@@ -1,0 +1,204 @@
+{
+  "_format": "vpe-game-mapping-platform",
+  "_version": "0.1",
+  "platform": {
+    "id": "wpc",
+    "name": "Williams Pinball Controller",
+    "description": "WPC-era Williams/Bally machines (1990-1999)",
+    "switch_matrix": "8x8",
+    "switch_numbering": "column-row",
+    "lamp_matrix": "8x8",
+    "lamp_numbering": "column-row"
+  },
+  "switches": [
+    {
+      "id": "s_coin_1",
+      "description": "Coin Button 1",
+      "input_action_hint": "Insert Coin Slot 1",
+      "input_map_hint": "Cabinet Switches"
+    },
+    {
+      "id": "s_coin_2",
+      "description": "Coin Button 2",
+      "input_action_hint": "Insert Coin Slot 2",
+      "input_map_hint": "Cabinet Switches"
+    },
+    {
+      "id": "s_coin_3",
+      "description": "Coin Button 3",
+      "input_action_hint": "Insert Coin Slot 3",
+      "input_map_hint": "Cabinet Switches"
+    },
+    {
+      "id": "s_coin_4",
+      "description": "Coin Button 4",
+      "input_action_hint": "Insert Coin Slot 4",
+      "input_map_hint": "Cabinet Switches"
+    },
+    {
+      "id": "s_cancel",
+      "description": "Cancel",
+      "input_action_hint": "Coin Door Cancel (WPC)",
+      "input_map_hint": "Cabinet Switches"
+    },
+    {
+      "id": "s_down",
+      "description": "Down",
+      "input_action_hint": "Coin Door Down (WPC)",
+      "input_map_hint": "Cabinet Switches"
+    },
+    {
+      "id": "s_up",
+      "description": "Up",
+      "input_action_hint": "Coin Door Up (WPC)",
+      "input_map_hint": "Cabinet Switches"
+    },
+    {
+      "id": "s_enter",
+      "description": "Enter",
+      "input_action_hint": "Coin Door Enter (WPC)",
+      "input_map_hint": "Cabinet Switches"
+    },
+    {
+      "id": "s_flipper_lower_right",
+      "description": "Lower Right Flipper",
+      "input_action_hint": "Right Flipper",
+      "input_map_hint": "Cabinet Switches"
+    },
+    {
+      "id": "s_flipper_lower_left",
+      "description": "Lower Left Flipper",
+      "input_action_hint": "Left Flipper",
+      "input_map_hint": "Cabinet Switches"
+    },
+    {
+      "id": "s_flipper_upper_right",
+      "description": "Upper Right Flipper",
+      "input_action_hint": "Upper Right Flipper",
+      "input_map_hint": "Cabinet Switches"
+    },
+    {
+      "id": "s_flipper_upper_left",
+      "description": "Upper Left Flipper",
+      "input_action_hint": "Upper Left Flipper",
+      "input_map_hint": "Cabinet Switches"
+    }
+  ],
+  "coils": [
+    {
+      "id": "c_game_on",
+      "description": "ROM Started"
+    },
+    {
+      "id": "c_flipper_lower_right",
+      "description": "Lower Right Flipper",
+      "device_hint": "^(RightFlipper|RFlipper|FlipperRight|FlipperR)$"
+    },
+    {
+      "id": "c_flipper_lower_left",
+      "description": "Lower Left Flipper",
+      "device_hint": "^(LeftFlipper|LFlipper|FlipperLeft|FlipperL)$"
+    },
+    {
+      "id": "c_flipper_upper_right",
+      "description": "Upper Right Flipper"
+    },
+    {
+      "id": "c_flipper_upper_left",
+      "description": "Upper Left Flipper"
+    }
+  ],
+  "aliases": [
+    {
+      "id": 1,
+      "alias": "s_coin_1",
+      "type": "switch"
+    },
+    {
+      "id": 2,
+      "alias": "s_coin_2",
+      "type": "switch"
+    },
+    {
+      "id": 3,
+      "alias": "s_coin_3",
+      "type": "switch"
+    },
+    {
+      "id": 4,
+      "alias": "s_coin_4",
+      "type": "switch"
+    },
+    {
+      "id": 5,
+      "alias": "s_cancel",
+      "type": "switch"
+    },
+    {
+      "id": 6,
+      "alias": "s_down",
+      "type": "switch"
+    },
+    {
+      "id": 7,
+      "alias": "s_up",
+      "type": "switch"
+    },
+    {
+      "id": 8,
+      "alias": "s_enter",
+      "type": "switch"
+    },
+    {
+      "id": 112,
+      "alias": "s_flipper_lower_right",
+      "type": "switch"
+    },
+    {
+      "id": 114,
+      "alias": "s_flipper_lower_left",
+      "type": "switch"
+    },
+    {
+      "id": 116,
+      "alias": "s_flipper_upper_right",
+      "type": "switch"
+    },
+    {
+      "id": 118,
+      "alias": "s_flipper_upper_left",
+      "type": "switch"
+    },
+    {
+      "id": 19,
+      "alias": "c_game_on",
+      "type": "coil"
+    }
+  ],
+  "wires": [
+    {
+      "description": "Lower Left Flipper",
+      "source_switch": "s_flipper_lower_left",
+      "destination_coil": "c_flipper_lower_left",
+      "pulse_delay": 255
+    },
+    {
+      "description": "Lower Right Flipper",
+      "source_switch": "s_flipper_lower_right",
+      "destination_coil": "c_flipper_lower_right",
+      "pulse_delay": 255
+    },
+    {
+      "description": "Upper Left Flipper",
+      "source_switch": "s_flipper_upper_left",
+      "destination_coil": "c_flipper_upper_left",
+      "pulse_delay": 255
+    },
+    {
+      "description": "Upper Right Flipper",
+      "source_switch": "s_flipper_upper_right",
+      "destination_coil": "c_flipper_upper_right",
+      "pulse_delay": 255
+    }
+  ]
+}
