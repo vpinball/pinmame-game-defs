@@ -1,0 +1,889 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Diner (Williams 1990) VPW Mod 1.0.2.vbs",
+    "extracted": "2026-02-12",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils/lamps. Uses S11.VBS (System 11, not WPC). swBRKicker(54)/swBLKicker(55) overlap with swRSling(54)/swLSling(55) — same physical switches, dual names. sLRFlipper, sLLFlipper, swTroughEject are framework-defined (core.vbs/S11.VBS), not in table script. Lamps 49-60 (clock lights) only active in VR mode; type 4 (not connected) in non-VR. Commented-out SolCallbacks for jet bumpers included as coils without callbacks."
+  },
+  "game": {
+    "id": "diner",
+    "name": "Diner",
+    "year": 1990,
+    "manufacturer": "Williams",
+    "ipdb_id": 681,
+    "platform": "s11"
+  },
+  "roms": [
+    {
+      "id": "diner_l4",
+      "version": "L-4"
+    }
+  ],
+  "switches": [
+    {
+      "id": 9,
+      "description": "Outhole",
+      "_vbscript_name": "swOuthole",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch"
+    },
+    {
+      "id": 10,
+      "description": "Up Down Ramp",
+      "_vbscript_name": "swUpDownRamp",
+      "_note": "Also used as bsTrough.EntrySw (trough entry switch)"
+    },
+    {
+      "id": 11,
+      "description": "Trough 1",
+      "_vbscript_name": "swTrough1",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_1"
+    },
+    {
+      "id": 12,
+      "description": "Trough 2",
+      "_vbscript_name": "swTrough2",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_2"
+    },
+    {
+      "id": 13,
+      "description": "Trough 3",
+      "_vbscript_name": "swTrough3",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_3"
+    },
+    {
+      "id": 14,
+      "description": "Shooter Lane",
+      "_vbscript_name": "swShooterLane",
+      "vpx_name": "ShooterLane"
+    },
+    {
+      "id": 15,
+      "description": "Sub Playfield Shooter 1",
+      "_vbscript_name": "swSubPlfdShooter1"
+    },
+    {
+      "id": 16,
+      "description": "Sub Playfield Shooter 2",
+      "_vbscript_name": "swSubPlfdShooter2"
+    },
+    {
+      "id": 17,
+      "description": "Cup",
+      "_vbscript_name": "swCup"
+    },
+    {
+      "id": 18,
+      "description": "Grill Bonus",
+      "_vbscript_name": "swGrillBonus"
+    },
+    {
+      "id": 19,
+      "description": "E",
+      "_vbscript_name": "swE"
+    },
+    {
+      "id": 20,
+      "description": "A",
+      "_vbscript_name": "swA"
+    },
+    {
+      "id": 21,
+      "description": "T",
+      "_vbscript_name": "swT"
+    },
+    {
+      "id": 22,
+      "description": "Hotdog",
+      "_vbscript_name": "swHotdog"
+    },
+    {
+      "id": 23,
+      "description": "Burger",
+      "_vbscript_name": "swBurger"
+    },
+    {
+      "id": 24,
+      "description": "Chili",
+      "_vbscript_name": "swChili"
+    },
+    {
+      "id": 27,
+      "description": "Right Ramp Entry",
+      "_vbscript_name": "swRightRampEntry"
+    },
+    {
+      "id": 28,
+      "description": "Right Ramp Exit",
+      "_vbscript_name": "swRightRampExit"
+    },
+    {
+      "id": 29,
+      "description": "Cup Entry",
+      "_vbscript_name": "swCupEntry"
+    },
+    {
+      "id": 30,
+      "description": "Root Beer",
+      "_vbscript_name": "swRootBeer"
+    },
+    {
+      "id": 31,
+      "description": "Fries",
+      "_vbscript_name": "swFries"
+    },
+    {
+      "id": 32,
+      "description": "Iced Tea",
+      "_vbscript_name": "swIcedTea"
+    },
+    {
+      "id": 36,
+      "description": "Left Ramp Exit",
+      "_vbscript_name": "swLeftRampExit"
+    },
+    {
+      "id": 37,
+      "description": "Left Outlane",
+      "_vbscript_name": "swLeftOutlane"
+    },
+    {
+      "id": 38,
+      "description": "Left Return Lane",
+      "_vbscript_name": "swLeftReturnLane"
+    },
+    {
+      "id": 39,
+      "description": "Right Return Lane",
+      "_vbscript_name": "swRightReturnLane"
+    },
+    {
+      "id": 40,
+      "description": "Right Outlane",
+      "_vbscript_name": "swRightOutlane"
+    },
+    {
+      "id": 49,
+      "description": "Upper Left Eject",
+      "_vbscript_name": "swUpperLeftEject",
+      "vpx_name": "UpperEject"
+    },
+    {
+      "id": 50,
+      "description": "Lower Left Eject",
+      "_vbscript_name": "swLowerLeftEject",
+      "vpx_name": "LowKicker"
+    },
+    {
+      "id": 51,
+      "description": "Left Jet Bumper",
+      "_vbscript_name": "swLeftJetBumper",
+      "vpx_name": "LeftJetBumper"
+    },
+    {
+      "id": 52,
+      "description": "Right Jet Bumper",
+      "_vbscript_name": "swRightJetBumper",
+      "vpx_name": "RightJetBumper"
+    },
+    {
+      "id": 53,
+      "description": "Lower Jet Bumper",
+      "_vbscript_name": "swLowerJetBumper",
+      "vpx_name": "LowerJetBumper"
+    },
+    {
+      "id": 54,
+      "description": "BR Kicker / Right Slingshot",
+      "_vbscript_name": "swBRKicker",
+      "_vbscript_alias": "swRSling",
+      "vpx_name": "RSling"
+    },
+    {
+      "id": 55,
+      "description": "BL Kicker / Left Slingshot",
+      "_vbscript_name": "swBLKicker",
+      "_vbscript_alias": "swLSling",
+      "vpx_name": "LSling"
+    },
+    {
+      "id": 56,
+      "description": "Spinner",
+      "_vbscript_name": "swSpinner"
+    },
+    {
+      "id": 57,
+      "description": "Right Flipper EOS",
+      "_vbscript_name": "swFlipR"
+    },
+    {
+      "id": 58,
+      "description": "Left Flipper EOS",
+      "_vbscript_name": "swFlipL"
+    },
+    {
+      "id": 59,
+      "description": "Clock Wheel",
+      "_vbscript_name": "swClockWheel"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Outhole",
+      "_vbscript_name": "sOuthole",
+      "_vbscript_callback": "bsTrough.SolIn",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_coil"
+    },
+    {
+      "id": 2,
+      "description": "Ramp Down",
+      "_vbscript_name": "sRampDown",
+      "_vbscript_callback": "SolRampDown",
+      "_inferred_type": "mechanism"
+    },
+    {
+      "id": 3,
+      "description": "Center 3 Bank Drop Target Reset",
+      "_vbscript_name": "sC3BDTReset",
+      "_vbscript_callback": "SolDTBankMiddle",
+      "_inferred_type": "drop_target_reset"
+    },
+    {
+      "id": 4,
+      "description": "Ramp Up",
+      "_vbscript_name": "sRampUp",
+      "_vbscript_callback": "SolRampUp",
+      "_inferred_type": "mechanism"
+    },
+    {
+      "id": 5,
+      "description": "Upper Left Eject",
+      "_vbscript_name": "sUpperLeftEject",
+      "_vbscript_callback": "SolUpperEject",
+      "_inferred_type": "kicker",
+      "vpx_name": "UpperEject"
+    },
+    {
+      "id": 6,
+      "description": "Sub Playfield Shooter",
+      "_vbscript_name": "sSubPlfdShooter",
+      "_vbscript_callback": "SolSubPlfdShooter",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_name": "sKnocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 8,
+      "description": "Lower Left Eject",
+      "_vbscript_name": "sLowerLeftEject",
+      "_vbscript_callback": "SolLowKicker",
+      "_inferred_type": "kicker",
+      "vpx_name": "LowKicker"
+    },
+    {
+      "id": 9,
+      "description": "Right Ramp Flasher",
+      "_vbscript_name": "sRightRampFlasher",
+      "_vbscript_callback": "SolFlash9",
+      "_inferred_type": "flasher",
+      "_note": "BG Moon"
+    },
+    {
+      "id": 10,
+      "description": "Back Box Relay",
+      "_vbscript_name": "sBackBoxRelay",
+      "_vbscript_callback": "SolGIRelay",
+      "_inferred_type": "gi_relay"
+    },
+    {
+      "id": 11,
+      "description": "Left Ramp Flasher",
+      "_vbscript_name": "sLeftRampFlasher",
+      "_vbscript_callback": "SolFlash11",
+      "_inferred_type": "flasher",
+      "_note": "BG Diner"
+    },
+    {
+      "id": 12,
+      "description": "AC Select Relay",
+      "_vbscript_name": "sACselectrelay",
+      "_vbscript_callback": "SolACSelect",
+      "_inferred_type": "relay"
+    },
+    {
+      "id": 13,
+      "description": "Left 3 Bank Drop Target Reset",
+      "_vbscript_name": "sL3BDTReset",
+      "_vbscript_callback": "SolDTBankLeft",
+      "_inferred_type": "drop_target_reset"
+    },
+    {
+      "id": 14,
+      "description": "Diverter",
+      "_vbscript_callback": "Sol14Diverter",
+      "_inferred_type": "diverter",
+      "_note": "No named constant — referenced by number in SolCallback"
+    },
+    {
+      "id": 15,
+      "description": "Clock Wheel",
+      "_vbscript_name": "sClockWheel",
+      "_inferred_type": "mechanism"
+    },
+    {
+      "id": 17,
+      "description": "Left Jet Bumper",
+      "_vbscript_name": "sLeftJetBumper",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out in script",
+      "vpx_name": "LeftJetBumper"
+    },
+    {
+      "id": 18,
+      "description": "Left Slingshot",
+      "_vbscript_name": "sLSling",
+      "_inferred_type": "slingshot",
+      "vpx_name": "LSling"
+    },
+    {
+      "id": 19,
+      "description": "Right Jet Bumper",
+      "_vbscript_name": "sRightJetBumper",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out in script",
+      "vpx_name": "RightJetBumper"
+    },
+    {
+      "id": 20,
+      "description": "Right Slingshot",
+      "_vbscript_name": "sRSling",
+      "_inferred_type": "slingshot",
+      "vpx_name": "RSling"
+    },
+    {
+      "id": 21,
+      "description": "Lower Jet Bumper",
+      "_vbscript_name": "sLowerJetBumper",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out in script",
+      "vpx_name": "LowerJetBumper"
+    },
+    {
+      "id": 22,
+      "description": "Shooter Lane Feeder",
+      "_vbscript_name": "sShooterLaneFeeder",
+      "_vbscript_callback": "bsTrough.SolOut",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 23,
+      "description": "Tilt",
+      "_vbscript_callback": "TiltSol",
+      "_inferred_type": "tilt",
+      "_note": "No named constant — referenced by number in SolCallback"
+    },
+    {
+      "id": 25,
+      "description": "Haji Flasher",
+      "_vbscript_callback": "SolHajiF",
+      "_inferred_type": "flasher",
+      "_note": "BG Haji character flasher. No named constant."
+    },
+    {
+      "id": 26,
+      "description": "Babs Flasher",
+      "_vbscript_callback": "SolBabsF",
+      "_inferred_type": "flasher",
+      "_note": "BG Babs character flasher. No named constant."
+    },
+    {
+      "id": 27,
+      "description": "Boris Flasher",
+      "_vbscript_callback": "SolBorisF",
+      "_inferred_type": "flasher",
+      "_note": "BG Boris character flasher. No named constant."
+    },
+    {
+      "id": 28,
+      "description": "Pepe Flasher",
+      "_vbscript_callback": "SolPepeF",
+      "_inferred_type": "flasher",
+      "_note": "BG Pepe character flasher. No named constant."
+    },
+    {
+      "id": 29,
+      "description": "Buck Flasher",
+      "_vbscript_callback": "SolBuckF",
+      "_inferred_type": "flasher",
+      "_note": "BG Buck character flasher. No named constant."
+    },
+    {
+      "id": 30,
+      "description": "Cup Flasher",
+      "_vbscript_callback": "SolCupF",
+      "_inferred_type": "flasher",
+      "_note": "No named constant."
+    },
+    {
+      "id": 31,
+      "description": "BG Clock Flasher",
+      "_vbscript_callback": "Sol31",
+      "_inferred_type": "flasher",
+      "_note": "BG clock (2). No named constant."
+    },
+    {
+      "id": 32,
+      "description": "Dine Time Flasher",
+      "_vbscript_name": "sDineTF",
+      "_vbscript_callback": "Sol32",
+      "_inferred_type": "flasher",
+      "_note": "BG Dine Time (2)"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_name": "sLRFlipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework-defined constant (core.vbs: sLRFlipper=46)",
+      "vpx_name": "RightFlipper"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_name": "sLLFlipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework-defined constant (core.vbs: sLLFlipper=48)",
+      "vpx_name": "LeftFlipper"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "description": "20K Register",
+      "vpx_name": "register20k",
+      "_light_type": 1
+    },
+    {
+      "id": 2,
+      "description": "40K Register",
+      "vpx_name": "register40k",
+      "_light_type": 1
+    },
+    {
+      "id": 3,
+      "description": "60K Register",
+      "vpx_name": "register60k",
+      "_light_type": 1
+    },
+    {
+      "id": 4,
+      "description": "80K Register",
+      "vpx_name": "register80k",
+      "_light_type": 1
+    },
+    {
+      "id": 5,
+      "description": "100K Register",
+      "vpx_name": "register100k",
+      "_light_type": 1
+    },
+    {
+      "id": 6,
+      "description": "Left Advance Dine Time",
+      "vpx_name": "Light6",
+      "_light_type": 0
+    },
+    {
+      "id": 7,
+      "description": "Right Advance Dine Time",
+      "vpx_name": "Light7",
+      "_light_type": 0
+    },
+    {
+      "id": 8,
+      "description": "Extra Ball Right",
+      "vpx_name": "Light8",
+      "_light_type": 0
+    },
+    {
+      "id": 9,
+      "description": "Serve Again",
+      "vpx_name": "Light9",
+      "_light_type": 0
+    },
+    {
+      "id": 10,
+      "description": "Left Ramp Scores",
+      "vpx_name": "Light10",
+      "_light_type": 0
+    },
+    {
+      "id": 11,
+      "description": "Right Ramp Scores",
+      "vpx_name": "Light11",
+      "_light_type": 0
+    },
+    {
+      "id": 12,
+      "description": "Lock",
+      "vpx_name": "Light12",
+      "_light_type": 0
+    },
+    {
+      "id": 13,
+      "description": "Release",
+      "vpx_name": "Light13",
+      "_light_type": 0
+    },
+    {
+      "id": 14,
+      "description": "Rush 1",
+      "vpx_name": "Light14",
+      "_light_type": 0
+    },
+    {
+      "id": 15,
+      "description": "Rush 2",
+      "vpx_name": "Light15",
+      "_light_type": 0
+    },
+    {
+      "id": 16,
+      "description": "Spinner",
+      "vpx_name": "Light16",
+      "_light_type": 0
+    },
+    {
+      "id": 17,
+      "description": "D",
+      "vpx_name": "Light17",
+      "_light_type": 0
+    },
+    {
+      "id": 18,
+      "description": "I",
+      "vpx_name": "Light18",
+      "_light_type": 0
+    },
+    {
+      "id": 19,
+      "description": "N",
+      "vpx_name": "Light19",
+      "_light_type": 0
+    },
+    {
+      "id": 20,
+      "description": "E",
+      "vpx_name": "Light20",
+      "_light_type": 0
+    },
+    {
+      "id": 21,
+      "description": "R",
+      "vpx_name": "Light21",
+      "_light_type": 0
+    },
+    {
+      "id": 22,
+      "description": "E (EAT)",
+      "vpx_name": "Light22",
+      "_light_type": 2,
+      "_note": "EAT multi-light with circleE insert"
+    },
+    {
+      "id": 23,
+      "description": "A (EAT)",
+      "vpx_name": "Light23",
+      "_light_type": 2,
+      "_note": "EAT multi-light with circleA insert"
+    },
+    {
+      "id": 24,
+      "description": "T (EAT)",
+      "vpx_name": "Light24",
+      "_light_type": 2,
+      "_note": "EAT multi-light with circleT insert"
+    },
+    {
+      "id": 25,
+      "description": "150K Jukebox",
+      "vpx_name": "juke150k",
+      "_light_type": 1
+    },
+    {
+      "id": 26,
+      "description": "100K Jukebox",
+      "vpx_name": "juke100k",
+      "_light_type": 1
+    },
+    {
+      "id": 27,
+      "description": "75K Jukebox",
+      "vpx_name": "juke75k",
+      "_light_type": 1
+    },
+    {
+      "id": 28,
+      "description": "50K Jukebox",
+      "vpx_name": "juke50k",
+      "_light_type": 1
+    },
+    {
+      "id": 29,
+      "description": "25K Jukebox",
+      "vpx_name": "juke25k",
+      "_light_type": 1
+    },
+    {
+      "id": 30,
+      "description": "Hotdog",
+      "vpx_name": "Light30",
+      "_light_type": 0
+    },
+    {
+      "id": 31,
+      "description": "Burger",
+      "vpx_name": "Light31",
+      "_light_type": 0
+    },
+    {
+      "id": 32,
+      "description": "Soup",
+      "vpx_name": "Light32",
+      "_light_type": 0
+    },
+    {
+      "id": 33,
+      "description": "Haji",
+      "vpx_name": "Light33",
+      "_light_type": 3,
+      "_note": "Cutout flasher — backbox character"
+    },
+    {
+      "id": 34,
+      "description": "Babs",
+      "vpx_name": "Light34",
+      "_light_type": 3,
+      "_note": "Cutout flasher — backbox character"
+    },
+    {
+      "id": 35,
+      "description": "Boris",
+      "vpx_name": "Light35",
+      "_light_type": 3,
+      "_note": "Cutout flasher — backbox character"
+    },
+    {
+      "id": 36,
+      "description": "Pepe",
+      "vpx_name": "Light36",
+      "_light_type": 3,
+      "_note": "Cutout flasher — backbox character"
+    },
+    {
+      "id": 37,
+      "description": "Buck",
+      "vpx_name": "Light37",
+      "_light_type": 3,
+      "_note": "Cutout flasher — backbox character"
+    },
+    {
+      "id": 38,
+      "description": "Beer",
+      "vpx_name": "Light38",
+      "_light_type": 0
+    },
+    {
+      "id": 39,
+      "description": "Fries",
+      "vpx_name": "Light39",
+      "_light_type": 0
+    },
+    {
+      "id": 40,
+      "description": "Lemonade",
+      "vpx_name": "Light40",
+      "_light_type": 0
+    },
+    {
+      "id": 41,
+      "description": "100K",
+      "vpx_name": "Light41",
+      "_light_type": 0
+    },
+    {
+      "id": 42,
+      "description": "150K",
+      "vpx_name": "Light42",
+      "_light_type": 0
+    },
+    {
+      "id": 43,
+      "description": "250K",
+      "vpx_name": "Light43",
+      "_light_type": 0
+    },
+    {
+      "id": 44,
+      "description": "1M",
+      "vpx_name": "Light44",
+      "_light_type": 0
+    },
+    {
+      "id": 45,
+      "description": "Extra Ball",
+      "vpx_name": "Light45",
+      "_light_type": 0
+    },
+    {
+      "id": 46,
+      "description": "Food",
+      "vpx_name": "Light46",
+      "_light_type": 0
+    },
+    {
+      "id": 47,
+      "description": "Cup Scores",
+      "vpx_name": "Light47",
+      "_light_type": 0
+    },
+    {
+      "id": 48,
+      "description": "Extra Ball Left",
+      "vpx_name": "Light48",
+      "_light_type": 0
+    },
+    {
+      "id": 49,
+      "description": "Clock Light 1",
+      "vpx_name": "BGClockLight1",
+      "_light_type": 1,
+      "_note": "Clock lights 49-60 only active in VR mode; type 4 (not connected) otherwise"
+    },
+    {
+      "id": 50,
+      "description": "Clock Light 2",
+      "vpx_name": "BGClockLight2",
+      "_light_type": 1,
+      "_note": "VR mode only"
+    },
+    {
+      "id": 51,
+      "description": "Clock Light 3",
+      "vpx_name": "BGClockLight3",
+      "_light_type": 1,
+      "_note": "VR mode only"
+    },
+    {
+      "id": 52,
+      "description": "Clock Light 4",
+      "vpx_name": "BGClockLight4",
+      "_light_type": 1,
+      "_note": "VR mode only"
+    },
+    {
+      "id": 53,
+      "description": "Clock Light 5",
+      "vpx_name": "BGClockLight5",
+      "_light_type": 1,
+      "_note": "VR mode only"
+    },
+    {
+      "id": 54,
+      "description": "Clock Light 6",
+      "vpx_name": "BGClockLight6",
+      "_light_type": 1,
+      "_note": "VR mode only"
+    },
+    {
+      "id": 55,
+      "description": "Clock Light 7",
+      "vpx_name": "BGClockLight7",
+      "_light_type": 1,
+      "_note": "VR mode only"
+    },
+    {
+      "id": 56,
+      "description": "Clock Light 8",
+      "vpx_name": "BGClockLight8",
+      "_light_type": 1,
+      "_note": "VR mode only"
+    },
+    {
+      "id": 57,
+      "description": "Clock Light 9",
+      "vpx_name": "BGClockLight9",
+      "_light_type": 1,
+      "_note": "VR mode only"
+    },
+    {
+      "id": 58,
+      "description": "Clock Light 10",
+      "vpx_name": "BGClockLight10",
+      "_light_type": 1,
+      "_note": "VR mode only"
+    },
+    {
+      "id": 59,
+      "description": "Clock Light 11",
+      "vpx_name": "BGClockLight11",
+      "_light_type": 1,
+      "_note": "VR mode only"
+    },
+    {
+      "id": 60,
+      "description": "Clock Light 12",
+      "vpx_name": "BGClockLight12",
+      "_light_type": 1,
+      "_note": "VR mode only"
+    },
+    {
+      "id": 61,
+      "description": "Top 5",
+      "vpx_name": "Light61",
+      "_light_type": 0
+    },
+    {
+      "id": 62,
+      "description": "Special",
+      "vpx_name": "Light62",
+      "_light_type": 0
+    },
+    {
+      "id": 63,
+      "description": "Dine Time",
+      "vpx_name": "Light63",
+      "_light_type": 0
+    },
+    {
+      "id": 64,
+      "description": "Food",
+      "vpx_name": "Light64",
+      "_light_type": 0
+    },
+    {
+      "id": 65,
+      "description": "Not Connected",
+      "_light_type": 4,
+      "_note": "Defined but type 4 (not connected)"
+    }
+  ]
+}
