@@ -1,0 +1,783 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Bram Stokers Dracula (Williams 1993) VPW 1.0.vpx",
+    "extracted": "2026-02-12",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches and coils from direct VBScript parsing. Lamp numbers inferred from VLM lightmap array names (LM_L_lNN) and mist lamp objects (ml1-ml13). No explicit Const sw* or Const s* declarations found in table script; switch/coil numbers are hardcoded in Controller.Switch() calls and SolCallback() assignments. Flipper solenoid IDs (sLRFlipper, sLLFlipper) come from WPC.VBS framework. AllLamps collection defined in VPX editor, not script."
+  },
+  "game": {
+    "id": "drac",
+    "name": "Bram Stoker's Dracula",
+    "year": 1993,
+    "manufacturer": "Williams",
+    "platform": "wpc",
+    "_note": "LoadVPM '03060000', 'WPC.VBS', 3.26 -- uses WPC platform via controller.vbs"
+  },
+  "roms": [
+    { "id": "drac_l1" },
+    { "id": "drac_l2c", "_note": "L-2C Competition MOD (commented out in script)" }
+  ],
+  "switches": [
+    {
+      "id": 14,
+      "description": "Tilt",
+      "_vbscript_name": "vpmNudge.TiltSwitch",
+      "_inferred_type": "cabinet",
+      "_note": "Set via vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Drop Target",
+      "vpx_name": "sw15",
+      "_vbscript_name": "sw15",
+      "_inferred_type": "drop_target",
+      "_note": "3-bank drop target, DTRaise/DTDrop/DTHit via sw15"
+    },
+    {
+      "id": 16,
+      "description": "Right Ramp Entry",
+      "vpx_name": "sw16",
+      "_vbscript_name": "sw16",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 17,
+      "description": "Shooter Lane",
+      "vpx_name": "sw17",
+      "_vbscript_name": "sw17",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "_vbscript_name": "Controller.Switch(22)",
+      "_inferred_type": "cabinet",
+      "_note": "Set to 1 at init -- close coin door"
+    },
+    {
+      "id": 24,
+      "description": "Coin Door Closed (Keep)",
+      "_vbscript_name": "Controller.Switch(24)",
+      "_inferred_type": "cabinet",
+      "_note": "Set to 1 at init -- keep coin door closed"
+    },
+    {
+      "id": 25,
+      "description": "Left Ramp Made",
+      "vpx_name": "sw25",
+      "_vbscript_name": "sw25",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 26,
+      "description": "Right Inner Loop",
+      "vpx_name": "sw26",
+      "_vbscript_name": "sw26",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 27,
+      "description": "Right Ramp Made",
+      "vpx_name": "sw27",
+      "_vbscript_name": "sw27",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 28,
+      "description": "Wire Ramp Made",
+      "vpx_name": "sw28",
+      "_vbscript_name": "sw28",
+      "_inferred_type": "rollover",
+      "_note": "Triggers WireRampOff on hit"
+    },
+    {
+      "id": 31,
+      "description": "Left Outer Loop",
+      "vpx_name": "sw31",
+      "_vbscript_name": "sw31",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 34,
+      "description": "Launch Button",
+      "_vbscript_name": "Controller.Switch(34)",
+      "_inferred_type": "cabinet",
+      "_note": "Set via PlungerKey keypress"
+    },
+    {
+      "id": 35,
+      "description": "Left Outlane",
+      "vpx_name": "sw35",
+      "_vbscript_name": "sw35",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 36,
+      "description": "Left Inlane",
+      "vpx_name": "sw36",
+      "_vbscript_name": "sw36",
+      "_inferred_type": "rollover",
+      "_note": "Triggers leftInlaneSpeedLimit"
+    },
+    {
+      "id": 37,
+      "description": "Right Inlane",
+      "vpx_name": "sw37",
+      "_vbscript_name": "sw37",
+      "_inferred_type": "rollover",
+      "_note": "Triggers rightInlaneSpeedLimit"
+    },
+    {
+      "id": 38,
+      "description": "Right Outlane",
+      "vpx_name": "sw38",
+      "_vbscript_name": "sw38",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 41,
+      "description": "Trough Ball 1 (Eject)",
+      "vpx_name": "sw41",
+      "_vbscript_name": "sw41",
+      "_inferred_type": "trough",
+      "device_hint": "Trough",
+      "device_item_hint": "ball_switch_1"
+    },
+    {
+      "id": 42,
+      "description": "Trough Ball 2",
+      "vpx_name": "sw42",
+      "_vbscript_name": "sw42",
+      "_inferred_type": "trough",
+      "device_hint": "Trough",
+      "device_item_hint": "ball_switch_2"
+    },
+    {
+      "id": 43,
+      "description": "Trough Ball 3",
+      "vpx_name": "sw43",
+      "_vbscript_name": "sw43",
+      "_inferred_type": "trough",
+      "device_hint": "Trough",
+      "device_item_hint": "ball_switch_3"
+    },
+    {
+      "id": 44,
+      "description": "Trough Ball 4 (Stack)",
+      "vpx_name": "sw44",
+      "_vbscript_name": "sw44",
+      "_inferred_type": "trough",
+      "device_hint": "Trough",
+      "device_item_hint": "ball_switch_4"
+    },
+    {
+      "id": 48,
+      "description": "Drain",
+      "vpx_name": "sw48",
+      "_vbscript_name": "sw48",
+      "_inferred_type": "drain",
+      "_note": "Ball kicked to trough after 500ms delay"
+    },
+    {
+      "id": 51,
+      "description": "Left Ramp Enter",
+      "vpx_name": "sw51",
+      "_vbscript_name": "sw51",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 52,
+      "description": "Left Ramp Inner",
+      "vpx_name": "sw52",
+      "_vbscript_name": "sw52",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 53,
+      "description": "Castle Lock 1",
+      "vpx_name": "sw53",
+      "_vbscript_name": "sw53",
+      "_inferred_type": "kicker",
+      "_note": "Castle Lock 1 -- triggers WireRampOff on unhit"
+    },
+    {
+      "id": 54,
+      "description": "Castle Lock 2",
+      "vpx_name": "sw54",
+      "_vbscript_name": "sw54",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 55,
+      "description": "Wire Ramp Popper",
+      "vpx_name": "sw55",
+      "_vbscript_name": "sw55",
+      "_inferred_type": "vuk",
+      "_note": "VUK -- WirerampPopper fires via SolCallback(6)"
+    },
+    {
+      "id": 56,
+      "description": "Crypt Popper",
+      "vpx_name": "sw56",
+      "_vbscript_name": "sw56",
+      "_inferred_type": "vuk",
+      "_note": "VUK -- CryptPopper fires via SolCallback(5), removes magnet ball"
+    },
+    {
+      "id": 57,
+      "description": "Castle Lock 3",
+      "vpx_name": "sw57",
+      "_vbscript_name": "sw57",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 58,
+      "description": "Right Ramp Enter",
+      "vpx_name": "sw58",
+      "_vbscript_name": "sw58",
+      "_inferred_type": "rollover",
+      "_note": "Uses vpmTimer.PulseSw (momentary)"
+    },
+    {
+      "id": 61,
+      "description": "Bumper 2 (Top Left)",
+      "vpx_name": "Bumper2",
+      "_vbscript_name": "Bumper2",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw 61"
+    },
+    {
+      "id": 62,
+      "description": "Bumper 3 (Top Right)",
+      "vpx_name": "Bumper3",
+      "_vbscript_name": "Bumper3",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw 62"
+    },
+    {
+      "id": 63,
+      "description": "Bumper 1 (Bottom)",
+      "vpx_name": "Bumper1",
+      "_vbscript_name": "Bumper1",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw 63"
+    },
+    {
+      "id": 64,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_vbscript_name": "LeftSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "vpmTimer.PulseSw 64"
+    },
+    {
+      "id": 65,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_vbscript_name": "RightSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "vpmTimer.PulseSw 65"
+    },
+    {
+      "id": 66,
+      "description": "Standup Target 66 (Top Bank Left)",
+      "vpx_name": "sw66",
+      "_vbscript_name": "sw66",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 67,
+      "description": "Standup Target 67 (Top Bank Center)",
+      "vpx_name": "sw67",
+      "_vbscript_name": "sw67",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 68,
+      "description": "Standup Target 68 (Top Bank Right)",
+      "vpx_name": "sw68",
+      "_vbscript_name": "sw68",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 71,
+      "description": "Castle Popper",
+      "vpx_name": "sw71",
+      "_vbscript_name": "sw71",
+      "_inferred_type": "vuk",
+      "_note": "VUK -- CastlePopper fires via SolCallback(3), removes magnet ball"
+    },
+    {
+      "id": 72,
+      "description": "Coffin Popper",
+      "vpx_name": "sw72",
+      "_vbscript_name": "sw72",
+      "_inferred_type": "vuk",
+      "_note": "VUK -- CoffinPopper fires via SolCallback(2)"
+    },
+    {
+      "id": 73,
+      "description": "Right Outer Loop",
+      "vpx_name": "sw73",
+      "_vbscript_name": "sw73",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 77,
+      "description": "Right Ramp Up Position",
+      "_vbscript_name": "Controller.Switch(77)",
+      "_inferred_type": "opto",
+      "_note": "Set by SolRRampUp/SolRRampDown, tracks moving ramp position"
+    },
+    {
+      "id": 81,
+      "description": "Mist Motor Right Opto",
+      "_vbscript_name": "Controller.Switch(81)",
+      "_inferred_type": "opto",
+      "_note": "MagnetPos > 490 (mist motor at right end)"
+    },
+    {
+      "id": 82,
+      "description": "Mist Motor Ball Detect",
+      "_vbscript_name": "Controller.Switch(82)",
+      "_inferred_type": "opto",
+      "_note": "Ball crossing mist magnet line detected in MistTimer"
+    },
+    {
+      "id": 83,
+      "description": "Mist Motor Left Opto",
+      "_vbscript_name": "Controller.Switch(83)",
+      "_inferred_type": "opto",
+      "_note": "MagnetPos < 10 (mist motor at left end)"
+    },
+    {
+      "id": 84,
+      "description": "Wire Ramp Entry",
+      "vpx_name": "sw84",
+      "_vbscript_name": "sw84",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 85,
+      "description": "Wire Ramp Exit",
+      "vpx_name": "sw85",
+      "_vbscript_name": "sw85",
+      "_inferred_type": "rollover",
+      "_note": "Triggers WireRampOff on hit"
+    },
+    {
+      "id": 86,
+      "description": "Standup Target 86 (Bottom Bank Left)",
+      "vpx_name": "sw86",
+      "_vbscript_name": "sw86",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 87,
+      "description": "Standup Target 87 (Bottom Bank Center)",
+      "vpx_name": "sw87",
+      "_vbscript_name": "sw87",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 88,
+      "description": "Standup Target 88 (Bottom Bank Right)",
+      "vpx_name": "sw88",
+      "_vbscript_name": "sw88",
+      "_inferred_type": "standup_target"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Auto Plunger",
+      "vpx_name": "Plunger",
+      "_vbscript_name": "AutoPlunger",
+      "_vbscript_callback": "SolCallback(1) = \"AutoPlunger\"",
+      "_inferred_type": "plunger"
+    },
+    {
+      "id": 2,
+      "description": "Coffin Popper (VUK)",
+      "vpx_name": "sw72",
+      "_vbscript_name": "CoffinPopper",
+      "_vbscript_callback": "SolCallback(2) = \"CoffinPopper\"",
+      "_inferred_type": "vuk"
+    },
+    {
+      "id": 3,
+      "description": "Castle Popper (VUK)",
+      "vpx_name": "sw71",
+      "_vbscript_name": "CastlePopper",
+      "_vbscript_callback": "SolCallback(3) = \"CastlePopper\"",
+      "_inferred_type": "vuk"
+    },
+    {
+      "id": 4,
+      "description": "Right Ramp Down",
+      "vpx_name": "FRRamp",
+      "_vbscript_name": "SolRRampDown",
+      "_vbscript_callback": "SolCallback(4) = \"SolRRampDown\"",
+      "_inferred_type": "diverter"
+    },
+    {
+      "id": 5,
+      "description": "Crypt Popper (VUK)",
+      "vpx_name": "sw56",
+      "_vbscript_name": "CryptPopper",
+      "_vbscript_callback": "SolCallback(5) = \"CryptPopper\"",
+      "_inferred_type": "vuk"
+    },
+    {
+      "id": 6,
+      "description": "Wire Ramp Popper (VUK)",
+      "vpx_name": "sw55",
+      "_vbscript_name": "WirerampPopper",
+      "_vbscript_callback": "SolCallback(6) = \"WirerampPopper\"",
+      "_inferred_type": "vuk"
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_name": "SolKnocker",
+      "_vbscript_callback": "SolCallback(7) = \"SolKnocker\"",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 8,
+      "description": "Shooter Ramp",
+      "vpx_name": "FLRamp",
+      "_vbscript_name": "SolShooterRamp",
+      "_vbscript_callback": "SolCallback(8) = \"SolShooterRamp\"",
+      "_inferred_type": "diverter",
+      "_note": "Controls sramp2 collidable and FLRamp rotation"
+    },
+    {
+      "id": 14,
+      "description": "Right Ramp Up",
+      "vpx_name": "FRRamp",
+      "_vbscript_name": "SolRRampUp",
+      "_vbscript_callback": "SolCallback(14) = \"SolRRampUp\"",
+      "_inferred_type": "diverter",
+      "_note": "Raises right ramp, sets sw77=True"
+    },
+    {
+      "id": 16,
+      "description": "Trough Ball Release",
+      "vpx_name": "sw41",
+      "_vbscript_name": "SolRelease",
+      "_vbscript_callback": "SolCallback(16) = \"SolRelease\"",
+      "_inferred_type": "trough_eject",
+      "device_hint": "Trough",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 17,
+      "description": "Flasher 17 (Top Right Corner / Dracula)",
+      "vpx_name": "F17_Dome",
+      "_vbscript_name": "Flasher17",
+      "_vbscript_callback": "SolModCallback(17) = \"Flasher17\"",
+      "_inferred_type": "flasher",
+      "_note": "Top Right Corner Flasher (#906), Dracula Flasher (x2) (#906)"
+    },
+    {
+      "id": 18,
+      "description": "Flasher 18 (Jackpot / Stoker)",
+      "vpx_name": "F18",
+      "_vbscript_name": "Flasher18",
+      "_vbscript_callback": "SolModCallback(18) = \"Flasher18\"",
+      "_inferred_type": "flasher",
+      "_note": "Jackpot Flasher (#906), Stoker Flasher (#906)"
+    },
+    {
+      "id": 19,
+      "description": "Flasher 19 (3 Bank / House)",
+      "vpx_name": ["F19", "F19a"],
+      "_vbscript_name": "Flasher19",
+      "_vbscript_callback": "SolModCallback(19) = \"Flasher19\"",
+      "_inferred_type": "flasher",
+      "_note": "3 Bank Flasher (#89), House Flasher (#906)"
+    },
+    {
+      "id": 20,
+      "description": "Flasher 20 (Top Left Corner / Mina)",
+      "vpx_name": ["F20", "F20_Dome"],
+      "_vbscript_name": "Flasher20",
+      "_vbscript_callback": "SolModCallback(20) = \"Flasher20\"",
+      "_inferred_type": "flasher",
+      "_note": "Top Left Corner Flasher (#89, #906), Mina Flasher (#906)"
+    },
+    {
+      "id": 21,
+      "description": "Flasher 21 (Castle / Helsing)",
+      "vpx_name": ["F21", "F21a"],
+      "_vbscript_name": "Flasher21",
+      "_vbscript_callback": "SolModCallback(21) = \"Flasher21\"",
+      "_inferred_type": "flasher",
+      "_note": "Castle Flasher (#89), Helsing Flasher (#906)"
+    },
+    {
+      "id": 22,
+      "description": "Flasher 22 (Left Ramp / Left Logo)",
+      "vpx_name": "F22",
+      "_vbscript_name": "Flasher22",
+      "_vbscript_callback": "SolModCallback(22) = \"Flasher22\"",
+      "_inferred_type": "flasher",
+      "_note": "Left Ramp Flasher (#906), Left Logo Flasher (#906)"
+    },
+    {
+      "id": 23,
+      "description": "Flasher 23 (Right Ramp / Right Logo)",
+      "vpx_name": "F23",
+      "_vbscript_name": "Flasher23",
+      "_vbscript_callback": "SolModCallback(23) = \"Flasher23\"",
+      "_inferred_type": "flasher",
+      "_note": "Right Ramp Flasher (#906), Right Logo Flasher (#906)"
+    },
+    {
+      "id": 24,
+      "description": "Flasher 24 (Asylum / Renfield)",
+      "vpx_name": "F24",
+      "_vbscript_name": "Flasher24",
+      "_vbscript_callback": "SolModCallback(24) = \"Flasher24\"",
+      "_inferred_type": "flasher",
+      "_note": "Asylum Flasher (#89), Renfield Flasher (#906)"
+    },
+    {
+      "id": 25,
+      "description": "Drop Target Reset",
+      "vpx_name": "sw15",
+      "_vbscript_name": "SolDTUp",
+      "_vbscript_callback": "SolCallback(25) = \"SolDTUp\"",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets sw15 drop target bank via DTRaise"
+    },
+    {
+      "id": 26,
+      "description": "Flasher 26 (Speaker Panel)",
+      "vpx_name": "F26",
+      "_vbscript_name": "Flasher26",
+      "_vbscript_callback": "SolModCallback(26) = \"Flasher26\"",
+      "_inferred_type": "flasher",
+      "_note": "Speaker panel flasher"
+    },
+    {
+      "id": 27,
+      "description": "Mist Magnet",
+      "_vbscript_name": "SolMistMagnet",
+      "_vbscript_callback": "SolCallback(27) = \"SolMistMagnet\"",
+      "_inferred_type": "magnet",
+      "_note": "Controls mist multiball magnet attract"
+    },
+    {
+      "id": 28,
+      "description": "Mist Motor",
+      "_vbscript_name": "Controller.Solenoid(28)",
+      "_inferred_type": "motor",
+      "_note": "Read directly by MotorTimer_Timer -- no SolCallback, drives mist motor position"
+    },
+    {
+      "id": 33,
+      "description": "Top Ramp Diverter",
+      "vpx_name": ["wDivert", "FDivert"],
+      "_vbscript_name": "solTopDiverter",
+      "_vbscript_callback": "SolCallback(33) = \"solTopDiverter\"",
+      "_inferred_type": "diverter"
+    },
+    {
+      "id": 34,
+      "description": "Right Gate",
+      "vpx_name": ["RGate", "RGateWall"],
+      "_vbscript_name": "SolRGate",
+      "_vbscript_callback": "SolCallback(34) = \"SolRGate\"",
+      "_inferred_type": "gate"
+    },
+    {
+      "id": 35,
+      "description": "Castle Lock Post",
+      "vpx_name": "clpost",
+      "_vbscript_name": "CastleLockPost",
+      "_vbscript_callback": "SolCallback(35) = \"CastleLockPost\"",
+      "_inferred_type": "post",
+      "_note": "Castle Lock Post -- controls clpost.isdropped"
+    },
+    {
+      "id": 36,
+      "description": "Left Gate",
+      "vpx_name": ["LGate", "Wall_LO"],
+      "_vbscript_name": "SolLGate",
+      "_vbscript_callback": "SolCallback(36) = \"SolLGate\"",
+      "_inferred_type": "gate"
+    },
+    {
+      "id": "sLLFlipper",
+      "description": "Left Flipper",
+      "vpx_name": "LeftFlipper",
+      "_vbscript_name": "SolLFlipper",
+      "_vbscript_callback": "SolCallback(sLLFlipper) = \"SolLFlipper\"",
+      "_inferred_type": "flipper",
+      "_note": "sLLFlipper is a WPC.VBS framework constant (typically 34 for WPC, but varies)"
+    },
+    {
+      "id": "sLRFlipper",
+      "description": "Right Flipper",
+      "vpx_name": "RightFlipper",
+      "_vbscript_name": "SolRFlipper",
+      "_vbscript_callback": "SolCallback(sLRFlipper) = \"SolRFlipper\"",
+      "_inferred_type": "flipper",
+      "_note": "sLRFlipper is a WPC.VBS framework constant (typically 36 for WPC, but varies)"
+    }
+  ],
+  "lamps": [
+    { "id": 16, "description": "Lamp 16", "vpx_name": "l16", "_note": "VLM lightmap LM_L_l16" },
+    { "id": 17, "description": "Lamp 17", "vpx_name": "l17", "_note": "VLM lightmap LM_L_l17" },
+    { "id": 18, "description": "Lamp 18", "vpx_name": "l18", "_note": "VLM lightmap LM_L_l18" },
+    { "id": 21, "description": "Lamp 21", "vpx_name": "l21", "_note": "VLM lightmap LM_L_l21" },
+    { "id": 22, "description": "Lamp 22", "vpx_name": "l22", "_note": "VLM lightmap LM_L_l22" },
+    { "id": 23, "description": "Lamp 23", "vpx_name": "l23", "_note": "VLM lightmap LM_L_l23" },
+    { "id": 24, "description": "Lamp 24", "vpx_name": "l24", "_note": "VLM lightmap LM_L_l24" },
+    { "id": 25, "description": "Lamp 25", "vpx_name": "l25", "_note": "VLM lightmap LM_L_l25" },
+    { "id": 26, "description": "Lamp 26", "vpx_name": "l26", "_note": "VLM lightmap LM_L_l26" },
+    { "id": 27, "description": "Lamp 27", "vpx_name": "l27", "_note": "VLM lightmap LM_L_l27" },
+    { "id": 28, "description": "Lamp 28", "vpx_name": "l28", "_note": "VLM lightmap LM_L_l28" },
+    { "id": 31, "description": "Lamp 31", "vpx_name": "l31", "_note": "VLM lightmap LM_L_l31" },
+    { "id": 32, "description": "Lamp 32", "vpx_name": "l32", "_note": "VLM lightmap LM_L_l32" },
+    { "id": 33, "description": "Lamp 33", "vpx_name": "l33", "_note": "VLM lightmap LM_L_l33" },
+    { "id": 34, "description": "Lamp 34", "vpx_name": "l34", "_note": "VLM lightmap LM_L_l34" },
+    { "id": 35, "description": "Lamp 35", "vpx_name": "l35", "_note": "VLM lightmap LM_L_l35" },
+    { "id": 36, "description": "Lamp 36", "vpx_name": "l36", "_note": "VLM lightmap LM_L_l36" },
+    { "id": 37, "description": "Lamp 37", "vpx_name": "l37", "_note": "VLM lightmap LM_L_l37" },
+    { "id": 38, "description": "Lamp 38", "vpx_name": "l38", "_note": "VLM lightmap LM_L_l38" },
+    { "id": 41, "description": "Lamp 41", "vpx_name": "l41", "_note": "VLM lightmap LM_L_l41" },
+    { "id": 42, "description": "Lamp 42", "vpx_name": "l42", "_note": "VLM lightmap LM_L_l42" },
+    { "id": 43, "description": "Lamp 43", "vpx_name": "l43", "_note": "VLM lightmap LM_L_l43" },
+    { "id": 44, "description": "Lamp 44", "vpx_name": "l44", "_note": "VLM lightmap LM_L_l44" },
+    { "id": 45, "description": "Lamp 45", "vpx_name": "l45", "_note": "VLM lightmap LM_L_l45" },
+    { "id": 46, "description": "Lamp 46", "vpx_name": "l46", "_note": "VLM lightmap LM_L_l46" },
+    { "id": 47, "description": "Lamp 47", "vpx_name": "l47", "_note": "VLM lightmap LM_L_l47" },
+    { "id": 48, "description": "Lamp 48", "vpx_name": "l48", "_note": "VLM lightmap LM_L_l48" },
+    { "id": 51, "description": "Lamp 51", "vpx_name": "l51", "_note": "VLM lightmap LM_L_l51" },
+    { "id": 52, "description": "Lamp 52", "vpx_name": "l52", "_note": "VLM lightmap LM_L_l52" },
+    { "id": 54, "description": "Lamp 54", "vpx_name": "l54", "_note": "VLM lightmap LM_L_l54" },
+    { "id": 55, "description": "Lamp 55", "vpx_name": "l55", "_note": "VLM lightmap LM_L_l55" },
+    { "id": 56, "description": "Lamp 56", "vpx_name": "l56", "_note": "VLM lightmap LM_L_l56" },
+    { "id": 57, "description": "Lamp 57", "vpx_name": "l57", "_note": "VLM lightmap LM_L_l57" },
+    { "id": 58, "description": "Lamp 58", "vpx_name": "l58", "_note": "VLM lightmap LM_L_l58" },
+    { "id": 61, "description": "Bumper Lamp (L61)", "vpx_name": "L61", "_note": "VLM lightmap LM_L_L61" },
+    { "id": 62, "description": "Bumper Lamp (L62)", "vpx_name": "L62", "_note": "VLM lightmap LM_L_L62" },
+    { "id": 63, "description": "Bumper Lamp (L63)", "vpx_name": "L63", "_note": "VLM lightmap LM_L_L63" },
+    { "id": 64, "description": "Lamp 64", "vpx_name": "l64", "_note": "VLM lightmap LM_L_l64" },
+    { "id": 65, "description": "Lamp 65", "vpx_name": "l65", "_note": "VLM lightmap LM_L_l65" },
+    { "id": 66, "description": "Lamp 66", "vpx_name": "l66", "_note": "VLM lightmap LM_L_l66" },
+    { "id": 67, "description": "Lamp 67", "vpx_name": "l67", "_note": "VLM lightmap LM_L_l67" },
+    { "id": 68, "description": "Bumper Lamp (L68)", "vpx_name": "L68", "_note": "VLM lightmap LM_L_L68" },
+    { "id": 71, "description": "Lamp 71", "vpx_name": "l71", "_note": "VLM lightmap LM_L_l71" },
+    { "id": 72, "description": "Lamp 72", "vpx_name": "l72", "_note": "VLM lightmap LM_L_l72" },
+    { "id": 73, "description": "Lamp 73", "vpx_name": "l73", "_note": "VLM lightmap LM_L_l73" },
+    { "id": 74, "description": "Lamp 74", "vpx_name": "l74", "_note": "VLM lightmap LM_L_l74" },
+    { "id": 75, "description": "Lamp 75", "vpx_name": "l75", "_note": "VLM lightmap LM_L_l75" },
+    { "id": 76, "description": "Lamp 76", "vpx_name": "l76", "_note": "VLM lightmap LM_L_l76" },
+    { "id": 77, "description": "Lamp 77", "vpx_name": "l77", "_note": "VLM lightmap LM_L_l77" },
+    { "id": 78, "description": "Lamp 78", "vpx_name": "l78", "_note": "VLM lightmap LM_L_l78" },
+    { "id": 81, "description": "Lamp 81", "vpx_name": "l81", "_note": "VLM lightmap LM_L_l81" },
+    { "id": 82, "description": "Lamp 82", "vpx_name": "l82", "_note": "VLM lightmap LM_L_l82" },
+    { "id": 83, "description": "Lamp 83", "vpx_name": "l83", "_note": "VLM lightmap LM_L_l83" },
+    { "id": 84, "description": "Lamp 84", "vpx_name": "l84", "_note": "VLM lightmap LM_L_l84" },
+    { "id": 85, "description": "Lamp 85", "vpx_name": "l85", "_note": "VLM lightmap LM_L_l85" },
+    { "id": 86, "description": "Lamp 86", "vpx_name": "l86", "_note": "VLM lightmap LM_L_l86" },
+    {
+      "id": "ml1",
+      "description": "Mist Light 1 (Left End)",
+      "vpx_name": "ml1",
+      "_inferred_type": "mist_lamp",
+      "_note": "Controlled by MotorTimer_Timer based on magnet position, not ROM-driven"
+    },
+    {
+      "id": "ml2",
+      "description": "Mist Light 2",
+      "vpx_name": "ml2",
+      "_inferred_type": "mist_lamp",
+      "_note": "Script-controlled mist position indicator"
+    },
+    {
+      "id": "ml3",
+      "description": "Mist Light 3",
+      "vpx_name": "ml3",
+      "_inferred_type": "mist_lamp",
+      "_note": "Script-controlled mist position indicator"
+    },
+    {
+      "id": "ml4",
+      "description": "Mist Light 4",
+      "vpx_name": "ml4",
+      "_inferred_type": "mist_lamp",
+      "_note": "Script-controlled mist position indicator"
+    },
+    {
+      "id": "ml5",
+      "description": "Mist Light 5",
+      "vpx_name": "ml5",
+      "_inferred_type": "mist_lamp",
+      "_note": "Script-controlled mist position indicator"
+    },
+    {
+      "id": "ml6",
+      "description": "Mist Light 6",
+      "vpx_name": "ml6",
+      "_inferred_type": "mist_lamp",
+      "_note": "Script-controlled mist position indicator"
+    },
+    {
+      "id": "ml7",
+      "description": "Mist Light 7",
+      "vpx_name": "ml7",
+      "_inferred_type": "mist_lamp",
+      "_note": "Script-controlled mist position indicator"
+    },
+    {
+      "id": "ml8",
+      "description": "Mist Light 8",
+      "vpx_name": "ml8",
+      "_inferred_type": "mist_lamp",
+      "_note": "Script-controlled mist position indicator"
+    },
+    {
+      "id": "ml9",
+      "description": "Mist Light 9",
+      "vpx_name": "ml9",
+      "_inferred_type": "mist_lamp",
+      "_note": "Script-controlled mist position indicator"
+    },
+    {
+      "id": "ml10",
+      "description": "Mist Light 10",
+      "vpx_name": "ml10",
+      "_inferred_type": "mist_lamp",
+      "_note": "Script-controlled mist position indicator"
+    },
+    {
+      "id": "ml11",
+      "description": "Mist Light 11",
+      "vpx_name": "ml11",
+      "_inferred_type": "mist_lamp",
+      "_note": "Script-controlled mist position indicator"
+    },
+    {
+      "id": "ml12",
+      "description": "Mist Light 12",
+      "vpx_name": "ml12",
+      "_inferred_type": "mist_lamp",
+      "_note": "Script-controlled mist position indicator"
+    },
+    {
+      "id": "ml13",
+      "description": "Mist Light 13 (Right End)",
+      "vpx_name": "ml13",
+      "_inferred_type": "mist_lamp",
+      "_note": "Script-controlled mist position indicator"
+    }
+  ]
+}

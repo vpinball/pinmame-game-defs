@@ -1,0 +1,967 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Twilight Zone (Bally 1993).vpx",
+    "extracted": "2026-02-12",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on coils/SolCallbacks and switch handler mappings. No Const sw*/s* definitions in table script \u2014 this table uses raw switch numbers (Controller.Switch(N), vpmTimer.PulseSw N) and raw SolCallback(N) indices instead of named constants. Trough is custom-implemented (not bsTrough): sw15/sw16/sw17 are trough opto switches, sw25 is trough jam, sw18 is outhole, sw26 is powerball detect opto. Coils 10-14 (slings/bumpers) are commented out in script (handled by VPX physics). sLRFlipper(46)/sLLFlipper(48)/sURFlipper(34)/sULFlipper(36) are framework constants from core.vbs. Lamp numbers from vpmMapLights AllLamps (TimerInterval-based mapping on VPX light objects). Flashers 17-20,28 use SolModCallback for PWM dimming. Coils 51-55 are remapped flashers (PinMAME numbering for WPC lamp matrix columns 7-8). Clock mechanism coils (56-58/42-44 real) are commented out. Gumball release (coil 59) is a PinMAME hack, commented out as unreliable with SolModCallbacks."
+  },
+  "game": {
+    "id": "tz",
+    "name": "Twilight Zone",
+    "year": 1993,
+    "manufacturer": "Bally",
+    "platform": "wpc"
+  },
+  "roms": [
+    {
+      "id": "tz_94ch",
+      "version": "9.4",
+      "description": "Arcade (credits)"
+    },
+    {
+      "id": "tz_94h",
+      "version": "9.4",
+      "description": "Home (free play)"
+    }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Right Inlane",
+      "vpx_name": "sw11",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 12,
+      "description": "Left Inlane",
+      "vpx_name": "sw12",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 13,
+      "description": "Start Button",
+      "input_action_hint": "Start Game"
+    },
+    {
+      "id": 14,
+      "description": "Plumb Bolt Tilt",
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Trough Right (Ball Release)",
+      "vpx_name": "sw15",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_1",
+      "_note": "Opto; also used for powerball detection via sw26"
+    },
+    {
+      "id": 16,
+      "description": "Trough Center",
+      "vpx_name": "sw16",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_2"
+    },
+    {
+      "id": 17,
+      "description": "Trough Left",
+      "vpx_name": "sw17",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_3"
+    },
+    {
+      "id": 18,
+      "description": "Outhole",
+      "vpx_name": "sw18",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch"
+    },
+    {
+      "id": 21,
+      "description": "Slam Tilt"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "_note": "Controller.Switch(22) = 1 on init"
+    },
+    {
+      "id": 23,
+      "description": "Buy In Button",
+      "_note": "Mapped to KeyFront"
+    },
+    {
+      "id": 25,
+      "description": "Trough Jam Opto",
+      "vpx_name": "sw25",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "jam_switch"
+    },
+    {
+      "id": 26,
+      "description": "Trough Powerball Detect",
+      "_note": "Opto; 1 if regular ball in sw15, 0 if powerball"
+    },
+    {
+      "id": 27,
+      "description": "Shooter Lane",
+      "vpx_name": "sw27",
+      "_inferred_type": "shooter_lane"
+    },
+    {
+      "id": 28,
+      "description": "Rocket Kicker",
+      "vpx_name": "RocketKicker",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 31,
+      "description": "Lower Jet Bumper",
+      "vpx_name": "Bumper1",
+      "_inferred_type": "bumper"
+    },
+    {
+      "id": 32,
+      "description": "Left Jet Bumper",
+      "vpx_name": "Bumper2",
+      "_inferred_type": "bumper"
+    },
+    {
+      "id": 33,
+      "description": "Right Jet Bumper",
+      "vpx_name": "Bumper3",
+      "_inferred_type": "bumper"
+    },
+    {
+      "id": 34,
+      "description": "Right Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "LeftSlingShot fires PulseSw 34 (cross-wired naming in script)"
+    },
+    {
+      "id": 35,
+      "description": "Left Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "RightSlingShot fires PulseSw 35 (cross-wired naming in script)"
+    },
+    {
+      "id": 36,
+      "description": "Left Outlane",
+      "vpx_name": "sw36",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 37,
+      "description": "Right Outlane",
+      "vpx_name": "sw37",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 38,
+      "description": "Right Inlane 2",
+      "vpx_name": "sw38",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 41,
+      "description": "Dead End",
+      "vpx_name": "DeadEnd",
+      "_note": "Also triggered by RightSlingShot_Slingshot"
+    },
+    {
+      "id": 42,
+      "description": "Camera / Upper Playfield",
+      "vpx_name": "sw42",
+      "_note": "Submarine switch; also triggered by LeftSlingShot_Slingshot"
+    },
+    {
+      "id": 43,
+      "description": "Piano",
+      "vpx_name": "sw43",
+      "_inferred_type": "submarine_switch"
+    },
+    {
+      "id": 44,
+      "description": "Mini Playfield Left Hole",
+      "vpx_name": "sw44"
+    },
+    {
+      "id": 45,
+      "description": "Mini Playfield Center Hole",
+      "vpx_name": "sw45",
+      "_note": "sw45a also triggers this switch"
+    },
+    {
+      "id": 46,
+      "description": "Mini Playfield Right Hole",
+      "vpx_name": "sw46",
+      "_note": "sw46a also triggers this switch"
+    },
+    {
+      "id": 47,
+      "description": "Left Target Top",
+      "vpx_name": "sw47",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 48,
+      "description": "Left Target Bottom",
+      "vpx_name": "sw48",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 51,
+      "description": "Gumball Popper Hole",
+      "vpx_name": "GumballPopperHole",
+      "_inferred_type": "hole"
+    },
+    {
+      "id": 52,
+      "description": "Hitchhiker",
+      "vpx_name": "sw52",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 53,
+      "description": "Left Ramp Enter",
+      "vpx_name": "sw53",
+      "_inferred_type": "ramp_switch"
+    },
+    {
+      "id": 54,
+      "description": "Left Ramp Exit",
+      "vpx_name": "sw54",
+      "_inferred_type": "ramp_switch"
+    },
+    {
+      "id": 55,
+      "description": "Gumball Geneva Switch",
+      "_note": "Pulsed by SolGumRelease timer; not a physical VPX object"
+    },
+    {
+      "id": 56,
+      "description": "Left Loop",
+      "vpx_name": "sw56",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 57,
+      "description": "Slot Machine Proximity",
+      "vpx_name": "sw57",
+      "_note": "Submarine switch; only triggers for non-powerball"
+    },
+    {
+      "id": 58,
+      "description": "Slot Machine Kickout",
+      "vpx_name": "sw58",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 61,
+      "description": "Right Inlane Lower",
+      "vpx_name": "sw61",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 62,
+      "description": "Right Inlane Upper",
+      "vpx_name": "sw62",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 63,
+      "description": "Right Ramp Enter",
+      "vpx_name": "sw63",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 64,
+      "description": "Town Square Target Top",
+      "vpx_name": "sw64",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 65,
+      "description": "Town Square Target Bottom",
+      "vpx_name": "sw65",
+      "_note": "sw65a fires STHit 165 (virtual duplicate)",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 66,
+      "description": "Right Side Target Upper",
+      "vpx_name": "sw66",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 67,
+      "description": "Right Side Target Center",
+      "vpx_name": "sw67",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 68,
+      "description": "Right Side Target Lower",
+      "vpx_name": "sw68",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 72,
+      "description": "Auto Plunger",
+      "vpx_name": "AutoPlungerKicker",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 73,
+      "description": "Wire Ramp to Mini Playfield",
+      "vpx_name": "sw73",
+      "_inferred_type": "ramp_switch"
+    },
+    {
+      "id": 74,
+      "description": "Gumball Popper",
+      "vpx_name": "GumballPopper",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 75,
+      "description": "Mini Playfield Top",
+      "vpx_name": "sw75"
+    },
+    {
+      "id": 76,
+      "description": "Mini Playfield Bottom",
+      "vpx_name": "sw76"
+    },
+    {
+      "id": 77,
+      "description": "Greed Target Top",
+      "vpx_name": "sw77",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 78,
+      "description": "Greed Target Bottom",
+      "vpx_name": "sw78",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 81,
+      "description": "Lower Right Magnet Opto",
+      "vpx_name": "sw81",
+      "_inferred_type": "opto"
+    },
+    {
+      "id": 82,
+      "description": "Upper Right Magnet Opto",
+      "vpx_name": "sw82",
+      "_inferred_type": "opto",
+      "_note": "Only enabled when Extra Magnet mod is on"
+    },
+    {
+      "id": 83,
+      "description": "Left Magnet Opto",
+      "vpx_name": "sw83",
+      "_inferred_type": "opto"
+    },
+    {
+      "id": 84,
+      "description": "Lock 2",
+      "vpx_name": "sw84",
+      "_inferred_type": "lock"
+    },
+    {
+      "id": 85,
+      "description": "Lock 1 (Entry)",
+      "vpx_name": "sw85",
+      "_inferred_type": "lock"
+    },
+    {
+      "id": 86,
+      "description": "Clock Pass Opto",
+      "vpx_name": "sw86",
+      "_note": "Only in prototypes, supported by ROM 9.4",
+      "_inferred_type": "opto"
+    },
+    {
+      "id": 87,
+      "description": "Gumball Entry Opto",
+      "vpx_name": "sw87",
+      "_inferred_type": "opto"
+    },
+    {
+      "id": 88,
+      "description": "Lock 3 (Top)",
+      "vpx_name": "sw88",
+      "_inferred_type": "lock"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Slot Machine Kickout",
+      "_vbscript_callback": "SlotMachineKickout",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw58"
+    },
+    {
+      "id": 2,
+      "description": "Rocket Kicker",
+      "_vbscript_callback": "SolRocket",
+      "_inferred_type": "kicker",
+      "vpx_name": "RocketKicker"
+    },
+    {
+      "id": 3,
+      "description": "Auto-Fire Kicker",
+      "_vbscript_callback": "SolAutoKicker",
+      "_inferred_type": "ball_management",
+      "vpx_name": "AutoPlungerKicker"
+    },
+    {
+      "id": 4,
+      "description": "Gumball Popper",
+      "_vbscript_callback": "SolGumballPopper",
+      "_inferred_type": "kicker",
+      "vpx_name": "GumballPopper"
+    },
+    {
+      "id": 5,
+      "description": "Right Ramp Diverter",
+      "_vbscript_callback": "SolRightRampDiverter",
+      "_inferred_type": "diverter"
+    },
+    {
+      "id": 6,
+      "description": "Gumball Diverter",
+      "_vbscript_callback": "SolGumballDiverter",
+      "_inferred_type": "diverter",
+      "vpx_name": "GumballDiverter"
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "sound"
+    },
+    {
+      "id": 8,
+      "description": "Outhole",
+      "_vbscript_callback": "SolOuthole",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw18",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_coil"
+    },
+    {
+      "id": 9,
+      "description": "Ball Release",
+      "_vbscript_callback": "SolBallRelease",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw15",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 10,
+      "description": "Right Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in script; handled by VPX physics"
+    },
+    {
+      "id": 11,
+      "description": "Left Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in script; handled by VPX physics"
+    },
+    {
+      "id": 12,
+      "description": "Lower Jet Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in script; handled by VPX physics"
+    },
+    {
+      "id": 13,
+      "description": "Left Jet Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in script; handled by VPX physics"
+    },
+    {
+      "id": 14,
+      "description": "Right Jet Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in script; handled by VPX physics"
+    },
+    {
+      "id": 15,
+      "description": "Lock Release",
+      "_vbscript_callback": "LockKickout",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw88"
+    },
+    {
+      "id": 16,
+      "description": "Shooter Diverter",
+      "_vbscript_callback": "SolShootDiverter",
+      "_inferred_type": "diverter",
+      "vpx_name": "ShooterDiverter"
+    },
+    {
+      "id": 17,
+      "description": "Flasher Bumpers x2",
+      "_vbscript_callback": "UpdateF17",
+      "_inferred_type": "flasher",
+      "vpx_name": "f17",
+      "_note": "SolModCallback (PWM)"
+    },
+    {
+      "id": 18,
+      "description": "Flasher Power Payoff x2",
+      "_vbscript_callback": "FlashPWM",
+      "_inferred_type": "flasher",
+      "vpx_name": "f18",
+      "_note": "SolModCallback (PWM)"
+    },
+    {
+      "id": 19,
+      "description": "Flasher Mini-Playfield x2",
+      "_vbscript_callback": "FlashPWM",
+      "_inferred_type": "flasher",
+      "vpx_name": "f19",
+      "_note": "SolModCallback (PWM)"
+    },
+    {
+      "id": 20,
+      "description": "Flasher Upper Left Ramp x2",
+      "_vbscript_callback": "FlashPWM",
+      "_inferred_type": "flasher",
+      "vpx_name": "f20",
+      "_note": "SolModCallback (PWM)"
+    },
+    {
+      "id": 21,
+      "description": "Left Magnet",
+      "_vbscript_callback": "SolLeftMagnet",
+      "_inferred_type": "magnet",
+      "vpx_name": "LeftMagnet"
+    },
+    {
+      "id": 22,
+      "description": "Upper Right Magnet",
+      "_vbscript_callback": "SolUpperRightMagnet",
+      "_inferred_type": "magnet",
+      "vpx_name": "UpperRightMagnet",
+      "_note": "Only present in mod-equipped tables"
+    },
+    {
+      "id": 23,
+      "description": "Lower Right Magnet",
+      "_vbscript_callback": "SolLowerRightMagnet",
+      "_inferred_type": "magnet",
+      "vpx_name": "LowerRightMagnet"
+    },
+    {
+      "id": 24,
+      "description": "Gumball Motor",
+      "_vbscript_callback": "SolGumballMotor",
+      "_inferred_type": "mechanism"
+    },
+    {
+      "id": 25,
+      "description": "Left Mini-Playfield Magnet",
+      "_vbscript_callback": "SolMiniMagnet mLeftMini,",
+      "_inferred_type": "magnet",
+      "vpx_name": "TLMiniFlip"
+    },
+    {
+      "id": 26,
+      "description": "Right Mini-Playfield Magnet",
+      "_vbscript_callback": "SolMiniMagnet mRightMini,",
+      "_inferred_type": "magnet",
+      "vpx_name": "TRMiniFlip"
+    },
+    {
+      "id": 27,
+      "description": "Left Ramp Diverter",
+      "_vbscript_callback": "SolLeftRampDiverter",
+      "_inferred_type": "diverter",
+      "vpx_name": "RampDiverter"
+    },
+    {
+      "id": 28,
+      "description": "Flasher Inside Ramp",
+      "_vbscript_callback": "FlashPWM",
+      "_inferred_type": "flasher",
+      "vpx_name": "f28",
+      "_note": "SolModCallback (PWM)"
+    },
+    {
+      "id": 34,
+      "description": "Upper Right Flipper",
+      "_vbscript_callback": "SolURFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework constant sURFlipper=34 from core.vbs"
+    },
+    {
+      "id": 36,
+      "description": "Upper Left Flipper",
+      "_vbscript_callback": "SolULFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework constant sULFlipper=36 from core.vbs"
+    },
+    {
+      "id": 46,
+      "description": "Lower Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework constant sLRFlipper=46 from core.vbs"
+    },
+    {
+      "id": 48,
+      "description": "Lower Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework constant sLLFlipper=48 from core.vbs"
+    },
+    {
+      "id": 51,
+      "description": "Flasher Upper Right Flipper",
+      "_vbscript_callback": "FlashPWM",
+      "_inferred_type": "flasher",
+      "vpx_name": "f37",
+      "_note": "SolModCallback (PWM); PinMAME coil 51 = flasher 37"
+    },
+    {
+      "id": 52,
+      "description": "Flasher Gumball Machine Higher",
+      "_vbscript_callback": "FlashPWM",
+      "_inferred_type": "flasher",
+      "vpx_name": "f38",
+      "_note": "SolModCallback (PWM); PinMAME coil 52 = flasher 38"
+    },
+    {
+      "id": 53,
+      "description": "Flasher Gumball Machine Middle",
+      "_vbscript_callback": "FlashPWM",
+      "_inferred_type": "flasher",
+      "vpx_name": "f39",
+      "_note": "SolModCallback (PWM); PinMAME coil 53 = flasher 39"
+    },
+    {
+      "id": 54,
+      "description": "Flasher Gumball Machine Lower",
+      "_vbscript_callback": "FlashPWM",
+      "_inferred_type": "flasher",
+      "vpx_name": "f40",
+      "_note": "SolModCallback (PWM); PinMAME coil 54 = flasher 40"
+    },
+    {
+      "id": 55,
+      "description": "Flasher Upper Right Ramp x2",
+      "_vbscript_callback": "FlashPWM",
+      "_inferred_type": "flasher",
+      "vpx_name": "f41",
+      "_note": "SolModCallback (PWM); PinMAME coil 55 = flasher 41"
+    },
+    {
+      "id": 56,
+      "description": "Clock Reverse",
+      "_inferred_type": "mechanism",
+      "_note": "Commented out in script; PinMAME coil 56 = real coil 42"
+    },
+    {
+      "id": 57,
+      "description": "Clock Forward",
+      "_inferred_type": "mechanism",
+      "_note": "Commented out in script; PinMAME coil 57 = real coil 43"
+    },
+    {
+      "id": 58,
+      "description": "Clock Switch Strobe",
+      "_inferred_type": "mechanism",
+      "_note": "Commented out in script; PinMAME coil 58 = real coil 44"
+    },
+    {
+      "id": 59,
+      "description": "Fake Gumball Release",
+      "_inferred_type": "mechanism",
+      "_note": "PinMAME hack; commented out as unreliable with SolModCallbacks"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 11,
+      "description": "Greed G"
+    },
+    {
+      "id": 12,
+      "description": "Greed R"
+    },
+    {
+      "id": 13,
+      "description": "Greed E1"
+    },
+    {
+      "id": 14,
+      "description": "Greed E2"
+    },
+    {
+      "id": 15,
+      "description": "Greed D"
+    },
+    {
+      "id": 16,
+      "description": "Left Outlane"
+    },
+    {
+      "id": 17,
+      "description": "Right Return Lane"
+    },
+    {
+      "id": 18,
+      "description": "Right Outlane"
+    },
+    {
+      "id": 21,
+      "description": "Power 1 Million"
+    },
+    {
+      "id": 22,
+      "description": "Spiral Award"
+    },
+    {
+      "id": 23,
+      "description": "Clock Millions Left"
+    },
+    {
+      "id": 24,
+      "description": "Power 2 Million"
+    },
+    {
+      "id": 25,
+      "description": "Clock Millions Right"
+    },
+    {
+      "id": 26,
+      "description": "Power 3 Million"
+    },
+    {
+      "id": 27,
+      "description": "Power 4 Million"
+    },
+    {
+      "id": 28,
+      "description": "Power 5 Million"
+    },
+    {
+      "id": 31,
+      "description": "Jet Bumper Lower"
+    },
+    {
+      "id": 32,
+      "description": "Jet Bumper Left"
+    },
+    {
+      "id": 33,
+      "description": "Jet Bumper Right"
+    },
+    {
+      "id": 34,
+      "description": "Battle the Power"
+    },
+    {
+      "id": 35,
+      "description": "Town Square Madness"
+    },
+    {
+      "id": 36,
+      "description": "Left Inlane"
+    },
+    {
+      "id": 37,
+      "description": "Right Inlane Lower"
+    },
+    {
+      "id": 38,
+      "description": "Right Inlane Upper"
+    },
+    {
+      "id": 41,
+      "description": "Left Flipper Lane 1"
+    },
+    {
+      "id": 42,
+      "description": "Left Flipper Lane 2"
+    },
+    {
+      "id": 43,
+      "description": "Left Flipper Lane 3"
+    },
+    {
+      "id": 44,
+      "description": "Center Lane 1"
+    },
+    {
+      "id": 45,
+      "description": "Right Flipper Lane 1"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper Lane 2"
+    },
+    {
+      "id": 47,
+      "description": "Spiral Arrow"
+    },
+    {
+      "id": 48,
+      "description": "Left Target Advance Clock"
+    },
+    {
+      "id": 51,
+      "description": "Gumball Light"
+    },
+    {
+      "id": 52,
+      "description": "Clock Millions 5"
+    },
+    {
+      "id": 53,
+      "description": "Clock Millions 10"
+    },
+    {
+      "id": 54,
+      "description": "Piano Jackpot"
+    },
+    {
+      "id": 55,
+      "description": "Camera Award"
+    },
+    {
+      "id": 56,
+      "description": "Left Loop Arrow"
+    },
+    {
+      "id": 57,
+      "description": "Clock Millions 15"
+    },
+    {
+      "id": 58,
+      "description": "Clock Millions 20"
+    },
+    {
+      "id": 61,
+      "description": "Bumper Lane Lower"
+    },
+    {
+      "id": 62,
+      "description": "Bumper Lane Left"
+    },
+    {
+      "id": 63,
+      "description": "Bumper Lane Right"
+    },
+    {
+      "id": 64,
+      "description": "Town Square Target Upper"
+    },
+    {
+      "id": 65,
+      "description": "Town Square Target Lower"
+    },
+    {
+      "id": 66,
+      "description": "Right Target Upper"
+    },
+    {
+      "id": 67,
+      "description": "Right Target Center"
+    },
+    {
+      "id": 68,
+      "description": "Right Target Lower"
+    },
+    {
+      "id": 71,
+      "description": "Slot Machine"
+    },
+    {
+      "id": 72,
+      "description": "Hitch Hiker"
+    },
+    {
+      "id": 73,
+      "description": "Super Skill Shot"
+    },
+    {
+      "id": 74,
+      "description": "Flasher Clock",
+      "_note": "Listed as LM_Flashers_l74 in lightmap bake arrays"
+    },
+    {
+      "id": 75,
+      "description": "Dead End Arrow"
+    },
+    {
+      "id": 76,
+      "description": "Left Ramp Arrow"
+    },
+    {
+      "id": 77,
+      "description": "Greed Target Upper"
+    },
+    {
+      "id": 78,
+      "description": "Greed Target Lower"
+    },
+    {
+      "id": 81,
+      "description": "Right Ramp Arrow"
+    },
+    {
+      "id": 82,
+      "description": "Lock Arrow"
+    },
+    {
+      "id": 83,
+      "description": "Right Loop Arrow"
+    },
+    {
+      "id": 84,
+      "description": "Clock Face"
+    },
+    {
+      "id": 85,
+      "description": "Rocket"
+    },
+    {
+      "id": 86,
+      "description": "Auto-Fire"
+    }
+  ],
+  "gi_strings": [
+    {
+      "id": 0,
+      "description": "GI Left"
+    },
+    {
+      "id": 1,
+      "description": "GI Mini Playfield"
+    },
+    {
+      "id": 2,
+      "description": "GI Clock"
+    },
+    {
+      "id": 3,
+      "description": "GI Inserts Modulation"
+    },
+    {
+      "id": 4,
+      "description": "GI Right"
+    }
+  ]
+}

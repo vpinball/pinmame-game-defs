@@ -1,0 +1,793 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Earthshaker (Williams 1989) VPW 0.023.vpx",
+    "extracted": "2026-02-12",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils. VPW table uses direct Controller.Switch() calls rather than named Const sw* constants — switch IDs inferred from VPX object names (sw10, sw11, etc.) and Controller.Switch() assignments. Lamps extracted from VLM BL_IN_L* arrays (VPW baked lighting system); lamp numbers are L1-L57 from the ROM lamp matrix. Flasher lamps mapped via SolModCallBack. Institute elevator uses switches 25/26 as position encoders (not simple open/close). sLRFlipper=46, sLLFlipper=48 are S11.VBS framework constants from core.vbs. Switch 42 is set by diverter animation timer, not a physical switch handler."
+  },
+  "game": {
+    "id": "esha",
+    "name": "Earthshaker",
+    "year": 1989,
+    "manufacturer": "Williams",
+    "platform": "s11"
+  },
+  "roms": [
+    {
+      "id": "esha_la3",
+      "version": "LA-3"
+    }
+  ],
+  "switches": [
+    {
+      "id": 9,
+      "description": "Tilt",
+      "_vbscript_name": "vpmNudge.TiltSwitch",
+      "_note": "Framework tilt switch, assigned via vpmNudge.TiltSwitch = 9"
+    },
+    {
+      "id": 10,
+      "description": "Outhole",
+      "vpx_name": "sw10",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch"
+    },
+    {
+      "id": 11,
+      "description": "Trough 1",
+      "vpx_name": "sw11",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_1",
+      "_note": "Ball eject position; ReleaseBall kicks from here"
+    },
+    {
+      "id": 12,
+      "description": "Trough 2",
+      "vpx_name": "sw12",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_2"
+    },
+    {
+      "id": 13,
+      "description": "Trough 3",
+      "vpx_name": "sw13",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_3"
+    },
+    {
+      "id": 14,
+      "description": "Right Inlane",
+      "vpx_name": "sw14",
+      "_note": "Wire trigger with rightInlaneSpeedLimit handler"
+    },
+    {
+      "id": 15,
+      "description": "Wire Trigger 15",
+      "vpx_name": "sw15"
+    },
+    {
+      "id": 16,
+      "description": "Wire Trigger 16",
+      "vpx_name": "sw16"
+    },
+    {
+      "id": 17,
+      "description": "Wire Trigger 17",
+      "vpx_name": "sw17"
+    },
+    {
+      "id": 18,
+      "description": "Left Inlane",
+      "vpx_name": "sw18",
+      "_note": "Wire trigger with leftInlaneSpeedLimit handler"
+    },
+    {
+      "id": 19,
+      "description": "Stand Up Target 19",
+      "vpx_name": "sw19",
+      "_note": "StandupTarget class instance ST19"
+    },
+    {
+      "id": 20,
+      "description": "Left VUK Saucer",
+      "vpx_name": "sw20",
+      "_note": "Locks ball, kicked by SolCallback(05) VUKLeft"
+    },
+    {
+      "id": 21,
+      "description": "Stand Up Target 21",
+      "vpx_name": "sw21",
+      "_note": "StandupTarget class instance ST21"
+    },
+    {
+      "id": 22,
+      "description": "Stand Up Target 22",
+      "vpx_name": "sw22",
+      "_note": "StandupTarget class instance ST22"
+    },
+    {
+      "id": 23,
+      "description": "Stand Up Target 23",
+      "vpx_name": "sw23",
+      "_note": "StandupTarget class instance ST23"
+    },
+    {
+      "id": 24,
+      "description": "Stand Up Target 24",
+      "vpx_name": "sw24",
+      "_note": "StandupTarget class instance ST24"
+    },
+    {
+      "id": 25,
+      "description": "Institute Elevator Position Low",
+      "_note": "Set by InstituteTimer — position encoder for Earthquake Institute building elevator motor. ON when at bottom or moving down past 2/3."
+    },
+    {
+      "id": 26,
+      "description": "Institute Elevator Position High",
+      "_note": "Set by InstituteTimer — position encoder for Earthquake Institute building elevator motor. ON when at top or bottom, OFF in middle zone."
+    },
+    {
+      "id": 27,
+      "description": "Drop Target Left",
+      "vpx_name": "sw27",
+      "_note": "Drop target, reset by SolCallback(03) SolDropReset"
+    },
+    {
+      "id": 28,
+      "description": "Drop Target Center",
+      "vpx_name": "sw28",
+      "_note": "Drop target, reset by SolCallback(03) SolDropReset"
+    },
+    {
+      "id": 29,
+      "description": "Drop Target Right",
+      "vpx_name": "sw29",
+      "_note": "Drop target, reset by SolCallback(03) SolDropReset"
+    },
+    {
+      "id": 30,
+      "description": "Stand Up Target 30",
+      "vpx_name": "sw30",
+      "_note": "StandupTarget class instance ST30"
+    },
+    {
+      "id": 31,
+      "description": "Gate 31",
+      "vpx_name": "sw31",
+      "_note": "Pulse switch (vpmTimer.pulseSw)"
+    },
+    {
+      "id": 32,
+      "description": "Gate 32",
+      "vpx_name": "sw32",
+      "_note": "Pulse switch (vpmTimer.pulseSw)"
+    },
+    {
+      "id": 33,
+      "description": "Wire Trigger 33",
+      "vpx_name": "sw33"
+    },
+    {
+      "id": 34,
+      "description": "Wire Trigger 34",
+      "vpx_name": "sw34"
+    },
+    {
+      "id": 35,
+      "description": "Wire Trigger 35",
+      "vpx_name": "sw35"
+    },
+    {
+      "id": 36,
+      "description": "Wire Trigger 36",
+      "vpx_name": "sw36"
+    },
+    {
+      "id": 37,
+      "description": "Top VUK Saucer",
+      "vpx_name": "sw37",
+      "_note": "Locks ball, kicked by SolCallback(13) VUKTop"
+    },
+    {
+      "id": 38,
+      "description": "Subway Entry",
+      "vpx_name": "sw38",
+      "_note": "Plays 'Subway' sound on hit"
+    },
+    {
+      "id": 39,
+      "description": "Subway Exit",
+      "vpx_name": "sw39",
+      "_note": "sw39wall collidable set false at init"
+    },
+    {
+      "id": 40,
+      "description": "Bottom VUK Saucer",
+      "vpx_name": "sw40",
+      "_note": "Locks ball, kicked by SolCallback(06) VUKBot"
+    },
+    {
+      "id": 41,
+      "description": "Spinner",
+      "vpx_name": "sw41",
+      "_note": "Pulse switch (vpmTimer.PulseSw)"
+    },
+    {
+      "id": 42,
+      "description": "California-Nevada Diverter Position",
+      "_note": "Virtual switch set by OpenFaultTimer/CloseFaultTimer animation — indicates diverter bridge is fully open (1) or closed (0)"
+    },
+    {
+      "id": 43,
+      "description": "Gate 43",
+      "vpx_name": "sw43",
+      "_note": "Pulse switch (vpmTimer.pulseSw)"
+    },
+    {
+      "id": 44,
+      "description": "Gate 44",
+      "vpx_name": "sw44",
+      "_note": "Pulse switch (vpmTimer.pulseSw)"
+    },
+    {
+      "id": 45,
+      "description": "Left Ramp Wire Trigger 45",
+      "vpx_name": "sw45"
+    },
+    {
+      "id": 46,
+      "description": "Left Ramp Wire Trigger 46",
+      "vpx_name": "sw46"
+    },
+    {
+      "id": 50,
+      "description": "Shooter Lane",
+      "vpx_name": "sw50"
+    },
+    {
+      "id": 52,
+      "description": "Top Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "Pulse switch via vpmTimer.PulseSw(52)"
+    },
+    {
+      "id": 53,
+      "description": "Middle Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "Pulse switch via vpmTimer.PulseSw(53)"
+    },
+    {
+      "id": 54,
+      "description": "Bottom Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "Pulse switch via vpmTimer.PulseSw(54)"
+    },
+    {
+      "id": 55,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "Pulse switch via vpmTimer.PulseSw 55"
+    },
+    {
+      "id": 56,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "Pulse switch via vpmTimer.PulseSw 56"
+    },
+    {
+      "id": 57,
+      "description": "Right Flipper Button",
+      "_note": "Set via Controller.Switch(57) in Table1_KeyDown/KeyUp (RightFlipperKey)"
+    },
+    {
+      "id": 58,
+      "description": "Left Flipper Button",
+      "_note": "Set via Controller.Switch(58) in Table1_KeyDown/KeyUp (LeftFlipperKey)"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Outhole Kicker",
+      "_vbscript_callback": "SolOuthole",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw10",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_coil",
+      "_note": "Kicks ball from outhole (sw10) toward trough"
+    },
+    {
+      "id": 2,
+      "description": "Ball Release",
+      "_vbscript_callback": "ReleaseBall",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw11",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Kicks ball from trough position 1 (sw11) to shooter lane"
+    },
+    {
+      "id": 3,
+      "description": "Drop Target Reset",
+      "_vbscript_callback": "SolDropReset",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets drop targets sw27, sw28, sw29 via DTRaise"
+    },
+    {
+      "id": 4,
+      "description": "California-Nevada Diverter",
+      "_vbscript_callback": "SolFault",
+      "_inferred_type": "diverter",
+      "vpx_name": "Pdiverter1, Pdiverter2",
+      "_note": "Toggles FaultOpen state; animates diverter bridge via OpenFaultTimer/CloseFaultTimer"
+    },
+    {
+      "id": 5,
+      "description": "Left VUK",
+      "_vbscript_callback": "VUKLeft",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw20",
+      "_note": "Kicks ball from sw20 saucer (KickBall angle=250, vel=15, velz=5)"
+    },
+    {
+      "id": 6,
+      "description": "Bottom VUK",
+      "_vbscript_callback": "VUKBot",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw40",
+      "_note": "Kicks ball from sw40 saucer (KickBall angle=0, vel=0, velz=50)"
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"Knocker\",DOFKnocker),",
+      "_inferred_type": "sound_effect"
+    },
+    {
+      "id": 9,
+      "description": "Institute Drop Motor",
+      "_vbscript_callback": "InstituteDrop",
+      "_inferred_type": "motor",
+      "_note": "Controls Earthquake Institute building elevator motor. Raises/lowers building over 3-second cycle. Position reported via switches 25/26."
+    },
+    {
+      "id": 10,
+      "description": "Upper Playfield GI",
+      "_vbscript_callback": "PFGI2",
+      "_inferred_type": "gi",
+      "_note": "Controls GIU collection (upper playfield general illumination). Inverted: enabled=True turns lights OFF."
+    },
+    {
+      "id": 12,
+      "description": "Flasher Backglass Group",
+      "_vbscript_callback": "Flash112",
+      "_inferred_type": "flasher",
+      "_note": "SolModCallBack (PWM). Controls FlBG1-FlBG12 backglass flasher visibility in VR mode."
+    },
+    {
+      "id": 13,
+      "description": "Top VUK",
+      "_vbscript_callback": "VUKTop",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw37",
+      "_note": "Kicks ball from sw37 saucer (KickBall angle=0, vel=0, velz=50)"
+    },
+    {
+      "id": 14,
+      "description": "Flasher 114",
+      "_vbscript_callback": "Flash114",
+      "_inferred_type": "flasher",
+      "vpx_name": "f114, f114a",
+      "_note": "SolModCallBack (PWM)"
+    },
+    {
+      "id": 15,
+      "description": "Playfield GI",
+      "_vbscript_callback": "PFGI",
+      "_inferred_type": "gi",
+      "_note": "Controls GI collection (main playfield general illumination). Inverted: enabled=True turns lights OFF."
+    },
+    {
+      "id": 16,
+      "description": "On Ramp and Bumper Flasher",
+      "_vbscript_callback": "Flash116",
+      "_inferred_type": "flasher",
+      "vpx_name": "f10",
+      "_note": "SolModCallBack (PWM). Comment: '16: On Ramp & J Bumper Flasher'"
+    },
+    {
+      "id": 22,
+      "description": "Shaker Motor",
+      "_vbscript_callback": "ShakerMotor",
+      "_inferred_type": "motor",
+      "_note": "Activates ShakeTimer which applies nudge forces (simulates earthquake shaking)"
+    },
+    {
+      "id": 25,
+      "description": "Captive Ball Flasher",
+      "_vbscript_callback": "Flash125",
+      "_inferred_type": "flasher",
+      "vpx_name": "f6",
+      "_note": "SolModCallBack (PWM). Comment: '01C: Captive Ball Flasher'"
+    },
+    {
+      "id": 26,
+      "description": "Center Ramp 1 and Building Flasher",
+      "_vbscript_callback": "Flash126",
+      "_inferred_type": "flasher",
+      "vpx_name": "f4",
+      "_note": "SolModCallBack (PWM). Comment: '02C: Center Ramp 1 & Building Flasher'. Also controls FlBG26 backglass flasher."
+    },
+    {
+      "id": 27,
+      "description": "Center Ramp 2 and Spinner Flasher",
+      "_vbscript_callback": "Flash127",
+      "_inferred_type": "flasher",
+      "vpx_name": "f3",
+      "_note": "SolModCallBack (PWM). Comment: '03C: Center Ramp 2 & Spinner Flasher'. Also controls FlBG27 backglass flasher."
+    },
+    {
+      "id": 28,
+      "description": "Eject Hole Flasher",
+      "_vbscript_callback": "Flash128",
+      "_inferred_type": "flasher",
+      "vpx_name": "f2",
+      "_note": "SolModCallBack (PWM). Comment: '05A: Eject Hole Flasher'. Also controls FlBG28 backglass flasher."
+    },
+    {
+      "id": 29,
+      "description": "Center Ramp 4 Flasher",
+      "_vbscript_callback": "Flash129",
+      "_inferred_type": "flasher",
+      "vpx_name": "f1",
+      "_note": "SolModCallBack (PWM). Comment: '05C: Center Ramp 4 Flasher'"
+    },
+    {
+      "id": 30,
+      "description": "Right Ramp 1 Flasher",
+      "_vbscript_callback": "Flash130",
+      "_inferred_type": "flasher",
+      "vpx_name": "f7",
+      "_note": "SolModCallBack (PWM). Comment: '06C: Right Ramp 1 Flasher'. Also controls FlBG30 backglass flasher."
+    },
+    {
+      "id": 31,
+      "description": "Right Ramp 2 Flasher",
+      "_vbscript_callback": "Flash131",
+      "_inferred_type": "flasher",
+      "vpx_name": "f8",
+      "_note": "SolModCallBack (PWM). Comment: '07C: Right Ramp 2 Flasher'. Also controls FlBG31 backglass flasher."
+    },
+    {
+      "id": 32,
+      "description": "Upper Playfield Flasher",
+      "_vbscript_callback": "Flash132",
+      "_inferred_type": "flasher",
+      "vpx_name": "f5, f9",
+      "_note": "SolModCallBack (PWM). Controls two flasher objects plus FlBG32 backglass flasher."
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "Framework constant sLRFlipper=46 from core.vbs/S11.VBS"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "Framework constant sLLFlipper=48 from core.vbs/S11.VBS"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "description": "Lamp 1",
+      "_vlm_array": "BL_IN_L1",
+      "_note": "Also used as backglass lamp (Controller.Lamp(1) controls FlBGL1 visibility in VR mode)"
+    },
+    {
+      "id": 2,
+      "description": "Lamp 2",
+      "_vlm_array": "BL_IN_L2",
+      "_note": "Also used as backglass lamp (Controller.Lamp(2) controls FlBGL2 visibility in VR mode)"
+    },
+    {
+      "id": 3,
+      "description": "Lamp 3",
+      "_vlm_array": "BL_IN_L3",
+      "_note": "Also used as backglass lamp (Controller.Lamp(3) controls FlBGL3 visibility in VR mode)"
+    },
+    {
+      "id": 4,
+      "description": "Lamp 4",
+      "_vlm_array": "BL_IN_L4",
+      "_note": "Also used as backglass lamp (Controller.Lamp(4) controls FlBGL4 visibility in VR mode)"
+    },
+    {
+      "id": 5,
+      "description": "Lamp 5",
+      "_vlm_array": "BL_IN_L5",
+      "_note": "Also used as backglass lamp (Controller.Lamp(5) controls FlBGL5 visibility in VR mode)"
+    },
+    {
+      "id": 6,
+      "description": "Lamp 6",
+      "_vlm_array": "BL_IN_L6",
+      "_note": "Also used as backglass lamp (Controller.Lamp(6) controls FlBGL6 visibility in VR mode)"
+    },
+    {
+      "id": 7,
+      "description": "Lamp 7",
+      "_vlm_array": "BL_IN_L7"
+    },
+    {
+      "id": 8,
+      "description": "Lamp 8",
+      "_vlm_array": "BL_IN_L8"
+    },
+    {
+      "id": 9,
+      "description": "Lamp 9",
+      "_vlm_array": "BL_IN_L9"
+    },
+    {
+      "id": 10,
+      "description": "Lamp 10",
+      "_vlm_array": "BL_IN_L10"
+    },
+    {
+      "id": 11,
+      "description": "Lamp 11",
+      "_vlm_array": "BL_IN_L11"
+    },
+    {
+      "id": 12,
+      "description": "Lamp 12",
+      "_vlm_array": "BL_IN_L12"
+    },
+    {
+      "id": 13,
+      "description": "Lamp 13",
+      "_vlm_array": "BL_IN_L13"
+    },
+    {
+      "id": 14,
+      "description": "Lamp 14",
+      "_vlm_array": "BL_IN_L14"
+    },
+    {
+      "id": 15,
+      "description": "Lamp 15",
+      "_vlm_array": "BL_IN_L15"
+    },
+    {
+      "id": 16,
+      "description": "Lamp 16",
+      "_vlm_array": "BL_IN_L16"
+    },
+    {
+      "id": 17,
+      "description": "Lamp 17",
+      "_vlm_array": "BL_IN_L17",
+      "_note": "On Institute building — animates with building elevator via L17a_Animate"
+    },
+    {
+      "id": 18,
+      "description": "Lamp 18",
+      "_vlm_array": "BL_IN_L18",
+      "_note": "On Institute building — animates with building elevator via L18a_Animate"
+    },
+    {
+      "id": 19,
+      "description": "Lamp 19",
+      "_vlm_array": "BL_IN_L19",
+      "_note": "On Institute building — animates with building elevator via L19a_Animate"
+    },
+    {
+      "id": 20,
+      "description": "Lamp 20",
+      "_vlm_array": "BL_IN_L20",
+      "_note": "On Institute building — animates with building elevator via L20a_Animate"
+    },
+    {
+      "id": 21,
+      "description": "Lamp 21",
+      "_vlm_array": "BL_IN_L21"
+    },
+    {
+      "id": 22,
+      "description": "Lamp 22",
+      "_vlm_array": "BL_IN_L22"
+    },
+    {
+      "id": 23,
+      "description": "Lamp 23",
+      "_vlm_array": "BL_IN_L23"
+    },
+    {
+      "id": 24,
+      "description": "Lamp 24",
+      "_vlm_array": "BL_IN_L24"
+    },
+    {
+      "id": 25,
+      "description": "Lamp 25",
+      "_vlm_array": "BL_IN_L25"
+    },
+    {
+      "id": 26,
+      "description": "Lamp 26",
+      "_vlm_array": "BL_IN_L26",
+      "_note": "Located on stand-up target sw21 (BL_IN_L26 contains LM_IN_L26_sw21)"
+    },
+    {
+      "id": 27,
+      "description": "Lamp 27",
+      "_vlm_array": "BL_IN_L27",
+      "_note": "Located on stand-up target sw22 (BL_IN_L27 contains LM_IN_L27_sw22)"
+    },
+    {
+      "id": 28,
+      "description": "Lamp 28",
+      "_vlm_array": "BL_IN_L28"
+    },
+    {
+      "id": 29,
+      "description": "Lamp 29",
+      "_vlm_array": "BL_IN_L29"
+    },
+    {
+      "id": 30,
+      "description": "Lamp 30",
+      "_vlm_array": "BL_IN_L30"
+    },
+    {
+      "id": 31,
+      "description": "Lamp 31",
+      "_vlm_array": "BL_IN_L31"
+    },
+    {
+      "id": 32,
+      "description": "Lamp 32",
+      "_vlm_array": "BL_IN_L32"
+    },
+    {
+      "id": 33,
+      "description": "Lamp 33",
+      "_vlm_array": "BL_IN_L33"
+    },
+    {
+      "id": 34,
+      "description": "Lamp 34",
+      "_vlm_array": "BL_IN_L34"
+    },
+    {
+      "id": 35,
+      "description": "Lamp 35",
+      "_vlm_array": "BL_IN_L35"
+    },
+    {
+      "id": 36,
+      "description": "Lamp 36",
+      "_vlm_array": "BL_IN_L36"
+    },
+    {
+      "id": 37,
+      "description": "Lamp 37",
+      "_vlm_array": "BL_IN_L37"
+    },
+    {
+      "id": 38,
+      "description": "Lamp 38",
+      "_vlm_array": "BL_IN_L38"
+    },
+    {
+      "id": 39,
+      "description": "Lamp 39",
+      "_vlm_array": "BL_IN_L39"
+    },
+    {
+      "id": 40,
+      "description": "Lamp 40",
+      "_vlm_array": "BL_IN_L40"
+    },
+    {
+      "id": 41,
+      "description": "Lamp 41",
+      "_vlm_array": "BL_IN_L41"
+    },
+    {
+      "id": 42,
+      "description": "Lamp 42",
+      "_vlm_array": "BL_IN_L42"
+    },
+    {
+      "id": 43,
+      "description": "Lamp 43",
+      "_vlm_array": "BL_IN_L43"
+    },
+    {
+      "id": 44,
+      "description": "Lamp 44",
+      "_vlm_array": "BL_IN_L44"
+    },
+    {
+      "id": 45,
+      "description": "Lamp 45",
+      "_vlm_array": "BL_IN_L45"
+    },
+    {
+      "id": 46,
+      "description": "Lamp 46",
+      "_vlm_array": "BL_IN_L46"
+    },
+    {
+      "id": 47,
+      "description": "Lamp 47",
+      "_vlm_array": "BL_IN_L47"
+    },
+    {
+      "id": 48,
+      "description": "Lamp 48",
+      "_vlm_array": "BL_IN_L48"
+    },
+    {
+      "id": 49,
+      "description": "Lamp 49",
+      "_vlm_array": "BL_IN_L49a",
+      "_note": "VPX object suffix 'a' — mapped as L49a in VLM"
+    },
+    {
+      "id": 50,
+      "description": "Lamp 50",
+      "_vlm_array": "BL_IN_L50",
+      "_note": "Located near stand-up target sw19 (BL_IN_L50 contains LM_IN_L50_sw19)"
+    },
+    {
+      "id": 51,
+      "description": "Lamp 51",
+      "_vlm_array": "BL_IN_L51"
+    },
+    {
+      "id": 52,
+      "description": "Lamp 52",
+      "_vlm_array": "BL_IN_L52",
+      "_note": "Located near gate1 (BL_IN_L52 contains LM_IN_L52_gate1)"
+    },
+    {
+      "id": 53,
+      "description": "Lamp 53",
+      "_vlm_array": "BL_IN_L53"
+    },
+    {
+      "id": 54,
+      "description": "Lamp 54",
+      "_vlm_array": "BL_IN_L54"
+    },
+    {
+      "id": 55,
+      "description": "Lamp 55",
+      "_vlm_array": "BL_IN_L55"
+    },
+    {
+      "id": 56,
+      "description": "Lamp 56",
+      "_vlm_array": "BL_IN_L56"
+    },
+    {
+      "id": 57,
+      "description": "Lamp 57",
+      "_vlm_array": "BL_IN_L57a",
+      "_note": "VPX object suffix 'a' — mapped as L57a in VLM"
+    }
+  ]
+}
