@@ -2,74 +2,616 @@
   "_format": "vpe-game-mapping",
   "_version": "0.1",
   "_source": {
-    "origin": "vbscript-parser",
+    "origin": "vbscript-agent-extracted",
     "source_file": "Skateball (Bally 1980) VPW 1.0.vbs",
     "extracted": "2026-02-14",
     "status": "auto-extracted-needs-review",
-    "confidence_notes": "SEMI-AUTOMATED \u2014 Manual review required. Extraction based on regex patterns; complex VBS logic may be missed."
+    "confidence_notes": "High confidence extraction from VPW 1.0 release by mcarter78/apophis/VPW team. Platform identified as Bally -35 era from LoadVPM call: LoadVPM '03060000', 'Bally.vbs', 3.02. ROM name 'skatebll' from Const cGameName. No Const sw* definitions exist in script -- all switches identified from _Hit/_UnHit sub handlers, Controller.Switch() on/off calls, PulseSw calls, and DIP switch dialog context. Trough is a simple single-ball outhole design typical of 1980 Bally games: Drain_Hit sets Controller.Switch(8)=1, Drain_UnHit clears it, and SolBallRelease (solenoid 7) kicks ball from Drain kicker and clears switch 8. No cvpmTrough framework used -- this is a direct Controller.Switch ball management pattern. Saucer at sw5 uses Controller.Switch(5)=1 on hit, SolKicker (solenoid 2) kicks and clears switch 5. Three drop target banks: Left bank (sw20-24, 5 targets, reset by solenoid 8), Center bank (sw2-4, 3 targets, reset by solenoid 10), Top bank (sw26-28, 3 targets, reset by solenoid 9). All drop targets use DTHit/DTRaise Roth drop target system. Switch 32 is Right Flipper EOS/button switch -- manually set via Controller.Switch(32) in KeyDown/KeyUp for RightFlipperKey. Four flippers: LeftFlipper, RightFlipper, LeftFlipper1 (upper left), RightFlipper1 (upper right) using nFozzy flipper implementation with LF/RF/ULF/URF fire objects. Flipper solenoids from Bally.vbs framework constants: sLRFlipper=17, sLLFlipper=18, sULFlipper=20, sURFlipper=19. Solenoid 25 is GameOn relay (vpmNudge.SolGameOn). Solenoid 6 is knocker. Lamps identified from VLM (Visual Light Map) BL_L_ arrays -- 54 controlled lamps numbered l1 through l63 (not all sequential). Additional backglass lamps identified from UpdateMultipleLamps LampCallback: lamp 13 (Ball In Play), lamp 45 (Game Over), lamp 29 (High Score To Date), lamp 43 (Shoot Again), lamp 61 (Tilt). GI uses 31 light groups (GI001-GI031) driven by GiON/GiOFF subs, not ROM-controlled. No cvpmMech usage. Gates are purely decorative (6 gate animations, no switch triggers). Spinner at sw33. Three pop bumpers: Bumper1=sw40, Bumper2=sw38, Bumper3=sw39. Two slingshots: Left=sw37, Right=sw36."
   },
   "game": {
     "id": "skateball",
-    "name": "Skateball (Bally 1980) VPW 1.0",
+    "name": "Skateball",
     "year": 1980,
     "manufacturer": "Bally",
-    "platform": "sam"
+    "ipdb_id": 2170,
+    "platform": "bally"
   },
   "roms": [
     {
-      "id": "skateball"
+      "id": "skatebll"
     }
   ],
   "switches": [
     {
-      "id": 5
+      "id": 1,
+      "description": "Tilt (Plumb Bob)",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = swTilt. Bally.vbs framework constant swTilt = 1."
     },
     {
-      "id": 8
+      "id": 2,
+      "description": "Center Drop Target 1 (Left)",
+      "vpx_name": "sw2",
+      "_note": "DTHit 2. Center bank of 3 drop targets (sw2, sw3, sw4). Reset by solenoid 10 (DTBankCenterReset)."
+    },
+    {
+      "id": 3,
+      "description": "Center Drop Target 2 (Middle)",
+      "vpx_name": "sw3",
+      "_note": "DTHit 3. Center bank of 3 drop targets."
+    },
+    {
+      "id": 4,
+      "description": "Center Drop Target 3 (Right)",
+      "vpx_name": "sw4",
+      "_note": "DTHit 4. Center bank of 3 drop targets."
+    },
+    {
+      "id": 5,
+      "description": "Saucer (Kicker Hole)",
+      "vpx_name": "sw5",
+      "_note": "Controller.Switch(5) = 1 on hit, cleared by SolKicker (solenoid 2). SoundSaucerLock on entry. DIP switches reference 'saucer extra ball' feature."
+    },
+    {
+      "id": 8,
+      "description": "Outhole (Drain)",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "Controller.Switch(8) = 1/0 on Drain_Hit/Drain_UnHit. Single-ball outhole design. Ball created in Drain at table init with Controller.Switch(8) = 1. SolBallRelease (sol 7) kicks and clears."
+    },
+    {
+      "id": 13,
+      "description": "Rollover (Upper Playfield)",
+      "vpx_name": "sw13",
+      "_note": "PulseSw 13. Has animated VLM trigger object (BP_sw13). Located in upper playfield area near bumpers."
+    },
+    {
+      "id": 14,
+      "description": "Rollover (Upper Playfield)",
+      "vpx_name": "sw14",
+      "_note": "PulseSw 14. Has animated VLM trigger object (BP_sw14). Located in upper playfield area near bumpers."
+    },
+    {
+      "id": 15,
+      "description": "Rollover (Upper Playfield)",
+      "vpx_name": "sw15",
+      "_note": "PulseSw 15. Has animated VLM trigger object (BP_sw15). Located in upper playfield area."
     },
     {
       "id": 17,
-      "_note": " PulseSw 17. PulseSw 17. PulseSw 17. PulseSw 17. PulseSw 17. PulseSw 17. PulseSw 17."
+      "description": "Scoring Rubber (Top Lanes)",
+      "vpx_name": "sw17a",
+      "_note": "PulseSw 17. Seven VPX trigger objects (sw17a through sw17g) all pulse switch 17. Top lane scoring rubbers."
     },
     {
-      "id": 32
+      "id": 18,
+      "description": "Rollover",
+      "vpx_name": "sw18",
+      "_note": "PulseSw 18. Has animated VLM trigger object (BP_sw18)."
+    },
+    {
+      "id": 19,
+      "description": "Rollover",
+      "vpx_name": "sw19",
+      "_note": "PulseSw 19. Has animated VLM trigger object (BP_sw19)."
+    },
+    {
+      "id": 20,
+      "description": "Left Drop Target 1",
+      "vpx_name": "sw20",
+      "_note": "DTHit 20. Left bank of 5 drop targets (sw20-24). Reset by solenoid 8 (DTBankLeftReset)."
+    },
+    {
+      "id": 21,
+      "description": "Left Drop Target 2",
+      "vpx_name": "sw21",
+      "_note": "DTHit 21. Left bank of 5 drop targets."
+    },
+    {
+      "id": 22,
+      "description": "Left Drop Target 3",
+      "vpx_name": "sw22",
+      "_note": "DTHit 22. Left bank of 5 drop targets."
+    },
+    {
+      "id": 23,
+      "description": "Left Drop Target 4",
+      "vpx_name": "sw23",
+      "_note": "DTHit 23. Left bank of 5 drop targets."
+    },
+    {
+      "id": 24,
+      "description": "Left Drop Target 5",
+      "vpx_name": "sw24",
+      "_note": "DTHit 24. Left bank of 5 drop targets."
+    },
+    {
+      "id": 26,
+      "description": "Top Drop Target 1",
+      "vpx_name": "sw26",
+      "_note": "DTHit 26. Top bank of 3 drop targets (sw26-28). Reset by solenoid 9 (DTBankTopReset)."
+    },
+    {
+      "id": 27,
+      "description": "Top Drop Target 2",
+      "vpx_name": "sw27",
+      "_note": "DTHit 27. Top bank of 3 drop targets."
+    },
+    {
+      "id": 28,
+      "description": "Top Drop Target 3",
+      "vpx_name": "sw28",
+      "_note": "DTHit 28. Top bank of 3 drop targets."
+    },
+    {
+      "id": 30,
+      "description": "Star Rollover (Left)",
+      "vpx_name": "sw30",
+      "_note": "PulseSw 30. Has animated VLM star rollover object (BP_Star_sw30)."
+    },
+    {
+      "id": 31,
+      "description": "Star Rollover (Right)",
+      "vpx_name": "sw31",
+      "_note": "PulseSw 31. Has animated VLM star rollover object (BP_Star_sw31)."
+    },
+    {
+      "id": 32,
+      "description": "Right Flipper Button / EOS",
+      "_note": "Controller.Switch(32) = 1 on RightFlipperKey KeyDown, cleared on KeyUp. Used by ROM for lane change or similar feature. Not a physical playfield switch -- triggered by cabinet button."
     },
     {
       "id": 33,
-      "_note": " PulseSw 33."
+      "description": "Spinner",
+      "vpx_name": "sw33",
+      "_note": "PulseSw 33 from sw33_Spin event. Elaborate VLM spinner animation with inner/outer russian doll opacity crossfade and rod rotation."
+    },
+    {
+      "id": 34,
+      "description": "Rollover",
+      "vpx_name": "sw34",
+      "_note": "PulseSw 34. Has animated VLM trigger object (BP_sw34)."
+    },
+    {
+      "id": 35,
+      "description": "Rollover",
+      "vpx_name": "sw35",
+      "_note": "PulseSw 35. Has animated VLM trigger object (BP_sw35)."
     },
     {
       "id": 36,
-      "_note": " PulseSw 36."
+      "description": "Right Slingshot",
+      "_note": "PulseSw 36 from RightSlingShot_Slingshot event. Has 4-frame VLM sling animation (BP_RightSling1-4) and mechanical arm rotation (BP_remk)."
     },
     {
       "id": 37,
-      "_note": " PulseSw 37."
+      "description": "Left Slingshot",
+      "_note": "PulseSw 37 from LeftSlingShot_Slingshot event. Has 4-frame VLM sling animation (BP_LeftSling1-4) and mechanical arm rotation (BP_lemk)."
     },
     {
       "id": 38,
-      "_note": " PulseSw 38."
+      "description": "Pop Bumper (Middle)",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 38 from Bumper2_Hit. Has animated ring (BP_Bumper2_Ring) and skirt."
     },
     {
       "id": 39,
-      "_note": " PulseSw 39."
+      "description": "Pop Bumper (Bottom)",
+      "vpx_name": "Bumper3",
+      "_note": "PulseSw 39 from Bumper3_Hit. Has animated ring (BP_Bumper3_Ring) and skirt."
     },
     {
       "id": 40,
-      "_note": " PulseSw 40."
+      "description": "Pop Bumper (Top)",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 40 from Bumper1_Hit. Has animated ring (BP_Bumper1_Ring) and skirt."
     }
   ],
   "coils": [
     {
-      "id": 0,
-      "_note": "No coils detected"
+      "id": 2,
+      "description": "Saucer Kicker",
+      "_vbscript_callback": "SolKicker",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw5",
+      "_note": "Kicks ball from saucer (sw5). sw5.kick 197+rnd*0.5, 20. Clears Controller.Switch(5)."
+    },
+    {
+      "id": 6,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"fx_knocker\",DOFKnocker),",
+      "_inferred_type": "knocker",
+      "_note": "Cabinet knocker solenoid. Sound-only callback via vpmSolSound."
+    },
+    {
+      "id": 7,
+      "description": "Ball Release (Outhole Kicker)",
+      "_vbscript_callback": "SolBallRelease",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Kicks ball from Drain kicker. Drain.kick 57, 20. Clears Controller.Switch(8). Single-ball outhole design."
+    },
+    {
+      "id": 8,
+      "description": "Left Drop Target Bank Reset",
+      "_vbscript_callback": "DTBankLeftReset",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets left bank of 5 drop targets (sw20, sw21, sw22, sw23, sw24). Uses DTRaise for each target."
+    },
+    {
+      "id": 9,
+      "description": "Top Drop Target Bank Reset",
+      "_vbscript_callback": "DTBankTopReset",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets top bank of 3 drop targets (sw26, sw27, sw28). Uses DTRaise for each target."
+    },
+    {
+      "id": 10,
+      "description": "Center Drop Target Bank Reset",
+      "_vbscript_callback": "DTBankCenterReset",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets center bank of 3 drop targets (sw2, sw3, sw4). Uses DTRaise for each target."
+    },
+    {
+      "id": 17,
+      "description": "Lower Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "sLRFlipper = 17 (Bally.vbs framework constant). nFozzy flipper implementation: RF.Fire on enable, RightFlipper.RotateToStart on disable."
+    },
+    {
+      "id": 18,
+      "description": "Lower Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "sLLFlipper = 18 (Bally.vbs framework constant). nFozzy flipper implementation: LF.Fire on enable, LeftFlipper.RotateToStart on disable."
+    },
+    {
+      "id": 19,
+      "description": "Upper Right Flipper",
+      "_vbscript_callback": "SolRFlipper1",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper1",
+      "_note": "sURFlipper = 19 (Bally.vbs framework constant). nFozzy flipper implementation: URF.Fire on enable, RightFlipper1.RotateToStart on disable."
+    },
+    {
+      "id": 20,
+      "description": "Upper Left Flipper",
+      "_vbscript_callback": "SolLFlipper1",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper1",
+      "_note": "sULFlipper = 20 (Bally.vbs framework constant). nFozzy flipper implementation: ULF.Fire on enable, LeftFlipper1.RotateToStart on disable."
+    },
+    {
+      "id": 25,
+      "description": "Game On Relay",
+      "_vbscript_callback": "vpmNudge.SolGameOn",
+      "_inferred_type": "mechanism",
+      "_note": "Game On relay. Standard Bally framework solenoid handled by vpmNudge.SolGameOn."
     }
   ],
   "lamps": [
     {
-      "id": 0,
-      "_note": "No lamps detected"
+      "id": 1,
+      "vpx_name": "l1",
+      "_note": "VLM lightmap: BL_L_l1 (Playfield)"
+    },
+    {
+      "id": 2,
+      "vpx_name": "l2",
+      "_note": "VLM lightmap: BL_L_l2 (Playfield)"
+    },
+    {
+      "id": 3,
+      "vpx_name": "l3",
+      "_note": "VLM lightmap: BL_L_l3 (Playfield)"
+    },
+    {
+      "id": 4,
+      "vpx_name": "l4",
+      "_note": "VLM lightmap: BL_L_l4 (Playfield)"
+    },
+    {
+      "id": 5,
+      "vpx_name": "l5",
+      "_note": "VLM lightmap: BL_L_l5 (Playfield)"
+    },
+    {
+      "id": 6,
+      "vpx_name": "l6",
+      "_note": "VLM lightmap: BL_L_l6 (Parts, Playfield)"
+    },
+    {
+      "id": 7,
+      "vpx_name": "l7",
+      "_note": "VLM lightmap: BL_L_l7 (Playfield, RFlipper1U). Near upper right flipper."
+    },
+    {
+      "id": 8,
+      "vpx_name": "l8",
+      "_note": "VLM lightmap: BL_L_l8 (Parts, Plastics, Playfield)"
+    },
+    {
+      "id": 9,
+      "vpx_name": "l9",
+      "_note": "VLM lightmap: BL_L_l9 (Parts, Playfield)"
+    },
+    {
+      "id": 10,
+      "vpx_name": "l10",
+      "_note": "VLM lightmap: BL_L_l10 (Bumper1_Ring, Playfield). Near top bumper."
+    },
+    {
+      "id": 12,
+      "vpx_name": "l12",
+      "_note": "VLM lightmap: BL_L_l12 (Parts, Playfield)"
+    },
+    {
+      "id": 13,
+      "description": "Ball In Play",
+      "_note": "Backglass lamp. UpdateMultipleLamps: Controller.Lamp(13) drives FlBGL13 opacity. Comment: 'Ball In Play'."
+    },
+    {
+      "id": 14,
+      "vpx_name": "l14",
+      "_note": "VLM lightmap: BL_L_l14 (Playfield)"
+    },
+    {
+      "id": 15,
+      "vpx_name": "l15",
+      "_note": "VLM lightmap: BL_L_l15 (Playfield)"
+    },
+    {
+      "id": 17,
+      "vpx_name": "l17",
+      "_note": "VLM lightmap: BL_L_l17 (Playfield, RFlipperU). Near lower right flipper."
+    },
+    {
+      "id": 18,
+      "vpx_name": "l18",
+      "_note": "VLM lightmap: BL_L_l18 (Playfield)"
+    },
+    {
+      "id": 19,
+      "vpx_name": "l19",
+      "_note": "VLM lightmap: BL_L_l19 (Playfield)"
+    },
+    {
+      "id": 20,
+      "vpx_name": "l20",
+      "_note": "VLM lightmap: BL_L_l20 (Playfield)"
+    },
+    {
+      "id": 21,
+      "vpx_name": "l21",
+      "_note": "VLM lightmap: BL_L_l21 (Parts, Plastic1)"
+    },
+    {
+      "id": 22,
+      "vpx_name": "l22",
+      "_note": "VLM lightmap: BL_L_l22 (LFlipperU, Parts, Playfield). Near lower left flipper."
+    },
+    {
+      "id": 23,
+      "vpx_name": "l23",
+      "_note": "VLM lightmap: BL_L_l23 (Playfield, RFlipper1U). Near upper right flipper."
+    },
+    {
+      "id": 24,
+      "vpx_name": "l24",
+      "_note": "VLM lightmap: BL_L_l24 (Parts, Playfield)"
+    },
+    {
+      "id": 25,
+      "vpx_name": "L25",
+      "_note": "VLM lightmap: BL_L_L25 (Bumper2_Ring, Bumper2_Skirt, Parts, Spinner_sw33). Near middle bumper and spinner."
+    },
+    {
+      "id": 26,
+      "vpx_name": "l26",
+      "_note": "VLM lightmap: BL_L_l26 (Playfield)"
+    },
+    {
+      "id": 28,
+      "vpx_name": "l28",
+      "_note": "VLM lightmap: BL_L_l28 (Parts, Plastics, Playfield, Star_sw30). Near left star rollover."
+    },
+    {
+      "id": 29,
+      "description": "High Score To Date",
+      "_note": "Backglass lamp. UpdateMultipleLamps: Controller.Lamp(29) drives FlBGL29 opacity. Comment: 'High Score To Date'."
+    },
+    {
+      "id": 30,
+      "vpx_name": "l30",
+      "_note": "VLM lightmap: BL_L_l30 (Parts, Playfield)"
+    },
+    {
+      "id": 31,
+      "vpx_name": "l31",
+      "_note": "VLM lightmap: BL_L_l31 (Playfield)"
+    },
+    {
+      "id": 33,
+      "vpx_name": "l33",
+      "_note": "VLM lightmap: BL_L_l33 (Playfield)"
+    },
+    {
+      "id": 34,
+      "vpx_name": "l34",
+      "_note": "VLM lightmap: BL_L_l34 (Playfield)"
+    },
+    {
+      "id": 35,
+      "vpx_name": "l35",
+      "_note": "VLM lightmap: BL_L_l35 (Playfield)"
+    },
+    {
+      "id": 36,
+      "vpx_name": "l36",
+      "_note": "VLM lightmap: BL_L_l36 (Playfield)"
+    },
+    {
+      "id": 37,
+      "vpx_name": "l37",
+      "_note": "VLM lightmap: BL_L_l37 (Parts)"
+    },
+    {
+      "id": 38,
+      "vpx_name": "l38",
+      "_note": "VLM lightmap: BL_L_l38 (Parts, Playfield, RFlipperU). Near lower right flipper."
+    },
+    {
+      "id": 39,
+      "vpx_name": "l39",
+      "_note": "VLM lightmap: BL_L_l39 (Playfield)"
+    },
+    {
+      "id": 40,
+      "vpx_name": "l40",
+      "_note": "VLM lightmap: BL_L_l40 (Parts, Playfield)"
+    },
+    {
+      "id": 41,
+      "vpx_name": "L41",
+      "_note": "VLM lightmap: BL_L_L41 (Bumper2_Ring, Bumper3_Ring, Bumper3_Skirt, Parts, Plastics). Near middle and bottom bumpers."
+    },
+    {
+      "id": 42,
+      "vpx_name": "l42",
+      "_note": "VLM lightmap: BL_L_l42 (Playfield)"
+    },
+    {
+      "id": 43,
+      "description": "Shoot Again",
+      "vpx_name": "l43",
+      "_note": "VLM lightmap: BL_L_l43 (Parts, Playfield). Also backglass lamp: UpdateMultipleLamps drives FlBGL43 opacity. Comment: 'Shoot Again'."
+    },
+    {
+      "id": 44,
+      "vpx_name": "l44",
+      "_note": "VLM lightmap: BL_L_l44 (Parts, Plastics, Playfield, Star_sw31). Near right star rollover."
+    },
+    {
+      "id": 45,
+      "description": "Game Over / Match",
+      "_note": "Backglass lamp. UpdateMultipleLamps: Controller.Lamp(45) drives FlBGL27 (Game Over) and FlBGL45 (Match) opacity."
+    },
+    {
+      "id": 46,
+      "vpx_name": "l46",
+      "_note": "VLM lightmap: BL_L_l46 (Playfield)"
+    },
+    {
+      "id": 47,
+      "vpx_name": "l47",
+      "_note": "VLM lightmap: BL_L_l47 (Parts, Playfield)"
+    },
+    {
+      "id": 49,
+      "vpx_name": "l49",
+      "_note": "VLM lightmap: BL_L_l49 (Playfield)"
+    },
+    {
+      "id": 50,
+      "vpx_name": "l50",
+      "_note": "VLM lightmap: BL_L_l50 (Playfield)"
+    },
+    {
+      "id": 51,
+      "vpx_name": "l51",
+      "_note": "VLM lightmap: BL_L_l51 (Playfield)"
+    },
+    {
+      "id": 52,
+      "vpx_name": "l52",
+      "_note": "VLM lightmap: BL_L_l52 (Playfield)"
+    },
+    {
+      "id": 53,
+      "vpx_name": "l53",
+      "_note": "VLM lightmap: BL_L_l53 (Playfield)"
+    },
+    {
+      "id": 54,
+      "vpx_name": "l54",
+      "_note": "VLM lightmap: BL_L_l54 (Parts, Playfield)"
+    },
+    {
+      "id": 55,
+      "vpx_name": "l55",
+      "_note": "VLM lightmap: BL_L_l55 (Playfield)"
+    },
+    {
+      "id": 56,
+      "vpx_name": "l56",
+      "_note": "VLM lightmap: BL_L_l56 (Parts, Playfield)"
+    },
+    {
+      "id": 57,
+      "vpx_name": "L57",
+      "_note": "VLM lightmap: BL_L_L57 (Bumper1_Ring, DT_sw26, DT_sw27, Parts). Near top bumper and top drop targets."
+    },
+    {
+      "id": 58,
+      "vpx_name": "l58",
+      "_note": "VLM lightmap: BL_L_l58 (Parts, Playfield)"
+    },
+    {
+      "id": 59,
+      "vpx_name": "l59",
+      "_note": "VLM lightmap: BL_L_l59 (Parts)"
+    },
+    {
+      "id": 60,
+      "vpx_name": "l60",
+      "_note": "VLM lightmap: BL_L_l60 (Parts, Playfield, Spinner_sw33). Near spinner."
+    },
+    {
+      "id": 61,
+      "description": "Tilt",
+      "_note": "Backglass lamp. UpdateMultipleLamps: Controller.Lamp(61) drives FlBGL61 opacity. Comment: 'Tilt'."
+    },
+    {
+      "id": 62,
+      "vpx_name": "l62",
+      "_note": "VLM lightmap: BL_L_l62 (Parts, Playfield)"
+    },
+    {
+      "id": 63,
+      "vpx_name": "l63",
+      "_note": "VLM lightmap: BL_L_l63 (Playfield)"
     }
   ],
-  "aliases": []
+  "aliases": [
+    {
+      "id": 17,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper = 17 (Bally.vbs framework constant). SolRFlipper callback. VPX object: RightFlipper."
+    },
+    {
+      "id": 18,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper = 18 (Bally.vbs framework constant). SolLFlipper callback. VPX object: LeftFlipper."
+    },
+    {
+      "id": 19,
+      "alias": "c_flipper_upper_right",
+      "type": "coil",
+      "_note": "sURFlipper = 19 (Bally.vbs framework constant). SolRFlipper1 callback. VPX object: RightFlipper1."
+    },
+    {
+      "id": 20,
+      "alias": "c_flipper_upper_left",
+      "type": "coil",
+      "_note": "sULFlipper = 20 (Bally.vbs framework constant). SolLFlipper1 callback. VPX object: LeftFlipper1."
+    }
+  ]
 }

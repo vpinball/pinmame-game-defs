@@ -2,97 +2,561 @@
   "_format": "vpe-game-mapping",
   "_version": "0.1",
   "_source": {
-    "origin": "vbscript-parser",
+    "origin": "vbscript-agent-extracted",
     "source_file": "Warlok (Williams 1982) VPW 1.2.vbs",
     "extracted": "2026-02-14",
     "status": "auto-extracted-needs-review",
-    "confidence_notes": "SEMI-AUTOMATED \u2014 Manual review required. Extraction based on regex patterns; complex VBS logic may be missed."
+    "confidence_notes": "High confidence extraction from VPW VBScript. Platform identified as Williams System 7 via LoadVPM '01560000', 'S7.VBS', 3.26. ROM name 'wrlok_l3' from cGameName constant. This is an early-80s EM/SS hybrid era table with no traditional trough — instead uses a single Drain kicker (VPX object 'Drain') with Controller.Switch(9) set on Drain_Hit/Drain_UnHit and SolCallback(4)='SolRelease' which kicks the ball out with Drain.kick(66,20). Ball is pre-created on the Drain object at table init (Drain.Createball / Controller.Switch(9)=1). No bsTrough or cvpmBallStack objects used — this is a simple single-ball drain-and-release pattern typical of System 7 era. Switches identified from Controller.Switch on/off pairs (drain sw9, wire triggers sw16-18/23-26, rollunder gates sw22/37/38, flipper button sw36), PulseSw calls (spinners sw10-12, bumpers sw13-15, standup target sw19, slingshots sw20-21), and DTHit calls (drop targets sw27-35 across three banks). Solenoids 1-3 are drop target bank resets (Sol1DropUp resets sw27-29, Sol2DropUp resets sw30-32, Sol3DropUp resets sw33-35). Solenoids 5-7 are individual drop target actuators (dt1drop/dt2drop/dt3drop raise sw33/34/35). Sol 8 is GI relay with inverted logic (enabled=GI off, per MetaTed hack fix comment for orbit shot). Sol 15 is knocker. Sol 23 is game-on relay via vpmNudge.SolGameOn. Flipper solenoids use S7.VBS framework constants sLRFlipper=14 and sLLFlipper=16. Lamps mapped via vpmMapLights AllLamps using VPX light TimerInterval values — lamp IDs 8-63 (with gaps at 48, 56) identified from BL_L_L* VLM lightmap arrays. Six backglass indicator lamps (2,3,4,5,6,15) driven by LampCallback/UpdateMultipleLamps reading Controller.Lamp() and setting gi25-gi30 VPX objects. GI controlled by Sol 8 with inverted behavior. Switch 36 is right flipper cabinet button, set via Controller.Switch(36) on RightFlipperKey press/release — unusual for S7 where cabinet switches are typically ROM-managed, but this appears to be a VPW implementation choice for the flipper EOS or lane change feature."
   },
   "game": {
     "id": "warlok",
-    "name": "Warlok (Williams 1982) VPW 1.2",
+    "name": "Warlok",
     "year": 1982,
     "manufacturer": "Williams",
-    "platform": "sam"
+    "platform": "s7"
   },
   "roms": [
     {
-      "id": "warlok"
+      "id": "wrlok_l3"
     }
   ],
   "switches": [
     {
-      "id": 9
+      "id": 1,
+      "description": "Tilt (Plumb Bob)",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 1. Sensitivity = 3. TiltObj = Array(Bumper1, LeftSlingshot, RightSlingshot)."
+    },
+    {
+      "id": 9,
+      "description": "Drain",
+      "vpx_name": "Drain",
+      "_note": "Controller.Switch(9) set on Drain_Hit/Drain_UnHit. Ball pre-created at init (Drain.Createball, Controller.Switch(9)=1). Single-ball drain, no trough — typical System 7 design."
+    },
+    {
+      "id": 10,
+      "description": "Spinner 1",
+      "vpx_name": "sw10",
+      "_note": "sw10_Spin sub fires vpmTimer.PulseSw(10). Spinner object with VLM rod animation (BM_Spin1Rod)."
+    },
+    {
+      "id": 11,
+      "description": "Spinner 2",
+      "vpx_name": "sw11",
+      "_note": "sw11_Spin sub fires vpmTimer.PulseSw(11). Spinner object with VLM rod animation (BM_Spin2Rod)."
+    },
+    {
+      "id": 12,
+      "description": "Spinner 3",
+      "vpx_name": "sw12",
+      "_note": "sw12_Spin sub fires vpmTimer.PulseSw(12). Spinner object with VLM rod animation (BM_Spin3Rod)."
     },
     {
       "id": 13,
-      "_note": " PulseSw 13."
+      "description": "Bottom Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "Bumper1_Hit fires vpmTimer.PulseSw 13. Has VLM skirt animation (BP_Bumper1Skirt)."
     },
     {
       "id": 14,
-      "_note": " PulseSw 14."
+      "description": "Middle Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "Bumper2_Hit fires vpmTimer.PulseSw 14. Has VLM skirt animation (BP_Bumper2Skirt). Sound: RandomSoundBumperMiddle."
     },
     {
       "id": 15,
-      "_note": " PulseSw 15."
+      "description": "Top Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "Bumper3_Hit fires vpmTimer.PulseSw 15. Has VLM skirt animation (BP_Bumper3Skirt). Sound: RandomSoundBumperTop."
     },
     {
-      "id": 16
+      "id": 16,
+      "description": "Wire Trigger (Rollover)",
+      "vpx_name": "sw16",
+      "_note": "Controller.Switch(16) on/off via sw16_Hit/sw16_UnHit. Grouped with other wire triggers. VLM wire animation (CurrentAnimOffset)."
     },
     {
-      "id": 17
+      "id": 17,
+      "description": "Wire Trigger (Rollover)",
+      "vpx_name": "sw17",
+      "_note": "Controller.Switch(17) on/off via sw17_Hit/sw17_UnHit. Grouped with other wire triggers."
     },
     {
-      "id": 18
+      "id": 18,
+      "description": "Wire Trigger (Rollover)",
+      "vpx_name": "sw18",
+      "_note": "Controller.Switch(18) on/off via sw18_Hit/sw18_UnHit. Grouped with other wire triggers."
     },
     {
       "id": 19,
-      "_note": " PulseSw 19."
+      "description": "Standup Target",
+      "vpx_name": "Tsw19",
+      "_note": "Tsw19_Hit fires PrimStandupTgtHit 19 (animated standup target with BM_HT primitive) then vpmTimer.PulseSw 19."
     },
     {
       "id": 20,
-      "_note": " PulseSw 20."
+      "description": "Left Slingshot",
+      "_note": "LeftSlingShot_Slingshot fires vpmTimer.PulseSw 20. Has 3-frame VLM sling arm animation (BP_LSling1, BP_LSling2, BP_LSlingArm)."
     },
     {
       "id": 21,
-      "_note": " PulseSw 21."
+      "description": "Right Slingshot",
+      "_note": "RightSlingShot_Slingshot fires vpmTimer.PulseSw 21. Has 3-frame VLM sling arm animation (BP_RSling1, BP_RSling2, BP_RSlingArm)."
     },
     {
-      "id": 22
+      "id": 22,
+      "description": "Rollunder Gate",
+      "vpx_name": "sw22",
+      "_note": "Controller.Switch(22) on/off via sw22_Hit/sw22_UnHit. Grouped under 'rollunder gates' comment."
     },
     {
-      "id": 23
+      "id": 23,
+      "description": "Wire Trigger (Rollover)",
+      "vpx_name": "sw23",
+      "_note": "Controller.Switch(23) on/off via sw23_Hit/sw23_UnHit. Grouped under 'Wire Triggers' comment. VLM animation."
     },
     {
-      "id": 24
+      "id": 24,
+      "description": "Wire Trigger (Rollover)",
+      "vpx_name": "sw24",
+      "_note": "Controller.Switch(24) on/off via sw24_Hit/sw24_UnHit. Grouped under 'Wire Triggers' comment. VLM animation."
     },
     {
-      "id": 25
+      "id": 25,
+      "description": "Wire Trigger (Rollover)",
+      "vpx_name": "sw25",
+      "_note": "Controller.Switch(25) on/off via sw25_Hit/sw25_UnHit. Grouped under 'Wire Triggers' comment. VLM animation."
     },
     {
-      "id": 26
+      "id": 26,
+      "description": "Wire Trigger (Rollover)",
+      "vpx_name": "sw26",
+      "_note": "Controller.Switch(26) on/off via sw26_Hit/sw26_UnHit. Grouped under 'Wire Triggers' comment. VLM animation."
     },
     {
-      "id": 36
+      "id": 27,
+      "description": "Drop Target Bank 1 - Target 1",
+      "vpx_name": "sw27",
+      "_note": "Sw27_Hit calls DTHit 27. Part of Bank 1 (sw27-29). DT27 = new DropTarget(sw27, sw27y, BM_DT1_1, 27). Reset by Sol 1 (Sol1DropUp)."
     },
     {
-      "id": 37
+      "id": 28,
+      "description": "Drop Target Bank 1 - Target 2",
+      "vpx_name": "sw28",
+      "_note": "Sw28_Hit calls DTHit 28. Part of Bank 1 (sw27-29). DT28 = new DropTarget(sw28, sw28y, BM_DT1_2, 28). Reset by Sol 1."
     },
     {
-      "id": 38
+      "id": 29,
+      "description": "Drop Target Bank 1 - Target 3",
+      "vpx_name": "sw29",
+      "_note": "Sw29_Hit calls DTHit 29. Part of Bank 1 (sw27-29). DT29 = new DropTarget(sw29, sw29y, BM_DT1_3, 29). Reset by Sol 1."
+    },
+    {
+      "id": 30,
+      "description": "Drop Target Bank 2 - Target 1",
+      "vpx_name": "sw30",
+      "_note": "Sw30_Hit calls DTHit 30. Part of Bank 2 (sw30-32). DT30 = new DropTarget(sw30, sw30y, BM_DT2_1, 30). Reset by Sol 2 (Sol2DropUp)."
+    },
+    {
+      "id": 31,
+      "description": "Drop Target Bank 2 - Target 2",
+      "vpx_name": "sw31",
+      "_note": "Sw31_Hit calls DTHit 31. Part of Bank 2 (sw30-32). DT31 = new DropTarget(sw31, sw31y, BM_DT2_2, 31). Reset by Sol 2."
+    },
+    {
+      "id": 32,
+      "description": "Drop Target Bank 2 - Target 3",
+      "vpx_name": "sw32",
+      "_note": "Sw32_Hit calls DTHit 32. Part of Bank 2 (sw30-32). DT32 = new DropTarget(sw32, sw32y, BM_DT2_3, 32). Reset by Sol 2."
+    },
+    {
+      "id": 33,
+      "description": "Drop Target Bank 3 - Target 1",
+      "vpx_name": "sw33",
+      "_note": "Sw33_Hit calls DTHit 33. Part of Bank 3 (sw33-35). DT33 = new DropTarget(sw33, sw33y, BM_DT3_1, 33). Reset by Sol 3 (Sol3DropUp). Also individually dropped by Sol 5 (dt1drop)."
+    },
+    {
+      "id": 34,
+      "description": "Drop Target Bank 3 - Target 2",
+      "vpx_name": "sw34",
+      "_note": "Sw34_Hit calls DTHit 34. Part of Bank 3 (sw33-35). DT34 = new DropTarget(sw34, sw34y, BM_DT3_2, 34). Reset by Sol 3. Also individually dropped by Sol 6 (dt2drop)."
+    },
+    {
+      "id": 35,
+      "description": "Drop Target Bank 3 - Target 3",
+      "vpx_name": "sw35",
+      "_note": "Sw35_Hit calls DTHit 35. Part of Bank 3 (sw33-35). DT35 = new DropTarget(sw35, sw35y, BM_DT3_3, 35). Reset by Sol 3. Also individually dropped by Sol 7 (dt3drop)."
+    },
+    {
+      "id": 36,
+      "description": "Right Flipper Button (Cabinet)",
+      "_note": "Controller.Switch(36)=1 on RightFlipperKey down, =0 on key up. Used for lane change or special feature — not a playfield switch. Set directly from keyboard handler."
+    },
+    {
+      "id": 37,
+      "description": "Rollunder Gate",
+      "vpx_name": "sw37",
+      "_note": "Controller.Switch(37) on/off via sw37_Hit/sw37_UnHit. Grouped under 'rollunder gates' comment."
+    },
+    {
+      "id": 38,
+      "description": "Rollunder Gate",
+      "vpx_name": "sw38",
+      "_note": "Controller.Switch(38) on/off via sw38_Hit/sw38_UnHit. Grouped under 'rollunder gates' comment."
     }
   ],
   "coils": [
     {
-      "id": 0,
-      "_note": "No coils detected"
+      "id": 1,
+      "description": "Drop Target Bank 1 Reset",
+      "_vbscript_callback": "Sol1DropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises drop targets sw27, sw28, sw29 (Bank 1) via DTRaise. Sound: RandomSoundDropTargetReset."
+    },
+    {
+      "id": 2,
+      "description": "Drop Target Bank 2 Reset",
+      "_vbscript_callback": "Sol2DropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises drop targets sw30, sw31, sw32 (Bank 2) via DTRaise. Sound: RandomSoundDropTargetReset."
+    },
+    {
+      "id": 3,
+      "description": "Drop Target Bank 3 Reset",
+      "_vbscript_callback": "Sol3DropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises drop targets sw33, sw34, sw35 (Bank 3) via DTRaise. Sound: RandomSoundDropTargetReset."
+    },
+    {
+      "id": 4,
+      "description": "Drain Ball Release",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Drain",
+      "_note": "Kicks ball from Drain kicker (Drain.kick 66,20). Checks BallCntOver for sound selection. No trough — simple single-ball drain/release mechanism typical of System 7."
+    },
+    {
+      "id": 5,
+      "description": "Drop Target 33 Individual Drop",
+      "_vbscript_callback": "dt1drop",
+      "_inferred_type": "drop_target",
+      "_note": "Raises individual drop target sw33 (Bank 3, Target 1) via DTRaise 33. Sound: RandomSoundDropTargetReset."
+    },
+    {
+      "id": 6,
+      "description": "Drop Target 34 Individual Drop",
+      "_vbscript_callback": "dt2drop",
+      "_inferred_type": "drop_target",
+      "_note": "Raises individual drop target sw34 (Bank 3, Target 2) via DTRaise 34. Sound: RandomSoundDropTargetReset."
+    },
+    {
+      "id": 7,
+      "description": "Drop Target 35 Individual Drop",
+      "_vbscript_callback": "dt3drop",
+      "_inferred_type": "drop_target",
+      "_note": "Raises individual drop target sw35 (Bank 3, Target 3) via DTRaise 35. Sound: RandomSoundDropTargetReset."
+    },
+    {
+      "id": 8,
+      "description": "GI Relay (Inverted)",
+      "_vbscript_callback": "SolGi",
+      "_inferred_type": "gi_relay",
+      "is_lamp": true,
+      "_note": "GI relay with INVERTED logic — when enabled, GI turns OFF (all lights in GI collection set to state=0). When disabled, GI turns ON. Comment says 'The GI is inverted for some reason when the Orbit shot is made (MetaTed hack fix)'. Initialized with SolGi(False) at table init to turn GI on."
+    },
+    {
+      "id": 14,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "sLRFlipper=14 (S7.VBS framework constant). nFozzy flipper implementation with RF.Fire, ReflipAngle=20, live catch, FlipperTricks. EOSTnew=1.5 (EM to late 80s setting)."
+    },
+    {
+      "id": 15,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker",
+      "_note": "Cabinet knocker solenoid. Calls KnockerSolenoid sound function."
+    },
+    {
+      "id": 16,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "sLLFlipper=16 (S7.VBS framework constant). nFozzy flipper implementation with LF.Fire, ReflipAngle=20, live catch, FlipperTricks. EOSTnew=1.5 (EM to late 80s setting)."
+    },
+    {
+      "id": 23,
+      "description": "Game On Relay",
+      "_vbscript_callback": "vpmNudge.SolGameOn",
+      "_inferred_type": "mechanism",
+      "_note": "Game-on solenoid handled by VPM framework. Controls nudge/tilt enable state."
     }
   ],
   "lamps": [
     {
-      "id": 0,
-      "_note": "No lamps detected"
+      "id": 2,
+      "description": "Ball In Play (Backglass)",
+      "vpx_name": "gi27",
+      "_note": "Backglass indicator lamp. Controller.Lamp(2) drives gi27 VPX object via LampCallback/UpdateMultipleLamps."
+    },
+    {
+      "id": 3,
+      "description": "Tilt (Backglass)",
+      "vpx_name": "gi29",
+      "_note": "Backglass indicator lamp. Controller.Lamp(3) drives gi29 VPX object via UpdateMultipleLamps."
+    },
+    {
+      "id": 4,
+      "description": "Game Over (Backglass)",
+      "vpx_name": "gi25",
+      "_note": "Backglass indicator lamp. Controller.Lamp(4) drives gi25 VPX object via UpdateMultipleLamps."
+    },
+    {
+      "id": 5,
+      "description": "Match (Backglass)",
+      "vpx_name": "gi28",
+      "_note": "Backglass indicator lamp. Controller.Lamp(5) drives gi28 VPX object via UpdateMultipleLamps."
+    },
+    {
+      "id": 6,
+      "description": "High Score To Date (Backglass)",
+      "vpx_name": "gi30",
+      "_note": "Backglass indicator lamp. Controller.Lamp(6) drives gi30 VPX object via UpdateMultipleLamps."
+    },
+    {
+      "id": 8,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L8 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 9,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L9 with Inserts, Parts, Playfield, Spin1 primitives."
+    },
+    {
+      "id": 10,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L10 with Gate_4, Inserts, Parts, Playfield, Spin2 primitives."
+    },
+    {
+      "id": 11,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L11 with Inserts, Parts, Playfield, Spin3 primitives."
+    },
+    {
+      "id": 12,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L12 with Gate_1, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 13,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L13 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 14,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L14 with Gate_6, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 15,
+      "description": "Shoot Again (Backglass)",
+      "vpx_name": "gi26",
+      "_note": "Backglass indicator lamp AND playfield insert. Controller.Lamp(15) drives gi26 via UpdateMultipleLamps. Also has VLM lightmap array BL_L_L15 with FlipperR, FlipperRup, Inserts, Parts, Playfield, RSling primitives."
+    },
+    {
+      "id": 16,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L16 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 17,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L17 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 18,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L18 with Gate_5, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 19,
+      "_note": "Playfield insert lamp near Bumper 1. VLM lightmap array BL_L_L19 with BR1, Bumper1Skirt, HT, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 20,
+      "_note": "Playfield insert lamp near Drop Target Bank 1. VLM lightmap array BL_L_L20 with DT1_1, DT1_2, DT1_3, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 21,
+      "_note": "Playfield insert lamp near Drop Target Bank 2. VLM lightmap array BL_L_L21 with DT2_1, DT2_2, DT2_3, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 22,
+      "_note": "Playfield insert lamp near Drop Target Bank 3. VLM lightmap array BL_L_L22 with DT3_1, DT3_2, DT3_3, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 23,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L23 with DT1_2, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 24,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L24 with DT2_1, DT2_2, DT2_3, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 25,
+      "_note": "Playfield insert lamp near Bumper 2. VLM lightmap array BL_L_L25 with BR2, Bumper2Skirt, DT3_1, DT3_2, DT3_3, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 26,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L26 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 27,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L27 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 28,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L28 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 29,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L29 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 30,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L30 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 31,
+      "_note": "Playfield insert lamp near left flipper. VLM lightmap array BL_L_L31 with FlipperL, FlipperLup, Inserts, LSling1, LSling2, Parts, Playfield primitives."
+    },
+    {
+      "id": 32,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L32 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 33,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L33 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 34,
+      "_note": "Playfield insert lamp near flippers. VLM lightmap array BL_L_L34 with FlipperLup, FlipperR, FlipperRup, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 35,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L35 with Gate_5, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 36,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L36 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 37,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L37 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 38,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L38 with Inserts, Parts, Playfield, RSling, RSling1, RSling2 primitives."
+    },
+    {
+      "id": 39,
+      "_note": "Playfield insert lamp near Bumper 1. VLM lightmap array BL_L_L39 with BR1, Bumper1Skirt, HT, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 40,
+      "_note": "Playfield insert lamp near left slingshot. VLM lightmap array BL_L_L40 with Inserts, LSling, LSling1, LSling2, Parts, Playfield primitives."
+    },
+    {
+      "id": 41,
+      "_note": "Playfield insert lamp near left slingshot. VLM lightmap array BL_L_L41 with Inserts, LSling, LSling1, LSling2, Parts, Playfield primitives."
+    },
+    {
+      "id": 42,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L42 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 43,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L43 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 44,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L44 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 45,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L45 with Inserts, Playfield primitives."
+    },
+    {
+      "id": 46,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L46 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 47,
+      "_note": "Playfield insert lamp near right slingshot. VLM lightmap array BL_L_L47 with Inserts, Parts, Playfield, RSling, RSling1, RSling2 primitives."
+    },
+    {
+      "id": 49,
+      "_note": "Playfield insert lamp near left slingshot. VLM lightmap array BL_L_L49 with Inserts, LSling, LSling1, LSling2, Parts, Playfield primitives."
+    },
+    {
+      "id": 50,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L50 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 51,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L51 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 52,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L52 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 53,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L53 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 54,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L54 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 55,
+      "_note": "Playfield insert lamp near right slingshot. VLM lightmap array BL_L_L55 with Inserts, Parts, Playfield, RSling, RSling1, RSling2 primitives."
+    },
+    {
+      "id": 57,
+      "_note": "Playfield insert lamp near left slingshot. VLM lightmap array BL_L_L57 with Inserts, LSling, LSling1, LSling2, Playfield primitives."
+    },
+    {
+      "id": 58,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L58 with Inserts, Playfield primitives."
+    },
+    {
+      "id": 59,
+      "_note": "Playfield insert lamp near right flipper. VLM lightmap array BL_L_L59 with FlipperR, Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 60,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L60 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 61,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L61 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 62,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L62 with Inserts, Parts, Playfield primitives."
+    },
+    {
+      "id": 63,
+      "_note": "Playfield insert lamp. VLM lightmap array BL_L_L63 with Inserts, Parts, Playfield, RSling2 primitives."
     }
   ],
-  "aliases": []
+  "aliases": [
+    {
+      "id": 14,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper=14 (S7.VBS framework constant). SolRFlipper callback. VPX object: RightFlipper."
+    },
+    {
+      "id": 16,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper=16 (S7.VBS framework constant). SolLFlipper callback. VPX object: LeftFlipper."
+    }
+  ]
 }

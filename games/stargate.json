@@ -2,117 +2,845 @@
   "_format": "vpe-game-mapping",
   "_version": "0.1",
   "_source": {
-    "origin": "vbscript-parser",
+    "origin": "vbscript-agent-extracted",
     "source_file": "Stargate (Gottlieb 1995) v2.0.vbs",
     "extracted": "2026-02-14",
     "status": "auto-extracted-needs-review",
-    "confidence_notes": "SEMI-AUTOMATED \u2014 Manual review required. Extraction based on regex patterns; complex VBS logic may be missed."
+    "confidence_notes": "High confidence extraction from VPW v2.0 VBScript by mcarter78/Sixtoe/Rothbauerw/Apophis team. Platform detected as GTS3 from LoadVPM '03060000', 'GTS3.VBS', 3.10 call. ROM identified as 'stargat5' from Const cGameName. Trough is custom physical design (not cvpmTrough) using three VPX kicker objects (swTrough1, swTrough2, swTrough3) plus Drain kicker, with a manual UpdateTrough cascade timer that shifts balls between positions. Switch 34 tracks swTrough3 occupancy (ball ready) and switch 24 tracks Drain occupancy. SolRelease (sol 28) ejects from swTrough1, SolTrough (sol 29) kicks from Drain. Three VUKs: sw33 (right, kicked by sol 12 VukTopPop), sw23 (center, kicked by sol 11 BotPop), sw80 (left, kicked by sol 10 LeftPop). Glider mechanism uses two motor solenoids (sol 23 LR motor, sol 24 forward motor) driving a GliderTimer animation that sets sw21 (home position) and sw30 (right limit position) via position calculations. Pyramid mechanism (sol 16) uses LeftFlipper1 VPX object with sw102 set via delayed timer. Diverter (sol 13) uses Flipper1 VPX object and sets sw101 for position feedback. Guardian targets (sol 14 left, sol 15 right) are pivot targets that physically open/close to reveal/block sw116/sw117 standup targets. Drop targets: 3-bank left (sw17/27/37, reset sol 17), 2-bank top (sw26/36, reset sol 18), single right (sw35, reset sol 19, trip sol 20). Kicking targets sw14/15/16 use Rothbauerw KickingTarget class with animated rebound. Bumpers use PulseSw (sw10=Bumper1 bottom, sw11=Bumper2 top). Slingshots use PulseSw (sw12=left, sw13=right). Flipper solenoids from GTS3 framework constants: sLRFlipper (right), sLLFlipper (left), sURFlipper (upper right). Lamps identified from vpmMapLights AllLamps and BL_L_ lightmap arrays: L0, L5-L7, L11-L17, L21-L27, L32-L37, L41-L47, L55-L57, L65-L67, L71-L77, L81-L87, plus flasher lamps L120-L125 mapped to f0-f5 VPX light objects, and backglass lamps L90, L92, L112, L126. GI controlled by sol 31 (GIState, inverted -- Not Enabled = GI on). Backbox GI via sol 26 (SolBBGI). Rope lights via sol 22 (SolBGRopeLights). Six commented-out solenoids: 1-4 (bumpers/slingshots handled by VPX physics), 5-7 (kicking target kickbacks), 21 (not used), 25 (not used), 27 (ticket dispenser), 32 (game over relay). Wire trigger switches sw31/sw111-sw115 use Controller.Switch on/off pattern with wire animation. Ramp triggers sw90/sw100/sw110 use PulseSw. Pyramid subway switch sw91 uses PulseSw. Tournament mode switch sw5 set by RightMagnaSave key and TournamentTimer auto-set at startup. Switch sw6 (FrontDoor) set by TournamentTimer."
   },
   "game": {
     "id": "stargate",
-    "name": "Stargate (Gottlieb 1995) v2.0",
+    "name": "Stargate",
     "year": 1995,
     "manufacturer": "Gottlieb",
-    "platform": "sam"
+    "platform": "gts3"
   },
   "roms": [
     {
-      "id": "stargate"
+      "id": "stargat5"
     }
   ],
   "switches": [
     {
-      "id": 5
+      "id": 5,
+      "description": "Tournament Mode",
+      "_note": "Controller.Switch(5) set by RightMagnaSave keypress and TournamentTimer_Timer auto-set at startup."
     },
     {
-      "id": 6
+      "id": 6,
+      "description": "Front Door",
+      "_note": "Controller.Switch(6) set by TournamentTimer_Timer at startup. Const swFrontDoor = 6."
     },
     {
-      "id": 21
+      "id": 10,
+      "description": "Left Pop Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 10. Bumper1_Hit. Sound S02_BumperBottom. Has skirt and ring animation."
+    },
+    {
+      "id": 11,
+      "description": "Top Pop Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 11. Bumper2_Hit. Sound S01_Bumper_Top. Has skirt and ring animation."
+    },
+    {
+      "id": 12,
+      "description": "Left Slingshot",
+      "_note": "PulseSw 12. LeftSlingShot_Slingshot event. Has 3-step sling animation."
+    },
+    {
+      "id": 13,
+      "description": "Right Slingshot",
+      "_note": "PulseSw 13. RightSlingShot_Slingshot event. Has 3-step sling animation."
+    },
+    {
+      "id": 14,
+      "description": "Left Kicking Target",
+      "vpx_name": "sw14",
+      "_note": "KTHit 14 via Rothbauerw KickingTarget class. sw14col_hit triggers KTKick. Kickback solenoid 5 (commented out)."
+    },
+    {
+      "id": 15,
+      "description": "Center Kicking Target",
+      "vpx_name": "sw15",
+      "_note": "KTHit 15 via KickingTarget class. sw15col_hit triggers KTKick. Kickback solenoid 6 (commented out)."
+    },
+    {
+      "id": 16,
+      "description": "Right Kicking Target",
+      "vpx_name": "sw16",
+      "_note": "KTHit 16 via KickingTarget class. sw16col_hit triggers KTKick. Kickback solenoid 7 (commented out)."
+    },
+    {
+      "id": 17,
+      "description": "Left Drop Target 1 (Top)",
+      "vpx_name": "sw17",
+      "_note": "DTHit 17. Part of 3-bank left drop targets (17/27/37). Reset by sol 17 LeftDropUp."
+    },
+    {
+      "id": 21,
+      "description": "Glider Forward Position (Home)",
+      "_note": "Controller.Switch(21) set by GliderTimer when GliderY <= GliderYMin + 2. Indicates glider is at home/forward position."
     },
     {
       "id": 22,
-      "_note": " PulseSw 22."
+      "description": "Standup Target",
+      "vpx_name": "sw22",
+      "_note": "PulseSw 22. sw22_Hit. Has standup target animation via STHit (not used directly - uses direct PulseSw instead)."
     },
     {
-      "id": 23
+      "id": 23,
+      "description": "Center VUK (Saucer)",
+      "vpx_name": "sw23",
+      "_note": "Controller.Switch(23) on/off. sw23_Hit captures ball. BotPop (sol 11) kicks ball out with KickBall velocity z=60."
     },
     {
-      "id": 24
+      "id": 24,
+      "description": "Drain / Outhole",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain",
+      "_note": "Controller.Switch(24) on/off. Drain_Hit/UnHit. Init: Controller.Switch(24)=1. SolTrough (sol 29) kicks ball from Drain."
     },
     {
-      "id": 25
+      "id": 25,
+      "description": "Left Kicker Hole",
+      "vpx_name": "sw25",
+      "_note": "Controller.Switch(25) on/off. sw25_Hit/UnHit. SolLeftPlunge (sol 8) kicks ball out with sw25.Kick 0,40."
     },
     {
-      "id": 30
+      "id": 26,
+      "description": "Top Drop Target 1 (Left)",
+      "vpx_name": "sw26",
+      "_note": "DTHit 26. Part of 2-bank top drop targets (26/36). Reset by sol 18 TopDropUp."
     },
     {
-      "id": 31
+      "id": 27,
+      "description": "Left Drop Target 2 (Middle)",
+      "vpx_name": "sw27",
+      "_note": "DTHit 27. Part of 3-bank left drop targets (17/27/37). Reset by sol 17 LeftDropUp."
     },
     {
-      "id": 33
+      "id": 30,
+      "description": "Glider Right Position (Limit)",
+      "_note": "Controller.Switch(30) set by GliderTimer when GliderRot > GliderRotMax - 1. Indicates glider LR motor at right limit."
     },
     {
-      "id": 34
+      "id": 31,
+      "description": "Shooter Lane / Plunger Lane",
+      "vpx_name": "SW31",
+      "_note": "Controller.Switch(31) on/off via SW31_Hit/UnHit wire trigger. Ball presence checked on PlungerKey release. plungerIM.InitImpulseP swPlunger references this via GTS3 framework."
     },
     {
-      "id": 80
+      "id": 32,
+      "description": "Standup Target (Center)",
+      "vpx_name": "sw32",
+      "_note": "STHit 32. Standup target with animation via UpdateStandupTargets."
     },
     {
-      "id": 81
+      "id": 33,
+      "description": "Right VUK (Saucer)",
+      "vpx_name": "sw33",
+      "_note": "Controller.Switch(33) on/off. sw33_Hit captures KickerBall33. VukTopPop (sol 12) kicks ball with KickBall velocity z=40."
     },
     {
-      "id": 82
+      "id": 34,
+      "description": "Trough Full (Ball Ready)",
+      "vpx_name": "swTrough3",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "Controller.Switch(34) set by swTrough3_Hit/UnHit. Init: Controller.Switch(34)=1. Indicates ball is in last trough position (ready for release)."
+    },
+    {
+      "id": 35,
+      "description": "Right Single Drop Target",
+      "vpx_name": "sw35",
+      "_note": "DTHit 35. Single drop target on right side. Reset by sol 19 RightDropUp. Trip by sol 20 RightDropTrip."
+    },
+    {
+      "id": 36,
+      "description": "Top Drop Target 2 (Right)",
+      "vpx_name": "sw36",
+      "_note": "DTHit 36. Part of 2-bank top drop targets (26/36). Reset by sol 18 TopDropUp."
+    },
+    {
+      "id": 37,
+      "description": "Left Drop Target 3 (Bottom)",
+      "vpx_name": "sw37",
+      "_note": "DTHit 37. Part of 3-bank left drop targets (17/27/37). Reset by sol 17 LeftDropUp."
+    },
+    {
+      "id": 80,
+      "description": "Left VUK (Saucer)",
+      "vpx_name": "sw80",
+      "_note": "Controller.Switch(80) on/off. sw80_Hit captures KickerBall80. LeftPop (sol 10) kicks ball with KickBall velocity z=40."
+    },
+    {
+      "id": 81,
+      "description": "Left Flipper Button",
+      "_note": "Controller.Switch(81) set by LeftFlipperKey in KeyDown/KeyUp handlers."
+    },
+    {
+      "id": 82,
+      "description": "Right Flipper Button",
+      "_note": "Controller.Switch(82) set by RightFlipperKey in KeyDown/KeyUp handlers. Also triggers RightFlipper1.RotateToStart on KeyUp."
     },
     {
       "id": 90,
-      "_note": " PulseSw 90."
+      "description": "Ramp Trigger (Left Ramp)",
+      "vpx_name": "sw90",
+      "_note": "PulseSw 90. sw90_Hit."
     },
     {
       "id": 91,
-      "_note": " PulseSw 91."
+      "description": "Pyramid Switch Subway",
+      "vpx_name": "sw91",
+      "_note": "PulseSw 91. sw91_Hit. Ball enters pyramid subway. Sound popperball_pyramide."
     },
     {
       "id": 100,
-      "_note": " PulseSw 100."
+      "description": "Ramp Trigger (Center Ramp)",
+      "vpx_name": "sw100",
+      "_note": "PulseSw 100. sw100_Hit."
     },
     {
-      "id": 101
+      "id": 101,
+      "description": "Diverter Position (Gate Open)",
+      "_note": "Controller.Switch(101) set by SolDiv (sol 13). Set to 1 when diverter opens, 0 when closes. Feedback switch for ROM."
     },
     {
-      "id": 102
+      "id": 102,
+      "description": "Pyramid Position (Open)",
+      "_note": "Controller.Switch(102) set by SolPyramid (sol 16) via delayed timer (500ms). Set to -1 (true) when open, 0 when closed."
     },
     {
       "id": 110,
-      "_note": " PulseSw 110."
+      "description": "Ramp Trigger (Right Ramp)",
+      "vpx_name": "sw110",
+      "_note": "PulseSw 110. sw110_Hit."
     },
     {
-      "id": 111
+      "id": 111,
+      "description": "Wire Trigger / Rollover 1",
+      "vpx_name": "SW111",
+      "_note": "Controller.Switch(111) on/off. SW111_Hit/UnHit with wire animation."
     },
     {
-      "id": 112
+      "id": 112,
+      "description": "Wire Trigger / Left Inlane",
+      "vpx_name": "SW112",
+      "_note": "Controller.Switch(112) on/off. SW112_Hit/UnHit with wire animation. Triggers leftInlaneSpeedLimit physics correction."
     },
     {
-      "id": 113
+      "id": 113,
+      "description": "Wire Trigger / Right Inlane",
+      "vpx_name": "SW113",
+      "_note": "Controller.Switch(113) on/off. SW113_Hit/UnHit with wire animation. Triggers rightInlaneSpeedLimit physics correction."
     },
     {
-      "id": 114
+      "id": 114,
+      "description": "Wire Trigger / Rollover 4",
+      "vpx_name": "SW114",
+      "_note": "Controller.Switch(114) on/off. SW114_Hit/UnHit with wire animation."
     },
     {
-      "id": 115
+      "id": 115,
+      "description": "Wire Trigger / Rollover 5",
+      "vpx_name": "SW115",
+      "_note": "Controller.Switch(115) on/off. SW115_Hit/UnHit with wire animation."
+    },
+    {
+      "id": 116,
+      "description": "Left Guardian Standup Target",
+      "vpx_name": "sw116",
+      "_note": "STHit 116. Collidable only when LeftGuardianDown=True. SolPivL (sol 14) makes sw116 non-collidable when pivot opens."
+    },
+    {
+      "id": 117,
+      "description": "Right Guardian Standup Target",
+      "vpx_name": "sw117",
+      "_note": "STHit 117. Collidable only when RightGuardianDown=True. SolPivR (sol 15) makes sw117 non-collidable when pivot opens."
     }
   ],
   "coils": [
     {
-      "id": 0,
-      "_note": "No coils detected"
+      "id": 1,
+      "description": "Bumper 1 (Left Pop)",
+      "_vbscript_callback": "(commented out)",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback(1) commented out -- 'Bumper 1'. Handled by VPX physics."
+    },
+    {
+      "id": 2,
+      "description": "Bumper 2 (Top Pop)",
+      "_vbscript_callback": "(commented out)",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback(2) commented out -- 'Bumper 2'. Handled by VPX physics."
+    },
+    {
+      "id": 3,
+      "description": "Left Slingshot",
+      "_vbscript_callback": "(commented out)",
+      "_inferred_type": "slingshot",
+      "_note": "SolCallback(3) commented out -- 'Left SlingShot'. Handled by VPX physics."
+    },
+    {
+      "id": 4,
+      "description": "Right Slingshot",
+      "_vbscript_callback": "(commented out)",
+      "_inferred_type": "slingshot",
+      "_note": "SolCallback(4) commented out -- 'Right SlingShot'. Handled by VPX physics."
+    },
+    {
+      "id": 5,
+      "description": "Kicking Target Kickback (sw14)",
+      "_vbscript_callback": "(commented out)",
+      "_inferred_type": "kicker",
+      "_note": "SolCallback(5) commented out -- 'sw14 kickback'. Kicking target kickback for left target."
+    },
+    {
+      "id": 6,
+      "description": "Kicking Target Kickback (sw15)",
+      "_vbscript_callback": "(commented out)",
+      "_inferred_type": "kicker",
+      "_note": "SolCallback(6) commented out -- 'sw15 kickback'. Kicking target kickback for center target."
+    },
+    {
+      "id": 7,
+      "description": "Kicking Target Kickback (sw16)",
+      "_vbscript_callback": "(commented out)",
+      "_inferred_type": "kicker",
+      "_note": "SolCallback(7) commented out -- 'sw16 kickback'. Kicking target kickback for right target."
+    },
+    {
+      "id": 8,
+      "description": "Left Kicker Eject",
+      "_vbscript_callback": "SolLeftPlunge",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw25",
+      "_note": "Kicks ball from sw25 kicker hole. sw25.Kick 0,40. Sound S08_LowerLeftKicker."
+    },
+    {
+      "id": 9,
+      "description": "Auto Plunger / Auto Fire",
+      "_vbscript_callback": "SolAutoFire",
+      "_inferred_type": "ball_management",
+      "_note": "Impulse plunger auto-fire. PlungerIM.AutoFire. Animates APFlipper. Sound S09_ShooterLaneKicker."
+    },
+    {
+      "id": 10,
+      "description": "Left VUK Eject",
+      "_vbscript_callback": "LeftPop",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw80",
+      "_note": "Kicks ball from left VUK (sw80). KickBall velocity z=40."
+    },
+    {
+      "id": 11,
+      "description": "Center VUK Eject",
+      "_vbscript_callback": "BotPop",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw23",
+      "_note": "Kicks ball from center VUK (sw23). KickBall velocity z=60."
+    },
+    {
+      "id": 12,
+      "description": "Right VUK Eject (Top Pop)",
+      "_vbscript_callback": "VukTopPop",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw33",
+      "_note": "Kicks ball from right VUK (sw33). KickBall velocity z=40."
+    },
+    {
+      "id": 13,
+      "description": "Diverter",
+      "_vbscript_callback": "SolDiv",
+      "_inferred_type": "diverter",
+      "vpx_name": "Flipper1",
+      "_note": "Controls diverter gate via Flipper1 VPX flipper object. Sets Controller.Switch(101) for position feedback. Sound S13_LowerLeftBallGateOpen/Close."
+    },
+    {
+      "id": 14,
+      "description": "Left Guardian Pivot Target",
+      "_vbscript_callback": "SolPivL",
+      "_inferred_type": "mechanism",
+      "vpx_name": "LeftFlipper2",
+      "_note": "Opens/closes left guardian pivot. Sets sw116/sw116a collidable state. Uses LeftFlipper2 VPX flipper. TrapTriggerL_Hit auto-opens if ball stuck behind. Sound S14_LeftPivotTargetOpen/Close."
+    },
+    {
+      "id": 15,
+      "description": "Right Guardian Pivot Target",
+      "_vbscript_callback": "SolPivR",
+      "_inferred_type": "mechanism",
+      "vpx_name": "RightFlipper2",
+      "_note": "Opens/closes right guardian pivot. Sets sw117/sw117a collidable state. Uses RightFlipper2 VPX flipper. TrapTriggerR_Hit auto-opens if ball stuck behind. Sound S15_RightPivotTargetOpen/Close."
+    },
+    {
+      "id": 16,
+      "description": "Pyramid Unit Motor",
+      "_vbscript_callback": "SolPyramid",
+      "_inferred_type": "mechanism",
+      "vpx_name": "LeftFlipper1",
+      "_note": "Opens/closes pyramid mechanism. Uses LeftFlipper1 VPX flipper for animation. Sets Controller.Switch(102) via 500ms delayed timer. Sound S16_TopPyramidOpen/Close."
+    },
+    {
+      "id": 17,
+      "description": "Left Drop Target Bank Reset (3-Bank)",
+      "_vbscript_callback": "LeftDropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets 3-bank left drop targets (sw17/sw27/sw37). DTRaise 17,27,37. Sound S17_3BankDropTargetReset."
+    },
+    {
+      "id": 18,
+      "description": "Top Drop Target Bank Reset (2-Bank)",
+      "_vbscript_callback": "TopDropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets 2-bank top drop targets (sw26/sw36). DTRaise 26,36. Sound S18_2BankDropTargetReset."
+    },
+    {
+      "id": 19,
+      "description": "Right Drop Target Reset (Single)",
+      "_vbscript_callback": "RightDropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets single right drop target (sw35). DTRaise 35. Sound S19_RollOverTargetReset."
+    },
+    {
+      "id": 20,
+      "description": "Right Drop Target Trip (Single)",
+      "_vbscript_callback": "RightDropTrip",
+      "_inferred_type": "drop_target_trip",
+      "_note": "Trips/drops single right drop target (sw35). DTDrop 35. Sound S20_RollOverTargetTrip."
+    },
+    {
+      "id": 21,
+      "description": "Not Used",
+      "_vbscript_callback": "(commented out)",
+      "_inferred_type": "unused",
+      "_note": "SolCallback(21) commented out -- 'Not Used'."
+    },
+    {
+      "id": 22,
+      "description": "Backglass Rope Lights",
+      "_vbscript_callback": "SolBGRopeLights",
+      "_inferred_type": "mechanism",
+      "is_lamp": true,
+      "_note": "Controls backglass rope lights. VR mode only: toggles BGTube.state. No playfield effect in desktop mode."
+    },
+    {
+      "id": 23,
+      "description": "Glider Left/Right Motor",
+      "_vbscript_callback": "SolGlid1",
+      "_inferred_type": "mechanism",
+      "_note": "Controls glider left-right oscillation motor. Sets GliderLROn flag. GliderTimer drives animation and sets sw30 (right limit position). Sound Glidercraft."
+    },
+    {
+      "id": 24,
+      "description": "Glider Forward Motor",
+      "_vbscript_callback": "SolGlid2",
+      "_inferred_type": "mechanism",
+      "_note": "Controls glider forward-backward motor. Sets GliderFROn flag. GliderTimer drives animation and sets sw21 (home position). Sound Glidercraft_retract."
+    },
+    {
+      "id": 25,
+      "description": "Not Used",
+      "_vbscript_callback": "(commented out)",
+      "_inferred_type": "unused",
+      "_note": "SolCallback(25) commented out -- 'Not Used'."
+    },
+    {
+      "id": 26,
+      "description": "Backbox GI (used as Playfield GI)",
+      "_vbscript_callback": "SolBBGI",
+      "_inferred_type": "mechanism",
+      "is_lamp": true,
+      "_note": "Backbox GI control. VR mode only effect (BGLights state toggle, currently commented out)."
+    },
+    {
+      "id": 27,
+      "description": "Ticket Dispenser",
+      "_vbscript_callback": "(commented out)",
+      "_inferred_type": "mechanism",
+      "_note": "SolCallback(27) commented out -- 'Ticket dispenser'. Not implemented."
+    },
+    {
+      "id": 28,
+      "description": "Ball Release (Trough Eject)",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "vpx_name": "swTrough1",
+      "_note": "Ejects ball from trough position 1 (swTrough1). swTrough1.kick 57,10. Sound S28_BallRelease."
+    },
+    {
+      "id": 29,
+      "description": "Drain Kicker (Trough Entry)",
+      "_vbscript_callback": "SolTrough",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "vpx_name": "Drain",
+      "_note": "Kicks ball from Drain into trough. Drain.kick 57,20. Separate from ball release -- feeds trough from outhole."
+    },
+    {
+      "id": 30,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker",
+      "_note": "Cabinet knocker solenoid. Sound S30_Knocker."
+    },
+    {
+      "id": 31,
+      "description": "GI Relay / Tilt Relay (Playfield GI)",
+      "_vbscript_callback": "GIState",
+      "_inferred_type": "mechanism",
+      "is_lamp": true,
+      "_note": "Playfield GI control. INVERTED: Not Enabled = GI ON (gilvl=1), Enabled = GI OFF (gilvl=0). Iterates GI collection setting bulb.State. Sound Flash_Relay."
+    },
+    {
+      "id": 32,
+      "description": "Game Over Relay",
+      "_vbscript_callback": "(commented out)",
+      "_inferred_type": "mechanism",
+      "_note": "SolCallback(32) commented out -- 'Game Over Relay'. Standard GTS3 game over relay, not implemented in VBS."
     }
   ],
   "lamps": [
     {
       "id": 0,
-      "_note": "No lamps detected"
+      "vpx_name": "L0",
+      "_note": "From BL_L_L0 lightmap array. Illuminates LF, RF, Parts, Playfield, UnderPF."
+    },
+    {
+      "id": 5,
+      "vpx_name": "L5",
+      "_note": "From BL_L_L5 lightmap array. Illuminates RSling1 area."
+    },
+    {
+      "id": 6,
+      "vpx_name": "L6",
+      "_note": "From BL_L_L6 lightmap array. Illuminates RSling area."
+    },
+    {
+      "id": 7,
+      "vpx_name": "L7",
+      "_note": "From BL_L_L7 lightmap array. Illuminates RSling area."
+    },
+    {
+      "id": 11,
+      "vpx_name": "L11",
+      "_note": "From BL_L_L11 lightmap array. Illuminates left slingshot area (LSling, Layer2)."
+    },
+    {
+      "id": 12,
+      "vpx_name": "L12",
+      "_note": "From BL_L_L12 lightmap array. Illuminates left slingshot area."
+    },
+    {
+      "id": 13,
+      "vpx_name": "L13",
+      "_note": "From BL_L_L13 lightmap array. Illuminates right slingshot area (RSling)."
+    },
+    {
+      "id": 14,
+      "vpx_name": "L14",
+      "_note": "From BL_L_L14 lightmap array."
+    },
+    {
+      "id": 15,
+      "vpx_name": "L15",
+      "_note": "From BL_L_L15 lightmap array. Illuminates Bumper1 skirt, DT_sw37 area."
+    },
+    {
+      "id": 16,
+      "vpx_name": "L16",
+      "_note": "From BL_L_L16 lightmap array."
+    },
+    {
+      "id": 17,
+      "vpx_name": "L17",
+      "_note": "From BL_L_L17 lightmap array. Illuminates Bumper1 skirt, DT_sw26 area."
+    },
+    {
+      "id": 21,
+      "vpx_name": "L21",
+      "_note": "From BL_L_L21 lightmap array."
+    },
+    {
+      "id": 22,
+      "vpx_name": "L22",
+      "_note": "From BL_L_L22 lightmap array."
+    },
+    {
+      "id": 23,
+      "vpx_name": "L23",
+      "_note": "From BL_L_L23 lightmap array."
+    },
+    {
+      "id": 24,
+      "vpx_name": "L24",
+      "_note": "From BL_L_L24 lightmap array."
+    },
+    {
+      "id": 25,
+      "vpx_name": "L25",
+      "_note": "From BL_L_L25 lightmap array. Illuminates Layer1, RF1/RF1U area."
+    },
+    {
+      "id": 26,
+      "vpx_name": "L26",
+      "_note": "From BL_L_L26 lightmap array. Illuminates Layer1, RF1U area."
+    },
+    {
+      "id": 27,
+      "vpx_name": "L27",
+      "_note": "From BL_L_L27 lightmap array. Illuminates DT_sw35, Layer1 area."
+    },
+    {
+      "id": 32,
+      "vpx_name": "L32",
+      "_note": "From BL_L_L32 lightmap array."
+    },
+    {
+      "id": 33,
+      "vpx_name": "L33",
+      "_note": "From BL_L_L33 lightmap array. Illuminates DT_sw26 area."
+    },
+    {
+      "id": 34,
+      "vpx_name": "L34",
+      "_note": "From BL_L_L34 lightmap array. Illuminates DT_sw26, DT_sw36 area."
+    },
+    {
+      "id": 35,
+      "vpx_name": "L35",
+      "_note": "From BL_L_L35 lightmap array. Illuminates RF1U area."
+    },
+    {
+      "id": 36,
+      "vpx_name": "L36",
+      "_note": "From BL_L_L36 lightmap array."
+    },
+    {
+      "id": 37,
+      "vpx_name": "L37",
+      "_note": "From BL_L_L37 lightmap array."
+    },
+    {
+      "id": 41,
+      "description": "Left Bumper Lamp",
+      "vpx_name": "L41",
+      "_note": "From BL_L_L41 lightmap array. Illuminates Bumper1 ring and skirt."
+    },
+    {
+      "id": 42,
+      "description": "Top Bumper Lamp",
+      "vpx_name": "L42",
+      "_note": "From BL_L_L42 lightmap array. Illuminates Bumper2 ring, skirt, Plastics."
+    },
+    {
+      "id": 43,
+      "vpx_name": "L43",
+      "_note": "From BL_L_L43 lightmap array. Illuminates Bumper1 ring/skirt, Layer2, SideBlades."
+    },
+    {
+      "id": 44,
+      "vpx_name": "L44",
+      "_note": "From BL_L_L44 lightmap array. Illuminates Bumper2 ring/skirt, GuardianL, KT_sw14."
+    },
+    {
+      "id": 45,
+      "vpx_name": "L45",
+      "_note": "From BL_L_L45 lightmap array. Illuminates DT_sw36 area."
+    },
+    {
+      "id": 46,
+      "vpx_name": "L46",
+      "_note": "From BL_L_L46 lightmap array. Illuminates DT_sw36, ST_sw32 area."
+    },
+    {
+      "id": 47,
+      "vpx_name": "L47",
+      "_note": "From BL_L_L47 lightmap array. Illuminates ST_sw32 area."
+    },
+    {
+      "id": 55,
+      "vpx_name": "L55",
+      "_note": "From BL_L_L55 lightmap array. Illuminates ST_sw32 area."
+    },
+    {
+      "id": 56,
+      "vpx_name": "L56",
+      "_note": "From BL_L_L56 lightmap array."
+    },
+    {
+      "id": 57,
+      "vpx_name": "L57",
+      "_note": "From BL_L_L57 lightmap array. Illuminates KT_sw15 area."
+    },
+    {
+      "id": 65,
+      "vpx_name": "L65",
+      "_note": "From BL_L_L65 lightmap array. Illuminates GuardianR area."
+    },
+    {
+      "id": 66,
+      "vpx_name": "L66",
+      "_note": "From BL_L_L66 lightmap array. Illuminates GuardianR area."
+    },
+    {
+      "id": 67,
+      "vpx_name": "L67",
+      "_note": "From BL_L_L67 lightmap array. Illuminates GuardianR area."
+    },
+    {
+      "id": 71,
+      "vpx_name": "L71",
+      "_note": "From BL_L_L71 lightmap array."
+    },
+    {
+      "id": 72,
+      "vpx_name": "L72",
+      "_note": "From BL_L_L72 lightmap array."
+    },
+    {
+      "id": 73,
+      "vpx_name": "L73",
+      "_note": "From BL_L_L73 lightmap array."
+    },
+    {
+      "id": 74,
+      "vpx_name": "L74",
+      "_note": "From BL_L_L74 lightmap array."
+    },
+    {
+      "id": 75,
+      "vpx_name": "L75",
+      "_note": "From BL_L_L75 lightmap array."
+    },
+    {
+      "id": 76,
+      "vpx_name": "L76",
+      "_note": "From BL_L_L76 lightmap array. Illuminates KT_sw16 area."
+    },
+    {
+      "id": 77,
+      "vpx_name": "L77",
+      "_note": "From BL_L_L77 lightmap array."
+    },
+    {
+      "id": 81,
+      "vpx_name": "L81",
+      "_note": "From BL_L_L81 lightmap array. Illuminates left slingshot area."
+    },
+    {
+      "id": 82,
+      "vpx_name": "L82",
+      "_note": "From BL_L_L82 lightmap array. Illuminates LF (left flipper), LSling area."
+    },
+    {
+      "id": 83,
+      "vpx_name": "L83",
+      "_note": "From BL_L_L83 lightmap array. Illuminates LF (left flipper) area."
+    },
+    {
+      "id": 84,
+      "vpx_name": "L84",
+      "_note": "From BL_L_L84 lightmap array. Illuminates RF (right flipper) area."
+    },
+    {
+      "id": 85,
+      "vpx_name": "L85",
+      "_note": "From BL_L_L85 lightmap array. Illuminates RF (right flipper), RSling area."
+    },
+    {
+      "id": 86,
+      "vpx_name": "L86",
+      "_note": "From BL_L_L86 lightmap array. Illuminates RSling1 area."
+    },
+    {
+      "id": 87,
+      "vpx_name": "L87",
+      "_note": "From BL_L_L87 lightmap array."
+    },
+    {
+      "id": 90,
+      "description": "Backglass Lamp (Glass/Metal)",
+      "vpx_name": "L90",
+      "_note": "From BL_BC_L90 backglass lightmap array. Illuminates Glass, Metal, VRRR."
+    },
+    {
+      "id": 92,
+      "description": "Backglass Lamp",
+      "vpx_name": "L92",
+      "_note": "From BL_BC_L92 backglass lightmap array. Illuminates Metal, VRRR."
+    },
+    {
+      "id": 112,
+      "description": "Backglass Lamp",
+      "vpx_name": "L112",
+      "_note": "From BL_BC_L112 backglass lightmap array. Illuminates Metal, VRRR."
+    },
+    {
+      "id": 120,
+      "description": "Flasher 0",
+      "vpx_name": "L120",
+      "_note": "L120_animate sets f0.state = L120.state. Flasher lamp mapped to f0 VPX light. Part of Flashers collection (color/brightness options). BL_F_f0 lightmap illuminates Bumper1 ring/skirt, Bumper2, KT_sw14, Parts, Plastics, Playfield, SideBlades."
+    },
+    {
+      "id": 121,
+      "description": "Flasher 1",
+      "vpx_name": "L121",
+      "_note": "L121_animate sets f1.state = L121.state. Flasher lamp mapped to f1 VPX light. BL_F_f1 lightmap illuminates DT_sw36, Glider, GuardianL/R, KT_sw15, Layer1/2, Pyramid1, RF1U, ST_sw32."
+    },
+    {
+      "id": 122,
+      "description": "Flasher 2",
+      "vpx_name": "L122",
+      "_note": "L122_animate sets f2.state = L122.state. Flasher lamp mapped to f2 VPX light. BL_F_f2 lightmap illuminates Glider, GuardianR, KT_sw15, Layer1/2, Pyramid1, ST_sw22."
+    },
+    {
+      "id": 123,
+      "description": "Flasher 3",
+      "vpx_name": "L123",
+      "_note": "L123_animate sets f3.state = L123.state. Flasher lamp mapped to f3 VPX light. BL_F_f3 lightmap illuminates Glider, GuardianR, Layer2, Pyramid1."
+    },
+    {
+      "id": 124,
+      "description": "Flasher 4",
+      "vpx_name": "L124",
+      "_note": "L124_animate sets f4.state = L124.state. Flasher lamp mapped to f4 VPX light. BL_F_f4 lightmap illuminates DT_sw26/sw36, Glider, GuardianL/R, KT_sw15, LSling, Layer1, Pyramid1, RF1, ST_sw22/sw32."
+    },
+    {
+      "id": 125,
+      "description": "Flasher 5",
+      "vpx_name": "L125",
+      "_note": "L125_animate sets f5.state = L125.state. Flasher lamp mapped to f5 VPX light. BL_F_f5 lightmap illuminates Bumper2, DT_sw17/sw26/sw27/sw35/sw36/sw37, KT_sw16, LF/RF, LSling/RSling, SarcArm, SlingL."
+    },
+    {
+      "id": 126,
+      "description": "Backglass Lamp (VR Room)",
+      "vpx_name": "L126",
+      "_note": "From BL_BC_L126 backglass lightmap array. LM_BC_L126_VRRR only. Has special color handling in SetGiColor JLou mode."
     }
   ],
-  "aliases": []
+  "aliases": [
+    {
+      "id": 33,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper from GTS3.VBS framework. SolCallback(sLRFlipper) = 'SolRFlipper'. VPX object: RightFlipper. nFozzy RF.Fire implementation."
+    },
+    {
+      "id": 34,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper from GTS3.VBS framework. SolCallback(sLLFlipper) = 'SolLFlipper'. VPX object: LeftFlipper. nFozzy LF.Fire implementation."
+    },
+    {
+      "id": 35,
+      "alias": "c_flipper_upper_right",
+      "type": "coil",
+      "_note": "sURFlipper from GTS3.VBS framework. SolCallback(sURFlipper) = 'SolURFlipper'. VPX object: RightFlipper1. RotateToEnd/Start (no nFozzy for upper)."
+    }
+  ]
 }

@@ -2,118 +2,600 @@
   "_format": "vpe-game-mapping",
   "_version": "0.1",
   "_source": {
-    "origin": "vbscript-parser",
+    "origin": "vbscript-agent-extracted",
     "source_file": "Space Station (Williams 1987) VPW v1.0.vbs",
     "extracted": "2026-02-14",
     "status": "auto-extracted-needs-review",
-    "confidence_notes": "SEMI-AUTOMATED \u2014 Manual review required. Extraction based on regex patterns; complex VBS logic may be missed."
+    "confidence_notes": "High confidence extraction from VPW VBScript. Platform detected as System 11 via LoadVPM call loading 's11.vbs'. ROM identified as 'spstn_l5' from Const cGameName. Trough is a pre-cvpmTrough manual implementation: sw10 is drain (outhole), sw11-sw13 are trough positions with sw13 nearest drain and sw11 nearest shooter. SolTrough (sol 1) kicks from sw10, SolRelease (sol 2) kicks from sw11 to shooter lane. UpdateTrough timer cascades balls from sw13 to sw12 to sw11 using BallCntOver checks. Tilt switch is 9 per vpmNudge.TiltSwitch assignment. Start button is switch 3, handled via StartGameKey in KeyUp (Controller.Switch(3)=0 on release). Space Station toy motor (sol 16) drives a rotating UFO mechanism via MotorPos variable (0-360 degrees). Motor position drives two switches: sw52 is ON when MotorPos>180, sw53 is ON when MotorPos between 90 and 270. This is NOT cvpmMech -- it is custom code in MotorUpdate() called from the main timer. Four VUKs: sw41 (upper left, sol 3), sw42 (upper right, sol 4), sw45 (right dock, sol 17), sw47 (left dock, sol 32). Kickback at sol 13 fires a VPX Kickback object. A/C Select Relay (sol 12) is a System 11 wiring feature. Standup targets spell 'SHUTTLE' (sw18-24), 'STA' (sw25-27), 'TION' (sw28-31), and 'Change' (sw35). Drop targets: sw33 is single drop target (reset by sol 8), sw57-59 are 3-bank drop targets (reset by sol 6). Slingshots are PulseSw 63 (left) and 64 (right). Bumpers are PulseSw 60-62. Rubber switches sw50 and sw54 use PulseSw. Flipper solenoids use framework constants sLRFlipper and sLLFlipper from s11.vbs. Lamps extracted from BL_IN_l* VLM arrays -- IDs 1-64 present with gaps at 37, 41, 46-49, 57. Flashers on SolModCallback: sol 15 (top panel x3), sol 25 (relaunch+ON), sol 26 (left side+SP), sol 27 (right side+AC), sol 28 (upper playfield+ES), sol 29 (top panel+TA), sol 30 (flame+TI), sol 31 (station x2 backbox). GI controlled via SolModCallback 9 (playfield level), sol 10 (green select), sol 11 (backbox). Comment notes sols 18-22 are slings and pop bumpers (handled by VPX physics, not in SolCallback). Sol 5 and 14 explicitly commented as unused."
   },
   "game": {
     "id": "space-station",
-    "name": "Space Station (Williams 1987) VPW v1.0",
+    "name": "Space Station",
     "year": 1987,
     "manufacturer": "Williams",
-    "platform": "sega"
+    "ipdb_id": 2261,
+    "platform": "s11"
   },
   "roms": [
     {
-      "id": "space-station"
+      "id": "spstn_l5",
+      "version": "L-5",
+      "language": "en"
     }
   ],
   "switches": [
     {
-      "id": 3
+      "id": 3,
+      "description": "Start Button",
+      "input_action_hint": "start_game",
+      "input_map_hint": "cabinet",
+      "_note": "Controller.Switch(3) set to 0 on StartGameKey release in Table1_KeyUp. System 11 start button."
     },
     {
-      "id": 10
+      "id": 9,
+      "description": "Tilt (Plumb Bob)",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 9. Tilt bob switch."
     },
     {
-      "id": 11
+      "id": 10,
+      "description": "Drain (Outhole)",
+      "vpx_name": "sw10",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "sw10_Hit/UnHit sets Controller.Switch(10). Ball drains here, then SolTrough (sol 1) kicks from sw10 into trough. Plays RandomSoundDrain on hit."
     },
     {
-      "id": 12
+      "id": 11,
+      "description": "Trough 3 (Nearest Shooter)",
+      "vpx_name": "sw11",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "sw11_Hit/UnHit sets Controller.Switch(11). Forced ON at init. SolRelease (sol 2) kicks from sw11 to shooter lane. Nearest to ball eject."
     },
     {
-      "id": 13
+      "id": 12,
+      "description": "Trough 2",
+      "vpx_name": "sw12",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "sw12_Hit/UnHit sets Controller.Switch(12). Forced ON at init. UpdateTrough cascades: if sw11 empty, kicks from sw12."
     },
     {
-      "id": 14
+      "id": 13,
+      "description": "Trough 1 (Nearest Drain)",
+      "vpx_name": "sw13",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "sw13_Hit/UnHit sets Controller.Switch(13). Forced ON at init. UpdateTrough cascades: if sw12 empty, kicks from sw13."
     },
     {
-      "id": 15
+      "id": 14,
+      "description": "Upper Playfield Rollover 1",
+      "vpx_name": "sw14",
+      "_note": "Controller.Switch(14) on/off. Comment says 'Upper Playfield'. One of three upper playfield rollovers."
     },
     {
-      "id": 16
+      "id": 15,
+      "description": "Upper Playfield Rollover 2",
+      "vpx_name": "sw15",
+      "_note": "Controller.Switch(15) on/off. Comment says 'Upper Playfield'. Second upper playfield rollover."
     },
     {
-      "id": 17
+      "id": 16,
+      "description": "Upper Playfield Rollover 3",
+      "vpx_name": "sw16",
+      "_note": "Controller.Switch(16) on/off. Comment says 'Upper Playfield'. Third upper playfield rollover."
     },
     {
-      "id": 32
+      "id": 17,
+      "description": "Left Inlane",
+      "vpx_name": "sw17",
+      "_note": "Controller.Switch(17) on/off. Comment says 'Left Inlane'. Plays RandomSoundOutlaneRollover on hit."
     },
     {
-      "id": 37
+      "id": 18,
+      "description": "Standup Target S (SHUTTLE)",
+      "vpx_name": "sw18",
+      "_note": "STHit 18. First letter 'S' of SHUTTLE standup target bank. Part of 7-target SHUTTLE group (sw18-24)."
     },
     {
-      "id": 38
+      "id": 19,
+      "description": "Standup Target H (SHUTTLE)",
+      "vpx_name": "sw19",
+      "_note": "STHit 19. Letter 'H' of SHUTTLE standup target bank."
     },
     {
-      "id": 39
+      "id": 20,
+      "description": "Standup Target U (SHUTTLE)",
+      "vpx_name": "sw20",
+      "_note": "STHit 20. Letter 'U' of SHUTTLE standup target bank."
     },
     {
-      "id": 40
+      "id": 21,
+      "description": "Standup Target T (SHUTTLE 1st T)",
+      "vpx_name": "sw21",
+      "_note": "STHit 21. First letter 'T' of SHUTTLE standup target bank."
     },
     {
-      "id": 41
+      "id": 22,
+      "description": "Standup Target T (SHUTTLE 2nd T)",
+      "vpx_name": "sw22",
+      "_note": "STHit 22. Second letter 'T' of SHUTTLE standup target bank."
     },
     {
-      "id": 42
+      "id": 23,
+      "description": "Standup Target L (SHUTTLE)",
+      "vpx_name": "sw23",
+      "_note": "STHit 23. Letter 'L' of SHUTTLE standup target bank."
     },
     {
-      "id": 43
+      "id": 24,
+      "description": "Standup Target E (SHUTTLE)",
+      "vpx_name": "sw24",
+      "_note": "STHit 24. Letter 'E' of SHUTTLE standup target bank."
     },
     {
-      "id": 45
+      "id": 25,
+      "description": "Standup Target S (STA)",
+      "vpx_name": "sw25",
+      "_note": "STHit 25. Letter 'S' of STA(TION) standup target group (sw25-27)."
     },
     {
-      "id": 46
+      "id": 26,
+      "description": "Standup Target T (STA)",
+      "vpx_name": "sw26",
+      "_note": "STHit 26. Letter 'T' of STA standup target group."
     },
     {
-      "id": 47
+      "id": 27,
+      "description": "Standup Target A (STA)",
+      "vpx_name": "sw27",
+      "_note": "STHit 27. Letter 'A' of STA standup target group."
     },
     {
-      "id": 48
+      "id": 28,
+      "description": "Standup Target T (TION)",
+      "vpx_name": "sw28",
+      "_note": "STHit 28. Letter 'T' of TION standup target group (sw28-31)."
     },
     {
-      "id": 52
+      "id": 29,
+      "description": "Standup Target I (TION)",
+      "vpx_name": "sw29",
+      "_note": "STHit 29. Letter 'I' of TION standup target group."
     },
     {
-      "id": 53
+      "id": 30,
+      "description": "Standup Target O (TION)",
+      "vpx_name": "sw30",
+      "_note": "STHit 30. Letter 'O' of TION standup target group."
+    },
+    {
+      "id": 31,
+      "description": "Standup Target N (TION)",
+      "vpx_name": "sw31",
+      "_note": "STHit 31. Letter 'N' of TION standup target group."
+    },
+    {
+      "id": 32,
+      "description": "Right Inlane",
+      "vpx_name": "sw32",
+      "_note": "Controller.Switch(32) on/off. Comment says 'Right Inlane'. Plays RandomSoundOutlaneRollover on hit."
+    },
+    {
+      "id": 33,
+      "description": "Drop Target (Single)",
+      "vpx_name": "sw33",
+      "_note": "DTHit 33. Single drop target. Reset by sol 8 (ResetDrops1). TargetBouncer applied on hit."
+    },
+    {
+      "id": 35,
+      "description": "Standup Target (Change)",
+      "vpx_name": "sw35",
+      "_note": "STHit 35. Comment says 'Change'. Standalone standup target."
+    },
+    {
+      "id": 37,
+      "description": "Left Orbit",
+      "vpx_name": "sw37",
+      "_note": "Controller.Switch(37) on/off. Comment says 'Left Orbit'. Rollunder switch."
+    },
+    {
+      "id": 38,
+      "description": "USA Rollover 1",
+      "vpx_name": "sw38",
+      "_note": "Controller.Switch(38) on/off. Comment says 'USA Rollover'. Part of 3-rollover USA group (sw38-40)."
+    },
+    {
+      "id": 39,
+      "description": "USA Rollover 2",
+      "vpx_name": "sw39",
+      "_note": "Controller.Switch(39) on/off. Comment says 'USA Rollover'. Second of USA group."
+    },
+    {
+      "id": 40,
+      "description": "USA Rollover 3",
+      "vpx_name": "sw40",
+      "_note": "Controller.Switch(40) on/off. Comment says 'USA Rollover'. Third of USA group."
+    },
+    {
+      "id": 41,
+      "description": "Upper Left VUK (Kicker)",
+      "vpx_name": "sw41",
+      "_note": "Controller.Switch(41) on/off. Upper left VUK. Ball captured on hit (KickerBall41), ejected by sol 3 (KickerUpperLeft). WireRampOn False called on entry."
+    },
+    {
+      "id": 42,
+      "description": "Upper Right VUK (Kicker)",
+      "vpx_name": "sw42",
+      "_note": "Controller.Switch(42) on/off. Upper right VUK. Ball captured on hit (KickerBall42), ejected by sol 4 (KickerUpperRight). WireRampOn False called on entry."
+    },
+    {
+      "id": 43,
+      "description": "Shooter Lane",
+      "vpx_name": "sw43",
+      "_note": "Controller.Switch(43) on/off. Sets BIPL (Ball In Plunger Lane) flag on hit. Used to determine plunger release sound."
+    },
+    {
+      "id": 45,
+      "description": "Right Dock VUK (Kicker)",
+      "vpx_name": "sw45",
+      "_note": "Controller.Switch(45) on/off. Right dock kicker. Ball captured on hit (KickerBall45), ejected by sol 17 (RightDockKick). Has sw45_Animate sub for visual animation."
+    },
+    {
+      "id": 46,
+      "description": "Right Lock Ramp Entry",
+      "vpx_name": "sw46",
+      "_note": "Controller.Switch(46) on/off. Comment says 'Right Lock Ramp Entry'."
+    },
+    {
+      "id": 47,
+      "description": "Left Dock VUK (Kicker)",
+      "vpx_name": "sw47",
+      "_note": "Controller.Switch(47) on/off. Left dock kicker. Ball captured on hit (KickerBall47), ejected by sol 32 (LeftDockKick). WireRampOff called on entry."
+    },
+    {
+      "id": 48,
+      "description": "Left Lock Entry",
+      "vpx_name": "sw48",
+      "_note": "Controller.Switch(48) on/off. Comment says 'Left Lock Entry'. Rollunder switch."
+    },
+    {
+      "id": 50,
+      "description": "Lower Right Rubber Switch",
+      "vpx_name": "sw50_rubber",
+      "_note": "PulseSw 50. Comment says 'Lower Right Rubber Switch'. Triggered by rubber hit event."
+    },
+    {
+      "id": 52,
+      "description": "Space Station Motor Position 1",
+      "_note": "Set by MotorUpdate(): Controller.Switch(52)=1 when MotorPos>180, else 0. Tracks position of rotating space station toy. NOT a physical VPX switch -- driven by motor code."
+    },
+    {
+      "id": 53,
+      "description": "Space Station Motor Position 2",
+      "_note": "Set by MotorUpdate(): Controller.Switch(53)=1 when MotorPos between 90 and 270, else 0. Tracks position of rotating space station toy. NOT a physical VPX switch -- driven by motor code."
+    },
+    {
+      "id": 54,
+      "description": "Upper Right Rubber Switch",
+      "vpx_name": "sw54_rubber",
+      "_note": "PulseSw 54. Comment says 'Uppper Right Rubber Switch'. Triggered by rubber hit event."
+    },
+    {
+      "id": 57,
+      "description": "3-Bank Drop Target 1",
+      "vpx_name": "sw57",
+      "_note": "DTHit 57. First of 3-bank drop targets (sw57-59). Reset by sol 6 (ResetDrops3)."
+    },
+    {
+      "id": 58,
+      "description": "3-Bank Drop Target 2",
+      "vpx_name": "sw58",
+      "_note": "DTHit 58. Second of 3-bank drop targets. Reset by sol 6."
+    },
+    {
+      "id": 59,
+      "description": "3-Bank Drop Target 3",
+      "vpx_name": "sw59",
+      "_note": "DTHit 59. Third of 3-bank drop targets. Reset by sol 6."
     },
     {
       "id": 60,
-      "_note": " PulseSw 60."
+      "description": "Top Pop Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 60. Bumper1_Hit fires PulseSw 60 with RandomSoundBumperTop."
     },
     {
       "id": 61,
-      "_note": " PulseSw 61."
+      "description": "Middle Pop Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 61. Bumper2_Hit fires PulseSw 61 with RandomSoundBumperMiddle."
     },
     {
       "id": 62,
-      "_note": " PulseSw 62."
+      "description": "Bottom Pop Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "PulseSw 62. Bumper3_Hit fires PulseSw 62 with RandomSoundBumperBottom."
+    },
+    {
+      "id": 63,
+      "description": "Left Slingshot",
+      "_note": "PulseSw 63. Fired from LeftSlingShot_Slingshot event via LS.VelocityCorrect."
+    },
+    {
+      "id": 64,
+      "description": "Right Slingshot",
+      "_note": "PulseSw 64. Fired from RightSlingShot_Slingshot event via RS.VelocityCorrect."
     }
   ],
   "coils": [
     {
-      "id": 0,
-      "_note": "No coils detected"
+      "id": 1,
+      "description": "Outhole Kicker (Drain to Trough)",
+      "_vbscript_callback": "SolTrough",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "vpx_name": "sw10",
+      "_note": "SolCallback(1). Kicks ball from drain (sw10) into trough. sw10.kick 57, 10."
+    },
+    {
+      "id": 2,
+      "description": "Ball Release (Trough to Shooter Lane)",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "ball_release",
+      "vpx_name": "sw11",
+      "_note": "SolCallback(2). Kicks ball from trough position 3 (sw11) to shooter lane. sw11.kick 57, 10."
+    },
+    {
+      "id": 3,
+      "description": "Upper Left Ball Popper (VUK)",
+      "_vbscript_callback": "KickerUpperLeft",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw41",
+      "_note": "SolCallback(3). Ejects ball from upper left VUK (sw41). KickBall angle 0, velz 30, zlift 10."
+    },
+    {
+      "id": 4,
+      "description": "Upper Right Ball Popper (VUK)",
+      "_vbscript_callback": "KickerUpperRight",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw42",
+      "_note": "SolCallback(4). Ejects ball from upper right VUK (sw42). KickBall angle 270, velz 60, zlift 10."
+    },
+    {
+      "id": 6,
+      "description": "3-Bank Drop Target Reset",
+      "_vbscript_callback": "ResetDrops3",
+      "_inferred_type": "drop_target_reset",
+      "_note": "SolCallback(6). Raises 3-bank drop targets sw57, sw58, sw59 via DTRaise."
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker",
+      "_note": "SolCallback(7). Cabinet knocker solenoid. Fires KnockerSolenoid sub."
+    },
+    {
+      "id": 8,
+      "description": "Single Drop Target Reset",
+      "_vbscript_callback": "ResetDrops1",
+      "_inferred_type": "drop_target_reset",
+      "_note": "SolCallback(8). Raises single drop target sw33 via DTRaise."
+    },
+    {
+      "id": 9,
+      "description": "GI Playfield (Level)",
+      "_vbscript_callback": "GIUpdates",
+      "_inferred_type": "gi_lighting",
+      "is_lamp": true,
+      "_note": "SolModCallback(9). Controls playfield GI brightness level. Uses SolModCallback (receives intensity level, not on/off)."
+    },
+    {
+      "id": 10,
+      "description": "GI Playfield Green Select",
+      "_vbscript_callback": "GiSelect",
+      "_inferred_type": "gi_lighting",
+      "is_lamp": true,
+      "_note": "SolCallback(10). Selects green GI circuit for playfield."
+    },
+    {
+      "id": 11,
+      "description": "GI Backbox",
+      "_vbscript_callback": "GiBackbox",
+      "_inferred_type": "gi_lighting",
+      "is_lamp": true,
+      "_note": "SolCallback(11). Controls backbox GI. Fires Sound_Solenoid_ACSelect_Relay on state change."
+    },
+    {
+      "id": 12,
+      "description": "A/C Select Relay",
+      "_vbscript_callback": "SolACSelectRelay",
+      "_inferred_type": "mechanism",
+      "_note": "SolCallback(12). System 11 A/C Select Relay. Switches between A and C lamp columns for doubled lamp matrix capacity. Fires Sound_Solenoid_ACSelect_Relay."
+    },
+    {
+      "id": 13,
+      "description": "Left Re-Entry Kickback",
+      "_vbscript_callback": "SolKickBack",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Kickback",
+      "_note": "SolCallback(13). Left kickback. Fires Kickback.Fire on enable, Kickback.PullBack on disable."
+    },
+    {
+      "id": 15,
+      "description": "Flasher: Top Panel (x3 Playfield)",
+      "_vbscript_callback": "SolMod15",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback(15). Playfield top panel flashers. Drives f15, f15b, f15c VPX flasher objects. Comment: '28v Lamps'."
+    },
+    {
+      "id": 16,
+      "description": "Space Station Motor Relay",
+      "_vbscript_callback": "StationMotor",
+      "_inferred_type": "mechanism",
+      "_note": "SolCallback(16). Controls rotating space station toy motor. Custom motor code (not cvpmMech) -- MotorUpdate() runs on main timer, increments MotorPos 0-360 degrees. Motor drives sw52 and sw53 position switches and UpdateUFO visual animation with 4-position diverter logic."
+    },
+    {
+      "id": 17,
+      "description": "Right Dock Kickback",
+      "_vbscript_callback": "RightDockKick",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw45",
+      "_note": "SolCallback(17). Ejects ball from right dock VUK (sw45). KickBall angle 0, random vel 16-24."
+    },
+    {
+      "id": 25,
+      "description": "Flasher: Relaunch + ON Backbox (x2+x2)",
+      "_vbscript_callback": "SolMod25",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback(25). Drives f25, f25b flasher objects. Comment: 'Relaunch (x2 pf) + ON Flashers (x2 Backbox)'."
+    },
+    {
+      "id": 26,
+      "description": "Flasher: Left Side + SP Backbox (x2+x2)",
+      "_vbscript_callback": "SolMod26",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback(26). Drives f26, f26b flasher objects. Comment: 'Left Side (x2 pf) + SP Flashers (x2 Backbox)'."
+    },
+    {
+      "id": 27,
+      "description": "Flasher: Right Side + AC Backbox (x2+x2)",
+      "_vbscript_callback": "SolMod27",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback(27). Drives f27, f27b flasher objects. Comment: 'Right Side (x2 pf) + AC Flashers (x2 Backbox)'."
+    },
+    {
+      "id": 28,
+      "description": "Flasher: Upper Playfield + ES Backbox (x2+x2)",
+      "_vbscript_callback": "SolMod28",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback(28). Drives f28, f28b flasher objects. Comment: 'Top Upper Playfield (x2 pf) + ES Flashers (x2 Backbox)'."
+    },
+    {
+      "id": 29,
+      "description": "Flasher: Top Panel + TA Backbox (x2+x2)",
+      "_vbscript_callback": "SolMod29",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback(29). Drives f29, f29b flasher objects. Comment: 'Playfield Top Panel (x2pf) + TA Flashers (x2 Backbox)'."
+    },
+    {
+      "id": 30,
+      "description": "Flasher: Flame + TI Backbox (x4)",
+      "_vbscript_callback": "SolMod30",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback(30). Drives f30 flasher object. Comment: 'Flame + TI Flashers (x4 Backbox)'."
+    },
+    {
+      "id": 31,
+      "description": "Flasher: Station Backbox (x2)",
+      "_vbscript_callback": "SolMod31",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback(31). Drives f31 flasher object. Comment: 'Station Flashers (x2 Backbox)'."
+    },
+    {
+      "id": 32,
+      "description": "Left Dock Kickback",
+      "_vbscript_callback": "LeftDockKick",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw47",
+      "_note": "SolCallback(32). Ejects ball from left dock VUK (sw47). KickBall angle 0, random vel 16-24. Comment incorrectly says 'Right Dock Kickback' but code clearly operates on sw47/KickerBall47 (left dock)."
     }
   ],
   "lamps": [
-    {
-      "id": 0,
-      "_note": "No lamps detected"
-    }
+    { "id": 1, "description": "Lamp 1" },
+    { "id": 2, "description": "Lamp 2" },
+    { "id": 3, "description": "Lamp 3" },
+    { "id": 4, "description": "Lamp 4" },
+    { "id": 5, "description": "Lamp 5" },
+    { "id": 6, "description": "Lamp 6" },
+    { "id": 7, "description": "Lamp 7" },
+    { "id": 8, "description": "Lamp 8" },
+    { "id": 9, "description": "Lamp 9" },
+    { "id": 10, "description": "Lamp 10" },
+    { "id": 11, "description": "Lamp 11" },
+    { "id": 12, "description": "Lamp 12" },
+    { "id": 13, "description": "Lamp 13" },
+    { "id": 14, "description": "Lamp 14" },
+    { "id": 15, "description": "Lamp 15" },
+    { "id": 16, "description": "Lamp 16" },
+    { "id": 17, "description": "Lamp 17" },
+    { "id": 18, "description": "Lamp 18" },
+    { "id": 19, "description": "Lamp 19" },
+    { "id": 20, "description": "Lamp 20" },
+    { "id": 21, "description": "Lamp 21" },
+    { "id": 22, "description": "Lamp 22" },
+    { "id": 23, "description": "Lamp 23" },
+    { "id": 24, "description": "Lamp 24" },
+    { "id": 25, "description": "Lamp 25" },
+    { "id": 26, "description": "Lamp 26" },
+    { "id": 27, "description": "Lamp 27" },
+    { "id": 28, "description": "Lamp 28" },
+    { "id": 29, "description": "Lamp 29" },
+    { "id": 30, "description": "Lamp 30" },
+    { "id": 31, "description": "Lamp 31" },
+    { "id": 32, "description": "Lamp 32" },
+    { "id": 33, "description": "Lamp 33" },
+    { "id": 34, "description": "Lamp 34" },
+    { "id": 35, "description": "Lamp 35" },
+    { "id": 36, "description": "Lamp 36" },
+    { "id": 38, "description": "Lamp 38" },
+    { "id": 39, "description": "Lamp 39" },
+    { "id": 40, "description": "Lamp 40" },
+    { "id": 42, "description": "Lamp 42" },
+    { "id": 43, "description": "Lamp 43" },
+    { "id": 44, "description": "Lamp 44" },
+    { "id": 45, "description": "Lamp 45" },
+    { "id": 50, "description": "Lamp 50" },
+    { "id": 51, "description": "Lamp 51" },
+    { "id": 52, "description": "Lamp 52" },
+    { "id": 53, "description": "Lamp 53" },
+    { "id": 54, "description": "Lamp 54" },
+    { "id": 55, "description": "Lamp 55" },
+    { "id": 56, "description": "Lamp 56" },
+    { "id": 58, "description": "Lamp 58" },
+    { "id": 59, "description": "Lamp 59" },
+    { "id": 60, "description": "Lamp 60" },
+    { "id": 61, "description": "Lamp 61" },
+    { "id": 62, "description": "Lamp 62" },
+    { "id": 63, "description": "Lamp 63" },
+    { "id": 64, "description": "Lamp 64" }
   ],
-  "aliases": []
+  "aliases": [
+    { "id": 46, "alias": "c_flipper_lower_right", "type": "coil" },
+    { "id": 48, "alias": "c_flipper_lower_left", "type": "coil" }
+  ],
+  "_commented_out": [
+    {
+      "type": "coil",
+      "id": 5,
+      "description": "Unused",
+      "_note": "SolCallback(5) commented out with 'Unused'."
+    },
+    {
+      "type": "coil",
+      "id": 14,
+      "description": "Unused",
+      "_note": "SolCallback(14) commented out with 'Unused'."
+    },
+    {
+      "type": "coil",
+      "ids": [18, 19, 20, 21, 22],
+      "description": "Slingshots and Pop Bumpers (VPX physics)",
+      "_note": "Comment says '18 - 22 Slings and Pop Bumpers'. Not in SolCallback — handled by VPX physics engine directly."
+    }
+  ]
 }

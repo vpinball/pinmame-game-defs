@@ -2,75 +2,495 @@
   "_format": "vpe-game-mapping",
   "_version": "0.1",
   "_source": {
-    "origin": "vbscript-parser",
+    "origin": "vbscript-agent-extracted",
     "source_file": "Count-Down (Gottlieb 1979) VPW v1.2.vbs",
     "extracted": "2026-02-14",
     "status": "auto-extracted-needs-review",
-    "confidence_notes": "SEMI-AUTOMATED \u2014 Manual review required. Extraction based on regex patterns; complex VBS logic may be missed."
+    "confidence_notes": "High confidence on switches, coils, and lamps. Platform identified as Gottlieb System 1 via LoadVPM call loading 'gts1.vbs'. ROM name is 'countdwn' from Const cGameName. This is a single-ball game (tnob=1, lob=0) with a simple drain/kicker trough — no cvpmTrough framework used. The drain is a single VPX kicker object ('Drain') that sets Controller.Switch(66)=1 on hit. Ball release solenoid (sol 1) kicks the ball from Drain and clears sw66. No multi-ball trough stack — the ball sits in the Drain kicker between plays. Switches found via Controller.Switch on/off pairs (_Hit/_UnHit subs for rollovers sw10,11,13,14,40,43,44,50), PulseSw calls (sw51 bumper, sw53 slingshots/rubbers), DTHit calls for 16 drop targets in 4 banks of 4 (Red: 20,21,23,24; Green: 30,31,33,34; Yellow: 60,61,63,64; Blue: 70,71,73,74), and Controller.Switch direct set for saucer sw41. Drop target reset solenoids: sol 7 (Green bank) and sol 8 (Red bank). Yellow and Blue resets are triggered by LampCallback watching Controller.Lamp(17) and Controller.Lamp(18) — these are lamp-driven resets, not direct solenoid-driven. Saucer at sw41 uses KickBall helper, released by sol 6. GI is not ROM-controlled — uses ball-presence detection (GIUpdate checks GetBalls count). Flipper solenoid IDs use framework constants sLRFlipper/sLLFlipper/sURFlipper/sULFlipper from gts1.vbs — exact IDs are platform-defined, not in this table script. Four flippers total: LeftFlipper, RightFlipper, LeftFlipper1 (upper left), RightFlipper1 (upper right). Sol 17 is vpmNudge.SolGameOn. Sols 3,4,5 are chime solenoids (10pt, 100pt, 1000pt) conditionally played based on PlayChimes user option. Lamps mapped via JP's Lamp Fading system (LampTimer) with explicit Lamp(N, object) calls in UpdateLamps sub — 33 lamp IDs identified (1-16, 19-33, 35-36). Lamp 1 = Game Over, Lamp 2 = Tilt, Lamp 3 = High Game, Lamp 4 = Same Player Shoots Again (with multi-object li4a/li4b). Lamps 17 and 18 are used as drop target reset triggers via LampCallback, not as physical lights. VPX light objects use 'li' prefix (li1, li2, li3... li36). VLM baked lighting system uses LM_LI_L{N} arrays for raytraced insert lighting per lamp. No Lampz.MassAssign — uses vpmMapLights AllLamps instead. TiltSwitch=4 per vpmNudge configuration."
   },
   "game": {
     "id": "count-down",
-    "name": "Count-Down (Gottlieb 1979) VPW v1.2",
+    "name": "Count-Down",
     "year": 1979,
     "manufacturer": "Gottlieb",
-    "platform": "sam"
+    "ipdb_id": 573,
+    "platform": "gts1"
   },
   "roms": [
     {
-      "id": "count-down"
+      "id": "countdwn"
     }
   ],
   "switches": [
     {
-      "id": 10
+      "id": 4,
+      "description": "Tilt (Plumb Bob)",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 4. Cabinet tilt switch."
     },
     {
-      "id": 11
+      "id": 10,
+      "description": "Rollover Switch (Left Upper Area)",
+      "vpx_name": "sw10",
+      "_note": "Controller.Switch(10) on/off. Wire rollover with AnimateWire BP_sw10. Located in upper left playfield area."
     },
     {
-      "id": 13
+      "id": 11,
+      "description": "Rollover Switch (Left Upper Area)",
+      "vpx_name": "sw11",
+      "_note": "Controller.Switch(11) on/off. Wire rollover with AnimateWire BP_sw11. Located in upper left playfield area near sw10."
     },
     {
-      "id": 14
+      "id": 13,
+      "description": "Rollover Switch (Right Area)",
+      "vpx_name": "sw13",
+      "_note": "Controller.Switch(13) on/off. Wire rollover with AnimateWire BP_sw13. Located in right playfield area."
     },
     {
-      "id": 40
+      "id": 14,
+      "description": "Rollover Switch (Right Area)",
+      "vpx_name": "sw14",
+      "_note": "Controller.Switch(14) on/off. Wire rollover with AnimateWire BP_sw14. Located in right playfield area near sw13."
     },
     {
-      "id": 41
+      "id": 20,
+      "description": "Red Drop Target 1",
+      "vpx_name": "Sw20",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 20. Red drop target bank (sw20,21,23,24). Reset by sol 8 (ResetDropsRed)."
     },
     {
-      "id": 43
+      "id": 21,
+      "description": "Red Drop Target 2",
+      "vpx_name": "Sw21",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 21. Red drop target bank. Reset by sol 8 (ResetDropsRed)."
     },
     {
-      "id": 44
+      "id": 23,
+      "description": "Red Drop Target 3",
+      "vpx_name": "Sw23",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 23. Red drop target bank. Reset by sol 8 (ResetDropsRed)."
     },
     {
-      "id": 50
+      "id": 24,
+      "description": "Red Drop Target 4",
+      "vpx_name": "Sw24",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 24. Red drop target bank. Reset by sol 8 (ResetDropsRed)."
+    },
+    {
+      "id": 30,
+      "description": "Green Drop Target 1",
+      "vpx_name": "Sw30",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 30. Green drop target bank (sw30,31,33,34). Reset by sol 7 (ResetDropsGreen)."
+    },
+    {
+      "id": 31,
+      "description": "Green Drop Target 2",
+      "vpx_name": "Sw31",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 31. Green drop target bank. Reset by sol 7 (ResetDropsGreen)."
+    },
+    {
+      "id": 33,
+      "description": "Green Drop Target 3",
+      "vpx_name": "Sw33",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 33. Green drop target bank. Reset by sol 7 (ResetDropsGreen)."
+    },
+    {
+      "id": 34,
+      "description": "Green Drop Target 4",
+      "vpx_name": "Sw34",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 34. Green drop target bank. Reset by sol 7 (ResetDropsGreen)."
+    },
+    {
+      "id": 40,
+      "description": "Rollover Switch (Center)",
+      "vpx_name": "sw40",
+      "_note": "Controller.Switch(40) on/off. Wire rollover with AnimateWire BP_sw40. Center playfield area. VLM LM_LI_L12_sw40 suggests illuminated by lamp 12."
+    },
+    {
+      "id": 41,
+      "description": "Saucer / VUK (Upper Left)",
+      "vpx_name": "sw41",
+      "_inferred_type": "saucer",
+      "_note": "Controller.Switch(41)=1 on hit. Ball captured by KickerBall41 reference. Released by sol 6 (SolSaucerRelease) via KickBall helper. Animated kick arm (BP_PkickarmR)."
+    },
+    {
+      "id": 43,
+      "description": "Rollover Switch (Upper Center)",
+      "vpx_name": "sw43",
+      "_note": "Controller.Switch(43) on/off. Wire rollover with AnimateWire BP_sw43."
+    },
+    {
+      "id": 44,
+      "description": "Rollover Switch (Upper Right)",
+      "vpx_name": "sw44",
+      "_note": "Controller.Switch(44) on/off. Wire rollover with AnimateWire BP_sw44."
+    },
+    {
+      "id": 50,
+      "description": "Rollover Switch (Center Lane)",
+      "vpx_name": "sw50",
+      "_note": "Controller.Switch(50) on/off. Wire rollover with AnimateWire BP_sw50. VLM LM_LI_L11_sw50 suggests illuminated by lamp 11."
     },
     {
       "id": 51,
-      "_note": " PulseSw 51."
+      "description": "Pop Bumper",
+      "vpx_name": "Bumper1",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw 51 in Bumper1_Hit. Single pop bumper. Also used as vpmNudge.TiltObj target. Has animated ring and skirt tilt."
     },
     {
       "id": 53,
-      "_note": " PulseSw 53. PulseSw 53. PulseSw 53. PulseSw 53. PulseSw 53. PulseSw 53. PulseSw 53. PulseSw 53. PulseSw 53. PulseSw 53. PulseSw 53. PulseSw 53. PulseSw 53. PulseSw 53."
+      "description": "Slingshots / Side Rubbers (Shared Switch)",
+      "_inferred_type": "slingshot",
+      "_note": "PulseSw 53 from 14 different VPX trigger objects: sw53a-sw53h (rubber bands — upper top/bottom, mid, lower pairs), sw53i/sw53i_LC/sw53i_LL (left slingshot variants), sw53j/sw53j_RC/sw53j_RL (right slingshot variants). All side rubber contacts and both slingshots share this single switch number. Gottlieb System 1 used shared switch matrix positions for similar playfield elements."
     },
     {
-      "id": 66
+      "id": 60,
+      "description": "Yellow Drop Target 1",
+      "vpx_name": "Sw60",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 60. Yellow drop target bank (sw60,61,63,64). Reset triggered by lamp 17 via LampCallback (ResetDropsYellow)."
+    },
+    {
+      "id": 61,
+      "description": "Yellow Drop Target 2",
+      "vpx_name": "Sw61",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 61. Yellow drop target bank. Reset triggered by lamp 17 via LampCallback."
+    },
+    {
+      "id": 63,
+      "description": "Yellow Drop Target 3",
+      "vpx_name": "Sw63",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 63. Yellow drop target bank. Reset triggered by lamp 17 via LampCallback."
+    },
+    {
+      "id": 64,
+      "description": "Yellow Drop Target 4",
+      "vpx_name": "Sw64",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 64. Yellow drop target bank. Reset triggered by lamp 17 via LampCallback."
+    },
+    {
+      "id": 66,
+      "description": "Drain / Outhole",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "Controller.Switch(66)=1 set in Drain_Hit. Cleared by sol 1 (SolBallRelease). Single-ball game — ball sits in Drain kicker between plays. No multi-ball trough. Set to 1 at table init."
+    },
+    {
+      "id": 70,
+      "description": "Blue Drop Target 1",
+      "vpx_name": "Sw70",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 70. Blue drop target bank (sw70,71,73,74). Reset triggered by lamp 18 via LampCallback (ResetDropsBlue)."
+    },
+    {
+      "id": 71,
+      "description": "Blue Drop Target 2",
+      "vpx_name": "Sw71",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 71. Blue drop target bank. Reset triggered by lamp 18 via LampCallback."
+    },
+    {
+      "id": 73,
+      "description": "Blue Drop Target 3",
+      "vpx_name": "Sw73",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 73. Blue drop target bank. Reset triggered by lamp 18 via LampCallback."
+    },
+    {
+      "id": 74,
+      "description": "Blue Drop Target 4",
+      "vpx_name": "Sw74",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 74. Blue drop target bank. Reset triggered by lamp 18 via LampCallback."
     }
   ],
   "coils": [
     {
-      "id": 0,
-      "_note": "No coils detected"
+      "id": 1,
+      "description": "Ball Release / Drain Kicker",
+      "_vbscript_callback": "SolBallRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "vpx_name": "Drain",
+      "_note": "Kicks ball from Drain kicker (angle 57, speed 20). Clears Controller.Switch(66). Single-ball trough — no multi-switch stack."
+    },
+    {
+      "id": 2,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmsolsound SoundFX(\"fx_knocker\",DOFKnocker),",
+      "_inferred_type": "knocker",
+      "_note": "Cabinet knocker solenoid. Sound-only callback in VBS."
+    },
+    {
+      "id": 3,
+      "description": "10-Point Chime",
+      "_vbscript_callback": "If PlayChimes = 1 Then VpmSolSound\"10pts\",",
+      "_inferred_type": "chime",
+      "_note": "10-point scoring chime. Conditionally plays sound based on PlayChimes user option (default off). Gottlieb System 1 used electromechanical chimes for scoring sounds."
+    },
+    {
+      "id": 4,
+      "description": "100-Point Chime",
+      "_vbscript_callback": "If PlayChimes = 1 Then VpmSolSound\"100chime\",",
+      "_inferred_type": "chime",
+      "_note": "100-point scoring chime. Conditionally plays sound based on PlayChimes user option."
+    },
+    {
+      "id": 5,
+      "description": "1000-Point Chime",
+      "_vbscript_callback": "If PlayChimes = 1 Then VpmSolSound\"1000chime\",",
+      "_inferred_type": "chime",
+      "_note": "1000-point scoring chime. Conditionally plays sound based on PlayChimes user option."
+    },
+    {
+      "id": 6,
+      "description": "Saucer Release / VUK Kicker",
+      "_vbscript_callback": "SolSaucerRelease",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw41",
+      "_note": "Releases ball from saucer (sw41) via KickBall helper (angle 170, vel 10, velz 5, zlift 10). Clears Controller.Switch(41). Triggers kick arm animation."
+    },
+    {
+      "id": 7,
+      "description": "Green Drop Target Reset",
+      "_vbscript_callback": "ResetDropsGreen",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets green drop target bank (sw30,31,33,34). DTRaise calls for all 4 targets. Updates DTShadows visibility (indices 4-7)."
+    },
+    {
+      "id": 8,
+      "description": "Red Drop Target Reset",
+      "_vbscript_callback": "ResetDropsRed",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets red drop target bank (sw20,21,23,24). DTRaise calls for all 4 targets. Updates DTShadows visibility (indices 0-3)."
+    },
+    {
+      "id": 17,
+      "description": "Game On Relay",
+      "_vbscript_callback": "vpmNudge.SolGameOn",
+      "_inferred_type": "mechanism",
+      "_note": "Standard Game On relay. Enables nudge/tilt detection via vpmNudge framework."
     }
   ],
   "lamps": [
     {
-      "id": 0,
-      "_note": "No lamps detected"
+      "id": 1,
+      "description": "Game Over",
+      "vpx_name": "li1",
+      "_note": "Lamp 1 in UpdateLamps. Controller.Lamp(1) checked in VR mode for backglass Ball In Play indicator."
+    },
+    {
+      "id": 2,
+      "description": "Tilt",
+      "vpx_name": "li2",
+      "_note": "Lamp 2 in UpdateLamps. Has secondary object li2a (Lampm). Controller.Lamp(2) checked in VR mode for VR_BGTilt."
+    },
+    {
+      "id": 3,
+      "description": "High Game to Date",
+      "vpx_name": "li3",
+      "_note": "Lamp 3 in UpdateLamps. Controller.Lamp(3) checked in VR mode for VR_BGHS."
+    },
+    {
+      "id": 4,
+      "description": "Same Player Shoots Again",
+      "vpx_name": "li4",
+      "_note": "Lamp 4 in UpdateLamps. Has additional objects li4a and li4b (Lampm). VR mode checks l4.state for VR_BGSA visibility."
+    },
+    {
+      "id": 5,
+      "vpx_name": "li5",
+      "_note": "Lamp 5 in UpdateLamps. VLM BL_LI_L5 illuminates parts, PegPlasticSlingL1C, playfield, Rubber10 objects."
+    },
+    {
+      "id": 6,
+      "vpx_name": "li6",
+      "_note": "Lamp 6 in UpdateLamps. VLM BL_LI_L6 illuminates parts, PegPlasticSlingL1C, playfield, Rubber10, RubberLSling objects."
+    },
+    {
+      "id": 7,
+      "vpx_name": "li7",
+      "_note": "Lamp 7 in UpdateLamps. VLM BL_LI_L7 illuminates playfield area."
+    },
+    {
+      "id": 8,
+      "vpx_name": "li8",
+      "_note": "Lamp 8 in UpdateLamps. VLM BL_LI_L8 illuminates overlay, parts, playfield, sw61, sw63 areas."
+    },
+    {
+      "id": 9,
+      "vpx_name": "li9",
+      "_note": "Lamp 9 in UpdateLamps. VLM BL_LI_L9 illuminates playfield area."
+    },
+    {
+      "id": 10,
+      "vpx_name": "li10",
+      "_note": "Lamp 10 in UpdateLamps. VLM BL_LI_L10 illuminates playfield area."
+    },
+    {
+      "id": 11,
+      "vpx_name": "li11",
+      "_note": "Lamp 11 in UpdateLamps. VLM BL_LI_L11 illuminates playfield and sw50 rollover area."
+    },
+    {
+      "id": 12,
+      "vpx_name": "li12",
+      "_note": "Lamp 12 in UpdateLamps. VLM BL_LI_L12 illuminates playfield and sw40 rollover area."
+    },
+    {
+      "id": 13,
+      "vpx_name": "li13",
+      "_note": "Lamp 13 in UpdateLamps. VLM BL_LI_L13 illuminates parts and playfield."
+    },
+    {
+      "id": 14,
+      "vpx_name": "li14",
+      "_note": "Lamp 14 in UpdateLamps. VLM BL_LI_L14 illuminates parts, playfield, and Rubber7 area."
+    },
+    {
+      "id": 15,
+      "vpx_name": "li15",
+      "_note": "Lamp 15 in UpdateLamps. VLM BL_LI_L15 illuminates parts and playfield."
+    },
+    {
+      "id": 16,
+      "vpx_name": "li16",
+      "_note": "Lamp 16 in UpdateLamps. VLM BL_LI_L16 illuminates parts and playfield."
+    },
+    {
+      "id": 17,
+      "description": "Yellow Drop Target Reset Trigger",
+      "_note": "NOT a physical lamp — used as a signal. Controller.Lamp(17) monitored by LampCallback (UpdateMultipleLamps). When lamp 17 transitions to on, ResetDropsYellow is called to reset yellow drop targets (sw60,61,63,64). Gottlieb System 1 lamp-as-coil pattern."
+    },
+    {
+      "id": 18,
+      "description": "Blue Drop Target Reset Trigger",
+      "_note": "NOT a physical lamp — used as a signal. Controller.Lamp(18) monitored by LampCallback (UpdateMultipleLamps). When lamp 18 transitions to on, ResetDropsBlue is called to reset blue drop targets (sw70,71,73,74). Gottlieb System 1 lamp-as-coil pattern."
+    },
+    {
+      "id": 19,
+      "vpx_name": "li19",
+      "_note": "Lamp 19 in UpdateLamps. VLM BL_LI_L19 illuminates playfield area."
+    },
+    {
+      "id": 20,
+      "vpx_name": "li20",
+      "_note": "Lamp 20 in UpdateLamps. VLM BL_LI_L20 illuminates playfield area."
+    },
+    {
+      "id": 21,
+      "vpx_name": "li21",
+      "_note": "Lamp 21 in UpdateLamps. VLM BL_LI_L21 illuminates playfield area."
+    },
+    {
+      "id": 22,
+      "vpx_name": "li22",
+      "_note": "Lamp 22 in UpdateLamps. VLM BL_LI_L22 illuminates playfield area."
+    },
+    {
+      "id": 23,
+      "vpx_name": "li23",
+      "_note": "Lamp 23 in UpdateLamps. VLM BL_LI_L23 illuminates LFlip, LFlipU, playfield, RFlip, RFlipU areas — likely center playfield near flippers."
+    },
+    {
+      "id": 24,
+      "vpx_name": "li24",
+      "_note": "Lamp 24 in UpdateLamps. VLM BL_LI_L24 illuminates LFlipU and playfield — near left upper flipper."
+    },
+    {
+      "id": 25,
+      "vpx_name": "li25",
+      "_note": "Lamp 25 in UpdateLamps. VLM BL_LI_L25 illuminates playfield and RFlipU — near right upper flipper."
+    },
+    {
+      "id": 26,
+      "vpx_name": "li26",
+      "_note": "Lamp 26 in UpdateLamps. VLM BL_LI_L26 illuminates playfield area."
+    },
+    {
+      "id": 27,
+      "vpx_name": "li27",
+      "_note": "Lamp 27 in UpdateLamps. VLM BL_LI_L27 illuminates playfield area."
+    },
+    {
+      "id": 28,
+      "vpx_name": "li28",
+      "_note": "Lamp 28 in UpdateLamps. VLM BL_LI_L28 illuminates playfield area."
+    },
+    {
+      "id": 29,
+      "vpx_name": "li29",
+      "_note": "Lamp 29 in UpdateLamps. VLM BL_LI_L29 illuminates playfield area."
+    },
+    {
+      "id": 30,
+      "vpx_name": "li30",
+      "_note": "Lamp 30 in UpdateLamps. VLM BL_LI_L30 illuminates playfield area."
+    },
+    {
+      "id": 31,
+      "vpx_name": "li31",
+      "_note": "Lamp 31 in UpdateLamps. VLM BL_LI_L31 illuminates playfield area."
+    },
+    {
+      "id": 32,
+      "vpx_name": "li32",
+      "_note": "Lamp 32 in UpdateLamps. VLM BL_LI_L32 illuminates playfield area."
+    },
+    {
+      "id": 33,
+      "vpx_name": "li33",
+      "_note": "Lamp 33 in UpdateLamps. VLM BL_LI_L33 illuminates playfield area."
+    },
+    {
+      "id": 35,
+      "vpx_name": "li35",
+      "_note": "Lamp 35 in UpdateLamps. VLM BL_LI_L35 illuminates overlay, parts, PegPlasticSlingR1C, playfield, Rubber9, sw74 — near right sling area."
+    },
+    {
+      "id": 36,
+      "vpx_name": "li36",
+      "_note": "Lamp 36 in UpdateLamps. VLM BL_LI_L36 illuminates overlay, parts, PegPlasticSlingR1C, PegPlasticSlingRC, playfield, Rubber9, RubberRSling — right slingshot area."
     }
   ],
-  "aliases": []
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper=46 (core.vbs framework constant). SolRFlipper callback drives RightFlipper.RotateToEnd/RotateToStart. nFozzy flipper implementation with live catch detection."
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper=48 (core.vbs framework constant). SolLFlipper callback drives LeftFlipper.RotateToEnd/RotateToStart. nFozzy flipper implementation with live catch detection."
+    },
+    {
+      "id": 34,
+      "alias": "c_flipper_upper_right",
+      "type": "coil",
+      "_note": "sURFlipper=34 (core.vbs framework constant). SolURFlipper callback drives RightFlipper1.RotateToEnd/RotateToStart. nFozzy flipper implementation."
+    },
+    {
+      "id": 36,
+      "alias": "c_flipper_upper_left",
+      "type": "coil",
+      "_note": "sULFlipper=36 (core.vbs framework constant). SolULFlipper callback drives LeftFlipper1.RotateToEnd/RotateToStart. nFozzy flipper implementation."
+    }
+  ]
 }

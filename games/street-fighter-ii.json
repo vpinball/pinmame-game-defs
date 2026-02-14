@@ -2,133 +2,808 @@
   "_format": "vpe-game-mapping",
   "_version": "0.1",
   "_source": {
-    "origin": "vbscript-parser",
+    "origin": "vbscript-agent-extracted",
     "source_file": "Street Fighter II (Gottlieb 1993) VPW 1.1.vbs",
     "extracted": "2026-02-14",
     "status": "auto-extracted-needs-review",
-    "confidence_notes": "SEMI-AUTOMATED \u2014 Manual review required. Extraction based on regex patterns; complex VBS logic may be missed."
+    "confidence_notes": "High confidence extraction from VPW VBScript by Apophis/Gedankekojote97/Sixtoe. Platform detected as Gottlieb System 3 from LoadVPM call: LoadVPM '03060000', 'gts3.VBS', 3.10. ROM name 'sfight2' from Const cGameName. Trough is a custom non-framework design: 3 balls initialized in kickers sw31o, sw31a, sw31b. sw31a maps to Controller.Switch(31), sw31b triggers Controller.Switch(21). Trough eject (sol 29) kicks from sw21, ball release (sol 28) kicks from sw31o. UpdateTrough cascades balls through the three kickers. No cvpmTrough framework used. Car Crunch mechanism uses a captive ball (CarBall) with physics simulation — sol 14 resets car position, sw15 fires on crunch hits, sw81 fires on full crunch completion. Chunli spinning flipper (sol 25) rotates a visual flipper with 4-frame animation. Flipper button switches sw82/sw83 are set directly in KeyDown/KeyUp handlers for left/right flipper buttons (GTS3 convention). Standup targets use VPW StandupTarget class with PulseSw in STAnimate function. Switches 20 and 30 are swapped in VBS code (FIXME comment in script — sw20_Hit fires PulseSw 30 and vice versa). Lamps identified from VLM lightmap arrays: L0, L10-L17, L20-L27, L30-L37, L40-L47, L50-L56, L57 (flasher-lamp), L60, L61-L67 (alphanumeric/topper). Car crunch lamps L02-L07 are CC (car crunch) lamps. GI is inverted — GIState(False) turns GI ON (gilvl=1). Sol 26 controls backglass GI relay. Flashers 15-23 use SolModCallback (PWM). Sol 24 is the car/underplayfield flipper (RightFlipper1). Sol 27 is a sound solenoid (vpmSolSound). Commented-out solenoids: 1 (pop bumper), 2 (left sling), 3 (right sling) — handled by VPX physics. Sol 12, 13 not used. Sol 32 (GameOn) commented out."
   },
   "game": {
     "id": "street-fighter-ii",
-    "name": "Street Fighter II (Gottlieb 1993) VPW 1.1",
+    "name": "Street Fighter II",
     "year": 1993,
     "manufacturer": "Gottlieb",
-    "platform": "sam"
+    "platform": "gts3"
   },
   "roms": [
     {
-      "id": "street-fighter-ii"
+      "id": "sfight2"
     }
   ],
   "switches": [
     {
-      "id": 5
+      "id": 5,
+      "description": "Tournament Mode",
+      "vpx_name": "RightMagnaSave",
+      "_vbscript_name": "swTournament",
+      "_note": "Const swTournament = 5. Controller.Switch(5) set on RightMagnaSave key."
     },
     {
       "id": 10,
-      "_note": " PulseSw 10."
+      "description": "Pop Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "vpmTimer.PulseSw 10. Bumper1_Hit fires PulseSw 10."
     },
     {
-      "id": 13
+      "id": 11,
+      "description": "Left Slingshot",
+      "_note": "vpmTimer.PulseSw(11). Fired from LeftSlingShot_Slingshot event."
     },
     {
-      "id": 14
+      "id": 12,
+      "description": "Right Slingshot",
+      "_note": "vpmTimer.PulseSw(12). Fired from RightSlingShot_Slingshot event."
+    },
+    {
+      "id": 13,
+      "description": "Left Kicker (Saucer)",
+      "vpx_name": "sw13",
+      "_note": "Controller.Switch(13) on/off via sw13_Hit/UnHit. Kicked by SolOutSw13 (sol 10)."
+    },
+    {
+      "id": 14,
+      "description": "Right Kicker (Saucer)",
+      "vpx_name": "sw14",
+      "_note": "Controller.Switch(14) on/off via sw14_Hit/UnHit. Kicked by SolOutSw14 (sol 11)."
     },
     {
       "id": 15,
-      "_note": " PulseSw 15."
+      "description": "Car Crunch Hit",
+      "_note": "vpmTimer.PulseSw 15. Fired in UpdateCar_Timer when car crunch collision occurs (deltay>0 and dCrunch<CrunchDist). Not a physical VPX switch."
     },
     {
-      "id": 20,
-      "_note": " PulseSw 20."
+      "id": 21,
+      "description": "Trough (Outhole / Drain)",
+      "vpx_name": "sw21",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "Controller.Switch(21) = 1 in sw21_Hit. Trough eject sol 29 kicks from sw21. sw31b_UnHit clears Controller.Switch(21). This is the primary drain/outhole switch."
     },
     {
-      "id": 21
-    },
-    {
-      "id": 22
+      "id": 22,
+      "description": "Shooter Lane / Plunger Lane",
+      "vpx_name": "sw22",
+      "_note": "Controller.Switch(22) on/off. Checked in KeyUp to determine plunger release sound."
     },
     {
       "id": 30,
-      "_note": " PulseSw 30."
+      "description": "Standup Target (Swapped with 20)",
+      "vpx_name": "sw30",
+      "_note": "sw30_Hit fires vpmTimer.PulseSw 20 (NOT 30). Comment says 'Switches 20 and 30 need to be swapped. Need to confirm -FIXME'. Physical VPX target sw30 sends ROM switch 20."
     },
     {
-      "id": 31
+      "id": 20,
+      "description": "Standup Target (Swapped with 30)",
+      "vpx_name": "sw20",
+      "_note": "sw20_Hit fires vpmTimer.PulseSw 30 (NOT 20). Comment says 'Switches 20 and 30 need to be swapped. Need to confirm -FIXME'. Physical VPX target sw20 sends ROM switch 30."
     },
     {
-      "id": 32
+      "id": 31,
+      "description": "Trough Ball Stack",
+      "vpx_name": "sw31a",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "Controller.Switch(31) on/off via sw31a_Hit/UnHit. Part of custom 3-ball trough chain: sw31o -> sw31a -> sw31b -> sw21. sw31a is the middle trough position."
     },
     {
-      "id": 33
+      "id": 32,
+      "description": "Rollover",
+      "vpx_name": "sw32",
+      "_note": "Controller.Switch(32) on/off via sw32_Hit/UnHit."
     },
     {
-      "id": 34
+      "id": 33,
+      "description": "Left VUK / Scoop",
+      "vpx_name": "sw33",
+      "_note": "Controller.Switch(33) on/off. sw33_Hit also calls WireRampOff. Kicked by SolOutSw33 (sol 4) with kickz."
     },
     {
-      "id": 80
+      "id": 34,
+      "description": "Right VUK / Scoop",
+      "vpx_name": "sw34",
+      "_note": "Controller.Switch(34) on/off. sw34_Hit also calls WireRampOff. Kicked by SolOutSw34 (sol 5) with kickz."
+    },
+    {
+      "id": 80,
+      "description": "Left Ramp Entry",
+      "vpx_name": "sw80",
+      "_note": "Controller.Switch(80) on/off. sw80_Hit calls WireRampOff then WireRampOn True (plastic ramp)."
     },
     {
       "id": 81,
-      "_note": " PulseSw 81."
+      "description": "Car Crunch Complete",
+      "_note": "vpmTimer.PulseSw 81. Fired in UpdateCar_Timer when dCrunch >= CrunchDist (full car crush). Also triggers F01 flasher. Not a physical VPX switch."
     },
     {
-      "id": 82
+      "id": 82,
+      "description": "Left Flipper Button",
+      "input_action_hint": "flipper_lower_left",
+      "input_map_hint": "flipper",
+      "_note": "Controller.Switch(82) set in KeyDown/KeyUp for LeftFlipperKey. GTS3 flipper button switch convention."
     },
     {
-      "id": 83
+      "id": 83,
+      "description": "Right Flipper Button",
+      "input_action_hint": "flipper_lower_right",
+      "input_map_hint": "flipper",
+      "_note": "Controller.Switch(83) set in KeyDown/KeyUp for RightFlipperKey. GTS3 flipper button switch convention."
     },
     {
-      "id": 90
+      "id": 90,
+      "description": "Left Ramp Made / Ramp Switch",
+      "vpx_name": "sw90",
+      "_note": "Controller.Switch(90) on/off. sw90_Hit calls WireRampOn True (plastic ramp)."
     },
     {
-      "id": 91
+      "id": 91,
+      "description": "Right Ramp Entry / Ramp Switch",
+      "vpx_name": "sw91",
+      "_note": "Controller.Switch(91) on/off. sw91_Hit calls WireRampOn False (wire ramp)."
     },
     {
-      "id": 95
+      "id": 92,
+      "description": "Standup Target (Left Bank 1)",
+      "vpx_name": "sw92",
+      "_note": "STHit 92 — StandupTarget class with animated pushback. PulseSw 92 fired via STAnimate."
     },
     {
-      "id": 96
+      "id": 93,
+      "description": "Standup Target (Left Bank 2)",
+      "vpx_name": "sw93",
+      "_note": "STHit 93 — StandupTarget class with animated pushback. PulseSw 93 fired via STAnimate."
+    },
+    {
+      "id": 94,
+      "description": "Standup Target (Left Bank 3)",
+      "vpx_name": "sw94",
+      "_note": "STHit 94 — StandupTarget class with animated pushback. PulseSw 94 fired via STAnimate."
+    },
+    {
+      "id": 95,
+      "description": "Left Outlane / Return Lane",
+      "vpx_name": "sw95",
+      "_note": "Controller.Switch(95) on/off via sw95_Hit/UnHit."
+    },
+    {
+      "id": 96,
+      "description": "Right Outlane / Return Lane",
+      "vpx_name": "sw96",
+      "_note": "Controller.Switch(96) on/off via sw96_Hit/UnHit."
     },
     {
       "id": 100,
-      "_note": " PulseSw 100."
+      "description": "Spinner",
+      "vpx_name": "sw100",
+      "_note": "vpmTimer.PulseSw 100. Fired from sw100_Hit."
     },
     {
-      "id": 101
+      "id": 101,
+      "description": "Right Ramp Made / Ramp Switch",
+      "vpx_name": "sw101",
+      "_note": "Controller.Switch(101) on/off. sw101_Hit calls WireRampOn False (wire ramp)."
     },
     {
-      "id": 105
+      "id": 102,
+      "description": "Standup Target (Center Bank 1)",
+      "vpx_name": "sw102",
+      "_note": "STHit 102 — StandupTarget class with animated pushback. PulseSw 102 fired via STAnimate."
     },
     {
-      "id": 106
+      "id": 103,
+      "description": "Standup Target (Center Bank 2)",
+      "vpx_name": "sw103",
+      "_note": "STHit 103 — StandupTarget class with animated pushback. PulseSw 103 fired via STAnimate."
     },
     {
-      "id": 110
+      "id": 104,
+      "description": "Standup Target (Center Bank 3)",
+      "vpx_name": "sw104",
+      "_note": "STHit 104 — StandupTarget class with animated pushback. PulseSw 104 fired via STAnimate."
     },
     {
-      "id": 111
+      "id": 105,
+      "description": "Left Slingshot Area / Lane Switch",
+      "vpx_name": "sw105",
+      "_note": "Controller.Switch(105) on/off via sw105_Hit/UnHit."
     },
     {
-      "id": 114
+      "id": 106,
+      "description": "Right Slingshot Area / Lane Switch",
+      "vpx_name": "sw106",
+      "_note": "Controller.Switch(106) on/off via sw106_Hit/UnHit."
     },
     {
-      "id": 115
+      "id": 110,
+      "description": "Left Ramp Exit / Ramp Switch",
+      "vpx_name": "sw110",
+      "_note": "Controller.Switch(110) on/off. sw110_UnHit calls WireRampOff."
     },
     {
-      "id": 116
+      "id": 111,
+      "description": "Right Ramp Exit / Ramp Switch",
+      "vpx_name": "sw111",
+      "_note": "Controller.Switch(111) on/off via sw111_Hit/UnHit."
+    },
+    {
+      "id": 112,
+      "description": "Standup Target (Right Bank 1)",
+      "vpx_name": "sw112",
+      "_note": "STHit 112 — StandupTarget class with animated pushback. PulseSw 112 fired via STAnimate."
+    },
+    {
+      "id": 113,
+      "description": "Standup Target (Right Bank 2)",
+      "vpx_name": "sw113",
+      "_note": "STHit 113 — StandupTarget class with animated pushback. PulseSw 113 fired via STAnimate."
+    },
+    {
+      "id": 114,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw114",
+      "_note": "Controller.Switch(114) on/off via sw114_Hit/UnHit."
+    },
+    {
+      "id": 115,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw115",
+      "_note": "Controller.Switch(115) on/off via sw115_Hit/UnHit."
+    },
+    {
+      "id": 116,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw116",
+      "_note": "Controller.Switch(116) on/off via sw116_Hit/UnHit."
+    },
+    {
+      "id": 151,
+      "description": "Tilt (Plumb Bob)",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 151."
     }
   ],
   "coils": [
     {
-      "id": 0,
-      "_note": "No coils detected"
+      "id": 1,
+      "description": "Pop Bumper",
+      "_inferred_type": "bumper",
+      "_vbscript_callback": "(commented out)",
+      "_note": "SolCallback(1) commented out with comment 'Pop bumper'. Handled by VPX physics."
+    },
+    {
+      "id": 2,
+      "description": "Left Slingshot",
+      "_inferred_type": "slingshot",
+      "_vbscript_callback": "(commented out)",
+      "_note": "SolCallback(2) commented out with comment 'Left sling'. Handled by VPX physics."
+    },
+    {
+      "id": 3,
+      "description": "Right Slingshot",
+      "_inferred_type": "slingshot",
+      "_vbscript_callback": "(commented out)",
+      "_note": "SolCallback(3) commented out with comment 'Right sling'. Handled by VPX physics."
+    },
+    {
+      "id": 4,
+      "description": "Left VUK / Scoop Kicker",
+      "_vbscript_callback": "SolOutSw33",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw33",
+      "_note": "Kicks ball out of left scoop (sw33). sw33.kickz 0,40,90,30."
+    },
+    {
+      "id": 5,
+      "description": "Right VUK / Scoop Kicker",
+      "_vbscript_callback": "SolOutSw34",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw34",
+      "_note": "Kicks ball out of right scoop (sw34). sw34.kickz 0,40,90,30."
+    },
+    {
+      "id": 6,
+      "description": "Diverter 1 (Left)",
+      "_vbscript_callback": "SolDiv1",
+      "_inferred_type": "diverter",
+      "vpx_name": "Diverter1",
+      "_note": "Controls Diverter1 drop state and Diverter1F rotation."
+    },
+    {
+      "id": 7,
+      "description": "Diverter 2 (Right)",
+      "_vbscript_callback": "SolDiv2",
+      "_inferred_type": "diverter",
+      "vpx_name": "Diverter2",
+      "_note": "Controls Diverter2 drop state and Diverter2F rotation."
+    },
+    {
+      "id": 8,
+      "description": "Left Ramp Diverter",
+      "_vbscript_callback": "SolDiv3",
+      "_inferred_type": "diverter",
+      "_note": "Controls LRampF rotation. Toggles LeftRampDown/LeftRampUp collidable state for ramp up/down position."
+    },
+    {
+      "id": 9,
+      "description": "Right Ramp Diverter",
+      "_vbscript_callback": "SolDiv4",
+      "_inferred_type": "diverter",
+      "_note": "Controls RRampF rotation. Toggles RightRampDown/RightRampUp collidable state for ramp up/down position."
+    },
+    {
+      "id": 10,
+      "description": "Left Kicker Eject",
+      "_vbscript_callback": "SolOutSw13",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw13",
+      "_note": "Kicks ball from sw13 kicker. sw13.kick 200,14."
+    },
+    {
+      "id": 11,
+      "description": "Right Kicker Eject",
+      "_vbscript_callback": "SolOutSw14",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw14",
+      "_note": "Kicks ball from sw14 kicker. sw14.kick 200,14."
+    },
+    {
+      "id": 14,
+      "description": "Car Crunch Reset Motor",
+      "_vbscript_callback": "CarReset",
+      "_inferred_type": "mechanism",
+      "_note": "Resets car crunch mechanism to home position. bCarReset = True triggers UpdateCarReset which moves CarP.y back at vy_reset velocity."
+    },
+    {
+      "id": 15,
+      "description": "Flasher 15",
+      "_vbscript_callback": "Flasher15",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f15",
+      "_note": "SolModCallBack(15). PWM flasher. AdjustBulbTint for incandescent simulation."
+    },
+    {
+      "id": 16,
+      "description": "Flasher 16",
+      "_vbscript_callback": "Flasher16",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f16",
+      "_note": "SolModCallBack(16). PWM flasher. AdjustBulbTint for incandescent simulation."
+    },
+    {
+      "id": 17,
+      "description": "Flasher 17",
+      "_vbscript_callback": "Flasher17",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f17",
+      "_note": "SolModCallBack(17). PWM flasher. AdjustBulbTint for incandescent simulation."
+    },
+    {
+      "id": 18,
+      "description": "Flasher 18",
+      "_vbscript_callback": "Flasher18",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f18",
+      "_note": "SolModCallBack(18). PWM flasher. AdjustBulbTint for incandescent simulation."
+    },
+    {
+      "id": 19,
+      "description": "Flasher 19",
+      "_vbscript_callback": "Flasher19",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f19",
+      "_note": "SolModCallBack(19). PWM flasher. AdjustBulbTint for incandescent simulation."
+    },
+    {
+      "id": 20,
+      "description": "Flasher 20",
+      "_vbscript_callback": "Flasher20",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f20",
+      "_note": "SolModCallBack(20). PWM flasher. AdjustBulbTint for incandescent simulation."
+    },
+    {
+      "id": 21,
+      "description": "Flasher 21",
+      "_vbscript_callback": "Flasher21",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f21",
+      "_note": "SolModCallBack(21). PWM flasher. AdjustBulbTint for incandescent simulation."
+    },
+    {
+      "id": 22,
+      "description": "Flasher 22",
+      "_vbscript_callback": "Flasher22",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f22",
+      "_note": "SolModCallBack(22). PWM flasher. AdjustBulbTint for incandescent simulation."
+    },
+    {
+      "id": 23,
+      "description": "Flasher 23",
+      "_vbscript_callback": "Flasher23",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f23",
+      "_note": "SolModCallBack(23). PWM flasher. AdjustBulbTint for incandescent simulation."
+    },
+    {
+      "id": 24,
+      "description": "Car Flipper (Underplayfield)",
+      "_vbscript_callback": "SolRFlipper1",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper1",
+      "_note": "SolCallback(24). Comment: 'this is the underplayfield flipper'. Controls RightFlipper1 rotation and UpdateCar timer. Sets LowerFlipper flag."
+    },
+    {
+      "id": 25,
+      "description": "Chunli Spinning Flipper Motor",
+      "_vbscript_callback": "SolSpinChunli",
+      "_inferred_type": "mechanism",
+      "_note": "Drives the spinning Chunli flipper animation. SpinningFlipper.startangle rotated at 0.64 rate. 4-frame visual animation (SpinFlip1-4). Motor sound plays while enabled."
+    },
+    {
+      "id": 26,
+      "description": "Backglass GI Relay",
+      "_vbscript_callback": "SolBG",
+      "_inferred_type": "mechanism",
+      "is_lamp": true,
+      "_note": "Controls backglass GI. INVERTED: SolBG(False) = gibg.state=1 (ON). Separate from playfield GI (sol 31)."
+    },
+    {
+      "id": 27,
+      "description": "Sound Solenoid",
+      "_vbscript_callback": "vpmSolSound \"SolOn\",",
+      "_inferred_type": "sound",
+      "_note": "VPM sound solenoid. Plays SolOn sound effect."
+    },
+    {
+      "id": 28,
+      "description": "Ball Release (Trough to Shooter Lane)",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "vpx_name": "sw31o",
+      "_note": "Kicks ball from sw31o (deepest trough position) to shooter lane. sw31o.kick 57,10."
+    },
+    {
+      "id": 29,
+      "description": "Trough Eject (Outhole to Trough)",
+      "_vbscript_callback": "SolTrough",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "vpx_name": "sw21",
+      "_note": "Kicks ball from sw21 (drain/outhole) into trough. sw21.kick 57,20."
+    },
+    {
+      "id": 30,
+      "description": "Knocker",
+      "_vbscript_callback": "Knocker",
+      "_inferred_type": "knocker",
+      "_note": "Cabinet knocker solenoid. Calls KnockerSolenoid sub."
+    },
+    {
+      "id": 31,
+      "description": "GI Relay (Playfield)",
+      "_vbscript_callback": "GIState",
+      "_inferred_type": "mechanism",
+      "is_lamp": true,
+      "_note": "Playfield GI relay. INVERTED: GIState(False) = GI ON (gilvl=1). GIState(True) = GI OFF (gilvl=0). Controls all lights in GI array."
+    },
+    {
+      "id": 32,
+      "description": "Game On Relay",
+      "_vbscript_callback": "(commented out)",
+      "_inferred_type": "mechanism",
+      "_note": "SolCallback(32) = 'GameOn' is commented out. Likely game-on relay but not implemented in VBS."
     }
   ],
   "lamps": [
     {
       "id": 0,
-      "_note": "No lamps detected"
+      "vpx_name": "l0",
+      "_note": "LM_I_L0 lightmap. Illuminates LFlip/RFlip area. UseLamps=1 (VPX built-in handling)."
+    },
+    {
+      "id": 2,
+      "vpx_name": "l02",
+      "_note": "LM_CC_L02 lightmap. Car Crunch lamp 1 of 6. Illuminates car, lower playfield, layers."
+    },
+    {
+      "id": 3,
+      "vpx_name": "l03",
+      "_note": "LM_CC_L03 lightmap. Car Crunch lamp 2 of 6."
+    },
+    {
+      "id": 4,
+      "vpx_name": "l04",
+      "_note": "LM_CC_L04 lightmap. Car Crunch lamp 3 of 6."
+    },
+    {
+      "id": 5,
+      "vpx_name": "l05",
+      "_note": "LM_CC_L05 lightmap. Car Crunch lamp 4 of 6."
+    },
+    {
+      "id": 6,
+      "vpx_name": "l06",
+      "_note": "LM_CC_L06 lightmap. Car Crunch lamp 5 of 6."
+    },
+    {
+      "id": 7,
+      "vpx_name": "l07",
+      "_note": "LM_CC_L07 lightmap. Car Crunch lamp 6 of 6."
+    },
+    {
+      "id": 10,
+      "vpx_name": "l10",
+      "_note": "LM_I_L10 lightmap. Also has l10_sw95 association in VLM."
+    },
+    {
+      "id": 11,
+      "vpx_name": "l11",
+      "_note": "LM_I_L11 lightmap. Illuminates LSling and sw105 area."
+    },
+    {
+      "id": 12,
+      "vpx_name": "l12",
+      "_note": "LM_I_L12 lightmap. Illuminates RSling and sw106 area."
+    },
+    {
+      "id": 13,
+      "vpx_name": "l13",
+      "_note": "LM_I_L13 lightmap. Also has sw96 association in VLM."
+    },
+    {
+      "id": 14,
+      "vpx_name": "l14",
+      "_note": "LM_I_L14 lightmap. Illuminates LFlip/RFlip area."
+    },
+    {
+      "id": 15,
+      "vpx_name": "l15",
+      "_note": "LM_I_L15 lightmap. Illuminates LSling area."
+    },
+    {
+      "id": 16,
+      "vpx_name": "l16",
+      "_note": "LM_I_L16 lightmap."
+    },
+    {
+      "id": 17,
+      "vpx_name": "l17",
+      "_note": "LM_I_L17 lightmap. Has l17a_animate for white insert brightness trick."
+    },
+    {
+      "id": 20,
+      "vpx_name": "l20",
+      "_note": "LM_I_L20 lightmap. Illuminates RSling and Sling2 area."
+    },
+    {
+      "id": 21,
+      "vpx_name": "l21",
+      "_note": "LM_I_L21 lightmap. Illuminates RSling area."
+    },
+    {
+      "id": 22,
+      "vpx_name": "l22",
+      "_note": "LM_I_L22 lightmap. Has l22a_animate for white insert brightness trick."
+    },
+    {
+      "id": 23,
+      "vpx_name": "l23",
+      "_note": "LM_I_L23 lightmap. Has l23a_animate for white insert brightness trick."
+    },
+    {
+      "id": 24,
+      "vpx_name": "l24",
+      "_note": "LM_I_L24 lightmap."
+    },
+    {
+      "id": 25,
+      "vpx_name": "l25",
+      "_note": "LM_I_L25 lightmap."
+    },
+    {
+      "id": 26,
+      "vpx_name": "l26",
+      "_note": "LM_I_L26 lightmap. Has l26a_animate for white insert brightness trick."
+    },
+    {
+      "id": 27,
+      "vpx_name": "l27",
+      "_note": "LM_I_L27 lightmap. Also illuminates RRampArm."
+    },
+    {
+      "id": 30,
+      "vpx_name": "l30",
+      "_note": "LM_I_L30 lightmap. Illuminates LPF, sw104, sw94 area."
+    },
+    {
+      "id": 31,
+      "vpx_name": "l31",
+      "_note": "LM_I_L31 lightmap. Illuminates Car, LPF, sw104 area."
+    },
+    {
+      "id": 32,
+      "vpx_name": "l32",
+      "_note": "LM_I_L32 lightmap."
+    },
+    {
+      "id": 33,
+      "vpx_name": "l33",
+      "_note": "LM_I_L33 lightmap. Illuminates sw103 and sw113 standup target area."
+    },
+    {
+      "id": 34,
+      "vpx_name": "l34",
+      "_note": "LM_I_L34 lightmap. Has l34a_animate for white insert brightness trick. Illuminates sw103 and sw113 area."
+    },
+    {
+      "id": 35,
+      "vpx_name": "l35",
+      "_note": "LM_I_L35 lightmap. Illuminates Bumper1Ring, sw103, sw112, sw113, sw30 area."
+    },
+    {
+      "id": 36,
+      "vpx_name": "l36",
+      "_note": "LM_I_L36 lightmap. Illuminates Bumper1Ring, sw102, sw112, sw92 area."
+    },
+    {
+      "id": 37,
+      "vpx_name": "l37",
+      "_note": "LM_I_L37 lightmap. Has l37a_animate for white insert brightness trick. Illuminates Bumper1Ring, sw112, sw92 area."
+    },
+    {
+      "id": 40,
+      "vpx_name": "l40",
+      "_note": "LM_I_L40 lightmap. Illuminates upper left flipper area (LFlip1U)."
+    },
+    {
+      "id": 41,
+      "vpx_name": "l41",
+      "_note": "LM_I_L41 lightmap. Illuminates left ramp arm and ramp area."
+    },
+    {
+      "id": 42,
+      "vpx_name": "l42",
+      "_note": "LM_I_L42 lightmap. Has l42a_animate. Illuminates left ramp arm, ramp, and Layer3."
+    },
+    {
+      "id": 43,
+      "vpx_name": "l43",
+      "_note": "LM_I_L43 lightmap. Illuminates left ramp, sw103, sw93 area."
+    },
+    {
+      "id": 44,
+      "vpx_name": "l44",
+      "_note": "LM_I_L44 lightmap. Illuminates left ramp, sw92, sw93 area."
+    },
+    {
+      "id": 45,
+      "vpx_name": "l45",
+      "_note": "LM_I_L45 lightmap. Has l45a_animate. Illuminates Bumper1Ring and sw92 area."
+    },
+    {
+      "id": 46,
+      "vpx_name": "l46",
+      "_note": "LM_I_L46 lightmap. Illuminates Car, LPF, sw103, sw113, sw93 area."
+    },
+    {
+      "id": 47,
+      "vpx_name": "l47",
+      "_note": "LM_I_L47 lightmap. Has l47a_animate. Illuminates Layer3, sw103, sw113."
+    },
+    {
+      "id": 50,
+      "vpx_name": "l50",
+      "_note": "LM_I_L50 lightmap. Illuminates upper left flipper area (LFlip1U)."
+    },
+    {
+      "id": 51,
+      "vpx_name": "l51",
+      "_note": "LM_I_L51 lightmap. Illuminates upper left flipper area (LFlip1U)."
+    },
+    {
+      "id": 52,
+      "vpx_name": "l52",
+      "_note": "LM_I_L52 lightmap. Has l52a_animate. Illuminates upper left flipper area (LFlip1U)."
+    },
+    {
+      "id": 53,
+      "vpx_name": "l53",
+      "_note": "LM_I_L53 lightmap. Has l53a_animate. Illuminates left ramp arm upper and ramp area."
+    },
+    {
+      "id": 54,
+      "vpx_name": "l54",
+      "_note": "LM_I_L54 lightmap. Illuminates sw102 and sw92 area."
+    },
+    {
+      "id": 55,
+      "vpx_name": "l55",
+      "_note": "LM_I_L55 lightmap. Illuminates sw102, sw112, sw92 area."
+    },
+    {
+      "id": 56,
+      "vpx_name": "l56",
+      "_note": "LM_I_L56 lightmap. Illuminates sw102, sw112, sw92 area."
+    },
+    {
+      "id": 57,
+      "vpx_name": "l57",
+      "_note": "LM_F_L57 lightmap. Flasher-style lamp. Illuminates Bumper1Ring, SpinFlip1/4, sw102, sw103, sw112, sw113, sw92, sw93 area."
+    },
+    {
+      "id": 60,
+      "vpx_name": "l60",
+      "_note": "LM_I_L60 lightmap. Illuminates Car, LPF, Layer1/2, RFlip1 area."
+    },
+    {
+      "id": 61,
+      "description": "Alphanumeric / Topper Lamp 1",
+      "_note": "LM_A_L61 lightmap. Parts only. Topper/alphanumeric display backlight."
+    },
+    {
+      "id": 62,
+      "description": "Alphanumeric / Topper Lamp 2",
+      "_note": "LM_A_L62 lightmap. Parts only."
+    },
+    {
+      "id": 63,
+      "description": "Alphanumeric / Topper Lamp 3",
+      "_note": "LM_A_L63 lightmap. Parts only."
+    },
+    {
+      "id": 64,
+      "description": "Alphanumeric / Topper Lamp 4",
+      "_note": "LM_A_L64 lightmap. Parts only."
+    },
+    {
+      "id": 65,
+      "description": "Alphanumeric / Topper Lamp 5",
+      "_note": "LM_A_L65 lightmap. Parts only."
+    },
+    {
+      "id": 66,
+      "description": "Alphanumeric / Topper Lamp 6",
+      "_note": "LM_A_L66 lightmap. Parts only."
+    },
+    {
+      "id": 67,
+      "description": "Alphanumeric / Topper Lamp 7",
+      "_note": "LM_A_L67 lightmap. Parts only."
     }
   ],
-  "aliases": []
+  "aliases": [
+    {
+      "id": 82,
+      "alias": "s_flipper_lower_left",
+      "type": "switch",
+      "_note": "GTS3 flipper button switch. Controller.Switch(82) set in KeyDown/KeyUp for LeftFlipperKey."
+    },
+    {
+      "id": 83,
+      "alias": "s_flipper_lower_right",
+      "type": "switch",
+      "_note": "GTS3 flipper button switch. Controller.Switch(83) set in KeyDown/KeyUp for RightFlipperKey."
+    }
+  ]
 }

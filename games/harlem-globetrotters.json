@@ -2,119 +2,344 @@
   "_format": "vpe-game-mapping",
   "_version": "0.1",
   "_source": {
-    "origin": "vbscript-parser",
+    "origin": "vbscript-agent-extracted",
     "source_file": "Harlem Globetrotters (Bally 1979) VPW 1.0.vbs",
     "extracted": "2026-02-14",
     "status": "auto-extracted-needs-review",
-    "confidence_notes": "SEMI-AUTOMATED \u2014 Manual review required. Extraction based on regex patterns; complex VBS logic may be missed."
+    "confidence_notes": "High confidence extraction from VPW 1.0 release by mcarter78/apophis/team. Platform is Bally -35 era, loaded via LoadVPM '03060000', 'bally.vbs', 3.02. No cvpmTrough framework -- this is a pre-trough-era single-ball game. Ball management uses a single Drain kicker: ball is created in Drain at init with Controller.Switch(8)=1, Drain_Hit sets switch 8 on, SolBallRelease (sol 7) kicks ball out via Drain.kick. No trough switches at all -- Bally -35 games used a simple outhole/ball release mechanism. Switches identified from _Hit/_UnHit subs, PulseSw calls, and Controller.Switch() calls. Drop targets sw1-4 use the DTHit/DTRaise framework class with DTAnimate setting controller.Switch(switchid mod 100). Sw34a fires PulseSw 134 (second leaf switch mapped to different ROM column, common Bally -35 pattern). Two saucers: sw24 (top, sol 13 kicks) and sw32 (right, sol 14 kicks) use Controller.Switch on/off. Three spinners: sw17, sw25, sw33 (PulseSw). Six standup targets: sw26-30, sw35 (PulseSw with STHit animation). Three bumpers: sw40 (Bumper1/top), sw38 (Bumper2/middle), sw39 (Bumper3/bottom). Two slingshots: sw37 (left), sw36 (right) via PulseSw. Three rollovers: sw22, sw23, sw31 (Controller.Switch on/off). Leaf switches: sw34 (PulseSw 34), sw34a (PulseSw 134). Diverter on sol 17 controls RightLaneGate via vpmSolDiverter with inverted logic. GI is manually managed (UseGI=0) -- ToggleGI sub turns on/off all GI lights based on ball count (GIUpdate checks GetBalls); GiOn/GiOff defined in bally.vbs framework. Flipper solenoid IDs come from bally.vbs framework constants (sLRFlipper, sLLFlipper, sULFlipper) -- for Bally -35, these are typically sol 33 (right), sol 35 (left), sol 37 (upper left). Game has two lower flippers and one upper left flipper. ROM name uses bootleg 7-digit ROM 'hglbtrtb' (normal 6-digit 'hglbtrtr' is commented out). Lamps identified from VLM lightmap arrays (BL_L_l* naming convention). VLM system uses baked lightmaps per lamp for real-time rendering. Backglass lamps (l13, l27, l29, l45, l61) identified via _animate subs that proxy from backglass light objects. Several VLM lamps have secondary objects (l42b, l200, l360, l500, l520) for additional light positions."
   },
   "game": {
     "id": "harlem-globetrotters",
-    "name": "Harlem Globetrotters (Bally 1979) VPW 1.0",
+    "name": "Harlem Globetrotters on Tour",
     "year": 1979,
     "manufacturer": "Bally",
-    "platform": "sam"
+    "platform": "bally"
   },
   "roms": [
     {
-      "id": "harlem-globetrotters"
+      "id": "hglbtrtb",
+      "description": "Bootleg 7-digit ROM (used by VPW script)"
+    },
+    {
+      "id": "hglbtrtr",
+      "description": "Normal 6-digit ROM (commented out in VPW script)"
     }
   ],
   "switches": [
     {
-      "id": 8
+      "id": 1,
+      "description": "Drop Target 1",
+      "vpx_name": "sw1",
+      "_note": "DTHit 1 on sw1_hit. Drop target framework class instance DT1. Controller.Switch(1) set to 1 when dropped, 0 when raised. Reset by sol 15."
+    },
+    {
+      "id": 2,
+      "description": "Drop Target 2",
+      "vpx_name": "sw2",
+      "_note": "DTHit 2 on sw2_hit. Drop target framework class instance DT2. Controller.Switch(2) set to 1 when dropped, 0 when raised. Reset by sol 15."
+    },
+    {
+      "id": 3,
+      "description": "Drop Target 3",
+      "vpx_name": "sw3",
+      "_note": "DTHit 3 on sw3_hit. Drop target framework class instance DT3. Controller.Switch(3) set to 1 when dropped, 0 when raised. Reset by sol 15."
+    },
+    {
+      "id": 4,
+      "description": "Drop Target 4",
+      "vpx_name": "sw4",
+      "_note": "DTHit 4 on sw4_hit. Drop target framework class instance DT4. Controller.Switch(4) set to 1 when dropped, 0 when raised. Reset by sol 15."
+    },
+    {
+      "id": 8,
+      "description": "Outhole / Drain",
+      "vpx_name": "Drain",
+      "_note": "Controller.Switch(8) on/off in Drain_Hit/Drain_UnHit. Single-ball Bally -35 outhole. Ball created in Drain at init with Switch(8)=1. SolBallRelease (sol 7) kicks ball out."
     },
     {
       "id": 17,
-      "_note": " PulseSw 17."
+      "description": "Spinner (Upper Left)",
+      "vpx_name": "sw17",
+      "_note": "vpmTimer.PulseSw 17 in sw17_Spin. Spinner with VLM frame animation (sw17_FrameAnimate)."
     },
     {
-      "id": 22
+      "id": 22,
+      "description": "Rollover (Right Return Lane)",
+      "vpx_name": "sw22",
+      "_note": "Controller.Switch(22) on/off in sw22_Hit/sw22_UnHit. Has VLM baked part BP_Rollover_sw22."
     },
     {
-      "id": 23
+      "id": 23,
+      "description": "Rollover (Left Return Lane)",
+      "vpx_name": "sw23",
+      "_note": "Controller.Switch(23) on/off in sw23_Hit/sw23_UnHit. Has VLM baked part BP_Rollover_sw23 and sw23_Animate sub."
     },
     {
-      "id": 24
+      "id": 24,
+      "description": "Top Saucer",
+      "vpx_name": "sw24",
+      "_note": "Controller.Switch(24)=1 on sw24_Hit. Cleared by SolTopSaucer (sol 13) which kicks ball with sw24.kick. SoundSaucerLock on entry."
     },
     {
       "id": 25,
-      "_note": " PulseSw 25."
+      "description": "Spinner (Right)",
+      "vpx_name": "sw25",
+      "_note": "vpmTimer.PulseSw 25 in sw25_Spin. Spinner with VLM frame animation (sw25_FrameAnimate)."
     },
     {
       "id": 26,
-      "_note": " PulseSw 26."
+      "description": "Standup Target 1",
+      "vpx_name": "sw26",
+      "_note": "vpmTimer.PulseSw 26 in sw26_Hit with STHit animation. Has bounce overlay sw26o_Hit with TargetBouncer. VLM baked part BP_STsw26."
     },
     {
       "id": 27,
-      "_note": " PulseSw 27."
+      "description": "Standup Target 2",
+      "vpx_name": "sw27",
+      "_note": "vpmTimer.PulseSw 27 in sw27_Hit with STHit animation. Has bounce overlay sw27o_Hit with TargetBouncer. VLM baked part BP_STsw27."
     },
     {
       "id": 28,
-      "_note": " PulseSw 28."
+      "description": "Standup Target 3",
+      "vpx_name": "sw28",
+      "_note": "vpmTimer.PulseSw 28 in sw28_Hit with STHit animation. Has bounce overlay sw28o_Hit with TargetBouncer. VLM baked part BP_STsw28."
     },
     {
       "id": 29,
-      "_note": " PulseSw 29."
+      "description": "Standup Target 4",
+      "vpx_name": "sw29",
+      "_note": "vpmTimer.PulseSw 29 in sw29_Hit with STHit animation. Has bounce overlay sw29o_Hit with TargetBouncer. VLM baked part BP_STsw29."
     },
     {
       "id": 30,
-      "_note": " PulseSw 30."
+      "description": "Standup Target 5",
+      "vpx_name": "sw30",
+      "_note": "vpmTimer.PulseSw 30 in sw30_Hit with STHit animation. Has bounce overlay sw30o_Hit with TargetBouncer. VLM baked part BP_STsw30."
     },
     {
-      "id": 31
+      "id": 31,
+      "description": "Rollover (Top)",
+      "vpx_name": "sw31",
+      "_note": "Controller.Switch(31) on/off in sw31_Hit/sw31_UnHit. Has VLM baked part BP_Rollover_sw31."
     },
     {
-      "id": 32
+      "id": 32,
+      "description": "Right Saucer",
+      "vpx_name": "sw32",
+      "_note": "Controller.Switch(32)=1 on sw32_Hit. Cleared by SolRightSaucer (sol 14) which kicks ball with sw32.kick. SoundSaucerLock on entry."
     },
     {
       "id": 33,
-      "_note": " PulseSw 33."
+      "description": "Spinner (Center)",
+      "vpx_name": "sw33",
+      "_note": "vpmTimer.PulseSw 33 in sw33_Spin. Spinner with VLM frame animation (sw33_FrameAnimate)."
     },
     {
       "id": 34,
-      "_note": " PulseSw 34. PulseSw 34. PulseSw 34."
+      "description": "Leaf Switch (Lower)",
+      "vpx_name": "sw34",
+      "_note": "vpmTimer.PulseSw 34 in sw34_Hit. Also triggered by RubberBand20_Hit and RubberBand21_Hit (PulseSw 34). Leaf switch per VPW changelog."
     },
     {
       "id": 35,
-      "_note": " PulseSw 35."
+      "description": "Standup Target 6",
+      "vpx_name": "sw35",
+      "_note": "vpmTimer.PulseSw 35 in sw35_Hit with STHit animation. Has bounce overlay sw35o_Hit with TargetBouncer. VLM baked part BP_STsw35."
     },
     {
       "id": 36,
-      "_note": " PulseSw 36."
+      "description": "Right Slingshot",
+      "_note": "vpmTimer.PulseSw 36 in RightSlingShot_Slingshot event. Fired from slingshot event handler with sound and animation."
     },
     {
       "id": 37,
-      "_note": " PulseSw 37."
+      "description": "Left Slingshot",
+      "_note": "vpmTimer.PulseSw 37 in LeftSlingShot_Slingshot event. Fired from slingshot event handler with sound and animation."
     },
     {
       "id": 38,
-      "_note": " PulseSw 38."
+      "description": "Bumper 2 (Middle)",
+      "vpx_name": "Bumper2",
+      "_note": "vpmTimer.PulseSw 38 in Bumper2_Hit. RandomSoundBumperMiddle. VLM baked parts BP_Bumper2_Socket, BP_Bumper2_ring."
     },
     {
       "id": 39,
-      "_note": " PulseSw 39."
+      "description": "Bumper 3 (Bottom)",
+      "vpx_name": "Bumper3",
+      "_note": "vpmTimer.PulseSw 39 in Bumper3_Hit. RandomSoundBumperBottom. VLM baked parts BP_Bumper3_Socket, BP_Bumper3_ring."
     },
     {
       "id": 40,
-      "_note": " PulseSw 40."
+      "description": "Bumper 1 (Top)",
+      "vpx_name": "Bumper1",
+      "_note": "vpmTimer.PulseSw 40 in Bumper1_Hit. RandomSoundBumperTop. VLM baked parts BP_Bumper1_Socket, BP_Bumper1_ring."
     },
     {
       "id": 134,
-      "_note": " PulseSw 134."
+      "description": "Leaf Switch (Upper)",
+      "vpx_name": "sw34a",
+      "_note": "vpmTimer.PulseSw 134 in sw34a_Hit. Separate leaf switch mapped to PinMAME switch 134. Bally -35 extended switch addressing. Added in VPW 1.15 per changelog."
     }
   ],
   "coils": [
     {
-      "id": 0,
-      "_note": "No coils detected"
+      "id": 6,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"fx_Knocker\",DOFKnocker),",
+      "_inferred_type": "knocker",
+      "_note": "Cabinet knocker solenoid. Sound-only callback via vpmSolSound."
+    },
+    {
+      "id": 7,
+      "description": "Ball Release (Outhole Kicker)",
+      "_vbscript_callback": "SolBallRelease",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Drain",
+      "_note": "Kicks ball from Drain kicker at angle 57, power 20. Single-ball Bally -35 outhole mechanism -- no trough, just outhole and kicker."
+    },
+    {
+      "id": 13,
+      "description": "Top Saucer Kicker",
+      "_vbscript_callback": "SolTopSaucer",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw24",
+      "_note": "Kicks ball from top saucer (sw24) with sw24.kick at angle ~200 (with random variance), power 10. Clears Controller.Switch(24)."
+    },
+    {
+      "id": 14,
+      "description": "Right Saucer Kicker",
+      "_vbscript_callback": "SolRightSaucer",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw32",
+      "_note": "Kicks ball from right saucer (sw32) with sw32.kick at angle -45, power 20. Clears Controller.Switch(32)."
+    },
+    {
+      "id": 15,
+      "description": "Drop Target Bank Reset",
+      "_vbscript_callback": "dtDropreset",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets all 4 drop targets (DTRaise 1-4). Calls RandomSoundDropTargetReset. Sets Controller.Switch(1-4) to 0 via DTAnimate framework."
+    },
+    {
+      "id": 17,
+      "description": "Diverter (Right Lane Gate)",
+      "_vbscript_callback": "Soldiv",
+      "_inferred_type": "diverter",
+      "vpx_name": "RightLaneGate",
+      "_note": "Controls RightLaneGate via vpmSolDiverter. Inverted logic (Not Enabled). VLM primitive BP_Diverter animated to track gate angle."
+    },
+    {
+      "id": 19,
+      "description": "Game On Relay",
+      "_vbscript_callback": "vpmNudge.SolGameOn",
+      "_inferred_type": "mechanism",
+      "_note": "Standard Bally -35 game-on relay. Passed to vpmNudge.SolGameOn framework handler."
+    },
+    {
+      "id": 33,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "sLRFlipper framework constant from bally.vbs (value 33 for Bally -35). nFozzy flipper implementation. RF.Fire on enable."
+    },
+    {
+      "id": 35,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "sLLFlipper framework constant from bally.vbs (value 35 for Bally -35). nFozzy flipper implementation. LF.Fire on enable."
+    },
+    {
+      "id": 37,
+      "description": "Upper Left Flipper",
+      "_vbscript_callback": "SolLFlipper1",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper1",
+      "_note": "sULFlipper framework constant from bally.vbs (value 37 for Bally -35). nFozzy flipper implementation. LF1.Fire on enable. Also activated by left flipper button (KeyDown chains both)."
     }
   ],
   "lamps": [
-    {
-      "id": 0,
-      "_note": "No lamps detected"
-    }
+    { "id": 1, "vpx_name": "l1", "_note": "VLM lightmap BL_L_l1. Illuminates flipper primitives (LFlipperU, RFlipperU) and Playfield." },
+    { "id": 2, "vpx_name": "l2" },
+    { "id": 3, "vpx_name": "l3" },
+    { "id": 4, "vpx_name": "l4" },
+    { "id": 5, "vpx_name": "l5", "_note": "VLM illuminates Parts, Playfield, and Spinner_sw33 primitives." },
+    { "id": 6, "vpx_name": "l6" },
+    { "id": 7, "vpx_name": "l7" },
+    { "id": 8, "vpx_name": "l8" },
+    { "id": 9, "vpx_name": "l9" },
+    { "id": 10, "vpx_name": "l10" },
+    { "id": 11, "vpx_name": "l11" },
+    { "id": 12, "vpx_name": "l12" },
+    { "id": 13, "vpx_name": "l13", "_note": "Backglass lamp. Proxied via l13a_animate: l13.SetValue l13a.state." },
+    { "id": 14, "vpx_name": "l14" },
+    { "id": 15, "vpx_name": "l15" },
+    { "id": 17, "vpx_name": "l17", "_note": "VLM illuminates LFlipperU and Playfield." },
+    { "id": 18, "vpx_name": "l18" },
+    { "id": 19, "vpx_name": "l19" },
+    { "id": 20, "vpx_name": "l20" },
+    { "id": 21, "vpx_name": "l21" },
+    { "id": 22, "vpx_name": "l22" },
+    { "id": 23, "vpx_name": "l23" },
+    { "id": 24, "vpx_name": "l24" },
+    { "id": 25, "vpx_name": "l25" },
+    { "id": 26, "vpx_name": "l26", "_note": "Wide-area lamp. VLM illuminates bumpers, drop targets, slingshots, ramps, standup targets, spinners, and playfield." },
+    { "id": 27, "vpx_name": "l27", "_note": "Backglass lamp. Proxied via l27a_animate: l27.SetValue l27a.state." },
+    { "id": 28, "vpx_name": "l28" },
+    { "id": 29, "vpx_name": "l29", "_note": "Backglass lamp. Proxied via l29a_animate: l29.SetValue l29a.state." },
+    { "id": 30, "vpx_name": "l30" },
+    { "id": 31, "vpx_name": "l31" },
+    { "id": 33, "vpx_name": "l33", "_note": "VLM illuminates Playfield and RFlipperU." },
+    { "id": 34, "vpx_name": "l34" },
+    { "id": 35, "vpx_name": "l35", "_note": "VLM illuminates Parts, Playfield, and Spinner_sw25 primitives." },
+    { "id": 36, "vpx_name": "l36" },
+    { "id": 37, "vpx_name": "l37" },
+    { "id": 38, "vpx_name": "l38", "_note": "VLM illuminates Parts, Playfield, and Spinner_sw17 primitives." },
+    { "id": 39, "vpx_name": "l39" },
+    { "id": 40, "vpx_name": "l40", "_note": "VLM illuminates LeftSling1, Parts, Playfield, and Ramp2." },
+    { "id": 41, "vpx_name": "l41" },
+    { "id": 42, "vpx_name": "l42", "_note": "Wide-area lamp. VLM illuminates bumpers, gates, ramps, spinners, standup targets, and playfield." },
+    { "id": 43, "vpx_name": "l43" },
+    { "id": 44, "vpx_name": "l44" },
+    { "id": 45, "vpx_name": "l45", "_note": "Backglass lamp. Proxied via l45a_animate: l45.SetValue l45a.state." },
+    { "id": 46, "vpx_name": "l46" },
+    { "id": 47, "vpx_name": "l47" },
+    { "id": 49, "vpx_name": "l49" },
+    { "id": 50, "vpx_name": "l50" },
+    { "id": 51, "vpx_name": "l51", "_note": "VLM illuminates Parts, Playfield, and Spinner_sw33 primitives." },
+    { "id": 52, "vpx_name": "l52" },
+    { "id": 53, "vpx_name": "l53" },
+    { "id": 54, "vpx_name": "l54", "_note": "VLM illuminates Parts, Playfield, Spinner_sw17 primitives including wire." },
+    { "id": 55, "vpx_name": "l55" },
+    { "id": 56, "vpx_name": "l56" },
+    { "id": 57, "vpx_name": "l57" },
+    { "id": 58, "vpx_name": "l58", "_note": "VLM Parts only -- no Playfield lightmap." },
+    { "id": 59, "vpx_name": "l59", "_note": "VLM illuminates Parts, apron1, and hg_apron2_003." },
+    { "id": 60, "vpx_name": "l60" },
+    { "id": 61, "vpx_name": "l61", "_note": "Backglass lamp. Proxied via l61a_animate: l61.SetValue l61a.state." },
+    { "id": 62, "vpx_name": "l62" },
+    { "id": 63, "vpx_name": "l63" }
   ],
-  "aliases": []
+  "aliases": [
+    {
+      "id": 33,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper=33 (Bally -35 framework constant from bally.vbs). SolRFlipper callback. VPX object: RightFlipper."
+    },
+    {
+      "id": 35,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper=35 (Bally -35 framework constant from bally.vbs). SolLFlipper callback. VPX object: LeftFlipper."
+    },
+    {
+      "id": 37,
+      "alias": "c_flipper_upper_left",
+      "type": "coil",
+      "_note": "sULFlipper=37 (Bally -35 framework constant from bally.vbs). SolLFlipper1 callback. VPX object: LeftFlipper1."
+    }
+  ]
 }

@@ -2,90 +2,507 @@
   "_format": "vpe-game-mapping",
   "_version": "0.1",
   "_source": {
-    "origin": "vbscript-parser",
+    "origin": "vbscript-agent-extracted",
     "source_file": "Quicksilver (Stern 1980) VPW 1.0.vbs",
     "extracted": "2026-02-14",
     "status": "auto-extracted-needs-review",
-    "confidence_notes": "SEMI-AUTOMATED \u2014 Manual review required. Extraction based on regex patterns; complex VBS logic may be missed."
+    "confidence_notes": "High confidence extraction from VPW VBScript by MetaTed (with apophis, somatik, Sixtoe assistance). Platform detected as Stern pre-S11 era via LoadVPM '01560000','Stern.VBS',3.26. ROM name 'quicksic' from cGameName constant. Switches identified through multiple mechanisms: Controller.Switch() on/off calls for wire triggers and rollovers (sw17-20, sw28, sw29, sw33-37, sw39), vpmTimer.PulseSw for momentary switches (bumpers sw9-11, spinners sw4-5, slingshots sw20-21, scoring rubbers sw38), and custom STHit/DTHit class methods for standup targets (sw14-16, sw25-27, sw40) and drop targets (sw21-24, sw30-32). Trough is minimal single-ball cvpmBallStack design with bsTrough.InitSw using only sw33 as the outhole switch, with BallRelease kicker for eject (sol 10). No multi-ball trough stacking -- this is a 1980 Stern single-ball drain with bsTrough.Balls=1. Kicker/saucer at sw29 uses manual ball position tracking (KickerBall29 variable, timer-based wiggle prevention) with KickBall physics function for eject (sol 9 via bsKicker callback). Drop targets use elaborate Rothbauerw DTHit/DTAnimate class system with Controller.Switch(switchid)=1 on drop and =0 on raise. Green bank (sw21-24) reset by sol 7 (GreenDropsUp), yellow bank (sw30-32) reset by sol 8 (YellowDropsUp). Note sw20 is dual-purpose: fires from both LeftSlingShot_Slingshot event and sw20 wire trigger (Controller.Switch on/off). Similarly sw21 fires from RightSlingShot_Slingshot AND as green drop target 1. This likely reflects the actual Stern Quicksilver switch matrix where multiple playfield features share switch numbers. SolCallback(6)='SolKnocker' is commented out. SolCallback(19)='FlipperRelay' is commented out. Lamps use vpmMapLights with InsertLamps collection -- individual lamp IDs identified from VLM lightmap array names (BL_L_L01 through BL_L_L62). Five backglass flasher lamps handled via LampCallback/UpdateMultipleLamps: lamp 45 (Game Over), lamp 13 (High Score To Date), lamp 63 (Match), lamp 61 (Tilt), lamp 11 (Shoot Again) -- these drive VPX objects go, hstd, ma, tilt, sa respectively. GI is always on (UseGI=0, GI lights forced to state=1 at init). Flipper solenoids via Stern.VBS framework constants sLRFlipper and sLLFlipper (standard Stern values 16 and 18)."
   },
   "game": {
     "id": "quicksilver",
-    "name": "Quicksilver (Stern 1980) VPW 1.0",
+    "name": "Quicksilver",
     "year": 1980,
     "manufacturer": "Stern",
-    "platform": "sam"
+    "ipdb_id": 1895,
+    "platform": "stern"
   },
   "roms": [
     {
-      "id": "quicksilver"
+      "id": "quicksic"
     }
   ],
   "switches": [
     {
       "id": 4,
-      "_note": " PulseSw 4."
+      "description": "Right Spinner",
+      "vpx_name": "sw4",
+      "_note": "vpmTimer.PulseSw 4 on each sw4_Spin event. Spinner with damping physics (sw4hit_Hit manages spin decay). VPX spinner object with animated BP_SpinR primitives."
     },
     {
       "id": 5,
-      "_note": " PulseSw 5."
+      "description": "Left Spinner",
+      "vpx_name": "sw5",
+      "_note": "vpmTimer.PulseSw 5 on each sw5_Spin event. Spinner with damping physics (sw5hit_Hit manages spin decay). VPX spinner object with animated BP_SpinL primitives."
     },
     {
-      "id": 17
+      "id": 7,
+      "description": "Tilt (Plumb Bob)",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch=7. Sensitivity=5. TiltObj includes all 3 bumpers and both slingshots."
     },
     {
-      "id": 18
+      "id": 9,
+      "description": "Top Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "vpmTimer.PulseSw(9) from Bumper1_Hit. Animated ring via BP_Bumper1_Ring."
     },
     {
-      "id": 19
+      "id": 10,
+      "description": "Middle Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "vpmTimer.PulseSw(10) from Bumper2_Hit. Animated ring via BP_Bumper2_Ring."
+    },
+    {
+      "id": 11,
+      "description": "Bottom Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "vpmTimer.PulseSw(11) from Bumper3_Hit. Animated ring via BP_Bumper3_Ring."
+    },
+    {
+      "id": 14,
+      "description": "Standup Target (Upper Left Area)",
+      "vpx_name": "sw14",
+      "_note": "STHit 14 via StandupTarget class. VPX target sw14 with BM_sw14 primitive. Animated via Rothbauerw standup target system."
+    },
+    {
+      "id": 15,
+      "description": "Standup Target (Upper Center Area)",
+      "vpx_name": "sw15",
+      "_note": "STHit 15 via StandupTarget class. VPX target sw15 with BM_sw15 primitive."
+    },
+    {
+      "id": 16,
+      "description": "Standup Target (Upper Right Area)",
+      "vpx_name": "sw16",
+      "_note": "STHit 16 via StandupTarget class. VPX target sw16 with BM_sw16 primitive. Illuminated by lamp L54."
+    },
+    {
+      "id": 17,
+      "description": "Rollover / Wire Trigger (Top Lane 1)",
+      "vpx_name": "sw17",
+      "_note": "Controller.Switch(17) on/off from sw17_hit/sw17_unhit. Wire trigger with animated BP_sw17 primitives."
+    },
+    {
+      "id": 18,
+      "description": "Rollover / Wire Trigger (Top Lane 2)",
+      "vpx_name": "sw18",
+      "_note": "Controller.Switch(18) on/off from sw18_hit/sw18_unhit. Wire trigger with animated BP_sw18 primitives."
+    },
+    {
+      "id": 19,
+      "description": "Rollover / Wire Trigger (Top Lane 3)",
+      "vpx_name": "sw19",
+      "_note": "Controller.Switch(19) on/off from sw19_hit/sw19_unhit. Wire trigger with animated BP_sw19 primitives."
     },
     {
       "id": 20,
-      "_note": " PulseSw 20."
+      "description": "Left Slingshot / Rollover",
+      "vpx_name": "sw20",
+      "_note": "Dual-purpose switch. Fires from LeftSlingShot_Slingshot (PulseSw 20) AND from sw20 wire trigger (Controller.Switch(20) on/off). Wire trigger has BP_sw20 animation. Slingshot has sling correction physics (apophis SlingshotCorrection class)."
     },
     {
       "id": 21,
-      "_note": " PulseSw 21."
+      "description": "Green Drop Target 1 / Right Slingshot",
+      "vpx_name": "sw21",
+      "_note": "Dual-purpose switch. Fires from DTHit 21 (green drop target bank, first target) AND from RightSlingShot_Slingshot (PulseSw 21). Drop target uses Rothbauerw DTAnimate system with BM_sw21 primitive. Slingshot has sling correction physics. Illuminated by lamps L52, L62."
     },
     {
-      "id": 28
+      "id": 22,
+      "description": "Green Drop Target 2",
+      "vpx_name": "sw22",
+      "_note": "DTHit 22 via DropTarget class. Green drop target bank, second target. BM_sw22 primitive. Illuminated by lamps L07, L23, L52, L62."
     },
     {
-      "id": 29
+      "id": 23,
+      "description": "Green Drop Target 3",
+      "vpx_name": "sw23",
+      "_note": "DTHit 23 via DropTarget class. Green drop target bank, third target. BM_sw23 primitive. Illuminated by lamps L07, L23, L52, L62."
     },
     {
-      "id": 33
+      "id": 24,
+      "description": "Green Drop Target 4",
+      "vpx_name": "sw24",
+      "_note": "DTHit 24 via DropTarget class. Green drop target bank, fourth target. BM_sw24 primitive. Illuminated by lamps L07, L23, L52, L62."
     },
     {
-      "id": 34
+      "id": 25,
+      "description": "Standup Target (Right Area 1)",
+      "vpx_name": "sw25",
+      "_note": "STHit 25 via StandupTarget class. VPX target sw25 with BM_sw25 primitive."
     },
     {
-      "id": 35
+      "id": 26,
+      "description": "Standup Target (Right Area 2)",
+      "vpx_name": "sw26",
+      "_note": "STHit 26 via StandupTarget class. VPX target sw26 with BM_sw26 primitive."
     },
     {
-      "id": 36
+      "id": 27,
+      "description": "Standup Target (Right Area 3)",
+      "vpx_name": "sw27",
+      "_note": "STHit 27 via StandupTarget class. VPX target sw27 with BM_sw27 primitive."
     },
     {
-      "id": 37
+      "id": 28,
+      "description": "Star Rollover / Trigger",
+      "vpx_name": "sw28",
+      "_note": "Controller.Switch(28) on/off from sw28_hit/sw28_unhit. Star trigger with BP_sw28 animation."
+    },
+    {
+      "id": 29,
+      "description": "Saucer / Kicker Hole",
+      "vpx_name": "sw29",
+      "_note": "Controller.Switch(29)=1 on hit, cleared by bsKicker solenoid (sol 9). Manual ball position tracking via KickerBall29 variable with timer-based wiggle prevention. Ball reflection disabled while in saucer. Physical saucer implementation by Sixtoe."
+    },
+    {
+      "id": 30,
+      "description": "Yellow Drop Target 1",
+      "vpx_name": "sw30",
+      "_note": "DTHit 30 via DropTarget class. Yellow drop target bank, first target. DTBM_sw30 primitive."
+    },
+    {
+      "id": 31,
+      "description": "Yellow Drop Target 2",
+      "vpx_name": "sw31",
+      "_note": "DTHit 31 via DropTarget class. Yellow drop target bank, second target. DTBM_sw31 primitive."
+    },
+    {
+      "id": 32,
+      "description": "Yellow Drop Target 3",
+      "vpx_name": "sw32",
+      "_note": "DTHit 32 via DropTarget class. Yellow drop target bank, third target. DTBM_sw32 primitive."
+    },
+    {
+      "id": 33,
+      "description": "Drain / Outhole",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "Controller.Switch(33) on/off from Drain_Hit/Drain_UnHit. bsTrough.InitSw 0,33,0,0,0,0,0,0 — single outhole switch. bsTrough.Balls=1 (single ball game). bsTrough.addball on drain hit."
+    },
+    {
+      "id": 34,
+      "description": "Rollover / Wire Trigger",
+      "vpx_name": "sw34",
+      "_note": "Controller.Switch(34) on/off from sw34_hit/sw34_unhit. Wire trigger with BP_sw34 animation."
+    },
+    {
+      "id": 35,
+      "description": "Rollover / Wire Trigger",
+      "vpx_name": "sw35",
+      "_note": "Controller.Switch(35) on/off from sw35_hit/sw35_unhit. Wire trigger with BP_sw35 animation."
+    },
+    {
+      "id": 36,
+      "description": "Rollover / Wire Trigger",
+      "vpx_name": "sw36",
+      "_note": "Controller.Switch(36) on/off from sw36_hit/sw36_unhit. Wire trigger with BP_sw36 animation."
+    },
+    {
+      "id": 37,
+      "description": "Rollover / Wire Trigger",
+      "vpx_name": "sw37",
+      "_note": "Controller.Switch(37) on/off from sw37_hit/sw37_unhit. Wire trigger with BP_sw37 animation."
     },
     {
       "id": 38,
-      "_note": " PulseSw 38. PulseSw 38. PulseSw 38. PulseSw 38. PulseSw 38."
+      "description": "Scoring Rubber",
+      "_note": "vpmTimer.PulseSw 38 from five separate VPX objects: sw38a, sw38b, sw38c, sw38d, sw38e. All pulse the same switch 38. Multiple rubber band segments that score on contact."
     },
     {
-      "id": 39
+      "id": 39,
+      "description": "Star Rollover / Trigger",
+      "vpx_name": "sw39",
+      "_note": "Controller.Switch(39) on/off from sw39_hit/sw39_unhit. Star trigger with BP_sw39 animation."
+    },
+    {
+      "id": 40,
+      "description": "Standup Target",
+      "vpx_name": "sw40",
+      "_note": "STHit 40 via StandupTarget class. VPX target sw40 with BM_sw40 primitive."
     }
   ],
   "coils": [
     {
-      "id": 0,
-      "_note": "No coils detected"
+      "id": 7,
+      "description": "Green Drop Target Bank Reset",
+      "_vbscript_callback": "GreenDropsUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "SolCallback(7)='GreenDropsUp'. Raises drop targets sw21-24 via DTRaise calls. Comment says 'Sol4 Center Drop Target Bank' but assigned to sol 7."
+    },
+    {
+      "id": 8,
+      "description": "Yellow Drop Target Bank Reset",
+      "_vbscript_callback": "YellowDropsUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "SolCallback(8)='YellowDropsUp'. Raises drop targets sw30-32 via DTRaise calls. Comment says 'Sol8 Right Drop Target Bank'."
+    },
+    {
+      "id": 9,
+      "description": "Saucer / Kicker Eject",
+      "_vbscript_callback": "bsKicker",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw29",
+      "_note": "SolCallback(9)='bsKicker'. Comment says 'Sol13 Kicker Hole'. Ejects ball from sw29 saucer via KickBall function (angle 150, vel 15, velz 5, zlift 20). Clears Controller.Switch(29) indirectly."
+    },
+    {
+      "id": 10,
+      "description": "Outhole / Ball Release",
+      "_vbscript_callback": "bsTrough.SolOut",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "vpx_name": "BallRelease",
+      "_note": "SolCallback(10)='bsTrough.SolOut'. Comment says 'Sol14 Outhole, BallRelease'. Ejects ball from trough via BallRelease kicker (angle 90, force 5). Single-ball trough system."
+    },
+    {
+      "id": 6,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_vbscript_name": "SolKnocker",
+      "_inferred_type": "knocker",
+      "_note": "SolCallback(6)='SolKnocker' is COMMENTED OUT in the script. SolKnocker sub exists and calls KnockerSolenoid. Likely disabled for testing or sound reasons."
+    },
+    {
+      "id": 16,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "SolCallback(sLRFlipper)='SolRFlipper'. sLRFlipper=16 from Stern.VBS framework. nFozzy flipper implementation (RF.Fire on enable, RotateToStart on disable). Includes reflip detection and live catch via CheckLiveCatch."
+    },
+    {
+      "id": 18,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "SolCallback(sLLFlipper)='SolLFlipper'. sLLFlipper=18 from Stern.VBS framework. nFozzy flipper implementation (LF.Fire on enable, RotateToStart on disable). Includes reflip detection and live catch via CheckLiveCatch."
+    },
+    {
+      "id": 19,
+      "description": "Flipper Relay (Enable)",
+      "_vbscript_callback": "FlipperRelay",
+      "_inferred_type": "mechanism",
+      "_note": "SolCallback(19)='FlipperRelay' is COMMENTED OUT. Comment says 'Sol19 sEnable'. This is the flipper enable relay for early Stern games."
     }
   ],
   "lamps": [
     {
-      "id": 0,
-      "_note": "No lamps detected"
+      "id": 1,
+      "_note": "vpmMapLights insert lamp. BL_L_L01 lightmap array."
+    },
+    {
+      "id": 2,
+      "_note": "vpmMapLights insert lamp. BL_L_L02 lightmap array."
+    },
+    {
+      "id": 3,
+      "_note": "vpmMapLights insert lamp. BL_L_L03 lightmap array."
+    },
+    {
+      "id": 4,
+      "_note": "vpmMapLights insert lamp. BL_L_L04 lightmap array."
+    },
+    {
+      "id": 5,
+      "_note": "vpmMapLights insert lamp. BL_L_L05 lightmap array."
+    },
+    {
+      "id": 7,
+      "_note": "vpmMapLights insert lamp. BL_L_L07 lightmap array. Illuminates area near drop targets sw22-24."
+    },
+    {
+      "id": 8,
+      "_note": "vpmMapLights insert lamp. BL_L_L08 lightmap array."
+    },
+    {
+      "id": 9,
+      "_note": "vpmMapLights insert lamp. BL_L_L09 lightmap array."
+    },
+    {
+      "id": 11,
+      "description": "Shoot Again",
+      "vpx_name": "sa",
+      "_note": "Backglass flasher lamp. Driven via LampCallback/UpdateMultipleLamps: Controller.Lamp(11) controls sa.state. Also has BL_L_L11 insert lightmap."
+    },
+    {
+      "id": 12,
+      "_note": "vpmMapLights insert lamp. BL_L_L12 lightmap array."
+    },
+    {
+      "id": 13,
+      "description": "High Score To Date",
+      "vpx_name": "hstd",
+      "_note": "Backglass flasher lamp. Driven via LampCallback/UpdateMultipleLamps: Controller.Lamp(13) controls hstd.state."
+    },
+    {
+      "id": 14,
+      "_note": "vpmMapLights insert lamp. BL_L_L14 lightmap array."
+    },
+    {
+      "id": 17,
+      "_note": "vpmMapLights insert lamp. BL_L_L17 lightmap array."
+    },
+    {
+      "id": 18,
+      "_note": "vpmMapLights insert lamp. BL_L_L18 lightmap array."
+    },
+    {
+      "id": 19,
+      "_note": "vpmMapLights insert lamp. BL_L_L19 lightmap array."
+    },
+    {
+      "id": 20,
+      "_note": "vpmMapLights insert lamp. BL_L_L20 lightmap array."
+    },
+    {
+      "id": 21,
+      "_note": "vpmMapLights insert lamp. BL_L_L21 lightmap array."
+    },
+    {
+      "id": 22,
+      "_note": "vpmMapLights insert lamp. BL_L_L22 lightmap array."
+    },
+    {
+      "id": 23,
+      "_note": "vpmMapLights insert lamp. BL_L_L23 lightmap array. Illuminates area near drop targets sw22-24."
+    },
+    {
+      "id": 24,
+      "_note": "vpmMapLights insert lamp. BL_L_L24 lightmap array."
+    },
+    {
+      "id": 28,
+      "_note": "vpmMapLights insert lamp. BL_L_L28 lightmap array."
+    },
+    {
+      "id": 30,
+      "_note": "vpmMapLights insert lamp. BL_L_L30 lightmap array."
+    },
+    {
+      "id": 31,
+      "_note": "vpmMapLights insert lamp. BL_L_L31 lightmap array."
+    },
+    {
+      "id": 33,
+      "_note": "vpmMapLights insert lamp. BL_L_L33 lightmap array."
+    },
+    {
+      "id": 34,
+      "_note": "vpmMapLights insert lamp. BL_L_L34 lightmap array."
+    },
+    {
+      "id": 35,
+      "_note": "vpmMapLights insert lamp. BL_L_L35 lightmap array."
+    },
+    {
+      "id": 36,
+      "_note": "vpmMapLights insert lamp. BL_L_L36 lightmap array."
+    },
+    {
+      "id": 37,
+      "_note": "vpmMapLights insert lamp. BL_L_L37 lightmap array."
+    },
+    {
+      "id": 38,
+      "_note": "vpmMapLights insert lamp. BL_L_L38 lightmap array."
+    },
+    {
+      "id": 39,
+      "_note": "vpmMapLights insert lamp. BL_L_L39 lightmap array."
+    },
+    {
+      "id": 40,
+      "_note": "vpmMapLights insert lamp. BL_L_L40 lightmap array. Also illuminates Plas_Over plastic overlay."
+    },
+    {
+      "id": 44,
+      "_note": "vpmMapLights insert lamp. BL_L_L44 lightmap array."
+    },
+    {
+      "id": 45,
+      "description": "Game Over",
+      "vpx_name": "go",
+      "_note": "Backglass flasher lamp. Driven via LampCallback/UpdateMultipleLamps: Controller.Lamp(45) controls go.state."
+    },
+    {
+      "id": 46,
+      "_note": "vpmMapLights insert lamp. BL_L_L46 lightmap array."
+    },
+    {
+      "id": 47,
+      "_note": "vpmMapLights insert lamp. BL_L_L47 lightmap array."
+    },
+    {
+      "id": 49,
+      "_note": "vpmMapLights insert lamp. BL_L_L49 lightmap array."
+    },
+    {
+      "id": 50,
+      "_note": "vpmMapLights insert lamp. BL_L_L50 lightmap array."
+    },
+    {
+      "id": 51,
+      "_note": "vpmMapLights insert lamp. BL_L_L51 lightmap array."
+    },
+    {
+      "id": 52,
+      "_note": "vpmMapLights insert lamp. BL_L_L52 lightmap array. Illuminates green drop target area (sw21-24)."
+    },
+    {
+      "id": 53,
+      "_note": "vpmMapLights insert lamp. BL_L_L53 lightmap array."
+    },
+    {
+      "id": 54,
+      "_note": "vpmMapLights insert lamp. BL_L_L54 lightmap array. Illuminates standup target sw16 area."
+    },
+    {
+      "id": 55,
+      "_note": "vpmMapLights insert lamp. BL_L_L55 lightmap array."
+    },
+    {
+      "id": 56,
+      "_note": "vpmMapLights insert lamp. BL_L_L56 lightmap array."
+    },
+    {
+      "id": 59,
+      "_note": "vpmMapLights insert lamp. BL_L_L59 lightmap array."
+    },
+    {
+      "id": 60,
+      "_note": "vpmMapLights insert lamp. BL_L_L60 lightmap array."
+    },
+    {
+      "id": 61,
+      "description": "Tilt",
+      "vpx_name": "tilt",
+      "_note": "Backglass flasher lamp. Driven via LampCallback/UpdateMultipleLamps: Controller.Lamp(61) controls tilt.state."
+    },
+    {
+      "id": 62,
+      "_note": "vpmMapLights insert lamp. BL_L_L62 lightmap array. Illuminates green drop target area (sw21-24)."
+    },
+    {
+      "id": 63,
+      "description": "Match",
+      "vpx_name": "ma",
+      "_note": "Backglass flasher lamp. Driven via LampCallback/UpdateMultipleLamps: Controller.Lamp(63) controls ma.state."
     }
   ],
-  "aliases": []
+  "aliases": [
+    {
+      "id": 16,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper=16 (Stern.VBS framework constant). SolRFlipper callback. VPX object: RightFlipper."
+    },
+    {
+      "id": 18,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper=18 (Stern.VBS framework constant). SolLFlipper callback. VPX object: LeftFlipper."
+    }
+  ]
 }

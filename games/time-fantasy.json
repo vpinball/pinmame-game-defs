@@ -2,120 +2,533 @@
   "_format": "vpe-game-mapping",
   "_version": "0.1",
   "_source": {
-    "origin": "vbscript-parser",
+    "origin": "vbscript-agent-extracted",
     "source_file": "Time Fantasy (Williams 1983) VPW v1.0.vbs",
     "extracted": "2026-02-14",
     "status": "auto-extracted-needs-review",
-    "confidence_notes": "SEMI-AUTOMATED \u2014 Manual review required. Extraction based on regex patterns; complex VBS logic may be missed."
+    "confidence_notes": "High confidence extraction from VPW v1.0 by mcarter78/apophis. Platform is Williams System 7 (s7.vbs loaded via LoadVPM). ROM is tmfnt_l5. This is a single-ball game (tnob=1, lob=0) with no traditional multi-ball trough — the drain is a simple kicker (VPX object 'Drain') that holds one ball. Controller.Switch(39)=1 is set on init and on Drain_Hit; SolRelease (sol 1) kicks the ball back into play via Drain.kick. No bsTrough/cvpmTrough framework is used. Switches identified from Controller.Switch on/off pairs (sw16-sw26, sw42 — wire triggers with AnimateWire), PulseSw calls (sw27-sw32 — scoring rubbers with SlingA-F animation, sw33-sw35 — bumpers, sw37-sw38 — slingshots, sw40 — right flipper EOS pulsed in SolRFlipper), and STHit standup target system (sw9-sw15, sw36 — 8 standup targets using VPW TargetBouncer with animate/physics). Lamps use vpmMapLights AllLamps (UseLamps=1) — VPX light objects have TimerInterval set to lamp number. VLM baked lighting arrays confirm lamp IDs 7-64 from BL_L_L* definitions. Backglass lamps 1-5 are read via Controller.Lamp in UpdateTextBoxes/UpdateVRLamps (1=Keep Shooting, 2=Ball In Play, 3=Tilt, 4=Game Over, 5=Match). GI is controlled by sol 11 via SetRelayGI — INVERTED logic (aLvl=0 turns GI ON). Four GI split zones identified from VLM arrays: GI028, GI029, GI032, GI033. Sol 25 drives BackglassLit for VR backglass illumination. Sol 15 is KnockerSolenoid but repurposed for bell sound (comment says 'Repurposed for bell sound'). No cvpmMech, no diverters, no drop targets, no ramp diverters found."
   },
   "game": {
     "id": "time-fantasy",
-    "name": "Time Fantasy (Williams 1983) VPW v1.0",
+    "name": "Time Fantasy",
     "year": 1983,
     "manufacturer": "Williams",
-    "platform": "sam"
+    "platform": "s7"
   },
   "roms": [
     {
-      "id": "time-fantasy"
+      "id": "tmfnt_l5"
     }
   ],
   "switches": [
     {
-      "id": 16
+      "id": 1,
+      "description": "Tilt (Plumb Bob)",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch=1. Standard tilt switch."
     },
     {
-      "id": 17
+      "id": 9,
+      "description": "Standup Target 9",
+      "vpx_name": "sw9",
+      "_note": "STHit 9. VPW TargetBouncer standup target with BM_sw9 primitive animation. Part of 8-target set (sw9-sw15, sw36)."
     },
     {
-      "id": 18
+      "id": 10,
+      "description": "Standup Target 10",
+      "vpx_name": "sw10",
+      "_note": "STHit 10. VPW TargetBouncer standup target with BM_sw10 primitive."
     },
     {
-      "id": 19
+      "id": 11,
+      "description": "Standup Target 11",
+      "vpx_name": "sw11",
+      "_note": "STHit 11. VPW TargetBouncer standup target with BM_sw11 primitive."
     },
     {
-      "id": 20
+      "id": 12,
+      "description": "Standup Target 12",
+      "vpx_name": "sw12",
+      "_note": "STHit 12. VPW TargetBouncer standup target with BM_sw12 primitive."
     },
     {
-      "id": 21
+      "id": 13,
+      "description": "Standup Target 13",
+      "vpx_name": "sw13",
+      "_note": "STHit 13. VPW TargetBouncer standup target with BM_sw13 primitive."
     },
     {
-      "id": 22
+      "id": 14,
+      "description": "Standup Target 14",
+      "vpx_name": "sw14",
+      "_note": "STHit 14. VPW TargetBouncer standup target with BM_sw14 primitive."
     },
     {
-      "id": 23
+      "id": 15,
+      "description": "Standup Target 15",
+      "vpx_name": "sw15",
+      "_note": "STHit 15. VPW TargetBouncer standup target with BM_sw15 primitive."
     },
     {
-      "id": 24
+      "id": 16,
+      "description": "Wire Trigger 16",
+      "vpx_name": "sw16",
+      "_note": "Controller.Switch(16) on/off. Wire trigger with AnimateWire animation (BP_sw16 drops 13 units on hit)."
     },
     {
-      "id": 25
+      "id": 17,
+      "description": "Wire Trigger 17",
+      "vpx_name": "sw17",
+      "_note": "Controller.Switch(17) on/off. Wire trigger with AnimateWire animation."
     },
     {
-      "id": 26
+      "id": 18,
+      "description": "Wire Trigger 18",
+      "vpx_name": "sw18",
+      "_note": "Controller.Switch(18) on/off. Wire trigger with AnimateWire animation. Illuminated by GI029 and GI032 split zones."
+    },
+    {
+      "id": 19,
+      "description": "Wire Trigger 19",
+      "vpx_name": "sw19",
+      "_note": "Controller.Switch(19) on/off. Wire trigger with AnimateWire animation. Illuminated by GI029 split zone."
+    },
+    {
+      "id": 20,
+      "description": "Left Inlane",
+      "vpx_name": "sw20",
+      "_note": "Controller.Switch(20) on/off. Wire trigger with AnimateWire. Calls leftInlaneSpeedLimit on hit. Illuminated by GI029 and GI032 split zones."
+    },
+    {
+      "id": 21,
+      "description": "Right Inlane",
+      "vpx_name": "sw21",
+      "_note": "Controller.Switch(21) on/off. Wire trigger with AnimateWire. Calls rightInlaneSpeedLimit on hit. Illuminated by GI029 split zone."
+    },
+    {
+      "id": 22,
+      "description": "Wire Trigger 22",
+      "vpx_name": "sw22",
+      "_note": "Controller.Switch(22) on/off. Wire trigger with AnimateWire animation."
+    },
+    {
+      "id": 23,
+      "description": "Wire Trigger 23",
+      "vpx_name": "sw23",
+      "_note": "Controller.Switch(23) on/off. Wire trigger with AnimateWire animation."
+    },
+    {
+      "id": 24,
+      "description": "Wire Trigger 24",
+      "vpx_name": "sw24",
+      "_note": "Controller.Switch(24) on/off. Wire trigger with AnimateWire animation."
+    },
+    {
+      "id": 25,
+      "description": "Wire Trigger 25",
+      "vpx_name": "sw25",
+      "_note": "Controller.Switch(25) on/off. Wire trigger with AnimateWire animation."
+    },
+    {
+      "id": 26,
+      "description": "Wire Trigger 26",
+      "vpx_name": "sw26",
+      "_note": "Controller.Switch(26) on/off. Wire trigger with AnimateWire animation."
     },
     {
       "id": 27,
-      "_note": " PulseSw 27."
+      "description": "Scoring Rubber F (Lower Left)",
+      "vpx_name": "sw27",
+      "_note": "PulseSw 27. Scoring rubber with SlingF animation (3 visual frames). Lower hit threshold (LowerRubberHitThreshold=2). Illuminated by GI032 and GI033 split zones."
     },
     {
       "id": 28,
-      "_note": " PulseSw 28."
+      "description": "Scoring Rubber A (Upper Right)",
+      "vpx_name": "sw28",
+      "_note": "PulseSw 28. Scoring rubber with SlingA animation (3 visual frames). Upper hit threshold (UpperRubberHitThreshold=4). Debug prints 'A final speed'."
     },
     {
       "id": 29,
-      "_note": " PulseSw 29."
+      "description": "Scoring Rubber B (Upper Left)",
+      "vpx_name": "sw29",
+      "_note": "PulseSw 29. Scoring rubber with SlingB animation (3 visual frames). Same upper threshold as sw28. Debug prints 'B final speed'."
     },
     {
       "id": 30,
-      "_note": " PulseSw 30."
+      "description": "Scoring Rubber C (Lower)",
+      "vpx_name": "sw30",
+      "_note": "PulseSw 30. Scoring rubber with SlingC animation (3 visual frames). Lower hit threshold."
     },
     {
       "id": 31,
-      "_note": " PulseSw 31."
+      "description": "Scoring Rubber D (Lower)",
+      "vpx_name": "sw31",
+      "_note": "PulseSw 31. Scoring rubber with SlingD animation (3 visual frames). Lower hit threshold."
     },
     {
       "id": 32,
-      "_note": " PulseSw 32."
+      "description": "Scoring Rubber E (Lower Right)",
+      "vpx_name": "sw32",
+      "_note": "PulseSw 32. Scoring rubber with SlingE animation (3 visual frames). Lower hit threshold. Illuminated by GI028 and GI029 split zones."
     },
     {
       "id": 33,
-      "_note": " PulseSw 33."
+      "description": "Top Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "PulseSw 33. Bumper3_Hit. Bumper with skirt tilt animation (BP_Bumper_Skirt_001). RandomSoundBumperTop."
     },
     {
       "id": 34,
-      "_note": " PulseSw 34."
+      "description": "Middle Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 34. Bumper2_Hit. Bumper with skirt tilt animation (BP_Bumper_Skirt_002). RandomSoundBumperMiddle."
     },
     {
       "id": 35,
-      "_note": " PulseSw 35."
+      "description": "Bottom Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 35. Bumper1_Hit. Bumper with skirt tilt animation (BP_Bumper_Socket). RandomSoundBumperBottom."
+    },
+    {
+      "id": 36,
+      "description": "Standup Target 36",
+      "vpx_name": "sw36",
+      "_note": "STHit 36. VPW TargetBouncer standup target with BM_sw36 primitive. The 8th target in the set (sw9-sw15 plus sw36)."
     },
     {
       "id": 37,
-      "_note": " PulseSw 37."
+      "description": "Left Slingshot",
+      "_note": "PulseSw 37. LeftSlingShot_Slingshot event. Uses SlingshotCorrection (LS object). Animated with BP_LSling frames. RandomSoundSlingshotLeft."
     },
     {
       "id": 38,
-      "_note": " PulseSw 38."
+      "description": "Right Slingshot",
+      "_note": "PulseSw 38. RightSlingShot_Slingshot event. Uses SlingshotCorrection (RS object). Animated with BP_RSling frames. RandomSoundSlingshotRight."
     },
     {
-      "id": 39
+      "id": 39,
+      "description": "Drain (Outhole)",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "Controller.Switch(39)=1 on Drain_Hit, =0 on Drain_UnHit. Single-ball trough — ball created in Drain kicker at init. Controller.Switch(39)=1 also set in Table1_Init. SolRelease (sol 1) kicks ball out."
     },
     {
-      "id": 42
+      "id": 40,
+      "description": "Right Flipper EOS",
+      "_note": "PulseSw 40 fired inside SolRFlipper when flipper is activated (enabled=True). Not a physical switch object — pulsed by code on every right flipper fire. Likely used by ROM for end-of-stroke detection."
+    },
+    {
+      "id": 42,
+      "description": "Wire Trigger 42",
+      "vpx_name": "sw42",
+      "_note": "Controller.Switch(42) on/off. Wire trigger with AnimateWire animation."
     }
   ],
   "coils": [
     {
-      "id": 0,
-      "_note": "No coils detected"
+      "id": 1,
+      "description": "Ball Release (Drain Kicker)",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "vpx_name": "Drain",
+      "_note": "Kicks ball from Drain kicker. Drain.kick 60,15. Single-ball system — no multi-ball trough. Ball is created in Drain at table init."
+    },
+    {
+      "id": 11,
+      "description": "GI Relay",
+      "_vbscript_callback": "SetRelayGI",
+      "_inferred_type": "mechanism",
+      "_note": "GI Relay — INVERTED. When aLvl=0, GI turns ON (bulb.State=1 for all GI lights). When aLvl=1 (enabled), GI turns OFF. Four GI split zones in VLM: GI028, GI029, GI032, GI033. S7-era single GI relay controlling all zones simultaneously."
+    },
+    {
+      "id": 15,
+      "description": "Bell / Knocker",
+      "_vbscript_callback": "KnockerSolenoid",
+      "_inferred_type": "knocker",
+      "_note": "SolCallback has trailing apostrophe commenting out the callback name ('KnockerSolenoid'') — but the Sub KnockerSolenoid() exists and plays 'Bell' sound via SoundFX('Bell',DOFKnocker). Comment says 'Repurposed for bell sound'. On the real machine this was likely the bell solenoid."
+    },
+    {
+      "id": 25,
+      "description": "Backglass Lit",
+      "_vbscript_callback": "BackglassLit",
+      "_inferred_type": "mechanism",
+      "_note": "Controls VR backglass illumination (VR_BGLit visibility). Only active in VR mode. On the real machine this likely controlled a backglass illumination relay."
     }
   ],
   "lamps": [
     {
-      "id": 0,
-      "_note": "No lamps detected"
+      "id": 1,
+      "description": "Keep Shooting (Backglass)",
+      "_note": "Controller.Lamp(1) checked in UpdateTextBoxes/UpdateVRLamps. Shows 'KEEP_SHOOTING' text / KeepShootingReel. Same Player Shoots Again indicator."
+    },
+    {
+      "id": 2,
+      "description": "Ball In Play (Backglass)",
+      "_note": "Controller.Lamp(2) checked in UpdateTextBoxes/UpdateVRLamps. Shows 'BIP' text / BIPReel."
+    },
+    {
+      "id": 3,
+      "description": "Tilt (Backglass)",
+      "_note": "Controller.Lamp(3) checked in UpdateTextBoxes/UpdateVRLamps. Shows 'TILT' text / TiltReel."
+    },
+    {
+      "id": 4,
+      "description": "Game Over (Backglass)",
+      "_note": "Controller.Lamp(4) checked in UpdateTextBoxes/UpdateVRLamps. Shows 'GAME_OVER' text / GameOverReel."
+    },
+    {
+      "id": 5,
+      "description": "Match (Backglass)",
+      "_note": "Controller.Lamp(5) checked in UpdateTextBoxes/UpdateVRLamps. Shows 'MATCH' text / MatchReel."
+    },
+    {
+      "id": 7,
+      "_note": "VLM baked lighting array BL_L_L7 present. vpmMapLights AllLamps assigns via TimerInterval."
+    },
+    {
+      "id": 8,
+      "_note": "VLM baked lighting array BL_L_L8 present (illuminates PostCenter). vpmMapLights AllLamps."
+    },
+    {
+      "id": 9,
+      "_note": "VLM baked lighting array BL_L_L9 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 10,
+      "_note": "VLM baked lighting array BL_L_L10 present (illuminates area around sw9 standup target). vpmMapLights AllLamps."
+    },
+    {
+      "id": 11,
+      "_note": "VLM baked lighting array BL_L_L11 present (illuminates area around sw10 standup target). vpmMapLights AllLamps."
+    },
+    {
+      "id": 12,
+      "_note": "VLM baked lighting array BL_L_L12 present (illuminates area around sw12). vpmMapLights AllLamps."
+    },
+    {
+      "id": 13,
+      "_note": "VLM baked lighting array BL_L_L13 present (illuminates area around sw12/sw13). vpmMapLights AllLamps."
+    },
+    {
+      "id": 14,
+      "_note": "VLM baked lighting array BL_L_L14 present (illuminates area around sw14). vpmMapLights AllLamps."
+    },
+    {
+      "id": 15,
+      "_note": "VLM baked lighting array BL_L_L15 present (illuminates area around sw15). vpmMapLights AllLamps."
+    },
+    {
+      "id": 16,
+      "_note": "VLM baked lighting array BL_L_L16 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 17,
+      "_note": "VLM baked lighting array BL_L_L17 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 18,
+      "_note": "VLM baked lighting array BL_L_L18 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 19,
+      "_note": "VLM baked lighting array BL_L_L19 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 20,
+      "_note": "VLM baked lighting array BL_L_L20 present. Opacity doubled at init (BL_L_L20 opacity * 2). vpmMapLights AllLamps."
+    },
+    {
+      "id": 21,
+      "_note": "VLM baked lighting array BL_L_L21 present (also illuminates RSling area). Opacity doubled at init. vpmMapLights AllLamps."
+    },
+    {
+      "id": 22,
+      "_note": "VLM baked lighting array BL_L_L22 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 23,
+      "_note": "VLM baked lighting array BL_L_L23 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 24,
+      "_note": "VLM baked lighting array BL_L_L24 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 25,
+      "_note": "VLM baked lighting array BL_L_L25 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 26,
+      "_note": "VLM baked lighting array BL_L_L26 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 27,
+      "_note": "VLM baked lighting array BL_L_L27 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 28,
+      "_note": "VLM baked lighting array BL_L_L28 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 29,
+      "_note": "VLM baked lighting array BL_L_L29 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 30,
+      "_note": "VLM baked lighting array BL_L_L30 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 31,
+      "_note": "VLM baked lighting array BL_L_L31 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 32,
+      "_note": "VLM baked lighting array BL_L_L32 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 33,
+      "_note": "VLM baked lighting array BL_L_L33 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 34,
+      "_note": "VLM baked lighting array BL_L_L34 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 35,
+      "_note": "VLM baked lighting array BL_L_L35 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 36,
+      "_note": "VLM baked lighting array BL_L_L36 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 37,
+      "_note": "VLM baked lighting array BL_L_L37 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 38,
+      "_note": "VLM baked lighting array BL_L_L38 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 39,
+      "_note": "VLM baked lighting array BL_L_L39 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 40,
+      "_note": "VLM baked lighting array BL_L_L40 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 41,
+      "_note": "VLM baked lighting array BL_L_L41 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 42,
+      "_note": "VLM baked lighting array BL_L_L42 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 43,
+      "_note": "VLM baked lighting array BL_L_L43 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 44,
+      "_note": "VLM baked lighting array BL_L_L44 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 45,
+      "_note": "VLM baked lighting array BL_L_L45 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 46,
+      "_note": "VLM baked lighting array BL_L_L46 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 47,
+      "_note": "VLM baked lighting array BL_L_L47 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 48,
+      "_note": "VLM baked lighting array BL_L_L48 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 49,
+      "_note": "VLM baked lighting array BL_L_L49 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 50,
+      "_note": "VLM baked lighting array BL_L_L50 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 51,
+      "_note": "VLM baked lighting array BL_L_L51 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 52,
+      "_note": "VLM baked lighting array BL_L_L52 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 53,
+      "_note": "VLM baked lighting array BL_L_L53 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 54,
+      "_note": "VLM baked lighting array BL_L_L54 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 55,
+      "_note": "VLM baked lighting array BL_L_L55 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 56,
+      "_note": "VLM baked lighting array BL_L_L56 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 57,
+      "_note": "VLM baked lighting array BL_L_L57 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 58,
+      "_note": "VLM baked lighting array BL_L_L58 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 59,
+      "_note": "VLM baked lighting array BL_L_L59 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 60,
+      "_note": "VLM baked lighting array BL_L_L60 present (illuminates left flipper area / FlipperLup). vpmMapLights AllLamps."
+    },
+    {
+      "id": 61,
+      "_note": "VLM baked lighting array BL_L_L61 present. vpmMapLights AllLamps."
+    },
+    {
+      "id": 62,
+      "_note": "VLM baked lighting array BL_L_L62 present (illuminates right flipper area / FlipperRup). vpmMapLights AllLamps."
+    },
+    {
+      "id": 63,
+      "_note": "VLM baked lighting array BL_L_L63 present (illuminates right flipper area / FlipperRup). vpmMapLights AllLamps."
+    },
+    {
+      "id": 64,
+      "_note": "VLM baked lighting array BL_L_l64 present. vpmMapLights AllLamps."
     }
   ],
-  "aliases": []
+  "aliases": [
+    {
+      "id": "sLRFlipper",
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper is S7 framework constant from s7.vbs (typically sol 26). SolCallback(sLRFlipper) = 'SolRFlipper'. VPX object: RightFlipper. Uses nFozzy RF.Fire implementation. Also pulses sw40 (EOS) on activate."
+    },
+    {
+      "id": "sLLFlipper",
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper is S7 framework constant from s7.vbs (typically sol 28). SolCallback(sLLFlipper) = 'SolLFlipper'. VPX object: LeftFlipper. Uses nFozzy LF.Fire implementation."
+    }
+  ]
 }

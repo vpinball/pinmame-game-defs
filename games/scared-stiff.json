@@ -2,140 +2,636 @@
   "_format": "vpe-game-mapping",
   "_version": "0.1",
   "_source": {
-    "origin": "vbscript-parser",
+    "origin": "vbscript-agent-extracted",
     "source_file": "Scared Stiff (Bally 1996) VPW v1.1.1.vbs",
     "extracted": "2026-02-14",
     "status": "auto-extracted-needs-review",
-    "confidence_notes": "SEMI-AUTOMATED \u2014 Manual review required. Extraction based on regex patterns; complex VBS logic may be missed."
+    "confidence_notes": "High confidence extraction from VPW v1.1.1 VBScript. Platform detected as WPC from LoadVPM call ('WPC.VBS'). ROM name 'SS_15' from Const cGameName. Trough is a 4-ball manual implementation (not cvpmTrough) using kicker objects sw32-sw35 with Controller.Switch on/off and an UpdateTrough timer that cascades balls forward (sw32.BallCntOver check). Ball release via SolRelease (sol 9) which PulseSw 31 and kicks from sw32. Drain_Hit kicks ball back into trough with 500ms delay. No Lampz.MassAssign — uses UseLamps=1 with vpmMapLights AllLamps (VPX light timer interval maps lamp IDs). Lamp IDs extracted from VLM baked lightmap arrays (LM_L_l## references in commented BL_L_l## definitions). Flashers use SolModCallback with UseVPMModSol=2 for PWM control. Spider wheel mechanism uses cvpmMech (vpmMechStepSol + vpmMechCircle + vpmMechLinear + vpmMechFast, sol1=39, sol2=40, AddSw 12 at position 0, 48 steps, length 200). Coffin diverter is a dual-solenoid power/hold design (sol 33 DiverterPower, sol 34 DiverterHold) controlling LockFlipper VPX object and DiverterWall drop states. Coffin door (sol 5) controls CoffinFlipper. VUKs for sw36 (right scoop), sw37 (left scoop), sw41 (coffin popper) use manual KickBall with Controller.Switch tracking — no cvpmBallStack. Crate post hold (sol 16) controls Crate_Pin collidable state. Stand-up targets (sw28, sw61-66) use STHit which calls vpmTimer.PulseSw(switch mod 100). Slingshots use PulseSw (51 left, 52 right, 56 upper). Bumpers use PulseSw (53 upper, 54 centre, 55 lower). Flipper solenoids use WPC framework constants sLRFlipper/sLLFlipper. NoUpperRightFlipper and NoUpperLeftFlipper called. SolCallback(8) for CratePostPower is commented out. SolCallbacks 12-15 commented out (Centre Jet, Upper Jet, Lower Jet, Upper Sling — handled by VPX physics). Coffin trough sw41 has both a commented-out simple switch version AND a VUK implementation (sw41_Hit in ZVUK section). GI handled via UseVPMModSol=2 with VLM lightmap system (GIC and GIU arrays for GI strings)."
   },
   "game": {
     "id": "scared-stiff",
-    "name": "Scared Stiff (Bally 1996) VPW v1.1.1",
+    "name": "Scared Stiff",
     "year": 1996,
     "manufacturer": "Bally",
-    "platform": "sam"
+    "platform": "wpc"
   },
   "roms": [
     {
-      "id": "scared-stiff"
+      "id": "ss_15"
     }
   ],
   "switches": [
     {
-      "id": 16
+      "id": 12,
+      "description": "Spider Wheel Position",
+      "_note": "cvpmMech.AddSw 12, 0, 0 — Spider mechanism position switch at step 0. Used by mSpider cvpmMech to track wheel home position."
     },
     {
-      "id": 17
+      "id": 14,
+      "description": "Tilt (Plumb Bob)",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 14."
     },
     {
-      "id": 18
+      "id": 16,
+      "description": "Start Button / Shooter Lane",
+      "vpx_name": "sw16",
+      "_note": "Controller.Switch(16)=1 on sw16_Hit, =0 on sw16_UnHit. Also Controller.Switch(16)=0 on StartGameKey release. Dual-purpose: shooter lane rollover AND start button (common WPC pattern where start button press is handled by vpmKeyDown)."
     },
     {
-      "id": 25
+      "id": 17,
+      "description": "Right Inlane",
+      "vpx_name": "sw17",
+      "_note": "Controller.Switch(17) on/off. Rollover switch with rightInlaneSpeedLimit ball speed correction."
     },
     {
-      "id": 26
+      "id": 18,
+      "description": "Shooter Lane / Auto Plunger",
+      "vpx_name": "sw18",
+      "_note": "Controller.Switch(18) on/off. Rollover switch. plungerIM.InitImpulseP swplunger uses this area. BP_sw18 z-positioned at -23.5 on init."
     },
     {
-      "id": 27
+      "id": 25,
+      "description": "Left Outlane",
+      "vpx_name": "sw25",
+      "_note": "Controller.Switch(25) on/off. Rollover switch."
+    },
+    {
+      "id": 26,
+      "description": "Left Inlane",
+      "vpx_name": "sw26",
+      "_note": "Controller.Switch(26) on/off. Rollover switch with leftInlaneSpeedLimit ball speed correction."
+    },
+    {
+      "id": 27,
+      "description": "Right Outlane",
+      "vpx_name": "sw27",
+      "_note": "Controller.Switch(27) on/off. Rollover switch."
+    },
+    {
+      "id": 28,
+      "description": "Standup Target (Hatpin)",
+      "vpx_name": "sw28",
+      "_note": "STHit 28. Stand-up target with VPW TargetBouncer animation. vpmTimer.PulseSw(28) via STAnimate."
     },
     {
       "id": 31,
-      "_note": " PulseSw 31."
+      "description": "Trough Eject (Opto)",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "vpmTimer.PulseSw 31 fired by SolRelease (sol 9). This is the trough eject opto — pulsed when ball is kicked out of trough. Acts as drain/outhole equivalent in WPC trough design."
     },
     {
-      "id": 32
+      "id": 32,
+      "description": "Trough 1 (Nearest Shooter)",
+      "vpx_name": "sw32",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "Controller.Switch(32) on/off. First trough position (nearest eject). Ball created here on init. sw32.kick called by SolRelease. UpdateTrough cascades balls forward."
     },
     {
-      "id": 33
+      "id": 33,
+      "description": "Trough 2",
+      "vpx_name": "sw33",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "Controller.Switch(33) on/off. Second trough position. Ball created here on init."
     },
     {
-      "id": 34
+      "id": 34,
+      "description": "Trough 3",
+      "vpx_name": "sw34",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "Controller.Switch(34) on/off. Third trough position. Ball created here on init."
     },
     {
-      "id": 35
+      "id": 35,
+      "description": "Trough 4 (Nearest Drain)",
+      "vpx_name": "sw35",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4",
+      "_note": "Controller.Switch(35) on/off. Fourth trough position (nearest drain). Ball created here on init. 4-ball trough."
     },
     {
-      "id": 36
+      "id": 36,
+      "description": "Right Scoop (VUK)",
+      "vpx_name": "sw36",
+      "_note": "Controller.Switch(36)=1 on hit, cleared by scoop_right (sol 3). KickBall launches ball vertically (kvelz=30, kzlift=105). Has rampFlap animation and Subway_UpVukTrap collidable toggle. Sound debounce via sw36sfx flag."
     },
     {
-      "id": 37
+      "id": 37,
+      "description": "Left Scoop (VUK)",
+      "vpx_name": "sw37",
+      "_note": "Controller.Switch(37)=1 on hit, cleared by scoop_topleft (sol 6). KickBall launches ball (angle 0, vel 3, kvelz random 35-45, kzlift 50). ScoopHit sound."
     },
     {
-      "id": 38
+      "id": 38,
+      "description": "Subway Crate Opto",
+      "vpx_name": "sw38",
+      "_note": "Controller.Switch(38) on/off. Opto switch in subway/crate area."
     },
     {
-      "id": 41
+      "id": 41,
+      "description": "Coffin Scoop (VUK)",
+      "vpx_name": "sw41",
+      "_note": "Controller.Switch(41)=1 on hit, cleared by CoffinPopper (sol 4). KickBall launches ball (angle 168, vel 1, kvelz 30, kzlift 100). NOTE: Simple sw41_Hit/UnHit is commented out — replaced by VUK implementation in ZVUK section."
     },
     {
-      "id": 42
+      "id": 42,
+      "description": "Coffin Trough Centre",
+      "vpx_name": "sw42",
+      "_note": "Controller.Switch(42) on/off. Centre position in coffin ball lock area."
     },
     {
-      "id": 43
+      "id": 43,
+      "description": "Coffin Trough Right",
+      "vpx_name": "sw43",
+      "_note": "Controller.Switch(43) on/off. Right position in coffin ball lock area."
     },
     {
-      "id": 44
+      "id": 44,
+      "description": "Left Ramp Enter",
+      "vpx_name": "sw44",
+      "_note": "Controller.Switch(44) on/off. Left ramp entrance switch."
     },
     {
-      "id": 45
+      "id": 45,
+      "description": "Right Ramp Enter",
+      "vpx_name": "sw45",
+      "_note": "Controller.Switch(45) on/off. Right ramp entrance switch."
     },
     {
-      "id": 46
+      "id": 46,
+      "description": "Left Ramp Made",
+      "vpx_name": "sw46",
+      "_note": "Controller.Switch(46) on/off. Left ramp completion switch."
     },
     {
-      "id": 47
+      "id": 47,
+      "description": "Right Ramp Made",
+      "vpx_name": "sw47",
+      "_note": "Controller.Switch(47) on/off. Right ramp completion switch."
     },
     {
-      "id": 48
+      "id": 48,
+      "description": "Coffin Entrance",
+      "vpx_name": "sw48",
+      "_note": "Controller.Switch(48) on/off. Coffin entrance opto. sw48_Hit calls ScoopHit for sound."
+    },
+    {
+      "id": 51,
+      "description": "Left Slingshot",
+      "_note": "vpmTimer.PulseSw(51). Fired from LeftSlingShot_Slingshot event. LS.VelocityCorrect applied."
+    },
+    {
+      "id": 52,
+      "description": "Right Slingshot",
+      "_note": "vpmTimer.PulseSw(52). Fired from RightSlingShot_Slingshot event. RS.VelocityCorrect applied."
     },
     {
       "id": 53,
-      "_note": " PulseSw 53."
+      "description": "Upper Pop Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "vpmTimer.PulseSw 53. Bumper1_Hit. BSocket1 skirt animation."
     },
     {
       "id": 54,
-      "_note": " PulseSw 54."
+      "description": "Centre Pop Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "vpmTimer.PulseSw 54. Bumper2_Hit. BSocket2 skirt animation."
     },
     {
       "id": 55,
-      "_note": " PulseSw 55."
+      "description": "Lower Pop Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "vpmTimer.PulseSw 55. Bumper3_Hit. BSocket3 skirt animation."
     },
     {
-      "id": 57
+      "id": 56,
+      "description": "Upper Slingshot",
+      "_note": "vpmTimer.PulseSw(56). Fired from TopSlingShot_Slingshot event. TS.VelocityCorrect applied. Uses LSlingArmU animation primitives."
     },
     {
-      "id": 58
+      "id": 57,
+      "description": "Crate Magnetic Sensor",
+      "vpx_name": "sw57",
+      "_note": "Controller.Switch(57) on/off. Magnetic sensor in crate mechanism area."
     },
     {
-      "id": 67
+      "id": 58,
+      "description": "Rollover (Upper Playfield)",
+      "vpx_name": "sw58",
+      "_note": "Controller.Switch(58) on/off. Rollover switch with wire animation."
     },
     {
-      "id": 68
+      "id": 61,
+      "description": "Standup Target (Left Bank Top)",
+      "vpx_name": "sw61",
+      "_note": "STHit 61. Stand-up target with VPW TargetBouncer animation. vpmTimer.PulseSw(61) via STAnimate."
     },
     {
-      "id": 71
+      "id": 62,
+      "description": "Standup Target (Left Bank Middle)",
+      "vpx_name": "sw62",
+      "_note": "STHit 62. Stand-up target with VPW TargetBouncer animation. vpmTimer.PulseSw(62) via STAnimate."
     },
     {
-      "id": 72
+      "id": 63,
+      "description": "Standup Target (Left Bank Bottom)",
+      "vpx_name": "sw63",
+      "_note": "STHit 63. Stand-up target with VPW TargetBouncer animation. vpmTimer.PulseSw(63) via STAnimate."
     },
     {
-      "id": 73
+      "id": 64,
+      "description": "Left Leaper (Frog Target)",
+      "vpx_name": "sw64",
+      "_note": "STHit 64. Left frog leaper target — both a stand-up target AND animated frog (PrLeaper1). Frog bounces on hit with velocity-dependent height. vpmTimer.PulseSw(64) via STAnimate."
     },
     {
-      "id": 74
+      "id": 65,
+      "description": "Center Leaper (Frog Target)",
+      "vpx_name": "sw65",
+      "_note": "STHit 65. Center frog leaper target — both a stand-up target AND animated frog (PrLeaper2). Frog bounces on hit. vpmTimer.PulseSw(65) via STAnimate."
+    },
+    {
+      "id": 66,
+      "description": "Right Leaper (Frog Target)",
+      "vpx_name": "sw66",
+      "_note": "STHit 66. Right frog leaper target — both a stand-up target AND animated frog (PrLeaper3). Frog bounces on hit. vpmTimer.PulseSw(66) via STAnimate."
+    },
+    {
+      "id": 67,
+      "description": "Top Right Rubber Switch",
+      "vpx_name": "sw67",
+      "_note": "Controller.Switch(67) on/off. Rubber switch in upper right playfield area."
+    },
+    {
+      "id": 68,
+      "description": "Rollover (Upper Right)",
+      "vpx_name": "sw68",
+      "_note": "Controller.Switch(68) on/off. Rollover switch with wire animation."
+    },
+    {
+      "id": 71,
+      "description": "Rollover (Top Lane Left)",
+      "vpx_name": "sw71",
+      "_note": "Controller.Switch(71) on/off. Top rollover lane."
+    },
+    {
+      "id": 72,
+      "description": "Rollover (Top Lane Center)",
+      "vpx_name": "sw72",
+      "_note": "Controller.Switch(72) on/off. Top rollover lane."
+    },
+    {
+      "id": 73,
+      "description": "Rollover (Top Lane Right)",
+      "vpx_name": "sw73",
+      "_note": "Controller.Switch(73) on/off. Top rollover lane."
+    },
+    {
+      "id": 74,
+      "description": "Rollover (Far Upper)",
+      "vpx_name": "sw74",
+      "_note": "Controller.Switch(74) on/off. Rollover switch with wire animation."
     }
   ],
   "coils": [
     {
-      "id": 0,
-      "_note": "No coils detected"
+      "id": 1,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "AutoPlunge",
+      "_inferred_type": "ball_management",
+      "vpx_name": "swplunger",
+      "_note": "Impulse plunger auto-fire. plungerIM.AutoFire. Also enables Gate008.collidable during fire. cvpmImpulseP with power 45, time 0.6."
+    },
+    {
+      "id": 2,
+      "description": "Loop Gate",
+      "_vbscript_callback": "LoopGate",
+      "_inferred_type": "mechanism",
+      "vpx_name": "GateLoop",
+      "_note": "Controls GateLoop one-way gate. GateLoop.Open = Enabled."
+    },
+    {
+      "id": 3,
+      "description": "Right Scoop Kicker (VUK)",
+      "_vbscript_callback": "scoop_right",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw36",
+      "_note": "Kicks ball out of right scoop (sw36). KickBall with angle 0, vel 0, kvelz 30, kzlift 105. Clears Controller.Switch(36). Also animates rampFlap and toggles Subway_UpVukTrap collidable."
+    },
+    {
+      "id": 4,
+      "description": "Coffin Popper (VUK)",
+      "_vbscript_callback": "CoffinPopper",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw41",
+      "_note": "Kicks ball out of coffin scoop (sw41). KickBall with angle 168, vel 1, kvelz 30, kzlift 100. Clears Controller.Switch(41)."
+    },
+    {
+      "id": 5,
+      "description": "Coffin Door",
+      "_vbscript_callback": "CoffinDoor",
+      "_inferred_type": "mechanism",
+      "vpx_name": "CoffinFlipper",
+      "_note": "Controls CoffinFlipper VPX flipper object. RotateToEnd on enable, RotateToStart on disable. Animated coffin door with open/closed baked map swap at angle -45."
+    },
+    {
+      "id": 6,
+      "description": "Left Scoop Kicker (VUK)",
+      "_vbscript_callback": "scoop_topleft",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw37",
+      "_note": "Kicks ball out of left scoop (sw37). KickBall with angle 0, vel 3, kvelz random 35-45, kzlift 50. Clears Controller.Switch(37)."
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"Knocker_1\",DOFKnocker),",
+      "_inferred_type": "knocker",
+      "_note": "Cabinet knocker solenoid. Sound-only callback."
+    },
+    {
+      "id": 8,
+      "description": "Crate Post Power (Commented Out)",
+      "_vbscript_callback": "CratePostPower",
+      "_inferred_type": "mechanism",
+      "_note": "COMMENTED OUT in VBS: 'SolCallback(8) = \"CratePostPower\" — Not Required, just for initial power surge. See sol 16 CratePostHold for the active crate post solenoid."
+    },
+    {
+      "id": 9,
+      "description": "Ball Release / Trough Eject",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Ejects ball from trough. PulseSw 31 then sw32.kick 60,9. Main trough release solenoid."
+    },
+    {
+      "id": 10,
+      "description": "Left Slingshot",
+      "_vbscript_callback": "SolLeftSling",
+      "_inferred_type": "slingshot",
+      "_note": "Left slingshot solenoid. Drives LeftSlingShot animation and Boogie Monster nudge (BoogLSlingNudge)."
+    },
+    {
+      "id": 11,
+      "description": "Right Slingshot",
+      "_vbscript_callback": "SolRightSling",
+      "_inferred_type": "slingshot",
+      "_note": "Right slingshot solenoid. Drives RightSlingShot animation and Boogie Monster nudge (BoogRSlingNudge)."
+    },
+    {
+      "id": 12,
+      "description": "Centre Jet Bumper (Commented Out)",
+      "_inferred_type": "bumper",
+      "_note": "COMMENTED OUT: 'SolCallBack(12) = \"Centre Jet\" — Not Required. Bumper coil handled by VPX physics."
+    },
+    {
+      "id": 13,
+      "description": "Upper Jet Bumper (Commented Out)",
+      "_inferred_type": "bumper",
+      "_note": "COMMENTED OUT: 'SolCallBack(13) = \"Upper Jet\" — Not Required. Bumper coil handled by VPX physics."
+    },
+    {
+      "id": 14,
+      "description": "Lower Jet Bumper (Commented Out)",
+      "_inferred_type": "bumper",
+      "_note": "COMMENTED OUT: 'SolCallBack(14) = \"Lower Jet\" — Not Required. Bumper coil handled by VPX physics."
+    },
+    {
+      "id": 15,
+      "description": "Upper Slingshot (Commented Out)",
+      "_inferred_type": "slingshot",
+      "_note": "COMMENTED OUT: 'SolCallBack(15) = \"Upper Sling\" — Not Required. Slingshot handled by VPX physics."
+    },
+    {
+      "id": 16,
+      "description": "Crate Post Hold",
+      "_vbscript_callback": "CratePostHold",
+      "_inferred_type": "mechanism",
+      "vpx_name": "Crate_Pin",
+      "_note": "Crate post hold solenoid. Crate_Pin.Collidable = Not Enabled. When energized, crate pin drops (not collidable), allowing ball passage. Sol 8 (CratePostPower) is commented out — this hold coil does all the work."
+    },
+    {
+      "id": 17,
+      "description": "Flasher — Top Jet (Pop Bumper 1)",
+      "_vbscript_callback": "SolFlash17",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f17",
+      "_note": "SolModCallback PWM flasher. f17.state = level."
+    },
+    {
+      "id": 18,
+      "description": "Flasher — Mid Jet (Pop Bumper 2)",
+      "_vbscript_callback": "SolFlash18",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f18",
+      "_note": "SolModCallback PWM flasher. f18.state = level."
+    },
+    {
+      "id": 19,
+      "description": "Flasher — Low Jet (Pop Bumper 3)",
+      "_vbscript_callback": "SolFlash19",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f19",
+      "_note": "SolModCallback PWM flasher. f19.state = level."
+    },
+    {
+      "id": 20,
+      "description": "Flasher — Bolts (Playfield)",
+      "_vbscript_callback": "SolFlash20",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f20",
+      "_note": "SolModCallback PWM flasher. Drives f20.state AND f20a.state (two flasher objects)."
+    },
+    {
+      "id": 21,
+      "description": "Flasher — Skull Left (Blue)",
+      "_vbscript_callback": "SolFlash21",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f21",
+      "_note": "SolModCallback PWM flasher. f21.state = level."
+    },
+    {
+      "id": 22,
+      "description": "Flasher — Upper Right (Orb)",
+      "_vbscript_callback": "SolFlash22",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f22",
+      "_note": "SolModCallback PWM flasher. f22.state = level."
+    },
+    {
+      "id": 23,
+      "description": "Flasher — Left Ramp (Boney Skull)",
+      "_vbscript_callback": "SolFlash23",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f23",
+      "_note": "SolModCallback PWM flasher. Drives f23.state AND f23a.state (two flasher objects — inside boney skull)."
+    },
+    {
+      "id": 24,
+      "description": "Flasher — Mid Left (Orb)",
+      "_vbscript_callback": "SolFlash24",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f24",
+      "_note": "SolModCallback PWM flasher. f24.state = level."
+    },
+    {
+      "id": 25,
+      "description": "Flasher — Skull Right (White)",
+      "_vbscript_callback": "SolFlash25",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f25",
+      "_note": "SolModCallback PWM flasher. f25.state = level."
+    },
+    {
+      "id": 26,
+      "description": "Flasher — Center TV (Playfield)",
+      "_vbscript_callback": "SolFlash26",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f26",
+      "_note": "SolModCallback PWM flasher. f26.state = level."
+    },
+    {
+      "id": 27,
+      "description": "Flasher — Upper Left (Orb)",
+      "_vbscript_callback": "SolFlash27",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f27",
+      "_note": "SolModCallback PWM flasher. f27.state = level."
+    },
+    {
+      "id": 28,
+      "description": "Flasher — Center Right (Orb)",
+      "_vbscript_callback": "SolFlash28",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f28",
+      "_note": "SolModCallback PWM flasher. f28.state = level."
+    },
+    {
+      "id": 33,
+      "description": "Coffin Diverter Power",
+      "_vbscript_callback": "DiverterPower",
+      "_inferred_type": "diverter",
+      "vpx_name": "LockFlipper",
+      "_note": "Lock diverter power solenoid. LockFlipper.RotateToEnd on enable. Controls DiverterWall/DiverterWall001 drop states. Dual-solenoid design with sol 34 (DiverterHold). Both must be off for diverter to retract."
+    },
+    {
+      "id": 34,
+      "description": "Coffin Diverter Hold",
+      "_vbscript_callback": "DiverterHold",
+      "_inferred_type": "diverter",
+      "vpx_name": "LockFlipper",
+      "_note": "Lock diverter hold solenoid. Keeps diverter in position without full power. When disabled AND DiverterPower is off, LockFlipper.RotateToStart and walls reset. Dual-solenoid power/hold design."
+    },
+    {
+      "id": 35,
+      "description": "Flasher — Lower Left (Orb)",
+      "_vbscript_callback": "SolFlash35",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f35",
+      "_note": "SolModCallback PWM flasher. f35.state = level."
+    },
+    {
+      "id": 36,
+      "description": "Flasher — Lower Right (Orb)",
+      "_vbscript_callback": "SolFlash36",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f36",
+      "_note": "SolModCallback PWM flasher. f36.state = level."
+    },
+    {
+      "id": 39,
+      "description": "Spider Wheel Motor Sol 1",
+      "_vbscript_callback": "cvpmMech (mSpider.Sol1 = 39)",
+      "_inferred_type": "mechanism",
+      "_note": "Spider wheel mechanism first solenoid. cvpmMech with vpmMechStepSol + vpmMechCircle + vpmMechLinear + vpmMechFast. 48 steps, length 200. Drives pSpider/pSpider2 rotation via UpdateSpider callback. Not in SolCallback — consumed by framework."
+    },
+    {
+      "id": 40,
+      "description": "Spider Wheel Motor Sol 2",
+      "_vbscript_callback": "cvpmMech (mSpider.Sol2 = 40)",
+      "_inferred_type": "mechanism",
+      "_note": "Spider wheel mechanism second solenoid. Part of dual-solenoid step motor (vpmMechStepSol). Works with sol 39 to control spider wheel position and direction."
     }
   ],
   "lamps": [
-    {
-      "id": 0,
-      "_note": "No lamps detected"
-    }
+    { "id": 11, "vpx_name": "l11" },
+    { "id": 12, "vpx_name": "l12" },
+    { "id": 13, "vpx_name": "l13" },
+    { "id": 14, "vpx_name": "l14" },
+    { "id": 15, "vpx_name": "l15" },
+    { "id": 16, "vpx_name": "l16" },
+    { "id": 17, "vpx_name": "l17" },
+    { "id": 18, "vpx_name": "l18" },
+    { "id": 21, "vpx_name": "l21" },
+    { "id": 22, "vpx_name": "l22" },
+    { "id": 23, "vpx_name": "l23" },
+    { "id": 24, "vpx_name": "l24" },
+    { "id": 25, "vpx_name": "l25" },
+    { "id": 26, "vpx_name": "l26" },
+    { "id": 27, "vpx_name": "l27" },
+    { "id": 28, "vpx_name": "l28" },
+    { "id": 31, "vpx_name": "l31" },
+    { "id": 32, "vpx_name": "l32" },
+    { "id": 33, "vpx_name": "l33" },
+    { "id": 34, "vpx_name": "l34" },
+    { "id": 35, "vpx_name": "l35" },
+    { "id": 36, "vpx_name": "l36" },
+    { "id": 37, "vpx_name": "l37" },
+    { "id": 38, "vpx_name": "l38" },
+    { "id": 41, "vpx_name": "l41" },
+    { "id": 42, "vpx_name": "l42" },
+    { "id": 43, "vpx_name": "l43" },
+    { "id": 44, "vpx_name": "l44" },
+    { "id": 45, "vpx_name": "l45" },
+    { "id": 46, "vpx_name": "l46" },
+    { "id": 47, "vpx_name": "l47" },
+    { "id": 48, "vpx_name": "l48" },
+    { "id": 51, "vpx_name": "l51" },
+    { "id": 52, "vpx_name": "l52" },
+    { "id": 53, "vpx_name": "l53" },
+    { "id": 54, "vpx_name": "l54" },
+    { "id": 55, "vpx_name": "l55" },
+    { "id": 56, "vpx_name": "l56", "_note": "Also has secondary VPX light l56a (separate lightmap group LM_L_l56a, secondary illumination zone for same lamp circuit)." },
+    { "id": 57, "vpx_name": "l57" },
+    { "id": 58, "vpx_name": "l58" },
+    { "id": 61, "vpx_name": "l61" },
+    { "id": 62, "vpx_name": "l62" },
+    { "id": 63, "vpx_name": "l63" },
+    { "id": 84, "vpx_name": "l84" },
+    { "id": 85, "vpx_name": "l85" },
+    { "id": 86, "vpx_name": "l86" }
   ],
-  "aliases": []
+  "aliases": [
+    {
+      "id": 31,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper (WPC framework constant from WPC.VBS). SolCallback(sLRFlipper) = 'SolRFlipper'. nFozzy flipper implementation: RF.Fire on enable, RightFlipper.RotateToStart on disable. VPX object: RightFlipper."
+    },
+    {
+      "id": 32,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper (WPC framework constant from WPC.VBS). SolCallback(sLLFlipper) = 'SolLFlipper'. nFozzy flipper implementation: LF.Fire on enable, LeftFlipper.RotateToStart on disable. VPX object: LeftFlipper."
+    }
+  ]
 }

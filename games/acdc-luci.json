@@ -2,175 +2,1393 @@
   "_format": "vpe-game-mapping",
   "_version": "0.1",
   "_source": {
-    "origin": "vbscript-parser",
-    "source_file": "AC-DC LUCI Premium VR (Stern 2013) v1.1.3.vbs",
+    "origin": "vbscript-agent-extracted",
+    "source_file": "AC-DC LUCI Premium VR (Stern 2013) VPW v1.1.3.vbs",
     "extracted": "2026-02-14",
     "status": "auto-extracted-needs-review",
-    "confidence_notes": "SEMI-AUTOMATED \u2014 Manual review required. Extraction based on regex patterns; complex VBS logic may be missed."
+    "confidence_notes": "High confidence extraction from VPW v1.1.3 AC/DC LUCI Premium VR script. Platform identified as SAM from LoadVPM call loading 'Sam.VBS'. ROM name 'acd_170h' from Const cGameName (color ROM variant 'acd_170hc' commented out). Trough is a 4-ball cvpmTrough with InitSwitches Array(21,20,19,18) — note reversed order means sw21 is nearest shooter, sw18 is nearest drain. Entry via Drain_Hit sub which calls bsTrough.AddBall. Trough eject (sol 1) fires bsTrough.ExitSol_On and also pulses sw22 (shooter lane confirm) when balls remain. Top eject (sol 12) uses cvpmSaucer at sw37 with PWM detection via SolModCallback — if PWM value reaches 255, an alternate high-power kickout fires (super skill shot mechanic). Bell eject (sol 52) is another cvpmSaucer at sw36. Lower PF eject (sol 3) is a 1-ball cvpmTrough at sw49. Impulse plunger at sw23 (sol 2). Cannon mechanism is complex: sw45 is the cannon kicker entry (Sw45_hit sets Controller.switch(45)=1), sw61/sw62 are cannon position switches set by animCannon based on GPos rotation (sw61=home at GPos>=110, sw62=mid-rotation at GPos<=89). Cannon motor is sol 32, cannon eject is sol 53. Bell swing uses a fake caged ball physics system — sw47 is the bell switch set True when bell RotX > 13 degrees. Band members mechanism on sol 51 uses repurposed Flipper1/Flipper2 objects for animation. Drop targets: AC/DC bank (sw1-5, sol 6 reset) and TNT bank (sw10-12, sol 7 reset) using DTHit/DTRaise framework. Flipper coils 15 (left) and 16 (right) use nFozzy with LF.Fire/RF.Fire and InitVpmFFlipsSAM. Mini playfield flippers on sol 4 (left) and sol 5 (right). Switches 86/88 are lower PF flipper button switches set via KeyDown/KeyUp (Controller.Switch(86)/88). Switch 64 is the FIRE button mapped to RightMagnaSave/LockbarKey. Switch 15 is tournament button (keyFront), switch 16 is start button. Lamps use Lampz framework with MassAssign — SAM platform uses lamp IDs from ChangedLamps. RGB LED inserts are driven by triplets of lamp IDs (e.g., lamp 81/82/83 = face mouth R/G/B). GI controlled via lamp IDs 130 (red), 132 (blue), 134 (lower PF), 136 (white). Flasher solenoids 17-31 use SolModCallback with SetLampMod mapping to lamp IDs 177-191, except sols 21/31 which use custom dome flasher subs (FlashSol121/FlashSol131). Sol 24 is knocker. Sol 8 is shaker motor. Sol 18 is detonator mechanism. Sol 54 is bell magnet. Sol 55 is cannon diverter. Sol 56 is right control gate via vpmSolGate. Sol 57 is left ramp diverter. Tilt uses vpmNudge.TiltSwitch = -7 (accelerometer-based, not a physical switch)."
   },
   "game": {
     "id": "acdc-luci",
-    "name": "AC-DC LUCI Premium VR (Stern 2013) v1.1.3",
+    "name": "AC/DC LUCI Premium",
     "year": 2013,
     "manufacturer": "Stern",
     "platform": "sam"
   },
   "roms": [
     {
-      "id": "acdc-luci"
+      "id": "acd_170h"
     }
   ],
   "switches": [
     {
+      "id": 1,
+      "description": "AC/DC Drop Target A (Left)",
+      "vpx_name": "sw1",
+      "_note": "DTHit 1. AC/DC 5-bank drop target, leftmost. DT1 = Array(sw1, sw1a, sw1p, 1, 0)."
+    },
+    {
+      "id": 2,
+      "description": "AC/DC Drop Target C (2nd)",
+      "vpx_name": "sw2",
+      "_note": "DTHit 2. AC/DC 5-bank drop target, 2nd from left. DT2 = Array(sw2, sw2a, sw2p, 2, 0)."
+    },
+    {
+      "id": 3,
+      "description": "AC/DC Drop Target / (3rd)",
+      "vpx_name": "sw3",
+      "_note": "DTHit 3. AC/DC 5-bank drop target, center. DT3 = Array(sw3, sw3a, sw3p, 3, 0)."
+    },
+    {
+      "id": 4,
+      "description": "AC/DC Drop Target D (4th)",
+      "vpx_name": "sw4",
+      "_note": "DTHit 4. AC/DC 5-bank drop target, 4th from left. DT4 = Array(sw4, sw4a, sw4p, 4, 0)."
+    },
+    {
+      "id": 5,
+      "description": "AC/DC Drop Target C (Right)",
+      "vpx_name": "sw5",
+      "_note": "DTHit 5. AC/DC 5-bank drop target, rightmost. DT5 = Array(sw5, sw5a, sw5p, 5, 0)."
+    },
+    {
       "id": 6,
-      "_note": " PulseSw 6."
+      "description": "R Standup Target (ROCK)",
+      "vpx_name": "Sw6",
+      "_note": "PulseSw 6. ROCK standup target bank."
     },
     {
       "id": 7,
-      "_note": " PulseSw 7."
+      "description": "O Standup Target (ROCK)",
+      "vpx_name": "Sw7",
+      "_note": "PulseSw 7. ROCK standup target bank."
     },
     {
       "id": 8,
-      "_note": " PulseSw 8."
+      "description": "C Standup Target (ROCK)",
+      "vpx_name": "Sw8",
+      "_note": "PulseSw 8. ROCK standup target bank."
     },
     {
       "id": 9,
-      "_note": " PulseSw 9."
+      "description": "K Standup Target (ROCK)",
+      "vpx_name": "Sw9",
+      "_note": "PulseSw 9. ROCK standup target bank."
     },
     {
-      "id": 13
+      "id": 10,
+      "description": "TNT Drop Target T (Left)",
+      "vpx_name": "sw10",
+      "_note": "DTHit 10. TNT 3-bank drop target, leftmost. DT10 = Array(sw10, sw10a, sw10p, 10, 0)."
     },
     {
-      "id": 14
+      "id": 11,
+      "description": "TNT Drop Target N (Center)",
+      "vpx_name": "sw11",
+      "_note": "DTHit 11. TNT 3-bank drop target, center. DT11 = Array(sw11, sw11a, sw11p, 11, 0)."
     },
     {
-      "id": 15
+      "id": 12,
+      "description": "TNT Drop Target T (Right)",
+      "vpx_name": "sw12",
+      "_note": "DTHit 12. TNT 3-bank drop target, rightmost. DT12 = Array(sw12, sw12a, sw12p, 12, 0)."
     },
     {
-      "id": 16
+      "id": 13,
+      "description": "Left Ramp Entrance",
+      "vpx_name": "Sw13",
+      "_note": "Controller.Switch(13) on/off. Left ramp entrance trigger."
+    },
+    {
+      "id": 14,
+      "description": "Left Ramp Exit",
+      "vpx_name": "Sw14",
+      "_note": "Controller.Switch(14) on/off. Left ramp made trigger."
+    },
+    {
+      "id": 15,
+      "description": "Tournament Button",
+      "_note": "Controller.Switch(15). Mapped to keyFront. Cabinet operator switch."
+    },
+    {
+      "id": 16,
+      "description": "Start Button",
+      "_note": "Controller.Switch(16). Mapped to StartGameKey. Also triggers BallSearch on KeyDown."
+    },
+    {
+      "id": 18,
+      "description": "Trough 4 (Nearest Drain)",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4",
+      "_note": "bsTrough.InitSwitches Array(21,20,19,18) — sw18 is position 4 (nearest drain). Size=4."
+    },
+    {
+      "id": 19,
+      "description": "Trough 3",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "bsTrough.InitSwitches Array(21,20,19,18) — sw19 is position 3."
+    },
+    {
+      "id": 20,
+      "description": "Trough 2",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "bsTrough.InitSwitches Array(21,20,19,18) — sw20 is position 2."
+    },
+    {
+      "id": 21,
+      "description": "Trough 1 (Nearest Shooter)",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "bsTrough.InitSwitches Array(21,20,19,18) — sw21 is position 1 (nearest eject). Size=4."
     },
     {
       "id": 22,
-      "_note": " PulseSw 22."
+      "description": "Shooter Lane Confirm",
+      "_note": "PulseSw 22. Pulsed after trough eject when balls remain: 'If BsTrough.Balls Then vpmTimer.PulseSw 22'."
     },
     {
-      "id": 24
+      "id": 23,
+      "description": "Plunger Lane / Auto Plunger",
+      "vpx_name": "sw23",
+      "_note": "plungerIM.InitImpulseP sw23, 55, 0.5. plungerIM.Switch 23. Impulse plunger auto-fire switch."
     },
     {
-      "id": 25
+      "id": 24,
+      "description": "Bottom Lane Rollover (Left Outlane)",
+      "vpx_name": "sw24",
+      "_note": "Controller.Switch(24) on/off. Bottom lane rollover."
+    },
+    {
+      "id": 25,
+      "description": "Bottom Lane Rollover (Left Inlane)",
+      "vpx_name": "sw25",
+      "_note": "Controller.Switch(25) on/off. Bottom lane rollover."
     },
     {
       "id": 26,
-      "_note": " PulseSw 26."
+      "description": "Left Slingshot",
+      "_note": "PulseSw 26. Fired from LeftSlingShot_Slingshot event."
     },
     {
       "id": 27,
-      "_note": " PulseSw 27."
+      "description": "Right Slingshot",
+      "_note": "PulseSw 27. Fired from RightSlingShot_Slingshot event."
     },
     {
-      "id": 28
+      "id": 28,
+      "description": "Bottom Lane Rollover (Right Inlane)",
+      "vpx_name": "sw28",
+      "_note": "Controller.Switch(28) on/off. Bottom lane rollover."
     },
     {
-      "id": 29
+      "id": 29,
+      "description": "Bottom Lane Rollover (Right Outlane)",
+      "vpx_name": "sw29",
+      "_note": "Controller.Switch(29) on/off. Bottom lane rollover."
     },
     {
       "id": 30,
-      "_note": " PulseSw 30."
+      "description": "Left Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 30. Bumper1_Hit."
     },
     {
       "id": 31,
-      "_note": " PulseSw 31."
+      "description": "Right Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 31. Bumper2_Hit."
     },
     {
       "id": 32,
-      "_note": " PulseSw 32."
+      "description": "Top Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "PulseSw 32. Bumper3_Hit."
     },
     {
       "id": 33,
-      "_note": " PulseSw 33."
+      "description": "Spinner",
+      "vpx_name": "Sw33",
+      "_note": "PulseSw 33. Sw33_Spin event."
     },
     {
       "id": 34,
-      "_note": " PulseSw 34."
+      "description": "Thunder Standup Target (Left)",
+      "vpx_name": "Sw34",
+      "_note": "PulseSw 34."
     },
     {
       "id": 35,
-      "_note": " PulseSw 35."
+      "description": "Thunder Standup Target (Right)",
+      "vpx_name": "Sw35",
+      "_note": "PulseSw 35."
     },
     {
-      "id": 38
+      "id": 36,
+      "description": "Bell Eject (Saucer)",
+      "vpx_name": "Sw36",
+      "_note": "cvpmSaucer. bsBellEject.InitKicker Sw36, 36. Bell eject kicker. Cleared by sol 52 (bsBellEject.SolOut)."
     },
     {
-      "id": 39
+      "id": 37,
+      "description": "Top Eject / Jukebox (Saucer)",
+      "vpx_name": "Sw37",
+      "_note": "cvpmSaucer. bsTEject.InitKicker Sw37, 37. Top eject kicker with PWM-based super skill shot. Cleared by sol 12."
     },
     {
-      "id": 40
+      "id": 38,
+      "description": "Top Lane Rollover (Left)",
+      "vpx_name": "sw38",
+      "_note": "Controller.Switch(38) on/off. Top lane rollover."
     },
     {
-      "id": 41
+      "id": 39,
+      "description": "Top Lane Rollover (Center)",
+      "vpx_name": "sw39",
+      "_note": "Controller.Switch(39) on/off. Top lane rollover."
+    },
+    {
+      "id": 40,
+      "description": "Top Lane Rollover (Right)",
+      "vpx_name": "sw40",
+      "_note": "Controller.Switch(40) on/off. Top lane rollover."
+    },
+    {
+      "id": 41,
+      "description": "Right Ramp Entrance",
+      "vpx_name": "Sw41",
+      "_note": "Controller.Switch(41) on/off. Right ramp entrance trigger."
     },
     {
       "id": 42,
-      "_note": " PulseSw 42."
+      "description": "Thunder Standup Target (Center)",
+      "vpx_name": "Sw42",
+      "_note": "PulseSw 42."
     },
     {
-      "id": 43
+      "id": 43,
+      "description": "Right Ramp Exit",
+      "vpx_name": "sw43",
+      "_note": "Controller.Switch(43) on/off. Right ramp made trigger."
     },
     {
-      "id": 44
+      "id": 44,
+      "description": "Left Orbit",
+      "vpx_name": "sw44",
+      "_note": "Controller.Switch(44) on/off. Left orbit trigger. UnHit dampens velX if > 20."
+    },
+    {
+      "id": 45,
+      "description": "Cannon Kicker Entry",
+      "vpx_name": "Sw45",
+      "_note": "Controller.switch(45)=1 on Sw45_hit. Cleared by sol 53 (SolCannon). Ball held in cannon mechanism."
     },
     {
       "id": 46,
-      "_note": " PulseSw 46."
+      "description": "Detonator Target",
+      "vpx_name": "sw46",
+      "_note": "PulseSw 46."
     },
     {
-      "id": 47
+      "id": 47,
+      "description": "Bell Switch",
+      "_note": "Controller.Switch(47). Set True when Bell.RotX > 13 degrees (bell swinging past threshold). Cleared when bell returns to center. No VPX object — driven by bell physics code."
     },
     {
-      "id": 48
+      "id": 48,
+      "description": "Plunger Lane",
+      "vpx_name": "sw48",
+      "_note": "Controller.Switch(48) on/off. Plunger lane trigger."
+    },
+    {
+      "id": 49,
+      "description": "Lower Playfield Eject",
+      "vpx_name": "Sw49",
+      "_note": "bsLowEject.InitSwitches Array(49). 1-ball cvpmTrough for lower PF eject. Cleared by sol 3."
     },
     {
       "id": 50,
-      "_note": " PulseSw 50."
+      "description": "Lower PF Standup Target (Left)",
+      "vpx_name": "sw50",
+      "_note": "PulseSw 50."
     },
     {
       "id": 51,
-      "_note": " PulseSw 51."
+      "description": "Lower PF Standup Target (Center)",
+      "vpx_name": "sw51",
+      "_note": "PulseSw 51."
     },
     {
       "id": 52,
-      "_note": " PulseSw 52."
+      "description": "Lower PF Standup Target (Right)",
+      "vpx_name": "sw52",
+      "_note": "PulseSw 52."
     },
     {
-      "id": 53
+      "id": 53,
+      "description": "Lower PF Rollover (Left)",
+      "vpx_name": "sw53",
+      "_note": "Controller.Switch(53) on/off."
     },
     {
-      "id": 54
+      "id": 54,
+      "description": "Lower PF Rollover (Right)",
+      "vpx_name": "sw54",
+      "_note": "Controller.Switch(54) on/off."
     },
     {
-      "id": 59
+      "id": 59,
+      "description": "Right Orbit",
+      "vpx_name": "sw59",
+      "_note": "Controller.Switch(59) on/off. Right orbit trigger."
     },
     {
-      "id": 64
+      "id": 61,
+      "description": "Cannon Position (Home)",
+      "_note": "Controller.switch(61). Set to 1 when GPos >= 110 (home). Set to 0 when cannon moves (GPos < 110). No VPX object — driven by animCannon code."
     },
     {
-      "id": 86
+      "id": 62,
+      "description": "Cannon Position (Mid-Rotation)",
+      "_note": "Controller.switch(62). Set to 1 when GPos <= 89 (mid-rotation). Cleared when cannon returns. No VPX object — driven by animCannon code."
     },
     {
-      "id": 88
+      "id": 64,
+      "description": "FIRE Button",
+      "_note": "Controller.Switch(64). Mapped to RightMagnaSave / LockbarKey. Action button on apron."
+    },
+    {
+      "id": 86,
+      "description": "Right Flipper Button (Lower PF)",
+      "_note": "Controller.Switch(86). Set on RightFlipperKey press/release. Lower playfield flipper button switch."
+    },
+    {
+      "id": 88,
+      "description": "Left Flipper Button (Lower PF)",
+      "_note": "Controller.Switch(88). Set on LeftFlipperKey press/release. Lower playfield flipper button switch."
     }
   ],
   "coils": [
     {
-      "id": 0,
-      "_note": "No coils detected"
+      "id": 1,
+      "description": "Trough Ball Eject",
+      "_vbscript_callback": "SolTrough",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "bsTrough.ExitSol_On. Also pulses sw22 if balls remain. VPX kicker: BallRelease."
+    },
+    {
+      "id": 2,
+      "description": "Auto Plunger / Ball Launch",
+      "_vbscript_callback": "SolAutoPlungerIM",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw23",
+      "_note": "Impulse plunger auto-fire. plungerIM.AutoFire. VPX object: sw23."
+    },
+    {
+      "id": 3,
+      "description": "Lower Playfield Eject",
+      "_vbscript_callback": "bsLowEject.SolOut",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Sw49",
+      "_note": "Lower PF eject kicker. bsLowEject is a 1-ball cvpmTrough at sw49."
+    },
+    {
+      "id": 4,
+      "description": "Left Flipper (Mini / Lower PF)",
+      "_vbscript_callback": "SolLFlipperMini",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipperMini",
+      "_note": "Lower playfield left flipper. LeftFlipperMini.RotateToEnd/Start."
+    },
+    {
+      "id": 5,
+      "description": "Right Flipper (Mini / Lower PF)",
+      "_vbscript_callback": "SolRFlipperMini",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipperMini",
+      "_note": "Lower playfield right flipper. RightFlipperMini.RotateToEnd/Start."
+    },
+    {
+      "id": 6,
+      "description": "AC/DC 5-Bank Drop Target Reset",
+      "_vbscript_callback": "SolDTBank5",
+      "_inferred_type": "mechanism",
+      "_note": "Resets AC/DC drop targets sw1-5. DTRaise 1-5."
+    },
+    {
+      "id": 7,
+      "description": "TNT 3-Bank Drop Target Reset",
+      "_vbscript_callback": "SolDTBank3",
+      "_inferred_type": "mechanism",
+      "_note": "Resets TNT drop targets sw10-12. DTRaise 10-12."
+    },
+    {
+      "id": 8,
+      "description": "Shaker Motor",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"ShakerPulse\",DOFShaker),",
+      "_inferred_type": "mechanism",
+      "_note": "Shaker motor. Sound-only callback in VBS."
+    },
+    {
+      "id": 9,
+      "description": "Left Bumper",
+      "_vbscript_callback": "",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in SolCallback. Handled by VPX physics. 'SolCallback(9) = \"\" 'Left Bumper'."
+    },
+    {
+      "id": 10,
+      "description": "Right Bumper",
+      "_vbscript_callback": "",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in SolCallback. Handled by VPX physics. 'SolCallback(10) = \"\" 'Right Bumper'."
+    },
+    {
+      "id": 11,
+      "description": "Top Bumper",
+      "_vbscript_callback": "",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in SolCallback. Handled by VPX physics. 'SolCallback(11) = \"\" 'Top Bumper'."
+    },
+    {
+      "id": 12,
+      "description": "Top Eject / Jukebox",
+      "_vbscript_callback": "SolTopEject",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Sw37",
+      "_note": "Top eject kicker at sw37. Uses PWM detection via SolModCallback(12) — if max PWM value reaches 255, fires alternate high-power kickout (super skill shot). bsTEject.ExitSol_On or bsTEject.ExitAltSol_On."
+    },
+    {
+      "id": 13,
+      "description": "Left Slingshot",
+      "_vbscript_callback": "",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in SolCallback. Handled by VPX physics. 'SolCallback(13) = \"\" 'Left Sling'."
+    },
+    {
+      "id": 14,
+      "description": "Right Slingshot",
+      "_vbscript_callback": "",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in SolCallback. Handled by VPX physics. 'SolCallback(14) = \"\" 'Right Sling'."
+    },
+    {
+      "id": 15,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "nFozzy flipper implementation. LF.Fire on enable. InitVpmFFlipsSAM."
+    },
+    {
+      "id": 16,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "nFozzy flipper implementation. RF.Fire on enable. InitVpmFFlipsSAM."
+    },
+    {
+      "id": 17,
+      "description": "Flasher: Train",
+      "_vbscript_callback": "SetLampMod 177,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback. Sets lamp 177. VPX flasher objects: f17, f17a, f17b, f17c, f17r."
+    },
+    {
+      "id": 18,
+      "description": "Detonator Mechanism",
+      "_vbscript_callback": "SolDetonator",
+      "_inferred_type": "mechanism",
+      "_note": "T.N.T. detonator plunger mechanism. Animates Detonator primitive Z position up and down."
+    },
+    {
+      "id": 19,
+      "description": "Flasher: Bottom Arch (x2)",
+      "_vbscript_callback": "SetLampMod 179,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback. Sets lamp 179. VPX flasher objects: f19, f19a."
+    },
+    {
+      "id": 20,
+      "description": "Flasher: Left Ramp",
+      "_vbscript_callback": "SetLampMod 180,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback. Sets lamp 180. VPX flasher object: f20."
+    },
+    {
+      "id": 21,
+      "description": "Flasher: Dome Left Side (Yellow)",
+      "_vbscript_callback": "FlashSol121",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Custom dome flasher sub FlashSol121. Yellow dome. Originally SetLampMod 181 (commented out). Uses Flasherbase1/Flasherlit1/Flasherflash1/Flasherlight1/Flasherbloom1 objects."
+    },
+    {
+      "id": 22,
+      "description": "Flasher: Backbox",
+      "_vbscript_callback": "SetLampMod 182,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback. Sets lamp 182. VPX flasher objects: f22, f22b, f22c, f22r."
+    },
+    {
+      "id": 23,
+      "description": "Flasher: Top Eject",
+      "_vbscript_callback": "SetLampMod 183,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback. Sets lamp 183. VPX flasher objects: f23, f23a."
+    },
+    {
+      "id": 24,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"fx_knocker\",DOFKnocker),",
+      "_inferred_type": "knocker",
+      "_note": "Cabinet knocker solenoid."
+    },
+    {
+      "id": 25,
+      "description": "Flasher: Pop Bumpers (x3)",
+      "_vbscript_callback": "SetLampMod 185,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback. Sets lamp 185. VPX flasher objects: f25, f25a."
+    },
+    {
+      "id": 26,
+      "description": "Flasher: Bell Arrow",
+      "_vbscript_callback": "SetLampMod 186,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback. Sets lamp 186. VPX flasher object: f26."
+    },
+    {
+      "id": 27,
+      "description": "Flasher: Thunder Left",
+      "_vbscript_callback": "SetLampMod 187,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback. Sets lamp 187. VPX flasher objects: f27, f27a, f27b, f27c."
+    },
+    {
+      "id": 28,
+      "description": "Flasher: Thunder Center",
+      "_vbscript_callback": "SetLampMod 188,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback. Sets lamp 188. VPX flasher objects: f28, f28a, f28b, f28c."
+    },
+    {
+      "id": 29,
+      "description": "Flasher: Thunder Right",
+      "_vbscript_callback": "SetLampMod 189,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback. Sets lamp 189. VPX flasher objects: f29, f29a, f29b, f29c."
+    },
+    {
+      "id": 30,
+      "description": "Flasher: Right Ramp",
+      "_vbscript_callback": "SetLampMod 190,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback. Sets lamp 190. VPX flasher object: f30."
+    },
+    {
+      "id": 31,
+      "description": "Flasher: Dome Right Side (Red)",
+      "_vbscript_callback": "FlashSol131",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Custom dome flasher sub FlashSol131. Red dome. Originally SetLampMod 191 (commented out). Uses Flasherbase2/Flasherlit2/Flasherflash2/Flasherlight2/Flasherbloom2 objects."
+    },
+    {
+      "id": 32,
+      "description": "Cannon Motor",
+      "_vbscript_callback": "SolCannonMotor",
+      "_inferred_type": "mechanism",
+      "_note": "Drives cannon rotation animation via aCannon.PlayLoop. Controls sw61/sw62 position switches. Cannon rotates from GPos 110 (home) to GPos 20 and back."
+    },
+    {
+      "id": 51,
+      "description": "Band Members Mechanism",
+      "_vbscript_callback": "SolBandMembers",
+      "_inferred_type": "mechanism",
+      "_note": "Aux coil. Band members pop-up mechanism. Animates Figure_Angus, Figure_Malcolm, Figure_Brian, Figure_Cliff, drums via repurposed Flipper1/Flipper2 VPX objects."
+    },
+    {
+      "id": 52,
+      "description": "Bell Eject",
+      "_vbscript_callback": "bsBellEject.SolOut",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Sw36",
+      "_note": "Aux coil. Bell eject kicker at sw36. cvpmSaucer kickout."
+    },
+    {
+      "id": 53,
+      "description": "Cannon Eject / Fire",
+      "_vbscript_callback": "SolCannon",
+      "_inferred_type": "ball_management",
+      "_note": "Aux coil. Cannon ball eject. Kicks ball from sw45 at current GPos angle. Clears sw45."
+    },
+    {
+      "id": 54,
+      "description": "Bell Magnet",
+      "_vbscript_callback": "SolBellMove",
+      "_inferred_type": "mechanism",
+      "_note": "Aux coil. Bell magnet used during Hell's Bell song. Pushes caged ball to swing the bell."
+    },
+    {
+      "id": 55,
+      "description": "Cannon Diverter",
+      "_vbscript_callback": "SolCannonDiv",
+      "_inferred_type": "diverter",
+      "vpx_name": "DiverterR",
+      "_note": "Aux coil. Cannon diverter. Controls DiverterR.IsDropped state."
+    },
+    {
+      "id": 56,
+      "description": "Right Control Gate",
+      "_vbscript_callback": "vpmSolGate Gate, SoundFX(SSolenoidOn,DOFContactors),",
+      "_inferred_type": "mechanism",
+      "vpx_name": "Gate",
+      "_note": "Aux coil. Right control gate. vpmSolGate standard gate handler."
+    },
+    {
+      "id": 57,
+      "description": "Left Ramp Diverter",
+      "_vbscript_callback": "SolRampDiv",
+      "_inferred_type": "diverter",
+      "vpx_name": "DiverterL",
+      "_note": "Aux coil. Left ramp diverter. Controls DiverterL.IsDropped state."
     }
   ],
   "lamps": [
     {
-      "id": 0,
-      "_note": "No lamps detected"
+      "id": 1,
+      "description": "Jam Multiball",
+      "vpx_name": "l41",
+      "_note": "Lampz.MassAssign(1) = l41. Insert lamp."
+    },
+    {
+      "id": 2,
+      "description": "Super Targets",
+      "vpx_name": "l42",
+      "_note": "Lampz.MassAssign(2) = l42. Insert lamp."
+    },
+    {
+      "id": 3,
+      "description": "Super Lanes",
+      "vpx_name": "l43",
+      "_note": "Lampz.MassAssign(3) = l43. Insert lamp."
+    },
+    {
+      "id": 4,
+      "description": "Album Multiball",
+      "vpx_name": "l44",
+      "_note": "Lampz.MassAssign(4) = l44. Insert lamp."
+    },
+    {
+      "id": 5,
+      "description": "Cannon Fodder",
+      "vpx_name": "l45",
+      "_note": "Lampz.MassAssign(5) = l45. Insert lamp."
+    },
+    {
+      "id": 6,
+      "description": "Cannon Volley",
+      "vpx_name": "l46",
+      "_note": "Lampz.MassAssign(6) = l46. Insert lamp."
+    },
+    {
+      "id": 7,
+      "description": "Cannon Chaos",
+      "vpx_name": "l47",
+      "_note": "Lampz.MassAssign(7) = l47. Insert lamp."
+    },
+    {
+      "id": 8,
+      "description": "Rock Again",
+      "vpx_name": "l48",
+      "_note": "Lampz.MassAssign(8) = l48. Insert lamp."
+    },
+    {
+      "id": 9,
+      "description": "Super Loops",
+      "vpx_name": "l51",
+      "_note": "Lampz.MassAssign(9) = l51. Insert lamp."
+    },
+    {
+      "id": 10,
+      "description": "Super Combos",
+      "vpx_name": "l50",
+      "_note": "Lampz.MassAssign(10) = l50. Insert lamp."
+    },
+    {
+      "id": 11,
+      "description": "Tour Multiball",
+      "vpx_name": "l49",
+      "_note": "Lampz.MassAssign(11) = l49. Insert lamp."
+    },
+    {
+      "id": 12,
+      "description": "F in FIRE",
+      "vpx_name": "l3",
+      "_note": "Lampz.MassAssign(12) = l3. Insert lamp."
+    },
+    {
+      "id": 13,
+      "description": "I in FIRE",
+      "vpx_name": "l4",
+      "_note": "Lampz.MassAssign(13) = l4. Insert lamp."
+    },
+    {
+      "id": 14,
+      "description": "2x Multiplier",
+      "vpx_name": "l5",
+      "_note": "Lampz.MassAssign(14) = l5. Insert lamp."
+    },
+    {
+      "id": 17,
+      "description": "AC/DC Last C",
+      "vpx_name": "l9",
+      "_note": "Lampz.MassAssign(17) = l9. AC/DC target insert."
+    },
+    {
+      "id": 18,
+      "description": "AC/DC D",
+      "vpx_name": "l10",
+      "_note": "Lampz.MassAssign(18) = l10. AC/DC target insert."
+    },
+    {
+      "id": 19,
+      "description": "AC/DC /",
+      "vpx_name": "l11",
+      "_note": "Lampz.MassAssign(19) = l11. AC/DC target insert."
+    },
+    {
+      "id": 20,
+      "description": "AC/DC First C",
+      "vpx_name": "l12",
+      "_note": "Lampz.MassAssign(20) = l12. AC/DC target insert."
+    },
+    {
+      "id": 21,
+      "description": "AC/DC A",
+      "vpx_name": "l13",
+      "_note": "Lampz.MassAssign(21) = l13. AC/DC target insert."
+    },
+    {
+      "id": 22,
+      "description": "Left Lightning Bolt",
+      "vpx_name": "l19",
+      "_note": "Lampz.MassAssign(22) = l19. Insert lamp."
+    },
+    {
+      "id": 23,
+      "description": "Middle Lightning Bolt",
+      "vpx_name": "l21",
+      "_note": "Lampz.MassAssign(23) = l21. Insert lamp."
+    },
+    {
+      "id": 24,
+      "vpx_name": "l25",
+      "_note": "Lampz.MassAssign(24) = l25. Insert lamp."
+    },
+    {
+      "id": 25,
+      "vpx_name": "l1",
+      "_note": "Lampz.MassAssign(25) = l1. Insert lamp."
+    },
+    {
+      "id": 32,
+      "description": "Train Front Light",
+      "vpx_name": "f32",
+      "_note": "Lampz.MassAssign(32) = f32. Callback: DisableLighting TrainFrontLight."
+    },
+    {
+      "id": 33,
+      "description": "K in ROCK",
+      "vpx_name": "l33",
+      "_note": "Lampz.MassAssign(33) = l33. ROCK target insert."
+    },
+    {
+      "id": 34,
+      "description": "C in ROCK",
+      "vpx_name": "l32",
+      "_note": "Lampz.MassAssign(34) = l32. ROCK target insert."
+    },
+    {
+      "id": 35,
+      "description": "O in ROCK",
+      "vpx_name": "l31",
+      "_note": "Lampz.MassAssign(35) = l31. ROCK target insert."
+    },
+    {
+      "id": 36,
+      "description": "R in ROCK",
+      "vpx_name": "l30",
+      "_note": "Lampz.MassAssign(36) = l30. ROCK target insert."
+    },
+    {
+      "id": 37,
+      "vpx_name": "l2",
+      "_note": "Lampz.MassAssign(37) = l2. Insert lamp."
+    },
+    {
+      "id": 38,
+      "description": "Special",
+      "vpx_name": "l34",
+      "_note": "Lampz.MassAssign(38) = l34. Special insert."
+    },
+    {
+      "id": 40,
+      "description": "Extra Ball",
+      "vpx_name": "l27",
+      "_note": "Lampz.MassAssign(40) = l27. Extra ball insert."
+    },
+    {
+      "id": 41,
+      "description": "Right Lightning Bolt",
+      "vpx_name": "l64",
+      "_note": "Lampz.MassAssign(41) = l64. Insert lamp."
+    },
+    {
+      "id": 42,
+      "description": "3x Multiplier",
+      "vpx_name": "l6",
+      "_note": "Lampz.MassAssign(42) = l6. Insert lamp."
+    },
+    {
+      "id": 43,
+      "description": "R in FIRE",
+      "vpx_name": "l7",
+      "_note": "Lampz.MassAssign(43) = l7. Insert lamp."
+    },
+    {
+      "id": 44,
+      "description": "E in FIRE",
+      "vpx_name": "l8",
+      "_note": "Lampz.MassAssign(44) = l8. Insert lamp."
+    },
+    {
+      "id": 49,
+      "description": "T in TNT (Left)",
+      "vpx_name": "l22",
+      "_note": "Lampz.MassAssign(49) = l22. TNT target insert."
+    },
+    {
+      "id": 50,
+      "description": "N in TNT",
+      "vpx_name": "l23",
+      "_note": "Lampz.MassAssign(50) = l23. TNT target insert."
+    },
+    {
+      "id": 51,
+      "description": "T in TNT (Right)",
+      "vpx_name": "l24",
+      "_note": "Lampz.MassAssign(51) = l24. TNT target insert."
+    },
+    {
+      "id": 53,
+      "description": "Train Horn (Left)",
+      "vpx_name": "l57",
+      "_note": "Driven by LampTimer2 via NFadeObjm/Flashm 53. Also l57a, l57p. MassAssign commented out."
+    },
+    {
+      "id": 54,
+      "description": "Train Horn (Right)",
+      "vpx_name": "l58",
+      "_note": "Driven by LampTimer2 via NFadeObjm/Flashm 54. Also l58a, l58p. MassAssign commented out."
+    },
+    {
+      "id": 57,
+      "description": "Start Button LED",
+      "vpx_name": "l100",
+      "_note": "Lampz.MassAssign(57) = l100. Start button illumination."
+    },
+    {
+      "id": 58,
+      "description": "Tournament Button LED",
+      "vpx_name": "l101",
+      "_note": "Lampz.MassAssign(58) = l101. Tournament button illumination."
+    },
+    {
+      "id": 59,
+      "description": "FIRE Button RGB (Red)",
+      "_note": "Lampz.state(59). FIRE button RGB — red channel. Drives l63/l63a/l63b/l63c colorfull property."
+    },
+    {
+      "id": 60,
+      "description": "FIRE Button RGB (Green)",
+      "_note": "Lampz.state(60). FIRE button RGB — green channel."
+    },
+    {
+      "id": 61,
+      "description": "FIRE Button RGB (Blue)",
+      "_note": "Lampz.state(61). FIRE button RGB — blue channel."
+    },
+    {
+      "id": 62,
+      "description": "Bumper Light (Left)",
+      "vpx_name": "l60",
+      "_note": "Lampz.MassAssign(62) = l60, l60a, l60b. Pop bumper lamp."
+    },
+    {
+      "id": 63,
+      "description": "Bumper Light (Right)",
+      "vpx_name": "l61",
+      "_note": "Lampz.MassAssign(63) = l61, l61a, l61b. Pop bumper lamp."
+    },
+    {
+      "id": 64,
+      "description": "Bumper Light (Top)",
+      "vpx_name": "l62",
+      "_note": "Lampz.MassAssign(64) = l62, l62a, l62b. Pop bumper lamp."
+    },
+    {
+      "id": 65,
+      "description": "Track: You Shook Me All Night Long",
+      "_note": "Flash 65, T_YouShookMe. Song select backbox insert. MassAssign commented out."
+    },
+    {
+      "id": 66,
+      "description": "Track: Highway to Hell",
+      "_note": "Flash 66, T_HighwaytoHell. Song select backbox insert. MassAssign commented out."
+    },
+    {
+      "id": 67,
+      "description": "Track: Rock N Roll Train",
+      "_note": "Flash 67, T_RockNRollTrain. Song select backbox insert. MassAssign commented out."
+    },
+    {
+      "id": 68,
+      "description": "Track: Whole Lotta Rosie",
+      "_note": "Flash 68, T_WholeLottaRosie. Song select backbox insert. MassAssign commented out."
+    },
+    {
+      "id": 69,
+      "description": "Track: Hells Bells",
+      "_note": "Flash 69, T_HellsBells. Song select backbox insert. MassAssign commented out."
+    },
+    {
+      "id": 70,
+      "description": "Track: Thunderstruck",
+      "_note": "Flash 70, T_ThunderStruck. Song select backbox insert. MassAssign commented out."
+    },
+    {
+      "id": 71,
+      "description": "Track: Let There Be Rock",
+      "_note": "Flash 71, T_LetThereBeRock. Song select backbox insert. MassAssign commented out."
+    },
+    {
+      "id": 72,
+      "description": "Track: Hell Ain't a Bad Place to Be",
+      "_note": "Flash 72, T_HellAintBad. Song select backbox insert. MassAssign commented out."
+    },
+    {
+      "id": 73,
+      "description": "Track: TNT",
+      "_note": "Flash 73, T_TNT. Song select backbox insert. MassAssign commented out."
+    },
+    {
+      "id": 74,
+      "description": "Track: For Those About to Rock",
+      "_note": "Flash 74, T_ForThoseAbout. Song select backbox insert. MassAssign commented out."
+    },
+    {
+      "id": 75,
+      "description": "Track: War Machine",
+      "_note": "Flash 75, T_WarMachine. Song select backbox insert. MassAssign commented out."
+    },
+    {
+      "id": 76,
+      "description": "Track: Back in Black",
+      "_note": "Flash 76, T_BackInBlack. Song select backbox insert. MassAssign commented out."
+    },
+    {
+      "id": 81,
+      "description": "Face Mouth RGB (Blue)",
+      "_note": "RGBLED_Prim l17, p17, Lampz.state(83), Lampz.state(82), Lampz.state(81). Blue channel of face mouth RGB insert."
+    },
+    {
+      "id": 82,
+      "description": "Face Mouth RGB (Green)",
+      "_note": "Green channel of face mouth RGB insert."
+    },
+    {
+      "id": 83,
+      "description": "Face Mouth RGB (Red)",
+      "vpx_name": "l17",
+      "_note": "Red channel of face mouth RGB insert. RGBLED_Prim l17, p17."
+    },
+    {
+      "id": 84,
+      "description": "Bell Arrow Top RGB (Blue)",
+      "_note": "RGBLED_Prim l35, p35. Blue channel."
+    },
+    {
+      "id": 85,
+      "description": "Bell Arrow Top RGB (Green)",
+      "_note": "RGBLED_Prim l35, p35. Green channel."
+    },
+    {
+      "id": 86,
+      "description": "Bell Arrow Top RGB (Red)",
+      "vpx_name": "l35",
+      "_note": "RGBLED_Prim l35, p35. Red channel."
+    },
+    {
+      "id": 87,
+      "description": "Center Top Lane RGB (Blue)",
+      "_note": "RGBLED_Prim l38, p38. Blue channel."
+    },
+    {
+      "id": 88,
+      "description": "Center Top Lane RGB (Green)",
+      "_note": "RGBLED_Prim l38, p38. Green channel."
+    },
+    {
+      "id": 89,
+      "description": "Center Top Lane RGB (Red)",
+      "vpx_name": "l38",
+      "_note": "RGBLED_Prim l38, p38. Red channel. Also drives l38a metal reflection."
+    },
+    {
+      "id": 90,
+      "description": "Tunes N Stuff RGB (Blue)",
+      "_note": "RGBLED_Prim l40, p40. Blue channel."
+    },
+    {
+      "id": 91,
+      "description": "Tunes N Stuff RGB (Green)",
+      "_note": "RGBLED_Prim l40, p40. Green channel."
+    },
+    {
+      "id": 92,
+      "description": "Tunes N Stuff RGB (Red)",
+      "vpx_name": "l40",
+      "_note": "RGBLED_Prim l40, p40. Red channel. Also drives l40a metal reflection."
+    },
+    {
+      "id": 93,
+      "description": "Right Loop Arrow Mid RGB (Blue)",
+      "_note": "RGBLED_Prim l28, p28. Blue channel."
+    },
+    {
+      "id": 94,
+      "description": "Right Loop Arrow Mid RGB (Green)",
+      "_note": "RGBLED_Prim l28, p28. Green channel."
+    },
+    {
+      "id": 95,
+      "description": "Right Loop Arrow Mid RGB (Red)",
+      "vpx_name": "l28",
+      "_note": "RGBLED_Prim l28, p28. Red channel."
+    },
+    {
+      "id": 96,
+      "description": "Bell Arrow Bottom RGB (Blue)",
+      "_note": "RGBLED_Prim l36, p36. Blue channel."
+    },
+    {
+      "id": 97,
+      "description": "Bell Arrow Bottom RGB (Green)",
+      "_note": "RGBLED_Prim l36, p36. Green channel."
+    },
+    {
+      "id": 98,
+      "description": "Bell Arrow Bottom RGB (Red)",
+      "vpx_name": "l36",
+      "_note": "RGBLED_Prim l36, p36. Red channel."
+    },
+    {
+      "id": 99,
+      "description": "Left Top Lane RGB (Blue)",
+      "_note": "RGBLED_Prim l37, p37. Blue channel."
+    },
+    {
+      "id": 100,
+      "description": "Left Top Lane RGB (Green)",
+      "_note": "RGBLED_Prim l37, p37. Green channel."
+    },
+    {
+      "id": 101,
+      "description": "Left Top Lane RGB (Red)",
+      "vpx_name": "l37",
+      "_note": "RGBLED_Prim l37, p37. Red channel. Also drives l37a metal reflection."
+    },
+    {
+      "id": 102,
+      "description": "Right Ramp Arrow RGB (Blue)",
+      "_note": "RGBLED_Prim l26, p26. Blue channel."
+    },
+    {
+      "id": 103,
+      "description": "Right Ramp Arrow RGB (Green)",
+      "_note": "RGBLED_Prim l26, p26. Green channel."
+    },
+    {
+      "id": 104,
+      "description": "Right Ramp Arrow RGB (Red)",
+      "vpx_name": "l26",
+      "_note": "RGBLED_Prim l26, p26. Red channel."
+    },
+    {
+      "id": 105,
+      "description": "Left Loop Arrow Bottom RGB (Blue)",
+      "_note": "RGBLED_Prim l18, p18. Blue channel."
+    },
+    {
+      "id": 106,
+      "description": "Left Loop Arrow Bottom RGB (Green)",
+      "_note": "RGBLED_Prim l18, p18. Green channel."
+    },
+    {
+      "id": 107,
+      "description": "Left Loop Arrow Bottom RGB (Red)",
+      "vpx_name": "l18",
+      "_note": "RGBLED_Prim l18, p18. Red channel."
+    },
+    {
+      "id": 108,
+      "description": "Right Loop Arrow Bottom RGB (Blue)",
+      "_note": "RGBLED_Prim l29, p29. Blue channel."
+    },
+    {
+      "id": 109,
+      "description": "Right Loop Arrow Bottom RGB (Green)",
+      "_note": "RGBLED_Prim l29, p29. Green channel."
+    },
+    {
+      "id": 110,
+      "description": "Right Loop Arrow Bottom RGB (Red)",
+      "vpx_name": "l29",
+      "_note": "RGBLED_Prim l29, p29. Red channel."
+    },
+    {
+      "id": 111,
+      "description": "Left Loop Arrow Top RGB (Blue)",
+      "_note": "RGBLED_Prim l52, p52. Blue channel."
+    },
+    {
+      "id": 112,
+      "description": "Left Loop Arrow Top RGB (Green)",
+      "_note": "RGBLED_Prim l52, p52. Green channel."
+    },
+    {
+      "id": 113,
+      "description": "Left Loop Arrow Top RGB (Red)",
+      "vpx_name": "l52",
+      "_note": "RGBLED_Prim l52, p52. Red channel."
+    },
+    {
+      "id": 117,
+      "description": "Face Right Eye RGB (Blue)",
+      "_note": "RGBLED_Prim l15, p15. Blue channel."
+    },
+    {
+      "id": 118,
+      "description": "Face Right Eye RGB (Green)",
+      "_note": "RGBLED_Prim l15, p15. Green channel."
+    },
+    {
+      "id": 119,
+      "description": "Face Right Eye RGB (Red)",
+      "vpx_name": "l15",
+      "_note": "RGBLED_Prim l15, p15. Red channel."
+    },
+    {
+      "id": 120,
+      "description": "Face Left Eye RGB (Blue)",
+      "_note": "RGBLED_Prim l14, p14. Blue channel."
+    },
+    {
+      "id": 121,
+      "description": "Face Left Eye RGB (Green)",
+      "_note": "RGBLED_Prim l14, p14. Green channel."
+    },
+    {
+      "id": 122,
+      "description": "Face Left Eye RGB (Red)",
+      "vpx_name": "l14",
+      "_note": "RGBLED_Prim l14, p14. Red channel."
+    },
+    {
+      "id": 123,
+      "description": "Left Ramp Arrow RGB (Blue)",
+      "_note": "RGBLED l20. Blue channel."
+    },
+    {
+      "id": 124,
+      "description": "Left Ramp Arrow RGB (Green)",
+      "_note": "RGBLED l20. Green channel."
+    },
+    {
+      "id": 125,
+      "description": "Left Ramp Arrow RGB (Red)",
+      "vpx_name": "l20",
+      "_note": "RGBLED l20. Red channel."
+    },
+    {
+      "id": 126,
+      "description": "Right Top Lane RGB (Blue)",
+      "_note": "RGBLED_Prim l39, p39. Blue channel. Also drives l39a metal reflection."
+    },
+    {
+      "id": 127,
+      "description": "Right Top Lane RGB (Green)",
+      "_note": "RGBLED_Prim l39, p39. Green channel."
+    },
+    {
+      "id": 128,
+      "description": "Right Top Lane RGB (Red)",
+      "vpx_name": "l39",
+      "_note": "RGBLED_Prim l39, p39. Red channel."
+    },
+    {
+      "id": 130,
+      "description": "GI Red",
+      "_note": "GI_Red collection. Lampz.state(130)/255 drives IntensityScale. Also controls BLRLights, bulb2/4/6, TrainRed material. Sound_GI_Relay on state change."
+    },
+    {
+      "id": 132,
+      "description": "GI Blue",
+      "_note": "GI_Blue collection. Lampz.state(132)/255 drives IntensityScale. Also controls BLBLights, bulb1/3/5/7, TrainBlue material. Sound_GI_Relay on state change."
+    },
+    {
+      "id": 134,
+      "description": "GI Lower Playfield",
+      "_note": "GI_LowPF collection. Lampz.state(134)/255 drives IntensityScale. Also light16, light19, light44, light45."
+    },
+    {
+      "id": 136,
+      "description": "GI White",
+      "_note": "GI_White collection. Lampz.state(136)/255 drives IntensityScale. Combined with lamp 130/132 for ColorGrade switching."
+    },
+    {
+      "id": 151,
+      "description": "LED Flames Tunnel 1",
+      "vpx_name": "l151",
+      "_note": "LampModTunnel 151, l151. Tunnel flame LED strip."
+    },
+    {
+      "id": 152,
+      "description": "LED Flames Tunnel 2",
+      "vpx_name": "l152",
+      "_note": "LampModTunnel 152, l152. Tunnel flame LED strip."
+    },
+    {
+      "id": 153,
+      "description": "LED Flames Tunnel 3",
+      "vpx_name": "l153",
+      "_note": "LampModTunnel 153, l153. Tunnel flame LED strip."
+    },
+    {
+      "id": 154,
+      "description": "LED Flames Tunnel 4",
+      "vpx_name": "l154",
+      "_note": "LampModTunnel 154, l154. Tunnel flame LED strip."
+    },
+    {
+      "id": 155,
+      "description": "LED Flames Tunnel 5",
+      "vpx_name": "l155",
+      "_note": "LampModTunnel 155, l155. Tunnel flame LED strip."
+    },
+    {
+      "id": 156,
+      "description": "LED Flames Tunnel 6",
+      "vpx_name": "l156",
+      "_note": "LampModTunnel 156, l156. Tunnel flame LED strip."
+    },
+    {
+      "id": 157,
+      "description": "LED Flames Tunnel 7",
+      "vpx_name": "l157",
+      "_note": "LampModTunnel 157, l157. Tunnel flame LED strip."
+    },
+    {
+      "id": 158,
+      "description": "LED Flames Tunnel 8",
+      "vpx_name": "l158",
+      "_note": "LampModTunnel 158, l158. Tunnel flame LED strip."
+    },
+    {
+      "id": 177,
+      "description": "Flasher -- Train (Sol 17)",
+      "_note": "Mapped from solenoid 17 via SetLampMod 177. VPX objects: f17, f17a, f17b, f17c, f17r."
+    },
+    {
+      "id": 179,
+      "description": "Flasher -- Bottom Arch (Sol 19)",
+      "_note": "Mapped from solenoid 19 via SetLampMod 179. VPX objects: f19, f19a."
+    },
+    {
+      "id": 180,
+      "description": "Flasher -- Left Ramp (Sol 20)",
+      "_note": "Mapped from solenoid 20 via SetLampMod 180. VPX object: f20."
+    },
+    {
+      "id": 182,
+      "description": "Flasher -- Backbox (Sol 22)",
+      "_note": "Mapped from solenoid 22 via SetLampMod 182. VPX objects: f22, f22b, f22c, f22r."
+    },
+    {
+      "id": 183,
+      "description": "Flasher -- Top Eject (Sol 23)",
+      "_note": "Mapped from solenoid 23 via SetLampMod 183. VPX objects: f23, f23a."
+    },
+    {
+      "id": 185,
+      "description": "Flasher -- Pop Bumpers (Sol 25)",
+      "_note": "Mapped from solenoid 25 via SetLampMod 185. VPX objects: f25, f25a."
+    },
+    {
+      "id": 186,
+      "description": "Flasher -- Bell Arrow (Sol 26)",
+      "_note": "Mapped from solenoid 26 via SetLampMod 186. VPX object: f26."
+    },
+    {
+      "id": 187,
+      "description": "Flasher -- Thunder Left (Sol 27)",
+      "_note": "Mapped from solenoid 27 via SetLampMod 187. VPX objects: f27, f27a, f27b, f27c."
+    },
+    {
+      "id": 188,
+      "description": "Flasher -- Thunder Center (Sol 28)",
+      "_note": "Mapped from solenoid 28 via SetLampMod 188. VPX objects: f28, f28a, f28b, f28c."
+    },
+    {
+      "id": 189,
+      "description": "Flasher -- Thunder Right (Sol 29)",
+      "_note": "Mapped from solenoid 29 via SetLampMod 189. VPX objects: f29, f29a, f29b, f29c."
+    },
+    {
+      "id": 190,
+      "description": "Flasher -- Right Ramp (Sol 30)",
+      "_note": "Mapped from solenoid 30 via SetLampMod 190. VPX object: f30."
     }
   ],
-  "aliases": []
+  "aliases": [
+    {
+      "id": 15,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "SolCallback(15) = SolLFlipper. SAM platform left flipper solenoid. nFozzy implementation with LF.Fire."
+    },
+    {
+      "id": 16,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "SolCallback(16) = SolRFlipper. SAM platform right flipper solenoid. nFozzy implementation with RF.Fire."
+    }
+  ]
 }
