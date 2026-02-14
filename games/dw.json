@@ -1,0 +1,588 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Doctor Who (Bally 1992) VPW Mod v1.1.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from VBScript handlers, Controller.Switch() calls, and PulseSw calls. Lamp IDs from Lampz.MassAssign() calls. Flasher coils (6,8,17-24) use SolModCallback for PWM fading. Mini-playfield mechanism uses sol1=28, sol2=27 via cvpmmech. Three flippers: left (sLLFlipper), right (sLRFlipper), upper left (sULFlipper). Jet bumper SolCallbacks (11-13) commented out in script. No Const sw* definitions — switches referenced directly by number. Trough is custom (3 ball + outhole), not bsTrough."
+  },
+  "game": {
+    "id": "dw",
+    "name": "Doctor Who",
+    "year": 1992,
+    "manufacturer": "Bally",
+    "ipdb_id": 738,
+    "platform": "wpc"
+  },
+  "roms": [
+    { "id": "dw_l2", "version": "L-2", "_note": "Default ROM in cGameName" }
+  ],
+  "switches": [
+    {
+      "id": 14,
+      "description": "Plumb Bob Tilt",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSling",
+      "_inferred_type": "slingshot",
+      "_note": "PulseSw 15 in LeftSling_Slingshot"
+    },
+    {
+      "id": 16,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSling",
+      "_inferred_type": "slingshot",
+      "_note": "PulseSw 16 in RightSling_Slingshot"
+    },
+    {
+      "id": 17,
+      "description": "Shooter Lane",
+      "vpx_name": "ShooterLane"
+    },
+    {
+      "id": 18,
+      "description": "Exit Jets",
+      "vpx_name": "sw18",
+      "_note": "PulseSw 18"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "normally_closed": true,
+      "_note": "Controller.Switch(22) = 1 in Table1_Init"
+    },
+    {
+      "id": 24,
+      "description": "Always Closed",
+      "constant_hint": "always_closed",
+      "_note": "Controller.Switch(24) = 1 in Table1_Init"
+    },
+    {
+      "id": 25,
+      "description": "Trough 1 Ball",
+      "vpx_name": "sw25",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1"
+    },
+    {
+      "id": 26,
+      "description": "Trough 2 Balls",
+      "vpx_name": "sw26",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 27,
+      "description": "Trough 3 Balls",
+      "vpx_name": "sw27",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 28,
+      "description": "Outhole",
+      "vpx_name": "sw28",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch"
+    },
+    {
+      "id": 31,
+      "description": "Opto Popper (Tardis Entrance)",
+      "vpx_name": "TardisEntrance",
+      "_note": "TardisEntrance_hit sets switch 31; TardisExit solenoid clears it"
+    },
+    {
+      "id": 32,
+      "description": "Mini-Playfield Home Opto",
+      "_note": "Controlled by UpdateMiniPF mechanism callback based on aCurrPos"
+    },
+    {
+      "id": 33,
+      "description": "Enter Top Ramp Opto",
+      "vpx_name": "sw33",
+      "_note": "PulseSw 33"
+    },
+    {
+      "id": 34,
+      "description": "Launch Button",
+      "_note": "Controller.Switch(34) toggled by PlungerKey",
+      "input_action_hint": "launch_ball",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 35,
+      "description": "Score Top Ramp",
+      "vpx_name": "gate5",
+      "_note": "PulseSw 35"
+    },
+    {
+      "id": 36,
+      "description": "Enter Bottom Ramp",
+      "vpx_name": "sw36",
+      "_note": "PulseSw 36"
+    },
+    {
+      "id": 37,
+      "description": "Score Bottom Ramp",
+      "vpx_name": "gate3",
+      "_note": "PulseSw 37"
+    },
+    {
+      "id": 38,
+      "description": "Mini-Playfield Door Middle",
+      "vpx_name": "sw38s",
+      "_note": "PulseSw 38"
+    },
+    {
+      "id": 41,
+      "description": "(E)-S-C-A-P-E Target",
+      "vpx_name": "sw41"
+    },
+    {
+      "id": 42,
+      "description": "E-(S)-C-A-P-E Target",
+      "vpx_name": "sw42"
+    },
+    {
+      "id": 43,
+      "description": "E-S-(C)-A-P-E Target",
+      "vpx_name": "sw43"
+    },
+    {
+      "id": 44,
+      "description": "E-S-C-(A)-P-E Target",
+      "vpx_name": "sw44"
+    },
+    {
+      "id": 45,
+      "description": "E-S-C-A-(P)-E Target",
+      "vpx_name": "sw45"
+    },
+    {
+      "id": 46,
+      "description": "E-S-C-A-P-(E) Target",
+      "vpx_name": "sw46"
+    },
+    {
+      "id": 47,
+      "description": "Hang On Score",
+      "vpx_name": "LeftMiddle"
+    },
+    {
+      "id": 48,
+      "description": "Select Doctor",
+      "vpx_name": "sw48",
+      "_note": "PulseSw 48"
+    },
+    {
+      "id": 51,
+      "description": "(R)-E-P-A-I-R Target",
+      "vpx_name": "sw51"
+    },
+    {
+      "id": 52,
+      "description": "R-(E)-P-A-I-R Target",
+      "vpx_name": "sw52"
+    },
+    {
+      "id": 53,
+      "description": "R-E-(P)-A-I-R Target",
+      "vpx_name": "sw53"
+    },
+    {
+      "id": 54,
+      "description": "R-E-P-(A)-I-R Target",
+      "vpx_name": "sw54"
+    },
+    {
+      "id": 55,
+      "description": "R-E-P-A-(I)-R Target",
+      "vpx_name": "sw55"
+    },
+    {
+      "id": 56,
+      "description": "R-E-P-A-I-(R) Target",
+      "vpx_name": "sw56"
+    },
+    {
+      "id": 57,
+      "description": "Trap Door Down",
+      "_note": "Opto controlled by TDUpTimer_timer based on trap door position"
+    },
+    {
+      "id": 58,
+      "description": "Transmat Award",
+      "vpx_name": "sw58"
+    },
+    {
+      "id": 61,
+      "description": "Left Jet Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 61"
+    },
+    {
+      "id": 62,
+      "description": "Right Jet Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 62"
+    },
+    {
+      "id": 63,
+      "description": "Bottom Jet Bumper",
+      "vpx_name": "Bumper4",
+      "_note": "PulseSw 63"
+    },
+    {
+      "id": 64,
+      "description": "Left Drain",
+      "vpx_name": "LeftOutlane"
+    },
+    {
+      "id": 65,
+      "description": "Left Return",
+      "vpx_name": "LeftInlane"
+    },
+    {
+      "id": 66,
+      "description": "Right Return",
+      "vpx_name": "RightInlane"
+    },
+    {
+      "id": 67,
+      "description": "Right Drain",
+      "vpx_name": "RightOutlane"
+    },
+    {
+      "id": 68,
+      "description": "Mini-Playfield Door Left",
+      "vpx_name": "sw68s",
+      "_note": "PulseSw 68"
+    },
+    {
+      "id": 71,
+      "description": "Mini Opto 5-Bank Right 1",
+      "vpx_name": "sw71"
+    },
+    {
+      "id": 72,
+      "description": "Mini Opto 5-Bank Right 2",
+      "vpx_name": "sw72"
+    },
+    {
+      "id": 73,
+      "description": "Mini Opto 5-Bank Middle",
+      "vpx_name": "sw73"
+    },
+    {
+      "id": 74,
+      "description": "Mini Opto 5-Bank Left 2",
+      "vpx_name": "sw74"
+    },
+    {
+      "id": 75,
+      "description": "Mini Opto 5-Bank Left 1",
+      "vpx_name": "sw75"
+    },
+    {
+      "id": 76,
+      "description": "Mini-Playfield Left Opto Eject",
+      "vpx_name": "sw76"
+    },
+    {
+      "id": 77,
+      "description": "Mini-Playfield Right Opto Eject",
+      "vpx_name": "sw77"
+    },
+    {
+      "id": 78,
+      "description": "Mini-Playfield Lites Lock",
+      "vpx_name": "sw78"
+    },
+    {
+      "id": 82,
+      "description": "Playfield Glass",
+      "constant_hint": "always_closed",
+      "_note": "Controller.Switch(82) = 1 in Table1_Init"
+    },
+    {
+      "id": 88,
+      "description": "Mini-Playfield Door Right",
+      "vpx_name": "sw88s",
+      "_note": "PulseSw 88"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trap Door",
+      "_vbscript_callback": "SolTrapDoor",
+      "_inferred_type": "mechanism",
+      "_note": "Controls trap door collidable state and TDUpTimer animation. Drives sw57 open/close."
+    },
+    {
+      "id": 2,
+      "description": "Auto Fire / Ball Launch",
+      "_vbscript_callback": "SolAutoFire",
+      "_inferred_type": "ball_management",
+      "vpx_name": "swplunger",
+      "_note": "Impulse plunger auto-fire via PlungerIM.AutoFire"
+    },
+    {
+      "id": 3,
+      "description": "Tardis Exit (VUK)",
+      "_vbscript_callback": "TardisExit",
+      "_inferred_type": "kicker",
+      "vpx_name": "TardisEntrance",
+      "_note": "Kicks ball out of Tardis VUK; clears sw31"
+    },
+    {
+      "id": 4,
+      "description": "Mini-Playfield Left Kicker",
+      "_vbscript_callback": "solmpfl",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw76"
+    },
+    {
+      "id": 5,
+      "description": "Mini-Playfield Right Kicker",
+      "_vbscript_callback": "solmpfr",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw77"
+    },
+    {
+      "id": 6,
+      "description": "Flasher F06",
+      "_vbscript_callback": "Flash06",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?06$",
+      "_note": "SolModCallback — PWM fading. VPX objects: FL06, FL06b, FL06h"
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 8,
+      "description": "Flasher F08 (Doctor 3 Backbox)",
+      "_vbscript_callback": "Flash08",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?08$",
+      "_note": "SolModCallback — PWM fading. Backbox flasher only (FL8bg)"
+    },
+    {
+      "id": 11,
+      "description": "Jet Bumper Relay 1",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out in script (bpr1)"
+    },
+    {
+      "id": 12,
+      "description": "Jet Bumper Relay 2",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out in script (bpr2)"
+    },
+    {
+      "id": 13,
+      "description": "Jet Bumper Relay 3",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out in script (bpr3)"
+    },
+    {
+      "id": 15,
+      "description": "Outhole",
+      "_vbscript_callback": "SolOutHole",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_coil"
+    },
+    {
+      "id": 16,
+      "description": "Ball Release",
+      "_vbscript_callback": "SolBallRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 17,
+      "description": "Flasher F17 (Time Expander)",
+      "_vbscript_callback": "Flash17",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?17$",
+      "_note": "SolModCallback — PWM fading. VPX objects: FL17, TEFlashP"
+    },
+    {
+      "id": 18,
+      "description": "Flasher F18",
+      "_vbscript_callback": "Flash18",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?18$",
+      "_note": "SolModCallback — PWM fading. VPX object: FL18"
+    },
+    {
+      "id": 19,
+      "description": "Flasher F19",
+      "_vbscript_callback": "Flash19",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?19$",
+      "_note": "SolModCallback — PWM fading. VPX object: FL19"
+    },
+    {
+      "id": 20,
+      "description": "Flasher F20",
+      "_vbscript_callback": "Flash20",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?20$",
+      "_note": "SolModCallback — PWM fading. VPX object: FL20 (opacity-based)"
+    },
+    {
+      "id": 21,
+      "description": "Flasher F21 (Repair)",
+      "_vbscript_callback": "Flash21",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?21$",
+      "_note": "SolModCallback — PWM fading. VPX objects: FL21, FL21b, RepairFlash"
+    },
+    {
+      "id": 22,
+      "description": "Flasher WHO 'H'",
+      "_vbscript_callback": "who_h",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?22$",
+      "_note": "SolModCallback — PWM fading. VPX objects: FL22, FL22h"
+    },
+    {
+      "id": 23,
+      "description": "Flasher WHO 'O'",
+      "_vbscript_callback": "who_o",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?23$",
+      "_note": "SolModCallback — PWM fading. VPX objects: FL23, FL23h"
+    },
+    {
+      "id": 24,
+      "description": "Flasher F24 (Escape)",
+      "_vbscript_callback": "Flash24",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?24$",
+      "_note": "SolModCallback — PWM fading. VPX objects: FL24, EscapeFlash"
+    },
+    {
+      "id": 27,
+      "description": "Mini-Playfield Motor (Sol2)",
+      "_inferred_type": "mechanism",
+      "_note": "cvpmmech sol2 — mini-playfield raise/lower mechanism direction 2"
+    },
+    {
+      "id": 28,
+      "description": "Mini-Playfield Motor (Sol1) / Time Expander On/Off",
+      "_vbscript_callback": "TEOnOff",
+      "_inferred_type": "mechanism",
+      "_note": "cvpmmech sol1 — mini-playfield raise/lower mechanism direction 1; TEOnOff sets TEOn flag"
+    }
+  ],
+  "lamps": [
+    { "id": 11, "vpx_name": "l11" },
+    { "id": 12, "vpx_name": "l12" },
+    { "id": 13, "vpx_name": "l13" },
+    { "id": 14, "vpx_name": "l14" },
+    { "id": 15, "vpx_name": "l15" },
+    { "id": 16, "vpx_name": "l16" },
+    { "id": 17, "vpx_name": "l17" },
+    { "id": 18, "vpx_name": "l18" },
+    { "id": 21, "vpx_name": "l21" },
+    { "id": 22, "vpx_name": "l22" },
+    { "id": 23, "vpx_name": "l23" },
+    { "id": 24, "vpx_name": "l24" },
+    { "id": 25, "vpx_name": "l25" },
+    { "id": 26, "vpx_name": "l26" },
+    { "id": 27, "vpx_name": "l27" },
+    { "id": 28, "vpx_name": "l28" },
+    { "id": 31, "vpx_name": "l31" },
+    { "id": 32, "vpx_name": "l32" },
+    { "id": 33, "vpx_name": "l33" },
+    { "id": 34, "vpx_name": "l34" },
+    { "id": 35, "vpx_name": "l35" },
+    { "id": 36, "vpx_name": "l36" },
+    { "id": 37, "vpx_name": "l37" },
+    { "id": 38, "vpx_name": "l38" },
+    { "id": 41, "vpx_name": "l41" },
+    { "id": 42, "vpx_name": "l42" },
+    { "id": 43, "vpx_name": "l43" },
+    { "id": 44, "vpx_name": "l44" },
+    { "id": 45, "vpx_name": "l45" },
+    { "id": 46, "vpx_name": "l46" },
+    { "id": 47, "vpx_name": "l47" },
+    { "id": 48, "vpx_name": "l48" },
+    { "id": 51, "vpx_name": "l51" },
+    { "id": 52, "vpx_name": "l52" },
+    { "id": 53, "vpx_name": "l53" },
+    { "id": 54, "vpx_name": "l54" },
+    { "id": 55, "vpx_name": "l55" },
+    { "id": 56, "vpx_name": "l56" },
+    { "id": 57, "vpx_name": "l57" },
+    { "id": 58, "vpx_name": "l58" },
+    { "id": 61, "vpx_name": "l61" },
+    { "id": 62, "vpx_name": "l62" },
+    { "id": 63, "vpx_name": "l63" },
+    { "id": 64, "vpx_name": "l64" },
+    { "id": 65, "vpx_name": "l65" },
+    { "id": 66, "vpx_name": "l66" },
+    { "id": 67, "vpx_name": "fl67", "_note": "Uses flasher object (fl67) not standard light" },
+    { "id": 68, "vpx_name": "l68" },
+    { "id": 71, "vpx_name": "l71" },
+    { "id": 72, "vpx_name": "l72" },
+    { "id": 73, "vpx_name": "l73" },
+    { "id": 74, "vpx_name": "l74" },
+    { "id": 75, "vpx_name": "l75" },
+    { "id": 76, "vpx_name": "l76" },
+    { "id": 77, "vpx_name": "l77" },
+    { "id": 78, "vpx_name": "l78" },
+    { "id": 81, "vpx_name": "l81" },
+    { "id": 82, "vpx_name": "l82" },
+    { "id": 83, "vpx_name": "l83" },
+    { "id": 84, "vpx_name": "l84" },
+    { "id": 85, "vpx_name": "l85" },
+    { "id": 86, "vpx_name": "l86a", "_note": "Dual lamp: l86a and l86b" },
+    { "id": 87, "_note": "Launch Button lamp — f87 in non-VR, callback in VR mode" },
+    { "id": 88, "vpx_name": "f88", "_note": "Start Button lamp — f88 in non-VR, f88f flasher in VR mode" }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "sLRFlipper",
+      "type": "coil",
+      "_note": "Right flipper (RightFlipper) — framework constant from WPC.VBS"
+    },
+    {
+      "id": 48,
+      "alias": "sLLFlipper",
+      "type": "coil",
+      "_note": "Left flipper (LeftFlipper) — framework constant from WPC.VBS"
+    },
+    {
+      "id": 34,
+      "alias": "sULFlipper",
+      "type": "coil",
+      "_note": "Upper left flipper (LeftFlipper2) — framework constant from WPC.VBS"
+    }
+  ]
+}

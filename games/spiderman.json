@@ -1,0 +1,1043 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Spider-Man Classic (Stern 2007) VPW Mod 2.0.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "SAM-platform game using PinMAME ROM (smanve_101 Vault Edition). Manual trough via 4 VPX kickers (Trough1-4) with Controller.Switch calls, not cvpmTrough. Sandman VUK (sw59/sol12) and Doc Ock VUK (sw36/sol4) use cvpmSaucer. Doc Ock magnet on sol3. 3 flippers (2 lower + 1 upper right). Drop target bank (3-bank) on sol20 uses position switches 49/50. Sandman motor (sol13) uses position switches 53/54. Doc Ock motor (sol5) uses position switches 57/58. GI is callback-driven (GIUpdate2). Lamps use nFozzy VPMLampUpdater (Lampz) with MassAssign — VPX object names (l3, p3on, etc.) are VPX editor primitives not defined in script. Flasher solenoids (21,23,25-31) use SolModCallback for PWM control. Some map to named VPX flasher objects (Flasherlight1-4). Lamp IDs 74-77 control GI color mode (Sandman/Venom/Goblin/Octopus spots). UseVPMModSol=2, UseSolenoids=1, UseLamps=0. TiltSwitch=-7 (active low)."
+  },
+  "game": {
+    "id": "spiderman",
+    "name": "Spider-Man Classic (Vault Edition)",
+    "year": 2007,
+    "manufacturer": "Stern",
+    "platform": "sam"
+  },
+  "roms": [
+    {
+      "id": "smanve_101"
+    },
+    {
+      "id": "smanve_101c",
+      "_note": "Vault Edition colored DMD"
+    },
+    {
+      "id": "sman_261",
+      "_note": "Standard (non-Vault) English version"
+    },
+    {
+      "id": "sman_210ai",
+      "_note": "Italian version"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Green Goblin opto 1",
+      "vpx_name": "sw1",
+      "_note": "PulseSw — momentary opto"
+    },
+    {
+      "id": 2,
+      "description": "Green Goblin opto 2",
+      "vpx_name": "sw2",
+      "_note": "PulseSw — momentary opto"
+    },
+    {
+      "id": 3,
+      "description": "Green Goblin opto 3",
+      "vpx_name": "sw3",
+      "_note": "PulseSw — momentary opto"
+    },
+    {
+      "id": 4,
+      "description": "Green Goblin opto 4",
+      "vpx_name": "sw4",
+      "_note": "PulseSw — momentary opto"
+    },
+    {
+      "id": 5,
+      "description": "Green Goblin opto 5",
+      "vpx_name": "sw5",
+      "_note": "PulseSw — momentary opto"
+    },
+    {
+      "id": 6,
+      "description": "Lock opto",
+      "vpx_name": "sw6",
+      "_note": "PulseSw — momentary opto"
+    },
+    {
+      "id": 7,
+      "description": "Spinner",
+      "vpx_name": "sw7",
+      "_note": "PulseSw via _Spin handler"
+    },
+    {
+      "id": 8,
+      "description": "Upper lane",
+      "vpx_name": "sw8",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 9,
+      "description": "Sandman drop target 1 (top)",
+      "vpx_name": "sw9",
+      "_note": "PulseSw — conditional on SandmanPronto flag"
+    },
+    {
+      "id": 10,
+      "description": "Sandman drop target 2 (middle)",
+      "vpx_name": "sw10",
+      "_note": "PulseSw — conditional on SandmanPronto flag"
+    },
+    {
+      "id": 11,
+      "description": "Sandman drop target 3 (bottom)",
+      "vpx_name": "sw11",
+      "_note": "PulseSw — conditional on SandmanPronto flag"
+    },
+    {
+      "id": 12,
+      "description": "Left orbit opto",
+      "vpx_name": "sw12",
+      "_note": "PulseSw — momentary opto"
+    },
+    {
+      "id": 13,
+      "description": "Right orbit opto",
+      "vpx_name": "sw13",
+      "_note": "PulseSw — momentary opto"
+    },
+    {
+      "id": 14,
+      "description": "Right post collision",
+      "vpx_name": "RPostColl21",
+      "_note": "PulseSw — via wall collision handler"
+    },
+    {
+      "id": 18,
+      "description": "Trough switch 1 (closest to drain)",
+      "vpx_name": "Trough1",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "switch_1",
+      "_note": "Controller.Switch — held. Manual trough, not cvpmTrough"
+    },
+    {
+      "id": 19,
+      "description": "Trough switch 2",
+      "vpx_name": "Trough2",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "switch_2",
+      "_note": "Controller.Switch — held. Manual trough"
+    },
+    {
+      "id": 20,
+      "description": "Trough switch 3",
+      "vpx_name": "Trough3",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "switch_3",
+      "_note": "Controller.Switch — held. Manual trough"
+    },
+    {
+      "id": 21,
+      "description": "Trough switch 4 (closest to shooter)",
+      "vpx_name": "Trough4",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "switch_4",
+      "_note": "Controller.Switch — held. Manual trough, balls init here"
+    },
+    {
+      "id": 22,
+      "description": "Trough jam / ball release confirm",
+      "vpx_name": null,
+      "_note": "PulseSw — pulsed inside ReleaseBall sol handler and bsTrough.ExitSol_On"
+    },
+    {
+      "id": 23,
+      "description": "Shooter lane / plunger",
+      "vpx_name": "swplunger",
+      "_note": "Controller.Switch held via _Hit/_UnHit, also PulseSw in ReleaseBall. plungerIM.Switch = 23"
+    },
+    {
+      "id": 24,
+      "description": "Left outlane",
+      "vpx_name": "sw24",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 25,
+      "description": "Left inlane",
+      "vpx_name": "sw25",
+      "_note": "Controller.Switch — held switch, has speed limiter"
+    },
+    {
+      "id": 26,
+      "description": "Left slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "PulseSw via _Slingshot handler"
+    },
+    {
+      "id": 27,
+      "description": "Right slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "PulseSw via _Slingshot handler"
+    },
+    {
+      "id": 28,
+      "description": "Right inlane",
+      "vpx_name": "sw28",
+      "_note": "Controller.Switch — held switch, has speed limiter"
+    },
+    {
+      "id": 29,
+      "description": "Right outlane",
+      "vpx_name": "sw29",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 30,
+      "description": "Left bumper",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw via Bumper1_Hit"
+    },
+    {
+      "id": 31,
+      "description": "Right bumper",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw via Bumper2_Hit"
+    },
+    {
+      "id": 32,
+      "description": "Bottom bumper",
+      "vpx_name": "Bumper3",
+      "_note": "PulseSw via Bumper3_Hit"
+    },
+    {
+      "id": 33,
+      "description": "Upper lane 2",
+      "vpx_name": "sw33",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 34,
+      "description": "Upper lane 3",
+      "vpx_name": "sw34",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 35,
+      "description": "Upper lane 4",
+      "vpx_name": "sw35",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 36,
+      "description": "Doc Ock VUK (saucer entry)",
+      "vpx_name": "sw36",
+      "_note": "Controller.Switch — VUK entry kicker, uses cvpmSaucer. Enabled/disabled dynamically"
+    },
+    {
+      "id": 37,
+      "description": "Right lane",
+      "vpx_name": "sw37",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 38,
+      "description": "Right lane 2",
+      "vpx_name": "sw38",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 39,
+      "description": "Right 3-bank target 1",
+      "vpx_name": "sw39",
+      "_note": "PulseSw — momentary opto target"
+    },
+    {
+      "id": 40,
+      "description": "Right 3-bank target 2",
+      "vpx_name": "sw40",
+      "_note": "PulseSw — momentary opto target"
+    },
+    {
+      "id": 41,
+      "description": "Right 3-bank target 3",
+      "vpx_name": "sw41",
+      "_note": "PulseSw — momentary opto target"
+    },
+    {
+      "id": 42,
+      "description": "Sandman target (position up)",
+      "vpx_name": "s42",
+      "_note": "Controller.Switch — held. Sandman figure hit target"
+    },
+    {
+      "id": 43,
+      "description": "Venom ramp opto (from Venom ramp)",
+      "vpx_name": "sw43",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 44,
+      "description": "Right ramp entry",
+      "vpx_name": "sw44",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 45,
+      "description": "Right ramp made",
+      "vpx_name": "sw45",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 46,
+      "description": "Right under flipper switch",
+      "vpx_name": "sw46",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 47,
+      "description": "Left ramp entry",
+      "vpx_name": "sw47",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 48,
+      "description": "Left ramp made",
+      "vpx_name": "sw48",
+      "_note": "Controller.Switch — held switch"
+    },
+    {
+      "id": 49,
+      "description": "3-bank drop target position (down)",
+      "vpx_name": null,
+      "_note": "Controller.Switch — set/cleared in Sol3Bank and PallaBloccata. Paired with sw50"
+    },
+    {
+      "id": 50,
+      "description": "3-bank drop target position (up)",
+      "vpx_name": null,
+      "_note": "Controller.Switch — set/cleared in Sol3Bank and PallaBloccata. Init=1. Paired with sw49"
+    },
+    {
+      "id": 53,
+      "description": "Sandman motor position (down)",
+      "vpx_name": null,
+      "_note": "Controller.Switch — set/cleared in solSandMotor. Init=1. Paired with sw54"
+    },
+    {
+      "id": 54,
+      "description": "Sandman motor position (up)",
+      "vpx_name": null,
+      "_note": "Controller.Switch — set/cleared in solSandMotor. Paired with sw53"
+    },
+    {
+      "id": 57,
+      "description": "Doc Ock motor position (down)",
+      "vpx_name": null,
+      "_note": "Controller.Switch — set/cleared in solDocMotor. Init=1. Paired with sw58"
+    },
+    {
+      "id": 58,
+      "description": "Doc Ock motor position (up)",
+      "vpx_name": null,
+      "_note": "Controller.Switch — set/cleared in solDocMotor. Paired with sw57"
+    },
+    {
+      "id": 59,
+      "description": "Sandman VUK (saucer entry)",
+      "vpx_name": "sw59",
+      "_note": "Controller.Switch — VUK entry kicker, uses cvpmSaucer. Enabled/disabled dynamically"
+    },
+    {
+      "id": 63,
+      "description": "Doc Ock target (position up)",
+      "vpx_name": "S63",
+      "_note": "Controller.Switch — held. Doc Ock/Octopus figure hit target"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough ball release",
+      "_vbscript_callback": "SolCallback(1) = \"ReleaseBall\"",
+      "_inferred_type": "eject",
+      "vpx_name": "Trough4",
+      "_note": "Kicks ball from Trough4, pulses sw23 (shooter lane)"
+    },
+    {
+      "id": 2,
+      "description": "Auto plunger / auto-fire",
+      "_vbscript_callback": "SolCallback(2) = \"solAutofire\"",
+      "_inferred_type": "eject",
+      "vpx_name": "swplunger",
+      "_note": "Uses plungerIM.AutoFire (cvpmImpulseP)"
+    },
+    {
+      "id": 3,
+      "description": "Doc Ock magnet",
+      "_vbscript_callback": "SolCallback(3) = \"solDocMagnet\"",
+      "_inferred_type": "magnet",
+      "vpx_name": "DocOckMagnet",
+      "_note": "cvpmMagnet on DocOckMagnet, 50 strength"
+    },
+    {
+      "id": 4,
+      "description": "Doc Ock VUK (eject)",
+      "_vbscript_callback": "SolCallback(4) = \"solDocVUK\"",
+      "_inferred_type": "eject",
+      "vpx_name": "sw36",
+      "_note": "bsDocOck.ExitSol_On — cvpmSaucer eject"
+    },
+    {
+      "id": 5,
+      "description": "Doc Ock motor (raise/lower figure)",
+      "_vbscript_callback": "SolCallback(5) = \"solDocMotor\"",
+      "_inferred_type": "motor",
+      "vpx_name": null,
+      "_note": "Toggles Doc Ock/Octopus figure position. Sets sw57/sw58, controls sw63 IsDropped. Also raises/lowers Octopus"
+    },
+    {
+      "id": 6,
+      "description": "Shaker motor (commented out)",
+      "_vbscript_callback": "SolCallback(6) — commented out",
+      "_inferred_type": "shaker",
+      "vpx_name": null,
+      "_note": "Commented out in script: 'SolCallback(6) = \"ShakerMotor\"'"
+    },
+    {
+      "id": 7,
+      "description": "Gate 2 (open/close)",
+      "_vbscript_callback": "SolCallback(7) = \"Gate2.open =\"",
+      "_inferred_type": "gate",
+      "vpx_name": "Gate2",
+      "_note": "Direct property assignment"
+    },
+    {
+      "id": 8,
+      "description": "Gate 3 (open/close)",
+      "_vbscript_callback": "SolCallback(8) = \"Gate3.open =\"",
+      "_inferred_type": "gate",
+      "vpx_name": "Gate3",
+      "_note": "Direct property assignment"
+    },
+    {
+      "id": 9,
+      "description": "Left bumper coil",
+      "_vbscript_callback": "SolCallback(9) = \"solLBump\"",
+      "_inferred_type": "bumper",
+      "vpx_name": "Bumper1",
+      "_note": "Bumper1 animation timer"
+    },
+    {
+      "id": 10,
+      "description": "Right bumper coil",
+      "_vbscript_callback": "SolCallback(10) = \"solRBump\"",
+      "_inferred_type": "bumper",
+      "vpx_name": "Bumper2",
+      "_note": "Bumper2 animation timer"
+    },
+    {
+      "id": 11,
+      "description": "Bottom bumper coil",
+      "_vbscript_callback": "SolCallback(11) = \"solBBump\"",
+      "_inferred_type": "bumper",
+      "vpx_name": "Bumper3",
+      "_note": "Bumper3 animation timer"
+    },
+    {
+      "id": 12,
+      "description": "Sandman VUK (eject)",
+      "_vbscript_callback": "SolCallback(12) = \"solSandVUK\"",
+      "_inferred_type": "eject",
+      "vpx_name": "sw59",
+      "_note": "bsSandman.ExitSol_On — cvpmSaucer eject"
+    },
+    {
+      "id": 13,
+      "description": "Sandman motor (raise/lower figure)",
+      "_vbscript_callback": "SolCallback(13) = \"solSandMotor\"",
+      "_inferred_type": "motor",
+      "vpx_name": null,
+      "_note": "Toggles Sandman figure position. Sets sw53/sw54, controls sw42 IsDropped"
+    },
+    {
+      "id": 14,
+      "description": "Upper right flipper",
+      "_vbscript_callback": "SolCallback(14) = \"solURFlipper\"",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper2",
+      "_note": "Upper right flipper"
+    },
+    {
+      "id": 15,
+      "description": "Left flipper",
+      "_vbscript_callback": "SolCallback(15) = \"SolLFlipper\"",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "Main left flipper, uses nFozzy FlipperPolarity (LF)"
+    },
+    {
+      "id": 16,
+      "description": "Right flipper",
+      "_vbscript_callback": "SolCallback(16) = \"SolRFlipper\"",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "Main right flipper, uses nFozzy FlipperPolarity (RF)"
+    },
+    {
+      "id": 17,
+      "description": "Left slingshot",
+      "_vbscript_callback": "SolCallback(17) = \"solLSling\"",
+      "_inferred_type": "slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "Slingshot animation (LSling/LSling1/LSling2)"
+    },
+    {
+      "id": 18,
+      "description": "Right slingshot",
+      "_vbscript_callback": "SolCallback(18) = \"solRSling\"",
+      "_inferred_type": "slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "Slingshot animation (RSling/RSling1/RSling2)"
+    },
+    {
+      "id": 19,
+      "description": "Green Goblin shaker",
+      "_vbscript_callback": "SolCallback(19) = \"ShakeGoblin\"",
+      "_inferred_type": "toy",
+      "vpx_name": null,
+      "_note": "Shakes Goblin figure via GoblinShakeTimer animation"
+    },
+    {
+      "id": 20,
+      "description": "3-bank drop target reset",
+      "_vbscript_callback": "SolCallback(20) = \"sol3Bank\"",
+      "_inferred_type": "drop_target_reset",
+      "vpx_name": null,
+      "_note": "Toggles 3-bank position. Sets sw49/sw50, controls sw11 IsDropped. Bank raise/lower animation"
+    },
+    {
+      "id": 21,
+      "description": "Flasher — red mid (dome)",
+      "_vbscript_callback": "SolModCallBack(21) = \"FlashSol21\"",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "Flasherlight4",
+      "_note": "PWM modulated. DomeRed RedFlasherMid per comment"
+    },
+    {
+      "id": 22,
+      "description": "Diverter",
+      "_vbscript_callback": "SolCallback(22) = \"solDivert\"",
+      "_inferred_type": "diverter",
+      "vpx_name": "Diverter",
+      "_note": "Controls loop diverter (IsDropped property)"
+    },
+    {
+      "id": 23,
+      "description": "Flasher (modulated)",
+      "_vbscript_callback": "SolModCallBack(23) = \"SetModLamp 23,\"",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": null,
+      "_note": "PWM modulated via SetModLamp. Routed to Lampz system"
+    },
+    {
+      "id": 24,
+      "description": "Knocker",
+      "_vbscript_callback": "SolCallback(24) = \"vpmSolSound SoundFX(\"Knocker\",DOFKnocker),\"",
+      "_inferred_type": "knocker",
+      "vpx_name": null,
+      "_note": "Sound-only knocker"
+    },
+    {
+      "id": 25,
+      "description": "Flasher (modulated)",
+      "_vbscript_callback": "SolModCallBack(25) = \"SetModLamp 25,\"",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": null,
+      "_note": "PWM modulated via SetModLamp. Routed to Lampz system"
+    },
+    {
+      "id": 26,
+      "description": "Flasher (modulated)",
+      "_vbscript_callback": "SolModCallBack(26) = \"SetModLamp 26,\"",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": null,
+      "_note": "PWM modulated via SetModLamp. Routed to Lampz system"
+    },
+    {
+      "id": 27,
+      "description": "Flasher — yellow top (dome)",
+      "_vbscript_callback": "SolModCallback(27) = \"FlashSol27\"",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "Flasherlight3",
+      "_note": "PWM modulated. DomeYellow YellowFlasherTop per comment"
+    },
+    {
+      "id": 28,
+      "description": "Flasher (modulated)",
+      "_vbscript_callback": "SolModCallback(28) = \"SetModLamp 28, \"",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": null,
+      "_note": "PWM modulated via SetModLamp. Routed to Lampz system"
+    },
+    {
+      "id": 29,
+      "description": "Flasher — blue top (dome)",
+      "_vbscript_callback": "SolModCallBack(29) = \"FlashSol29\"",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "Flasherlight1",
+      "_note": "PWM modulated. DomerBlue BlueFlasherTop per comment"
+    },
+    {
+      "id": 30,
+      "description": "Flasher — red top (dome)",
+      "_vbscript_callback": "SolModCallBack(30) = \"FlashSol30\"",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "Flasherlight2",
+      "_note": "PWM modulated. DomerRed RedFlasherTop per comment"
+    },
+    {
+      "id": 31,
+      "description": "Flasher (modulated)",
+      "_vbscript_callback": "SolModCallBack(31) = \"SetModLamp 31,\"",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": null,
+      "_note": "PWM modulated via SetModLamp. Routed to Lampz system"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 3,
+      "vpx_name": "p3on",
+      "_note": "Lampz MassAssign l3, callback DisableLighting p3on"
+    },
+    {
+      "id": 4,
+      "vpx_name": "p4on",
+      "_note": "Lampz MassAssign l4, callback DisableLighting p4on"
+    },
+    {
+      "id": 5,
+      "vpx_name": "p5on",
+      "_note": "Lampz MassAssign l5, callback DisableLighting p5on"
+    },
+    {
+      "id": 6,
+      "vpx_name": "p6on",
+      "_note": "Lampz MassAssign l6, callback DisableLighting p6on"
+    },
+    {
+      "id": 7,
+      "vpx_name": "p7on",
+      "_note": "Lampz MassAssign l7, callback DisableLighting p7on"
+    },
+    {
+      "id": 8,
+      "vpx_name": "p8on",
+      "_note": "Lampz MassAssign l8, callback DisableLighting p8on"
+    },
+    {
+      "id": 9,
+      "vpx_name": "p9on",
+      "_note": "Lampz MassAssign l9, callback DisableLighting p9on"
+    },
+    {
+      "id": 10,
+      "vpx_name": "p10on",
+      "_note": "Lampz MassAssign l10, callback DisableLighting p10on"
+    },
+    {
+      "id": 11,
+      "vpx_name": "p11on",
+      "_note": "Lampz MassAssign l11, callback DisableLighting p11on"
+    },
+    {
+      "id": 12,
+      "vpx_name": "p12on",
+      "_note": "Lampz MassAssign l12, callback DisableLighting p12on"
+    },
+    {
+      "id": 13,
+      "vpx_name": "p13on",
+      "_note": "Lampz MassAssign l13, callback DisableLighting p13on"
+    },
+    {
+      "id": 14,
+      "vpx_name": "p14on",
+      "_note": "Lampz MassAssign l14, callback DisableLighting p14on"
+    },
+    {
+      "id": 15,
+      "vpx_name": "p15on",
+      "_note": "Lampz MassAssign l15, callback DisableLighting p15on"
+    },
+    {
+      "id": 16,
+      "vpx_name": "p16on",
+      "_note": "Lampz MassAssign l16, callback DisableLighting p16on"
+    },
+    {
+      "id": 17,
+      "vpx_name": "p17on",
+      "_note": "Lampz MassAssign l17/l17r, callback DisableLighting p17on"
+    },
+    {
+      "id": 18,
+      "vpx_name": "p18on",
+      "_note": "Lampz MassAssign l18/l18r, callback DisableLighting p18on"
+    },
+    {
+      "id": 19,
+      "vpx_name": "p19on",
+      "_note": "Lampz MassAssign l19/l19r, callback DisableLighting p19on"
+    },
+    {
+      "id": 20,
+      "vpx_name": "p20on",
+      "_note": "Lampz MassAssign l20/l20r, callback DisableLighting p20on"
+    },
+    {
+      "id": 21,
+      "vpx_name": "p21on",
+      "_note": "Lampz MassAssign l21/l21r, callback DisableLighting p21on"
+    },
+    {
+      "id": 22,
+      "vpx_name": "p22on",
+      "_note": "Lampz MassAssign l22, callback DisableLighting p22on"
+    },
+    {
+      "id": 23,
+      "vpx_name": "p23on",
+      "_note": "Lampz MassAssign l23, callback DisableLighting p23on"
+    },
+    {
+      "id": 24,
+      "vpx_name": "p24on",
+      "_note": "Lampz MassAssign l24, callback DisableLighting p24on"
+    },
+    {
+      "id": 25,
+      "vpx_name": "p25on",
+      "_note": "Lampz MassAssign l25, callback DisableLighting p25on"
+    },
+    {
+      "id": 26,
+      "vpx_name": "p26on",
+      "_note": "Lampz MassAssign l26, callback DisableLighting p26on"
+    },
+    {
+      "id": 27,
+      "vpx_name": "p27on",
+      "_note": "Lampz MassAssign l27, callback DisableLighting p27on"
+    },
+    {
+      "id": 28,
+      "vpx_name": "p28on",
+      "_note": "Lampz MassAssign l28/l28r, callback DisableLighting p28on"
+    },
+    {
+      "id": 29,
+      "vpx_name": "p29on",
+      "_note": "Lampz MassAssign l29, callback DisableLighting p29on"
+    },
+    {
+      "id": 30,
+      "vpx_name": "p30on",
+      "_note": "Lampz MassAssign l30, callback DisableLighting p30on"
+    },
+    {
+      "id": 31,
+      "vpx_name": "p31on",
+      "_note": "Lampz MassAssign l31, callback DisableLighting p31on"
+    },
+    {
+      "id": 32,
+      "vpx_name": "p32on",
+      "_note": "Lampz MassAssign l32, callback DisableLighting p32on"
+    },
+    {
+      "id": 33,
+      "vpx_name": "p33on",
+      "_note": "Lampz MassAssign l33, callback DisableLighting p33on"
+    },
+    {
+      "id": 34,
+      "vpx_name": "p34on",
+      "_note": "Lampz MassAssign l34, callback DisableLighting p34on"
+    },
+    {
+      "id": 35,
+      "vpx_name": "p35on",
+      "_note": "Lampz MassAssign l35, callback DisableLighting p35on"
+    },
+    {
+      "id": 36,
+      "vpx_name": "p36on",
+      "_note": "Lampz MassAssign l36, callback DisableLighting p36on"
+    },
+    {
+      "id": 37,
+      "vpx_name": "p37on",
+      "_note": "Lampz MassAssign l37, callback DisableLighting p37on"
+    },
+    {
+      "id": 38,
+      "vpx_name": "p38on",
+      "_note": "Lampz MassAssign l38, callback DisableLighting p38on"
+    },
+    {
+      "id": 39,
+      "vpx_name": "p39on",
+      "_note": "Lampz MassAssign l39, callback DisableLighting p39on"
+    },
+    {
+      "id": 40,
+      "vpx_name": "p40on",
+      "_note": "Lampz MassAssign l40, callback DisableLighting p40on"
+    },
+    {
+      "id": 41,
+      "vpx_name": "p41on",
+      "_note": "Lampz MassAssign l41/l41r, callback DisableLighting p41on"
+    },
+    {
+      "id": 42,
+      "vpx_name": "p42on",
+      "_note": "Lampz MassAssign l42, callback DisableLighting p42on"
+    },
+    {
+      "id": 43,
+      "vpx_name": "p43on",
+      "_note": "Lampz MassAssign l43, callback DisableLighting p43on"
+    },
+    {
+      "id": 44,
+      "vpx_name": "p44on",
+      "_note": "Lampz MassAssign l44/l44r, callback DisableLighting p44on"
+    },
+    {
+      "id": 45,
+      "vpx_name": "p45on",
+      "_note": "Lampz MassAssign l45, callback DisableLighting p45on"
+    },
+    {
+      "id": 46,
+      "vpx_name": "p46on",
+      "_note": "Lampz MassAssign l46, callback DisableLighting p46on"
+    },
+    {
+      "id": 47,
+      "vpx_name": "p47on",
+      "_note": "Lampz MassAssign l47, callback DisableLighting p47on"
+    },
+    {
+      "id": 48,
+      "vpx_name": "p48on",
+      "_note": "Lampz MassAssign l48, callback DisableLighting p48on"
+    },
+    {
+      "id": 49,
+      "vpx_name": "p49on",
+      "_note": "Lampz MassAssign l49, callback DisableLighting p49on"
+    },
+    {
+      "id": 50,
+      "vpx_name": "p50on",
+      "_note": "Lampz MassAssign l50, callback DisableLighting p50on"
+    },
+    {
+      "id": 51,
+      "vpx_name": "p51on",
+      "_note": "Lampz MassAssign l51, callback DisableLighting p51on"
+    },
+    {
+      "id": 52,
+      "vpx_name": "p52on",
+      "_note": "Lampz MassAssign l52/l52r, callback DisableLighting p52on"
+    },
+    {
+      "id": 53,
+      "vpx_name": "p53on",
+      "_note": "Lampz MassAssign l53/l53r, callback DisableLighting p53on"
+    },
+    {
+      "id": 54,
+      "vpx_name": "p54on",
+      "_note": "Lampz MassAssign l54/l54r, callback DisableLighting p54on"
+    },
+    {
+      "id": 57,
+      "vpx_name": "p57on",
+      "_note": "Lampz MassAssign l57, callback DisableLighting p57on"
+    },
+    {
+      "id": 58,
+      "vpx_name": "p58on",
+      "_note": "Lampz MassAssign l58, callback DisableLighting p58on"
+    },
+    {
+      "id": 59,
+      "vpx_name": "p59on",
+      "_note": "Lampz MassAssign l59, callback DisableLighting p59on"
+    },
+    {
+      "id": 60,
+      "vpx_name": "LM_IN_L60_*",
+      "description": "Lightmap insert L60",
+      "_note": "Uses UpdateLightMap callbacks across multiple lightmap layers (Layer0, Layer1, Layer3, Parts, Sandman)"
+    },
+    {
+      "id": 61,
+      "vpx_name": "LM_IN_L61_*",
+      "description": "Lightmap insert L61",
+      "_note": "Uses UpdateLightMap callbacks across multiple lightmap layers (Layer0, Layer1, Parts)"
+    },
+    {
+      "id": 62,
+      "vpx_name": "LM_IN_L62_*",
+      "description": "Lightmap insert L62",
+      "_note": "Uses UpdateLightMap callbacks across multiple lightmap layers (Layer0, Layer1, Parts, Sandman)"
+    },
+    {
+      "id": 63,
+      "vpx_name": "p63on",
+      "_note": "Lampz MassAssign l63/l63r, callback DisableLighting p63on"
+    },
+    {
+      "id": 64,
+      "vpx_name": "p64on",
+      "_note": "Lampz MassAssign l64, callback DisableLighting p64on"
+    },
+    {
+      "id": 65,
+      "vpx_name": "p65on",
+      "_note": "Lampz MassAssign l65, callback DisableLighting p65on"
+    },
+    {
+      "id": 66,
+      "vpx_name": "LM_IN_MissioneVenom3_*",
+      "description": "Venom mission 3 insert",
+      "_note": "Uses UpdateLightMap callbacks across multiple lightmap layers"
+    },
+    {
+      "id": 67,
+      "vpx_name": "LM_IN_MissioneVenom2_*",
+      "description": "Venom mission 2 insert",
+      "_note": "Uses UpdateLightMap callbacks across multiple lightmap layers"
+    },
+    {
+      "id": 68,
+      "vpx_name": "LM_IN_MissioneVenom1_*",
+      "description": "Venom mission 1 insert",
+      "_note": "Uses UpdateLightMap callbacks across multiple lightmap layers"
+    },
+    {
+      "id": 69,
+      "vpx_name": "LM_IN_MissioneSandman3_*",
+      "description": "Sandman mission 3 insert",
+      "_note": "Uses UpdateLightMap callbacks across multiple lightmap layers"
+    },
+    {
+      "id": 70,
+      "vpx_name": "LM_IN_MissioneSandman2_*",
+      "description": "Sandman mission 2 insert",
+      "_note": "Uses UpdateLightMap callbacks across multiple lightmap layers"
+    },
+    {
+      "id": 71,
+      "vpx_name": "LM_IN_MissioneSandman1_*",
+      "description": "Sandman mission 1 insert",
+      "_note": "Uses UpdateLightMap callbacks across multiple lightmap layers"
+    },
+    {
+      "id": 72,
+      "vpx_name": "p72on",
+      "_note": "Lampz MassAssign l72/l72r, callback DisableLighting p72on"
+    },
+    {
+      "id": 74,
+      "description": "Sandman spot (GI color mode)",
+      "vpx_name": null,
+      "_note": "Controls GI color via ModeGiColor callback. Red/Green component"
+    },
+    {
+      "id": 75,
+      "description": "Venom spot (GI color mode)",
+      "vpx_name": null,
+      "_note": "Controls GI color via ModeGiColor callback. Blue component"
+    },
+    {
+      "id": 76,
+      "description": "Goblin spot (GI color mode)",
+      "vpx_name": null,
+      "_note": "Controls GI color via ModeGiColor callback. Red/Blue component"
+    },
+    {
+      "id": 77,
+      "description": "Octopus spot (GI color mode)",
+      "vpx_name": null,
+      "_note": "Controls GI color via ModeGiColor callback. Green component"
+    },
+    {
+      "id": 78,
+      "vpx_name": "p78on",
+      "_note": "Lampz MassAssign l78, callback DisableLighting p78on"
+    },
+    {
+      "id": 123,
+      "vpx_name": null,
+      "_note": "Lampz MassAssign f23/F23a — flasher lamp routed through Lampz"
+    },
+    {
+      "id": 125,
+      "vpx_name": null,
+      "_note": "Lampz MassAssign f25/F25a — flasher lamp routed through Lampz"
+    },
+    {
+      "id": 126,
+      "vpx_name": null,
+      "_note": "Lampz MassAssign f26 — flasher lamp routed through Lampz"
+    },
+    {
+      "id": 128,
+      "vpx_name": null,
+      "description": "Goblin flasher",
+      "_note": "Lampz MassAssign FlasherGoblin"
+    },
+    {
+      "id": 131,
+      "vpx_name": null,
+      "description": "Bumpers flasher",
+      "_note": "Lampz MassAssign FlasherBumpers"
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    }
+  ]
+}

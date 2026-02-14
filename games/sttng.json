@@ -1,0 +1,784 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Star_Trek_The_Next_Generation_Williams_1993_VPW_Mod_v1.1.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils/lamps. No Const sw* declarations — switches referenced by number directly. Solenoid numbers 51-54 are WPC extboard solenoids; flasher solenoids 55-56 are extboard custom. Spinner is WPC F7 (switch 117). Flipper coil IDs (sLRFlipper, sLLFlipper, sURFlipper) are framework constants defined in wpc.VBS, not in the table script. Trough uses 6-ball stack (sw61-sw66). STTNG has dual photon cannon mechanisms with motor solenoids and position-tracking switches. Borg lock is a separate ball stack device. Lamp vpx_names derived from NFadeLm/NFadeL calls in UpdateLamps."
+  },
+  "game": {
+    "id": "sttng",
+    "name": "Star Trek: The Next Generation",
+    "year": 1993,
+    "manufacturer": "Williams",
+    "ipdb_id": 2357,
+    "platform": "wpc"
+  },
+  "roms": [
+    { "id": "sttng_l7", "version": "LX-7", "language": "en", "description": "Sound L-1" },
+    { "id": "sttng_d7", "version": "DX-7", "language": "en", "description": "LED Ghost Fix, Sound L-1" },
+    { "id": "sttng_l7c", "version": "LX-7C", "language": "en", "description": "Competition MOD (2017)" },
+    { "id": "sttng_x7", "version": "LX-7", "language": "en", "description": "Special Sound L-1" },
+    { "id": "sttng_dx", "version": "DX-7", "language": "en", "description": "LED Ghost Fix, Special Sound L-1" },
+    { "id": "sttng_p4", "version": "P-4", "language": "en", "description": "Prototype" },
+    { "id": "sttng_p5", "version": "P-5", "language": "en", "description": "Prototype" },
+    { "id": "sttng_p6", "version": "P-6", "language": "en", "description": "LED Ghost Fix Prototype" },
+    { "id": "sttng_p8", "version": "P-8", "language": "en", "description": "Prototype" },
+    { "id": "sttng_g7", "version": "LG-7", "language": "de", "description": "German" },
+    { "id": "sttng_h7", "version": "HG-7", "language": "de", "description": "LED Ghost Fix German" },
+    { "id": "sttng_l1", "version": "LX-1", "language": "en" },
+    { "id": "sttng_d1", "version": "DX-1", "language": "en", "description": "LED Ghost Fix" },
+    { "id": "sttng_l2", "version": "LX-2", "language": "en" },
+    { "id": "sttng_d2", "version": "DX-2", "language": "en", "description": "LED Ghost Fix" },
+    { "id": "sttng_l3", "version": "LX-3", "language": "en" },
+    { "id": "sttng_l5", "version": "LX-5", "language": "en" },
+    { "id": "sttng_x8", "version": "LX-8", "language": "en", "description": "MOD, Special Sound L-1 (2023)" }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Buy-In Button",
+      "_note": "Directly set via keyFront in KeyDown/KeyUp handlers"
+    },
+    {
+      "id": 12,
+      "description": "Right Fire Button",
+      "_note": "Set via PlungerKey and LockBarKey in KeyDown/KeyUp handlers"
+    },
+    {
+      "id": 13,
+      "description": "Start Button",
+      "input_action_hint": "start_game",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 14,
+      "description": "Plumb Bob Tilt",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Left Outlane",
+      "vpx_name": "sw15"
+    },
+    {
+      "id": 16,
+      "description": "Left Return Lane",
+      "vpx_name": "sw16"
+    },
+    {
+      "id": 17,
+      "description": "Right Return Lane",
+      "vpx_name": "sw17"
+    },
+    {
+      "id": 18,
+      "description": "Right Outlane",
+      "vpx_name": "sw18"
+    },
+    {
+      "id": 21,
+      "description": "Slam Tilt"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "normally_closed": true,
+      "_note": "Controller.Switch(22) = 1 in table init"
+    },
+    {
+      "id": 23,
+      "description": "Made Middle Ramp",
+      "vpx_name": "sw23"
+    },
+    {
+      "id": 24,
+      "description": "Always Closed",
+      "constant_hint": "always_closed",
+      "_note": "Controller.Switch(24) = 0 set in init, but PinMAME defines this as always closed"
+    },
+    {
+      "id": 25,
+      "description": "Enter Right Ramp",
+      "vpx_name": "sw25"
+    },
+    {
+      "id": 26,
+      "description": "Left 45 Degree Target",
+      "vpx_name": "T26",
+      "_note": "Standup target; PulseSw in T26_Hit"
+    },
+    {
+      "id": 27,
+      "description": "Center 45 Degree Target (Neutral Zone)",
+      "vpx_name": "sw27",
+      "_note": "Neutral zone hole entry; PulseSw 27 in sw27_Hit. Also triggers T27 target animation"
+    },
+    {
+      "id": 28,
+      "description": "Right 45 Degree Target",
+      "vpx_name": "T28",
+      "_note": "Standup target; PulseSw in T28_Hit"
+    },
+    {
+      "id": 31,
+      "description": "Borg Lock",
+      "_note": "Opto switch. Used in BorgLock ball stack InitSw"
+    },
+    {
+      "id": 32,
+      "description": "Under Left Gun Switch 2",
+      "vpx_name": "sw32",
+      "_note": "Opto. Set in sw32_Hit, cleared when sw36 (Under L Gun 1) is hit"
+    },
+    {
+      "id": 33,
+      "description": "Under Right Gun Switch 2",
+      "vpx_name": "sw33",
+      "_note": "Opto. Set in sw33_Hit, cleared when sw37 (Under R Gun 1) is hit"
+    },
+    {
+      "id": 34,
+      "description": "Right Gun Shooter",
+      "_note": "Opto. Set by Kicker2_Hit when ball enters right cannon"
+    },
+    {
+      "id": 35,
+      "description": "Under Left Lock Switch 2",
+      "vpx_name": "sw35"
+    },
+    {
+      "id": 36,
+      "description": "Under Left Gun Switch 1",
+      "vpx_name": "sw36",
+      "_note": "Opto. Kicker trigger for left gun loading"
+    },
+    {
+      "id": 37,
+      "description": "Under Right Gun Switch 1",
+      "vpx_name": "sw37",
+      "_note": "Opto. Kicker trigger for right gun loading"
+    },
+    {
+      "id": 38,
+      "description": "Left Gun Shooter",
+      "_note": "Opto. Set by Kicker1_Hit when ball enters left cannon"
+    },
+    {
+      "id": 41,
+      "description": "Under Left Lock Switch 1",
+      "vpx_name": "sw41",
+      "_note": "Opto. Primary lock kicker position"
+    },
+    {
+      "id": 42,
+      "description": "Under Left Lock Switch 3",
+      "vpx_name": "sw42",
+      "_note": "Opto"
+    },
+    {
+      "id": 43,
+      "description": "Under Left Lock Switch 4",
+      "vpx_name": "sw43",
+      "_note": "Opto"
+    },
+    {
+      "id": 44,
+      "description": "Left Outer Loop",
+      "vpx_name": "sw44"
+    },
+    {
+      "id": 45,
+      "description": "Under Top Hole",
+      "vpx_name": "sw45",
+      "_note": "PulseSw in sw45_Hit"
+    },
+    {
+      "id": 46,
+      "description": "Under Left Hole",
+      "vpx_name": "sw46t",
+      "_note": "Set via sw46t_Hit trigger, not a kicker"
+    },
+    {
+      "id": 47,
+      "description": "Under Borg Hole",
+      "vpx_name": "sw47t",
+      "_note": "Start Mission scope; trigger with sw47dr drop mechanism"
+    },
+    {
+      "id": 48,
+      "description": "Borg Entry",
+      "vpx_name": "sw48"
+    },
+    {
+      "id": 51,
+      "description": "Left Bank Top",
+      "vpx_name": "T51",
+      "_note": "Drop target; PulseSw in T51_Hit"
+    },
+    {
+      "id": 52,
+      "description": "Left Bank Middle",
+      "vpx_name": "T52",
+      "_note": "Drop target; PulseSw in T52_Hit"
+    },
+    {
+      "id": 53,
+      "description": "Left Bank Bottom",
+      "vpx_name": "T53",
+      "_note": "Drop target; PulseSw in T53_Hit"
+    },
+    {
+      "id": 54,
+      "description": "Right Bank Top",
+      "vpx_name": "T54",
+      "_note": "Drop target; PulseSw in T54_Hit"
+    },
+    {
+      "id": 55,
+      "description": "Right Bank Middle",
+      "vpx_name": "T55",
+      "_note": "Drop target; PulseSw in T55_Hit"
+    },
+    {
+      "id": 56,
+      "description": "Right Bank Bottom",
+      "vpx_name": "T56",
+      "_note": "Drop target; PulseSw in T56_Hit"
+    },
+    {
+      "id": 57,
+      "description": "Top Drop Target",
+      "vpx_name": "sw57",
+      "_note": "Single drop target; handled via TopDrop cvpmDropTarget object"
+    },
+    {
+      "id": 58,
+      "description": "Right Outer Loop",
+      "vpx_name": "sw58"
+    },
+    {
+      "id": 61,
+      "description": "Trough 1",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "Opto. bsTrough.InitSw position 6 (sw61)"
+    },
+    {
+      "id": 62,
+      "description": "Trough 2",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "Opto. bsTrough.InitSw position 5 (sw62)"
+    },
+    {
+      "id": 63,
+      "description": "Trough 3",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "Opto. bsTrough.InitSw position 4 (sw63)"
+    },
+    {
+      "id": 64,
+      "description": "Trough 4",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4",
+      "_note": "Opto. bsTrough.InitSw position 3 (sw64)"
+    },
+    {
+      "id": 65,
+      "description": "Trough 5",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "5",
+      "_note": "Opto. bsTrough.InitSw position 2 (sw65)"
+    },
+    {
+      "id": 66,
+      "description": "Trough 6",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "6",
+      "_note": "Opto. bsTrough.InitSw position 1 (sw66)"
+    },
+    {
+      "id": 67,
+      "description": "Trough Up",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "jam",
+      "_note": "PulseSw 67 in SolRelease callback"
+    },
+    {
+      "id": 68,
+      "description": "Shooter Lane",
+      "vpx_name": "AutoPlunger",
+      "_note": "Auto-plunger switch; set in AutoPlunger_Hit"
+    },
+    {
+      "id": 71,
+      "description": "Left Jet Bumper",
+      "vpx_name": "LeftJetBumper",
+      "_note": "PulseSw 71 in LeftJetBumper_hit"
+    },
+    {
+      "id": 72,
+      "description": "Right Jet Bumper",
+      "vpx_name": "RightJetBumper",
+      "_note": "PulseSw 72 in RightJetBumper_hit"
+    },
+    {
+      "id": 73,
+      "description": "Bottom Jet Bumper",
+      "vpx_name": "BottomJetBumper",
+      "_note": "PulseSw 73 in BottomJetBumper_hit"
+    },
+    {
+      "id": 74,
+      "description": "Right Slingshot",
+      "vpx_name": "SlingShotRight",
+      "_note": "PulseSw 74 in SlingShotRight_Slingshot"
+    },
+    {
+      "id": 75,
+      "description": "Left Slingshot",
+      "vpx_name": "SlingShotLeft",
+      "_note": "PulseSw 75 in SlingShotLeft_Slingshot"
+    },
+    {
+      "id": 76,
+      "description": "Top Lane Left (Multiplier)",
+      "vpx_name": "sw76"
+    },
+    {
+      "id": 77,
+      "description": "Top Lane Center (Multiplier)",
+      "vpx_name": "sw77"
+    },
+    {
+      "id": 78,
+      "description": "Top Lane Right (Multiplier)",
+      "vpx_name": "sw78"
+    },
+    {
+      "id": 81,
+      "description": "Time Rift Target",
+      "vpx_name": "T81",
+      "_note": "PulseSw in T81_Hit"
+    },
+    {
+      "id": 82,
+      "description": "Rift Target",
+      "vpx_name": "T82",
+      "_note": "PulseSw in T82_Hit"
+    },
+    {
+      "id": 83,
+      "description": "Made Left Ramp",
+      "vpx_name": "sw83"
+    },
+    {
+      "id": 84,
+      "description": "Q Target",
+      "vpx_name": "T84",
+      "_note": "PulseSw in T84_Hit"
+    },
+    {
+      "id": 85,
+      "description": "Left 2X Shuttle",
+      "vpx_name": "T85",
+      "_note": "PulseSw in T85_Hit"
+    },
+    {
+      "id": 86,
+      "description": "Right 2X Shuttle",
+      "vpx_name": "T86",
+      "_note": "PulseSw in T86_Hit"
+    },
+    {
+      "id": 87,
+      "description": "Made Right Ramp",
+      "vpx_name": "sw87"
+    },
+    {
+      "id": 88,
+      "description": "Enter Left Ramp",
+      "vpx_name": "sw88"
+    },
+    {
+      "id": 117,
+      "description": "Spinner",
+      "vpx_name": "sw117spinner",
+      "_note": "WPC F7 switch. PulseSw 117 in sw117spinner_Spin"
+    },
+    {
+      "id": 122,
+      "description": "Left Gun Mark",
+      "_note": "Custom switch column 9. Set dynamically by CannonLTimer based on cannon position"
+    },
+    {
+      "id": 125,
+      "description": "Right Gun Home",
+      "_note": "Custom switch column 9. Set dynamically by CannonRTimer based on cannon position"
+    },
+    {
+      "id": 126,
+      "description": "Right Gun Mark",
+      "_note": "Custom switch column 9. Set dynamically by CannonRTimer based on cannon position"
+    },
+    {
+      "id": 127,
+      "description": "Left Gun Home",
+      "_note": "Custom switch column 9. Set dynamically by CannonLTimer based on cannon position"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Left Gun Kicker",
+      "_vbscript_callback": "LeftCannonKicker",
+      "_inferred_type": "kicker",
+      "_note": "Fires ball from left cannon"
+    },
+    {
+      "id": 2,
+      "description": "Right Gun Kicker",
+      "_vbscript_callback": "RightCannonKicker",
+      "_inferred_type": "kicker",
+      "_note": "Fires ball from right cannon"
+    },
+    {
+      "id": 3,
+      "description": "Left Gun Popper",
+      "_vbscript_callback": "UnderLeftGun",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw36",
+      "_note": "Kicks ball from under-left-gun to left cannon"
+    },
+    {
+      "id": 4,
+      "description": "Right Gun Popper",
+      "_vbscript_callback": "UnderRightGun",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw37",
+      "_note": "Kicks ball from under-right-gun to right cannon"
+    },
+    {
+      "id": 5,
+      "description": "Left Lock Popper",
+      "_vbscript_callback": "LeftLock",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw41",
+      "_note": "Ejects ball from left lock (under-left-lock sw1)"
+    },
+    {
+      "id": 6,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "AutoPlunge",
+      "_inferred_type": "ball_management",
+      "vpx_name": "AutoPlunger",
+      "_note": "Auto-launches ball from shooter lane"
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"Knocker\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 8,
+      "description": "Kickback",
+      "_vbscript_callback": "Kickback",
+      "_inferred_type": "kicker",
+      "vpx_name": "KickbackPlunger",
+      "_note": "Left outlane kickback"
+    },
+    {
+      "id": 9,
+      "description": "Left Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "PinMAME defines sLSling=9. No explicit SolCallback in VBS — handled by VPM framework"
+    },
+    {
+      "id": 10,
+      "description": "Right Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "PinMAME defines sRSling=10. No explicit SolCallback in VBS — handled by VPM framework"
+    },
+    {
+      "id": 11,
+      "description": "Trough Eject",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "bsTrough.ExitSol_On — ejects ball from trough. PinMAME: sTrough=11"
+    },
+    {
+      "id": 12,
+      "description": "Left Jet Bumper",
+      "_inferred_type": "bumper",
+      "_note": "PinMAME defines sJet1=12. No explicit SolCallback in VBS — handled by VPM framework",
+      "vpx_name": "LeftJetBumper"
+    },
+    {
+      "id": 13,
+      "description": "Right Jet Bumper",
+      "_inferred_type": "bumper",
+      "_note": "PinMAME defines sJet2=13. No explicit SolCallback in VBS — handled by VPM framework",
+      "vpx_name": "RightJetBumper"
+    },
+    {
+      "id": 14,
+      "description": "Bottom Jet Bumper",
+      "_inferred_type": "bumper",
+      "_note": "PinMAME defines sJet3=14. No explicit SolCallback in VBS — handled by VPM framework",
+      "vpx_name": "BottomJetBumper"
+    },
+    {
+      "id": 15,
+      "description": "Top Diverter",
+      "_vbscript_callback": "TopDiverter",
+      "_inferred_type": "diverter",
+      "vpx_name": "diverter"
+    },
+    {
+      "id": 16,
+      "description": "Borg Lock Kicker",
+      "_vbscript_callback": "BorgLock.SolOut",
+      "_inferred_type": "kicker",
+      "vpx_name": "BorgKicker",
+      "_note": "Ejects ball from Borg lock"
+    },
+    {
+      "id": 17,
+      "description": "Left Gun Motor",
+      "_vbscript_callback": "LeftCannonMotor",
+      "_inferred_type": "mechanism",
+      "_note": "Rotates left cannon. Position tracked by switches 122 (mark) and 127 (home)"
+    },
+    {
+      "id": 18,
+      "description": "Right Gun Motor",
+      "_vbscript_callback": "RightCannonMotor",
+      "_inferred_type": "mechanism",
+      "_note": "Rotates right cannon. Position tracked by switches 125 (home) and 126 (mark)"
+    },
+    {
+      "id": 20,
+      "description": "Jets Flasher",
+      "_vbscript_callback": "Flash120",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "l120",
+      "_note": "SolModCallBack; also drives l83"
+    },
+    {
+      "id": 21,
+      "description": "Right Popper Flasher",
+      "_vbscript_callback": "Flash121",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f121",
+      "_note": "SolModCallBack; also drives l121"
+    },
+    {
+      "id": 22,
+      "description": "Middle Ramp Flasher",
+      "_vbscript_callback": "Flash122",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f122",
+      "_note": "SolModCallBack; also drives f122b, f122s"
+    },
+    {
+      "id": 23,
+      "description": "Shields Flasher",
+      "_vbscript_callback": "Flash123",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f123",
+      "_note": "SolModCallBack; also drives f123a, ShieldGiBig7/8/10"
+    },
+    {
+      "id": 24,
+      "description": "Autofire Flasher",
+      "_vbscript_callback": "SetLamp 124,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Uses SetLamp to lamp 124 rather than SolModCallBack"
+    },
+    {
+      "id": 25,
+      "description": "Exit Underground Flasher",
+      "_vbscript_callback": "Flash125",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f125",
+      "_note": "SolModCallBack; left popper area. Also drives l125"
+    },
+    {
+      "id": 26,
+      "description": "Right Borg Flasher",
+      "_vbscript_callback": "Flash126",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f126",
+      "_note": "SolModCallBack; also drives f126s, l78borgb1, l78borga1, l78d1, l78e1"
+    },
+    {
+      "id": 27,
+      "description": "Left Borg Flasher",
+      "_vbscript_callback": "Flash127",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f127",
+      "_note": "SolModCallBack; also drives f127s, l78b1, l78c1, l78borgd1, l78borge1"
+    },
+    {
+      "id": 28,
+      "description": "Center Borg Flasher",
+      "_vbscript_callback": "Flash128",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f128",
+      "_note": "SolModCallBack; also drives f128s, GiBigGreen, l78a1, l78borgc1"
+    },
+    {
+      "id": 51,
+      "description": "Under Playfield Top Diverter",
+      "_vbscript_callback": "UnderDiverterTop",
+      "_inferred_type": "diverter",
+      "_note": "WPC extboard solenoid. Controls DiverterFRG and sw37dr1 drop walls"
+    },
+    {
+      "id": 52,
+      "description": "Under Playfield Bottom Diverter",
+      "_vbscript_callback": "UnderDiverterBottom",
+      "_inferred_type": "diverter",
+      "_note": "WPC extboard solenoid. Controls DiverterFLG drop wall"
+    },
+    {
+      "id": 53,
+      "description": "Top Drop Target Reset (Up)",
+      "_vbscript_callback": "TopDrop.SolDropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "WPC extboard solenoid. Resets the single top drop target"
+    },
+    {
+      "id": 54,
+      "description": "Top Drop Target Down",
+      "_vbscript_callback": "TopDrop.SolDropDown",
+      "_inferred_type": "drop_target_reset",
+      "_note": "WPC extboard solenoid. Drops the top drop target"
+    },
+    {
+      "id": 55,
+      "description": "Romulan Flasher",
+      "_vbscript_callback": "Flash141",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f141",
+      "_note": "SolModCallBack; also drives f141s, f141s1, GiBigGreen, l141, l141a"
+    },
+    {
+      "id": 56,
+      "description": "Right Ramp Flasher",
+      "_vbscript_callback": "Flash142",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f142",
+      "_note": "SolModCallBack; also drives f142s, f142s1, GiBigRed, GiBigRed1, l142"
+    }
+  ],
+  "lamps": [
+    { "id": 11, "vpx_name": "l11", "_note": "Also l11b, f11" },
+    { "id": 12, "vpx_name": "l12", "_note": "Also l12b, f12" },
+    { "id": 13, "vpx_name": "l13", "_note": "Also l13b" },
+    { "id": 14, "vpx_name": "l14", "_note": "Also l14b" },
+    { "id": 15, "vpx_name": "l15", "_note": "Also l15b, f15" },
+    { "id": 16, "vpx_name": "l16", "_note": "Also l16b" },
+    { "id": 17, "vpx_name": "l17", "_note": "Also l17b" },
+    { "id": 18, "vpx_name": "l18", "_note": "Also l18b" },
+    { "id": 21, "vpx_name": "l21", "_note": "Also l21b" },
+    { "id": 22, "vpx_name": "l22", "_note": "Also l22b" },
+    { "id": 23, "vpx_name": "l23", "_note": "Also l23b" },
+    { "id": 24, "vpx_name": "l24", "_note": "Also l24b, f24" },
+    { "id": 25, "vpx_name": "l25", "_note": "Also l25b, f25" },
+    { "id": 26, "vpx_name": "l26", "_note": "Also l26b, f26, f26s, f26s1, l26blue" },
+    { "id": 27, "vpx_name": "l27", "_note": "Also l27b" },
+    { "id": 28, "vpx_name": "l28", "_note": "Also l28b, f28" },
+    { "id": 31, "vpx_name": "l31", "_note": "Also l31b" },
+    { "id": 32, "vpx_name": "l32", "_note": "Also l32b" },
+    { "id": 33, "vpx_name": "l33", "_note": "Also l33b" },
+    { "id": 34, "vpx_name": "l34", "_note": "Also l34b, f34" },
+    { "id": 35, "vpx_name": "l35", "_note": "Also l35b" },
+    { "id": 36, "vpx_name": "l36", "_note": "Also l36b" },
+    { "id": 37, "vpx_name": "l37", "_note": "Also l37b" },
+    { "id": 38, "vpx_name": "l38", "_note": "Also l38b, f38" },
+    { "id": 41, "vpx_name": "l41", "_note": "Also l41b, f41" },
+    { "id": 42, "vpx_name": "l42", "_note": "Also l42b" },
+    { "id": 43, "vpx_name": "l43", "_note": "Also l43b" },
+    { "id": 44, "vpx_name": "l44", "_note": "Also l44b" },
+    { "id": 45, "vpx_name": "l45", "_note": "Also l45b, f45" },
+    { "id": 46, "vpx_name": "l46", "_note": "Also l46b" },
+    { "id": 47, "vpx_name": "l47", "_note": "Also l47b" },
+    { "id": 48, "vpx_name": "l48", "_note": "Also l48b, f48" },
+    { "id": 51, "vpx_name": "l51", "_note": "Also l51b" },
+    { "id": 52, "vpx_name": "l52", "_note": "Also f52, f52s, f52s1. l52 position moves with left cannon" },
+    { "id": 53, "vpx_name": "l53yellow", "_note": "Also f53, f53s. Object-based fade (NFadeObjm)" },
+    { "id": 54, "vpx_name": "l54", "_note": "Also l54b" },
+    { "id": 55, "vpx_name": "l55", "_note": "Also l55b" },
+    { "id": 56, "vpx_name": "l56", "_note": "Also l56b" },
+    { "id": 57, "vpx_name": "l57", "_note": "Also l57b" },
+    { "id": 58, "vpx_name": "l58", "_note": "Also l58b" },
+    { "id": 61, "vpx_name": "l61", "_note": "Also l61b" },
+    { "id": 62, "vpx_name": "l62", "_note": "Also l62b" },
+    { "id": 63, "vpx_name": "l63", "_note": "Also l63b" },
+    { "id": 64, "vpx_name": "l64", "_note": "Also l64b" },
+    { "id": 65, "vpx_name": "l65", "_note": "Also l65b" },
+    { "id": 66, "vpx_name": "l66", "_note": "Also l66b" },
+    { "id": 67, "vpx_name": "l67", "_note": "Also l67b, f67" },
+    { "id": 68, "vpx_name": "l68", "_note": "Also l68b, f68" },
+    { "id": 71, "vpx_name": "l71", "_note": "Also l71b" },
+    { "id": 72, "vpx_name": "l72", "_note": "Also l72b" },
+    { "id": 73, "vpx_name": "l73", "_note": "Also l73b" },
+    { "id": 74, "vpx_name": "l74", "_note": "Also l74b" },
+    { "id": 75, "vpx_name": "l75", "_note": "Also l75b" },
+    { "id": 76, "vpx_name": "l76", "_note": "Also l76b" },
+    { "id": 77, "vpx_name": "l77", "_note": "Also l77b" },
+    { "id": 78, "vpx_name": "l78a", "_note": "Borg ship lamp. Multiple VPX objects: l78a-e (custom mod), l78borga-e (original). Also l78a1-e1, l78borga1-e1 for flasher intensities" },
+    { "id": 81, "vpx_name": "l81", "_note": "Also l81b" },
+    { "id": 82, "vpx_name": "l82", "_note": "Also f82, f82s, f82s1. l82 position moves with right cannon" },
+    { "id": 84, "vpx_name": "l84", "_note": "Also l84b, f84" },
+    { "id": 85, "vpx_name": "l85green", "_note": "Also f85, f85s. Object-based fade (NFadeObjm)" },
+    { "id": 86, "vpx_name": "l86red", "_note": "Also f86, f86s, f86s1. Object-based fade (NFadeObjm)" },
+    { "id": 124, "vpx_name": "l124", "_note": "Also l124b. Autofire flasher lamp driven via SetLamp from coil 24" }
+  ],
+  "aliases": [
+    {
+      "id": "sLRFlipper",
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_vbscript_callback": "SolRFlipper",
+      "vpx_name": "RightFlipper",
+      "_note": "Framework constant from wpc.VBS (id=46). Also controls FlipperR1 (upper right) when StagedFlipperMod=0"
+    },
+    {
+      "id": "sLLFlipper",
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_vbscript_callback": "SolLFlipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "Framework constant from wpc.VBS (id=48)"
+    },
+    {
+      "id": "sURFlipper",
+      "alias": "c_flipper_upper_right",
+      "type": "coil",
+      "_vbscript_callback": "SolURFlipper",
+      "vpx_name": "FlipperR1",
+      "_note": "Framework constant from wpc.VBS. Upper right flipper, only independent when StagedFlipperMod=1"
+    }
+  ]
+}

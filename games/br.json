@@ -1,0 +1,890 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Black Rose (Bally 1992) VPW v1.4.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches and coils — extracted from VPW v1.4 VBScript. No Const sw*/s* declarations in script; switches identified from _Hit/_UnHit subs, Controller.Switch() calls, PulseSw() calls, and bsTrough.initSwitches. Lamps from Lampz.MassAssign; lamp descriptions inferred from playfield layout and rulesheet — lower confidence than switches/coils. Flasher coils 17-24,27-28 use SolModCallback with Sol## subs; flashers 25-26 use SolModCallback with SetLamp directly. Flipper solenoid IDs use framework constants (sLRFlipper, sLLFlipper, sURFlipper) from core.vbs — not extracted as game-level coils. Solenoids 5-6, 12-16 have empty callbacks in script. Switches 13 (Start), 21 (Slam Tilt), 22 (Coin Door) are framework-handled. Switch 23 (Ticket Opto) not referenced in this VPW script. IPDB URL in script header points to id=313."
+  },
+  "game": {
+    "id": "br",
+    "name": "Black Rose",
+    "year": 1992,
+    "manufacturer": "Bally",
+    "ipdb_id": 313,
+    "platform": "wpc"
+  },
+  "roms": [
+    {
+      "id": "br_l4",
+      "version": "L-4",
+      "language": "en"
+    },
+    {
+      "id": "br_d4",
+      "version": "D-4",
+      "language": "en",
+      "description": "LED Ghost Fix"
+    },
+    {
+      "id": "br_l3",
+      "version": "L-3",
+      "language": "en"
+    },
+    {
+      "id": "br_d3",
+      "version": "D-3",
+      "language": "en",
+      "description": "LED Ghost Fix"
+    },
+    {
+      "id": "br_l1",
+      "version": "L-1",
+      "language": "en"
+    },
+    {
+      "id": "br_d1",
+      "version": "D-1",
+      "language": "en",
+      "description": "LED Ghost Fix"
+    },
+    {
+      "id": "br_p17",
+      "version": "P-17",
+      "language": "en",
+      "description": "Prototype, SP-1"
+    },
+    {
+      "id": "br_p18",
+      "version": "P-18",
+      "language": "en",
+      "description": "LED Ghost Fix"
+    }
+  ],
+  "switches": [
+    {
+      "id": 13,
+      "description": "Start Button",
+      "input_action_hint": "start_game",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 14,
+      "description": "Plumb Bob Tilt",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Outhole",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "bsTrough.EntrySw = 15"
+    },
+    {
+      "id": 16,
+      "description": "Right Trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "bsTrough.initSwitches Array(16,17,18)"
+    },
+    {
+      "id": 17,
+      "description": "Center Trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 18,
+      "description": "Left Trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 21,
+      "description": "Slam Tilt"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "normally_closed": true,
+      "_note": "Controller.Switch(22) = 1 in Table1_Init"
+    },
+    {
+      "id": 25,
+      "description": "Shooter Lane",
+      "vpx_name": "ShooterLane",
+      "_note": "Controller.Switch(25) set in ShooterLane_Hit/UnHit"
+    },
+    {
+      "id": 26,
+      "description": "Left Outlane",
+      "vpx_name": "Sw26",
+      "_note": "Controller.Switch(26) set in Sw26_Hit/UnHit"
+    },
+    {
+      "id": 27,
+      "description": "Left Inlane",
+      "vpx_name": "Sw27",
+      "_note": "Controller.Switch(27) set in Sw27_Hit/UnHit"
+    },
+    {
+      "id": 28,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "PulseSw(28) in LeftSlingShot_Slingshot"
+    },
+    {
+      "id": 31,
+      "description": "Bottom Bank Bottom Target",
+      "vpx_name": "Sw31",
+      "_note": "PulseSw(31) in Sw31_Hit"
+    },
+    {
+      "id": 32,
+      "description": "Bottom Bank Middle Target",
+      "vpx_name": "Sw32",
+      "_note": "PulseSw(32) in Sw32_Hit"
+    },
+    {
+      "id": 33,
+      "description": "Bottom Bank Top Target",
+      "vpx_name": "Sw33",
+      "_note": "PulseSw(33) in Sw33_Hit"
+    },
+    {
+      "id": 34,
+      "description": "Fire Button",
+      "vpx_name": "Plunger",
+      "input_action_hint": "launch_ball",
+      "input_map_hint": "cabinet",
+      "_note": "Controller.Switch(34) set via PlungerKey in KeyDown/KeyUp"
+    },
+    {
+      "id": 35,
+      "description": "Cannon Kicker",
+      "_note": "Controller.Switch(35) = 1 in sw66_Sub_Hit (subway loads cannon); cleared by FireCannon"
+    },
+    {
+      "id": 36,
+      "description": "Right Outlane",
+      "vpx_name": "Sw36",
+      "_note": "Controller.Switch(36) set in Sw36_Hit/UnHit"
+    },
+    {
+      "id": 37,
+      "description": "Right Inlane",
+      "vpx_name": "Sw37",
+      "_note": "Controller.Switch(37) set in Sw37_Hit/UnHit"
+    },
+    {
+      "id": 38,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "PulseSw(38) in RightSlingShot_Slingshot"
+    },
+    {
+      "id": 41,
+      "description": "Middle Bank Top Target",
+      "vpx_name": "Sw41",
+      "_note": "PulseSw(41) in Sw41_Hit"
+    },
+    {
+      "id": 42,
+      "description": "Middle Bank Middle Target",
+      "vpx_name": "Sw42",
+      "_note": "PulseSw(42) in Sw42_Hit"
+    },
+    {
+      "id": 43,
+      "description": "Middle Bank Bottom Target",
+      "vpx_name": "Sw43",
+      "_note": "PulseSw(43) in Sw43_Hit"
+    },
+    {
+      "id": 44,
+      "description": "Enter Left Ramp",
+      "vpx_name": "GateSw44",
+      "_note": "PulseSw(44) in GateSw44_Hit"
+    },
+    {
+      "id": 45,
+      "description": "Top Left Loop",
+      "vpx_name": "Sw45",
+      "_note": "Controller.Switch(45) set in Sw45_Hit/UnHit"
+    },
+    {
+      "id": 46,
+      "description": "Left Jet Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw(46) in Bumper1_Hit"
+    },
+    {
+      "id": 47,
+      "description": "Right Jet Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw(47) in Bumper2_Hit"
+    },
+    {
+      "id": 48,
+      "description": "Bottom Jet Bumper",
+      "vpx_name": "BumperSw48",
+      "_note": "PulseSw(48) in BumperSw48_Hit"
+    },
+    {
+      "id": 51,
+      "description": "Top Bank Bottom Target",
+      "vpx_name": "Sw51",
+      "_note": "PulseSw(51) in Sw51_Hit"
+    },
+    {
+      "id": 52,
+      "description": "Top Bank Middle Target",
+      "vpx_name": "Sw52",
+      "_note": "PulseSw(52) in Sw52_Hit"
+    },
+    {
+      "id": 53,
+      "description": "Top Bank Top Target",
+      "vpx_name": "Sw53",
+      "_note": "PulseSw(53) in Sw53_Hit"
+    },
+    {
+      "id": 54,
+      "description": "Ramp Down",
+      "_note": "Controller.Switch(54) managed by RampDown/RampUp solenoid callbacks; indicates ship ramp (Davey Jones) is in down position"
+    },
+    {
+      "id": 55,
+      "description": "Ball Popper (Ramp Sword)",
+      "vpx_name": "KickerSW55",
+      "_note": "Controller.Switch(55) = 1 in KickerSW55_Hit; cleared by RampSwordKicker"
+    },
+    {
+      "id": 56,
+      "description": "Right Ramp Made",
+      "vpx_name": "Sw56",
+      "_note": "Controller.Switch(56) set in Sw56_Hit/UnHit"
+    },
+    {
+      "id": 57,
+      "description": "Jets Exit",
+      "vpx_name": "Sw57",
+      "_note": "Controller.Switch(57) set in Sw57_Hit/UnHit"
+    },
+    {
+      "id": 58,
+      "description": "Enter Jets",
+      "vpx_name": "Sw58",
+      "_note": "Controller.Switch(58) set in Sw58_Hit/UnHit"
+    },
+    {
+      "id": 61,
+      "description": "Subway Top (Broadside Hole)",
+      "vpx_name": "sw61_Sub",
+      "_note": "PulseSwitch 61 in sw61_Sub_Hit"
+    },
+    {
+      "id": 62,
+      "description": "Backboard Ramp",
+      "vpx_name": "Sw62",
+      "_note": "Controller.Switch(62) set in Sw62_Hit/UnHit"
+    },
+    {
+      "id": 63,
+      "description": "Lockup 1",
+      "vpx_name": "KickerSw63",
+      "_note": "Controller.Switch(63) = 1 in KickerSw63_Hit; cleared by PiratesCoveKick"
+    },
+    {
+      "id": 64,
+      "description": "Lockup 2",
+      "vpx_name": "KickerSw64",
+      "_note": "Controller.Switch(64) = 1 in KickerSw64_Hit; cleared by PiratesCoveKick"
+    },
+    {
+      "id": 65,
+      "description": "Right Single Standup Target",
+      "vpx_name": "Sw65",
+      "_note": "PulseSw(65) in Sw65_Hit"
+    },
+    {
+      "id": 66,
+      "description": "Subway Bottom (Cannon Load)",
+      "vpx_name": "sw66_Sub",
+      "_note": "PulseSwitch 66 in sw66_Sub_Hit; also sets Controller.Switch(35) = 1"
+    },
+    {
+      "id": 71,
+      "description": "Enter Lockup",
+      "vpx_name": "GateSw71",
+      "_note": "PulseSw(71) in GateSw71_Hit"
+    },
+    {
+      "id": 72,
+      "description": "Middle Ramp (Ship Ramp)",
+      "vpx_name": "GateSw72",
+      "_note": "PulseSw(72) in GateSw72_Hit"
+    },
+    {
+      "id": 76,
+      "description": "Enter Right Ramp",
+      "vpx_name": "GateSw76",
+      "_note": "PulseSw(76) in GateSw76_Hit"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Ball Popper (Ramp Sword Kicker)",
+      "_vbscript_callback": "RampSwordKicker",
+      "_inferred_type": "kicker",
+      "vpx_name": "KickerSW55Upper",
+      "_note": "Destroys ball at KickerSw55, creates at KickerSW55Upper, kicks 180/5"
+    },
+    {
+      "id": 2,
+      "description": "Outhole (Trough Entry)",
+      "_vbscript_callback": "bsTroughSolIn",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_coil"
+    },
+    {
+      "id": 3,
+      "description": "Cannon Motor",
+      "_vbscript_callback": "CannonMotor",
+      "_inferred_type": "mechanism",
+      "_note": "Enables DiscTimer to rotate cannon; plays Motor_Cannon loop sound"
+    },
+    {
+      "id": 4,
+      "description": "Ball Release (Trough Eject)",
+      "_vbscript_callback": "bsTroughSolOut",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "vpx_name": "BallRelease",
+      "_note": "bsTrough.InitExit BallRelease, 55, 8"
+    },
+    {
+      "id": 5,
+      "description": "Not Used",
+      "_vbscript_callback": "",
+      "_note": "Empty SolCallback in script"
+    },
+    {
+      "id": 6,
+      "description": "Not Used",
+      "_vbscript_callback": "",
+      "_note": "Empty SolCallback in script"
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 8,
+      "description": "Cannon Kicker (Fire Cannon)",
+      "_vbscript_callback": "FireCannon",
+      "_inferred_type": "mechanism",
+      "vpx_name": "CannonKicker",
+      "_note": "Creates ball at CannonKicker, kicks at disc angle; clears sw35"
+    },
+    {
+      "id": 9,
+      "description": "Pirates Cove Kick (Ball Lock Release)",
+      "_vbscript_callback": "PiratesCoveKick",
+      "_inferred_type": "kicker",
+      "vpx_name": "KickerSW63",
+      "_note": "Kicks from KickerSw64 first, then KickerSw63; clears sw63/sw64"
+    },
+    {
+      "id": 10,
+      "description": "Ramp Up (Ship Ramp Raise)",
+      "_vbscript_callback": "RampUp",
+      "_inferred_type": "mechanism",
+      "_note": "Clears Controller.Switch(54); raises DaveyRamp via timer"
+    },
+    {
+      "id": 11,
+      "description": "Ramp Down (Ship Ramp Lower)",
+      "_vbscript_callback": "RampDown",
+      "_inferred_type": "mechanism",
+      "_note": "Sets Controller.Switch(54) = 1; lowers DaveyRamp via timer"
+    },
+    {
+      "id": 12,
+      "description": "Not Used",
+      "_vbscript_callback": "",
+      "_note": "Empty SolCallback in script"
+    },
+    {
+      "id": 13,
+      "description": "Not Used",
+      "_vbscript_callback": "",
+      "_note": "Empty SolCallback in script"
+    },
+    {
+      "id": 14,
+      "description": "Not Used",
+      "_vbscript_callback": "",
+      "_note": "Empty SolCallback in script"
+    },
+    {
+      "id": 15,
+      "description": "Not Used",
+      "_vbscript_callback": "",
+      "_note": "Empty SolCallback in script"
+    },
+    {
+      "id": 16,
+      "description": "Not Used",
+      "_vbscript_callback": "",
+      "_note": "Empty SolCallback in script"
+    },
+    {
+      "id": 17,
+      "description": "Left Bottom Flasher",
+      "_vbscript_callback": "Sol17",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?17$",
+      "_note": "Backglass: Top 'Black'; SetLamp 117"
+    },
+    {
+      "id": 18,
+      "description": "Left Top Flasher",
+      "_vbscript_callback": "Sol18",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?18$",
+      "_note": "Backglass: Lady Pirate Belly; SetLamp 118"
+    },
+    {
+      "id": 19,
+      "description": "Right Bottom Flasher",
+      "_vbscript_callback": "Sol19",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?19$",
+      "_note": "Backglass: Man Pirate Right; SetLamp 119"
+    },
+    {
+      "id": 20,
+      "description": "Right Top Flasher",
+      "_vbscript_callback": "Sol20",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?20$",
+      "_note": "Backglass: Right Top; SetLamp 120"
+    },
+    {
+      "id": 21,
+      "description": "Right Ramp Flasher",
+      "_vbscript_callback": "Sol21",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?21$",
+      "_note": "Backglass: Bottom 'Rose'; SetLamp 121"
+    },
+    {
+      "id": 22,
+      "description": "Left Ramp Flasher",
+      "_vbscript_callback": "Sol22",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?22$",
+      "_note": "Backglass: Bottom 'Black'; SetLamp 122"
+    },
+    {
+      "id": 23,
+      "description": "Locker Open Flasher",
+      "_vbscript_callback": "Sol23",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?23$",
+      "_note": "Backglass: Skull; SetLamp 123"
+    },
+    {
+      "id": 24,
+      "description": "Left Sword Flasher",
+      "_vbscript_callback": "Sol24",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?24$",
+      "_note": "Backglass: Bottom of Skull; SetLamp 124"
+    },
+    {
+      "id": 25,
+      "description": "Top Popper Flasher",
+      "_vbscript_callback": "SetLamp 125,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?25$",
+      "_note": "SolModCallback uses SetLamp 125 directly (no Sol25 sub)"
+    },
+    {
+      "id": 26,
+      "description": "Cannon Flasher",
+      "_vbscript_callback": "SetLamp 126,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?26$",
+      "_note": "Dual cannon flashers; SolModCallback uses SetLamp 126 directly (no Sol26 sub)"
+    },
+    {
+      "id": 27,
+      "description": "Fire Button Flasher",
+      "_vbscript_callback": "Sol27",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?27$",
+      "_note": "Backglass: Canon Flame; SetLamp 127"
+    },
+    {
+      "id": 28,
+      "description": "Right Sword Flasher",
+      "_vbscript_callback": "Sol28",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?28$",
+      "_note": "Backglass: Middle Pirate; SetLamp 128"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 11,
+      "description": "Shoot Again",
+      "vpx_name": "l11"
+    },
+    {
+      "id": 12,
+      "description": "Broadside Polly Says",
+      "vpx_name": "l12"
+    },
+    {
+      "id": 13,
+      "description": "Broadside Knife Throw",
+      "vpx_name": "l13"
+    },
+    {
+      "id": 14,
+      "description": "Broadside Instant Multiball",
+      "vpx_name": "l14"
+    },
+    {
+      "id": 15,
+      "description": "Broadside Walk the Plank",
+      "vpx_name": "l15"
+    },
+    {
+      "id": 16,
+      "description": "Broadside Treasure",
+      "vpx_name": "l16"
+    },
+    {
+      "id": 17,
+      "description": "Broadside Rigging Swing",
+      "vpx_name": "l17"
+    },
+    {
+      "id": 18,
+      "description": "Broadside Millions Plus",
+      "vpx_name": "l18"
+    },
+    {
+      "id": 21,
+      "description": "Sink Ship S",
+      "vpx_name": "l21"
+    },
+    {
+      "id": 22,
+      "description": "Sink Ship I",
+      "vpx_name": "l22"
+    },
+    {
+      "id": 23,
+      "description": "Sink Ship N",
+      "vpx_name": "l23"
+    },
+    {
+      "id": 24,
+      "description": "Sink Ship K",
+      "vpx_name": "l24"
+    },
+    {
+      "id": 25,
+      "description": "Sink Ship S (Ship)",
+      "vpx_name": "l25"
+    },
+    {
+      "id": 26,
+      "description": "Sink Ship H",
+      "vpx_name": "l26"
+    },
+    {
+      "id": 27,
+      "description": "Sink Ship I (Ship)",
+      "vpx_name": "l27"
+    },
+    {
+      "id": 28,
+      "description": "Sink Ship P",
+      "vpx_name": "l28"
+    },
+    {
+      "id": 31,
+      "description": "Torch Target 1",
+      "vpx_name": "l31"
+    },
+    {
+      "id": 32,
+      "description": "Torch Target 2",
+      "vpx_name": "l32"
+    },
+    {
+      "id": 33,
+      "description": "Torch Target 3",
+      "vpx_name": "l33"
+    },
+    {
+      "id": 34,
+      "description": "Bonus 2X",
+      "vpx_name": "l34"
+    },
+    {
+      "id": 35,
+      "description": "Lock Arrow",
+      "vpx_name": "l35"
+    },
+    {
+      "id": 36,
+      "description": "Bonus 4X",
+      "vpx_name": "l36"
+    },
+    {
+      "id": 37,
+      "description": "Jet Bumper Lane",
+      "vpx_name": "l37"
+    },
+    {
+      "id": 38,
+      "description": "Right Ramp Arrow",
+      "vpx_name": "l38"
+    },
+    {
+      "id": 41,
+      "description": "Cannon Ball Target 1",
+      "vpx_name": "l41"
+    },
+    {
+      "id": 42,
+      "description": "Cannon Ball Target 2",
+      "vpx_name": "l42"
+    },
+    {
+      "id": 43,
+      "description": "Cannon Ball Target 3",
+      "vpx_name": "l43"
+    },
+    {
+      "id": 44,
+      "description": "Left Ramp Arrow",
+      "vpx_name": "l44"
+    },
+    {
+      "id": 45,
+      "description": "Lock L",
+      "vpx_name": "l45"
+    },
+    {
+      "id": 46,
+      "description": "Lock O",
+      "vpx_name": "l46"
+    },
+    {
+      "id": 47,
+      "description": "Lock C",
+      "vpx_name": "l47"
+    },
+    {
+      "id": 48,
+      "description": "Lock K",
+      "vpx_name": "l48"
+    },
+    {
+      "id": 51,
+      "description": "Gun Powder Target 1",
+      "vpx_name": "l51"
+    },
+    {
+      "id": 52,
+      "description": "Gun Powder Target 2",
+      "vpx_name": "l52"
+    },
+    {
+      "id": 53,
+      "description": "Gun Powder Target 3",
+      "vpx_name": "l53"
+    },
+    {
+      "id": 54,
+      "description": "Extra Ball",
+      "vpx_name": "l54"
+    },
+    {
+      "id": 55,
+      "description": "Whirlpool 100K",
+      "vpx_name": "l55"
+    },
+    {
+      "id": 56,
+      "description": "Whirlpool 200K",
+      "vpx_name": "l56"
+    },
+    {
+      "id": 57,
+      "description": "Treasure Left",
+      "vpx_name": "l57",
+      "_note": "Lampz.Callback(57) commented out in VBS"
+    },
+    {
+      "id": 58,
+      "description": "Whirlpool 300K",
+      "vpx_name": "l58"
+    },
+    {
+      "id": 61,
+      "description": "Whirlpool 400K",
+      "vpx_name": "l61"
+    },
+    {
+      "id": 62,
+      "description": "Whirlpool Extra Ball",
+      "vpx_name": "l62"
+    },
+    {
+      "id": 63,
+      "description": "Whirlpool 1M",
+      "vpx_name": "l63"
+    },
+    {
+      "id": 64,
+      "description": "Broadside Arrow",
+      "vpx_name": "l64"
+    },
+    {
+      "id": 65,
+      "description": "Ship Ramp Arrow",
+      "vpx_name": "l65"
+    },
+    {
+      "id": 66,
+      "description": "Treasure Right",
+      "vpx_name": "l66",
+      "_note": "Lampz.Callback(66) commented out in VBS"
+    },
+    {
+      "id": 67,
+      "description": "Doubloon Target",
+      "vpx_name": "l67"
+    },
+    {
+      "id": 68,
+      "description": "Special",
+      "vpx_name": "l68"
+    },
+    {
+      "id": 71,
+      "description": "Top Loop Arrow",
+      "vpx_name": "l71"
+    },
+    {
+      "id": 72,
+      "description": "Combo Arrow 1",
+      "vpx_name": "l72"
+    },
+    {
+      "id": 73,
+      "description": "Combo Arrow 2",
+      "vpx_name": "l73"
+    },
+    {
+      "id": 74,
+      "description": "Combo Arrow 3",
+      "vpx_name": "l74"
+    },
+    {
+      "id": 75,
+      "description": "Combo Arrow 4",
+      "vpx_name": "l75"
+    },
+    {
+      "id": 76,
+      "description": "Combo Arrow 5",
+      "vpx_name": "l76"
+    },
+    {
+      "id": 77,
+      "description": "Combo Arrow 6",
+      "vpx_name": "l77"
+    },
+    {
+      "id": 81,
+      "description": "Bonus 6X",
+      "vpx_name": "l81"
+    },
+    {
+      "id": 82,
+      "description": "Bonus 8X",
+      "vpx_name": "l82"
+    },
+    {
+      "id": 83,
+      "description": "Lock 1",
+      "vpx_name": "l83"
+    },
+    {
+      "id": 84,
+      "description": "Lock 2",
+      "vpx_name": "l84"
+    },
+    {
+      "id": 85,
+      "description": "Multiball",
+      "vpx_name": "l85"
+    },
+    {
+      "id": 86,
+      "description": "Jackpot",
+      "vpx_name": "l86",
+      "_note": "Also controls secondary insert (l86a / Pot)"
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    },
+    {
+      "id": 44,
+      "alias": "c_flipper_upper_right",
+      "type": "coil",
+      "_note": "sURFlipper — framework constant"
+    }
+  ]
+}

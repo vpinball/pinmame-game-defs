@@ -1,0 +1,758 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Tales from the Crypt (Data East 1993) VPW v1.22.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils. No Const sw* definitions — switches identified from _Hit/_UnHit subs, Controller.Switch() calls, PulseSw calls, and mechanism AddSw. Custom ball-through system (not cvpmTrough) with 6 kicker positions (Drain + sw10-sw14) and sw15 as shooter lane release. Tombstone is a cvpmMech (Sol1=15, mechanism switches 33 and 36). Drop targets use custom DTHit/DTAnimate code with Controller.Switch set on drop/raise. Flashers (coils 25-32) use Sol1R-Sol8R custom subs with DisableLightingFlash primitives. Lamps use Lampz class with MassAssign. GI controlled via coil 11 (inverted relay — solenoid cuts GI circuit). UseSolenoids=2, UseLamps=0, UseGI=0."
+  },
+  "game": {
+    "id": "tftc",
+    "name": "Tales from the Crypt",
+    "year": 1993,
+    "manufacturer": "Data East",
+    "platform": "dataeast"
+  },
+  "roms": [
+    {
+      "id": "tftc_400"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Tilt",
+      "_note": "vpmNudge.TiltSwitch = 1"
+    },
+    {
+      "id": 8,
+      "description": "Buy-In Button",
+      "_note": "Pulsed via keyFront (2 key). vpmTimer.PulseSw 8",
+      "input_action_hint": "buy_in",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 9,
+      "description": "Trough 1 / Drain",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "Custom trough. Controller.Switch on/off. Drain kicker — balls cascade from here through sw10-sw14 to sw15."
+    },
+    {
+      "id": 10,
+      "description": "Trough 2",
+      "vpx_name": "sw10",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "Custom trough. Controller.Switch on/off."
+    },
+    {
+      "id": 11,
+      "description": "Trough 3",
+      "vpx_name": "sw11",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "Custom trough. Controller.Switch on/off."
+    },
+    {
+      "id": 12,
+      "description": "Trough 4",
+      "vpx_name": "sw12",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4",
+      "_note": "Custom trough. Controller.Switch on/off."
+    },
+    {
+      "id": 13,
+      "description": "Trough 5",
+      "vpx_name": "sw13",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "5",
+      "_note": "Custom trough. Controller.Switch on/off."
+    },
+    {
+      "id": 14,
+      "description": "Trough 6",
+      "vpx_name": "sw14",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "6",
+      "_note": "Custom trough. Controller.Switch on/off. kisort (coil 1) kicks from here."
+    },
+    {
+      "id": 15,
+      "description": "Trough Eject / Shooter Lane",
+      "vpx_name": "sw15",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject",
+      "_note": "Custom trough. Controller.Switch on/off. KickBallToLane (coil 2) kicks ball from here to plunger lane. Also mTombStone.Sol1 = 15 (tombstone mechanism uses this solenoid number)."
+    },
+    {
+      "id": 16,
+      "description": "Shooter Lane Rollover",
+      "vpx_name": "sw16",
+      "_note": "Controller.Switch on/off. Sets BIPL (Ball In Plunger Lane) flag."
+    },
+    {
+      "id": 17,
+      "description": "Rollover",
+      "vpx_name": "sw17",
+      "_note": "Controller.Switch on/off."
+    },
+    {
+      "id": 18,
+      "description": "Rollover",
+      "vpx_name": "sw18",
+      "_note": "Controller.Switch on/off."
+    },
+    {
+      "id": 19,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "vpmTimer.PulseSw 19 in LeftSlingShot_Slingshot sub."
+    },
+    {
+      "id": 20,
+      "description": "Standup Target",
+      "vpx_name": "sw20",
+      "_note": "vpmTimer.PulseSw(20). Animated standup target with TargetBouncer."
+    },
+    {
+      "id": 21,
+      "description": "Standup Target",
+      "vpx_name": "sw21",
+      "_note": "vpmTimer.PulseSw(21). Animated standup target with TargetBouncer."
+    },
+    {
+      "id": 22,
+      "description": "Standup Target",
+      "vpx_name": "sw22",
+      "_note": "vpmTimer.PulseSw(22). Animated standup target with TargetBouncer."
+    },
+    {
+      "id": 23,
+      "description": "Rollover",
+      "vpx_name": "sw23",
+      "_note": "Controller.Switch on/off."
+    },
+    {
+      "id": 24,
+      "description": "Rollover",
+      "vpx_name": "sw24",
+      "_note": "Controller.Switch on/off."
+    },
+    {
+      "id": 25,
+      "description": "Rollover",
+      "vpx_name": "sw25",
+      "_note": "Controller.Switch on/off."
+    },
+    {
+      "id": 26,
+      "description": "Rollover",
+      "vpx_name": "sw26",
+      "_note": "Controller.Switch on/off."
+    },
+    {
+      "id": 27,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "vpmTimer.PulseSw 27 in RightSlingShot_Slingshot sub."
+    },
+    {
+      "id": 28,
+      "description": "Standup Target",
+      "vpx_name": "sw28",
+      "_note": "vpmTimer.PulseSw(28). Animated standup target with TargetBouncer."
+    },
+    {
+      "id": 29,
+      "description": "Standup Target",
+      "vpx_name": "sw29",
+      "_note": "vpmTimer.PulseSw(29). Animated standup target with TargetBouncer."
+    },
+    {
+      "id": 30,
+      "description": "Standup Target",
+      "vpx_name": "sw30",
+      "_note": "vpmTimer.PulseSw(30). Animated standup target with TargetBouncer."
+    },
+    {
+      "id": 31,
+      "description": "Rollover",
+      "vpx_name": "sw31",
+      "_note": "Controller.Switch on/off."
+    },
+    {
+      "id": 32,
+      "description": "Rollover",
+      "vpx_name": "sw32",
+      "_note": "Controller.Switch on/off."
+    },
+    {
+      "id": 33,
+      "description": "Tombstone Up Position (Mechanism)",
+      "_note": "mTombStone.AddSw 33, 160, 180. cvpmMech switch — tombstone at raised/up position."
+    },
+    {
+      "id": 36,
+      "description": "Tombstone Down Position (Mechanism)",
+      "_note": "mTombStone.AddSw 36, 0, 20. cvpmMech switch — tombstone at lowered/down position."
+    },
+    {
+      "id": 38,
+      "description": "Center VUK (Vertical Up Kicker)",
+      "vpx_name": "sw38",
+      "_note": "Controller.Switch on/off. Ball enters pUpKicker area. KickBallUp38 (coil 6) ejects."
+    },
+    {
+      "id": 39,
+      "description": "Standup Target",
+      "vpx_name": "sw39",
+      "_note": "vpmTimer.PulseSw 39."
+    },
+    {
+      "id": 41,
+      "description": "Drop Target 1",
+      "vpx_name": "sw41w",
+      "_note": "DTHit 41 via sw41w_Hit. Custom drop target animation code sets Controller.Switch(41) on drop, clears on raise."
+    },
+    {
+      "id": 42,
+      "description": "Drop Target 2",
+      "vpx_name": "sw42w",
+      "_note": "DTHit 42 via sw42w_Hit. Custom drop target animation code sets Controller.Switch(42) on drop, clears on raise."
+    },
+    {
+      "id": 43,
+      "description": "Drop Target 3",
+      "vpx_name": "sw43w",
+      "_note": "DTHit 43 via sw43w_Hit. Custom drop target animation code sets Controller.Switch(43) on drop, clears on raise."
+    },
+    {
+      "id": 44,
+      "description": "Ramp Gate Trigger",
+      "vpx_name": "sw44",
+      "_note": "vpmTimer.PulseSw 44."
+    },
+    {
+      "id": 45,
+      "description": "Left Spinner / Gate Switch",
+      "vpx_name": "sw45",
+      "_note": "Controller.Switch on/off. Animated switch (switch01 roty)."
+    },
+    {
+      "id": 46,
+      "description": "Ramp Gate Trigger",
+      "vpx_name": "sw46",
+      "_note": "vpmTimer.PulseSw 46."
+    },
+    {
+      "id": 47,
+      "description": "Right Spinner / Gate Switch",
+      "vpx_name": "sw47",
+      "_note": "Controller.Switch on/off. Animated switch (switch02 roty)."
+    },
+    {
+      "id": 49,
+      "description": "Top Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "vpmTimer.PulseSw(49) in Bumper1_Hit."
+    },
+    {
+      "id": 50,
+      "description": "Bottom Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "vpmTimer.PulseSw(50) in Bumper2_Hit."
+    },
+    {
+      "id": 51,
+      "description": "Middle Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "vpmTimer.PulseSw(51) in Bumper3_Hit."
+    },
+    {
+      "id": 52,
+      "description": "Back VUK (From Subway)",
+      "vpx_name": "sw52",
+      "_note": "Controller.Switch on/off. Ball enters subway VUK. KickBallUp52 (coil 7) ejects."
+    },
+    {
+      "id": 53,
+      "description": "Lock 1",
+      "vpx_name": "sw53",
+      "_note": "Controller.Switch on/off. Ball lock position."
+    },
+    {
+      "id": 54,
+      "description": "Lock 2",
+      "vpx_name": "sw54",
+      "_note": "Controller.Switch on/off. Ball lock position."
+    },
+    {
+      "id": 55,
+      "description": "Scoop",
+      "vpx_name": "sw55",
+      "_note": "Controller.Switch on/off. ScoopKick (coil 5) ejects."
+    },
+    {
+      "id": 57,
+      "description": "Switch / Rollover",
+      "vpx_name": "sw57",
+      "_note": "Controller.Switch on/off. Animated switch (switch03 roty)."
+    },
+    {
+      "id": 62,
+      "description": "Launch Button",
+      "_note": "Controller.Switch set via PlungerKey/LockBarKey in Table1_KeyDown/KeyUp.",
+      "input_action_hint": "launch_ball",
+      "input_map_hint": "cabinet"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Sort (Kick sw14 toward sw15)",
+      "_vbscript_callback": "kisort",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from sw14 toward sw15/shooter lane. Part of custom trough cascade system.",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 2,
+      "description": "Ball Release (Shooter Lane Eject)",
+      "_vbscript_callback": "KickBallToLane",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from sw15 into plunger lane. Clears Controller.Switch(15)."
+    },
+    {
+      "id": 3,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "Auto_Plunger",
+      "_inferred_type": "ball_management",
+      "_note": "PlungerIM.AutoFire. Fires ball from plunger lane to playfield."
+    },
+    {
+      "id": 4,
+      "description": "Drop Target Reset",
+      "_vbscript_callback": "ResetDrops",
+      "_inferred_type": "mechanism",
+      "_note": "Resets drop targets 41/42/43 to raised position."
+    },
+    {
+      "id": 5,
+      "description": "Scoop Eject",
+      "_vbscript_callback": "ScoopKick",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw55",
+      "_note": "Kicks ball from scoop (sw55). Clears Controller.Switch(55)."
+    },
+    {
+      "id": 6,
+      "description": "Center VUK Eject",
+      "_vbscript_callback": "KickBallUp38",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw38",
+      "_note": "Ejects ball from center VUK (sw38) via timer animation sequence."
+    },
+    {
+      "id": 7,
+      "description": "Back VUK Eject (Subway)",
+      "_vbscript_callback": "KickBallUp52",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw52",
+      "_note": "Ejects ball from back subway VUK (sw52) via timer animation sequence."
+    },
+    {
+      "id": 8,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"Knocker\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 9,
+      "description": "Diverter",
+      "_vbscript_callback": "SolDiv",
+      "_inferred_type": "diverter",
+      "vpx_name": "Diverter",
+      "_note": "Diverter.IsDropped toggled. Animated via timer."
+    },
+    {
+      "id": 11,
+      "description": "GI Relay (Inverted)",
+      "_vbscript_callback": "SetGI",
+      "_inferred_type": "gi_relay",
+      "_note": "Inverted: solenoid ON cuts GI circuit (GI off). Solenoid OFF enables GI. Controls lamp 111 (GI collection) and bumper top intensities. Early Data East era relay."
+    },
+    {
+      "id": 16,
+      "description": "Shaker Motor",
+      "_vbscript_callback": "SolShake",
+      "_inferred_type": "mechanism",
+      "vpx_name": "ShakerMotor",
+      "_note": "ShakerMotor.Enabled toggled."
+    },
+    {
+      "id": 22,
+      "description": "Kickback",
+      "_vbscript_callback": "Solkickback",
+      "_inferred_type": "mechanism",
+      "vpx_name": "plunger1",
+      "_note": "Left outlane kickback. plunger1.Fire/PullBack."
+    },
+    {
+      "id": 25,
+      "description": "Flasher 1R",
+      "_vbscript_callback": "Sol1R",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flasher relay. DisableLightingFlash on p65/p65bulb primitives."
+    },
+    {
+      "id": 26,
+      "description": "Flasher 2R",
+      "_vbscript_callback": "Sol2R",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flasher relay. Also syncs with GI state (Sol2RGIsync)."
+    },
+    {
+      "id": 27,
+      "description": "Flasher 3R",
+      "_vbscript_callback": "Sol3R",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flasher relay. DisableLightingFlash on p67/p67bulb and p67a/p67abulb."
+    },
+    {
+      "id": 28,
+      "description": "Flasher 4R",
+      "_vbscript_callback": "Sol4R",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flasher relay. Also syncs with GI state (Sol4RGIsync)."
+    },
+    {
+      "id": 29,
+      "description": "Flasher 5R",
+      "_vbscript_callback": "Sol5R",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flasher relay. DisableLightingFlash on p69b/p69bbulb."
+    },
+    {
+      "id": 30,
+      "description": "Flasher 6R",
+      "_vbscript_callback": "Sol6R",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flasher relay. DisableLightingFlash on p70/p70bulb and p70a/p70abulb."
+    },
+    {
+      "id": 31,
+      "description": "Flasher 7R",
+      "_vbscript_callback": "Sol7R",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flasher relay. DisableLightingFlash on p71/p71bulb and p60/p60bulb."
+    },
+    {
+      "id": 32,
+      "description": "Flasher 8R",
+      "_vbscript_callback": "Sol8R",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flasher relay. DisableLightingFlash on p52/p52bulb."
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "vpx_name": "l1"
+    },
+    {
+      "id": 2,
+      "vpx_name": "l2"
+    },
+    {
+      "id": 3,
+      "vpx_name": "l3"
+    },
+    {
+      "id": 4,
+      "vpx_name": "l4"
+    },
+    {
+      "id": 5,
+      "vpx_name": "l5",
+      "_note": "Also has flasher object f5TOP"
+    },
+    {
+      "id": 6,
+      "vpx_name": "l6"
+    },
+    {
+      "id": 7,
+      "vpx_name": "l7"
+    },
+    {
+      "id": 8,
+      "vpx_name": "l8"
+    },
+    {
+      "id": 9,
+      "vpx_name": "l9"
+    },
+    {
+      "id": 10,
+      "vpx_name": "l10"
+    },
+    {
+      "id": 11,
+      "vpx_name": "l11"
+    },
+    {
+      "id": 12,
+      "vpx_name": "l12"
+    },
+    {
+      "id": 13,
+      "vpx_name": "F13",
+      "_note": "Flasher object. Also F13Light. Callback: g02_bulb2/g02_bulbOFF2"
+    },
+    {
+      "id": 15,
+      "vpx_name": "l15",
+      "_note": "Plunger LED. Also F15, f_bulbshooter, PlungerEye1, PlungerEye2"
+    },
+    {
+      "id": 17,
+      "vpx_name": "l17",
+      "_note": "Also has l17a secondary object"
+    },
+    {
+      "id": 18,
+      "vpx_name": "l18"
+    },
+    {
+      "id": 19,
+      "vpx_name": "l19"
+    },
+    {
+      "id": 20,
+      "vpx_name": "l20"
+    },
+    {
+      "id": 21,
+      "vpx_name": "l21"
+    },
+    {
+      "id": 22,
+      "vpx_name": "l22"
+    },
+    {
+      "id": 23,
+      "vpx_name": "l23"
+    },
+    {
+      "id": 24,
+      "vpx_name": "l24"
+    },
+    {
+      "id": 25,
+      "vpx_name": "l25"
+    },
+    {
+      "id": 26,
+      "vpx_name": "l26",
+      "_note": "Also has l26a and f26aTOP secondary objects"
+    },
+    {
+      "id": 27,
+      "vpx_name": "l27"
+    },
+    {
+      "id": 28,
+      "vpx_name": "l28"
+    },
+    {
+      "id": 29,
+      "vpx_name": "l29"
+    },
+    {
+      "id": 30,
+      "vpx_name": "l30"
+    },
+    {
+      "id": 31,
+      "vpx_name": "l31"
+    },
+    {
+      "id": 32,
+      "vpx_name": "l32"
+    },
+    {
+      "id": 33,
+      "vpx_name": "l33"
+    },
+    {
+      "id": 34,
+      "vpx_name": "l34"
+    },
+    {
+      "id": 35,
+      "vpx_name": "l35"
+    },
+    {
+      "id": 36,
+      "vpx_name": "l36"
+    },
+    {
+      "id": 37,
+      "vpx_name": "l37"
+    },
+    {
+      "id": 38,
+      "vpx_name": "l38"
+    },
+    {
+      "id": 39,
+      "vpx_name": "l39"
+    },
+    {
+      "id": 40,
+      "vpx_name": "l40"
+    },
+    {
+      "id": 41,
+      "vpx_name": "l41",
+      "_note": "Also has flasher object f41TOP"
+    },
+    {
+      "id": 42,
+      "vpx_name": "l42",
+      "_note": "Also has flasher object f42TOP"
+    },
+    {
+      "id": 43,
+      "vpx_name": "l43",
+      "_note": "Also has flasher object f43TOP"
+    },
+    {
+      "id": 44,
+      "vpx_name": "l44"
+    },
+    {
+      "id": 45,
+      "vpx_name": "l45"
+    },
+    {
+      "id": 46,
+      "vpx_name": "l46"
+    },
+    {
+      "id": 47,
+      "vpx_name": "l47"
+    },
+    {
+      "id": 48,
+      "vpx_name": "l48"
+    },
+    {
+      "id": 49,
+      "vpx_name": "l49"
+    },
+    {
+      "id": 50,
+      "vpx_name": "l50"
+    },
+    {
+      "id": 51,
+      "vpx_name": "l51"
+    },
+    {
+      "id": 52,
+      "vpx_name": "l52"
+    },
+    {
+      "id": 53,
+      "vpx_name": "l53",
+      "_note": "Also has flasher object f53TOP"
+    },
+    {
+      "id": 54,
+      "vpx_name": "l54"
+    },
+    {
+      "id": 55,
+      "vpx_name": "l55"
+    },
+    {
+      "id": 56,
+      "vpx_name": "l56"
+    },
+    {
+      "id": 57,
+      "vpx_name": "l57",
+      "description": "Bumper 1 Light",
+      "_note": "Also l57a. Bumpertop1 callback."
+    },
+    {
+      "id": 58,
+      "vpx_name": "l58",
+      "description": "Bumper 2 Light",
+      "_note": "Also l58a. Bumpertop2 callback."
+    },
+    {
+      "id": 59,
+      "vpx_name": "l59",
+      "description": "Bumper 3 Light",
+      "_note": "Also l59a. Bumpertop3 callback."
+    },
+    {
+      "id": 60,
+      "vpx_name": "l60"
+    },
+    {
+      "id": 61,
+      "vpx_name": "l61"
+    },
+    {
+      "id": 62,
+      "vpx_name": "F62",
+      "_note": "Flasher object. Also F62Light. Callback: g02_bulb1/g02_bulbOFF1"
+    },
+    {
+      "id": 63,
+      "vpx_name": "F63",
+      "_note": "Flasher object. Also F63Light. Callback: g02_bulb3/g02_bulbOFF3"
+    },
+    {
+      "id": 64,
+      "vpx_name": "l64"
+    },
+    {
+      "id": 111,
+      "vpx_name": "GI",
+      "description": "General Illumination",
+      "_note": "Lampz GI collection. Controlled by coil 11 (inverted relay). state(111) set via SetLamp."
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — SolRFlipper callback. VPX objects: RightFlipper, RightFlipper1"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — SolLFlipper callback. VPX object: LeftFlipper"
+    }
+  ]
+}

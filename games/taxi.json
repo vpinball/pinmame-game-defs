@@ -1,0 +1,861 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Taxi (Williams 1988) VPW v1.2.5.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from SolCallback and _Hit/_UnHit handlers. Uses S11.VBS (System 11). Trough is cvpmBallStack with 3 switches (10,11,12) and 2 balls. Saucers: RightHole (sw36), TopHole/JoyRide (sw13), Catapult (sw35), SpinoutKicker (sw43). Drop targets: center bank DT27-29 (sw27-29), right bank DT30-32 (sw30-32). Solenoids 15,17-21 are commented out — bumpers/slings handled by VPX directly. Coils 25-29 are passenger insert flashers driven via SetLamp. Coils 30-32 are ramp/spinout flashers via SetLamp. Coil 16 is Joyride flasher via SetLamp. Spinner has no switch assignment in script (sound only). Slingshot switches not explicitly assigned — handled by VPX slingshot events (no ROM switch). Flipper solenoids use S11 framework constants (sLRFlipper=46, sLLFlipper=48). GI controlled by solenoids 10 (insert GI relay) and 11 (playfield GI, inverse logic). Lamp 99 is virtual GI insert state. Lamps 116,125-132 are solenoid-driven flasher lamps (100+sol#)."
+  },
+  "game": {
+    "id": "taxi",
+    "name": "Taxi",
+    "year": 1988,
+    "manufacturer": "Williams",
+    "ipdb_id": 2505,
+    "platform": "system11"
+  },
+  "roms": [
+    {
+      "id": "taxi_l4",
+      "version": "L-4"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Tilt",
+      "_note": "vpmNudge.TiltSwitch = 1"
+    },
+    {
+      "id": 10,
+      "description": "Trough Switch 1",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "bsTrough.InitSw first position"
+    },
+    {
+      "id": 11,
+      "description": "Trough Switch 2",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "bsTrough.InitSw second position"
+    },
+    {
+      "id": 12,
+      "description": "Trough Switch 3",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "bsTrough.InitSw third position"
+    },
+    {
+      "id": 13,
+      "description": "Top Hole / Joy Ride Saucer",
+      "vpx_name": "TopHole",
+      "_inferred_type": "saucer",
+      "_note": "bsTopHole.InitKicker TopHole,13 — ball enters via TopHole_Hit"
+    },
+    {
+      "id": 14,
+      "description": "Rollover / Lane Switch 14",
+      "vpx_name": "SW14",
+      "_note": "Controller.Switch set via SW14_Hit/Unhit"
+    },
+    {
+      "id": 15,
+      "description": "Rollover / Lane Switch 15",
+      "vpx_name": "SW15",
+      "_note": "Controller.Switch set via SW15_Hit/Unhit"
+    },
+    {
+      "id": 16,
+      "description": "Rollover / Lane Switch 16",
+      "vpx_name": "SW16",
+      "_note": "Controller.Switch set via SW16_Hit/Unhit"
+    },
+    {
+      "id": 17,
+      "description": "Middle Pop Bumper",
+      "vpx_name": "Bumper2",
+      "_inferred_type": "bumper",
+      "_note": "Pulsed via vpmTimer.PulseSw 17"
+    },
+    {
+      "id": 19,
+      "description": "Bottom Pop Bumper",
+      "vpx_name": "Bumper3",
+      "_inferred_type": "bumper",
+      "_note": "Pulsed via vpmTimer.PulseSw 19"
+    },
+    {
+      "id": 21,
+      "description": "Top Pop Bumper",
+      "vpx_name": "Bumper1",
+      "_inferred_type": "bumper",
+      "_note": "Pulsed via vpmTimer.PulseSw 21"
+    },
+    {
+      "id": 22,
+      "description": "Rollover / Lane Switch 22",
+      "vpx_name": "SW22",
+      "_note": "Controller.Switch set via SW22_Hit/Unhit"
+    },
+    {
+      "id": 23,
+      "description": "Rollover / Lane Switch 23",
+      "vpx_name": "SW23",
+      "_note": "Controller.Switch set via SW23_Hit/Unhit"
+    },
+    {
+      "id": 24,
+      "description": "Standup Target 24",
+      "vpx_name": "Target24",
+      "_inferred_type": "standup_target",
+      "_note": "Pulsed via vpmTimer.PulseSW 24"
+    },
+    {
+      "id": 25,
+      "description": "Target / Switch 25",
+      "vpx_name": "SW25",
+      "_inferred_type": "standup_target",
+      "_note": "Pulsed via vpmTimer.PulseSW 25"
+    },
+    {
+      "id": 26,
+      "description": "Target / Switch 26",
+      "vpx_name": "SW26",
+      "_inferred_type": "standup_target",
+      "_note": "Pulsed via vpmTimer.PulseSW 26"
+    },
+    {
+      "id": 27,
+      "description": "Center Drop Target 1",
+      "vpx_name": "DT27",
+      "_inferred_type": "drop_target",
+      "_note": "CenterDTBank.InitDrop — first target in center bank"
+    },
+    {
+      "id": 28,
+      "description": "Center Drop Target 2",
+      "vpx_name": "DT28",
+      "_inferred_type": "drop_target",
+      "_note": "CenterDTBank.InitDrop — second target in center bank"
+    },
+    {
+      "id": 29,
+      "description": "Center Drop Target 3",
+      "vpx_name": "DT29",
+      "_inferred_type": "drop_target",
+      "_note": "CenterDTBank.InitDrop — third target in center bank"
+    },
+    {
+      "id": 30,
+      "description": "Right Drop Target 1",
+      "vpx_name": "DT30",
+      "_inferred_type": "drop_target",
+      "_note": "RightDTBank.InitDrop — first target in right bank"
+    },
+    {
+      "id": 31,
+      "description": "Right Drop Target 2",
+      "vpx_name": "DT31",
+      "_inferred_type": "drop_target",
+      "_note": "RightDTBank.InitDrop — second target in right bank"
+    },
+    {
+      "id": 32,
+      "description": "Right Drop Target 3",
+      "vpx_name": "DT32",
+      "_inferred_type": "drop_target",
+      "_note": "RightDTBank.InitDrop — third target in right bank"
+    },
+    {
+      "id": 33,
+      "description": "Lane / Rollover Switch 33",
+      "vpx_name": "SW33",
+      "_note": "Controller.Switch set via SW33_Hit/Unhit. Has animated switch arm (Primitive_SwitchArm33)"
+    },
+    {
+      "id": 34,
+      "description": "Lane / Rollover Switch 34",
+      "vpx_name": "SW34",
+      "_note": "Controller.Switch set via SW34_Hit/Unhit. Has animated switch arm (Primitive_SwitchArm34)"
+    },
+    {
+      "id": 35,
+      "description": "Catapult Kicker",
+      "vpx_name": "CatapultLaunchKicker",
+      "_inferred_type": "saucer",
+      "_note": "bsCatapult.InitKicker CatapultLaunchKicker,35 — also checked via Controller.Switch(35) in SolCatapult"
+    },
+    {
+      "id": 36,
+      "description": "Right Hole Saucer",
+      "vpx_name": "RightHole",
+      "_inferred_type": "saucer",
+      "_note": "bsRightHole.InitKicker RightHole,36"
+    },
+    {
+      "id": 37,
+      "description": "Rollover / Lane Switch 37",
+      "vpx_name": "SW37",
+      "_note": "Controller.Switch set via SW37_Hit/Unhit"
+    },
+    {
+      "id": 38,
+      "description": "Rollover / Lane Switch 38",
+      "vpx_name": "SW38",
+      "_note": "Controller.Switch set via SW38_Hit/Unhit"
+    },
+    {
+      "id": 39,
+      "description": "Rollover / Lane Switch 39",
+      "vpx_name": "SW39",
+      "_note": "Controller.Switch set via SW39_Hit/Unhit"
+    },
+    {
+      "id": 40,
+      "description": "Rollover / Lane Switch 40",
+      "vpx_name": "SW40",
+      "_note": "Controller.Switch set via SW40_Hit/Unhit"
+    },
+    {
+      "id": 43,
+      "description": "Spinout Kicker",
+      "vpx_name": "SpinoutKicker",
+      "_inferred_type": "saucer",
+      "_note": "bsSpinoutKicker.InitKicker SpinoutKicker,43. SW43 handled via saucer (per comment in script)"
+    },
+    {
+      "id": 44,
+      "description": "Target / Switch 44",
+      "vpx_name": "SW44",
+      "_inferred_type": "standup_target",
+      "_note": "Pulsed via vpmTimer.PulseSW 44"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Entry (Drain to Trough)",
+      "_vbscript_callback": "bsTrough.SolIn",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_coil",
+      "_note": "Moves ball from drain into trough"
+    },
+    {
+      "id": 2,
+      "description": "Trough Release (Ball to Plunger)",
+      "_vbscript_callback": "bsTrough.SolOut",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "ball_release",
+      "vpx_name": "BallRelease",
+      "_note": "Kicks ball from trough to shooter lane"
+    },
+    {
+      "id": 3,
+      "description": "Catapult",
+      "_vbscript_callback": "SolCatapult",
+      "_inferred_type": "kicker",
+      "vpx_name": "CatapultLaunchKicker",
+      "_note": "Fires catapult mechanism. Checks Controller.Switch(35) and calls bsCatapult.ExitSol_On"
+    },
+    {
+      "id": 4,
+      "description": "Center Drop Target Bank Reset",
+      "_vbscript_callback": "CenterDTBank.SolDropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets center drop targets DT27, DT28, DT29 (sw 27-29)"
+    },
+    {
+      "id": 5,
+      "description": "Top Hole / Joy Ride Eject",
+      "_vbscript_callback": "bsTopHole.SolOut",
+      "_inferred_type": "kicker",
+      "vpx_name": "TopHole",
+      "_note": "Ejects ball from top hole saucer (sw13)"
+    },
+    {
+      "id": 6,
+      "description": "Right Drop Target Bank Reset",
+      "_vbscript_callback": "RightDTBank.SolDropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets right drop targets DT30, DT31, DT32 (sw 30-32)"
+    },
+    {
+      "id": 7,
+      "description": "Spinout Kicker",
+      "_vbscript_callback": "SolSpinoutKicker",
+      "_inferred_type": "kicker",
+      "vpx_name": "SpinoutKicker",
+      "_note": "Ejects ball from spinout kicker saucer (sw43)"
+    },
+    {
+      "id": 8,
+      "description": "Right Hole Eject",
+      "_vbscript_callback": "bsRightHole.SolOut",
+      "_inferred_type": "kicker",
+      "vpx_name": "RightHole",
+      "_note": "Ejects ball from right hole saucer (sw36)"
+    },
+    {
+      "id": 9,
+      "description": "Top Left Gate",
+      "_vbscript_callback": "TopGateLeft.open =",
+      "_inferred_type": "gate",
+      "vpx_name": "TopGateLeft",
+      "_note": "Opens/closes top left gate directly via property assignment"
+    },
+    {
+      "id": 10,
+      "description": "Insert General Illumination Relay",
+      "_vbscript_callback": "Sol10",
+      "_inferred_type": "gi_relay",
+      "_note": "Controls GI inserts via SetLamp 99. Also ORed with passenger insert solenoids (25-29) for insert illumination"
+    },
+    {
+      "id": 11,
+      "description": "Playfield General Illumination",
+      "_vbscript_callback": "Sol11",
+      "_inferred_type": "gi_relay",
+      "_note": "Inverse logic — GI is OFF when solenoid is enabled. Controls playfield textures, bumper lamps, cabinet side panels via 4-step fading"
+    },
+    {
+      "id": 12,
+      "description": "A/C Select Relay",
+      "_inferred_type": "relay",
+      "_note": "Commented out in script — SolCallback(12) not assigned"
+    },
+    {
+      "id": 13,
+      "description": "Bell",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"ringing_bell\",DOFBell),",
+      "_inferred_type": "sound",
+      "_note": "Plays ringing bell sound effect"
+    },
+    {
+      "id": 14,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 15,
+      "description": "Jackpot Flasher",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Commented out SolCallback — handled in LampTimer. ORed with lamp 44 as LampState(44)"
+    },
+    {
+      "id": 16,
+      "description": "Joyride Flasher",
+      "_vbscript_callback": "SetLamp 116,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Handled in LampTimer via SetLamp. Also ORed with lamp 43 as LampState(43). VPX lamp object F16"
+    },
+    {
+      "id": 17,
+      "description": "Bumper Coil 1",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in script — bumper handled by VPX directly"
+    },
+    {
+      "id": 18,
+      "description": "Left Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in script — slingshot handled by VPX directly"
+    },
+    {
+      "id": 19,
+      "description": "Bumper Coil 2",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in script — bumper handled by VPX directly"
+    },
+    {
+      "id": 20,
+      "description": "Right Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in script — slingshot handled by VPX directly"
+    },
+    {
+      "id": 21,
+      "description": "Bumper Coil 3",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in script — bumper handled by VPX directly"
+    },
+    {
+      "id": 23,
+      "description": "Game On Relay",
+      "_vbscript_callback": "SolGameOn",
+      "_inferred_type": "game_on",
+      "_note": "Enables flippers and nudge. When disabled, flippers return to start position"
+    },
+    {
+      "id": 25,
+      "description": "Pinbot Passenger Insert Flasher",
+      "_vbscript_callback": "SetLamp 125,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Handled in LampTimer. ORed with lamp 25 and sol 10 (GI relay)"
+    },
+    {
+      "id": 26,
+      "description": "Dracula Passenger Insert Flasher",
+      "_vbscript_callback": "SetLamp 126,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Handled in LampTimer. ORed with lamp 26 and sol 10 (GI relay)"
+    },
+    {
+      "id": 27,
+      "description": "Lola Passenger Insert Flasher",
+      "_vbscript_callback": "SetLamp 127,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Handled in LampTimer. ORed with lamp 27 and sol 10 (GI relay)"
+    },
+    {
+      "id": 28,
+      "description": "Santa Passenger Insert Flasher",
+      "_vbscript_callback": "SetLamp 128,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Handled in LampTimer. ORed with lamp 28 and sol 10 (GI relay)"
+    },
+    {
+      "id": 29,
+      "description": "Gorbachev Passenger Insert Flasher",
+      "_vbscript_callback": "SetLamp 129,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Handled in LampTimer. ORed with lamp 29 and sol 10 (GI relay)"
+    },
+    {
+      "id": 30,
+      "description": "Left Ramp Flasher",
+      "_vbscript_callback": "SetLamp 130,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "VPX flasher object F30"
+    },
+    {
+      "id": 31,
+      "description": "Right Ramp Flasher",
+      "_vbscript_callback": "SetLamp 131,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "VPX flasher object F31"
+    },
+    {
+      "id": 32,
+      "description": "Spinout Flasher",
+      "_vbscript_callback": "SetLamp 132,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "VPX flasher object F32"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "vpx_name": "L1",
+      "description": "Joy Ride Lamp 1",
+      "_note": "Backbox lamp (desktop mode). Also L1a"
+    },
+    {
+      "id": 2,
+      "vpx_name": "L2",
+      "description": "Joy Ride Lamp 2",
+      "_note": "Backbox lamp (desktop mode). Also L2a"
+    },
+    {
+      "id": 3,
+      "vpx_name": "L3",
+      "description": "Joy Ride Lamp 3",
+      "_note": "Backbox lamp (desktop mode). Also L3a"
+    },
+    {
+      "id": 4,
+      "vpx_name": "L4",
+      "description": "Joy Ride Lamp 4",
+      "_note": "Backbox lamp (desktop mode). Also L4a"
+    },
+    {
+      "id": 5,
+      "vpx_name": "L5",
+      "description": "Joy Ride Lamp 5",
+      "_note": "Backbox lamp (desktop mode). Also L5a"
+    },
+    {
+      "id": 6,
+      "vpx_name": "L6",
+      "description": "Backbox Lamp 6",
+      "_note": "Desktop mode only"
+    },
+    {
+      "id": 7,
+      "vpx_name": "L7",
+      "description": "Backbox Lamp 7",
+      "_note": "Desktop mode only"
+    },
+    {
+      "id": 8,
+      "vpx_name": "L8",
+      "description": "Backbox Lamp 8",
+      "_note": "Desktop mode only"
+    },
+    {
+      "id": 9,
+      "vpx_name": "L9",
+      "description": "Playfield Insert 9",
+      "_note": "Also L9b, p9 primitive"
+    },
+    {
+      "id": 10,
+      "vpx_name": "L10",
+      "description": "Playfield Insert 10",
+      "_note": "Also L10b, p10 primitive"
+    },
+    {
+      "id": 11,
+      "vpx_name": "L11",
+      "description": "Playfield Insert 11",
+      "_note": "Also L11b, p11 primitive"
+    },
+    {
+      "id": 12,
+      "vpx_name": "L12",
+      "description": "Playfield Insert 12",
+      "_note": "Also L12b, p12 primitive"
+    },
+    {
+      "id": 13,
+      "vpx_name": "L13",
+      "description": "Playfield Insert 13",
+      "_note": "Also L13b, p13 primitive"
+    },
+    {
+      "id": 14,
+      "vpx_name": "L14",
+      "description": "Playfield Insert 14",
+      "_note": "Also L14b, p14 primitive"
+    },
+    {
+      "id": 15,
+      "vpx_name": "L15",
+      "description": "Playfield Insert 15",
+      "_note": "Also L15b, p15 primitive"
+    },
+    {
+      "id": 16,
+      "vpx_name": "L16",
+      "description": "Playfield Insert 16",
+      "_note": "Also L16b, p16 primitive"
+    },
+    {
+      "id": 17,
+      "vpx_name": "L17",
+      "description": "Playfield Lamp 17"
+    },
+    {
+      "id": 18,
+      "vpx_name": "L18",
+      "description": "Playfield Insert 18",
+      "_note": "Also L18b, p18 primitive"
+    },
+    {
+      "id": 19,
+      "vpx_name": "L19",
+      "description": "Playfield Insert 19",
+      "_note": "Also L19b, p19 primitive"
+    },
+    {
+      "id": 20,
+      "vpx_name": "L20",
+      "description": "Playfield Insert 20",
+      "_note": "Also L20b, p20 primitive"
+    },
+    {
+      "id": 21,
+      "vpx_name": "L21",
+      "description": "Playfield Insert 21",
+      "_note": "Also L21b, p21 primitive"
+    },
+    {
+      "id": 22,
+      "vpx_name": "L22",
+      "description": "Playfield Insert 22",
+      "_note": "Also L22b, p22 primitive"
+    },
+    {
+      "id": 23,
+      "vpx_name": "L23",
+      "description": "Playfield Insert 23",
+      "_note": "Also L23b, L23C, p23 primitive"
+    },
+    {
+      "id": 24,
+      "vpx_name": "L24",
+      "description": "Playfield Insert 24",
+      "_note": "Also L24b, p24 primitive"
+    },
+    {
+      "id": 25,
+      "vpx_name": "L25",
+      "description": "Playfield Lamp 25",
+      "_note": "Also F25 flasher. Multi-state: ORed with sol 25 (Pinbot insert) and sol 10 (GI relay)"
+    },
+    {
+      "id": 26,
+      "vpx_name": "L26",
+      "description": "Playfield Insert 26",
+      "_note": "Also L26b, p26 primitive. Multi-state: ORed with sol 26 (Drac insert) and sol 10"
+    },
+    {
+      "id": 27,
+      "vpx_name": "L27",
+      "description": "Playfield Insert 27",
+      "_note": "Also L27b, p27 primitive. Multi-state: ORed with sol 27 (Lola insert) and sol 10"
+    },
+    {
+      "id": 28,
+      "vpx_name": "L28",
+      "description": "Playfield Insert 28",
+      "_note": "Also L28b, p28 primitive. Multi-state: ORed with sol 28 (Santa insert) and sol 10"
+    },
+    {
+      "id": 29,
+      "vpx_name": "L29",
+      "description": "Playfield Insert 29",
+      "_note": "Also L29b, p29 primitive. Multi-state: ORed with sol 29 (Gorby insert) and sol 10"
+    },
+    {
+      "id": 30,
+      "vpx_name": "L30",
+      "description": "Playfield Insert 30",
+      "_note": "Also L30b, p30 primitive"
+    },
+    {
+      "id": 31,
+      "vpx_name": "L31",
+      "description": "Playfield Insert 31",
+      "_note": "Also L31b, p31 primitive"
+    },
+    {
+      "id": 32,
+      "vpx_name": "L32",
+      "description": "Playfield Insert 32",
+      "_note": "Also L32b, L32c, p32 primitive"
+    },
+    {
+      "id": 33,
+      "vpx_name": "L33",
+      "description": "Playfield Insert 33",
+      "_note": "Also L33b, p33 primitive"
+    },
+    {
+      "id": 34,
+      "vpx_name": "L34",
+      "description": "Playfield Insert 34",
+      "_note": "Also L34b, p34 primitive"
+    },
+    {
+      "id": 35,
+      "vpx_name": "L35",
+      "description": "Playfield Insert 35",
+      "_note": "Also L35b, p35 primitive"
+    },
+    {
+      "id": 36,
+      "vpx_name": "L36",
+      "description": "Playfield Insert 36",
+      "_note": "Also L36b, p36 primitive"
+    },
+    {
+      "id": 37,
+      "vpx_name": "L37",
+      "description": "Playfield Insert 37",
+      "_note": "Also L37b, p37 primitive"
+    },
+    {
+      "id": 38,
+      "vpx_name": "L38",
+      "description": "Playfield Insert 38",
+      "_note": "Also L38b, p38 primitive"
+    },
+    {
+      "id": 39,
+      "vpx_name": "L39",
+      "description": "Playfield Insert 39",
+      "_note": "Also L39b, p39 primitive"
+    },
+    {
+      "id": 40,
+      "vpx_name": "L40",
+      "description": "Playfield Insert 40",
+      "_note": "Also L40b, p40 primitive"
+    },
+    {
+      "id": 41,
+      "vpx_name": "L41",
+      "description": "Playfield Insert 41",
+      "_note": "Also L41b, p41 primitive"
+    },
+    {
+      "id": 42,
+      "vpx_name": "L42",
+      "description": "Playfield Insert 42",
+      "_note": "Also L42b, p42 primitive"
+    },
+    {
+      "id": 43,
+      "vpx_name": "L43",
+      "description": "Joyride Insert",
+      "_note": "Also L43b, p43 primitive. Multi-state: ORed with sol 16 (Joyride flasher)"
+    },
+    {
+      "id": 44,
+      "vpx_name": "L44",
+      "description": "Jackpot Insert",
+      "_note": "Also L44b, p44 primitive. Multi-state: ORed with sol 15 (Jackpot flasher)"
+    },
+    {
+      "id": 45,
+      "vpx_name": "L45",
+      "description": "Playfield Insert 45",
+      "_note": "Also L45b, p45 primitive"
+    },
+    {
+      "id": 46,
+      "vpx_name": "L46",
+      "description": "Playfield Insert 46",
+      "_note": "Also L46b, p46 primitive"
+    },
+    {
+      "id": 47,
+      "vpx_name": "L47",
+      "description": "Playfield Insert 47",
+      "_note": "Also L47b, p47 primitive"
+    },
+    {
+      "id": 48,
+      "vpx_name": "L48",
+      "description": "Playfield Insert 48",
+      "_note": "Also L48b, p48 primitive"
+    },
+    {
+      "id": 49,
+      "vpx_name": "L49",
+      "description": "Backbox Lamp 49",
+      "_note": "Desktop mode only"
+    },
+    {
+      "id": 50,
+      "vpx_name": "L50",
+      "description": "Backbox Lamp 50",
+      "_note": "Desktop mode only"
+    },
+    {
+      "id": 51,
+      "vpx_name": "L51",
+      "description": "Backbox Lamp 51",
+      "_note": "Desktop mode only"
+    },
+    {
+      "id": 52,
+      "vpx_name": "L52",
+      "description": "Backbox Lamp 52",
+      "_note": "Desktop mode only"
+    },
+    {
+      "id": 53,
+      "vpx_name": "L53",
+      "description": "Backbox Lamp 53",
+      "_note": "Desktop mode only"
+    },
+    {
+      "id": 54,
+      "vpx_name": "L54",
+      "description": "Backbox Lamp 54",
+      "_note": "Desktop mode only"
+    },
+    {
+      "id": 55,
+      "vpx_name": "L55",
+      "description": "Backbox Lamp 55",
+      "_note": "Desktop mode only"
+    },
+    {
+      "id": 56,
+      "vpx_name": "L56",
+      "description": "Backbox Lamp 56",
+      "_note": "Desktop mode only"
+    },
+    {
+      "id": 57,
+      "vpx_name": "L57",
+      "description": "Flasher Lamp 57",
+      "_note": "Also L57f flasher object"
+    },
+    {
+      "id": 58,
+      "vpx_name": "L58",
+      "description": "Flasher Lamp 58",
+      "_note": "Also L58f flasher object"
+    },
+    {
+      "id": 59,
+      "vpx_name": "L59",
+      "description": "Flasher Lamp 59",
+      "_note": "Also L59f flasher object"
+    },
+    {
+      "id": 60,
+      "vpx_name": "L60",
+      "description": "Flasher Lamp 60",
+      "_note": "Also L60f flasher object"
+    },
+    {
+      "id": 61,
+      "vpx_name": "L61",
+      "description": "Flasher Lamp 61",
+      "_note": "Also L61f flasher object"
+    },
+    {
+      "id": 62,
+      "vpx_name": "L62",
+      "description": "Flasher Lamp 62",
+      "_note": "Also L62f flasher object"
+    },
+    {
+      "id": 63,
+      "vpx_name": "L63",
+      "description": "Flasher Lamp 63",
+      "_note": "Also L63f flasher object"
+    },
+    {
+      "id": 64,
+      "vpx_name": "L64",
+      "description": "Backbox Lamp 64",
+      "_note": "Desktop mode only"
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — S11 framework constant. Flippers enabled via Game On relay (sol 23). VPX object: RightFlipper"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — S11 framework constant. Flippers enabled via Game On relay (sol 23). VPX object: LeftFlipper"
+    }
+  ]
+}

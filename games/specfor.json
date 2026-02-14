@@ -1,0 +1,786 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Special Force (Bally 1986) VPW 1.2.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from SolCallback and sw*_Hit handlers. Uses 6803.VBS (Bally 6803 MPU). Solenoids 6-10, 14-15 are multiplexed: when L3 is lit they control drop targets/kicker/ball management, when L3 is off they control bright light relays (lamps 101-105) or knocker/outhole. swTilt is a framework constant from 6803.VBS (typically sw14 on Bally -35/6803). Lamp numbers extracted from VLM baked lighting arrays (LM_Inserts_l##). GI lamps (60-63, 76-79, 91-94, 100a-d) and BRL lamps (101-105) are solenoid-controlled bright lights. Manual trough with 3 balls (sw30-32) and outhole (sw8)."
+  },
+  "game": {
+    "id": "specfor",
+    "name": "Special Force",
+    "year": 1986,
+    "manufacturer": "Bally",
+    "ipdb_id": 2272,
+    "platform": "bally"
+  },
+  "roms": [
+    {
+      "id": "specforc",
+      "version": ""
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Collect Weapon",
+      "vpx_name": "sw1",
+      "_inferred_type": "target",
+      "_note": "Pulsed via vpmTimer.PulseSw 1"
+    },
+    {
+      "id": 2,
+      "description": "Chopper Top",
+      "vpx_name": "sw2",
+      "_inferred_type": "target",
+      "_note": "Pulsed via vpmTimer.PulseSw 2"
+    },
+    {
+      "id": 3,
+      "description": "Chopper Bottom",
+      "vpx_name": "sw3",
+      "_inferred_type": "target",
+      "_note": "Pulsed via vpmTimer.PulseSw 3. Also triggers wire ramp on/off based on ball direction."
+    },
+    {
+      "id": 4,
+      "description": "Return Lane Rubbers",
+      "_inferred_type": "rubber",
+      "_note": "Pulsed via vpmTimer.PulseSw 4 from sw4Rubber1-5_Hit"
+    },
+    {
+      "id": 5,
+      "description": "Left Magna Save Button",
+      "input_action_hint": "magna_save_left",
+      "input_map_hint": "cabinet",
+      "_note": "Activated by LeftMagnaSave key"
+    },
+    {
+      "id": 7,
+      "description": "Right Magna Save Button",
+      "input_action_hint": "magna_save_right",
+      "input_map_hint": "cabinet",
+      "_note": "Activated by RightMagnaSave key"
+    },
+    {
+      "id": 8,
+      "description": "Outhole",
+      "vpx_name": "sw8",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "Drain switch — ball enters here, kicked to trough by SolDrain (Mult14 when L3=1)"
+    },
+    {
+      "id": 12,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw12",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 13,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw13",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 16,
+      "description": "Standup Target",
+      "vpx_name": "sw16",
+      "_inferred_type": "standup_target",
+      "_note": "Hit via STHit 16"
+    },
+    {
+      "id": 17,
+      "description": "Standup Target",
+      "vpx_name": "sw17",
+      "_inferred_type": "standup_target",
+      "_note": "Hit via STHit 17"
+    },
+    {
+      "id": 18,
+      "description": "Standup Target",
+      "vpx_name": "sw18",
+      "_inferred_type": "standup_target",
+      "_note": "Hit via STHit 18"
+    },
+    {
+      "id": 19,
+      "description": "Standup Target",
+      "vpx_name": "sw19",
+      "_inferred_type": "standup_target",
+      "_note": "Hit via STHit 19"
+    },
+    {
+      "id": 20,
+      "description": "Standup Target",
+      "vpx_name": "sw20",
+      "_inferred_type": "standup_target",
+      "_note": "Hit via STHit 20"
+    },
+    {
+      "id": 21,
+      "description": "Standup Target",
+      "vpx_name": "sw21",
+      "_inferred_type": "standup_target",
+      "_note": "Hit via STHit 21"
+    },
+    {
+      "id": 22,
+      "description": "Standup Target",
+      "vpx_name": "sw22",
+      "_inferred_type": "standup_target",
+      "_note": "Hit via STHit 22"
+    },
+    {
+      "id": 23,
+      "description": "Saucer / Kicker",
+      "vpx_name": "sw23",
+      "_inferred_type": "kicker",
+      "_note": "Ball locks in saucer. Kicked out by Mult10 (sol 10) when L3=1."
+    },
+    {
+      "id": 24,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw24",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 25,
+      "description": "Left Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Bumper1 — pulsed via vpmTimer.PulseSw(25)"
+    },
+    {
+      "id": 26,
+      "description": "Right Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Bumper2 — pulsed via vpmTimer.PulseSw(26)"
+    },
+    {
+      "id": 27,
+      "description": "Middle Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Bumper3 — pulsed via vpmTimer.PulseSw(27)"
+    },
+    {
+      "id": 30,
+      "description": "Trough Ball 1 (front)",
+      "vpx_name": "sw30",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1"
+    },
+    {
+      "id": 31,
+      "description": "Trough Ball 2",
+      "vpx_name": "sw31",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 32,
+      "description": "Trough Ball 3 (rear)",
+      "vpx_name": "sw32",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 33,
+      "description": "Standup Target",
+      "vpx_name": "sw33",
+      "_inferred_type": "standup_target",
+      "_note": "Hit via STHit 33"
+    },
+    {
+      "id": 34,
+      "description": "Standup Target",
+      "vpx_name": "sw34",
+      "_inferred_type": "standup_target",
+      "_note": "Hit via STHit 34"
+    },
+    {
+      "id": 35,
+      "description": "Standup Target",
+      "vpx_name": "sw35",
+      "_inferred_type": "standup_target",
+      "_note": "Hit via STHit 35"
+    },
+    {
+      "id": 36,
+      "description": "Standup Target",
+      "vpx_name": "sw36",
+      "_inferred_type": "standup_target",
+      "_note": "Hit via STHit 36"
+    },
+    {
+      "id": 38,
+      "description": "Single Capture Drop Target",
+      "vpx_name": "sw38",
+      "_inferred_type": "drop_target",
+      "_note": "Hit via DTHit 38. Reset by Mult14 (sol 14) when L3=1."
+    },
+    {
+      "id": 40,
+      "description": "Drop Target",
+      "vpx_name": "sw40",
+      "_inferred_type": "drop_target",
+      "_note": "Hit via DTHit 40. Reset by sol 11 (DTRaise40), dropped by sol 12 (DTDrop40)."
+    },
+    {
+      "id": 41,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw41",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 42,
+      "description": "Gate / Rollover (dual triggers)",
+      "vpx_name": "sw42a, sw42b",
+      "_inferred_type": "rollover",
+      "_note": "Two VPX triggers (sw42a, sw42b) both map to ROM switch 42. Ball velocity dampened on exit."
+    },
+    {
+      "id": 43,
+      "description": "Standup Target",
+      "vpx_name": "sw43",
+      "_inferred_type": "standup_target",
+      "_note": "Hit via STHit 43"
+    },
+    {
+      "id": 44,
+      "description": "Standup Target (with bounce)",
+      "vpx_name": "sw44",
+      "_inferred_type": "standup_target",
+      "_note": "Hit via STHit 44 with TargetBouncer applied"
+    },
+    {
+      "id": 45,
+      "description": "Inline Drop Target (bottom)",
+      "vpx_name": "sw45",
+      "_inferred_type": "drop_target",
+      "_note": "Hit via DTHit 45. Part of 3-target inline bank (sw45-47). Reset by Mult6 (sol 6) when L3=1."
+    },
+    {
+      "id": 46,
+      "description": "Inline Drop Target (middle)",
+      "vpx_name": "sw46",
+      "_inferred_type": "drop_target",
+      "_note": "Hit via DTHit 46. Part of 3-target inline bank (sw45-47). Reset by Mult6 (sol 6) when L3=1."
+    },
+    {
+      "id": 47,
+      "description": "Inline Drop Target (top)",
+      "vpx_name": "sw47",
+      "_inferred_type": "drop_target",
+      "_note": "Hit via DTHit 47. Part of 3-target inline bank (sw45-47). Reset by Mult6 (sol 6) when L3=1."
+    },
+    {
+      "id": 48,
+      "description": "Road Switch",
+      "vpx_name": "sw48",
+      "_inferred_type": "target",
+      "_note": "Pulsed via vpmTimer.PulseSw 48"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Left Pop Bumper",
+      "_vbscript_callback": "SolLBumper",
+      "_inferred_type": "bumper",
+      "_note": "Fires Bumper1"
+    },
+    {
+      "id": 2,
+      "description": "Right Pop Bumper",
+      "_vbscript_callback": "SolRBumper",
+      "_inferred_type": "bumper",
+      "_note": "Fires Bumper2"
+    },
+    {
+      "id": 3,
+      "description": "Middle Pop Bumper",
+      "_vbscript_callback": "SolMBumper",
+      "_inferred_type": "bumper",
+      "_note": "Fires Bumper3"
+    },
+    {
+      "id": 6,
+      "description": "Multiplexed: Inline Drop Target Bank Reset / Bright Lights 1",
+      "_vbscript_callback": "Mult6",
+      "_inferred_type": "multiplexed",
+      "_note": "When L3=1: resets inline drop targets sw45-47. When L3=0: controls bright lights group 101. Bally -35 multiplexed solenoid."
+    },
+    {
+      "id": 7,
+      "description": "Multiplexed: Lower Bottom Inline DT / Bright Lights 2",
+      "_vbscript_callback": "Mult7",
+      "_inferred_type": "multiplexed",
+      "_note": "When L3=1: drops sw45 (bottom inline target). When L3=0: controls bright lights group 102."
+    },
+    {
+      "id": 8,
+      "description": "Multiplexed: Lower Middle Inline DT / Bright Lights 3",
+      "_vbscript_callback": "Mult8",
+      "_inferred_type": "multiplexed",
+      "_note": "When L3=1: drops sw46 (middle inline target). When L3=0: controls bright lights group 103."
+    },
+    {
+      "id": 9,
+      "description": "Multiplexed: Lower Top Inline DT / Bright Lights 4",
+      "_vbscript_callback": "Mult9",
+      "_inferred_type": "multiplexed",
+      "_note": "When L3=1: drops sw47 (top inline target). When L3=0: controls bright lights group 104."
+    },
+    {
+      "id": 10,
+      "description": "Multiplexed: Saucer Kicker / Bright Lights 5",
+      "_vbscript_callback": "Mult10",
+      "_inferred_type": "multiplexed",
+      "_note": "When L3=1: kicks ball from saucer (sw23). When L3=0: controls bright lights group 105."
+    },
+    {
+      "id": 11,
+      "description": "Drop Target sw40 Reset",
+      "_vbscript_callback": "DTRaise40",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises drop target sw40"
+    },
+    {
+      "id": 12,
+      "description": "Drop Target sw40 Drop",
+      "_vbscript_callback": "DTDrop40",
+      "_inferred_type": "drop_target_drop",
+      "_note": "Drops drop target sw40"
+    },
+    {
+      "id": 14,
+      "description": "Multiplexed: Single Capture DT Reset / Outhole Drain",
+      "_vbscript_callback": "Mult14",
+      "_inferred_type": "multiplexed",
+      "_note": "When L3=1: resets single capture drop target sw38. When L3=0: SolDrain — kicks ball from outhole (sw8) to trough.",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_coil"
+    },
+    {
+      "id": 15,
+      "description": "Multiplexed: Ball Release / Knocker",
+      "_vbscript_callback": "Mult15",
+      "_inferred_type": "multiplexed",
+      "_note": "When L3=1: SolRelease — releases ball from trough (sw30). When L3=0: fires knocker solenoid.",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "ball_release"
+    },
+    {
+      "id": 17,
+      "description": "Game On Relay",
+      "_vbscript_callback": "SolGameOn",
+      "_inferred_type": "game_on"
+    },
+    {
+      "id": 19,
+      "description": "Unused / Empty",
+      "_vbscript_callback": "",
+      "_note": "SolCallback assigned to empty string"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "description": "Lamp 1"
+    },
+    {
+      "id": 2,
+      "description": "Lamp 2"
+    },
+    {
+      "id": 4,
+      "description": "Lamp 4"
+    },
+    {
+      "id": 5,
+      "description": "Lamp 5"
+    },
+    {
+      "id": 6,
+      "description": "Lamp 6"
+    },
+    {
+      "id": 7,
+      "description": "Lamp 7"
+    },
+    {
+      "id": 8,
+      "description": "Lamp 8"
+    },
+    {
+      "id": 9,
+      "description": "Lamp 9"
+    },
+    {
+      "id": 10,
+      "description": "Lamp 10"
+    },
+    {
+      "id": 11,
+      "description": "Lamp 11"
+    },
+    {
+      "id": 12,
+      "description": "Lamp 12"
+    },
+    {
+      "id": 13,
+      "description": "Lamp 13"
+    },
+    {
+      "id": 14,
+      "description": "Lamp 14"
+    },
+    {
+      "id": 15,
+      "description": "Lamp 15"
+    },
+    {
+      "id": 17,
+      "description": "Lamp 17"
+    },
+    {
+      "id": 18,
+      "description": "Lamp 18"
+    },
+    {
+      "id": 19,
+      "description": "Lamp 19"
+    },
+    {
+      "id": 20,
+      "description": "Lamp 20"
+    },
+    {
+      "id": 21,
+      "description": "Lamp 21"
+    },
+    {
+      "id": 22,
+      "description": "Lamp 22"
+    },
+    {
+      "id": 23,
+      "description": "Lamp 23"
+    },
+    {
+      "id": 24,
+      "description": "Lamp 24"
+    },
+    {
+      "id": 25,
+      "description": "Lamp 25"
+    },
+    {
+      "id": 26,
+      "description": "Lamp 26"
+    },
+    {
+      "id": 27,
+      "description": "Lamp 27"
+    },
+    {
+      "id": 28,
+      "description": "Lamp 28"
+    },
+    {
+      "id": 29,
+      "description": "Lamp 29"
+    },
+    {
+      "id": 30,
+      "description": "Lamp 30"
+    },
+    {
+      "id": 31,
+      "description": "Lamp 31"
+    },
+    {
+      "id": 33,
+      "description": "Lamp 33"
+    },
+    {
+      "id": 34,
+      "description": "Lamp 34"
+    },
+    {
+      "id": 35,
+      "description": "Lamp 35"
+    },
+    {
+      "id": 36,
+      "description": "Lamp 36"
+    },
+    {
+      "id": 37,
+      "description": "Lamp 37"
+    },
+    {
+      "id": 38,
+      "description": "Lamp 38"
+    },
+    {
+      "id": 39,
+      "description": "Lamp 39"
+    },
+    {
+      "id": 40,
+      "description": "Lamp 40"
+    },
+    {
+      "id": 41,
+      "description": "Lamp 41"
+    },
+    {
+      "id": 42,
+      "description": "Lamp 42"
+    },
+    {
+      "id": 43,
+      "description": "Lamp 43"
+    },
+    {
+      "id": 44,
+      "description": "Lamp 44"
+    },
+    {
+      "id": 45,
+      "description": "Lamp 45"
+    },
+    {
+      "id": 46,
+      "description": "Lamp 46"
+    },
+    {
+      "id": 47,
+      "description": "Lamp 47"
+    },
+    {
+      "id": 49,
+      "description": "Lamp 49"
+    },
+    {
+      "id": 50,
+      "description": "Lamp 50"
+    },
+    {
+      "id": 52,
+      "description": "Lamp 52"
+    },
+    {
+      "id": 53,
+      "description": "Lamp 53"
+    },
+    {
+      "id": 54,
+      "description": "Lamp 54"
+    },
+    {
+      "id": 55,
+      "description": "Lamp 55"
+    },
+    {
+      "id": 56,
+      "description": "Lamp 56"
+    },
+    {
+      "id": 57,
+      "description": "Lamp 57"
+    },
+    {
+      "id": 58,
+      "description": "Lamp 58"
+    },
+    {
+      "id": 59,
+      "description": "Lamp 59"
+    },
+    {
+      "id": 65,
+      "description": "Lamp 65"
+    },
+    {
+      "id": 66,
+      "description": "Lamp 66"
+    },
+    {
+      "id": 67,
+      "description": "Lamp 67"
+    },
+    {
+      "id": 68,
+      "description": "Lamp 68"
+    },
+    {
+      "id": 69,
+      "description": "Lamp 69"
+    },
+    {
+      "id": 70,
+      "description": "Lamp 70"
+    },
+    {
+      "id": 71,
+      "description": "Lamp 71"
+    },
+    {
+      "id": 73,
+      "description": "Lamp 73"
+    },
+    {
+      "id": 74,
+      "description": "Lamp 74"
+    },
+    {
+      "id": 75,
+      "description": "Lamp 75"
+    },
+    {
+      "id": 81,
+      "description": "Lamp 81"
+    },
+    {
+      "id": 82,
+      "description": "Lamp 82"
+    },
+    {
+      "id": 83,
+      "description": "Lamp 83"
+    },
+    {
+      "id": 84,
+      "description": "Lamp 84"
+    },
+    {
+      "id": 85,
+      "description": "Lamp 85"
+    },
+    {
+      "id": 86,
+      "description": "Lamp 86"
+    },
+    {
+      "id": 87,
+      "description": "Lamp 87"
+    },
+    {
+      "id": 89,
+      "description": "Lamp 89"
+    },
+    {
+      "id": 60,
+      "description": "GI Lamp 60",
+      "_note": "GI string — controlled via LM_GI_l60a"
+    },
+    {
+      "id": 61,
+      "description": "GI Lamp 61",
+      "_note": "GI string — controlled via LM_GI_l61a"
+    },
+    {
+      "id": 62,
+      "description": "GI Lamp 62",
+      "_note": "GI string — controlled via LM_GI_l62a"
+    },
+    {
+      "id": 63,
+      "description": "GI Lamp 63",
+      "_note": "GI string — controlled via LM_GI_l63a"
+    },
+    {
+      "id": 76,
+      "description": "GI Lamp 76",
+      "_note": "GI string — controlled via LM_GI_l76a"
+    },
+    {
+      "id": 77,
+      "description": "GI Lamp 77",
+      "_note": "GI string — controlled via LM_GI_l77a"
+    },
+    {
+      "id": 78,
+      "description": "GI Lamp 78",
+      "_note": "GI string — controlled via LM_GI_l78"
+    },
+    {
+      "id": 79,
+      "description": "GI Lamp 79",
+      "_note": "GI string — controlled via LM_GI_l79a"
+    },
+    {
+      "id": 91,
+      "description": "GI Lamp 91",
+      "_note": "GI string — controlled via LM_GI_l91a"
+    },
+    {
+      "id": 92,
+      "description": "GI Lamp 92",
+      "_note": "GI string — controlled via LM_GI_l92a"
+    },
+    {
+      "id": 93,
+      "description": "GI Lamp 93",
+      "_note": "GI string — controlled via LM_GI_l93a"
+    },
+    {
+      "id": 94,
+      "description": "GI Lamp 94",
+      "_note": "GI string — controlled via LM_GI_l94a"
+    },
+    {
+      "id": 100,
+      "description": "GI Group (4 zones: 100a, 100b, 100c, 100d)",
+      "_note": "GI string — controlled via LM_GI_l100a through l100d. Represents 4 GI zones across playfield."
+    },
+    {
+      "id": 101,
+      "description": "Bright Light Relay 1",
+      "_note": "Solenoid-driven via Mult6 (sol 6) when L3=0. BRL group controlled by ManualLightsUpdate."
+    },
+    {
+      "id": 102,
+      "description": "Bright Light Relay 2",
+      "_note": "Solenoid-driven via Mult7 (sol 7) when L3=0. BRL group controlled by ManualLightsUpdate.",
+      "is_solenoid_driven": true
+    },
+    {
+      "id": 103,
+      "description": "Bright Light Relay 3",
+      "_note": "Solenoid-driven via Mult8 (sol 8) when L3=0. BRL group controlled by ManualLightsUpdate.",
+      "is_solenoid_driven": true
+    },
+    {
+      "id": 104,
+      "description": "Bright Light Relay 4",
+      "_note": "Solenoid-driven via Mult9 (sol 9) when L3=0. BRL group controlled by ManualLightsUpdate.",
+      "is_solenoid_driven": true
+    },
+    {
+      "id": 105,
+      "description": "Bright Light Relay 5",
+      "_note": "Solenoid-driven via Mult10 (sol 10) when L3=0. BRL group controlled by ManualLightsUpdate.",
+      "is_solenoid_driven": true
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper framework constant from core.vbs. SolCallback = SolRFlipper. VPX objects: RightFlipper."
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper framework constant from core.vbs. SolCallback = SolLFlipper. VPX objects: LeftFlipper."
+    }
+  ]
+}

@@ -1,0 +1,876 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Jurassic Park (Data East 1993) VPW 1.0.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from Controller.Switch() calls and SolCallback assignments. No Const sw* declarations in table script — all switches referenced by raw number. Lamps extracted from VLM BL_inserts_L/BL_ins2_L/BL_GISplit_L arrays — no descriptions available (VLM only provides light IDs, not names). Flashers are SolModCallBack entries (solenoid-driven). Flippers (sLRFlipper=46, sLLFlipper=48) are DE.VBS framework-defined constants, not in table script. Trough is a manual 6-ball design (sw9-sw14) with custom UpdateTrough logic, not bsTrough. GI on solenoid 11 via SolModCallBack."
+  },
+  "game": {
+    "id": "jpark",
+    "name": "Jurassic Park",
+    "year": 1993,
+    "manufacturer": "Data East",
+    "ipdb_id": 1343,
+    "platform": "dataeast"
+  },
+  "roms": [
+    {
+      "id": "jupk_600",
+      "_note": "Const cGameName in script"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Tilt",
+      "_note": "vpmNudge.TiltSwitch = 1"
+    },
+    {
+      "id": 9,
+      "description": "Drain",
+      "vpx_name": "sw9",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "Ball enters trough from drain, kicks up chain sw9->sw10->sw11->sw12->sw13->sw14"
+    },
+    {
+      "id": 10,
+      "description": "Trough 5",
+      "vpx_name": "sw10",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "5"
+    },
+    {
+      "id": 11,
+      "description": "Trough 4",
+      "vpx_name": "sw11",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4"
+    },
+    {
+      "id": 12,
+      "description": "Trough 3",
+      "vpx_name": "sw12",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 13,
+      "description": "Trough 2",
+      "vpx_name": "sw13",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 14,
+      "description": "Trough 1 (Launch Position)",
+      "vpx_name": "sw14",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "Top of trough chain; SolTrough kicks from here to sw15"
+    },
+    {
+      "id": 15,
+      "description": "Shooter Lane Lockout",
+      "vpx_name": "sw15",
+      "_note": "Virtual switch set by SolTrough/SolRelease; Controller.Switch(15) toggled in code. sw15 is a physical VPX kicker used by SolRelease to kick ball into shooter lane."
+    },
+    {
+      "id": 16,
+      "description": "Shooter Lane",
+      "vpx_name": "sw16",
+      "_note": "Also plungerIM.Switch 16"
+    },
+    {
+      "id": 17,
+      "description": "Outer Loop Low",
+      "vpx_name": "Sw17"
+    },
+    {
+      "id": 18,
+      "description": "Outer Loop Top",
+      "vpx_name": "Sw18"
+    },
+    {
+      "id": 19,
+      "description": "Inner Loop Low",
+      "vpx_name": "Sw19"
+    },
+    {
+      "id": 20,
+      "description": "Inner Loop Top",
+      "vpx_name": "Sw20"
+    },
+    {
+      "id": 21,
+      "description": "Right Outlane",
+      "vpx_name": "Sw21"
+    },
+    {
+      "id": 22,
+      "description": "Right Return",
+      "vpx_name": "Sw22"
+    },
+    {
+      "id": 23,
+      "description": "Left Return",
+      "vpx_name": "Sw23"
+    },
+    {
+      "id": 24,
+      "description": "Left Outlane",
+      "vpx_name": "Sw24"
+    },
+    {
+      "id": 25,
+      "description": "Spitter Target #1 (Bottom)",
+      "vpx_name": "sw25",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 26,
+      "description": "Spitter Target #2 (Middle)",
+      "vpx_name": "sw26",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 27,
+      "description": "Spitter Target #3 (Top)",
+      "vpx_name": "sw27",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 29,
+      "description": "Raptor Pit",
+      "vpx_name": "sw29",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 31,
+      "description": "T-Rex Right",
+      "_inferred_type": "opto",
+      "_note": "Set by T-Rex rotation motor code (MotorTimer_Timer), not a physical VPX trigger"
+    },
+    {
+      "id": 32,
+      "description": "T-Rex Left",
+      "_inferred_type": "opto",
+      "_note": "Set by T-Rex rotation motor code (MotorTimer_Timer), not a physical VPX trigger"
+    },
+    {
+      "id": 33,
+      "description": "Right Ramp Enter",
+      "vpx_name": "sw33"
+    },
+    {
+      "id": 34,
+      "description": "Right Ramp Exit",
+      "vpx_name": "sw34"
+    },
+    {
+      "id": 35,
+      "description": "Left Scoop",
+      "vpx_name": "sw35",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 36,
+      "description": "T-Rex Center",
+      "_inferred_type": "opto",
+      "_note": "Set by T-Rex rotation motor code (MotorTimer_Timer), not a physical VPX trigger"
+    },
+    {
+      "id": 37,
+      "description": "Middle Scoop Trough",
+      "vpx_name": "sw37",
+      "_inferred_type": "kicker",
+      "_note": "Uses vpmTimer.PulseSw 37"
+    },
+    {
+      "id": 38,
+      "description": "Herrerasaurus Low",
+      "vpx_name": "sw38",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 39,
+      "description": "Herrerasaurus Top",
+      "vpx_name": "sw39",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 40,
+      "description": "Brachiasaurus Low",
+      "vpx_name": "sw40",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 41,
+      "description": "Launch Button",
+      "_inferred_type": "cabinet",
+      "input_action_hint": "plunger",
+      "input_map_hint": "cabinet",
+      "_note": "Mapped to PlungerKey in keycode handler"
+    },
+    {
+      "id": 42,
+      "description": "Smart Bomb Button",
+      "_inferred_type": "cabinet",
+      "input_action_hint": "action_button",
+      "input_map_hint": "cabinet",
+      "_note": "Mapped to RightMagnaSave/LeftMagnaSave/LockBarKey in keycode handler"
+    },
+    {
+      "id": 43,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "Pulsed from LeftSlingShot_Slingshot event"
+    },
+    {
+      "id": 44,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "Pulsed from RightSlingShot_Slingshot event"
+    },
+    {
+      "id": 45,
+      "description": "Jet Bumper (Top)",
+      "vpx_name": "sw45",
+      "_inferred_type": "bumper"
+    },
+    {
+      "id": 46,
+      "description": "Jet Bumper (Left)",
+      "vpx_name": "sw46",
+      "_inferred_type": "bumper"
+    },
+    {
+      "id": 47,
+      "description": "Jet Bumper (Right)",
+      "vpx_name": "sw47",
+      "_inferred_type": "bumper"
+    },
+    {
+      "id": 48,
+      "description": "Mosquito Captive Ball",
+      "vpx_name": "sw48",
+      "_inferred_type": "captive_ball"
+    },
+    {
+      "id": 49,
+      "description": "Baryonyx Target",
+      "vpx_name": "sw49",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 50,
+      "description": "Gallimimus Target",
+      "vpx_name": "sw50",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 52,
+      "description": "Gallimimus Target",
+      "vpx_name": "sw52",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 53,
+      "description": "Brachiasaurus Top",
+      "vpx_name": "sw53",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 55,
+      "description": "T-Rex Saucer",
+      "vpx_name": "sw55",
+      "_inferred_type": "kicker",
+      "_note": "Ball held for T-Rex head animation; debounced with timer"
+    },
+    {
+      "id": 56,
+      "description": "Boat Dock Saucer",
+      "vpx_name": "sw56",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 57,
+      "description": "T-Rex Top/Up",
+      "_inferred_type": "opto",
+      "_note": "Set by T-Rex bend motor code (UpDownTimer_Timer), not a physical VPX trigger"
+    },
+    {
+      "id": 58,
+      "description": "T-Rex Forward/Down",
+      "_inferred_type": "opto",
+      "_note": "Set by T-Rex bend motor code (UpDownTimer_Timer), not a physical VPX trigger"
+    },
+    {
+      "id": 59,
+      "description": "T-Rex Trough",
+      "vpx_name": "sw59",
+      "_inferred_type": "kicker",
+      "_note": "Uses vpmTimer.PulseSw 59"
+    },
+    {
+      "id": 60,
+      "description": "Right Scoop Trough",
+      "vpx_name": "sw60",
+      "_inferred_type": "kicker",
+      "_note": "Uses vpmTimer.PulseSw 60"
+    },
+    {
+      "id": 61,
+      "description": "Right VUK",
+      "vpx_name": "vuk",
+      "_inferred_type": "vuk"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Boat Dock Eject",
+      "_vbscript_callback": "BoatDockSaucer",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 2,
+      "description": "Trough Release",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Kicks ball from sw15 into shooter lane"
+    },
+    {
+      "id": 3,
+      "description": "AutoLaunch",
+      "_vbscript_callback": "AutoLaunch",
+      "_inferred_type": "ball_management",
+      "_note": "Uses cvpmImpulseP plungerIM on swPlunger"
+    },
+    {
+      "id": 4,
+      "description": "Left Scoop Eject",
+      "_vbscript_callback": "LeftScoopEject",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 5,
+      "description": "Right VUK",
+      "_vbscript_callback": "VukKick",
+      "_inferred_type": "vuk"
+    },
+    {
+      "id": 6,
+      "description": "Ramp Diverter",
+      "_vbscript_callback": "Divert",
+      "_inferred_type": "diverter"
+    },
+    {
+      "id": 7,
+      "description": "T-Rex Saucer Eject",
+      "_vbscript_callback": "RexSaucer",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 8,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SfxKnocker,",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 9,
+      "description": "Raptor Pit",
+      "_vbscript_callback": "RaptorKick",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 11,
+      "description": "GI",
+      "_vbscript_callback": "SolGI",
+      "_inferred_type": "gi_relay",
+      "is_lamp": true,
+      "_note": "SolModCallBack (PWM); controls all GI lighting via VLM BL_GI array"
+    },
+    {
+      "id": 12,
+      "description": "T-Rex Left/Right Select",
+      "_vbscript_callback": "RexLeftRight",
+      "_inferred_type": "mechanism"
+    },
+    {
+      "id": 13,
+      "description": "T-Rex Mouth",
+      "_vbscript_callback": "RexMouth",
+      "_inferred_type": "mechanism"
+    },
+    {
+      "id": 14,
+      "description": "T-Rex Up/Down Motor",
+      "_vbscript_callback": "RexUpDown",
+      "_inferred_type": "mechanism"
+    },
+    {
+      "id": 15,
+      "description": "T-Rex Left/Right Motor On/Off",
+      "_vbscript_callback": "RexMotor",
+      "_inferred_type": "mechanism"
+    },
+    {
+      "id": 16,
+      "description": "Trough Lockout",
+      "_vbscript_callback": "SolTrough",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from sw14 to sw15 and sets Controller.Switch(15)=1"
+    },
+    {
+      "id": 17,
+      "description": "Top Jet Bumper",
+      "_inferred_type": "bumper",
+      "vpx_name": "sw45",
+      "_note": "SolCallback commented out in script; framework handles"
+    },
+    {
+      "id": 18,
+      "description": "Left Jet Bumper",
+      "_inferred_type": "bumper",
+      "vpx_name": "sw46",
+      "_note": "SolCallback commented out in script; framework handles"
+    },
+    {
+      "id": 19,
+      "description": "Right Jet Bumper",
+      "_inferred_type": "bumper",
+      "vpx_name": "sw47",
+      "_note": "SolCallback commented out in script; framework handles"
+    },
+    {
+      "id": 20,
+      "description": "Left Slingshot",
+      "_vbscript_callback": "vpmSolSound SfxSling,",
+      "_inferred_type": "slingshot"
+    },
+    {
+      "id": 21,
+      "description": "Right Slingshot",
+      "_vbscript_callback": "vpmSolSound SfxSling,",
+      "_inferred_type": "slingshot"
+    },
+    {
+      "id": 22,
+      "description": "Cabinet Shaker",
+      "_vbscript_callback": "ShakerMotor",
+      "_inferred_type": "shaker"
+    },
+    {
+      "id": 23,
+      "description": "AC Relay",
+      "_vbscript_callback": "RelayAC",
+      "_inferred_type": "relay",
+      "_note": "Callback is empty (no-op)"
+    },
+    {
+      "id": 25,
+      "description": "Flasher 1 (Top Middle)",
+      "_vbscript_callback": "Flash1",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallBack (PWM); controls F1a/F1b lights"
+    },
+    {
+      "id": 26,
+      "description": "Flasher 2 (Middle Right)",
+      "_vbscript_callback": "Flash2",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallBack (PWM); controls F2a/F2b/F2c lights"
+    },
+    {
+      "id": 27,
+      "description": "Flasher 3",
+      "_vbscript_callback": "Flash3",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallBack (PWM); controls F3a/F3b/F3c/F3d lights"
+    },
+    {
+      "id": 28,
+      "description": "Flasher 4 (Right)",
+      "_vbscript_callback": "Flash4",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallBack (PWM); controls F4a/F4b/F4c/F4d lights"
+    },
+    {
+      "id": 29,
+      "description": "Flasher 5 (Left)",
+      "_vbscript_callback": "Flash5",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallBack (PWM); controls F5/F5a/F5b/F5c lights"
+    },
+    {
+      "id": 30,
+      "description": "Flasher 6 (Middle Left)",
+      "_vbscript_callback": "Flash6",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallBack (PWM); controls F6a/F6b/F6c lights"
+    },
+    {
+      "id": 31,
+      "description": "Flasher 7",
+      "_vbscript_callback": "Flash7",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallBack (PWM); controls F7a/F7b/F7c/F7d lights"
+    },
+    {
+      "id": 32,
+      "description": "Flasher 8",
+      "_vbscript_callback": "Flash8",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallBack (PWM); controls F8a/F8b lights"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "_note": "sLRFlipper=46 (DE.VBS framework constant)"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "_note": "sLLFlipper=48 (DE.VBS framework constant)"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "_vlm_name": "BL_inserts_L1"
+    },
+    {
+      "id": 2,
+      "_vlm_name": "BL_ins2_L2"
+    },
+    {
+      "id": 3,
+      "_vlm_name": "BL_inserts_L3"
+    },
+    {
+      "id": 4,
+      "_vlm_name": "BL_inserts_L4"
+    },
+    {
+      "id": 5,
+      "_vlm_name": "BL_inserts_L5"
+    },
+    {
+      "id": 6,
+      "_vlm_name": "BL_inserts_L6"
+    },
+    {
+      "id": 7,
+      "_vlm_name": "BL_inserts_L7"
+    },
+    {
+      "id": 8,
+      "_vlm_name": "BL_inserts_L8"
+    },
+    {
+      "id": 10,
+      "_vlm_name": "BL_inserts_L10"
+    },
+    {
+      "id": 11,
+      "_vlm_name": "BL_inserts_L11"
+    },
+    {
+      "id": 12,
+      "_vlm_name": "BL_inserts_L12"
+    },
+    {
+      "id": 13,
+      "_vlm_name": "BL_inserts_L13"
+    },
+    {
+      "id": 14,
+      "_vlm_name": "BL_inserts_L14"
+    },
+    {
+      "id": 15,
+      "_vlm_name": "BL_inserts_L15"
+    },
+    {
+      "id": 16,
+      "_vlm_name": "BL_inserts_L16"
+    },
+    {
+      "id": 17,
+      "_vlm_name": "BL_ins2_L17"
+    },
+    {
+      "id": 18,
+      "_vlm_name": "BL_ins2_L18"
+    },
+    {
+      "id": 19,
+      "_vlm_name": "BL_inserts_L19"
+    },
+    {
+      "id": 20,
+      "_vlm_name": "BL_inserts_L20"
+    },
+    {
+      "id": 21,
+      "_vlm_name": "BL_inserts_L21"
+    },
+    {
+      "id": 22,
+      "_vlm_name": "BL_inserts_L22"
+    },
+    {
+      "id": 23,
+      "_vlm_name": "BL_inserts_L23"
+    },
+    {
+      "id": 24,
+      "_vlm_name": "BL_inserts_L24"
+    },
+    {
+      "id": 25,
+      "_vlm_name": "BL_inserts_L25"
+    },
+    {
+      "id": 26,
+      "_vlm_name": "BL_inserts_L26"
+    },
+    {
+      "id": 27,
+      "_vlm_name": "BL_inserts_L27"
+    },
+    {
+      "id": 28,
+      "_vlm_name": "BL_inserts_L28"
+    },
+    {
+      "id": 29,
+      "_vlm_name": "BL_inserts_L29"
+    },
+    {
+      "id": 30,
+      "_vlm_name": "BL_inserts_L30"
+    },
+    {
+      "id": 31,
+      "_vlm_name": "BL_ins2_L31"
+    },
+    {
+      "id": 32,
+      "_vlm_name": "BL_ins2_L32"
+    },
+    {
+      "id": 33,
+      "_vlm_name": "BL_ins2_L33"
+    },
+    {
+      "id": 34,
+      "_vlm_name": "BL_ins2_L34"
+    },
+    {
+      "id": 35,
+      "_vlm_name": "BL_inserts_L35"
+    },
+    {
+      "id": 36,
+      "_vlm_name": "BL_inserts_L36"
+    },
+    {
+      "id": 37,
+      "_vlm_name": "BL_inserts_L37",
+      "_note": "Also has VLM layer BL_ins2_L37b"
+    },
+    {
+      "id": 38,
+      "_vlm_name": "BL_inserts_L38"
+    },
+    {
+      "id": 39,
+      "_vlm_name": "BL_inserts_L39"
+    },
+    {
+      "id": 40,
+      "_vlm_name": "BL_inserts_L40"
+    },
+    {
+      "id": 41,
+      "_vlm_name": "BL_inserts_L41"
+    },
+    {
+      "id": 42,
+      "_vlm_name": "BL_inserts_L42"
+    },
+    {
+      "id": 43,
+      "_vlm_name": "BL_inserts_L43"
+    },
+    {
+      "id": 44,
+      "_vlm_name": "BL_inserts_L44"
+    },
+    {
+      "id": 45,
+      "_vlm_name": "BL_inserts_L45"
+    },
+    {
+      "id": 46,
+      "_vlm_name": "BL_ins2_L46a",
+      "_note": "Two VLM layers: L46a and L46b"
+    },
+    {
+      "id": 47,
+      "_vlm_name": "BL_ins2_L47"
+    },
+    {
+      "id": 48,
+      "_vlm_name": "BL_ins2_L48"
+    },
+    {
+      "id": 49,
+      "_vlm_name": "BL_inserts_L49"
+    },
+    {
+      "id": 50,
+      "_vlm_name": "BL_inserts_L50"
+    },
+    {
+      "id": 51,
+      "_vlm_name": "BL_inserts_L51"
+    },
+    {
+      "id": 52,
+      "_vlm_name": "BL_inserts_L52"
+    },
+    {
+      "id": 53,
+      "_vlm_name": "BL_inserts_L53"
+    },
+    {
+      "id": 54,
+      "_vlm_name": "BL_inserts_L54"
+    },
+    {
+      "id": 55,
+      "_vlm_name": "BL_inserts_L55"
+    },
+    {
+      "id": 56,
+      "_vlm_name": "BL_inserts_L56"
+    },
+    {
+      "id": 57,
+      "_vlm_name": "BL_ins2_l57"
+    },
+    {
+      "id": 58,
+      "_vlm_name": "BL_ins2_l58"
+    },
+    {
+      "id": 59,
+      "_vlm_name": "BL_inserts_L59"
+    },
+    {
+      "id": 60,
+      "_vlm_name": "BL_ins2_L60"
+    },
+    {
+      "id": 61,
+      "_vlm_name": "BL_inserts_L61"
+    },
+    {
+      "id": 62,
+      "_vlm_name": "BL_ins2_L62"
+    },
+    {
+      "id": 63,
+      "_vlm_name": "BL_inserts_L63"
+    },
+    {
+      "id": 64,
+      "_vlm_name": "BL_inserts_L64"
+    },
+    {
+      "id": 100,
+      "_vlm_name": "BL_GISplit_L100",
+      "_note": "GI split lamp (controlled via GI relay solenoid 11)"
+    },
+    {
+      "id": 101,
+      "_vlm_name": "BL_GISplit_L101",
+      "_note": "GI split lamp"
+    },
+    {
+      "id": 102,
+      "_vlm_name": "BL_GISplit_L102",
+      "_note": "GI split lamp"
+    },
+    {
+      "id": 103,
+      "_vlm_name": "BL_GISplit_L103",
+      "_note": "GI split lamp"
+    },
+    {
+      "id": 104,
+      "_vlm_name": "BL_GISplit_L104",
+      "_note": "GI split lamp"
+    },
+    {
+      "id": 105,
+      "_vlm_name": "BL_GISplit_L105",
+      "_note": "GI split lamp"
+    },
+    {
+      "id": 106,
+      "_vlm_name": "BL_GISplit_L106",
+      "_note": "GI split lamp"
+    },
+    {
+      "id": 108,
+      "_vlm_name": "BL_GISplit_L108",
+      "_note": "GI split lamp"
+    },
+    {
+      "id": 114,
+      "_vlm_name": "BL_GISplit_L114",
+      "_note": "GI split lamp"
+    },
+    {
+      "id": 124,
+      "_vlm_name": "BL_GISplit_L124",
+      "_note": "GI split lamp"
+    },
+    {
+      "id": 125,
+      "_vlm_name": "BL_GISplit_l125",
+      "_note": "GI split lamp"
+    },
+    {
+      "id": 127,
+      "_vlm_name": "BL_inserts_L127"
+    },
+    {
+      "id": 128,
+      "_vlm_name": "BL_inserts_L128"
+    }
+  ]
+}

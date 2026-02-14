@@ -1,0 +1,754 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Batman (Data East 1991) VPW v1.1.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils. No Const sw* definitions — switches identified from _Hit/_UnHit subs, Controller.Switch() calls, and PulseSw calls. Lamp IDs from Lampz.MassAssign() calls. Trough is 3-ball cvpmTrough with switches 11-13 and entry switch 10. Solenoid 16 (Bar Motor) handled via cvpmMech — not in SolCallback but consumed by framework. Solenoids 5, 7, 10 unused. Solenoids 15-21 commented out — handled by VPX physics (bumpers, slingshots). Flasher solenoids use SetLamp with 100+ lamp IDs for Lampz integration. GI Relay (sol 11) is inverted — enabled cuts GI circuit. Sw36/37/38 are Joker face switches (eyes and mouth) using Controller.Switch on/off (not PulseSw). Sw50/51 are bar mechanism position switches set via cvpmMech. Sw53 set by ball tracking code when ball is above right scoop."
+  },
+  "game": {
+    "id": "batman",
+    "name": "Batman",
+    "year": 1991,
+    "manufacturer": "Data East",
+    "platform": "dataeast"
+  },
+  "roms": [
+    {
+      "id": "btmn_106"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Tilt (Plumb Bob)",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 1"
+    },
+    {
+      "id": 10,
+      "description": "Trough Entry (Drain)",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain",
+      "_note": "bsTrough.EntrySw = 10. Drain_Hit triggers sound."
+    },
+    {
+      "id": 11,
+      "description": "Trough 3 (Nearest Shooter)",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "bsTrough.InitSwitches Array(13,12,11) — sw11 is position 3 (nearest eject). Size=3."
+    },
+    {
+      "id": 12,
+      "description": "Trough 2",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "bsTrough.InitSwitches Array(13,12,11) — sw12 is position 2."
+    },
+    {
+      "id": 13,
+      "description": "Trough 1 (Nearest Drain)",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "bsTrough.InitSwitches Array(13,12,11) — sw13 is position 1 (nearest drain)."
+    },
+    {
+      "id": 14,
+      "description": "Plunger Lane / Shooter Lane",
+      "vpx_name": "Sw14",
+      "_note": "Sw14_Hit/UnHit tracks BallInPlungerLane variable. plungerIM.switch 14."
+    },
+    {
+      "id": 17,
+      "description": "Top Lane (Left)",
+      "vpx_name": "Sw17",
+      "_note": "Controller.Switch(17) on/off. Part of top rollover lanes."
+    },
+    {
+      "id": 18,
+      "description": "Top Lane (Center)",
+      "vpx_name": "Sw18",
+      "_note": "Controller.Switch(18) on/off. Part of top rollover lanes."
+    },
+    {
+      "id": 19,
+      "description": "Top Lane (Right)",
+      "vpx_name": "Sw19",
+      "_note": "Controller.Switch(19) on/off. Part of top rollover lanes."
+    },
+    {
+      "id": 21,
+      "description": "Left Orbit / Left Loop",
+      "vpx_name": "Sw21",
+      "_note": "Controller.Switch(21) on/off."
+    },
+    {
+      "id": 22,
+      "description": "Right Orbit / Right Loop",
+      "vpx_name": "Sw22",
+      "_note": "Controller.Switch(22) on/off."
+    },
+    {
+      "id": 23,
+      "description": "Left Return Lane",
+      "vpx_name": "Sw23",
+      "_note": "Controller.Switch(23) on/off."
+    },
+    {
+      "id": 24,
+      "description": "Right Return Lane",
+      "vpx_name": "Sw24",
+      "_note": "Controller.Switch(24) on/off."
+    },
+    {
+      "id": 28,
+      "description": "Center Ramp Entrance",
+      "vpx_name": "Sw28",
+      "_note": "Controller.Switch(28) on/off. Comment says 'Center Ramp'."
+    },
+    {
+      "id": 29,
+      "description": "Center Ramp Exit",
+      "vpx_name": "Sw29",
+      "_note": "Controller.Switch(29) on/off. Comment says 'Center Ramp Exit'."
+    },
+    {
+      "id": 33,
+      "description": "Left Bank Standup Target 1",
+      "vpx_name": "Sw33",
+      "_note": "PulseSw 33. Left bank of 3 standup targets with animation."
+    },
+    {
+      "id": 34,
+      "description": "Left Bank Standup Target 2",
+      "vpx_name": "Sw34",
+      "_note": "PulseSw 34. Left bank of 3 standup targets with animation."
+    },
+    {
+      "id": 35,
+      "description": "Left Bank Standup Target 3",
+      "vpx_name": "Sw35",
+      "_note": "PulseSw 35. Left bank of 3 standup targets with animation."
+    },
+    {
+      "id": 36,
+      "description": "Joker Left Eye",
+      "vpx_name": "sw36",
+      "_note": "Controller.Switch(36) on/off. Joker face target — left eye. Animated gate with psw36 primitive."
+    },
+    {
+      "id": 37,
+      "description": "Joker Right Eye",
+      "vpx_name": "sw37",
+      "_note": "Controller.Switch(37) on/off. Joker face target — right eye. Animated gate with psw37 primitive."
+    },
+    {
+      "id": 38,
+      "description": "Joker Mouth",
+      "vpx_name": "sw38",
+      "_note": "Controller.Switch(38) on/off. Joker face target — mouth. Animated gate with psw38 primitive."
+    },
+    {
+      "id": 39,
+      "description": "Left Scoop (Saucer)",
+      "vpx_name": "sw39",
+      "_note": "Controller.Switch(39)=1 on hit, cleared by ScoopKickL solenoid 3."
+    },
+    {
+      "id": 41,
+      "description": "Right Bank Standup Target 1",
+      "vpx_name": "Sw41",
+      "_note": "PulseSw 41. Right bank of 3 standup targets with animation."
+    },
+    {
+      "id": 42,
+      "description": "Right Bank Standup Target 2",
+      "vpx_name": "Sw42",
+      "_note": "PulseSw 42. Right bank of 3 standup targets with animation."
+    },
+    {
+      "id": 43,
+      "description": "Right Bank Standup Target 3",
+      "vpx_name": "Sw43",
+      "_note": "PulseSw 43. Right bank of 3 standup targets with animation."
+    },
+    {
+      "id": 47,
+      "description": "Left Slingshot",
+      "_note": "PulseSw 47. Fired from LeftSlingShot_Slingshot event."
+    },
+    {
+      "id": 48,
+      "description": "Right Slingshot",
+      "_note": "PulseSw 48. Fired from RightSlingShot_Slingshot event."
+    },
+    {
+      "id": 49,
+      "description": "Bat Bar Standup Target",
+      "vpx_name": "Sw49",
+      "_note": "PulseSw 49. Target on the bar mechanism."
+    },
+    {
+      "id": 50,
+      "description": "Bar Mechanism Position (Home)",
+      "_note": "cvpmMech.AddSw 50,0,0 — mechanism position switch at home position. Set to 0 on init."
+    },
+    {
+      "id": 51,
+      "description": "Bar Mechanism Position (Extended)",
+      "_note": "cvpmMech.AddSw 51,47,49 — mechanism position switch at steps 47-49. Set to 1 on init."
+    },
+    {
+      "id": 52,
+      "description": "Right Scoop (Saucer)",
+      "vpx_name": "sw52",
+      "_note": "Controller.Switch(52)=1 on hit, cleared by ScoopKickR solenoid 6."
+    },
+    {
+      "id": 53,
+      "description": "Right Scoop Upper Position",
+      "_note": "Controller.Switch(53)=1 set by ball tracking code when ball is above right scoop (z < -60). Cleared by ScoopKickR solenoid 6."
+    },
+    {
+      "id": 54,
+      "description": "Left Bumper",
+      "vpx_name": "Bumper1B",
+      "_note": "PulseSw 54. Bumper1B_Hit."
+    },
+    {
+      "id": 55,
+      "description": "Bottom Bumper",
+      "vpx_name": "Bumper3B",
+      "_note": "PulseSw 55. Bumper3B_Hit."
+    },
+    {
+      "id": 56,
+      "description": "Right Bumper",
+      "vpx_name": "Bumper2B",
+      "_note": "PulseSw 56. Bumper2B_Hit."
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Ball Lockout (Ball Stack In)",
+      "_vbscript_callback": "bsTrough.SolIn",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "_note": "6-ball lockout. bsTrough.SolIn."
+    },
+    {
+      "id": 2,
+      "description": "Trough Ball Eject",
+      "_vbscript_callback": "bsTrough.SolOut",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Ball eject from trough. bsTrough.SolOut via BallRelease kicker."
+    },
+    {
+      "id": 3,
+      "description": "Left Scoop Kicker",
+      "_vbscript_callback": "ScoopKickL",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw39",
+      "_note": "Kicks ball out of left scoop (sw39). sw39.Kick 0,85,1.56."
+    },
+    {
+      "id": 4,
+      "description": "Auto Plunger / Ball Launch",
+      "_vbscript_callback": "SolAutoPlungerIM",
+      "_inferred_type": "ball_management",
+      "vpx_name": "swplunger",
+      "_note": "Impulse plunger auto-fire. plungerIM.AutoFire."
+    },
+    {
+      "id": 6,
+      "description": "Right Scoop Kicker",
+      "_vbscript_callback": "ScoopKickR",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw52",
+      "_note": "Kicks ball out of right scoop (sw52). sw52.Kick 0,40,1.56. Also clears sw52 and sw53."
+    },
+    {
+      "id": 8,
+      "description": "Knocker",
+      "_vbscript_callback": "Solknocker",
+      "_inferred_type": "knocker",
+      "_note": "Cabinet knocker solenoid."
+    },
+    {
+      "id": 9,
+      "description": "Flasher Relay (Moon / Bat Signal)",
+      "_vbscript_callback": "Sol9",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlashLamp x4 (2 backbox + 2 pf). Sets lamp 109."
+    },
+    {
+      "id": 11,
+      "description": "GI Relay",
+      "_vbscript_callback": "Sol11",
+      "_inferred_type": "mechanism",
+      "is_lamp": true,
+      "_note": "GI Relay — INVERTED. When enabled, GI turns OFF (cuts circuit). Sets lamp 111. DE-era inverted GI behavior."
+    },
+    {
+      "id": 12,
+      "description": "Flasher Relay (B/M/City Right)",
+      "_vbscript_callback": "Sol12",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlashLamp x4 (1 pf + 3 backbox). Sets lamp 112."
+    },
+    {
+      "id": 13,
+      "description": "Flasher Relay (A/A)",
+      "_vbscript_callback": "Sol13",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlashLamp x4 (2 pf + 2 backbox). Sets lamp 113."
+    },
+    {
+      "id": 14,
+      "description": "Flasher Relay (T/M/Batmobile)",
+      "_vbscript_callback": "Sol14",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlashLamp x4 (1 pf + 3 backbox). Sets lamp 114."
+    },
+    {
+      "id": 16,
+      "description": "Bar Motor",
+      "_vbscript_callback": "cvpmMech (mBar.Sol1 = 16)",
+      "_inferred_type": "mechanism",
+      "_note": "Bar motor driven by cvpmMech framework. vpmMechOneSol + vpmMechReverse + vpmMechNonLinear. 50 steps, length 130. Controls bar toy position and sw49 target availability. Not in SolCallback — consumed by framework."
+    },
+    {
+      "id": 22,
+      "description": "Ramp Diverter",
+      "_vbscript_callback": "SolDiv",
+      "_inferred_type": "diverter",
+      "vpx_name": "RampDiverter",
+      "_note": "Controls RampDiverter and RampDiverter2 drop state."
+    },
+    {
+      "id": 25,
+      "description": "Flasher Relay (City Right / Top)",
+      "_vbscript_callback": "Sol25",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flashlamp X4 (3 pf + backbox). Sets lamp 125."
+    },
+    {
+      "id": 26,
+      "description": "Flasher Relay (Moon / Ramps)",
+      "_vbscript_callback": "Sol26",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flashlamp X4 (1 pf + 2 ramp + 1 backbox). Sets lamp 126."
+    },
+    {
+      "id": 27,
+      "description": "Flasher Relay (Vicki / Batman)",
+      "_vbscript_callback": "Sol27",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flashlamp X4 (2 pf + 2 backbox). Sets lamp 127."
+    },
+    {
+      "id": 28,
+      "description": "Flasher Relay (Batman Chest Logo)",
+      "_vbscript_callback": "Sol28",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flashlamp X4 (2 pf + 2 backbox). Sets lamp 128."
+    },
+    {
+      "id": 29,
+      "description": "Flasher Relay (Dome Flashers)",
+      "_vbscript_callback": "SetLamp 129,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flashlamp X4 (4 pf). Direct SetLamp callback for lamp 129. Flash129 sub drives 4 dome flasher objects."
+    },
+    {
+      "id": 30,
+      "description": "Flasher Relay (Joker)",
+      "_vbscript_callback": "Sol30",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flashlamp X4 (3 pf + 1 backbox). Sets lamp 130. Has bulb filament and clear bulb image/material swaps."
+    },
+    {
+      "id": 31,
+      "description": "Flasher Relay (City Left)",
+      "_vbscript_callback": "Sol31",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flashlamp X4 (3 pf + 1 backbox). Sets lamp 131."
+    },
+    {
+      "id": 32,
+      "description": "Flasher Relay (Bat Cave / Museum / Top Right)",
+      "_vbscript_callback": "Flash132",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flashlamp X4 (2 bat + 2 backbox). Custom Flash132 sub with museumflash fading. Lamp 132 (museum)."
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "nFozzy flipper implementation. RF.Fire on enable."
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "nFozzy flipper implementation. LF.Fire on enable."
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "vpx_name": "l1"
+    },
+    {
+      "id": 2,
+      "vpx_name": "l2"
+    },
+    {
+      "id": 3,
+      "vpx_name": "l3"
+    },
+    {
+      "id": 4,
+      "vpx_name": "l4"
+    },
+    {
+      "id": 5,
+      "vpx_name": "l5"
+    },
+    {
+      "id": 6,
+      "vpx_name": "l6"
+    },
+    {
+      "id": 7,
+      "vpx_name": "l7"
+    },
+    {
+      "id": 8,
+      "vpx_name": "l8"
+    },
+    {
+      "id": 9,
+      "vpx_name": "l9"
+    },
+    {
+      "id": 10,
+      "vpx_name": "l10"
+    },
+    {
+      "id": 11,
+      "vpx_name": "l11"
+    },
+    {
+      "id": 12,
+      "vpx_name": "l12"
+    },
+    {
+      "id": 13,
+      "vpx_name": "l13"
+    },
+    {
+      "id": 14,
+      "vpx_name": "l14"
+    },
+    {
+      "id": 15,
+      "vpx_name": "l15"
+    },
+    {
+      "id": 16,
+      "vpx_name": "l16"
+    },
+    {
+      "id": 17,
+      "vpx_name": "l17",
+      "_note": "Also has flasher primitives L17f"
+    },
+    {
+      "id": 18,
+      "vpx_name": "l18",
+      "_note": "Also has flasher primitives L18f"
+    },
+    {
+      "id": 19,
+      "vpx_name": "l19",
+      "_note": "Also has flasher primitives L19f"
+    },
+    {
+      "id": 20,
+      "vpx_name": "l20"
+    },
+    {
+      "id": 21,
+      "vpx_name": "l21"
+    },
+    {
+      "id": 22,
+      "vpx_name": "l22"
+    },
+    {
+      "id": 23,
+      "vpx_name": "l23",
+      "_note": "Also has flasher primitives l23f"
+    },
+    {
+      "id": 24,
+      "vpx_name": "l24"
+    },
+    {
+      "id": 25,
+      "_note": "Flasher lamp for Sol25. Callback Flash25. No MassAssign VPX light objects — uses callback-only Lampz integration."
+    },
+    {
+      "id": 26,
+      "_note": "Flasher lamp for Sol26. Callback Flash26. No MassAssign VPX light objects — uses callback-only Lampz integration."
+    },
+    {
+      "id": 27,
+      "_note": "Flasher lamp for Sol27. Callback Flash27. No MassAssign VPX light objects — uses callback-only Lampz integration."
+    },
+    {
+      "id": 28,
+      "_note": "Flasher lamp for Sol28. Callback Flash28. No MassAssign VPX light objects — uses callback-only Lampz integration."
+    },
+    {
+      "id": 29,
+      "_note": "Flasher lamp for Sol29. Callback Flash29. No MassAssign VPX light objects — uses callback-only Lampz integration."
+    },
+    {
+      "id": 30,
+      "vpx_name": "l30"
+    },
+    {
+      "id": 31,
+      "vpx_name": "l31"
+    },
+    {
+      "id": 32,
+      "vpx_name": "l32"
+    },
+    {
+      "id": 33,
+      "vpx_name": "l33"
+    },
+    {
+      "id": 34,
+      "vpx_name": "l34"
+    },
+    {
+      "id": 35,
+      "vpx_name": "l35"
+    },
+    {
+      "id": 36,
+      "vpx_name": "l36",
+      "_note": "Also has l36b, l36Fb, l36Fb2 objects"
+    },
+    {
+      "id": 37,
+      "vpx_name": "l37",
+      "_note": "Also has l37b, l37Fb objects"
+    },
+    {
+      "id": 38,
+      "vpx_name": "l38"
+    },
+    {
+      "id": 39,
+      "vpx_name": "l39"
+    },
+    {
+      "id": 40,
+      "vpx_name": "l40"
+    },
+    {
+      "id": 41,
+      "vpx_name": "l41"
+    },
+    {
+      "id": 42,
+      "vpx_name": "l42"
+    },
+    {
+      "id": 43,
+      "vpx_name": "l43"
+    },
+    {
+      "id": 44,
+      "description": "Left Bumper Lamp",
+      "vpx_name": "BumperL_Flasher",
+      "_note": "ImageSwap on pBumperCap1. Also has BumperL_Flasher_a, Bumberhalolb/Bumberhalol."
+    },
+    {
+      "id": 45,
+      "description": "Bottom Bumper Lamp",
+      "vpx_name": "BumperB_Flasher",
+      "_note": "ImageSwap on pBumperCap3. Also has BumperB_Flasher_a, Bumberhalobb/Bumberhalob."
+    },
+    {
+      "id": 46,
+      "description": "Right Bumper Lamp",
+      "vpx_name": "BumperR_Flasher",
+      "_note": "ImageSwap on pBumperCap2. Also has Bumberhalorb/Bumberhalor."
+    },
+    {
+      "id": 47,
+      "vpx_name": "l47"
+    },
+    {
+      "id": 48,
+      "vpx_name": "l48"
+    },
+    {
+      "id": 49,
+      "vpx_name": "l49",
+      "_note": "Also has l49f flasher primitive"
+    },
+    {
+      "id": 55,
+      "vpx_name": "L55"
+    },
+    {
+      "id": 56,
+      "vpx_name": "l56"
+    },
+    {
+      "id": 57,
+      "vpx_name": "l57"
+    },
+    {
+      "id": 58,
+      "vpx_name": "l58"
+    },
+    {
+      "id": 59,
+      "vpx_name": "l59"
+    },
+    {
+      "id": 60,
+      "vpx_name": "l60"
+    },
+    {
+      "id": 61,
+      "vpx_name": "l61"
+    },
+    {
+      "id": 62,
+      "vpx_name": "l62"
+    },
+    {
+      "id": 63,
+      "vpx_name": "l63"
+    },
+    {
+      "id": 64,
+      "vpx_name": "l64"
+    },
+    {
+      "id": 109,
+      "description": "Flasher — Moon / Bat Signal (Sol 9)",
+      "vpx_name": "Flasher9",
+      "_note": "Mapped from solenoid 9. Also has Flasher9a."
+    },
+    {
+      "id": 111,
+      "description": "GI (Sol 11)",
+      "_note": "GI controlled via Sol11 relay. Inverted — sol enabled = GI off. aGiLights array."
+    },
+    {
+      "id": 112,
+      "description": "Flasher — B/M/City Right (Sol 12)",
+      "vpx_name": "Flasher12",
+      "_note": "Mapped from solenoid 12."
+    },
+    {
+      "id": 114,
+      "description": "Flasher — T/M/Batmobile (Sol 14)",
+      "vpx_name": "Flasher14",
+      "_note": "Mapped from solenoid 14."
+    },
+    {
+      "id": 125,
+      "description": "Flasher — City Right / Top (Sol 25)",
+      "vpx_name": "FlasherL1b",
+      "_note": "Mapped from solenoid 25. Also has FlasherL2b."
+    },
+    {
+      "id": 126,
+      "description": "Flasher — Moon / Ramps (Sol 26)",
+      "vpx_name": "FlasherLight2a",
+      "_note": "Mapped from solenoid 26. Also has FlasherLight2b, FlasherLight2c."
+    },
+    {
+      "id": 127,
+      "description": "Flasher — Vicki / Batman (Sol 27)",
+      "vpx_name": "FlasherLight3a",
+      "_note": "Mapped from solenoid 27."
+    },
+    {
+      "id": 128,
+      "description": "Flasher — Batman Chest Logo (Sol 28)",
+      "vpx_name": "FlasherLight4a",
+      "_note": "Mapped from solenoid 28."
+    },
+    {
+      "id": 129,
+      "description": "Flasher — Dome Flashers (Sol 29)",
+      "_note": "Mapped from solenoid 29. Callback Flash129 drives 4 dome flasher fade sequences."
+    },
+    {
+      "id": 130,
+      "description": "Flasher — Joker Ramp (Sol 30)",
+      "vpx_name": "Flasher6",
+      "_note": "Mapped from solenoid 30. Also has Flasher6a, Flasher6c. Bulb filament and material swap effects."
+    },
+    {
+      "id": 131,
+      "description": "Flasher — City Left (Sol 31)",
+      "vpx_name": "FlasherLight7a",
+      "_note": "Mapped from solenoid 31. Also has FlasherLight7b/c/d/e."
+    },
+    {
+      "id": 132,
+      "description": "Flasher — Museum / Bat Cave (Sol 32)",
+      "_note": "Mapped from solenoid 32. Custom Flash132 sub with museum fading. Objects commented out — uses callback only."
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper=46 (DE framework constant from core.vbs). SolRFlipper callback. VPX object: RightFlipper."
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper=48 (DE framework constant from core.vbs). SolLFlipper callback. VPX object: LeftFlipper."
+    }
+  ]
+}

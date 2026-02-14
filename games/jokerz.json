@@ -1,0 +1,843 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Jokerz! (Williams 1988) VPW V1.2.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from SolCallback and sw*_Hit handlers. Uses S11.VBS (System 11). Manual trough implementation (sw11/12/13 with UpdateTrough cascade, not cvpmTrough). Drain is sw10 (pulsed). Ball release is solenoid 2 (kicks from sw11). Solenoid 10 is GI relay (inverted logic in SolGi — enabled=off, disabled=on). Ramp motor solenoid 15 drives center ramp up/down with position switches 15/16. Card wheel mechanism uses cvpmMyMech. Flipper solenoid numbers (sLRFlipper=46, sLLFlipper=48) come from core.vbs S11 constants. swTilt=67 from S11.VBS framework. Flasher solenoids (9,11,22,25-32) use Lampz indices 109-132 for lamp state. Lamp indices 1-64 from Lampz.MassAssign. Lamp 0 is GI (non-matrix, solenoid-driven via sol 10)."
+  },
+  "game": {
+    "id": "jokerz",
+    "name": "Jokerz!",
+    "year": 1988,
+    "manufacturer": "Williams",
+    "platform": "system11"
+  },
+  "roms": [
+    {
+      "id": "jokrz_l6",
+      "version": "L-6"
+    }
+  ],
+  "switches": [
+    {
+      "id": 10,
+      "description": "Drain",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "Pulsed via vpmTimer.PulseSw 10"
+    },
+    {
+      "id": 11,
+      "description": "Trough 1 (Front)",
+      "vpx_name": "sw11",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1"
+    },
+    {
+      "id": 12,
+      "description": "Trough 2 (Middle)",
+      "vpx_name": "sw12",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 13,
+      "description": "Trough 3 (Back)",
+      "vpx_name": "sw13",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 14,
+      "description": "Right Return Lane",
+      "vpx_name": "sw14",
+      "_note": "Labeled 'lanes' in script"
+    },
+    {
+      "id": 15,
+      "description": "Center Ramp Down Position",
+      "_note": "Ramp position switch — set when ramp is lowered (LowerRamp sub). Not a physical switch object."
+    },
+    {
+      "id": 16,
+      "description": "Center Ramp Up Position",
+      "_note": "Ramp position switch — set when ramp is raised (RiseRamp sub). Initialized to 1 in InitCenterRamp."
+    },
+    {
+      "id": 17,
+      "description": "Top Lane Left",
+      "vpx_name": "sw17"
+    },
+    {
+      "id": 18,
+      "description": "Top Lane Center",
+      "vpx_name": "sw18"
+    },
+    {
+      "id": 19,
+      "description": "Top Lane Right",
+      "vpx_name": "sw19"
+    },
+    {
+      "id": 20,
+      "description": "Left Outlane",
+      "vpx_name": "sw20",
+      "_note": "Labeled 'lanes' in script"
+    },
+    {
+      "id": 21,
+      "description": "Left Return Lane",
+      "vpx_name": "sw21",
+      "_note": "Labeled 'lanes' in script"
+    },
+    {
+      "id": 22,
+      "description": "Right Outlane",
+      "vpx_name": "sw22",
+      "_note": "Labeled 'lanes' in script"
+    },
+    {
+      "id": 23,
+      "description": "Right Return Lane Upper",
+      "vpx_name": "sw23",
+      "_note": "Labeled 'lanes' in script"
+    },
+    {
+      "id": 24,
+      "description": "Standup Target",
+      "vpx_name": "sw24",
+      "_inferred_type": "standup_target",
+      "_note": "Pulsed via vpmTimer.PulseSw 24"
+    },
+    {
+      "id": 25,
+      "description": "Bottom Left Drop Target 1",
+      "vpx_name": "sw25",
+      "_inferred_type": "drop_target",
+      "_note": "Left bank — reset by solenoid 3 (SolBLDropTgt)"
+    },
+    {
+      "id": 26,
+      "description": "Bottom Left Drop Target 2",
+      "vpx_name": "sw26",
+      "_inferred_type": "drop_target",
+      "_note": "Left bank — reset by solenoid 3 (SolBLDropTgt)"
+    },
+    {
+      "id": 27,
+      "description": "Bottom Left Drop Target 3",
+      "vpx_name": "sw27",
+      "_inferred_type": "drop_target",
+      "_note": "Left bank — reset by solenoid 3 (SolBLDropTgt)"
+    },
+    {
+      "id": 28,
+      "description": "Left Inlane",
+      "vpx_name": "sw28"
+    },
+    {
+      "id": 29,
+      "description": "Right Inlane",
+      "vpx_name": "sw29"
+    },
+    {
+      "id": 30,
+      "description": "Left Spinner Lane",
+      "vpx_name": "sw30"
+    },
+    {
+      "id": 31,
+      "description": "Right Spinner Lane",
+      "vpx_name": "sw31"
+    },
+    {
+      "id": 32,
+      "description": "Center Lane",
+      "vpx_name": "sw32"
+    },
+    {
+      "id": 36,
+      "description": "Bottom Right Drop Target 1",
+      "vpx_name": "sw36",
+      "_inferred_type": "drop_target",
+      "_note": "Right bank — reset by solenoid 4 (SolBRDropTgt)"
+    },
+    {
+      "id": 37,
+      "description": "Bottom Right Drop Target 2",
+      "vpx_name": "sw37",
+      "_inferred_type": "drop_target",
+      "_note": "Right bank — reset by solenoid 4 (SolBRDropTgt)"
+    },
+    {
+      "id": 38,
+      "description": "Bottom Right Drop Target 3",
+      "vpx_name": "sw38",
+      "_inferred_type": "drop_target",
+      "_note": "Right bank — reset by solenoid 4 (SolBRDropTgt)"
+    },
+    {
+      "id": 41,
+      "description": "Top Left Drop Target 1",
+      "vpx_name": "sw41",
+      "_inferred_type": "drop_target",
+      "_note": "Top bank — reset by solenoid 6 (SolTLDropTgt)"
+    },
+    {
+      "id": 42,
+      "description": "Top Left Drop Target 2",
+      "vpx_name": "sw42",
+      "_inferred_type": "drop_target",
+      "_note": "Top bank — reset by solenoid 6 (SolTLDropTgt)"
+    },
+    {
+      "id": 43,
+      "description": "Top Left Drop Target 3",
+      "vpx_name": "sw43",
+      "_inferred_type": "drop_target",
+      "_note": "Top bank — reset by solenoid 6 (SolTLDropTgt)"
+    },
+    {
+      "id": 45,
+      "description": "Bottom Left Kicker (Entry)",
+      "vpx_name": "sw45",
+      "_inferred_type": "kicker",
+      "_note": "Two-stage kicker — ball enters sw45 first, then sw46 is enabled"
+    },
+    {
+      "id": 46,
+      "description": "Bottom Left Kicker (Lock)",
+      "vpx_name": "sw46",
+      "_inferred_type": "kicker",
+      "_note": "Kicked by solenoid 7 (SolBLKicker). Both sw45 and sw46 cleared on kick."
+    },
+    {
+      "id": 47,
+      "description": "Right Saucer (Lock)",
+      "vpx_name": "sw47",
+      "_inferred_type": "kicker",
+      "_note": "Kicked by solenoid 16 (bsREject). Ball lock saucer."
+    },
+    {
+      "id": 48,
+      "description": "Spinner",
+      "vpx_name": "sw48",
+      "_inferred_type": "spinner",
+      "_note": "Pulsed via sw48_Spin"
+    },
+    {
+      "id": 49,
+      "description": "Left Ramp Entry",
+      "vpx_name": "sw49",
+      "_note": "Ramp switch with physical primitive animation (sw49p)"
+    },
+    {
+      "id": 50,
+      "description": "Right Ramp Entry",
+      "vpx_name": "sw50",
+      "_note": "Ramp switch with physical primitive animation (sw50p)"
+    },
+    {
+      "id": 52,
+      "description": "Center Ramp Target",
+      "vpx_name": "sw52",
+      "_inferred_type": "standup_target",
+      "_note": "Pulsed via vpmTimer.PulseSw 52"
+    },
+    {
+      "id": 53,
+      "description": "Rollover 1",
+      "vpx_name": "sw53",
+      "_note": "Pulsed via vpmTimer.PulseSw 53"
+    },
+    {
+      "id": 56,
+      "description": "Rollover 2",
+      "vpx_name": "sw56",
+      "_note": "Pulsed via vpmTimer.PulseSw 56"
+    },
+    {
+      "id": 60,
+      "description": "Top Pop Bumper",
+      "_inferred_type": "bumper",
+      "vpx_name": "Bumper1",
+      "_note": "Pulsed via vpmTimer.PulseSw(60)"
+    },
+    {
+      "id": 61,
+      "description": "Middle Pop Bumper",
+      "_inferred_type": "bumper",
+      "vpx_name": "Bumper2",
+      "_note": "Pulsed via vpmTimer.PulseSw(61)"
+    },
+    {
+      "id": 62,
+      "description": "Bottom Pop Bumper",
+      "_inferred_type": "bumper",
+      "vpx_name": "Bumper3",
+      "_note": "Pulsed via vpmTimer.PulseSw(62)"
+    },
+    {
+      "id": 63,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "Pulsed via vpmTimer.PulseSw(63)"
+    },
+    {
+      "id": 64,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "Pulsed via vpmTimer.PulseSw(64)"
+    },
+    {
+      "id": 67,
+      "description": "Tilt",
+      "_note": "vpmNudge.TiltSwitch = swTilt (swTilt=67 from S11.VBS framework)",
+      "input_action_hint": "tilt",
+      "input_map_hint": "cabinet"
+    }
+  ],
+  "coils": [
+    {
+      "id": 2,
+      "description": "Ball Release",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "ball_release",
+      "_note": "Kicks ball from sw11 (front trough position)"
+    },
+    {
+      "id": 3,
+      "description": "Bottom Left Drop Target Bank Reset",
+      "_vbscript_callback": "SolBLDropTgt",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises drop targets sw25, sw26, sw27"
+    },
+    {
+      "id": 4,
+      "description": "Bottom Right Drop Target Bank Reset",
+      "_vbscript_callback": "SolBRDropTgt",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises drop targets sw36, sw37, sw38"
+    },
+    {
+      "id": 5,
+      "description": "Left Eject Kicker",
+      "_vbscript_callback": "bsLEject.SolOut",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 6,
+      "description": "Top Left Drop Target Bank Reset",
+      "_vbscript_callback": "SolTLDropTgt",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises drop targets sw41, sw42, sw43"
+    },
+    {
+      "id": 7,
+      "description": "Bottom Left Kicker",
+      "_vbscript_callback": "SolBLKicker",
+      "_inferred_type": "kicker",
+      "_note": "Kicks from sw46, clears both sw45 and sw46"
+    },
+    {
+      "id": 8,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"Knocker_1\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 9,
+      "description": "Main Flasher (Central Ramp) x2",
+      "_vbscript_callback": "FlashSol109",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Controls two flasher objects via Lampz indices. F09 central ramp flasher."
+    },
+    {
+      "id": 10,
+      "description": "GI Relay",
+      "_vbscript_callback": "SolGi",
+      "_inferred_type": "gi_relay",
+      "_note": "Inverted logic: Enabled=GI off, Disabled=GI on. Controls Lampz.state(0) and backglass brightness."
+    },
+    {
+      "id": 11,
+      "description": "Wheel Flasher (Backbox)",
+      "_vbscript_callback": "FlashSol111 / SetLamp 111,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Desktop mode uses SetLamp 111; VR mode uses FlashSol111. Controls card wheel backbox flasher."
+    },
+    {
+      "id": 15,
+      "description": "Center Ramp Motor",
+      "_vbscript_callback": "SolRamp",
+      "_inferred_type": "motor",
+      "_note": "Drives center ramp up/down via RampTimer. Position tracked by switches 15/16."
+    },
+    {
+      "id": 16,
+      "description": "Right Eject Saucer",
+      "_vbscript_callback": "bsREject",
+      "_inferred_type": "kicker",
+      "_note": "Kicks ball from sw47 (right saucer/lock)"
+    },
+    {
+      "id": 22,
+      "description": "Lifter Ramp Flashers",
+      "_vbscript_callback": "SetLamp 122,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Controls Lampz index 122 (f122a, f122b) and drawbridge flash primitive"
+    },
+    {
+      "id": 25,
+      "description": "Back Wall Flasher \"JO\"",
+      "_vbscript_callback": "Flashsol125",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Back wall JOKERZ! letter flasher — JO"
+    },
+    {
+      "id": 26,
+      "description": "Back Wall Flasher \"KE\"",
+      "_vbscript_callback": "Flashsol126",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Back wall JOKERZ! letter flasher — KE"
+    },
+    {
+      "id": 27,
+      "description": "Back Wall Flasher \"RZ\"",
+      "_vbscript_callback": "Flashsol127",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Back wall JOKERZ! letter flasher — RZ"
+    },
+    {
+      "id": 28,
+      "description": "Back Wall Flasher \"!\"",
+      "_vbscript_callback": "Flashsol128",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Back wall JOKERZ! letter flasher — !"
+    },
+    {
+      "id": 29,
+      "description": "Double Scores Flashers",
+      "_vbscript_callback": "FlashSol129",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "F29 — VR-only flasher effect"
+    },
+    {
+      "id": 30,
+      "description": "Main Flasher Top Left",
+      "_vbscript_callback": "FlashSol130",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flupper dome flasher"
+    },
+    {
+      "id": 31,
+      "description": "Main Flasher Left",
+      "_vbscript_callback": "FlashSol131",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flupper dome flasher"
+    },
+    {
+      "id": 32,
+      "description": "Main Flasher Right",
+      "_vbscript_callback": "FlashSol132",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Flupper dome flasher"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "sLRFlipper=46 from core.vbs"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "sLLFlipper=48 from core.vbs"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 0,
+      "description": "GI (General Illumination)",
+      "_note": "Non-matrix. Controlled by solenoid 10 (SolGi). Lampz.obj(0) = GI collection. Inverted logic."
+    },
+    {
+      "id": 1,
+      "description": "Playfield Lamp 1",
+      "vpx_name": "l1"
+    },
+    {
+      "id": 2,
+      "description": "Playfield Lamp 2",
+      "vpx_name": "l2"
+    },
+    {
+      "id": 3,
+      "description": "Playfield Lamp 3",
+      "vpx_name": "l3"
+    },
+    {
+      "id": 4,
+      "description": "Playfield Lamp 4",
+      "vpx_name": "l4"
+    },
+    {
+      "id": 5,
+      "description": "Playfield Lamp 5",
+      "vpx_name": "l5"
+    },
+    {
+      "id": 6,
+      "description": "Playfield Lamp 6",
+      "vpx_name": "l6"
+    },
+    {
+      "id": 7,
+      "description": "Playfield Lamp 7",
+      "vpx_name": "l7"
+    },
+    {
+      "id": 8,
+      "description": "Playfield Lamp 8",
+      "vpx_name": "l8"
+    },
+    {
+      "id": 9,
+      "description": "Playfield Lamp 9",
+      "vpx_name": "l9"
+    },
+    {
+      "id": 10,
+      "description": "Playfield Lamp 10",
+      "vpx_name": "l10"
+    },
+    {
+      "id": 11,
+      "description": "Playfield Lamp 11",
+      "vpx_name": "l11"
+    },
+    {
+      "id": 12,
+      "description": "Playfield Lamp 12",
+      "vpx_name": "l12"
+    },
+    {
+      "id": 13,
+      "description": "Playfield Lamp 13",
+      "vpx_name": "l13"
+    },
+    {
+      "id": 14,
+      "description": "Playfield Lamp 14",
+      "vpx_name": "l14"
+    },
+    {
+      "id": 15,
+      "description": "Playfield Lamp 15",
+      "vpx_name": "l15"
+    },
+    {
+      "id": 16,
+      "description": "Playfield Lamp 16",
+      "vpx_name": "l16"
+    },
+    {
+      "id": 17,
+      "description": "Playfield Lamp 17",
+      "vpx_name": "l17"
+    },
+    {
+      "id": 18,
+      "description": "Playfield Lamp 18",
+      "vpx_name": "l18"
+    },
+    {
+      "id": 19,
+      "description": "Playfield Lamp 19",
+      "vpx_name": "l19"
+    },
+    {
+      "id": 20,
+      "description": "Playfield Lamp 20",
+      "vpx_name": "l20"
+    },
+    {
+      "id": 21,
+      "description": "Playfield Lamp 21",
+      "vpx_name": "l21"
+    },
+    {
+      "id": 22,
+      "description": "Playfield Lamp 22",
+      "vpx_name": "l22"
+    },
+    {
+      "id": 23,
+      "description": "Playfield Lamp 23",
+      "vpx_name": "l23"
+    },
+    {
+      "id": 24,
+      "description": "Playfield Lamp 24",
+      "vpx_name": "l24"
+    },
+    {
+      "id": 25,
+      "description": "Playfield Lamp 25",
+      "vpx_name": "l25"
+    },
+    {
+      "id": 26,
+      "description": "Playfield Lamp 26",
+      "vpx_name": "l26"
+    },
+    {
+      "id": 27,
+      "description": "Playfield Lamp 27",
+      "vpx_name": "l27"
+    },
+    {
+      "id": 28,
+      "description": "Playfield Lamp 28",
+      "vpx_name": "l28"
+    },
+    {
+      "id": 29,
+      "description": "Playfield Lamp 29",
+      "vpx_name": "l29"
+    },
+    {
+      "id": 30,
+      "description": "Playfield Lamp 30",
+      "vpx_name": "l30"
+    },
+    {
+      "id": 31,
+      "description": "Playfield Lamp 31",
+      "vpx_name": "l31"
+    },
+    {
+      "id": 32,
+      "description": "Playfield Lamp 32",
+      "vpx_name": "l32"
+    },
+    {
+      "id": 33,
+      "description": "Playfield Lamp 33",
+      "vpx_name": "l33"
+    },
+    {
+      "id": 34,
+      "description": "Playfield Lamp 34",
+      "vpx_name": "l34"
+    },
+    {
+      "id": 35,
+      "description": "Playfield Lamp 35",
+      "vpx_name": "l35"
+    },
+    {
+      "id": 36,
+      "description": "Playfield Lamp 36",
+      "vpx_name": "l36"
+    },
+    {
+      "id": 37,
+      "description": "Playfield Lamp 37",
+      "vpx_name": "l37"
+    },
+    {
+      "id": 38,
+      "description": "Playfield Lamp 38",
+      "vpx_name": "l38"
+    },
+    {
+      "id": 39,
+      "description": "Playfield Lamp 39",
+      "vpx_name": "l39"
+    },
+    {
+      "id": 40,
+      "description": "Playfield Lamp 40",
+      "vpx_name": "l40"
+    },
+    {
+      "id": 41,
+      "description": "Playfield Lamp 41",
+      "vpx_name": "l41"
+    },
+    {
+      "id": 42,
+      "description": "Playfield Lamp 42",
+      "vpx_name": "l42"
+    },
+    {
+      "id": 43,
+      "description": "Playfield Lamp 43",
+      "vpx_name": "l43"
+    },
+    {
+      "id": 44,
+      "description": "Playfield Lamp 44",
+      "vpx_name": "l44"
+    },
+    {
+      "id": 45,
+      "description": "Playfield Lamp 45",
+      "vpx_name": "l45"
+    },
+    {
+      "id": 46,
+      "description": "Playfield Lamp 46",
+      "vpx_name": "l46"
+    },
+    {
+      "id": 47,
+      "description": "Playfield Lamp 47",
+      "vpx_name": "l47"
+    },
+    {
+      "id": 48,
+      "description": "Playfield Lamp 48",
+      "vpx_name": "l48"
+    },
+    {
+      "id": 49,
+      "description": "Playfield Lamp 49",
+      "vpx_name": "l49"
+    },
+    {
+      "id": 50,
+      "description": "Playfield Lamp 50",
+      "vpx_name": "l50"
+    },
+    {
+      "id": 51,
+      "description": "Playfield Lamp 51",
+      "vpx_name": "l51"
+    },
+    {
+      "id": 52,
+      "description": "Playfield Lamp 52",
+      "vpx_name": "l52"
+    },
+    {
+      "id": 53,
+      "description": "Playfield Lamp 53",
+      "vpx_name": "l53"
+    },
+    {
+      "id": 54,
+      "description": "Playfield Lamp 54",
+      "vpx_name": "l54"
+    },
+    {
+      "id": 55,
+      "description": "Playfield Lamp 55",
+      "vpx_name": "l55"
+    },
+    {
+      "id": 56,
+      "description": "Playfield Lamp 56",
+      "vpx_name": "l56"
+    },
+    {
+      "id": 57,
+      "description": "Playfield Lamp 57",
+      "vpx_name": "l57",
+      "_note": "Desktop-only (no callback)"
+    },
+    {
+      "id": 58,
+      "description": "Playfield Lamp 58",
+      "vpx_name": "l58",
+      "_note": "Desktop-only (no callback)"
+    },
+    {
+      "id": 59,
+      "description": "Playfield Lamp 59",
+      "vpx_name": "l59",
+      "_note": "Desktop-only (no callback)"
+    },
+    {
+      "id": 60,
+      "description": "Playfield Lamp 60",
+      "vpx_name": "l60",
+      "_note": "Desktop-only (no callback)"
+    },
+    {
+      "id": 61,
+      "description": "Playfield Lamp 61",
+      "vpx_name": "l61",
+      "_note": "Desktop-only (no callback)"
+    },
+    {
+      "id": 62,
+      "description": "Playfield Lamp 62",
+      "vpx_name": "l62",
+      "_note": "Desktop-only (no callback)"
+    },
+    {
+      "id": 63,
+      "description": "Playfield Lamp 63",
+      "vpx_name": "l63",
+      "_note": "Desktop-only (no callback)"
+    },
+    {
+      "id": 64,
+      "description": "Playfield Lamp 64",
+      "vpx_name": "l64",
+      "_note": "Desktop-only (no callback)"
+    },
+    {
+      "id": 111,
+      "description": "Wheel Flasher (Backbox)",
+      "vpx_name": "f111",
+      "_note": "Solenoid-driven flasher (sol 11). Lampz index 111."
+    },
+    {
+      "id": 122,
+      "description": "Lifter Ramp Flashers",
+      "vpx_name": "f122a",
+      "_note": "Solenoid-driven flasher (sol 22). Lampz index 122. Also f122b."
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    }
+  ]
+}

@@ -1,0 +1,864 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "The Who's Tommy Pinball Wizard (Data East 1994) VPWMod 1.2.1.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils. 6-ball trough (sw9-sw14) with sw15 as virtual outhole switch managed by SolTrough/SolRelease. Lamp descriptions from Lampz.MassAssign comments in VBS. Flashers on solenoids 15, 25-32 mapped to Lampz IDs 115, 125-132 via Flupper dome system. Mirror motor (sol 14) controls sw28 (mirror up) and sw31 (mirror down) position switches. Blinder motor on sol 51 (custom solenoid). Upper left flipper on sol 47 via vpmFlips.FlipperSolNumber(2)=47, SolCallback commented out. GI relay on sol 11 controls Lampz 100/101/102. Backglass lamps on IDs 1, 10, 19, 28, 37 are VR-only."
+  },
+  "game": {
+    "id": "tommy",
+    "name": "The Who's Tommy Pinball Wizard",
+    "year": 1994,
+    "manufacturer": "Data East",
+    "ipdb_id": 2579,
+    "platform": "dataeast"
+  },
+  "roms": [
+    {
+      "id": "tomy_400",
+      "version": "4.00",
+      "_note": "Less bugs, but not as fun (per VBS comment)"
+    },
+    {
+      "id": "tomy_500",
+      "version": "5.00",
+      "description": "Custom ROM by Soren - better scoring/rules"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Tilt",
+      "_note": "vpmNudge.TiltSwitch=1"
+    },
+    {
+      "id": 8,
+      "description": "Extra Ball Button",
+      "_note": "Set via keycode 3 in KeyDown/KeyUp, not a physical playfield switch"
+    },
+    {
+      "id": 9,
+      "description": "#1 (Left) Ball Trough",
+      "vpx_name": "sw9",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch"
+    },
+    {
+      "id": 10,
+      "description": "#2 Ball Trough",
+      "vpx_name": "sw10",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_2"
+    },
+    {
+      "id": 11,
+      "description": "#3 Ball Trough",
+      "vpx_name": "sw11",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_3"
+    },
+    {
+      "id": 12,
+      "description": "#4 Ball Trough",
+      "vpx_name": "sw12",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_4"
+    },
+    {
+      "id": 13,
+      "description": "#5 Ball Trough",
+      "vpx_name": "sw13",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_5"
+    },
+    {
+      "id": 14,
+      "description": "#6 (Right) Ball Trough",
+      "vpx_name": "sw14",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_6"
+    },
+    {
+      "id": 15,
+      "description": "#7 Ball Trough (Outhole)",
+      "_note": "Virtual switch set by SolTrough/SolRelease, no VPX kicker object. sw15.kick used for ball release."
+    },
+    {
+      "id": 16,
+      "description": "Shooter Lane",
+      "vpx_name": "sw16"
+    },
+    {
+      "id": 17,
+      "description": "Left Slingshot",
+      "_note": "Pulsed via LeftSlingShot_Slingshot event"
+    },
+    {
+      "id": 18,
+      "description": "Right Slingshot",
+      "_note": "Pulsed via RightSlingShot_Slingshot event"
+    },
+    {
+      "id": 19,
+      "description": "VUK (Vertical Up Kicker)",
+      "vpx_name": "sw19"
+    },
+    {
+      "id": 20,
+      "description": "Left Ramp Left Standup Target",
+      "vpx_name": "sw20"
+    },
+    {
+      "id": 21,
+      "description": "Left Ramp Right Standup Target",
+      "vpx_name": "sw21"
+    },
+    {
+      "id": 22,
+      "description": "Right Ramp Standup Target",
+      "vpx_name": "sw22"
+    },
+    {
+      "id": 23,
+      "description": "Left Scoop",
+      "vpx_name": "sw23"
+    },
+    {
+      "id": 24,
+      "description": "Silverball Standup Target",
+      "vpx_name": "sw24"
+    },
+    {
+      "id": 25,
+      "description": "Left Target Bank Top",
+      "vpx_name": "sw25"
+    },
+    {
+      "id": 26,
+      "description": "Left Target Bank Middle",
+      "vpx_name": "sw26"
+    },
+    {
+      "id": 27,
+      "description": "Left Target Bank Bottom",
+      "vpx_name": "sw27"
+    },
+    {
+      "id": 28,
+      "description": "Mirror Up Position",
+      "_note": "Set by MirrorTimer when MirrorP.Z >= 137, not a physical VPX switch"
+    },
+    {
+      "id": 29,
+      "description": "Left Orbit",
+      "vpx_name": "sw29"
+    },
+    {
+      "id": 30,
+      "description": "Left Ramp Enter",
+      "vpx_name": "sw30"
+    },
+    {
+      "id": 31,
+      "description": "Mirror Down Position",
+      "_note": "Set by MirrorTimer when MirrorP.Z <= 3, not a physical VPX switch"
+    },
+    {
+      "id": 32,
+      "description": "Mirror Hit (Captive Ball)",
+      "vpx_name": "sw32",
+      "_note": "Pulsed only if ball speed > 4"
+    },
+    {
+      "id": 33,
+      "description": "Right Target Bank Top",
+      "vpx_name": "sw33"
+    },
+    {
+      "id": 34,
+      "description": "Right Target Bank Middle",
+      "vpx_name": "sw34"
+    },
+    {
+      "id": 35,
+      "description": "Right Target Bank Bottom",
+      "vpx_name": "sw35"
+    },
+    {
+      "id": 36,
+      "description": "Left Orbit Top",
+      "vpx_name": "sw36"
+    },
+    {
+      "id": 37,
+      "description": "Right Orbit Top",
+      "vpx_name": "sw37"
+    },
+    {
+      "id": 38,
+      "description": "Middle Standup Target (More Time)",
+      "vpx_name": "sw38"
+    },
+    {
+      "id": 39,
+      "description": "Left Spinner",
+      "vpx_name": "sw39"
+    },
+    {
+      "id": 40,
+      "description": "Right Spinner",
+      "vpx_name": "sw40"
+    },
+    {
+      "id": 41,
+      "description": "Subway Entrance (Skill Shot Hole)",
+      "vpx_name": "sw41"
+    },
+    {
+      "id": 42,
+      "description": "Subway Entrance (Mirror Hole)",
+      "vpx_name": "sw42"
+    },
+    {
+      "id": 43,
+      "description": "Captive Ball Standup Target",
+      "vpx_name": "sw43"
+    },
+    {
+      "id": 47,
+      "description": "Top Left Eject",
+      "vpx_name": "sw47"
+    },
+    {
+      "id": 48,
+      "description": "Left Inlane",
+      "vpx_name": "sw48"
+    },
+    {
+      "id": 49,
+      "description": "Top Pop Bumper",
+      "_note": "Pulsed via Bumper1_Hit"
+    },
+    {
+      "id": 50,
+      "description": "Center Pop Bumper",
+      "_note": "Pulsed via Bumper2_Hit"
+    },
+    {
+      "id": 51,
+      "description": "Right Pop Bumper",
+      "_note": "Pulsed via Bumper3_Hit"
+    },
+    {
+      "id": 55,
+      "description": "Left Outlane",
+      "vpx_name": "sw55"
+    },
+    {
+      "id": 56,
+      "description": "Right Outlane",
+      "vpx_name": "sw56"
+    },
+    {
+      "id": 57,
+      "description": "Right Ramp Enter",
+      "vpx_name": "sw57"
+    },
+    {
+      "id": 58,
+      "description": "Left Ramp Exit",
+      "vpx_name": "sw58",
+      "_note": "Flipper gate at ramp exit"
+    },
+    {
+      "id": 62,
+      "description": "Right Ramp Exit",
+      "vpx_name": "sw62",
+      "_note": "Flipper gate at ramp exit"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Eject (6-ball lockout)",
+      "_vbscript_callback": "SolTrough",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 2,
+      "description": "Ball Release",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "ball_release",
+      "vpx_name": "sw15"
+    },
+    {
+      "id": 3,
+      "description": "Auto Launch (Plunger)",
+      "_vbscript_callback": "AutoLaunch",
+      "_inferred_type": "kicker",
+      "vpx_name": "swPlunger",
+      "_note": "Impulse plunger via cvpmImpulseP"
+    },
+    {
+      "id": 4,
+      "description": "VUK (Vertical Up Kicker)",
+      "_vbscript_callback": "ExitVUK",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw19"
+    },
+    {
+      "id": 5,
+      "description": "Left Scoop Eject",
+      "_vbscript_callback": "ExitScoop",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw23"
+    },
+    {
+      "id": 6,
+      "description": "Top Left Eject",
+      "_vbscript_callback": "SolEject",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw47"
+    },
+    {
+      "id": 8,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"Knocker_1\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 9,
+      "description": "Shaker Motor",
+      "_inferred_type": "mechanism",
+      "_note": "Commented out in VBS: 'SolCallback(9)"
+    },
+    {
+      "id": 10,
+      "description": "L/R Relay",
+      "_inferred_type": "relay",
+      "_note": "Commented out in VBS: 'SolCallback(10)"
+    },
+    {
+      "id": 11,
+      "description": "GI Relay",
+      "_vbscript_callback": "GIRelay",
+      "_inferred_type": "gi_relay",
+      "_note": "Controls Lampz 100 (GI), 101 (GI Cabinet), 102 (Insert intensity). On=GI off, Off=GI on."
+    },
+    {
+      "id": 12,
+      "description": "Top Diverter",
+      "_vbscript_callback": "Diverter",
+      "_inferred_type": "diverter",
+      "vpx_name": "TopDiverter"
+    },
+    {
+      "id": 13,
+      "description": "Airplane Propeller Motor",
+      "_vbscript_callback": "PropellerMove",
+      "_inferred_type": "mechanism",
+      "_note": "Drives propeller rotation animation"
+    },
+    {
+      "id": 14,
+      "description": "Mirror Motor",
+      "_vbscript_callback": "MirrorMove",
+      "_inferred_type": "mechanism",
+      "vpx_name": "MirrorP",
+      "_note": "Raises/lowers mirror, controls sw28 (up) and sw31 (down) position switches"
+    },
+    {
+      "id": 15,
+      "description": "Flashlamp X1 Mirror",
+      "_vbscript_callback": "FlashSol15",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Lampz ID 115. VR backglass flash effect."
+    },
+    {
+      "id": 17,
+      "description": "Top Pop Bumper",
+      "_vbscript_callback": "SolBumper1",
+      "_inferred_type": "bumper",
+      "vpx_name": "Bumper1"
+    },
+    {
+      "id": 18,
+      "description": "Center Pop Bumper",
+      "_vbscript_callback": "SolBumper2",
+      "_inferred_type": "bumper",
+      "vpx_name": "Bumper2"
+    },
+    {
+      "id": 19,
+      "description": "Right Pop Bumper",
+      "_vbscript_callback": "SolBumper3",
+      "_inferred_type": "bumper",
+      "vpx_name": "Bumper3"
+    },
+    {
+      "id": 20,
+      "description": "Left Slingshot",
+      "_vbscript_callback": "SolLSling",
+      "_inferred_type": "slingshot",
+      "vpx_name": "LeftSlingShot"
+    },
+    {
+      "id": 21,
+      "description": "Right Slingshot",
+      "_vbscript_callback": "SolRSling",
+      "_inferred_type": "slingshot",
+      "vpx_name": "RightSlingShot"
+    },
+    {
+      "id": 23,
+      "description": "Flipper Enable Relay",
+      "_vbscript_callback": "SolEnableFlips",
+      "_inferred_type": "relay",
+      "_note": "Enables/disables all flippers via bFlippersEnabled flag"
+    },
+    {
+      "id": 25,
+      "description": "Flashlamp X4 Bottom Arch L/R",
+      "_vbscript_callback": "Setlamp 125,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Lampz ID 125. Outlane flashers (F25A/B/C/D/L/R)."
+    },
+    {
+      "id": 26,
+      "description": "Flashlamp X4 Upper Right Corner",
+      "_vbscript_callback": "Flash26",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Lampz ID 126. Flupper dome flasher 1. Skillshot area."
+    },
+    {
+      "id": 27,
+      "description": "Flashlamp X2 Left Scoop",
+      "_vbscript_callback": "Flash27",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Lampz ID 127. Flupper dome flasher 2."
+    },
+    {
+      "id": 28,
+      "description": "Flashlamp X2 Top Eject / Left Ramp",
+      "_vbscript_callback": "FlashSol28",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Lampz ID 128. VR backglass flash effect."
+    },
+    {
+      "id": 29,
+      "description": "Flashlamp X4 Bumpers Hot Dog (Tommy)",
+      "_vbscript_callback": "Setlamp 129,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Lampz ID 129. Bumper area Tommy flasher."
+    },
+    {
+      "id": 30,
+      "description": "Flashlamp X4 Back Panel",
+      "_vbscript_callback": "Flash30",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "No Lampz ID. Drives 4 Flupper dome flashers (3-6) for back panel effect."
+    },
+    {
+      "id": 31,
+      "description": "Flashlamp X2 Lower Right Hot Dogs / Captive Ball",
+      "_vbscript_callback": "FlashSol31",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Lampz ID 131. Captive ball area flasher. VR backglass flash effect."
+    },
+    {
+      "id": 32,
+      "description": "Flashlamp X4 Top Hot Dogs / Left Orbit",
+      "_vbscript_callback": "Flash32",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Lampz ID 132. Flupper dome flasher 7. Left orbit area."
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_name": "sLRFlipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper"
+    },
+    {
+      "id": 47,
+      "description": "Upper Left Flipper",
+      "_vbscript_callback": "SolULFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper1",
+      "_note": "SolCallback(47) commented out; assigned via vpmFlips.FlipperSolNumber(2)=47"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_name": "sLLFlipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper"
+    },
+    {
+      "id": 51,
+      "description": "Blinder Motor",
+      "_vbscript_callback": "BlinderMove",
+      "_inferred_type": "mechanism",
+      "_note": "Custom solenoid. Drives blinder animation (BlinderP1/BlinderP2 rotation)."
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "vpx_name": "VRBGBulb1",
+      "_note": "Backglass lamp (VR only)"
+    },
+    {
+      "id": 2,
+      "description": "CHRISTMAS",
+      "vpx_name": "l2"
+    },
+    {
+      "id": 3,
+      "description": "COUSIN KEVIN",
+      "vpx_name": "l3"
+    },
+    {
+      "id": 4,
+      "description": "HOLIDAY CAMP",
+      "vpx_name": "l4"
+    },
+    {
+      "id": 5,
+      "description": "LITE EXTRA BALL",
+      "vpx_name": "l5"
+    },
+    {
+      "id": 6,
+      "description": "SILVER BALL",
+      "vpx_name": "l6"
+    },
+    {
+      "id": 7,
+      "description": "CAPTAIN WALKER",
+      "vpx_name": "l7"
+    },
+    {
+      "id": 8,
+      "description": "PINBALL WIZARD",
+      "vpx_name": "l8"
+    },
+    {
+      "id": 9,
+      "description": "SKILL SHOT",
+      "vpx_name": "l9"
+    },
+    {
+      "id": 10,
+      "vpx_name": "VRBGBulb3",
+      "_note": "Backglass lamp (VR only)"
+    },
+    {
+      "id": 11,
+      "description": "SMASH THE MIRROR",
+      "vpx_name": "l11"
+    },
+    {
+      "id": 12,
+      "description": "FIDDLE ABOUT",
+      "vpx_name": "l12"
+    },
+    {
+      "id": 13,
+      "description": "ACID QUEEN",
+      "vpx_name": "l13"
+    },
+    {
+      "id": 14,
+      "description": "THERE'S A DOCTOR",
+      "vpx_name": "l14"
+    },
+    {
+      "id": 15,
+      "description": "TOMMY SCORING",
+      "vpx_name": "l15"
+    },
+    {
+      "id": 16,
+      "description": "SALLY SIMPSON",
+      "vpx_name": "l16"
+    },
+    {
+      "id": 17,
+      "description": "JACKPOT",
+      "vpx_name": "l17"
+    },
+    {
+      "id": 18,
+      "description": "DOUBLE JACKPOT",
+      "vpx_name": "l18"
+    },
+    {
+      "id": 19,
+      "vpx_name": "VRBGBulb5",
+      "_note": "Backglass lamp (VR only)"
+    },
+    {
+      "id": 20,
+      "description": "Left Inlane Arrow",
+      "vpx_name": "l20"
+    },
+    {
+      "id": 21,
+      "description": "Center Inlane Arrow",
+      "vpx_name": "l21"
+    },
+    {
+      "id": 22,
+      "description": "Right Inlane Arrow",
+      "vpx_name": "l22"
+    },
+    {
+      "id": 24,
+      "description": "Silverball",
+      "vpx_name": "l24"
+    },
+    {
+      "id": 25,
+      "description": "Target Arrow (Left Bank Top)",
+      "vpx_name": "l25"
+    },
+    {
+      "id": 26,
+      "description": "Target Arrow (Left Bank Middle)",
+      "vpx_name": "l26"
+    },
+    {
+      "id": 27,
+      "description": "Target Arrow (Left Bank Bottom)",
+      "vpx_name": "l27"
+    },
+    {
+      "id": 28,
+      "vpx_name": "VRBGBulb7",
+      "_note": "Backglass lamp (VR only)"
+    },
+    {
+      "id": 29,
+      "description": "SPINNER BONUS L",
+      "vpx_name": "l29"
+    },
+    {
+      "id": 30,
+      "description": "EXTRA BALL",
+      "vpx_name": "l30"
+    },
+    {
+      "id": 31,
+      "description": "LITE L",
+      "vpx_name": "l31"
+    },
+    {
+      "id": 32,
+      "description": "GENIUS-WOW",
+      "vpx_name": "l32"
+    },
+    {
+      "id": 33,
+      "description": "Target Arrow (Right Bank Top)",
+      "vpx_name": "l33"
+    },
+    {
+      "id": 34,
+      "description": "Target Arrow (Right Bank Middle)",
+      "vpx_name": "l34"
+    },
+    {
+      "id": 35,
+      "description": "Target Arrow (Right Bank Bottom)",
+      "vpx_name": "l35"
+    },
+    {
+      "id": 36,
+      "description": "MYSTERY",
+      "vpx_name": "l36"
+    },
+    {
+      "id": 37,
+      "vpx_name": "VRBGBulb9",
+      "_note": "Backglass lamp (VR only)"
+    },
+    {
+      "id": 38,
+      "description": "MORE TIME",
+      "vpx_name": "l38"
+    },
+    {
+      "id": 39,
+      "description": "Left Sign Bulb",
+      "vpx_name": "l39"
+    },
+    {
+      "id": 40,
+      "description": "Center Left Sign Bulb",
+      "vpx_name": "l40"
+    },
+    {
+      "id": 41,
+      "description": "T (TOMMY)",
+      "vpx_name": "l41"
+    },
+    {
+      "id": 42,
+      "description": "O (TOMMY)",
+      "vpx_name": "l42"
+    },
+    {
+      "id": 43,
+      "description": "M (TOMMY)",
+      "vpx_name": "l43"
+    },
+    {
+      "id": 44,
+      "description": "M (TOMMY)",
+      "vpx_name": "l44"
+    },
+    {
+      "id": 45,
+      "description": "Y (TOMMY)",
+      "vpx_name": "l45"
+    },
+    {
+      "id": 46,
+      "description": "SPECIAL L/R",
+      "vpx_name": "l46"
+    },
+    {
+      "id": 47,
+      "description": "MULTIBALL",
+      "vpx_name": "l47"
+    },
+    {
+      "id": 48,
+      "description": "SHOOT AGAIN",
+      "vpx_name": "l48"
+    },
+    {
+      "id": 49,
+      "description": "Top Pop Bumper Lamp",
+      "vpx_name": "l49"
+    },
+    {
+      "id": 50,
+      "description": "Center Pop Bumper Lamp",
+      "vpx_name": "l50"
+    },
+    {
+      "id": 51,
+      "description": "Right Pop Bumper Lamp",
+      "vpx_name": "l51"
+    },
+    {
+      "id": 52,
+      "description": "SPINNER BONUS R",
+      "vpx_name": "l52"
+    },
+    {
+      "id": 53,
+      "description": "LITE R",
+      "vpx_name": "l53"
+    },
+    {
+      "id": 54,
+      "description": "HOLIDAY CAMP",
+      "vpx_name": "l54"
+    },
+    {
+      "id": 55,
+      "description": "DOUBLE SPINNER VALUE L/R",
+      "vpx_name": "l55"
+    },
+    {
+      "id": 56,
+      "description": "Airplane Lamp",
+      "vpx_name": "l56"
+    },
+    {
+      "id": 57,
+      "description": "ACID QUEEN Left",
+      "vpx_name": "l57"
+    },
+    {
+      "id": 58,
+      "description": "ACID QUEEN Top",
+      "vpx_name": "l58"
+    },
+    {
+      "id": 59,
+      "description": "ACID QUEEN Right",
+      "vpx_name": "l59"
+    },
+    {
+      "id": 60,
+      "description": "Center Right Sign Bulb",
+      "vpx_name": "l60"
+    },
+    {
+      "id": 61,
+      "description": "Right Sign Bulb",
+      "vpx_name": "l61"
+    },
+    {
+      "id": 62,
+      "description": "MULTI BALL (Ramp)",
+      "vpx_name": "l62"
+    },
+    {
+      "id": 63,
+      "description": "COLLECT",
+      "vpx_name": "l63"
+    },
+    {
+      "id": 100,
+      "description": "GI Playfield",
+      "_note": "Controlled by GI Relay (sol 11). Lampz.obj(100) = GI collection."
+    },
+    {
+      "id": 101,
+      "description": "GI Cabinet",
+      "_note": "Controlled by GI Relay (sol 11). Lampz.obj(101) = GICab collection."
+    },
+    {
+      "id": 102,
+      "description": "Insert Intensity",
+      "_note": "Callback: InsertIntensityUpdate. Controlled by GI Relay."
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper=46 (DE framework constant from core.vbs). SolRFlipper callback. VPX object: RightFlipper."
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper=48 (DE framework constant from core.vbs). SolLFlipper callback. VPX object: LeftFlipper."
+    }
+  ]
+}

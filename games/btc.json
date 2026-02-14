@@ -1,0 +1,656 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Beat The Clock (Bally 1985) VPW v1.0.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from SolCallback and sw*_Hit handlers. Uses BALLY.VBS platform. Physical trough with single ball (sw8). Lamps extracted from VLM BL_L_l## arrays (light numbers correspond to ROM lamp outputs via vpmMapLights AllLamps with TimerInterval). Flashers driven via solenoid 6 (4 sub-flashers F6a-F6d) and solenoid 7 (no-op in script). GI controlled by solenoid 17 via SetGI. Drop targets use Roth DT system (DTHit/DTRaise). Standup targets use Roth ST system (STHit with PulseSw). ROM beatclc2 has flasher support; beatclck is alternate without."
+  },
+  "game": {
+    "id": "btc",
+    "name": "Beat The Clock",
+    "year": 1985,
+    "manufacturer": "Bally",
+    "ipdb_id": 212,
+    "platform": "bally"
+  },
+  "roms": [
+    {
+      "id": "beatclc2",
+      "version": "Free Play (Flasher support)"
+    },
+    {
+      "id": "beatclck",
+      "version": "Standard",
+      "_note": "Commented out in VBS — no flasher support"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Drop Target 1 (Left Bank)",
+      "vpx_name": "sw1",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 1 — part of 1-6 bank, reset by sol 11"
+    },
+    {
+      "id": 2,
+      "description": "Drop Target 2 (Left Bank)",
+      "vpx_name": "sw2",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 2 — part of 1-6 bank, reset by sol 11"
+    },
+    {
+      "id": 3,
+      "description": "Drop Target 3 (Left Bank)",
+      "vpx_name": "sw3",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 3 — part of 1-6 bank, reset by sol 11"
+    },
+    {
+      "id": 4,
+      "description": "Drop Target 4 (Left Bank)",
+      "vpx_name": "sw4",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 4 — part of 1-6 bank, reset by sol 11"
+    },
+    {
+      "id": 5,
+      "description": "Drop Target 5 (Left Bank)",
+      "vpx_name": "sw5",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 5 — part of 1-6 bank, reset by sol 11"
+    },
+    {
+      "id": 7,
+      "description": "Drop Target 6 (Left Bank)",
+      "vpx_name": "sw7",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 7 — part of 1-6 bank, reset by sol 11. Bank is sw1-5,7 (no sw6)"
+    },
+    {
+      "id": 8,
+      "description": "Trough / Outhole",
+      "vpx_name": "sw8",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "Physical trough, single ball. Initialized in Table1_Init with Controller.Switch(8)=1"
+    },
+    {
+      "id": 12,
+      "description": "Upper Right Flipper Button",
+      "_note": "Mapped to RightFlipperKey in KeyDown/KeyUp",
+      "input_action_hint": "flipper_upper_right",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 13,
+      "description": "Wire Trigger (Left)",
+      "vpx_name": "sw13",
+      "_inferred_type": "trigger"
+    },
+    {
+      "id": 15,
+      "description": "Tilt",
+      "_note": "vpmNudge.TiltSwitch=15",
+      "input_action_hint": "tilt",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 16,
+      "description": "Wire Trigger",
+      "vpx_name": "sw16",
+      "_inferred_type": "trigger"
+    },
+    {
+      "id": 17,
+      "description": "Standup Target 1 (Upper Bank)",
+      "vpx_name": "sw17",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 17 — pulsed via Roth ST system"
+    },
+    {
+      "id": 18,
+      "description": "Standup Target 2 (Upper Bank)",
+      "vpx_name": "sw18",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 18"
+    },
+    {
+      "id": 19,
+      "description": "Standup Target 3 (Upper Bank)",
+      "vpx_name": "sw19",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 19"
+    },
+    {
+      "id": 20,
+      "description": "Standup Target 4 (Upper Bank)",
+      "vpx_name": "sw20",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 20"
+    },
+    {
+      "id": 21,
+      "description": "Standup Target 5 (Upper Bank)",
+      "vpx_name": "sw21",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 21"
+    },
+    {
+      "id": 23,
+      "description": "Wire Trigger",
+      "vpx_name": "sw23",
+      "_inferred_type": "trigger"
+    },
+    {
+      "id": 24,
+      "description": "Wire Trigger",
+      "vpx_name": "sw24",
+      "_inferred_type": "trigger"
+    },
+    {
+      "id": 25,
+      "description": "Top Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Bumper1 — pulsed via vpmTimer.PulseSw 25"
+    },
+    {
+      "id": 26,
+      "description": "Middle Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Bumper2 — pulsed via vpmTimer.PulseSw 26"
+    },
+    {
+      "id": 27,
+      "description": "Bottom Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Bumper3 — pulsed via vpmTimer.PulseSw 27"
+    },
+    {
+      "id": 28,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "Pulsed via vpmTimer.PulseSw 28"
+    },
+    {
+      "id": 29,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "Pulsed via vpmTimer.PulseSw 29"
+    },
+    {
+      "id": 30,
+      "description": "Star Trigger 1",
+      "vpx_name": "sw30",
+      "_inferred_type": "trigger"
+    },
+    {
+      "id": 31,
+      "description": "Star Trigger 2",
+      "vpx_name": "sw31",
+      "_inferred_type": "trigger"
+    },
+    {
+      "id": 32,
+      "description": "Star Trigger 3",
+      "vpx_name": "sw32",
+      "_inferred_type": "trigger",
+      "_note": "Also toggles L16 lamp state on hit/timer"
+    },
+    {
+      "id": 33,
+      "description": "Standup Target 1 (Lower Bank)",
+      "vpx_name": "sw33",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 33"
+    },
+    {
+      "id": 34,
+      "description": "Standup Target 2 (Lower Bank)",
+      "vpx_name": "sw34",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 34"
+    },
+    {
+      "id": 35,
+      "description": "Standup Target 3 (Lower Bank)",
+      "vpx_name": "sw35",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 35"
+    },
+    {
+      "id": 36,
+      "description": "Standup Target 4 (Lower Bank)",
+      "vpx_name": "sw36",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 36"
+    },
+    {
+      "id": 37,
+      "description": "Wire Trigger",
+      "vpx_name": "sw37",
+      "_inferred_type": "trigger"
+    },
+    {
+      "id": 38,
+      "description": "Wire Trigger",
+      "vpx_name": "sw38",
+      "_inferred_type": "trigger"
+    },
+    {
+      "id": 39,
+      "description": "Wire Trigger",
+      "vpx_name": "sw39",
+      "_inferred_type": "trigger"
+    },
+    {
+      "id": 40,
+      "description": "Wire Trigger",
+      "vpx_name": "sw40",
+      "_inferred_type": "trigger"
+    },
+    {
+      "id": 45,
+      "description": "Single Drop Target (Right)",
+      "vpx_name": "sw45",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 45 — standalone target, reset by sol 10"
+    },
+    {
+      "id": 46,
+      "description": "Left Saucer",
+      "vpx_name": "sw46",
+      "_inferred_type": "kicker",
+      "_note": "Kicked by sol 8 (SolOut46)"
+    },
+    {
+      "id": 47,
+      "description": "Middle Saucer",
+      "vpx_name": "sw47",
+      "_inferred_type": "kicker",
+      "_note": "Kicked by sol 9 (SolOut47)"
+    }
+  ],
+  "coils": [
+    {
+      "id": 6,
+      "description": "Flasher 6",
+      "_vbscript_callback": "Flasher6",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Controls 4 sub-flashers: F6a, F6b, F6c, F6d"
+    },
+    {
+      "id": 7,
+      "description": "Flasher 7",
+      "_vbscript_callback": "Flasher7",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "No-op in script (empty sub)"
+    },
+    {
+      "id": 8,
+      "description": "Left Saucer Kicker",
+      "_vbscript_callback": "SolOut46",
+      "_inferred_type": "kicker",
+      "_note": "Kicks ball from sw46"
+    },
+    {
+      "id": 9,
+      "description": "Middle Saucer Kicker",
+      "_vbscript_callback": "SolOut47",
+      "_inferred_type": "kicker",
+      "_note": "Kicks ball from sw47"
+    },
+    {
+      "id": 10,
+      "description": "Single Drop Target Reset (Right)",
+      "_vbscript_callback": "SolDropUpDTR",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises sw45"
+    },
+    {
+      "id": 11,
+      "description": "1-6 Drop Target Bank Reset",
+      "_vbscript_callback": "SolDropUpDTL",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises sw1-5,7 (full left bank)"
+    },
+    {
+      "id": 14,
+      "description": "Ball Release",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "ball_release",
+      "_note": "Releases ball from sw8 trough"
+    },
+    {
+      "id": 15,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"Knocker_1\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 17,
+      "description": "GI Relay",
+      "_vbscript_callback": "SolGIOn",
+      "_inferred_type": "gi_relay",
+      "_note": "Controls playfield general illumination via SetGI"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 2,
+      "vpx_name": "L02"
+    },
+    {
+      "id": 4,
+      "vpx_name": "L04"
+    },
+    {
+      "id": 5,
+      "vpx_name": "L05"
+    },
+    {
+      "id": 6,
+      "vpx_name": "L06"
+    },
+    {
+      "id": 7,
+      "vpx_name": "L07"
+    },
+    {
+      "id": 8,
+      "vpx_name": "L08"
+    },
+    {
+      "id": 9,
+      "vpx_name": "L09"
+    },
+    {
+      "id": 10,
+      "vpx_name": "L10"
+    },
+    {
+      "id": 11,
+      "vpx_name": "L11"
+    },
+    {
+      "id": 12,
+      "vpx_name": "L12"
+    },
+    {
+      "id": 13,
+      "vpx_name": "L13"
+    },
+    {
+      "id": 14,
+      "vpx_name": "L14"
+    },
+    {
+      "id": 15,
+      "vpx_name": "L15"
+    },
+    {
+      "id": 16,
+      "vpx_name": "L16"
+    },
+    {
+      "id": 20,
+      "vpx_name": "L20"
+    },
+    {
+      "id": 21,
+      "vpx_name": "L21"
+    },
+    {
+      "id": 22,
+      "vpx_name": "L22"
+    },
+    {
+      "id": 23,
+      "vpx_name": "L23"
+    },
+    {
+      "id": 24,
+      "vpx_name": "L24"
+    },
+    {
+      "id": 25,
+      "vpx_name": "L25"
+    },
+    {
+      "id": 26,
+      "vpx_name": "L26"
+    },
+    {
+      "id": 27,
+      "vpx_name": "L27"
+    },
+    {
+      "id": 28,
+      "vpx_name": "L28"
+    },
+    {
+      "id": 29,
+      "vpx_name": "L29"
+    },
+    {
+      "id": 30,
+      "vpx_name": "L30"
+    },
+    {
+      "id": 31,
+      "vpx_name": "L31"
+    },
+    {
+      "id": 35,
+      "vpx_name": "L35"
+    },
+    {
+      "id": 36,
+      "vpx_name": "L36"
+    },
+    {
+      "id": 37,
+      "vpx_name": "L37"
+    },
+    {
+      "id": 38,
+      "vpx_name": "L38"
+    },
+    {
+      "id": 39,
+      "vpx_name": "L39"
+    },
+    {
+      "id": 40,
+      "vpx_name": "L40"
+    },
+    {
+      "id": 41,
+      "vpx_name": "L41"
+    },
+    {
+      "id": 42,
+      "vpx_name": "L42"
+    },
+    {
+      "id": 43,
+      "vpx_name": "L43"
+    },
+    {
+      "id": 44,
+      "vpx_name": "L44"
+    },
+    {
+      "id": 45,
+      "vpx_name": "L45"
+    },
+    {
+      "id": 46,
+      "vpx_name": "L46"
+    },
+    {
+      "id": 47,
+      "vpx_name": "L47"
+    },
+    {
+      "id": 49,
+      "vpx_name": "L49"
+    },
+    {
+      "id": 50,
+      "vpx_name": "L50"
+    },
+    {
+      "id": 51,
+      "vpx_name": "L51"
+    },
+    {
+      "id": 52,
+      "vpx_name": "L52"
+    },
+    {
+      "id": 53,
+      "vpx_name": "L53"
+    },
+    {
+      "id": 54,
+      "vpx_name": "L54"
+    },
+    {
+      "id": 58,
+      "vpx_name": "L58"
+    },
+    {
+      "id": 59,
+      "vpx_name": "L59"
+    },
+    {
+      "id": 60,
+      "vpx_name": "L60"
+    },
+    {
+      "id": 62,
+      "vpx_name": "L62"
+    },
+    {
+      "id": 63,
+      "vpx_name": "L63"
+    },
+    {
+      "id": 65,
+      "vpx_name": "L65"
+    },
+    {
+      "id": 66,
+      "vpx_name": "L66"
+    },
+    {
+      "id": 67,
+      "vpx_name": "L67"
+    },
+    {
+      "id": 68,
+      "vpx_name": "L68"
+    },
+    {
+      "id": 69,
+      "vpx_name": "L69"
+    },
+    {
+      "id": 74,
+      "vpx_name": "L74"
+    },
+    {
+      "id": 75,
+      "vpx_name": "L75"
+    },
+    {
+      "id": 76,
+      "vpx_name": "L76"
+    },
+    {
+      "id": 77,
+      "vpx_name": "L77"
+    },
+    {
+      "id": 78,
+      "vpx_name": "L78"
+    },
+    {
+      "id": 79,
+      "vpx_name": "L79"
+    },
+    {
+      "id": 81,
+      "vpx_name": "L81"
+    },
+    {
+      "id": 82,
+      "vpx_name": "L82"
+    },
+    {
+      "id": 83,
+      "vpx_name": "L83"
+    },
+    {
+      "id": 84,
+      "vpx_name": "L84"
+    },
+    {
+      "id": 85,
+      "vpx_name": "L85"
+    },
+    {
+      "id": 89,
+      "vpx_name": "L89"
+    },
+    {
+      "id": 90,
+      "vpx_name": "L90"
+    },
+    {
+      "id": 91,
+      "vpx_name": "L91"
+    },
+    {
+      "id": 92,
+      "vpx_name": "L92"
+    },
+    {
+      "id": 93,
+      "vpx_name": "L93"
+    },
+    {
+      "id": 94,
+      "vpx_name": "L94"
+    },
+    {
+      "id": 95,
+      "vpx_name": "L95"
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    }
+  ]
+}

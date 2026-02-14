@@ -1,0 +1,945 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Simpsons Pinball Party, The (Stern 2003) VPW 2.0.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils. No Const sw* definitions in script — switches identified from _Hit/_UnHit subs, Controller.Switch() calls, PulseSw calls, and cvpmBallStack/cvpmDropTarget init. swTilt comes from Sega.VBS framework (not defined in table script) — documented but not assigned a number here. Flasher coils (21-29, 31-32) use SolCallBack with custom Flash subs and FlupperDoms v2 flasher system. Lamps use Lampz (LampFader class) with MassAssign. UseSolenoids=2 (FastFlips), UseLamps=0, UseGI=0. Complex game: 5-ball trough, 3 ball stacks (bsBR, bsTR, bsVUK), drop target bank (3 targets), Homer head mechanism (solenoid 8), garage door mechanism (solenoid 20), TV lock post (solenoid 7), couch lock/exit (solenoid 3). Lamp 111 is GI (mapped to GI collection). Lamps 73-80 have callbacks but no MassAssign — likely backbox or auxiliary inserts with direct object references (l73-l80). Lamp 32 not in MassAssign but has no callback either — possibly unused or backbox. Five flippers total: main L/R plus TopLeftFlipper (sol 12), TopRightFlipper (sol 13), RightFlipper2 (sol 14)."
+  },
+  "game": {
+    "id": "simp",
+    "name": "The Simpsons Pinball Party",
+    "year": 2003,
+    "manufacturer": "Stern",
+    "ipdb_id": 6154,
+    "platform": "sega"
+  },
+  "roms": [
+    {
+      "id": "simpprty",
+      "_note": "cGameName from script"
+    }
+  ],
+  "switches": [
+    {
+      "id": 6,
+      "description": "Coin Door",
+      "_note": "Controller.Switch(6) on/off from AddCreditKey KeyDown/KeyUp"
+    },
+    {
+      "id": 9,
+      "description": "Standup Target",
+      "vpx_name": "sw9",
+      "_note": "PulseSw 9"
+    },
+    {
+      "id": 10,
+      "description": "Trough 5 (Nearest Drain)",
+      "vpx_name": "bsTrough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "5",
+      "_note": "bsTrough.InitSw — position 5 (last switch in 5-ball trough)"
+    },
+    {
+      "id": 11,
+      "description": "Trough 4",
+      "vpx_name": "bsTrough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4",
+      "_note": "bsTrough.InitSw — position 4"
+    },
+    {
+      "id": 12,
+      "description": "Trough 3",
+      "vpx_name": "bsTrough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "bsTrough.InitSw — position 3"
+    },
+    {
+      "id": 13,
+      "description": "Trough 2",
+      "vpx_name": "bsTrough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "bsTrough.InitSw — position 2"
+    },
+    {
+      "id": 14,
+      "description": "Trough 1 (Nearest Shooter)",
+      "vpx_name": "bsTrough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "bsTrough.InitSw — position 1 (first to eject)"
+    },
+    {
+      "id": 15,
+      "description": "Shooter Lane Confirm",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "jam",
+      "_note": "PulseSw 15 fired in SolRelease after trough eject"
+    },
+    {
+      "id": 16,
+      "description": "Plunger Lane",
+      "vpx_name": "sw16",
+      "_note": "Controller.Switch on/off. Also used by plungerIM (cvpmImpulseP) as plunger lane switch. BIPL flag tracks ball-in-plunger-lane."
+    },
+    {
+      "id": 17,
+      "description": "Drop Target 1",
+      "vpx_name": "sw17",
+      "_note": "dtDrop.InitDrop Array(sw17,sw18,sw19), Array(17,18,19). VPX drop target object."
+    },
+    {
+      "id": 18,
+      "description": "Drop Target 2",
+      "vpx_name": "sw18",
+      "_note": "dtDrop.InitDrop"
+    },
+    {
+      "id": 19,
+      "description": "Drop Target 3",
+      "vpx_name": "sw19",
+      "_note": "dtDrop.InitDrop"
+    },
+    {
+      "id": 20,
+      "description": "Bottom Right Saucer",
+      "vpx_name": "sw20",
+      "_note": "bsBR cvpmBallStack. InitSaucer sw20, 20, 232, 30. Ball management."
+    },
+    {
+      "id": 21,
+      "description": "Spinner",
+      "vpx_name": "sw21",
+      "_note": "PulseSw 21 on sw21_Spin event"
+    },
+    {
+      "id": 22,
+      "description": "Bart Ramp Entry (Opto)",
+      "vpx_name": "sw22",
+      "_note": "Controller.Switch on/off — opto-style (held while ball present)"
+    },
+    {
+      "id": 23,
+      "description": "Bart Ramp Exit (Opto)",
+      "vpx_name": "sw23",
+      "_note": "Controller.Switch on/off — opto-style (held while ball present)"
+    },
+    {
+      "id": 24,
+      "description": "Top Right Saucer",
+      "vpx_name": "sw24",
+      "_note": "bsTR cvpmBallStack. InitSaucer sw24, 24, 100, 1. Ball management."
+    },
+    {
+      "id": 25,
+      "description": "Rollover",
+      "vpx_name": "sw25",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 26,
+      "description": "Rollover",
+      "vpx_name": "sw26",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 29,
+      "description": "Rollover",
+      "vpx_name": "sw29",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 30,
+      "description": "Standup Target",
+      "vpx_name": "sw30",
+      "_note": "PulseSw 30"
+    },
+    {
+      "id": 31,
+      "description": "Standup Target",
+      "vpx_name": "sw31",
+      "_note": "PulseSw 31"
+    },
+    {
+      "id": 32,
+      "description": "Standup Target",
+      "vpx_name": "sw32",
+      "_note": "PulseSw 32"
+    },
+    {
+      "id": 33,
+      "description": "Standup Target",
+      "vpx_name": "sw33",
+      "_note": "PulseSw 33"
+    },
+    {
+      "id": 34,
+      "description": "Standup Target",
+      "vpx_name": "sw34",
+      "_note": "PulseSw 34"
+    },
+    {
+      "id": 35,
+      "description": "Standup Target",
+      "vpx_name": "sw35",
+      "_note": "PulseSw 35"
+    },
+    {
+      "id": 36,
+      "description": "Wire Ramp Entry",
+      "vpx_name": "sw36",
+      "_note": "PulseSw 36. Also triggers WireRampOn/Off sound based on ball direction."
+    },
+    {
+      "id": 37,
+      "description": "Rollover",
+      "vpx_name": "sw37",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 38,
+      "description": "Drop Target (Couch Area)",
+      "vpx_name": "sw38",
+      "_note": "Controller.Switch on/off. Also referenced by CouchDrop_Hit (sets switch 38=0). Drop1 object."
+    },
+    {
+      "id": 39,
+      "description": "Drop Target (Couch Area)",
+      "vpx_name": "sw39",
+      "_note": "Controller.Switch on/off. Drop2 object."
+    },
+    {
+      "id": 40,
+      "description": "Couch (Ball Landing)",
+      "vpx_name": "sw40",
+      "_note": "Controller.Switch on/off. Ball lands on couch after drop. Turns off WireRamp sound."
+    },
+    {
+      "id": 41,
+      "description": "Rollover / Lane",
+      "vpx_name": "sw41",
+      "_note": "PulseSw 41"
+    },
+    {
+      "id": 42,
+      "description": "Rollover / Lane",
+      "vpx_name": "sw42",
+      "_note": "PulseSw 42"
+    },
+    {
+      "id": 43,
+      "description": "Rollover / Lane",
+      "vpx_name": "sw43",
+      "_note": "PulseSw 43"
+    },
+    {
+      "id": 44,
+      "description": "Rollover",
+      "vpx_name": "sw44",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 45,
+      "description": "Ramp Switch",
+      "vpx_name": "sw45",
+      "_note": "PulseSw 45"
+    },
+    {
+      "id": 46,
+      "description": "Ramp Switch",
+      "vpx_name": "sw46",
+      "_note": "PulseSw 46"
+    },
+    {
+      "id": 47,
+      "description": "Ramp Switch",
+      "vpx_name": "sw47",
+      "_note": "PulseSw 47"
+    },
+    {
+      "id": 48,
+      "description": "Garage Door Switch",
+      "vpx_name": "sw48",
+      "_note": "PulseSw 48. Comment says 'Garage Door'."
+    },
+    {
+      "id": 49,
+      "description": "Pop Bumper (Middle)",
+      "vpx_name": "Bumper3",
+      "_note": "PulseSw 49 in Bumper3_Hit"
+    },
+    {
+      "id": 50,
+      "description": "Pop Bumper (Top)",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 50 in Bumper1_Hit"
+    },
+    {
+      "id": 51,
+      "description": "Pop Bumper (Bottom)",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 51 in Bumper2_Hit"
+    },
+    {
+      "id": 52,
+      "description": "Rollover / Lane",
+      "vpx_name": "sw52",
+      "_note": "PulseSw 52"
+    },
+    {
+      "id": 54,
+      "description": "Start Button",
+      "input_action_hint": "start_game",
+      "input_map_hint": "cabinet",
+      "_note": "Controller.Switch(54) on/off from StartGameKey KeyDown/KeyUp"
+    },
+    {
+      "id": 55,
+      "description": "VUK (Vertical Up Kicker)",
+      "vpx_name": "sw55",
+      "_note": "bsVuk cvpmBallStack. InitSw 0,55. Ball management — ball enters via sw55_Hit, exits via VukOut kicker."
+    },
+    {
+      "id": 57,
+      "description": "Rollover",
+      "vpx_name": "sw57",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 58,
+      "description": "Rollover",
+      "vpx_name": "sw58",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 59,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "PulseSw 59 in LeftSlingShot_Slingshot sub"
+    },
+    {
+      "id": 60,
+      "description": "Rollover",
+      "vpx_name": "sw60",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 61,
+      "description": "Rollover",
+      "vpx_name": "sw61",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 62,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "PulseSw 62 in RightSlingShot_Slingshot sub"
+    },
+    {
+      "id": 63,
+      "description": "Rollover",
+      "vpx_name": "sw63",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 64,
+      "description": "Rollover",
+      "vpx_name": "sw64",
+      "_note": "Controller.Switch on/off"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Eject",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "vpx_name": "BallRelease",
+      "_note": "Fires bsTrough.ExitSol_On then PulseSw 15 (shooter lane confirm). Kick angle 45, force 9."
+    },
+    {
+      "id": 2,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "Auto_Plunger",
+      "_inferred_type": "ball_management",
+      "vpx_name": "swPlunger",
+      "_note": "cvpmImpulseP. plungerIM.AutoFire. Power=75, Time=0.7s."
+    },
+    {
+      "id": 3,
+      "description": "Couch Exit",
+      "_vbscript_callback": "CouchExit",
+      "_inferred_type": "ball_management",
+      "_note": "Enables CouchDrop timer to release ball from couch lock. Drop1 reset logic. Original comment: vlLock.SolExit."
+    },
+    {
+      "id": 4,
+      "description": "Drop Target Bank Reset",
+      "_vbscript_callback": "dtDrop.SolDropUp",
+      "_inferred_type": "drop_target",
+      "_note": "Resets drop targets sw17/sw18/sw19. Also clears blenddisablelighting on SW17/SW18/SW19 objects. Inline callback expression."
+    },
+    {
+      "id": 5,
+      "description": "Bottom Right Saucer Eject",
+      "_vbscript_callback": "bsBR.SolOut",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw20",
+      "_note": "bsBR cvpmBallStack eject. Kick angle 232, force 30."
+    },
+    {
+      "id": 6,
+      "description": "VUK Eject",
+      "_vbscript_callback": "bsVUK.SolOut",
+      "_inferred_type": "ball_management",
+      "vpx_name": "VukOut",
+      "_note": "bsVuk cvpmBallStack eject via VukOut kicker. Kick angle 180, force 0 (vertical)."
+    },
+    {
+      "id": 7,
+      "description": "TV Lock Post Release",
+      "_vbscript_callback": "SolTVRelease",
+      "_inferred_type": "mechanism",
+      "vpx_name": "TopPost",
+      "_note": "Drops/raises TopPost. When enabled: TopPost.IsDropped=1 (releases ball). When disabled: TopPost.IsDropped=0 (blocks)."
+    },
+    {
+      "id": 8,
+      "description": "Homer Head Motor",
+      "_vbscript_callback": "SolHomer",
+      "_inferred_type": "mechanism",
+      "_note": "Rotates Homer head mechanism. Enabled: HomerActive=1, rotates head up (HeadDir=2). Disabled: rotates head down (HeadDir=-2). Uses HeadTimer for animation."
+    },
+    {
+      "id": 12,
+      "description": "Top Left Flipper",
+      "_vbscript_callback": "SolTopLeftFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "TopLeftFlipper",
+      "_note": "ROM-controlled upper left flipper. Only fires when LFPress=0 (no player button press)."
+    },
+    {
+      "id": 13,
+      "description": "Top Right Flipper",
+      "_vbscript_callback": "SolTopRightFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "TopRightFlipper",
+      "_note": "ROM-controlled upper right flipper. Only fires when RFPress=0."
+    },
+    {
+      "id": 14,
+      "description": "Right Flipper 2 (Upper)",
+      "_vbscript_callback": "SolRightFlipper2",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper2",
+      "_note": "ROM-controlled secondary right flipper. Only fires when RFPress=0."
+    },
+    {
+      "id": 19,
+      "description": "Top Right Saucer Eject",
+      "_vbscript_callback": "bsTR.SolOut",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw24",
+      "_note": "bsTR cvpmBallStack eject. Kick angle 100, force 1."
+    },
+    {
+      "id": 20,
+      "description": "Garage Door Motor",
+      "_vbscript_callback": "GarageUp",
+      "_inferred_type": "mechanism",
+      "_note": "Opens/closes garage door mechanism. Enabled: DoorStatus=1 (opens). Disabled: DoorStatus=0 (closes). Uses GDoorT timer for animation."
+    },
+    {
+      "id": 21,
+      "description": "Flasher — Pops (Clear/Green)",
+      "_vbscript_callback": "FlashPops",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlupperDoms v2 flasher. ObjTargetLevel(1)."
+    },
+    {
+      "id": 22,
+      "description": "Flasher — Right Ramp Red",
+      "_vbscript_callback": "RightRampRed",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlupperDoms v2 flasher. ObjTargetLevel(4)."
+    },
+    {
+      "id": 23,
+      "description": "Flasher — Duff Can / Right Ramp Orange",
+      "_vbscript_callback": "DuffCan",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlupperDoms v2 flasher. ObjTargetLevel(5). Comment: R.Ramp Orange / Duff Can."
+    },
+    {
+      "id": 25,
+      "description": "Flasher — Itchy",
+      "_vbscript_callback": "FlashItchy",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlupperDoms v2 flasher. ObjTargetLevel(6)."
+    },
+    {
+      "id": 26,
+      "description": "Flasher — Scratchy",
+      "_vbscript_callback": "FlashScratchy",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlupperDoms v2 flasher. ObjTargetLevel(8)."
+    },
+    {
+      "id": 27,
+      "description": "Flasher — Homer Head",
+      "_vbscript_callback": "HomerHead",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlupperDoms v2 flasher. ObjTargetLevel(10). Illuminates Homer head mechanism."
+    },
+    {
+      "id": 28,
+      "description": "Flasher — Couch",
+      "_vbscript_callback": "FlashCouch",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlupperDoms v2 flasher. ObjTargetLevel(2)."
+    },
+    {
+      "id": 29,
+      "description": "Flasher — Comic Book Guy",
+      "_vbscript_callback": "FlashCBG",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlupperDoms v2 flasher. ObjTargetLevel(9)."
+    },
+    {
+      "id": 30,
+      "description": "Drop Bank Trip (Couch Area Drops)",
+      "_vbscript_callback": "SolDropBankTrips",
+      "_inferred_type": "drop_target",
+      "_note": "Knocks down all 3 drops in bank (dtDrop.Hit 1/2/3). Sets blenddisablelighting on SW17/SW18/SW19."
+    },
+    {
+      "id": 31,
+      "description": "Flasher — Upper Playfield Orange",
+      "_vbscript_callback": "UPFOrange",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlupperDoms v2 flasher. ObjTargetLevel(7)."
+    },
+    {
+      "id": 32,
+      "description": "Flasher — Upper Playfield Red",
+      "_vbscript_callback": "UPFRed",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "FlupperDoms v2 flasher. ObjTargetLevel(3)."
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "vpx_name": "l1",
+      "_note": "Also bl1 (bloom layer). Callback: DisableLighting p1."
+    },
+    {
+      "id": 2,
+      "vpx_name": "l2",
+      "_note": "Also bl2. Callback: DisableLighting p2."
+    },
+    {
+      "id": 3,
+      "vpx_name": "l3",
+      "_note": "Also bl3. Callback: DisableLighting p3."
+    },
+    {
+      "id": 4,
+      "vpx_name": "l4",
+      "_note": "Also bl4. Callback: DisableLighting p4."
+    },
+    {
+      "id": 5,
+      "vpx_name": "l5",
+      "_note": "Also bl5. Callback: DisableLighting p5."
+    },
+    {
+      "id": 6,
+      "vpx_name": "l6",
+      "_note": "Also bl6. Callback: DisableLighting p6."
+    },
+    {
+      "id": 7,
+      "vpx_name": "l7",
+      "_note": "Also bl7. Callback: DisableLighting p7."
+    },
+    {
+      "id": 8,
+      "vpx_name": "l8",
+      "_note": "Also bl8. Callback: DisableLighting p8."
+    },
+    {
+      "id": 9,
+      "vpx_name": "l9",
+      "_note": "Also bl9. Callback: DisableLighting p9."
+    },
+    {
+      "id": 10,
+      "vpx_name": "l10",
+      "_note": "Also bl10. Callback: DisableLighting p10."
+    },
+    {
+      "id": 11,
+      "vpx_name": "l11",
+      "_note": "Also bl11. Callback: DisableLighting p11."
+    },
+    {
+      "id": 12,
+      "vpx_name": "l12",
+      "_note": "Also bl12. Callback: DisableLighting p12."
+    },
+    {
+      "id": 13,
+      "vpx_name": "l13",
+      "_note": "Also bl13. Callback: DisableLighting p13."
+    },
+    {
+      "id": 14,
+      "vpx_name": "l14",
+      "_note": "Also bl14. Callback: DisableLighting p14."
+    },
+    {
+      "id": 15,
+      "vpx_name": "l15",
+      "_note": "Also bl15. Callback: DisableLighting p15."
+    },
+    {
+      "id": 16,
+      "vpx_name": "l16"
+    },
+    {
+      "id": 17,
+      "vpx_name": "l17"
+    },
+    {
+      "id": 18,
+      "vpx_name": "l18a",
+      "_note": "Bumper 1 lamp. Callback: bump1LitOpacity."
+    },
+    {
+      "id": 19,
+      "vpx_name": "l19a",
+      "_note": "Bumper 2 lamp. Callback: bump2LitOpacity."
+    },
+    {
+      "id": 20,
+      "vpx_name": "l20",
+      "_note": "Also bl20. Callback: DisableLighting p20."
+    },
+    {
+      "id": 21,
+      "vpx_name": "l21",
+      "_note": "Also bl21. Callback: DisableLighting p21."
+    },
+    {
+      "id": 22,
+      "vpx_name": "l22",
+      "_note": "Also bl22. Callback: DisableLighting p22."
+    },
+    {
+      "id": 23,
+      "vpx_name": "l23",
+      "_note": "Also bl23. Callback: DisableLighting p23."
+    },
+    {
+      "id": 24,
+      "vpx_name": "l24",
+      "_note": "Also bl24. Callback: DisableLighting p24."
+    },
+    {
+      "id": 25,
+      "vpx_name": "l25",
+      "_note": "Also bl25. Callback: DisableLighting p25."
+    },
+    {
+      "id": 26,
+      "vpx_name": "l26",
+      "_note": "Also bl26. Callback: DisableLighting p26."
+    },
+    {
+      "id": 27,
+      "vpx_name": "l27",
+      "_note": "Also bl27. Callback: DisableLighting p27."
+    },
+    {
+      "id": 28,
+      "vpx_name": "l28",
+      "_note": "Also bl28. Callback: DisableLighting p28."
+    },
+    {
+      "id": 29,
+      "vpx_name": "l29",
+      "_note": "Also bl29. Callback: DisableLighting p29."
+    },
+    {
+      "id": 30,
+      "vpx_name": "l30",
+      "_note": "Also bl30. Callback: DisableLighting p30."
+    },
+    {
+      "id": 31,
+      "vpx_name": "l31"
+    },
+    {
+      "id": 33,
+      "vpx_name": "l33",
+      "_note": "Also bl33. Callback: DisableLighting p33."
+    },
+    {
+      "id": 34,
+      "vpx_name": "l34",
+      "_note": "Also bl34. Callback: DisableLighting p34."
+    },
+    {
+      "id": 35,
+      "vpx_name": "l35",
+      "_note": "Also bl35. Callback: DisableLighting p35."
+    },
+    {
+      "id": 36,
+      "vpx_name": "l36",
+      "_note": "Also bl36. Callback: DisableLighting p36."
+    },
+    {
+      "id": 37,
+      "vpx_name": "l37",
+      "_note": "Also bl37. Callback: DisableLighting p37."
+    },
+    {
+      "id": 38,
+      "vpx_name": "l38",
+      "_note": "Also bl38. Callback: DisableLighting p38."
+    },
+    {
+      "id": 39,
+      "vpx_name": "l39",
+      "_note": "Also bl39. Callback: DisableLighting p39."
+    },
+    {
+      "id": 40,
+      "vpx_name": "l40",
+      "_note": "Also bl40. Callback: DisableLighting p40."
+    },
+    {
+      "id": 41,
+      "vpx_name": "l41",
+      "_note": "Also bl41. Callback: DisableLighting p41."
+    },
+    {
+      "id": 42,
+      "vpx_name": "l42",
+      "_note": "Also bl42. Callback: DisableLighting p42."
+    },
+    {
+      "id": 43,
+      "vpx_name": "l43",
+      "_note": "Also bl43. Callback: DisableLighting p43."
+    },
+    {
+      "id": 44,
+      "vpx_name": "l44",
+      "_note": "Also bl44. Callback: DisableLighting p44."
+    },
+    {
+      "id": 45,
+      "vpx_name": "l45",
+      "_note": "Also bl45. Callback: DisableLighting p45."
+    },
+    {
+      "id": 46,
+      "vpx_name": "l46",
+      "_note": "Also bl46. Callback: DisableLighting p46."
+    },
+    {
+      "id": 47,
+      "vpx_name": "l47",
+      "_note": "Also bl47. Callback: DisableLighting p47."
+    },
+    {
+      "id": 48,
+      "vpx_name": "l48",
+      "_note": "Also bl48. Callback: DisableLighting p48."
+    },
+    {
+      "id": 49,
+      "vpx_name": "l49",
+      "_note": "Also bl49. Callback: DisableLighting p49."
+    },
+    {
+      "id": 50,
+      "vpx_name": "l50",
+      "_note": "Also bl50. Callback: DisableLighting p50."
+    },
+    {
+      "id": 51,
+      "vpx_name": "l51",
+      "_note": "Also bl51. Callback: DisableLighting p51."
+    },
+    {
+      "id": 52,
+      "vpx_name": "l52",
+      "_note": "Also bl52. Callback: DisableLighting p52."
+    },
+    {
+      "id": 53,
+      "vpx_name": "l53",
+      "_note": "Also bl53. Callback: DisableLighting p53."
+    },
+    {
+      "id": 54,
+      "vpx_name": "l54",
+      "_note": "Also bl54. Callback: DisableLighting p54."
+    },
+    {
+      "id": 55,
+      "vpx_name": "l55",
+      "_note": "Also bl55. Callback: DisableLighting p55."
+    },
+    {
+      "id": 56,
+      "vpx_name": "l56",
+      "_note": "Also bl56. Callback: DisableLighting p56."
+    },
+    {
+      "id": 57,
+      "vpx_name": "l57"
+    },
+    {
+      "id": 58,
+      "vpx_name": "l58"
+    },
+    {
+      "id": 59,
+      "vpx_name": "l59"
+    },
+    {
+      "id": 60,
+      "vpx_name": "l60"
+    },
+    {
+      "id": 61,
+      "vpx_name": "l61"
+    },
+    {
+      "id": 62,
+      "vpx_name": "l62"
+    },
+    {
+      "id": 63,
+      "vpx_name": "l63",
+      "_note": "Also bl63. Callback: DisableLighting p63."
+    },
+    {
+      "id": 64,
+      "vpx_name": "l64",
+      "_note": "Also bl64. Callback: DisableLighting p64."
+    },
+    {
+      "id": 65,
+      "vpx_name": "l65",
+      "_note": "Also bl65. Callback: DisableLighting p65."
+    },
+    {
+      "id": 66,
+      "vpx_name": "l66",
+      "_note": "Also bl66. Callback: DisableLighting p66."
+    },
+    {
+      "id": 67,
+      "vpx_name": "l67",
+      "_note": "Also bl67. Callback: DisableLighting p67."
+    },
+    {
+      "id": 68,
+      "vpx_name": "l68",
+      "_note": "Also bl68. Callback: DisableLighting p68."
+    },
+    {
+      "id": 69,
+      "vpx_name": "l69",
+      "_note": "Also bl69. Callback: DisableLighting p69."
+    },
+    {
+      "id": 70,
+      "vpx_name": "l70",
+      "_note": "Also bl70. Callback: DisableLighting p70."
+    },
+    {
+      "id": 73,
+      "vpx_name": "l73",
+      "_note": "Callback only (no MassAssign). DisableLighting l73, 150."
+    },
+    {
+      "id": 74,
+      "vpx_name": "l74",
+      "_note": "Callback only. DisableLighting l74, 145."
+    },
+    {
+      "id": 75,
+      "vpx_name": "l75",
+      "_note": "Callback only. DisableLighting l75, 140."
+    },
+    {
+      "id": 76,
+      "vpx_name": "l76",
+      "_note": "Callback only. DisableLighting l76, 135."
+    },
+    {
+      "id": 77,
+      "vpx_name": "l77",
+      "_note": "Callback only. DisableLighting l77, 130."
+    },
+    {
+      "id": 78,
+      "vpx_name": "l78",
+      "_note": "Callback only. DisableLighting l78, 125."
+    },
+    {
+      "id": 79,
+      "vpx_name": "l79",
+      "_note": "Callback only. DisableLighting l79, 125."
+    },
+    {
+      "id": 80,
+      "vpx_name": "l80",
+      "_note": "Callback only. DisableLighting l80/l80b, 5. Two callback lines — likely two VPX objects."
+    },
+    {
+      "id": 111,
+      "vpx_name": "GI",
+      "description": "General Illumination",
+      "_note": "Lampz.obj(111) = ColtoArray(GI). Mapped to GI collection. Callback: GIUpdates. Controls backglass brightness in VR mode."
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — SolRFlipper callback. VPX objects: RightFlipper (also TopRightFlipper, RightFlipper2 on player key press via FlipperActivate)."
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — SolLFlipper callback. VPX objects: LeftFlipper (also TopLeftFlipper on player key press via FlipperActivate)."
+    }
+  ]
+}

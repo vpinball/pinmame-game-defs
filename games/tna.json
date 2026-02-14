@@ -1,0 +1,844 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Total Nuclear Annihilation (Spooky 2017) VPW v2.3.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "STANDALONE VBS GAME — no PinMAME ROM. TNA uses a custom Spooky Pinball microcontroller (not WPC/SAM/etc). The VPW script implements ALL game logic in VBScript with no LoadVPM call — it loads only core.vbs for VPX framework helpers. There are no ROM switch numbers, no SolCallback assignments (except a single DOF knocker), and no lamp matrix. All 'switches' are VPX object _Hit handlers with string names. All 'coils' are direct VPX object manipulation (kicker.Kick, flipper.RotateToEnd, etc). Lighting is RGB LED-based via SetInsert/SetInsertRGB calls on VPX light objects. DOF event numbers (101-198) are listed for cabinet feedback only — they do not correspond to ROM I/O. This game cannot be driven by PinMAME and requires a fundamentally different approach in VPE (either native reimplementation or a custom controller). Switches, coils, and lamps below are documented as VPX object names rather than matrix IDs."
+  },
+  "game": {
+    "id": "tna",
+    "name": "Total Nuclear Annihilation",
+    "year": 2017,
+    "manufacturer": "Spooky",
+    "platform": "standalone-vbs",
+    "_platform_note": "No PinMAME — game logic is entirely in VBScript. Real machine uses custom Spooky Pinball controller with P3-ROC or similar. VPW script loads core.vbs but not any system VBS (no S11.VBS, WPC.VBS, SAM.VBS, etc). cGameName='tna' is used for PuP-Pack folder naming and B2S, not ROM selection."
+  },
+  "roms": [],
+  "_rom_note": "No ROM — standalone VBS game. All game rules implemented in script.",
+  "switches": [
+    {
+      "id": "Drain",
+      "description": "Drain (ball trough entry)",
+      "vpx_name": "Drain",
+      "_inferred_type": "drain",
+      "_dof_event": 116,
+      "_note": "Drain_Hit() destroys ball, manages ball save, end-of-ball logic"
+    },
+    {
+      "id": "swPlungerRest",
+      "description": "Plunger lane ball rest",
+      "vpx_name": "swPlungerRest",
+      "_inferred_type": "shooter_lane",
+      "_note": "Detects ball in plunger lane. Triggers auto-plunge when bAutoPlunger=True. Uses cvpmImpulseP for plunger mechanics."
+    },
+    {
+      "id": "sw1",
+      "description": "Top Lane 1 (C)",
+      "vpx_name": "sw1",
+      "_inferred_type": "rollover",
+      "_dof_event": 150,
+      "_note": "CORE lane 1 — completes C-O-R-E for bonus multiplier. Insert: L1 (yellow)"
+    },
+    {
+      "id": "sw2",
+      "description": "Top Lane 2 (O)",
+      "vpx_name": "sw2",
+      "_inferred_type": "rollover",
+      "_dof_event": 151,
+      "_note": "CORE lane 2. Insert: L2 (yellow)"
+    },
+    {
+      "id": "sw3",
+      "description": "Top Lane 3 (R)",
+      "vpx_name": "sw3",
+      "_inferred_type": "rollover",
+      "_dof_event": 152,
+      "_note": "CORE lane 3. Insert: L3 (yellow)"
+    },
+    {
+      "id": "sw4",
+      "description": "Top Lane 4 (E)",
+      "vpx_name": "sw4",
+      "_inferred_type": "rollover",
+      "_dof_event": 153,
+      "_note": "CORE lane 4. Insert: L4 (yellow)"
+    },
+    {
+      "id": "swOutlaneL",
+      "description": "Left Outlane",
+      "vpx_name": "swOutlaneL",
+      "_inferred_type": "outlane",
+      "_note": "Left outlane. Lane save insert: la1"
+    },
+    {
+      "id": "swOutlaneR",
+      "description": "Right Outlane",
+      "vpx_name": "swOutlaneR",
+      "_inferred_type": "outlane",
+      "_note": "Right outlane. Lane save insert: la4"
+    },
+    {
+      "id": "swInlaneL",
+      "description": "Left Inlane",
+      "vpx_name": "swInlaneL",
+      "_inferred_type": "inlane",
+      "_note": "Left inlane. Lane save insert: la2"
+    },
+    {
+      "id": "swInlaneR",
+      "description": "Right Inlane",
+      "vpx_name": "swInlaneR",
+      "_inferred_type": "inlane",
+      "_note": "Right inlane. Lane save insert: la3"
+    },
+    {
+      "id": "LeftSlingShot",
+      "description": "Left Slingshot (lower)",
+      "vpx_name": "LeftSlingShot",
+      "_inferred_type": "slingshot",
+      "_dof_events": [
+        103,
+        104
+      ],
+      "_note": "Lower left slingshot. DOF 103=solenoid, 104=flasher"
+    },
+    {
+      "id": "RightSlingShot",
+      "description": "Right Slingshot (lower)",
+      "vpx_name": "RightSlingShot",
+      "_inferred_type": "slingshot",
+      "_dof_events": [
+        105,
+        106
+      ],
+      "_note": "Lower right slingshot. DOF 105=solenoid, 106=flasher"
+    },
+    {
+      "id": "Slingshot1",
+      "description": "Reactor Slingshot Top",
+      "vpx_name": "Slingshot1",
+      "_inferred_type": "slingshot",
+      "_dof_event": 117,
+      "_note": "Upper/reactor area slingshot (top). One of three slingshots around the reactor."
+    },
+    {
+      "id": "Slingshot2",
+      "description": "Reactor Slingshot Right",
+      "vpx_name": "Slingshot2",
+      "_inferred_type": "slingshot",
+      "_dof_event": 118,
+      "_note": "Upper/reactor area slingshot (right)."
+    },
+    {
+      "id": "Slingshot3",
+      "description": "Reactor Slingshot Left",
+      "vpx_name": "SlingShot3",
+      "_inferred_type": "slingshot",
+      "_dof_event": 117,
+      "_note": "Upper/reactor area slingshot (left). Shares DOF 117 with Slingshot1."
+    },
+    {
+      "id": "Spinner1",
+      "description": "Left Spinner",
+      "vpx_name": "Spinner1",
+      "_inferred_type": "spinner",
+      "_dof_event": 112,
+      "_note": "Main spinner. 50 spins activates Super Spinner. Insert: lSpinner (blue)"
+    },
+    {
+      "id": "Spinner2",
+      "description": "Right Spinner (optional)",
+      "vpx_name": "Spinner2",
+      "_inferred_type": "spinner",
+      "_dof_event": 113,
+      "_note": "Optional second spinner, enabled via AddRightSpinner const. Not on real TNA."
+    },
+    {
+      "id": "Bumper1",
+      "description": "Pop Bumper",
+      "vpx_name": "Bumper1",
+      "_inferred_type": "pop_bumper",
+      "_dof_events": [
+        107,
+        119
+      ],
+      "_note": "Single pop bumper. DOF 107=solenoid, 119=flasher. Also used as DESTROY target (lD3, lD4)."
+    },
+    {
+      "id": "GridTargetx",
+      "description": "Grid Standup Target X (left column)",
+      "vpx_name": "GridTargetx",
+      "_inferred_type": "standup_target",
+      "_dof_event": 109,
+      "_note": "Left column of 3x3 grid standup targets. 3 inserts: lx1, lx2, lx3. DOF 184 (green)/187 (purple) on hit."
+    },
+    {
+      "id": "GridTargety",
+      "description": "Grid Standup Target Y (middle column)",
+      "vpx_name": "GridTargety",
+      "_inferred_type": "standup_target",
+      "_dof_event": 109,
+      "_note": "Middle column of 3x3 grid. 3 inserts: ly1, ly2, ly3. DOF 185 (green)/188 (purple) on hit."
+    },
+    {
+      "id": "GridTargetz",
+      "description": "Grid Standup Target Z (right column)",
+      "vpx_name": "GridTargetz",
+      "_inferred_type": "standup_target",
+      "_dof_event": 109,
+      "_note": "Right column of 3x3 grid. 3 inserts: lz1, lz2, lz3. DOF 186 (green)/189 (purple) on hit."
+    },
+    {
+      "id": "Target1",
+      "description": "Reactor Max Target 1 (left bank upper)",
+      "vpx_name": "Target1",
+      "_inferred_type": "standup_target",
+      "_dof_events": [
+        114,
+        190
+      ],
+      "_note": "Left standup bank, target 1. Reactor Max target — complete 3 to max reactor value. Insert: lt1 (red)."
+    },
+    {
+      "id": "Target2",
+      "description": "Reactor Max Target 2 (left bank middle)",
+      "vpx_name": "Target2",
+      "_inferred_type": "standup_target",
+      "_dof_events": [
+        114,
+        191
+      ],
+      "_note": "Left standup bank, target 2. Insert: lt2 (red)."
+    },
+    {
+      "id": "Target3",
+      "description": "Reactor Max Target 3 (left bank lower)",
+      "vpx_name": "Target3",
+      "_inferred_type": "standup_target",
+      "_dof_events": [
+        114,
+        192
+      ],
+      "_note": "Left standup bank, target 3. Insert: lt3 (red)."
+    },
+    {
+      "id": "TargetRAD1",
+      "description": "RAD Standup Target 1 (Mystery Award bank)",
+      "vpx_name": "TargetRAD1",
+      "_inferred_type": "standup_target",
+      "_dof_events": [
+        108,
+        195
+      ],
+      "_note": "RAD bank target 1. Completes RAD to light mystery award at left scoop. Also DESTROY target during reactor critical. Insert: lRAD1."
+    },
+    {
+      "id": "TargetRAD2",
+      "description": "RAD Standup Target 2",
+      "vpx_name": "TargetRAD2",
+      "_inferred_type": "standup_target",
+      "_dof_events": [
+        108,
+        194
+      ],
+      "_note": "RAD bank target 2. Insert: lRAD2."
+    },
+    {
+      "id": "TargetRAD3",
+      "description": "RAD Standup Target 3",
+      "vpx_name": "TargetRAD3",
+      "_inferred_type": "standup_target",
+      "_dof_events": [
+        108,
+        193
+      ],
+      "_note": "RAD bank target 3. Insert: lRAD3."
+    },
+    {
+      "id": "TargetD1",
+      "description": "DESTROY Standup Target Left",
+      "vpx_name": "TargetD1",
+      "_inferred_type": "standup_target",
+      "_dof_event": 110,
+      "_note": "Left DESTROY target. Active during reactor critical phase. Insert: lD1 (white)."
+    },
+    {
+      "id": "TargetD2",
+      "description": "DESTROY Standup Target Right",
+      "vpx_name": "TargetD2",
+      "_inferred_type": "standup_target",
+      "_dof_event": 111,
+      "_note": "Right DESTROY target. Insert: lD2 (white)."
+    },
+    {
+      "id": "LeftScoop",
+      "description": "Left Scoop / VUK (mystery award, reactor standby)",
+      "vpx_name": "LeftScoop",
+      "_inferred_type": "kicker",
+      "_dof_event": 122,
+      "_note": "Left scoop kicker. Awards mystery, starts reactor standby sequence. Ball held during animations, then ejected."
+    },
+    {
+      "id": "RightScoop",
+      "description": "Right Scoop (jackpot during multiball)",
+      "vpx_name": "RightScoop",
+      "_inferred_type": "kicker",
+      "_dof_event": 122,
+      "_note": "Right scoop kicker. Awards jackpots during multiball. Shares DOF 122 with LeftScoop."
+    },
+    {
+      "id": "DropTarget1",
+      "description": "Drop Target Upper (ball lock)",
+      "vpx_name": "DropTarget1",
+      "_inferred_type": "drop_target",
+      "_dof_event": 136,
+      "_note": "Top drop target in 3-target bank. Ball lock mechanism — when Lock is Lit, ball passes dropped DT1 to reach DT2/DT3 optos."
+    },
+    {
+      "id": "DropTarget2",
+      "description": "Drop Target Middle (ball lock 1 opto)",
+      "vpx_name": "DropTarget2",
+      "_inferred_type": "drop_target",
+      "_dof_event": 137,
+      "_note": "Middle drop target. DropTargetOpto2_Hit locks ball 1."
+    },
+    {
+      "id": "DropTarget3",
+      "description": "Drop Target Lower (ball lock 2 opto / multiball start)",
+      "vpx_name": "DropTarget3",
+      "_inferred_type": "drop_target",
+      "_dof_event": 138,
+      "_note": "Bottom drop target. DropTargetOpto3_Hit locks ball 2, starts multiball."
+    },
+    {
+      "id": "DropTargetOpto2",
+      "description": "Drop Target Opto 2 (ball lock 1 sensor)",
+      "vpx_name": "DropTargetOpto2",
+      "_inferred_type": "opto",
+      "_dof_event": 173,
+      "_note": "Opto sensor behind middle drop target. Detects ball 1 lock."
+    },
+    {
+      "id": "DropTargetOpto3",
+      "description": "Drop Target Opto 3 (ball lock 2 sensor / multiball trigger)",
+      "vpx_name": "DropTargetOpto3",
+      "_inferred_type": "opto",
+      "_dof_event": 173,
+      "_note": "Opto sensor behind bottom drop target. Detects ball 2 lock, triggers multiball."
+    },
+    {
+      "id": "swLLoop",
+      "description": "Left Orbit / Loop",
+      "vpx_name": "swLLoop",
+      "_inferred_type": "rollover",
+      "_note": "Left orbit entry. Combo detection (R-L loop). Gate control for reactor entry."
+    },
+    {
+      "id": "swRLoop",
+      "description": "Right Orbit / Loop",
+      "vpx_name": "swRLoop",
+      "_inferred_type": "rollover",
+      "_note": "Right orbit entry. Combo detection."
+    },
+    {
+      "id": "GateL",
+      "description": "Left Orbit Gate",
+      "vpx_name": "GateL",
+      "_inferred_type": "gate",
+      "_dof_event": 134,
+      "_note": "One-way gate on left orbit. Controls reactor entry routing."
+    },
+    {
+      "id": "GateR",
+      "description": "Right Orbit Gate",
+      "vpx_name": "GateR",
+      "_inferred_type": "gate",
+      "_dof_event": 135,
+      "_note": "One-way gate on right orbit."
+    }
+  ],
+  "coils": [
+    {
+      "id": "BallRelease",
+      "description": "Ball Release / Trough Eject",
+      "vpx_name": "BallRelease",
+      "_dof_event": 121,
+      "_note": "Kicker that creates and launches ball into plunger lane. BallRelease.CreateSizedball + BallRelease.Kick 90, 4"
+    },
+    {
+      "id": "LeftFlipper",
+      "description": "Left Flipper",
+      "vpx_name": "LeftFlipper",
+      "_dof_event": 101,
+      "_note": "Main left flipper. SolLFlipper sub fires LF.Fire and LeftFlipper.RotateToEnd."
+    },
+    {
+      "id": "RightFlipper",
+      "description": "Right Flipper",
+      "vpx_name": "RightFlipper",
+      "_dof_event": 102,
+      "_note": "Main right flipper. SolRFlipper sub."
+    },
+    {
+      "id": "LeftFlipper1",
+      "description": "Upper Left Flipper",
+      "vpx_name": "LeftFlipper1",
+      "_note": "Upper left flipper. Activated by SolULFlipper. Fires with lower left flipper unless StagedFlipper=1."
+    },
+    {
+      "id": "plungerIM",
+      "description": "Auto-Plunger (Impulse Plunger)",
+      "vpx_name": "swplunger",
+      "_dof_event": 125,
+      "_note": "cvpmImpulseP auto-plunger. Power=43, Time=1.1s. DOF 123 (strobe) also fires on auto-plunge."
+    },
+    {
+      "id": "LeftScoop_Eject",
+      "description": "Left Scoop Eject",
+      "vpx_name": "LeftScoop",
+      "_dof_event": 122,
+      "_note": "LeftScoop.KickZ for eject. Strength varies: LeftScoopStrength=40 default +/- randomness."
+    },
+    {
+      "id": "RightScoop_Eject",
+      "description": "Right Scoop Eject",
+      "vpx_name": "RightScoop",
+      "_dof_event": 122,
+      "_note": "RightScoop.Kick 190, RightScoopStrength(55). Shares DOF 122 with left scoop."
+    },
+    {
+      "id": "DropTargetReset",
+      "description": "Drop Target Bank Reset",
+      "vpx_name": "DropTarget1/2/3",
+      "_dof_events": [
+        136,
+        137,
+        138
+      ],
+      "_note": "Sequenced reset of 3 drop targets. DropTarget3 first (bottom), then DropTarget2 (middle) at +100ms, then DropTarget1 (top) at +200ms. Multiple reset modes: LockIsLit (DT1 up only), LockIsNotLit (DT1 up), MultiballTargetReset (all up)."
+    },
+    {
+      "id": "Knocker",
+      "description": "Knocker Solenoid",
+      "_dof_event": 129,
+      "_note": "Fires on match award and special award. SolCallback(6)='SolKnocker' — the only actual SolCallback in the script."
+    },
+    {
+      "id": "Shaker",
+      "description": "Shaker Motor",
+      "_dof_events": [
+        126,
+        127,
+        128
+      ],
+      "_note": "3 intensity levels via DOF. Fires during reactor critical, bumper hits (optional). Configurable: ShakerMotorEnabled const."
+    },
+    {
+      "id": "Beacon",
+      "description": "Beacon Motor",
+      "_dof_event": 130,
+      "_note": "Beacon/flasher motor. Fires during special game events. Configurable: BeaconMotorEnabled const."
+    }
+  ],
+  "lamps": [
+    {
+      "id": "L1",
+      "description": "CORE Lane 1 (C) Insert",
+      "vpx_name": "L1",
+      "_color": "yellow",
+      "_note": "Top lane rollover insert. Part of C-O-R-E completion for bonus multiplier."
+    },
+    {
+      "id": "L2",
+      "description": "CORE Lane 2 (O) Insert",
+      "vpx_name": "L2",
+      "_color": "yellow"
+    },
+    {
+      "id": "L3",
+      "description": "CORE Lane 3 (R) Insert",
+      "vpx_name": "L3",
+      "_color": "yellow"
+    },
+    {
+      "id": "L4",
+      "description": "CORE Lane 4 (E) Insert",
+      "vpx_name": "L4",
+      "_color": "yellow"
+    },
+    {
+      "id": "la1",
+      "description": "Lane Save Insert 1 (left outlane)",
+      "vpx_name": "la1",
+      "_color": "variable",
+      "_note": "Lane save inserts rotate with flipper keys. Active insert on outlane prevents drain."
+    },
+    {
+      "id": "la2",
+      "description": "Lane Save Insert 2 (left inlane)",
+      "vpx_name": "la2",
+      "_color": "variable"
+    },
+    {
+      "id": "la3",
+      "description": "Lane Save Insert 3 (right inlane)",
+      "vpx_name": "la3",
+      "_color": "variable"
+    },
+    {
+      "id": "la4",
+      "description": "Lane Save Insert 4 (right outlane)",
+      "vpx_name": "la4",
+      "_color": "variable"
+    },
+    {
+      "id": "l2x",
+      "description": "Bonus Multiplier 2X Insert",
+      "vpx_name": "l2x",
+      "_color": "white/red",
+      "_note": "Bonus multiplier inserts. White when earned normally, red blink during multiball jackpot sequence."
+    },
+    {
+      "id": "l3x",
+      "description": "Bonus Multiplier 3X Insert",
+      "vpx_name": "l3x",
+      "_color": "white/red"
+    },
+    {
+      "id": "l4x",
+      "description": "Bonus Multiplier 4X Insert",
+      "vpx_name": "l4x",
+      "_color": "white/red"
+    },
+    {
+      "id": "lSpinner",
+      "description": "Spinner / Super Spinner Insert",
+      "vpx_name": "lSpinner",
+      "_color": "blue",
+      "_note": "Solid blue = active spinner. Blink = super spinner (50 spins completes). Off = spinner inactive."
+    },
+    {
+      "id": "lx1",
+      "description": "Grid Insert X1 (left column, top)",
+      "vpx_name": "lx1",
+      "_color": "purple/orange/blue",
+      "_note": "3x3 Grid insert system. Purple (targeted, pre-reactor), orange (reactor started), blue (active/next target). 9 inserts total."
+    },
+    {
+      "id": "lx2",
+      "description": "Grid Insert X2 (left column, middle)",
+      "vpx_name": "lx2",
+      "_color": "purple/orange/blue"
+    },
+    {
+      "id": "lx3",
+      "description": "Grid Insert X3 (left column, bottom)",
+      "vpx_name": "lx3",
+      "_color": "purple/orange/blue"
+    },
+    {
+      "id": "ly1",
+      "description": "Grid Insert Y1 (middle column, top)",
+      "vpx_name": "ly1",
+      "_color": "purple/orange/blue"
+    },
+    {
+      "id": "ly2",
+      "description": "Grid Insert Y2 (middle column, middle)",
+      "vpx_name": "ly2",
+      "_color": "purple/orange/blue"
+    },
+    {
+      "id": "ly3",
+      "description": "Grid Insert Y3 (middle column, bottom)",
+      "vpx_name": "ly3",
+      "_color": "purple/orange/blue"
+    },
+    {
+      "id": "lz1",
+      "description": "Grid Insert Z1 (right column, top)",
+      "vpx_name": "lz1",
+      "_color": "purple/orange/blue"
+    },
+    {
+      "id": "lz2",
+      "description": "Grid Insert Z2 (right column, middle)",
+      "vpx_name": "lz2",
+      "_color": "purple/orange/blue"
+    },
+    {
+      "id": "lz3",
+      "description": "Grid Insert Z3 (right column, bottom)",
+      "vpx_name": "lz3",
+      "_color": "purple/orange/blue"
+    },
+    {
+      "id": "lt1",
+      "description": "Reactor Max Target 1 Insert",
+      "vpx_name": "lt1",
+      "_color": "red",
+      "_note": "Left standup bank inserts. Complete 3 to max reactor value."
+    },
+    {
+      "id": "lt2",
+      "description": "Reactor Max Target 2 Insert",
+      "vpx_name": "lt2",
+      "_color": "red"
+    },
+    {
+      "id": "lt3",
+      "description": "Reactor Max Target 3 Insert",
+      "vpx_name": "lt3",
+      "_color": "red"
+    },
+    {
+      "id": "lRAD1",
+      "description": "RAD Target 1 Insert (Mystery Award)",
+      "vpx_name": "lRAD1",
+      "_color": "red/white",
+      "_note": "RAD bank inserts. Red normally, white during reactor critical (DESTROY phase)."
+    },
+    {
+      "id": "lRAD2",
+      "description": "RAD Target 2 Insert",
+      "vpx_name": "lRAD2",
+      "_color": "red/white"
+    },
+    {
+      "id": "lRAD3",
+      "description": "RAD Target 3 Insert",
+      "vpx_name": "lRAD3",
+      "_color": "red/white"
+    },
+    {
+      "id": "lD1",
+      "description": "DESTROY Target Left Insert",
+      "vpx_name": "lD1",
+      "_color": "white",
+      "_note": "DESTROY target inserts. Active during reactor critical phase — hit all DESTROY targets to destroy reactor."
+    },
+    {
+      "id": "lD2",
+      "description": "DESTROY Target Right Insert",
+      "vpx_name": "lD2",
+      "_color": "white"
+    },
+    {
+      "id": "lD3",
+      "description": "DESTROY Target Bumper Insert",
+      "vpx_name": "lD3",
+      "_color": "white",
+      "_note": "Destroy target on bumper."
+    },
+    {
+      "id": "lD4",
+      "description": "DESTROY Target 4 Insert",
+      "vpx_name": "lD4",
+      "_color": "white"
+    },
+    {
+      "id": "l5",
+      "description": "Reactor Insert 1 (level indicator)",
+      "vpx_name": "l5",
+      "_color": "blue/red/green",
+      "_note": "Reactor level ring — 6 inserts (l5-l10) around reactor. Blue during play, green/red for level progress. IntensityScale used for reactor percent fill."
+    },
+    {
+      "id": "l6",
+      "description": "Reactor Insert 2",
+      "vpx_name": "l6",
+      "_color": "blue/red/green"
+    },
+    {
+      "id": "l7",
+      "description": "Reactor Insert 3",
+      "vpx_name": "l7",
+      "_color": "blue/red/green"
+    },
+    {
+      "id": "l8",
+      "description": "Reactor Insert 4",
+      "vpx_name": "l8",
+      "_color": "blue/red/green"
+    },
+    {
+      "id": "l9",
+      "description": "Reactor Insert 5",
+      "vpx_name": "l9",
+      "_color": "blue/red/green"
+    },
+    {
+      "id": "l10",
+      "description": "Reactor Insert 6",
+      "vpx_name": "l10",
+      "_color": "blue/red/green"
+    },
+    {
+      "id": "lStart",
+      "description": "Reactor Start Insert",
+      "vpx_name": "lStart",
+      "_color": "yellow",
+      "_note": "Indicates reactor is ready to start. Lit yellow when grid completion triggers reactor ready state."
+    },
+    {
+      "id": "F1",
+      "description": "Reactor Flasher / Level Insert F1",
+      "vpx_name": "F1",
+      "_color": "white",
+      "_note": "Reactor level progress inserts. 5 flasher inserts (F1-F5) used for reactor level display."
+    },
+    {
+      "id": "F2",
+      "description": "Reactor Level Insert F2",
+      "vpx_name": "F2",
+      "_color": "white"
+    },
+    {
+      "id": "F3",
+      "description": "Reactor Level Insert F3",
+      "vpx_name": "F3",
+      "_color": "white"
+    },
+    {
+      "id": "F4",
+      "description": "Reactor Level Insert F4",
+      "vpx_name": "F4",
+      "_color": "white"
+    },
+    {
+      "id": "F5",
+      "description": "Reactor Level Insert F5",
+      "vpx_name": "F5",
+      "_color": "white"
+    },
+    {
+      "id": "FD1",
+      "description": "Reactor Destroy Insert FD1",
+      "vpx_name": "FD1",
+      "_color": "white"
+    },
+    {
+      "id": "FD2",
+      "description": "Reactor Destroy Insert FD2",
+      "vpx_name": "FD2",
+      "_color": "white"
+    },
+    {
+      "id": "FRAD1",
+      "description": "RAD Flasher Insert FRAD1",
+      "vpx_name": "FRAD1",
+      "_color": "white"
+    },
+    {
+      "id": "FRAD2",
+      "description": "RAD Flasher Insert FRAD2",
+      "vpx_name": "FRAD2",
+      "_color": "white"
+    },
+    {
+      "id": "FRAD3",
+      "description": "RAD Flasher Insert FRAD3",
+      "vpx_name": "FRAD3",
+      "_color": "white"
+    },
+    {
+      "id": "lBumperFlash",
+      "description": "Bumper Flash Insert",
+      "vpx_name": "lBumperFlash",
+      "_color": "white",
+      "_note": "Flash effect on pop bumper hit."
+    }
+  ],
+  "_lamp_note": "All lamps are RGB LED inserts controlled via SetInsert/SetInsertRGB VBScript calls — not a traditional lamp matrix. Colors are set dynamically based on game state (e.g., grid inserts change from purple to orange when reactor starts). GI lighting is also RGB-controlled via a separate GI system (aGILeftSling, aGIRightSling arrays, ChangeGI sub).",
+  "_gi_note": "GI is RGB LED-based, controlled by ChangeGI/SetGI subs. Default color configurable via GIcolor const ('white' or 'blue'). GI changes color for reactor states, slingshot hits, and critical mode. Not a traditional GI relay.",
+  "_dof_events": {
+    "_note": "DOF (Direct Output Framework) events are used for cabinet feedback only — they are NOT ROM I/O numbers. Listed here for reference.",
+    "101": "Left Flipper",
+    "102": "Right Flipper",
+    "103": "Left Slingshot Solenoid",
+    "104": "Left Slingshot Flasher",
+    "105": "Right Slingshot Solenoid",
+    "106": "Right Slingshot Flasher",
+    "107": "Bumper Solenoid",
+    "108": "RAD Left Standup Target bank",
+    "109": "Grid Target x,y,z standup target",
+    "110": "Destroy Left Standup",
+    "111": "Destroy Right Standup",
+    "112": "Left Spinner Flasher",
+    "113": "Right Spinner Flasher",
+    "114": "Reactor Standup Targets",
+    "115": "Multiball",
+    "116": "Drain",
+    "117": "Reactor Left Slings",
+    "118": "Reactor Right Sling",
+    "119": "Bumper Flasher",
+    "121": "Ball Trough",
+    "122": "Left Scoop / Right Scoop Solenoid",
+    "123": "Strobe (Autoplunge, Extra Game, Scoops, Jackpots)",
+    "125": "Autoplunge Solenoid",
+    "126": "Shaker Intensity 1",
+    "127": "Shaker Intensity 2",
+    "128": "Shaker Intensity 3",
+    "129": "Knocker",
+    "130": "Beacon Motor",
+    "132": "Triple Jackpot Strobe",
+    "133": "Super Jackpot Strobe",
+    "134": "Left Orbit Gate",
+    "135": "Right Orbit Gate",
+    "136": "Drop Target Upper Solenoid",
+    "137": "Drop Target Middle Solenoid",
+    "138": "Drop Target Lower Solenoid",
+    "140": "Credits/Free Play Start Button",
+    "144": "Undercab Yellow",
+    "145": "Undercab White",
+    "146": "Undercab Blue",
+    "147": "Undercab Red",
+    "148": "Undercab Green",
+    "149": "Undercab Purple",
+    "150": "Top Lane 1 (C)",
+    "151": "Top Lane 2 (O)",
+    "152": "Top Lane 3 (R)",
+    "153": "Top Lane 4 (E)",
+    "160": "Combo Loop",
+    "161": "Tilt Warning",
+    "162": "Tilted",
+    "163": "Shoot Again",
+    "164": "Player Bonus Count",
+    "165": "Ball Saved",
+    "166": "Bonus Multiplier Awarded",
+    "167": "Extra Ball Earned",
+    "168": "Skill Shot",
+    "169": "Handsfree Skill Shot",
+    "170": "Lane Save Earned",
+    "171": "Super Spinner Awarded",
+    "172": "Locks are Lit",
+    "173": "Ball Lock 1 / Ball Lock 2",
+    "175": "Reactor Grid Jackpot",
+    "176": "Reactor Ready",
+    "177": "Reactor Started",
+    "178": "Reactor Critical",
+    "179": "Reactor Destroyed",
+    "180": "Total Annihilation Achieved",
+    "181": "Reactor Value Maxed",
+    "182": "Mystery is Lit",
+    "183": "Mystery Awarded",
+    "184": "Grid Insert Left Green",
+    "185": "Grid Insert Middle Green",
+    "186": "Grid Insert Right Green",
+    "187": "Grid Insert Left Purple",
+    "188": "Grid Insert Middle Purple",
+    "189": "Grid Insert Right Purple",
+    "190": "Reactor Max 1 Target Insert",
+    "191": "Reactor Max 2 Target Insert",
+    "192": "Reactor Max 3 Target Insert",
+    "193": "Mystery Award 1 Target Insert",
+    "194": "Mystery Award 2 Target Insert",
+    "195": "Mystery Award 3 Target Insert",
+    "196": "Reactor Reset/Not Ready",
+    "197": "Match Sequence",
+    "198": "Match Awarded"
+  }
+}

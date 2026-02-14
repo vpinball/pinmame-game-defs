@@ -1,0 +1,933 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Rollercoaster Tycoon (Stern 2002) VPW 2.3.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from Controller.Switch() calls and SolCallback assignments. SEGA/Whitestar platform detected from LoadVPM sega.vbs. Trough is custom (no cvpmTrough/cvpmBallStack) — 4 ball positions sw11-sw14 with manual kick-chain logic. Lamps inferred from VLM naming (LM_Inserts_L*, LM_Backlight_L*) since vpmMapLights is used with InsertLamps collection; exact lamp descriptions unavailable from VBS alone. Flasher coils (21-23, 27, 29-32) use SolModCallback for PWM. Switch 20 is the Scrambled Eggs disc spinner (pulsed on rotation). Switch 36 is a ghost target (mechanically toggled by sol 19). L48/L57/L58/L59 are VLM-classified as flashers but mapped as regular lamps (<80). L64 (start button) has an animate sub but no VLM reference. Flipper coil IDs from sega.vbs constants."
+  },
+  "game": {
+    "id": "rct",
+    "name": "RollerCoaster Tycoon",
+    "year": 2002,
+    "manufacturer": "Stern",
+    "ipdb_id": 4536,
+    "platform": "sega"
+  },
+  "roms": [
+    {
+      "id": "rctycn"
+    }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Trough 1 (Right)",
+      "vpx_name": "sw11",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "Custom trough — manual kick-chain from Drain through sw11-sw14"
+    },
+    {
+      "id": 12,
+      "description": "Trough 2",
+      "vpx_name": "sw12",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 13,
+      "description": "Trough 3",
+      "vpx_name": "sw13",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 14,
+      "description": "Trough 4 (Left/Eject)",
+      "vpx_name": "sw14",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4",
+      "_note": "Ball eject position — SolRelease kicks from here"
+    },
+    {
+      "id": 15,
+      "description": "Trough Ball Eject Opto",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "jam",
+      "_note": "Pulsed briefly when SolRelease fires (sw14 kick), cleared on timer"
+    },
+    {
+      "id": 16,
+      "description": "Plunger Lane",
+      "vpx_name": "swPlunger",
+      "_note": "Auto-plunger via cvpmImpulseP, plungerIM.switch 16"
+    },
+    {
+      "id": 17,
+      "description": "Standup Target",
+      "vpx_name": "sw17",
+      "_note": "STHit 17"
+    },
+    {
+      "id": 18,
+      "description": "Standup Target",
+      "vpx_name": "sw18",
+      "_note": "STHit 18"
+    },
+    {
+      "id": 19,
+      "description": "Standup Target",
+      "vpx_name": "sw19",
+      "_note": "STHit 19"
+    },
+    {
+      "id": 20,
+      "description": "Scrambled Eggs Disc Spinner",
+      "_note": "PulseSw 20 fired on each 30-degree disc rotation position. No VPX trigger — driven by SpinnerBallTimer code."
+    },
+    {
+      "id": 21,
+      "description": "Rollover / Wire Guide",
+      "vpx_name": "sw21"
+    },
+    {
+      "id": 22,
+      "description": "Standup Target",
+      "vpx_name": "sw22",
+      "_note": "STHit 22"
+    },
+    {
+      "id": 23,
+      "description": "Rollover / Wire Guide",
+      "vpx_name": "sw23"
+    },
+    {
+      "id": 24,
+      "description": "Rollover / Wire Guide",
+      "vpx_name": "sw24"
+    },
+    {
+      "id": 25,
+      "description": "Rollover / Wire Guide",
+      "vpx_name": "sw25"
+    },
+    {
+      "id": 26,
+      "description": "Rollover / Wire Guide",
+      "vpx_name": "sw26"
+    },
+    {
+      "id": 27,
+      "description": "Rollover / Wire Guide",
+      "vpx_name": "sw27"
+    },
+    {
+      "id": 28,
+      "description": "Standup Target",
+      "vpx_name": "sw28",
+      "_note": "STHit 28"
+    },
+    {
+      "id": 29,
+      "description": "Standup Target",
+      "vpx_name": "sw29",
+      "_note": "STHit 29"
+    },
+    {
+      "id": 30,
+      "description": "Drop Target (Left Bank)",
+      "vpx_name": "sw30",
+      "_note": "DTHit 30 — 3-bank drop targets (30/31/32)"
+    },
+    {
+      "id": 31,
+      "description": "Drop Target (Center Bank)",
+      "vpx_name": "sw31",
+      "_note": "DTHit 31"
+    },
+    {
+      "id": 32,
+      "description": "Drop Target (Right Bank)",
+      "vpx_name": "sw32",
+      "_note": "DTHit 32"
+    },
+    {
+      "id": 33,
+      "description": "Rollover / Wire Guide",
+      "vpx_name": "sw33"
+    },
+    {
+      "id": 34,
+      "description": "Rollover / Wire Guide",
+      "vpx_name": "sw34"
+    },
+    {
+      "id": 35,
+      "description": "Rollover / Wire Guide",
+      "vpx_name": "sw35"
+    },
+    {
+      "id": 36,
+      "description": "Ghost Target",
+      "vpx_name": "sw36",
+      "_note": "Initialized closed. Opened by SolGhost (sol 19), closed by sw36_Hit when ball hits. Mechanically toggled target."
+    },
+    {
+      "id": 37,
+      "description": "Rollover (Conditional)",
+      "vpx_name": "sw37",
+      "_note": "Starts disabled; enabled/disabled by sw37trigger/sw37trigger0 triggers"
+    },
+    {
+      "id": 38,
+      "description": "Rollover / Wire Guide",
+      "vpx_name": "sw38",
+      "_note": "Initialized closed (Controller.Switch(38) = 1)"
+    },
+    {
+      "id": 39,
+      "description": "Drop Target (Sweeper)",
+      "vpx_name": "sw39",
+      "_note": "DTHit 39 — single drop target controlled by SolDTSweeperUp/Down (sols 4/5)"
+    },
+    {
+      "id": 40,
+      "description": "Standup Target",
+      "vpx_name": "sw40",
+      "_note": "STHit 40"
+    },
+    {
+      "id": 42,
+      "description": "Rollover / Wire Guide",
+      "vpx_name": "sw42"
+    },
+    {
+      "id": 43,
+      "description": "Ball Lock Kicker",
+      "vpx_name": "sw43",
+      "_note": "Kicker — ball locked until BallLock (sol 3) fires"
+    },
+    {
+      "id": 44,
+      "description": "Standup Target",
+      "vpx_name": "sw44",
+      "_note": "STHit 44"
+    },
+    {
+      "id": 45,
+      "description": "Standup Target",
+      "vpx_name": "sw45",
+      "_note": "STHit 45"
+    },
+    {
+      "id": 46,
+      "description": "Standup Target",
+      "vpx_name": "sw46",
+      "_note": "STHit 46"
+    },
+    {
+      "id": 47,
+      "description": "Kiosk Scoop",
+      "vpx_name": "sw47",
+      "_note": "Kicker — ball scooped until KioskScoop (sol 8) fires"
+    },
+    {
+      "id": 48,
+      "description": "Rollover / Wire Guide",
+      "vpx_name": "sw48"
+    },
+    {
+      "id": 49,
+      "description": "Pop Bumper (Left)",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 49"
+    },
+    {
+      "id": 50,
+      "description": "Pop Bumper (Right)",
+      "vpx_name": "Bumper3",
+      "_note": "PulseSw 50"
+    },
+    {
+      "id": 51,
+      "description": "Pop Bumper (Bottom)",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 51"
+    },
+    {
+      "id": 52,
+      "description": "Rocket Kicker",
+      "vpx_name": "sw52",
+      "_note": "Kicker — ball ejected when Rocket (sol 7) fires"
+    },
+    {
+      "id": 56,
+      "description": "Tilt",
+      "_note": "vpmNudge.TiltSwitch = 56"
+    },
+    {
+      "id": 57,
+      "description": "Rollover (Left Inlane)",
+      "vpx_name": "sw57"
+    },
+    {
+      "id": 58,
+      "description": "Rollover (Left Outlane)",
+      "vpx_name": "sw58"
+    },
+    {
+      "id": 59,
+      "description": "Left Slingshot",
+      "_note": "PulseSw 59 — LeftSlingShot_Slingshot event"
+    },
+    {
+      "id": 60,
+      "description": "Rollover (Right Inlane)",
+      "vpx_name": "sw60"
+    },
+    {
+      "id": 61,
+      "description": "Rollover (Right Outlane)",
+      "vpx_name": "sw61"
+    },
+    {
+      "id": 62,
+      "description": "Right Slingshot",
+      "_note": "PulseSw 62 — RightSlingShot_Slingshot event"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Release",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw14",
+      "_note": "Kicks from sw14 (trough eject position)"
+    },
+    {
+      "id": 2,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "Auto_Plunger",
+      "_inferred_type": "auto_plunger",
+      "vpx_name": "swPlunger"
+    },
+    {
+      "id": 3,
+      "description": "Ball Lock Release",
+      "_vbscript_callback": "BallLock",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw43"
+    },
+    {
+      "id": 4,
+      "description": "Drop Target Sweeper Up",
+      "_vbscript_callback": "SolDTSweeperUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Single drop target sw39 — raises target and enables sweeper flipper"
+    },
+    {
+      "id": 5,
+      "description": "Drop Target Sweeper Down",
+      "_vbscript_callback": "SolDTSweeperDown",
+      "_inferred_type": "drop_target",
+      "_note": "Single drop target sw39 — drops target and enables sweeper kick"
+    },
+    {
+      "id": 6,
+      "description": "Drop Target Bank Down",
+      "_vbscript_callback": "SolDTDropDown",
+      "_inferred_type": "drop_target",
+      "_note": "Drops sw31 only"
+    },
+    {
+      "id": 7,
+      "description": "Rocket Kicker",
+      "_vbscript_callback": "Rocket",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw52",
+      "_note": "Vertical up kick from rocket kicker"
+    },
+    {
+      "id": 8,
+      "description": "Kiosk Scoop Eject",
+      "_vbscript_callback": "KioskScoop",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw47"
+    },
+    {
+      "id": 12,
+      "description": "Drop Target Bank Reset",
+      "_vbscript_callback": "SolDTDropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets 3-bank drop targets sw30/sw31/sw32"
+    },
+    {
+      "id": 19,
+      "description": "Ghost Target Release",
+      "_vbscript_callback": "SolGhost",
+      "_inferred_type": "target_mechanism",
+      "vpx_name": "GhostTarget",
+      "_note": "Opens ghost target, sets sw36 closed"
+    },
+    {
+      "id": 20,
+      "description": "Up Post",
+      "_vbscript_callback": "SolPost",
+      "_inferred_type": "up_post",
+      "vpx_name": "Post"
+    },
+    {
+      "id": 21,
+      "description": "Flasher - Lockup",
+      "_vbscript_callback": "FlashMod121",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "L121",
+      "_note": "SolModCallback — PWM flasher"
+    },
+    {
+      "id": 22,
+      "description": "Flasher - Shooter",
+      "_vbscript_callback": "FlashMod122",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "L122",
+      "_note": "SolModCallback — PWM flasher"
+    },
+    {
+      "id": 23,
+      "description": "Flasher - Kiosk",
+      "_vbscript_callback": "FlashMod123",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "L123",
+      "_note": "SolModCallback — PWM flasher"
+    },
+    {
+      "id": 25,
+      "description": "Left Diverter (Lock)",
+      "_vbscript_callback": "SolLock",
+      "_inferred_type": "diverter",
+      "vpx_name": "Diverter_left"
+    },
+    {
+      "id": 26,
+      "description": "Right Ramp Diverter",
+      "_vbscript_callback": "SolDiverterRight",
+      "_inferred_type": "diverter",
+      "vpx_name": "Diverter_right"
+    },
+    {
+      "id": 27,
+      "description": "Flasher - Bumpers",
+      "_vbscript_callback": "FlashMod127",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "L127",
+      "_note": "SolModCallback — PWM flasher"
+    },
+    {
+      "id": 28,
+      "description": "Dummy Animator",
+      "_vbscript_callback": "DummyAnim",
+      "_inferred_type": "toy",
+      "vpx_name": "DummyFlipper",
+      "_note": "Rotates DummyFlipper to end then back after 150ms"
+    },
+    {
+      "id": 29,
+      "description": "Flasher - Sign Right",
+      "_vbscript_callback": "FlashMod129",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "L129",
+      "_note": "SolModCallback — PWM flasher"
+    },
+    {
+      "id": 30,
+      "description": "Flasher - Sign Middle",
+      "_vbscript_callback": "FlashMod130",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "L130",
+      "_note": "SolModCallback — PWM flasher"
+    },
+    {
+      "id": 31,
+      "description": "Flasher - Sign Left",
+      "_vbscript_callback": "FlashMod131",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "L131",
+      "_note": "SolModCallback — PWM flasher"
+    },
+    {
+      "id": 32,
+      "description": "Flasher - Middle Left",
+      "_vbscript_callback": "FlashMod132",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "L132",
+      "_note": "SolModCallback — PWM flasher"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "Framework constant sLRFlipper from sega.vbs"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "Framework constant sLLFlipper from sega.vbs"
+    },
+    {
+      "id": 34,
+      "description": "Upper Right Flipper",
+      "_vbscript_callback": "SolURFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework constant sURFlipper from sega.vbs"
+    },
+    {
+      "id": 36,
+      "description": "Upper Left Flipper",
+      "_vbscript_callback": "SolULFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework constant sULFlipper from sega.vbs"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "vpx_name": "L1",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 2,
+      "vpx_name": "L2",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 3,
+      "vpx_name": "L3",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 4,
+      "vpx_name": "L4",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 5,
+      "vpx_name": "L5",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 6,
+      "vpx_name": "L6",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 7,
+      "vpx_name": "L7",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 8,
+      "vpx_name": "L8",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 9,
+      "vpx_name": "L9",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 10,
+      "vpx_name": "L10",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 11,
+      "vpx_name": "L11",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 12,
+      "vpx_name": "L12",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 13,
+      "vpx_name": "L13",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 14,
+      "vpx_name": "L14",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 15,
+      "vpx_name": "L15",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 16,
+      "vpx_name": "L16",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 17,
+      "vpx_name": "L17",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 18,
+      "vpx_name": "L18",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 19,
+      "vpx_name": "L19",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 20,
+      "vpx_name": "L20",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 21,
+      "vpx_name": "L21",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 22,
+      "vpx_name": "L22",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 23,
+      "vpx_name": "L23",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 24,
+      "vpx_name": "L24",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 25,
+      "vpx_name": "L25",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 26,
+      "vpx_name": "L26",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 27,
+      "vpx_name": "L27",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 28,
+      "vpx_name": "L28",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 29,
+      "vpx_name": "L29",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 30,
+      "vpx_name": "L30",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 31,
+      "vpx_name": "L31",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 32,
+      "vpx_name": "L32",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 33,
+      "vpx_name": "L33",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 34,
+      "vpx_name": "L34",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 35,
+      "vpx_name": "L35",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 36,
+      "vpx_name": "L36",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 37,
+      "vpx_name": "L37",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 38,
+      "vpx_name": "L38",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 39,
+      "vpx_name": "L39",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 40,
+      "vpx_name": "L40",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 41,
+      "vpx_name": "L41",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 42,
+      "vpx_name": "L42",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 43,
+      "vpx_name": "L43",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 44,
+      "vpx_name": "L44",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 45,
+      "vpx_name": "L45",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 46,
+      "vpx_name": "L46",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 47,
+      "vpx_name": "L47",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 48,
+      "vpx_name": "L48",
+      "_note": "vpmMapLights insert lamp — VLM-classified as Flashers but controlled as lamp"
+    },
+    {
+      "id": 49,
+      "vpx_name": "L49",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 50,
+      "vpx_name": "L50",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 51,
+      "vpx_name": "L51",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 52,
+      "vpx_name": "L52",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 53,
+      "vpx_name": "L53",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 54,
+      "vpx_name": "L54",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 55,
+      "vpx_name": "L55",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 56,
+      "vpx_name": "L56",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 57,
+      "vpx_name": "L57",
+      "_note": "vpmMapLights insert lamp — VLM-classified as Flashers; also drives Bumper2 force variation via L57_animate"
+    },
+    {
+      "id": 58,
+      "vpx_name": "L58",
+      "_note": "vpmMapLights insert lamp — VLM-classified as Flashers; also drives Bumper3 force variation via L58_animate"
+    },
+    {
+      "id": 59,
+      "vpx_name": "L59",
+      "_note": "vpmMapLights insert lamp — VLM-classified as Flashers; also drives Bumper1 force variation via L59_animate"
+    },
+    {
+      "id": 60,
+      "vpx_name": "L60",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 61,
+      "vpx_name": "L61",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 62,
+      "vpx_name": "L62",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 63,
+      "vpx_name": "L63",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 64,
+      "vpx_name": "L64",
+      "_note": "Start button lamp — L64_animate controls startbutton.BlendDisableLighting"
+    },
+    {
+      "id": 65,
+      "vpx_name": "L65",
+      "_note": "vpmMapLights backlight lamp"
+    },
+    {
+      "id": 66,
+      "vpx_name": "L66",
+      "_note": "vpmMapLights backlight lamp"
+    },
+    {
+      "id": 67,
+      "vpx_name": "L67",
+      "_note": "vpmMapLights backlight lamp"
+    },
+    {
+      "id": 68,
+      "vpx_name": "L68",
+      "_note": "vpmMapLights backlight lamp"
+    },
+    {
+      "id": 69,
+      "vpx_name": "L69",
+      "_note": "vpmMapLights backlight lamp"
+    },
+    {
+      "id": 70,
+      "vpx_name": "L70",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 71,
+      "vpx_name": "L71",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 72,
+      "vpx_name": "L72",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 73,
+      "vpx_name": "L73",
+      "_note": "vpmMapLights backlight lamp"
+    },
+    {
+      "id": 74,
+      "vpx_name": "L74",
+      "_note": "vpmMapLights backlight lamp"
+    },
+    {
+      "id": 75,
+      "vpx_name": "L75",
+      "_note": "vpmMapLights backlight lamp"
+    },
+    {
+      "id": 76,
+      "vpx_name": "L76",
+      "_note": "vpmMapLights backlight lamp"
+    },
+    {
+      "id": 77,
+      "vpx_name": "L77",
+      "_note": "vpmMapLights backlight lamp"
+    },
+    {
+      "id": 78,
+      "vpx_name": "L78",
+      "_note": "vpmMapLights insert lamp"
+    },
+    {
+      "id": 79,
+      "vpx_name": "L79",
+      "_note": "vpmMapLights insert lamp"
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    },
+    {
+      "id": 34,
+      "alias": "c_flipper_upper_right",
+      "type": "coil",
+      "_note": "sURFlipper — framework constant"
+    },
+    {
+      "id": 36,
+      "alias": "c_flipper_upper_left",
+      "type": "coil",
+      "_note": "sULFlipper — framework constant"
+    }
+  ]
+}

@@ -1,0 +1,797 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Congo (Williams 1995)_VPW_V1.0.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from Controller.Switch() calls, PulseSw calls, and SolCallback/SolModCallback assignments. No Const sw* declarations in table script — all switches referenced by raw number. Lamp IDs from NFadeL/NFadeLm/NFadeLwF calls in UpdateLamps. Flashers (coils 17-21, 25-28) use SolModCallback with SetModLamp/SetModLampm routines or custom Sol28 callback. Trough is a 4-ball cvpmTrough with switches 32-35 and eject via BallRelease kicker (solenoid 9, fires PulseSw 31). Volcano is a separate cvpmTrough (switches 41-43, sol 6). Two-way popper (bsAmyVuk) is cvpmSaucer on switch 53 with two kick directions (sol 3 up, sol 4 down). Mystery saucer (sw37, sol 34) and Map saucer (sw38, sol 22). Upper left flipper present (sULFlipper=34), no upper right flipper. Grey Gorilla mechanism driven by solenoids 15/16. Header comment says Williams 1988 but game is actually Williams 1995."
+  },
+  "game": {
+    "id": "congo",
+    "name": "Congo",
+    "year": 1995,
+    "manufacturer": "Williams",
+    "platform": "wpc"
+  },
+  "roms": [
+    {
+      "id": "congo_21",
+      "_note": "Const cGameName in script"
+    }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Playfield Switch",
+      "vpx_name": "sw11",
+      "_note": "Controller.Switch(11) on/off via sw11_Hit/UnHit"
+    },
+    {
+      "id": 12,
+      "description": "Volcano Entrance",
+      "vpx_name": "sw12",
+      "_note": "Controller.Switch(12) on/off via sw12_Hit/UnHit. Comment says 'Volcano Switch'"
+    },
+    {
+      "id": 14,
+      "description": "Plumb Bob Tilt",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Playfield Switch",
+      "vpx_name": "sw15",
+      "_note": "Controller.Switch(15) on/off via sw15_Hit/UnHit"
+    },
+    {
+      "id": 16,
+      "description": "Left Outlane (Kickback)",
+      "vpx_name": "sw16",
+      "_note": "Controller.Switch(16) on/off. Comment: 'Kickback'"
+    },
+    {
+      "id": 17,
+      "description": "Left Inlane",
+      "vpx_name": "sw17",
+      "_note": "Controller.Switch(17) on/off"
+    },
+    {
+      "id": 18,
+      "description": "Shooter Lane",
+      "vpx_name": "sw18",
+      "_note": "Controller.Switch(18) on/off. Comment: 'Shooter Lane'"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "_note": "Controller.Switch(22) = 1 set in Table1_Init. Not a VPX object."
+    },
+    {
+      "id": 24,
+      "description": "Always Closed",
+      "_note": "Controller.Switch(24) = 1 set in Table1_Init. Not a VPX object."
+    },
+    {
+      "id": 25,
+      "description": "Right Eject Rubber",
+      "vpx_name": "sw25",
+      "_note": "PulseSw 25. Comment: 'Right Eject Rubber'"
+    },
+    {
+      "id": 26,
+      "description": "Right Inlane",
+      "vpx_name": "sw26",
+      "_note": "Controller.Switch(26) on/off"
+    },
+    {
+      "id": 27,
+      "description": "Right Outlane",
+      "vpx_name": "sw27",
+      "_note": "Controller.Switch(27) on/off"
+    },
+    {
+      "id": 28,
+      "description": "Standup Target ('You')",
+      "vpx_name": "sw28",
+      "_note": "PulseSw 28 with TargetBouncer. Part of 'We Are Watching You' targets."
+    },
+    {
+      "id": 31,
+      "description": "Trough Eject Confirmation",
+      "_note": "PulseSw 31 fired in SolRelease callback when trough ejects. Not a VPX object — virtual switch."
+    },
+    {
+      "id": 32,
+      "description": "Trough Ball 4",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4",
+      "_note": "bsTrough.initSwitches Array(32, 33, 34, 35). First in array = closest to drain."
+    },
+    {
+      "id": 33,
+      "description": "Trough Ball 3",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "bsTrough.initSwitches Array(32, 33, 34, 35)"
+    },
+    {
+      "id": 34,
+      "description": "Trough Ball 2",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "bsTrough.initSwitches Array(32, 33, 34, 35)"
+    },
+    {
+      "id": 35,
+      "description": "Trough Ball 1 (Launch Position)",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "bsTrough.initSwitches Array(32, 33, 34, 35). Last in array = closest to eject."
+    },
+    {
+      "id": 36,
+      "description": "Volcano Lock",
+      "vpx_name": "Sw36",
+      "_note": "PulseSw 36 via Sw36_Hit. Ball added to bsVolcano."
+    },
+    {
+      "id": 37,
+      "description": "Mystery Saucer",
+      "vpx_name": "sw37",
+      "_note": "Controller.Switch(37) = 1. Ball added to bsMystery."
+    },
+    {
+      "id": 38,
+      "description": "Map Saucer",
+      "vpx_name": "sw38",
+      "_note": "Controller.Switch(38) = 1. Ball added to bsMap."
+    },
+    {
+      "id": 41,
+      "description": "Volcano Stack 1",
+      "_note": "bsVolcano.initSwitches Array(41, 42, 43). Volcano is a separate cvpmTrough with 3 switches."
+    },
+    {
+      "id": 42,
+      "description": "Volcano Stack 2",
+      "_note": "bsVolcano.initSwitches Array(41, 42, 43)"
+    },
+    {
+      "id": 43,
+      "description": "Volcano Stack 3",
+      "_note": "bsVolcano.initSwitches Array(41, 42, 43)"
+    },
+    {
+      "id": 44,
+      "description": "Playfield Switch",
+      "vpx_name": "sw44",
+      "_note": "Controller.Switch(44) on/off via sw44_Hit/UnHit"
+    },
+    {
+      "id": 45,
+      "description": "Playfield Switch",
+      "vpx_name": "sw45",
+      "_note": "Controller.Switch(45) on/off via sw45_Hit/UnHit"
+    },
+    {
+      "id": 46,
+      "description": "Standup Target",
+      "vpx_name": "sw46",
+      "_note": "PulseSw 46 with TargetBouncer"
+    },
+    {
+      "id": 47,
+      "description": "Standup Target",
+      "vpx_name": "sw47",
+      "_note": "PulseSw 47 with TargetBouncer"
+    },
+    {
+      "id": 48,
+      "description": "Standup Target",
+      "vpx_name": "sw48",
+      "_note": "PulseSw 48 with TargetBouncer"
+    },
+    {
+      "id": 51,
+      "description": "Standup Target",
+      "vpx_name": "sw51",
+      "_note": "PulseSw 51 with TargetBouncer"
+    },
+    {
+      "id": 52,
+      "description": "Standup Target",
+      "vpx_name": "sw52",
+      "_note": "PulseSw 52 with TargetBouncer"
+    },
+    {
+      "id": 53,
+      "description": "Two-Way Popper (Amy VUK)",
+      "vpx_name": "sw53",
+      "_note": "Controller.Switch(53) = 1 in sw53_hit. Ball added to bsAmyVuk (cvpmSaucer)."
+    },
+    {
+      "id": 54,
+      "description": "Standup Target ('We Are')",
+      "vpx_name": "sw54",
+      "_note": "PulseSw 54 with TargetBouncer. Comment: 'We Are'"
+    },
+    {
+      "id": 55,
+      "description": "Standup Target ('Watching')",
+      "vpx_name": "sw55",
+      "_note": "PulseSw 55 with TargetBouncer. Comment: 'Watching'"
+    },
+    {
+      "id": 56,
+      "description": "Standup Target (Laser Perimeter)",
+      "vpx_name": "sw56",
+      "_note": "PulseSw 56 with TargetBouncer. Comment: 'Laser Perimeter'"
+    },
+    {
+      "id": 57,
+      "description": "Playfield Switch",
+      "vpx_name": "sw57",
+      "_note": "Controller.Switch(57) on/off"
+    },
+    {
+      "id": 58,
+      "description": "Playfield Switch",
+      "vpx_name": "sw58",
+      "_note": "Controller.Switch(58) on/off"
+    },
+    {
+      "id": 61,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "PulseSw 61 in LeftSlingShot_Slingshot sub"
+    },
+    {
+      "id": 62,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "PulseSw 62 in RightSlingShot_Slingshot sub"
+    },
+    {
+      "id": 63,
+      "description": "Top Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 63 in Bumper1_Hit"
+    },
+    {
+      "id": 64,
+      "description": "Middle Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 64 in Bumper2_Hit"
+    },
+    {
+      "id": 65,
+      "description": "Bottom Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "PulseSw 65 in Bumper3_Hit"
+    },
+    {
+      "id": 67,
+      "description": "Playfield Switch",
+      "vpx_name": "sw67",
+      "_note": "Controller.Switch(67) on/off"
+    },
+    {
+      "id": 68,
+      "description": "Playfield Switch",
+      "vpx_name": "sw68",
+      "_note": "Controller.Switch(68) on/off"
+    },
+    {
+      "id": 71,
+      "description": "AMY Rollover (A)",
+      "vpx_name": "sw71",
+      "_note": "Controller.Switch(71) on/off. Comment: 'AMY Rollovers'"
+    },
+    {
+      "id": 72,
+      "description": "AMY Rollover (M)",
+      "vpx_name": "sw72",
+      "_note": "Controller.Switch(72) on/off. Comment: 'AMY Rollovers'"
+    },
+    {
+      "id": 73,
+      "description": "AMY Rollover (Y)",
+      "vpx_name": "sw73",
+      "_note": "Controller.Switch(73) on/off. Comment: 'AMY Rollovers'"
+    },
+    {
+      "id": 74,
+      "description": "Drop Target",
+      "vpx_name": "sw74",
+      "_note": "PulseSw 74"
+    },
+    {
+      "id": 75,
+      "description": "Drop Target",
+      "vpx_name": "sw75",
+      "_note": "PulseSw 75"
+    },
+    {
+      "id": 76,
+      "description": "Drop Target",
+      "vpx_name": "sw76",
+      "_note": "PulseSw 76"
+    },
+    {
+      "id": 77,
+      "description": "Drop Target",
+      "vpx_name": "sw77",
+      "_note": "PulseSw 77"
+    },
+    {
+      "id": 78,
+      "description": "Drop Target",
+      "vpx_name": "sw78",
+      "_note": "PulseSw 78"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "Auto_Plunger",
+      "_inferred_type": "ball_management",
+      "vpx_name": "AutoPlunger",
+      "_note": "Fires AutoPlunger kicker. Plays release sound."
+    },
+    {
+      "id": 2,
+      "description": "Kickback",
+      "_vbscript_callback": "Kick_back",
+      "_inferred_type": "ball_management",
+      "vpx_name": "KickBack",
+      "_note": "Fires KickBack kicker from left outlane."
+    },
+    {
+      "id": 3,
+      "description": "Two-Way Popper Up (Amy VUK)",
+      "_vbscript_callback": "SolPopUp",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw53",
+      "_note": "Ejects ball from bsAmyVuk (cvpmSaucer at sw53) upward via SolOutAlt 0."
+    },
+    {
+      "id": 4,
+      "description": "Two-Way Popper Down",
+      "_vbscript_callback": "SolPopDown",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw53",
+      "_note": "Ejects ball from bsAmyVuk downward via SolOutAlt 1."
+    },
+    {
+      "id": 5,
+      "description": "Ramp Diverter",
+      "_vbscript_callback": "RampDiverter",
+      "_inferred_type": "diverter",
+      "vpx_name": "Diverter",
+      "_note": "Rotates Diverter object, drops/raises DiverterSwoop."
+    },
+    {
+      "id": 6,
+      "description": "Volcano Kick Out",
+      "_vbscript_callback": "VolcanoKickOut",
+      "_inferred_type": "ball_management",
+      "_note": "Ejects from bsVolcano (cvpmTrough, exit via sw36a kicker)."
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"Knocker\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 8,
+      "description": "Top Post (Lock)",
+      "_vbscript_callback": "SolTopPost",
+      "_inferred_type": "mechanism",
+      "vpx_name": "TopPost",
+      "_note": "Drops/raises TopPost. Used for ball lock mechanism."
+    },
+    {
+      "id": 9,
+      "description": "Trough Eject",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "vpx_name": "BallRelease",
+      "_note": "Ejects from bsTrough via BallRelease kicker. Also fires PulseSw 31."
+    },
+    {
+      "id": 15,
+      "description": "Grey Gorilla Right Arm",
+      "_vbscript_callback": "GorillaRight",
+      "_inferred_type": "mechanism",
+      "_note": "Rotates gorilla animatronic right. Drives GorDest/GorDirection for physics animation."
+    },
+    {
+      "id": 16,
+      "description": "Grey Gorilla Left Arm",
+      "_vbscript_callback": "GorillaLeft",
+      "_inferred_type": "mechanism",
+      "_note": "Rotates gorilla animatronic left. Drives GorDest/GorDirection for physics animation."
+    },
+    {
+      "id": 17,
+      "description": "Amy Flasher",
+      "_vbscript_callback": "SolFlash17",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback with custom SolFlash17 handler. Uses f17/f17b light objects. Lamp 117."
+    },
+    {
+      "id": 18,
+      "description": "Left Ramp Flasher",
+      "_vbscript_callback": "SetModLampm 118, 138,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?18$",
+      "_note": "SolModCallback. Drives lamp IDs 118 and 138."
+    },
+    {
+      "id": 19,
+      "description": "Two-Way Popper Flasher",
+      "_vbscript_callback": "SetModLampm 119, 129,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?19$",
+      "_note": "SolModCallback. Drives lamp IDs 119 and 129."
+    },
+    {
+      "id": 20,
+      "description": "Skill Shot Flasher",
+      "_vbscript_callback": "SetModLampm 120, 130,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?20$",
+      "_note": "SolModCallback. Drives lamp IDs 120 and 130."
+    },
+    {
+      "id": 21,
+      "description": "Grey Gorilla Flasher",
+      "_vbscript_callback": "SetModLamp 121,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?21$",
+      "_note": "SolModCallback. Drives lamp ID 121."
+    },
+    {
+      "id": 22,
+      "description": "Map Saucer Kick",
+      "_vbscript_callback": "MapKick",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw38",
+      "_note": "Ejects from bsMap (cvpmSaucer at sw38)."
+    },
+    {
+      "id": 23,
+      "description": "Left Gate",
+      "_vbscript_callback": "LeftGateOn",
+      "_inferred_type": "gate",
+      "vpx_name": "gate2",
+      "_note": "Opens/closes gate2 object."
+    },
+    {
+      "id": 24,
+      "description": "Right Gate",
+      "_vbscript_callback": "RightGateOn",
+      "_inferred_type": "gate",
+      "vpx_name": "gate4",
+      "_note": "Opens/closes gate4 object."
+    },
+    {
+      "id": 25,
+      "description": "Lower Right Flasher",
+      "_vbscript_callback": "SetModLampm 125, 135,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?25$",
+      "_note": "SolModCallback. Drives lamp IDs 125 and 135."
+    },
+    {
+      "id": 26,
+      "description": "Right Ramp Flasher",
+      "_vbscript_callback": "SetModLampm 126, 136,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?26$",
+      "_note": "SolModCallback. Drives lamp IDs 126 and 136."
+    },
+    {
+      "id": 27,
+      "description": "Volcano Flasher",
+      "_vbscript_callback": "SetModLampM 127, 137,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?27$",
+      "_note": "SolModCallback. Drives lamp IDs 127 and 137."
+    },
+    {
+      "id": 28,
+      "description": "Perimeter Defense Flasher",
+      "_vbscript_callback": "Sol28",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback with custom Sol28 handler. Drives f28/F28B light objects. Uses lamp 128 GI scale. Comment: 'old style'."
+    },
+    {
+      "id": 33,
+      "description": "Left Post",
+      "_vbscript_callback": "SolLeftpost",
+      "_inferred_type": "mechanism",
+      "vpx_name": "LeftPost",
+      "_note": "Drops/raises LeftPost and LeftPost_invis. Plays buzz sound when energized."
+    },
+    {
+      "id": 34,
+      "description": "Mystery Saucer Kick",
+      "_vbscript_callback": "MysteryKick",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw37",
+      "_note": "Ejects from bsMystery (cvpmSaucer at sw37)."
+    }
+  ],
+  "lamps": [
+    {
+      "id": 16,
+      "vpx_name": "L16",
+      "description": "AMY Insert (A)"
+    },
+    {
+      "id": 17,
+      "vpx_name": "L17",
+      "description": "AMY Insert (M)"
+    },
+    {
+      "id": 18,
+      "vpx_name": "L18",
+      "description": "AMY Insert (Y)"
+    },
+    {
+      "id": 21,
+      "vpx_name": "L21"
+    },
+    {
+      "id": 22,
+      "vpx_name": "L22"
+    },
+    {
+      "id": 23,
+      "vpx_name": "L23"
+    },
+    {
+      "id": 24,
+      "vpx_name": "L24"
+    },
+    {
+      "id": 25,
+      "vpx_name": "L25"
+    },
+    {
+      "id": 26,
+      "vpx_name": "L26"
+    },
+    {
+      "id": 27,
+      "vpx_name": "L27"
+    },
+    {
+      "id": 28,
+      "vpx_name": "L28"
+    },
+    {
+      "id": 31,
+      "vpx_name": "L31"
+    },
+    {
+      "id": 32,
+      "vpx_name": "L32"
+    },
+    {
+      "id": 33,
+      "vpx_name": "L33"
+    },
+    {
+      "id": 34,
+      "vpx_name": "L34"
+    },
+    {
+      "id": 35,
+      "vpx_name": "L35"
+    },
+    {
+      "id": 36,
+      "vpx_name": "L36"
+    },
+    {
+      "id": 37,
+      "vpx_name": "L37"
+    },
+    {
+      "id": 38,
+      "vpx_name": "L38"
+    },
+    {
+      "id": 41,
+      "vpx_name": "L41"
+    },
+    {
+      "id": 42,
+      "vpx_name": "L42"
+    },
+    {
+      "id": 43,
+      "vpx_name": "L43"
+    },
+    {
+      "id": 44,
+      "vpx_name": "L44"
+    },
+    {
+      "id": 45,
+      "vpx_name": "L45"
+    },
+    {
+      "id": 46,
+      "vpx_name": "L46"
+    },
+    {
+      "id": 47,
+      "vpx_name": "L47"
+    },
+    {
+      "id": 48,
+      "vpx_name": "L48"
+    },
+    {
+      "id": 51,
+      "vpx_name": "L51"
+    },
+    {
+      "id": 52,
+      "vpx_name": "L52"
+    },
+    {
+      "id": 53,
+      "vpx_name": "L53"
+    },
+    {
+      "id": 54,
+      "vpx_name": "L54"
+    },
+    {
+      "id": 55,
+      "vpx_name": "L55"
+    },
+    {
+      "id": 56,
+      "vpx_name": "L56"
+    },
+    {
+      "id": 57,
+      "vpx_name": "L57"
+    },
+    {
+      "id": 58,
+      "vpx_name": "L58"
+    },
+    {
+      "id": 61,
+      "vpx_name": "L61"
+    },
+    {
+      "id": 62,
+      "vpx_name": "L62"
+    },
+    {
+      "id": 63,
+      "vpx_name": "L63"
+    },
+    {
+      "id": 64,
+      "vpx_name": "L64"
+    },
+    {
+      "id": 65,
+      "vpx_name": "L65"
+    },
+    {
+      "id": 66,
+      "vpx_name": "L66"
+    },
+    {
+      "id": 67,
+      "vpx_name": "L67"
+    },
+    {
+      "id": 68,
+      "vpx_name": "L68"
+    },
+    {
+      "id": 71,
+      "vpx_name": "L71"
+    },
+    {
+      "id": 72,
+      "vpx_name": "L72"
+    },
+    {
+      "id": 73,
+      "vpx_name": "L73"
+    },
+    {
+      "id": 74,
+      "vpx_name": "L74"
+    },
+    {
+      "id": 75,
+      "vpx_name": "L75"
+    },
+    {
+      "id": 76,
+      "vpx_name": "L76"
+    },
+    {
+      "id": 77,
+      "vpx_name": "L77"
+    },
+    {
+      "id": 78,
+      "vpx_name": "L78"
+    },
+    {
+      "id": 81,
+      "vpx_name": "L81",
+      "description": "Hippo Target"
+    },
+    {
+      "id": 82,
+      "vpx_name": "L82"
+    },
+    {
+      "id": 83,
+      "vpx_name": "L83"
+    },
+    {
+      "id": 84,
+      "vpx_name": "L84"
+    },
+    {
+      "id": 85,
+      "vpx_name": "L85"
+    },
+    {
+      "id": 86,
+      "vpx_name": "L86",
+      "description": "Shoot Again"
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "SolCallback(sLRFlipper) = SolRFlipper; sLRFlipper is framework constant (WPC.VBS). VPX object: RightFlipper"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "SolCallback(sLLFlipper) = SolLFlipper; sLLFlipper is framework constant (WPC.VBS). VPX object: LeftFlipper"
+    },
+    {
+      "id": 34,
+      "alias": "c_flipper_upper_left",
+      "type": "coil",
+      "_note": "SolCallback(sULFlipper) = SolULFlipper; sULFlipper is framework constant (WPC.VBS). VPX object: ULeftFlipper"
+    }
+  ]
+}

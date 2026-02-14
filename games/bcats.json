@@ -1,0 +1,809 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Bad Cats (Williams 1989) VPW 3.0.vbs",
+    "extracted": "2026-02-12",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils. Lamp descriptions inferred from VLM insert arrays (BL_Inserts_lN) and playfield context; no named lamp constants in script. Uses S11.VBS framework (System 11B). Cabinet switches (1-8, 81-84) from S11.vbs framework constants. Flipper solenoids (46/48) from core.vbs framework constants. Seafood wheel mechanism uses cvpmMech with Sol1=16, Sol2=15 and switch 44. SolModCallback used for flashers (PWM). SolCallback(16) commented out as secondary seafood flasher solenoid that apparently doesn't exist IRL."
+  },
+  "game": {
+    "id": "bcats",
+    "name": "Bad Cats",
+    "year": 1989,
+    "manufacturer": "Williams",
+    "ipdb_id": 127,
+    "platform": "s11"
+  },
+  "roms": [
+    {
+      "id": "bcats_l5",
+      "version": "L-5"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Tilt",
+      "_vbscript_name": "swTilt",
+      "_note": "Framework-defined (S11.vbs). Used as vpmNudge.TiltSwitch."
+    },
+    {
+      "id": 2,
+      "description": "Ball Roll Tilt",
+      "_vbscript_name": "swBallRollTilt",
+      "_note": "Framework-defined (S11.vbs)"
+    },
+    {
+      "id": 3,
+      "description": "Start Button",
+      "_vbscript_name": "swStartButton",
+      "_note": "Framework-defined (S11.vbs)"
+    },
+    {
+      "id": 4,
+      "description": "Coin 3",
+      "_vbscript_name": "swCoin3",
+      "_note": "Framework-defined (S11.vbs)"
+    },
+    {
+      "id": 5,
+      "description": "Coin 2",
+      "_vbscript_name": "swCoin2",
+      "_note": "Framework-defined (S11.vbs)"
+    },
+    {
+      "id": 6,
+      "description": "Coin 1",
+      "_vbscript_name": "swCoin1",
+      "_note": "Framework-defined (S11.vbs)"
+    },
+    {
+      "id": 7,
+      "description": "Slam Tilt",
+      "_vbscript_name": "swSlamTilt",
+      "_note": "Framework-defined (S11.vbs)"
+    },
+    {
+      "id": 8,
+      "description": "High Score Reset",
+      "_vbscript_name": "swHiScoreReset",
+      "_note": "Framework-defined (S11.vbs)"
+    },
+    {
+      "id": 10,
+      "description": "Outhole",
+      "_vbscript_name": "sw10",
+      "vpx_name": "sw10",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "Single-ball trough. Ball created here at init. Controller.Switch(10)=1 at startup."
+    },
+    {
+      "id": 11,
+      "description": "Top Standup Target 1",
+      "_vbscript_name": "sw11",
+      "vpx_name": "sw11",
+      "_note": "Upper playfield standup target, near rollover lanes. Has animation primitive."
+    },
+    {
+      "id": 12,
+      "description": "Top Standup Target 2",
+      "_vbscript_name": "sw12",
+      "vpx_name": "sw12",
+      "_note": "Upper playfield standup target. Has animation primitive."
+    },
+    {
+      "id": 13,
+      "description": "Top Standup Target 3",
+      "_vbscript_name": "sw13",
+      "vpx_name": "sw13",
+      "_note": "Upper playfield standup target. Has animation primitive."
+    },
+    {
+      "id": 14,
+      "description": "Top Standup Target 4",
+      "_vbscript_name": "sw14",
+      "vpx_name": "sw14",
+      "_note": "Upper playfield standup target. Has animation primitive."
+    },
+    {
+      "id": 16,
+      "description": "Fish Ramp Gate",
+      "_vbscript_name": "sw16",
+      "vpx_name": "sw16",
+      "_note": "Fishbowl ramp gate switch. PulseSw. Has gate wire animation primitive."
+    },
+    {
+      "id": 19,
+      "description": "Linear Fish Target",
+      "_vbscript_name": "LT19",
+      "vpx_name": "LinearTargetStart",
+      "_note": "Linear target (Fish Bone-Us). Uses LinearTarget class with custom hit detection. Switch activated via controller.Switch(19)."
+    },
+    {
+      "id": 22,
+      "description": "Doghouse Kicker (Ralphie)",
+      "_vbscript_name": "sw22",
+      "vpx_name": "sw22",
+      "_note": "Doghouse scoop eject hole. Ball enters and is kicked out by SolDogOut (solenoid 3)."
+    },
+    {
+      "id": 23,
+      "description": "Tiger Ramp Gate",
+      "_vbscript_name": "sw23",
+      "vpx_name": "sw23",
+      "_note": "Tiger ramp gate switch. PulseSw. Has gate wire animation primitive."
+    },
+    {
+      "id": 24,
+      "description": "Trash Can Kicker",
+      "_vbscript_name": "sw24",
+      "vpx_name": "sw24",
+      "_note": "Trash can / Garbage can eject hole (Fish Bone-Us collection). Ball kicked out by SolTrashOut (solenoid 5)."
+    },
+    {
+      "id": 25,
+      "description": "Bird Drop Target 1 (B)",
+      "_vbscript_name": "sw25",
+      "vpx_name": "sw25",
+      "_note": "Bird drop target bank, target 1. DTHit handler. Reset by solenoid 6 (SolBT)."
+    },
+    {
+      "id": 26,
+      "description": "Bird Drop Target 2 (A)",
+      "_vbscript_name": "sw26",
+      "vpx_name": "sw26",
+      "_note": "Bird drop target bank, target 2. DTHit handler."
+    },
+    {
+      "id": 27,
+      "description": "Bird Drop Target 3 (D)",
+      "_vbscript_name": "sw27",
+      "vpx_name": "sw27",
+      "_note": "Bird drop target bank, target 3. DTHit handler."
+    },
+    {
+      "id": 28,
+      "description": "Bird Drop Target 4 (C)",
+      "_vbscript_name": "sw28",
+      "vpx_name": "sw28",
+      "_note": "Bird drop target bank, target 4. DTHit handler."
+    },
+    {
+      "id": 29,
+      "description": "Bird Drop Target 5 (A)",
+      "_vbscript_name": "sw29",
+      "vpx_name": "sw29",
+      "_note": "Bird drop target bank, target 5. DTHit handler."
+    },
+    {
+      "id": 30,
+      "description": "Left Inlane",
+      "_vbscript_name": "sw30",
+      "vpx_name": "sw30",
+      "_note": "Left inlane rollover. Lights Doghouse when lit."
+    },
+    {
+      "id": 31,
+      "description": "Right Inlane",
+      "_vbscript_name": "sw31",
+      "vpx_name": "sw31",
+      "_note": "Right inlane rollover. Lights 10x Fish Bone-Us multiplier when lit."
+    },
+    {
+      "id": 33,
+      "description": "Top Rollover 1 (T)",
+      "_vbscript_name": "sw33",
+      "vpx_name": "sw33",
+      "_note": "TOY rollover lane, letter T. PulseSw."
+    },
+    {
+      "id": 34,
+      "description": "Top Rollover 2 (O)",
+      "_vbscript_name": "sw34",
+      "vpx_name": "sw34",
+      "_note": "TOY rollover lane, letter O. PulseSw."
+    },
+    {
+      "id": 35,
+      "description": "Left Outlane",
+      "_vbscript_name": "sw35",
+      "vpx_name": "sw35",
+      "_note": "Left outlane. Triggers backglass animation and Curiosity Spin on final ball."
+    },
+    {
+      "id": 36,
+      "description": "Right Outlane",
+      "_vbscript_name": "sw36",
+      "vpx_name": "sw36",
+      "_note": "Right outlane."
+    },
+    {
+      "id": 37,
+      "description": "Milk Drop Target 1",
+      "_vbscript_name": "sw37",
+      "vpx_name": "sw37",
+      "_note": "Milk bottle drop target bank, target 1. DTHit handler. Reset by solenoid 4 (solMT)."
+    },
+    {
+      "id": 38,
+      "description": "Milk Drop Target 2",
+      "_vbscript_name": "sw38",
+      "vpx_name": "sw38",
+      "_note": "Milk bottle drop target bank, target 2. DTHit handler."
+    },
+    {
+      "id": 39,
+      "description": "Milk Drop Target 3",
+      "_vbscript_name": "sw39",
+      "vpx_name": "sw39",
+      "_note": "Milk bottle drop target bank, target 3. DTHit handler."
+    },
+    {
+      "id": 40,
+      "description": "Top Rollover 3 (Y)",
+      "_vbscript_name": "sw40",
+      "vpx_name": "sw40",
+      "_note": "TOY rollover lane, letter Y. PulseSw."
+    },
+    {
+      "id": 41,
+      "description": "Spinner",
+      "_vbscript_name": "sw41",
+      "vpx_name": "sw41",
+      "_note": "Spinner switch. Has rotating animation primitive (sw41P). SoundSpinner plays spinner sound at sw41 position."
+    },
+    {
+      "id": 43,
+      "description": "Right Gate",
+      "_vbscript_name": "sw43",
+      "vpx_name": "sw43",
+      "_note": "Right side gate/trigger. Has rotating animation primitive (sw43P) with timer-driven animation."
+    },
+    {
+      "id": 44,
+      "description": "Seafood Wheel Position",
+      "_note": "Defined in cvpmMech mechanism, not as a direct VPX switch. Mech .AddSw 44, 0, 99. Seafood wheel position detection."
+    },
+    {
+      "id": 60,
+      "description": "Upper Pop Bumper",
+      "_vbscript_name": "sw60",
+      "vpx_name": "sw60",
+      "device_hint": "^Bumper\\s*\\d?",
+      "_note": "Upper jet bumper. PulseSw. Has ring animation."
+    },
+    {
+      "id": 61,
+      "description": "Left Pop Bumper",
+      "_vbscript_name": "sw61",
+      "vpx_name": "sw61",
+      "device_hint": "^Bumper\\s*\\d?",
+      "_note": "Left jet bumper. PulseSw. Has ring animation."
+    },
+    {
+      "id": 62,
+      "description": "Lower Pop Bumper",
+      "_vbscript_name": "sw62",
+      "vpx_name": "sw62",
+      "device_hint": "^Bumper\\s*\\d?",
+      "_note": "Lower jet bumper. PulseSw. Has ring animation."
+    },
+    {
+      "id": 63,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "device_hint": "^Sling\\s*\\d?",
+      "_note": "Left slingshot. PulseSw(63) in LeftSlingShot_Slingshot sub. Part of vpmNudge.TiltObj array."
+    },
+    {
+      "id": 64,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "device_hint": "^Sling\\s*\\d?",
+      "_note": "Right slingshot. PulseSw(64) in RightSlingShot_Slingshot sub. Part of vpmNudge.TiltObj array."
+    },
+    {
+      "id": 81,
+      "description": "Upper Right Flipper Button",
+      "_vbscript_name": "swURFlip",
+      "_note": "Framework-defined (S11.vbs). Cabinet flipper button switch."
+    },
+    {
+      "id": 82,
+      "description": "Lower Right Flipper Button",
+      "_vbscript_name": "swLRFlip",
+      "_note": "Framework-defined (S11.vbs). Cabinet flipper button switch."
+    },
+    {
+      "id": 83,
+      "description": "Upper Left Flipper Button",
+      "_vbscript_name": "swULFlip",
+      "_note": "Framework-defined (S11.vbs). Cabinet flipper button switch."
+    },
+    {
+      "id": 84,
+      "description": "Lower Left Flipper Button",
+      "_vbscript_name": "swLLFlip",
+      "_note": "Framework-defined (S11.vbs). Cabinet flipper button switch."
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Ball Release / Outhole Kicker",
+      "_vbscript_callback": "SolBallRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Kicks ball from outhole (sw10) to shooter lane. BIP incremented on fire."
+    },
+    {
+      "id": 2,
+      "description": "Knocker",
+      "_vbscript_callback": "KnockerSolenoid",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 3,
+      "description": "Doghouse Kicker (Ralphie)",
+      "_vbscript_callback": "SolDogOut",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw22",
+      "_note": "Ejects ball from doghouse scoop (sw22). Kicks at angle 35, power 35."
+    },
+    {
+      "id": 4,
+      "description": "Milk Drop Target Reset",
+      "_vbscript_callback": "solMT",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets milk bottle drop targets (sw37, sw38, sw39). Original comment: dtMilk.SolDropUp"
+    },
+    {
+      "id": 5,
+      "description": "Trash Can Kicker",
+      "_vbscript_callback": "SolTrashOut",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw24",
+      "_note": "Ejects ball from trash can/garbage can kicker (sw24)."
+    },
+    {
+      "id": 6,
+      "description": "Bird Drop Target Reset",
+      "_vbscript_callback": "SolBT",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets bird drop targets (sw25-sw29). Original comment: dtBird.SolDropUp"
+    },
+    {
+      "id": 9,
+      "description": "Backglass Cat Animation",
+      "_vbscript_callback": "SolbgCat",
+      "_inferred_type": "backglass_mechanism",
+      "_note": "Triggers backglass cat animation (VR: vrCatTimer). Mechanical backbox feature."
+    },
+    {
+      "id": 10,
+      "description": "GI Blink Relay",
+      "_vbscript_callback": "SolGIBlink",
+      "_inferred_type": "gi_relay",
+      "_note": "Blinks GI on/off. Toggles both main GI (SolGI) and backbox GI (SolbbGI) when their respective active flags are set."
+    },
+    {
+      "id": 11,
+      "description": "Backbox GI Relay",
+      "_vbscript_callback": "SolbbGION",
+      "_inferred_type": "gi_relay",
+      "_note": "Controls backbox GI string. Sets GIActivebb flag."
+    },
+    {
+      "id": 13,
+      "description": "Backglass Woman Animation",
+      "_vbscript_callback": "SolbgWoman",
+      "_inferred_type": "backglass_mechanism",
+      "_note": "Triggers backglass woman-with-broom animation (VR: vrWomanTimer and VrCat rotation). Mechanical backbox feature."
+    },
+    {
+      "id": 15,
+      "description": "Seafood Wheel Flasher",
+      "_vbscript_callback": "FlashMod15",
+      "_inferred_type": "flasher",
+      "vpx_name": "SFWL",
+      "_note": "Seafood wheel light/flasher. Also used as cvpmMech Sol1 for wheel motor direction. SolModCallback (PWM)."
+    },
+    {
+      "id": 16,
+      "description": "Seafood Wheel Motor 2",
+      "_inferred_type": "mechanism",
+      "_note": "cvpmMech Sol2 for seafood wheel. No SolCallback assigned directly. SolModCallback(16) commented out with note: secondary seafood flasher solenoid - apparently doesn't exist IRL."
+    },
+    {
+      "id": 23,
+      "description": "Game On / GI Relay",
+      "_vbscript_callback": "SolGION",
+      "_inferred_type": "gi_relay",
+      "_note": "GameOnSolenoid (framework-defined = 23). Controls main playfield GI. Also enables flippers. Sets GIActive flag. Also calls ACRelay via vpmNudge.SolGameOn."
+    },
+    {
+      "id": 25,
+      "description": "Fish Target Insert Flasher",
+      "_vbscript_callback": "FlashMod125",
+      "_inferred_type": "flasher",
+      "vpx_name": "f125",
+      "_note": "SolModCallback (PWM). Controller.SolMask(1025). Fish target area flasher."
+    },
+    {
+      "id": 26,
+      "description": "Upper Right Dome Flasher",
+      "_vbscript_callback": "FlashMod126",
+      "_inferred_type": "flasher",
+      "vpx_name": "f126",
+      "_note": "SolModCallback (PWM). Controller.SolMask(1026). Has mayo/grease glass effect."
+    },
+    {
+      "id": 27,
+      "description": "Birdcage / Middle Left Dome Flasher",
+      "_vbscript_callback": "FlashMod127",
+      "_inferred_type": "flasher",
+      "vpx_name": "f127",
+      "_note": "SolModCallback (PWM). Controller.SolMask(1027). Has mayo/grease glass effect."
+    },
+    {
+      "id": 28,
+      "description": "Upper Left Dome Flasher",
+      "_vbscript_callback": "FlashMod128",
+      "_inferred_type": "flasher",
+      "vpx_name": "f128",
+      "_note": "SolModCallback (PWM). Controller.SolMask(1028). Has mayo/grease glass effect."
+    },
+    {
+      "id": 29,
+      "description": "Fish Bowl Dome Flasher",
+      "_vbscript_callback": "FlashMod129",
+      "_inferred_type": "flasher",
+      "vpx_name": "f129",
+      "_note": "SolModCallback (PWM). Controller.SolMask(1029). Has mayo/grease glass effect."
+    },
+    {
+      "id": 30,
+      "description": "Doghouse Cat Insert Flasher",
+      "_vbscript_callback": "FlashMod130",
+      "_inferred_type": "flasher",
+      "vpx_name": "f130",
+      "_note": "SolModCallback (PWM). Controller.SolMask(1030)."
+    },
+    {
+      "id": 31,
+      "description": "Tiger Ramp / Lower Right Dome Flasher",
+      "_vbscript_callback": "FlashMod131",
+      "_inferred_type": "flasher",
+      "vpx_name": "f131",
+      "_note": "SolModCallback (PWM). Controller.SolMask(1031). Has mayo/grease glass effect."
+    },
+    {
+      "id": 32,
+      "description": "BBQ Insert Flasher",
+      "_vbscript_callback": "FlashMod132",
+      "_inferred_type": "flasher",
+      "vpx_name": "f132",
+      "_note": "SolModCallback (PWM). Controller.SolMask(1032). BBQ/barbecue area flasher."
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_name": "sLRFlipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "device_hint": "^Flipper\\s*\\d?",
+      "_note": "Framework-defined constant (core.vbs: sLRFlipper=46)"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_name": "sLLFlipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "device_hint": "^Flipper\\s*\\d?",
+      "_note": "Framework-defined constant (core.vbs: sLLFlipper=48)"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "description": "Lamp 1",
+      "_vlm_array": "BL_Inserts_l1",
+      "_note": "Near left/right flipper area based on VLM lightmap data (FlipperL, FlipperR)"
+    },
+    {
+      "id": 2,
+      "description": "Lamp 2",
+      "_vlm_array": "BL_Inserts_l2",
+      "_note": "Left slingshot area based on VLM lightmap data"
+    },
+    {
+      "id": 3,
+      "description": "Lamp 3",
+      "_vlm_array": "BL_Inserts_l3",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 4,
+      "description": "Lamp 4",
+      "_vlm_array": "BL_Inserts_l4",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 5,
+      "description": "Lamp 5",
+      "_vlm_array": "BL_Inserts_l5",
+      "_note": "Right flipper area based on VLM lightmap data"
+    },
+    {
+      "id": 6,
+      "description": "Lamp 6",
+      "_vlm_array": "BL_Inserts_l6",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 7,
+      "description": "Lamp 7",
+      "_vlm_array": "BL_Inserts_l7",
+      "_note": "Right slingshot area based on VLM lightmap data"
+    },
+    {
+      "id": 8,
+      "description": "Lamp 8",
+      "_vlm_array": "BL_Inserts_l8",
+      "_note": "Playfield insert near plastics"
+    },
+    {
+      "id": 9,
+      "description": "Lamp 9",
+      "_vlm_array": "BL_Inserts_l9",
+      "_note": "Upper playfield area based on VLM lightmap data (BackWall2)"
+    },
+    {
+      "id": 10,
+      "description": "Lamp 10",
+      "_vlm_array": "BL_Inserts_l10",
+      "_note": "Tiger ramp area based on VLM lightmap data"
+    },
+    {
+      "id": 11,
+      "description": "Lamp 11",
+      "_vlm_array": "BL_Inserts_l11",
+      "_note": "Upper playfield area"
+    },
+    {
+      "id": 12,
+      "description": "Lamp 12",
+      "_vlm_array": "BL_Inserts_l12",
+      "_note": "Upper playfield area"
+    },
+    {
+      "id": 13,
+      "description": "Lamp 13",
+      "_vlm_array": "BL_Inserts_l13",
+      "_note": "Upper playfield area"
+    },
+    {
+      "id": 14,
+      "description": "Lamp 14",
+      "_vlm_array": "BL_Inserts_l14",
+      "_note": "Near upper bumper (sw60) area based on VLM lightmap data"
+    },
+    {
+      "id": 15,
+      "description": "Lamp 15",
+      "_vlm_array": "BL_Inserts_l15",
+      "_note": "Near upper bumper (sw60) area based on VLM lightmap data"
+    },
+    {
+      "id": 16,
+      "description": "Lamp 16",
+      "_vlm_array": "BL_Inserts_l16",
+      "_note": "Near bumper area (sw60/sw61) based on VLM lightmap data"
+    },
+    {
+      "id": 17,
+      "description": "Lamp 17",
+      "_vlm_array": "BL_Inserts_l17",
+      "_note": "Tiger ramp area based on VLM lightmap data"
+    },
+    {
+      "id": 18,
+      "description": "Lamp 18",
+      "_vlm_array": "BL_Inserts_l18",
+      "_note": "Upper playfield area"
+    },
+    {
+      "id": 19,
+      "description": "Lamp 19",
+      "_vlm_array": "BL_Inserts_l19",
+      "_note": "Tiger ramp area based on VLM lightmap data"
+    },
+    {
+      "id": 21,
+      "description": "Lamp 21",
+      "_vlm_array": "BL_Inserts_l21",
+      "_note": "Fish ramp area based on VLM lightmap data (FishRampEdges)"
+    },
+    {
+      "id": 22,
+      "description": "Lamp 22",
+      "_vlm_array": "BL_Inserts_l22",
+      "_note": "Fish ramp area based on VLM lightmap data"
+    },
+    {
+      "id": 23,
+      "description": "Lamp 23",
+      "_vlm_array": "BL_Inserts_l23",
+      "_note": "Fish ramp area based on VLM lightmap data"
+    },
+    {
+      "id": 24,
+      "description": "Lamp 24",
+      "_vlm_array": "BL_Inserts_l24",
+      "_note": "Near fish ramp gate (sw16) based on VLM lightmap data"
+    },
+    {
+      "id": 26,
+      "description": "Lamp 26",
+      "_vlm_array": "BL_Inserts_l26",
+      "_note": "Left slingshot area based on VLM lightmap data"
+    },
+    {
+      "id": 27,
+      "description": "Lamp 27",
+      "_vlm_array": "BL_Inserts_l27",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 28,
+      "description": "Lamp 28",
+      "_vlm_array": "BL_Inserts_l28",
+      "_note": "Tiger ramp edge area based on VLM lightmap data"
+    },
+    {
+      "id": 29,
+      "description": "Lamp 29",
+      "_vlm_array": "BL_Inserts_l29",
+      "_note": "Right slingshot area based on VLM lightmap data"
+    },
+    {
+      "id": 30,
+      "description": "Lamp 30",
+      "_vlm_array": "BL_Inserts_l30",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 33,
+      "description": "Lamp 33",
+      "_vlm_array": "BL_Inserts_l33",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 34,
+      "description": "Lamp 34",
+      "_vlm_array": "BL_Inserts_l34",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 35,
+      "description": "Lamp 35",
+      "_vlm_array": "BL_Inserts_l35",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 36,
+      "description": "Lamp 36",
+      "_vlm_array": "BL_Inserts_l36",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 37,
+      "description": "Lamp 37",
+      "_vlm_array": "BL_Inserts_l37",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 38,
+      "description": "Lamp 38",
+      "_vlm_array": "BL_Inserts_l38",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 39,
+      "description": "Lamp 39",
+      "_vlm_array": "BL_Inserts_l39",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 40,
+      "description": "Lamp 40",
+      "_vlm_array": "BL_Inserts_l40",
+      "_note": "Playfield insert near plastics"
+    },
+    {
+      "id": 41,
+      "description": "Lamp 41",
+      "_vlm_array": "BL_Inserts_l41",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 42,
+      "description": "Lamp 42",
+      "_vlm_array": "BL_Inserts_l42",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 43,
+      "description": "Lamp 43",
+      "_vlm_array": "BL_Inserts_l43",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 44,
+      "description": "Lamp 44",
+      "_vlm_array": "BL_Inserts_l44",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 45,
+      "description": "Lamp 45",
+      "_vlm_array": "BL_Inserts_l45",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 46,
+      "description": "Lamp 46",
+      "_vlm_array": "BL_Inserts_l46",
+      "_note": "Under-playfield lamp only"
+    },
+    {
+      "id": 47,
+      "description": "Lamp 47",
+      "_vlm_array": "BL_Inserts_l47",
+      "_note": "Backglass area based on VLM lightmap data"
+    },
+    {
+      "id": 48,
+      "description": "Lamp 48",
+      "_vlm_array": "BL_Inserts_l48",
+      "_note": "Backglass area based on VLM lightmap data"
+    },
+    {
+      "id": 49,
+      "description": "Lamp 49",
+      "_vlm_array": "BL_Inserts_l49",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 50,
+      "description": "Lamp 50",
+      "_vlm_array": "BL_Inserts_l50",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 51,
+      "description": "Lamp 51",
+      "_vlm_array": "BL_Inserts_l51",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 52,
+      "description": "Lamp 52",
+      "_vlm_array": "BL_Inserts_l52",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 53,
+      "description": "Lamp 53",
+      "_vlm_array": "BL_Inserts_l53",
+      "_note": "Near fish target based on VLM lightmap data (FishT)"
+    }
+  ]
+}

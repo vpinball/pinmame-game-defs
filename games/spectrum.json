@@ -1,0 +1,363 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Spectrum (Bally 1981) VPW v1.0.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from explicit Controller.Switch() and SolCallback assignments. No Const sw* definitions — switches identified from _Hit/_UnHit subs and Controller.Switch() calls. No NFadeL/NFadeLm/Flash/Lampz macros found — lamps use vpmMapLights AllLamps (implicit VPX light-to-lamp mapping; actual lamp IDs depend on VPX table light numbering, not extractable from script alone). Early Bally -17/-35 platform. Drain uses cvpmBallStack (not cvpmTrough) with single switch 8. Four saucer kickers (sw7, sw17, sw24, sw41, sw48) each have dual-direction kick logic. Drop targets in 4 banks of 3."
+  },
+  "game": {
+    "id": "spectrum",
+    "name": "Spectrum",
+    "year": 1981,
+    "manufacturer": "Bally",
+    "platform": "bally"
+  },
+  "roms": [
+    {
+      "id": "spectru4"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Right Flipper Button",
+      "_note": "Controller.Switch(1) set via RightFlipperKey in Table1_KeyDown/KeyUp"
+    },
+    {
+      "id": 2,
+      "description": "Left Flipper Button",
+      "_note": "Controller.Switch(2) set via LeftFlipperKey in Table1_KeyDown/KeyUp"
+    },
+    {
+      "id": 7,
+      "description": "Top Saucer Kicker",
+      "vpx_name": "sw7",
+      "_note": "Controller.Switch(7) on/off. Dual-direction kick: sol 1 kicks left, sol 2 kicks right."
+    },
+    {
+      "id": 8,
+      "description": "Drain",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain",
+      "_note": "bsD cvpmBallStack. InitSaucer Drain, 8. Single ball drain — early Bally has no multi-switch trough."
+    },
+    {
+      "id": 15,
+      "description": "Tilt",
+      "_note": "vpmNudge.TiltSwitch = 15"
+    },
+    {
+      "id": 17,
+      "description": "Bottom Left Saucer Kicker",
+      "vpx_name": "sw17",
+      "_note": "Controller.Switch(17) on/off. Dual-direction kick: sol 3 kicks left, sol 4 kicks right (inferred from sub pairing)."
+    },
+    {
+      "id": 18,
+      "description": "Rollover",
+      "vpx_name": "sw18",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 19,
+      "description": "Star Trigger",
+      "vpx_name": "sw19",
+      "_note": "Controller.Switch on/off. Multiple VPX objects: sw19, sw19a, sw19b"
+    },
+    {
+      "id": 20,
+      "description": "Star Trigger",
+      "vpx_name": "sw20",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 21,
+      "description": "Star Trigger",
+      "vpx_name": "sw21",
+      "_note": "Controller.Switch on/off. Multiple VPX objects: sw21, sw21a, sw21b"
+    },
+    {
+      "id": 22,
+      "description": "Rollover",
+      "vpx_name": "sw22",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 23,
+      "description": "Rollover",
+      "vpx_name": "sw23",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 24,
+      "description": "Middle Right Saucer Kicker",
+      "vpx_name": "sw24",
+      "_note": "Controller.Switch(24) on/off. Dual-direction kick similar to sw7/sw17."
+    },
+    {
+      "id": 25,
+      "description": "Rollover (Triple)",
+      "vpx_name": "sw25a",
+      "_note": "Controller.Switch on/off. Multiple VPX objects: sw25a, sw25b, sw25c — all map to switch 25"
+    },
+    {
+      "id": 26,
+      "description": "Spinner",
+      "vpx_name": "sw26",
+      "_note": "vpmTimer.PulseSw 26"
+    },
+    {
+      "id": 27,
+      "description": "Star Trigger",
+      "vpx_name": "sw27",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 28,
+      "description": "Star Trigger",
+      "vpx_name": "sw28",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 29,
+      "description": "Star Trigger",
+      "vpx_name": "sw29",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 30,
+      "description": "Star Trigger",
+      "vpx_name": "sw30",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 31,
+      "description": "Spinner",
+      "vpx_name": "sw31",
+      "_note": "vpmTimer.PulseSw 31"
+    },
+    {
+      "id": 32,
+      "description": "Rollover (Triple)",
+      "vpx_name": "sw32a",
+      "_note": "Controller.Switch on/off. Multiple VPX objects: sw32a, sw32b, sw32c — all map to switch 32"
+    },
+    {
+      "id": 33,
+      "description": "Star Trigger",
+      "vpx_name": "sw33",
+      "_note": "Controller.Switch on/off. Multiple VPX objects: sw33, sw33a"
+    },
+    {
+      "id": 34,
+      "description": "Drop Target — Green Bank 1",
+      "vpx_name": "sw34",
+      "_note": "DTHit 34. Reset by sol 11 (DT_G_Reset)."
+    },
+    {
+      "id": 35,
+      "description": "Drop Target — Green Bank 2",
+      "vpx_name": "sw35",
+      "_note": "DTHit 35. Reset by sol 11 (DT_G_Reset)."
+    },
+    {
+      "id": 36,
+      "description": "Drop Target — Green Bank 3",
+      "vpx_name": "sw36",
+      "_note": "DTHit 36. Reset by sol 11 (DT_G_Reset)."
+    },
+    {
+      "id": 37,
+      "description": "Drop Target — Yellow Bank 1",
+      "vpx_name": "sw37",
+      "_note": "DTHit 37. Reset by sol 12 (DT_Y_Reset)."
+    },
+    {
+      "id": 38,
+      "description": "Drop Target — Yellow Bank 2",
+      "vpx_name": "sw38",
+      "_note": "DTHit 38. Reset by sol 12 (DT_Y_Reset)."
+    },
+    {
+      "id": 39,
+      "description": "Drop Target — Yellow Bank 3",
+      "vpx_name": "sw39",
+      "_note": "DTHit 39. Reset by sol 12 (DT_Y_Reset)."
+    },
+    {
+      "id": 40,
+      "description": "Star Trigger",
+      "vpx_name": "sw40",
+      "_note": "Controller.Switch on/off. Multiple VPX objects: sw40, sw40a"
+    },
+    {
+      "id": 41,
+      "description": "Middle Left Saucer Kicker",
+      "vpx_name": "sw41",
+      "_note": "Controller.Switch(41) on/off. Dual-direction kick similar to sw7/sw17."
+    },
+    {
+      "id": 42,
+      "description": "Drop Target — Blue Bank 1",
+      "vpx_name": "sw42",
+      "_note": "DTHit 42. Reset by sol 10 (DT_B_Reset)."
+    },
+    {
+      "id": 43,
+      "description": "Drop Target — Blue Bank 2",
+      "vpx_name": "sw43",
+      "_note": "DTHit 43. Reset by sol 10 (DT_B_Reset)."
+    },
+    {
+      "id": 44,
+      "description": "Drop Target — Blue Bank 3",
+      "vpx_name": "sw44",
+      "_note": "DTHit 44. Reset by sol 10 (DT_B_Reset)."
+    },
+    {
+      "id": 45,
+      "description": "Drop Target — Red Bank 1",
+      "vpx_name": "sw45",
+      "_note": "DTHit 45. Reset by sol 13 (DT_R_Reset)."
+    },
+    {
+      "id": 46,
+      "description": "Drop Target — Red Bank 2",
+      "vpx_name": "sw46",
+      "_note": "DTHit 46. Reset by sol 13 (DT_R_Reset)."
+    },
+    {
+      "id": 47,
+      "description": "Drop Target — Red Bank 3",
+      "vpx_name": "sw47",
+      "_note": "DTHit 47. Reset by sol 13 (DT_R_Reset)."
+    },
+    {
+      "id": 48,
+      "description": "Bottom Right Saucer Kicker",
+      "vpx_name": "sw48",
+      "_note": "Controller.Switch(48) on/off. Dual-direction kick similar to sw7/sw17."
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Top Kicker — Kick Left",
+      "_vbscript_callback": "kicker_topleft",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from sw7 saucer to the left (angle 290)"
+    },
+    {
+      "id": 2,
+      "description": "Top Kicker — Kick Right",
+      "_vbscript_callback": "kicker_topright",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from sw7 saucer to the right (angle 70)"
+    },
+    {
+      "id": 3,
+      "description": "Middle Left Kicker",
+      "_vbscript_callback": "kicker_midleft",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from sw41 saucer"
+    },
+    {
+      "id": 4,
+      "description": "Middle Right Kicker",
+      "_vbscript_callback": "kicker_midright",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from sw48 saucer"
+    },
+    {
+      "id": 5,
+      "description": "Drain Eject / Ball Release",
+      "_vbscript_callback": "DrainSolOut",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "bsD.SolOut — ejects ball from drain (cvpmBallStack)"
+    },
+    {
+      "id": 6,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"Knocker\",DOFKnocker),",
+      "_inferred_type": "knocker",
+      "_note": "Sound-only callback in VPX — physical knocker coil"
+    },
+    {
+      "id": 8,
+      "description": "Bottom Left Kicker",
+      "_vbscript_callback": "kicker_botleft",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from sw17 saucer"
+    },
+    {
+      "id": 9,
+      "description": "Bottom Right Kicker",
+      "_vbscript_callback": "kicker_botright",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from sw24 saucer"
+    },
+    {
+      "id": 10,
+      "description": "Drop Target Reset — Blue Bank",
+      "_vbscript_callback": "DT_B_Reset",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets drop targets sw42, sw43, sw44"
+    },
+    {
+      "id": 11,
+      "description": "Drop Target Reset — Green Bank",
+      "_vbscript_callback": "DT_G_Reset",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets drop targets sw34, sw35, sw36"
+    },
+    {
+      "id": 12,
+      "description": "Drop Target Reset — Yellow Bank",
+      "_vbscript_callback": "DT_Y_Reset",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets drop targets sw37, sw38, sw39"
+    },
+    {
+      "id": 13,
+      "description": "Drop Target Reset — Red Bank",
+      "_vbscript_callback": "DT_R_Reset",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets drop targets sw45, sw46, sw47"
+    },
+    {
+      "id": 18,
+      "description": "GI Relay",
+      "_vbscript_callback": "SolGI",
+      "_inferred_type": "gi",
+      "_note": "Enables/disables GI lighting. Iterates GI array setting state."
+    },
+    {
+      "id": 19,
+      "description": "Game On Solenoid",
+      "_vbscript_callback": "vpmNudge.SolGameOn",
+      "_inferred_type": "system",
+      "_note": "Standard Bally game-on solenoid. Enables nudge/tilt detection."
+    }
+  ],
+  "lamps": [],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — SolRFlipper callback. VPX object: RightFlipper"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — SolLFlipper callback. VPX object: LeftFlipper"
+    }
+  ]
+}

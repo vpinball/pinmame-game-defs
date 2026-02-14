@@ -1,0 +1,909 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Defender (Williams 1982) VPW v1.0.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from SolCallback and sw*_Hit handlers. Lamp assignments from InitLampsNF Lampz.MassAssign and Controller.Lamp comments in UpdateMultipleLamps/UpdateDTLamps. Uses S7.VBS (Williams System 7). Solenoid 11 is multiplexed per System 7 convention — coils 33-42 are multiplexed via sol 11 (VPM 1.52+ handles automatically, older versions offset by +32). Lamp 0 is GI (solenoid-driven via SolPFGI on coil 14). Lamp 100 is center flasher (solenoid-driven via SolCenterFlasher on coil 21). Tilt switch is swTilt from S7.VBS framework (platform-defined, typically switch 2 on System 7). Flipper solenoid callbacks are blanked for fast-flip workaround — flippers are driven directly in KeyDown/KeyUp subs."
+  },
+  "game": {
+    "id": "defender",
+    "name": "Defender",
+    "year": 1982,
+    "manufacturer": "Williams",
+    "platform": "s7"
+  },
+  "roms": [
+    {
+      "id": "dfndr_l4",
+      "version": "L-4"
+    }
+  ],
+  "switches": [
+    {
+      "id": 9,
+      "description": "Left Outlane",
+      "vpx_name": "sw9"
+    },
+    {
+      "id": 10,
+      "description": "Left Return Lane",
+      "vpx_name": "sw10"
+    },
+    {
+      "id": 11,
+      "description": "Right Return Lane",
+      "vpx_name": "sw11"
+    },
+    {
+      "id": 12,
+      "description": "Right Outlane",
+      "vpx_name": "sw12"
+    },
+    {
+      "id": 13,
+      "description": "Left Bank Drop Target 1",
+      "vpx_name": "sw13",
+      "_inferred_type": "drop_target",
+      "_note": "5-target left bank (sw13-17), reset individually by coils 1-5 or bank-dropped by coil 6"
+    },
+    {
+      "id": 14,
+      "description": "Left Bank Drop Target 2",
+      "vpx_name": "sw14",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 15,
+      "description": "Left Bank Drop Target 3",
+      "vpx_name": "sw15",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 16,
+      "description": "Left Bank Drop Target 4",
+      "vpx_name": "sw16",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 17,
+      "description": "Left Bank Drop Target 5",
+      "vpx_name": "sw17",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 18,
+      "description": "Standup Target 1",
+      "vpx_name": "sw18",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 19,
+      "description": "Standup Target 2",
+      "vpx_name": "sw19",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 20,
+      "description": "Standup Target 3",
+      "vpx_name": "sw20",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 21,
+      "description": "Standup Target 4",
+      "vpx_name": "sw21",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 22,
+      "description": "Standup Target 5",
+      "vpx_name": "sw22",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 23,
+      "description": "Right Bank Drop Target 1",
+      "vpx_name": "sw23",
+      "_inferred_type": "drop_target",
+      "_note": "5-target right bank (sw23-27), reset individually by coils 33-37 or bank-dropped by coil 38 (multiplexed via sol 11)"
+    },
+    {
+      "id": 24,
+      "description": "Right Bank Drop Target 2",
+      "vpx_name": "sw24",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 25,
+      "description": "Right Bank Drop Target 3",
+      "vpx_name": "sw25",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 26,
+      "description": "Right Bank Drop Target 4",
+      "vpx_name": "sw26",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 27,
+      "description": "Right Bank Drop Target 5",
+      "vpx_name": "sw27",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 28,
+      "description": "Standup Target 6",
+      "vpx_name": "sw28",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 29,
+      "description": "Standup Target 7",
+      "vpx_name": "sw29",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 30,
+      "description": "Standup Target 8",
+      "vpx_name": "sw30",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 31,
+      "description": "Standup Target 9",
+      "vpx_name": "sw31",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 32,
+      "description": "Standup Target 10",
+      "vpx_name": "sw32",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 33,
+      "description": "Center Drop Target 1",
+      "vpx_name": "sw33",
+      "_inferred_type": "drop_target",
+      "_note": "3-target center bank (sw33-35), reset individually by coils 9/41/10 or bank-dropped by coil 42"
+    },
+    {
+      "id": 34,
+      "description": "Center Drop Target 2",
+      "vpx_name": "sw34",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 35,
+      "description": "Center Drop Target 3",
+      "vpx_name": "sw35",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 36,
+      "description": "Standup Target 11",
+      "vpx_name": "sw36",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 37,
+      "description": "Standup Target 12",
+      "vpx_name": "sw37",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 38,
+      "description": "Scoring Rubber",
+      "vpx_name": "sw38",
+      "_inferred_type": "rubber",
+      "_note": "Pulsed via vpmTimer.pulseSw 38"
+    },
+    {
+      "id": 39,
+      "description": "Bottom Pod Drop Target",
+      "vpx_name": "sw39",
+      "_inferred_type": "drop_target",
+      "_note": "Single drop target, reset by coil 7"
+    },
+    {
+      "id": 40,
+      "description": "Top Pod Drop Target",
+      "vpx_name": "sw40",
+      "_inferred_type": "drop_target",
+      "_note": "Single drop target, reset by coil 39 (multiplexed via sol 11)"
+    },
+    {
+      "id": 41,
+      "description": "Standup Target 13",
+      "vpx_name": "sw41",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 42,
+      "description": "Lock 1",
+      "vpx_name": "sw42",
+      "_inferred_type": "ball_lock",
+      "_note": "3-ball lock (sw42-44). Balls stack via UpdateLock cascade. Released by coil 40."
+    },
+    {
+      "id": 43,
+      "description": "Lock 2",
+      "vpx_name": "sw43",
+      "_inferred_type": "ball_lock"
+    },
+    {
+      "id": 44,
+      "description": "Lock 3 (Saucer)",
+      "vpx_name": "sw44",
+      "_inferred_type": "ball_lock",
+      "_note": "Top of lock stack — SoundSaucerLock on hit"
+    },
+    {
+      "id": 45,
+      "description": "Top Lane",
+      "vpx_name": "sw45"
+    },
+    {
+      "id": 46,
+      "description": "Outhole",
+      "vpx_name": "sw46",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch"
+    },
+    {
+      "id": 47,
+      "description": "Trough 1",
+      "vpx_name": "sw47",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "3-ball trough (sw47-49). Balls cascade via UpdateTrough timer. Ball release from sw47."
+    },
+    {
+      "id": 48,
+      "description": "Trough 2",
+      "vpx_name": "sw48",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 49,
+      "description": "Trough 3",
+      "vpx_name": "sw49",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 50,
+      "description": "Shooter Lane",
+      "vpx_name": "sw50",
+      "_note": "Also sets BIPL flag on hit (Ball In Play Latch)"
+    },
+    {
+      "id": 51,
+      "description": "Wire Trigger 1",
+      "vpx_name": "sw51"
+    },
+    {
+      "id": 52,
+      "description": "Wire Trigger 2",
+      "vpx_name": "sw52"
+    },
+    {
+      "id": 53,
+      "description": "Wire Trigger 3",
+      "vpx_name": "sw53"
+    },
+    {
+      "id": 54,
+      "description": "Wire Trigger 4",
+      "vpx_name": "sw54"
+    },
+    {
+      "id": 55,
+      "description": "Left Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Bumper1 — pulsed via vpmTimer.PulseSw(55)"
+    },
+    {
+      "id": 56,
+      "description": "Right Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Bumper2 — pulsed via vpmTimer.PulseSw(56)"
+    },
+    {
+      "id": 57,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "Pulsed via vpmTimer.PulseSw 57"
+    },
+    {
+      "id": 58,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "Pulsed via vpmTimer.PulseSw 58"
+    },
+    {
+      "id": 60,
+      "description": "Right Magna Save / Fire Button",
+      "_note": "Mapped to RightMagnaSave and LockBarKey keypresses",
+      "input_action_hint": "fire_button",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 61,
+      "description": "Left Magna Save",
+      "_note": "Mapped to LeftMagnaSave keypress",
+      "input_action_hint": "magna_save_left",
+      "input_map_hint": "cabinet"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Left Bank Drop Target 1 Reset",
+      "_vbscript_callback": "SolDTLBankUnhit 13,",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets individual target sw13"
+    },
+    {
+      "id": 2,
+      "description": "Left Bank Drop Target 2 Reset",
+      "_vbscript_callback": "SolDTLBankUnhit 14,",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets individual target sw14"
+    },
+    {
+      "id": 3,
+      "description": "Left Bank Drop Target 3 Reset",
+      "_vbscript_callback": "SolDTLBankUnhit 15,",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets individual target sw15"
+    },
+    {
+      "id": 4,
+      "description": "Left Bank Drop Target 4 Reset",
+      "_vbscript_callback": "SolDTLBankUnhit 16,",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets individual target sw16"
+    },
+    {
+      "id": 5,
+      "description": "Left Bank Drop Target 5 Reset",
+      "_vbscript_callback": "SolDTLBankUnhit 17,",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets individual target sw17"
+    },
+    {
+      "id": 6,
+      "description": "Left Bank Drop Target Bank Down",
+      "_vbscript_callback": "SolDTLBankDropDown",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Drops all left bank targets (sw13-17)"
+    },
+    {
+      "id": 7,
+      "description": "Bottom Pod Drop Target Reset",
+      "_vbscript_callback": "SolDTBPodDropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises sw39"
+    },
+    {
+      "id": 8,
+      "description": "Ball Release",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "ball_release",
+      "_note": "Kicks ball from sw47 (trough position 1)"
+    },
+    {
+      "id": 9,
+      "description": "Center Drop Target 1 Reset",
+      "_vbscript_callback": "SolDTBait1",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises sw33"
+    },
+    {
+      "id": 10,
+      "description": "Center Drop Target 3 Reset",
+      "_vbscript_callback": "SolDTBait3",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises sw35"
+    },
+    {
+      "id": 12,
+      "description": "Outhole Kicker",
+      "_vbscript_callback": "SolDrain",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_coil",
+      "_note": "Kicks ball from sw46 (outhole) into trough"
+    },
+    {
+      "id": 13,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "SolAPlunger",
+      "_inferred_type": "ball_management",
+      "_note": "Fires Plunger1 to launch ball; pulls back on disable"
+    },
+    {
+      "id": 14,
+      "description": "Playfield GI Relay",
+      "_vbscript_callback": "SolPFGI",
+      "_inferred_type": "gi_relay",
+      "_note": "Enabled = GI off (Lampz.state(0)=0, dark backglass), Disabled = GI on (Lampz.state(0)=1, illuminated backglass)"
+    },
+    {
+      "id": 15,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 17,
+      "description": "Left Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out in script"
+    },
+    {
+      "id": 18,
+      "description": "Right Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out in script"
+    },
+    {
+      "id": 21,
+      "description": "Center Flasher",
+      "_vbscript_callback": "SolCenterFlasher",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Controls Lampz.state(100) — mapped to flash1/flash2/flash3/flash4/flashh VPX objects"
+    },
+    {
+      "id": 22,
+      "description": "Flipper Diverter",
+      "_vbscript_callback": "SolFlipperDiverter",
+      "_inferred_type": "diverter",
+      "vpx_name": "Flipper3",
+      "_note": "Uses Flipper3 RotateToEnd/RotateToStart for diverter motion"
+    },
+    {
+      "id": 25,
+      "description": "Game On Relay",
+      "_vbscript_callback": "SolRun",
+      "_inferred_type": "game_on",
+      "_note": "Enables flippers and slingshots; disables on game end"
+    },
+    {
+      "id": 33,
+      "description": "Right Bank Drop Target 1 Reset",
+      "_vbscript_callback": "SolDTRBankUnhit 23,",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Multiplexed via sol 11. Resets individual target sw23"
+    },
+    {
+      "id": 34,
+      "description": "Right Bank Drop Target 2 Reset",
+      "_vbscript_callback": "SolDTRBankUnhit 24,",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Multiplexed via sol 11. Resets individual target sw24"
+    },
+    {
+      "id": 35,
+      "description": "Right Bank Drop Target 3 Reset",
+      "_vbscript_callback": "SolDTRBankUnhit 25,",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Multiplexed via sol 11. Resets individual target sw25"
+    },
+    {
+      "id": 36,
+      "description": "Right Bank Drop Target 4 Reset",
+      "_vbscript_callback": "SolDTRBankUnhit 26,",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Multiplexed via sol 11. Resets individual target sw26"
+    },
+    {
+      "id": 37,
+      "description": "Right Bank Drop Target 5 Reset",
+      "_vbscript_callback": "SolDTRBankUnhit 27,",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Multiplexed via sol 11. Resets individual target sw27"
+    },
+    {
+      "id": 38,
+      "description": "Right Bank Drop Target Bank Down",
+      "_vbscript_callback": "SolDTRBankDropDown",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Multiplexed via sol 11. Drops all right bank targets (sw23-27)"
+    },
+    {
+      "id": 39,
+      "description": "Top Pod Drop Target Reset",
+      "_vbscript_callback": "SolDTTPodDropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Multiplexed via sol 11. Raises sw40"
+    },
+    {
+      "id": 40,
+      "description": "Lock Release",
+      "_vbscript_callback": "SolUnlock",
+      "_inferred_type": "ball_management",
+      "_note": "Multiplexed via sol 11. Kicks ball from sw42 (lock position 1)"
+    },
+    {
+      "id": 41,
+      "description": "Center Drop Target 2 Reset",
+      "_vbscript_callback": "SolDTBait2",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Multiplexed via sol 11. Raises sw34"
+    },
+    {
+      "id": 42,
+      "description": "Center Drop Target Bank Down",
+      "_vbscript_callback": "SolDTBaitDropDown",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Multiplexed via sol 11. Drops all center targets (sw33-35)"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_note": "SolCallback blanked for fast-flip workaround. Flipper driven directly via KeyDown/KeyUp calling SolRFlipper. Framework constant from S7.VBS."
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_note": "SolCallback blanked for fast-flip workaround. Flipper driven directly via KeyDown/KeyUp calling SolLFlipper. Also drives LeftFlipper1 (upper left). Framework constant from S7.VBS."
+    }
+  ],
+  "lamps": [
+    {
+      "id": 0,
+      "description": "GI",
+      "_note": "Solenoid-driven via SolPFGI (coil 14). Lampz.state(0) set by coil callback, not lamp matrix. Controls GI light collection."
+    },
+    {
+      "id": 1,
+      "description": "Shoot Again",
+      "_note": "Status lamp — Controller.Lamp(1) used in UpdateMultipleLamps (VR: l1, Desktop: ShootAgainReel)"
+    },
+    {
+      "id": 2,
+      "description": "Ball In Play",
+      "_note": "Status lamp — Controller.Lamp(2)"
+    },
+    {
+      "id": 3,
+      "description": "Tilt",
+      "_note": "Status lamp — Controller.Lamp(3)"
+    },
+    {
+      "id": 4,
+      "description": "Game Over",
+      "_note": "Status lamp — Controller.Lamp(4)"
+    },
+    {
+      "id": 5,
+      "description": "Match",
+      "_note": "Status lamp — Controller.Lamp(5)"
+    },
+    {
+      "id": 6,
+      "description": "High Score to Date",
+      "_note": "Status lamp — Controller.Lamp(6), dual VPX objects l6/l6a"
+    },
+    {
+      "id": 7,
+      "description": "Shoot Again",
+      "vpx_name": "Light7",
+      "_note": "Playfield insert — Lampz.MassAssign(7)"
+    },
+    {
+      "id": 8,
+      "description": "Wave In Play",
+      "_note": "Status lamp — Controller.Lamp(8)"
+    },
+    {
+      "id": 9,
+      "description": "Playfield Insert 9",
+      "vpx_name": "Light9",
+      "_note": "Lampz.MassAssign(9) with Light9h highlight prim"
+    },
+    {
+      "id": 10,
+      "description": "Playfield Insert 10",
+      "vpx_name": "Light10"
+    },
+    {
+      "id": 11,
+      "description": "Playfield Insert 11",
+      "vpx_name": "Light11"
+    },
+    {
+      "id": 12,
+      "description": "Playfield Insert 12",
+      "vpx_name": "Light12"
+    },
+    {
+      "id": 13,
+      "description": "Playfield Insert 13",
+      "vpx_name": "Light13"
+    },
+    {
+      "id": 14,
+      "description": "Playfield Insert 14",
+      "vpx_name": "Light14"
+    },
+    {
+      "id": 15,
+      "description": "Playfield Insert 15",
+      "vpx_name": "Light15"
+    },
+    {
+      "id": 16,
+      "description": "Playfield Insert 16",
+      "vpx_name": "Light16"
+    },
+    {
+      "id": 17,
+      "description": "Playfield Insert 17",
+      "vpx_name": "Light17"
+    },
+    {
+      "id": 18,
+      "description": "Playfield Insert 18",
+      "vpx_name": "Light18"
+    },
+    {
+      "id": 19,
+      "description": "Playfield Insert 19",
+      "vpx_name": "Light19"
+    },
+    {
+      "id": 20,
+      "description": "Playfield Insert 20",
+      "vpx_name": "Light20"
+    },
+    {
+      "id": 21,
+      "description": "Playfield Insert 21",
+      "vpx_name": "Light21"
+    },
+    {
+      "id": 22,
+      "description": "Playfield Insert 22",
+      "vpx_name": "Light22"
+    },
+    {
+      "id": 23,
+      "description": "Playfield Insert 23",
+      "vpx_name": "Light23"
+    },
+    {
+      "id": 24,
+      "description": "Playfield Insert 24",
+      "vpx_name": "Light24"
+    },
+    {
+      "id": 25,
+      "description": "Playfield Insert 25",
+      "vpx_name": "Light25"
+    },
+    {
+      "id": 26,
+      "description": "Playfield Insert 26",
+      "vpx_name": "Light26"
+    },
+    {
+      "id": 27,
+      "description": "Playfield Insert 27",
+      "vpx_name": "Light27"
+    },
+    {
+      "id": 28,
+      "description": "Playfield Insert 28",
+      "vpx_name": "Light28"
+    },
+    {
+      "id": 29,
+      "description": "Playfield Insert 29",
+      "vpx_name": "Light29"
+    },
+    {
+      "id": 30,
+      "description": "Playfield Insert 30",
+      "vpx_name": "Light30"
+    },
+    {
+      "id": 31,
+      "description": "Playfield Insert 31",
+      "vpx_name": "Light31"
+    },
+    {
+      "id": 32,
+      "description": "Playfield Insert 32",
+      "vpx_name": "Light32"
+    },
+    {
+      "id": 33,
+      "description": "Playfield Insert 33",
+      "vpx_name": "Light33"
+    },
+    {
+      "id": 34,
+      "description": "Playfield Insert 34",
+      "vpx_name": "Light34"
+    },
+    {
+      "id": 35,
+      "description": "Playfield Insert 35",
+      "vpx_name": "Light35"
+    },
+    {
+      "id": 36,
+      "description": "Playfield Insert 36",
+      "vpx_name": "Light36"
+    },
+    {
+      "id": 37,
+      "description": "Playfield Insert 37",
+      "vpx_name": "Light37"
+    },
+    {
+      "id": 38,
+      "description": "Playfield Insert 38",
+      "vpx_name": "Light38"
+    },
+    {
+      "id": 39,
+      "description": "Playfield Insert 39",
+      "vpx_name": "Light39",
+      "_note": "Also has Light39f flasher variant"
+    },
+    {
+      "id": 40,
+      "description": "Playfield Insert 40",
+      "vpx_name": "Light40",
+      "_note": "Also has Light40f flasher variant"
+    },
+    {
+      "id": 41,
+      "description": "Playfield Insert 41",
+      "vpx_name": "Light41",
+      "_note": "Also has Light41f flasher variant"
+    },
+    {
+      "id": 42,
+      "description": "Playfield Insert 42",
+      "vpx_name": "Light42",
+      "_note": "Also has Light42f flasher variant"
+    },
+    {
+      "id": 43,
+      "description": "Playfield Insert 43",
+      "vpx_name": "Light43"
+    },
+    {
+      "id": 44,
+      "description": "Playfield Insert 44",
+      "vpx_name": "Light44"
+    },
+    {
+      "id": 45,
+      "description": "Playfield Insert 45",
+      "vpx_name": "Light45"
+    },
+    {
+      "id": 46,
+      "description": "Playfield Insert 46",
+      "vpx_name": "Light46"
+    },
+    {
+      "id": 47,
+      "description": "Playfield Insert 47",
+      "vpx_name": "Light47"
+    },
+    {
+      "id": 48,
+      "description": "Playfield Insert 48",
+      "vpx_name": "Light48"
+    },
+    {
+      "id": 49,
+      "description": "Playfield Insert 49",
+      "vpx_name": "Light49"
+    },
+    {
+      "id": 50,
+      "description": "Playfield Insert 50",
+      "vpx_name": "Light50"
+    },
+    {
+      "id": 51,
+      "description": "Playfield Insert 51",
+      "vpx_name": "Light51"
+    },
+    {
+      "id": 52,
+      "description": "Playfield Insert 52",
+      "vpx_name": "Light52"
+    },
+    {
+      "id": 53,
+      "description": "Playfield Insert 53",
+      "vpx_name": "Light53"
+    },
+    {
+      "id": 54,
+      "description": "Playfield Insert 54",
+      "vpx_name": "Light54"
+    },
+    {
+      "id": 55,
+      "description": "Playfield Insert 55",
+      "vpx_name": "Light55",
+      "_note": "Also has Light55f flasher variant"
+    },
+    {
+      "id": 56,
+      "description": "Playfield Insert 56",
+      "vpx_name": "Light56",
+      "_note": "Also has Light56f flasher variant"
+    },
+    {
+      "id": 57,
+      "description": "Playfield Insert 57",
+      "vpx_name": "Light57"
+    },
+    {
+      "id": 58,
+      "description": "Playfield Insert 58",
+      "vpx_name": "Light58"
+    },
+    {
+      "id": 59,
+      "description": "Playfield Insert 59",
+      "vpx_name": "Light59"
+    },
+    {
+      "id": 60,
+      "description": "Playfield Insert 60",
+      "vpx_name": "Light60"
+    },
+    {
+      "id": 61,
+      "description": "Playfield Insert 61",
+      "vpx_name": "Light61"
+    },
+    {
+      "id": 62,
+      "description": "Playfield Insert 62",
+      "vpx_name": "Light62"
+    },
+    {
+      "id": 100,
+      "description": "Center Flasher",
+      "is_lamp": true,
+      "_note": "Solenoid-driven via SolCenterFlasher (coil 21). Lampz.state(100) set by coil callback. Mapped to flash1/flash2/flash3/flash4/flashh VPX objects."
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    }
+  ]
+}

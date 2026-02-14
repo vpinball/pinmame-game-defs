@@ -1,0 +1,763 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Radical (Bally 1990) Prototype _VPWmod_v1.0.1.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils. No Const sw* definitions in script — switches identified from _Hit/_UnHit subs, Controller.Switch() calls, PulseSw calls, and cvpmBallStack/cvpmVLock/cvpmDropTarget init. Platform is System 11 (S11.VBS). This is the prototype playfield version with additional upper slingshot (sw49) and top eject hole (sw16/sol3) not present on production games. Trough uses cvpmBallStack with 3 switches (10,11,12) and 2 balls. Lock uses cvpmVLock with switches 39,40. Drop targets in two banks: middle (22,23,24) and top (30,31,32). Flashers are driven via solenoid callbacks (9,16,25-32) with custom flash subs. Ramp diverter (sol7) toggles switch 20 as feedback. GI controlled via sol10 (inverted — enabled=off). Flipper solenoids use S11.VBS framework constants sLRFlipper/sLLFlipper. Lamps 57-62 are backglass lamps using Flash sub."
+  },
+  "game": {
+    "id": "rad",
+    "name": "Radical!",
+    "year": 1990,
+    "manufacturer": "Bally",
+    "ipdb_id": 1904,
+    "platform": "s11"
+  },
+  "roms": [
+    {
+      "id": "radcl_l1",
+      "version": "L-1",
+      "language": "en",
+      "_note": "Default ROM specified by cGameName in script (latest)"
+    },
+    {
+      "id": "radcl_g1",
+      "version": "G-1",
+      "language": "de",
+      "_note": "German ROM (commented out)"
+    },
+    {
+      "id": "radcl_p3",
+      "version": "P-3",
+      "language": "en",
+      "_note": "Prototype ROM (commented out)"
+    }
+  ],
+  "switches": [
+    {
+      "id": 10,
+      "description": "Trough 1 (Right)",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "cvpmBallStack.InitSw first position. Drain_Hit adds ball to bsTrough."
+    },
+    {
+      "id": 11,
+      "description": "Trough 2 (Center)",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "cvpmBallStack.InitSw second position"
+    },
+    {
+      "id": 12,
+      "description": "Trough 3 (Left)",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "cvpmBallStack.InitSw third position"
+    },
+    {
+      "id": 14,
+      "description": "Left Outlane",
+      "vpx_name": "sw14",
+      "_note": "Controller.Switch rollover"
+    },
+    {
+      "id": 15,
+      "description": "Left Inlane",
+      "vpx_name": "sw15",
+      "_note": "Controller.Switch rollover"
+    },
+    {
+      "id": 16,
+      "description": "Top Eject Hole",
+      "vpx_name": "sw16a",
+      "_note": "cvpmBallStack bsTP switch. Prototype-only feature, not in latest ROMs. Ball enters via sw16a_Hit, ejected after 2500ms delay."
+    },
+    {
+      "id": 17,
+      "description": "Right Spinner",
+      "vpx_name": "Spinner2",
+      "_note": "PulseSw 17 from Spinner2_Spin"
+    },
+    {
+      "id": 18,
+      "description": "Rollover Switch 18",
+      "vpx_name": "sw18",
+      "_note": "Controller.Switch rollover"
+    },
+    {
+      "id": 19,
+      "description": "Rollover Switch 19",
+      "vpx_name": "sw19",
+      "_note": "Controller.Switch rollover"
+    },
+    {
+      "id": 20,
+      "description": "Ramp Diverter Feedback",
+      "_note": "Set by SolRampDiv sub — Controller.Switch(20) toggled when diverter changes position. Not a physical switch on playfield."
+    },
+    {
+      "id": 22,
+      "description": "Middle Drop Target 1",
+      "vpx_name": "sw22",
+      "_note": "cvpmDropTarget dtBankM. Sound-only _Hit sub."
+    },
+    {
+      "id": 23,
+      "description": "Middle Drop Target 2",
+      "vpx_name": "sw23",
+      "_note": "cvpmDropTarget dtBankM. Sound-only _Hit sub."
+    },
+    {
+      "id": 24,
+      "description": "Middle Drop Target 3",
+      "vpx_name": "sw24",
+      "_note": "cvpmDropTarget dtBankM. Sound-only _Hit sub."
+    },
+    {
+      "id": 27,
+      "description": "Rollover Switch 27",
+      "vpx_name": "sw27",
+      "_note": "Controller.Switch rollover"
+    },
+    {
+      "id": 28,
+      "description": "Standup Target",
+      "vpx_name": "sw28",
+      "_note": "PulseSw 28 with random bounce multiplier"
+    },
+    {
+      "id": 29,
+      "description": "Left Spinner",
+      "vpx_name": "Spinner1",
+      "_note": "PulseSw 29 from Spinner1_Spin"
+    },
+    {
+      "id": 30,
+      "description": "Top Drop Target 1",
+      "vpx_name": "sw30",
+      "_note": "cvpmDropTarget dtBankT. Sound-only _Hit sub."
+    },
+    {
+      "id": 31,
+      "description": "Top Drop Target 2",
+      "vpx_name": "sw31",
+      "_note": "cvpmDropTarget dtBankT. Sound-only _Hit sub."
+    },
+    {
+      "id": 32,
+      "description": "Top Drop Target 3",
+      "vpx_name": "sw32",
+      "_note": "cvpmDropTarget dtBankT. Sound-only _Hit sub."
+    },
+    {
+      "id": 37,
+      "description": "Rollover Switch 37",
+      "vpx_name": "sw37",
+      "_note": "Controller.Switch rollover"
+    },
+    {
+      "id": 38,
+      "description": "Rollover Switch 38",
+      "vpx_name": "sw38",
+      "_note": "Controller.Switch rollover"
+    },
+    {
+      "id": 39,
+      "description": "Ball Lock 2",
+      "vpx_name": "sw39",
+      "_note": "cvpmVLock bsLock second position. Ball kicked by sw39k."
+    },
+    {
+      "id": 40,
+      "description": "Ball Lock 1",
+      "vpx_name": "sw40",
+      "_note": "cvpmVLock bsLock first position. Ball kicked by sw40k."
+    },
+    {
+      "id": 43,
+      "description": "Standup Target 43",
+      "vpx_name": "sw43",
+      "_note": "PulseSw 43 with random bounce multiplier"
+    },
+    {
+      "id": 44,
+      "description": "Standup Target 44",
+      "vpx_name": "sw44",
+      "_note": "PulseSw 44 with random bounce multiplier"
+    },
+    {
+      "id": 46,
+      "description": "Rollover Switch 46",
+      "vpx_name": "sw46",
+      "_note": "Controller.Switch rollover"
+    },
+    {
+      "id": 47,
+      "description": "Rollover Switch 47",
+      "vpx_name": "sw47",
+      "_note": "Controller.Switch rollover"
+    },
+    {
+      "id": 48,
+      "description": "Rollover Switch 48",
+      "vpx_name": "sw48",
+      "_note": "Controller.Switch rollover"
+    },
+    {
+      "id": 49,
+      "description": "Upper Right Slingshot (Prototype)",
+      "vpx_name": "RightSlingShot1",
+      "_note": "PulseSw 49 from RightSlingShot1_Slingshot. Prototype-only, disabled when DisableUpperSling=1."
+    },
+    {
+      "id": 50,
+      "description": "Jet Bumper 2",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 50 from Bumper2_Hit"
+    },
+    {
+      "id": 51,
+      "description": "Kickback Lane",
+      "vpx_name": "sw51",
+      "_note": "Controller.Switch rollover. Also used as impulse plunger switch (plungerIM.switch 51)."
+    },
+    {
+      "id": 52,
+      "description": "Jet Bumper 1",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 52 from Bumper1_Hit"
+    },
+    {
+      "id": 53,
+      "description": "Jet Bumper 4",
+      "vpx_name": "Bumper4",
+      "_note": "PulseSw 53 from Bumper4_Hit"
+    },
+    {
+      "id": 54,
+      "description": "Jet Bumper 3",
+      "vpx_name": "Bumper3",
+      "_note": "PulseSw 54 from Bumper3_Hit"
+    },
+    {
+      "id": 55,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "PulseSw 55 from LeftSlingShot_Slingshot sub"
+    },
+    {
+      "id": 56,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "PulseSw 56 from RightSlingShot_Slingshot sub"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough In (Ball Entry)",
+      "_vbscript_callback": "bsTrough.SolIn",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "entry_coil",
+      "_note": "Handles ball entry into trough stack"
+    },
+    {
+      "id": 2,
+      "description": "Trough Eject",
+      "_vbscript_callback": "bsTrough.SolOut",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "vpx_name": "BallRelease",
+      "_note": "Kicks ball from BallRelease kicker at power 80, angle 6"
+    },
+    {
+      "id": 3,
+      "description": "Top Eject Hole Kick",
+      "_vbscript_callback": "bsTP.SolOut",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw16",
+      "_note": "Prototype-only. Not used in latest ROMs. Kicks from sw16 kicker at power 55."
+    },
+    {
+      "id": 4,
+      "description": "Top Drop Target Bank Reset",
+      "_vbscript_callback": "dtBankT.SolDropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets top 3-bank drop targets (sw30, sw31, sw32)"
+    },
+    {
+      "id": 5,
+      "description": "Knocker",
+      "_vbscript_callback": "VpmSolSound SoundFX(\"fx_knocker\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 6,
+      "description": "Middle Drop Target Bank Reset",
+      "_vbscript_callback": "dtBankM.SolDropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets middle 3-bank drop targets (sw22, sw23, sw24)"
+    },
+    {
+      "id": 7,
+      "description": "Ramp Diverter",
+      "_vbscript_callback": "SolRampDiv",
+      "_inferred_type": "diverter",
+      "vpx_name": "DiverterDown, DiverterUp",
+      "_note": "Toggles ramp diverter position and Controller.Switch(20) feedback"
+    },
+    {
+      "id": 8,
+      "description": "Ball Lock Release",
+      "_vbscript_callback": "bsLock.SolExit",
+      "_inferred_type": "kicker",
+      "_note": "cvpmVLock exit. Releases locked balls from sw40/sw39 positions via sw40k/sw39k kickers."
+    },
+    {
+      "id": 9,
+      "description": "Flash Purple Middle Right",
+      "_vbscript_callback": "FlashPurpleMiddleRight",
+      "is_lamp": true,
+      "_note": "Flasher solenoid. Originally SetLamp 90."
+    },
+    {
+      "id": 10,
+      "description": "GI Relay",
+      "_vbscript_callback": "SolGI",
+      "_inferred_type": "gi",
+      "_note": "Controls general illumination. Inverted logic: enabled=GiOFF, disabled=GiON."
+    },
+    {
+      "id": 13,
+      "description": "Right Diverter",
+      "_vbscript_callback": "vpmSolToggleWall RightDiverter2,RightDiverter1,\"fx_diverter\",",
+      "_inferred_type": "diverter",
+      "vpx_name": "RightDiverter1, RightDiverter2",
+      "_note": "Toggles right diverter walls"
+    },
+    {
+      "id": 14,
+      "description": "Kickback",
+      "_vbscript_callback": "SolKickBack",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw51 (plungerIM)",
+      "_note": "Fires impulse plunger (plungerIM.AutoFire) for kickback"
+    },
+    {
+      "id": 16,
+      "description": "Flash Ramp (Front Left)",
+      "_vbscript_callback": "SetLamp 116,",
+      "is_lamp": true,
+      "_note": "Flasher driven as lamp 116. Mapped to f16 VPX light in UpdateLamps."
+    },
+    {
+      "id": 23,
+      "description": "Game On Solenoid",
+      "_vbscript_callback": "vpmNudge.SolGameOn",
+      "_inferred_type": "system"
+    },
+    {
+      "id": 25,
+      "description": "Flash Purple Left Bottom",
+      "_vbscript_callback": "FlashPurpleLeftBottom",
+      "is_lamp": true,
+      "_note": "Flasher solenoid. Originally SetLamp 125."
+    },
+    {
+      "id": 26,
+      "description": "Flash Green Left Bottom",
+      "_vbscript_callback": "FlashGreenLeftBottom",
+      "is_lamp": true,
+      "_note": "Flasher solenoid. Originally SetLamp 126."
+    },
+    {
+      "id": 27,
+      "description": "Flash Purple Middle Left",
+      "_vbscript_callback": "FlashPurpleMiddleLeft",
+      "is_lamp": true,
+      "_note": "Flasher solenoid. Originally SetLamp 127."
+    },
+    {
+      "id": 28,
+      "description": "Flash Green Left Top",
+      "_vbscript_callback": "FlashGreenLeftTop",
+      "is_lamp": true,
+      "_note": "Flasher solenoid. Originally SetLamp 128."
+    },
+    {
+      "id": 29,
+      "description": "Flash White Back",
+      "_vbscript_callback": "FlashWhiteBack",
+      "is_lamp": true,
+      "_note": "Flasher solenoid. Originally SetLamp 129."
+    },
+    {
+      "id": 30,
+      "description": "Flash Purple Middle Top",
+      "_vbscript_callback": "FlashPurpleMiddleTop",
+      "is_lamp": true,
+      "_note": "Flasher solenoid. Originally SetLamp 130."
+    },
+    {
+      "id": 31,
+      "description": "Flash Green Top",
+      "_vbscript_callback": "FlashGreenTop",
+      "is_lamp": true,
+      "_note": "Flasher solenoid. Originally SetLamp 131."
+    },
+    {
+      "id": 32,
+      "description": "Flash Green Right",
+      "_vbscript_callback": "FlashGreenRight",
+      "is_lamp": true,
+      "_note": "Flasher solenoid. Originally SetLamp 132."
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "vpx_name": "li1",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 2,
+      "vpx_name": "li2",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 3,
+      "vpx_name": "li3",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 4,
+      "vpx_name": "li4",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 5,
+      "vpx_name": "li5",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 6,
+      "vpx_name": "li6",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 7,
+      "vpx_name": "li7",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 8,
+      "vpx_name": "li8",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 9,
+      "vpx_name": "li9, li9a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 10,
+      "vpx_name": "li10, li10a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 11,
+      "vpx_name": "li11, li11a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 12,
+      "vpx_name": "li12, li12a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 13,
+      "vpx_name": "li13, li13a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 14,
+      "vpx_name": "li14, li14a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 15,
+      "vpx_name": "li15, li15a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 16,
+      "vpx_name": "li16",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 17,
+      "vpx_name": "li17, li17a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 18,
+      "vpx_name": "li18, li18a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 19,
+      "vpx_name": "li19, li19a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 20,
+      "vpx_name": "li20, li20a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 21,
+      "vpx_name": "li21, li21a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 22,
+      "vpx_name": "li22, li22a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 23,
+      "vpx_name": "li23, li23a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 24,
+      "vpx_name": "li24",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 25,
+      "vpx_name": "li25",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 26,
+      "vpx_name": "li26",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 27,
+      "vpx_name": "li27",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 28,
+      "vpx_name": "li28",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 29,
+      "vpx_name": "li29",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 30,
+      "vpx_name": "li30",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 31,
+      "vpx_name": "li31",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 32,
+      "vpx_name": "li32",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 33,
+      "vpx_name": "li33",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 34,
+      "vpx_name": "li34",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 35,
+      "vpx_name": "li35",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 36,
+      "vpx_name": "li36, li36a",
+      "_note": "Dual-mapped playfield insert"
+    },
+    {
+      "id": 37,
+      "vpx_name": "li37",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 38,
+      "vpx_name": "li38",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 39,
+      "vpx_name": "li39",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 40,
+      "vpx_name": "li40",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 41,
+      "vpx_name": "li41",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 42,
+      "vpx_name": "li42",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 43,
+      "vpx_name": "li43",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 44,
+      "vpx_name": "li44",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 45,
+      "vpx_name": "li45",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 46,
+      "vpx_name": "li46",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 47,
+      "vpx_name": "li47",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 48,
+      "vpx_name": "li48",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 49,
+      "vpx_name": "li49",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 50,
+      "vpx_name": "li50",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 51,
+      "vpx_name": "li51",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 52,
+      "vpx_name": "li52",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 53,
+      "vpx_name": "li53",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 54,
+      "vpx_name": "li54",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 55,
+      "vpx_name": "li55",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 56,
+      "vpx_name": "li56",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 57,
+      "vpx_name": "li57, bg1",
+      "_note": "Backglass lamp (Flash sub). Desktop-only VPX light, always drives bg1 flasher."
+    },
+    {
+      "id": 58,
+      "vpx_name": "li58, bg2",
+      "_note": "Backglass lamp (Flash sub). Desktop-only VPX light, always drives bg2 flasher."
+    },
+    {
+      "id": 59,
+      "vpx_name": "li59, bg3",
+      "_note": "Backglass lamp (Flash sub). Desktop-only VPX light, always drives bg3 flasher."
+    },
+    {
+      "id": 60,
+      "vpx_name": "li60, bg4",
+      "_note": "Backglass lamp (Flash sub). Desktop-only VPX light, always drives bg4 flasher."
+    },
+    {
+      "id": 61,
+      "vpx_name": "li61, bg5",
+      "_note": "Backglass lamp (Flash sub). Desktop-only VPX light, always drives bg5 flasher."
+    },
+    {
+      "id": 62,
+      "vpx_name": "li62, bg6",
+      "_note": "Backglass lamp (Flash sub). Desktop-only VPX light, always drives bg6 flasher."
+    },
+    {
+      "id": 63,
+      "vpx_name": "li63",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 64,
+      "vpx_name": "li64",
+      "_note": "Playfield insert"
+    },
+    {
+      "id": 116,
+      "vpx_name": "f16",
+      "_note": "Ramp flasher on front left. Driven by SolCallback(16) via SetLamp 116."
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    }
+  ]
+}

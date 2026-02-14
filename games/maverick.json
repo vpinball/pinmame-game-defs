@@ -1,0 +1,699 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Maverick (Data East 1994) VPW v1.3.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence. Switch layout from bsTrough.InitSw (sw11-14), bsTroughKick.InitSaucer (sw15), vLock (sw45/46), TopVUK (sw31), and Controller.Switch/PulseSw/DTHit handlers. No Const sw* definitions in table script -- switches referenced by number or VPX object name. Lamp IDs from UpdateLamps function (Lamp/Lampm/Flash calls). Flasher-lamps 125-132 driven by SetLamp from solenoid callbacks. DE framework flipper constants sLRFlipper=46, sLLFlipper=48, sURFlipper=34 from DE.VBS. GI controlled by sol 11 relay. Bumper solenoids 17-19 and slingshot solenoids 20-21 commented out in script (handled by VPX physics). TiltSwitch=1. IPDB link in script header: id=1561."
+  },
+  "game": {
+    "id": "maverick",
+    "name": "Maverick",
+    "year": 1994,
+    "manufacturer": "Data East",
+    "ipdb_id": 1561,
+    "platform": "dataeast"
+  },
+  "roms": [
+    { "id": "mav_402", "version": "4.02", "language": "en" }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Tilt",
+      "_vbscript_callback": "vpmNudge.TiltSwitch = 1",
+      "_inferred_type": "tilt"
+    },
+    {
+      "id": 11,
+      "description": "Trough 1 (Drain)",
+      "vpx_name": "sw11",
+      "_vbscript_callback": "bsTrough.InitSw position 4 / Drain_Hit sets Controller.Switch(11)=1",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch",
+      "_note": "Last position in InitSw (0,14,13,12,11,0,0,0). Also directly set in Drain_Hit."
+    },
+    {
+      "id": 12,
+      "description": "Trough 2",
+      "vpx_name": "sw12",
+      "_vbscript_callback": "bsTrough.InitSw position 3",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_2"
+    },
+    {
+      "id": 13,
+      "description": "Trough 3",
+      "vpx_name": "sw13",
+      "_vbscript_callback": "bsTrough.InitSw position 2",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_3"
+    },
+    {
+      "id": 14,
+      "description": "Trough 4",
+      "vpx_name": "sw14",
+      "_vbscript_callback": "bsTrough.InitSw position 1",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_4"
+    },
+    {
+      "id": 15,
+      "description": "Ball Release / Trough Eject",
+      "vpx_name": "BallRelease",
+      "_vbscript_callback": "bsTroughKick.InitSaucer BallRelease,15,80,8",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "jam"
+    },
+    {
+      "id": 16,
+      "description": "Shooter Lane",
+      "vpx_name": "sw16",
+      "_vbscript_callback": "Controller.Switch(16)=1/0",
+      "_inferred_type": "lane"
+    },
+    {
+      "id": 17,
+      "description": "Lower Left 5-Bank Drop Target 1",
+      "vpx_name": "sw17",
+      "_vbscript_callback": "DTHit 17",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 18,
+      "description": "Lower Left 5-Bank Drop Target 2",
+      "vpx_name": "sw18",
+      "_vbscript_callback": "DTHit 18",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 19,
+      "description": "Lower Left 5-Bank Drop Target 3",
+      "vpx_name": "sw19",
+      "_vbscript_callback": "DTHit 19",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 20,
+      "description": "Lower Left 5-Bank Drop Target 4",
+      "vpx_name": "sw20",
+      "_vbscript_callback": "DTHit 20",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 21,
+      "description": "Lower Left 5-Bank Drop Target 5",
+      "vpx_name": "sw21",
+      "_vbscript_callback": "DTHit 21",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 22,
+      "description": "Center 3-Bank Drop Target 1",
+      "vpx_name": "sw22",
+      "_vbscript_callback": "DTHit 22",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 23,
+      "description": "Center 3-Bank Drop Target 2",
+      "vpx_name": "sw23",
+      "_vbscript_callback": "DTHit 23",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 24,
+      "description": "Center 3-Bank Drop Target 3",
+      "vpx_name": "sw24",
+      "_vbscript_callback": "DTHit 24",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 25,
+      "description": "Upper Left 5-Bank Autodrop 1",
+      "vpx_name": "sw25",
+      "_vbscript_callback": "DTHit 25",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 26,
+      "description": "Upper Left 5-Bank Autodrop 2",
+      "vpx_name": "sw26",
+      "_vbscript_callback": "DTHit 26",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 27,
+      "description": "Upper Left 5-Bank Autodrop 3",
+      "vpx_name": "sw27",
+      "_vbscript_callback": "DTHit 27",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 28,
+      "description": "Upper Left 5-Bank Autodrop 4",
+      "vpx_name": "sw28",
+      "_vbscript_callback": "DTHit 28",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 29,
+      "description": "Upper Left 5-Bank Autodrop 5",
+      "vpx_name": "sw29",
+      "_vbscript_callback": "DTHit 29",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 30,
+      "description": "Captive Ball",
+      "vpx_name": "sw30",
+      "_vbscript_callback": "vpmTimer.PulseSw 30",
+      "_inferred_type": "target"
+    },
+    {
+      "id": 31,
+      "description": "Top VUK",
+      "vpx_name": "TopVUK",
+      "_vbscript_callback": "Controller.Switch(31)=True in TopVUK_Hit",
+      "_inferred_type": "vuk"
+    },
+    {
+      "id": 32,
+      "description": "Target",
+      "vpx_name": "sw32",
+      "_vbscript_callback": "vpmTimer.PulseSw 32",
+      "_inferred_type": "target"
+    },
+    {
+      "id": 33,
+      "description": "Right 4-Bank Drop Target 1",
+      "vpx_name": "sw33",
+      "_vbscript_callback": "DTHit 33",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 34,
+      "description": "Right 4-Bank Drop Target 2",
+      "vpx_name": "sw34",
+      "_vbscript_callback": "DTHit 34",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 35,
+      "description": "Right 4-Bank Drop Target 3",
+      "vpx_name": "sw35",
+      "_vbscript_callback": "DTHit 35",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 36,
+      "description": "Right 4-Bank Drop Target 4",
+      "vpx_name": "sw36",
+      "_vbscript_callback": "DTHit 36",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 37,
+      "description": "Right Bank Target 5",
+      "vpx_name": "sw37",
+      "_vbscript_callback": "Controller.Switch(37)=1/0",
+      "_inferred_type": "lane",
+      "_note": "Raised by SolRDTBank (DTRaise 37) with the right bank, but uses Hit/UnHit pattern instead of DTHit -- may be a standup target or rollover at end of the bank"
+    },
+    {
+      "id": 38,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw38",
+      "_vbscript_callback": "Controller.Switch(38)=1/0",
+      "_inferred_type": "lane"
+    },
+    {
+      "id": 39,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw39",
+      "_vbscript_callback": "Controller.Switch(39)=1/0",
+      "_inferred_type": "lane"
+    },
+    {
+      "id": 40,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw40",
+      "_vbscript_callback": "Controller.Switch(40)=1/0",
+      "_inferred_type": "lane"
+    },
+    {
+      "id": 41,
+      "description": "Left Turbo Bumper",
+      "vpx_name": "BumperTL",
+      "_vbscript_callback": "vpmTimer.PulseSw 41",
+      "_inferred_type": "bumper"
+    },
+    {
+      "id": 42,
+      "description": "Bottom Turbo Bumper",
+      "vpx_name": "BumperB",
+      "_vbscript_callback": "vpmTimer.PulseSw 42",
+      "_inferred_type": "bumper"
+    },
+    {
+      "id": 43,
+      "description": "Right Turbo Bumper",
+      "vpx_name": "BumperTR",
+      "_vbscript_callback": "vpmTimer.PulseSw 43",
+      "_inferred_type": "bumper"
+    },
+    {
+      "id": 44,
+      "description": "Target",
+      "vpx_name": "sw44",
+      "_vbscript_callback": "vpmTimer.PulseSw 44",
+      "_inferred_type": "target"
+    },
+    {
+      "id": 45,
+      "description": "Ball Lock 2",
+      "vpx_name": "sw45",
+      "_vbscript_callback": "vLock.InitVlock position 2 (switch 45)",
+      "_inferred_type": "lock"
+    },
+    {
+      "id": 46,
+      "description": "Ball Lock 1",
+      "vpx_name": "sw46",
+      "_vbscript_callback": "vLock.InitVlock position 1 (switch 46)",
+      "_inferred_type": "lock"
+    },
+    {
+      "id": 47,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw47",
+      "_vbscript_callback": "Controller.Switch(47)=1/0",
+      "_inferred_type": "lane"
+    },
+    {
+      "id": 49,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw49",
+      "_vbscript_callback": "Controller.Switch(49)=1/0",
+      "_inferred_type": "lane"
+    },
+    {
+      "id": 50,
+      "description": "Target",
+      "vpx_name": "sw50",
+      "_vbscript_callback": "vpmTimer.PulseSw 50",
+      "_inferred_type": "target"
+    },
+    {
+      "id": 51,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_vbscript_callback": "vpmTimer.PulseSw 51",
+      "_inferred_type": "slingshot"
+    },
+    {
+      "id": 52,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw52",
+      "_vbscript_callback": "Controller.Switch(52)=1/0",
+      "_inferred_type": "lane"
+    },
+    {
+      "id": 53,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw53",
+      "_vbscript_callback": "Controller.Switch(53)=1/0",
+      "_inferred_type": "lane"
+    },
+    {
+      "id": 54,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw54",
+      "_vbscript_callback": "Controller.Switch(54)=1/0",
+      "_inferred_type": "lane"
+    },
+    {
+      "id": 55,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw55",
+      "_vbscript_callback": "Controller.Switch(55)=1/0",
+      "_inferred_type": "lane"
+    },
+    {
+      "id": 56,
+      "description": "Target",
+      "vpx_name": "sw56",
+      "_vbscript_callback": "vpmTimer.PulseSw 56",
+      "_inferred_type": "target"
+    },
+    {
+      "id": 57,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw57",
+      "_vbscript_callback": "Controller.Switch(57)=1/0",
+      "_inferred_type": "lane"
+    },
+    {
+      "id": 58,
+      "description": "Target",
+      "vpx_name": "sw58",
+      "_vbscript_callback": "vpmTimer.PulseSw 58",
+      "_inferred_type": "target"
+    },
+    {
+      "id": 59,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_vbscript_callback": "vpmTimer.PulseSw 59",
+      "_inferred_type": "slingshot"
+    },
+    {
+      "id": 60,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw60",
+      "_vbscript_callback": "Controller.Switch(60)=1/0",
+      "_inferred_type": "lane"
+    },
+    {
+      "id": 61,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw61",
+      "_vbscript_callback": "Controller.Switch(61)=1/0",
+      "_inferred_type": "lane"
+    },
+    {
+      "id": 62,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw62",
+      "_vbscript_callback": "Controller.Switch(62)=1/0",
+      "_inferred_type": "lane"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "4-Ball Assembly Lockout",
+      "_vbscript_callback": "SolLockout",
+      "_inferred_type": "ball_management",
+      "_note": "Calls bsTrough.ExitSol_On and creates ball at BallRelease"
+    },
+    {
+      "id": 2,
+      "description": "Ball Release (Eject)",
+      "_vbscript_callback": "bsTroughKick.SolOut",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 3,
+      "description": "Skill Shot Launch",
+      "_vbscript_callback": "SolSkillshot",
+      "_inferred_type": "kicker",
+      "vpx_name": "SkillShot"
+    },
+    {
+      "id": 4,
+      "description": "5-Bank Autodrop Down",
+      "_vbscript_callback": "SolLUBankAuto",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Drops sw25-29 down (autodrop feature)"
+    },
+    {
+      "id": 5,
+      "description": "5-Bank Autodrop Reset Up",
+      "_vbscript_callback": "SolLUBank",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises sw25-29"
+    },
+    {
+      "id": 6,
+      "description": "Center 3-Bank Drop Target Reset",
+      "_vbscript_callback": "SolCDTBank",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises sw22-24"
+    },
+    {
+      "id": 7,
+      "description": "Right Drop Target Bank Reset",
+      "_vbscript_callback": "SolRDTBank",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises sw33-37 (script comment says 4-Bank but code raises 5 targets)"
+    },
+    {
+      "id": 8,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"Knocker_1\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 9,
+      "description": "Plastic Ramp Diverter",
+      "_vbscript_callback": "SolRdiv",
+      "_inferred_type": "diverter"
+    },
+    {
+      "id": 11,
+      "description": "G.I. Relay",
+      "_vbscript_callback": "GIRelay",
+      "_inferred_type": "gi_relay"
+    },
+    {
+      "id": 12,
+      "description": "Ball Lock Assembly",
+      "_vbscript_callback": "LockRelease",
+      "_inferred_type": "ball_management",
+      "_note": "Calls vLock.SolExit to release locked balls"
+    },
+    {
+      "id": 13,
+      "description": "Lower Left 5-Bank Drop Target Reset",
+      "_vbscript_callback": "SolLDTLwrBank",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises sw17-21"
+    },
+    {
+      "id": 14,
+      "description": "Top VUK Kicker",
+      "_vbscript_callback": "VukTopPop",
+      "_inferred_type": "kicker",
+      "vpx_name": "TopVUK"
+    },
+    {
+      "id": 15,
+      "description": "Upper Left Ball Deflector",
+      "_vbscript_callback": "SolBallDeflector",
+      "_inferred_type": "diverter"
+    },
+    {
+      "id": 16,
+      "description": "Paddle Wheel",
+      "_vbscript_callback": "SolWheel",
+      "_inferred_type": "mechanism",
+      "_note": "Rotating paddle wheel mechanism with ball capture/release"
+    },
+    {
+      "id": 17,
+      "description": "Left Turbo Bumper",
+      "_vbscript_callback": "commented out: vpmSolSound \"jet3\",",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in script -- bumper physics handled by VPX"
+    },
+    {
+      "id": 18,
+      "description": "Bottom Turbo Bumper",
+      "_vbscript_callback": "commented out: vpmSolSound \"jet3\",",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in script -- bumper physics handled by VPX"
+    },
+    {
+      "id": 19,
+      "description": "Right Turbo Bumper",
+      "_vbscript_callback": "commented out: vpmSolSound \"jet3\",",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in script -- bumper physics handled by VPX"
+    },
+    {
+      "id": 20,
+      "description": "Left Slingshot",
+      "_vbscript_callback": "commented out: vpmSolSound \"Sling\",",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in script -- slingshot physics handled by VPX"
+    },
+    {
+      "id": 21,
+      "description": "Right Slingshot",
+      "_vbscript_callback": "commented out: vpmSolSound \"Sling\",",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in script -- slingshot physics handled by VPX"
+    },
+    {
+      "id": 22,
+      "description": "Kickback",
+      "_vbscript_callback": "SolKickBack",
+      "_inferred_type": "kicker",
+      "vpx_name": "KickBack"
+    },
+    {
+      "id": 25,
+      "description": "Skill Shot Flash",
+      "_vbscript_callback": "FlashSkill",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Sets lamp 125 and fires flasher objects 1 & 2"
+    },
+    {
+      "id": 26,
+      "description": "Jokers Flash",
+      "_vbscript_callback": "JokersFlash",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Sets lamp 126 and fires flasher object 6"
+    },
+    {
+      "id": 27,
+      "description": "Turbo Bumpers Flash",
+      "_vbscript_callback": "SetLamp 127,",
+      "_inferred_type": "flasher",
+      "is_lamp": true
+    },
+    {
+      "id": 28,
+      "description": "Paddle Wheel Flash",
+      "_vbscript_callback": "FlashPaddle",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Sets lamp 128 and fires flasher object 5"
+    },
+    {
+      "id": 29,
+      "description": "Lower Left Flash",
+      "_vbscript_callback": "FlashLLeft",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Sets lamp 129 and fires flasher objects 3 & 4"
+    },
+    {
+      "id": 30,
+      "description": "Right Drop Target Flash",
+      "_vbscript_callback": "SetLamp 130,",
+      "_inferred_type": "flasher",
+      "is_lamp": true
+    },
+    {
+      "id": 31,
+      "description": "3-Bank D.T. Flash",
+      "_vbscript_callback": "SetLamp 131,",
+      "_inferred_type": "flasher",
+      "is_lamp": true
+    },
+    {
+      "id": 32,
+      "description": "Lower Left 5-Bank DT Flash",
+      "_vbscript_callback": "SetLamp 132,",
+      "_inferred_type": "flasher",
+      "is_lamp": true
+    },
+    {
+      "id": 34,
+      "description": "Upper Right Flipper",
+      "_vbscript_name": "sURFlipper",
+      "_vbscript_callback": "SolURFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "URightFlipper"
+    },
+    {
+      "id": 46,
+      "description": "Lower Right Flipper",
+      "_vbscript_name": "sLRFlipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper"
+    },
+    {
+      "id": 48,
+      "description": "Lower Left Flipper",
+      "_vbscript_name": "sLLFlipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper"
+    }
+  ],
+  "lamps": [
+    { "id": 1, "description": "Lamp 1", "vpx_name": "L1", "_inferred_type": "insert" },
+    { "id": 2, "description": "Lamp 2", "vpx_name": "L2", "_inferred_type": "insert" },
+    { "id": 3, "description": "Lamp 3", "vpx_name": "L3", "_inferred_type": "insert" },
+    { "id": 4, "description": "Lamp 4", "vpx_name": "L4", "_inferred_type": "insert" },
+    { "id": 5, "description": "Lamp 5", "vpx_name": "L5", "_inferred_type": "insert" },
+    { "id": 6, "description": "Lamp 6", "vpx_name": "L6", "_inferred_type": "insert" },
+    { "id": 7, "description": "Lamp 7", "vpx_name": "L7", "_inferred_type": "insert" },
+    { "id": 8, "description": "Lamp 8", "vpx_name": "L8", "_inferred_type": "insert" },
+    { "id": 9, "description": "Flasher F9", "vpx_name": "F9", "_inferred_type": "flasher" },
+    { "id": 10, "description": "Lamp 10", "vpx_name": "L10", "_inferred_type": "insert" },
+    { "id": 11, "description": "Lamp 11", "vpx_name": "L11", "_inferred_type": "insert" },
+    { "id": 12, "description": "Lamp 12", "vpx_name": "L12", "_inferred_type": "insert", "_note": "Multi-light with PrimL12 primitive" },
+    { "id": 14, "description": "Lamp 14", "vpx_name": "L14", "_inferred_type": "insert" },
+    { "id": 15, "description": "Lamp 15", "vpx_name": "L15", "_inferred_type": "insert" },
+    { "id": 16, "description": "Lamp 16", "vpx_name": "L16", "_inferred_type": "insert" },
+    { "id": 17, "description": "Lamp 17", "vpx_name": "L17", "_inferred_type": "insert" },
+    { "id": 18, "description": "Lamp 18", "vpx_name": "L18", "_inferred_type": "insert" },
+    { "id": 19, "description": "Lamp 19", "vpx_name": "L19", "_inferred_type": "insert" },
+    { "id": 20, "description": "Lamp 20", "vpx_name": "L20", "_inferred_type": "insert" },
+    { "id": 21, "description": "Lamp 21", "vpx_name": "L21", "_inferred_type": "insert" },
+    { "id": 22, "description": "Lamp 22", "vpx_name": "L22", "_inferred_type": "insert" },
+    { "id": 23, "description": "Lamp 23", "vpx_name": "L23", "_inferred_type": "insert" },
+    { "id": 24, "description": "Lamp 24", "vpx_name": "L24", "_inferred_type": "insert" },
+    { "id": 25, "description": "Left Turbo Bumper Lamp", "vpx_name": "L25", "_inferred_type": "insert", "_note": "Multi-light: L25, L25a, Primitive023" },
+    { "id": 26, "description": "Right Turbo Bumper Lamp", "vpx_name": "L26", "_inferred_type": "insert", "_note": "Multi-light: L26, L26a, Primitive024" },
+    { "id": 27, "description": "Bottom Turbo Bumper Lamp", "vpx_name": "L27", "_inferred_type": "insert", "_note": "Multi-light: L27, L27a, Primitive7" },
+    { "id": 28, "description": "Lamp 28", "vpx_name": "L28", "_inferred_type": "insert" },
+    { "id": 29, "description": "Lamp 29", "vpx_name": "L29", "_inferred_type": "insert" },
+    { "id": 30, "description": "Lamp 30", "vpx_name": "L30", "_inferred_type": "insert" },
+    { "id": 31, "description": "Lamp 31", "vpx_name": "L31", "_inferred_type": "insert" },
+    { "id": 32, "description": "Lamp 32", "vpx_name": "L32", "_inferred_type": "insert" },
+    { "id": 33, "description": "Lamp 33", "vpx_name": "PrimL33", "_inferred_type": "insert", "_note": "FDL primitive-only lamp (no VPX light)" },
+    { "id": 34, "description": "Lamp 34", "vpx_name": "PrimL34", "_inferred_type": "insert", "_note": "FDL primitive-only lamp (no VPX light)" },
+    { "id": 35, "description": "Lamp 35", "vpx_name": "PrimL35", "_inferred_type": "insert", "_note": "FDL primitive-only lamp (no VPX light)" },
+    { "id": 37, "description": "Lamp 37", "vpx_name": "L37a", "_inferred_type": "insert", "_note": "Multi-light: L37a, L37b" },
+    { "id": 38, "description": "Lamp 38", "vpx_name": "L38", "_inferred_type": "insert" },
+    { "id": 39, "description": "Lamp 39", "vpx_name": "L39", "_inferred_type": "insert" },
+    { "id": 40, "description": "Lamp 40", "vpx_name": "L40", "_inferred_type": "insert" },
+    { "id": 41, "description": "Lamp 41", "vpx_name": "L41", "_inferred_type": "insert" },
+    { "id": 42, "description": "Lamp 42", "vpx_name": "L42", "_inferred_type": "insert" },
+    { "id": 43, "description": "Lamp 43", "vpx_name": "L43", "_inferred_type": "insert" },
+    { "id": 44, "description": "Lamp 44", "vpx_name": "L44", "_inferred_type": "insert" },
+    { "id": 45, "description": "Lamp 45", "vpx_name": "L45", "_inferred_type": "insert" },
+    { "id": 46, "description": "Lamp 46", "vpx_name": "L46a", "_inferred_type": "insert", "_note": "Multi-light: L46a, L46b" },
+    { "id": 47, "description": "Lamp 47", "vpx_name": "L47", "_inferred_type": "insert" },
+    { "id": 48, "description": "Lamp 48", "vpx_name": "L48", "_inferred_type": "insert" },
+    { "id": 49, "description": "Lamp 49", "vpx_name": "L49", "_inferred_type": "insert" },
+    { "id": 50, "description": "Lamp 50", "vpx_name": "L50", "_inferred_type": "insert" },
+    { "id": 51, "description": "Lamp 51", "vpx_name": "L51", "_inferred_type": "insert" },
+    { "id": 52, "description": "Lamp 52", "vpx_name": "L52", "_inferred_type": "insert", "_note": "Multi-light with PrimL52 primitive" },
+    { "id": 53, "description": "Lamp 53", "vpx_name": "L53", "_inferred_type": "insert" },
+    { "id": 54, "description": "Lamp 54", "vpx_name": "L54", "_inferred_type": "insert" },
+    { "id": 55, "description": "Lamp 55", "vpx_name": "L55a", "_inferred_type": "insert", "_note": "Multi-light: L55a, L55b" },
+    { "id": 56, "description": "Lamp 56", "vpx_name": "L56", "_inferred_type": "insert" },
+    { "id": 57, "description": "Lamp 57", "vpx_name": "L57", "_inferred_type": "insert" },
+    { "id": 58, "description": "Lamp 58", "vpx_name": "L58", "_inferred_type": "insert" },
+    { "id": 59, "description": "Lamp 59", "vpx_name": "L59", "_inferred_type": "insert" },
+    { "id": 60, "description": "Lamp 60", "vpx_name": "L60", "_inferred_type": "insert" },
+    { "id": 61, "description": "Lamp 61", "vpx_name": "L61", "_inferred_type": "insert" },
+    { "id": 62, "description": "Lamp 62", "vpx_name": "L62", "_inferred_type": "insert" },
+    { "id": 125, "description": "Skill Shot Flasher Lamp", "vpx_name": "L125", "_inferred_type": "flasher", "_note": "Driven by sol 25 (FlashSkill). Multi-light: L125, L125a, f125, f125a, Primitive088" },
+    { "id": 126, "description": "Jokers Flasher Lamp", "vpx_name": "F126", "_inferred_type": "flasher", "_note": "Driven by sol 26 (JokersFlash)" },
+    { "id": 127, "description": "Turbo Bumpers Flasher Lamp", "vpx_name": "L127", "_inferred_type": "flasher", "_note": "Driven by sol 27. Multi-light: L127, L127a, L127b, F127, F127a, F127b" },
+    { "id": 128, "description": "Paddle Wheel Flasher Lamp", "vpx_name": "L128", "_inferred_type": "flasher", "_note": "Driven by sol 28 (FlashPaddle). Multi-light: L128, L128a, F128" },
+    { "id": 129, "description": "Lower Left Flasher Lamp", "vpx_name": "f129", "_inferred_type": "flasher", "_note": "Driven by sol 29 (FlashLLeft)" },
+    { "id": 130, "description": "Right Drop Target Flasher Lamp", "vpx_name": "f130", "_inferred_type": "flasher", "_note": "Driven by sol 30. Multi-light: L130, f130" },
+    { "id": 131, "description": "3-Bank D.T. Flasher Lamp", "vpx_name": "f131", "_inferred_type": "flasher", "_note": "Driven by sol 31. Multi-light: L131, f131" },
+    { "id": 132, "description": "Lower Left 5-Bank DT Flasher Lamp", "vpx_name": "f132", "_inferred_type": "flasher", "_note": "Driven by sol 32. Multi-light: L132, L132a, f132, f132a" }
+  ]
+}

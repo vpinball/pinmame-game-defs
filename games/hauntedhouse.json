@@ -1,0 +1,739 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Haunted House (Gottlieb 1982) VPW 2.1.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from SolCallback and Controller.Switch handlers. Uses sys80.VBS (Gottlieb System 80). Three-playfield design (Upper, Main, Lower/Basement) — unique architecture for 1982. Lamp numbers inferred from VLM insert array naming (LM_inserts_{playfield}_l{N}) and Backdrop_Init light object names. Lamps 12/13/15/16/17 are used as coil outputs via LampCallback (lamp-as-solenoid pattern common on System 80). No cvpmTrough — single-ball physical trough with Kicker1 (sw67). Ball starts in sw46 kicker (main playfield saucer) at init. Upper flippers (FlipperUL/FlipperUR) and basement flippers (FlipperLL/FlipperLR) are controlled via MagnaSave keys, not via separate SolCallbacks — they are VBS-only, activated when Controller.Lamp(17) is on (GI state). GI relay (sol 11) controls which playfield is lit: off = upper+main lit, on = lower/basement lit. UseSolenoids=2 (modulated), UseLamps=1, UseGI=0."
+  },
+  "game": {
+    "id": "hauntedhouse",
+    "name": "Haunted House",
+    "year": 1982,
+    "manufacturer": "Gottlieb",
+    "ipdb_id": 1133,
+    "platform": "gts80",
+    "_notes": "Three-playfield design: Upper Playfield (UPF), Main Playfield (MPF), Lower/Basement Playfield (LPF). Ball travels between levels via trap door, kickers, and gravity. Gottlieb System 80 with sound board. Two ROM variants: 'hh' (6-digit) and 'hh7' (7-digit)."
+  },
+  "roms": [
+    {
+      "id": "hh",
+      "version": "6-digit"
+    },
+    {
+      "id": "hh7",
+      "version": "7-digit"
+    }
+  ],
+  "switches": [
+    {
+      "id": 0,
+      "description": "Lower Drop Target 1",
+      "vpx_name": "sw00",
+      "_inferred_type": "drop_target",
+      "_note": "Lower/basement playfield drop target bank"
+    },
+    {
+      "id": 1,
+      "description": "Lower Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Bumper4 (LPF) — pulsed via vpmTimer.PulseSw(1)"
+    },
+    {
+      "id": 2,
+      "description": "Upper Drop Target 1",
+      "vpx_name": "sw02",
+      "_inferred_type": "drop_target",
+      "_note": "Upper drop target bank (UPF)"
+    },
+    {
+      "id": 3,
+      "description": "Upper Standup Target 1",
+      "vpx_name": "sw03",
+      "_inferred_type": "standup_target",
+      "_note": "Upper playfield standup"
+    },
+    {
+      "id": 4,
+      "description": "Upper Left Lane",
+      "vpx_name": "Sw04",
+      "_note": "Switch — Controller.Switch set/unset on hit/unhit"
+    },
+    {
+      "id": 5,
+      "description": "Main Standup Target 1",
+      "vpx_name": "sw05",
+      "_inferred_type": "standup_target",
+      "_note": "Main playfield standup"
+    },
+    {
+      "id": 6,
+      "description": "Lower Through Lane 1",
+      "vpx_name": "sw06",
+      "_note": "Lower playfield through-lane switch (LPF)"
+    },
+    {
+      "id": 10,
+      "description": "Lower Drop Target 2",
+      "vpx_name": "sw10",
+      "_inferred_type": "drop_target",
+      "_note": "Lower/basement drop target bank"
+    },
+    {
+      "id": 11,
+      "description": "Kicking Target 1",
+      "vpx_name": "sw11",
+      "_inferred_type": "kicking_target",
+      "_note": "Main playfield kicking target"
+    },
+    {
+      "id": 12,
+      "description": "Upper Drop Target 2",
+      "vpx_name": "sw12",
+      "_inferred_type": "drop_target",
+      "_note": "Upper drop target bank (UPF)"
+    },
+    {
+      "id": 13,
+      "description": "Upper Standup Target 2",
+      "vpx_name": "sw13",
+      "_inferred_type": "standup_target",
+      "_note": "Upper playfield standup"
+    },
+    {
+      "id": 14,
+      "description": "Kicking Target 2",
+      "vpx_name": "sw14",
+      "_inferred_type": "kicking_target",
+      "_note": "Main playfield kicking target"
+    },
+    {
+      "id": 15,
+      "description": "Main Standup Target 2",
+      "vpx_name": "sw15",
+      "_inferred_type": "standup_target",
+      "_note": "Main playfield standup"
+    },
+    {
+      "id": 16,
+      "description": "Lower Through Lane 2",
+      "vpx_name": "sw16",
+      "_note": "Lower playfield through-lane switch (LPF)"
+    },
+    {
+      "id": 20,
+      "description": "Lower Drop Target 3",
+      "vpx_name": "sw20",
+      "_inferred_type": "drop_target",
+      "_note": "Lower/basement drop target bank"
+    },
+    {
+      "id": 21,
+      "description": "Upper Wire Rollover",
+      "vpx_name": "Sw21",
+      "_note": "Switch — Controller.Switch set/unset on hit/unhit (UPF)"
+    },
+    {
+      "id": 22,
+      "description": "Upper Drop Target 3",
+      "vpx_name": "sw22",
+      "_inferred_type": "drop_target",
+      "_note": "Upper drop target bank (UPF)"
+    },
+    {
+      "id": 23,
+      "description": "Upper Standup Target 3",
+      "vpx_name": "sw23",
+      "_inferred_type": "standup_target",
+      "_note": "Upper playfield standup"
+    },
+    {
+      "id": 24,
+      "description": "Kicking Target 3",
+      "vpx_name": "sw24",
+      "_inferred_type": "kicking_target",
+      "_note": "Main playfield kicking target"
+    },
+    {
+      "id": 25,
+      "description": "Kicking Target 4",
+      "vpx_name": "sw25",
+      "_inferred_type": "kicking_target",
+      "_note": "Main playfield kicking target"
+    },
+    {
+      "id": 26,
+      "description": "Lower Through Lane 3",
+      "vpx_name": "sw26",
+      "_note": "Lower playfield through-lane switch (LPF)"
+    },
+    {
+      "id": 30,
+      "description": "Lower Drop Target 4",
+      "vpx_name": "sw30",
+      "_inferred_type": "drop_target",
+      "_note": "Lower/basement drop target bank"
+    },
+    {
+      "id": 31,
+      "description": "Basement Kicker",
+      "vpx_name": "sw31",
+      "_inferred_type": "kicker",
+      "_note": "Basement up-kick saucer — kicks ball back up to main playfield. Activated via LampCallback on Controller.Lamp(12)"
+    },
+    {
+      "id": 32,
+      "description": "Upper Drop Target 4",
+      "vpx_name": "sw32",
+      "_inferred_type": "drop_target",
+      "_note": "Upper drop target bank (UPF)"
+    },
+    {
+      "id": 33,
+      "description": "Upper Standup Target 4",
+      "vpx_name": "sw33",
+      "_inferred_type": "standup_target",
+      "_note": "Upper playfield standup"
+    },
+    {
+      "id": 34,
+      "description": "Main Playfield Rollover",
+      "vpx_name": "Sw34",
+      "_note": "Switch — Controller.Switch set/unset on hit/unhit (MPF)"
+    },
+    {
+      "id": 35,
+      "description": "Main Playfield Gate",
+      "vpx_name": "Sw35",
+      "_note": "Gate switch (MPF) — also controls Gate4 damping animation"
+    },
+    {
+      "id": 36,
+      "description": "Lower Through Lane 4",
+      "vpx_name": "sw36",
+      "_note": "Lower playfield through-lane switch (LPF)"
+    },
+    {
+      "id": 40,
+      "description": "Lower Drop Target 5",
+      "vpx_name": "sw40",
+      "_inferred_type": "drop_target",
+      "_note": "Lower/basement drop target bank"
+    },
+    {
+      "id": 41,
+      "description": "Basement Special Kicker",
+      "vpx_name": "sw41",
+      "_inferred_type": "kicker",
+      "_note": "Basement special saucer — kicked by solenoid 6 (BS callback)"
+    },
+    {
+      "id": 42,
+      "description": "Upper Scoring Rubber",
+      "vpx_name": "sw42a",
+      "_inferred_type": "rubber",
+      "_note": "Upper playfield scoring rubber — sw42a and sw42b both pulse sw42. Also sw42b_Hit."
+    },
+    {
+      "id": 43,
+      "description": "Upper Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Bumper3 (UPF) — pulsed via vpmTimer.PulseSw(43)"
+    },
+    {
+      "id": 44,
+      "description": "Main Pop Bumpers",
+      "_inferred_type": "bumper",
+      "_note": "Bumper1 (bottom) and Bumper2 (top) on MPF — both pulse sw44"
+    },
+    {
+      "id": 45,
+      "description": "Main Playfield Kicker",
+      "vpx_name": "sw45",
+      "_inferred_type": "kicker",
+      "_note": "Main playfield saucer — kicked by solenoid 2 (UpKick callback)"
+    },
+    {
+      "id": 46,
+      "description": "Main Playfield Saucer / Ball Start",
+      "vpx_name": "sw46",
+      "_inferred_type": "kicker",
+      "_note": "Main playfield saucer — kicked by solenoid 1 (Kick46 callback). Ball starts here at init. Multi-step kick animation with TWKicker1 prim."
+    },
+    {
+      "id": 50,
+      "description": "Lower Standup Target 1",
+      "vpx_name": "sw50",
+      "_inferred_type": "standup_target",
+      "_note": "Lower/basement playfield standup"
+    },
+    {
+      "id": 51,
+      "description": "Lower Slingshot",
+      "vpx_name": "LowerSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "Lower playfield slingshot — pulsed via vpmTimer.PulseSw(51). Also scoring rubber sw51a/sw51b pulse sw51."
+    },
+    {
+      "id": 54,
+      "description": "Main Playfield Lane",
+      "vpx_name": "Sw54",
+      "_note": "Switch — Controller.Switch set/unset on hit/unhit (MPF)"
+    },
+    {
+      "id": 55,
+      "description": "Main Standup Target 3",
+      "vpx_name": "sw55",
+      "_inferred_type": "standup_target",
+      "_note": "Main playfield standup"
+    },
+    {
+      "id": 57,
+      "description": "Tilt",
+      "_note": "Tilt switch — vpmNudge.TiltSwitch = 57"
+    },
+    {
+      "id": 60,
+      "description": "Lower Standup Target 2",
+      "vpx_name": "sw60",
+      "_inferred_type": "standup_target",
+      "_note": "Lower/basement playfield standup"
+    },
+    {
+      "id": 64,
+      "description": "Upper Playfield Gate",
+      "vpx_name": "Sw64",
+      "_note": "Gate switch (UPF) — also controls Gate3 damping animation"
+    },
+    {
+      "id": 65,
+      "description": "Shooter Lane / Auto Plunger",
+      "vpx_name": "sw65",
+      "_note": "Impulse plunger switch — used by plungerIM (cvpmImpulseP). Kicked by lamp 15 via LampCallback."
+    },
+    {
+      "id": 66,
+      "description": "Upper Slingshot / Main Scoring Rubber",
+      "vpx_name": "UpperSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "Upper playfield slingshot — pulsed via vpmTimer.PulseSw(66). Also sw66b_hit pulses sw66 (main scoring rubber)."
+    },
+    {
+      "id": 67,
+      "description": "Trough",
+      "vpx_name": "Kicker1",
+      "_note": "Single-ball trough kicker. Ball release via solenoid 9 (KickBallToLane). Drain directs ball here.",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Saucer Kick (sw46)",
+      "_vbscript_callback": "Kick46",
+      "_inferred_type": "kicker",
+      "_note": "Kicks ball from sw46 saucer with multi-step animation (TWKicker1 prim). Ball start position."
+    },
+    {
+      "id": 2,
+      "description": "Up Kick (sw45)",
+      "_vbscript_callback": "UpKick",
+      "_inferred_type": "kicker",
+      "_note": "Kicks ball from sw45 saucer on main playfield"
+    },
+    {
+      "id": 5,
+      "description": "Upper Drop Targets Reset",
+      "_vbscript_callback": "UpperDropsUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises all four upper drop targets (sw2, sw12, sw22, sw32)"
+    },
+    {
+      "id": 6,
+      "description": "Basement Special Kick (sw41)",
+      "_vbscript_callback": "BS",
+      "_inferred_type": "kicker",
+      "_note": "Kicks ball from sw41 basement special saucer"
+    },
+    {
+      "id": 8,
+      "description": "Knocker",
+      "_vbscript_callback": "PlayKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 9,
+      "description": "Ball Release / Trough Kick",
+      "_vbscript_callback": "KickBallToLane",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from Kicker1 (sw67 trough) to shooter lane",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "ball_release"
+    },
+    {
+      "id": 10,
+      "description": "Game Over Relay",
+      "_vbscript_callback": "GameOver",
+      "_inferred_type": "game_on",
+      "_note": "Sets GameInPlay flag — controls whether upper/lower flippers can activate"
+    },
+    {
+      "id": 11,
+      "description": "GI Relay",
+      "_vbscript_callback": "SolGi",
+      "_inferred_type": "gi_relay",
+      "_note": "Controls GI relay sound effect only — actual GI switching done via Controller.Lamp(17) in LampCallback"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper (Main)",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Main right flipper (RightFlipper/RightFlipper2). Also cascades to SolRUFlipper when FlipperKeyMod=2."
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper (Main)",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Main left flipper (LeftFlipper/LeftFlipper2). Also cascades to SolLUFlipper when FlipperKeyMod=2."
+    }
+  ],
+  "lamp_coils": [
+    {
+      "lamp_id": 12,
+      "description": "Basement Up Kick (sw31)",
+      "_inferred_type": "kicker",
+      "_note": "Lamp used as coil via LampCallback. When Controller.Lamp(12) turns on, kicks ball from sw31 basement saucer."
+    },
+    {
+      "lamp_id": 13,
+      "description": "Lower Drop Targets Reset",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Lamp used as coil via LampCallback. When Controller.Lamp(13) turns on, raises all five lower drop targets (sw0, sw10, sw20, sw30, sw40)."
+    },
+    {
+      "lamp_id": 15,
+      "description": "Auto Plunger Kick (sw65)",
+      "_inferred_type": "kicker",
+      "_note": "Lamp used as coil via LampCallback. When Controller.Lamp(15) turns on, fires plungerIM (cvpmImpulseP) auto-fire."
+    },
+    {
+      "lamp_id": 16,
+      "description": "Trap Door",
+      "_inferred_type": "trap_door",
+      "_note": "Lamp used as coil via LampCallback. On = opens trap door (TrapDoorR not collidable), Off = closes trap door. Animated with TrapDoorTimer."
+    },
+    {
+      "lamp_id": 17,
+      "description": "GI State Relay",
+      "_inferred_type": "gi_relay",
+      "_note": "Lamp used as coil via LampCallback. On = SolGIOn (lower PF lit, upper+main off). Off = SolGIOff (upper+main lit, lower off). Also gates upper/lower flipper activation."
+    }
+  ],
+  "lamps": [
+    {
+      "id": 2,
+      "description": "Upper Playfield Insert",
+      "vpx_name": "l2",
+      "_playfield": "UPF"
+    },
+    {
+      "id": 3,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l3",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 8,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l8",
+      "_playfield": "MPF",
+      "_note": "Near sw55 standup target area and upper slingshot"
+    },
+    {
+      "id": 18,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l18",
+      "_playfield": "MPF",
+      "_note": "Near secret target area and lower left region"
+    },
+    {
+      "id": 19,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l19",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 20,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l20",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 21,
+      "description": "Upper Playfield Insert",
+      "vpx_name": "l21",
+      "_playfield": "UPF",
+      "_note": "Near upper rubber/sling area"
+    },
+    {
+      "id": 22,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l22",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 23,
+      "description": "Lower Playfield Insert",
+      "vpx_name": "l23",
+      "_playfield": "LPF",
+      "_note": "Positioned in Backdrop_Init for desktop mode"
+    },
+    {
+      "id": 24,
+      "description": "Lower Playfield Insert",
+      "vpx_name": "l24",
+      "_playfield": "LPF",
+      "_note": "Positioned in Backdrop_Init for desktop mode"
+    },
+    {
+      "id": 25,
+      "description": "Lower Playfield Insert",
+      "vpx_name": "l25",
+      "_playfield": "LPF",
+      "_note": "Near sw60 standup target. Positioned in Backdrop_Init."
+    },
+    {
+      "id": 26,
+      "description": "Lower Playfield Insert",
+      "vpx_name": "l26",
+      "_playfield": "LPF",
+      "_note": "Positioned in Backdrop_Init for desktop mode"
+    },
+    {
+      "id": 27,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l27",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 28,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l28",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 29,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l29",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 30,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l30",
+      "_playfield": "MPF",
+      "_note": "Near sw20/sw30 lower drop target area"
+    },
+    {
+      "id": 31,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l31",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 32,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l32",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 33,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l33",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 34,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l34",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 35,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l35",
+      "_playfield": "MPF",
+      "_note": "Near lower left/right flipper area and secret target"
+    },
+    {
+      "id": 36,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l36",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 37,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l37",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 38,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l38",
+      "_playfield": "MPF"
+    },
+    {
+      "id": 39,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l39",
+      "_playfield": "MPF",
+      "_note": "Near upper slingshot area"
+    },
+    {
+      "id": 40,
+      "description": "Upper Playfield Insert",
+      "vpx_name": "l40",
+      "_playfield": "UPF",
+      "_note": "Near sw13 standup target"
+    },
+    {
+      "id": 41,
+      "description": "Upper Playfield Insert",
+      "vpx_name": "l41",
+      "_playfield": "UPF",
+      "_note": "Near sw13/sw23/sw33 standup targets"
+    },
+    {
+      "id": 42,
+      "description": "Upper Playfield Insert",
+      "vpx_name": "l42",
+      "_playfield": "UPF",
+      "_note": "Near sw33 standup target"
+    },
+    {
+      "id": 44,
+      "description": "Upper Playfield Insert",
+      "vpx_name": "l44",
+      "_playfield": "UPF"
+    },
+    {
+      "id": 45,
+      "description": "Lower Playfield Insert",
+      "vpx_name": "l45",
+      "_playfield": "LPF",
+      "_note": "Positioned in Backdrop_Init for desktop mode"
+    },
+    {
+      "id": 46,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l46",
+      "_playfield": "MPF",
+      "_note": "Near sw34 rollover area"
+    },
+    {
+      "id": 47,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l47",
+      "_playfield": "MPF",
+      "_note": "Near trap door and Gate3 area"
+    },
+    {
+      "id": 51,
+      "description": "Main Playfield Insert",
+      "vpx_name": "l51",
+      "_playfield": "MPF",
+      "_note": "Near sw05/sw15 standup target area and lower right flipper region"
+    }
+  ],
+  "gi": [
+    {
+      "id": "giUL1",
+      "description": "Upper Playfield GI Light 1",
+      "_playfield": "UPF",
+      "_note": "Part of GIUpper array — controlled by GI relay state"
+    },
+    {
+      "id": "giUL2",
+      "description": "Upper Playfield GI Light 2",
+      "_playfield": "UPF",
+      "_note": "Part of GIUpper array — listed as 'gUL2' in VLM (typo)"
+    },
+    {
+      "id": "giUL3",
+      "description": "Upper Playfield GI Light 3",
+      "_playfield": "UPF"
+    },
+    {
+      "id": "giUL4",
+      "description": "Upper Playfield GI Light 4",
+      "_playfield": "UPF"
+    },
+    {
+      "id": "giUL5",
+      "description": "Upper Playfield GI Light 5",
+      "_playfield": "UPF"
+    },
+    {
+      "id": "giUL6",
+      "description": "Upper Playfield GI Light 6",
+      "_playfield": "UPF"
+    },
+    {
+      "id": "giML1",
+      "description": "Main Playfield GI Light 1",
+      "_playfield": "MPF",
+      "_note": "Part of GIMain array — controlled by GI relay state"
+    },
+    {
+      "id": "giML2",
+      "description": "Main Playfield GI Light 2",
+      "_playfield": "MPF"
+    },
+    {
+      "id": "giML3",
+      "description": "Main Playfield GI Light 3",
+      "_playfield": "MPF"
+    },
+    {
+      "id": "giML4",
+      "description": "Main Playfield GI Light 4",
+      "_playfield": "MPF"
+    },
+    {
+      "id": "giML5",
+      "description": "Main Playfield GI Light 5",
+      "_playfield": "MPF"
+    },
+    {
+      "id": "giML6",
+      "description": "Main Playfield GI Light 6",
+      "_playfield": "MPF"
+    },
+    {
+      "id": "giLL1",
+      "description": "Lower Playfield GI Light 1",
+      "_playfield": "LPF",
+      "_note": "Part of GILower array — only GI string for basement. ON when GI relay on (Lamp 17 = 1), OFF when relay off."
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    }
+  ]
+}

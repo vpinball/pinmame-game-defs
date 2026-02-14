@@ -1,0 +1,578 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Star Wars (Data East 1992) VPW v1.2.2.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from VPW v1.2.2 script. Trough is standard cvpmTrough with 4-switch array (11,13,12,10). Death Star uses two cvpmMech objects: mechDeathStarDoor (sol 12, switches 41/42) and mechDeathStar rotation (sol 15). Death Star VUK (sw36) uses custom ball-destroy/create pattern with DSBalls counter. R2D2 entrance (sw35) also uses ball-destroy pattern. Flashers (sol 25-32) route through Lampz fader as IDs 125-132. Bumper coils 17-20 and slingshot coils 21-22 are commented out in SolCallback (handled natively by VPX physics objects). Switch 50 = launch button, switch 51 = magna save (overloaded for LUT selector in VPW). GI controlled via sol 11 relay. DE.VBS framework: sLRFlipper=46, sLLFlipper=48."
+  },
+  "game": {
+    "id": "stwr",
+    "name": "Star Wars",
+    "year": 1992,
+    "manufacturer": "Data East",
+    "ipdb_id": 2358,
+    "platform": "dataeast"
+  },
+  "roms": [
+    { "id": "stwr_107" }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Tilt",
+      "_inferred_type": "tilt",
+      "_note": "vpmNudge.TiltSwitch = 1"
+    },
+    {
+      "id": 10,
+      "description": "Trough Ball 4 (Jam)",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_4",
+      "_inferred_type": "trough",
+      "_note": "bsTrough.InitSwitches Array(11,13,12,10) — 4th position (jam switch)"
+    },
+    {
+      "id": 11,
+      "description": "Trough Ball 1",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_1",
+      "_inferred_type": "trough",
+      "_note": "bsTrough.InitSwitches Array(11,13,12,10) — 1st position (nearest exit)"
+    },
+    {
+      "id": 12,
+      "description": "Trough Ball 3",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_3",
+      "_inferred_type": "trough",
+      "_note": "bsTrough.InitSwitches Array(11,13,12,10) — 3rd position"
+    },
+    {
+      "id": 13,
+      "description": "Trough Ball 2",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_2",
+      "_inferred_type": "trough",
+      "_note": "bsTrough.InitSwitches Array(11,13,12,10) — 2nd position"
+    },
+    {
+      "id": 14,
+      "description": "Shooter Lane (Auto Plunger)",
+      "vpx_name": "sw14",
+      "_inferred_type": "plunger_lane",
+      "_note": "plungerIM.InitImpulseP sw14, 65, 0.5 — auto plunger switch"
+    },
+    {
+      "id": 17,
+      "description": "Rollover/Lane Switch",
+      "vpx_name": "sw17",
+      "_inferred_type": "rollover",
+      "_note": "vpmTimer.PulseSw 17"
+    },
+    {
+      "id": 19,
+      "description": "Rollover/Lane Switch",
+      "vpx_name": "sw19",
+      "_inferred_type": "rollover",
+      "_note": "vpmTimer.PulseSw 19"
+    },
+    {
+      "id": 20,
+      "description": "Wire Ramp Exit",
+      "vpx_name": "sw20",
+      "_inferred_type": "ramp_switch",
+      "_note": "vpmTimer.PulseSw 20; also calls WireRampOn False"
+    },
+    {
+      "id": 21,
+      "description": "Rollover/Lane Switch (Continuous)",
+      "vpx_name": "sw21",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch(21) on/off — held switch"
+    },
+    {
+      "id": 22,
+      "description": "Rollover/Lane Switch (Continuous)",
+      "vpx_name": "sw22",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch(22) on/off — held switch"
+    },
+    {
+      "id": 23,
+      "description": "Rollover/Lane Switch (Continuous)",
+      "vpx_name": "sw23",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch(23) on/off — held switch"
+    },
+    {
+      "id": 24,
+      "description": "Rollover/Lane Switch (Continuous)",
+      "vpx_name": "sw24",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch(24) on/off — held switch"
+    },
+    {
+      "id": 25,
+      "description": "Standup Target 1",
+      "vpx_name": "sw25",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 25 — also in vpmNudge.TiltObj array"
+    },
+    {
+      "id": 26,
+      "description": "Standup Target 2",
+      "vpx_name": "sw26",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 26 — also in vpmNudge.TiltObj array"
+    },
+    {
+      "id": 27,
+      "description": "Standup Target 3",
+      "vpx_name": "sw27",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 27 — also in vpmNudge.TiltObj array"
+    },
+    {
+      "id": 28,
+      "description": "Standup Target 4",
+      "vpx_name": "sw28",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 28"
+    },
+    {
+      "id": 29,
+      "description": "Standup Target 5",
+      "vpx_name": "sw29",
+      "_inferred_type": "standup_target",
+      "_note": "STHit 29"
+    },
+    {
+      "id": 30,
+      "description": "Drop Target 1",
+      "vpx_name": "Sw30",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 30; reset by sol 6 (ResetDrops)"
+    },
+    {
+      "id": 31,
+      "description": "Drop Target 2",
+      "vpx_name": "Sw31",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 31; reset by sol 6 (ResetDrops)"
+    },
+    {
+      "id": 32,
+      "description": "Drop Target 3",
+      "vpx_name": "Sw32",
+      "_inferred_type": "drop_target",
+      "_note": "DTHit 32; reset by sol 6 (ResetDrops)"
+    },
+    {
+      "id": 33,
+      "description": "Right Saucer (Eject)",
+      "vpx_name": "sw33",
+      "_inferred_type": "kicker",
+      "_note": "SolRightEject.AddBall 1 — cvpmBallStack InitSaucer sw33, kick angle 220, force 85"
+    },
+    {
+      "id": 34,
+      "description": "Death Star Entrance",
+      "vpx_name": "deathstarIn",
+      "_inferred_type": "vuk",
+      "_note": "deathstarIn_Hit: DestroyBall, PulseSw 34, AddVUK — ball-destroy/create pattern for Death Star subway"
+    },
+    {
+      "id": 35,
+      "description": "R2D2 Entrance",
+      "vpx_name": "r2In",
+      "_inferred_type": "vuk",
+      "_note": "r2In_Hit: DestroyBall, PulseSw 35, AddVUK — ball-destroy/create pattern for R2D2 subway"
+    },
+    {
+      "id": 36,
+      "description": "Death Star VUK",
+      "vpx_name": "sw36",
+      "_inferred_type": "vuk",
+      "_note": "Custom VUK: sw36_Hit destroys ball and AddVUK increments DSBalls counter. Controller.Switch(36) set/cleared by SolLeftPopper (sol 5). Ball-destroy/create pattern."
+    },
+    {
+      "id": 37,
+      "description": "Left Saucer (Eject)",
+      "vpx_name": "sw37",
+      "_inferred_type": "kicker",
+      "_note": "SolLeftEject.AddBall 1 — cvpmBallStack InitSaucer sw37, kick angle 163, force 70"
+    },
+    {
+      "id": 38,
+      "description": "R2D2 Position Switch (Continuous)",
+      "vpx_name": "sw38",
+      "_inferred_type": "opto",
+      "_note": "Controller.Switch(38) on/off — held switch, likely R2D2 mech position"
+    },
+    {
+      "id": 39,
+      "description": "Ramp Exit (Delayed)",
+      "vpx_name": "sw39",
+      "_inferred_type": "ramp_switch",
+      "_note": "vpmTimer.AddTimer 1400 delayed PulseSw 39 — also in vpmNudge.TiltObj array; calls WireRampOff"
+    },
+    {
+      "id": 40,
+      "description": "Death Star Door Switch",
+      "vpx_name": "sw40",
+      "_inferred_type": "gate",
+      "_note": "vpmTimer.PulseSw 40 — also in vpmNudge.TiltObj array; collidable toggled by UpdateDeathStarDoor based on DSDoor.Z position"
+    },
+    {
+      "id": 41,
+      "description": "Death Star Door Closed Position",
+      "_inferred_type": "opto",
+      "_note": "mechDeathStarDoor.AddSw 41, 0, 0 — mech position switch at step 0 (closed)"
+    },
+    {
+      "id": 42,
+      "description": "Death Star Door Open Position",
+      "_inferred_type": "opto",
+      "_note": "mechDeathStarDoor.AddSw 42, 71, 71 — mech position switch at step 71 (fully open)"
+    },
+    {
+      "id": 43,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "LeftSlingShot_Slingshot: vpmTimer.PulseSw 43"
+    },
+    {
+      "id": 44,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "RightSlingShot_Slingshot: vpmTimer.PulseSw 44"
+    },
+    {
+      "id": 45,
+      "description": "Top Bumper",
+      "vpx_name": "Bumper1",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw(45)"
+    },
+    {
+      "id": 46,
+      "description": "Middle Left Bumper",
+      "vpx_name": "Bumper2",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw(46)"
+    },
+    {
+      "id": 47,
+      "description": "Middle Right Bumper",
+      "vpx_name": "Bumper3",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw(47)"
+    },
+    {
+      "id": 48,
+      "description": "Bottom Bumper",
+      "vpx_name": "Bumper4",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw(48)"
+    },
+    {
+      "id": 50,
+      "description": "Launch Button",
+      "_inferred_type": "cabinet_switch",
+      "_note": "Controller.Switch(50) set by PlungerKey/LockBarKey in Table1_KeyDown/KeyUp"
+    },
+    {
+      "id": 51,
+      "description": "Right Magna Save / Coin Door",
+      "_inferred_type": "cabinet_switch",
+      "_note": "Controller.Switch(51) set by PlungerKey/LockBarKey and toggled by LeftMagnaSave/RightMagnaSave keys — overloaded for LUT selector in VPW"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Eject (In)",
+      "_vbscript_callback": "bsTroughSolIn",
+      "_inferred_type": "trough",
+      "_note": "bsTrough.SolIn — feeds ball into trough"
+    },
+    {
+      "id": 2,
+      "description": "Trough Ball Release",
+      "_vbscript_callback": "bsTroughSolOut",
+      "_inferred_type": "trough",
+      "_note": "bsTrough.SolOut — releases ball to shooter lane via BallRelease at angle 90, force 7"
+    },
+    {
+      "id": 3,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "SolAutoPlungerIM",
+      "_inferred_type": "autoplunger",
+      "vpx_name": "sw14",
+      "_note": "plungerIM.AutoFire — impulse plunger at sw14"
+    },
+    {
+      "id": 4,
+      "description": "Left Saucer Eject",
+      "_vbscript_callback": "SolLeftEject.SolOut",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw37",
+      "_note": "cvpmBallStack SolOut — ejects ball from left saucer (sw37)"
+    },
+    {
+      "id": 5,
+      "description": "Left Popper (Death Star VUK)",
+      "_vbscript_callback": "SolLeftPopper",
+      "_inferred_type": "vuk",
+      "vpx_name": "sw36",
+      "_note": "Custom VUK eject: creates ball at sw36, kicks at angle 0/force 45. Manages DSBalls counter and Controller.Switch(36)."
+    },
+    {
+      "id": 6,
+      "description": "Drop Target Bank Reset",
+      "_vbscript_callback": "ResetDrops",
+      "_inferred_type": "drop_target_reset",
+      "_note": "DTRaise 30, 31, 32 — resets all three drop targets"
+    },
+    {
+      "id": 7,
+      "description": "Right Saucer Eject",
+      "_vbscript_callback": "SolRightEject.SolOut",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw33",
+      "_note": "cvpmBallStack SolOut — ejects ball from right saucer (sw33)"
+    },
+    {
+      "id": 9,
+      "description": "R2D2 Up Motor",
+      "_vbscript_callback": "SolR2",
+      "_inferred_type": "mechanism",
+      "_note": "Sets R2UpSol flag controlling R2D2 vertical movement in UpdateR2 timer"
+    },
+    {
+      "id": 11,
+      "description": "GI Relay",
+      "_vbscript_callback": "Sol11",
+      "_inferred_type": "gi_relay",
+      "_note": "SetGI True/False — controls general illumination on/off"
+    },
+    {
+      "id": 12,
+      "description": "Death Star Entrance Bar Motor",
+      "_inferred_type": "mechanism",
+      "_note": "Commented out SolCallback — handled by mechDeathStarDoor cvpmMech (sol1=12, steps=72, switches 41/42)"
+    },
+    {
+      "id": 15,
+      "description": "R2D2-2 & Death Star Rotation Motor",
+      "_inferred_type": "mechanism",
+      "_note": "Commented out SolCallback — handled by mechDeathStar cvpmMech (sol1=15, steps=360, circular motion)"
+    },
+    {
+      "id": 16,
+      "description": "Kickback",
+      "_vbscript_callback": "SolKickback",
+      "_inferred_type": "kickback",
+      "vpx_name": "Kickback",
+      "_note": "Kickback.Fire on enable, Kickback.PullBack on disable"
+    },
+    {
+      "id": 17,
+      "description": "Top Turbo Bumper",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out — bumper coil handled natively by VPX Bumper1 object"
+    },
+    {
+      "id": 18,
+      "description": "Left Turbo Bumper",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out — bumper coil handled natively by VPX Bumper2 object"
+    },
+    {
+      "id": 19,
+      "description": "Right Turbo Bumper",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out — bumper coil handled natively by VPX Bumper3 object"
+    },
+    {
+      "id": 20,
+      "description": "Bottom Turbo Bumper",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out — bumper coil handled natively by VPX Bumper4 object"
+    },
+    {
+      "id": 21,
+      "description": "Left Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "SolCallback commented out — slingshot coil handled natively by VPX LeftSlingShot object"
+    },
+    {
+      "id": 22,
+      "description": "Right Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "SolCallback commented out — slingshot coil handled natively by VPX RightSlingShot object"
+    },
+    {
+      "id": 25,
+      "description": "Flasher 1R (Scoops/Walls)",
+      "_vbscript_callback": "Sol25",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SetLamp 125 — routes through Lampz fader. VPX objects: f125a_u, f125a_l, f125b_u, f125b_l, f125c_u, f125c_l, f125d, f125e"
+    },
+    {
+      "id": 26,
+      "description": "Flasher 2R",
+      "_vbscript_callback": "SetLamp 126,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Direct SetLamp 126. VPX objects: f126a, f126b, f2r"
+    },
+    {
+      "id": 27,
+      "description": "Flasher 3R",
+      "_vbscript_callback": "Sol27",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SetLamp 127. VPX objects: f3r_a, f3r_b"
+    },
+    {
+      "id": 28,
+      "description": "Flasher 4R (Upper Playfield)",
+      "_vbscript_callback": "SetLamp 128,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Direct SetLamp 128. VPX objects: f128a-d, f4r_a/af/b/bf/c/cf with DisableLighting callbacks pf4_a/b/c"
+    },
+    {
+      "id": 29,
+      "description": "Flasher 5R (Death Star)",
+      "_vbscript_callback": "Sol29",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SetLamp 129. Lampz.MassAssign(129) commented out — Death Star flasher"
+    },
+    {
+      "id": 30,
+      "description": "Flasher 6R",
+      "_vbscript_callback": "Sol30",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SetLamp 130. VPX objects: f6r_a, f6r_b"
+    },
+    {
+      "id": 31,
+      "description": "Flasher 7R (R2D2)",
+      "_vbscript_callback": "Sol31",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SetLamp 131. Lampz.MassAssign(131) commented out — R2D2 flasher"
+    },
+    {
+      "id": 32,
+      "description": "Flasher 8R (Back/Left Wall)",
+      "_vbscript_callback": "SetLamp 132,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Direct SetLamp 132. VPX objects: F132a-e, f8r_a/b/f with DisableLighting callbacks pf8_a/b"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "sLRFlipper framework constant from DE.VBS/core.vbs"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "sLLFlipper framework constant from DE.VBS/core.vbs"
+    }
+  ],
+  "lamps": [
+    { "id": 1, "vpx_name": "l1", "description": "Insert 1" },
+    { "id": 2, "vpx_name": "l2", "description": "Insert 2" },
+    { "id": 3, "vpx_name": "l3", "description": "Insert 3" },
+    { "id": 4, "vpx_name": "l4", "description": "Insert 4" },
+    { "id": 5, "vpx_name": "l5", "description": "Insert 5" },
+    { "id": 6, "vpx_name": "l6", "description": "Insert 6" },
+    { "id": 7, "vpx_name": "l7", "description": "Insert 7" },
+    { "id": 8, "vpx_name": "l8", "description": "Insert 8" },
+    { "id": 9, "vpx_name": "l9", "description": "Insert 9" },
+    { "id": 10, "vpx_name": "l10", "description": "Insert 10" },
+    { "id": 11, "vpx_name": "l11", "description": "Insert 11" },
+    { "id": 12, "vpx_name": "l12", "description": "Insert 12" },
+    { "id": 13, "vpx_name": "l13", "description": "Insert 13" },
+    { "id": 14, "vpx_name": "l14", "description": "Insert 14" },
+    { "id": 15, "vpx_name": "l15", "description": "Insert 15" },
+    { "id": 16, "vpx_name": "l16", "description": "Insert 16" },
+    { "id": 18, "vpx_name": "l18" },
+    { "id": 19, "vpx_name": "l19" },
+    { "id": 20, "vpx_name": "l20" },
+    { "id": 21, "vpx_name": "l21" },
+    { "id": 22, "vpx_name": "l22" },
+    { "id": 23, "vpx_name": "l23" },
+    { "id": 24, "vpx_name": "l24f" },
+    { "id": 26, "vpx_name": "l26", "description": "C3PO Left Eye" },
+    { "id": 27, "vpx_name": "l27", "description": "C3PO Mouth" },
+    { "id": 28, "vpx_name": "l28", "description": "C3PO Right Eye" },
+    { "id": 31, "vpx_name": "l31", "description": "Launcher Lane" },
+    { "id": 32, "vpx_name": "l32", "description": "Insert 32" },
+    { "id": 33, "vpx_name": "l33" },
+    { "id": 34, "vpx_name": "l34" },
+    { "id": 35, "vpx_name": "l35" },
+    { "id": 36, "vpx_name": "l36" },
+    { "id": 37, "vpx_name": "l37" },
+    { "id": 38, "vpx_name": "l38", "description": "Yellow x3 Bank 1" },
+    { "id": 39, "vpx_name": "l39", "description": "Yellow x3 Bank 2" },
+    { "id": 40, "vpx_name": "l40", "description": "Yellow x3 Bank 3" },
+    { "id": 41, "vpx_name": "l41", "description": "Insert 41" },
+    { "id": 42, "vpx_name": "l42", "description": "Insert 42" },
+    { "id": 43, "vpx_name": "l43", "description": "Insert 43" },
+    { "id": 44, "vpx_name": "l44", "description": "Insert 44" },
+    { "id": 45, "vpx_name": "l45" },
+    { "id": 46, "vpx_name": "l46" },
+    { "id": 47, "vpx_name": "l47", "description": "Scoop Bulb" },
+    { "id": 48, "description": "Scoop Right / Jabba", "_note": "Lampz.MassAssign(48) commented out; callback to JabbasInsert DisableLighting" },
+    { "id": 49, "vpx_name": "l49", "description": "Ramp Entrance Bank 1" },
+    { "id": 50, "vpx_name": "l50", "description": "Ramp Entrance Bank 2" },
+    { "id": 51, "vpx_name": "l51", "description": "Ramp Entrance Bank 3" },
+    { "id": 52, "vpx_name": "l52", "description": "Insert 52" },
+    { "id": 53, "vpx_name": "l53", "description": "Insert 53" },
+    { "id": 54, "vpx_name": "l54", "description": "Insert 54" },
+    { "id": 55, "vpx_name": "l55", "description": "Insert 55" },
+    { "id": 56, "vpx_name": "l56", "description": "Insert 56" },
+    { "id": 57, "vpx_name": "l57" },
+    { "id": 58, "vpx_name": "l58" },
+    { "id": 59, "vpx_name": "l59", "description": "Insert 59" },
+    { "id": 60, "vpx_name": "l60", "description": "Insert 60" },
+    { "id": 61, "vpx_name": "l61", "description": "Bumper 1 Lamp" },
+    { "id": 62, "vpx_name": "l62", "description": "Bumper 2 Lamp" },
+    { "id": 63, "vpx_name": "l63", "description": "Bumper 3 Lamp" },
+    { "id": 64, "vpx_name": "l64", "description": "Bumper 4 Lamp" },
+    { "id": 111, "description": "GI (General Illumination)", "_note": "Lampz.obj(111) = ColtoArray(GI) — GI collection, controlled by sol 11 relay" }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper framework constant. SolCallback = SolRFlipper. VPX objects: RightFlipper."
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper framework constant. SolCallback = SolLFlipper. VPX objects: LeftFlipper."
+    }
+  ]
+}

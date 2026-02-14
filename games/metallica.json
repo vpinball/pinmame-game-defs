@@ -1,0 +1,1125 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Metallica Premium Monsters (Stern 2013) VPW 2.0.2.vbs",
+    "extracted": "2026-02-13",
+    "status": "vpw-verified",
+    "confidence_notes": "Re-extracted directly from VPW 2.0.2 VBScript. SAM-era Stern game. No Const sw* definitions — switches referenced by number via Controller.Switch(N) and vpmTimer.PulseSw N. Lamp IDs for l17-l80 confirmed from VLM lightmap arrays (LM_L_lNN naming). Flashers driven by SolModCallback (coils 19-32). GI at lamp indexes 130/132/134/136 confirmed from GI130/GI132/GI134/GI136 VPX _animate subs. RGB insert lamp IDs (CN4/CN5/CN9/CN11/CN13/CN19) confirmed from VLM arrays and _animate subs but numeric IDs are set via VPX TimerInterval — not determinable from script alone. Optos lamp ID similarly estimated. Premium-specific features: snake jaw, coffin magnet processor board, hammer, cross motor, captive ball. Flipper EOS aliases sLRFlipper=46 sLLFlipper=48 from SAM framework (sam.VBS), not table script."
+  },
+  "game": {
+    "id": "metallica",
+    "name": "Metallica Premium",
+    "year": 2013,
+    "manufacturer": "Stern",
+    "ipdb_id": 6033,
+    "platform": "sam"
+  },
+  "roms": [
+    {
+      "id": "mtl_180h",
+      "version": "1.80h",
+      "description": "Normal ROM"
+    },
+    {
+      "id": "mtl_180hc",
+      "version": "1.80hc",
+      "description": "Color patched ROM"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Right Outlane",
+      "vpx_name": "sw1",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 3,
+      "description": "Left Outlane",
+      "vpx_name": "sw3",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 4,
+      "description": "Left Standup Target",
+      "vpx_name": "sw4",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 7,
+      "description": "Right Standup Target",
+      "vpx_name": "sw7",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 9,
+      "description": "Standup Target (Upper)",
+      "vpx_name": "sw9",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 15,
+      "description": "Front Cabinet Button",
+      "_inferred_type": "cabinet",
+      "_note": "Service/coin door button, mapped via keyFront"
+    },
+    {
+      "id": 16,
+      "description": "Start Button",
+      "_inferred_type": "cabinet",
+      "_note": "Mapped via StartGameKey"
+    },
+    {
+      "id": 18,
+      "description": "Trough 4 (Leftmost)",
+      "vpx_name": "sw18",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4"
+    },
+    {
+      "id": 19,
+      "description": "Trough 3",
+      "vpx_name": "sw19",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 20,
+      "description": "Trough 2",
+      "vpx_name": "sw20",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 21,
+      "description": "Trough 1 (Eject Side)",
+      "vpx_name": "sw21",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1"
+    },
+    {
+      "id": 22,
+      "description": "Shooter Lane",
+      "_inferred_type": "shooter_lane",
+      "_note": "Pulsed by solTrough on ball eject (vpmTimer.PulseSw 22)"
+    },
+    {
+      "id": 23,
+      "description": "Left Return Lane",
+      "vpx_name": "sw23",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 24,
+      "description": "Left Outlane Feed",
+      "vpx_name": "sw24",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 25,
+      "description": "Left Orbit",
+      "vpx_name": "sw25",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 26,
+      "description": "Left Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "Triggered via LeftSlingShot_Slingshot, vpmTimer.PulseSw 26"
+    },
+    {
+      "id": 27,
+      "description": "Right Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "Triggered via RightSlingShot_Slingshot, vpmTimer.PulseSw 27"
+    },
+    {
+      "id": 28,
+      "description": "Right Return Lane",
+      "vpx_name": "sw28",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 29,
+      "description": "Right Outlane Feed",
+      "vpx_name": "sw29",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 30,
+      "description": "Middle Pop Bumper",
+      "vpx_name": "Bumper2b",
+      "_inferred_type": "bumper",
+      "_note": "Triggered via Bumper2b_Hit, vpmTimer.PulseSw 30"
+    },
+    {
+      "id": 31,
+      "description": "Top Pop Bumper",
+      "vpx_name": "Bumper1b",
+      "_inferred_type": "bumper",
+      "_note": "Triggered via Bumper1b_Hit, vpmTimer.PulseSw 31"
+    },
+    {
+      "id": 32,
+      "description": "Bottom Pop Bumper",
+      "vpx_name": "Bumper3b",
+      "_inferred_type": "bumper",
+      "_note": "Triggered via Bumper3b_Hit, vpmTimer.PulseSw 32"
+    },
+    {
+      "id": 33,
+      "description": "Cross Down Opto",
+      "_inferred_type": "opto",
+      "_note": "Cross at minimum position (CrossMin)"
+    },
+    {
+      "id": 34,
+      "description": "Cross Up Opto",
+      "_inferred_type": "opto",
+      "_note": "Cross at maximum position (CrossMax)"
+    },
+    {
+      "id": 35,
+      "description": "Sparky Standup Target",
+      "vpx_name": "sw35",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 36,
+      "description": "Cemetery Standup Target 1",
+      "vpx_name": "sw36",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 37,
+      "description": "Cemetery Standup Target 2",
+      "vpx_name": "sw37",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 38,
+      "description": "Left Spinner",
+      "vpx_name": "Lspinner",
+      "_inferred_type": "spinner"
+    },
+    {
+      "id": 39,
+      "description": "Right Spinner",
+      "vpx_name": "Rspinner",
+      "_inferred_type": "spinner"
+    },
+    {
+      "id": 40,
+      "description": "Snake Standup Target 1",
+      "vpx_name": "sw40",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 41,
+      "description": "Snake Standup Target 2",
+      "vpx_name": "sw41",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 42,
+      "description": "Captive Ball Target",
+      "vpx_name": "sw42",
+      "_inferred_type": "standup_target",
+      "_note": "Captive ball cube hit target"
+    },
+    {
+      "id": 43,
+      "description": "Upper Left Lane",
+      "vpx_name": "sw43",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 44,
+      "description": "Upper Center Lane",
+      "vpx_name": "sw44",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 45,
+      "description": "Upper Right Lane",
+      "vpx_name": "sw45",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 46,
+      "description": "Right Orbit",
+      "vpx_name": "sw46",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 47,
+      "description": "Left Ramp Enter",
+      "vpx_name": "sw47g",
+      "_inferred_type": "gate",
+      "_note": "Gate switch, pulsed on hit"
+    },
+    {
+      "id": 50,
+      "description": "Right Ramp Enter",
+      "vpx_name": "sw50g",
+      "_inferred_type": "gate",
+      "_note": "Gate switch, pulsed on hit"
+    },
+    {
+      "id": 51,
+      "description": "Scoop Kicker",
+      "vpx_name": "Kicker3",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 52,
+      "description": "Right Ramp Made",
+      "vpx_name": "sw52",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 53,
+      "description": "Left Ramp Made",
+      "vpx_name": "sw53",
+      "_inferred_type": "pulse",
+      "_note": "Pulsed switch (vpmTimer.PulseSw 53)"
+    },
+    {
+      "id": 54,
+      "description": "Snake Kicker",
+      "vpx_name": "sw54",
+      "_inferred_type": "kicker",
+      "_note": "Premium snake eject"
+    },
+    {
+      "id": 55,
+      "description": "Snake Jaw Latch",
+      "vpx_name": "JawLatch",
+      "_inferred_type": "opto",
+      "_note": "Premium jaw latch sensor, pulsed on hit"
+    },
+    {
+      "id": 56,
+      "description": "Snake Jaw Position",
+      "_inferred_type": "opto",
+      "_note": "Premium snake jaw closed/open status"
+    },
+    {
+      "id": 57,
+      "description": "Lock Lane Left",
+      "vpx_name": "sw57",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 58,
+      "description": "Lock Lane Center",
+      "vpx_name": "sw58",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 59,
+      "description": "Lock Lane Right",
+      "vpx_name": "sw59",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 60,
+      "description": "Drop Target Left",
+      "vpx_name": "sw60",
+      "_inferred_type": "drop_target",
+      "_note": "Raised=1, Dropped=0"
+    },
+    {
+      "id": 61,
+      "description": "Drop Target Center",
+      "vpx_name": "sw61",
+      "_inferred_type": "drop_target",
+      "_note": "Raised=1, Dropped=0"
+    },
+    {
+      "id": 62,
+      "description": "Drop Target Right",
+      "vpx_name": "sw62",
+      "_inferred_type": "drop_target",
+      "_note": "Raised=1, Dropped=0"
+    },
+    {
+      "id": 63,
+      "description": "Coffin Magnet Ball Detect",
+      "vpx_name": "sw63",
+      "_inferred_type": "opto",
+      "_note": "Premium coffin magnet ball detection, controlled by magnet processor board modes (sol 57/58)"
+    },
+    {
+      "id": 64,
+      "description": "Coffin Magnet Down",
+      "_inferred_type": "opto",
+      "_note": "Premium coffin magnet lowered position, set by CoffinMagDown solenoid"
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Eject",
+      "_vbscript_callback": "solTrough",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 2,
+      "description": "Auto Launch",
+      "_vbscript_callback": "solAutofire",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "entry_coil"
+    },
+    {
+      "id": 3,
+      "description": "Grave Magnet (Left)",
+      "_vbscript_callback": "SolLMag",
+      "_inferred_type": "magnet"
+    },
+    {
+      "id": 4,
+      "description": "Electric Chair Magnet (Right)",
+      "_vbscript_callback": "SolRMag",
+      "_inferred_type": "magnet"
+    },
+    {
+      "id": 5,
+      "description": "Snake Kicker",
+      "_vbscript_callback": "SnakeKick",
+      "_inferred_type": "kicker",
+      "_note": "Premium snake eject"
+    },
+    {
+      "id": 6,
+      "description": "Scoop Kicker",
+      "_vbscript_callback": "ScoopKick",
+      "_inferred_type": "kicker",
+      "vpx_name": "Kicker3"
+    },
+    {
+      "id": 8,
+      "description": "Shaker Motor",
+      "_vbscript_callback": "SolShaker",
+      "_inferred_type": "shaker",
+      "_note": "Optional"
+    },
+    {
+      "id": 12,
+      "description": "Snake Jaw Latch",
+      "_vbscript_callback": "SnakeJawLatch",
+      "_inferred_type": "mechanism",
+      "_note": "Premium snake jaw latch"
+    },
+    {
+      "id": 15,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper"
+    },
+    {
+      "id": 16,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper"
+    },
+    {
+      "id": 18,
+      "description": "Sparky Head",
+      "_vbscript_callback": "SolSparkyHead",
+      "_inferred_type": "mechanism"
+    },
+    {
+      "id": 19,
+      "description": "Grave Marker Flasher",
+      "_vbscript_callback": "SolCrossPrim",
+      "_callback_type": "SolModCallback",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f19",
+      "device_hint": "^F1?19$"
+    },
+    {
+      "id": 20,
+      "description": "Cross Motor",
+      "_vbscript_callback": "CrossMotor",
+      "_callback_type": "SolCallback",
+      "_inferred_type": "mechanism",
+      "_note": "Premium grave marker motor"
+    },
+    {
+      "id": 21,
+      "description": "Back Panel Left Flasher",
+      "_vbscript_callback": "SolBackPanelLeft",
+      "_callback_type": "SolModCallback",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f21",
+      "device_hint": "^F1?21$"
+    },
+    {
+      "id": 22,
+      "description": "Back Panel Right Flasher",
+      "_vbscript_callback": "SolBackPanelRight",
+      "_callback_type": "SolModCallback",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f22",
+      "device_hint": "^F1?22$"
+    },
+    {
+      "id": 23,
+      "description": "Left Ramp Flasher",
+      "_vbscript_callback": "SolLeftRamp",
+      "_callback_type": "SolModCallback",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f23",
+      "device_hint": "^F1?23$"
+    },
+    {
+      "id": 25,
+      "description": "Pop Bumper Insert Flasher",
+      "_vbscript_callback": "SolPopInsert",
+      "_callback_type": "SolModCallback",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f25",
+      "device_hint": "^F1?25$"
+    },
+    {
+      "id": 26,
+      "description": "Grave Marker Flasher x2",
+      "_vbscript_callback": "SolGraveMarker",
+      "_callback_type": "SolModCallback",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f26",
+      "device_hint": "^F1?26$"
+    },
+    {
+      "id": 27,
+      "description": "Electric Chair Flasher x2",
+      "_vbscript_callback": "SolElecChair",
+      "_callback_type": "SolModCallback",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f27",
+      "device_hint": "^F1?27$"
+    },
+    {
+      "id": 28,
+      "description": "Sparky / Electric Chair Spot Flasher",
+      "_vbscript_callback": "SolSparkyFlash",
+      "_callback_type": "SolModCallback",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f28",
+      "device_hint": "^F1?28$"
+    },
+    {
+      "id": 29,
+      "description": "Right Ramp Flasher",
+      "_vbscript_callback": "SolRightRamp",
+      "_callback_type": "SolModCallback",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f29",
+      "device_hint": "^F1?29$"
+    },
+    {
+      "id": 30,
+      "description": "Snake Flasher",
+      "_vbscript_callback": "SolSnakeFlasher",
+      "_callback_type": "SolModCallback",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f30",
+      "device_hint": "^F1?30$",
+      "_note": "Premium snake / captive ball flasher"
+    },
+    {
+      "id": 31,
+      "description": "Coffin Insert Flasher x2",
+      "_vbscript_callback": "SolCoffinFlasher",
+      "_callback_type": "SolModCallback",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f31",
+      "device_hint": "^F1?31$"
+    },
+    {
+      "id": 32,
+      "description": "Electric Chair Insert Flasher",
+      "_vbscript_callback": "SolElecChairInsert",
+      "_callback_type": "SolModCallback",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f32",
+      "device_hint": "^F1?32$"
+    },
+    {
+      "id": 51,
+      "description": "Lock Release",
+      "_vbscript_callback": "CLockRelease",
+      "_callback_type": "SolCallback",
+      "_inferred_type": "mechanism",
+      "_note": "Coffin lock post release"
+    },
+    {
+      "id": 52,
+      "description": "Coffin Magnet Down",
+      "_vbscript_callback": "CoffinMagDown",
+      "_callback_type": "SolCallback",
+      "_inferred_type": "mechanism",
+      "_note": "Premium coffin magnet lowering"
+    },
+    {
+      "id": 53,
+      "description": "Hammer",
+      "_vbscript_callback": "Hammer",
+      "_callback_type": "SolCallback",
+      "_inferred_type": "mechanism",
+      "_note": "Premium hammer mechanism"
+    },
+    {
+      "id": 54,
+      "description": "Drop Target Reset",
+      "_vbscript_callback": "ResetDTs",
+      "_callback_type": "SolCallback",
+      "_inferred_type": "drop_target_reset"
+    },
+    {
+      "id": 55,
+      "description": "Orbit Post",
+      "_vbscript_callback": "OrbitPost",
+      "_callback_type": "SolCallback",
+      "_inferred_type": "mechanism",
+      "_note": "Premium loop post"
+    },
+    {
+      "id": 56,
+      "description": "Snake Jaw",
+      "_vbscript_callback": "SolSnakeJaw",
+      "_callback_type": "SolCallback",
+      "_inferred_type": "mechanism",
+      "_note": "Premium snake jaw open/close"
+    },
+    {
+      "id": 57,
+      "description": "Coffin Processor Bit 0",
+      "_vbscript_callback": "UpdateCoffinProcessorBoard",
+      "_callback_type": "SolCallback",
+      "_inferred_type": "mechanism",
+      "_note": "Premium coffin magnet mode bit 0 (2-bit control with sol 58). See https://missionpinball.org/mechs/magnets/stern_magnet_pcb/"
+    },
+    {
+      "id": 58,
+      "description": "Coffin Processor Bit 1",
+      "_vbscript_callback": "UpdateCoffinProcessorBoard",
+      "_callback_type": "SolCallback",
+      "_inferred_type": "mechanism",
+      "_note": "Premium coffin magnet mode bit 1 (2-bit control with sol 57). Modes: 00=off, 11=detect, 01=grab, 10=hold+detect"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 17,
+      "vpx_name": "l17",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 18,
+      "vpx_name": "l18",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 19,
+      "vpx_name": "l19",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 21,
+      "vpx_name": "l21",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 22,
+      "vpx_name": "l22",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 23,
+      "vpx_name": "l23",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 24,
+      "vpx_name": "l24",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 25,
+      "description": "Special Insert",
+      "vpx_name": "l25",
+      "_inferred_type": "insert",
+      "_note": "Has mayo option overlay (Mayo_l25)"
+    },
+    {
+      "id": 26,
+      "vpx_name": "l26",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 27,
+      "vpx_name": "l27",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 28,
+      "vpx_name": "l28",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 29,
+      "vpx_name": "l29",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 30,
+      "vpx_name": "l30",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 31,
+      "vpx_name": "l31",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 32,
+      "vpx_name": "l32",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 33,
+      "vpx_name": "l33",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 34,
+      "vpx_name": "l34",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 35,
+      "vpx_name": "l35",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 37,
+      "description": "Fuel Gauge Green",
+      "vpx_name": "l37",
+      "_inferred_type": "insert",
+      "_note": "RGB override: green (10, 255, 10)"
+    },
+    {
+      "id": 38,
+      "description": "Fuel Gauge White",
+      "vpx_name": "l38",
+      "_inferred_type": "insert",
+      "_note": "RGB override: white (255, 255, 240)"
+    },
+    {
+      "id": 39,
+      "description": "Fuel Gauge Orange",
+      "vpx_name": "l39",
+      "_inferred_type": "insert",
+      "_note": "RGB override: orange (255, 128, 10)"
+    },
+    {
+      "id": 40,
+      "description": "Fuel Gauge Orange",
+      "vpx_name": "l40",
+      "_inferred_type": "insert",
+      "_note": "RGB override: orange (255, 128, 10)"
+    },
+    {
+      "id": 41,
+      "description": "Fuel Gauge Red",
+      "vpx_name": "l41",
+      "_inferred_type": "insert",
+      "_note": "RGB override: red (255, 2, 2)"
+    },
+    {
+      "id": 42,
+      "vpx_name": "l42",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 43,
+      "vpx_name": "l43",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 44,
+      "vpx_name": "l44",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 45,
+      "vpx_name": "l45",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 46,
+      "vpx_name": "l46",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 47,
+      "vpx_name": "l47",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 48,
+      "vpx_name": "l48",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 49,
+      "vpx_name": "l49",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 50,
+      "vpx_name": "l50",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 51,
+      "vpx_name": "l51",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 53,
+      "vpx_name": "l53",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 55,
+      "vpx_name": "l55",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 56,
+      "vpx_name": "l56",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 57,
+      "vpx_name": "l57",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 58,
+      "vpx_name": "l58",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 59,
+      "vpx_name": "l59",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 60,
+      "vpx_name": "l60",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 61,
+      "vpx_name": "l61",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 62,
+      "vpx_name": "l62",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 63,
+      "vpx_name": "l63",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 64,
+      "vpx_name": "l64",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 65,
+      "vpx_name": "l65",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 66,
+      "vpx_name": "l66",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 67,
+      "vpx_name": "l67",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 68,
+      "vpx_name": "l68",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 69,
+      "vpx_name": "l69",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 70,
+      "vpx_name": "l70",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 71,
+      "vpx_name": "l71",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 72,
+      "description": "Start Button Lamp",
+      "vpx_name": "L72",
+      "_inferred_type": "insert",
+      "_note": "Drives VRStartButton brightness"
+    },
+    {
+      "id": 73,
+      "vpx_name": "L73",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 74,
+      "vpx_name": "L74",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 75,
+      "vpx_name": "L75",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 76,
+      "description": "Tournament Button Lamp",
+      "vpx_name": "L76",
+      "_inferred_type": "insert",
+      "_note": "Drives VRTourneyButton brightness"
+    },
+    {
+      "id": 77,
+      "vpx_name": "l77",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 78,
+      "vpx_name": "l78",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 79,
+      "vpx_name": "l79",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 80,
+      "vpx_name": "l80",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 81,
+      "description": "RGB Insert CN4 Red",
+      "vpx_name": "CN4R",
+      "_inferred_type": "rgb_channel",
+      "_note": "Red channel for RGB insert CN4. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 82,
+      "description": "RGB Insert CN4 Green",
+      "vpx_name": "CN4G",
+      "_inferred_type": "rgb_channel",
+      "_note": "Green channel for RGB insert CN4. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 83,
+      "description": "RGB Insert CN4 Blue",
+      "vpx_name": "CN4B",
+      "_inferred_type": "rgb_channel",
+      "_note": "Blue channel for RGB insert CN4. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 84,
+      "description": "RGB Insert CN5 Red",
+      "vpx_name": "CN5R",
+      "_inferred_type": "rgb_channel",
+      "_note": "Red channel for RGB insert CN5. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 85,
+      "description": "RGB Insert CN5 Green",
+      "vpx_name": "CN5G",
+      "_inferred_type": "rgb_channel",
+      "_note": "Green channel for RGB insert CN5. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 86,
+      "description": "RGB Insert CN5 Blue",
+      "vpx_name": "CN5B",
+      "_inferred_type": "rgb_channel",
+      "_note": "Blue channel for RGB insert CN5. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 87,
+      "description": "RGB Insert CN9 Red",
+      "vpx_name": "CN9R",
+      "_inferred_type": "rgb_channel",
+      "_note": "Red channel for RGB insert CN9. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 88,
+      "description": "RGB Insert CN9 Green",
+      "vpx_name": "CN9G",
+      "_inferred_type": "rgb_channel",
+      "_note": "Green channel for RGB insert CN9. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 89,
+      "description": "RGB Insert CN9 Blue",
+      "vpx_name": "CN9B",
+      "_inferred_type": "rgb_channel",
+      "_note": "Blue channel for RGB insert CN9. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 90,
+      "description": "RGB Insert CN11 Red",
+      "vpx_name": "CN11R",
+      "_inferred_type": "rgb_channel",
+      "_note": "Red channel for RGB insert CN11. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 91,
+      "description": "RGB Insert CN11 Green",
+      "vpx_name": "CN11G",
+      "_inferred_type": "rgb_channel",
+      "_note": "Green channel for RGB insert CN11. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 92,
+      "description": "RGB Insert CN11 Blue",
+      "vpx_name": "CN11B",
+      "_inferred_type": "rgb_channel",
+      "_note": "Blue channel for RGB insert CN11. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 93,
+      "description": "RGB Insert CN13 Red",
+      "vpx_name": "CN13R",
+      "_inferred_type": "rgb_channel",
+      "_note": "Red channel for RGB insert CN13. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 94,
+      "description": "RGB Insert CN13 Green",
+      "vpx_name": "CN13G",
+      "_inferred_type": "rgb_channel",
+      "_note": "Green channel for RGB insert CN13. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 95,
+      "description": "RGB Insert CN13 Blue",
+      "vpx_name": "CN13B",
+      "_inferred_type": "rgb_channel",
+      "_note": "Blue channel for RGB insert CN13. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 96,
+      "description": "RGB Insert CN19 Red",
+      "vpx_name": "CN19R",
+      "_inferred_type": "rgb_channel",
+      "_note": "Red channel for RGB insert CN19. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 97,
+      "description": "RGB Insert CN19 Green",
+      "vpx_name": "CN19G",
+      "_inferred_type": "rgb_channel",
+      "_note": "Green channel for RGB insert CN19. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 98,
+      "description": "RGB Insert CN19 Blue",
+      "vpx_name": "CN19B",
+      "_inferred_type": "rgb_channel",
+      "_note": "Blue channel for RGB insert CN19. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 99,
+      "description": "Opto Lights",
+      "vpx_name": "optos",
+      "_inferred_type": "insert",
+      "_note": "Lock post opto lights. ID estimated from VPX TimerInterval."
+    },
+    {
+      "id": 130,
+      "description": "GI Red",
+      "vpx_name": "GI130",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 132,
+      "description": "GI Blue",
+      "vpx_name": "GI132",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 134,
+      "description": "GI White Upper",
+      "vpx_name": "GI134",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 136,
+      "description": "GI White Playfield",
+      "vpx_name": "GI136",
+      "_inferred_type": "gi"
+    }
+  ]
+}

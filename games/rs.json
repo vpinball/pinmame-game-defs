@@ -1,0 +1,996 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Red and Ted's Road Show (Williams 1994) VPW 1.4.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "Re-extracted from VPW 1.4 source (replaces sverrewl-sourced JSON). All switch/coil numbers from _Hit/_UnHit subs, Controller.Switch() calls, PulseSw calls, SolCallback/SolModCallback assignments. No Const sw* definitions in script. Lamp IDs from Lampz.MassAssign() and Lampz.Callback() calls. Trough is custom-implemented (4 switches sw42-sw45 with UpdateTrough timer, no bsTrough object). Slingshots use VPX _Slingshot events with PulseSw 61/62. Jet bumpers use VPX Bumper_Hit events with PulseSw 63/64/65. Flasher coils use SolModCallBack 51-58 (WPC aux board remapped to coils 37-44). Flipper coils use framework constants sLRFlipper=46, sLLFlipper=48. Three left flippers (main + 2 upper via sULFlipper). Bulldozer, Ted jaw, and Red jaw are cvpmMech mechanisms — Road Show's signature talking head mechanisms."
+  },
+  "game": {
+    "id": "rs",
+    "name": "Red and Ted's Road Show",
+    "year": 1994,
+    "manufacturer": "Williams",
+    "platform": "wpc"
+  },
+  "roms": [
+    {
+      "id": "rs_l6",
+      "version": "L-6",
+      "language": "en"
+    }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Ted's Mouth",
+      "vpx_name": "sw11",
+      "_inferred_type": "target",
+      "_note": "PulseSw 11 via sw11_Hit. Ted's mouth opto — ball enters Ted's mouth when jaw is open."
+    },
+    {
+      "id": 12,
+      "description": "Bulldozer Down",
+      "_inferred_type": "opto",
+      "_note": "Bulldozer mechanism position switch (down). Managed by cvpmMech BulldozerMech .AddSw 12, 0, 0."
+    },
+    {
+      "id": 13,
+      "description": "Start Button",
+      "input_action_hint": "start_game",
+      "input_map_hint": "cabinet",
+      "_inferred_type": "cabinet"
+    },
+    {
+      "id": 14,
+      "description": "Plumb Bob Tilt",
+      "normally_closed": true,
+      "_inferred_type": "tilt",
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Bulldozer Up",
+      "_inferred_type": "opto",
+      "_note": "Bulldozer mechanism position switch (up). Managed by cvpmMech BulldozerMech .AddSw 15, 10, 11."
+    },
+    {
+      "id": 16,
+      "description": "Right Outlane",
+      "vpx_name": "sw16",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 17,
+      "description": "Right Outer Inlane",
+      "vpx_name": "sw17",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 18,
+      "description": "Right Inner Inlane",
+      "vpx_name": "sw18",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 21,
+      "description": "Slam Tilt",
+      "_inferred_type": "tilt"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "normally_closed": true,
+      "_inferred_type": "cabinet",
+      "_note": "Controller.Switch(22) = 1 on init"
+    },
+    {
+      "id": 23,
+      "description": "Buy-In Button",
+      "_inferred_type": "cabinet",
+      "input_action_hint": "buy_in",
+      "input_map_hint": "cabinet",
+      "_note": "Controller.Switch(23) toggled via KeyFront"
+    },
+    {
+      "id": 24,
+      "description": "Always Closed",
+      "normally_closed": true,
+      "_inferred_type": "cabinet",
+      "_note": "Controller.Switch(24) = 1 on init. Comment: 'and keep it close'. WPC column 3 always-closed switch."
+    },
+    {
+      "id": 25,
+      "description": "Red's Mouth",
+      "vpx_name": "sw25",
+      "_inferred_type": "saucer",
+      "_note": "Red's mouth saucer. bsRed.AddBall on hit. Eject via coil 24 (bsRed.SolOut)."
+    },
+    {
+      "id": 26,
+      "description": "Left Outlane",
+      "vpx_name": "sw26",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 27,
+      "description": "Left Inlane",
+      "vpx_name": "sw27",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 28,
+      "description": "Blast Zone Targets",
+      "vpx_name": "T28a",
+      "_inferred_type": "target",
+      "_note": "3 targets (T28a, T28b, T28c) all pulse switch 28."
+    },
+    {
+      "id": 31,
+      "description": "Skill Shot Lower",
+      "vpx_name": "sw31",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 32,
+      "description": "Skill Shot Upper",
+      "vpx_name": "sw32",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 33,
+      "description": "Shooter Lane",
+      "vpx_name": "sw33",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 34,
+      "description": "Radio Riot Targets",
+      "vpx_name": "T34a",
+      "_inferred_type": "target",
+      "_note": "3 targets (T34a, T34b, T34c) all pulse switch 34."
+    },
+    {
+      "id": 35,
+      "description": "Red Standup Upper",
+      "vpx_name": "T35",
+      "_inferred_type": "target"
+    },
+    {
+      "id": 36,
+      "description": "Red Standup Lower",
+      "vpx_name": "T36",
+      "_inferred_type": "target"
+    },
+    {
+      "id": 37,
+      "description": "Hit Red (Red's Jaw)",
+      "vpx_name": "sw37a",
+      "_inferred_type": "target",
+      "_note": "PulseSw 37 via sw37a_Hit. Red's jaw target. sw37_Hit plays sound only (mouth plastic hit)."
+    },
+    {
+      "id": 38,
+      "description": "Right Loop Exit",
+      "vpx_name": "sw38",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 41,
+      "description": "Trough Jam",
+      "_inferred_type": "trough",
+      "_note": "PulseSw 41 called in SolRelease (coil 1 callback). Trough jam/ball-near-shooter detection.",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "jam_switch"
+    },
+    {
+      "id": 42,
+      "description": "Trough 1",
+      "vpx_name": "sw42",
+      "_inferred_type": "trough",
+      "_note": "First trough switch (closest to shooter). Custom trough implementation with UpdateTrough timer. Ball created at init: sw42.CreateSizedballWithMass.",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1"
+    },
+    {
+      "id": 43,
+      "description": "Trough 2",
+      "vpx_name": "sw43",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 44,
+      "description": "Trough 3",
+      "vpx_name": "sw44",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 45,
+      "description": "Trough 4",
+      "vpx_name": "sw45",
+      "_inferred_type": "trough",
+      "_note": "Last trough switch (furthest from shooter). 4-ball trough.",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4"
+    },
+    {
+      "id": 46,
+      "description": "Right Loop Enter",
+      "vpx_name": "sw46",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 47,
+      "description": "Bulldozer Hit",
+      "vpx_name": "sw47",
+      "_inferred_type": "target",
+      "_note": "PulseSw 47. Bulldozer proximity sensor — detects ball hitting bulldozer blade."
+    },
+    {
+      "id": 48,
+      "description": "Hit Ted (Ted's Jaw)",
+      "vpx_name": "sw48",
+      "_inferred_type": "target",
+      "_note": "PulseSw 48. Ted's mouth plastic — ball hitting Ted's jaw."
+    },
+    {
+      "id": 51,
+      "description": "Spinner",
+      "vpx_name": "sw51spinner",
+      "_inferred_type": "spinner",
+      "_note": "sw51spinner_Spin event pulses switch 51."
+    },
+    {
+      "id": 52,
+      "description": "Lockup 1",
+      "vpx_name": "sw52",
+      "_inferred_type": "rollover",
+      "_note": "First lock switch in Bob's Bunker lock lane."
+    },
+    {
+      "id": 53,
+      "description": "Lockup 2",
+      "vpx_name": "sw53",
+      "_inferred_type": "rollover",
+      "_note": "Second lock switch in Bob's Bunker lock lane."
+    },
+    {
+      "id": 54,
+      "description": "Lock Kickout",
+      "vpx_name": "sw54",
+      "_inferred_type": "saucer",
+      "_note": "Lock kickout position. KickerBall54 stores activeball reference for coil 8 (SolLockKickOut) ejection."
+    },
+    {
+      "id": 55,
+      "description": "Right Ramp Exit",
+      "vpx_name": "sw55",
+      "_inferred_type": "rollover",
+      "_note": "Right ramp exit to left mini flipper area."
+    },
+    {
+      "id": 56,
+      "description": "Left Ramp Exit",
+      "vpx_name": "sw56",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 57,
+      "description": "Left Ramp Enter",
+      "vpx_name": "sw57",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 58,
+      "description": "Left Shooter Lane",
+      "vpx_name": "sw58",
+      "_inferred_type": "rollover",
+      "_note": "Left plunger lane. On hit: PPL=True, switches MechPlunger to left plunger. Flying Rocks skill shot lane."
+    },
+    {
+      "id": 61,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "LeftSlingShot_Slingshot event pulses switch 61."
+    },
+    {
+      "id": 62,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "RightSlingShot_Slingshot event pulses switch 62."
+    },
+    {
+      "id": 63,
+      "description": "Left Jet Bumper",
+      "vpx_name": "Bumper3",
+      "_inferred_type": "bumper",
+      "_note": "Bumper3_hit pulses switch 63."
+    },
+    {
+      "id": 64,
+      "description": "Top Jet Bumper",
+      "vpx_name": "Bumper1",
+      "_inferred_type": "bumper",
+      "_note": "Bumper1_hit pulses switch 64."
+    },
+    {
+      "id": 65,
+      "description": "Right Jet Bumper",
+      "vpx_name": "Bumper2",
+      "_inferred_type": "bumper",
+      "_note": "Bumper2_hit pulses switch 65."
+    },
+    {
+      "id": 71,
+      "description": "Right Ramp Enter",
+      "vpx_name": "sw71",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 72,
+      "description": "Right Ramp Exit (Center)",
+      "vpx_name": "sw72",
+      "_inferred_type": "rollover",
+      "_note": "Right ramp center exit (habitrail back to right inlane)."
+    },
+    {
+      "id": 73,
+      "description": "Flying Rocks 5X Blast",
+      "vpx_name": "sw73",
+      "_inferred_type": "rollover",
+      "_note": "Flying rocks lane — awards 5X Blast."
+    },
+    {
+      "id": 74,
+      "description": "Flying Rocks Radio Riot",
+      "vpx_name": "sw74",
+      "_inferred_type": "rollover",
+      "_note": "Flying rocks lane — awards Radio Riot."
+    },
+    {
+      "id": 75,
+      "description": "Flying Rocks Extra Ball",
+      "vpx_name": "sw75",
+      "_inferred_type": "rollover",
+      "_note": "Flying rocks lane — awards Extra Ball."
+    },
+    {
+      "id": 76,
+      "description": "Flying Rocks Top",
+      "vpx_name": "sw76",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 77,
+      "description": "Upper Blast Zone",
+      "vpx_name": "sw77",
+      "_inferred_type": "saucer",
+      "_note": "Blast Zone / Skill Shot hole. Feeds to Start City."
+    },
+    {
+      "id": 78,
+      "description": "Start City",
+      "vpx_name": "sw78",
+      "_inferred_type": "saucer",
+      "_note": "Start City scoop/hole. Eject via coil 6 (StartCitySolOut). Controller.Switch(78) on/off directly."
+    },
+    {
+      "id": 81,
+      "description": "White Standup Target",
+      "vpx_name": "T81",
+      "_inferred_type": "target",
+      "_note": "PulseSw 81. Cone zone target."
+    },
+    {
+      "id": 82,
+      "description": "Red Standup Target",
+      "vpx_name": "T82",
+      "_inferred_type": "target",
+      "_note": "PulseSw 82. Cone zone target. T82P rotates on hit."
+    },
+    {
+      "id": 83,
+      "description": "Yellow Standup Target",
+      "vpx_name": "T83",
+      "_inferred_type": "target",
+      "_note": "PulseSw 83. Cone zone target."
+    },
+    {
+      "id": 84,
+      "description": "Orange Standup Target",
+      "vpx_name": "T84",
+      "_inferred_type": "target",
+      "_note": "PulseSw 84. Cone zone target."
+    },
+    {
+      "id": 85,
+      "description": "Left Mini Flipper Loop Top",
+      "vpx_name": "sw85",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 86,
+      "description": "Left Mini Flipper Loop Bottom",
+      "vpx_name": "sw86",
+      "_inferred_type": "rollover"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Eject",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from trough (sw42) to shooter lane. Also pulses sw41 (trough jam).",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 2,
+      "description": "Lower Left Diverter",
+      "_vbscript_callback": "LowerLeftDiverter",
+      "_inferred_type": "diverter",
+      "_note": "Controls diverter1/diverter2 VPX flipper objects. Routes ball to left shooter lane (Flying Rocks)."
+    },
+    {
+      "id": 3,
+      "description": "Lockup Pin",
+      "_vbscript_callback": "LockupPin",
+      "_inferred_type": "mechanism",
+      "_note": "Controls sol3lockup wall. When enabled, drops wall to release locked balls."
+    },
+    {
+      "id": 4,
+      "description": "Upper Left Diverter",
+      "_vbscript_callback": "UpperLeftDiverter",
+      "_inferred_type": "diverter",
+      "_note": "Left ramp diverter. Routes ball left vs right on left ramp exit."
+    },
+    {
+      "id": 5,
+      "description": "Upper Right Diverter",
+      "_vbscript_callback": "UpperRightDiverter",
+      "_inferred_type": "diverter",
+      "_note": "Right ramp diverter. Routes ball to center habitrail vs mini flipper area."
+    },
+    {
+      "id": 6,
+      "description": "Start City Eject",
+      "_vbscript_callback": "StartCitySolOut",
+      "_inferred_type": "kicker",
+      "_note": "Ejects ball from Start City scoop (sw78). sw78.KickZ with randomized force."
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"Knocker\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 8,
+      "description": "Lock Kickout",
+      "_vbscript_callback": "SolLockKickOut",
+      "_inferred_type": "kicker",
+      "_note": "Ejects ball from lock position (sw54) via KickBall function."
+    },
+    {
+      "id": 9,
+      "description": "Ted Eyes Left",
+      "_vbscript_callback": "TedEyesLeft",
+      "_inferred_type": "mechanism",
+      "_note": "Animates Ted's eyes to look left. Talking head mechanism."
+    },
+    {
+      "id": 10,
+      "description": "Ted Lids Down",
+      "_vbscript_callback": "TedLidsDown",
+      "_inferred_type": "mechanism",
+      "_note": "Closes Ted's eyelids. Talking head mechanism."
+    },
+    {
+      "id": 11,
+      "description": "Ted Lids Up",
+      "_vbscript_callback": "TedLidsUp",
+      "_inferred_type": "mechanism",
+      "_note": "Opens Ted's eyelids. Talking head mechanism."
+    },
+    {
+      "id": 12,
+      "description": "Ted Eyes Right",
+      "_vbscript_callback": "TedEyesRight",
+      "_inferred_type": "mechanism",
+      "_note": "Animates Ted's eyes to look right. Talking head mechanism."
+    },
+    {
+      "id": 13,
+      "description": "Red Lids Down",
+      "_vbscript_callback": "RedLidsDown",
+      "_inferred_type": "mechanism",
+      "_note": "Closes Red's eyelids. Talking head mechanism."
+    },
+    {
+      "id": 14,
+      "description": "Red Eyes Left",
+      "_vbscript_callback": "RedEyesLeft",
+      "_inferred_type": "mechanism",
+      "_note": "Animates Red's eyes to look left. Talking head mechanism."
+    },
+    {
+      "id": 15,
+      "description": "Red Lids Up",
+      "_vbscript_callback": "RedLidsUp",
+      "_inferred_type": "mechanism",
+      "_note": "Opens Red's eyelids. Talking head mechanism."
+    },
+    {
+      "id": 16,
+      "description": "Red Eyes Right",
+      "_vbscript_callback": "RedEyesRight",
+      "_inferred_type": "mechanism",
+      "_note": "Animates Red's eyes to look right. Talking head mechanism."
+    },
+    {
+      "id": 17,
+      "description": "Red Mouth Motor",
+      "_vbscript_callback": "RedMotorOn",
+      "_inferred_type": "mechanism",
+      "_note": "Red's jaw motor. cvpmMech RedJawMech Sol1=17. Talking head mechanism."
+    },
+    {
+      "id": 18,
+      "description": "Red Motor Direction",
+      "_inferred_type": "mechanism",
+      "_note": "Red's jaw motor direction. cvpmMech RedJawMech Sol2=18. SolCallback commented out — handled by cvpmMech internally."
+    },
+    {
+      "id": 19,
+      "description": "Ted Motor Direction",
+      "_inferred_type": "mechanism",
+      "_note": "Ted's jaw motor direction. cvpmMech TedJawMech Sol2=19. SolCallback commented out — handled by cvpmMech internally."
+    },
+    {
+      "id": 20,
+      "description": "Ted Mouth Motor",
+      "_vbscript_callback": "TedMotorOn",
+      "_inferred_type": "mechanism",
+      "_note": "Ted's jaw motor. cvpmMech TedJawMech Sol1=20. Talking head mechanism."
+    },
+    {
+      "id": 23,
+      "description": "Bulldozer Motor",
+      "_vbscript_callback": "BullDozerMotor",
+      "_inferred_type": "mechanism",
+      "_note": "Bulldozer motor. cvpmMech BulldozerMech Sol1=23. Steps=11, switches at positions 12 (down) and 15 (up)."
+    },
+    {
+      "id": 24,
+      "description": "Red's Mouth Eject",
+      "_vbscript_callback": "bsRed.SolOut",
+      "_inferred_type": "kicker",
+      "_note": "Ejects ball from Red's mouth saucer (sw25)."
+    },
+    {
+      "id": 28,
+      "description": "Shaker Motor",
+      "_vbscript_callback": "ShakerMotorSol",
+      "_inferred_type": "mechanism",
+      "_note": "Shaker motor for physical feedback. Configurable intensity (0-3) and volume."
+    },
+    {
+      "id": 37,
+      "description": "Little Flipper Flasher",
+      "is_lamp": true,
+      "_vbscript_callback": "FlashSolMod51",
+      "_inferred_type": "flasher",
+      "_note": "WPC aux board flasher. SolModCallBack(51). Flasher 9 (white) in InitAllFlashers."
+    },
+    {
+      "id": 38,
+      "description": "Left Ramp Flasher",
+      "is_lamp": true,
+      "_vbscript_callback": "FlashSolMod52",
+      "_inferred_type": "flasher",
+      "_note": "WPC aux board flasher. SolModCallBack(52). Flasher 7 (yellow) in InitAllFlashers."
+    },
+    {
+      "id": 39,
+      "description": "Back White Flashers",
+      "is_lamp": true,
+      "_vbscript_callback": "FlashSolMod53",
+      "_inferred_type": "flasher",
+      "_note": "WPC aux board flasher. SolModCallBack(53). Flashers 1+2 (white) in InitAllFlashers."
+    },
+    {
+      "id": 40,
+      "description": "Back Yellow Flashers",
+      "is_lamp": true,
+      "_vbscript_callback": "FlashSolMod54",
+      "_inferred_type": "flasher",
+      "_note": "WPC aux board flasher. SolModCallBack(54). Flashers 3+4 (yellow) in InitAllFlashers."
+    },
+    {
+      "id": 41,
+      "description": "Back Red Flashers",
+      "is_lamp": true,
+      "_vbscript_callback": "FlashSolMod55",
+      "_inferred_type": "flasher",
+      "_note": "WPC aux board flasher. SolModCallBack(55). Flashers 5+6 (red) in InitAllFlashers."
+    },
+    {
+      "id": 42,
+      "description": "Blasting Zone Flashers",
+      "is_lamp": true,
+      "_vbscript_callback": "FlashSolMod56",
+      "_inferred_type": "flasher",
+      "_note": "WPC aux board flasher. SolModCallBack(56). Flasher 11 (white) in InitAllFlashers."
+    },
+    {
+      "id": 43,
+      "description": "Right Ramp Flasher",
+      "is_lamp": true,
+      "_vbscript_callback": "FlashSolMod57",
+      "_inferred_type": "flasher",
+      "_note": "WPC aux board flasher. SolModCallBack(57). Flasher 8 (white) in InitAllFlashers."
+    },
+    {
+      "id": 44,
+      "description": "Jets Flasher",
+      "is_lamp": true,
+      "_vbscript_callback": "FlashSolMod58",
+      "_inferred_type": "flasher",
+      "_note": "WPC aux board flasher. SolModCallBack(58). Flasher 10 (orange) in InitAllFlashers."
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework constant sLRFlipper=46. SolCallback(sLRFlipper)."
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework constant sLLFlipper=48. SolCallback(sLLFlipper). Main lower left flipper."
+    },
+    {
+      "id": 34,
+      "description": "Upper Left Flippers",
+      "_vbscript_callback": "SolUFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework constant sULFlipper (value not in table script — defined in wpc.VBS). Controls LeftFlipper1 and LeftFlipper2 simultaneously. SolCallback(sULFlipper)."
+    }
+  ],
+  "lamps": [
+    {
+      "id": 11,
+      "description": "Wheel Award 1",
+      "vpx_name": "l11"
+    },
+    {
+      "id": 12,
+      "description": "Wheel Award 2",
+      "vpx_name": "l12"
+    },
+    {
+      "id": 13,
+      "description": "Wheel Award 3",
+      "vpx_name": "l13"
+    },
+    {
+      "id": 14,
+      "description": "Wheel Award 4",
+      "vpx_name": "l14"
+    },
+    {
+      "id": 15,
+      "description": "Wheel Award 5",
+      "vpx_name": "l15"
+    },
+    {
+      "id": 16,
+      "description": "Wheel Award 6",
+      "vpx_name": "l16"
+    },
+    {
+      "id": 17,
+      "description": "Wheel Award 7",
+      "vpx_name": "l17"
+    },
+    {
+      "id": 18,
+      "description": "Wheel Award 8",
+      "vpx_name": "l18"
+    },
+    {
+      "id": 21,
+      "description": "Wheel Award 9",
+      "vpx_name": "l21"
+    },
+    {
+      "id": 22,
+      "description": "Wheel Award 10",
+      "vpx_name": "l22"
+    },
+    {
+      "id": 23,
+      "description": "Wheel Award 11",
+      "vpx_name": "l23"
+    },
+    {
+      "id": 24,
+      "description": "Wheel Award 12",
+      "vpx_name": "l24"
+    },
+    {
+      "id": 25,
+      "description": "Lock",
+      "vpx_name": "l25"
+    },
+    {
+      "id": 26,
+      "description": "Extra Ball (Lock Area)",
+      "vpx_name": "l26"
+    },
+    {
+      "id": 27,
+      "description": "Day of Week",
+      "vpx_name": "l27"
+    },
+    {
+      "id": 28,
+      "description": "Day of Week",
+      "vpx_name": "l28"
+    },
+    {
+      "id": 31,
+      "description": "Right Ramp Arrow",
+      "vpx_name": "l31"
+    },
+    {
+      "id": 32,
+      "description": "Right Ramp Made",
+      "vpx_name": "l32"
+    },
+    {
+      "id": 33,
+      "description": "Left Ramp Arrow",
+      "vpx_name": "l33"
+    },
+    {
+      "id": 34,
+      "description": "Left Ramp Made",
+      "vpx_name": "l34"
+    },
+    {
+      "id": 35,
+      "description": "Shoot Here (Left)",
+      "vpx_name": "l35"
+    },
+    {
+      "id": 36,
+      "description": "Shoot Here (Center)",
+      "vpx_name": "l36"
+    },
+    {
+      "id": 37,
+      "description": "Multiball",
+      "vpx_name": "l37"
+    },
+    {
+      "id": 38,
+      "description": "City Advance",
+      "vpx_name": "l38"
+    },
+    {
+      "id": 41,
+      "description": "Right Outlane",
+      "vpx_name": "l41"
+    },
+    {
+      "id": 42,
+      "description": "Right Inlane",
+      "vpx_name": "l42"
+    },
+    {
+      "id": 43,
+      "description": "Radio / Center Playfield Insert",
+      "vpx_name": "l43",
+      "_note": "Lampz.Callback(43) reassigned to bc43 (radio toy lamp)."
+    },
+    {
+      "id": 44,
+      "description": "Left Inlane",
+      "vpx_name": "l44"
+    },
+    {
+      "id": 45,
+      "description": "Bonus 2X",
+      "vpx_name": "l45"
+    },
+    {
+      "id": 46,
+      "description": "Bonus 3X",
+      "vpx_name": "l46"
+    },
+    {
+      "id": 47,
+      "description": "Bonus 4X",
+      "vpx_name": "l47"
+    },
+    {
+      "id": 48,
+      "description": "Bonus 5X",
+      "vpx_name": "l48"
+    },
+    {
+      "id": 51,
+      "description": "US Map / City 1",
+      "vpx_name": "l51"
+    },
+    {
+      "id": 52,
+      "description": "US Map / City 2",
+      "vpx_name": "l52"
+    },
+    {
+      "id": 53,
+      "description": "US Map / City 3",
+      "vpx_name": "l53"
+    },
+    {
+      "id": 54,
+      "description": "US Map / City 4",
+      "vpx_name": "l54"
+    },
+    {
+      "id": 55,
+      "description": "US Map / City 5",
+      "vpx_name": "l55"
+    },
+    {
+      "id": 56,
+      "description": "US Map / City 6",
+      "vpx_name": "l56"
+    },
+    {
+      "id": 57,
+      "description": "US Map / City 7",
+      "vpx_name": "l57"
+    },
+    {
+      "id": 58,
+      "description": "US Map / City 8",
+      "vpx_name": "l58"
+    },
+    {
+      "id": 61,
+      "description": "US Map / Border 1",
+      "vpx_name": "l61"
+    },
+    {
+      "id": 62,
+      "description": "US Map / Border 2",
+      "vpx_name": "l62"
+    },
+    {
+      "id": 63,
+      "description": "US Map / Border 3",
+      "vpx_name": "l63"
+    },
+    {
+      "id": 64,
+      "description": "US Map / Border 4",
+      "vpx_name": "l64"
+    },
+    {
+      "id": 65,
+      "description": "Left Outlane",
+      "vpx_name": "l65"
+    },
+    {
+      "id": 66,
+      "description": "Left Return Lane",
+      "vpx_name": "l66"
+    },
+    {
+      "id": 67,
+      "description": "Blast Zone Targets",
+      "vpx_name": "l67"
+    },
+    {
+      "id": 68,
+      "description": "Radio Riot Targets",
+      "vpx_name": "l68"
+    },
+    {
+      "id": 71,
+      "description": "Red Standup Upper",
+      "vpx_name": "l71"
+    },
+    {
+      "id": 72,
+      "description": "Red Standup Lower",
+      "vpx_name": "l72"
+    },
+    {
+      "id": 73,
+      "description": "Right Loop Arrow",
+      "vpx_name": "l73"
+    },
+    {
+      "id": 74,
+      "description": "Left Loop Arrow",
+      "vpx_name": "l74"
+    },
+    {
+      "id": 75,
+      "description": "Cone Target 1",
+      "vpx_name": "l75"
+    },
+    {
+      "id": 76,
+      "description": "Cone Target 2",
+      "vpx_name": "l76"
+    },
+    {
+      "id": 77,
+      "description": "Bulldozer Area Lamp",
+      "_note": "Lampz.Callback(77) uses bc77. Bulb above playfield, no standard light object."
+    },
+    {
+      "id": 78,
+      "description": "Skill Shot",
+      "vpx_name": "l78"
+    },
+    {
+      "id": 81,
+      "description": "Blast Zone Lamp",
+      "_note": "Lampz.Callback(81) uses bc81. Bulb above playfield."
+    },
+    {
+      "id": 82,
+      "description": "Start City Lamp",
+      "_note": "Lampz.Callback(82) uses bc82. Bulb above playfield."
+    },
+    {
+      "id": 83,
+      "description": "Red's Area Lamp",
+      "_note": "Lampz.Callback(83) uses bc83. Bulb above playfield."
+    },
+    {
+      "id": 84,
+      "description": "Left Ramp Wig-Wag",
+      "_note": "Wig-wag lamp pair. Lampz.Callback(84) = WigWag1. Uses spare lamp IDs 94-95 internally for alternating blink."
+    },
+    {
+      "id": 85,
+      "description": "Bob's Bunker Lamp",
+      "_note": "Lampz.Callback(85) uses BobsBunker primitive."
+    },
+    {
+      "id": 86,
+      "description": "Right Ramp Wig-Wag",
+      "_note": "Wig-wag lamp pair. Lampz.Callback(86) = WigWag2. Uses spare lamp IDs 96-97 internally for alternating blink."
+    },
+    {
+      "id": 87,
+      "description": "Extra Ball Button",
+      "_note": "Lampz.Callback(87) for ExtraballButton and ExtraBallButtonInner."
+    },
+    {
+      "id": 88,
+      "description": "Start Button",
+      "_note": "Lampz.Callback(88) for StartButton and StartButtonInner."
+    }
+  ]
+}

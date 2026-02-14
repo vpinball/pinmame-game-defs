@@ -1,0 +1,622 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Judge Dredd (Bally 1993) VPW v1.2.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils. No Const sw* definitions — switches identified from _Hit/_UnHit subs, Controller.Switch() calls, and PulseSw calls. Lamp IDs from Lampz.MassAssign() calls; descriptions inferred from VBScript comments and object names. Flashers (coils 17-28) use SetLamp with 100+ lamp IDs (117-128). Slingshots (coils 15-16) commented out in SolCallback — handled by VPX directly. Trough uses 6 switches (81-86) with a custom implementation (not bsTrough). sw87 is pulsed on trough eject as shooter lane confirmation. Flipper coils use framework constants (sLRFlipper, sLLFlipper, sURFlipper, sULFlipper). Upper flippers present (4-flipper game)."
+  },
+  "game": {
+    "id": "jd",
+    "name": "Judge Dredd",
+    "year": 1993,
+    "manufacturer": "Bally",
+    "platform": "wpc"
+  },
+  "roms": [
+    { "id": "jd_l1", "version": "L-1", "language": "en", "_note": "cGameName. Script warns DO NOT CHANGE — L-1 has active Deadworld ball lock that later ROMs removed." }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Left Fire Button",
+      "_note": "Controller.Switch(11) set via LeftMagnaSave key. Used for left plunger lane in Air Raid / Missile mode.",
+      "input_action_hint": "left_magnasave",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 12,
+      "description": "Right Fire Button / Launch Ball",
+      "_note": "Controller.Switch(12) set via PlungerKey",
+      "input_action_hint": "launch_ball",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 14,
+      "description": "Plumb Bob Tilt",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Left Shooter Lane",
+      "vpx_name": "sw15",
+      "_note": "Kickback / Missile Launcher lane switch. Controller.Switch(15) on/off."
+    },
+    {
+      "id": 16,
+      "description": "Left Outlane",
+      "vpx_name": "sw16",
+      "_note": "PulseSw 16"
+    },
+    {
+      "id": 17,
+      "description": "Left Return Lane",
+      "vpx_name": "sw17",
+      "_note": "PulseSw 17"
+    },
+    {
+      "id": 18,
+      "description": "Standup Target Bank (3 targets, same switch)",
+      "vpx_name": "sw18",
+      "_note": "sw18, sw18a, sw18b all use switch 18. Bank of 3 targets with custom hit IDs 180/181/182 for animation but same ROM switch."
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "normally_closed": true,
+      "_note": "Controller.Switch(22)=1 on init (coin door closed)"
+    },
+    {
+      "id": 25,
+      "description": "Standup Target (Left)",
+      "vpx_name": "sw25",
+      "_note": "STHit 25"
+    },
+    {
+      "id": 26,
+      "description": "Captive Ball 1 (Bottom)",
+      "vpx_name": "sw26",
+      "_note": "Controller.Switch(26) on/off. Reactor lane captive ball."
+    },
+    {
+      "id": 27,
+      "description": "Standup Target (Right of Subway)",
+      "vpx_name": "sw27",
+      "_note": "STHit 27"
+    },
+    {
+      "id": 28,
+      "description": "Crane Magnet Opto",
+      "_note": "Controller.Switch(28) set by CraneMag sub. Signals crane has grabbed a ball."
+    },
+    {
+      "id": 31,
+      "description": "Extra Ball / Buy-In Button",
+      "_note": "Controller.Switch(31) set via keycode 3",
+      "input_action_hint": "buy_in",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 32,
+      "description": "Main Ramp Entrance Opto",
+      "vpx_name": "sw67",
+      "_note": "sw67_Hit pulses switch 32 (remapped). Opto at main ramp entrance."
+    },
+    {
+      "id": 33,
+      "description": "Left Orbit Rollover",
+      "vpx_name": "sw33",
+      "_note": "PulseSw 33"
+    },
+    {
+      "id": 34,
+      "description": "Right Return Lane Rollover",
+      "vpx_name": "sw34",
+      "_note": "PulseSw 34"
+    },
+    {
+      "id": 35,
+      "description": "Centre Orbit Rollover",
+      "vpx_name": "sw35",
+      "_note": "PulseSw 35"
+    },
+    {
+      "id": 36,
+      "description": "Standup Target (Upper)",
+      "vpx_name": "sw36",
+      "_note": "STHit 36"
+    },
+    {
+      "id": 37,
+      "description": "Subway Entrance 1 (Start)",
+      "vpx_name": "sw37",
+      "_note": "PulseSw 37"
+    },
+    {
+      "id": 38,
+      "description": "Subway Entrance 2 (Mid-way)",
+      "vpx_name": "sw38",
+      "_note": "PulseSw 38"
+    },
+    {
+      "id": 41,
+      "description": "Right Ball Shooter",
+      "vpx_name": "sw41",
+      "_note": "Controller.Switch(41) on/off"
+    },
+    {
+      "id": 42,
+      "description": "Right Outlane Rollover",
+      "vpx_name": "sw42",
+      "_note": "PulseSw 42"
+    },
+    {
+      "id": 43,
+      "description": "Right Outside Return Lane Rollover",
+      "vpx_name": "sw43",
+      "_note": "PulseSw 43"
+    },
+    {
+      "id": 44,
+      "description": "Super Game Button",
+      "_note": "Controller.Switch(44) set via RightMagnaSave key",
+      "input_action_hint": "right_magnasave",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 51,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "PulseSw 51 in LeftSlingShot_Slingshot sub"
+    },
+    {
+      "id": 52,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "PulseSw 52 in RightSlingShot_Slingshot sub"
+    },
+    {
+      "id": 53,
+      "description": "Captive Ball 2 (Middle)",
+      "vpx_name": "sw53",
+      "_note": "Controller.Switch(53) on/off. Reactor lane captive ball."
+    },
+    {
+      "id": 54,
+      "description": "Drop Target J",
+      "vpx_name": "sw54",
+      "_note": "JUDGE drop target bank — J. DT54 array: sw54, sw54off, sw54prim."
+    },
+    {
+      "id": 55,
+      "description": "Drop Target U",
+      "vpx_name": "sw55",
+      "_note": "JUDGE drop target bank — U. DT55 array: sw55, sw55off, sw55prim."
+    },
+    {
+      "id": 56,
+      "description": "Drop Target D",
+      "vpx_name": "sw56",
+      "_note": "JUDGE drop target bank — D. DT56 array: sw56, sw56off, sw56prim."
+    },
+    {
+      "id": 57,
+      "description": "Drop Target G",
+      "vpx_name": "sw57",
+      "_note": "JUDGE drop target bank — G. DT57 array: sw57, sw57off, sw57prim."
+    },
+    {
+      "id": 58,
+      "description": "Drop Target E",
+      "vpx_name": "sw58",
+      "_note": "JUDGE drop target bank — E. DT58 array: sw58, sw58off, sw58prim."
+    },
+    {
+      "id": 62,
+      "description": "Crane Exit Opto",
+      "_note": "Controller.Switch(62) on/off. Critical for tracking balls exiting Deadworld crane."
+    },
+    {
+      "id": 63,
+      "description": "Main Ramp Deadworld Entrance Opto",
+      "vpx_name": "sw63",
+      "_note": "PulseSw 63"
+    },
+    {
+      "id": 64,
+      "description": "Main Ramp Exit Opto",
+      "vpx_name": "sw64",
+      "_note": "PulseSw 64"
+    },
+    {
+      "id": 65,
+      "description": "Right Ramp Entrance Opto",
+      "vpx_name": "sw65",
+      "_note": "PulseSw 65. Comment says 'Not used?'"
+    },
+    {
+      "id": 66,
+      "description": "Blackout Plastic Ramp Opto",
+      "vpx_name": "sw66",
+      "_note": "PulseSw 66"
+    },
+    {
+      "id": 68,
+      "description": "Standup Target (Reactor)",
+      "vpx_name": "sw68",
+      "_note": "STHit 68"
+    },
+    {
+      "id": 71,
+      "description": "Crane Position Switch",
+      "_note": "Controller.Switch(71) set/cleared during crane movement. Signals crane is at disc position."
+    },
+    {
+      "id": 72,
+      "description": "Right Playfield Level Orbit Opto",
+      "vpx_name": "sw72",
+      "_note": "PulseSw 72"
+    },
+    {
+      "id": 73,
+      "description": "Bottom VUK (Left Vertical Up Kicker)",
+      "vpx_name": "sw73",
+      "_note": "bsBotVUK.AddBall. InitSaucer sw73, 73."
+    },
+    {
+      "id": 74,
+      "description": "Top VUK (Right Vertical Up Kicker)",
+      "vpx_name": "sw74",
+      "_note": "bsTopVUK.AddBall. InitSaucer sw74, 74."
+    },
+    {
+      "id": 75,
+      "description": "Air Raid Ramp Wire Ramp Transition Opto",
+      "vpx_name": "sw75",
+      "_note": "PulseSw 75"
+    },
+    {
+      "id": 76,
+      "description": "Right Ramp Wire Ramp Transition Opto",
+      "vpx_name": "sw76",
+      "_note": "PulseSw 76"
+    },
+    {
+      "id": 77,
+      "description": "Deadworld Globe Opto",
+      "_note": "Controller.Switch(77) toggled in FWTimer_Timer. Signals ball in Deadworld slot passing drop position."
+    },
+    {
+      "id": 81,
+      "description": "Trough 1 (Nearest Shooter)",
+      "vpx_name": "SW81",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "Ball trough position 1"
+    },
+    {
+      "id": 82,
+      "description": "Trough 2",
+      "vpx_name": "SW82",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "Ball trough position 2"
+    },
+    {
+      "id": 83,
+      "description": "Trough 3",
+      "vpx_name": "SW83",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "Ball trough position 3"
+    },
+    {
+      "id": 84,
+      "description": "Trough 4",
+      "vpx_name": "SW84",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4",
+      "_note": "Ball trough position 4"
+    },
+    {
+      "id": 85,
+      "description": "Trough 5",
+      "vpx_name": "SW85",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "5",
+      "_note": "Ball trough position 5"
+    },
+    {
+      "id": 86,
+      "description": "Trough 6 (Nearest Drain)",
+      "vpx_name": "SW86",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "6",
+      "_note": "Ball trough position 6. sw86.kick used by JDTrough solenoid."
+    },
+    {
+      "id": 87,
+      "description": "Shooter Lane / Trough Eject Confirmation",
+      "_note": "PulseSw 87 fired in JDTrough sub after ball eject. Confirms ball reached shooter lane.",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "jam"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Crane Magnet (Globe Magnet)",
+      "_vbscript_callback": "CraneMag",
+      "_inferred_type": "mechanism",
+      "_note": "Magnet inside crane arm to grab/release balls"
+    },
+    {
+      "id": 2,
+      "description": "Bottom VUK (Left Vertical Up Kicker)",
+      "_vbscript_callback": "bsBotVUK.SolOut",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw73",
+      "_note": "Bottom (Left) Vertical Up Kicker / Popper. InitSaucer sw73, 73, direction 0, force 100."
+    },
+    {
+      "id": 3,
+      "description": "Top VUK (Right Vertical Up Kicker)",
+      "_vbscript_callback": "bsTopVUK.SolOut",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw74",
+      "_note": "Top (Right) Vertical Up Kicker / Popper. InitSaucer sw74, 74, direction 280, force 50."
+    },
+    {
+      "id": 4,
+      "description": "Crane Arm Motor (Globe Arm)",
+      "_vbscript_callback": "CraneArm",
+      "_inferred_type": "mechanism",
+      "_note": "Crane arm movement"
+    },
+    {
+      "id": 5,
+      "description": "Drop Target Reset (JUDGE)",
+      "_vbscript_callback": "ResetDrops",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets J-U-D-G-E drop targets"
+    },
+    {
+      "id": 6,
+      "description": "Deadworld Globe Motor",
+      "_vbscript_callback": "SolWheelDrive",
+      "_inferred_type": "mechanism",
+      "_note": "Rotates Deadworld globe"
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 8,
+      "description": "Right Shooter / Plunger",
+      "_vbscript_callback": "JDPlunger",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Sol8",
+      "_note": "Impulse plunger for right shooter lane"
+    },
+    {
+      "id": 9,
+      "description": "Left Shooter / Missile Launcher (Kickback)",
+      "_vbscript_callback": "KickBack",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Sol9",
+      "_note": "Kickback / Missile launcher plunger"
+    },
+    {
+      "id": 10,
+      "description": "Trip Drop Target (D)",
+      "_vbscript_callback": "TripDrop",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Drops the center 'D' drop target for certain modes to enable subway"
+    },
+    {
+      "id": 11,
+      "description": "Diverter (Top Ramp)",
+      "_vbscript_callback": "Diverter",
+      "_inferred_type": "diverter",
+      "vpx_name": "JDDiverter"
+    },
+    {
+      "id": 13,
+      "description": "Ball Trough Eject",
+      "_vbscript_callback": "JDTrough",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Kicks ball from sw86 into shooter lane. PulseSw 87 after eject."
+    },
+    {
+      "id": 17,
+      "description": "Judge Fire Flasher (Centre Playfield)",
+      "_vbscript_callback": "SetLamp 117,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?17$",
+      "vpx_name": "F17"
+    },
+    {
+      "id": 18,
+      "description": "Judge Fear Flasher (Centre Playfield)",
+      "_vbscript_callback": "SetLamp 118,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?18$",
+      "vpx_name": "F18"
+    },
+    {
+      "id": 19,
+      "description": "Judge Death Flasher (Centre Playfield)",
+      "_vbscript_callback": "SetLamp 119,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?19$",
+      "vpx_name": "F19"
+    },
+    {
+      "id": 20,
+      "description": "Judge Mortis Flasher (Centre Playfield)",
+      "_vbscript_callback": "SetLamp 120,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?20$",
+      "vpx_name": "F20"
+    },
+    {
+      "id": 21,
+      "description": "Pursuit Left Flashers (Police Lights)",
+      "_vbscript_callback": "FlashSol21",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?21$",
+      "vpx_name": "F21",
+      "_note": "Custom flash sub with bloom effects. MassAssign(121) commented out — uses FlashSol21 sub instead."
+    },
+    {
+      "id": 22,
+      "description": "Pursuit Right Flashers (Police Lights)",
+      "_vbscript_callback": "FlashSol22",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?22$",
+      "vpx_name": "F22",
+      "_note": "Custom flash sub with bloom effects. MassAssign(122) commented out — uses FlashSol22 sub instead."
+    },
+    {
+      "id": 23,
+      "description": "Blackout Flasher (Centre Playfield on Bike)",
+      "_vbscript_callback": "SetLamp 123,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?23$",
+      "vpx_name": "F23"
+    },
+    {
+      "id": 24,
+      "description": "Cursed Earth Flashers (Under Playfield / Deadworld)",
+      "_vbscript_callback": "SetLamp 124,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?24$",
+      "vpx_name": "F24"
+    },
+    {
+      "id": 25,
+      "description": "Lower Left Flashers x2 (Shooter Exit & VUK Exit)",
+      "_vbscript_callback": "SetLamp 125,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?25$",
+      "vpx_name": "F25"
+    },
+    {
+      "id": 26,
+      "description": "Globe Flashers (Inside Deadworld)",
+      "_vbscript_callback": "FlashSol26",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?26$",
+      "vpx_name": "F26",
+      "_note": "Custom flash sub with bloom effects. MassAssign(126) commented out — uses FlashSol26 sub instead."
+    },
+    {
+      "id": 27,
+      "description": "Under Ramp Flashers x2 (Stakeout & Sniper Ramp)",
+      "_vbscript_callback": "SetLamp 127,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?27$",
+      "vpx_name": "F27"
+    },
+    {
+      "id": 28,
+      "description": "Backglass Flasher",
+      "_vbscript_callback": "SetLamp 128,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?28$",
+      "_note": "No VPX playfield object — backglass only. No MassAssign(128) in script."
+    }
+  ],
+  "lamps": [
+    { "id": 11, "description": "Crime Scene 1 (Blue)", "vpx_name": "L11" },
+    { "id": 12, "description": "Crime Scene 2 (Red)", "vpx_name": "L12" },
+    { "id": 13, "description": "Crime Scene 3 (Yellow)", "vpx_name": "L13" },
+    { "id": 14, "description": "Crime Scene 4 (Green)", "vpx_name": "L14" },
+    { "id": 15, "description": "Crime Scene 5 (Blue)", "vpx_name": "L15" },
+    { "id": 16, "description": "Crime Scene 6 (Red)", "vpx_name": "L16" },
+    { "id": 17, "description": "Crime Scene 7 (Yellow)", "vpx_name": "L17" },
+    { "id": 18, "description": "Crime Scene 8 (Green)", "vpx_name": "L18" },
+    { "id": 21, "description": "Crime Scene 9 (Blue)", "vpx_name": "L21" },
+    { "id": 22, "description": "Crime Scene 10 (Red)", "vpx_name": "L22" },
+    { "id": 23, "description": "Crime Scene 11 (Yellow)", "vpx_name": "L23" },
+    { "id": 24, "description": "Crime Scene 12 (Green)", "vpx_name": "L24" },
+    { "id": 25, "description": "Crime Scene 13 (Blue)", "vpx_name": "L25" },
+    { "id": 26, "description": "Crime Scene 14 (Red)", "vpx_name": "L26" },
+    { "id": 27, "description": "Crime Scene 15 (Yellow)", "vpx_name": "L27" },
+    { "id": 28, "description": "Crime Scene 16 (Green)", "vpx_name": "L28" },
+    { "id": 31, "description": "Chain 1 (Blue)", "vpx_name": "L31" },
+    { "id": 32, "description": "Chain 2 (Red)", "vpx_name": "L32" },
+    { "id": 33, "description": "Chain 3 (Yellow)", "vpx_name": "L33" },
+    { "id": 34, "description": "Chain 4 (Green)", "vpx_name": "L34" },
+    { "id": 35, "description": "Lock 1", "vpx_name": "L35" },
+    { "id": 36, "description": "Lock 2", "vpx_name": "L36" },
+    { "id": 37, "description": "Lock 3", "vpx_name": "L37" },
+    { "id": 38, "description": "Extra Ball / Buy-In", "_note": "Callback to PinCab_EB button lamp" },
+    { "id": 41, "description": "Planet 1", "vpx_name": "L41" },
+    { "id": 42, "description": "Planet 2", "vpx_name": "L42" },
+    { "id": 43, "description": "Planet 3", "vpx_name": "L43" },
+    { "id": 44, "description": "Planet 4", "vpx_name": "L44" },
+    { "id": 45, "description": "Advance 1", "vpx_name": "L45" },
+    { "id": 46, "description": "Advance 2", "vpx_name": "L46" },
+    { "id": 47, "description": "Advance 3", "vpx_name": "L47" },
+    { "id": 48, "description": "Advance 4", "vpx_name": "L48" },
+    { "id": 51, "description": "Award 1", "vpx_name": "L51" },
+    { "id": 52, "description": "Award 2", "vpx_name": "L52" },
+    { "id": 53, "description": "Award 3", "vpx_name": "L53" },
+    { "id": 54, "description": "Award 4", "vpx_name": "L54" },
+    { "id": 55, "description": "Award 5", "vpx_name": "L55" },
+    { "id": 56, "description": "Award 6", "vpx_name": "L56" },
+    { "id": 57, "description": "Award 7", "vpx_name": "L57" },
+    { "id": 58, "description": "Cursed Earth / Subway Entrance", "vpx_name": "L58" },
+    { "id": 61, "description": "Sniper Tower", "vpx_name": "L61", "_note": "Has dual insert (L61 + L61a)" },
+    { "id": 62, "description": "Left Return Lane", "vpx_name": "L62" },
+    { "id": 63, "description": "Left Orbit", "vpx_name": "L63" },
+    { "id": 64, "description": "Shoot Again", "vpx_name": "L64" },
+    { "id": 65, "description": "Centre Upper", "vpx_name": "L65" },
+    { "id": 66, "description": "Right Return Lane", "vpx_name": "L66" },
+    { "id": 67, "description": "Right Orbit", "vpx_name": "L67" },
+    { "id": 68, "description": "Reactor", "vpx_name": "L68" },
+    { "id": 71, "description": "J (JUDGE)", "vpx_name": "L71" },
+    { "id": 72, "description": "U (JUDGE)", "vpx_name": "L72" },
+    { "id": 73, "description": "D (JUDGE)", "vpx_name": "L73" },
+    { "id": 74, "description": "G (JUDGE)", "vpx_name": "L74" },
+    { "id": 75, "description": "E (JUDGE)", "vpx_name": "L75" },
+    { "id": 76, "description": "Right Orbit Lower", "vpx_name": "L76" },
+    { "id": 77, "description": "Centre Playfield", "vpx_name": "L77" },
+    { "id": 78, "description": "Right Outlane", "vpx_name": "L78" },
+    { "id": 81, "description": "Stakeout (Under Insert)", "vpx_name": "L81", "_note": "Decal flash material swap" },
+    { "id": 82, "description": "Blackout (Under Insert)", "vpx_name": "L82", "_note": "Decal flash material swap" },
+    { "id": 83, "description": "Drain Guard", "vpx_name": "L83" },
+    { "id": 84, "description": "Left Outlane", "vpx_name": "L84" },
+    { "id": 85, "description": "Air Raid Ramp", "vpx_name": "L85" },
+    { "id": 86, "description": "Pursuit Ramp", "vpx_name": "L86" },
+    { "id": 87, "description": "Super Game Button Lamp", "_note": "Callback to PinCab_Super button lamp" },
+    { "id": 88, "description": "Start Button Lamp", "_note": "Callback to PinCab_Start button lamp" }
+  ],
+  "aliases": [
+    { "id": 46, "alias": "c_flipper_lower_right", "type": "coil", "_note": "sLRFlipper — SolRFlipper callback. VPX object: RightFlipper" },
+    { "id": 48, "alias": "c_flipper_lower_left", "type": "coil", "_note": "sLLFlipper — SolLFlipper callback. VPX object: LeftFlipper" },
+    { "id": 36, "alias": "c_flipper_upper_right", "type": "coil", "_note": "sURFlipper — SolURFlipper callback. VPX object: RightFlipper1" },
+    { "id": 34, "alias": "c_flipper_upper_left", "type": "coil", "_note": "sULFlipper — SolULFlipper callback. VPX object: LeftFlipper1" }
+  ]
+}

@@ -1,0 +1,989 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "X-Men LE (Stern 2012) VPW v1.0.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "SAM-era Stern game (LoadVPM sam.VBS). LE variant (Wolverine & Magneto) — IPDB 5823/5824. No Const sw* definitions — all switches referenced by number via Controller.Switch(N) and vpmTimer.PulseSw N. Trough is sw18-sw21 (4-ball), manually managed via kicker objects (no cvpmTrough). Lamp IDs from Lampz.MassAssign: inserts L17-L80 high confidence, flashers 117-132 via SolModCallback, GI at 100-103 (white/red/blue/base). LE-specific features: Nightcrawler pop-ups (sol 52/53/57/58), cvpmMagnet on sol 51 (Wolverine TL magnet), Magneto magnet on sol 4 (SolModCallback), disc motor (sol 23), Iceman ramp motor (sol 27). Switches 34/35 are Iceman ramp position optos. Switch 12 is left Nightcrawler down opto, switch 56 is right Nightcrawler down opto. UseLamps=0 — ROM lamp matrix handled via Lampz framework, not core.vbs lamp handler."
+  },
+  "game": {
+    "id": "xmen",
+    "name": "X-Men LE",
+    "year": 2012,
+    "manufacturer": "Stern",
+    "ipdb_id": 5823,
+    "platform": "sam"
+  },
+  "roms": [
+    {
+      "id": "xmn_151h"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Drop Target 1",
+      "vpx_name": "sw1",
+      "_inferred_type": "drop_target",
+      "_note": "PulseSw 1 on hit"
+    },
+    {
+      "id": 2,
+      "description": "Drop Target 2",
+      "vpx_name": "sw2",
+      "_inferred_type": "drop_target",
+      "_note": "PulseSw 2 on hit"
+    },
+    {
+      "id": 4,
+      "description": "Magneto Scoop Kicker",
+      "vpx_name": "sw4",
+      "_inferred_type": "kicker",
+      "_note": "Ball captured via Controller.Switch(4)=1, ejected by SolOutLHole (sol 3)"
+    },
+    {
+      "id": 7,
+      "description": "Drop Target 3",
+      "vpx_name": "sw7",
+      "_inferred_type": "drop_target",
+      "_note": "PulseSw 7 on hit"
+    },
+    {
+      "id": 8,
+      "description": "Drop Target 4",
+      "vpx_name": "sw8",
+      "_inferred_type": "drop_target",
+      "_note": "PulseSw 8 on hit"
+    },
+    {
+      "id": 11,
+      "description": "Right Orbit Opto",
+      "vpx_name": "sw11",
+      "_inferred_type": "opto",
+      "_note": "PulseSw 11"
+    },
+    {
+      "id": 12,
+      "description": "Left Nightcrawler Down Opto (LE)",
+      "_inferred_type": "opto",
+      "_note": "Set to 1 when left Nightcrawler reaches min position, cleared on move up. No VPX trigger — controlled by LeftNightCrawlerWall_Timer mechanism"
+    },
+    {
+      "id": 13,
+      "description": "Left Orbit Opto",
+      "vpx_name": "sw13",
+      "_inferred_type": "opto",
+      "_note": "PulseSw 13"
+    },
+    {
+      "id": 14,
+      "description": "Left Ramp Wire",
+      "vpx_name": "sw14",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 16,
+      "description": "Start Button",
+      "_inferred_type": "cabinet_switch",
+      "_note": "Set via vpmKeyDown/vpmKeyUp (StartGameKey)"
+    },
+    {
+      "id": 18,
+      "description": "Trough 4 (Leftmost)",
+      "vpx_name": "sw18",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4"
+    },
+    {
+      "id": 19,
+      "description": "Trough 3",
+      "vpx_name": "sw19",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 20,
+      "description": "Trough 2",
+      "vpx_name": "sw20",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 21,
+      "description": "Trough 1 (Eject Side)",
+      "vpx_name": "sw21",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1"
+    },
+    {
+      "id": 23,
+      "description": "Left Return Lane",
+      "vpx_name": "sw23",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 24,
+      "description": "Left Inlane",
+      "vpx_name": "sw24",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 25,
+      "description": "Left Orbit Wire",
+      "vpx_name": "sw25",
+      "_inferred_type": "rollover",
+      "_note": "Ball velocity dampened on hit"
+    },
+    {
+      "id": 26,
+      "description": "Left Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "Triggered via LeftSlingShot_Slingshot, PulseSw 26",
+      "vpx_name": "LeftSlingShot"
+    },
+    {
+      "id": 27,
+      "description": "Right Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "Triggered via RightSlingShot_Slingshot, PulseSw 27",
+      "vpx_name": "RightSlingShot"
+    },
+    {
+      "id": 28,
+      "description": "Right Inlane",
+      "vpx_name": "sw28",
+      "_inferred_type": "rollover",
+      "_note": "Ball velocity dampened on hit"
+    },
+    {
+      "id": 29,
+      "description": "Right Return Lane",
+      "vpx_name": "sw29",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 30,
+      "description": "Middle Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Triggered via Bumper2b_Hit, PulseSw 30",
+      "vpx_name": "Bumper2b"
+    },
+    {
+      "id": 31,
+      "description": "Top Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Triggered via Bumper1b_Hit, PulseSw 31",
+      "vpx_name": "Bumper1b"
+    },
+    {
+      "id": 32,
+      "description": "Bottom Pop Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Triggered via Bumper3b_Hit, PulseSw 32",
+      "vpx_name": "Bumper3b"
+    },
+    {
+      "id": 33,
+      "description": "Right Ramp Wire",
+      "vpx_name": "sw33",
+      "_inferred_type": "rollover",
+      "_note": "Ball velocity dampened on hit"
+    },
+    {
+      "id": 34,
+      "description": "Iceman Ramp Min Position Opto",
+      "_inferred_type": "opto",
+      "_note": "Set when Iceman ramp reaches minimum angle (14 deg). Managed by TimerIceManMotor"
+    },
+    {
+      "id": 35,
+      "description": "Iceman Ramp Max Position Opto",
+      "_inferred_type": "opto",
+      "_note": "Set when Iceman ramp reaches maximum angle (60 deg). Managed by TimerIceManMotor"
+    },
+    {
+      "id": 36,
+      "description": "Wolverine Target",
+      "vpx_name": "sw36",
+      "_inferred_type": "standup_target",
+      "_note": "PulseSw 36, triggers Wolverine wobble animation"
+    },
+    {
+      "id": 38,
+      "description": "Lock 2",
+      "vpx_name": "sw38",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 39,
+      "description": "Lock 3",
+      "vpx_name": "sw39",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 40,
+      "description": "Lock 4",
+      "vpx_name": "sw40",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 41,
+      "description": "Standup Target Left",
+      "vpx_name": "sw41",
+      "_inferred_type": "standup_target",
+      "_note": "PulseSw 41, has visual pop primitive sw41p"
+    },
+    {
+      "id": 42,
+      "description": "Standup Target Right",
+      "vpx_name": "sw42",
+      "_inferred_type": "standup_target",
+      "_note": "PulseSw 42, has visual pop primitive sw42p"
+    },
+    {
+      "id": 47,
+      "description": "Spinner",
+      "vpx_name": "sw47",
+      "_inferred_type": "spinner",
+      "_note": "PulseSw 47 on spin event"
+    },
+    {
+      "id": 48,
+      "description": "Upper Rollover",
+      "vpx_name": "sw48",
+      "_inferred_type": "rollover",
+      "_note": "PulseSw 48"
+    },
+    {
+      "id": 49,
+      "description": "Right Orbit Wire",
+      "vpx_name": "sw49",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 50,
+      "description": "Left Nightcrawler Wall (LE)",
+      "vpx_name": "LeftNightCrawlerWall",
+      "_inferred_type": "wall_switch",
+      "_note": "Ball detect on left Nightcrawler toy"
+    },
+    {
+      "id": 51,
+      "description": "Right Nightcrawler Wall (LE)",
+      "vpx_name": "RightNightCrawlerWall",
+      "_inferred_type": "wall_switch",
+      "_note": "Ball detect on right Nightcrawler toy"
+    },
+    {
+      "id": 52,
+      "description": "Iceman Ramp Ball Detect",
+      "vpx_name": "sw52",
+      "_inferred_type": "rollover",
+      "_note": "Ball on Iceman ramp"
+    },
+    {
+      "id": 53,
+      "description": "Upper Playfield Wire Left",
+      "vpx_name": "sw53",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 54,
+      "description": "Upper Playfield Wire Right",
+      "vpx_name": "sw54",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 55,
+      "description": "Magneto Lock Kicker",
+      "vpx_name": "sw55",
+      "_inferred_type": "kicker",
+      "_note": "Ball captured via Controller.Switch(55)=1, ejected by SolOutL (sol 5)"
+    },
+    {
+      "id": 56,
+      "description": "Right Nightcrawler Down Opto (LE)",
+      "_inferred_type": "opto",
+      "_note": "Set to 1 when right Nightcrawler reaches min position, cleared on move up. Controlled by RightNightCrawlerWall_Timer mechanism"
+    },
+    {
+      "id": -7,
+      "description": "Tilt",
+      "_inferred_type": "cabinet_switch",
+      "_note": "vpmNudge.TiltSwitch = -7 (active low)"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Eject",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw21",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Kicks from sw21 (trough position 1)"
+    },
+    {
+      "id": 2,
+      "description": "Auto Launch",
+      "_vbscript_callback": "solAutofire",
+      "_inferred_type": "ball_management",
+      "vpx_name": "swplunger",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "entry_coil",
+      "_note": "cvpmImpulseP autofire from swplunger kicker"
+    },
+    {
+      "id": 3,
+      "description": "Magneto Scoop Eject",
+      "_vbscript_callback": "SolOutLHole",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw4",
+      "_note": "Ejects ball from sw4 (Magneto kicker)"
+    },
+    {
+      "id": 4,
+      "description": "Magneto Magnet (LE)",
+      "_vbscript_callback": "SolMagnetoMagnet",
+      "_inferred_type": "magnet",
+      "_note": "SolModCallback — modulated magnet. cvpmMagnet on Magnet3 object. Strength proportional to PWM value"
+    },
+    {
+      "id": 5,
+      "description": "Magneto Lock Eject",
+      "_vbscript_callback": "SolOutL",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw55",
+      "_note": "Ejects ball from sw55 (Magneto lock kicker)"
+    },
+    {
+      "id": 6,
+      "description": "Lock Post Up (LE)",
+      "_vbscript_callback": "CLockUp",
+      "_inferred_type": "mechanism",
+      "_note": "Raises lockPin1 and lockPin2, disables MagnetHelper"
+    },
+    {
+      "id": 7,
+      "description": "Lock Post Latch",
+      "_vbscript_callback": "CLockLatch",
+      "_inferred_type": "mechanism",
+      "_note": "Starts timed latch release for lockPin1"
+    },
+    {
+      "id": 15,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper"
+    },
+    {
+      "id": 16,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "Also drives RightFlipper1 (upper right flipper)"
+    },
+    {
+      "id": 17,
+      "description": "Left Blue Flasher",
+      "_vbscript_callback": "SetLampMod 117",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f17",
+      "_note": "SolModCallback — maps to Lampz index 117"
+    },
+    {
+      "id": 18,
+      "description": "Right Yellow Flasher",
+      "_vbscript_callback": "SetLampMod 118",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f18",
+      "_note": "SolModCallback — maps to Lampz index 118"
+    },
+    {
+      "id": 19,
+      "description": "Disc Clear Flasher",
+      "_vbscript_callback": "SetLampMod 119",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f19",
+      "_note": "SolModCallback — maps to Lampz index 119"
+    },
+    {
+      "id": 20,
+      "description": "Disc Blue Flasher",
+      "_vbscript_callback": "SetLampMod 120",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f20",
+      "_note": "SolModCallback — maps to Lampz index 120"
+    },
+    {
+      "id": 21,
+      "description": "Wolverine Flasher",
+      "_vbscript_callback": "SetLampMod 121",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f21",
+      "_note": "SolModCallback — maps to Lampz index 121"
+    },
+    {
+      "id": 22,
+      "description": "Magneto Side Flashers",
+      "_vbscript_callback": "SetLampMod 122",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f22",
+      "_note": "SolModCallback — maps to Lampz index 122"
+    },
+    {
+      "id": 23,
+      "description": "Disc Motor (LE)",
+      "_vbscript_callback": "solDiscMotor",
+      "_inferred_type": "motor",
+      "_note": "Drives cvpmTurntable. LE-only feature"
+    },
+    {
+      "id": 25,
+      "description": "Pop Bumper Flasher",
+      "_vbscript_callback": "SetLampMod 125",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f25",
+      "_note": "SolModCallback — maps to Lampz index 125"
+    },
+    {
+      "id": 26,
+      "description": "Ramp Diverter",
+      "_vbscript_callback": "vpmSolDiverter RampDiverter",
+      "_inferred_type": "diverter",
+      "vpx_name": "RampDiverter"
+    },
+    {
+      "id": 27,
+      "description": "Iceman Ramp Motor (LE)",
+      "_vbscript_callback": "solIceManMotor",
+      "_inferred_type": "motor",
+      "_note": "Drives TimerIceManMotor for Iceman ramp rotation. LE-only feature"
+    },
+    {
+      "id": 28,
+      "description": "Left Backpanel Flasher",
+      "_vbscript_callback": "SetLampMod 128",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f28",
+      "_note": "SolModCallback — maps to Lampz index 128"
+    },
+    {
+      "id": 29,
+      "description": "Right Backpanel Flasher",
+      "_vbscript_callback": "SetLampMod 129",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f29",
+      "_note": "SolModCallback — maps to Lampz index 129"
+    },
+    {
+      "id": 30,
+      "description": "Magneto Spot Light",
+      "_vbscript_callback": "SetLampMod 130",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f30",
+      "_note": "SolModCallback — maps to Lampz index 130"
+    },
+    {
+      "id": 31,
+      "description": "LE Bottom Arch Flasher",
+      "_vbscript_callback": "SetLampMod 131",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f31",
+      "_note": "SolModCallback — maps to Lampz index 131. LE-only"
+    },
+    {
+      "id": 32,
+      "description": "Magneto Head Flasher",
+      "_vbscript_callback": "SetLampMod 132",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f32",
+      "_note": "SolModCallback — maps to Lampz index 132"
+    },
+    {
+      "id": 51,
+      "description": "Wolverine Top Left Magnet (LE)",
+      "_inferred_type": "magnet",
+      "_note": "cvpmMagnet on Magnet1 object, solenoid=51. Handled by cvpmMagnet.CreateEvents, no explicit SolCallback. LE-only"
+    },
+    {
+      "id": 52,
+      "description": "Left Nightcrawler Down (LE)",
+      "_vbscript_callback": "solLeftNightcrawler",
+      "_inferred_type": "mechanism",
+      "_note": "LE-only. Moves left Nightcrawler down with shake animation"
+    },
+    {
+      "id": 53,
+      "description": "Right Nightcrawler Down (LE)",
+      "_vbscript_callback": "solRightNightcrawler",
+      "_inferred_type": "mechanism",
+      "_note": "LE-only. Moves right Nightcrawler down with shake animation"
+    },
+    {
+      "id": 54,
+      "description": "GI White",
+      "_vbscript_callback": "SolGIWhite",
+      "_inferred_type": "gi",
+      "_note": "SolModCallback — GI White control. Sol 44 in manual. Maps to Lampz index 100"
+    },
+    {
+      "id": 55,
+      "description": "GI Red",
+      "_vbscript_callback": "SolGIRed",
+      "_inferred_type": "gi",
+      "_note": "SolModCallback — GI Red control. Sol 45 in manual. Maps to Lampz index 101"
+    },
+    {
+      "id": 56,
+      "description": "GI Blue",
+      "_vbscript_callback": "SolGIBlue",
+      "_inferred_type": "gi",
+      "_note": "SolModCallback — GI Blue control. Sol 46 in manual. Maps to Lampz index 102"
+    },
+    {
+      "id": 57,
+      "description": "Left Nightcrawler Latch (LE)",
+      "_vbscript_callback": "solLeftNightcrawlerLatch",
+      "_inferred_type": "mechanism",
+      "_note": "LE-only. When released (NOT Enabled), moves left Nightcrawler back up"
+    },
+    {
+      "id": 58,
+      "description": "Right Nightcrawler Latch (LE)",
+      "_vbscript_callback": "solRightNightcrawlerLatch",
+      "_inferred_type": "mechanism",
+      "_note": "LE-only. When released (NOT Enabled), moves right Nightcrawler back up"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 17,
+      "vpx_name": "L17",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 18,
+      "vpx_name": "L18",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 19,
+      "vpx_name": "L19",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 20,
+      "vpx_name": "L20",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 21,
+      "vpx_name": "L21",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 22,
+      "vpx_name": "L22",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 23,
+      "vpx_name": "L23",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 24,
+      "vpx_name": "L24",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 25,
+      "vpx_name": "L25",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 26,
+      "vpx_name": "L26",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 27,
+      "vpx_name": "L27",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 28,
+      "vpx_name": "L28",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 29,
+      "vpx_name": "L29",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 30,
+      "vpx_name": "L30",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 31,
+      "vpx_name": "L31",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 32,
+      "vpx_name": "L32",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 33,
+      "vpx_name": "L33",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 34,
+      "vpx_name": "L34",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 35,
+      "vpx_name": "L35",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 36,
+      "vpx_name": "L36",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 37,
+      "vpx_name": "L37",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 38,
+      "vpx_name": "L38",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 41,
+      "vpx_name": "L41",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 42,
+      "vpx_name": "L42",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 43,
+      "vpx_name": "L43",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 45,
+      "vpx_name": "L45",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 46,
+      "vpx_name": "L46",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 47,
+      "vpx_name": "L47",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 48,
+      "vpx_name": "L48",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 49,
+      "vpx_name": "L49",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 50,
+      "vpx_name": "L50",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 51,
+      "vpx_name": "L51",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 52,
+      "vpx_name": "L52",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 53,
+      "vpx_name": "L53",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 54,
+      "vpx_name": "L54",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 55,
+      "vpx_name": "L55",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 56,
+      "vpx_name": "L56",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 57,
+      "vpx_name": "L57",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 58,
+      "vpx_name": "L58",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 59,
+      "vpx_name": "L59",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 60,
+      "vpx_name": "L60",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 65,
+      "vpx_name": "L65",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 66,
+      "vpx_name": "L66",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 67,
+      "vpx_name": "L67",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 68,
+      "vpx_name": "L68",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 69,
+      "vpx_name": "L69",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 70,
+      "vpx_name": "L70",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 71,
+      "vpx_name": "L71",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 72,
+      "vpx_name": "L72",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 73,
+      "vpx_name": "L73",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 74,
+      "vpx_name": "L74",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 75,
+      "vpx_name": "L75",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 76,
+      "vpx_name": "L76",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 77,
+      "vpx_name": "L77",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 78,
+      "vpx_name": "L78",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 79,
+      "vpx_name": "L79",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 80,
+      "vpx_name": "L80",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 100,
+      "description": "GI White",
+      "_inferred_type": "gi",
+      "_note": "Sol 54 controls via SolGIWhite. Multiple VPX light objects (l100a-l100k)"
+    },
+    {
+      "id": 101,
+      "description": "GI Red",
+      "_inferred_type": "gi",
+      "_note": "Sol 55 controls via SolGIRed. Multiple VPX light objects (l101a-l101h)"
+    },
+    {
+      "id": 102,
+      "description": "GI Blue",
+      "_inferred_type": "gi",
+      "_note": "Sol 56 controls via SolGIBlue. Multiple VPX light objects (l102a-l102h)"
+    },
+    {
+      "id": 103,
+      "description": "GI Base",
+      "_inferred_type": "gi",
+      "_note": "Always-on base GI. VPX light objects (l103, l103b)"
+    },
+    {
+      "id": 117,
+      "description": "Left Blue Flasher",
+      "vpx_name": "f17",
+      "_inferred_type": "flasher",
+      "_note": "Driven by coil 17 via SolModCallback. VPX objects f17a, f17b"
+    },
+    {
+      "id": 118,
+      "description": "Right Yellow Flasher",
+      "vpx_name": "f18",
+      "_inferred_type": "flasher",
+      "_note": "Driven by coil 18 via SolModCallback"
+    },
+    {
+      "id": 119,
+      "description": "Disc Clear Flasher",
+      "vpx_name": "f19",
+      "_inferred_type": "flasher",
+      "_note": "Driven by coil 19 via SolModCallback"
+    },
+    {
+      "id": 120,
+      "description": "Disc Blue Flasher",
+      "vpx_name": "f20",
+      "_inferred_type": "flasher",
+      "_note": "Driven by coil 20 via SolModCallback"
+    },
+    {
+      "id": 121,
+      "description": "Wolverine Flasher",
+      "vpx_name": "f21",
+      "_inferred_type": "flasher",
+      "_note": "Driven by coil 21 via SolModCallback"
+    },
+    {
+      "id": 122,
+      "description": "Magneto Side Flashers",
+      "vpx_name": "f22",
+      "_inferred_type": "flasher",
+      "_note": "Driven by coil 22 via SolModCallback"
+    },
+    {
+      "id": 125,
+      "description": "Pop Bumper Flasher",
+      "vpx_name": "f25",
+      "_inferred_type": "flasher",
+      "_note": "Driven by coil 25 via SolModCallback"
+    },
+    {
+      "id": 128,
+      "description": "Left Backpanel Flasher",
+      "vpx_name": "f28",
+      "_inferred_type": "flasher",
+      "_note": "Driven by coil 28 via SolModCallback"
+    },
+    {
+      "id": 129,
+      "description": "Right Backpanel Flasher",
+      "vpx_name": "f29",
+      "_inferred_type": "flasher",
+      "_note": "Driven by coil 29 via SolModCallback"
+    },
+    {
+      "id": 130,
+      "description": "Magneto Spot Light",
+      "vpx_name": "f30",
+      "_inferred_type": "flasher",
+      "_note": "Driven by coil 30 via SolModCallback"
+    },
+    {
+      "id": 131,
+      "description": "LE Bottom Arch Flasher",
+      "vpx_name": "f31",
+      "_inferred_type": "flasher",
+      "_note": "Driven by coil 31 via SolModCallback. LE-only"
+    },
+    {
+      "id": 132,
+      "description": "Magneto Head Flasher",
+      "vpx_name": "f32",
+      "_inferred_type": "flasher",
+      "_note": "Driven by coil 32 via SolModCallback"
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    }
+  ]
+}

@@ -1,0 +1,639 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Transporter the Rescue (Midway 1989) VPW v1.05.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from SolCallback and Controller.Switch handlers. Uses S11.VBS (System 11). Custom 'realish trough' with 3 balls — no cvpmTrough/cvpmBallStack used, trough is manually coded with switches 10-13. Flasher coils (11, 15-16, 25-32) use various flash sub implementations. Lamps extracted from Lampz.MassAssign block. Commented-out SolCallbacks 17-21 were bumper/slingshot sound-only callbacks, not physical coils — omitted. swTilt and sURFlipper are S11.VBS framework constants (swTilt=57, sURFlipper=34). Manufacturer listed as Bally in script splash line (Bally/Midway merger era). Drop target switches (19-24) use custom DTHit handler with TargetBouncer animation."
+  },
+  "game": {
+    "id": "tran",
+    "name": "Transporter the Rescue",
+    "year": 1989,
+    "manufacturer": "Bally",
+    "ipdb_id": 2630,
+    "platform": "system11"
+  },
+  "roms": [
+    {
+      "id": "tsptr_l3",
+      "version": "L-3"
+    }
+  ],
+  "switches": [
+    {
+      "id": 10,
+      "description": "Drain",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch"
+    },
+    {
+      "id": 11,
+      "description": "Trough 1 (Ball Release)",
+      "vpx_name": "BallRelease",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1"
+    },
+    {
+      "id": 12,
+      "description": "Trough 2",
+      "vpx_name": "Trough2",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 13,
+      "description": "Trough 3",
+      "vpx_name": "Trough3",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 14,
+      "description": "Wire Gate / Lane",
+      "vpx_name": "SW14"
+    },
+    {
+      "id": 15,
+      "description": "Saucer (Popper)",
+      "vpx_name": "sw15",
+      "_note": "Held switch — cleared by PopperSol (coil 6)"
+    },
+    {
+      "id": 16,
+      "description": "Standup Target",
+      "vpx_name": "sw16",
+      "_inferred_type": "standup_target",
+      "_note": "Pulsed via vpmTimer.PulseSw(16)"
+    },
+    {
+      "id": 17,
+      "description": "Ramp / Lane Entry",
+      "vpx_name": "SW17",
+      "_note": "Held switch — ball velocity modified on entry"
+    },
+    {
+      "id": 19,
+      "description": "Left Drop Target 1",
+      "vpx_name": "SW19",
+      "_inferred_type": "drop_target",
+      "_note": "Left bank — uses DTHit handler"
+    },
+    {
+      "id": 20,
+      "description": "Left Drop Target 2",
+      "vpx_name": "SW20",
+      "_inferred_type": "drop_target",
+      "_note": "Left bank — uses DTHit handler"
+    },
+    {
+      "id": 21,
+      "description": "Left Drop Target 3",
+      "vpx_name": "SW21",
+      "_inferred_type": "drop_target",
+      "_note": "Left bank — uses DTHit handler"
+    },
+    {
+      "id": 22,
+      "description": "Right Drop Target 1",
+      "vpx_name": "SW22",
+      "_inferred_type": "drop_target",
+      "_note": "Right bank — uses DTHit handler"
+    },
+    {
+      "id": 23,
+      "description": "Right Drop Target 2",
+      "vpx_name": "SW23",
+      "_inferred_type": "drop_target",
+      "_note": "Right bank — uses DTHit handler"
+    },
+    {
+      "id": 24,
+      "description": "Right Drop Target 3",
+      "vpx_name": "SW24",
+      "_inferred_type": "drop_target",
+      "_note": "Right bank — uses DTHit handler"
+    },
+    {
+      "id": 25,
+      "description": "Rollover / Lane 1",
+      "vpx_name": "SW25"
+    },
+    {
+      "id": 26,
+      "description": "Rollover / Lane 2",
+      "vpx_name": "SW26"
+    },
+    {
+      "id": 27,
+      "description": "Rollover / Lane 3",
+      "vpx_name": "SW27"
+    },
+    {
+      "id": 30,
+      "description": "Standup Target",
+      "vpx_name": "sw30",
+      "_inferred_type": "standup_target",
+      "_note": "Pulsed via vpmTimer.PulseSw(30)"
+    },
+    {
+      "id": 31,
+      "description": "Transporter Loop",
+      "vpx_name": "SW31",
+      "_note": "Held switch — has speed-up helpers for ball velocity"
+    },
+    {
+      "id": 33,
+      "description": "Lane / Rollover",
+      "vpx_name": "SW33"
+    },
+    {
+      "id": 34,
+      "description": "Lane / Rollover",
+      "vpx_name": "SW34"
+    },
+    {
+      "id": 35,
+      "description": "Spinner",
+      "vpx_name": "sw35",
+      "_inferred_type": "spinner",
+      "_note": "Pulsed via vpmTimer.PulseSw(35)"
+    },
+    {
+      "id": 37,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw37"
+    },
+    {
+      "id": 39,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw39"
+    },
+    {
+      "id": 40,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw40"
+    },
+    {
+      "id": 57,
+      "description": "Tilt",
+      "_note": "Framework constant swTilt from S11.VBS",
+      "input_action_hint": "tilt",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 59,
+      "description": "Lane / Rollover",
+      "vpx_name": "sw59"
+    },
+    {
+      "id": 60,
+      "description": "Pop Bumper 1 (Top)",
+      "_inferred_type": "bumper",
+      "_note": "Bumper1 — pulsed via vpmTimer.PulseSw(60)"
+    },
+    {
+      "id": 61,
+      "description": "Pop Bumper 2 (Middle)",
+      "_inferred_type": "bumper",
+      "_note": "Bumper2 — pulsed via vpmTimer.PulseSw(61)"
+    },
+    {
+      "id": 62,
+      "description": "Pop Bumper 3 (Bottom)",
+      "_inferred_type": "bumper",
+      "_note": "Bumper3 — pulsed via vpmTimer.PulseSw(62)"
+    },
+    {
+      "id": 63,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "Pulsed via vpmTimer.PulseSw(63)"
+    },
+    {
+      "id": 64,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "Pulsed via vpmTimer.PulseSw(64)"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Outhole Drain Kick",
+      "_vbscript_callback": "ballDrain",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_coil"
+    },
+    {
+      "id": 2,
+      "description": "Ball Release (Trough Kick)",
+      "_vbscript_callback": "BallKick",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "ball_release"
+    },
+    {
+      "id": 3,
+      "description": "Left Drop Target Bank Reset",
+      "_vbscript_callback": "dtLSolDropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises drop targets sw19, sw20, sw21"
+    },
+    {
+      "id": 4,
+      "description": "Right Drop Target Bank Reset",
+      "_vbscript_callback": "dtRSolDropUp",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Raises drop targets sw22, sw23, sw24"
+    },
+    {
+      "id": 5,
+      "description": "Left Ball Lock",
+      "_vbscript_callback": "LeftLockSol",
+      "_inferred_type": "ball_management",
+      "_note": "Fires LockLSol kicker"
+    },
+    {
+      "id": 6,
+      "description": "Popper (Saucer Kick)",
+      "_vbscript_callback": "PopperSol",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from sw15 saucer"
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 8,
+      "description": "Right Ball Lock",
+      "_vbscript_callback": "RightLockSol",
+      "_inferred_type": "ball_management",
+      "_note": "Fires LockRSol kicker"
+    },
+    {
+      "id": 9,
+      "description": "GI Relay",
+      "_vbscript_callback": "SolGI",
+      "_inferred_type": "gi_relay",
+      "_note": "Inverted logic — Enabled=true turns GI OFF, Enabled=false turns GI ON"
+    },
+    {
+      "id": 10,
+      "description": "Gate Open",
+      "_vbscript_callback": "GateOpen",
+      "_inferred_type": "gate",
+      "_note": "Controls GateSol10 open/close"
+    },
+    {
+      "id": 11,
+      "description": "Turn 1 Flasher",
+      "_vbscript_callback": "Turn1Flash",
+      "_inferred_type": "flasher",
+      "is_lamp": true
+    },
+    {
+      "id": 14,
+      "description": "Auto Fire / Kickback",
+      "_vbscript_callback": "AutoFireSol",
+      "_inferred_type": "ball_management",
+      "_note": "Fires Kickback kicker"
+    },
+    {
+      "id": 15,
+      "description": "Turn 2 Flasher",
+      "_vbscript_callback": "Turn2Flash",
+      "_inferred_type": "flasher",
+      "is_lamp": true
+    },
+    {
+      "id": 16,
+      "description": "Turn 3 Flasher",
+      "_vbscript_callback": "Turn3Flash",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Controls Turn3Flasher VPX object"
+    },
+    {
+      "id": 25,
+      "description": "Playfield 2X Flasher",
+      "_vbscript_callback": "PF2XFlash",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Controls PF2XFlasher VPX object"
+    },
+    {
+      "id": 26,
+      "description": "Bridge Flasher",
+      "_vbscript_callback": "BridgeFlash",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Controls BridgeFlasher VPX object"
+    },
+    {
+      "id": 27,
+      "description": "Top Left Flasher",
+      "_vbscript_callback": "TopLeftFlash",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Triggers FlasherFlash1 and FlasherFlash2"
+    },
+    {
+      "id": 28,
+      "description": "Jet Flasher",
+      "_vbscript_callback": "JetFlash",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Triggers FlasherFlash3 and FlasherFlash4"
+    },
+    {
+      "id": 29,
+      "description": "Ball Lock Flasher",
+      "_vbscript_callback": "BallLockFlash",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Controls BallLockFlasher with fade effect"
+    },
+    {
+      "id": 30,
+      "description": "Single Standup Flasher",
+      "_vbscript_callback": "SingleStandupFlash",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Controls SingleSUFlasher VPX object"
+    },
+    {
+      "id": 31,
+      "description": "Ball Popper Flasher",
+      "_vbscript_callback": "BallPopperFlash",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Routes through Lampz.state(107) with fade"
+    },
+    {
+      "id": 32,
+      "description": "Playfield 3X Flasher",
+      "_vbscript_callback": "PF3XFlash",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Controls PF3XFlasher VPX object"
+    },
+    {
+      "id": 34,
+      "description": "Upper Right Flipper",
+      "_vbscript_callback": "SolURFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework constant sURFlipper from S11.VBS"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework constant sLRFlipper from core.vbs"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework constant sLLFlipper from core.vbs"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "description": "Lamp 1",
+      "vpx_name": "L1"
+    },
+    {
+      "id": 2,
+      "description": "Lamp 2",
+      "vpx_name": "L2"
+    },
+    {
+      "id": 3,
+      "description": "Lamp 3",
+      "vpx_name": "L3"
+    },
+    {
+      "id": 4,
+      "description": "Lamp 4",
+      "vpx_name": "L4"
+    },
+    {
+      "id": 5,
+      "description": "Lamp 5",
+      "vpx_name": "L5"
+    },
+    {
+      "id": 6,
+      "description": "Lamp 6",
+      "vpx_name": "L6"
+    },
+    {
+      "id": 7,
+      "description": "Lamp 7",
+      "vpx_name": "L7"
+    },
+    {
+      "id": 8,
+      "description": "Lamp 8",
+      "vpx_name": "L8"
+    },
+    {
+      "id": 9,
+      "description": "Lamp 9",
+      "vpx_name": "L9"
+    },
+    {
+      "id": 10,
+      "description": "Lamp 10",
+      "vpx_name": "L10"
+    },
+    {
+      "id": 11,
+      "description": "Lamp 11",
+      "vpx_name": "L11"
+    },
+    {
+      "id": 12,
+      "description": "Lamp 12",
+      "vpx_name": "L12"
+    },
+    {
+      "id": 13,
+      "description": "Lamp 13",
+      "vpx_name": "L13"
+    },
+    {
+      "id": 14,
+      "description": "Lamp 14",
+      "vpx_name": "L14"
+    },
+    {
+      "id": 15,
+      "description": "Lamp 15",
+      "vpx_name": "L15"
+    },
+    {
+      "id": 16,
+      "description": "Lamp 16",
+      "vpx_name": "L16"
+    },
+    {
+      "id": 17,
+      "description": "Lamp 17",
+      "vpx_name": "L17"
+    },
+    {
+      "id": 19,
+      "description": "Lamp 19",
+      "vpx_name": "L19"
+    },
+    {
+      "id": 20,
+      "description": "Lamp 20",
+      "vpx_name": "L20"
+    },
+    {
+      "id": 21,
+      "description": "Lamp 21",
+      "vpx_name": "L21"
+    },
+    {
+      "id": 22,
+      "description": "Lamp 22",
+      "vpx_name": "L22"
+    },
+    {
+      "id": 23,
+      "description": "Lamp 23",
+      "vpx_name": "L23"
+    },
+    {
+      "id": 24,
+      "description": "Lamp 24",
+      "vpx_name": "L24"
+    },
+    {
+      "id": 25,
+      "description": "Lamp 25",
+      "vpx_name": "L25"
+    },
+    {
+      "id": 26,
+      "description": "Lamp 26",
+      "vpx_name": "L26"
+    },
+    {
+      "id": 27,
+      "description": "Lamp 27",
+      "vpx_name": "L27"
+    },
+    {
+      "id": 28,
+      "description": "Lamp 28",
+      "vpx_name": "L28"
+    },
+    {
+      "id": 29,
+      "description": "Lamp 29",
+      "vpx_name": "L29"
+    },
+    {
+      "id": 30,
+      "description": "Lamp 30",
+      "vpx_name": "L30"
+    },
+    {
+      "id": 31,
+      "description": "Lamp 31",
+      "vpx_name": "L31"
+    },
+    {
+      "id": 32,
+      "description": "Lamp 32",
+      "vpx_name": "L32"
+    },
+    {
+      "id": 33,
+      "description": "Lamp 33",
+      "vpx_name": "L33"
+    },
+    {
+      "id": 34,
+      "description": "Lamp 34",
+      "vpx_name": "L34"
+    },
+    {
+      "id": 35,
+      "description": "Lamp 35",
+      "vpx_name": "L35"
+    },
+    {
+      "id": 36,
+      "description": "Lamp 36",
+      "vpx_name": "L36"
+    },
+    {
+      "id": 37,
+      "description": "Lamp 37",
+      "vpx_name": "L37"
+    },
+    {
+      "id": 38,
+      "description": "Lamp 38",
+      "vpx_name": "L38"
+    },
+    {
+      "id": 39,
+      "description": "Lamp 39",
+      "vpx_name": "L39"
+    },
+    {
+      "id": 40,
+      "description": "Lamp 40",
+      "vpx_name": "L40"
+    },
+    {
+      "id": 107,
+      "description": "Ball Popper Flasher Lamp",
+      "_note": "Non-matrix lamp — driven via SetLamp(107) from BallPopperFlash coil 31. VPX objects: BallPopperFlasher, BallPopperFlasherb, BallPopperFlasherc"
+    },
+    {
+      "id": 109,
+      "description": "GI Lamps",
+      "_note": "Non-matrix lamp — controlled by SolGI (coil 9). Lampz.state(109) tracks GI on/off state"
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    },
+    {
+      "id": 34,
+      "alias": "c_flipper_upper_right",
+      "type": "coil",
+      "_note": "sURFlipper — framework constant"
+    }
+  ]
+}

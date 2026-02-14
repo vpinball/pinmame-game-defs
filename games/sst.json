@@ -1,0 +1,1030 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Starship Troopers (Sega 1997) VPW Mod v2.0.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from VPW VBScript. Sega Whitestar platform (sega.vbs). Trough is standard cvpmBallStack with 4 balls and switches 15/14/13/12. Warrior bug uses cvpmMyMech (custom stepper class) with Sol1=17, position switches 33/34. BrainBug opto switches 37/39 set directly via Controller.Switch in SolBrainBug handler. Mini flipper (sol 14) commented out in script but present in SolRFlipperS sub — controlled via LockbarKey/RightMagnaSave binding to switch 88. Flasher coils 23/25-32 use SetLamp to virtual lamp numbers 123/129-132 for fading. Lamp IDs from UpdateLamps sub using JP's flasher fading system. GI is single string on lamp 200 via GICallback(0). Framework flipper constants from core.vbs (sLRFlipper=46, sLLFlipper=48)."
+  },
+  "game": {
+    "id": "sst",
+    "name": "Starship Troopers",
+    "year": 1997,
+    "manufacturer": "Sega",
+    "platform": "sega"
+  },
+  "roms": [
+    {
+      "id": "startrp2"
+    }
+  ],
+  "switches": [
+    {
+      "id": 9,
+      "description": "Skillshot / Shooter Lane",
+      "vpx_name": "sw9",
+      "_vbscript_name": "sw9",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch on/off; also calls WireRampOff"
+    },
+    {
+      "id": 10,
+      "description": "Subway Scoop (to Super VUK)",
+      "vpx_name": "sw10",
+      "_vbscript_name": "sw10",
+      "_inferred_type": "scoop",
+      "_note": "PulseSw 10; ball destroyed by timer then added to bsSuperVUK after 1800ms delay"
+    },
+    {
+      "id": 12,
+      "description": "Trough Switch 4 (near entrance)",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_4",
+      "_note": "bsTrough.InitSw position 5 (4th ball)"
+    },
+    {
+      "id": 13,
+      "description": "Trough Switch 3",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_3",
+      "_note": "bsTrough.InitSw position 4"
+    },
+    {
+      "id": 14,
+      "description": "Trough Switch 2",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_2",
+      "_note": "bsTrough.InitSw position 3"
+    },
+    {
+      "id": 15,
+      "description": "Trough Switch 1 (deepest)",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_1",
+      "_note": "bsTrough.InitSw position 2 (first ball stacks here)"
+    },
+    {
+      "id": 16,
+      "description": "Rollover",
+      "vpx_name": "sw16",
+      "_vbscript_name": "sw16",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 17,
+      "description": "Drop Target 1 (left bank)",
+      "vpx_name": "T17",
+      "_vbscript_name": "T17",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 17"
+    },
+    {
+      "id": 18,
+      "description": "Drop Target 2 (left bank)",
+      "vpx_name": "T18",
+      "_vbscript_name": "T18",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 18"
+    },
+    {
+      "id": 19,
+      "description": "Drop Target 3 (left bank)",
+      "vpx_name": "T19",
+      "_vbscript_name": "T19",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 19"
+    },
+    {
+      "id": 20,
+      "description": "Drop Target 4 (left bank)",
+      "vpx_name": "T20",
+      "_vbscript_name": "T20",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 20"
+    },
+    {
+      "id": 21,
+      "description": "Drop Target 5 (left bank)",
+      "vpx_name": "T21",
+      "_vbscript_name": "T21",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 21"
+    },
+    {
+      "id": 22,
+      "description": "Drop Target 6 (left bank)",
+      "vpx_name": "T22",
+      "_vbscript_name": "T22",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 22"
+    },
+    {
+      "id": 23,
+      "description": "Drop Target 7 (left bank)",
+      "vpx_name": "T23",
+      "_vbscript_name": "T23",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 23"
+    },
+    {
+      "id": 24,
+      "description": "Drop Target 8 (left bank)",
+      "vpx_name": "T24",
+      "_vbscript_name": "T24",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 24"
+    },
+    {
+      "id": 25,
+      "description": "Standup Target",
+      "vpx_name": "sw25",
+      "_vbscript_name": "sw25",
+      "_inferred_type": "standup_target",
+      "_note": "vpmTimer.PulseSw 25"
+    },
+    {
+      "id": 26,
+      "description": "Wire Ramp Entry",
+      "vpx_name": "sw26",
+      "_vbscript_name": "sw26",
+      "_inferred_type": "ramp_switch",
+      "_note": "PulseSw 26; calls WireRampOff on hit, WireRampOn on unhit"
+    },
+    {
+      "id": 27,
+      "description": "Drop Target 1 (right bank)",
+      "vpx_name": "T27",
+      "_vbscript_name": "T27",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 27"
+    },
+    {
+      "id": 28,
+      "description": "Drop Target 2 (right bank)",
+      "vpx_name": "T28",
+      "_vbscript_name": "T28",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 28"
+    },
+    {
+      "id": 29,
+      "description": "Drop Target 3 (right bank)",
+      "vpx_name": "T29",
+      "_vbscript_name": "T29",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 29"
+    },
+    {
+      "id": 30,
+      "description": "Drop Target 4 (right bank)",
+      "vpx_name": "T30",
+      "_vbscript_name": "T30",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 30"
+    },
+    {
+      "id": 31,
+      "description": "Drop Target 5 (right bank)",
+      "vpx_name": "T31",
+      "_vbscript_name": "T31",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 31"
+    },
+    {
+      "id": 32,
+      "description": "Drop Target 6 (right bank)",
+      "vpx_name": "T32",
+      "_vbscript_name": "T32",
+      "_inferred_type": "drop_target",
+      "_note": "vpmTimer.PulseSw 32"
+    },
+    {
+      "id": 33,
+      "description": "Warrior Bug Mech Up Position",
+      "_inferred_type": "opto",
+      "_note": "mBug.AddSw 33,221,222 — warrior bug stepper mech fully extended position"
+    },
+    {
+      "id": 34,
+      "description": "Warrior Bug Mech Down Position",
+      "_inferred_type": "opto",
+      "_note": "mBug.AddSw 34,0,1 — warrior bug stepper mech fully retracted position"
+    },
+    {
+      "id": 35,
+      "description": "Warrior Bug Target",
+      "vpx_name": "BWalls",
+      "_vbscript_name": "BWalls",
+      "_inferred_type": "standup_target",
+      "_note": "vpmTimer.PulseSw 35; BWalls_Hit collection handler"
+    },
+    {
+      "id": 37,
+      "description": "Brain Bug Opto Left",
+      "_inferred_type": "opto",
+      "_note": "Set directly by SolBrainBug(7) — Controller.Switch(37)=True when brain bug raised"
+    },
+    {
+      "id": 38,
+      "description": "Brain Bug Target",
+      "vpx_name": "sw38",
+      "_vbscript_name": "sw38",
+      "_inferred_type": "standup_target",
+      "_note": "PulseSw 38 via timer; drop target that becomes active when brain bug is raised"
+    },
+    {
+      "id": 39,
+      "description": "Brain Bug Opto Right",
+      "_inferred_type": "opto",
+      "_note": "Set directly by SolBrainBug(7) — Controller.Switch(39)=True when brain bug raised"
+    },
+    {
+      "id": 40,
+      "description": "Bumper Exit / Ramp Return",
+      "vpx_name": "sw40",
+      "_vbscript_name": "sw40",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 41,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw41",
+      "_vbscript_name": "sw41",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 42,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw42",
+      "_vbscript_name": "sw42",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 43,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw43",
+      "_vbscript_name": "sw43",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 45,
+      "description": "Left VUK",
+      "vpx_name": "sw45",
+      "_vbscript_name": "sw45",
+      "_inferred_type": "vuk",
+      "_note": "bsLeftVUK cvpmSaucer; InitKicker sw45, 45, 131, 15, 15"
+    },
+    {
+      "id": 46,
+      "description": "Super VUK",
+      "vpx_name": "sw46",
+      "_vbscript_name": "sw46",
+      "_inferred_type": "vuk",
+      "_note": "bsSuperVUK cvpmBallStack; InitSw 0,46,0,0,0,0,0,0; InitKick sw46,182,72"
+    },
+    {
+      "id": 47,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw47",
+      "_vbscript_name": "sw47",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 48,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw48",
+      "_vbscript_name": "sw48",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 49,
+      "description": "Top Pop Bumper",
+      "vpx_name": "Bumper1",
+      "_vbscript_name": "Bumper1",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw 49"
+    },
+    {
+      "id": 50,
+      "description": "Bottom Pop Bumper",
+      "vpx_name": "Bumper3",
+      "_vbscript_name": "Bumper3",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw 50"
+    },
+    {
+      "id": 51,
+      "description": "Middle Pop Bumper",
+      "vpx_name": "Bumper2",
+      "_vbscript_name": "Bumper2",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw 51"
+    },
+    {
+      "id": 52,
+      "description": "Standup Target / Spinner",
+      "vpx_name": "sw52",
+      "_vbscript_name": "sw52",
+      "_inferred_type": "standup_target",
+      "_note": "vpmTimer.PulseSw 52"
+    },
+    {
+      "id": 53,
+      "description": "Standup Target / Spinner",
+      "vpx_name": "sw53",
+      "_vbscript_name": "sw53",
+      "_inferred_type": "standup_target",
+      "_note": "vpmTimer.PulseSw 53"
+    },
+    {
+      "id": 56,
+      "description": "Tilt",
+      "_inferred_type": "tilt",
+      "_note": "vpmNudge.TiltSwitch = 56"
+    },
+    {
+      "id": 57,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw57",
+      "_vbscript_name": "sw57",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 58,
+      "description": "Inlane Switch (Left)",
+      "vpx_name": "sw58",
+      "_vbscript_name": "sw58",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch on/off; applies inlane slowdown (vely*0.8)"
+    },
+    {
+      "id": 59,
+      "description": "Right Slingshot",
+      "vpx_name": "Rightslingshot",
+      "_vbscript_name": "Rightslingshot",
+      "_inferred_type": "slingshot",
+      "_note": "vpmTimer.PulseSw 59 in Rightslingshot_Slingshot event"
+    },
+    {
+      "id": 60,
+      "description": "Rollover / Lane Switch",
+      "vpx_name": "sw60",
+      "_vbscript_name": "sw60",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 61,
+      "description": "Inlane Switch (Right)",
+      "vpx_name": "sw61",
+      "_vbscript_name": "sw61",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch on/off; applies inlane slowdown (vely*0.8)"
+    },
+    {
+      "id": 62,
+      "description": "Left Slingshot",
+      "vpx_name": "Leftslingshot",
+      "_vbscript_name": "Leftslingshot",
+      "_inferred_type": "slingshot",
+      "_note": "vpmTimer.PulseSw 62 in Leftslingshot_Slingshot event"
+    },
+    {
+      "id": 88,
+      "description": "Right MagnaSave / Upper Right Flipper Button",
+      "_inferred_type": "cabinet_switch",
+      "_note": "Controller.Switch(88) set by RightMagnaSave/LockbarKey keydown/keyup; triggers mini flipper SolRFlipperS"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Ball Release",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "bsTrough.ExitSol_On — kicks ball from trough to shooter lane"
+    },
+    {
+      "id": 2,
+      "description": "Auto Launch",
+      "_vbscript_callback": "SolAutolaunch",
+      "_inferred_type": "autoplunger",
+      "_note": "Fires plunger via Plunger.AutoPlunger and Plunger.Fire"
+    },
+    {
+      "id": 3,
+      "description": "Left VUK Eject",
+      "_vbscript_callback": "SolLeftVuk",
+      "_inferred_type": "vuk",
+      "vpx_name": "sw45",
+      "_note": "bsLeftVUK.ExitSol_On — ejects from left VUK (sw45)"
+    },
+    {
+      "id": 4,
+      "description": "Super VUK Eject",
+      "_vbscript_callback": "bsSupervuk.SolOut",
+      "_inferred_type": "vuk",
+      "vpx_name": "sw46",
+      "_note": "bsSuperVUK standard eject — kicks from sw46"
+    },
+    {
+      "id": 5,
+      "description": "Left Magnet",
+      "_vbscript_callback": "SolLeftMagnet",
+      "_inferred_type": "magnet",
+      "vpx_name": "LeftMagnet",
+      "_note": "cvpmMagnet; InitMagnet LeftMagnet, 30; GrabCenter=1"
+    },
+    {
+      "id": 6,
+      "description": "Right Magnet",
+      "_vbscript_callback": "SolRightMagnet",
+      "_inferred_type": "magnet",
+      "vpx_name": "RightMagnet",
+      "_note": "cvpmMagnet; InitMagnet RightMagnet, 30; GrabCenter=1"
+    },
+    {
+      "id": 7,
+      "description": "Brain Bug Motor",
+      "_vbscript_callback": "SolBrainBug",
+      "_inferred_type": "mechanism",
+      "_note": "Raises/lowers brain bug assembly; sets Controller.Switch 37/39 directly; controls sw38/sw38a drop state"
+    },
+    {
+      "id": 8,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 14,
+      "description": "Mini Right Flipper",
+      "_vbscript_callback": "SolRFlipperS",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipperS",
+      "_note": "Commented out SolCallback — controlled directly via LockbarKey/RightMagnaSave keybinding to switch 88"
+    },
+    {
+      "id": 15,
+      "description": "Flipper Enable Relay",
+      "_vbscript_callback": "FlippersEnabled=",
+      "_inferred_type": "flipper_relay",
+      "_note": "Enables/disables flipper response"
+    },
+    {
+      "id": 17,
+      "description": "Warrior Bug Stepper Motor",
+      "_inferred_type": "mechanism",
+      "_note": "cvpmMyMech Sol1=17; Steps=222, Length=600ms; controls warrior bug raise/lower with switches 33/34"
+    },
+    {
+      "id": 23,
+      "description": "Brain Bug Flasher",
+      "_vbscript_callback": "SetLamp 123,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Routes to lamp 123 via SetLamp for fading flasher control"
+    },
+    {
+      "id": 25,
+      "description": "Flash Red",
+      "_vbscript_callback": "Sol25",
+      "_inferred_type": "flasher",
+      "_note": "FlashBlinkingRed / FlashoffRed"
+    },
+    {
+      "id": 26,
+      "description": "Flash Yellow",
+      "_vbscript_callback": "Sol26",
+      "_inferred_type": "flasher",
+      "_note": "FlashBlinkingYellow / FlashoffYellow"
+    },
+    {
+      "id": 27,
+      "description": "Flash Green",
+      "_vbscript_callback": "Sol27",
+      "_inferred_type": "flasher",
+      "_note": "FlashBlinkingGreen / FlashoffGreen"
+    },
+    {
+      "id": 28,
+      "description": "Flash Blue",
+      "_vbscript_callback": "Sol28",
+      "_inferred_type": "flasher",
+      "_note": "FlashBlinkingBlue / FlashoffBlue"
+    },
+    {
+      "id": 29,
+      "description": "Warrior Bug Sled Flasher (F5)",
+      "_vbscript_callback": "SetLamp 129,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Routes to lamp 129 via SetLamp; X4 multiplied flasher"
+    },
+    {
+      "id": 30,
+      "description": "Left Ramp Flasher (F6)",
+      "_vbscript_callback": "SetLamp 130,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Routes to lamp 130 via SetLamp; X4 multiplied flasher"
+    },
+    {
+      "id": 31,
+      "description": "Right Ramp Flasher (F7)",
+      "_vbscript_callback": "SetLamp 131,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Routes to lamp 131 via SetLamp; X4 multiplied flasher"
+    },
+    {
+      "id": 32,
+      "description": "Pop Bumpers Flasher (F8)",
+      "_vbscript_callback": "SetLamp 132,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Routes to lamp 132 via SetLamp; X2 multiplied flasher"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_name": "sLRFlipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "Framework constant (core.vbs: sLRFlipper=46); nFozzy physics"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_name": "sLLFlipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "Framework constant (core.vbs: sLLFlipper=48); nFozzy physics"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "vpx_name": "l1",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 2,
+      "vpx_name": "l2",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 3,
+      "vpx_name": "l3",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 4,
+      "vpx_name": "l4",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 5,
+      "vpx_name": "l5",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 6,
+      "vpx_name": "l6",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 7,
+      "vpx_name": "l7",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 8,
+      "vpx_name": "l8",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 9,
+      "vpx_name": "l9",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 10,
+      "vpx_name": "l10",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 11,
+      "vpx_name": "l11",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 12,
+      "vpx_name": "l12",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 13,
+      "vpx_name": "l13a",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 14,
+      "vpx_name": "l14a",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 15,
+      "vpx_name": "l15a",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 16,
+      "vpx_name": "l16a",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 17,
+      "vpx_name": "l17",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 18,
+      "vpx_name": "l18",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 19,
+      "vpx_name": "l19",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 20,
+      "vpx_name": "l20",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 21,
+      "vpx_name": "l21",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 22,
+      "vpx_name": "l22",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 23,
+      "vpx_name": "l23",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 24,
+      "vpx_name": "l24",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 25,
+      "vpx_name": "l25",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 26,
+      "vpx_name": "l26",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 27,
+      "vpx_name": "l27",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 28,
+      "vpx_name": "l28",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 29,
+      "vpx_name": "l29",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 30,
+      "vpx_name": "l30",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 31,
+      "vpx_name": "l31",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 32,
+      "vpx_name": "l32",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 35,
+      "vpx_name": "l35",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 36,
+      "vpx_name": "l36",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 37,
+      "vpx_name": "l37",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 38,
+      "vpx_name": "l38",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 39,
+      "vpx_name": "l39",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 40,
+      "vpx_name": "l40",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 41,
+      "vpx_name": "l41",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 42,
+      "vpx_name": "l42",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 43,
+      "vpx_name": "l43",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 44,
+      "vpx_name": "l44",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 45,
+      "vpx_name": "l45",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 46,
+      "vpx_name": "l46",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 47,
+      "vpx_name": "l47",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 48,
+      "vpx_name": "l48",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 49,
+      "vpx_name": "l49",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 50,
+      "vpx_name": "l50",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 51,
+      "vpx_name": "l51",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 52,
+      "vpx_name": "l52",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 53,
+      "vpx_name": "l53",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 54,
+      "vpx_name": "l54",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 55,
+      "vpx_name": "l55",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 56,
+      "vpx_name": "l56",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 57,
+      "vpx_name": "l57",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 58,
+      "vpx_name": "l58",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 59,
+      "vpx_name": "l59",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 60,
+      "vpx_name": "l60",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 61,
+      "vpx_name": "l61",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 62,
+      "vpx_name": "l62",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 63,
+      "vpx_name": "l63",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 64,
+      "vpx_name": "l64",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 65,
+      "vpx_name": "l65",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 66,
+      "vpx_name": "l66",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 67,
+      "vpx_name": "l67",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 68,
+      "vpx_name": "l68",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 69,
+      "vpx_name": "l69",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 70,
+      "vpx_name": "l70",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 71,
+      "vpx_name": "l71",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 72,
+      "vpx_name": "l72",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 73,
+      "vpx_name": "l73",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 74,
+      "vpx_name": "l74",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 75,
+      "vpx_name": "l75",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 76,
+      "vpx_name": "l76",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 77,
+      "vpx_name": "l77",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 78,
+      "vpx_name": "l78",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 79,
+      "vpx_name": "l79",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 80,
+      "vpx_name": "l80",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 123,
+      "vpx_name": "l123a",
+      "_inferred_type": "flasher",
+      "is_flasher": true,
+      "_note": "Brain Bug Flasher — controlled by coil 23 via SetLamp 123"
+    },
+    {
+      "id": 129,
+      "vpx_name": "l129",
+      "_inferred_type": "flasher",
+      "is_flasher": true,
+      "_note": "Warrior Bug Sled Flasher (F5) — controlled by coil 29 via SetLamp 129; X4"
+    },
+    {
+      "id": 130,
+      "vpx_name": "l130b",
+      "_inferred_type": "flasher",
+      "is_flasher": true,
+      "_note": "Left Ramp Flasher (F6) — controlled by coil 30 via SetLamp 130; X4"
+    },
+    {
+      "id": 131,
+      "vpx_name": "l131b",
+      "_inferred_type": "flasher",
+      "is_flasher": true,
+      "_note": "Right Ramp Flasher (F7) — controlled by coil 31 via SetLamp 131; X4"
+    },
+    {
+      "id": 132,
+      "vpx_name": "l132",
+      "_inferred_type": "flasher",
+      "is_flasher": true,
+      "_note": "Pop Bumpers Flasher (F8) — controlled by coil 32 via SetLamp 132; X2"
+    },
+    {
+      "id": 200,
+      "vpx_name": "Light001",
+      "_inferred_type": "gi",
+      "_note": "General Illumination — single GI string; GICallback(0); 28 light objects (Light001-Light028) + 5 flasher objects"
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    }
+  ]
+}

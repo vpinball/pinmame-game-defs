@@ -1,0 +1,799 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "NBA Fastbreak (Bally 1997)_VPWmod_v1.3.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "Extracted directly from VPW VBS source. All switches from sw*_Hit/Controller.Switch() handlers. Coils from SolCallback assignments (active and commented). Lamps from UpdateLamps NfadeLm/NFadeL calls. Lamp descriptions are from VPX object names only — no PinMAME cross-referencing. Flashers 17-20,22,24 are solenoid-driven via FlashSol* subs. Lamps 67,68,77,78 have flasher behavior via FlashRondo. Defender mechanism (sol 37/38) and magnet (sol 8) handled via cvpmMech/cvpmMagnet, not SolCallback."
+  },
+  "game": {
+    "id": "nbaf",
+    "name": "NBA Fastbreak",
+    "year": 1997,
+    "manufacturer": "Bally",
+    "platform": "wpc"
+  },
+  "switches": [
+    {
+      "id": 1,
+      "description": "Backbox Basket Score 1",
+      "vpx_name": "sw1",
+      "_note": "sw1_Hit triggers BasketFlipper.RotateToStart"
+    },
+    {
+      "id": 2,
+      "description": "Backbox Basket Score 2",
+      "vpx_name": "sw2",
+      "_note": "sw2_Hit triggers BasketFlipper.RotateToStart"
+    },
+    {
+      "id": 3,
+      "description": "Backbox Basket Score 3",
+      "vpx_name": "sw3",
+      "_note": "sw3_Hit triggers BasketFlipper.RotateToStart"
+    },
+    {
+      "id": 11,
+      "description": "Ball Launch",
+      "vpx_name": "swPlunger",
+      "_note": "KeyDown/KeyUp PlungerKey sets Controller.Switch(11). Also plungerIM.Switch 15 references shooter lane."
+    },
+    {
+      "id": 12,
+      "description": "Backbox Basket",
+      "vpx_name": "sw12",
+      "_note": "Controller.Switch(12) via sw12_Hit/sw12_UnHit"
+    },
+    {
+      "id": 14,
+      "description": "Tilt",
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Shooter Lane",
+      "_note": "plungerIM.Switch 15"
+    },
+    {
+      "id": 16,
+      "description": "Left Return Lane",
+      "vpx_name": "sw16"
+    },
+    {
+      "id": 17,
+      "description": "Right Return Lane",
+      "vpx_name": "sw17"
+    },
+    {
+      "id": 18,
+      "description": "Lower Standup Target",
+      "vpx_name": "sw18",
+      "_note": "vpmTimer.PulseSw 18"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "normally_closed": true,
+      "_note": "Controller.Switch(22) = 1 in init"
+    },
+    {
+      "id": 23,
+      "description": "Right Jet Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "vpmTimer.PulseSw 23 in Bumper2_Hit"
+    },
+    {
+      "id": 24,
+      "description": "Always Closed",
+      "constant_hint": "always_closed",
+      "_note": "Controller.Switch(24) = 1 in init"
+    },
+    {
+      "id": 25,
+      "description": "Eject Hole",
+      "vpx_name": "sw25",
+      "_note": "bsEject saucer — bsEject.AddBall 0 on hit"
+    },
+    {
+      "id": 26,
+      "description": "Left Outlane",
+      "vpx_name": "sw26"
+    },
+    {
+      "id": 27,
+      "description": "Right Outlane",
+      "vpx_name": "sw27"
+    },
+    {
+      "id": 28,
+      "description": "Upper Standup Target",
+      "vpx_name": "sw28",
+      "_note": "vpmTimer.PulseSw 28"
+    },
+    {
+      "id": 31,
+      "description": "Trough Jam",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "jam",
+      "_note": "bsTrough.InitSw 0,32,33,34,35,31,0,0 — position 5 is jam switch"
+    },
+    {
+      "id": 32,
+      "description": "Trough Ball 1",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1"
+    },
+    {
+      "id": 33,
+      "description": "Trough Ball 2",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 34,
+      "description": "Trough Ball 3",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 35,
+      "description": "Trough Ball 4",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4"
+    },
+    {
+      "id": 36,
+      "description": "Center Ramp",
+      "vpx_name": "sw36"
+    },
+    {
+      "id": 37,
+      "description": "Right Loop Enter",
+      "vpx_name": "sw37"
+    },
+    {
+      "id": 38,
+      "description": "Right Loop Exit",
+      "vpx_name": "sw38"
+    },
+    {
+      "id": 41,
+      "description": "Standup Target (upper group)",
+      "vpx_name": "sw41",
+      "_note": "vpmTimer.PulseSw 41"
+    },
+    {
+      "id": 42,
+      "description": "Standup Target (upper group)",
+      "vpx_name": "sw42",
+      "_note": "vpmTimer.PulseSw 42"
+    },
+    {
+      "id": 43,
+      "description": "Standup Target (upper group)",
+      "vpx_name": "sw43",
+      "_note": "vpmTimer.PulseSw 43"
+    },
+    {
+      "id": 44,
+      "description": "Right Ramp Enter",
+      "vpx_name": "sw44"
+    },
+    {
+      "id": 45,
+      "description": "Left Ramp Enter",
+      "vpx_name": "sw45"
+    },
+    {
+      "id": 46,
+      "description": "Left Ramp Made",
+      "vpx_name": "sw46",
+      "_note": "Also plays fx_metalrolling and sets ball velocity"
+    },
+    {
+      "id": 47,
+      "description": "Left Loop Enter",
+      "vpx_name": "sw47"
+    },
+    {
+      "id": 48,
+      "description": "Left Loop Made",
+      "vpx_name": "sw48"
+    },
+    {
+      "id": 51,
+      "description": "Defender Position Opto",
+      "_note": "Defender mech AddSw 51, 0, 1"
+    },
+    {
+      "id": 52,
+      "description": "Defender Position Opto",
+      "_note": "Defender mech AddSw 52, 17, 18"
+    },
+    {
+      "id": 53,
+      "description": "Defender Position Opto",
+      "_note": "Defender mech AddSw 53, 31, 32"
+    },
+    {
+      "id": 54,
+      "description": "Defender Position Opto",
+      "_note": "Defender mech AddSw 54, 44, 45"
+    },
+    {
+      "id": 55,
+      "description": "Defender Position Opto",
+      "_note": "Defender mech AddSw 55, 64, 65"
+    },
+    {
+      "id": 56,
+      "description": "Jets Ball Drain",
+      "vpx_name": "sw56"
+    },
+    {
+      "id": 57,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "vpmTimer.PulseSw 57 in LeftSlingShot_Slingshot"
+    },
+    {
+      "id": 58,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "vpmTimer.PulseSw 58 in RightSlingShot_Slingshot"
+    },
+    {
+      "id": 61,
+      "description": "Left Jet Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "vpmTimer.PulseSw 61 in Bumper1_Hit"
+    },
+    {
+      "id": 62,
+      "description": "Middle Jet Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "vpmTimer.PulseSw 62 in Bumper3_Hit"
+    },
+    {
+      "id": 63,
+      "description": "Left Loop/Ramp Exit",
+      "vpx_name": "sw63"
+    },
+    {
+      "id": 64,
+      "description": "Right Ramp Made",
+      "vpx_name": "sw64"
+    },
+    {
+      "id": 65,
+      "description": "In The Paint Saucer 4",
+      "vpx_name": "sw65",
+      "_note": "bsSaucer4 — InitSaucer sw65, 65"
+    },
+    {
+      "id": 66,
+      "description": "In The Paint Saucer 3",
+      "vpx_name": "sw66",
+      "_note": "bsSaucer3 — InitSaucer sw66, 66"
+    },
+    {
+      "id": 67,
+      "description": "In The Paint Saucer 2",
+      "vpx_name": "sw67",
+      "_note": "bsSaucer2 — InitSaucer sw67, 67"
+    },
+    {
+      "id": 68,
+      "description": "In The Paint Saucer 1",
+      "vpx_name": "sw68",
+      "_note": "bsSaucer1 — InitSaucer sw68, 68"
+    },
+    {
+      "id": 115,
+      "description": "Basket Made",
+      "vpx_name": "sw115",
+      "_note": "WPC flipper-coded switch. Controller.Switch(115)."
+    },
+    {
+      "id": 117,
+      "description": "Basket Hold",
+      "vpx_name": "sw117",
+      "_note": "WPC flipper-coded switch. Controller.Switch(117)."
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "Auto_Plunger",
+      "_note": "Fires impulse plunger via PlungerIM.AutoFire"
+    },
+    {
+      "id": 2,
+      "description": "Not Used",
+      "_note": "Commented out: 'SolCallBack(2) = Not Used'"
+    },
+    {
+      "id": 3,
+      "description": "Diverter 2",
+      "_vbscript_callback": "SolDiverter2",
+      "vpx_name": "Diverter2"
+    },
+    {
+      "id": 4,
+      "description": "Diverter 1",
+      "_vbscript_callback": "vpmSolWall Diverter1,True,",
+      "vpx_name": "Diverter1"
+    },
+    {
+      "id": 5,
+      "description": "Eject Hole",
+      "_vbscript_callback": "bsEject.SolOut"
+    },
+    {
+      "id": 6,
+      "description": "Right Gate",
+      "_vbscript_callback": "RightGate.Open =",
+      "vpx_name": "RightGate"
+    },
+    {
+      "id": 7,
+      "description": "Backbox Basket Flipper",
+      "_vbscript_callback": "SolBasket",
+      "_note": "Controls backbox basketball mini-game flipper via BackBall kick"
+    },
+    {
+      "id": 8,
+      "description": "Ball Catch Magnet",
+      "_note": "Handled via cvpmMagnet (MagnetCatch.Solenoid = 8), not SolCallback",
+      "vpx_name": "BCMagnet"
+    },
+    {
+      "id": 9,
+      "description": "Trough Eject",
+      "_vbscript_callback": "bsTrough.SolOut",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 10,
+      "description": "Left Slingshot",
+      "_note": "Commented out in VBS: 'SolCallBack(10) = vpmSolSound lSling'",
+      "vpx_name": "LeftSlingShot"
+    },
+    {
+      "id": 11,
+      "description": "Right Slingshot",
+      "_note": "Commented out in VBS: 'SolCallBack(11) = vpmSolSound lSling'",
+      "vpx_name": "RightSlingShot"
+    },
+    {
+      "id": 12,
+      "description": "Jet Bumper",
+      "_note": "Commented out in VBS: 'SolCallBack(12) = vpmSolSound Jet1'"
+    },
+    {
+      "id": 13,
+      "description": "Jet Bumper",
+      "_note": "Commented out in VBS: 'SolCallBack(13) = vpmSolSound Jet1'"
+    },
+    {
+      "id": 14,
+      "description": "Jet Bumper",
+      "_note": "Commented out in VBS: 'SolCallBack(14) = vpmSolSound Jet1'"
+    },
+    {
+      "id": 15,
+      "description": "Pass Right 2 (In The Paint)",
+      "_vbscript_callback": "PassRight2",
+      "_note": "Alternate kick for bsSaucer2"
+    },
+    {
+      "id": 16,
+      "description": "Pass Left 2 (In The Paint)",
+      "_vbscript_callback": "PassLeft2",
+      "_note": "Alternate kick for bsSaucer2"
+    },
+    {
+      "id": 17,
+      "description": "Flasher — Eject Kickout",
+      "_vbscript_callback": "FlashSol17",
+      "is_lamp": true,
+      "_note": "Comment: 'eject kickout flasher'"
+    },
+    {
+      "id": 18,
+      "description": "Flasher — Left Jet Bumper",
+      "_vbscript_callback": "FlashSol18",
+      "is_lamp": true,
+      "_note": "Comment: 'left jet bumper'"
+    },
+    {
+      "id": 19,
+      "description": "Flasher — Upper Left / BG Left",
+      "_vbscript_callback": "FlashSol19",
+      "is_lamp": true,
+      "_note": "Comment: 'upper left / BG Left'"
+    },
+    {
+      "id": 20,
+      "description": "Flasher — Upper Right / BG Right",
+      "_vbscript_callback": "FlashSol20",
+      "is_lamp": true,
+      "_note": "Comment: 'upper right / BG Right'"
+    },
+    {
+      "id": 22,
+      "description": "Flasher — Trophy Insert",
+      "_vbscript_callback": "SetLamp 122,",
+      "is_lamp": true,
+      "_note": "Comment: 'trophy insert TODO'"
+    },
+    {
+      "id": 24,
+      "description": "Flasher — Lower Right/Left",
+      "_vbscript_callback": "FlashSol24",
+      "is_lamp": true,
+      "_note": "Comment: 'lower right left'"
+    },
+    {
+      "id": 25,
+      "description": "Pass Right 1 (In The Paint)",
+      "_vbscript_callback": "PassRight1",
+      "_note": "Alternate kick for bsSaucer1"
+    },
+    {
+      "id": 26,
+      "description": "Pass Left 3 (In The Paint)",
+      "_vbscript_callback": "PassLeft3",
+      "_note": "Alternate kick for bsSaucer3"
+    },
+    {
+      "id": 27,
+      "description": "Pass Right 3 (In The Paint)",
+      "_vbscript_callback": "PassRight3",
+      "_note": "Alternate kick for bsSaucer3"
+    },
+    {
+      "id": 28,
+      "description": "Pass Left 4 (In The Paint)",
+      "_vbscript_callback": "PassLeft4",
+      "_note": "Alternate kick for bsSaucer4"
+    },
+    {
+      "id": 33,
+      "description": "In The Paint Saucer 1 Eject",
+      "_vbscript_callback": "bsSaucer1.SolOut"
+    },
+    {
+      "id": 34,
+      "description": "In The Paint Saucer 2 Eject",
+      "_vbscript_callback": "bsSaucer2.SolOut"
+    },
+    {
+      "id": 35,
+      "description": "In The Paint Saucer 3 Eject",
+      "_vbscript_callback": "bsSaucer3.SolOut"
+    },
+    {
+      "id": 36,
+      "description": "In The Paint Saucer 4 Eject",
+      "_vbscript_callback": "bsSaucer4.SolOut"
+    },
+    {
+      "id": 37,
+      "description": "Defender Motor Enable",
+      "_note": "Handled via cvpmMech (mDefender.Sol1 = 37), not SolCallback"
+    },
+    {
+      "id": 38,
+      "description": "Defender Motor Direction",
+      "_note": "Handled via cvpmMech (mDefender.Sol2 = 38), not SolCallback"
+    },
+    {
+      "id": 39,
+      "description": "Shot Clock Enable",
+      "_note": "Commented out in VBS: 'SolCallBack(39) = ClockEnable'"
+    },
+    {
+      "id": 40,
+      "description": "Shot Clock Count",
+      "_note": "Commented out in VBS: 'SolCallBack(40) = ClockCount'"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_note": "Framework alias sLRFlipper = 46 (from WPC.VBS/core.vbs)"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_note": "Framework alias sLLFlipper = 48 (from WPC.VBS/core.vbs)"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 11,
+      "vpx_name": "l11"
+    },
+    {
+      "id": 12,
+      "vpx_name": "l12"
+    },
+    {
+      "id": 13,
+      "vpx_name": "l13"
+    },
+    {
+      "id": 14,
+      "vpx_name": "l14"
+    },
+    {
+      "id": 15,
+      "vpx_name": "l15"
+    },
+    {
+      "id": 16,
+      "vpx_name": "l16"
+    },
+    {
+      "id": 17,
+      "vpx_name": "l17"
+    },
+    {
+      "id": 18,
+      "vpx_name": "l18"
+    },
+    {
+      "id": 21,
+      "vpx_name": "l21"
+    },
+    {
+      "id": 22,
+      "vpx_name": "l22"
+    },
+    {
+      "id": 23,
+      "vpx_name": "l23"
+    },
+    {
+      "id": 24,
+      "vpx_name": "l24"
+    },
+    {
+      "id": 25,
+      "vpx_name": "l25"
+    },
+    {
+      "id": 26,
+      "vpx_name": "l26",
+      "_note": "Also mapped to l26a (dual VPX object)"
+    },
+    {
+      "id": 27,
+      "vpx_name": "l27"
+    },
+    {
+      "id": 28,
+      "vpx_name": "l28"
+    },
+    {
+      "id": 31,
+      "vpx_name": "l31"
+    },
+    {
+      "id": 32,
+      "vpx_name": "l32"
+    },
+    {
+      "id": 33,
+      "vpx_name": "l33"
+    },
+    {
+      "id": 34,
+      "vpx_name": "l34"
+    },
+    {
+      "id": 35,
+      "vpx_name": "l35"
+    },
+    {
+      "id": 36,
+      "vpx_name": "l36"
+    },
+    {
+      "id": 37,
+      "vpx_name": "l37",
+      "_note": "Also mapped to l37a (dual VPX object)"
+    },
+    {
+      "id": 38,
+      "vpx_name": "l38",
+      "_note": "Also mapped to l38a (dual VPX object)"
+    },
+    {
+      "id": 41,
+      "vpx_name": "l41"
+    },
+    {
+      "id": 42,
+      "vpx_name": "l42"
+    },
+    {
+      "id": 43,
+      "vpx_name": "l43",
+      "_note": "Also mapped to l43a (dual VPX object)"
+    },
+    {
+      "id": 44,
+      "vpx_name": "l44"
+    },
+    {
+      "id": 45,
+      "vpx_name": "l45"
+    },
+    {
+      "id": 46,
+      "vpx_name": "l46"
+    },
+    {
+      "id": 47,
+      "vpx_name": "l47"
+    },
+    {
+      "id": 48,
+      "vpx_name": "l48"
+    },
+    {
+      "id": 51,
+      "vpx_name": "l51",
+      "_note": "Also mapped to l51a (dual VPX object)"
+    },
+    {
+      "id": 52,
+      "vpx_name": "l52"
+    },
+    {
+      "id": 53,
+      "vpx_name": "l53",
+      "_note": "Also mapped to l53a (dual VPX object)"
+    },
+    {
+      "id": 54,
+      "vpx_name": "l54",
+      "_note": "Also mapped to l54a (dual VPX object)"
+    },
+    {
+      "id": 55,
+      "vpx_name": "l55",
+      "_note": "Also mapped to l55a (dual VPX object)"
+    },
+    {
+      "id": 56,
+      "vpx_name": "l56"
+    },
+    {
+      "id": 57,
+      "vpx_name": "l57"
+    },
+    {
+      "id": 58,
+      "vpx_name": "l58"
+    },
+    {
+      "id": 61,
+      "vpx_name": "l61",
+      "_note": "Also mapped to l61b (dual VPX object, FadeDisableLightingM)"
+    },
+    {
+      "id": 62,
+      "vpx_name": "l62"
+    },
+    {
+      "id": 63,
+      "vpx_name": "l63"
+    },
+    {
+      "id": 64,
+      "vpx_name": "l64"
+    },
+    {
+      "id": 65,
+      "vpx_name": "l65"
+    },
+    {
+      "id": 66,
+      "vpx_name": "l66",
+      "_note": "Also mapped to l66a (dual VPX object)"
+    },
+    {
+      "id": 67,
+      "vpx_name": "l67",
+      "is_lamp": true,
+      "_note": "Has flasher behavior via FlashRondo (Objlevel 9)"
+    },
+    {
+      "id": 68,
+      "vpx_name": "l68",
+      "is_lamp": true,
+      "_note": "Has flasher behavior via FlashRondo (Objlevel 8)"
+    },
+    {
+      "id": 71,
+      "vpx_name": "l71"
+    },
+    {
+      "id": 72,
+      "vpx_name": "l72"
+    },
+    {
+      "id": 73,
+      "vpx_name": "l73",
+      "_note": "Also mapped to l73a (dual VPX object)"
+    },
+    {
+      "id": 74,
+      "vpx_name": "l74"
+    },
+    {
+      "id": 75,
+      "vpx_name": "l75"
+    },
+    {
+      "id": 76,
+      "vpx_name": "l76",
+      "_note": "Also mapped to l76a (dual VPX object)"
+    },
+    {
+      "id": 77,
+      "vpx_name": "l77",
+      "is_lamp": true,
+      "_note": "Has flasher behavior via FlashRondo (Objlevel 6)"
+    },
+    {
+      "id": 78,
+      "vpx_name": "l78",
+      "is_lamp": true,
+      "_note": "Has flasher behavior via FlashRondo (Objlevel 7)"
+    },
+    {
+      "id": 81,
+      "vpx_name": "l81"
+    },
+    {
+      "id": 82,
+      "vpx_name": "l82"
+    },
+    {
+      "id": 83,
+      "vpx_name": "l83",
+      "_note": "Also mapped to l83a (dual VPX object)"
+    },
+    {
+      "id": 84,
+      "vpx_name": "l84"
+    },
+    {
+      "id": 85,
+      "vpx_name": "l85"
+    },
+    {
+      "id": 86,
+      "vpx_name": "l86"
+    },
+    {
+      "id": 87,
+      "vpx_name": "l87",
+      "_note": "Uses NFadeL (single object, no multi)"
+    },
+    {
+      "id": 88,
+      "vpx_name": "l88",
+      "_note": "Uses NFadeL (single object, no multi)"
+    }
+  ]
+}

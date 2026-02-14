@@ -1,0 +1,971 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Iron Man Vault Edition (Stern 2010) VPW v1.0.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "SAM-era Stern game with UseVPMModSol=True. No Const sw* definitions — switches referenced by number via Controller.Switch(N) and vpmTimer.PulseSw N. Trough is custom (4-ball, sw18-sw21 with manual cascade logic, not cvpmTrough). Iron Monger toy uses sol 19 with position switches 1 (down) and 3 (up) set programmatically. Magnets on sol 3 and 4. Flashers driven by SolModCallback (coils 20-32) mapped to Lampz indexes 120-132. GI at Lampz index 104. Lamp 150 is room lighting (virtual). Commented-out switch subs replaced by STHit standup target framework. swplunger VPX object used for impulse plunger via cvpmImpulseP — Update_Wires calls are physics-only, not ROM switch assignments."
+  },
+  "game": {
+    "id": "ironman",
+    "name": "Iron Man Vault Edition",
+    "year": 2010,
+    "manufacturer": "Stern",
+    "platform": "sam"
+  },
+  "roms": [
+    {
+      "id": "im_183ve",
+      "_note": "Commented out in script"
+    },
+    {
+      "id": "im_185ve",
+      "_note": "Active ROM — Fastflips Enabled"
+    },
+    {
+      "id": "im_186ve",
+      "_note": "Commented out — Fastflips Not Enabled"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Iron Monger Down",
+      "_inferred_type": "opto",
+      "_note": "Set programmatically by Solmonger sub when monger closes (Controller.Switch(1)=1)"
+    },
+    {
+      "id": 3,
+      "description": "Iron Monger Up",
+      "_inferred_type": "opto",
+      "_note": "Set programmatically by Solmonger sub when monger opens (Controller.Switch(3)=1)"
+    },
+    {
+      "id": 4,
+      "description": "Iron Monger Target 1",
+      "vpx_name": "sw4",
+      "_inferred_type": "standup_target",
+      "_note": "Target on Iron Monger toy, PulseSw. IsDropped when monger closed."
+    },
+    {
+      "id": 5,
+      "description": "Iron Monger Target 2",
+      "vpx_name": "sw5",
+      "_inferred_type": "standup_target",
+      "_note": "Target on Iron Monger toy, PulseSw. IsDropped when monger closed."
+    },
+    {
+      "id": 6,
+      "description": "Iron Monger Target 3",
+      "vpx_name": "sw6",
+      "_inferred_type": "standup_target",
+      "_note": "Target on Iron Monger toy, PulseSw. IsDropped when monger closed."
+    },
+    {
+      "id": 7,
+      "description": "Left Orbit",
+      "vpx_name": "sw7",
+      "_inferred_type": "rollover",
+      "_note": "Has Update_Wires + Controller.Switch"
+    },
+    {
+      "id": 9,
+      "description": "Right Orbit",
+      "vpx_name": "sw9",
+      "_inferred_type": "rollover",
+      "_note": "Has Update_Wires + Controller.Switch"
+    },
+    {
+      "id": 10,
+      "description": "War Machine Kicker",
+      "vpx_name": "sw10",
+      "_inferred_type": "kicker",
+      "_note": "Ball captured on hit, ejected by sol 5 (WMKick)"
+    },
+    {
+      "id": 11,
+      "description": "Left Spinner",
+      "vpx_name": "sw11",
+      "_inferred_type": "spinner",
+      "_note": "sw11_Spin PulseSw 11"
+    },
+    {
+      "id": 12,
+      "description": "Center Lane",
+      "vpx_name": "sw12",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch hit/unhit"
+    },
+    {
+      "id": 13,
+      "description": "Center Spinner",
+      "vpx_name": "sw13",
+      "_inferred_type": "spinner",
+      "_note": "sw13_Spin PulseSw 13"
+    },
+    {
+      "id": 14,
+      "description": "Right Spinner",
+      "vpx_name": "sw14",
+      "_inferred_type": "spinner",
+      "_note": "sw14_Spin PulseSw 14"
+    },
+    {
+      "id": 15,
+      "description": "Trough Release",
+      "_inferred_type": "pulse",
+      "_note": "PulseSw 15 fired during SolRelease — ball eject confirmation"
+    },
+    {
+      "id": 16,
+      "description": "Start Button",
+      "_inferred_type": "cabinet",
+      "_note": "Set via Table_KeyDown/Up StartGameKey"
+    },
+    {
+      "id": 18,
+      "description": "Trough 4 (Leftmost)",
+      "vpx_name": "sw18",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4"
+    },
+    {
+      "id": 19,
+      "description": "Trough 3",
+      "vpx_name": "sw19",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 20,
+      "description": "Trough 2",
+      "vpx_name": "sw20",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 21,
+      "description": "Trough 1 (Eject Side)",
+      "vpx_name": "sw21",
+      "_inferred_type": "trough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1"
+    },
+    {
+      "id": 23,
+      "description": "Left Return Lane",
+      "vpx_name": "sw23",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 24,
+      "description": "Left Outlane",
+      "vpx_name": "sw24",
+      "_inferred_type": "rollover",
+      "_note": "Has Update_Wires + Controller.Switch"
+    },
+    {
+      "id": 25,
+      "description": "Right Outlane",
+      "vpx_name": "sw25",
+      "_inferred_type": "rollover",
+      "_note": "Has Update_Wires + Controller.Switch"
+    },
+    {
+      "id": 26,
+      "description": "Left Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "PulseSw 26 via LeftSlingShot_Slingshot"
+    },
+    {
+      "id": 27,
+      "description": "Right Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "PulseSw 27 via RightSlingShot_Slingshot"
+    },
+    {
+      "id": 28,
+      "description": "Right Return Lane",
+      "vpx_name": "sw28",
+      "_inferred_type": "rollover",
+      "_note": "Has Update_Wires + Controller.Switch"
+    },
+    {
+      "id": 29,
+      "description": "Right Outlane Feed",
+      "vpx_name": "sw29",
+      "_inferred_type": "rollover",
+      "_note": "Has Update_Wires + Controller.Switch"
+    },
+    {
+      "id": 30,
+      "description": "Pop Bumper 1 (Top)",
+      "_inferred_type": "bumper",
+      "_note": "PulseSw 30 via Bumper1_Hit",
+      "vpx_name": "Bumper1"
+    },
+    {
+      "id": 31,
+      "description": "Pop Bumper 2 (Middle)",
+      "_inferred_type": "bumper",
+      "_note": "PulseSw 31 via Bumper2_Hit",
+      "vpx_name": "Bumper2"
+    },
+    {
+      "id": 32,
+      "description": "Pop Bumper 3 (Bottom)",
+      "_inferred_type": "bumper",
+      "_note": "PulseSw 32 via Bumper3_Hit",
+      "vpx_name": "Bumper3"
+    },
+    {
+      "id": 33,
+      "description": "Left Target Bank 1",
+      "vpx_name": "sw33",
+      "_inferred_type": "standup_target",
+      "_note": "STHit framework target"
+    },
+    {
+      "id": 34,
+      "description": "Left Target Bank 2",
+      "vpx_name": "sw34",
+      "_inferred_type": "standup_target",
+      "_note": "STHit framework target"
+    },
+    {
+      "id": 35,
+      "description": "Left Target Bank 3",
+      "vpx_name": "sw35",
+      "_inferred_type": "standup_target",
+      "_note": "STHit framework target"
+    },
+    {
+      "id": 36,
+      "description": "Left Target Bank 4",
+      "vpx_name": "sw36",
+      "_inferred_type": "standup_target",
+      "_note": "STHit framework target"
+    },
+    {
+      "id": 37,
+      "description": "Center Lane Gate",
+      "vpx_name": "sw37",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch hit/unhit"
+    },
+    {
+      "id": 38,
+      "description": "Left Lane",
+      "vpx_name": "sw38",
+      "_inferred_type": "rollover",
+      "_note": "Has Update_Wires + Controller.Switch"
+    },
+    {
+      "id": 39,
+      "description": "Right Lane",
+      "vpx_name": "sw39",
+      "_inferred_type": "rollover",
+      "_note": "Has Update_Wires + Controller.Switch"
+    },
+    {
+      "id": 40,
+      "description": "Right Target Bank 1",
+      "vpx_name": "sw40",
+      "_inferred_type": "standup_target",
+      "_note": "STHit framework target"
+    },
+    {
+      "id": 41,
+      "description": "Right Target Bank 2",
+      "vpx_name": "sw41",
+      "_inferred_type": "standup_target",
+      "_note": "STHit framework target"
+    },
+    {
+      "id": 42,
+      "description": "Right Target Bank 3",
+      "vpx_name": "sw42",
+      "_inferred_type": "standup_target",
+      "_note": "STHit framework target"
+    },
+    {
+      "id": 43,
+      "description": "Upper Lane",
+      "vpx_name": "sw43",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch hit/unhit"
+    },
+    {
+      "id": 44,
+      "description": "Drone Target 1",
+      "vpx_name": "sw44",
+      "_inferred_type": "standup_target",
+      "_note": "STHit framework target"
+    },
+    {
+      "id": 45,
+      "description": "Drone Target 2",
+      "vpx_name": "sw45",
+      "_inferred_type": "standup_target",
+      "_note": "STHit framework target"
+    },
+    {
+      "id": 46,
+      "description": "Drone Target 3",
+      "vpx_name": "sw46",
+      "_inferred_type": "standup_target",
+      "_note": "STHit framework target"
+    },
+    {
+      "id": 47,
+      "description": "Whiplash Target 1",
+      "vpx_name": "sw47",
+      "_inferred_type": "standup_target",
+      "_note": "STHit framework target"
+    },
+    {
+      "id": 48,
+      "description": "Whiplash Target 2",
+      "vpx_name": "sw48",
+      "_inferred_type": "standup_target",
+      "_note": "STHit framework target"
+    },
+    {
+      "id": 49,
+      "description": "Right Return Lane",
+      "vpx_name": "sw49",
+      "_inferred_type": "rollover",
+      "_note": "Controller.Switch hit/unhit"
+    },
+    {
+      "id": 50,
+      "description": "Drone Target 4",
+      "vpx_name": "sw50",
+      "_inferred_type": "standup_target",
+      "_note": "STHit framework target"
+    },
+    {
+      "id": -7,
+      "description": "Tilt",
+      "_inferred_type": "cabinet",
+      "_note": "vpmNudge.TiltSwitch=-7 (negative = virtual slam tilt)"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Release",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw21",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Kicks from sw21, pulses sw15 on release"
+    },
+    {
+      "id": 2,
+      "description": "Auto Launch",
+      "_vbscript_callback": "solAutofire",
+      "_inferred_type": "ball_management",
+      "vpx_name": "PlungerIM",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "entry_coil",
+      "_note": "Impulse plunger auto-fire"
+    },
+    {
+      "id": 3,
+      "description": "Left Magnet",
+      "_inferred_type": "magnet",
+      "vpx_name": "Magnet1",
+      "_note": "cvpmMagnet mag1, solenoid=3, size=50"
+    },
+    {
+      "id": 4,
+      "description": "Right Magnet",
+      "_inferred_type": "magnet",
+      "vpx_name": "Magnet2",
+      "_note": "cvpmMagnet mag2, solenoid=4, size=30"
+    },
+    {
+      "id": 5,
+      "description": "War Machine Kicker",
+      "_vbscript_callback": "WMKick",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw10",
+      "_note": "Kicks ball from sw10 kicker"
+    },
+    {
+      "id": 6,
+      "description": "Orbit Lane Drop Post",
+      "_vbscript_callback": "orbitpost",
+      "_inferred_type": "mechanism",
+      "vpx_name": "PostOrbit",
+      "_note": "Raises/lowers orbit lane diverter post"
+    },
+    {
+      "id": 12,
+      "description": "Center Lane Drop Post",
+      "_vbscript_callback": "ClanePost",
+      "_inferred_type": "mechanism",
+      "vpx_name": "PostClane",
+      "_note": "Raises/lowers center lane diverter post"
+    },
+    {
+      "id": 15,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper"
+    },
+    {
+      "id": 16,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper"
+    },
+    {
+      "id": 19,
+      "description": "Iron Monger Motor",
+      "_vbscript_callback": "Solmonger",
+      "_inferred_type": "mechanism",
+      "_note": "Toggles Iron Monger toy up/down. Sets sw1 (down) and sw3 (up) programmatically."
+    },
+    {
+      "id": 20,
+      "description": "Flasher Pop Bumper",
+      "_vbscript_callback": "SetLampMod 120",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback — modulated flasher mapped to Lampz 120"
+    },
+    {
+      "id": 21,
+      "description": "Flasher Left Ramp Top",
+      "_vbscript_callback": "SetLampMod 121",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback — modulated flasher mapped to Lampz 121"
+    },
+    {
+      "id": 22,
+      "description": "Flasher War Machine Front",
+      "_vbscript_callback": "SetLampMod 122",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback — modulated flasher mapped to Lampz 122"
+    },
+    {
+      "id": 23,
+      "description": "Flasher Monger Centre Lane",
+      "_vbscript_callback": "SetLampMod 123",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback — modulated flasher mapped to Lampz 123"
+    },
+    {
+      "id": 24,
+      "description": "Optional Coil",
+      "_vbscript_callback": "SetLampMod 124",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback — modulated flasher mapped to Lampz 124. No VPX light assigned."
+    },
+    {
+      "id": 25,
+      "description": "Flasher Iron Monger x2",
+      "_vbscript_callback": "SetLampMod 125",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback — modulated flasher mapped to Lampz 125"
+    },
+    {
+      "id": 26,
+      "description": "Flasher Right Ramp Top",
+      "_vbscript_callback": "SetLampMod 126",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback — modulated flasher mapped to Lampz 126"
+    },
+    {
+      "id": 27,
+      "description": "Flasher War Machine x3",
+      "_vbscript_callback": "SetLampMod 127",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback — modulated flasher mapped to Lampz 127 (l127a, l127b)"
+    },
+    {
+      "id": 28,
+      "description": "Iron Monger Chest Light",
+      "_vbscript_callback": "SetLampMod 128",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback — modulated flasher mapped to Lampz 128"
+    },
+    {
+      "id": 29,
+      "description": "Flasher Whiplash x2",
+      "_vbscript_callback": "SetLampMod 129",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback — modulated flasher mapped to Lampz 129"
+    },
+    {
+      "id": 30,
+      "description": "Flasher Mark VI x2",
+      "_vbscript_callback": "SetLampMod 130",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback — modulated flasher mapped to Lampz 130"
+    },
+    {
+      "id": 31,
+      "description": "Flasher Left Ramp Bottom x2",
+      "_vbscript_callback": "SetLampMod 131",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback — modulated flasher mapped to Lampz 131"
+    },
+    {
+      "id": 32,
+      "description": "Flasher Right Ramp Bottom",
+      "_vbscript_callback": "SetLampMod 132",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "SolModCallback — modulated flasher mapped to Lampz 132"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "vpx_name": "l1",
+      "description": "Start Button",
+      "_note": "Commented out MassAssign; callback drives VR_StartButtInner"
+    },
+    {
+      "id": 2,
+      "vpx_name": "l2",
+      "description": "Tournament Button",
+      "_note": "Commented out MassAssign; callback drives VR_TourneyButt"
+    },
+    {
+      "id": 3,
+      "vpx_name": "l3",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 4,
+      "vpx_name": "l4",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 5,
+      "vpx_name": "l5",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 6,
+      "vpx_name": "l6",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 7,
+      "vpx_name": "l7",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 8,
+      "vpx_name": "L8",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 9,
+      "vpx_name": "l9",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 10,
+      "vpx_name": "l10",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 11,
+      "vpx_name": "l11",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 12,
+      "vpx_name": "l12",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 13,
+      "vpx_name": "l13",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 14,
+      "vpx_name": "l14",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 15,
+      "vpx_name": "l15",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 16,
+      "vpx_name": "l16",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 17,
+      "vpx_name": "l17",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 18,
+      "vpx_name": "l18",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 19,
+      "vpx_name": "l19",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 20,
+      "vpx_name": "l20",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 21,
+      "vpx_name": "l21",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 22,
+      "vpx_name": "l22",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 23,
+      "vpx_name": "l23",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 24,
+      "vpx_name": "l24",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 25,
+      "vpx_name": "l25",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 26,
+      "vpx_name": "l26",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 27,
+      "vpx_name": "l27",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 28,
+      "vpx_name": "l28",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 29,
+      "vpx_name": "l29",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 30,
+      "vpx_name": "l30",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 31,
+      "vpx_name": "l31",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 32,
+      "vpx_name": "l32",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 33,
+      "vpx_name": "l33",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 34,
+      "vpx_name": "l34",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 35,
+      "vpx_name": "l35",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 36,
+      "vpx_name": "l36",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 37,
+      "vpx_name": "l37",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 38,
+      "vpx_name": "l38",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 39,
+      "vpx_name": "l39",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 40,
+      "vpx_name": "l40",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 41,
+      "vpx_name": "l41",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 42,
+      "vpx_name": "l42",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 43,
+      "vpx_name": "l43",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 44,
+      "vpx_name": "l44",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 45,
+      "vpx_name": "l45",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 46,
+      "vpx_name": "l46",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 47,
+      "vpx_name": "l47",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 48,
+      "vpx_name": "l48",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 49,
+      "vpx_name": "l49",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 50,
+      "vpx_name": "l50",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 51,
+      "vpx_name": "l51",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 52,
+      "vpx_name": "l52",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 53,
+      "vpx_name": "l53",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 54,
+      "vpx_name": "l54",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 55,
+      "vpx_name": "l55",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 56,
+      "vpx_name": "l56",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 57,
+      "vpx_name": "l57",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 58,
+      "vpx_name": "l58",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 59,
+      "vpx_name": "l59",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 60,
+      "vpx_name": "l60",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 61,
+      "vpx_name": "l61",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 62,
+      "vpx_name": "l62",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 63,
+      "vpx_name": "l63",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 104,
+      "description": "GI",
+      "_inferred_type": "gi",
+      "_note": "Lampz index 104, drives GILights collection"
+    },
+    {
+      "id": 120,
+      "vpx_name": "l120",
+      "description": "Flasher Pop Bumper",
+      "_inferred_type": "flasher",
+      "_note": "Driven by SolModCallback coil 20"
+    },
+    {
+      "id": 121,
+      "vpx_name": "l121",
+      "description": "Flasher Left Ramp Top",
+      "_inferred_type": "flasher",
+      "_note": "Driven by SolModCallback coil 21"
+    },
+    {
+      "id": 122,
+      "vpx_name": "l122",
+      "description": "Flasher War Machine Front",
+      "_inferred_type": "flasher",
+      "_note": "Driven by SolModCallback coil 22"
+    },
+    {
+      "id": 123,
+      "vpx_name": "l123",
+      "description": "Flasher Monger Centre Lane",
+      "_inferred_type": "flasher",
+      "_note": "Driven by SolModCallback coil 23"
+    },
+    {
+      "id": 125,
+      "vpx_name": "l125",
+      "description": "Flasher Iron Monger x2",
+      "_inferred_type": "flasher",
+      "_note": "Driven by SolModCallback coil 25"
+    },
+    {
+      "id": 126,
+      "vpx_name": "l126",
+      "description": "Flasher Right Ramp Top",
+      "_inferred_type": "flasher",
+      "_note": "Driven by SolModCallback coil 26"
+    },
+    {
+      "id": 127,
+      "vpx_name": "l127a",
+      "description": "Flasher War Machine x3",
+      "_inferred_type": "flasher",
+      "_note": "Driven by SolModCallback coil 27. Two VPX lights: l127a, l127b."
+    },
+    {
+      "id": 128,
+      "description": "Iron Monger Chest Light",
+      "_inferred_type": "flasher",
+      "_note": "Driven by SolModCallback coil 28. MassAssign commented out — callback only."
+    },
+    {
+      "id": 129,
+      "description": "Flasher Whiplash x2",
+      "_inferred_type": "flasher",
+      "_note": "Driven by SolModCallback coil 29. MassAssign commented out — callback only."
+    },
+    {
+      "id": 130,
+      "vpx_name": "l130",
+      "description": "Flasher Mark VI x2",
+      "_inferred_type": "flasher",
+      "_note": "Driven by SolModCallback coil 30"
+    },
+    {
+      "id": 131,
+      "vpx_name": "l131",
+      "description": "Flasher Left Ramp Bottom x2",
+      "_inferred_type": "flasher",
+      "_note": "Driven by SolModCallback coil 31"
+    },
+    {
+      "id": 132,
+      "vpx_name": "l132",
+      "description": "Flasher Right Ramp Bottom",
+      "_inferred_type": "flasher",
+      "_note": "Driven by SolModCallback coil 32"
+    },
+    {
+      "id": 150,
+      "description": "Room Lighting",
+      "_inferred_type": "gi",
+      "_note": "Virtual room ambient lighting. Lampz.Callback only (MassAssign commented out)."
+    }
+  ],
+  "aliases": [
+    {
+      "id": 16,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "right_main — framework constant"
+    },
+    {
+      "id": 15,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "left_main — framework constant"
+    }
+  ]
+}

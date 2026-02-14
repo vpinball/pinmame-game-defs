@@ -1,0 +1,530 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Guns N Roses (Data East 1994) VPW 1.2.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils — extracted directly from VPW 1.2 VBScript. Trough is 6-ball (sw9-sw14) with virtual sw15 for shooter lane staging. Switch descriptions from VBS comments and game context. Lamps l1-l62 confirmed via VLM lightmapper BL_Inserts arrays. GI lights (l140a-f, l141/l141a-l) controlled by SolModCallback(11) GI relay. Flashers (f01-f08) controlled by SolModCallback(25-32) via DE A/B relay. Magnets use cvpmMagnet custom solenoids 51-53. Flipper solenoids use DE framework constants sLRFlipper=46, sLLFlipper=48, sULFlipper=36."
+  },
+  "game": {
+    "id": "gnr",
+    "name": "Guns N' Roses",
+    "year": 1994,
+    "manufacturer": "Data East",
+    "ipdb_id": 1100,
+    "platform": "dataeast"
+  },
+  "roms": [
+    { "id": "gnr_300", "version": "3.00", "language": "en" }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Tilt",
+      "_note": "vpmNudge.TiltSwitch=1"
+    },
+    {
+      "id": 9,
+      "description": "#1 (Left) Ball Trough",
+      "vpx_name": "sw9",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch"
+    },
+    {
+      "id": 10,
+      "description": "#2 Ball Trough",
+      "vpx_name": "sw10",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_2"
+    },
+    {
+      "id": 11,
+      "description": "#3 Ball Trough",
+      "vpx_name": "sw11",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_3"
+    },
+    {
+      "id": 12,
+      "description": "#4 Ball Trough",
+      "vpx_name": "sw12",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_4"
+    },
+    {
+      "id": 13,
+      "description": "#5 Ball Trough",
+      "vpx_name": "sw13",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_5"
+    },
+    {
+      "id": 14,
+      "description": "#6 Ball Trough",
+      "vpx_name": "sw14",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_6"
+    },
+    {
+      "id": 15,
+      "description": "Trough Jam / Shooter Lane",
+      "_note": "Virtual switch — set by SolTrough(1)/SolRelease(0), no physical VPX kicker object"
+    },
+    {
+      "id": 16,
+      "description": "Shooter Lane (Ball In Plunger Lane)",
+      "vpx_name": "sw16"
+    },
+    {
+      "id": 17,
+      "description": "Standup Target D (DUFF)",
+      "vpx_name": "sw17"
+    },
+    {
+      "id": 18,
+      "description": "Standup Target U (DUFF)",
+      "vpx_name": "sw18"
+    },
+    {
+      "id": 19,
+      "description": "Standup Target F (DUFF)",
+      "vpx_name": "sw19"
+    },
+    {
+      "id": 20,
+      "description": "Standup Target F (DUFF)",
+      "vpx_name": "sw20"
+    },
+    {
+      "id": 21,
+      "description": "J Top Lane (JAM)",
+      "vpx_name": "sw21"
+    },
+    {
+      "id": 22,
+      "description": "A Top Lane (JAM)",
+      "vpx_name": "sw22"
+    },
+    {
+      "id": 23,
+      "description": "M Top Lane (JAM)",
+      "vpx_name": "sw23"
+    },
+    {
+      "id": 24,
+      "description": "Left Shooter Lane",
+      "vpx_name": "sw24"
+    },
+    {
+      "id": 25,
+      "description": "Top Bumper",
+      "vpx_name": "Bumper1"
+    },
+    {
+      "id": 26,
+      "description": "Middle Bumper",
+      "vpx_name": "Bumper2"
+    },
+    {
+      "id": 27,
+      "description": "Bottom Bumper",
+      "vpx_name": "Bumper3"
+    },
+    {
+      "id": 28,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot"
+    },
+    {
+      "id": 29,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot"
+    },
+    {
+      "id": 30,
+      "description": "Top Slingshot",
+      "vpx_name": "TopSlingShot"
+    },
+    {
+      "id": 33,
+      "description": "Left Drop Target Bottom",
+      "vpx_name": "sw33"
+    },
+    {
+      "id": 34,
+      "description": "Left Drop Target Middle",
+      "vpx_name": "sw34"
+    },
+    {
+      "id": 35,
+      "description": "Right Drop Target Middle",
+      "vpx_name": "sw35"
+    },
+    {
+      "id": 36,
+      "description": "Right Drop Target Bottom",
+      "vpx_name": "sw36"
+    },
+    {
+      "id": 37,
+      "description": "Upper Left VUK",
+      "vpx_name": "sw37"
+    },
+    {
+      "id": 38,
+      "description": "Center Scoop",
+      "vpx_name": "sw38"
+    },
+    {
+      "id": 39,
+      "description": "Upper Right VUK",
+      "vpx_name": "sw39"
+    },
+    {
+      "id": 40,
+      "description": "Snake Funnel",
+      "vpx_name": "sw40"
+    },
+    {
+      "id": 48,
+      "description": "Inner Orbit Bottom",
+      "vpx_name": "sw48"
+    },
+    {
+      "id": 49,
+      "description": "R Ramp Entrance",
+      "vpx_name": "sw49"
+    },
+    {
+      "id": 50,
+      "description": "R Ramp Made",
+      "vpx_name": "sw50"
+    },
+    {
+      "id": 51,
+      "description": "G Ramp Entrance",
+      "vpx_name": "sw51"
+    },
+    {
+      "id": 52,
+      "description": "G Ramp Made",
+      "vpx_name": "sw52"
+    },
+    {
+      "id": 53,
+      "description": "Left Inlane Return",
+      "vpx_name": "sw53"
+    },
+    {
+      "id": 54,
+      "description": "Left Outlane",
+      "vpx_name": "sw54"
+    },
+    {
+      "id": 55,
+      "description": "Right Outlane",
+      "vpx_name": "sw55"
+    },
+    {
+      "id": 56,
+      "description": "Right Inlane Return",
+      "vpx_name": "sw56"
+    },
+    {
+      "id": 57,
+      "description": "Right Drop Target Top",
+      "vpx_name": "sw57"
+    },
+    {
+      "id": 58,
+      "description": "Right Orbit Top",
+      "vpx_name": "sw58"
+    },
+    {
+      "id": 59,
+      "description": "Left Drop Target Top",
+      "vpx_name": "sw59"
+    },
+    {
+      "id": 60,
+      "description": "Left Orbit Top",
+      "vpx_name": "sw60"
+    },
+    {
+      "id": 62,
+      "description": "Gun Trigger",
+      "_note": "Pulsed via PlungerKey (vpmTimer.PulseSw 62), not a physical VPX kicker"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Eject",
+      "_vbscript_callback": "SolTrough",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 2,
+      "description": "Ball Release (Shooter Lane)",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "ball_release"
+    },
+    {
+      "id": 3,
+      "description": "Auto Fire (Plunger)",
+      "_vbscript_callback": "SolAutofire",
+      "_inferred_type": "kicker",
+      "vpx_name": "swplunger",
+      "_note": "Impulse plunger via cvpmImpulseP, power=65, time=0.6"
+    },
+    {
+      "id": 4,
+      "description": "Upper Left VUK Kicker",
+      "_vbscript_callback": "KickerUpperLeft",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw37"
+    },
+    {
+      "id": 5,
+      "description": "Upper Right VUK Kicker",
+      "_vbscript_callback": "KickerUpperRight",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw39"
+    },
+    {
+      "id": 6,
+      "description": "Scoop Kicker",
+      "_vbscript_callback": "ScoopKicker",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw38"
+    },
+    {
+      "id": 7,
+      "description": "Trap Door",
+      "_vbscript_callback": "SolTrapDoor",
+      "_inferred_type": "mechanism",
+      "_note": "Controls SnakeTrapDoor wall and TrapFlipper"
+    },
+    {
+      "id": 8,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"knocker\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 9,
+      "description": "Reset Right Drop Targets",
+      "_vbscript_callback": "ResetDropsR",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets sw35, sw36, sw57"
+    },
+    {
+      "id": 10,
+      "description": "K1 Relay (Solenoid Mux)",
+      "_vbscript_callback": "K1Relay",
+      "_inferred_type": "relay",
+      "_note": "DE solenoid mux relay — SSF sound only in VBS"
+    },
+    {
+      "id": 11,
+      "description": "GI Relay",
+      "_vbscript_callback": "GIRelay",
+      "_inferred_type": "gi_relay",
+      "_note": "SolModCallback — PWM controls GI lights l141, l141b-l141l, lgi"
+    },
+    {
+      "id": 12,
+      "description": "Reset Left Drop Targets",
+      "_vbscript_callback": "ResetDropsL",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets sw33, sw34, sw59"
+    },
+    {
+      "id": 14,
+      "description": "Kickback",
+      "_vbscript_callback": "SolKickBack",
+      "_inferred_type": "kicker",
+      "vpx_name": "Kickback"
+    },
+    {
+      "id": 25,
+      "description": "Flasher 1",
+      "_vbscript_callback": "FlashPWM 1, f01, BL_Flashers_f1, ",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f01",
+      "_note": "SolModCallback — DE relay-switched flasher"
+    },
+    {
+      "id": 26,
+      "description": "Flasher 2",
+      "_vbscript_callback": "FlashPWM 2, f02, BL_Flashers_f2, ",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f02"
+    },
+    {
+      "id": 27,
+      "description": "Flasher 3",
+      "_vbscript_callback": "FlashPWM 3, f03, BL_Flashers_f3, ",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f03"
+    },
+    {
+      "id": 28,
+      "description": "Flasher 4",
+      "_vbscript_callback": "FlashPWM 4, f04, BL_Flashers_f4, ",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f04"
+    },
+    {
+      "id": 29,
+      "description": "Flasher 5",
+      "_vbscript_callback": "FlashPWM 5, f05, BL_Flashers_f5, ",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f05"
+    },
+    {
+      "id": 30,
+      "description": "Flasher 6",
+      "_vbscript_callback": "FlashPWM 6, f06, BL_Flashers_f6, ",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f06"
+    },
+    {
+      "id": 31,
+      "description": "Flasher 7",
+      "_vbscript_callback": "FlashPWM 7, f07, BL_Flashers_f7, ",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f07"
+    },
+    {
+      "id": 32,
+      "description": "Flasher 8",
+      "_vbscript_callback": "FlashPWM 8, f08, BL_Flashers_f8, ",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f08"
+    },
+    {
+      "id": 46,
+      "description": "Lower Right Flipper",
+      "_vbscript_name": "sLRFlipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper"
+    },
+    {
+      "id": 48,
+      "description": "Lower Left Flipper",
+      "_vbscript_name": "sLLFlipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper"
+    },
+    {
+      "id": 36,
+      "description": "Upper Left Flipper",
+      "_vbscript_name": "sULFlipper",
+      "_vbscript_callback": "SolULFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper1"
+    },
+    {
+      "id": 51,
+      "description": "Left Magnet",
+      "_inferred_type": "magnet",
+      "vpx_name": "MagLeft",
+      "_note": "cvpmMagnet, solenoid=51, radius=16"
+    },
+    {
+      "id": 52,
+      "description": "Middle Magnet",
+      "_inferred_type": "magnet",
+      "vpx_name": "MagMid",
+      "_note": "cvpmMagnet, solenoid=52, radius=16"
+    },
+    {
+      "id": 53,
+      "description": "Right Magnet",
+      "_inferred_type": "magnet",
+      "vpx_name": "MagRight",
+      "_note": "cvpmMagnet, solenoid=53, radius=16"
+    }
+  ],
+  "lamps": [
+    { "id": 1, "description": "Lamp 1", "vpx_name": "l1" },
+    { "id": 2, "description": "Lamp 2", "vpx_name": "l2" },
+    { "id": 3, "description": "Lamp 3", "vpx_name": "l3" },
+    { "id": 4, "description": "Lamp 4", "vpx_name": "l4" },
+    { "id": 5, "description": "Lamp 5", "vpx_name": "l5" },
+    { "id": 6, "description": "Lamp 6", "vpx_name": "l6" },
+    { "id": 7, "description": "Lamp 7", "vpx_name": "l7" },
+    { "id": 8, "description": "Lamp 8", "vpx_name": "l8" },
+    { "id": 9, "description": "Lamp 9", "vpx_name": "l9" },
+    { "id": 10, "description": "Lamp 10", "vpx_name": "l10" },
+    { "id": 11, "description": "Lamp 11", "vpx_name": "l11" },
+    { "id": 12, "description": "Lamp 12", "vpx_name": "l12" },
+    { "id": 13, "description": "Lamp 13", "vpx_name": "l13" },
+    { "id": 14, "description": "Lamp 14", "vpx_name": "l14" },
+    { "id": 15, "description": "Lamp 15", "vpx_name": "l15" },
+    { "id": 16, "description": "Lamp 16", "vpx_name": "l16" },
+    { "id": 17, "description": "Lamp 17", "vpx_name": "l17" },
+    { "id": 18, "description": "Lamp 18", "vpx_name": "l18" },
+    { "id": 19, "description": "Lamp 19", "vpx_name": "l19" },
+    { "id": 20, "description": "Lamp 20", "vpx_name": "l20" },
+    { "id": 21, "description": "Lamp 21", "vpx_name": "l21" },
+    { "id": 22, "description": "Lamp 22", "vpx_name": "l22" },
+    { "id": 23, "description": "Lamp 23", "vpx_name": "l23" },
+    { "id": 24, "description": "Lamp 24", "vpx_name": "l24" },
+    { "id": 25, "description": "Lamp 25", "vpx_name": "l25" },
+    { "id": 26, "description": "Lamp 26", "vpx_name": "l26" },
+    { "id": 27, "description": "Lamp 27", "vpx_name": "l27" },
+    { "id": 28, "description": "Lamp 28", "vpx_name": "l28" },
+    { "id": 29, "description": "Lamp 29", "vpx_name": "l29" },
+    { "id": 30, "description": "Lamp 30", "vpx_name": "l30" },
+    { "id": 31, "description": "Lamp 31", "vpx_name": "l31" },
+    { "id": 32, "description": "Lamp 32", "vpx_name": "l32" },
+    { "id": 33, "description": "Lamp 33", "vpx_name": "l33" },
+    { "id": 34, "description": "Lamp 34", "vpx_name": "l34" },
+    { "id": 35, "description": "Lamp 35", "vpx_name": "l35" },
+    { "id": 36, "description": "Lamp 36", "vpx_name": "l36" },
+    { "id": 37, "description": "Lamp 37", "vpx_name": "l37" },
+    { "id": 38, "description": "Lamp 38", "vpx_name": "l38" },
+    { "id": 39, "description": "Lamp 39", "vpx_name": "l39" },
+    { "id": 40, "description": "Lamp 40", "vpx_name": "l40" },
+    { "id": 41, "description": "Lamp 41", "vpx_name": "l41" },
+    { "id": 42, "description": "Lamp 42", "vpx_name": "l42" },
+    { "id": 43, "description": "Lamp 43", "vpx_name": "l43" },
+    { "id": 44, "description": "Lamp 44", "vpx_name": "l44" },
+    { "id": 45, "description": "Lamp 45", "vpx_name": "l45" },
+    { "id": 46, "description": "Lamp 46", "vpx_name": "l46" },
+    { "id": 47, "description": "Lamp 47", "vpx_name": "l47" },
+    { "id": 48, "description": "Lamp 48", "vpx_name": "l48" },
+    { "id": 49, "description": "Lamp 49", "vpx_name": "l49" },
+    { "id": 50, "description": "Lamp 50", "vpx_name": "l50" },
+    { "id": 51, "description": "Lamp 51", "vpx_name": "l51" },
+    { "id": 52, "description": "Lamp 52", "vpx_name": "l52" },
+    { "id": 53, "description": "Lamp 53", "vpx_name": "l53" },
+    { "id": 54, "description": "Lamp 54", "vpx_name": "l54" },
+    { "id": 55, "description": "Lamp 55", "vpx_name": "l55" },
+    { "id": 56, "description": "Lamp 56", "vpx_name": "l56" },
+    { "id": 57, "description": "Lamp 57", "vpx_name": "l57" },
+    { "id": 58, "description": "Lamp 58", "vpx_name": "l58" },
+    { "id": 59, "description": "Lamp 59", "vpx_name": "l59" },
+    { "id": 60, "description": "Lamp 60", "vpx_name": "l60" },
+    { "id": 61, "description": "Lamp 61", "vpx_name": "l61" },
+    { "id": 62, "description": "Lamp 62", "vpx_name": "l62" }
+  ]
+}

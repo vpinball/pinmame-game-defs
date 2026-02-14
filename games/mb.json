@@ -1,0 +1,671 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Monster Bash (Williams 1998) VPWmod v1.01.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from VBScript hit/unhit subs and SolCallback assignments. Lamp IDs from UpdateLamps NFadeL/NFadeLm calls. Flasher coils (17-26) use SolModCallback with SetModLamp/flasher routines. Dracula position switches (74-78) are opto-based and handled by controller.getmech(2), not direct VPX objects. Spinner (sw117) fires PulseSw 117 but 117 is outside the 8x8 matrix — this is a WPC virtual switch used internally. Commented-out SolCallbacks for slingshots (10-11) and bumpers (12-14) included as coils since the ROM still fires them."
+  },
+  "game": {
+    "id": "mb",
+    "name": "Monster Bash",
+    "year": 1998,
+    "manufacturer": "Williams",
+    "ipdb_id": 4441,
+    "platform": "wpc"
+  },
+  "roms": [
+    { "id": "mb_106b", "version": "1.06B", "language": "en", "_note": "Default ROM in VBScript (cGameName)" },
+    { "id": "mb_106", "version": "1.06", "language": "en" },
+    { "id": "mb_10", "version": "1.0", "language": "en" }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Launch Button",
+      "vpx_name": "PlungerKey",
+      "_note": "Directly set via Controller.Switch(11) in KeyDown/KeyUp handlers, not a VPX object hit sub"
+    },
+    {
+      "id": 12,
+      "description": "Dracula Standup Top",
+      "vpx_name": "sw12",
+      "_inferred_type": "standup_target",
+      "_note": "Uses STHit bouncer system (STArray)"
+    },
+    {
+      "id": 13,
+      "description": "Start Button",
+      "input_action_hint": "start_game",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 14,
+      "description": "Plumb Bob Tilt",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Dracula Standup Bottom",
+      "vpx_name": "sw15",
+      "_inferred_type": "standup_target",
+      "_note": "Uses STHit bouncer system (STArray)"
+    },
+    {
+      "id": 16,
+      "description": "Left Outlane",
+      "vpx_name": "sw16"
+    },
+    {
+      "id": 17,
+      "description": "Right Return Lane",
+      "vpx_name": "sw17"
+    },
+    {
+      "id": 18,
+      "description": "Shooter Lane",
+      "vpx_name": "sw18"
+    },
+    {
+      "id": 21,
+      "description": "Slam Tilt"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "normally_closed": true,
+      "_note": "Set to 1 in Table1_Init"
+    },
+    {
+      "id": 23,
+      "description": "Tomb Treasure",
+      "vpx_name": "sw23",
+      "_inferred_type": "standup_target",
+      "_note": "Uses STHit bouncer system (STArray)"
+    },
+    {
+      "id": 24,
+      "description": "Always Closed",
+      "constant_hint": "always_closed",
+      "_note": "Set to 0 in Table1_Init (Controller.Switch(24) = 0), inverted logic — normally closed opto"
+    },
+    {
+      "id": 25,
+      "description": "Dracula Target",
+      "_inferred_type": "standup_target",
+      "_note": "Fired via vpmTimer.PulseSw 25 in DracTargets_Hit sub — rotating Dracula mechanism target"
+    },
+    {
+      "id": 26,
+      "description": "Left Return Lane",
+      "vpx_name": "sw26"
+    },
+    {
+      "id": 27,
+      "description": "Right Outlane",
+      "vpx_name": "sw27"
+    },
+    {
+      "id": 28,
+      "description": "Left Eject",
+      "vpx_name": "sw28",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 31,
+      "description": "Trough Jam",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "jam",
+      "_note": "Fired via vpmTimer.PulseSw 31 in SolBallRelease"
+    },
+    {
+      "id": 32,
+      "description": "Trough Ball 1",
+      "vpx_name": "sw32",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1"
+    },
+    {
+      "id": 33,
+      "description": "Trough Ball 2",
+      "vpx_name": "sw33",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 34,
+      "description": "Trough Ball 3",
+      "vpx_name": "sw34",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 35,
+      "description": "Trough Ball 4 (Drain)",
+      "vpx_name": "sw35",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch"
+    },
+    {
+      "id": 36,
+      "description": "Right Popper",
+      "vpx_name": "sw36",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 42,
+      "description": "Left Flipper Opto",
+      "vpx_name": "sw42"
+    },
+    {
+      "id": 43,
+      "description": "Right Flipper Opto",
+      "vpx_name": "sw43"
+    },
+    {
+      "id": 44,
+      "description": "Left Blue Target",
+      "vpx_name": "sw44",
+      "_inferred_type": "standup_target",
+      "_note": "Uses STHit2 bouncer system"
+    },
+    {
+      "id": 45,
+      "description": "Center Blue Target",
+      "vpx_name": "sw45",
+      "_inferred_type": "standup_target",
+      "_note": "Uses STHit2 bouncer system"
+    },
+    {
+      "id": 46,
+      "description": "Right Blue Target",
+      "vpx_name": "sw46",
+      "_inferred_type": "standup_target",
+      "_note": "Uses STHit2 bouncer system"
+    },
+    {
+      "id": 47,
+      "description": "Left Flipper Proximity Sensor",
+      "vpx_name": "sw47"
+    },
+    {
+      "id": 48,
+      "description": "Right Flipper Proximity Sensor",
+      "vpx_name": "sw48"
+    },
+    {
+      "id": 51,
+      "description": "Left Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "Fired via vpmTimer.PulseSw 51 in LeftSlingShot_Slingshot sub"
+    },
+    {
+      "id": 52,
+      "description": "Right Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "Fired via vpmTimer.PulseSw 52 in RightSlingShot_Slingshot sub"
+    },
+    {
+      "id": 53,
+      "description": "Left Jet Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Fired via vpmTimer.PulseSw 53 in Bumper1_Hit",
+      "vpx_name": "Bumper1"
+    },
+    {
+      "id": 54,
+      "description": "Right Jet Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Fired via vpmTimer.PulseSw 54 in Bumper2_Hit",
+      "vpx_name": "Bumper2"
+    },
+    {
+      "id": 55,
+      "description": "Bottom Jet Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Fired via vpmTimer.PulseSw 55 in Bumper3_Hit",
+      "vpx_name": "Bumper3"
+    },
+    {
+      "id": 56,
+      "description": "Left Top Lane",
+      "vpx_name": "sw56"
+    },
+    {
+      "id": 57,
+      "description": "Center Top Lane",
+      "vpx_name": "sw57"
+    },
+    {
+      "id": 58,
+      "description": "Right Top Lane",
+      "vpx_name": "sw58"
+    },
+    {
+      "id": 61,
+      "description": "Left Loop Low",
+      "vpx_name": "sw61"
+    },
+    {
+      "id": 62,
+      "description": "Left Loop High",
+      "vpx_name": "sw62"
+    },
+    {
+      "id": 63,
+      "description": "Right Loop Low",
+      "vpx_name": "sw63"
+    },
+    {
+      "id": 64,
+      "description": "Right Loop High",
+      "vpx_name": "sw64"
+    },
+    {
+      "id": 65,
+      "description": "Center Loop",
+      "vpx_name": "sw65"
+    },
+    {
+      "id": 66,
+      "description": "Left Ramp Enter",
+      "vpx_name": "sw66"
+    },
+    {
+      "id": 67,
+      "description": "Left Ramp Exit",
+      "vpx_name": "sw67"
+    },
+    {
+      "id": 68,
+      "description": "Center Ramp Enter",
+      "vpx_name": "sw68",
+      "_note": "PulseSw — momentary pulse switch"
+    },
+    {
+      "id": 71,
+      "description": "Right Ramp Enter",
+      "vpx_name": "sw71",
+      "_note": "PulseSw — momentary pulse switch"
+    },
+    {
+      "id": 72,
+      "description": "Right Ramp Exit",
+      "vpx_name": "sw72"
+    },
+    {
+      "id": 73,
+      "description": "Right Ramp Lock",
+      "vpx_name": "sw73"
+    },
+    {
+      "id": 74,
+      "description": "Dracula Position 5",
+      "_note": "Opto — handled by controller.getmech(2), no VPX object"
+    },
+    {
+      "id": 75,
+      "description": "Dracula Position 4",
+      "_note": "Opto — handled by controller.getmech(2), no VPX object"
+    },
+    {
+      "id": 76,
+      "description": "Dracula Position 3",
+      "_note": "Opto — handled by controller.getmech(2), no VPX object"
+    },
+    {
+      "id": 77,
+      "description": "Dracula Position 2",
+      "_note": "Opto — handled by controller.getmech(2), no VPX object"
+    },
+    {
+      "id": 78,
+      "description": "Dracula Position 1",
+      "_note": "Opto — handled by controller.getmech(2), no VPX object"
+    },
+    {
+      "id": 81,
+      "description": "Up/Down Bank Up",
+      "_note": "Set directly in TargetsInit and BankMove_timer. Tracks Frank target bank position."
+    },
+    {
+      "id": 82,
+      "description": "Up/Down Bank Down",
+      "_note": "Set directly in TargetsInit and BankMove_timer. Tracks Frank target bank position."
+    },
+    {
+      "id": 83,
+      "description": "Frank Table Down",
+      "_note": "Set in FrankMove_timer. Tracks Frankenstein table mechanism."
+    },
+    {
+      "id": 84,
+      "description": "Frank Table Up",
+      "_note": "Set in FrankInit and FrankMove_timer. Tracks Frankenstein table mechanism."
+    },
+    {
+      "id": 85,
+      "description": "Left Up/Down Bank Target",
+      "vpx_name": "sw85",
+      "_inferred_type": "standup_target",
+      "_note": "Uses STHit bouncer system (STArray)"
+    },
+    {
+      "id": 86,
+      "description": "Right Up/Down Bank Target",
+      "vpx_name": "sw86",
+      "_inferred_type": "standup_target",
+      "_note": "Uses STHit bouncer system (STArray)"
+    },
+    {
+      "id": 87,
+      "description": "Frank Hit",
+      "_note": "Set in FrankInit and FrankMove_timer. Indicates Frankenstein is in hittable position."
+    },
+    {
+      "id": 117,
+      "description": "Spinner",
+      "vpx_name": "Spinner1",
+      "_note": "PulseSw 117 — WPC virtual switch outside 8x8 matrix, used internally by ROM"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "AutoPlunger",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Plunger"
+    },
+    {
+      "id": 2,
+      "description": "Bride Post",
+      "_vbscript_callback": "SolBride",
+      "_inferred_type": "mechanism",
+      "_note": "Raises/lowers bride post (BrideH object)"
+    },
+    {
+      "id": 3,
+      "description": "Mummy Coffin",
+      "_vbscript_callback": "SolMummy",
+      "_inferred_type": "mechanism",
+      "_note": "Opens/closes mummy coffin animation"
+    },
+    {
+      "id": 5,
+      "description": "Left Gate",
+      "_vbscript_callback": "vpmSolGate LGate,false,",
+      "_inferred_type": "gate",
+      "vpx_name": "LGate"
+    },
+    {
+      "id": 6,
+      "description": "Right Gate",
+      "_vbscript_callback": "vpmSolGate Rgate,false,",
+      "_inferred_type": "gate",
+      "vpx_name": "Rgate"
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "solKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 8,
+      "description": "Ramp Lock Post",
+      "_vbscript_callback": "SolLockPost",
+      "_inferred_type": "mechanism",
+      "_note": "Raises/lowers ramp lock post (lock object)"
+    },
+    {
+      "id": 9,
+      "description": "Trough Eject",
+      "_vbscript_callback": "SolBallRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "vpx_name": "sw32",
+      "_note": "Kicks ball from sw32 (trough ball 1)"
+    },
+    {
+      "id": 10,
+      "description": "Left Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "SolCallback commented out in script but ROM still fires it"
+    },
+    {
+      "id": 11,
+      "description": "Right Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "SolCallback commented out in script but ROM still fires it"
+    },
+    {
+      "id": 12,
+      "description": "Left Jet Bumper",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out in script but ROM still fires it",
+      "vpx_name": "Bumper1"
+    },
+    {
+      "id": 13,
+      "description": "Right Jet Bumper",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out in script but ROM still fires it",
+      "vpx_name": "Bumper2"
+    },
+    {
+      "id": 14,
+      "description": "Bottom Jet Bumper",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out in script but ROM still fires it",
+      "vpx_name": "Bumper3"
+    },
+    {
+      "id": 15,
+      "description": "Left Eject",
+      "_vbscript_callback": "SolSaucer",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw28"
+    },
+    {
+      "id": 16,
+      "description": "Right Popper",
+      "_vbscript_callback": "SolRightScoop",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw36"
+    },
+    {
+      "id": 17,
+      "description": "Wolfman Flasher",
+      "_vbscript_callback": "SetModLamp 117,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?17$",
+      "vpx_name": "f17"
+    },
+    {
+      "id": 18,
+      "description": "Bride Flasher",
+      "_vbscript_callback": "SetModLamp 118,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?18$",
+      "vpx_name": "f18"
+    },
+    {
+      "id": 19,
+      "description": "Frank Flasher",
+      "_vbscript_callback": "Flashsol19",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?19$",
+      "_note": "Uses custom flupper dome flasher system"
+    },
+    {
+      "id": 20,
+      "description": "Dracula Flasher",
+      "_vbscript_callback": "SetModLamp 120,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?20$",
+      "vpx_name": "f20"
+    },
+    {
+      "id": 21,
+      "description": "Creature Flasher",
+      "_vbscript_callback": "SolCreature",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?21$",
+      "vpx_name": "f21",
+      "_note": "Also controls Creature animation — SetModLamp 121 + creature shake mechanism"
+    },
+    {
+      "id": 22,
+      "description": "Mummy Flasher",
+      "_vbscript_callback": "SetModLamp 122,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?22$",
+      "vpx_name": "f22"
+    },
+    {
+      "id": 23,
+      "description": "Right Popper Flasher",
+      "_vbscript_callback": "FlashSol23",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?23$",
+      "_note": "Uses custom flupper dome flasher system"
+    },
+    {
+      "id": 24,
+      "description": "Frank Arrow Flasher",
+      "_vbscript_callback": "SetModLamp 124,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?24$",
+      "vpx_name": "f24"
+    },
+    {
+      "id": 25,
+      "description": "Monsters of Rock Flasher",
+      "_vbscript_callback": "SetModLamp 125,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?25$",
+      "vpx_name": "f25"
+    },
+    {
+      "id": 26,
+      "description": "Wolfman Loop Flasher",
+      "_vbscript_callback": "SetLamp 126,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?26$",
+      "vpx_name": "f26"
+    },
+    {
+      "id": 27,
+      "description": "Frank Motor",
+      "_vbscript_callback": "SolFrank",
+      "_inferred_type": "mechanism",
+      "_note": "Drives Frankenstein body up/down animation"
+    },
+    {
+      "id": 28,
+      "description": "Bank Motor",
+      "_vbscript_callback": "SolBank",
+      "_inferred_type": "mechanism",
+      "_note": "Drives Frank target bank up/down movement"
+    },
+    {
+      "id": 41,
+      "description": "Dracula Motor",
+      "_vbscript_callback": "SolDrac",
+      "_inferred_type": "mechanism",
+      "_note": "Drives Dracula rotating coffin mechanism. Uses controller.getmech(2) for position."
+    }
+  ],
+  "lamps": [
+    { "id": 11, "vpx_name": "l11", "_note": "Multiple VPX objects: l11, l11a, l11halo" },
+    { "id": 12, "vpx_name": "l12", "_note": "Multiple VPX objects: l12c, l12" },
+    { "id": 13, "vpx_name": "l13", "_note": "Multiple VPX objects: l13, l13halo" },
+    { "id": 14, "vpx_name": "l14", "_note": "Multiple VPX objects: l14, l14halo" },
+    { "id": 15, "vpx_name": "l15", "_note": "Multiple VPX objects: l15, l15halo" },
+    { "id": 16, "vpx_name": "l16", "_note": "Multiple VPX objects: l16, l16halo" },
+    { "id": 17, "vpx_name": "l17", "_note": "Multiple VPX objects: l17, l17halo" },
+    { "id": 18, "vpx_name": "l18", "_note": "Multiple VPX objects: l18, l18halo" },
+    { "id": 21, "vpx_name": "l21", "_note": "Multiple VPX objects: l21, l21halo" },
+    { "id": 22, "vpx_name": "l22", "_note": "Multiple VPX objects: l22, l22halo" },
+    { "id": 23, "vpx_name": "l23" },
+    { "id": 24, "vpx_name": "l24", "_note": "Multiple VPX objects: l24c, l24, l24halo, l24chalo" },
+    { "id": 25, "vpx_name": "l25", "_note": "Multiple VPX objects: l25, l25halo" },
+    { "id": 26, "vpx_name": "l26", "_note": "Multiple VPX objects: l26, l26halo" },
+    { "id": 27, "vpx_name": "l27", "_note": "Multiple VPX objects: l27, l27halo" },
+    { "id": 28, "vpx_name": "l28", "_note": "Multiple VPX objects: l28, l28halo" },
+    { "id": 31, "vpx_name": "l31", "_note": "Multiple VPX objects: l31c, l31" },
+    { "id": 32, "vpx_name": "l32", "_note": "Multiple VPX objects: l32, l32halo" },
+    { "id": 33, "vpx_name": "l33" },
+    { "id": 34, "vpx_name": "l34", "_note": "Multiple VPX objects: l34, l34halo" },
+    { "id": 35, "vpx_name": "l35" },
+    { "id": 36, "vpx_name": "l36" },
+    { "id": 37, "vpx_name": "l37" },
+    { "id": 38, "vpx_name": "l38", "_note": "Multiple VPX objects: l38, l38halo" },
+    { "id": 41, "vpx_name": "l41" },
+    { "id": 42, "vpx_name": "l42", "_note": "Multiple VPX objects: l42, l42halo" },
+    { "id": 43, "vpx_name": "l43", "_note": "Multiple VPX objects: l43c, l43" },
+    { "id": 44, "vpx_name": "l44", "_note": "Multiple VPX objects: l44, l44halo" },
+    { "id": 45, "vpx_name": "l45", "_note": "Multiple VPX objects: l45, l45halo" },
+    { "id": 46, "vpx_name": "l46", "_note": "Multiple VPX objects: l46, l46halo" },
+    { "id": 47, "vpx_name": "l47", "_note": "Multiple VPX objects: l47, l47halo" },
+    { "id": 48, "vpx_name": "l48", "_note": "Multiple VPX objects: l48, l48halo" },
+    { "id": 51, "vpx_name": "l51" },
+    { "id": 52, "vpx_name": "l52" },
+    { "id": 53, "vpx_name": "l53" },
+    { "id": 54, "vpx_name": "l54" },
+    { "id": 55, "vpx_name": "l55" },
+    { "id": 56, "vpx_name": "l56" },
+    { "id": 57, "vpx_name": "l57", "_note": "Multiple VPX objects: l57, l57a, l57halo" },
+    { "id": 58, "vpx_name": "l58", "_note": "Multiple VPX objects: l58, l58halo" },
+    { "id": 61, "vpx_name": "l61", "_note": "Multiple VPX objects: l61, l61a" },
+    { "id": 62, "vpx_name": "l62", "_note": "Multiple VPX objects: l62, l62a" },
+    { "id": 63, "vpx_name": "l63", "_note": "Multiple VPX objects: l63, l63a" },
+    { "id": 64, "vpx_name": "l64", "_note": "Multiple VPX objects: l64, l64a" },
+    { "id": 65, "vpx_name": "l65", "_note": "Multiple VPX objects: l65, l65a" },
+    { "id": 66, "vpx_name": "l66", "_note": "Multiple VPX objects: l66, l66a" },
+    { "id": 67, "vpx_name": "l67", "_note": "Multiple VPX objects: l67, l67halo" },
+    { "id": 68, "vpx_name": "l68", "_note": "Multiple VPX objects: l68, l68halo" },
+    { "id": 71, "vpx_name": "l71" },
+    { "id": 72, "vpx_name": "l72" },
+    { "id": 73, "vpx_name": "l73", "_note": "Multiple VPX objects: l73, l73halo" },
+    { "id": 74, "vpx_name": "l74" },
+    { "id": 75, "vpx_name": "l75" },
+    { "id": 76, "vpx_name": "l76" },
+    { "id": 77, "vpx_name": "l77", "_note": "Multiple VPX objects: l77, l77halo" },
+    { "id": 81, "vpx_name": "l81pp", "_note": "Monster feature lamp. Multiple VPX objects: l81pp, l81pp2, l81f, l81f2, l81ref" },
+    { "id": 82, "vpx_name": "l82pp", "_note": "Monster feature lamp. Multiple VPX objects: l82pp, l82pp2, l82f, l82f2, l82ref" },
+    { "id": 83, "vpx_name": "l83pp", "_note": "Monster feature lamp. Multiple VPX objects: l83pp, l83pp2, l83f, l83f2" },
+    { "id": 84, "vpx_name": "l84pp", "_note": "Monster feature lamp. Multiple VPX objects: l84pp, l84pp2, l84f, l84f2" },
+    { "id": 85, "vpx_name": "l85", "_note": "Multiple VPX objects: l85, l85a, l85halo" },
+    { "id": 86, "vpx_name": "l86", "_note": "Multiple VPX objects: l86, l86a, l86halo" }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "SolCallback(sLRFlipper) = SolRFlipper; sLRFlipper is framework constant (WPC.VBS)"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "SolCallback(sLLFlipper) = SolLFlipper; sLLFlipper is framework constant (WPC.VBS)"
+    }
+  ]
+}

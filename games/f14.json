@@ -1,0 +1,1132 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "F-14 Tomcat (Williams 1987) VPW Mod 1.0.vbs",
+    "extracted": "2026-02-12",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches and coils from VBS + manual. Lamp descriptions reconstructed from manual OCR (garbled) cross-referenced with game adjustment text and known gameplay. Lamps L57-L62 have backbox bulb/filament treatment in VBS. System 11 A/C relay (sol 14) splits solenoids 1-8 between 'A' (mechanisms) and 'C' (flashers) sides. Flipper solenoid IDs (sLRFlipper=46, sLLFlipper=48, sURFlipper=34, sULFlipper=36) come from core.vbs. VPX table uses manual trough management (not bsTrough helper). SolCallback(2) uses dual-callback syntax 'doflyin:Sol02A'."
+  },
+  "game": {
+    "id": "f14",
+    "name": "F-14 Tomcat",
+    "year": 1987,
+    "manufacturer": "Williams",
+    "ipdb_id": 804,
+    "platform": "s11",
+    "_vpx_source": "F-14 Tomcat (Williams 1987) VPW Mod 1.0.vpx",
+    "_load_vpm": "LoadVPM \"03060000\", \"S11.VBS\", 3.26126"
+  },
+  "roms": [
+    {
+      "id": "f14_l1",
+      "version": "L-1"
+    },
+    {
+      "id": "f14_p3",
+      "version": "P-3",
+      "_note": "Prototype"
+    },
+    {
+      "id": "f14_p4",
+      "version": "P-4",
+      "_note": "Prototype"
+    },
+    {
+      "id": "f14_p5",
+      "version": "P-5",
+      "_note": "Prototype"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Plumb Bob Tilt",
+      "_vbscript_name": "swTilt",
+      "_note": "Framework-defined in S11.VBS"
+    },
+    {
+      "id": 2,
+      "description": "Ball Roll Tilt",
+      "_vbscript_name": "swBallRollTilt",
+      "_note": "Framework-defined in S11.VBS"
+    },
+    {
+      "id": 3,
+      "description": "Credit Button",
+      "_vbscript_name": "swStartButton",
+      "_note": "Framework-defined in S11.VBS"
+    },
+    {
+      "id": 4,
+      "description": "Right Coin Chute",
+      "_vbscript_name": "swCoin3",
+      "_note": "Framework-defined in S11.VBS"
+    },
+    {
+      "id": 5,
+      "description": "Center Coin Chute",
+      "_vbscript_name": "swCoin2",
+      "_note": "Framework-defined in S11.VBS"
+    },
+    {
+      "id": 6,
+      "description": "Left Coin Chute",
+      "_vbscript_name": "swCoin1",
+      "_note": "Framework-defined in S11.VBS"
+    },
+    {
+      "id": 7,
+      "description": "Slam Tilt",
+      "_vbscript_name": "swSlamTilt",
+      "_note": "Framework-defined in S11.VBS"
+    },
+    {
+      "id": 8,
+      "description": "High Score Reset",
+      "_vbscript_name": "swHiScoreReset",
+      "_note": "Framework-defined in S11.VBS"
+    },
+    {
+      "id": 10,
+      "description": "Outhole",
+      "vpx_name": "sw10",
+      "_vbscript_callback": "sw10_hit / sw10_UnHit",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch"
+    },
+    {
+      "id": 11,
+      "description": "Right Ball Trough",
+      "vpx_name": "sw11",
+      "_vbscript_callback": "sw11_Hit / sw11_UnHit",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_1",
+      "_note": "Trough position 1 (closest to shooter lane)"
+    },
+    {
+      "id": 12,
+      "description": "Right Center Ball Trough",
+      "vpx_name": "sw12",
+      "_vbscript_callback": "sw12_Hit / sw12_UnHit",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_2",
+      "_note": "Trough position 2"
+    },
+    {
+      "id": 13,
+      "description": "Left Center Ball Trough",
+      "vpx_name": "sw13",
+      "_vbscript_callback": "sw13_Hit / sw13_UnHit",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_3",
+      "_note": "Trough position 3"
+    },
+    {
+      "id": 14,
+      "description": "Left Ball Trough",
+      "vpx_name": "sw14",
+      "_vbscript_callback": "sw14_Hit / sw14_UnHit",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_4",
+      "_note": "Trough position 4 (farthest from shooter lane)"
+    },
+    {
+      "id": 15,
+      "description": "Right Flipper EOS",
+      "_vbscript_callback": "Controller.Switch(15) via KeyDown/KeyUp",
+      "_note": "End-of-stroke switch for right flipper. Directly set via LeftFlipperKey in VBS (reversed per PinMAME convention)"
+    },
+    {
+      "id": 16,
+      "description": "Ball Shooter Lane",
+      "vpx_name": "sw16",
+      "_vbscript_callback": "sw16_Hit / sw16_Unhit"
+    },
+    {
+      "id": 20,
+      "description": "Ramp Entry",
+      "vpx_name": "sw20",
+      "_vbscript_callback": "sw20_Hit / sw20_Unhit"
+    },
+    {
+      "id": 21,
+      "description": "Right Eject",
+      "vpx_name": "sw21",
+      "_vbscript_callback": "sw21_Hit / sw21_UnHit",
+      "_note": "cvpmImpulseP with switch 21 (plungerIM07a)"
+    },
+    {
+      "id": 22,
+      "description": "Left Center Eject",
+      "vpx_name": "sw22",
+      "_vbscript_callback": "sw22_Hit / sw22_UnHit",
+      "_note": "cvpmImpulseP with switch 22 (plungerIM10)"
+    },
+    {
+      "id": 23,
+      "description": "Right Center Eject",
+      "vpx_name": "sw23",
+      "_vbscript_callback": "sw23_Hit / sw23_UnHit",
+      "_note": "cvpmImpulseP with switch 23 (plungerIM05a)"
+    },
+    {
+      "id": 24,
+      "description": "Ball Popper",
+      "vpx_name": "sw24",
+      "_vbscript_callback": "sw24_hit / sw24_unhit",
+      "_note": "Vertical up-kicker. Animated pUpKicker prim. Kicked by Sol 3 (SolTopHole)"
+    },
+    {
+      "id": 25,
+      "description": "Left Center Target",
+      "vpx_name": "sw25",
+      "_vbscript_callback": "vpmTimer.PulseSw(25)"
+    },
+    {
+      "id": 26,
+      "description": "Right Center Target",
+      "vpx_name": "sw26",
+      "_vbscript_callback": "vpmTimer.PulseSw(26)"
+    },
+    {
+      "id": 28,
+      "description": "Jet Bumper",
+      "vpx_name": "Bumper1",
+      "_vbscript_callback": "vpmTimer.PulseSw(28)"
+    },
+    {
+      "id": 30,
+      "description": "Lower Ramp",
+      "vpx_name": "sw30",
+      "_vbscript_callback": "sw30_Hit / sw30_Unhit",
+      "_note": "Also triggers WireRampOn False"
+    },
+    {
+      "id": 31,
+      "description": "Middle Ramp",
+      "vpx_name": "sw31",
+      "_vbscript_callback": "sw31_Hit / sw31_Unhit",
+      "_note": "Also triggers WireRampOn False"
+    },
+    {
+      "id": 32,
+      "description": "Upper Ramp",
+      "vpx_name": "sw32",
+      "_vbscript_callback": "sw32_Hit / sw32_Unhit",
+      "_note": "Also triggers WireRampOn False"
+    },
+    {
+      "id": 33,
+      "description": "Lower Left T Target",
+      "vpx_name": "sw33",
+      "_vbscript_callback": "vpmTimer.PulseSw(33)"
+    },
+    {
+      "id": 34,
+      "description": "Lower Left O Target",
+      "vpx_name": "sw34",
+      "_vbscript_callback": "vpmTimer.PulseSw(34)"
+    },
+    {
+      "id": 35,
+      "description": "Lower Left M Target",
+      "vpx_name": "sw35",
+      "_vbscript_callback": "vpmTimer.PulseSw(35)"
+    },
+    {
+      "id": 36,
+      "description": "Lower Right T Target",
+      "vpx_name": "sw36",
+      "_vbscript_callback": "vpmTimer.PulseSw(36)"
+    },
+    {
+      "id": 37,
+      "description": "Lower Right A Target",
+      "vpx_name": "sw37",
+      "_vbscript_callback": "vpmTimer.PulseSw(37)"
+    },
+    {
+      "id": 38,
+      "description": "Lower Right C Target",
+      "vpx_name": "sw38",
+      "_vbscript_callback": "vpmTimer.PulseSw(38)"
+    },
+    {
+      "id": 41,
+      "description": "3 Target",
+      "vpx_name": "sw41",
+      "_vbscript_callback": "vpmTimer.PulseSw(41)"
+    },
+    {
+      "id": 42,
+      "description": "2 Target",
+      "vpx_name": "sw42",
+      "_vbscript_callback": "vpmTimer.PulseSw(42)"
+    },
+    {
+      "id": 43,
+      "description": "1 Target",
+      "vpx_name": "sw43",
+      "_vbscript_callback": "vpmTimer.PulseSw(43)"
+    },
+    {
+      "id": 44,
+      "description": "4 Target",
+      "vpx_name": "sw44",
+      "_vbscript_callback": "vpmTimer.PulseSw(44)"
+    },
+    {
+      "id": 45,
+      "description": "5 Target",
+      "vpx_name": "sw45",
+      "_vbscript_callback": "vpmTimer.PulseSw(45)"
+    },
+    {
+      "id": 46,
+      "description": "6 Target",
+      "vpx_name": "sw46",
+      "_vbscript_callback": "vpmTimer.PulseSw(46)"
+    },
+    {
+      "id": 47,
+      "description": "Top Right Loop",
+      "vpx_name": "sw47",
+      "_vbscript_callback": "vpmTimer.PulseSw(47)"
+    },
+    {
+      "id": 48,
+      "description": "Spinner",
+      "vpx_name": "sw48",
+      "_vbscript_callback": "vpmTimer.PulseSw(48)"
+    },
+    {
+      "id": 49,
+      "description": "Upper Left T Target",
+      "vpx_name": "sw49",
+      "_vbscript_callback": "vpmTimer.PulseSw(49)"
+    },
+    {
+      "id": 50,
+      "description": "Upper Left O Target",
+      "vpx_name": "sw50",
+      "_vbscript_callback": "vpmTimer.PulseSw(50)"
+    },
+    {
+      "id": 51,
+      "description": "Upper Left M Target",
+      "vpx_name": "sw51",
+      "_vbscript_callback": "vpmTimer.PulseSw(51)"
+    },
+    {
+      "id": 52,
+      "description": "Upper Right T Target",
+      "vpx_name": "sw52",
+      "_vbscript_callback": "vpmTimer.PulseSw(52)"
+    },
+    {
+      "id": 53,
+      "description": "Upper Right A Target",
+      "vpx_name": "sw53",
+      "_vbscript_callback": "vpmTimer.PulseSw(53)"
+    },
+    {
+      "id": 54,
+      "description": "Upper Right C Target",
+      "vpx_name": "sw54",
+      "_vbscript_callback": "vpmTimer.PulseSw(54)"
+    },
+    {
+      "id": 55,
+      "description": "Line of Death (Kill Gen. Yagov)",
+      "vpx_name": "sw55",
+      "_vbscript_callback": "sw55_Hit / sw55_unHit",
+      "_note": "LODKick activated by Sol 12. Yagov kickback lane."
+    },
+    {
+      "id": 56,
+      "description": "Top Left Loop",
+      "vpx_name": "sw56",
+      "_vbscript_callback": "vpmTimer.PulseSw(56)"
+    },
+    {
+      "id": 57,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_vbscript_callback": "vpmTimer.PulseSw(57)",
+      "_note": "Triggered from LeftSlingShot_Slingshot sub"
+    },
+    {
+      "id": 58,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_vbscript_callback": "vpmTimer.PulseSw(58)",
+      "_note": "Triggered from RightSlingShot_Slingshot sub"
+    },
+    {
+      "id": 59,
+      "description": "Left Flipper Return",
+      "vpx_name": "sw59",
+      "_vbscript_callback": "sw59_Hit / sw59_UnHit"
+    },
+    {
+      "id": 60,
+      "description": "Right Flipper Return",
+      "vpx_name": "sw60",
+      "_vbscript_callback": "sw60_Hit / sw60_UnHit"
+    },
+    {
+      "id": 61,
+      "description": "Left Drain Rescue Kickback",
+      "vpx_name": "sw61",
+      "_vbscript_callback": "sw61_Hit / sw61_unHit",
+      "_note": "LaserKick activated by Sol 13. Left outlane rescue."
+    },
+    {
+      "id": 62,
+      "description": "Right Drain",
+      "vpx_name": "sw62",
+      "_vbscript_callback": "sw62_Hit / sw62_UnHit"
+    },
+    {
+      "id": 63,
+      "description": "Left Flipper EOS",
+      "_vbscript_callback": "Controller.Switch(63) via KeyDown/KeyUp",
+      "_note": "End-of-stroke switch for left flipper. Directly set via RightFlipperKey in VBS (reversed per PinMAME convention)"
+    },
+    {
+      "id": 81,
+      "description": "Upper Right Flipper Button",
+      "_vbscript_name": "swURFlip",
+      "_note": "Framework-defined in S11.VBS. Directly set via flipper key."
+    },
+    {
+      "id": 82,
+      "description": "Lower Right Flipper Button",
+      "_vbscript_name": "swLRFlip",
+      "_note": "Framework-defined in S11.VBS. Directly set via flipper key."
+    },
+    {
+      "id": 83,
+      "description": "Upper Left Flipper Button",
+      "_vbscript_name": "swULFlip",
+      "_note": "Framework-defined in S11.VBS. Directly set via flipper key."
+    },
+    {
+      "id": 84,
+      "description": "Lower Left Flipper Button",
+      "_vbscript_name": "swLLFlip",
+      "_note": "Framework-defined in S11.VBS. Directly set via flipper key."
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Outhole Kicker",
+      "_vbscript_callback": "kisort",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from outhole (sw10) back to trough. Manual trough management (no bsTrough helper).",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_coil"
+    },
+    {
+      "id": 2,
+      "description": "Ball Shooter Lane Feeder",
+      "_vbscript_callback": "doflyin:Sol02A",
+      "_inferred_type": "ball_management",
+      "_note": "Dual callback: doflyin triggers VR F-14 fly-in animation, Sol02A kicks ball from trough (sw11) to shooter lane. Manual trough management.",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 3,
+      "description": "Ball Popper (Launch / Up-Kicker)",
+      "_vbscript_callback": "SolTopHole",
+      "_inferred_type": "kicker",
+      "_note": "Vertical up-kicker at sw24. Animated pUpKicker primitive."
+    },
+    {
+      "id": 5,
+      "description": "Center Right Eject",
+      "_vbscript_callback": "Sol05a",
+      "_inferred_type": "kicker",
+      "_note": "cvpmImpulseP plungerIM05a, switch 23, kick power 70"
+    },
+    {
+      "id": 6,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"fx_KnockerLouder\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 7,
+      "description": "Right Eject",
+      "_vbscript_callback": "Sol07A",
+      "_inferred_type": "kicker",
+      "_note": "cvpmImpulseP plungerIM07a, switch 21, kick power 75"
+    },
+    {
+      "id": 9,
+      "description": "Flasher 9 (Top Blue)",
+      "_vbscript_callback": "FlashFL109",
+      "_inferred_type": "flasher",
+      "_note": "SolModCallback. PWM flasher. Drives F109 light + ModFlashFlasher 1. Blue color. Top playfield position."
+    },
+    {
+      "id": 10,
+      "description": "Center Left Eject",
+      "_vbscript_callback": "Sol10",
+      "_inferred_type": "kicker",
+      "_note": "cvpmImpulseP plungerIM10, switch 22, kick power 70"
+    },
+    {
+      "id": 11,
+      "description": "General Illumination Relay",
+      "_vbscript_callback": "SetGI",
+      "_inferred_type": "gi_relay",
+      "_note": "Controls GILighting collection. System 11 GI on/off relay."
+    },
+    {
+      "id": 12,
+      "description": "Line of Death Kickback (Yagov Kicker)",
+      "_vbscript_callback": "Sol12_Solenoid",
+      "_inferred_type": "kicker",
+      "_note": "Enables/disables LODKick wall at sw55. High-speed kickback. Strength adjustable via YagovKick variable."
+    },
+    {
+      "id": 13,
+      "description": "Rescue Kickback (Left Outlane)",
+      "_vbscript_callback": "Sol13_Solenoid",
+      "_inferred_type": "kicker",
+      "_note": "Enables/disables LaserKick wall at sw61. Left outlane ball save. Animated pLaserKick primitive."
+    },
+    {
+      "id": 14,
+      "description": "Solenoid A/C Select Relay",
+      "_inferred_type": "relay",
+      "_note": "No SolCallback in VBS. System 11 A/C relay that multiplexes solenoids 1-8 between 'A' (mechanism) and 'C' (flasher) functions."
+    },
+    {
+      "id": 15,
+      "description": "Flasher 10 (Top Right Red)",
+      "_vbscript_callback": "FlashFL115",
+      "_inferred_type": "flasher",
+      "_note": "SolModCallback. PWM flasher. Drives F115 light + ModFlashFlasher 2. Red color."
+    },
+    {
+      "id": 16,
+      "description": "Rotating Beacons (Backbox)",
+      "_vbscript_callback": "SolRotateBeacons",
+      "_inferred_type": "mechanism",
+      "_note": "Controls 3 rotating beacon lights (red/white/blue) and F-14 model toy flames/wings. Motor-driven in real machine."
+    },
+    {
+      "id": 17,
+      "description": "Left Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "Special solenoid #1. No SolCallback in VBS (auto-fired by VPX)."
+    },
+    {
+      "id": 18,
+      "description": "Right Slingshot",
+      "_inferred_type": "slingshot",
+      "_note": "Special solenoid #2. No SolCallback in VBS (auto-fired by VPX)."
+    },
+    {
+      "id": 20,
+      "description": "Jet Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Special solenoid #4. No SolCallback in VBS (auto-fired by VPX)."
+    },
+    {
+      "id": 21,
+      "description": "Upper Diverter (Launch Ramp)",
+      "_vbscript_callback": "Sol21",
+      "_inferred_type": "diverter",
+      "_note": "Controls Sol21wall and Diverter1. Init state: dropped (closed). Special solenoid #5."
+    },
+    {
+      "id": 22,
+      "description": "Lower Diverter (Launch Ramp)",
+      "_vbscript_callback": "Sol22",
+      "_inferred_type": "diverter",
+      "_note": "Controls Sol22wall and Diverter2. Init state: dropped (closed). Special solenoid #6."
+    },
+    {
+      "id": 25,
+      "description": "Flasher 1C (Yagov White)",
+      "_vbscript_callback": "FlashFL101",
+      "_inferred_type": "flasher",
+      "_note": "SolModCallback. A/C flasher (shares driver with Sol 1A Outhole). PWM. Drives F101 + ModFlashFlasher 4,10. White color."
+    },
+    {
+      "id": 26,
+      "description": "Flasher 2C (Left Lane)",
+      "_vbscript_callback": "FlashFL102",
+      "_inferred_type": "flasher",
+      "_note": "SolModCallback. A/C flasher (shares driver with Sol 2A Feeder). PWM. Drives F102 + ModFlashFlasher 8. Red color."
+    },
+    {
+      "id": 27,
+      "description": "Flasher 3C (Right Lane)",
+      "_vbscript_callback": "FlashFL103",
+      "_inferred_type": "flasher",
+      "_note": "SolModCallback. A/C flasher (shares driver with Sol 3A Popper). PWM. Drives F103 + ModFlashFlasher 7. Red color."
+    },
+    {
+      "id": 28,
+      "description": "Flasher 4C (Bottom Red)",
+      "_vbscript_callback": "FlashFL104",
+      "_inferred_type": "flasher",
+      "_note": "SolModCallback. A/C flasher (shares driver with Sol 4A Spare). PWM. Drives F104 + ModFlashFlasher 14,6. Red color."
+    },
+    {
+      "id": 29,
+      "description": "Flasher 5C (Bottom White)",
+      "_vbscript_callback": "FlashFL105",
+      "_inferred_type": "flasher",
+      "_note": "SolModCallback. A/C flasher (shares driver with Sol 5A Center Right Eject). PWM. Drives F105 + ModFlashFlasher 13,5. White color."
+    },
+    {
+      "id": 30,
+      "description": "Flasher 6C (Bottom Blue)",
+      "_vbscript_callback": "FlashFL106",
+      "_inferred_type": "flasher",
+      "_note": "SolModCallback. A/C flasher (shares driver with Sol 6A Knocker). PWM. Drives F106 + ModFlashFlasher 12,11. Blue color."
+    },
+    {
+      "id": 31,
+      "description": "Flasher 7C (Top White / Top Red Left)",
+      "_vbscript_callback": "FlashFL107",
+      "_inferred_type": "flasher",
+      "_note": "SolModCallback. A/C flasher (shares driver with Sol 7A Right Eject). PWM. Drives F107 + ModFlashFlasher 3,9. Red color."
+    },
+    {
+      "id": 32,
+      "description": "Flasher 8C (Radar Flasher)",
+      "_vbscript_callback": "Flash108",
+      "_inferred_type": "flasher",
+      "_note": "SolModCallback. A/C flasher (shares driver with Sol 8A Spare). Drives F108/f108a/f108c/f108d. Comment in VBS: 'not sure why 32 works. Service manual says it should be 8.'"
+    },
+    {
+      "id": 34,
+      "description": "Upper Right Flipper",
+      "_vbscript_name": "sURFlipper",
+      "_vbscript_callback": "SolURFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework-defined in core.vbs"
+    },
+    {
+      "id": 36,
+      "description": "Upper Left Flipper",
+      "_vbscript_name": "sULFlipper",
+      "_vbscript_callback": "SolULFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework-defined in core.vbs"
+    },
+    {
+      "id": 46,
+      "description": "Lower Right Flipper",
+      "_vbscript_name": "sLRFlipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework-defined in core.vbs"
+    },
+    {
+      "id": 48,
+      "description": "Lower Left Flipper",
+      "_vbscript_name": "sLLFlipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework-defined in core.vbs"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "description": "Lites Lock On",
+      "vpx_name": "L1",
+      "_note": "Center playfield insert"
+    },
+    {
+      "id": 2,
+      "description": "Alpha Kill",
+      "vpx_name": "L2",
+      "_note": "Kill lane sequence lamp"
+    },
+    {
+      "id": 3,
+      "description": "1K Bonus",
+      "vpx_name": "L3",
+      "_note": "Bonus value 1000"
+    },
+    {
+      "id": 4,
+      "description": "2X Bonus Multiplier",
+      "vpx_name": "L4",
+      "_note": "Bonus multiplier lane"
+    },
+    {
+      "id": 5,
+      "description": "Rescue (Left)",
+      "vpx_name": "L5",
+      "_note": "Left rescue kickback indicator"
+    },
+    {
+      "id": 6,
+      "description": "Kill (Center)",
+      "vpx_name": "L6",
+      "_note": "Center kill target lamp"
+    },
+    {
+      "id": 7,
+      "description": "Rescue (Right)",
+      "vpx_name": "L7",
+      "_note": "Right rescue indicator"
+    },
+    {
+      "id": 8,
+      "description": "Rescue (Bottom)",
+      "vpx_name": "L8",
+      "_note": "Bottom rescue indicator"
+    },
+    {
+      "id": 9,
+      "description": "Release",
+      "vpx_name": "L9",
+      "_note": "Ball release/lock release lamp"
+    },
+    {
+      "id": 10,
+      "description": "Bravo Kill",
+      "vpx_name": "L10",
+      "_note": "Kill lane sequence lamp"
+    },
+    {
+      "id": 11,
+      "description": "2K Bonus",
+      "vpx_name": "L11",
+      "_note": "Bonus value 2000"
+    },
+    {
+      "id": 12,
+      "description": "3X Bonus Multiplier",
+      "vpx_name": "L12",
+      "_note": "Bonus multiplier lane"
+    },
+    {
+      "id": 13,
+      "description": "Echo Kill",
+      "vpx_name": "L13",
+      "_note": "Kill lane sequence lamp"
+    },
+    {
+      "id": 14,
+      "description": "Fox Kill",
+      "vpx_name": "L14",
+      "_note": "Kill lane sequence lamp"
+    },
+    {
+      "id": 15,
+      "description": "Golf Kill",
+      "vpx_name": "L15",
+      "_note": "Kill lane sequence lamp"
+    },
+    {
+      "id": 16,
+      "description": "Flight Insurance",
+      "vpx_name": "L16",
+      "_note": "Last-ball safety feature indicator"
+    },
+    {
+      "id": 17,
+      "description": "Blue Lite Special",
+      "vpx_name": "L17",
+      "_note": "Special award lamp (blue insert)"
+    },
+    {
+      "id": 18,
+      "description": "Charlie Kill",
+      "vpx_name": "L18",
+      "_note": "Kill lane sequence lamp"
+    },
+    {
+      "id": 19,
+      "description": "4K Bonus",
+      "vpx_name": "L19",
+      "_note": "Bonus value 4000"
+    },
+    {
+      "id": 20,
+      "description": "4X Bonus Multiplier",
+      "vpx_name": "L20",
+      "_note": "Bonus multiplier lane"
+    },
+    {
+      "id": 21,
+      "description": "8K Bonus",
+      "vpx_name": "L21",
+      "_note": "Bonus value 8000"
+    },
+    {
+      "id": 22,
+      "description": "16K Bonus",
+      "vpx_name": "L22",
+      "_note": "Bonus value 16000"
+    },
+    {
+      "id": 23,
+      "description": "32K Bonus",
+      "vpx_name": "L23",
+      "_note": "Bonus value 32000"
+    },
+    {
+      "id": 24,
+      "description": "64K Bonus",
+      "vpx_name": "L24",
+      "_note": "Bonus value 64000. VBS: p24a also animated."
+    },
+    {
+      "id": 25,
+      "description": "Fly Again",
+      "vpx_name": "L25",
+      "_note": "Shoot again / extra ball indicator"
+    },
+    {
+      "id": 26,
+      "description": "Extra Ball (Left Lane)",
+      "vpx_name": "L26",
+      "_note": "Extra ball indicator in left bonus multiplier lane"
+    },
+    {
+      "id": 27,
+      "description": "5X Bonus Multiplier",
+      "vpx_name": "L27",
+      "_note": "Bonus multiplier lane"
+    },
+    {
+      "id": 28,
+      "description": "6X Bonus Multiplier",
+      "vpx_name": "L28",
+      "_note": "Bonus multiplier lane"
+    },
+    {
+      "id": 29,
+      "description": "7X Bonus Multiplier",
+      "vpx_name": "L29",
+      "_note": "Bonus multiplier lane"
+    },
+    {
+      "id": 30,
+      "description": "8X Bonus Multiplier",
+      "vpx_name": "L30",
+      "_note": "Bonus multiplier lane"
+    },
+    {
+      "id": 31,
+      "description": "Bonus X",
+      "vpx_name": "L31",
+      "_note": "Bonus multiplier collect"
+    },
+    {
+      "id": 32,
+      "description": "Landing (Ball Popper)",
+      "vpx_name": "L32",
+      "_note": "Landing indicator near ball popper"
+    },
+    {
+      "id": 33,
+      "description": "T (Lower Left)",
+      "vpx_name": "L33",
+      "_note": "TOMCAT target letter - lower left bank"
+    },
+    {
+      "id": 34,
+      "description": "O (Lower Left)",
+      "vpx_name": "L34",
+      "_note": "TOMCAT target letter - lower left bank"
+    },
+    {
+      "id": 35,
+      "description": "M (Lower Left)",
+      "vpx_name": "L35",
+      "_note": "TOMCAT target letter - lower left bank"
+    },
+    {
+      "id": 36,
+      "description": "T (Lower Right)",
+      "vpx_name": "L36",
+      "_note": "TOMCAT target letter - lower right bank"
+    },
+    {
+      "id": 37,
+      "description": "A (Lower Right)",
+      "vpx_name": "L37",
+      "_note": "TOMCAT target letter - lower right bank"
+    },
+    {
+      "id": 38,
+      "description": "C (Lower Right)",
+      "vpx_name": "L38",
+      "_note": "TOMCAT target letter - lower right bank"
+    },
+    {
+      "id": 39,
+      "description": "Lites Kill (Left Flipper Lane)",
+      "vpx_name": "L39",
+      "_note": "Flipper lane indicator. VBS: p39a also animated."
+    },
+    {
+      "id": 40,
+      "description": "Lock On (Ball Popper)",
+      "vpx_name": "L40",
+      "_note": "Lock-on indicator near ball popper"
+    },
+    {
+      "id": 41,
+      "description": "3 Target",
+      "vpx_name": "L41",
+      "_note": "Center numbered target 3"
+    },
+    {
+      "id": 42,
+      "description": "2 Target",
+      "vpx_name": "L42",
+      "_note": "Center numbered target 2"
+    },
+    {
+      "id": 43,
+      "description": "1 Target",
+      "vpx_name": "L43",
+      "_note": "Center numbered target 1"
+    },
+    {
+      "id": 44,
+      "description": "4 Target",
+      "vpx_name": "L44",
+      "_note": "Center numbered target 4"
+    },
+    {
+      "id": 45,
+      "description": "5 Target",
+      "vpx_name": "L45",
+      "_note": "Center numbered target 5"
+    },
+    {
+      "id": 46,
+      "description": "6 Target",
+      "vpx_name": "L46",
+      "_note": "Center numbered target 6"
+    },
+    {
+      "id": 47,
+      "description": "Lites Kill (Right Flipper Lane)",
+      "vpx_name": "L47",
+      "_note": "Flipper lane indicator"
+    },
+    {
+      "id": 48,
+      "description": "2000 Points",
+      "vpx_name": "L48",
+      "_note": "2000 points spinner lane insert"
+    },
+    {
+      "id": 49,
+      "description": "T (Upper Left)",
+      "vpx_name": "L49",
+      "_note": "TOMCAT target letter - upper left bank"
+    },
+    {
+      "id": 50,
+      "description": "O (Upper Left)",
+      "vpx_name": "L50",
+      "_note": "TOMCAT target letter - upper left bank"
+    },
+    {
+      "id": 51,
+      "description": "M (Upper Left)",
+      "vpx_name": "L51",
+      "_note": "TOMCAT target letter - upper left bank"
+    },
+    {
+      "id": 52,
+      "description": "T (Upper Right)",
+      "vpx_name": "L52",
+      "_note": "TOMCAT target letter - upper right bank"
+    },
+    {
+      "id": 53,
+      "description": "A (Upper Right)",
+      "vpx_name": "L53",
+      "_note": "TOMCAT target letter - upper right bank"
+    },
+    {
+      "id": 54,
+      "description": "C (Upper Right)",
+      "vpx_name": "L54",
+      "_note": "TOMCAT target letter - upper right bank"
+    },
+    {
+      "id": 55,
+      "description": "Ripoff (Line of Death)",
+      "vpx_name": "L55",
+      "_note": "Yagov lane indicator"
+    },
+    {
+      "id": 56,
+      "description": "2000 Points (Spinner)",
+      "vpx_name": "L56",
+      "_note": "Spinner value indicator"
+    },
+    {
+      "id": 57,
+      "description": "Lock (Top Ramp)",
+      "vpx_name": "L57",
+      "_note": "Red ramp lock indicator - top. Backbox-style bulb (pfil57/pBulb57 animated)."
+    },
+    {
+      "id": 58,
+      "description": "Lock (Middle Ramp)",
+      "vpx_name": "L58",
+      "_note": "Red ramp lock indicator - middle. Backbox-style bulb (pfil58/pBulb58 animated)."
+    },
+    {
+      "id": 59,
+      "description": "Lock (Lower Ramp)",
+      "vpx_name": "L59",
+      "_note": "Red ramp lock indicator - lower. Backbox-style bulb (pfil59/pBulb59 animated)."
+    },
+    {
+      "id": 60,
+      "description": "Landing (Top Ramp)",
+      "vpx_name": "L60",
+      "_note": "Green ramp landing indicator - top. Backbox-style bulb (pfil60/pBulb60 animated)."
+    },
+    {
+      "id": 61,
+      "description": "Landing (Middle Ramp)",
+      "vpx_name": "L61",
+      "_note": "Green ramp landing indicator - middle. Backbox-style bulb (pfil61/pBulb61 animated)."
+    },
+    {
+      "id": 62,
+      "description": "Landing (Lower Ramp)",
+      "vpx_name": "L62",
+      "_note": "Green ramp landing indicator - lower. Backbox-style bulb (pfil62/pBulb62 animated)."
+    },
+    {
+      "id": 63,
+      "description": "Ripoff (Line of Death)",
+      "vpx_name": "L63",
+      "_note": "Second Yagov/Line of Death indicator insert"
+    },
+    {
+      "id": 64,
+      "description": "Extra Ball (Right Lane)",
+      "vpx_name": "L64",
+      "_note": "Extra ball indicator in right bonus multiplier lane"
+    }
+  ],
+  "gi": [
+    {
+      "id": 0,
+      "description": "General Illumination",
+      "_vbscript_callback": "SetGI (Sol 11)",
+      "_note": "Single GI string controlled by solenoid 11 (GI relay). Uses GILighting and GIBulbs collections. GI001_animate handles PWM dimming of GI bulbs, ramp plastics, and clear plastics."
+    }
+  ],
+  "flashers": [
+    {
+      "id": 1,
+      "description": "Flasher 1C - Yagov White",
+      "coil_id": 25,
+      "_color": "white",
+      "_vpx_objects": "F101, ModFlashFlasher 4, ModFlashFlasher 10, pFiliment01C"
+    },
+    {
+      "id": 2,
+      "description": "Flasher 2C - Left Lane",
+      "coil_id": 26,
+      "_color": "red",
+      "_vpx_objects": "F102, ModFlashFlasher 8, f102e, f102f, pFiliment02c"
+    },
+    {
+      "id": 3,
+      "description": "Flasher 3C - Right Lane",
+      "coil_id": 27,
+      "_color": "red",
+      "_vpx_objects": "F103, ModFlashFlasher 7, f103e, f103f, pfiliment03c"
+    },
+    {
+      "id": 4,
+      "description": "Flasher 4C - Bottom Red",
+      "coil_id": 28,
+      "_color": "red",
+      "_vpx_objects": "F104, ModFlashFlasher 14, ModFlashFlasher 6, pFiliment04C"
+    },
+    {
+      "id": 5,
+      "description": "Flasher 5C - Bottom White",
+      "coil_id": 29,
+      "_color": "white",
+      "_vpx_objects": "F105, ModFlashFlasher 13, ModFlashFlasher 5, pFiliment05C"
+    },
+    {
+      "id": 6,
+      "description": "Flasher 6C - Bottom Blue",
+      "coil_id": 30,
+      "_color": "blue",
+      "_vpx_objects": "F106, ModFlashFlasher 12, ModFlashFlasher 11, pFiliment06C"
+    },
+    {
+      "id": 7,
+      "description": "Flasher 7C - Top White / Top Red Left",
+      "coil_id": 31,
+      "_color": "red",
+      "_vpx_objects": "F107, ModFlashFlasher 3, ModFlashFlasher 9, pFiliment07C, pFiliment07Ca"
+    },
+    {
+      "id": 8,
+      "description": "Flasher 8C - Radar",
+      "coil_id": 32,
+      "_color": "white",
+      "_vpx_objects": "F108, f108a, f108c, f108d",
+      "_note": "VBS comment: 'not sure why 32 works. Service manual says it should be 8.'"
+    },
+    {
+      "id": 9,
+      "description": "Flasher 9 - Top Blue",
+      "coil_id": 9,
+      "_color": "blue",
+      "_vpx_objects": "F109, ModFlashFlasher 1, pFiliment09"
+    },
+    {
+      "id": 10,
+      "description": "Flasher 10 - Top Right Red",
+      "coil_id": 15,
+      "_color": "red",
+      "_vpx_objects": "F115, ModFlashFlasher 2"
+    }
+  ],
+  "mechanisms": [
+    {
+      "id": "beacons",
+      "description": "Rotating Beacons (Backbox)",
+      "coil_id": 16,
+      "_note": "Three rotating beacon lights (red, white, blue) plus F-14 model flames and retractable wings. Animated via BeaconTimer. Real machine uses motor (part 14-7946)."
+    },
+    {
+      "id": "upper_diverter",
+      "description": "Upper Diverter (Launch Ramp)",
+      "coil_id": 21,
+      "_vpx_objects": "Sol21wall, Diverter1, pDiverter1"
+    },
+    {
+      "id": "lower_diverter",
+      "description": "Lower Diverter (Launch Ramp)",
+      "coil_id": 22,
+      "_vpx_objects": "Sol22wall, Diverter2, pDiverter2"
+    }
+  ]
+}

@@ -1,0 +1,993 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vpx-vbscript-extraction",
+    "vpx_file": "Cirqus Voltaire (Bally 1997) VPW Mod v1.1.vpx",
+    "extracted": "2026-02-12",
+    "status": "manual-extraction"
+  },
+  "game": {
+    "id": "cv",
+    "name": "Cirqus Voltaire",
+    "manufacturer": "Bally",
+    "year": 1997,
+    "platform": "wpc",
+    "ipdb_id": 4059,
+    "_vpx_source": "Cirqus Voltaire (Bally 1997) VPW Mod v1.1.vpx",
+    "_load_vpm": "LoadVPM \"01560000\", \"wpc.VBS\", 3.36"
+  },
+  "roms": [
+    {
+      "id": "cv_20h",
+      "version": "2.0H",
+      "language": "en",
+      "_note": "Default ROM in VPX script"
+    },
+    {
+      "id": "cv_20hc",
+      "version": "2.0HC",
+      "language": "en",
+      "_note": "Coin supported ROM (commented out in VPX script)"
+    }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Backbox Luck",
+      "_vbscript_name": "sw11",
+      "_note": "Rollover switch; also pulsed via vpmTimer from EndCannon sub for bell ring"
+    },
+    {
+      "id": 12,
+      "description": "Wire Ramp Enter",
+      "_vbscript_name": "sw12"
+    },
+    {
+      "id": 13,
+      "description": "Start Button",
+      "input_action_hint": "Start Game",
+      "_vbscript_name": "keyFront"
+    },
+    {
+      "id": 14,
+      "description": "Plumb Bob Tilt",
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Left Loop Upper",
+      "_vbscript_name": "sw15"
+    },
+    {
+      "id": 16,
+      "description": "Top Eddy (Ringmaster Hit)",
+      "_vbscript_name": "sw16",
+      "_note": "Timed switch with Eddy_timer to auto-release; enabled when RMCurrPos > 4 and < 100"
+    },
+    {
+      "id": 17,
+      "description": "Right In-Lane (Volt 3)",
+      "_vbscript_name": "sw17"
+    },
+    {
+      "id": 18,
+      "description": "Shooter Lane",
+      "input_action_hint": "Plunger",
+      "_vbscript_name": "sw18",
+      "_note": "Sets BIPL (Ball In Plunger Lane) flag"
+    },
+    {
+      "id": 21,
+      "description": "Slam Tilt",
+      "input_action_hint": "Slam Tilt"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "normally_closed": true,
+      "input_action_hint": "Coin Door Open/Close",
+      "_note": "Initialized to 1 at start; toggled for motor bug fix"
+    },
+    {
+      "id": 23,
+      "description": "Right Loop Upper",
+      "_vbscript_name": "sw23"
+    },
+    {
+      "id": 24,
+      "description": "Always Closed",
+      "constant_hint": "always_closed",
+      "_note": "Set to 0 at init (.Switch(24) = 0)"
+    },
+    {
+      "id": 25,
+      "description": "Inner Loop Left",
+      "_vbscript_name": "sw25"
+    },
+    {
+      "id": 26,
+      "description": "Left In-Lane (Volt 4)",
+      "_vbscript_name": "sw26"
+    },
+    {
+      "id": 27,
+      "description": "Left Outlane",
+      "_vbscript_name": "sw27"
+    },
+    {
+      "id": 28,
+      "description": "Inner Loop Right",
+      "_vbscript_name": "sw28"
+    },
+    {
+      "id": 31,
+      "description": "Trough Eject",
+      "_note": "Pulsed by SolRelease sub via vpmTimer.PulseSw 31"
+    },
+    {
+      "id": 32,
+      "description": "Trough Ball 1",
+      "_note": "bsTrough.InitSw 0, 32, 33, 34, 35, 0, 0, 0"
+    },
+    {
+      "id": 33,
+      "description": "Trough Ball 2"
+    },
+    {
+      "id": 34,
+      "description": "Trough Ball 3"
+    },
+    {
+      "id": 35,
+      "description": "Trough Ball 4"
+    },
+    {
+      "id": 36,
+      "description": "Popper Opto",
+      "_vbscript_name": "sw36",
+      "_note": "Popper.InitSw 0, 36, 0, 0, 0, 0, 0, 0; subway entrance"
+    },
+    {
+      "id": 37,
+      "description": "WOW Targets",
+      "_vbscript_name": "T37a, T37b, T37c",
+      "_note": "Three physical targets all pulse switch 37"
+    },
+    {
+      "id": 38,
+      "description": "Top Targets",
+      "_vbscript_name": "T38a, T38b",
+      "_note": "Two physical targets pulse switch 38; also RMHit_Hit pulses 38"
+    },
+    {
+      "id": 41,
+      "description": "Left Lane",
+      "_vbscript_name": "T41"
+    },
+    {
+      "id": 42,
+      "description": "Ringmaster Up",
+      "_note": "mechRM.AddSw 42, 117, 118 (top position opto)"
+    },
+    {
+      "id": 43,
+      "description": "Ringmaster Middle",
+      "_note": "mechRM.AddSw 43, 88, 89 (middle position opto)"
+    },
+    {
+      "id": 44,
+      "description": "Ringmaster Down",
+      "_note": "mechRM.AddSw 44, 0, 1 (bottom/home position opto)"
+    },
+    {
+      "id": 45,
+      "description": "Left Ramp Made",
+      "_vbscript_name": "sw45"
+    },
+    {
+      "id": 46,
+      "description": "Trough Upper (Subway)",
+      "_vbscript_name": "sw46",
+      "_note": "Pulsed via vpmTimer.PulseSw 46"
+    },
+    {
+      "id": 47,
+      "description": "Trough Middle (Subway)",
+      "_vbscript_name": "sw47",
+      "_note": "Pulsed via vpmTimer.PulseSw 47"
+    },
+    {
+      "id": 48,
+      "description": "Left Loop Enter",
+      "_vbscript_name": "sw48"
+    },
+    {
+      "id": 51,
+      "description": "Left Slingshot",
+      "_note": "LeftSlingShot_Slingshot pulses sw 51"
+    },
+    {
+      "id": 52,
+      "description": "Right Slingshot",
+      "_note": "RightSlingShot_Slingshot pulses sw 52"
+    },
+    {
+      "id": 53,
+      "description": "Upper Jet Bumper",
+      "_vbscript_name": "UpperJetBumper"
+    },
+    {
+      "id": 54,
+      "description": "Middle Jet Bumper (Boom Bumper)",
+      "_vbscript_name": "MiddleJetBumper",
+      "_note": "Disappearing jet bumper; raised/lowered by sol 7/8"
+    },
+    {
+      "id": 55,
+      "description": "Lower Jet Bumper",
+      "_vbscript_name": "LowerJetBumper"
+    },
+    {
+      "id": 56,
+      "description": "Skill Shot",
+      "_vbscript_name": "T56"
+    },
+    {
+      "id": 57,
+      "description": "Right Outlane",
+      "_vbscript_name": "sw57"
+    },
+    {
+      "id": 58,
+      "description": "Ring N/G Target",
+      "_vbscript_name": "T58"
+    },
+    {
+      "id": 61,
+      "description": "Light Standup Target",
+      "_vbscript_name": "T61"
+    },
+    {
+      "id": 62,
+      "description": "Lock Standup Target",
+      "_vbscript_name": "T62"
+    },
+    {
+      "id": 63,
+      "description": "Ramp Enter",
+      "_vbscript_name": "sw63"
+    },
+    {
+      "id": 64,
+      "description": "Ramp Magnet",
+      "_vbscript_name": "sw64"
+    },
+    {
+      "id": 65,
+      "description": "Ramp Made",
+      "_vbscript_name": "sw65"
+    },
+    {
+      "id": 66,
+      "description": "Ramp Lock Low",
+      "_vbscript_name": "sw66",
+      "_note": "vlLock.InitVLock Array(sw66, sw67, sw68)"
+    },
+    {
+      "id": 67,
+      "description": "Ramp Lock Middle",
+      "_vbscript_name": "sw67"
+    },
+    {
+      "id": 68,
+      "description": "Ramp Lock High",
+      "_vbscript_name": "sw68"
+    },
+    {
+      "id": 71,
+      "description": "Left Saucer",
+      "_vbscript_name": "sw71",
+      "_note": "LeftSaucer.InitSaucer sw71, 71, 45, 10"
+    },
+    {
+      "id": 72,
+      "description": "Right Saucer",
+      "_vbscript_name": "sw72",
+      "_note": "RightSaucer.InitSaucer sw72, 72, 140, 6"
+    },
+    {
+      "id": 74,
+      "description": "Big Ball Rebound (Menagerie)",
+      "_vbscript_name": "sw74",
+      "_note": "Pulsed via vpmTimer.PulseSw 74"
+    },
+    {
+      "id": 75,
+      "description": "Volt Right (Volt 2)",
+      "_vbscript_name": "sw75"
+    },
+    {
+      "id": 76,
+      "description": "Volt Left (Volt 1)",
+      "_vbscript_name": "sw76"
+    },
+    {
+      "id": 115,
+      "description": "Left Spinner",
+      "_vbscript_name": "sw115spinner",
+      "_note": "Dedicated opto; pulses on each spin"
+    },
+    {
+      "id": 117,
+      "description": "Right Spinner",
+      "_vbscript_name": "sw117spinner",
+      "_note": "Dedicated opto; pulses on each spin"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Auto Plunger",
+      "device_hint": "Plunger",
+      "device_item_hint": "c_autofire",
+      "_vbscript_callback": "SolCallback(1) = \"AutoPlunger\""
+    },
+    {
+      "id": 2,
+      "description": "Backbox Kicker",
+      "_vbscript_callback": "SolCallback(2) = \"BackBoxKick\"",
+      "_note": "Fires plunger2 to send ball to backbox spinner/bell mechanism"
+    },
+    {
+      "id": 3,
+      "description": "Left Loop Magnet",
+      "_vbscript_callback": "Commented out in script; handled by cvpmMagnet LoopMagnet.Solenoid = 3",
+      "_note": "cvpmMagnet with GrabCenter=True, Size=200"
+    },
+    {
+      "id": 4,
+      "description": "Middle Jet Bumper",
+      "_note": "Not wired in VPX script (handled by VPX bumper object); listed in manual"
+    },
+    {
+      "id": 5,
+      "description": "Ramp Magnet",
+      "_vbscript_callback": "Commented out in script; handled by cvpmMagnet LockMagnet.Solenoid = 5",
+      "_note": "cvpmMagnet with GrabCenter=True, Size=200"
+    },
+    {
+      "id": 6,
+      "description": "Diverter Power",
+      "_note": "Listed in manual; not directly wired in VPX script (see sol 34 for DiverterHold)"
+    },
+    {
+      "id": 7,
+      "description": "Jet Up (Boom Bumper Raise)",
+      "_vbscript_callback": "SolCallback(7) = \"JetUp\"",
+      "_note": "Raises disappearing middle jet bumper"
+    },
+    {
+      "id": 8,
+      "description": "Jet Release (Boom Bumper Lower)",
+      "_vbscript_callback": "SolCallBack(8) = \"JetRelease\"",
+      "_note": "Lowers disappearing middle jet bumper"
+    },
+    {
+      "id": 9,
+      "description": "Trough Eject",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_vbscript_callback": "SolCallBack(9) = \"SolRelease\"",
+      "_note": "Pulses sw 31 and calls bsTrough.ExitSol_On"
+    },
+    {
+      "id": 10,
+      "description": "Left Slingshot",
+      "_note": "Physical slingshot coil; not explicitly wired in VPX (handled by VPX slingshot object)"
+    },
+    {
+      "id": 11,
+      "description": "Right Slingshot",
+      "_note": "Physical slingshot coil; not explicitly wired in VPX (handled by VPX slingshot object)"
+    },
+    {
+      "id": 12,
+      "description": "Upper Jet Bumper",
+      "_note": "Physical bumper coil; not explicitly wired in VPX (handled by VPX bumper object)"
+    },
+    {
+      "id": 13,
+      "description": "Lower Jet Bumper",
+      "_note": "Physical bumper coil; not explicitly wired in VPX (handled by VPX bumper object)"
+    },
+    {
+      "id": 14,
+      "description": "Left Saucer Eject",
+      "_vbscript_callback": "SolCallBack(14) = \"LeftSaucer.SolOut\"",
+      "_note": "Kicks ball from left saucer at angle 45, force 10"
+    },
+    {
+      "id": 15,
+      "description": "Right Saucer Eject",
+      "_vbscript_callback": "SolCallBack(15) = \"RightSaucer.SolOut\"",
+      "_note": "Kicks ball from right saucer at angle 140, force 6"
+    },
+    {
+      "id": 16,
+      "description": "Lock Post",
+      "_vbscript_callback": "SolCallBack(16) = \"LockPost\"",
+      "_note": "Controls ball lock post for multiball; releases vlLock"
+    },
+    {
+      "id": 17,
+      "description": "Join/Coin Flashers",
+      "is_lamp": true,
+      "_vbscript_callback": "SolModCallBack(17) = \"Flash117\"",
+      "_note": "PWM flasher; drives f117, f117b"
+    },
+    {
+      "id": 18,
+      "description": "Ring #1 Flashers",
+      "is_lamp": true,
+      "_vbscript_callback": "SolModCallBack(18) = \"Flash118\"",
+      "_note": "PWM flasher; drives l118"
+    },
+    {
+      "id": 19,
+      "description": "Ring #2 Flashers",
+      "is_lamp": true,
+      "_vbscript_callback": "SolModCallBack(19) = \"Flash119\"",
+      "_note": "PWM flasher; drives l119"
+    },
+    {
+      "id": 20,
+      "description": "Ring #3 Flashers",
+      "is_lamp": true,
+      "_vbscript_callback": "SolModCallBack(20) = \"Flash120\"",
+      "_note": "PWM flasher; drives l120"
+    },
+    {
+      "id": 21,
+      "description": "Right Playfield Flasher",
+      "is_lamp": true,
+      "_vbscript_callback": "SolModCallBack(21) = \"Flash121\"",
+      "_note": "PWM flasher; drives l121 and Flupper dome FlasherFlash1"
+    },
+    {
+      "id": 22,
+      "description": "Ringmaster Motor Enable",
+      "_vbscript_callback": "SolCallBack(22) = \"MotorEnable\"",
+      "_note": "Enables ringmaster motor; plays motor sound. Also mechRM.Sol1 = 22"
+    },
+    {
+      "id": 23,
+      "description": "Jet Flasher",
+      "is_lamp": true,
+      "_vbscript_callback": "SolModCallBack(23) = \"Flash123\"",
+      "_note": "PWM flasher; drives f123"
+    },
+    {
+      "id": 24,
+      "description": "Left Playfield Flasher",
+      "is_lamp": true,
+      "_vbscript_callback": "SolModCallBack(24) = \"Flash124\"",
+      "_note": "PWM flasher; drives l124 and Flupper dome FlasherFlash2"
+    },
+    {
+      "id": 25,
+      "description": "Upper Left Flasher",
+      "is_lamp": true,
+      "_vbscript_callback": "SolModCallBack(25) = \"Flash125\"",
+      "_note": "PWM flasher; drives Flupper dome FlasherFlash3"
+    },
+    {
+      "id": 26,
+      "description": "Upper Right Playfield Flasher",
+      "is_lamp": true,
+      "_vbscript_callback": "SolModCallBack(26) = \"Flash126\"",
+      "_note": "PWM flasher; drives l126 and Flupper dome FlasherFlash4"
+    },
+    {
+      "id": 27,
+      "description": "Ringmaster Flashers",
+      "is_lamp": true,
+      "_vbscript_callback": "SolModCallBack(27) = \"Flash127\"",
+      "_note": "PWM flasher; drives l127, f127, f127a; changes Ringmaster texture based on state"
+    },
+    {
+      "id": 28,
+      "description": "Bear Playfield Flasher",
+      "is_lamp": true,
+      "_vbscript_callback": "SolModCallBack(28) = \"Flash128\"",
+      "_note": "PWM flasher; drives f128, f128b"
+    },
+    {
+      "id": 33,
+      "description": "Popper (Subway Eject)",
+      "_vbscript_callback": "SolCallBack(33) = \"SolPopper\"",
+      "_note": "Kicks ball from popper (subway) at angle 284, force 26"
+    },
+    {
+      "id": 34,
+      "description": "Diverter Hold",
+      "_vbscript_callback": "SolCallback(34) = \"DiverterHold\"",
+      "_note": "Holds diverter open to direct ball to right orbit"
+    },
+    {
+      "id": 35,
+      "description": "Ringmaster Magnet",
+      "_vbscript_callback": "SolCallBack(35) = \"SolRingmasterMagnet\"",
+      "_note": "Grabs/releases ball at ringmaster head; cvpmMagnet with GrabCenter=0, Size=100"
+    },
+    {
+      "id": 36,
+      "description": "Upper Post",
+      "_vbscript_callback": "SolCallback(36) = \"UpperPost\"",
+      "_note": "Raises/lowers upper post wall"
+    },
+    {
+      "id": 37,
+      "description": "Neon Tube",
+      "is_lamp": true,
+      "_vbscript_callback": "SolModCallBack(37) = \"Flash137\"",
+      "_note": "PWM; controls UV/neon lighting that changes playfield textures to blue"
+    },
+    {
+      "id": 39,
+      "description": "Ringmaster Motor Direction",
+      "_note": "mechRM.Sol2 = 39; controls direction of ringmaster motor"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolCallback(sLRFlipper) = \"SolRFlipper\"",
+      "_note": "WPC framework constant sLRFlipper = 46"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolCallback(sLLFlipper) = \"SolLFlipper\"",
+      "_note": "WPC framework constant sLLFlipper = 48"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 11,
+      "description": "Drop",
+      "_vbscript_name": "l11, l11b"
+    },
+    {
+      "id": 12,
+      "description": "Cirqus R",
+      "_vbscript_name": "l12, l12b"
+    },
+    {
+      "id": 13,
+      "description": "Cirqus Q",
+      "_vbscript_name": "l13, l13b"
+    },
+    {
+      "id": 14,
+      "description": "Cirqus U",
+      "_vbscript_name": "l14, l14b"
+    },
+    {
+      "id": 15,
+      "description": "Grid Top Right",
+      "_vbscript_name": "l15, l15b"
+    },
+    {
+      "id": 16,
+      "description": "Cirqus S",
+      "_vbscript_name": "l16, l16b"
+    },
+    {
+      "id": 17,
+      "description": "Grid Middle Right",
+      "_vbscript_name": "l17, l17b"
+    },
+    {
+      "id": 18,
+      "description": "Left Jackpot",
+      "_vbscript_name": "l18, l18b"
+    },
+    {
+      "id": 21,
+      "description": "Cirqus I",
+      "_vbscript_name": "l21, l21b"
+    },
+    {
+      "id": 22,
+      "description": "Cirqus C",
+      "_vbscript_name": "l22, l22b"
+    },
+    {
+      "id": 23,
+      "description": "Grid Middle Left",
+      "_vbscript_name": "l23, l23b"
+    },
+    {
+      "id": 24,
+      "description": "Grid Bottom Left",
+      "_vbscript_name": "l24, l24b"
+    },
+    {
+      "id": 25,
+      "description": "Shoot Again",
+      "_vbscript_name": "l25, l25b"
+    },
+    {
+      "id": 26,
+      "description": "Ringmaster Center",
+      "_vbscript_name": "l26, l26b"
+    },
+    {
+      "id": 27,
+      "description": "Grid Bottom Right",
+      "_vbscript_name": "l27, l27b"
+    },
+    {
+      "id": 28,
+      "description": "Grid Top Left",
+      "_vbscript_name": "l28, l28b"
+    },
+    {
+      "id": 31,
+      "description": "Side Show",
+      "_vbscript_name": "l31, l31b"
+    },
+    {
+      "id": 32,
+      "description": "Highwire",
+      "_vbscript_name": "l32, l32b"
+    },
+    {
+      "id": 33,
+      "description": "Acrobats",
+      "_vbscript_name": "l33, l33b"
+    },
+    {
+      "id": 34,
+      "description": "Left Loop 2",
+      "_vbscript_name": "l34, l34b"
+    },
+    {
+      "id": 35,
+      "description": "Left Loop 1",
+      "_vbscript_name": "l35, l35b"
+    },
+    {
+      "id": 36,
+      "description": "Multiball",
+      "_vbscript_name": "l36, l36b"
+    },
+    {
+      "id": 37,
+      "description": "Lock",
+      "_vbscript_name": "l37, l37b"
+    },
+    {
+      "id": 38,
+      "description": "Spot Marvel",
+      "_vbscript_name": "l38, l38b"
+    },
+    {
+      "id": 41,
+      "description": "Ringmaster Left",
+      "_vbscript_name": "l41, l41b"
+    },
+    {
+      "id": 42,
+      "description": "Ringmaster 2",
+      "_vbscript_name": "l42, l42b"
+    },
+    {
+      "id": 43,
+      "description": "Ringmaster 3",
+      "_vbscript_name": "l43, l43b"
+    },
+    {
+      "id": 44,
+      "description": "Ringmaster 4",
+      "_vbscript_name": "l44, l44b"
+    },
+    {
+      "id": 45,
+      "description": "Ringmaster Right",
+      "_vbscript_name": "l45, l45b"
+    },
+    {
+      "id": 46,
+      "description": "Special",
+      "_vbscript_name": "l46, l46b"
+    },
+    {
+      "id": 47,
+      "description": "Razz",
+      "_vbscript_name": "l47, l47b"
+    },
+    {
+      "id": 48,
+      "description": "Frenzy",
+      "_vbscript_name": "l48, l48b"
+    },
+    {
+      "id": 51,
+      "description": "Crank It Up Top",
+      "_vbscript_name": "l51, l51b"
+    },
+    {
+      "id": 52,
+      "description": "Crank It Up 2",
+      "_vbscript_name": "l52, l52b"
+    },
+    {
+      "id": 53,
+      "description": "Crank It Up 3",
+      "_vbscript_name": "l53, l53b"
+    },
+    {
+      "id": 54,
+      "description": "Crank It Up Bottom",
+      "_vbscript_name": "l54, l54b"
+    },
+    {
+      "id": 55,
+      "description": "Right Loop Top",
+      "_vbscript_name": "l55, l55b"
+    },
+    {
+      "id": 56,
+      "description": "Right Loop 3",
+      "_vbscript_name": "l56, l56b"
+    },
+    {
+      "id": 57,
+      "description": "Right Loop 2",
+      "_vbscript_name": "l57, l57b"
+    },
+    {
+      "id": 58,
+      "description": "Right Loop 1",
+      "_vbscript_name": "l58, l58b"
+    },
+    {
+      "id": 61,
+      "description": "Middle Jackpot",
+      "_vbscript_name": "l61, l61b"
+    },
+    {
+      "id": 62,
+      "description": "Right Jackpot",
+      "_vbscript_name": "l62, l62b"
+    },
+    {
+      "id": 63,
+      "description": "Light Standup",
+      "_vbscript_name": "l63, l63b"
+    },
+    {
+      "id": 64,
+      "description": "Lock Standup",
+      "_vbscript_name": "l64, l64b"
+    },
+    {
+      "id": 65,
+      "description": "Ring R/In",
+      "_vbscript_name": "l65, l65b"
+    },
+    {
+      "id": 66,
+      "description": "WOW W (Left)",
+      "_vbscript_name": "l66, l66b"
+    },
+    {
+      "id": 67,
+      "description": "WOW W (Right)",
+      "_vbscript_name": "l67, l67b"
+    },
+    {
+      "id": 68,
+      "description": "Left Outlane",
+      "_vbscript_name": "l68, l68b"
+    },
+    {
+      "id": 71,
+      "description": "Right Return Lane",
+      "_vbscript_name": "l71, l71b"
+    },
+    {
+      "id": 72,
+      "description": "WOW O",
+      "_vbscript_name": "l72, l72b"
+    },
+    {
+      "id": 73,
+      "description": "WOW Left W",
+      "_vbscript_name": "l73, l73b"
+    },
+    {
+      "id": 74,
+      "description": "Ring N",
+      "_vbscript_name": "l74, l74b"
+    },
+    {
+      "id": 75,
+      "description": "Ring S",
+      "_vbscript_name": "l75, l75b"
+    },
+    {
+      "id": 76,
+      "description": "Right Outlane",
+      "_vbscript_name": "l76, l76b"
+    },
+    {
+      "id": 77,
+      "description": "Left Inlane (Volt 4)",
+      "_vbscript_name": "l77, l77b",
+      "_note": "Also controls Volt4 primitive via DisableLightingm and imgswapm"
+    },
+    {
+      "id": 78,
+      "description": "Still Ring",
+      "_vbscript_name": "l78, l78b"
+    },
+    {
+      "id": 81,
+      "description": "Middle Jet Bumper",
+      "_vbscript_name": "l81, l81b"
+    },
+    {
+      "id": 82,
+      "description": "Upper Jet Bumper",
+      "_vbscript_name": "l82, l82b"
+    },
+    {
+      "id": 83,
+      "description": "Boom Bumper (Disappearing Jet)",
+      "_vbscript_name": "l83",
+      "_note": "Also swaps plastic_boombumper image via NFadeObjm"
+    },
+    {
+      "id": 84,
+      "description": "Lower Jet Bumper",
+      "_vbscript_name": "l84, l84b"
+    },
+    {
+      "id": 85,
+      "description": "Right Inlane (Volt 3)",
+      "_vbscript_name": "l85, l85b",
+      "_note": "Also controls Volt3 primitive via DisableLightingm and imgswapm"
+    },
+    {
+      "id": 86,
+      "description": "Volt 1 (Left)",
+      "_vbscript_name": "l86, l86b",
+      "_note": "Also controls Volt1 primitive via DisableLightingm and imgswapm"
+    },
+    {
+      "id": 87,
+      "description": "Volt 2 (Right)",
+      "_vbscript_name": "l87, l87b",
+      "_note": "Also controls Volt2 primitive via DisableLightingm and imgswapm"
+    }
+  ],
+  "gi": [
+    {
+      "id": 0,
+      "description": "Playfield Right",
+      "_vbscript_callback": "UpdateGI case 0",
+      "_note": "Controls Gi_Pf_Right_01 lights and Gi_Pf_Right_Plastics materials"
+    },
+    {
+      "id": 1,
+      "description": "Playfield Middle",
+      "_vbscript_callback": "UpdateGI case 1",
+      "_note": "Controls Gi_Pf_Middle_02 lights, Gi_Pf_Center_Plastics, MetalGroup_Center; toggles Ringmaster on/off texture"
+    },
+    {
+      "id": 2,
+      "description": "Playfield Left",
+      "_vbscript_callback": "UpdateGI case 2",
+      "_note": "Controls Gi_Pf_Left_03 lights and Gi_Pf_Left_Plastics materials"
+    }
+  ],
+  "mechanisms": [
+    {
+      "type": "ringmaster_motor",
+      "description": "Ringmaster Pop-Up Head",
+      "_vbscript_class": "cvpmMech",
+      "_config": {
+        "mtype": "vpmMechLinear + vpmMechFast + vpmMechReverse + vpmMechOneDirSol",
+        "sol1": 22,
+        "sol2": 39,
+        "length": 960,
+        "steps": 118,
+        "switches": [
+          {"sw": 44, "start": 0, "end": 1, "description": "Ringmaster Down (home)"},
+          {"sw": 43, "start": 88, "end": 89, "description": "Ringmaster Middle"},
+          {"sw": 42, "start": 117, "end": 118, "description": "Ringmaster Up (fully raised)"}
+        ]
+      },
+      "_note": "Linear motor raises/lowers Ringmaster head. Sol 22 enables motor, Sol 39 controls direction. Callback UpdateRM moves ringmaster.z and collision walls based on position."
+    },
+    {
+      "type": "magnet",
+      "description": "Left Loop Magnet",
+      "_vbscript_class": "cvpmMagnet",
+      "_config": {
+        "solenoid": 3,
+        "grab_center": true,
+        "size": 200
+      }
+    },
+    {
+      "type": "magnet",
+      "description": "Ramp Lock Magnet",
+      "_vbscript_class": "cvpmMagnet",
+      "_config": {
+        "solenoid": 5,
+        "grab_center": true,
+        "size": 200
+      }
+    },
+    {
+      "type": "magnet",
+      "description": "Ringmaster Magnet",
+      "_vbscript_class": "cvpmMagnet",
+      "_config": {
+        "solenoid": 35,
+        "grab_center": false,
+        "size": 100
+      },
+      "_note": "Grabs ball at Ringmaster head; custom kick logic on release via SolRingmasterMagnet sub"
+    },
+    {
+      "type": "magnet",
+      "description": "Spin Magnet",
+      "_vbscript_class": "cvpmMagnet",
+      "_config": {
+        "grab_center": true
+      },
+      "_note": "No solenoid assigned; used for wobble/shake physics on ringmaster head"
+    },
+    {
+      "type": "virtual_lock",
+      "description": "Ramp Ball Lock (3 ball)",
+      "_vbscript_class": "cvpmVLock",
+      "_config": {
+        "switches": [66, 67, 68],
+        "kick_objects": ["sw66k", "sw67k", "sw68k"]
+      },
+      "_note": "3-ball virtual lock on upper ramp; released by Lock Post solenoid (16)"
+    },
+    {
+      "type": "trough",
+      "description": "Ball Trough (4 ball)",
+      "_vbscript_class": "cvpmBallStack",
+      "_config": {
+        "switches": [0, 32, 33, 34, 35, 0, 0, 0],
+        "eject_coil": 9,
+        "balls": 4
+      }
+    },
+    {
+      "type": "kicker",
+      "description": "Popper (Subway Eject)",
+      "_vbscript_class": "cvpmBallStack",
+      "_config": {
+        "switches": [0, 36, 0, 0, 0, 0, 0, 0],
+        "eject_coil": 33,
+        "kick_angle": 284,
+        "kick_force": 26
+      }
+    },
+    {
+      "type": "backbox_spinner",
+      "description": "Backbox Prize Wheel / Bell Spinner",
+      "_note": "Custom physics simulation; ball launched by Backbox Kicker (sol 2) interacts with spinning disc. Disc has 5 spinner balls for collision detection. Bell at sw11."
+    }
+  ],
+  "aliases": []
+}

@@ -1,0 +1,957 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "The Machine-Bride Of Pinbot (Williams 1991)_VPW_1.0.4.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils. No Const sw* definitions in script — switches identified from _Hit/_UnHit subs, Controller.Switch() calls, PulseSw calls, and trough init. Custom nFozzy trough (not cvpmTrough) with 3 balls at sw27/sw26/sw25(ballrelease). Head mechanism uses cvpmMyMech with sol 27 (direction) and sol 28 (motor), switch 67 (head position). Solenoids 17-24 are flashers — 17 (Billions) and 19 (Jackpot) route through SetLamp to Lampz; 18 (left ramp) and 20 (skill shot) use custom flash subs; 21-24 are dome flashers on the helmet. Solenoids 27/28 are head motor (PROC only via SolCallback, non-PROC uses cvpmMyMech). Solenoid 40 (FlipperRelay) is PROC-only. Flipper coils use framework constants (sLRFlipper=46, sLLFlipper=48 from core.vbs). Cabinet flipper switches 11/12 set directly in KeyDown/KeyUp. UseSolenoids=2 (FastFlips), UseLamps=0, UseSync=1. Script supports both PinMAME and PROC modes. Lamp assignments from Lampz.MassAssign — comprehensive coverage of inserts 11-68, helmet/backglass lamps 71-88, GI at 91-108. Backglass body lamps 71-78 and 81-85 are VR-only. Switch 100 is rubber band impact sensor (PulseSw 100 from multiple wall_Hit subs)."
+  },
+  "game": {
+    "id": "bop",
+    "name": "The Machine: Bride of Pinbot",
+    "year": 1991,
+    "manufacturer": "Williams",
+    "platform": "wpc"
+  },
+  "roms": [
+    {
+      "id": "bop_l7",
+      "version": "L-7",
+      "language": "en",
+      "_note": "Default ROM specified by cGameName in script"
+    },
+    {
+      "id": "bop_l6",
+      "version": "L-6",
+      "language": "en"
+    },
+    {
+      "id": "bop_l5",
+      "version": "L-5",
+      "language": "en"
+    },
+    {
+      "id": "bop_l4",
+      "version": "L-4",
+      "language": "en"
+    },
+    {
+      "id": "bop_l3",
+      "version": "L-3",
+      "language": "en"
+    },
+    {
+      "id": "bop_l2",
+      "version": "L-2",
+      "language": "en"
+    }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Right Flipper Cabinet Switch",
+      "_note": "Set via Controller.Switch(11) in Table1_KeyDown/KeyUp on RightFlipperKey"
+    },
+    {
+      "id": 12,
+      "description": "Left Flipper Cabinet Switch",
+      "_note": "Set via Controller.Switch(12) in Table1_KeyDown/KeyUp on LeftFlipperKey"
+    },
+    {
+      "id": 14,
+      "description": "Plumb Bob Tilt",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Left Outlane",
+      "vpx_name": "sw15",
+      "_note": "Hit/UnHit rollover switch"
+    },
+    {
+      "id": 16,
+      "description": "Right Outlane",
+      "vpx_name": "sw16",
+      "_note": "Hit/UnHit rollover switch"
+    },
+    {
+      "id": 17,
+      "description": "Left Inlane",
+      "vpx_name": "sw17",
+      "_note": "Hit/UnHit rollover switch"
+    },
+    {
+      "id": 18,
+      "description": "Right Inlane",
+      "vpx_name": "sw18",
+      "_note": "Hit/UnHit rollover switch"
+    },
+    {
+      "id": 25,
+      "description": "Trough 3 (Ball Release)",
+      "vpx_name": "ballrelease",
+      "device_hint": "^Trough\\s*\\d?",
+      "_note": "Top trough switch closest to shooter lane. CreateSizedballWithMass at init. Trough exit — kicked by solenoid 2."
+    },
+    {
+      "id": 26,
+      "description": "Trough 2",
+      "vpx_name": "sw26",
+      "device_hint": "^Trough\\s*\\d?",
+      "_note": "Middle trough switch. CreateSizedballWithMass at init."
+    },
+    {
+      "id": 27,
+      "description": "Trough 1",
+      "vpx_name": "sw27",
+      "device_hint": "^Trough\\s*\\d?",
+      "_note": "Bottom trough switch (drain end). CreateSizedballWithMass at init."
+    },
+    {
+      "id": 28,
+      "description": "Standup Target",
+      "vpx_name": "sw28",
+      "_note": "PulseSw 28 from sw28_Hit. Drop target with animation."
+    },
+    {
+      "id": 31,
+      "description": "Shooter Lane / Plunger",
+      "vpx_name": "sw31",
+      "_note": "Hit/UnHit rollover switch. Also used as plungerIM.switch for impulse plunger."
+    },
+    {
+      "id": 32,
+      "description": "Right Ramp Made",
+      "vpx_name": "sw32",
+      "_note": "Hit/UnHit rollover switch"
+    },
+    {
+      "id": 33,
+      "description": "Left Ramp Made",
+      "vpx_name": "sw33",
+      "_note": "Hit/UnHit rollover switch"
+    },
+    {
+      "id": 34,
+      "description": "Inner Loop",
+      "vpx_name": "sw34",
+      "_note": "Hit/UnHit rollover switch"
+    },
+    {
+      "id": 35,
+      "description": "Outer Loop",
+      "vpx_name": "sw35",
+      "_note": "Hit/UnHit rollover switch"
+    },
+    {
+      "id": 36,
+      "description": "Standup Target (Center)",
+      "vpx_name": "sw36",
+      "_note": "PulseSw 36 from sw36_Hit. Drop target with animation."
+    },
+    {
+      "id": 37,
+      "description": "Standup Target (Right)",
+      "vpx_name": "sw37",
+      "_note": "PulseSw 37 from sw37_Hit. Drop target with animation."
+    },
+    {
+      "id": 38,
+      "description": "Drain / Outhole",
+      "vpx_name": "Drain",
+      "_note": "Set via controller.switch(38) in Drain_hit. Cleared by kisort (solenoid 1)."
+    },
+    {
+      "id": 41,
+      "description": "Enter Skill Shot Lane",
+      "vpx_name": "sw41",
+      "_note": "PulseSw 41 from sw41_Hit"
+    },
+    {
+      "id": 43,
+      "description": "Rollover Switch",
+      "vpx_name": "sw43",
+      "_note": "Hit/UnHit rollover switch"
+    },
+    {
+      "id": 44,
+      "description": "Rollover Switch",
+      "vpx_name": "sw44",
+      "_note": "Hit/UnHit rollover switch"
+    },
+    {
+      "id": 45,
+      "description": "Rollover Switch",
+      "vpx_name": "sw45",
+      "_note": "Hit/UnHit rollover switch"
+    },
+    {
+      "id": 46,
+      "description": "Ball Scoop / Kickout Hole",
+      "vpx_name": "sw46k",
+      "_note": "Hit/UnHit kicker switch. Ejected by solenoid 3 (SolKickout)."
+    },
+    {
+      "id": 47,
+      "description": "Skill Shot Target",
+      "vpx_name": "sw47",
+      "_note": "PulseSw 47 from sw47_Hit"
+    },
+    {
+      "id": 51,
+      "description": "Spinner",
+      "vpx_name": "sw51",
+      "_note": "PulseSw 51 from sw51_Spin sub"
+    },
+    {
+      "id": 52,
+      "description": "Right Return Lane",
+      "vpx_name": "sw52",
+      "_note": "Hit/UnHit rollover switch"
+    },
+    {
+      "id": 53,
+      "description": "Left Jet Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 53 from Bumper1_Hit"
+    },
+    {
+      "id": 54,
+      "description": "Lower Jet Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "PulseSw 54 from Bumper3_Hit"
+    },
+    {
+      "id": 55,
+      "description": "Upper Jet Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 55 from Bumper2_Hit"
+    },
+    {
+      "id": 56,
+      "description": "Upper Slingshot",
+      "vpx_name": "UpperSlingShot",
+      "_note": "PulseSw 56 from UpperSlingShot_Slingshot"
+    },
+    {
+      "id": 57,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "PulseSw 57 from LeftSlingShot_Slingshot"
+    },
+    {
+      "id": 58,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "PulseSw 58 from RightSlingShot_Slingshot"
+    },
+    {
+      "id": 63,
+      "description": "Left Eye (Head Face 2)",
+      "vpx_name": "sw63x",
+      "_note": "Controller.Switch(63) set in sw63x_Hit. Enabled only when currentFace=2. Ejected by solenoid 15 (KickLeftEye)."
+    },
+    {
+      "id": 64,
+      "description": "Right Eye (Head Face 2)",
+      "vpx_name": "sw64x",
+      "_note": "Controller.Switch(64) set in sw64x_Hit. Enabled only when currentFace=2. Ejected by solenoid 16 (KickRightEye)."
+    },
+    {
+      "id": 65,
+      "description": "Mouth (Head Face 1)",
+      "vpx_name": "sw65x",
+      "_note": "Controller.Switch(65) set in sw65x_Hit. Enabled only when currentFace=1. Ejected by solenoid 8 (KickMouth)."
+    },
+    {
+      "id": 67,
+      "description": "Head Position Switch",
+      "_note": "Mechanism switch. Set to TRUE when currentFace is 1, 2, or 3 (faces that close the switch). Managed by HeadMechCallback. Set to 1 on init."
+    },
+    {
+      "id": 71,
+      "description": "Drop Target / Lock Entrance",
+      "vpx_name": "sw71",
+      "_note": "Hit/UnHit switch"
+    },
+    {
+      "id": 72,
+      "description": "Ball Lock",
+      "vpx_name": "sw72",
+      "_note": "Hit/UnHit switch. LockWall dropped/raised on hit/unhit."
+    },
+    {
+      "id": 73,
+      "description": "Right Ramp Entry",
+      "vpx_name": "sw73",
+      "_note": "PulseSw 73 from sw73_Hit"
+    },
+    {
+      "id": 74,
+      "description": "Left Ramp Entry",
+      "vpx_name": "sw74",
+      "_note": "PulseSw 74 from sw74_Hit"
+    },
+    {
+      "id": 75,
+      "description": "Jet Bumper Lane Entry",
+      "vpx_name": "sw75",
+      "_note": "PulseSw 75 from sw75_Hit"
+    },
+    {
+      "id": 76,
+      "description": "Right Loop",
+      "vpx_name": "sw76",
+      "_note": "PulseSw 76 from sw76_Hit"
+    },
+    {
+      "id": 77,
+      "description": "Left Loop / Orbit",
+      "vpx_name": "sw77",
+      "_note": "PulseSw 77 from sw77_Hit"
+    },
+    {
+      "id": 100,
+      "description": "Rubber Band Contact",
+      "_note": "PulseSw 100 from multiple wall_Hit subs (wall69, wall75, wall77, wall79, wall80, wall81, wall82, wall83, wall84). Likely mapped in WPC switch matrix extension or opto group."
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Outhole Kicker",
+      "_vbscript_callback": "kisort",
+      "_inferred_type": "coil",
+      "vpx_name": "Drain",
+      "_note": "Kicks ball from Drain kicker. Clears switch 38."
+    },
+    {
+      "id": 2,
+      "description": "Ball Release / Trough Eject",
+      "_vbscript_callback": "KickBallToLane",
+      "_inferred_type": "coil",
+      "vpx_name": "ballrelease",
+      "_note": "Kicks ball from trough to shooter lane."
+    },
+    {
+      "id": 3,
+      "description": "Ball Scoop Kickout",
+      "_vbscript_callback": "SolKickout",
+      "_inferred_type": "coil",
+      "vpx_name": "sw46k",
+      "_note": "Ejects ball from scoop kicker (switch 46)."
+    },
+    {
+      "id": 4,
+      "description": "Diverter Gate",
+      "_vbscript_callback": "SolGate3",
+      "_inferred_type": "coil",
+      "vpx_name": "Gate3",
+      "_note": "Controls Gate3 diverter via vpmSolGate."
+    },
+    {
+      "id": 5,
+      "description": "Skill Shot Launch",
+      "_vbscript_callback": "SolSS",
+      "_inferred_type": "coil",
+      "vpx_name": "SSLaunch",
+      "_note": "Auto-fires impulse plunger for skill shot."
+    },
+    {
+      "id": 6,
+      "description": "Ball Lock Post",
+      "_vbscript_callback": "solBallLockPost",
+      "_inferred_type": "coil",
+      "vpx_name": "BL",
+      "_note": "Drops/raises ball lock post (BL wall)."
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "KnockerSolenoid",
+      "_inferred_type": "coil",
+      "_note": "Cabinet knocker solenoid. Sound only in VPX."
+    },
+    {
+      "id": 8,
+      "description": "Mouth Eject",
+      "_vbscript_callback": "KickMouth",
+      "_inferred_type": "coil",
+      "_note": "Ejects ball from mouth (switch 65, Face 1). Launches ball upward."
+    },
+    {
+      "id": 15,
+      "description": "Left Eye Eject",
+      "_vbscript_callback": "KickLeftEye",
+      "_inferred_type": "coil",
+      "_note": "Ejects ball from left eye (switch 63, Face 2). Launches ball upward."
+    },
+    {
+      "id": 16,
+      "description": "Right Eye Eject",
+      "_vbscript_callback": "KickRightEye",
+      "_inferred_type": "coil",
+      "_note": "Ejects ball from right eye (switch 64, Face 2). Launches ball upward."
+    },
+    {
+      "id": 17,
+      "description": "Flasher - Billions",
+      "_vbscript_callback": "SetLamp 117, ",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Routes to Lampz lamp 117. Uses SolModCallBack for PWM when UsePinmameModulatedSolenoids=true."
+    },
+    {
+      "id": 18,
+      "description": "Flasher - Left Ramp",
+      "_vbscript_callback": "SolFlashLR",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "F118_SL",
+      "_note": "Left ramp flasher. Custom fading sub. Backglass: Left SpaceShip."
+    },
+    {
+      "id": 19,
+      "description": "Flasher - Jackpot",
+      "_vbscript_callback": "SetLamp 119, ",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Routes to Lampz lamp 119. Backglass: Jackpot. Uses SolModCallBack for PWM."
+    },
+    {
+      "id": 20,
+      "description": "Flasher - Skill Shot",
+      "_vbscript_callback": "SolFlashSK",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "F120_SR",
+      "_note": "Skill shot flasher. Custom fading sub. Backglass: Heart."
+    },
+    {
+      "id": 21,
+      "description": "Flasher - Left Helmet Dome",
+      "_vbscript_callback": "SetProcRedDome1",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Left helmet dome flasher. Uses SolModCallBack SetRedDome1 for PWM. Backglass: Face."
+    },
+    {
+      "id": 22,
+      "description": "Flasher - Right Helmet Dome",
+      "_vbscript_callback": "SetProcRedDome2",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Right helmet dome flasher. Uses SolModCallBack SetRedDome2 for PWM. Backglass: Bottom Right."
+    },
+    {
+      "id": 23,
+      "description": "Flasher - Jets Enter Dome",
+      "_vbscript_callback": "SetProcRedDome4",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Jets entrance dome flasher. Uses SolModCallBack SetRedDome4 for PWM. Backglass: Title Left."
+    },
+    {
+      "id": 24,
+      "description": "Flasher - Left Loop Dome",
+      "_vbscript_callback": "SetProcRedDome3",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Left loop dome flasher. Uses SolModCallBack SetRedDome3 for PWM. Backglass: Title Right."
+    },
+    {
+      "id": 27,
+      "description": "Head Motor Direction",
+      "_vbscript_callback": "motor_dir",
+      "_inferred_type": "mechanism",
+      "_note": "PROC-only SolCallback. Controls head rotation direction. Non-PROC uses cvpmMyMech.Sol2=27."
+    },
+    {
+      "id": 28,
+      "description": "Head Motor Drive",
+      "_vbscript_callback": "motor_sol",
+      "_inferred_type": "mechanism",
+      "_note": "PROC-only SolCallback. Drives head motor on/off. Non-PROC uses cvpmMyMech.Sol1=28."
+    },
+    {
+      "id": 40,
+      "description": "Flipper Relay Enable",
+      "_vbscript_callback": "FlipperRelay",
+      "_inferred_type": "coil",
+      "_note": "PROC-only SolCallback. Enables/disables flippers. Non-PROC handles flipper enable via PinMAME framework."
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "coil",
+      "_note": "Framework constant sLRFlipper=46 from core.vbs/WPC.VBS. Custom sub handles nFozzy flipper physics."
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "coil",
+      "_note": "Framework constant sLLFlipper=48 from core.vbs/WPC.VBS. Custom sub handles nFozzy flipper physics."
+    }
+  ],
+  "lamps": [
+    {
+      "id": 11,
+      "vpx_name": "l11",
+      "description": "Insert"
+    },
+    {
+      "id": 12,
+      "vpx_name": "l12",
+      "description": "Insert"
+    },
+    {
+      "id": 13,
+      "vpx_name": "l13",
+      "description": "Insert"
+    },
+    {
+      "id": 14,
+      "vpx_name": "l14",
+      "description": "Insert"
+    },
+    {
+      "id": 15,
+      "vpx_name": "l15",
+      "description": "Insert"
+    },
+    {
+      "id": 16,
+      "vpx_name": "l16",
+      "description": "Insert"
+    },
+    {
+      "id": 17,
+      "vpx_name": "l17",
+      "description": "Insert"
+    },
+    {
+      "id": 18,
+      "vpx_name": "l18",
+      "description": "Insert"
+    },
+    {
+      "id": 21,
+      "vpx_name": "l21",
+      "description": "Insert"
+    },
+    {
+      "id": 22,
+      "vpx_name": "l22",
+      "description": "Insert"
+    },
+    {
+      "id": 23,
+      "vpx_name": "l23",
+      "description": "Insert"
+    },
+    {
+      "id": 24,
+      "vpx_name": "l24",
+      "description": "Insert"
+    },
+    {
+      "id": 25,
+      "vpx_name": "l25",
+      "description": "Insert"
+    },
+    {
+      "id": 26,
+      "vpx_name": "l26",
+      "description": "Insert"
+    },
+    {
+      "id": 27,
+      "vpx_name": "l27",
+      "description": "Insert"
+    },
+    {
+      "id": 28,
+      "vpx_name": "l28",
+      "description": "Insert"
+    },
+    {
+      "id": 31,
+      "vpx_name": "l31",
+      "description": "Insert"
+    },
+    {
+      "id": 32,
+      "vpx_name": "l32",
+      "description": "Insert"
+    },
+    {
+      "id": 33,
+      "vpx_name": "l33",
+      "description": "Insert"
+    },
+    {
+      "id": 34,
+      "vpx_name": "l34",
+      "description": "Insert"
+    },
+    {
+      "id": 35,
+      "vpx_name": "l35",
+      "description": "Insert"
+    },
+    {
+      "id": 36,
+      "vpx_name": "l36",
+      "description": "Insert"
+    },
+    {
+      "id": 37,
+      "vpx_name": "l37",
+      "description": "Insert / Helmet"
+    },
+    {
+      "id": 38,
+      "vpx_name": "l38",
+      "description": "Insert / Helmet (multi-object: l38a-m)"
+    },
+    {
+      "id": 41,
+      "vpx_name": "L41",
+      "description": "Skill Shot Lane"
+    },
+    {
+      "id": 42,
+      "vpx_name": "L42",
+      "description": "Skill Shot Lane"
+    },
+    {
+      "id": 43,
+      "vpx_name": "L43",
+      "description": "Skill Shot Lane"
+    },
+    {
+      "id": 44,
+      "vpx_name": "L44",
+      "description": "Skill Shot Lane"
+    },
+    {
+      "id": 45,
+      "vpx_name": "L45",
+      "description": "Skill Shot Lane"
+    },
+    {
+      "id": 46,
+      "vpx_name": "l46",
+      "description": "Left Eye"
+    },
+    {
+      "id": 47,
+      "vpx_name": "l47",
+      "description": "Right Eye"
+    },
+    {
+      "id": 48,
+      "vpx_name": "l48",
+      "description": "Mouth"
+    },
+    {
+      "id": 51,
+      "vpx_name": "l51",
+      "description": "Insert"
+    },
+    {
+      "id": 52,
+      "vpx_name": "l52",
+      "description": "Insert"
+    },
+    {
+      "id": 53,
+      "vpx_name": "l53",
+      "description": "Insert"
+    },
+    {
+      "id": 54,
+      "vpx_name": "l54",
+      "description": "Insert"
+    },
+    {
+      "id": 55,
+      "vpx_name": "l55",
+      "description": "Insert"
+    },
+    {
+      "id": 56,
+      "vpx_name": "l56",
+      "description": "Insert"
+    },
+    {
+      "id": 57,
+      "vpx_name": "l57",
+      "description": "Insert"
+    },
+    {
+      "id": 58,
+      "vpx_name": "l58",
+      "description": "Insert"
+    },
+    {
+      "id": 61,
+      "vpx_name": "l61",
+      "description": "Insert"
+    },
+    {
+      "id": 62,
+      "vpx_name": "l62",
+      "description": "Insert"
+    },
+    {
+      "id": 63,
+      "vpx_name": "l63",
+      "description": "Insert"
+    },
+    {
+      "id": 64,
+      "vpx_name": "l64",
+      "description": "Ball Lock Light"
+    },
+    {
+      "id": 65,
+      "vpx_name": "l65",
+      "description": "Insert"
+    },
+    {
+      "id": 66,
+      "vpx_name": "l66",
+      "description": "Insert"
+    },
+    {
+      "id": 67,
+      "vpx_name": "l67",
+      "description": "Insert"
+    },
+    {
+      "id": 68,
+      "vpx_name": "l68",
+      "description": "Insert"
+    },
+    {
+      "id": 71,
+      "vpx_name": "BG8M",
+      "description": "Backglass Body 8 (VR-only)",
+      "_note": "VR room backglass lamp"
+    },
+    {
+      "id": 72,
+      "vpx_name": "BG7M",
+      "description": "Backglass Body 7 (VR-only)",
+      "_note": "VR room backglass lamp"
+    },
+    {
+      "id": 73,
+      "vpx_name": "BG6M",
+      "description": "Backglass Body 6 (VR-only)",
+      "_note": "VR room backglass lamp"
+    },
+    {
+      "id": 74,
+      "vpx_name": "BG5M",
+      "description": "Backglass Body 5 (VR-only)",
+      "_note": "VR room backglass lamp"
+    },
+    {
+      "id": 75,
+      "vpx_name": "BG4M",
+      "description": "Backglass Body 4 (VR-only)",
+      "_note": "VR room backglass lamp"
+    },
+    {
+      "id": 76,
+      "vpx_name": "BG3M",
+      "description": "Backglass Body 3 (VR-only)",
+      "_note": "VR room backglass lamp"
+    },
+    {
+      "id": 77,
+      "vpx_name": "BG2M",
+      "description": "Backglass Body 2 (VR-only)",
+      "_note": "VR room backglass lamp"
+    },
+    {
+      "id": 78,
+      "vpx_name": "BG1M",
+      "description": "Backglass Body 1 (VR-only)",
+      "_note": "VR room backglass lamp"
+    },
+    {
+      "id": 81,
+      "vpx_name": "VRBGFL81Hip",
+      "description": "Backglass Hip (VR-only)",
+      "_note": "VR room backglass lamp"
+    },
+    {
+      "id": 82,
+      "vpx_name": "VRBGFL82MLeg",
+      "description": "Backglass Mid Leg (VR-only)",
+      "_note": "VR room backglass lamp"
+    },
+    {
+      "id": 83,
+      "vpx_name": "VRBGFL83Knee",
+      "description": "Backglass Knee (VR-only)",
+      "_note": "VR room backglass lamp"
+    },
+    {
+      "id": 84,
+      "vpx_name": "VRBGFL84Foot",
+      "description": "Backglass Foot (VR-only)",
+      "_note": "VR room backglass lamp"
+    },
+    {
+      "id": 85,
+      "vpx_name": "VRBGFL85Shoulder",
+      "description": "Backglass Shoulder (VR-only)",
+      "_note": "VR room backglass lamp"
+    },
+    {
+      "id": 86,
+      "vpx_name": "f86",
+      "description": "Flasher / Lamp",
+      "_note": "Lampz.MassAssign only, no callback"
+    },
+    {
+      "id": 87,
+      "vpx_name": "f87",
+      "description": "Flasher / Lamp",
+      "_note": "Lampz.MassAssign only, no callback"
+    },
+    {
+      "id": 88,
+      "vpx_name": "f88",
+      "description": "Flasher / Lamp",
+      "_note": "Lampz.MassAssign only, no callback"
+    },
+    {
+      "id": 91,
+      "vpx_name": "l91",
+      "description": "GI String"
+    },
+    {
+      "id": 92,
+      "vpx_name": "l92",
+      "description": "GI String"
+    },
+    {
+      "id": 93,
+      "vpx_name": "l93",
+      "description": "GI String"
+    },
+    {
+      "id": 94,
+      "vpx_name": "l94",
+      "description": "GI String"
+    },
+    {
+      "id": 95,
+      "vpx_name": "l95",
+      "description": "GI String"
+    },
+    {
+      "id": 96,
+      "vpx_name": "l96",
+      "description": "GI String"
+    },
+    {
+      "id": 97,
+      "vpx_name": "l97",
+      "description": "GI String"
+    },
+    {
+      "id": 98,
+      "vpx_name": "l98",
+      "description": "GI String"
+    },
+    {
+      "id": 101,
+      "vpx_name": "l101",
+      "description": "GI String"
+    },
+    {
+      "id": 102,
+      "vpx_name": "l102",
+      "description": "GI String"
+    },
+    {
+      "id": 103,
+      "vpx_name": "l103",
+      "description": "GI String"
+    },
+    {
+      "id": 104,
+      "vpx_name": "l104",
+      "description": "GI String"
+    },
+    {
+      "id": 105,
+      "vpx_name": "l105",
+      "description": "GI String"
+    },
+    {
+      "id": 106,
+      "vpx_name": "l106",
+      "description": "GI String"
+    },
+    {
+      "id": 107,
+      "vpx_name": "l107",
+      "description": "GI String"
+    },
+    {
+      "id": 108,
+      "vpx_name": "l108",
+      "description": "GI String"
+    },
+    {
+      "id": 117,
+      "vpx_name": "f117",
+      "description": "Flasher - Billions",
+      "_note": "Driven by solenoid 17 via SetLamp/Lampz"
+    },
+    {
+      "id": 119,
+      "vpx_name": "f119",
+      "description": "Flasher - Jackpot",
+      "_note": "Driven by solenoid 19 via SetLamp/Lampz"
+    }
+  ],
+  "gi": [
+    {
+      "id": 2,
+      "description": "GI Rear",
+      "_note": "ModLampz GI string 2. Maps to Lampz index 112 in non-modulated mode. GIRear collection. Includes DecalHeart1 material color fade."
+    },
+    {
+      "id": 4,
+      "description": "GI Front",
+      "_note": "ModLampz GI string 4. Maps to Lampz index 114 in non-modulated mode. GIFront collection + AmbientOverhead."
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    }
+  ]
+}

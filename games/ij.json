@@ -1,0 +1,1203 @@
+{
+  "game": {
+    "id": "ij",
+    "name": "Indiana Jones: The Pinball Adventure",
+    "manufacturer": "Williams",
+    "year": 1993,
+    "platform": "wpc",
+    "ipdb": 1267,
+    "_vpx_source": "Indiana Jones The Pinball Adventure (Williams 1993) VPWmod v1.1.vpx",
+    "_load_vpm": "LoadVPM \"02800000\", \"WPC.VBS\", 3.55",
+    "_notes": "Widebody 'Superpin' line. Features Path of Adventure mini-playfield and rotating Idol mechanism."
+  },
+  "roms": [
+    {
+      "id": "ij_l7",
+      "version": "L-7",
+      "_note": "cGameName in VBS"
+    }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Totem Drop Target",
+      "_vbscript_name": "sw11a",
+      "_inferred_type": "drop_target",
+      "_note": "Single totem drop target, raised/lowered by solenoids 3/16"
+    },
+    {
+      "id": 12,
+      "description": "Buy-In Button",
+      "_vbscript_name": "keyFront",
+      "_inferred_type": "cabinet_button"
+    },
+    {
+      "id": 14,
+      "description": "Tilt",
+      "_vbscript_name": "vpmNudge.TiltSwitch",
+      "_inferred_type": "tilt"
+    },
+    {
+      "id": 15,
+      "description": "Left Inlane/Outlane Rollover 1",
+      "_vbscript_name": "Sw15",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 16,
+      "description": "Left Inlane/Outlane Rollover 2",
+      "_vbscript_name": "Sw16",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 17,
+      "description": "Right Inlane/Outlane Rollover 1",
+      "_vbscript_name": "Sw17",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 18,
+      "description": "Right Inlane/Outlane Rollover 2",
+      "_vbscript_name": "Sw18",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "_inferred_type": "coin_door",
+      "_note": "Set to 1 at init (coin door closed)"
+    },
+    {
+      "id": 24,
+      "description": "Always Closed Switch",
+      "_inferred_type": "opto",
+      "_note": "Set to 0 at init, comment says 'always closed'"
+    },
+    {
+      "id": 25,
+      "description": "Left Orbit Rollover 1",
+      "_vbscript_name": "Sw25",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 26,
+      "description": "Left Orbit Rollover 2",
+      "_vbscript_name": "Sw26",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 27,
+      "description": "Right Orbit Rollover 1",
+      "_vbscript_name": "Sw27",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 28,
+      "description": "Right Orbit Rollover 2",
+      "_vbscript_name": "Sw28",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 31,
+      "description": "Left Eject Saucer",
+      "_vbscript_name": "Sw31",
+      "_inferred_type": "saucer",
+      "_note": "cvpmSaucer bsLEject, kicks at angle 160"
+    },
+    {
+      "id": 32,
+      "description": "Center Rollover (Subway Area)",
+      "_vbscript_name": "Sw32",
+      "_inferred_type": "rollover",
+      "_note": "Ball VelY set to 1 on hit"
+    },
+    {
+      "id": 33,
+      "description": "Left Slingshot",
+      "_vbscript_name": "LeftSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "vpmTimer.PulseSw 33"
+    },
+    {
+      "id": 34,
+      "description": "Shooter Lane / Plunger",
+      "_vbscript_name": "PlungerKey",
+      "_inferred_type": "plunger_lane"
+    },
+    {
+      "id": 35,
+      "description": "Top Bumper",
+      "_vbscript_name": "Bumper1",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw 35"
+    },
+    {
+      "id": 36,
+      "description": "Middle Bumper",
+      "_vbscript_name": "Bumper2",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw 36"
+    },
+    {
+      "id": 37,
+      "description": "Bottom Bumper",
+      "_vbscript_name": "Bumper3",
+      "_inferred_type": "bumper",
+      "_note": "vpmTimer.PulseSw 37"
+    },
+    {
+      "id": 38,
+      "description": "Center Standup Target",
+      "_vbscript_name": "Sw38",
+      "_inferred_type": "standup_target",
+      "_note": "vpmTimer.PulseSw 38"
+    },
+    {
+      "id": 41,
+      "description": "Left Ramp Entry",
+      "_vbscript_name": "Sw41",
+      "_inferred_type": "ramp_entry",
+      "_note": "vpmTimer.PulseSw 41"
+    },
+    {
+      "id": 42,
+      "description": "Right Ramp Entry",
+      "_vbscript_name": "Sw42",
+      "_inferred_type": "ramp_entry",
+      "_note": "vpmTimer.PulseSw 42"
+    },
+    {
+      "id": 43,
+      "description": "Idol Enter",
+      "_vbscript_name": "sw43",
+      "_inferred_type": "kicker",
+      "_note": "vpmTimer.PulseSw 43, ball enters idol mechanism"
+    },
+    {
+      "id": 44,
+      "description": "Subway Popper",
+      "_vbscript_name": "Sw44",
+      "_inferred_type": "saucer",
+      "_note": "cvpmSaucer bsPopper, ejects ball from subway"
+    },
+    {
+      "id": 45,
+      "description": "Subway Enter",
+      "_vbscript_name": "sw45",
+      "_inferred_type": "opto",
+      "_note": "vpmTimer.PulseSw 45, ball enters subway"
+    },
+    {
+      "id": 46,
+      "description": "Path of Adventure Entry",
+      "_vbscript_name": "sw46",
+      "_inferred_type": "kicker",
+      "_note": "Ball enters Path of Adventure mini-playfield, sets Controller.Switch(46)=1 on hit"
+    },
+    {
+      "id": 47,
+      "description": "Subway Release",
+      "_vbscript_name": "sw47",
+      "_inferred_type": "saucer",
+      "_note": "cvpmSaucer bsSubway"
+    },
+    {
+      "id": 48,
+      "description": "Right Slingshot",
+      "_vbscript_name": "RightSlingShot",
+      "_inferred_type": "slingshot",
+      "_note": "vpmTimer.PulseSw 48"
+    },
+    {
+      "id": 51,
+      "description": "Adventure Target U",
+      "_vbscript_name": "Sw51",
+      "_inferred_type": "standup_target",
+      "_note": "ADVENTURE letter targets (U)"
+    },
+    {
+      "id": 52,
+      "description": "Adventure Target R",
+      "_vbscript_name": "Sw52",
+      "_inferred_type": "standup_target",
+      "_note": "ADVENTURE letter targets (R)"
+    },
+    {
+      "id": 53,
+      "description": "Adventure Target E",
+      "_vbscript_name": "Sw53",
+      "_inferred_type": "standup_target",
+      "_note": "ADVENTURE letter targets (E)"
+    },
+    {
+      "id": 54,
+      "description": "Upper Rollover 1",
+      "_vbscript_name": "Sw54",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 55,
+      "description": "Upper Rollover 2",
+      "_vbscript_name": "Sw55",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 56,
+      "description": "Upper Rollover 3",
+      "_vbscript_name": "Sw56",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 57,
+      "description": "Upper Rollover 4",
+      "_vbscript_name": "Sw57",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 58,
+      "description": "Upper Rollover 5",
+      "_vbscript_name": "Sw58",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 61,
+      "description": "Adventure Target A",
+      "_vbscript_name": "Sw61",
+      "_inferred_type": "standup_target",
+      "_note": "ADVENTURE letter targets (A)"
+    },
+    {
+      "id": 62,
+      "description": "Adventure Target D",
+      "_vbscript_name": "Sw62",
+      "_inferred_type": "standup_target",
+      "_note": "ADVENTURE letter targets (D)"
+    },
+    {
+      "id": 63,
+      "description": "Adventure Target V",
+      "_vbscript_name": "Sw63",
+      "_inferred_type": "standup_target",
+      "_note": "ADVENTURE letter targets (V)"
+    },
+    {
+      "id": 64,
+      "description": "Captive Ball Target",
+      "_vbscript_name": "Sw64",
+      "_inferred_type": "standup_target",
+      "_note": "vpmTimer.PulseSw 64"
+    },
+    {
+      "id": 65,
+      "description": "Path of Adventure Left Row 1",
+      "_vbscript_name": "Sw65",
+      "_inferred_type": "rollover",
+      "_note": "PoA mini-playfield, left row top"
+    },
+    {
+      "id": 66,
+      "description": "Path of Adventure Left Row 2",
+      "_vbscript_name": "Sw66",
+      "_inferred_type": "rollover",
+      "_note": "PoA mini-playfield, left row"
+    },
+    {
+      "id": 67,
+      "description": "Path of Adventure Left Row 3",
+      "_vbscript_name": "Sw67",
+      "_inferred_type": "rollover",
+      "_note": "PoA mini-playfield, left row"
+    },
+    {
+      "id": 68,
+      "description": "Path of Adventure Left Row 4",
+      "_vbscript_name": "Sw68",
+      "_inferred_type": "rollover",
+      "_note": "PoA mini-playfield, left row bottom"
+    },
+    {
+      "id": 71,
+      "description": "Captive Ball Opto",
+      "_vbscript_name": "Sw71",
+      "_inferred_type": "opto",
+      "_note": "Captive ball rollover opto, direct switch set"
+    },
+    {
+      "id": 72,
+      "description": "Path of Adventure Hole Left",
+      "_vbscript_name": "sw72",
+      "_inferred_type": "kicker",
+      "_note": "PoA mini-playfield hole, ball drops through"
+    },
+    {
+      "id": 73,
+      "description": "Path of Adventure Hole Right",
+      "_vbscript_name": "sw73",
+      "_inferred_type": "kicker",
+      "_note": "PoA mini-playfield hole, ball drops through"
+    },
+    {
+      "id": 74,
+      "description": "Right Ramp Made",
+      "_vbscript_name": "Sw74",
+      "_inferred_type": "ramp_exit",
+      "_note": "vpmTimer.PulseSw 74"
+    },
+    {
+      "id": 75,
+      "description": "Path of Adventure Right Row 1",
+      "_vbscript_name": "Sw75",
+      "_inferred_type": "rollover",
+      "_note": "PoA mini-playfield, right row top"
+    },
+    {
+      "id": 76,
+      "description": "Path of Adventure Right Row 2",
+      "_vbscript_name": "Sw76",
+      "_inferred_type": "rollover",
+      "_note": "PoA mini-playfield, right row"
+    },
+    {
+      "id": 77,
+      "description": "Path of Adventure Right Row 3",
+      "_vbscript_name": "Sw77",
+      "_inferred_type": "rollover",
+      "_note": "PoA mini-playfield, right row"
+    },
+    {
+      "id": 78,
+      "description": "Path of Adventure Right Row 4",
+      "_vbscript_name": "Sw78",
+      "_inferred_type": "rollover",
+      "_note": "PoA mini-playfield, right row bottom"
+    },
+    {
+      "id": 81,
+      "description": "Trough Ball 6 (Top)",
+      "_inferred_type": "trough",
+      "_note": "bsTrough.InitSwitches Array(86,85,84,83,82,81)"
+    },
+    {
+      "id": 82,
+      "description": "Trough Ball 5",
+      "_inferred_type": "trough"
+    },
+    {
+      "id": 83,
+      "description": "Trough Ball 4",
+      "_inferred_type": "trough"
+    },
+    {
+      "id": 84,
+      "description": "Trough Ball 3",
+      "_inferred_type": "trough"
+    },
+    {
+      "id": 85,
+      "description": "Trough Ball 2",
+      "_inferred_type": "trough"
+    },
+    {
+      "id": 86,
+      "description": "Trough Ball 1 (Bottom/Drain)",
+      "_inferred_type": "trough"
+    },
+    {
+      "id": 87,
+      "description": "Trough Jam",
+      "_inferred_type": "trough",
+      "_note": "Pulsed after ExitSol_On if balls remain: vpmTimer.PulseSw 87"
+    },
+    {
+      "id": 88,
+      "description": "Shooter Lane Rollover",
+      "_vbscript_name": "Sw88",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 115,
+      "description": "Center Drop Target Left",
+      "_vbscript_name": "sw115a",
+      "_inferred_type": "drop_target",
+      "_note": "Center bank of 3 drop targets (left)"
+    },
+    {
+      "id": 116,
+      "description": "Center Drop Target Center",
+      "_vbscript_name": "sw116a",
+      "_inferred_type": "drop_target",
+      "_note": "Center bank of 3 drop targets (center)"
+    },
+    {
+      "id": 117,
+      "description": "Center Drop Target Right",
+      "_vbscript_name": "sw117a",
+      "_inferred_type": "drop_target",
+      "_note": "Center bank of 3 drop targets (right)"
+    },
+    {
+      "id": 118,
+      "description": "Left Ramp Made",
+      "_vbscript_name": "Sw118",
+      "_inferred_type": "ramp_exit",
+      "_note": "vpmTimer.PulseSw 118, triggers propeller animation if PropellerMod=1"
+    },
+    {
+      "id": 121,
+      "description": "Idol Position Opto 1",
+      "_inferred_type": "opto",
+      "_note": "Idol rotating mechanism position encoder, set by UpdateIdol_timer"
+    },
+    {
+      "id": 122,
+      "description": "Idol Position Opto 2",
+      "_inferred_type": "opto",
+      "_note": "Idol rotating mechanism position encoder"
+    },
+    {
+      "id": 123,
+      "description": "Idol Position Opto 3",
+      "_inferred_type": "opto",
+      "_note": "Idol rotating mechanism position encoder"
+    },
+    {
+      "id": 124,
+      "description": "Path of Adventure Left End",
+      "_inferred_type": "opto",
+      "_note": "cvpmMech PoAMech.AddSw 124,0,0 (position 0)"
+    },
+    {
+      "id": 125,
+      "description": "Path of Adventure Right End",
+      "_inferred_type": "opto",
+      "_note": "cvpmMech PoAMech.AddSw 125,8,8 (position 8)"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Ball Popper (Subway Exit)",
+      "_vbscript_callback": "bsPopper.SolOut",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 2,
+      "description": "Auto Plunger / Ball Launch",
+      "_vbscript_callback": "AutoPlunger",
+      "_inferred_type": "plunger"
+    },
+    {
+      "id": 3,
+      "description": "Totem Drop Target Up",
+      "_vbscript_callback": "TotemDropUP",
+      "_inferred_type": "drop_target_reset"
+    },
+    {
+      "id": 4,
+      "description": "Ball Release (Trough Eject)",
+      "_vbscript_callback": "SolBallRelease",
+      "_inferred_type": "trough_eject"
+    },
+    {
+      "id": 5,
+      "description": "Center Drop Targets Reset",
+      "_vbscript_callback": "ResetDrops",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets switches 115, 116, 117"
+    },
+    {
+      "id": 6,
+      "description": "Idol Release",
+      "_vbscript_callback": "SolIdol",
+      "_inferred_type": "kicker",
+      "_note": "Opens lock doors, releases ball from idol"
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"fx_Knocker\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 8,
+      "description": "Left Eject",
+      "_vbscript_callback": "bsLEject.SolOut",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 9,
+      "description": "Left Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in VBS - bumper solenoids handled natively by VPX",
+      "_commented_out": true
+    },
+    {
+      "id": 10,
+      "description": "Right Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in VBS - bumper solenoids handled natively by VPX",
+      "_commented_out": true
+    },
+    {
+      "id": 11,
+      "description": "Bottom Bumper",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in VBS - bumper solenoids handled natively by VPX",
+      "_commented_out": true
+    },
+    {
+      "id": 12,
+      "description": "Right Sling",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in VBS - slingshot handled natively by VPX",
+      "_commented_out": true
+    },
+    {
+      "id": 13,
+      "description": "Left Sling",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in VBS - slingshot handled natively by VPX",
+      "_commented_out": true
+    },
+    {
+      "id": 14,
+      "description": "Left Control Gate",
+      "_vbscript_callback": "vpmSolGate LeftGate,SoundFX(\"DiverterOn\",DOFContactors),",
+      "_inferred_type": "gate"
+    },
+    {
+      "id": 15,
+      "description": "Right Control Gate",
+      "_vbscript_callback": "vpmSolGate RightGate,SoundFX(\"DiverterOn\",DOFContactors),",
+      "_inferred_type": "gate"
+    },
+    {
+      "id": 16,
+      "description": "Totem Drop Target Down",
+      "_vbscript_callback": "TotemDropDOWN",
+      "_inferred_type": "drop_target_trip"
+    },
+    {
+      "id": 17,
+      "description": "Flasher: Eternal Life Insert",
+      "_vbscript_callback": "SolFlash17",
+      "_inferred_type": "flasher",
+      "_note": "Controls lamp 117 insert and BG center backglass flashers"
+    },
+    {
+      "id": 18,
+      "description": "Flasher: Light Jackpot",
+      "_vbscript_callback": "SolFlash18",
+      "_inferred_type": "flasher_pwm",
+      "_note": "SolModCallback (PWM), FL_LJackpot flasher objects"
+    },
+    {
+      "id": 19,
+      "description": "Insert: Super Jackpot",
+      "_vbscript_callback": "SetLamp 119, ",
+      "_inferred_type": "controlled_lamp",
+      "_note": "Routes to lamp 119 via SetLamp"
+    },
+    {
+      "id": 20,
+      "description": "Flasher: Jackpot",
+      "_vbscript_callback": "SetModLamp 20, ",
+      "_inferred_type": "flasher_pwm",
+      "_note": "SolModCallback, FL_Jackpot, BG Ark backglass flasher"
+    },
+    {
+      "id": 21,
+      "description": "Flasher: Path of Adventure",
+      "_vbscript_callback": "SetModLamp 21, ",
+      "_inferred_type": "flasher_pwm",
+      "_note": "SolModCallback, FL_POA, BG Letters backglass flasher"
+    },
+    {
+      "id": 22,
+      "description": "Path of Adventure Motor Left",
+      "_vbscript_callback": "PoAMoveLeft",
+      "_inferred_type": "motor",
+      "_note": "cvpmMech Sol2=22, tilts PoA mini-playfield left"
+    },
+    {
+      "id": 23,
+      "description": "Path of Adventure Motor Right",
+      "_vbscript_callback": "PoAMoveRight",
+      "_inferred_type": "motor",
+      "_note": "cvpmMech Sol1=23, tilts PoA mini-playfield right"
+    },
+    {
+      "id": 24,
+      "description": "Flasher: Plane Gun LEDs",
+      "_vbscript_callback": "SetModLamp 24, ",
+      "_inferred_type": "flasher_pwm",
+      "_note": "SolModCallback, FL_PlaneGunsA and FL_PlaneGunsB"
+    },
+    {
+      "id": 25,
+      "description": "Insert: Dogfight Hurry Up",
+      "_vbscript_callback": "SetLamp 125, ",
+      "_inferred_type": "controlled_lamp",
+      "_note": "Routes to lamp 125 via SetLamp"
+    },
+    {
+      "id": 26,
+      "description": "Flasher: Right Ramp (x3)",
+      "_vbscript_callback": "SolFlash26",
+      "_inferred_type": "flasher_pwm",
+      "_note": "SolModCallback, green flupper dome #2, BG Right Fire backglass flasher"
+    },
+    {
+      "id": 27,
+      "description": "Flasher: Left Ramp",
+      "_vbscript_callback": "SolFlash27",
+      "_inferred_type": "flasher_pwm",
+      "_note": "SolModCallback, green flupper dome #3, BG Left Sky backglass flasher"
+    },
+    {
+      "id": 28,
+      "description": "Subway Release",
+      "_vbscript_callback": "bsSubway.SolOut",
+      "_inferred_type": "kicker"
+    },
+    {
+      "id": 33,
+      "description": "Diverter Power",
+      "_vbscript_callback": "SolDivPower",
+      "_inferred_type": "diverter",
+      "_note": "Powers the diverter on"
+    },
+    {
+      "id": 34,
+      "description": "Diverter Hold",
+      "_vbscript_callback": "SolDivHold",
+      "_inferred_type": "diverter",
+      "_note": "Holds the diverter, releases when disabled"
+    },
+    {
+      "id": 35,
+      "description": "Top Post Power",
+      "_vbscript_callback": "SolTopPostPower",
+      "_inferred_type": "post",
+      "_note": "Controls PoA entry post, interacts with DropPoA"
+    },
+    {
+      "id": 36,
+      "description": "Top Post Hold",
+      "_vbscript_callback": "SolTopPostHold",
+      "_inferred_type": "post",
+      "_note": "Holds top post down for PoA ball divert"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "_note": "sLRFlipper from WPC.VBS core framework (constant = 46)"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "_note": "sLLFlipper from WPC.VBS core framework (constant = 48)"
+    },
+    {
+      "id": 51,
+      "description": "Flasher: Left Side (x2)",
+      "_vbscript_callback": "solflash51",
+      "_inferred_type": "flasher_pwm",
+      "_note": "SolModCallback, PLAYFIELD_leftside, LeftSideFlashA/B, BG Left Horse backglass"
+    },
+    {
+      "id": 52,
+      "description": "Flasher: Right Side (x2)",
+      "_vbscript_callback": "SolFlash52",
+      "_inferred_type": "flasher_pwm",
+      "_note": "SolModCallback, yellow flupper dome #1, RightSideFlasher, PLAYFIELD_ruins, BG Right Cave backglass"
+    },
+    {
+      "id": 53,
+      "description": "Insert: Sol 53 to Lamp 116",
+      "_vbscript_callback": "SetLamp 116, ",
+      "_inferred_type": "controlled_lamp",
+      "_note": "Routes to lamp 116 -> L153L, L153R"
+    },
+    {
+      "id": 54,
+      "description": "Insert: Totem Multi",
+      "_vbscript_callback": "SetLamp 115, ",
+      "_inferred_type": "controlled_lamp",
+      "_note": "Routes to lamp 115 -> f54"
+    },
+    {
+      "id": 55,
+      "description": "Flasher: Jackpot Multi",
+      "_vbscript_callback": "solflash55",
+      "_inferred_type": "flasher_pwm",
+      "_note": "SolModCallback, FL_JackpotMultia/b flashers"
+    },
+    {
+      "id": 56,
+      "description": "Idol Motor",
+      "_vbscript_callback": "SolMoveIdol",
+      "_inferred_type": "motor",
+      "_note": "Rotates the idol mechanism through 6 positions (60 deg each)"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 11,
+      "description": "Lamp 11",
+      "_vpx_name": "Light11, Light11a",
+      "_note": "With primitive p11, p11bulb"
+    },
+    {
+      "id": 12,
+      "description": "Lamp 12",
+      "_vpx_name": "Light12, Light12a",
+      "_note": "With primitive p12, p12bulb"
+    },
+    {
+      "id": 13,
+      "description": "Lamp 13",
+      "_vpx_name": "Light13, Light13a",
+      "_note": "With primitive p13, p13bulb"
+    },
+    {
+      "id": 14,
+      "description": "Lamp 14",
+      "_vpx_name": "Light14, Light14a, Light14b",
+      "_note": "With primitive p14, p14bulb"
+    },
+    {
+      "id": 15,
+      "description": "Lamp 15",
+      "_vpx_name": "Light15, Light15a, Light15b",
+      "_note": "With primitive p15, p15bulb"
+    },
+    {
+      "id": 16,
+      "description": "Lamp 16",
+      "_vpx_name": "Light16, Light16a, Light16b",
+      "_note": "With primitive p16, p16bulb"
+    },
+    {
+      "id": 17,
+      "description": "Lamp 17",
+      "_vpx_name": "Light17, Light17a",
+      "_note": "With primitive p17, p17bulb"
+    },
+    {
+      "id": 18,
+      "description": "Lamp 18",
+      "_vpx_name": "Light18, Light18a, Light18b",
+      "_note": "With primitive p18"
+    },
+    {
+      "id": 21,
+      "description": "Lamp 21",
+      "_vpx_name": "Light21, Light21a, Light21b",
+      "_note": "With primitive p21"
+    },
+    {
+      "id": 22,
+      "description": "Lamp 22",
+      "_vpx_name": "Light22, Light22a, Light22b, Light22f",
+      "_note": "With primitive p22, p22bulb. Light22f tied to drop target sw117"
+    },
+    {
+      "id": 23,
+      "description": "Lamp 23",
+      "_vpx_name": "Light23, Light23a, Light23b, Light23f",
+      "_note": "With primitive p23, p23bulb. Light23f tied to drop target sw115"
+    },
+    {
+      "id": 24,
+      "description": "Lamp 24",
+      "_vpx_name": "Light24, Light24a, Light24b, Light24f",
+      "_note": "With primitive p24, p24bulb. Light24f tied to drop target sw116"
+    },
+    {
+      "id": 25,
+      "description": "Lamp 25",
+      "_vpx_name": "Light25, Light25a, Light25b",
+      "_note": "With primitive p25"
+    },
+    {
+      "id": 26,
+      "description": "Lamp 26",
+      "_vpx_name": "Light26, Light26a, Light26b",
+      "_note": "With primitive p26, plus BGFLGrail in VR"
+    },
+    {
+      "id": 27,
+      "description": "Lamp 27",
+      "_vpx_name": "Light27, Light27a, Light27b",
+      "_note": "With primitive p27"
+    },
+    {
+      "id": 28,
+      "description": "Lamp 28",
+      "_vpx_name": "Light28, Light28a, Light28b",
+      "_note": "With primitive p28, plus BGFLStones in VR"
+    },
+    {
+      "id": 31,
+      "description": "Lamp 31",
+      "_vpx_name": "Light31, Light31a",
+      "_note": "With primitive p31, p31bulb"
+    },
+    {
+      "id": 32,
+      "description": "Lamp 32",
+      "_vpx_name": "Light32, Light32a, Light32b",
+      "_note": "With primitive p32"
+    },
+    {
+      "id": 33,
+      "description": "Lamp 33",
+      "_vpx_name": "Light33, Light33a",
+      "_note": "With primitive p33, p33bulb"
+    },
+    {
+      "id": 34,
+      "description": "Lamp 34",
+      "_vpx_name": "Light34, Light34a, Light34b",
+      "_note": "With primitive p34"
+    },
+    {
+      "id": 35,
+      "description": "Lamp 35",
+      "_vpx_name": "Light35, Light35a",
+      "_note": "With primitive p35, p35bulb"
+    },
+    {
+      "id": 36,
+      "description": "Lamp 36",
+      "_vpx_name": "Light36, Light36a, Light36b",
+      "_note": "With primitive p36"
+    },
+    {
+      "id": 37,
+      "description": "Lamp 37",
+      "_vpx_name": "Light37, Light37a",
+      "_note": "With primitive p37, p37bulb"
+    },
+    {
+      "id": 38,
+      "description": "Lamp 38",
+      "_vpx_name": "Light38, Light38a",
+      "_note": "With primitive p38, p38bulb"
+    },
+    {
+      "id": 41,
+      "description": "Lamp 41",
+      "_vpx_name": "Light41, Light41a, Light41b",
+      "_note": "With primitive p41"
+    },
+    {
+      "id": 42,
+      "description": "Lamp 42",
+      "_vpx_name": "Light42, Light42a, Light42b",
+      "_note": "With primitive p42, plus BGFLArk in VR"
+    },
+    {
+      "id": 43,
+      "description": "Lamp 43",
+      "_vpx_name": "Light43, Light43a, Light43b",
+      "_note": "With primitive p43"
+    },
+    {
+      "id": 44,
+      "description": "Lamp 44",
+      "_vpx_name": "Light44, Light44a",
+      "_note": "With primitive p44, p44bulb"
+    },
+    {
+      "id": 45,
+      "description": "Lamp 45",
+      "_vpx_name": "Light45, Light45a",
+      "_note": "With primitive p45, p45bulb"
+    },
+    {
+      "id": 46,
+      "description": "Lamp 46",
+      "_vpx_name": "Light46, Light46a",
+      "_note": "With primitive p46, p46bulb"
+    },
+    {
+      "id": 47,
+      "description": "Lamp 47",
+      "_vpx_name": "Light47, Light47a, Light47b",
+      "_note": "With primitive p47"
+    },
+    {
+      "id": 48,
+      "description": "Lamp 48",
+      "_vpx_name": "Light48, Light48a",
+      "_note": "With primitive p48, p48bulb"
+    },
+    {
+      "id": 51,
+      "description": "Lamp 51",
+      "_vpx_name": "Light51, Light51a",
+      "_note": "With primitive p51"
+    },
+    {
+      "id": 52,
+      "description": "Lamp 52",
+      "_vpx_name": "Light52, Light52a",
+      "_note": "With primitive p52, p52bulb"
+    },
+    {
+      "id": 53,
+      "description": "Lamp 53",
+      "_vpx_name": "Light53, Light53a, Light53b",
+      "_note": "With primitive p53"
+    },
+    {
+      "id": 54,
+      "description": "Lamp 54",
+      "_vpx_name": "Light54, Light54a, Light54b",
+      "_note": "With primitive p54, p54bulb"
+    },
+    {
+      "id": 55,
+      "description": "Lamp 55",
+      "_vpx_name": "Light55, Light55a, Light55b",
+      "_note": "With primitive p55, p55bulb"
+    },
+    {
+      "id": 56,
+      "description": "Lamp 56",
+      "_vpx_name": "Light56, Light56a, Light56b",
+      "_note": "With primitive p56, p56bulb"
+    },
+    {
+      "id": 57,
+      "description": "Lamp 57",
+      "_vpx_name": "Light57, Light57a, Light57b",
+      "_note": "With primitive p57"
+    },
+    {
+      "id": 58,
+      "description": "Lamp 58",
+      "_vpx_name": "Light58, Light58a",
+      "_note": "With primitive p58, p58bulb"
+    },
+    {
+      "id": 61,
+      "description": "Lamp 61",
+      "_vpx_name": "Light61, Light61a, Light61b, l61r, l61r2",
+      "_note": "With primitive p61, p61bulb"
+    },
+    {
+      "id": 62,
+      "description": "Lamp 62",
+      "_vpx_name": "Light62, Light62a, Light62b, l62r, l62r2",
+      "_note": "With primitive p62, p62bulb"
+    },
+    {
+      "id": 63,
+      "description": "Lamp 63",
+      "_vpx_name": "Light63, Light63a, Light63b, l63r, l63r2",
+      "_note": "With primitive p63, p63bulb"
+    },
+    {
+      "id": 64,
+      "description": "Lamp 64",
+      "_vpx_name": "Light64, Light64a, Light64b, l64r, l64r2",
+      "_note": "With primitive p64, p64bulb"
+    },
+    {
+      "id": 65,
+      "description": "Lamp 65",
+      "_vpx_name": "Light65, Light65a, Light65b",
+      "_note": "With primitive p65"
+    },
+    {
+      "id": 66,
+      "description": "Lamp 66",
+      "_vpx_name": "Light66, Light66a",
+      "_note": "With primitive p66, p66bulb"
+    },
+    {
+      "id": 67,
+      "description": "Lamp 67",
+      "_vpx_name": "Light67, Light67a, Light67b",
+      "_note": "With primitive p67"
+    },
+    {
+      "id": 68,
+      "description": "Lamp 68",
+      "_vpx_name": "Light68, Light68a",
+      "_note": "With primitive p68, p68bulb"
+    },
+    {
+      "id": 71,
+      "description": "Path of Adventure Insert Left 1",
+      "_note": "Callback only: DisableLighting Li71on, 600. PoA mini-playfield insert"
+    },
+    {
+      "id": 72,
+      "description": "Path of Adventure Insert Left 2",
+      "_note": "Callback only: DisableLighting Li72on, 600"
+    },
+    {
+      "id": 73,
+      "description": "Path of Adventure Insert Left 3",
+      "_note": "Callback only: DisableLighting Li73on, 600"
+    },
+    {
+      "id": 74,
+      "description": "Path of Adventure Insert Left 4",
+      "_note": "Callback only: DisableLighting Li74on, 600"
+    },
+    {
+      "id": 75,
+      "description": "Path of Adventure Insert Left 5",
+      "_note": "Callback only: DisableLighting Li75on, 600"
+    },
+    {
+      "id": 76,
+      "description": "Lamp 76",
+      "_vpx_name": "Light76, Light76a, Light76b",
+      "_note": "With primitive p76"
+    },
+    {
+      "id": 77,
+      "description": "Lamp 77",
+      "_vpx_name": "Light77, Light77a",
+      "_note": "With primitive p77, p77bulb"
+    },
+    {
+      "id": 78,
+      "description": "Lamp 78",
+      "_vpx_name": "Light78, Light78a, Light78b",
+      "_note": "With primitive p78"
+    },
+    {
+      "id": 81,
+      "description": "Path of Adventure Insert Right 1",
+      "_note": "Callback only: DisableLighting Li81on, 600. PoA mini-playfield insert"
+    },
+    {
+      "id": 82,
+      "description": "Path of Adventure Insert Right 2",
+      "_note": "Callback only: DisableLighting Li82on, 600"
+    },
+    {
+      "id": 83,
+      "description": "Path of Adventure Insert Right 3",
+      "_note": "Callback only: DisableLighting Li83on, 600"
+    },
+    {
+      "id": 84,
+      "description": "Path of Adventure Insert Right 4",
+      "_note": "Callback only: DisableLighting Li84on, 600"
+    },
+    {
+      "id": 85,
+      "description": "Path of Adventure Insert Right 5",
+      "_note": "Callback only: DisableLighting Li85on, 600"
+    },
+    {
+      "id": 86,
+      "description": "Lamp 86",
+      "_vpx_name": "Light86, Light86a",
+      "_note": "With primitive p86, p86bulb"
+    },
+    {
+      "id": 87,
+      "description": "Lamp 87",
+      "_vpx_name": "Light87, Light87a",
+      "_note": "With primitive p87, p87bulb"
+    },
+    {
+      "id": 115,
+      "description": "Totem Multi Insert (via Sol 54)",
+      "_vpx_name": "f54, f54a",
+      "_note": "Controlled by solenoid 54 -> SetLamp 115. With primitive pf54, pf54bulb"
+    },
+    {
+      "id": 116,
+      "description": "Center Insert L153L/R (via Sol 53)",
+      "_vpx_name": "L153L, L153La, L153R, L153Ra",
+      "_note": "Controlled by solenoid 53 -> SetLamp 116. With primitives p153l, p153lBulb, p153r, p153rBulb"
+    },
+    {
+      "id": 117,
+      "description": "Eternal Life Insert (via Sol 17)",
+      "_vpx_name": "Light117, Light117a",
+      "_note": "Controlled by solenoid 17 via SolFlash17. With primitive p117, p117bulb"
+    },
+    {
+      "id": 119,
+      "description": "Super Jackpot Insert (via Sol 19)",
+      "_vpx_name": "FL_SJackpot, FL_SJackpota, FL_SJackpotb",
+      "_note": "Controlled by solenoid 19 -> SetLamp 119. With primitives pSJackpotOn, pSJackpotBulb"
+    },
+    {
+      "id": 125,
+      "description": "Dogfight Hurry Up Insert (via Sol 25)",
+      "_vpx_name": "l25, l25a",
+      "_note": "Controlled by solenoid 25 -> SetLamp 125. With primitive p125, p125bulb"
+    }
+  ],
+  "gi": [
+    {
+      "id": 0,
+      "description": "GI String 0: Top Playfield",
+      "_vpx_collections": "GiTop, GiBumpers",
+      "_note": "ModLampz index 0, includes GI top and bumper area lights"
+    },
+    {
+      "id": 1,
+      "description": "GI String 1: Bottom Playfield",
+      "_vpx_collections": "GIBot",
+      "_note": "ModLampz index 1, includes VR backglass GI in VR mode. Controls ON/OFF prim visibility"
+    },
+    {
+      "id": 4,
+      "description": "GI String 4: Return Lane / Coin Door",
+      "_vpx_collections": "GIRLaneCoin",
+      "_note": "ModLampz index 4, includes LiteHOF_La, LiteHOF_Ra and their primitives"
+    }
+  ],
+  "mechanisms": [
+    {
+      "id": "path_of_adventure",
+      "description": "Path of Adventure Mini-Playfield",
+      "type": "cvpmMech",
+      "_mech_type": "vpmMechTwoDirSol + vpmMechStopEnd + vpmMechLinear",
+      "_sol1": 23,
+      "_sol2": 22,
+      "_sol1_desc": "Right motor",
+      "_sol2_desc": "Left motor",
+      "_length": 9,
+      "_steps": 9,
+      "_switches": [
+        {"id": 124, "position_min": 0, "position_max": 0, "description": "Left end position"},
+        {"id": 125, "position_min": 8, "position_max": 8, "description": "Right end position"}
+      ],
+      "_callback": "UpdatePoA",
+      "_note": "Tilting mini-playfield mechanism. Ball rolls across guided by tilting. Positions 0-8, center at 4. Related switches on playfield: 65-68 (left row), 75-78 (right row), 72/73 (holes). Related lamps: 71-75 (left inserts), 81-85 (right inserts)."
+    },
+    {
+      "id": "idol",
+      "description": "Rotating Idol Mechanism",
+      "type": "custom",
+      "_sol": 56,
+      "_sol_desc": "Idol Motor",
+      "_switches": [
+        {"id": 121, "description": "Idol Position Opto 1"},
+        {"id": 122, "description": "Idol Position Opto 2"},
+        {"id": 123, "description": "Idol Position Opto 3"}
+      ],
+      "_positions": 6,
+      "_degrees_per_position": 60,
+      "_note": "Rotating idol toy with 6 positions. 3 optos encode position via Gray-code pattern. Sol 6 (Idol Release) ejects balls. bsIdol trough holds up to 3 balls. Lock doors open/close with solenoid 6."
+    }
+  ]
+}

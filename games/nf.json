@@ -1,0 +1,537 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "No Fear (Williams 1995) VPW v1.0.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils. No Const sw* definitions — switches identified from _Hit/_UnHit subs, Controller.Switch() calls, and PulseSw calls. Lamps identified from VLM BL_inserts_l* arrays (l11-l85) plus l86 (launch button) and l88 (start button). Flashers (coils 17-25, 28) use SolModCallback with PWM. Slingshots (coils 10-11) commented out — handled by VPX directly. Trough is custom (not bsTrough/cvpmTrough): 4 switches (sw32-sw35), ReleaseBall kicks sw32 and pulses sw31. Three magnets (coils 3,5,6) on jump ramps. Skull mouth (coil 16) uses FlipperJaw mechanical flipper object. Flipper coils use framework constants (sLRFlipper=46, sLLFlipper=48, sURFlipper=34)."
+  },
+  "game": {
+    "id": "nf",
+    "name": "No Fear: Dangerous Sports",
+    "year": 1995,
+    "manufacturer": "Williams",
+    "ipdb_id": 2852,
+    "platform": "wpc"
+  },
+  "roms": [
+    { "id": "nf_23x", "_note": "ROM specified in cGameName. 2.3x version." }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Launch Button",
+      "_note": "Controller.Switch(11) set via PlungerKey and LockBarKey",
+      "input_action_hint": "launch_ball",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 14,
+      "description": "Plumb Bob Tilt",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Shooter Lane",
+      "vpx_name": "sw15",
+      "_note": "Controller.Switch(15) on/off. Auto plunger (cvpmImpulseP) fires from this switch."
+    },
+    {
+      "id": 16,
+      "description": "Spinner",
+      "vpx_name": "sw16",
+      "_note": "sw16_spin PulseSw 16. Spinner object with sw16_Animate."
+    },
+    {
+      "id": 17,
+      "description": "Left Rollover",
+      "vpx_name": "sw17",
+      "_note": "Controller.Switch(17) on/off"
+    },
+    {
+      "id": 18,
+      "description": "Right Rollover",
+      "vpx_name": "sw18",
+      "_note": "Controller.Switch(18) on/off"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "normally_closed": true,
+      "_note": "Controller.Switch(22) = 1 on init"
+    },
+    {
+      "id": 23,
+      "description": "Buy-In Button",
+      "_note": "Controller.Switch(23) set via keyFront",
+      "input_action_hint": "buy_in",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 24,
+      "description": "Always Closed",
+      "normally_closed": true,
+      "_note": "Controller.Switch(24) = 1 on init. Always closed switch."
+    },
+    {
+      "id": 25,
+      "description": "Kickback Lane",
+      "vpx_name": "sw25",
+      "_note": "Controller.Switch(25) on/off. KickBackIM.AddBall/RemoveBall on hit/unhit."
+    },
+    {
+      "id": 26,
+      "description": "Left Outlane",
+      "vpx_name": "sw26",
+      "_note": "Controller.Switch(26) on/off"
+    },
+    {
+      "id": 27,
+      "description": "Left Slingshot",
+      "vpx_name": "sw27",
+      "_note": "sw27_Slingshot PulseSw 27. Slingshot object with animation timer."
+    },
+    {
+      "id": 28,
+      "description": "Right Slingshot",
+      "vpx_name": "sw28",
+      "_note": "sw28_Slingshot PulseSw 28. Slingshot object with animation timer."
+    },
+    {
+      "id": 31,
+      "description": "Trough Eject Confirmation",
+      "_note": "PulseSw 31 fired in ReleaseBall sub after trough eject.",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "jam"
+    },
+    {
+      "id": 32,
+      "description": "Trough 1 (Nearest Shooter)",
+      "vpx_name": "sw32",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "Ball trough position 1. sw32.kick used by ReleaseBall solenoid."
+    },
+    {
+      "id": 33,
+      "description": "Trough 2",
+      "vpx_name": "sw33",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "Ball trough position 2"
+    },
+    {
+      "id": 34,
+      "description": "Trough 3",
+      "vpx_name": "sw34",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "Ball trough position 3"
+    },
+    {
+      "id": 35,
+      "description": "Trough 4 (Nearest Drain)",
+      "vpx_name": "sw35",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4",
+      "_note": "Ball trough position 4"
+    },
+    {
+      "id": 37,
+      "description": "Left Jet Bumper",
+      "vpx_name": "sw37",
+      "_note": "Controller.Switch(37) on/off"
+    },
+    {
+      "id": 38,
+      "description": "Right Jet Bumper",
+      "vpx_name": "sw38",
+      "_note": "Controller.Switch(38) on/off"
+    },
+    {
+      "id": 41,
+      "description": "Right Popper (Subway VUK)",
+      "vpx_name": "sw41",
+      "_note": "Controller.Switch(41) on/off. SubwayVUK solenoid ejects from this kicker."
+    },
+    {
+      "id": 42,
+      "description": "Bottom Jet Bumper",
+      "vpx_name": "sw42",
+      "_note": "Controller.Switch(42) on/off"
+    },
+    {
+      "id": 46,
+      "description": "Magnet Opto Left",
+      "vpx_name": "sw46",
+      "_note": "PulseSw 46. Opto on jump ramp magnet path."
+    },
+    {
+      "id": 47,
+      "description": "Magnet Opto Center",
+      "vpx_name": "sw47",
+      "_note": "PulseSw 47. Opto on jump ramp magnet path."
+    },
+    {
+      "id": 48,
+      "description": "Magnet Opto Right",
+      "vpx_name": "sw48",
+      "_note": "PulseSw 48. Opto on jump ramp magnet path."
+    },
+    {
+      "id": 51,
+      "description": "Drop Target",
+      "vpx_name": "sw51",
+      "_note": "DTHit 51. Single drop target with sw51a alternate prim. DropTargetUP (coil 12) and DropTargetDOWN (coil 8)."
+    },
+    {
+      "id": 54,
+      "description": "Wire Ramp",
+      "vpx_name": "sw54",
+      "_note": "Controller.Switch(54) on/off"
+    },
+    {
+      "id": 55,
+      "description": "Inner Loop",
+      "vpx_name": "sw55",
+      "_note": "PulseSw 55"
+    },
+    {
+      "id": 56,
+      "description": "Standup Target Left",
+      "vpx_name": "sw56",
+      "_note": "STHit 56. Standup target with animation."
+    },
+    {
+      "id": 57,
+      "description": "Standup Target Right",
+      "vpx_name": "sw57",
+      "_note": "STHit 57. Standup target with animation."
+    },
+    {
+      "id": 58,
+      "description": "Right Loop",
+      "vpx_name": "sw58",
+      "_note": "PulseSw 58"
+    },
+    {
+      "id": 61,
+      "description": "Left Scoop (Left Eject Kicker)",
+      "vpx_name": "sw61",
+      "_note": "Controller.Switch(61) on/off. LeftKicker solenoid (coil 15) ejects from this kicker."
+    },
+    {
+      "id": 62,
+      "description": "Left Loop",
+      "vpx_name": "sw62",
+      "_note": "PulseSw 62"
+    },
+    {
+      "id": 63,
+      "description": "Left Plastic Ramp Entry",
+      "vpx_name": "sw63",
+      "_note": "PulseSw 63"
+    },
+    {
+      "id": 64,
+      "description": "Left Plastic Ramp Exit",
+      "vpx_name": "sw64",
+      "_note": "PulseSw 64"
+    },
+    {
+      "id": 66,
+      "description": "Right Plastic Ramp Entry",
+      "vpx_name": "sw66",
+      "_note": "PulseSw 66"
+    },
+    {
+      "id": 67,
+      "description": "Right Plastic Ramp Exit",
+      "vpx_name": "sw67",
+      "_note": "PulseSw 67"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Right Popper (Subway VUK)",
+      "_vbscript_callback": "SubwayVUK",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw41",
+      "_note": "Ejects ball from sw41 kicker via KickBall. Ball kicked at angle 135."
+    },
+    {
+      "id": 2,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "SolAutoPlungerIM",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw15",
+      "_note": "cvpmImpulseP auto-fires from sw15 (shooter lane)"
+    },
+    {
+      "id": 3,
+      "description": "Right Magnet",
+      "_vbscript_callback": "Rmag",
+      "_inferred_type": "magnet",
+      "_note": "Jump ramp magnet. Affects ball velocity when enabled. VPX object: RightMagnet."
+    },
+    {
+      "id": 4,
+      "description": "Kickback",
+      "_vbscript_callback": "SolKickbackIM",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw25",
+      "_note": "cvpmImpulseP kickback fires from sw25 lane"
+    },
+    {
+      "id": 5,
+      "description": "Center Magnet",
+      "_vbscript_callback": "Cmag",
+      "_inferred_type": "magnet",
+      "_note": "Jump ramp magnet. VPX object: CenterMagnet."
+    },
+    {
+      "id": 6,
+      "description": "Left Magnet",
+      "_vbscript_callback": "Lmag",
+      "_inferred_type": "magnet",
+      "_note": "Jump ramp magnet. VPX object: LeftMagnet."
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 8,
+      "description": "Drop Target Down",
+      "_vbscript_callback": "DropTargetDOWN",
+      "_inferred_type": "drop_target_knock_down",
+      "vpx_name": "sw51",
+      "_note": "Knocks down drop target at sw51"
+    },
+    {
+      "id": 9,
+      "description": "Not Used",
+      "_vbscript_callback": "",
+      "_inferred_type": "unused",
+      "_note": "Commented out: '9-N.U."
+    },
+    {
+      "id": 10,
+      "description": "Right Slingshot",
+      "_vbscript_callback": "",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in SolCallback — handled by VPX directly. VPX object: sw28."
+    },
+    {
+      "id": 11,
+      "description": "Left Slingshot",
+      "_vbscript_callback": "",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in SolCallback — handled by VPX directly. VPX object: sw27."
+    },
+    {
+      "id": 12,
+      "description": "Drop Target Up (Reset)",
+      "_vbscript_callback": "DropTargetUP",
+      "_inferred_type": "drop_target_reset",
+      "vpx_name": "sw51",
+      "_note": "Resets drop target at sw51"
+    },
+    {
+      "id": 13,
+      "description": "Not Used",
+      "_vbscript_callback": "",
+      "_inferred_type": "unused",
+      "_note": "Commented out: '13-N.U."
+    },
+    {
+      "id": 14,
+      "description": "Trough Eject",
+      "_vbscript_callback": "ReleaseBall",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw32",
+      "_note": "Kicks ball from sw32 (trough position 1) and pulses sw31. Custom trough, not bsTrough.",
+      "device_hint": "^Trough\\s*\\d?"
+    },
+    {
+      "id": 15,
+      "description": "Left Eject (Left Scoop)",
+      "_vbscript_callback": "LeftKicker",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw61",
+      "_note": "Ejects ball from sw61 kicker via KickBall. Ball kicked at angle 170."
+    },
+    {
+      "id": 16,
+      "description": "Skull Mouth",
+      "_vbscript_callback": "SolMouth",
+      "_inferred_type": "mechanism",
+      "_note": "Controls FlipperJaw (mechanical flipper object). RotateToEnd on enable, RotateToStart on disable. Skull jaw animation."
+    },
+    {
+      "id": 17,
+      "description": "Flasher: Flipper Return (x2)",
+      "_vbscript_callback": "FlashMod117",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?17$",
+      "vpx_name": "f117a",
+      "_note": "SolModCallback PWM. Two flashers: f117a, f117b."
+    },
+    {
+      "id": 18,
+      "description": "Flasher: Spinner",
+      "_vbscript_callback": "FlashMod118",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?18$",
+      "vpx_name": "f118",
+      "_note": "SolModCallback PWM. Single flasher with mayo."
+    },
+    {
+      "id": 19,
+      "description": "Flasher: No Fear (x2)",
+      "_vbscript_callback": "FlashMod119",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?19$",
+      "vpx_name": "f119",
+      "_note": "SolModCallback PWM. Single flasher with mayo."
+    },
+    {
+      "id": 20,
+      "description": "Flasher: Right Ramp",
+      "_vbscript_callback": "FlashMod120",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?20$",
+      "vpx_name": "f120",
+      "_note": "SolModCallback PWM."
+    },
+    {
+      "id": 21,
+      "description": "Flasher: Skull (x2)",
+      "_vbscript_callback": "FlashMod121",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?21$",
+      "vpx_name": "f121",
+      "_note": "SolModCallback PWM. f121 initialized to State=0 in Table1_Init."
+    },
+    {
+      "id": 23,
+      "description": "Flasher: Left Ramp",
+      "_vbscript_callback": "FlashMod123",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?23$",
+      "vpx_name": "f123",
+      "_note": "SolModCallback PWM."
+    },
+    {
+      "id": 24,
+      "description": "Flasher: Top Left",
+      "_vbscript_callback": "FlashMod124",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?24$",
+      "vpx_name": "f124",
+      "_note": "SolModCallback PWM. Single flasher with mayo."
+    },
+    {
+      "id": 25,
+      "description": "Flasher: AutoFire (x2)",
+      "_vbscript_callback": "FlashMod125",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?25$",
+      "vpx_name": "f125a",
+      "_note": "SolModCallback PWM. Two flashers: f125a, f125b."
+    },
+    {
+      "id": 28,
+      "description": "Flasher: Right Popper",
+      "_vbscript_callback": "FlashMod128",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?28$",
+      "vpx_name": "f128",
+      "_note": "SolModCallback PWM. f128 initialized to State=0 in Table1_Init."
+    }
+  ],
+  "lamps": [
+    { "id": 11, "vpx_name": "l11" },
+    { "id": 12, "vpx_name": "l12" },
+    { "id": 13, "vpx_name": "l13" },
+    { "id": 14, "vpx_name": "l14" },
+    { "id": 15, "vpx_name": "l15" },
+    { "id": 16, "vpx_name": "l16" },
+    { "id": 17, "vpx_name": "l17" },
+    { "id": 18, "vpx_name": "l18" },
+    { "id": 21, "vpx_name": "l21" },
+    { "id": 22, "vpx_name": "l22" },
+    { "id": 23, "vpx_name": "l23" },
+    { "id": 24, "vpx_name": "l24" },
+    { "id": 25, "vpx_name": "l25" },
+    { "id": 26, "vpx_name": "l26" },
+    { "id": 27, "vpx_name": "l27" },
+    { "id": 28, "vpx_name": "l28" },
+    { "id": 31, "vpx_name": "l31" },
+    { "id": 32, "vpx_name": "l32" },
+    { "id": 33, "vpx_name": "l33" },
+    { "id": 34, "vpx_name": "l34" },
+    { "id": 35, "vpx_name": "l35" },
+    { "id": 36, "vpx_name": "l36" },
+    { "id": 37, "vpx_name": "l37" },
+    { "id": 38, "vpx_name": "l38" },
+    { "id": 41, "vpx_name": "l41" },
+    { "id": 42, "vpx_name": "l42" },
+    { "id": 43, "vpx_name": "l43" },
+    { "id": 44, "vpx_name": "l44" },
+    { "id": 45, "vpx_name": "l45" },
+    { "id": 46, "vpx_name": "l46" },
+    { "id": 47, "vpx_name": "l47" },
+    { "id": 48, "vpx_name": "l48" },
+    { "id": 51, "vpx_name": "l51" },
+    { "id": 52, "vpx_name": "l52" },
+    { "id": 53, "vpx_name": "l53" },
+    { "id": 54, "vpx_name": "l54" },
+    { "id": 55, "vpx_name": "l55" },
+    { "id": 56, "vpx_name": "l56" },
+    { "id": 57, "vpx_name": "l57" },
+    { "id": 61, "vpx_name": "l61" },
+    { "id": 62, "vpx_name": "l62" },
+    { "id": 63, "vpx_name": "l63" },
+    { "id": 64, "vpx_name": "l64" },
+    { "id": 65, "vpx_name": "l65" },
+    { "id": 66, "vpx_name": "l66" },
+    { "id": 67, "vpx_name": "l67" },
+    { "id": 68, "vpx_name": "l68" },
+    { "id": 71, "vpx_name": "l71" },
+    { "id": 72, "vpx_name": "l72" },
+    { "id": 73, "vpx_name": "l73" },
+    { "id": 74, "vpx_name": "l74" },
+    { "id": 75, "vpx_name": "l75" },
+    { "id": 76, "vpx_name": "l76" },
+    { "id": 77, "vpx_name": "l77" },
+    { "id": 78, "vpx_name": "l78" },
+    { "id": 81, "vpx_name": "l81" },
+    { "id": 82, "vpx_name": "l82" },
+    { "id": 83, "vpx_name": "l83" },
+    { "id": 84, "vpx_name": "l84" },
+    { "id": 85, "vpx_name": "l85" },
+    { "id": 86, "vpx_name": "l86", "_note": "Launch button lamp. LaunchButton.blenddisablelighting controlled by state." },
+    { "id": 88, "vpx_name": "l88", "_note": "Start button lamp. f88.visible controlled by state." }
+  ],
+  "aliases": [
+    { "id": 46, "alias": "c_flipper_lower_right", "type": "coil", "_note": "sLRFlipper — SolRFlipper callback. VPX objects: RightFlipper, RF (nFozzy)." },
+    { "id": 48, "alias": "c_flipper_lower_left", "type": "coil", "_note": "sLLFlipper — SolLFlipper callback. VPX objects: LeftFlipper, LF (nFozzy)." },
+    { "id": 34, "alias": "c_flipper_upper_right", "type": "coil", "_note": "sURFlipper — SolURFlipper callback. VPX object: RightUpFlipper." }
+  ]
+}

@@ -1,0 +1,1363 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Big Bang Bar (Capcom 1996) VPW 2.1.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils. Capcom platform via Capcom.VBS. Manual trough implementation (no cvpmTrough): sw35=drain, sw36-39=trough stack with custom UpdateTrough cascading kicks. UseLamps=1 with vpmMapLights AllLamps. UseVPMModSol=2 for flashers (SolModCallback 21-26). Flipper solenoids use framework constants sLRFlipper/sLLFlipper from Capcom.VBS (46/48). SolRFlipper sets both switch 34 and 68 (upper right flipper EOS). Coils 4/5 (slingshots), 9/10/11 (flippers), 18/19/20 (bumpers) are commented out in VBS — ROM controls them directly or VPX handles natively. Lamp IDs derived from BL_ VLM array naming convention (BL_Flashers_L##, BL_Inserts_L##, BL_Gi_L##). Drop targets (sw17-20, sw49-51, sw58) use VPW TargetBouncer framework. Standup targets sw52/53 also use TargetBouncer. Game has captive balls (4), alien lock mechanism (motor forward/reverse coils 31/32), tube dancer motor (coil 30), and outpost difficulty mod."
+  },
+  "game": {
+    "id": "bbb",
+    "name": "Big Bang Bar",
+    "year": 1996,
+    "manufacturer": "Capcom",
+    "ipdb_id": 4001,
+    "platform": "capcom"
+  },
+  "roms": [
+    {
+      "id": "bbb109"
+    }
+  ],
+  "switches": [
+    {
+      "id": 10,
+      "description": "Tilt",
+      "_inferred_type": "tilt",
+      "_note": "vpmNudge.TiltSwitch=10"
+    },
+    {
+      "id": 17,
+      "description": "Drop Target 1 (4-Bank)",
+      "_vbscript_name": "sw17",
+      "_inferred_type": "drop_target",
+      "vpx_name": "sw17",
+      "_note": "4-bank drop target, reset by coil 7"
+    },
+    {
+      "id": 18,
+      "description": "Drop Target 2 (4-Bank)",
+      "_vbscript_name": "sw18",
+      "_inferred_type": "drop_target",
+      "vpx_name": "sw18",
+      "_note": "4-bank drop target, reset by coil 7"
+    },
+    {
+      "id": 19,
+      "description": "Drop Target 3 (4-Bank)",
+      "_vbscript_name": "sw19",
+      "_inferred_type": "drop_target",
+      "vpx_name": "sw19",
+      "_note": "4-bank drop target, reset by coil 7"
+    },
+    {
+      "id": 20,
+      "description": "Drop Target 4 (4-Bank)",
+      "_vbscript_name": "sw20",
+      "_inferred_type": "drop_target",
+      "vpx_name": "sw20",
+      "_note": "4-bank drop target, reset by coil 7"
+    },
+    {
+      "id": 21,
+      "description": "Standup Target 1",
+      "_vbscript_name": "sw21",
+      "_vbscript_callback": "STHit 21",
+      "_inferred_type": "standup_target",
+      "vpx_name": "sw21"
+    },
+    {
+      "id": 22,
+      "description": "Standup Target 2",
+      "_vbscript_name": "sw22",
+      "_vbscript_callback": "STHit 22",
+      "_inferred_type": "standup_target",
+      "vpx_name": "sw22"
+    },
+    {
+      "id": 23,
+      "description": "Standup Target 3",
+      "_vbscript_name": "sw23",
+      "_vbscript_callback": "STHit 23",
+      "_inferred_type": "standup_target",
+      "vpx_name": "sw23"
+    },
+    {
+      "id": 24,
+      "description": "Rollover",
+      "_vbscript_name": "sw24",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw24"
+    },
+    {
+      "id": 25,
+      "description": "Spinner",
+      "_vbscript_name": "sw25",
+      "_vbscript_callback": "vpmTimer.PulseSw 25",
+      "_inferred_type": "spinner",
+      "vpx_name": "sw25"
+    },
+    {
+      "id": 26,
+      "description": "Left Orbit",
+      "_vbscript_name": "sw26",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw26"
+    },
+    {
+      "id": 27,
+      "description": "Right Orbit",
+      "_vbscript_name": "sw27",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw27"
+    },
+    {
+      "id": 28,
+      "description": "Ramp Entry / Rollover",
+      "_vbscript_name": "sw28",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw28"
+    },
+    {
+      "id": 29,
+      "description": "Ramp / Rollover",
+      "_vbscript_name": "sw29",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw29"
+    },
+    {
+      "id": 30,
+      "description": "Ramp / Rollover",
+      "_vbscript_name": "sw30",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw30"
+    },
+    {
+      "id": 31,
+      "description": "Rollover",
+      "_vbscript_name": "sw31",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw31"
+    },
+    {
+      "id": 32,
+      "description": "Rollover",
+      "_vbscript_name": "sw32",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw32"
+    },
+    {
+      "id": 33,
+      "description": "Left Flipper EOS",
+      "_inferred_type": "flipper_eos",
+      "_note": "Set by SolLFlipper callback: Controller.Switch(33)=1 when enabled"
+    },
+    {
+      "id": 34,
+      "description": "Right Flipper EOS",
+      "_inferred_type": "flipper_eos",
+      "_note": "Set by SolRFlipper callback: Controller.Switch(34)=1 when enabled"
+    },
+    {
+      "id": 35,
+      "description": "Drain",
+      "_vbscript_name": "sw35",
+      "_inferred_type": "trough",
+      "vpx_name": "sw35",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch"
+    },
+    {
+      "id": 36,
+      "description": "Trough 1 (Near Shooter)",
+      "_vbscript_name": "sw36",
+      "_inferred_type": "trough",
+      "vpx_name": "sw36",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1"
+    },
+    {
+      "id": 37,
+      "description": "Trough 2",
+      "_vbscript_name": "sw37",
+      "_inferred_type": "trough",
+      "vpx_name": "sw37",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 38,
+      "description": "Trough 3",
+      "_vbscript_name": "sw38",
+      "_inferred_type": "trough",
+      "vpx_name": "sw38",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 39,
+      "description": "Trough 4 (Near Drain)",
+      "_vbscript_name": "sw39",
+      "_inferred_type": "trough",
+      "vpx_name": "sw39",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4"
+    },
+    {
+      "id": 41,
+      "description": "Left Slingshot",
+      "_vbscript_callback": "vpmTimer.PulseSw 41",
+      "_inferred_type": "slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "Fired from LeftSlingShot_Slingshot event"
+    },
+    {
+      "id": 42,
+      "description": "Right Slingshot",
+      "_vbscript_callback": "vpmTimer.PulseSw 42",
+      "_inferred_type": "slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "Fired from RightSlingShot_Slingshot event"
+    },
+    {
+      "id": 43,
+      "description": "Shooter Lane",
+      "_vbscript_name": "sw43",
+      "_inferred_type": "shooter_lane",
+      "vpx_name": "sw43"
+    },
+    {
+      "id": 44,
+      "description": "Left Inlane",
+      "_vbscript_name": "sw44",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw44"
+    },
+    {
+      "id": 45,
+      "description": "Left Outlane",
+      "_vbscript_name": "sw45",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw45"
+    },
+    {
+      "id": 46,
+      "description": "Left Ramp Rollover",
+      "_vbscript_name": "sw46",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw46"
+    },
+    {
+      "id": 47,
+      "description": "Ramp Rollover",
+      "_vbscript_name": "sw47",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw47"
+    },
+    {
+      "id": 48,
+      "description": "Right Ramp Rollover",
+      "_vbscript_name": "sw48",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw48"
+    },
+    {
+      "id": 49,
+      "description": "Drop Target 1 (3-Bank)",
+      "_vbscript_name": "sw49",
+      "_inferred_type": "drop_target",
+      "vpx_name": "sw49",
+      "_note": "3-bank drop target, reset by coil 17"
+    },
+    {
+      "id": 50,
+      "description": "Drop Target 2 (3-Bank)",
+      "_vbscript_name": "sw50",
+      "_inferred_type": "drop_target",
+      "vpx_name": "sw50",
+      "_note": "3-bank drop target, reset by coil 17"
+    },
+    {
+      "id": 51,
+      "description": "Drop Target 3 (3-Bank)",
+      "_vbscript_name": "sw51",
+      "_inferred_type": "drop_target",
+      "vpx_name": "sw51",
+      "_note": "3-bank drop target, reset by coil 17"
+    },
+    {
+      "id": 52,
+      "description": "Standup Target 4",
+      "_vbscript_name": "sw52",
+      "_vbscript_callback": "STHit 52",
+      "_inferred_type": "standup_target",
+      "vpx_name": "sw52"
+    },
+    {
+      "id": 53,
+      "description": "Standup Target 5",
+      "_vbscript_name": "sw53",
+      "_vbscript_callback": "STHit 53",
+      "_inferred_type": "standup_target",
+      "vpx_name": "sw53"
+    },
+    {
+      "id": 54,
+      "description": "Middle Bumper",
+      "_vbscript_callback": "vpmTimer.PulseSw 54",
+      "_inferred_type": "bumper",
+      "vpx_name": "Bumper2"
+    },
+    {
+      "id": 55,
+      "description": "Right Bumper",
+      "_vbscript_callback": "vpmTimer.PulseSw 55",
+      "_inferred_type": "bumper",
+      "vpx_name": "Bumper3"
+    },
+    {
+      "id": 56,
+      "description": "Left Bumper",
+      "_vbscript_callback": "vpmTimer.PulseSw 56",
+      "_inferred_type": "bumper",
+      "vpx_name": "Bumper1"
+    },
+    {
+      "id": 58,
+      "description": "Drop Target (1-Bank)",
+      "_vbscript_name": "sw58",
+      "_inferred_type": "drop_target",
+      "vpx_name": "sw58",
+      "_note": "Single drop target, reset by coil 29"
+    },
+    {
+      "id": 59,
+      "description": "Rollover",
+      "_vbscript_name": "sw59",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw59"
+    },
+    {
+      "id": 60,
+      "description": "Rollover",
+      "_vbscript_name": "sw60",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw60"
+    },
+    {
+      "id": 61,
+      "description": "Alien Lock Left",
+      "_vbscript_name": "sw61",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw61",
+      "_note": "Alien lock left kicker — sets AlienLBall flag, disables wire ramp"
+    },
+    {
+      "id": 62,
+      "description": "Alien Lock Right",
+      "_vbscript_name": "sw62",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw62",
+      "_note": "Alien lock right kicker — sets AlienRBall flag, disables wire ramp"
+    },
+    {
+      "id": 65,
+      "description": "Right Inlane",
+      "_vbscript_name": "sw65",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw65"
+    },
+    {
+      "id": 66,
+      "description": "Right Outlane",
+      "_vbscript_name": "sw66",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw66"
+    },
+    {
+      "id": 67,
+      "description": "Eject Hole",
+      "_vbscript_name": "sw67",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw67",
+      "_note": "cvpmBallStack (bsRHole) — InitSaucer sw67, 67, 222, 25"
+    },
+    {
+      "id": 68,
+      "description": "Upper Right Flipper EOS",
+      "_inferred_type": "flipper_eos",
+      "_note": "Set by SolRFlipper callback alongside switch 34"
+    },
+    {
+      "id": 69,
+      "description": "Rollover",
+      "_vbscript_name": "sw69",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw69"
+    },
+    {
+      "id": 70,
+      "description": "Rollover",
+      "_vbscript_name": "sw70",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw70"
+    },
+    {
+      "id": 71,
+      "description": "Rollover",
+      "_vbscript_name": "sw71",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw71"
+    },
+    {
+      "id": 77,
+      "description": "Target / Rollover",
+      "_vbscript_name": "sw77",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw77"
+    },
+    {
+      "id": 78,
+      "description": "Target / Rollover",
+      "_vbscript_name": "sw78",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw78"
+    },
+    {
+      "id": 79,
+      "description": "Target / Rollover",
+      "_vbscript_name": "sw79",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw79"
+    },
+    {
+      "id": 80,
+      "description": "Target / Rollover",
+      "_vbscript_name": "sw80",
+      "_inferred_type": "rollover",
+      "vpx_name": "sw80"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "OutHole (Trough)",
+      "_vbscript_callback": "SolTrough",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Kicks ball from sw35 drain toward trough stack"
+    },
+    {
+      "id": 2,
+      "description": "Ball Release",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "_note": "Kicks ball from sw36 trough to plunger lane"
+    },
+    {
+      "id": 3,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"knocker\",DOFContactors),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 4,
+      "description": "Left Slingshot",
+      "_vbscript_callback": "commented out",
+      "_inferred_type": "slingshot",
+      "_note": "SolCallback commented out — handled by VPX natively"
+    },
+    {
+      "id": 5,
+      "description": "Right Slingshot",
+      "_vbscript_callback": "commented out",
+      "_inferred_type": "slingshot",
+      "_note": "SolCallback commented out — handled by VPX natively"
+    },
+    {
+      "id": 6,
+      "description": "KickBack",
+      "_vbscript_callback": "SolKickBack",
+      "_inferred_type": "kickback",
+      "vpx_name": "kickback"
+    },
+    {
+      "id": 7,
+      "description": "4-Bank Drop Target Reset",
+      "_vbscript_callback": "sol4Bank",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets drop targets sw17, sw18, sw19, sw20"
+    },
+    {
+      "id": 8,
+      "description": "Lower Lock Post",
+      "_vbscript_callback": "SolLowerLockPin",
+      "_inferred_type": "post",
+      "vpx_name": "MissionLockPin"
+    },
+    {
+      "id": 9,
+      "description": "Left Flipper",
+      "_vbscript_callback": "commented out",
+      "_inferred_type": "flipper",
+      "_note": "SolCallback commented out — uses sLLFlipper framework constant instead"
+    },
+    {
+      "id": 10,
+      "description": "Right Flipper",
+      "_vbscript_callback": "commented out",
+      "_inferred_type": "flipper",
+      "_note": "SolCallback commented out — uses sLRFlipper framework constant instead"
+    },
+    {
+      "id": 11,
+      "description": "Upper Flipper",
+      "_vbscript_callback": "commented out",
+      "_inferred_type": "flipper",
+      "_note": "SolCallback commented out"
+    },
+    {
+      "id": 12,
+      "description": "Eject Hole",
+      "_vbscript_callback": "bsRHole.SolOut",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw67",
+      "_note": "cvpmBallStack eject from sw67 saucer"
+    },
+    {
+      "id": 13,
+      "description": "Island Diverter",
+      "_vbscript_callback": "SolLRDIvert",
+      "_inferred_type": "diverter",
+      "vpx_name": "DivLR"
+    },
+    {
+      "id": 14,
+      "description": "Ramp Diverter 1",
+      "_vbscript_callback": "SolRDivert1",
+      "_inferred_type": "diverter",
+      "_note": "Controls tube ramp diverter"
+    },
+    {
+      "id": 15,
+      "description": "Ramp Diverter 2",
+      "_vbscript_callback": "SolRDivert2",
+      "_inferred_type": "diverter",
+      "_note": "Controls second tube ramp diverter"
+    },
+    {
+      "id": 16,
+      "description": "Alien Lock Post",
+      "_vbscript_callback": "SolRDivert3",
+      "_inferred_type": "post",
+      "vpx_name": "AliensLockPin"
+    },
+    {
+      "id": 17,
+      "description": "3-Bank Drop Target Reset",
+      "_vbscript_callback": "sol3Bank",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets drop targets sw49, sw50, sw51"
+    },
+    {
+      "id": 18,
+      "description": "Left Bumper",
+      "_vbscript_callback": "commented out",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out — handled by VPX natively",
+      "vpx_name": "Bumper1"
+    },
+    {
+      "id": 19,
+      "description": "Middle Bumper",
+      "_vbscript_callback": "commented out",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out — handled by VPX natively",
+      "vpx_name": "Bumper2"
+    },
+    {
+      "id": 20,
+      "description": "Right Bumper",
+      "_vbscript_callback": "commented out",
+      "_inferred_type": "bumper",
+      "_note": "SolCallback commented out — handled by VPX natively",
+      "vpx_name": "Bumper3"
+    },
+    {
+      "id": 21,
+      "description": "BackBox Left Flasher",
+      "_vbscript_callback": "Flash1",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "F21",
+      "_note": "SolModCallback — sets F21.state = level"
+    },
+    {
+      "id": 22,
+      "description": "Tube Dancer Flasher",
+      "_vbscript_callback": "Flash2",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "F22",
+      "_note": "SolModCallback — sets F22.state = level"
+    },
+    {
+      "id": 23,
+      "description": "Dance Floor Flasher",
+      "_vbscript_callback": "Flash3",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "F23",
+      "_note": "SolModCallback — sets F23.state = level"
+    },
+    {
+      "id": 24,
+      "description": "Eject Hole Flasher",
+      "_vbscript_callback": "Flash4",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "F24",
+      "_note": "SolModCallback — sets F24.state = level"
+    },
+    {
+      "id": 25,
+      "description": "Alien Lock Flasher",
+      "_vbscript_callback": "Flash5",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "F25",
+      "_note": "SolModCallback — sets F25.state = level"
+    },
+    {
+      "id": 26,
+      "description": "Lower Lock Flasher",
+      "_vbscript_callback": "Flash6",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "F26",
+      "_note": "SolModCallback — sets F26.state = level"
+    },
+    {
+      "id": 27,
+      "description": "Loop Left Gate",
+      "_vbscript_callback": "GateLeft",
+      "_inferred_type": "gate",
+      "vpx_name": "GateL"
+    },
+    {
+      "id": 28,
+      "description": "Loop Right Gate",
+      "_vbscript_callback": "GateRight",
+      "_inferred_type": "gate",
+      "vpx_name": "GateR"
+    },
+    {
+      "id": 29,
+      "description": "1-Bank Drop Target Reset",
+      "_vbscript_callback": "sol1Bank",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets drop target sw58"
+    },
+    {
+      "id": 30,
+      "description": "Tube Dancer Motor",
+      "_vbscript_callback": "solDancer",
+      "_inferred_type": "mechanism",
+      "_note": "Enables/disables dancerT timer for tube dancer animation"
+    },
+    {
+      "id": 31,
+      "description": "Alien Motor Forward",
+      "_vbscript_callback": "SolAlienForward",
+      "_inferred_type": "mechanism",
+      "_note": "Drives alien lock mechanism forward"
+    },
+    {
+      "id": 32,
+      "description": "Alien Motor Reverse",
+      "_vbscript_callback": "SolAlienReverse",
+      "_inferred_type": "mechanism",
+      "_note": "Drives alien lock mechanism in reverse"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_name": "sLRFlipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper",
+      "_note": "Framework-defined constant (Capcom.VBS: sLRFlipper=46). Also fires RightFlipper1 (upper)"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_name": "sLLFlipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper",
+      "_note": "Framework-defined constant (Capcom.VBS: sLLFlipper=48)"
+    },
+    {
+      "id": 51,
+      "description": "Game On / Off Control",
+      "_vbscript_callback": "SolGameOn",
+      "_inferred_type": "mechanism",
+      "_note": "Sets GameStateOn flag — flippers only respond when game is active"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 1,
+      "description": "Flasher Lamp L01 (Plunger)",
+      "_vbscript_name": "BL_Flashers_L01",
+      "_inferred_type": "flasher"
+    },
+    {
+      "id": 9,
+      "description": "GI L9",
+      "_vbscript_name": "BL_Gi_L9",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 10,
+      "description": "GI L10",
+      "_vbscript_name": "BL_Gi_L10",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 11,
+      "description": "GI L11",
+      "_vbscript_name": "BL_Gi_L11",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 12,
+      "description": "GI L12",
+      "_vbscript_name": "BL_Gi_L12",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 14,
+      "description": "GI L14",
+      "_vbscript_name": "BL_Gi_L14",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 17,
+      "description": "GI L17",
+      "_vbscript_name": "BL_Gi_L17",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 18,
+      "description": "GI L18",
+      "_vbscript_name": "BL_Gi_L18",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 19,
+      "description": "Insert L19",
+      "_vbscript_name": "BL_Inserts_L19",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 20,
+      "description": "Insert L20",
+      "_vbscript_name": "BL_Inserts_L20",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 21,
+      "description": "GI L21",
+      "_vbscript_name": "BL_Gi_L21",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 22,
+      "description": "GI L22",
+      "_vbscript_name": "BL_Gi_L22",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 23,
+      "description": "GI L23",
+      "_vbscript_name": "BL_Gi_L23",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 24,
+      "description": "GI L24",
+      "_vbscript_name": "BL_Gi_L24",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 25,
+      "description": "GI L25",
+      "_vbscript_name": "BL_Gi_L25",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 26,
+      "description": "GI L26",
+      "_vbscript_name": "BL_Gi_L26",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 27,
+      "description": "GI L27",
+      "_vbscript_name": "BL_Gi_L27",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 28,
+      "description": "GI L28",
+      "_vbscript_name": "BL_Gi_L28",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 29,
+      "description": "GI L29",
+      "_vbscript_name": "BL_Gi_L29",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 30,
+      "description": "Insert L30",
+      "_vbscript_name": "BL_Inserts_L30",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 31,
+      "description": "Insert L31",
+      "_vbscript_name": "BL_Inserts_L31",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 32,
+      "description": "Insert L32",
+      "_vbscript_name": "BL_Inserts_L32",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 33,
+      "description": "GI L33",
+      "_vbscript_name": "BL_Gi_L33",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 34,
+      "description": "GI L34",
+      "_vbscript_name": "BL_Gi_L34",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 35,
+      "description": "GI L35",
+      "_vbscript_name": "BL_Gi_L35",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 36,
+      "description": "GI L36",
+      "_vbscript_name": "BL_Gi_L36",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 37,
+      "description": "GI L37",
+      "_vbscript_name": "BL_Gi_L37",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 39,
+      "description": "GI L39",
+      "_vbscript_name": "BL_Gi_L39",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 40,
+      "description": "GI L40",
+      "_vbscript_name": "BL_Gi_L40",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 41,
+      "description": "Insert L41",
+      "_vbscript_name": "BL_Inserts_L41",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 42,
+      "description": "Insert L42",
+      "_vbscript_name": "BL_Inserts_L42",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 43,
+      "description": "Insert L43",
+      "_vbscript_name": "BL_Inserts_L43",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 44,
+      "description": "Flasher Lamp L44",
+      "_vbscript_name": "BL_Flashers_L44",
+      "_inferred_type": "flasher"
+    },
+    {
+      "id": 45,
+      "description": "Flasher Lamp L45",
+      "_vbscript_name": "BL_Flashers_L45",
+      "_inferred_type": "flasher"
+    },
+    {
+      "id": 49,
+      "description": "Insert L49",
+      "_vbscript_name": "BL_Inserts_L49",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 50,
+      "description": "Insert L50",
+      "_vbscript_name": "BL_Inserts_L50",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 51,
+      "description": "Insert L51",
+      "_vbscript_name": "BL_Inserts_L51",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 52,
+      "description": "Flasher Lamp L52",
+      "_vbscript_name": "BL_Flashers_L52",
+      "_inferred_type": "flasher"
+    },
+    {
+      "id": 53,
+      "description": "Flasher Lamp L53",
+      "_vbscript_name": "BL_Flashers_L53",
+      "_inferred_type": "flasher"
+    },
+    {
+      "id": 54,
+      "description": "Flasher Lamp L54",
+      "_vbscript_name": "BL_Flashers_L54",
+      "_inferred_type": "flasher"
+    },
+    {
+      "id": 57,
+      "description": "Insert l57",
+      "_vbscript_name": "BL_Inserts_l57",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 58,
+      "description": "Insert l58",
+      "_vbscript_name": "BL_Inserts_l58",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 59,
+      "description": "Insert l59",
+      "_vbscript_name": "BL_Inserts_l59",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 62,
+      "description": "Flasher Lamp L62",
+      "_vbscript_name": "BL_Flashers_L62",
+      "_inferred_type": "flasher"
+    },
+    {
+      "id": 65,
+      "description": "Insert L65",
+      "_vbscript_name": "BL_Inserts_L65",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 66,
+      "description": "Insert L66",
+      "_vbscript_name": "BL_Inserts_L66",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 67,
+      "description": "Insert L67",
+      "_vbscript_name": "BL_Inserts_L67",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 68,
+      "description": "Insert L68",
+      "_vbscript_name": "BL_Inserts_L68",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 69,
+      "description": "Insert L69",
+      "_vbscript_name": "BL_Inserts_L69",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 70,
+      "description": "Insert L70",
+      "_vbscript_name": "BL_Inserts_L70",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 71,
+      "description": "Insert L71",
+      "_vbscript_name": "BL_Inserts_L71",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 72,
+      "description": "Insert L72",
+      "_vbscript_name": "BL_Inserts_L72",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 73,
+      "description": "Insert L73",
+      "_vbscript_name": "BL_Inserts_L73",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 74,
+      "description": "Insert L74",
+      "_vbscript_name": "BL_Inserts_L74",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 75,
+      "description": "Insert L75",
+      "_vbscript_name": "BL_Inserts_L75",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 76,
+      "description": "Insert L76",
+      "_vbscript_name": "BL_Inserts_L76",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 77,
+      "description": "Insert L77",
+      "_vbscript_name": "BL_Inserts_L77",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 78,
+      "description": "Insert L78",
+      "_vbscript_name": "BL_Inserts_L78",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 79,
+      "description": "Insert L79",
+      "_vbscript_name": "BL_Inserts_L79",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 80,
+      "description": "Insert L80",
+      "_vbscript_name": "BL_Inserts_L80",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 81,
+      "description": "Insert L81",
+      "_vbscript_name": "BL_Inserts_L81",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 82,
+      "description": "Insert L82",
+      "_vbscript_name": "BL_Inserts_L82",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 83,
+      "description": "Insert L83",
+      "_vbscript_name": "BL_Inserts_L83",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 84,
+      "description": "Insert L84",
+      "_vbscript_name": "BL_Inserts_L84",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 85,
+      "description": "Insert L85",
+      "_vbscript_name": "BL_Inserts_L85",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 86,
+      "description": "Insert L86",
+      "_vbscript_name": "BL_Inserts_L86",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 87,
+      "description": "Insert L87",
+      "_vbscript_name": "BL_Inserts_L87",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 88,
+      "description": "Insert L88",
+      "_vbscript_name": "BL_Inserts_L88",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 89,
+      "description": "Insert L89",
+      "_vbscript_name": "BL_Inserts_L89",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 90,
+      "description": "Insert L90",
+      "_vbscript_name": "BL_Inserts_L90",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 91,
+      "description": "Insert L91",
+      "_vbscript_name": "BL_Inserts_L91",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 92,
+      "description": "Insert L92",
+      "_vbscript_name": "BL_Inserts_L92",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 93,
+      "description": "Insert L93",
+      "_vbscript_name": "BL_Inserts_L93",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 94,
+      "description": "Insert L94",
+      "_vbscript_name": "BL_Inserts_L94",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 95,
+      "description": "Insert L95",
+      "_vbscript_name": "BL_Inserts_L95",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 97,
+      "description": "Insert L97",
+      "_vbscript_name": "BL_Inserts_L97",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 98,
+      "description": "Insert L98",
+      "_vbscript_name": "BL_Inserts_L98",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 99,
+      "description": "Insert L99",
+      "_vbscript_name": "BL_Inserts_L99",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 100,
+      "description": "Insert L100",
+      "_vbscript_name": "BL_Inserts_L100",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 101,
+      "description": "Insert L101",
+      "_vbscript_name": "BL_Inserts_L101",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 102,
+      "description": "Insert L102",
+      "_vbscript_name": "BL_Inserts_L102",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 103,
+      "description": "Insert L103",
+      "_vbscript_name": "BL_Inserts_L103",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 104,
+      "description": "Flasher Lamp L104",
+      "_vbscript_name": "BL_Flashers_L104",
+      "_inferred_type": "flasher"
+    },
+    {
+      "id": 105,
+      "description": "Insert L105",
+      "_vbscript_name": "BL_Inserts_L105",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 106,
+      "description": "Insert L106",
+      "_vbscript_name": "BL_Inserts_L106",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 107,
+      "description": "Insert L107",
+      "_vbscript_name": "BL_Inserts_L107",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 108,
+      "description": "Insert L108",
+      "_vbscript_name": "BL_Inserts_L108",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 109,
+      "description": "Insert L109",
+      "_vbscript_name": "BL_Inserts_L109",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 110,
+      "description": "Insert L110",
+      "_vbscript_name": "BL_Inserts_L110",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 111,
+      "description": "Insert L111",
+      "_vbscript_name": "BL_Inserts_L111",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 112,
+      "description": "Insert L112",
+      "_vbscript_name": "BL_Inserts_L112",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 113,
+      "description": "Insert L113",
+      "_vbscript_name": "BL_Inserts_L113",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 114,
+      "description": "Insert L114",
+      "_vbscript_name": "BL_Inserts_L114",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 115,
+      "description": "Insert L115",
+      "_vbscript_name": "BL_Inserts_L115",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 116,
+      "description": "Insert L116",
+      "_vbscript_name": "BL_Inserts_L116",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 117,
+      "description": "Insert L117",
+      "_vbscript_name": "BL_Inserts_L117",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 118,
+      "description": "Insert L118",
+      "_vbscript_name": "BL_Inserts_L118",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 119,
+      "description": "Flasher Lamp L119",
+      "_vbscript_name": "BL_Flashers_L119",
+      "_inferred_type": "flasher"
+    },
+    {
+      "id": 120,
+      "description": "Flasher Lamp L120",
+      "_vbscript_name": "BL_Flashers_L120",
+      "_inferred_type": "flasher"
+    },
+    {
+      "id": 121,
+      "description": "Insert L121",
+      "_vbscript_name": "BL_Inserts_L121",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 122,
+      "description": "GI L122",
+      "_vbscript_name": "BL_Gi_L122",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 123,
+      "description": "GI L123",
+      "_vbscript_name": "BL_Gi_L123",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 124,
+      "description": "GI L124",
+      "_vbscript_name": "BL_Gi_L124",
+      "_inferred_type": "gi"
+    },
+    {
+      "id": 126,
+      "description": "Insert L126",
+      "_vbscript_name": "BL_Inserts_L126",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 127,
+      "description": "Insert L127",
+      "_vbscript_name": "BL_Inserts_L127",
+      "_inferred_type": "insert"
+    },
+    {
+      "id": 128,
+      "description": "GI L128",
+      "_vbscript_name": "BL_Gi_L128",
+      "_inferred_type": "gi"
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    }
+  ]
+}

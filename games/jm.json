@@ -1,0 +1,607 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Johnny Mnemonic (Williams 1995) VPW v1.1.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils. All switch data extracted from _Hit/_UnHit subs, Controller.Switch() calls, PulseSw calls, and inline comments. No Const sw* definitions found — IDs extracted directly from VPX object handlers. Lamp matrix uses vpmMapLights AllLamps (timer-interval-based, no explicit IDs in script — lamps not enumerable from VBS alone). Flashers (coils 17-20, 25-28) use SolModCallback with PWM level. Glove mechanism uses cvpmMech for X/Y motor axes (solenoids 21-24) with encoder switches 74-77 and home switches 12/37. Matrix switches 51-53, 61-63, 71-73 are the 3x3 hand matrix targets. Switch 115 is a virtual/opto switch for glove magnet ball detection. Slingshots (coils 9-10) and bumpers (coils 11-13) are commented out in SolCallback — handled natively by VPX. GI has 5 strings (0-4) via GiCallBack2."
+  },
+  "game": {
+    "id": "jm",
+    "name": "Johnny Mnemonic",
+    "year": 1995,
+    "manufacturer": "Williams",
+    "ipdb_id": 3683,
+    "platform": "wpc"
+  },
+  "roms": [
+    { "id": "jm_12r", "_note": "ROM specified as cGameName in VPW script" }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Ball Launch",
+      "_note": "vpmTimer.PulseSw 11 via PlungerKey",
+      "input_action_hint": "plunger",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 12,
+      "description": "X Hand Home",
+      "_note": "cvpmMech AddSw — X axis home position switch at step range 0-2"
+    },
+    {
+      "id": 13,
+      "description": "Start Button",
+      "_note": "Controller.Switch(13) toggled via StartGameKey",
+      "input_action_hint": "start",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 14,
+      "description": "Plumb Bob Tilt",
+      "normally_closed": true,
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Inlane Rollover Left Outlane",
+      "vpx_name": "sw15",
+      "_note": "Controller.Switch(15) on/off"
+    },
+    {
+      "id": 16,
+      "description": "Inlane Rollover Left Return",
+      "vpx_name": "sw16",
+      "_note": "Controller.Switch(16) on/off"
+    },
+    {
+      "id": 17,
+      "description": "Inlane Rollover Right Return",
+      "vpx_name": "sw17",
+      "_note": "Controller.Switch(17) on/off"
+    },
+    {
+      "id": 18,
+      "description": "Inlane Rollover Right Outlane",
+      "vpx_name": "sw18",
+      "_note": "Controller.Switch(18) on/off"
+    },
+    {
+      "id": 21,
+      "description": "Slam Tilt",
+      "_note": "Referenced in comments only (sw21)"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "normally_closed": true,
+      "_note": "Controller.Switch(22)=1 on init"
+    },
+    {
+      "id": 23,
+      "description": "Buy In Button",
+      "_note": "Controller.Switch(23) toggled via KeyFront",
+      "input_action_hint": "buy_in",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 24,
+      "description": "Always Closed",
+      "normally_closed": true,
+      "_note": "Controller.Switch(24)=1 on init — always closed switch"
+    },
+    {
+      "id": 25,
+      "description": "Left Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "PulseSw 25 in RightSlingShot_Slingshot — note: VPX sub name says Right but comment says Left Sling Shot"
+    },
+    {
+      "id": 26,
+      "description": "Right Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "PulseSw 26 in LeftSlingShot_Slingshot — note: VPX sub name says Left but comment says Right Sling Shot"
+    },
+    {
+      "id": 27,
+      "description": "Left Standup Target",
+      "vpx_name": "sw27",
+      "_note": "STHit 27"
+    },
+    {
+      "id": 28,
+      "description": "Right Standup Target",
+      "vpx_name": "sw28",
+      "_note": "STHit 28"
+    },
+    {
+      "id": 31,
+      "description": "Trough Jam",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "jam",
+      "_note": "PulseSw 31 fired during SolRelease (trough eject confirmation)"
+    },
+    {
+      "id": 32,
+      "description": "Trough Ball 1 (Nearest Shooter)",
+      "vpx_name": "sw32",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "Ball trough position 1. sw32.kick used by SolRelease."
+    },
+    {
+      "id": 33,
+      "description": "Trough Ball 2",
+      "vpx_name": "sw33",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "Ball trough position 2"
+    },
+    {
+      "id": 34,
+      "description": "Trough Ball 3",
+      "vpx_name": "sw34",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "Ball trough position 3"
+    },
+    {
+      "id": 35,
+      "description": "Trough Ball 4 (Nearest Drain)",
+      "vpx_name": "sw35",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4",
+      "_note": "Ball trough position 4"
+    },
+    {
+      "id": 36,
+      "description": "Ball Popper 1 (Kick to Glove)",
+      "vpx_name": "KickToGlove",
+      "_note": "Controller.Switch(36) set in KickToGlove_hit/unhit. VUK that feeds ball up to glove mechanism."
+    },
+    {
+      "id": 37,
+      "description": "Y Hand Home",
+      "_note": "cvpmMech AddSw — Y axis home position switch at step range 0-1502"
+    },
+    {
+      "id": 38,
+      "description": "Right Rubber Band Leaf Switch",
+      "vpx_name": "sw38",
+      "_note": "PulseSw 38"
+    },
+    {
+      "id": 41,
+      "description": "Left Ramp Enter",
+      "vpx_name": "sw41",
+      "_note": "Controller.Switch(41) on/off"
+    },
+    {
+      "id": 42,
+      "description": "Left Ramp Made",
+      "vpx_name": "sw42",
+      "_note": "Controller.Switch(42) on/off"
+    },
+    {
+      "id": 43,
+      "description": "Drop Target",
+      "vpx_name": "sw43",
+      "_note": "DTHit 43 — single drop target"
+    },
+    {
+      "id": 44,
+      "description": "Pop Bumper Left",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 44"
+    },
+    {
+      "id": 45,
+      "description": "Pop Bumper Bottom",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 45"
+    },
+    {
+      "id": 46,
+      "description": "Pop Bumper Right",
+      "vpx_name": "Bumper3",
+      "_note": "PulseSw 46"
+    },
+    {
+      "id": 47,
+      "description": "Crazy Bob's VUK",
+      "vpx_name": "sw47",
+      "_note": "Controller.Switch(47) on/off. Ball lock kicker — CrazyBobKick solenoid ejects."
+    },
+    {
+      "id": 48,
+      "description": "Spinner",
+      "vpx_name": "sw48",
+      "_note": "PulseSw 48 in sw48_spin"
+    },
+    {
+      "id": 51,
+      "description": "Hand Matrix Position 1,1 (Left Back)",
+      "vpx_name": "Matrix11",
+      "_note": "Controller.Switch(51)=1 on Matrix11_Hit. 3x3 glove target matrix."
+    },
+    {
+      "id": 52,
+      "description": "Hand Matrix Position 2,1 (Centre Back)",
+      "vpx_name": "Matrix21",
+      "_note": "Controller.Switch(52)=1 on Matrix21_Hit"
+    },
+    {
+      "id": 53,
+      "description": "Hand Matrix Position 3,1 (Right Back)",
+      "vpx_name": "Matrix31",
+      "_note": "Controller.Switch(53)=1 on Matrix31_Hit"
+    },
+    {
+      "id": 54,
+      "description": "Right Ramp Enter",
+      "vpx_name": "sw54",
+      "_note": "Controller.Switch(54) on/off"
+    },
+    {
+      "id": 55,
+      "description": "Right Ramp Made",
+      "vpx_name": "sw55",
+      "_note": "Controller.Switch(55) on/off"
+    },
+    {
+      "id": 56,
+      "description": "Left Outer Orbit Loop",
+      "vpx_name": "sw56",
+      "_note": "Controller.Switch(56) on/off"
+    },
+    {
+      "id": 57,
+      "description": "Right Outer Orbit Loop",
+      "vpx_name": "sw57",
+      "_note": "Controller.Switch(57) on/off"
+    },
+    {
+      "id": 58,
+      "description": "Right Inner Loop Entry",
+      "vpx_name": "sw58",
+      "_note": "Controller.Switch(58) on/off"
+    },
+    {
+      "id": 61,
+      "description": "Hand Matrix Position 1,2 (Left Middle)",
+      "vpx_name": "Matrix12",
+      "_note": "Controller.Switch(61)=1 on Matrix12_Hit"
+    },
+    {
+      "id": 62,
+      "description": "Hand Matrix Position 2,2 (Centre Middle)",
+      "vpx_name": "Matrix22",
+      "_note": "Controller.Switch(62)=1 on Matrix22_Hit"
+    },
+    {
+      "id": 63,
+      "description": "Hand Matrix Position 3,2 (Right Middle)",
+      "vpx_name": "Matrix32",
+      "_note": "Controller.Switch(63)=1 on Matrix32_Hit"
+    },
+    {
+      "id": 64,
+      "description": "Left Jet Lane Rollover",
+      "vpx_name": "sw64",
+      "_note": "Controller.Switch(64) on/off"
+    },
+    {
+      "id": 65,
+      "description": "Middle Jet Lane Rollover",
+      "vpx_name": "sw65",
+      "_note": "Controller.Switch(65) on/off"
+    },
+    {
+      "id": 66,
+      "description": "Right Jet Lane Rollover",
+      "vpx_name": "sw66",
+      "_note": "Controller.Switch(66) on/off"
+    },
+    {
+      "id": 67,
+      "description": "Right Hand Control",
+      "_note": "Controller.Switch(67) toggled via rightmagnasave key",
+      "input_action_hint": "right_magnasave",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 68,
+      "description": "Left Hand Control",
+      "_note": "Controller.Switch(68) toggled via leftmagnasave key",
+      "input_action_hint": "left_magnasave",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 71,
+      "description": "Hand Matrix Position 1,3 (Left Front)",
+      "vpx_name": "Matrix13",
+      "_note": "Controller.Switch(71)=1 on Matrix13_Hit"
+    },
+    {
+      "id": 72,
+      "description": "Hand Matrix Position 2,3 (Centre Front)",
+      "vpx_name": "Matrix23",
+      "_note": "Controller.Switch(72)=1 on Matrix23_Hit"
+    },
+    {
+      "id": 73,
+      "description": "Hand Matrix Position 3,3 (Right Front)",
+      "vpx_name": "Matrix33",
+      "_note": "Controller.Switch(73)=1 on Matrix33_Hit"
+    },
+    {
+      "id": 74,
+      "description": "X Hand Encoder A",
+      "_note": "cvpmMech AddPulseSwNew — X axis encoder pulse switch (steps 4-9)"
+    },
+    {
+      "id": 75,
+      "description": "X Hand Encoder B",
+      "_note": "cvpmMech AddPulseSwNew — X axis encoder pulse switch (steps 0-5)"
+    },
+    {
+      "id": 76,
+      "description": "Y Hand Encoder A",
+      "_note": "cvpmMech AddPulseSwNew — Y axis encoder pulse switch (steps 0-5)"
+    },
+    {
+      "id": 77,
+      "description": "Y Hand Encoder B",
+      "_note": "cvpmMech AddPulseSwNew — Y axis encoder pulse switch (steps 4-9)"
+    },
+    {
+      "id": 78,
+      "description": "Shooter Lane Rollover",
+      "vpx_name": "sw78",
+      "_note": "Controller.Switch(78) on/off"
+    },
+    {
+      "id": 115,
+      "description": "Glove Magnet Ball Sensor",
+      "_note": "Virtual/opto switch. Controller.Switch(115) set when ball caught by glove magnet (TriggerGloveMag_Hit), cleared on DoHandMagnet off. Extended switch number beyond standard WPC matrix."
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Eject",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw32",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Kicks ball from sw32. PulseSw 31 fired as trough jam confirmation."
+    },
+    {
+      "id": 2,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "SolAutofire",
+      "_inferred_type": "ball_management",
+      "_note": "Impulse plunger auto-fire. PlungerIM.AutoFire."
+    },
+    {
+      "id": 3,
+      "description": "Popper (Kick Up to Glove)",
+      "_vbscript_callback": "SolKickToGlove",
+      "_inferred_type": "ball_management",
+      "vpx_name": "KickToGlove",
+      "_note": "VUK that kicks ball up to glove mechanism from below playfield"
+    },
+    {
+      "id": 5,
+      "description": "Clear Matrix (Tip Up)",
+      "_vbscript_callback": "DoClearMatrix",
+      "_inferred_type": "mechanism",
+      "_note": "Clears all balls from 3x3 hand matrix targets. Kicks balls from Matrix kickers."
+    },
+    {
+      "id": 6,
+      "description": "Hand Magnet",
+      "_vbscript_callback": "DoHandMagnet",
+      "_inferred_type": "mechanism",
+      "_note": "Glove magnet — picks up ball from matrix targets or holds ball caught at TriggerGloveMag. Clears switch 115 on disable."
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"Knocker\",DOFKnocker),",
+      "_inferred_type": "knocker",
+      "_note": "Sound-only knocker implementation"
+    },
+    {
+      "id": 9,
+      "description": "Left Slingshot",
+      "_vbscript_callback": null,
+      "_inferred_type": "mechanism",
+      "_note": "Commented out in SolCallback — handled natively by VPX slingshot object"
+    },
+    {
+      "id": 10,
+      "description": "Right Slingshot",
+      "_vbscript_callback": null,
+      "_inferred_type": "mechanism",
+      "_note": "Commented out in SolCallback — handled natively by VPX slingshot object"
+    },
+    {
+      "id": 11,
+      "description": "Left Jet Bumper",
+      "_vbscript_callback": null,
+      "_inferred_type": "mechanism",
+      "_note": "Commented out in SolCallback — handled natively by VPX bumper object"
+    },
+    {
+      "id": 12,
+      "description": "Bottom Jet Bumper",
+      "_vbscript_callback": null,
+      "_inferred_type": "mechanism",
+      "_note": "Commented out in SolCallback — handled natively by VPX bumper object"
+    },
+    {
+      "id": 13,
+      "description": "Right Jet Bumper",
+      "_vbscript_callback": null,
+      "_inferred_type": "mechanism",
+      "_note": "Commented out in SolCallback — handled natively by VPX bumper object"
+    },
+    {
+      "id": 14,
+      "description": "Crazy Bob's Eject",
+      "_vbscript_callback": "CrazyBobKick",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw47",
+      "_note": "Ejects ball from Crazy Bob's VUK (switch 47)"
+    },
+    {
+      "id": 15,
+      "description": "Drop Target Reset",
+      "_vbscript_callback": "ResetDrop",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets single drop target (sw43)"
+    },
+    {
+      "id": 16,
+      "description": "Drop Target Down",
+      "_vbscript_callback": "DropTargetDown",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Forces drop target down (sw43)"
+    },
+    {
+      "id": 17,
+      "description": "Jet's Flasher",
+      "_vbscript_callback": "Flash117",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?17$",
+      "vpx_name": "l117",
+      "_note": "SolModCallback with PWM level. Controller.SolMask(1017) for PWM."
+    },
+    {
+      "id": 18,
+      "description": "Crazy Bob's Flasher",
+      "_vbscript_callback": "Flash118",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?18$",
+      "vpx_name": "l118",
+      "_note": "SolModCallback with PWM level. Controller.SolMask(1018) for PWM."
+    },
+    {
+      "id": 19,
+      "description": "Left Slingshot Flasher",
+      "_vbscript_callback": "Flash119",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?19$",
+      "vpx_name": "l119",
+      "_note": "SolModCallback with PWM level. Controller.SolMask(1019) for PWM."
+    },
+    {
+      "id": 20,
+      "description": "Right Slingshot Flasher",
+      "_vbscript_callback": "Flash120",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?20$",
+      "vpx_name": "l120",
+      "_note": "SolModCallback with PWM level. Controller.SolMask(1020) for PWM."
+    },
+    {
+      "id": 21,
+      "description": "X Motor Direction",
+      "_vbscript_callback": null,
+      "_inferred_type": "mechanism",
+      "_note": "Commented out in SolCallback — used internally by cvpmMech (.Sol2=-21 on MoveGloveX). Glove X-axis motor direction."
+    },
+    {
+      "id": 22,
+      "description": "X Motor Enable",
+      "_vbscript_callback": null,
+      "_inferred_type": "mechanism",
+      "_note": "Commented out in SolCallback — used internally by cvpmMech (.Sol1=22 on MoveGloveX). Glove X-axis motor enable."
+    },
+    {
+      "id": 23,
+      "description": "Y Motor Direction",
+      "_vbscript_callback": null,
+      "_inferred_type": "mechanism",
+      "_note": "Commented out in SolCallback — used internally by cvpmMech (.Sol2=-23 on MoveGloveY). Glove Y-axis motor direction."
+    },
+    {
+      "id": 24,
+      "description": "Y Motor Enable",
+      "_vbscript_callback": null,
+      "_inferred_type": "mechanism",
+      "_note": "Commented out in SolCallback — used internally by cvpmMech (.Sol1=24 on MoveGloveY). Glove Y-axis motor enable."
+    },
+    {
+      "id": 25,
+      "description": "Left Ramp Flasher",
+      "_vbscript_callback": "Flash125",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?25$",
+      "vpx_name": "l125",
+      "_note": "SolModCallback with PWM level. Controller.SolMask(1025) for PWM."
+    },
+    {
+      "id": 26,
+      "description": "Right Ramp Flasher",
+      "_vbscript_callback": "Flash126",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?26$",
+      "vpx_name": "l126",
+      "_note": "SolModCallback with PWM level. Controller.SolMask(1026) for PWM."
+    },
+    {
+      "id": 27,
+      "description": "Hand Popper Flasher",
+      "_vbscript_callback": "Flash127",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?27$",
+      "vpx_name": "l127",
+      "_note": "SolModCallback with PWM level. Controller.SolMask(1027) for PWM."
+    },
+    {
+      "id": 28,
+      "description": "Right Backpanel Flasher",
+      "_vbscript_callback": "Flash128",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "device_hint": "^F1?28$",
+      "vpx_name": "l128",
+      "_note": "SolModCallback with PWM level. Controller.SolMask(1028) for PWM."
+    },
+    {
+      "id": 34,
+      "description": "Left Diverter",
+      "_vbscript_callback": "SolLeftDiverterHold",
+      "_inferred_type": "diverter",
+      "vpx_name": "LeftDiverterOpen",
+      "_note": "Hold coil — toggles LeftDiverterOpen/LeftDiverterClosed IsDropped state"
+    },
+    {
+      "id": 36,
+      "description": "Right Diverter",
+      "_vbscript_callback": "SolRightDiverterHold",
+      "_inferred_type": "diverter",
+      "vpx_name": "RightDiverterOpen",
+      "_note": "Hold coil — toggles RightDiverterOpen/RightDiverterClosed IsDropped state"
+    }
+  ],
+  "lamps": [],
+  "_lamp_note": "Lamps use vpmMapLights AllLamps — mapped by TimerInterval property on VPX light objects, not enumerable from VBS script alone. Flasher lamp objects: l117 (Jets), l118 (Crazy Bobs), l119 (Left Sling), l120 (Right Sling), l125 (Left Ramp), l126 (Right Ramp), l127 (Hand Popper), l128 (Right Backpanel). GI strings: 0=Left Playfield, 1=Right Playfield, 2=Top Playfield, 3=Insert 1 (l143a), 4=Insert 2. GI uses GiCallBack2 with 9 intensity levels (0-8).",
+  "aliases": [
+    { "id": 46, "alias": "c_flipper_lower_right", "type": "coil", "_note": "sLRFlipper — SolRFlipper callback. VPX objects: RightFlipper, TriggerRF, EndPointRp" },
+    { "id": 48, "alias": "c_flipper_lower_left", "type": "coil", "_note": "sLLFlipper — SolLFlipper callback. VPX objects: LeftFlipper, TriggerLF, EndPointLp" }
+  ]
+}

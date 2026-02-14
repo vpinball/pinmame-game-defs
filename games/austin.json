@@ -1,0 +1,553 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Austin Powers (Stern 2001)_VPWmod_1.0.5.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils. No Const sw* definitions — switches identified from _Hit/_UnHit subs, Controller.Switch() calls, PulseSw calls, and mechanism AddSw. Lamp IDs from NFadeL/Flash macros. Flashers (coils 5-6, 12-13, 25-32) use SetLamp with 100+ lamp IDs or custom Flash subs. Trough uses cvpmTrough with 4 switches (11-14). Sega/Whitestar platform via SEGA.VBS. Multiple mechanisms: LaserGun cannon (sol 21, mech), Dr Evil motor (sol 19, mech), Time Machine motor (sol 20), Dancing Austin (sol 7), Magnet (sol 14)."
+  },
+  "game": {
+    "id": "austin",
+    "name": "Austin Powers",
+    "year": 2001,
+    "manufacturer": "Stern",
+    "platform": "sega"
+  },
+  "roms": [
+    { "id": "austin" }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Trough 1 (Nearest Shooter)",
+      "vpx_name": "bsTrough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "cvpmTrough InitSwitches Array(14,13,12,11) — sw11 is nearest shooter"
+    },
+    {
+      "id": 12,
+      "description": "Trough 2",
+      "vpx_name": "bsTrough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 13,
+      "description": "Trough 3",
+      "vpx_name": "bsTrough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 14,
+      "description": "Trough 4 (Nearest Drain)",
+      "vpx_name": "bsTrough",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4"
+    },
+    {
+      "id": 15,
+      "description": "Shooter Lane",
+      "_note": "PulseSw 15 fired in SolTrough after ball eject. Confirms ball reached shooter lane.",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "jam"
+    },
+    {
+      "id": 16,
+      "description": "Impulse Plunger Lane",
+      "vpx_name": "sw16",
+      "_note": "Controller.Switch on/off (rollover). Also plungerIM.switch 16 — auto plunger lane switch."
+    },
+    {
+      "id": 18,
+      "description": "Ramp Gate Trigger",
+      "vpx_name": "sw18",
+      "_note": "PulseSw 18"
+    },
+    {
+      "id": 21,
+      "description": "Toilet Post Saucer (Inodoro)",
+      "vpx_name": "Sw21",
+      "_note": "bsInodoro cvpmSaucer. InitKicker Sw21, 21. Ball management."
+    },
+    {
+      "id": 22,
+      "description": "Dr Evil End Position (Mechanism)",
+      "_note": "mEvil.AddSw 22, 498, 500. Mechanism switch — Dr Evil at top position."
+    },
+    {
+      "id": 23,
+      "description": "Dr Evil Home Position (Mechanism)",
+      "_note": "mEvil.AddSw 23, 0, 1. Mechanism switch — Dr Evil at bottom/home position."
+    },
+    {
+      "id": 24,
+      "description": "Standup Target (Dr Evil Area)",
+      "vpx_name": "Sw24",
+      "_note": "PulseSw 24. Animated standup target near Dr Evil."
+    },
+    {
+      "id": 25,
+      "description": "Standup Target (Left Bank 1)",
+      "vpx_name": "Sw25",
+      "_note": "PulseSw 25"
+    },
+    {
+      "id": 26,
+      "description": "Standup Target (Left Bank 2)",
+      "vpx_name": "Sw26",
+      "_note": "PulseSw 26"
+    },
+    {
+      "id": 27,
+      "description": "Standup Target (Left Bank 3)",
+      "vpx_name": "Sw27",
+      "_note": "PulseSw 27"
+    },
+    {
+      "id": 28,
+      "description": "Standup Target (Right Bank 1)",
+      "vpx_name": "Sw28",
+      "_note": "PulseSw 28"
+    },
+    {
+      "id": 29,
+      "description": "Standup Target (Right Bank 2)",
+      "vpx_name": "Sw29",
+      "_note": "PulseSw 29"
+    },
+    {
+      "id": 30,
+      "description": "Standup Target (Right Bank 3)",
+      "vpx_name": "Sw30",
+      "_note": "PulseSw 30"
+    },
+    {
+      "id": 31,
+      "description": "Standup Target",
+      "vpx_name": "sw31",
+      "_note": "PulseSw 31. Animated standup target."
+    },
+    {
+      "id": 32,
+      "description": "Standup Target",
+      "vpx_name": "sw32",
+      "_note": "PulseSw 32. Animated standup target."
+    },
+    {
+      "id": 33,
+      "description": "Rollover",
+      "vpx_name": "sw33",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 34,
+      "description": "Spinner (Mini-Me)",
+      "vpx_name": "Sw34Anim",
+      "_note": "PulseSw 34 from spinner animation timer. Animated Mini-Me spinner."
+    },
+    {
+      "id": 35,
+      "description": "Ramp Trigger",
+      "vpx_name": "sw35",
+      "_note": "PulseSw 35"
+    },
+    {
+      "id": 37,
+      "description": "Ramp Gate",
+      "vpx_name": "sw37",
+      "_note": "PulseSw 37 on hit and unhit"
+    },
+    {
+      "id": 38,
+      "description": "Ramp Gate",
+      "vpx_name": "sw38",
+      "_note": "PulseSw 38 on hit and unhit"
+    },
+    {
+      "id": 39,
+      "description": "Rollover",
+      "vpx_name": "sw39",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 41,
+      "description": "Ramp Gate",
+      "vpx_name": "sw41",
+      "_note": "PulseSw 41 on hit and unhit"
+    },
+    {
+      "id": 42,
+      "description": "Ramp Gate",
+      "vpx_name": "sw42",
+      "_note": "PulseSw 42 on hit and unhit"
+    },
+    {
+      "id": 43,
+      "description": "Laser Gun Home Position (Mechanism)",
+      "_note": "mLaserGun.AddSw 43, 0, 10. Mechanism switch — cannon at home position."
+    },
+    {
+      "id": 44,
+      "description": "Laser Gun End Position (Mechanism)",
+      "_note": "mLaserGun.AddSw 44, 400, 750. Mechanism switch — cannon at end of travel."
+    },
+    {
+      "id": 45,
+      "description": "Laser Beam Kicker",
+      "vpx_name": "Sw45",
+      "_note": "Controller.switch(45) on/off. Ball enters cannon, kicked out by SolLaserBeam (coil 4)."
+    },
+    {
+      "id": 46,
+      "description": "Scoop",
+      "vpx_name": "Sw46b",
+      "_note": "bsScoop cvpmSaucer. InitKicker Sw46b, 46."
+    },
+    {
+      "id": 47,
+      "description": "Rollover",
+      "vpx_name": "sw47",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 48,
+      "description": "Rollover",
+      "vpx_name": "sw48",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 49,
+      "description": "Middle Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 49"
+    },
+    {
+      "id": 50,
+      "description": "Bottom Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 50"
+    },
+    {
+      "id": 51,
+      "description": "Top Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "PulseSw 51"
+    },
+    {
+      "id": 53,
+      "description": "Action Button",
+      "_note": "Controller.Switch(53) set via LeftMagnaSave/RightMagnaSave/LockBarKey",
+      "input_action_hint": "launch_ball",
+      "input_map_hint": "cabinet"
+    },
+    {
+      "id": 56,
+      "description": "Tilt",
+      "_note": "vpmNudge.TiltSwitch = 56"
+    },
+    {
+      "id": 57,
+      "description": "Rollover",
+      "vpx_name": "sw57",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 58,
+      "description": "Rollover",
+      "vpx_name": "sw58",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 59,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "PulseSw 59 in LeftSlingShot_Slingshot sub"
+    },
+    {
+      "id": 60,
+      "description": "Rollover",
+      "vpx_name": "sw60",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 61,
+      "description": "Rollover",
+      "vpx_name": "sw61",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 62,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "PulseSw 62 in RightSlingShot_Slingshot sub"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Eject",
+      "_vbscript_callback": "SolTrough",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Fires bsTrough.ExitSol_On, then PulseSw 15 (shooter lane confirm)"
+    },
+    {
+      "id": 2,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "SolAutoPlungerIM",
+      "_inferred_type": "ball_management",
+      "_note": "Impulse plunger. plungerIM.AutoFire"
+    },
+    {
+      "id": 3,
+      "description": "Scoop Eject",
+      "_vbscript_callback": "bsScoop.SolOut",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Sw46b"
+    },
+    {
+      "id": 4,
+      "description": "Laser Beam Eject (Cannon Shot)",
+      "_vbscript_callback": "SolLaserBeam",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Sw45",
+      "_note": "Kicks ball from cannon. Clears Controller.switch(45)."
+    },
+    {
+      "id": 5,
+      "description": "Flasher — Time Travel Ramp",
+      "_vbscript_callback": "SetLamp 105,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "F105"
+    },
+    {
+      "id": 6,
+      "description": "Flasher — Right Green Dome",
+      "_vbscript_callback": "FlashGreen",
+      "_inferred_type": "flasher",
+      "is_lamp": true
+    },
+    {
+      "id": 7,
+      "description": "Dancing Austin",
+      "_vbscript_callback": "SolAustinDance",
+      "_inferred_type": "mechanism",
+      "_note": "Activates Austin Powers dancing figure animation"
+    },
+    {
+      "id": 8,
+      "description": "Toilet Post Eject (Inodoro)",
+      "_vbscript_callback": "bsInodoro.SolOut",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Sw21"
+    },
+    {
+      "id": 12,
+      "description": "Flasher — Left Blue Dome",
+      "_vbscript_callback": "FlashBlue",
+      "_inferred_type": "flasher",
+      "is_lamp": true
+    },
+    {
+      "id": 13,
+      "description": "Flasher — Right Red Dome",
+      "_vbscript_callback": "FlashRed",
+      "_inferred_type": "flasher",
+      "is_lamp": true
+    },
+    {
+      "id": 14,
+      "description": "Magnet",
+      "_inferred_type": "mechanism",
+      "vpx_name": "Magnet",
+      "_note": "cvpmMagnet. GrabCenter = 1."
+    },
+    {
+      "id": 19,
+      "description": "Dr Evil Motor",
+      "_vbscript_callback": "mrEvil",
+      "_inferred_type": "mechanism",
+      "_note": "cvpmMyMech. Dr Evil pop-up figure motor. Mech switches: sw23 (home 0-1), sw22 (top 498-500)."
+    },
+    {
+      "id": 20,
+      "description": "Time Machine Motor",
+      "_vbscript_callback": "SolTimeMachine",
+      "_inferred_type": "mechanism",
+      "_note": "Time Machine Motor Relay Board"
+    },
+    {
+      "id": 21,
+      "description": "Cannon Motor (Laser Gun)",
+      "_vbscript_callback": "Solcannon",
+      "_inferred_type": "mechanism",
+      "_note": "cvpmMyMech. Rotates cannon/laser gun. Mech switches: sw43 (home 0-10), sw44 (end 400-750)."
+    },
+    {
+      "id": 22,
+      "description": "Laser Beam Diverter",
+      "_vbscript_callback": "SolDiv",
+      "_inferred_type": "diverter",
+      "vpx_name": "RampDiverter"
+    },
+    {
+      "id": 23,
+      "description": "Gate",
+      "_vbscript_callback": "vpmSolGate Gate",
+      "_inferred_type": "gate",
+      "vpx_name": "Gate"
+    },
+    {
+      "id": 24,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"fx_knocker\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 25,
+      "description": "Flasher — PF Insert",
+      "_vbscript_callback": "SetLamp 125,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "FlasherLight25"
+    },
+    {
+      "id": 26,
+      "description": "Flasher — PF Insert",
+      "_vbscript_callback": "SetLamp 126,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "FlasherLight26"
+    },
+    {
+      "id": 27,
+      "description": "Flasher — Spot Light",
+      "_vbscript_callback": "SolFlasher27",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "Flasher27m"
+    },
+    {
+      "id": 28,
+      "description": "Flasher — PF Insert",
+      "_vbscript_callback": "SetLamp 128,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "FlasherLight28"
+    },
+    {
+      "id": 29,
+      "description": "Flasher — PF Insert",
+      "_vbscript_callback": "SetLamp 129,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "FlasherLight29"
+    },
+    {
+      "id": 30,
+      "description": "Flasher — PF Insert",
+      "_vbscript_callback": "SetLamp 130,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "FlasherLight30"
+    },
+    {
+      "id": 31,
+      "description": "Flasher — PF Insert",
+      "_vbscript_callback": "SetLamp 131,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "FlasherLight31",
+      "_note": "Also has bloom effect object Flasherbloom31"
+    },
+    {
+      "id": 32,
+      "description": "Flasher — Left Yellow Dome",
+      "_vbscript_callback": "FlashYellow",
+      "_inferred_type": "flasher",
+      "is_lamp": true
+    }
+  ],
+  "lamps": [
+    { "id": 1, "vpx_name": "Light1" },
+    { "id": 2, "vpx_name": "Light2" },
+    { "id": 3, "vpx_name": "Light3" },
+    { "id": 4, "vpx_name": "Light4" },
+    { "id": 5, "vpx_name": "Light5", "_note": "Also has Flash object Light5a" },
+    { "id": 6, "vpx_name": "Light6", "_note": "Also has Flash object Light6a" },
+    { "id": 7, "vpx_name": "Light7" },
+    { "id": 8, "vpx_name": "Light8" },
+    { "id": 9, "vpx_name": "Light9" },
+    { "id": 10, "vpx_name": "Light10" },
+    { "id": 11, "vpx_name": "Light11" },
+    { "id": 12, "vpx_name": "Light12" },
+    { "id": 13, "vpx_name": "BumperL_Flasher1", "_note": "Flash macro — bumper flasher" },
+    { "id": 14, "vpx_name": "BumperR_Flasher1", "_note": "Flash macro — bumper flasher" },
+    { "id": 15, "vpx_name": "BumperT_Flasher1", "_note": "Flash macro — bumper flasher" },
+    { "id": 16, "vpx_name": "Light16" },
+    { "id": 17, "vpx_name": "Light17" },
+    { "id": 18, "vpx_name": "Light18" },
+    { "id": 19, "vpx_name": "Light19" },
+    { "id": 20, "vpx_name": "Light20" },
+    { "id": 21, "vpx_name": "Light21" },
+    { "id": 22, "vpx_name": "Light22" },
+    { "id": 23, "vpx_name": "Light23" },
+    { "id": 24, "vpx_name": "Light24" },
+    { "id": 25, "vpx_name": "Light25" },
+    { "id": 26, "vpx_name": "Light26" },
+    { "id": 27, "vpx_name": "Light27" },
+    { "id": 28, "vpx_name": "Light28" },
+    { "id": 29, "vpx_name": "Light29" },
+    { "id": 30, "vpx_name": "Light30" },
+    { "id": 31, "vpx_name": "Light31" },
+    { "id": 32, "vpx_name": "Light32" },
+    { "id": 33, "vpx_name": "Light33" },
+    { "id": 34, "vpx_name": "Light34" },
+    { "id": 35, "vpx_name": "Light35" },
+    { "id": 36, "vpx_name": "Light36" },
+    { "id": 37, "vpx_name": "Light37" },
+    { "id": 38, "vpx_name": "Light38" },
+    { "id": 39, "vpx_name": "Light39" },
+    { "id": 40, "vpx_name": "Light40" },
+    { "id": 41, "vpx_name": "Light41" },
+    { "id": 42, "vpx_name": "Light42" },
+    { "id": 43, "vpx_name": "Light43" },
+    { "id": 44, "vpx_name": "Light44" },
+    { "id": 45, "vpx_name": "Light45", "_note": "Also has Flash object Light45a" },
+    { "id": 46, "vpx_name": "Light46" },
+    { "id": 47, "vpx_name": "Light47" },
+    { "id": 48, "vpx_name": "Light48", "_note": "Also has Flash object Light48a" },
+    { "id": 49, "vpx_name": "Light49" },
+    { "id": 50, "vpx_name": "Light50" },
+    { "id": 51, "vpx_name": "Light51" },
+    { "id": 52, "vpx_name": "Light52" },
+    { "id": 53, "description": "Fire Button", "vpx_name": "F53" },
+    { "id": 54, "description": "Dr Evil", "vpx_name": "Light54" },
+    { "id": 57, "vpx_name": "Light57" },
+    { "id": 58, "vpx_name": "Light58" },
+    { "id": 59, "vpx_name": "Light59" },
+    { "id": 60, "vpx_name": "Light60" },
+    { "id": 61, "vpx_name": "Light61" },
+    { "id": 62, "vpx_name": "Light62" },
+    { "id": 63, "vpx_name": "Light63" },
+    { "id": 64, "vpx_name": "Light64" },
+    { "id": 65, "vpx_name": "Light65" },
+    { "id": 66, "vpx_name": "Light66" },
+    { "id": 67, "vpx_name": "Light67" },
+    { "id": 68, "vpx_name": "Light68" },
+    { "id": 73, "vpx_name": "Light73" },
+    { "id": 74, "vpx_name": "Light74" },
+    { "id": 75, "vpx_name": "Light75" },
+    { "id": 76, "vpx_name": "Light76" }
+  ],
+  "aliases": [
+    { "id": 46, "alias": "c_flipper_lower_right", "type": "coil", "_note": "sLRFlipper — SolRFlipper callback. VPX object: RightFlipper" },
+    { "id": 48, "alias": "c_flipper_lower_left", "type": "coil", "_note": "sLLFlipper — SolLFlipper callback. VPX object: LeftFlipper" }
+  ]
+}

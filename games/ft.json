@@ -1,0 +1,935 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Fish Tales (Williams 1992) VPW v1.0.vbs",
+    "extracted": "2026-02-12",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on coils/SolCallbacks, switches, and lamp matrix. No Const sw* definitions in table script - uses raw switch numbers (Controller.Switch(N), VPMTimer.PulseSw N) and raw SolCallback(N) indices. Trough is custom-implemented (not bsTrough): sw16/sw17/sw18 are trough kicker switches, sw15 (Drain_Hit) is outhole. Reel mechanism uses switches 37/38 driven by position table in VBS (not physical optos). sLLFlipper/sLRFlipper are framework constants from WPC.VBS (typically 46/34 for WPC). Flashers 17-23,25-27 use SolModCallBack for PWM dimming. Lamp numbers derived from VLM BL_Inserts_l## arrays and cross-referenced with Fish Tales manual lamp matrix. L48a is a VPX-only extra lamp (split from L48 for better lighting). L88 is Start Button lamp (added to AllLamps collection). IPDB ID: 861."
+  },
+  "game": {
+    "id": "ft",
+    "name": "Fish Tales",
+    "year": 1992,
+    "manufacturer": "Williams",
+    "platform": "wpc",
+    "ipdb_id": 861
+  },
+  "roms": [
+    {
+      "id": "ft_l5",
+      "version": "L-5",
+      "description": "Latest official release"
+    }
+  ],
+  "switches": [
+    {
+      "id": 11,
+      "description": "Not Used"
+    },
+    {
+      "id": 12,
+      "description": "Not Used"
+    },
+    {
+      "id": 13,
+      "description": "Start Button",
+      "input_action_hint": "Start Game"
+    },
+    {
+      "id": 14,
+      "description": "Plumb Bob Tilt",
+      "_note": "vpmNudge.TiltSwitch = 14"
+    },
+    {
+      "id": 15,
+      "description": "Outhole",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch"
+    },
+    {
+      "id": 16,
+      "description": "Trough 1 (Right/Release End)",
+      "vpx_name": "sw16",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_1",
+      "_note": "Ball release end; SolRelease kicks from sw16"
+    },
+    {
+      "id": 17,
+      "description": "Trough 2 (Center)",
+      "vpx_name": "sw17",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_2"
+    },
+    {
+      "id": 18,
+      "description": "Trough 3 (Left)",
+      "vpx_name": "sw18",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_3"
+    },
+    {
+      "id": 21,
+      "description": "Slam Tilt"
+    },
+    {
+      "id": 22,
+      "description": "Coin Door Closed",
+      "_note": "Controller.Switch(22) = 1 on init"
+    },
+    {
+      "id": 23,
+      "description": "Ticket Opto"
+    },
+    {
+      "id": 24,
+      "description": "Always Closed",
+      "_note": "Controller.Switch(24) = 1 on init"
+    },
+    {
+      "id": 25,
+      "description": "Left Outlane",
+      "vpx_name": "sw25",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 26,
+      "description": "Left Return Lane",
+      "vpx_name": "sw26",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 27,
+      "description": "Left Standup Target 1 (Bottom)",
+      "vpx_name": "sw27",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 28,
+      "description": "Left Standup Target 2 (Top)",
+      "vpx_name": "sw28",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 31,
+      "description": "Cast (Plunger Lane)",
+      "_note": "Mapped to PlungerKey; Controller.Switch(31) toggled on KeyDown/KeyUp"
+    },
+    {
+      "id": 32,
+      "description": "Left Boat Exit",
+      "vpx_name": "sw32",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 33,
+      "description": "Right Boat Exit",
+      "vpx_name": "sw33",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 34,
+      "description": "Spinner",
+      "vpx_name": "sw34",
+      "_inferred_type": "spinner"
+    },
+    {
+      "id": 35,
+      "description": "Reel Entry",
+      "vpx_name": "sw35",
+      "_inferred_type": "rollover",
+      "_note": "Trigger at reel entry; PulseSw 35"
+    },
+    {
+      "id": 36,
+      "description": "Catapult",
+      "vpx_name": "Catapult",
+      "_inferred_type": "saucer",
+      "_note": "Set on Catapult_hit, cleared by SolCatapult or timer"
+    },
+    {
+      "id": 37,
+      "description": "Reel Opto 1",
+      "_note": "Driven by VBS ReelPosTable; not a physical switch in VPX"
+    },
+    {
+      "id": 38,
+      "description": "Reel Opto 2",
+      "_note": "Driven by VBS ReelPosTable; not a physical switch in VPX"
+    },
+    {
+      "id": 41,
+      "description": "Captive Ball Target",
+      "vpx_name": "sw41",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 42,
+      "description": "Right Boat Entry",
+      "vpx_name": "sw42a",
+      "_inferred_type": "rollover",
+      "_note": "VPX object sw42a maps to PulseSw 42"
+    },
+    {
+      "id": 43,
+      "description": "Left Boat Entry",
+      "vpx_name": "sw43a",
+      "_inferred_type": "rollover",
+      "_note": "VPX object sw43a maps to PulseSw 43"
+    },
+    {
+      "id": 44,
+      "description": "LIE - E Trigger",
+      "vpx_name": "sw44",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 45,
+      "description": "LIE - I Trigger",
+      "vpx_name": "sw45",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 46,
+      "description": "LIE - L Trigger",
+      "vpx_name": "sw46",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 47,
+      "description": "Ball Popper (Caster Club VUK)",
+      "vpx_name": "sw47",
+      "_inferred_type": "saucer",
+      "_note": "VUK (Vertical Up Kicker) for Caster Club"
+    },
+    {
+      "id": 48,
+      "description": "Drop Target",
+      "vpx_name": "sw48",
+      "_inferred_type": "drop_target"
+    },
+    {
+      "id": 51,
+      "description": "Left Jet Bumper",
+      "vpx_name": "Bumper1",
+      "device_hint": "^Bumper\\s*\\d?",
+      "_inferred_type": "bumper"
+    },
+    {
+      "id": 52,
+      "description": "Center Jet Bumper",
+      "vpx_name": "Bumper2",
+      "device_hint": "^Bumper\\s*\\d?",
+      "_inferred_type": "bumper"
+    },
+    {
+      "id": 53,
+      "description": "Right Jet Bumper",
+      "vpx_name": "Bumper3",
+      "device_hint": "^Bumper\\s*\\d?",
+      "_inferred_type": "bumper"
+    },
+    {
+      "id": 54,
+      "description": "Right Standup Target 1 (Top)",
+      "vpx_name": "sw54",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 55,
+      "description": "Right Standup Target 2 (Bottom)",
+      "vpx_name": "sw55",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 56,
+      "description": "Ball Shooter Lane",
+      "vpx_name": "sw56",
+      "_inferred_type": "rollover",
+      "_note": "Held switch (Controller.Switch set/cleared on Hit/UnHit)"
+    },
+    {
+      "id": 57,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "device_hint": "^(Left)?\\s*Sling",
+      "_inferred_type": "slingshot"
+    },
+    {
+      "id": 58,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "device_hint": "^(Right)?\\s*Sling",
+      "_inferred_type": "slingshot"
+    },
+    {
+      "id": 61,
+      "description": "Extra Ball / Caster Club Target",
+      "vpx_name": "sw61",
+      "_inferred_type": "standup_target"
+    },
+    {
+      "id": 62,
+      "description": "Top Right Loop",
+      "vpx_name": "sw62",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 63,
+      "description": "Fish Finder (Top Eject Hole)",
+      "vpx_name": "sw63",
+      "_inferred_type": "saucer",
+      "_note": "Fish Finder saucer; SolFF controls eject"
+    },
+    {
+      "id": 64,
+      "description": "Top Left Loop",
+      "vpx_name": "sw64",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 65,
+      "description": "Right Return Lane",
+      "vpx_name": "sw65",
+      "_inferred_type": "rollover"
+    },
+    {
+      "id": 66,
+      "description": "Right Outlane",
+      "vpx_name": "sw66",
+      "_inferred_type": "rollover"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "AutoPlunger",
+      "_inferred_type": "kicker",
+      "vpx_name": "Plunger"
+    },
+    {
+      "id": 2,
+      "description": "Catapult",
+      "_vbscript_callback": "SolCatapult",
+      "_inferred_type": "kicker",
+      "vpx_name": "Catapult"
+    },
+    {
+      "id": 3,
+      "description": "VUK (Caster Club Ball Popper)",
+      "_vbscript_callback": "SolVUK",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw47"
+    },
+    {
+      "id": 4,
+      "description": "Not Used"
+    },
+    {
+      "id": 5,
+      "description": "Not Used"
+    },
+    {
+      "id": 6,
+      "description": "Gate",
+      "_vbscript_callback": "SolGate",
+      "_inferred_type": "diverter",
+      "vpx_name": "Gate"
+    },
+    {
+      "id": 7,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 8,
+      "description": "Topper Fish",
+      "_vbscript_callback": "TopperFish",
+      "_inferred_type": "toy",
+      "_note": "VR Topper fish animation; not a physical solenoid on playfield"
+    },
+    {
+      "id": 9,
+      "description": "Trough / Drain Kicker",
+      "_vbscript_callback": "SolDrain",
+      "_inferred_type": "kicker",
+      "vpx_name": "Drain",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_coil"
+    },
+    {
+      "id": 10,
+      "description": "Ball Release",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw16",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 11,
+      "description": "Fish Finder Eject",
+      "_vbscript_callback": "SolFF",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw63"
+    },
+    {
+      "id": 12,
+      "description": "Drop Target Up (Reset)",
+      "_vbscript_callback": "SolDTUp",
+      "_inferred_type": "drop_target_reset",
+      "vpx_name": "sw48"
+    },
+    {
+      "id": 13,
+      "description": "Drop Target Down",
+      "_vbscript_callback": "SolDTDown",
+      "_inferred_type": "drop_target_trip",
+      "vpx_name": "sw48"
+    },
+    {
+      "id": 14,
+      "description": "Not Used"
+    },
+    {
+      "id": 15,
+      "description": "Not Used"
+    },
+    {
+      "id": 16,
+      "description": "Not Used"
+    },
+    {
+      "id": 17,
+      "description": "Flasher - Jackpot",
+      "_vbscript_callback": "Flash17",
+      "_inferred_type": "flasher",
+      "vpx_name": "f17",
+      "_note": "PWM via SolModCallBack; also f17b"
+    },
+    {
+      "id": 18,
+      "description": "Flasher - Super Jackpot",
+      "_vbscript_callback": "Flash18",
+      "_inferred_type": "flasher",
+      "vpx_name": "f18",
+      "_note": "PWM via SolModCallBack; also f18b"
+    },
+    {
+      "id": 19,
+      "description": "Flasher - Instant Multiball",
+      "_vbscript_callback": "Flash19",
+      "_inferred_type": "flasher",
+      "vpx_name": "f19",
+      "_note": "PWM via SolModCallBack"
+    },
+    {
+      "id": 20,
+      "description": "Flasher - Light Extra Ball",
+      "_vbscript_callback": "Flash20",
+      "_inferred_type": "flasher",
+      "vpx_name": "f20",
+      "_note": "PWM via SolModCallBack"
+    },
+    {
+      "id": 21,
+      "description": "Flasher - Rock the Boat",
+      "_vbscript_callback": "Flash21",
+      "_inferred_type": "flasher",
+      "vpx_name": "f21",
+      "_note": "PWM via SolModCallBack"
+    },
+    {
+      "id": 22,
+      "description": "Flasher - Video Mode",
+      "_vbscript_callback": "Flash22",
+      "_inferred_type": "flasher",
+      "vpx_name": "f22",
+      "_note": "PWM via SolModCallBack"
+    },
+    {
+      "id": 23,
+      "description": "Flasher - Hold Bonus",
+      "_vbscript_callback": "Flash23",
+      "_inferred_type": "flasher",
+      "vpx_name": "f23",
+      "_note": "PWM via SolModCallBack"
+    },
+    {
+      "id": 24,
+      "description": "Not Used",
+      "_note": "No SolCallback(24) assigned"
+    },
+    {
+      "id": 25,
+      "description": "Flasher - Reel",
+      "_vbscript_callback": "Flash25",
+      "_inferred_type": "flasher",
+      "vpx_name": "f25",
+      "_note": "PWM via SolModCallBack"
+    },
+    {
+      "id": 26,
+      "description": "Flasher - Top Left",
+      "_vbscript_callback": "Flash26",
+      "_inferred_type": "flasher",
+      "vpx_name": "f26",
+      "_note": "PWM via SolModCallBack"
+    },
+    {
+      "id": 27,
+      "description": "Flasher - Caster Club",
+      "_vbscript_callback": "Flash27",
+      "_inferred_type": "flasher",
+      "vpx_name": "f27",
+      "_note": "PWM via SolModCallBack"
+    },
+    {
+      "id": 28,
+      "description": "Reel Motor",
+      "_vbscript_callback": "ReelMotor",
+      "_inferred_type": "motor",
+      "_note": "Drives fishing reel mechanism; controls reel rotation and ball lock/release positions via ReelPosTable"
+    },
+    {
+      "id": 29,
+      "description": "Not Used"
+    },
+    {
+      "id": 30,
+      "description": "Not Used"
+    },
+    {
+      "id": 46,
+      "description": "Lower Right Flipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "device_hint": "^(Right)?\\s*Flipper",
+      "_note": "Framework constant sLRFlipper=46 from core.vbs"
+    },
+    {
+      "id": 48,
+      "description": "Lower Left Flipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "device_hint": "^(Left)?\\s*Flipper",
+      "_note": "Framework constant sLLFlipper=48 from core.vbs; NoUpperLeftFlipper and NoUpperRightFlipper called"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 11,
+      "description": "Boat - Rock the Boat",
+      "vpx_name": "L11",
+      "_vlm_array": "BL_Inserts_l11"
+    },
+    {
+      "id": 12,
+      "description": "Boat - Light Extra Ball",
+      "vpx_name": "L12",
+      "_vlm_array": "BL_Inserts_l12"
+    },
+    {
+      "id": 13,
+      "description": "Boat - Instant Multiball",
+      "vpx_name": "L13",
+      "_vlm_array": "BL_Inserts_l13"
+    },
+    {
+      "id": 14,
+      "description": "Boat - Video Mode",
+      "vpx_name": "L14",
+      "_vlm_array": "BL_Inserts_l14"
+    },
+    {
+      "id": 15,
+      "description": "Boat - Hold Bonus",
+      "vpx_name": "L15",
+      "_vlm_array": "BL_Inserts_l15"
+    },
+    {
+      "id": 16,
+      "description": "LIE - L",
+      "vpx_name": "L16",
+      "_vlm_array": "BL_Inserts_l16"
+    },
+    {
+      "id": 17,
+      "description": "LIE - I",
+      "vpx_name": "L17",
+      "_vlm_array": "BL_Inserts_l17"
+    },
+    {
+      "id": 18,
+      "description": "LIE - E",
+      "vpx_name": "L18",
+      "_vlm_array": "BL_Inserts_l18"
+    },
+    {
+      "id": 21,
+      "description": "Left Slingshot",
+      "vpx_name": "L21",
+      "_vlm_array": "BL_Inserts_l21"
+    },
+    {
+      "id": 22,
+      "description": "Left Standup Arrow 1",
+      "vpx_name": "L22",
+      "_vlm_array": "BL_Inserts_l22"
+    },
+    {
+      "id": 23,
+      "description": "Left Standup Arrow 2",
+      "vpx_name": "L23",
+      "_vlm_array": "BL_Inserts_l23"
+    },
+    {
+      "id": 24,
+      "description": "Right Slingshot",
+      "vpx_name": "L24",
+      "_vlm_array": "BL_Inserts_l24"
+    },
+    {
+      "id": 25,
+      "description": "Right Standup Arrow",
+      "vpx_name": "L25",
+      "_vlm_array": "BL_Inserts_l25"
+    },
+    {
+      "id": 26,
+      "description": "Fishing Rod - Fish 1 (Bottom)",
+      "vpx_name": "L26",
+      "_vlm_array": "BL_Inserts_l26"
+    },
+    {
+      "id": 27,
+      "description": "Fishing Rod - Fish 2",
+      "vpx_name": "L27",
+      "_vlm_array": "BL_Inserts_l27"
+    },
+    {
+      "id": 28,
+      "description": "Fishing Rod - Fish 3 (Top)",
+      "vpx_name": "L28",
+      "_vlm_array": "BL_Inserts_l28"
+    },
+    {
+      "id": 31,
+      "description": "Rewind Arrow",
+      "vpx_name": "L31",
+      "_vlm_array": "BL_Inserts_l31"
+    },
+    {
+      "id": 32,
+      "description": "Right Ramp Arrow 1",
+      "vpx_name": "L32",
+      "_vlm_array": "BL_Inserts_l32"
+    },
+    {
+      "id": 33,
+      "description": "Right Ramp Arrow 2",
+      "vpx_name": "L33",
+      "_vlm_array": "BL_Inserts_l33"
+    },
+    {
+      "id": 34,
+      "description": "Spinner Arrow",
+      "vpx_name": "L34",
+      "_vlm_array": "BL_Inserts_l34"
+    },
+    {
+      "id": 35,
+      "description": "Boat Ramp Left Arrow 1",
+      "vpx_name": "L35",
+      "_vlm_array": "BL_Inserts_l35"
+    },
+    {
+      "id": 36,
+      "description": "Boat Ramp Left Arrow 2",
+      "vpx_name": "L36",
+      "_vlm_array": "BL_Inserts_l36"
+    },
+    {
+      "id": 37,
+      "description": "Boat Ramp Right Arrow 1",
+      "vpx_name": "L37",
+      "_vlm_array": "BL_Inserts_l37"
+    },
+    {
+      "id": 38,
+      "description": "Boat Ramp Right Arrow 2",
+      "vpx_name": "L38",
+      "_vlm_array": "BL_Inserts_l38"
+    },
+    {
+      "id": 41,
+      "description": "Tale 1",
+      "vpx_name": "L41",
+      "_vlm_array": "BL_Inserts_l41"
+    },
+    {
+      "id": 42,
+      "description": "Tale 2",
+      "vpx_name": "L42",
+      "_vlm_array": "BL_Inserts_l42"
+    },
+    {
+      "id": 43,
+      "description": "Tale 3",
+      "vpx_name": "L43",
+      "_vlm_array": "BL_Inserts_l43"
+    },
+    {
+      "id": 44,
+      "description": "Tale 4",
+      "vpx_name": "L44",
+      "_vlm_array": "BL_Inserts_l44"
+    },
+    {
+      "id": 45,
+      "description": "Left Standup 2X",
+      "vpx_name": "L45",
+      "_vlm_array": "BL_Inserts_l45"
+    },
+    {
+      "id": 46,
+      "description": "Left Standup 3X",
+      "vpx_name": "L46",
+      "_vlm_array": "BL_Inserts_l46"
+    },
+    {
+      "id": 47,
+      "description": "Left Standup 4X",
+      "vpx_name": "L47",
+      "_vlm_array": "BL_Inserts_l47"
+    },
+    {
+      "id": 48,
+      "description": "Left Return Special",
+      "vpx_name": "L48",
+      "_vlm_array": "BL_Inserts_l48"
+    },
+    {
+      "id": 51,
+      "description": "Left Outlane Special",
+      "vpx_name": "L51",
+      "_vlm_array": "BL_Inserts_l51"
+    },
+    {
+      "id": 52,
+      "description": "Shoot Again (Extra Ball)",
+      "vpx_name": "L52",
+      "_vlm_array": "BL_Inserts_l52"
+    },
+    {
+      "id": 53,
+      "description": "Fish Finder Arrow",
+      "vpx_name": "L53",
+      "_vlm_array": "BL_Inserts_l53"
+    },
+    {
+      "id": 54,
+      "description": "Caster Club Arrow",
+      "vpx_name": "L54",
+      "_vlm_array": "BL_Inserts_l54"
+    },
+    {
+      "id": 55,
+      "description": "Right Standup 2X",
+      "vpx_name": "L55",
+      "_vlm_array": "BL_Inserts_l55"
+    },
+    {
+      "id": 56,
+      "description": "Right Standup 3X",
+      "vpx_name": "L56",
+      "_vlm_array": "BL_Inserts_l56"
+    },
+    {
+      "id": 57,
+      "description": "Right Standup 4X",
+      "vpx_name": "L57",
+      "_vlm_array": "BL_Inserts_l57"
+    },
+    {
+      "id": 58,
+      "description": "Left Return Lane",
+      "vpx_name": "L58",
+      "_vlm_array": "BL_Inserts_l58"
+    },
+    {
+      "id": 61,
+      "description": "Catch - C",
+      "vpx_name": "L61",
+      "_vlm_array": "BL_Inserts_l61"
+    },
+    {
+      "id": 62,
+      "description": "Catch - A",
+      "vpx_name": "L62",
+      "_vlm_array": "BL_Inserts_l62"
+    },
+    {
+      "id": 63,
+      "description": "Catch - T",
+      "vpx_name": "L63",
+      "_vlm_array": "BL_Inserts_l63"
+    },
+    {
+      "id": 64,
+      "description": "Catch - C (2nd)",
+      "vpx_name": "L64",
+      "_vlm_array": "BL_Inserts_l64"
+    },
+    {
+      "id": 65,
+      "description": "Catch - H",
+      "vpx_name": "L65",
+      "_vlm_array": "BL_Inserts_l65"
+    },
+    {
+      "id": 66,
+      "description": "Caster Club 2X",
+      "vpx_name": "L66",
+      "_vlm_array": "BL_Inserts_l66"
+    },
+    {
+      "id": 67,
+      "description": "Caster Club 3X",
+      "vpx_name": "L67",
+      "_vlm_array": "BL_Inserts_l67"
+    },
+    {
+      "id": 68,
+      "description": "Right Return Lane / Right Return Special",
+      "vpx_name": "L68",
+      "_vlm_array": "BL_Inserts_l68"
+    },
+    {
+      "id": 71,
+      "description": "Stretch the Truth - S",
+      "vpx_name": "L71",
+      "_vlm_array": "BL_Inserts_l71"
+    },
+    {
+      "id": 72,
+      "description": "Stretch the Truth - T",
+      "vpx_name": "L72",
+      "_vlm_array": "BL_Inserts_l72"
+    },
+    {
+      "id": 73,
+      "description": "Stretch the Truth - R",
+      "vpx_name": "L73",
+      "_vlm_array": "BL_Inserts_l73"
+    },
+    {
+      "id": 74,
+      "description": "Stretch the Truth - E",
+      "vpx_name": "L74",
+      "_vlm_array": "BL_Inserts_l74"
+    },
+    {
+      "id": 75,
+      "description": "Stretch the Truth - T (2nd)",
+      "vpx_name": "L75",
+      "_vlm_array": "BL_Inserts_l75"
+    },
+    {
+      "id": 76,
+      "description": "Stretch the Truth - C",
+      "vpx_name": "L76",
+      "_vlm_array": "BL_Inserts_l76"
+    },
+    {
+      "id": 77,
+      "description": "Stretch the Truth - H",
+      "vpx_name": "L77",
+      "_vlm_array": "BL_Inserts_l77"
+    },
+    {
+      "id": 78,
+      "description": "Extra Ball",
+      "vpx_name": "L78",
+      "_vlm_array": "BL_Inserts_l78"
+    },
+    {
+      "id": 81,
+      "description": "Reel 1 (Caster's Club)",
+      "vpx_name": "L81",
+      "_vlm_array": "BL_Inserts_l81"
+    },
+    {
+      "id": 82,
+      "description": "Reel 2 (Rock the Boat)",
+      "vpx_name": "L82",
+      "_vlm_array": "BL_Inserts_l82"
+    },
+    {
+      "id": 83,
+      "description": "Reel 3 (Monster Fish)",
+      "vpx_name": "L83",
+      "_vlm_array": "BL_Inserts_l83"
+    },
+    {
+      "id": 84,
+      "description": "Reel 4 (Feeding Frenzy)",
+      "vpx_name": "L84",
+      "_vlm_array": "BL_Inserts_l84"
+    },
+    {
+      "id": 85,
+      "description": "Reel 5 (Lock)",
+      "vpx_name": "L85",
+      "_vlm_array": "BL_Inserts_l85"
+    },
+    {
+      "id": 86,
+      "description": "Ball Lock Indicator",
+      "vpx_name": "L86",
+      "_vlm_array": "BL_Inserts_l86"
+    },
+    {
+      "id": "48a",
+      "description": "Right Return Special (VPX Split)",
+      "vpx_name": "L48a",
+      "_vlm_array": "BL_Inserts_l48a",
+      "_note": "VPX-only lamp; split from L48 for better lighting geometry. Not in original WPC lamp matrix."
+    },
+    {
+      "id": 88,
+      "description": "Start Button",
+      "vpx_name": "L88",
+      "_note": "Under apron; added to AllLamps collection. Drives Primary_StartButton and StartButton2 lighting in VR"
+    }
+  ],
+  "gi_strings": [
+    {
+      "id": 0,
+      "description": "Backglass GI",
+      "vpx_collection": "BackglassGI"
+    },
+    {
+      "id": 1,
+      "description": "Topper GI",
+      "vpx_collection": "TopperGI"
+    },
+    {
+      "id": 2,
+      "description": "Top GI (Playfield Upper)",
+      "vpx_collection": "TopGI",
+      "_note": "Also controls VLM arrays: BL_GITop, BL_GISplit_gi002, BL_GISplit_gi006, BL_GISplit_gi009, BL_GISplit_gi011, BL_GISplit_gitop020"
+    },
+    {
+      "id": 4,
+      "description": "Bottom GI (Playfield Lower)",
+      "vpx_collection": "BottomGI",
+      "_note": "Also controls VLM array BL_GIBottom; affects ball color based on room brightness"
+    }
+  ]
+}

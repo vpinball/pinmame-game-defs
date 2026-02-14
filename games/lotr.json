@@ -1,0 +1,661 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Lord of the Rings (Stern 2003)_VPW_v1.4.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches and coils. No Const sw* definitions — switches identified from _Hit/_UnHit subs, Controller.Switch() calls, and PulseSw calls. Manual trough (not cvpmTrough) with 4 kicker switches (sw11-sw14) and PulseSw 15 for shooter lane confirm. Lamp IDs from Lampz.MassAssign/Callback (IDs 1-99 matrix lamps, 100-102 special lamps, 130-132 flasher lamps). Flashers (coils 14, 23, 25-27, 29-32) use Flash subs or Lampz.SetLamp with 100+ IDs, plus ModLampz for PWM mode. Balrog mechanism uses switches 28, 31, 32 and solenoid 22. Ring magnet (sol 6) with sw47. Tower mechanism (sol 7). SEGA.VBS = Whitestar platform. Solenoids 9-11 (bumpers), 15-16 (flippers), 17-18 (slingshots) handled by core.vbs framework — not in table script SolCallbacks."
+  },
+  "game": {
+    "id": "lotr",
+    "name": "Lord of the Rings",
+    "year": 2003,
+    "manufacturer": "Stern",
+    "platform": "sega"
+  },
+  "roms": [
+    { "id": "lotr" },
+    { "id": "lotr_fr" },
+    { "id": "lotr_gr" },
+    { "id": "lotr_it" },
+    { "id": "lotr_sp" }
+  ],
+  "switches": [
+    {
+      "id": 9,
+      "description": "Lower Left VUK (Kicker)",
+      "vpx_name": "sw9",
+      "_note": "Controller.Switch on/off. Ball enters VUK, kicked out by SolLVUK (coil 3)."
+    },
+    {
+      "id": 10,
+      "description": "Standup Target",
+      "vpx_name": "sw10",
+      "_note": "PulseSw 10. Drop target or standup target."
+    },
+    {
+      "id": 11,
+      "description": "Trough 4 (Nearest Drain)",
+      "vpx_name": "sw11",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4",
+      "_note": "Manual trough. sw11 is deepest position (nearest drain). Controller.Switch on/off with UpdateTrough."
+    },
+    {
+      "id": 12,
+      "description": "Trough 3",
+      "vpx_name": "sw12",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3"
+    },
+    {
+      "id": 13,
+      "description": "Trough 2",
+      "vpx_name": "sw13",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2"
+    },
+    {
+      "id": 14,
+      "description": "Trough 1 (Nearest Shooter)",
+      "vpx_name": "sw14",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "Manual trough. sw14 is nearest shooter lane — ball ejected from here by SolRelease (coil 1)."
+    },
+    {
+      "id": 15,
+      "description": "Shooter Lane",
+      "_note": "PulseSw 15 fired in SolRelease after trough eject. Confirms ball reached shooter lane.",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "jam"
+    },
+    {
+      "id": 16,
+      "description": "Auto Plunger Lane Switch",
+      "vpx_name": "sw16",
+      "_note": "Controller.Switch on/off. Also plungerIM.switch 16 — impulse plunger lane switch."
+    },
+    {
+      "id": 17,
+      "description": "Lock 1 (Sword Ramp)",
+      "vpx_name": "sw17",
+      "_note": "Controller.Switch on/off. Ball lock position on sword ramp."
+    },
+    {
+      "id": 18,
+      "description": "Lock 2 (Sword Ramp)",
+      "vpx_name": "sw18",
+      "_note": "Controller.Switch on/off. Second ball lock position on sword ramp."
+    },
+    {
+      "id": 19,
+      "description": "Lock 3 (Sword Ramp Top)",
+      "vpx_name": "sw19",
+      "_note": "Controller.Switch on/off. Top lock position. Triggers sword glow (Lampz 101) when occupied."
+    },
+    {
+      "id": 20,
+      "description": "Rollover (Left Outlane Area)",
+      "vpx_name": "sw20",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 21,
+      "description": "Rollover",
+      "vpx_name": "sw21",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 22,
+      "description": "Rollover",
+      "vpx_name": "sw22",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 23,
+      "description": "Standup Target",
+      "vpx_name": "sw23",
+      "_note": "PulseSw 23. Animated standup target with gate model (g01_sw23)."
+    },
+    {
+      "id": 24,
+      "description": "Wire Ramp Entry",
+      "vpx_name": "sw24",
+      "_note": "Controller.Switch on/off. Triggers WireRampOff on hit, WireRampOn on unhit."
+    },
+    {
+      "id": 25,
+      "description": "Wire Ramp Switch",
+      "vpx_name": "sw25",
+      "_note": "Controller.Switch on/off. Direction-aware — checks activeball.vely for WireRampOn direction."
+    },
+    {
+      "id": 28,
+      "description": "Balrog Hit Switch",
+      "_note": "Controller.Switch set on BalrogFlipper_Collide when Balrog is closed and hit force > 3. Cleared after wobble settles. Not a VPX trigger — mechanical collision detection.",
+      "vpx_name": "BalrogFlipper"
+    },
+    {
+      "id": 29,
+      "description": "Standup Target",
+      "vpx_name": "sw29",
+      "_note": "PulseSw 29. Animated standup target with gate model (g01_sw29)."
+    },
+    {
+      "id": 30,
+      "description": "Right VUK (Kicker)",
+      "vpx_name": "sw30",
+      "_note": "Controller.Switch on/off. Ball enters right VUK, kicked out by SolRVUK (coil 5)."
+    },
+    {
+      "id": 31,
+      "description": "Balrog Opening Position",
+      "_note": "Controller.Switch set by SolBalrog when Balrog opens (BalrogDir toggling). Mechanism position switch.",
+      "vpx_name": "BalrogFlipper"
+    },
+    {
+      "id": 32,
+      "description": "Balrog Closed Position",
+      "_note": "Controller.Switch set by SolBalrog when Balrog closes (BalrogDir toggling). Mechanism position switch.",
+      "vpx_name": "BalrogFlipper"
+    },
+    {
+      "id": 33,
+      "description": "Rollover",
+      "vpx_name": "sw33",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 34,
+      "description": "Rollover",
+      "vpx_name": "sw34",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 35,
+      "description": "Rollover",
+      "vpx_name": "sw35",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 36,
+      "description": "Rollover",
+      "vpx_name": "sw36",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 37,
+      "description": "Rollover",
+      "vpx_name": "sw37",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 38,
+      "description": "Rollover",
+      "vpx_name": "sw38",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 39,
+      "description": "Rollover",
+      "vpx_name": "sw39",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 40,
+      "description": "Rollover",
+      "vpx_name": "sw40",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 41,
+      "description": "Upper Left VUK (Kicker)",
+      "vpx_name": "sw41",
+      "_note": "Controller.Switch on/off. Ball enters VUK, kicked out by SolULVUK (coil 4). Triggers POTD lamp (Lampz 100)."
+    },
+    {
+      "id": 42,
+      "description": "Rollover",
+      "vpx_name": "sw42",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 43,
+      "description": "Rollover",
+      "vpx_name": "sw43",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 44,
+      "description": "Rollover",
+      "vpx_name": "sw44",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 45,
+      "description": "Rollover",
+      "vpx_name": "sw45",
+      "_note": "Controller.Switch on/off"
+    },
+    {
+      "id": 46,
+      "description": "Upper Right Saucer",
+      "vpx_name": "sw46",
+      "_note": "Controller.Switch on/off. Ball caught in saucer, kicked out by SolURKicker (coil 19)."
+    },
+    {
+      "id": 47,
+      "description": "Ring Magnet Kicker",
+      "vpx_name": "sw47",
+      "_note": "Controller.Switch on/off. Ball in ring magnet area. Has stuck-ball timer. Separate VPX magnet object sw47a with cvpmMagnet."
+    },
+    {
+      "id": 48,
+      "description": "Wire Ramp Switch",
+      "vpx_name": "sw48",
+      "_note": "Controller.Switch on/off. Triggers WireRampOn on hit. Nudges ball VelX on unhit."
+    },
+    {
+      "id": 49,
+      "description": "Top Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "PulseSw 49"
+    },
+    {
+      "id": 50,
+      "description": "Middle Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "PulseSw 50"
+    },
+    {
+      "id": 51,
+      "description": "Bottom Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "PulseSw 51"
+    },
+    {
+      "id": 52,
+      "description": "Spinner",
+      "vpx_name": "sw52",
+      "_note": "PulseSw 52 from sw52_Spin sub."
+    },
+    {
+      "id": 53,
+      "description": "Standup Target (Palantir Area)",
+      "vpx_name": "sw53",
+      "_note": "PulseSw 53. Triggers EyeLookAt. Near Palantir eye."
+    },
+    {
+      "id": 56,
+      "description": "Tilt",
+      "_note": "vpmNudge.TiltSwitch = 56"
+    },
+    {
+      "id": 57,
+      "description": "Rollover (Orbit)",
+      "vpx_name": "sw57",
+      "_note": "Controller.Switch on/off. Triggers EyeLookAt."
+    },
+    {
+      "id": 58,
+      "description": "Rollover (Orbit)",
+      "vpx_name": "sw58",
+      "_note": "Controller.Switch on/off. Triggers EyeLookAt."
+    },
+    {
+      "id": 59,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "PulseSw 59 in LeftSlingShot_Slingshot sub"
+    },
+    {
+      "id": 60,
+      "description": "Rollover",
+      "vpx_name": "sw60",
+      "_note": "Controller.Switch on/off. Triggers EyeLookAt."
+    },
+    {
+      "id": 61,
+      "description": "Rollover",
+      "vpx_name": "sw61",
+      "_note": "Controller.Switch on/off. Triggers EyeLookAt."
+    },
+    {
+      "id": 62,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "PulseSw 62 in RightSlingShot_Slingshot sub"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Eject",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Kicks from sw14, PulseSw 15 (shooter lane confirm)"
+    },
+    {
+      "id": 2,
+      "description": "Auto Plunger",
+      "_vbscript_callback": "AutoPlunger",
+      "_inferred_type": "ball_management",
+      "_note": "Impulse plunger. plungerIM.AutoFire. VPX object: swPlunger."
+    },
+    {
+      "id": 3,
+      "description": "Lower Left VUK Eject",
+      "_vbscript_callback": "SolLVUK",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw9",
+      "_note": "Kicks ball from sw9 VUK upward. KickBall with z-lift."
+    },
+    {
+      "id": 4,
+      "description": "Upper Left VUK Eject",
+      "_vbscript_callback": "SolULVUK",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw41",
+      "_note": "Kicks ball from sw41 VUK. KickBall with z-lift 230."
+    },
+    {
+      "id": 5,
+      "description": "Right VUK Eject",
+      "_vbscript_callback": "SolRVUK",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw30",
+      "_note": "Kicks ball from sw30 right VUK upward."
+    },
+    {
+      "id": 6,
+      "description": "Ring Magnet",
+      "_vbscript_callback": "SolRingMag",
+      "_inferred_type": "mechanism",
+      "vpx_name": "sw47a",
+      "_note": "cvpmMagnet. GrabCenter=True. Controls ring magnet on/off. Kicks ball out when disabled."
+    },
+    {
+      "id": 7,
+      "description": "Tower Motor",
+      "_vbscript_callback": "SolTower",
+      "_inferred_type": "mechanism",
+      "_note": "Animates Orthanc/Barad-dur tower raising and lowering via TowerAnim timer. 20-step animation."
+    },
+    {
+      "id": 8,
+      "description": "Diverter",
+      "_vbscript_callback": "SolDiv",
+      "_inferred_type": "diverter",
+      "vpx_name": "DiverterFlipper",
+      "_note": "Rotates DiverterFlipper to end/start. Controls ball path on playfield."
+    },
+    {
+      "id": 9,
+      "description": "Left Bumper",
+      "_inferred_type": "mechanism",
+      "_note": "Bumper solenoid. Handled by VPM framework (core.vbs), not table SolCallback. Comment in script: '9 left bumper'."
+    },
+    {
+      "id": 10,
+      "description": "Right Bumper",
+      "_inferred_type": "mechanism",
+      "_note": "Bumper solenoid. Handled by VPM framework (core.vbs). Comment: '10 right bumper'."
+    },
+    {
+      "id": 11,
+      "description": "Bottom Bumper",
+      "_inferred_type": "mechanism",
+      "_note": "Bumper solenoid. Handled by VPM framework (core.vbs). Comment: '11 bottom bumper'."
+    },
+    {
+      "id": 13,
+      "description": "Orbit Gate",
+      "_vbscript_callback": "SolOrbit",
+      "_inferred_type": "gate",
+      "vpx_name": "OrbitPin",
+      "_note": "OrbitPin.IsDropped toggled by Enabled state. Controls orbit one-way gate."
+    },
+    {
+      "id": 14,
+      "description": "Flasher — Helms Deep Right",
+      "_vbscript_callback": "Flash14",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Non-ModSol: Flash14 sub. ModSol: ModLampz.SetModLamp 14. PWM SolMask(1014)."
+    },
+    {
+      "id": 15,
+      "description": "Left Flipper (Framework)",
+      "_inferred_type": "flipper",
+      "_note": "Flipper solenoid. Handled by VPM framework (core.vbs). Comment: '15 left flipper'. Not same as sLLFlipper constant (which is 48)."
+    },
+    {
+      "id": 16,
+      "description": "Right Flipper (Framework)",
+      "_inferred_type": "flipper",
+      "_note": "Flipper solenoid. Handled by VPM framework (core.vbs). Comment: '16 right flipper'. Not same as sLRFlipper constant (which is 46)."
+    },
+    {
+      "id": 17,
+      "description": "Left Slingshot",
+      "_inferred_type": "mechanism",
+      "_note": "Slingshot solenoid. Handled by VPM framework (core.vbs). Comment: '17 left slingshot'."
+    },
+    {
+      "id": 18,
+      "description": "Right Slingshot",
+      "_inferred_type": "mechanism",
+      "_note": "Slingshot solenoid. Handled by VPM framework (core.vbs). Comment: '18 right slingshot'."
+    },
+    {
+      "id": 19,
+      "description": "Upper Right Saucer Eject",
+      "_vbscript_callback": "SolURKicker",
+      "_inferred_type": "ball_management",
+      "vpx_name": "sw46",
+      "_note": "Kicks ball from sw46 saucer at angle 270."
+    },
+    {
+      "id": 20,
+      "description": "Balrog Motor Relay",
+      "_inferred_type": "mechanism",
+      "_note": "Comment: '20 balrog motor relay'. No SolCallback — motor relay likely handled by VPM or used for power relay only."
+    },
+    {
+      "id": 21,
+      "description": "Lock Release",
+      "_vbscript_callback": "SolLockRelease",
+      "_inferred_type": "mechanism",
+      "vpx_name": "Lockpin",
+      "_note": "Drops Lockpin to release locked balls from sword ramp. Timed re-raise after 280ms."
+    },
+    {
+      "id": 22,
+      "description": "Balrog Open/Close",
+      "_vbscript_callback": "SolBalrog",
+      "_inferred_type": "mechanism",
+      "_note": "Toggles Balrog figure open/close. Sets switches 31 (opening) and 32 (closed) as position feedback. Animated via BalrogOpen/BalrogClose timers."
+    },
+    {
+      "id": 23,
+      "description": "Flasher — Helms Deep Left",
+      "_vbscript_callback": "Flash23",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Non-ModSol: Flash23 sub. ModSol: ModLampz.SetModLamp 23. PWM SolMask(1023)."
+    },
+    {
+      "id": 24,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 25,
+      "description": "Flasher — Pops 3X",
+      "_vbscript_callback": "Flash25",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Non-ModSol: Flash25 sub. ModSol: ModLampz.SetModLamp 25. PWM SolMask(1025)."
+    },
+    {
+      "id": 26,
+      "description": "Flasher — Ring",
+      "_vbscript_callback": "Flash26",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Non-ModSol: Flash26 sub. ModSol: ModLampz.SetModLamp 26. PWM SolMask(1026)."
+    },
+    {
+      "id": 27,
+      "description": "Flasher — Back Panel",
+      "_vbscript_callback": "Flash27",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Non-ModSol: Flash27 sub. ModSol: ModLampz.SetModLamp 27. PWM SolMask(1027)."
+    },
+    {
+      "id": 29,
+      "description": "Flasher — Ringwraith",
+      "_vbscript_callback": "Flash29",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Non-ModSol: Flash29 sub. ModSol: ModLampz.SetModLamp 29. PWM SolMask(1029)."
+    },
+    {
+      "id": 30,
+      "description": "Flasher — Sword",
+      "_vbscript_callback": "Lampz.SetLamp 130,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Non-ModSol: Lampz.SetLamp 130. ModSol: ModLampz.SetModLamp 30. PWM SolMask(1030). VPX objects: f130, f130l."
+    },
+    {
+      "id": 31,
+      "description": "Flasher — Destroy the Ring",
+      "_vbscript_callback": "Lampz.SetLamp 131,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Non-ModSol: Lampz.SetLamp 131. ModSol: ModLampz.SetModLamp 31. PWM SolMask(1031). ModLampz callback: DisableLighting p19 (DTR insert)."
+    },
+    {
+      "id": 32,
+      "description": "Flasher — Balrog",
+      "_vbscript_callback": "Lampz.SetLamp 132,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Non-ModSol: Lampz.SetLamp 132. ModSol: ModLampz.SetModLamp 32. PWM SolMask(1032). ModLampz callback: ModFlash32 (BalrogImageSwap). VPX object: Lbalrogbloom."
+    }
+  ],
+  "lamps": [
+    { "id": 1, "vpx_name": "l1", "description": "Lamp 1" },
+    { "id": 2, "vpx_name": "l2", "description": "Lamp 2" },
+    { "id": 3, "vpx_name": "l3", "description": "Lamp 3" },
+    { "id": 4, "vpx_name": "l4", "description": "Lamp 4" },
+    { "id": 5, "vpx_name": "l5", "description": "Lamp 5" },
+    { "id": 6, "vpx_name": "l6", "description": "Lamp 6" },
+    { "id": 7, "vpx_name": "l7", "description": "Lamp 7" },
+    { "id": 8, "vpx_name": "l8", "description": "Lamp 8" },
+    { "id": 9, "vpx_name": "l9", "description": "Lamp 9" },
+    { "id": 10, "vpx_name": "l10", "description": "Lamp 10" },
+    { "id": 11, "vpx_name": "l11", "description": "Lamp 11" },
+    { "id": 12, "vpx_name": "l12", "description": "Lamp 12" },
+    { "id": 13, "vpx_name": "l13", "description": "Lamp 13" },
+    { "id": 14, "vpx_name": "l14", "description": "Lamp 14" },
+    { "id": 15, "vpx_name": "l15", "description": "Lamp 15" },
+    { "id": 16, "vpx_name": "l16", "description": "Lamp 16" },
+    { "id": 17, "vpx_name": "l17", "description": "Lamp 17" },
+    { "id": 18, "vpx_name": "l18", "description": "Lamp 18" },
+    { "id": 19, "vpx_name": "l19", "description": "Lamp 19" },
+    { "id": 20, "vpx_name": "l20", "description": "Lamp 20" },
+    { "id": 21, "vpx_name": "l21", "description": "Lamp 21" },
+    { "id": 22, "vpx_name": "l22", "description": "Lamp 22" },
+    { "id": 23, "vpx_name": "l23", "description": "Globe Eye" },
+    { "id": 24, "vpx_name": "l24", "description": "Lamp 24" },
+    { "id": 25, "vpx_name": "l25", "description": "Lamp 25" },
+    { "id": 26, "vpx_name": "l26", "description": "Lamp 26" },
+    { "id": 27, "vpx_name": "l27", "description": "Lamp 27" },
+    { "id": 28, "vpx_name": "l28", "description": "Lamp 28" },
+    { "id": 29, "vpx_name": "l29", "description": "Lamp 29" },
+    { "id": 30, "vpx_name": "l30", "description": "Lamp 30" },
+    { "id": 31, "vpx_name": "l31", "description": "Lamp 31" },
+    { "id": 32, "vpx_name": "l32", "description": "Lamp 32" },
+    { "id": 33, "vpx_name": "l33", "description": "Lamp 33" },
+    { "id": 34, "vpx_name": "l34", "description": "Lamp 34" },
+    { "id": 35, "vpx_name": "l35", "description": "Lamp 35" },
+    { "id": 36, "vpx_name": "l36", "description": "Lamp 36" },
+    { "id": 37, "vpx_name": "l37", "description": "Lamp 37" },
+    { "id": 38, "vpx_name": "l38", "description": "Lamp 38" },
+    { "id": 39, "vpx_name": "l39", "description": "Lamp 39" },
+    { "id": 40, "vpx_name": "l40", "description": "Lamp 40" },
+    { "id": 41, "vpx_name": "l41", "description": "Lamp 41" },
+    { "id": 42, "vpx_name": "l42", "description": "Lamp 42" },
+    { "id": 43, "vpx_name": "l43", "description": "Lamp 43" },
+    { "id": 44, "vpx_name": "l44", "description": "Lamp 44" },
+    { "id": 45, "vpx_name": "l45", "description": "Lamp 45" },
+    { "id": 46, "vpx_name": "l46", "description": "Lamp 46" },
+    { "id": 47, "vpx_name": "l47", "description": "Lamp 47" },
+    { "id": 48, "vpx_name": "l48", "description": "Lamp 48" },
+    { "id": 49, "vpx_name": "l49", "description": "Lamp 49" },
+    { "id": 50, "vpx_name": "l50", "description": "Lamp 50" },
+    { "id": 51, "vpx_name": "l51", "description": "Lamp 51" },
+    { "id": 52, "vpx_name": "l52", "description": "Lamp 52" },
+    { "id": 53, "vpx_name": "l53", "description": "Lamp 53" },
+    { "id": 54, "vpx_name": "l54", "description": "Lamp 54" },
+    { "id": 55, "vpx_name": "l55", "description": "Lamp 55" },
+    { "id": 56, "vpx_name": "l56", "description": "Lamp 56" },
+    { "id": 57, "vpx_name": "l57", "description": "Lamp 57" },
+    { "id": 58, "vpx_name": "l58", "description": "Lamp 58" },
+    { "id": 59, "vpx_name": "l59", "description": "Lamp 59" },
+    { "id": 60, "vpx_name": "l60", "description": "Green Bulb (Ring)" },
+    { "id": 61, "vpx_name": "l61", "description": "Green Bulb (Ring)" },
+    { "id": 62, "vpx_name": "l62", "description": "Green Bulb (Ring)" },
+    { "id": 63, "vpx_name": "l63", "description": "Green Bulb (Ring)" },
+    { "id": 64, "vpx_name": "l64", "description": "Lamp 64 (Ring Feature)" },
+    { "id": 65, "vpx_name": "l65", "description": "Lamp 65 (Ring Feature)" },
+    { "id": 66, "vpx_name": "l66", "description": "Lamp 66 (Ring Feature)" },
+    { "id": 67, "vpx_name": "l67", "description": "Lamp 67 (Ring Feature)" },
+    { "id": 68, "vpx_name": "l68", "description": "Lamp 68 (Ring Feature)" },
+    { "id": 69, "vpx_name": "l69", "description": "Lamp 69 (Ring Feature)" },
+    { "id": 70, "vpx_name": "l70", "description": "Lamp 70 (Ring Feature)" },
+    { "id": 71, "vpx_name": "l71", "description": "Lamp 71 (Ring Feature)" },
+    { "id": 72, "vpx_name": "l72", "description": "Lamp 72 (Ring Feature)" },
+    { "id": 73, "vpx_name": "l73", "_note": "MassAssign commented out. Callback DisableLighting p73 still active." },
+    { "id": 74, "vpx_name": "l74", "_note": "MassAssign commented out. Callback DisableLighting p74 still active." },
+    { "id": 75, "vpx_name": "l75", "_note": "MassAssign commented out. Callback DisableLighting p75 still active." },
+    { "id": 76, "vpx_name": "l76", "_note": "MassAssign commented out. Callback DisableLighting p76 still active." },
+    { "id": 77, "vpx_name": "l77", "_note": "MassAssign commented out. Callback DisableLighting p77 still active." },
+    { "id": 78, "vpx_name": "l78", "_note": "MassAssign commented out. Callback DisableLighting p78 still active." },
+    { "id": 81, "vpx_name": "l81", "description": "Lamp 81" },
+    { "id": 82, "vpx_name": "l82", "description": "Lamp 82" },
+    { "id": 83, "vpx_name": "l83", "description": "Lamp 83" },
+    { "id": 84, "vpx_name": "l84", "description": "Lamp 84" },
+    { "id": 85, "vpx_name": "l85", "description": "Lamp 85" },
+    { "id": 86, "vpx_name": "l86", "description": "Lamp 86" },
+    { "id": 87, "vpx_name": "l87", "description": "Lamp 87" },
+    { "id": 88, "vpx_name": "l88", "description": "Lamp 88" },
+    { "id": 89, "vpx_name": "l89", "description": "Lamp 89" },
+    { "id": 90, "vpx_name": "l90", "description": "Lamp 90" },
+    { "id": 91, "vpx_name": "l91", "description": "Lamp 91" },
+    { "id": 92, "vpx_name": "l92", "description": "Lamp 92" },
+    { "id": 93, "vpx_name": "l93", "description": "Lamp 93" },
+    { "id": 94, "vpx_name": "l94", "description": "Lamp 94" },
+    { "id": 95, "vpx_name": "l95", "description": "Lamp 95" },
+    { "id": 96, "vpx_name": "l96", "description": "Lamp 96" },
+    { "id": 97, "vpx_name": "l97", "description": "Lamp 97" },
+    { "id": 98, "vpx_name": "l98", "description": "Lamp 98" },
+    { "id": 99, "vpx_name": "l99", "description": "Lamp 99" },
+    { "id": 100, "vpx_name": "l_potd_1", "description": "Path of the Dead (POTD)", "_note": "Special lamp. 5 VPX objects: l_potd_1 through l_potd_5. Slow fade speed." },
+    { "id": 101, "vpx_name": "swordflash", "description": "Sword Glow", "_note": "Special lamp. Triggered by sw19 (lock 3). VPX objects: swordflash, swordflashs. Slow fade." },
+    { "id": 102, "vpx_name": "Lvial", "description": "Vial Glow", "_note": "Special lamp. VPX objects: Lvial, Lvialhalo. Very slow fade." }
+  ],
+  "aliases": [
+    { "id": 46, "alias": "c_flipper_lower_right", "type": "coil", "_note": "sLRFlipper — SolRFlipper callback. VPX objects: RightFlipper, RF." },
+    { "id": 48, "alias": "c_flipper_lower_left", "type": "coil", "_note": "sLLFlipper — SolLFlipper callback. VPX objects: LeftFlipper, LF." }
+  ]
+}

@@ -1,0 +1,847 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Goldeneye (Sega 1996) VPW 1.0.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence. Extracted from VPW 1.0 release VBS. Uses SEGA2.VBS framework (Whitestar gen 1). No Const sw* declarations in table script; switches identified from Controller.Switch() calls, vpmTimer.PulseSw calls, and cvpmBallStack.InitSw parameters. Lampz (nFozzy) system with MassAssign for lamps 0-69 plus desktop backglass 72-80. Flasher solenoids 25-32 use fading timers. sLRFlipper=46 and sLLFlipper=48 are framework-defined constants from core.vbs."
+  },
+  "game": {
+    "id": "goldeneye",
+    "name": "GoldenEye",
+    "year": 1996,
+    "manufacturer": "Sega",
+    "ipdb_id": 3792,
+    "platform": "sega"
+  },
+  "roms": [
+    {
+      "id": "gldneye"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Plumb Bob Tilt",
+      "_note": "vpmNudge.TiltSwitch=1"
+    },
+    {
+      "id": 3,
+      "description": "Start Button",
+      "_note": "Controller.Switch(3) toggled in KeyDown/KeyUp via StartGameKey"
+    },
+    {
+      "id": 7,
+      "description": "Slam Door Hit",
+      "_note": "Controller.Switch(7) toggled in KeyDown/KeyUp via KeySlamDoorHit"
+    },
+    {
+      "id": 9,
+      "description": "Plunger Lane / Lock Bar",
+      "_note": "Controller.Switch(9) toggled in KeyDown/KeyUp via PlungerKey"
+    },
+    {
+      "id": 10,
+      "description": "Trough 5 (Left)",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "5",
+      "_note": "bsTrough.InitSw 0,14,13,12,11,10 — position 5 (leftmost in trough)"
+    },
+    {
+      "id": 11,
+      "description": "Trough 4",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "4",
+      "_note": "bsTrough.InitSw position 4"
+    },
+    {
+      "id": 12,
+      "description": "Trough 3",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "3",
+      "_note": "bsTrough.InitSw position 3"
+    },
+    {
+      "id": 13,
+      "description": "Trough 2",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "2",
+      "_note": "bsTrough.InitSw position 2"
+    },
+    {
+      "id": 14,
+      "description": "Trough 1 (Right)",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "1",
+      "_note": "bsTrough.InitSw position 1 (rightmost, first filled)"
+    },
+    {
+      "id": 15,
+      "description": "Lock Out Eject",
+      "_note": "Pulsed by SolLockOut (sol 17): vpmTimer.PulseSw 15"
+    },
+    {
+      "id": 16,
+      "description": "Shooter Lane",
+      "vpx_name": "sw16",
+      "_note": "bsPlunger.InitSaucer Plunger,16 — ball in shooter lane"
+    },
+    {
+      "id": 17,
+      "description": "Left Ramp Gate",
+      "vpx_name": "GateSw17",
+      "_note": "GateSw17_Hit: vpmTimer.PulseSw 17"
+    },
+    {
+      "id": 18,
+      "description": "Right Ramp Gate",
+      "vpx_name": "GateSw18",
+      "_note": "GateSw18_Hit: vpmTimer.PulseSw 18"
+    },
+    {
+      "id": 19,
+      "description": "Mode Start Gate",
+      "vpx_name": "GateSw19",
+      "_note": "GateSw19_Hit: vpmTimer.PulseSw 19"
+    },
+    {
+      "id": 20,
+      "description": "Satellite Home Position",
+      "_note": "Controller.Switch(20) cleared by SolSatMotorRelay(false)"
+    },
+    {
+      "id": 23,
+      "description": "Radar Lock / Satellite Lock",
+      "_note": "Controller.Switch(23) set in RadarKicker_hit, cleared by SolRadarMagnet(false) and SolSatMotorRelay(false)"
+    },
+    {
+      "id": 24,
+      "description": "Flipper Magnet Eject",
+      "_note": "vpmTimer.PulseSw 24 in HideFlipper_Timer (ball released from flipper magnet)"
+    },
+    {
+      "id": 25,
+      "description": "Standup Target 1 (Shootout)",
+      "vpx_name": "SS25",
+      "_note": "SS25_hit: vpmTimer.PulseSw 25"
+    },
+    {
+      "id": 26,
+      "description": "Standup Target 2 (Shootout)",
+      "vpx_name": "SS26",
+      "_note": "SS26_hit: vpmTimer.PulseSw 26"
+    },
+    {
+      "id": 27,
+      "description": "Standup Target 3 (Shootout)",
+      "vpx_name": "SS27",
+      "_note": "SS27_hit: vpmTimer.PulseSw 27"
+    },
+    {
+      "id": 28,
+      "description": "Standup Target 4 (Shootout)",
+      "vpx_name": "SS28",
+      "_note": "SS28_hit: vpmTimer.PulseSw 28"
+    },
+    {
+      "id": 30,
+      "description": "Ramp Standup Left",
+      "vpx_name": "SS30",
+      "_note": "SS30_hit: vpmTimer.PulseSw 30"
+    },
+    {
+      "id": 31,
+      "description": "Ramp Standup Right",
+      "vpx_name": "SS31",
+      "_note": "SS31_hit: vpmTimer.PulseSw 31"
+    },
+    {
+      "id": 32,
+      "description": "Wire Ramp Gate",
+      "vpx_name": "GateSw32",
+      "_note": "GateSw32_Hit: vpmTimer.PulseSw 32"
+    },
+    {
+      "id": 33,
+      "description": "Satellite Bank Target 1",
+      "vpx_name": "SS33",
+      "_note": "SS33_hit: vpmTimer.PulseSw 33"
+    },
+    {
+      "id": 34,
+      "description": "Satellite Bank Target 2",
+      "vpx_name": "SS34",
+      "_note": "SS34_hit: vpmTimer.PulseSw 34"
+    },
+    {
+      "id": 39,
+      "description": "Q Target / Center Standup",
+      "vpx_name": "SS39",
+      "_note": "SS39_hit: vpmTimer.PulseSw 39"
+    },
+    {
+      "id": 40,
+      "description": "Collect Bonus Lane Gate",
+      "vpx_name": "GateSw40",
+      "_note": "GateSw40_Hit: vpmTimer.PulseSw 40"
+    },
+    {
+      "id": 41,
+      "description": "Left Bumper",
+      "vpx_name": "LeftTurboBumper",
+      "_note": "LeftTurboBumper_Hit: vpmTimer.PulseSw 41"
+    },
+    {
+      "id": 42,
+      "description": "Bottom Bumper",
+      "vpx_name": "BottomTurboBumper",
+      "_note": "BottomTurboBumper_Hit: vpmTimer.PulseSw 42"
+    },
+    {
+      "id": 43,
+      "description": "Right Bumper",
+      "vpx_name": "RightTurboBumper",
+      "_note": "RightTurboBumper_Hit: vpmTimer.PulseSw 43"
+    },
+    {
+      "id": 44,
+      "description": "Satellite Bank Target 3",
+      "vpx_name": "SS44",
+      "_note": "SS44_hit: vpmTimer.PulseSw 44"
+    },
+    {
+      "id": 45,
+      "description": "Satellite Bank Target 4",
+      "vpx_name": "SS45",
+      "_note": "SS45_hit: vpmTimer.PulseSw 45"
+    },
+    {
+      "id": 46,
+      "description": "Satellite Value Target",
+      "vpx_name": "SS46",
+      "_note": "SS46_hit: vpmTimer.PulseSw 46"
+    },
+    {
+      "id": 47,
+      "description": "Q Target Left",
+      "vpx_name": "SS47",
+      "_note": "SS47_hit: vpmTimer.PulseSw 47"
+    },
+    {
+      "id": 48,
+      "description": "Q Target Right",
+      "vpx_name": "SS48",
+      "_note": "SS48_hit: vpmTimer.PulseSw 48"
+    },
+    {
+      "id": 49,
+      "description": "007 Top Lane 1",
+      "vpx_name": "sw49",
+      "_note": "sw49_Hit/UnHit: Controller.Switch(49)"
+    },
+    {
+      "id": 50,
+      "description": "Scoop",
+      "_note": "bsScoop.InitSw 0,50 — Mode Start scoop kicker"
+    },
+    {
+      "id": 51,
+      "description": "007 Top Lane 2",
+      "vpx_name": "sw51",
+      "_note": "sw51_Hit/UnHit: Controller.Switch(51)"
+    },
+    {
+      "id": 52,
+      "description": "007 Top Lane 3",
+      "vpx_name": "sw52",
+      "_note": "sw52_Hit/UnHit: Controller.Switch(52)"
+    },
+    {
+      "id": 53,
+      "description": "Left Inlane",
+      "vpx_name": "sw53",
+      "_note": "sw53_Hit/UnHit: Controller.Switch(53)"
+    },
+    {
+      "id": 54,
+      "description": "Right Inlane Gate",
+      "vpx_name": "GateSw54",
+      "_note": "GateSw54_Hit: vpmTimer.PulseSw 54"
+    },
+    {
+      "id": 55,
+      "description": "Left Outlane",
+      "vpx_name": "sw55",
+      "_note": "sw55_Hit/UnHit: Controller.Switch(55)"
+    },
+    {
+      "id": 56,
+      "description": "Tank Kicker",
+      "_note": "bsTank.InitSw 0,56 — ball in tank"
+    },
+    {
+      "id": 57,
+      "description": "Right Inlane",
+      "vpx_name": "sw57",
+      "_note": "sw57_Hit/UnHit: Controller.Switch(57)"
+    },
+    {
+      "id": 58,
+      "description": "Right Outlane",
+      "vpx_name": "sw58",
+      "_note": "sw58_Hit/UnHit: Controller.Switch(58)"
+    },
+    {
+      "id": 59,
+      "description": "Left Inlane 2",
+      "vpx_name": "sw59",
+      "_note": "sw59_Hit/UnHit: Controller.Switch(59)"
+    },
+    {
+      "id": 60,
+      "description": "Collect Bonus Rollover",
+      "vpx_name": "sw60",
+      "_note": "sw60_Hit/UnHit: Controller.Switch(60)"
+    },
+    {
+      "id": 61,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "LeftSlingShot_Slingshot: vpmTimer.PulseSw 61"
+    },
+    {
+      "id": 62,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "RightSlingShot_Slingshot: vpmTimer.PulseSw 62"
+    },
+    {
+      "id": 63,
+      "description": "Left Flipper EOS",
+      "_note": "Controller.Switch(63) toggled in SolLFlipper"
+    },
+    {
+      "id": 64,
+      "description": "Right Flipper EOS",
+      "_note": "Controller.Switch(64) toggled in SolRFlipper"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "Trough Eject",
+      "_vbscript_callback": "bsTrough.SolOut",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil"
+    },
+    {
+      "id": 2,
+      "description": "Plunger Eject",
+      "_vbscript_callback": "bsPlunger.SolOut",
+      "_inferred_type": "ball_management",
+      "vpx_name": "Plunger"
+    },
+    {
+      "id": 4,
+      "description": "Scoop Eject",
+      "_vbscript_callback": "bsScoop.SolOut",
+      "_inferred_type": "kicker",
+      "vpx_name": "Scoop"
+    },
+    {
+      "id": 8,
+      "description": "Knocker",
+      "_vbscript_callback": "vpmSolSound SoundFX(\"knocker_1\",DOFKnocker),",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 14,
+      "description": "Tank Eject",
+      "_vbscript_callback": "bsTank.SolOut",
+      "_inferred_type": "ball_management",
+      "vpx_name": "TankKickBig"
+    },
+    {
+      "id": 17,
+      "description": "Lock Out Eject",
+      "_vbscript_callback": "SolLockOut",
+      "_inferred_type": "kicker",
+      "_note": "Pulses switch 15 when enabled"
+    },
+    {
+      "id": 18,
+      "description": "Up/Down Ramp",
+      "_vbscript_callback": "SolUpDownRamp",
+      "_inferred_type": "mechanism",
+      "_note": "Raises/lowers the moving ramp (Ramp005, Mramp collidable toggles)"
+    },
+    {
+      "id": 20,
+      "description": "Satellite Launch Ramp",
+      "_vbscript_callback": "SolSatLaunchRamp",
+      "_inferred_type": "mechanism",
+      "_note": "Raises pop-up ramp in front of satellite dish"
+    },
+    {
+      "id": 21,
+      "description": "Satellite Motor Relay",
+      "_vbscript_callback": "SolSatMotorRelay",
+      "_inferred_type": "mechanism",
+      "_note": "Rotates the satellite dish via RotRadar timer"
+    },
+    {
+      "id": 22,
+      "description": "Drop Ramp Enable",
+      "_vbscript_callback": "DropRamp1.Enabled=",
+      "_inferred_type": "mechanism",
+      "_note": "Enables/disables DropRamp1 collidable state"
+    },
+    {
+      "id": 25,
+      "description": "Flasher 25 (Left Upper)",
+      "_vbscript_callback": "Sol25",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Fading flasher. Controls Flash001, Flash002, Flasha001/Flasha001B"
+    },
+    {
+      "id": 26,
+      "description": "Flasher 26 (Left Lower)",
+      "_vbscript_callback": "Sol26",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Fading flasher. Controls Flasha003, LL15/LL15F/LLb015"
+    },
+    {
+      "id": 27,
+      "description": "Flasher 27 (Center)",
+      "_vbscript_callback": "Sol27",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Fading flasher. Controls Flash003A, Flash003B, Flasha002"
+    },
+    {
+      "id": 28,
+      "description": "Flasher 28 (Right)",
+      "_vbscript_callback": "Sol28",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Fading flasher. Controls Flash004, Flasha0004"
+    },
+    {
+      "id": 29,
+      "description": "Flasher 29 (Dome 1)",
+      "_vbscript_callback": "Sol29",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Calls Flash1 — controls Flasherbase1 via FlupperDome system"
+    },
+    {
+      "id": 30,
+      "description": "Flasher 30 (Center Ramp)",
+      "_vbscript_callback": "sol30",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Fading flasher. Controls Rampflash4, Flash003"
+    },
+    {
+      "id": 31,
+      "description": "Flasher 31 (Dome 2-3)",
+      "_vbscript_callback": "Sol31",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Calls Flash3 + Flash2 — controls Flasherbase3, Flasherbase2 via FlupperDome system"
+    },
+    {
+      "id": 32,
+      "description": "Flasher 32 (Dome 4)",
+      "_vbscript_callback": "Sol32",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Calls Flash4 — controls Flasherbase4 via FlupperDome system"
+    },
+    {
+      "id": 33,
+      "description": "Radar Magnet",
+      "_vbscript_callback": "SolRadarMagnet",
+      "_inferred_type": "magnet",
+      "_note": "Satellite dish magnet. Holds ball in radar lock, clears sw23 on release"
+    },
+    {
+      "id": 34,
+      "description": "Flipper Magnet",
+      "_vbscript_callback": "SolFlipperMagnet",
+      "_inferred_type": "magnet",
+      "_note": "Ball saver magnet near flippers (cvpmMagnet). Pulses sw24 on release"
+    },
+    {
+      "id": 45,
+      "description": "Tilt Relay",
+      "_vbscript_callback": "TiltMod",
+      "_inferred_type": "tilt"
+    },
+    {
+      "id": 46,
+      "description": "Right Flipper",
+      "_vbscript_name": "sLRFlipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework-defined constant (core.vbs: sLRFlipper=46). Toggles Controller.Switch(64)",
+      "vpx_name": "RightFlipper"
+    },
+    {
+      "id": 48,
+      "description": "Left Flipper",
+      "_vbscript_name": "sLLFlipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "_note": "Framework-defined constant (core.vbs: sLLFlipper=48). Toggles Controller.Switch(63)",
+      "vpx_name": "LeftFlipper"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 0,
+      "description": "General Illumination",
+      "_note": "Lampz.obj(0) = GI collection. Callback: GIUpdates. Controls playfield GI fading"
+    },
+    {
+      "id": 1,
+      "vpx_name": "LL1",
+      "description": "Lamp 1"
+    },
+    {
+      "id": 2,
+      "vpx_name": "LL2",
+      "description": "Lamp 2"
+    },
+    {
+      "id": 3,
+      "vpx_name": "LL3",
+      "description": "Lamp 3"
+    },
+    {
+      "id": 4,
+      "vpx_name": "LL4",
+      "description": "Lamp 4"
+    },
+    {
+      "id": 5,
+      "vpx_name": "LL5",
+      "description": "Lamp 5"
+    },
+    {
+      "id": 6,
+      "vpx_name": "LL6",
+      "description": "Lamp 6"
+    },
+    {
+      "id": 7,
+      "vpx_name": "LL7",
+      "description": "Lamp 7"
+    },
+    {
+      "id": 8,
+      "vpx_name": "LL8",
+      "description": "Lamp 8"
+    },
+    {
+      "id": 10,
+      "vpx_name": "LL10",
+      "description": "Lamp 10"
+    },
+    {
+      "id": 11,
+      "vpx_name": "LL11",
+      "description": "Lamp 11"
+    },
+    {
+      "id": 12,
+      "vpx_name": "LL12",
+      "description": "Lamp 12"
+    },
+    {
+      "id": 13,
+      "vpx_name": "LL13",
+      "description": "Lamp 13"
+    },
+    {
+      "id": 14,
+      "vpx_name": "LL14",
+      "description": "Lamp 14"
+    },
+    {
+      "id": 15,
+      "vpx_name": "LL15",
+      "description": "Lamp 15",
+      "_note": "Also LL15F. Sol26 flasher directly modulates LL15/LL15F/LLb015 intensity"
+    },
+    {
+      "id": 16,
+      "vpx_name": "LL16",
+      "description": "Lamp 16"
+    },
+    {
+      "id": 17,
+      "vpx_name": "LL17",
+      "description": "Lamp 17"
+    },
+    {
+      "id": 18,
+      "vpx_name": "LL18",
+      "description": "Lamp 18"
+    },
+    {
+      "id": 19,
+      "vpx_name": "LL19",
+      "description": "Bumper Lamp (Left)",
+      "_note": "Also LL19A, LL19B — bumper lamp with multiple VPX objects"
+    },
+    {
+      "id": 20,
+      "vpx_name": "LL20",
+      "description": "Lamp 20"
+    },
+    {
+      "id": 21,
+      "vpx_name": "LL21",
+      "description": "Lamp 21"
+    },
+    {
+      "id": 22,
+      "vpx_name": "LL22",
+      "description": "Lamp 22"
+    },
+    {
+      "id": 23,
+      "vpx_name": "LL23",
+      "description": "Lamp 23"
+    },
+    {
+      "id": 24,
+      "vpx_name": "LL24",
+      "description": "Lamp 24"
+    },
+    {
+      "id": 25,
+      "vpx_name": "LL25",
+      "description": "Lamp 25"
+    },
+    {
+      "id": 26,
+      "vpx_name": "LL26",
+      "description": "Lamp 26"
+    },
+    {
+      "id": 27,
+      "vpx_name": "LL27",
+      "description": "Bumper Lamp (Right)",
+      "_note": "Also LL27A, LL27B — bumper lamp with multiple VPX objects"
+    },
+    {
+      "id": 28,
+      "vpx_name": "LL28",
+      "description": "Lamp 28"
+    },
+    {
+      "id": 29,
+      "vpx_name": "LL29",
+      "description": "Lamp 29"
+    },
+    {
+      "id": 30,
+      "vpx_name": "LL30",
+      "description": "Lamp 30"
+    },
+    {
+      "id": 31,
+      "vpx_name": "LL31",
+      "description": "Lamp 31"
+    },
+    {
+      "id": 32,
+      "vpx_name": "LL32",
+      "description": "Lamp 32"
+    },
+    {
+      "id": 33,
+      "vpx_name": "LL33",
+      "description": "Lamp 33"
+    },
+    {
+      "id": 34,
+      "vpx_name": "LL34",
+      "description": "Green Light (Satellite Area)",
+      "_note": "Callback: DisableLighting GreenLight primitive"
+    },
+    {
+      "id": 35,
+      "vpx_name": "LL35",
+      "description": "Lamp 35"
+    },
+    {
+      "id": 36,
+      "vpx_name": "LL36",
+      "description": "Lamp 36"
+    },
+    {
+      "id": 37,
+      "vpx_name": "LL37",
+      "description": "Lamp 37"
+    },
+    {
+      "id": 38,
+      "vpx_name": "LL38",
+      "description": "Lamp 38"
+    },
+    {
+      "id": 39,
+      "vpx_name": "LL39",
+      "description": "Lamp 39"
+    },
+    {
+      "id": 41,
+      "vpx_name": "LL41",
+      "description": "Bumper Lamp (Bottom)",
+      "_note": "Also LL41A, LL41B — bumper lamp with multiple VPX objects"
+    },
+    {
+      "id": 42,
+      "vpx_name": "LL42",
+      "description": "Lamp 42"
+    },
+    {
+      "id": 43,
+      "vpx_name": "LL43",
+      "description": "Lamp 43"
+    },
+    {
+      "id": 44,
+      "vpx_name": "LL44",
+      "description": "Lamp 44"
+    },
+    {
+      "id": 45,
+      "vpx_name": "LL45",
+      "description": "Lamp 45"
+    },
+    {
+      "id": 46,
+      "vpx_name": "LL46",
+      "description": "Lamp 46"
+    },
+    {
+      "id": 47,
+      "vpx_name": "LL47",
+      "description": "Lamp 47"
+    },
+    {
+      "id": 48,
+      "vpx_name": "LL48",
+      "description": "Lamp 48"
+    },
+    {
+      "id": 49,
+      "vpx_name": "LL49",
+      "description": "Copter Lamp",
+      "_note": "ll49.state controls helicopter rotor animation via Rotor_timer"
+    },
+    {
+      "id": 50,
+      "vpx_name": "LL50",
+      "description": "Red Light A",
+      "_note": "Callback: DisableLighting RedLightA primitive"
+    },
+    {
+      "id": 51,
+      "vpx_name": "LL51",
+      "description": "Red Light B",
+      "_note": "Callback: DisableLighting RedLightB primitive"
+    },
+    {
+      "id": 52,
+      "vpx_name": "LL52",
+      "description": "Lamp 52"
+    },
+    {
+      "id": 53,
+      "vpx_name": "LL53",
+      "description": "Lamp 53"
+    },
+    {
+      "id": 54,
+      "vpx_name": "LL54",
+      "description": "Lamp 54"
+    },
+    {
+      "id": 55,
+      "vpx_name": "LL55",
+      "description": "Lamp 55"
+    },
+    {
+      "id": 56,
+      "vpx_name": "LL56",
+      "description": "Lamp 56"
+    },
+    {
+      "id": 58,
+      "vpx_name": "LL58",
+      "description": "Lamp 58",
+      "_note": "Also LL58bis — two VPX objects"
+    },
+    {
+      "id": 59,
+      "vpx_name": "LL59",
+      "description": "Lamp 59"
+    },
+    {
+      "id": 60,
+      "vpx_name": "LL60",
+      "description": "Lamp 60"
+    },
+    {
+      "id": 61,
+      "vpx_name": "LL61",
+      "description": "Lamp 61"
+    },
+    {
+      "id": 62,
+      "vpx_name": "LL62",
+      "description": "Lamp 62"
+    },
+    {
+      "id": 63,
+      "vpx_name": "LL63",
+      "description": "Lamp 63"
+    },
+    {
+      "id": 65,
+      "vpx_name": "LL65",
+      "description": "Lamp 65"
+    },
+    {
+      "id": 66,
+      "vpx_name": "LL66",
+      "description": "Lamp 66"
+    },
+    {
+      "id": 67,
+      "vpx_name": "LL67",
+      "description": "Lamp 67"
+    },
+    {
+      "id": 68,
+      "vpx_name": "LL68",
+      "description": "Lamp 68"
+    },
+    {
+      "id": 69,
+      "vpx_name": "LL69",
+      "description": "Copter Spotlight",
+      "_note": "Callback: DisableLighting spotlightLight primitive"
+    }
+  ]
+}

@@ -1,0 +1,871 @@
+{
+  "_format": "vpe-game-mapping",
+  "_version": "0.1",
+  "_source": {
+    "origin": "vbscript-parser",
+    "source_file": "Last Action Hero (Data East 1993) VPW v1.2.vbs",
+    "extracted": "2026-02-13",
+    "status": "auto-extracted",
+    "confidence_notes": "High confidence on switches/coils from VPW VBScript. Trough is a 6-ball manual implementation (sw9-sw14, sw15 virtual). Switch descriptions are inferred from VBScript context (DTHit=drop target, STHit=standup, PulseSw=momentary, bsRScoop/bsVuk/bsMLScoop=ball stacks). Lamps l1-l63 are playfield inserts via Lampz.MassAssign. Flashers use Lampz indices 101-109 driven by SolCallback(9,25-32). GI is Lampz index 0, controlled by SolCallback(11) GI relay (inverted logic). Crane mechanism uses switches 60/61 for position and solenoids 4 (lock) and 14 (motor). Three magnets on solenoids 37-39. Flipper solenoids use framework constants sLRFlipper=46, sLLFlipper=48 from DE.VBS. No upper flippers on this game."
+  },
+  "game": {
+    "id": "lah",
+    "name": "Last Action Hero",
+    "year": 1993,
+    "manufacturer": "Data East",
+    "ipdb_id": 1416,
+    "platform": "de"
+  },
+  "roms": [
+    {
+      "id": "lah_113",
+      "version": "1.13",
+      "language": "en"
+    },
+    {
+      "id": "lah_112",
+      "version": "1.12",
+      "language": "en"
+    },
+    {
+      "id": "lah_110",
+      "version": "1.10",
+      "language": "en"
+    },
+    {
+      "id": "lah_104",
+      "version": "1.04",
+      "language": "en"
+    },
+    {
+      "id": "lah_100",
+      "version": "1.00",
+      "language": "en"
+    },
+    {
+      "id": "lah_l104",
+      "version": "1.04",
+      "language": "en",
+      "description": "LED Ghost Fix"
+    },
+    {
+      "id": "lah_c106",
+      "version": "1.06",
+      "language": "en",
+      "description": "Profanity ROM by Cross"
+    }
+  ],
+  "switches": [
+    {
+      "id": 1,
+      "description": "Tilt",
+      "_note": "vpmNudge.TiltSwitch=1"
+    },
+    {
+      "id": 8,
+      "description": "Plunger Button",
+      "_note": "Set via PlungerKey in Table1_KeyDown"
+    },
+    {
+      "id": 9,
+      "description": "#1 (Left) Ball Trough",
+      "vpx_name": "sw9",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "drain_switch"
+    },
+    {
+      "id": 10,
+      "description": "#2 Ball Trough",
+      "vpx_name": "sw10",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_2"
+    },
+    {
+      "id": 11,
+      "description": "#3 Ball Trough",
+      "vpx_name": "sw11",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_3"
+    },
+    {
+      "id": 12,
+      "description": "#4 Ball Trough",
+      "vpx_name": "sw12",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_4"
+    },
+    {
+      "id": 13,
+      "description": "#5 Ball Trough",
+      "vpx_name": "sw13",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_5"
+    },
+    {
+      "id": 14,
+      "description": "#6 Ball Trough",
+      "vpx_name": "sw14",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "trough_switch_6"
+    },
+    {
+      "id": 15,
+      "description": "#7 (Right) Ball Trough",
+      "_note": "Virtual switch set by SolTrough/SolRelease, no VPX kicker object"
+    },
+    {
+      "id": 16,
+      "description": "Shooter Lane",
+      "vpx_name": "sw16",
+      "_note": "Also used by cvpmImpulseP plunger (.Switch 16)"
+    },
+    {
+      "id": 17,
+      "description": "Drop Target 1 (Left)",
+      "vpx_name": "sw17"
+    },
+    {
+      "id": 18,
+      "description": "Drop Target 2",
+      "vpx_name": "sw18"
+    },
+    {
+      "id": 19,
+      "description": "Drop Target 3",
+      "vpx_name": "sw19"
+    },
+    {
+      "id": 20,
+      "description": "Drop Target 4",
+      "vpx_name": "sw20"
+    },
+    {
+      "id": 21,
+      "description": "Drop Target 5 (Right)",
+      "vpx_name": "sw21"
+    },
+    {
+      "id": 22,
+      "description": "Lock Post / Upper Entrance",
+      "vpx_name": "Sw22",
+      "_note": "Lock post area — enables PostSettleTimer, triggers WireRampOff"
+    },
+    {
+      "id": 23,
+      "description": "Lock Post / Lower Entrance",
+      "vpx_name": "Sw23",
+      "_note": "Lock post area — enables PostSettleTimer"
+    },
+    {
+      "id": 24,
+      "description": "Left Inlane / Wire Rollover",
+      "vpx_name": "Sw24"
+    },
+    {
+      "id": 25,
+      "description": "Standup Target 1",
+      "vpx_name": "sw25"
+    },
+    {
+      "id": 26,
+      "description": "Standup Target 2",
+      "vpx_name": "sw26"
+    },
+    {
+      "id": 27,
+      "description": "Standup Target 3",
+      "vpx_name": "sw27"
+    },
+    {
+      "id": 28,
+      "description": "Wire Rollover / Lane",
+      "vpx_name": "Sw28"
+    },
+    {
+      "id": 29,
+      "description": "Wire Rollover / Lane",
+      "vpx_name": "Sw29"
+    },
+    {
+      "id": 30,
+      "description": "Wire Rollover / Lane",
+      "vpx_name": "Sw30"
+    },
+    {
+      "id": 31,
+      "description": "Right Scoop",
+      "vpx_name": "sw31",
+      "_note": "bsRScoop ball stack — InitSaucer sw31, solenoid 6"
+    },
+    {
+      "id": 32,
+      "description": "Standup Target 4",
+      "vpx_name": "Sw32"
+    },
+    {
+      "id": 33,
+      "description": "Left Bumper",
+      "vpx_name": "Bumper1",
+      "_note": "vpmTimer.PulseSw 33"
+    },
+    {
+      "id": 34,
+      "description": "Right Bumper",
+      "vpx_name": "Bumper3",
+      "_note": "vpmTimer.PulseSw 34"
+    },
+    {
+      "id": 35,
+      "description": "Center Bumper",
+      "vpx_name": "Bumper2",
+      "_note": "vpmTimer.PulseSw 35"
+    },
+    {
+      "id": 36,
+      "description": "Left Slingshot",
+      "vpx_name": "LeftSlingShot",
+      "_note": "vpmTimer.PulseSw 36"
+    },
+    {
+      "id": 37,
+      "description": "Right Slingshot",
+      "vpx_name": "RightSlingShot",
+      "_note": "vpmTimer.PulseSw 37"
+    },
+    {
+      "id": 38,
+      "description": "Wire Rollover / Lane",
+      "vpx_name": "Sw38"
+    },
+    {
+      "id": 39,
+      "description": "Wire Rollover / Lane",
+      "vpx_name": "Sw39"
+    },
+    {
+      "id": 40,
+      "description": "Standup Target 5",
+      "vpx_name": "Sw40"
+    },
+    {
+      "id": 41,
+      "description": "Wire Rollover / Lane",
+      "vpx_name": "Sw41"
+    },
+    {
+      "id": 42,
+      "description": "Wire Rollover / Lane",
+      "vpx_name": "Sw42"
+    },
+    {
+      "id": 43,
+      "description": "Wire Rollover / Lane",
+      "vpx_name": "Sw43"
+    },
+    {
+      "id": 44,
+      "description": "Wire Rollover / Lane",
+      "vpx_name": "Sw44"
+    },
+    {
+      "id": 45,
+      "description": "Wire Rollover / Lane",
+      "vpx_name": "Sw45"
+    },
+    {
+      "id": 46,
+      "description": "Wire Rollover / Lane",
+      "vpx_name": "Sw46"
+    },
+    {
+      "id": 47,
+      "description": "Top Right VUK",
+      "vpx_name": "sw47",
+      "_note": "bsVuk ball stack — InitSaucer sw47, solenoid 5"
+    },
+    {
+      "id": 48,
+      "description": "Ripper Kickback Lane",
+      "vpx_name": "Sw48",
+      "_note": "vpmTimer.PulseSw 48 — used as kicker by SolRipperKick (sol 22)"
+    },
+    {
+      "id": 54,
+      "description": "Rollover / Trigger",
+      "vpx_name": "Sw54",
+      "_note": "vpmTimer.PulseSw 54"
+    },
+    {
+      "id": 55,
+      "description": "Wire Rollover / Lane",
+      "vpx_name": "Sw55"
+    },
+    {
+      "id": 56,
+      "description": "Standup Target 6",
+      "vpx_name": "Sw56"
+    },
+    {
+      "id": 57,
+      "description": "Middle Left Scoop",
+      "vpx_name": "sw57",
+      "_note": "bsMLScoop ball stack — InitSaucer sw57, solenoid 15"
+    },
+    {
+      "id": 58,
+      "description": "Centre Right Subway",
+      "vpx_name": "Sw58",
+      "_note": "vpmTimer.PulseSw 58"
+    },
+    {
+      "id": 59,
+      "description": "Spinner",
+      "vpx_name": "sw59",
+      "_note": "Sw59_Spin — vpmTimer.PulseSw 59"
+    },
+    {
+      "id": 60,
+      "description": "Crane Position Left",
+      "_note": "Set by crane motor code — CraneIsLeft sets switch 60=1, CraneIsRight sets 60=0"
+    },
+    {
+      "id": 61,
+      "description": "Crane Position Right",
+      "_note": "Set by crane motor code — CraneIsRight sets switch 61=1, CraneIsLeft sets 61=0"
+    },
+    {
+      "id": 62,
+      "description": "Smart Bomb",
+      "_note": "Set via PlungerKey and LockBarKey in Table1_KeyDown — no physical VPX object"
+    }
+  ],
+  "coils": [
+    {
+      "id": 1,
+      "description": "6 Ball Assy Lockout / Trough",
+      "_vbscript_callback": "SolTrough",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "eject_coil",
+      "_note": "Kicks from sw14 to sw15, sets Controller.Switch(15)=1"
+    },
+    {
+      "id": 2,
+      "description": "Ball Release",
+      "_vbscript_callback": "SolRelease",
+      "_inferred_type": "ball_management",
+      "device_hint": "^Trough\\s*\\d?",
+      "device_item_hint": "ball_release",
+      "_note": "Kicks from sw15 to shooter lane, sets Controller.Switch(15)=0"
+    },
+    {
+      "id": 3,
+      "description": "Ball Launch (Auto Plunger)",
+      "_vbscript_callback": "AutoLaunch",
+      "_inferred_type": "kicker",
+      "vpx_name": "swPlunger",
+      "_note": "cvpmImpulseP auto-fire plunger"
+    },
+    {
+      "id": 4,
+      "description": "Crane Lock",
+      "_vbscript_callback": "SolCraneLock",
+      "_inferred_type": "mechanism",
+      "_note": "Releases ball from crane when disabled and crane at left position (sw60)"
+    },
+    {
+      "id": 5,
+      "description": "VUK (Top Right)",
+      "_vbscript_callback": "bsVuk.SolOut",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw47",
+      "_note": "cvpmBallStack eject — InitSaucer sw47"
+    },
+    {
+      "id": 6,
+      "description": "Right Scoop",
+      "_vbscript_callback": "bsRScoop.SolOut",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw31",
+      "_note": "cvpmBallStack eject — InitSaucer sw31"
+    },
+    {
+      "id": 7,
+      "description": "Ball Lock Release",
+      "_vbscript_callback": "SolLockRelease",
+      "_inferred_type": "mechanism",
+      "_note": "Drops lock post to release ball"
+    },
+    {
+      "id": 8,
+      "description": "Knocker",
+      "_vbscript_callback": "SolKnocker",
+      "_inferred_type": "knocker"
+    },
+    {
+      "id": 9,
+      "description": "Flash Crane + Backbox Inserts",
+      "_vbscript_callback": "Lampz.SetLamp 109,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Lampz index 109 — Crane(x2) + Backbox Inserts(x2)"
+    },
+    {
+      "id": 10,
+      "description": "L/R Relay",
+      "_inferred_type": "relay",
+      "_note": "Commented out in VBScript — no callback assigned"
+    },
+    {
+      "id": 11,
+      "description": "GI Relay",
+      "_vbscript_callback": "SolGI",
+      "_inferred_type": "gi_relay",
+      "_note": "Controls GI lighting via Lampz.state(0) — inverted logic (enabled=off, disabled=on)"
+    },
+    {
+      "id": 12,
+      "description": "Diverter",
+      "_vbscript_callback": "SolDiv",
+      "_inferred_type": "diverter"
+    },
+    {
+      "id": 13,
+      "description": "Drop Target Reset",
+      "_vbscript_callback": "SoLDrop",
+      "_inferred_type": "drop_target_reset",
+      "_note": "Resets all 5 drop targets (sw17-sw21)"
+    },
+    {
+      "id": 14,
+      "description": "Crane Motor",
+      "_vbscript_callback": "SoLCraneMotor",
+      "_inferred_type": "motor",
+      "_note": "Enables CraneTimer — drives crane left/right, sets sw60/sw61"
+    },
+    {
+      "id": 15,
+      "description": "Middle Scoop",
+      "_vbscript_callback": "bsMLScoop.SolOut",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw57",
+      "_note": "cvpmBallStack eject — InitSaucer sw57"
+    },
+    {
+      "id": 16,
+      "description": "Shaker Motor",
+      "_inferred_type": "motor",
+      "_note": "Commented out in VBScript — no callback assigned"
+    },
+    {
+      "id": 17,
+      "description": "Left Bumper Coil",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in VBScript — bumpers handled by VPX physics"
+    },
+    {
+      "id": 18,
+      "description": "Center Bumper Coil",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in VBScript — bumpers handled by VPX physics"
+    },
+    {
+      "id": 19,
+      "description": "Right Bumper Coil",
+      "_inferred_type": "bumper",
+      "_note": "Commented out in VBScript — bumpers handled by VPX physics"
+    },
+    {
+      "id": 20,
+      "description": "Left Slingshot Coil",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in VBScript — slingshots handled by VPX physics"
+    },
+    {
+      "id": 21,
+      "description": "Right Slingshot Coil",
+      "_inferred_type": "slingshot",
+      "_note": "Commented out in VBScript — slingshots handled by VPX physics"
+    },
+    {
+      "id": 22,
+      "description": "Ripper Kickback",
+      "_vbscript_callback": "SolRipperKick",
+      "_inferred_type": "kicker",
+      "vpx_name": "sw48",
+      "_note": "Kicks ball from sw48 kicker"
+    },
+    {
+      "id": 25,
+      "description": "Flash Topper Right Police",
+      "_vbscript_callback": "Lampz.SetLamp 101,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f2",
+      "_note": "Lampz index 101 — Topper Right Police(x4)"
+    },
+    {
+      "id": 26,
+      "description": "Flash Playfield Upper Left",
+      "_vbscript_callback": "Lampz.SetLamp 102,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f2",
+      "_note": "Lampz index 102 — Playfield Upper Left(x3) + Backbox Insert"
+    },
+    {
+      "id": 27,
+      "description": "Flash Ramp",
+      "_vbscript_callback": "Lampz.SetLamp 103,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f3",
+      "_note": "Lampz index 103 — Ramp(x2) + Backbox Insert(x2)"
+    },
+    {
+      "id": 28,
+      "description": "Flash Playfield Upper Right",
+      "_vbscript_callback": "Lampz.SetLamp 104,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f4",
+      "_note": "Lampz index 104 — Playfield Upper Right(x2) + Backbox Insert(x2)"
+    },
+    {
+      "id": 29,
+      "description": "Flash Playfield Mid Right",
+      "_vbscript_callback": "Lampz.SetLamp 105,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f5",
+      "_note": "Lampz index 105 — Playfield Mid Right(x3) + Backbox Insert"
+    },
+    {
+      "id": 30,
+      "description": "Flash Playfield Low Right",
+      "_vbscript_callback": "Lampz.SetLamp 106,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "vpx_name": "f6",
+      "_note": "Lampz index 106 — Playfield Low Right(x4)"
+    },
+    {
+      "id": 31,
+      "description": "Flash Topper Left Police",
+      "_vbscript_callback": "Lampz.SetLamp 107,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Lampz index 107 — Topper Left Police(x4). MassAssign commented out in LampzHelper."
+    },
+    {
+      "id": 32,
+      "description": "Flash Playfield Low Left",
+      "_vbscript_callback": "Lampz.SetLamp 108,",
+      "_inferred_type": "flasher",
+      "is_lamp": true,
+      "_note": "Lampz index 108 — Playfield Low Left + Backbox Insert(x2). MassAssign commented out in LampzHelper."
+    },
+    {
+      "id": 37,
+      "description": "Left Magnet",
+      "_vbscript_callback": "SolLeftMagnet",
+      "_inferred_type": "magnet",
+      "vpx_name": "LMagnet",
+      "_note": "cvpmMagnet — InitMagnet LMagnet, strength 9"
+    },
+    {
+      "id": 38,
+      "description": "Center Magnet",
+      "_vbscript_callback": "SolCenterMagnet",
+      "_inferred_type": "magnet",
+      "vpx_name": "CMagnet",
+      "_note": "cvpmMagnet — InitMagnet CMagnet, strength 9"
+    },
+    {
+      "id": 39,
+      "description": "Right Magnet",
+      "_vbscript_callback": "SolRightMagnet",
+      "_inferred_type": "magnet",
+      "vpx_name": "RMagnet",
+      "_note": "cvpmMagnet — InitMagnet RMagnet, strength 9"
+    },
+    {
+      "id": 46,
+      "description": "Lower Right Flipper",
+      "_vbscript_name": "sLRFlipper",
+      "_vbscript_callback": "SolRFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "RightFlipper"
+    },
+    {
+      "id": 48,
+      "description": "Lower Left Flipper",
+      "_vbscript_name": "sLLFlipper",
+      "_vbscript_callback": "SolLFlipper",
+      "_inferred_type": "flipper",
+      "vpx_name": "LeftFlipper"
+    }
+  ],
+  "lamps": [
+    {
+      "id": 0,
+      "vpx_name": "gi1",
+      "description": "GI String",
+      "_note": "Controlled by SolGI (sol 11) — Lampz index 0, inverted logic"
+    },
+    {
+      "id": 1,
+      "vpx_name": "l1"
+    },
+    {
+      "id": 2,
+      "vpx_name": "l2"
+    },
+    {
+      "id": 3,
+      "vpx_name": "l3"
+    },
+    {
+      "id": 4,
+      "vpx_name": "l4"
+    },
+    {
+      "id": 5,
+      "vpx_name": "l5"
+    },
+    {
+      "id": 6,
+      "vpx_name": "l6"
+    },
+    {
+      "id": 7,
+      "vpx_name": "l7"
+    },
+    {
+      "id": 8,
+      "vpx_name": "l8"
+    },
+    {
+      "id": 9,
+      "vpx_name": "l9"
+    },
+    {
+      "id": 10,
+      "vpx_name": "l10"
+    },
+    {
+      "id": 11,
+      "vpx_name": "l11"
+    },
+    {
+      "id": 12,
+      "vpx_name": "l12"
+    },
+    {
+      "id": 13,
+      "vpx_name": "l13"
+    },
+    {
+      "id": 14,
+      "vpx_name": "l14"
+    },
+    {
+      "id": 15,
+      "vpx_name": "l15"
+    },
+    {
+      "id": 16,
+      "vpx_name": "l16"
+    },
+    {
+      "id": 17,
+      "vpx_name": "l17"
+    },
+    {
+      "id": 18,
+      "vpx_name": "l18"
+    },
+    {
+      "id": 19,
+      "vpx_name": "l19"
+    },
+    {
+      "id": 20,
+      "vpx_name": "l20"
+    },
+    {
+      "id": 21,
+      "vpx_name": "l21"
+    },
+    {
+      "id": 22,
+      "vpx_name": "l22"
+    },
+    {
+      "id": 23,
+      "vpx_name": "l23"
+    },
+    {
+      "id": 24,
+      "vpx_name": "l24"
+    },
+    {
+      "id": 25,
+      "vpx_name": "l25"
+    },
+    {
+      "id": 26,
+      "vpx_name": "l26"
+    },
+    {
+      "id": 27,
+      "vpx_name": "l27"
+    },
+    {
+      "id": 28,
+      "vpx_name": "l28"
+    },
+    {
+      "id": 29,
+      "vpx_name": "l29"
+    },
+    {
+      "id": 30,
+      "vpx_name": "l30"
+    },
+    {
+      "id": 32,
+      "vpx_name": "l32"
+    },
+    {
+      "id": 33,
+      "vpx_name": "l33"
+    },
+    {
+      "id": 34,
+      "vpx_name": "l34"
+    },
+    {
+      "id": 35,
+      "vpx_name": "l35"
+    },
+    {
+      "id": 36,
+      "vpx_name": "l36"
+    },
+    {
+      "id": 37,
+      "vpx_name": "l37"
+    },
+    {
+      "id": 38,
+      "vpx_name": "l38"
+    },
+    {
+      "id": 39,
+      "vpx_name": "l39"
+    },
+    {
+      "id": 41,
+      "vpx_name": "l41"
+    },
+    {
+      "id": 42,
+      "vpx_name": "l42"
+    },
+    {
+      "id": 44,
+      "vpx_name": "l44"
+    },
+    {
+      "id": 45,
+      "vpx_name": "l45"
+    },
+    {
+      "id": 46,
+      "vpx_name": "l46"
+    },
+    {
+      "id": 47,
+      "vpx_name": "l47"
+    },
+    {
+      "id": 48,
+      "vpx_name": "l48"
+    },
+    {
+      "id": 49,
+      "vpx_name": "l49"
+    },
+    {
+      "id": 50,
+      "vpx_name": "l50"
+    },
+    {
+      "id": 51,
+      "vpx_name": "l51"
+    },
+    {
+      "id": 52,
+      "vpx_name": "l52"
+    },
+    {
+      "id": 53,
+      "vpx_name": "l53"
+    },
+    {
+      "id": 54,
+      "vpx_name": "l54"
+    },
+    {
+      "id": 55,
+      "vpx_name": "l55"
+    },
+    {
+      "id": 56,
+      "vpx_name": "l56"
+    },
+    {
+      "id": 57,
+      "vpx_name": "l57"
+    },
+    {
+      "id": 58,
+      "vpx_name": "l58"
+    },
+    {
+      "id": 59,
+      "vpx_name": "l59"
+    },
+    {
+      "id": 60,
+      "vpx_name": "l60"
+    },
+    {
+      "id": 61,
+      "vpx_name": "l61"
+    },
+    {
+      "id": 62,
+      "vpx_name": "l62"
+    },
+    {
+      "id": 63,
+      "vpx_name": "l63"
+    }
+  ],
+  "aliases": [
+    {
+      "id": 46,
+      "alias": "c_flipper_lower_right",
+      "type": "coil",
+      "_note": "sLRFlipper — framework constant"
+    },
+    {
+      "id": 48,
+      "alias": "c_flipper_lower_left",
+      "type": "coil",
+      "_note": "sLLFlipper — framework constant"
+    }
+  ]
+}
