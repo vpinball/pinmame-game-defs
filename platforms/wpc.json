@@ -1,13 +1,15 @@
 {
   "_format": "vpe-game-mapping-platform",
   "_version": "0.1",
-  "games": [
+  "games":
+  [
     {
       "controller_id": "pinmame",
       "game_id": "wpc-core",
       "name": "Williams Pinball Controller",
       "description": "WPC-era Williams/Bally machines (1990-1999)",
-      "digital_inputs": [
+      "digital_inputs":
+      [
         {
           "group_id": "DIP Switches",
           "id": "3",
@@ -87,10 +89,11 @@
           "input_action_map": "Service/Enter"
         }
       ],
-      "device_definitions": [
+      "device_definitions":
+      [
         {
           "id": "gpio",
-          "description": "General Purpose IO definition (for custom and unknown hardware)"
+          "description": "General Purpose IO definition (for custom and unknown hardware)",
           "type": "generic"
         },
         {
@@ -102,23 +105,23 @@
           "voltage_type": "DC",
           "voltage_value": 19.3,
           "resistor": 0.12,
-		  "relative_brightness": 1.0
+          "relative_brightness": 1.0
         },
         {
           "id": "insert",
-		  "description": "Generic #44/#555 bulb strobed by the lamp matrix",
-		  "comments": "Strobed bulb, 18V switched through a TIP102 and a TIP107 (voltage drop supposed of 0.7V per semiconductor switch, datasheet states Vcesat=2V for I=3A), resistor from schematics (TZ, TOTAN, CFTBL, WPC95 general)",
+          "description": "Generic #44/#555 bulb strobed by the lamp matrix",
+          "comments": "Strobed bulb, 18V switched through a TIP102 and a TIP107 (voltage drop supposed of 0.7V per semiconductor switch, datasheet states Vcesat=2V for I=3A), resistor from schematics (TZ, TOTAN, CFTBL, WPC95 general)",
           "type": "bulb",
           "bulb_characteristics": "#44",
           "voltage_type": "DC",
           "voltage_value": 16.6,
           "resistor": 0.22,
-		  "relative_brightness": 1.0
+          "relative_brightness": 1.0
         },
         {
           "id": "GI",
-		  "description": "Generic #44/#555 bulb strobed by the lamp matrix",
-		  "comments": "Strobed bulb, 18V switched through a TIP102 and a TIP107 (voltage drop supposed of 0.7V per semiconductor switch, datasheet states Vcesat=2V for I=3A), resistor from schematics (TZ, TOTAN, CFTBL, WPC95 general)",
+          "description": "Generic #44/#555 bulb strobed by the lamp matrix",
+          "comments": "Strobed bulb, 18V switched through a TIP102 and a TIP107 (voltage drop supposed of 0.7V per semiconductor switch, datasheet states Vcesat=2V for I=3A), resistor from schematics (TZ, TOTAN, CFTBL, WPC95 general)",
           "type": "bulb",
           "bulb_characteristics": "#44",
           "voltage_type": "DC",
@@ -222,8 +225,12 @@
     {
       "controller_id": "pinmame",
       "game_id": "wpc-dmd",
-      "imports": [ "wpc-core" ],
-      "controlled_devices": [
+      "imports":
+      [
+        "wpc-core"
+      ],
+      "controlled_devices":
+      [
         {
           "group_name": "Solenoids",
           "id": "31",
@@ -235,8 +242,12 @@
     {
       "controller_id": "pinmame",
       "game_id": "wpc-fliptronic",
-      "imports": [ "wpc-core" ],
-      "digital_inputs": [
+      "imports":
+      [
+        "wpc-core"
+      ],
+      "digital_inputs":
+      [
         {
           "group_id": "Fliptronic",
           "id": "112",
@@ -249,8 +260,9 @@
           "description": "Lower Left Flipper Switch",
           "input_action_map": "Flipper/LowerLeft"
         }
-      ]
-      "controlled_devices": [
+      ],
+      "controlled_devices":
+      [
         {
           "group_name": "Solenoids",
           "id": "29",
