@@ -1,0 +1,592 @@
+{
+  "driver_ids": [
+    "starrac7",
+    "starrace"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.starrace"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Vari Reset",
+      "line": 210,
+      "status": "candidate",
+      "symbol": "SolVariReset"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Saucer",
+      "line": 211,
+      "status": "candidate",
+      "symbol": "SolSaucer"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol DT Top Reset",
+      "line": 212,
+      "status": "candidate",
+      "symbol": "SolDTTopReset"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol DT Mid Reset",
+      "line": 213,
+      "status": "candidate",
+      "symbol": "SolDTMidReset"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 214,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Trough",
+      "line": 215,
+      "status": "candidate",
+      "symbol": "SolTrough"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "Game Over",
+      "line": 216,
+      "status": "candidate",
+      "symbol": "GameOver"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Tilt",
+      "line": 217,
+      "status": "candidate",
+      "symbol": "SolTilt"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 73,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "______             ___\n / __/ /____ _____  / _ \\___ ________\n_\\ \\/ __/ _ `/ __/ / , _/ _ `/ __/ -_)\n/___/\\__/\\_,_/_/   /_/|_|\\_,_/\\__/\\__/\n\n\n********************************************************************************************************************************\n******** Work done by UnclePaulie on Hybrid version 0.01 - 2.0 *********\n    Added latest VPW standards, physics, GI baking, Lampz and 3D inserts, shadows, updated backglass for desktop,\n  playfield mesh for a saucer bevel, roth drop and standup targets, standalone compatibility, sling corrections,\n  optional DIP adjustments, updated flipper physics, VR and fully hybrid, Flupper style bumpers and lighting.\n  Full details at the bottom of the script.\n********************************************************************************************************************************\nv0.01  Started with UnclePaulie's circus table for physics, materials, VR structure, and Redbone's playfield\n  Added all elements to table.\n  Added simple ruleset to table info.\n  Added plunger groove and trigger for BIPL\n  Enabled the desktop backglass digits\n  Implemented sling corrections.\n  Added some randomness to the plunger.\n  Implemented the five sensors\n  Added physics walls\n  Added a playfield mesh for a bevel in the saucer.\n  Implemented new drop and standup targets by Rothbaurer; and ensured standalone\n  Added a new saucer floor, and updated to new saucer kick logic\n  Added plastics\n  Added Flupper Bumpers, and adjusted color, dL, of tops, base, skirt, etc.\nv0.02  Added varitargets, and created code to adjust velocity.\n  Adjusted the top gate elasticity to account for some bounce from plunger fire.\n  Added cutouts for triggers and other holes.\n  Updated playfield with GI bulb cutouts,  And filled in holes in lower playfield under apron.\n  Added all bulb prims, including in standup target holes.\n  Added all new GI.  Will bake later.\n  Added dynamic sources\n  Adjusted rollover colors, and slight mod to physics walls near flippers.\n  Colored star targets to red.\n  Added all the screws and screw caps.\n  Added some metals to metalGI\n  Updated target, side walls, plunger cover, and bumper images.\n  Updated playfield holes, made the right bumper a solid circle, and added a text overlay\nv0.03  Added Lampz and 3D primitive inserts.\n  Tweaked insert prim materials and lampz constants to get best look.\n  Tied GI and bumpers to Lampz\n  Added default DIPS *** HIGHLY RECOMMENDED to have Dips set to the following which is default:  This will enable match, extra balls, and game replays\n    Dip 20 novelty normal game mode of 0 = \"normal game mode... not extra points\"\n    Dip 21 game mode replay of 0 = \"Game awards replay when threshold achieved\"\n  Updated code to change instruction cards depending on ball selection and reward\n  Updated all elements to have some disablelighting and controlled by GI script\n  Added a saucer backstop\n  Tweaked the flipper end engle\n  Updated card images\nv0.04  Baked all the GI lighting, as well as the AO shadows.  All controlled by Lampz.\n  Adjusted the transparency of the tents and lanerollovers\n  Adjusted the dL of the bumper tops with the DNA setting.\n  Added star rollovers to GI function\n  Got the backbox functional for DesktopMode, updated new picture, and added GI bg lights for Destktop.\n  Added drop target shadows\n  Made the plastic posts transparent\nv0.05  Updated the VR Backglass displays, color, position, etc.\n  Added VR Cabinet and VR Room\n  Adjusted flipper size and angles to better match real table.\nv0.06  Added the 7 digit ROM option and accounted for desktop and VR for the LED displays.\n  Added options for inside wall color / space theme, and side rails.\n  One more tweak to flipper end angle based on excellent close up video of flippers.\n  Adjusted the clear posts material\n  Updated the desktop background slightly\n  Redbone updated several images including the apron, lockdownbar, plastics, and playfield.\n  Redbone provided ambient space sounds as an option\n  Updated the plunger cover location and adjusted the plunger\n  Slight adjustment to center drop targets position\n  Increased opacity of P1-P4 VR images\n  Converted images to webp"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in special_audiopan_and_audiofade_patched/Star Race (Gottlieb 1980) w VR Room v0.06.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "special_audiopan_and_audiofade_patched/Star Race (Gottlieb 1980) w VR Room v0.06.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "42634e333ea85694946c409e21d806937ebd675b3a985ef6077ac2cb0dd89683"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 0,
+      "group": "pinmame.input.switch",
+      "label": "sw0",
+      "line": 859,
+      "status": "candidate",
+      "symbol": "sw0_Hit"
+    },
+    {
+      "address": 0,
+      "group": "pinmame.input.switch",
+      "label": "sw10",
+      "line": 862,
+      "status": "candidate",
+      "symbol": "sw10_Hit"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "sw1",
+      "line": 974,
+      "status": "candidate",
+      "symbol": "sw1_Hit"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 2981,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "Vari Timer Down1",
+      "line": 1032,
+      "status": "candidate",
+      "symbol": "VariTimerDown1_Timer"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 2983,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "sw3",
+      "line": 827,
+      "status": "candidate",
+      "symbol": "sw3_Hit"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "sw3",
+      "line": 828,
+      "status": "candidate",
+      "symbol": "sw3_UnHit"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 2985,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 2987,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "zcol rubber 007",
+      "line": 818,
+      "status": "candidate",
+      "symbol": "zcol_rubber_007_Hit"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "zcol rubber 008",
+      "line": 819,
+      "status": "candidate",
+      "symbol": "zcol_rubber_008_Hit"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "zcol rubber 010",
+      "line": 820,
+      "status": "candidate",
+      "symbol": "zcol_rubber_010_Hit"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "zcol rubber 012",
+      "line": 821,
+      "status": "candidate",
+      "symbol": "zcol_rubber_012_Hit"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 2989,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 2991,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 2993,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 984,
+      "status": "candidate",
+      "symbol": "sw11_Hit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "Vari Timer Down1",
+      "line": 1029,
+      "status": "candidate",
+      "symbol": "VariTimerDown1_Timer"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 829,
+      "status": "candidate",
+      "symbol": "sw13_Hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 830,
+      "status": "candidate",
+      "symbol": "sw13_UnHit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 683,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 702,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "sw20",
+      "line": 835,
+      "status": "candidate",
+      "symbol": "sw20_Hit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "sw20",
+      "line": 836,
+      "status": "candidate",
+      "symbol": "sw20_UnHit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "sw21",
+      "line": 994,
+      "status": "candidate",
+      "symbol": "sw21_Hit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Vari Timer Down1",
+      "line": 1028,
+      "status": "candidate",
+      "symbol": "VariTimerDown1_Timer"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 831,
+      "status": "candidate",
+      "symbol": "sw23_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 832,
+      "status": "candidate",
+      "symbol": "sw23_UnHit"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "sw30",
+      "line": 837,
+      "status": "candidate",
+      "symbol": "sw30_Hit"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "sw30",
+      "line": 838,
+      "status": "candidate",
+      "symbol": "sw30_UnHit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "sw31",
+      "line": 1004,
+      "status": "candidate",
+      "symbol": "sw31_Hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Vari Timer Down1",
+      "line": 1027,
+      "status": "candidate",
+      "symbol": "VariTimerDown1_Timer"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "sw33",
+      "line": 833,
+      "status": "candidate",
+      "symbol": "sw33_Hit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "sw33",
+      "line": 834,
+      "status": "candidate",
+      "symbol": "sw33_UnHit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "sw40",
+      "line": 839,
+      "status": "candidate",
+      "symbol": "sw40_Hit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "sw40",
+      "line": 840,
+      "status": "candidate",
+      "symbol": "sw40_UnHit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "sw41",
+      "line": 919,
+      "status": "candidate",
+      "symbol": "sw41_Hit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "Vari Timer Down",
+      "line": 1020,
+      "status": "candidate",
+      "symbol": "VariTimerDown_Timer"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "sw50",
+      "line": 841,
+      "status": "candidate",
+      "symbol": "sw50_Hit"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "sw50",
+      "line": 842,
+      "status": "candidate",
+      "symbol": "sw50_UnHit"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "sw51",
+      "line": 929,
+      "status": "candidate",
+      "symbol": "sw51_Hit"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Vari Timer Down",
+      "line": 1017,
+      "status": "candidate",
+      "symbol": "VariTimerDown_Timer"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "sw53",
+      "line": 865,
+      "status": "candidate",
+      "symbol": "sw53_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53a",
+      "line": 868,
+      "status": "candidate",
+      "symbol": "sw53a_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53b",
+      "line": 871,
+      "status": "candidate",
+      "symbol": "sw53b_Hit"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.input.switch",
+      "label": "sw60",
+      "line": 843,
+      "status": "candidate",
+      "symbol": "sw60_Hit"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.input.switch",
+      "label": "sw60",
+      "line": 844,
+      "status": "candidate",
+      "symbol": "sw60_UnHit"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "sw61",
+      "line": 939,
+      "status": "candidate",
+      "symbol": "sw61_Hit"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "Vari Timer Down",
+      "line": 1016,
+      "status": "candidate",
+      "symbol": "VariTimerDown_Timer"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "label": "Slot1",
+      "line": 558,
+      "status": "candidate",
+      "symbol": "Slot1_Hit"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "label": "Slot1",
+      "line": 559,
+      "status": "candidate",
+      "symbol": "Slot1_UnHit"
+    },
+    {
+      "address": 70,
+      "group": "pinmame.input.switch",
+      "label": "sw70",
+      "line": 845,
+      "status": "candidate",
+      "symbol": "sw70_Hit"
+    },
+    {
+      "address": 70,
+      "group": "pinmame.input.switch",
+      "label": "sw70",
+      "line": 846,
+      "status": "candidate",
+      "symbol": "sw70_UnHit"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.input.switch",
+      "label": "sw71",
+      "line": 949,
+      "status": "candidate",
+      "symbol": "sw71_Hit"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.input.switch",
+      "label": "Vari Timer Down",
+      "line": 1015,
+      "status": "candidate",
+      "symbol": "VariTimerDown_Timer"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.input.switch",
+      "label": "sw72",
+      "line": 646,
+      "status": "candidate",
+      "symbol": "sw72_Hit"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.input.switch",
+      "label": "sw72",
+      "line": 651,
+      "status": "candidate",
+      "symbol": "sw72_Unhit"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 303,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 665,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 670,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    }
+  ],
+  "version": 1
+}

@@ -1,0 +1,33 @@
+{
+  "driver_ids": [],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 38,
+      "line_start": 2,
+      "status": "candidate",
+      "text": "****************************************************************\n\n        Grand Tour (Bally 1964)\n            v 2.0\n         Script by Scottacus\n             July 2021\n\nBasic DOF config\n  71 - 80 BackGlass Slides\n  90  BackGlass On Image\n  101 Left Flipper, 102 Right Flipper\n  103 Left Sling, 104 Right Sling\n  105 Bumper1, 106 Bumper2, 107 Bumper3\n  124 Drain, 125 Ball Release\n  130 - 136 Wire Rollovers\n  141 Chime1-10s, 142 Chime2-100s, 143 Chime3-1000s\n  151 - 152 Butterfly Rollovers\n  160 - 161 Rollover Buttons\n  170 - 173 Mushrooms\n  199 credit light\n  128 Knocker & Strobe\n  165 Ball In Shooter Lane\n\n  Code Flow\n                 EndGame\n                  ^\n  Start Game -> New Game -> Check Continue -> Release Ball -> Drain -> Next Ball\n                  ^                   |\n                EndGame = True <-----------------------------\n\nNote Score Motor Location for sound routines is at shootAgain Light\nBall Control Subroutine developed by: rothbauerw\n  Press \"c\" during play to activate, the arrow keys control the ball, \".\" will levitate the ball, press \"c\" to drop it.\n**********************************************************************************************************************\nPhysical elements are on layer 2 w/ leaf switch rubbers separated for individual hit events."
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Grand Tour (Bally 1964).vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Grand Tour (Bally 1964).vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "fb728fde6b455b94f151620e4565398fe45588521c1ab089246819c82f650901"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

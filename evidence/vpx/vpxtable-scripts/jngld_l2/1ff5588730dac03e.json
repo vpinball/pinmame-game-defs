@@ -1,0 +1,546 @@
+{
+  "driver_ids": [
+    "jngld_l2"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.jngld_l2"
+  ],
+  "mechanisms": [
+    {
+      "kind": "cvpmMagnet",
+      "line": 386,
+      "raw": "Set LMAG=New cvpmMagnet",
+      "status": "candidate"
+    },
+    {
+      "kind": "cvpmMagnet",
+      "line": 392,
+      "raw": "Set RMAG=New cvpmMagnet",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Outhole",
+      "line": 243,
+      "status": "candidate",
+      "symbol": "SolOuthole"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Ball Release",
+      "line": 244,
+      "status": "candidate",
+      "symbol": "SolBallRelease"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol GI",
+      "line": 245,
+      "status": "candidate",
+      "symbol": "SolGI"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "DT Left Reset",
+      "line": 246,
+      "status": "candidate",
+      "symbol": "DTLeftReset"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "DT Right Reset",
+      "line": 247,
+      "status": "candidate",
+      "symbol": "DTRightReset"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Buzzer",
+      "line": 248,
+      "status": "candidate",
+      "symbol": "Buzzer"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Lower Kicker",
+      "line": 249,
+      "status": "candidate",
+      "symbol": "LowerKicker"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Upper Kicker",
+      "line": 250,
+      "status": "candidate",
+      "symbol": "UpperKicker"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "DT Left1",
+      "line": 251,
+      "status": "candidate",
+      "symbol": "DTLeft1"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "DT Left2",
+      "line": 252,
+      "status": "candidate",
+      "symbol": "DTLeft2"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "DT Left3",
+      "line": 253,
+      "status": "candidate",
+      "symbol": "DTLeft3"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "DT Left4",
+      "line": 254,
+      "status": "candidate",
+      "symbol": "DTLeft4"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "DT Left5",
+      "line": 255,
+      "status": "candidate",
+      "symbol": "DTLeft5"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "DT Up Release",
+      "line": 256,
+      "status": "candidate",
+      "symbol": "DTUpRelease"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "Bell",
+      "line": 257,
+      "status": "candidate",
+      "symbol": "Bell"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "label": "Mini Kicker",
+      "line": 262,
+      "status": "candidate",
+      "symbol": "MiniKicker"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 121,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "Jungle Lord / IPD No. 1338 / February, 1981 / 4 Players\nOriginal VPX version 1.05 by Tony The Wrench 2016\nVersion 2.0 by UnclePaulie 2022\n******** Revisions done by UnclePaulie on Hybrid version 0.01 - 2.0 *********\nNOTE:  Tony the Wrench did this table in 2016, and indicated there is Full permission to mod without approval\nv.01  Started updating code to make current.  Removed old sounds.\n    Enabled hybrid code for desktop, VR, and cabinet modes\n  Added fastflips and turned off in game AO and ScrSp Reflections\n  Changed playfield settings (AO, ScSp, physics, lighting, etc.) to match other Williams 2 level, 1981 tables.\n  Changed the dimensions of the table to be standard williams (was too wide before)... This resulted in LOTS of work... almost from scratch.\nv.02  Changed ALL walls, and major playfield components to be similar to other Williams tables.  Original table size was not correct.\n  Moved and resized everthing (walls, lights, rubbers, posts... everything) to fit correct table size.  Changed all cuved walls to ramps.\n  Added bulb primitives for GI.  Adjusted the bulb GI lights.\n  Changed to the anti-bill snubber rail primitives for death saves.  Added a metal rail in the plunger wall lane.\nv.03  Added full GI solution to bulbs, top of bulbs, and shadow'ed on playfield.\n  Added plastic acrylics.\n  Changed the apron wall structure to create a trough.\n  Changed the flippers to new williams flipper bats\n  Changed credit light.  Moved to correct location, and adjusted the height. Added a credit light prim\nv.04  Added code for physics, flippers, shadows, etc.\n    Completely changed the trough logic to handle balls on table\n    No longer destroy balls.  Use a global gBOT throughout all of script.\n  Removed all the getballs calls and am only useing gBOT.  Will help eliminate stutter on slower CPU machines\n    Removed the UpperEnter and UpperExit, as it destroyed balls.  I put a physics ramp prim in there from Bord's Black Knight.\n    Added updated knocker position and code, kept bell sound.\n    Added Apophis sling corrections to top and bottom slings, and updated the sling physics.\n    Added nFozzy / Roth physics and flippers.  Updated the flipper physics per recommendations.\n  Added code for DT, ST, slingshot corrections, flippers, physics, dampeners, shadows\n  Added groove to plunger lane, and small ball release ramp to get up.\n  Added VPW Dynamic Ball Shadows to the solution done Iakki, Apophis, and Wylte.  For upper playfield, had to change value of 90 to 80, since this upper playfield is lower than Pharaoh\n  Added flipper shadows\n    Added lighter ball images provided by hauntfreaks and g5k ball scratches, changeable in script\n  Added fleep sounds and ballrolling sounds\n    Updated Credit light to be tied to actual number of credits.\n  Made the plastic acrylics collidable\n  Changed the plunger pull speed.\nv.05  Removed miniPF lights from GI. They are their own lights.\n  Updated all elements physics and sound routines.\n  Instead of adding ramp triggers for ramp rolling sounds, I decided to have metal ramps have just a metal hit sound, since they were short.\n  Changed the peg color and disablelighting.\n  Added a vertical prim for plunger vertical ramp.\n  Added all the rubber and post physics and collections.\n  Changed metal GI plates, walls, and rails to include aluminum and aluminum scratched dark images.\nv.06  Updated saucer / kicker logic with sub method and fleep sounds\n  Redid the mini playfield kicker logic, and resized the saucers.\n    Updated the left and right magnet code, and adjusted the strength and size.\n  Added new drop and standup targets to the solution done by Rothbauerw\n  Added Buzzer routine\n    Adjusted the apron size down slightly.\n  Modified the trough logic for updating on outhole and BallRelease.  Increased the drain kicker slightly.\n  I added a slight delay to the drain swtich setting to avoid posible outhole delays.\nv0.7  Updated to Lampz lighting routine by VPW.\n    Updated the playfield for 3D inserts, slings, triggers holes, and target holes, and added plywood hole images.\n  Modified the sling primatives and sling walls to drop below playfield.  Looks better in VR.\n  Added all 3D inserts\n  Adjusted the center insert brightness to be more white when off\n  Added updated playfield and insert text for 3D inserts.  Needed both upper and lower playfield inserts.\n  Adjusted all the insert light intensities, fade, falloff, heights, colors, etc.\n  Set alpha channel on text overlays to 50.  Made the text on inserts look so much better.\n  Added insert light blooms\nv0.8  Added image for drop targets.\n  Added Drop Target Shadows\n    Added code for when GI is on or off... the DT shadows turn on and off accordingly.\n  Adjusted the playfield GI near inserts 4 and 5 to see them correctly.\n  Added GI Brightness increase to inserts when GI is off and reduced it when GI on\n  Added GI lights to Lampz.\n  Added GI to white screws, rubbbers, posts, apron, plunger, flippers, side walls, and targets (each target needed separate material since active)\n  Added basic ball GI brightness level.\n  Adjusted the ramp walls and some plastics to ensure no conflicts with ramps, tunnels, and plastics.\nv0.9  Changed the lighting and wall structure in the miniPF and miniPF special.\n    On the miniPF walls between triggers, the ball can get stuck on the top of them... make a round wall on top.\n  Added code to control the rubbers and rails for GI\nv0.10 Bunch of minor corrections: could see the walls on the snubbers. Needed separate material on each playfield guard rail.\n  Adjusted the gates, all the triggers, UP right wall length. Made the acrylics more consistent size.  Raised rubber heights.\n  Adjusted the Plastic with light material to opacity amount to 0.999 (needed all three 9's)... could see through too much.\n    Adjusted the playfield material and image alpha to not see through, and hide some of the black outlines.\n    Adjusted middle ramp plastics, and apron underwall near right side.  Added a bulb prim under Light28bulb\n  Adjusted all rubber height.  Also changed the height of slings, and the screws and caps.\nv0.11 Added all VR elements (no graphics yet)\n  Fixed Wall004 sizing near ramp.\n  Added guard rails behind some rubbers (like real Table)\n    Cut holes in playfield for little walls behind rubbers\n    Outlane bottm walls by flippers moveed up\n  Got the game over, titl, bip, etc. working in desktop.\nv0.12 Original scan of playfield had inserts oblong. Resized inserts on playfield and text overlays to try make more circular.\n  Adjusted the right side walls to align better.\nv0.13 Added upper playfield mesh for realistic saucer drops and bevels, and changed the physics of the upperplayfield.\n  Adjusted saucer walls and saucer strength to ensure accurate to ball rollouts like online videos.\n  Edited the image of the upper playfield slightly for the saucers and added nicer looking Williams gray kicker primitives.\n    Added a wall behind the upper top saucer\n  Adjusted the mini playfield to match the real table as close as possible, and can hit all four LORD shots.\n  Adjusted the tunnel walls.\n  Updated playfield and PlasticLowerCenter3 image to clean up some areas, and widened the magna save circle images.\n  Updated the bell sound\n  Added GI to the miniPF plastic lane separators, as well as an adjustment to GIPosts\n  Added the MultiBall Timer to the desktop background\n  Added ruleset to table info.\n  Adjusted topper and cab graphics in VR, and fixed the side walls for VR.  Also modified the corners on the apron\n    Put a black wall under upper playfield, and under whole playfield to block seeing through triggers.\nv0.14 Rewrote MiniPF kicker logic to more close match the odds of the real table (based on videos) for hitting the LORD targets.\n    Animated VR Backglass, and changed VR backglass lamps and GI to Lampz.\n  Updated disablelighting and color of GIRailsPF\n    Updated POV for cab\nv0.15 Updated LUT's to additional images, and new subroutines, and ability to save to user text file.\nv0.16 Had 2 hit subs for sw17-19 hit subs.  Corrected (thanks Wylte)\n  Hit threshold on inlane walls was set to 0, Wylte suggested 2 to avoid sound spam - plunger vert U-turn could use the same\n    VPW feedback indicated that the table was a bit bright.  Turned the day/night slider down 1/2 tick.\nv0.17 Added more instructions\n  Corrected the upper playfield sling edges and its post physics alignment. PinstratsDan found an issue with ball roll off and soft shot.\nv0.18 leojreimroc updated the VR backglass to look more realistic and natural.\n  Overall cleanup, and removed PinCab_Backglass, as it was no longer needed.  Moved VRLut down 175 units to see, since overlaying a flasher.\nv2.0  Released Version\nv2.01 Added DisableLUT selector (forgot to add in earlier version.\n  Bord created meshes for the metal ramps and walls to smooth out the ramp transitions, give the metal some texture and to add ambient occlusion\n  UnclePaulie broke the mesh into two, to be able to control GI separately for the miniPF.\nThanks to the VPW team for testing, especially Wylte, BountyBob, Thalamus, Astronasty, bietekwiet, leojreimroc, smaug, Bord, and PinStratsDan!"
+    },
+    {
+      "line_end": 386,
+      "line_start": 384,
+      "status": "candidate",
+      "text": "Magnets"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Jungle Lord (Williams 1981) w VR Room v2.01.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Jungle Lord (Williams 1981) w VR Room v2.01.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "1ff5588730dac03ef57f7f88ec0c721d9ae5ee01f7ee5b4f8cc72f10ca72918a"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 705,
+      "status": "candidate",
+      "symbol": "BallRelease_Hit"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 706,
+      "status": "candidate",
+      "symbol": "BallRelease_UnHit"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 358,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "Slot",
+      "line": 707,
+      "status": "candidate",
+      "symbol": "Slot_Hit"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "Slot",
+      "line": 708,
+      "status": "candidate",
+      "symbol": "Slot_UnHit"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 359,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 684,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 841,
+      "status": "candidate",
+      "symbol": "sw13_Hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 842,
+      "status": "candidate",
+      "symbol": "sw13_UnHit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "sw14",
+      "line": 844,
+      "status": "candidate",
+      "symbol": "sw14_Hit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "sw14",
+      "line": 845,
+      "status": "candidate",
+      "symbol": "sw14_UnHit"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "sw15",
+      "line": 847,
+      "status": "candidate",
+      "symbol": "sw15_Hit"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "sw15",
+      "line": 848,
+      "status": "candidate",
+      "symbol": "sw15_UnHit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 850,
+      "status": "candidate",
+      "symbol": "sw16_Hit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 851,
+      "status": "candidate",
+      "symbol": "sw16_UnHit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "sw20",
+      "line": 817,
+      "status": "candidate",
+      "symbol": "sw20_Hit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "sw20",
+      "line": 818,
+      "status": "candidate",
+      "symbol": "sw20_UnHit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "sw21",
+      "line": 820,
+      "status": "candidate",
+      "symbol": "sw21_Hit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "sw21",
+      "line": 821,
+      "status": "candidate",
+      "symbol": "sw21_UnHit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 823,
+      "status": "candidate",
+      "symbol": "sw22_Hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 824,
+      "status": "candidate",
+      "symbol": "sw22_UnHit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 826,
+      "status": "candidate",
+      "symbol": "sw23_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 827,
+      "status": "candidate",
+      "symbol": "sw23_UnHit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "sw24",
+      "line": 829,
+      "status": "candidate",
+      "symbol": "sw24_Hit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "sw24",
+      "line": 830,
+      "status": "candidate",
+      "symbol": "sw24_UnHit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 645,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 832,
+      "status": "candidate",
+      "symbol": "sw32_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 833,
+      "status": "candidate",
+      "symbol": "sw32_UnHit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Kicker2",
+      "line": 770,
+      "status": "candidate",
+      "symbol": "Kicker2_Hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Upper Kicker",
+      "line": 780,
+      "status": "candidate",
+      "symbol": "UpperKicker"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "Kicker1",
+      "line": 756,
+      "status": "candidate",
+      "symbol": "Kicker1_Hit"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "Lower Kicker",
+      "line": 765,
+      "status": "candidate",
+      "symbol": "LowerKicker"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "Upper Right Sling Shot",
+      "line": 664,
+      "status": "candidate",
+      "symbol": "UpperRightSlingShot_Slingshot"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 747,
+      "status": "candidate",
+      "symbol": "Drain_Hit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 752,
+      "status": "candidate",
+      "symbol": "Drain_UnHit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 357,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 835,
+      "status": "candidate",
+      "symbol": "sw43_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 836,
+      "status": "candidate",
+      "symbol": "sw43_UnHit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 360,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 838,
+      "status": "candidate",
+      "symbol": "sw44_Hit"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 839,
+      "status": "candidate",
+      "symbol": "sw44_UnHit"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 462,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 529,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 456,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 524,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    }
+  ],
+  "version": 1
+}

@@ -1,0 +1,421 @@
+{
+  "driver_ids": [
+    "sorbit"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.sorbit"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 139,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Trough",
+      "line": 140,
+      "status": "candidate",
+      "symbol": "SolTrough"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "Game Over",
+      "line": 141,
+      "status": "candidate",
+      "symbol": "GameOver"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 19,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "____                    ____      __   _ __\n / __/_ _____  ___ ____  / __ \\____/ /  (_) /_\n_\\ \\/ // / _ \\/ -_) __/ / /_/ / __/ _ \\/ / __/\n/___/\\_,_/ .__/\\__/_/    \\____/_/ /_.__/_/\\__/\n       /_/\n********************************************************************************************************************************\n******** Work done by UnclePaulie on Hybrid version 0.01 - 2.0 *********\n    Added latest VPW standards, physics, GI baking, Lampz and 3D inserts, shadows, updated backglass for desktop,\n  roth standup targets, standalone compatibility, sling corrections,\n  optional DIP adjustments, updated flipper physics, varitarget, VR and fully hybrid, Flupper style bumpers and lighting.\n  Full details at the bottom of the script.  Redbone did the playfield, plastics, and other graphics.\n    Thanks to Redbone for the playfield and plastic images, and Hauntfreaks for the updated backglass image!  Also Silversurfer for updated VR Cab artwork.\n    Also thanks to the VPW team for testing, Rothbauerw for his varitarget code, DarthVito for the VR Walls, and everyone else that provided feedback!\n********************************************************************************************************************************"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in special_audiopan_and_audiofade_patched/Super Orbit (Gottlieb 1983) v2.0.1.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "special_audiopan_and_audiofade_patched/Super Orbit (Gottlieb 1983) v2.0.1.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "a6327351f42cbd9b9d65356f175339d872bee1bf3ebf244715a474131ce96c93"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 0,
+      "group": "pinmame.input.switch",
+      "label": "itch 0",
+      "line": 2698,
+      "status": "candidate",
+      "symbol": "switch_0"
+    },
+    {
+      "address": 0,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 231,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "01t",
+      "line": 604,
+      "status": "candidate",
+      "symbol": "sw01t_Hit"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "01t",
+      "line": 605,
+      "status": "candidate",
+      "symbol": "sw01t_UnHit"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "01ta",
+      "line": 606,
+      "status": "candidate",
+      "symbol": "sw01ta_Hit"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "01ta",
+      "line": 607,
+      "status": "candidate",
+      "symbol": "sw01ta_UnHit"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 2422,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 521,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "itch 10",
+      "line": 2698,
+      "status": "candidate",
+      "symbol": "switch_10"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 230,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "11t",
+      "line": 608,
+      "status": "candidate",
+      "symbol": "sw11t_Hit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "11t",
+      "line": 609,
+      "status": "candidate",
+      "symbol": "sw11t_UnHit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "11ta",
+      "line": 610,
+      "status": "candidate",
+      "symbol": "sw11ta_Hit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "11ta",
+      "line": 611,
+      "status": "candidate",
+      "symbol": "sw11ta_UnHit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 2424,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 526,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "itch 20",
+      "line": 2698,
+      "status": "candidate",
+      "symbol": "switch_20"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 229,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Gate3",
+      "line": 649,
+      "status": "candidate",
+      "symbol": "Gate3_Hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Bumper3",
+      "line": 531,
+      "status": "candidate",
+      "symbol": "Bumper3_Hit"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "itch 30",
+      "line": 2698,
+      "status": "candidate",
+      "symbol": "switch_30"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 228,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Spinner",
+      "line": 633,
+      "status": "candidate",
+      "symbol": "Spinner_Spin"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 545,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "itch 40",
+      "line": 2698,
+      "status": "candidate",
+      "symbol": "switch_40"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 227,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "sw41",
+      "line": 612,
+      "status": "candidate",
+      "symbol": "sw41_Hit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "sw41",
+      "line": 613,
+      "status": "candidate",
+      "symbol": "sw41_UnHit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 292,
+      "state_labels": [
+        "Table1 Key Down"
+      ],
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 363,
+      "state_labels": [
+        "Table1 Key Up"
+      ],
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "itch 50",
+      "line": 2698,
+      "status": "candidate",
+      "symbol": "switch_50"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 226,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "sw51",
+      "line": 614,
+      "status": "candidate",
+      "symbol": "sw51_Hit"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "sw51",
+      "line": 615,
+      "status": "candidate",
+      "symbol": "sw51_UnHit"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "sw52",
+      "line": 616,
+      "status": "candidate",
+      "symbol": "sw52_Hit"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "sw52",
+      "line": 617,
+      "status": "candidate",
+      "symbol": "sw52_UnHit"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.input.switch",
+      "label": "itch 60",
+      "line": 2698,
+      "status": "candidate",
+      "symbol": "switch_60"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 225,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "sw61",
+      "line": 618,
+      "status": "candidate",
+      "symbol": "sw61_Hit"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "sw61",
+      "line": 619,
+      "status": "candidate",
+      "symbol": "sw61_UnHit"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "Sensor62",
+      "line": 596,
+      "status": "candidate",
+      "symbol": "Sensor62_Hit"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "label": "Slot1",
+      "line": 453,
+      "status": "candidate",
+      "symbol": "Slot1_Hit"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "label": "Slot1",
+      "line": 454,
+      "status": "candidate",
+      "symbol": "Slot1_UnHit"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 222,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    }
+  ],
+  "version": 1
+}

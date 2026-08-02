@@ -1,0 +1,344 @@
+{
+  "driver_ids": [
+    "bk_l4"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.bk_l4"
+  ],
+  "mechanisms": [
+    {
+      "kind": "cvpmMagnet",
+      "line": 222,
+      "raw": "Set LMAG = New cvpmMagnet",
+      "status": "candidate"
+    },
+    {
+      "kind": "cvpmMagnet",
+      "line": 230,
+      "raw": "Set RMAG = New cvpmMagnet",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Trough.Sol In",
+      "line": 846,
+      "status": "candidate",
+      "symbol": "bsTrough.SolIn"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Drop Up LL",
+      "line": 847,
+      "status": "candidate",
+      "symbol": "SolDropUpLL"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Drop Up LR",
+      "line": 848,
+      "status": "candidate",
+      "symbol": "SolDropUpLR"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Drop Up UL",
+      "line": 849,
+      "status": "candidate",
+      "symbol": "SolDropUpUL"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Drop Up UR",
+      "line": 850,
+      "status": "candidate",
+      "symbol": "SolDropUpUR"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Trough.Sol Out",
+      "line": 851,
+      "status": "candidate",
+      "symbol": "bsTrough.SolOut"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Lock.Sol Out",
+      "line": 852,
+      "status": "candidate",
+      "symbol": "bsLock.SolOut"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Saucer.Sol Out",
+      "line": 853,
+      "status": "candidate",
+      "symbol": "bsSaucer.SolOut"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Gi",
+      "line": 854,
+      "status": "candidate",
+      "symbol": "SolGi"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Sol Sound Sound FX(",
+      "line": 855,
+      "status": "candidate",
+      "symbol": "vpmSolSound SoundFX("
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Nudge.Sol Game On",
+      "line": 856,
+      "status": "candidate",
+      "symbol": "vpmNudge.SolGameOn"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 17,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "Black Knight / IPD No. 310 / Williams, November, 1980 / 4 Players\nOriginal table done by Bord\nVR Room Mods for Version 3.0 by Uncle Paulie\n- NOTE:  IF YOU GET TOO MANY CREDITS:  If you get 3 credits when you press your keycode 5 or addcreditkey; you need to change your ROM\n    Here is the procedure to set credits on Williams System 6A tables on the ROM using service keys (or your keyboard):\n      1. Press 9 to enter diagnostic mode.\n      2. Press 8 to enter test mode.\n      3. Press 7 then press 8 to see 01 in the credit display.\n      4. Continue to press 8 until you see 19 in the credit display\n      5. Press and hold the 1 key select for the setting you want 00-08. The value will increment by 1 while holding in the 1 key.\n\t   When you reach the number you want to set it to, release the 1 key. (NOTE: If you want to lower the value or you went past\n\t   the value you wanted to set it to, release the 1 key, press and release the 7 key, then press and hold the 1 key. Value should\n\t   then decrement by 1).   (NOTE:  From a fresh NVRAM, incrementing the 1 key one time is all that's necessary.)\n      6. Press F3 to save your changes and reset the table.\n    The manual is here:  https://www.ipdb.org/files/310/Williams_1980_Black_Knight_Operators_Handbook.pdf"
+    },
+    {
+      "line_end": 222,
+      "line_start": 220,
+      "status": "candidate",
+      "text": "Left Magnet"
+    },
+    {
+      "line_end": 230,
+      "line_start": 228,
+      "status": "candidate",
+      "text": "Right Magnet"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Black Knight (Williams 1980)/Black Knight (Williams 1980).vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Black Knight (Williams 1980)/Black Knight (Williams 1980).vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/jsm174/vpx-standalone-scripts",
+    "revision": "15d112648a1b94b9f59eb8b3c335d57283653c50",
+    "sha256": "15a703c8c1a4ae47979d89355ac6840c6d40a2ba4c00c88e22a6fe6bfc85285b"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 318,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 398,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 312,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 392,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 757,
+      "status": "candidate",
+      "symbol": "sw11_Hit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 758,
+      "status": "candidate",
+      "symbol": "sw11_UnHit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "sw12",
+      "line": 766,
+      "status": "candidate",
+      "symbol": "sw12_Hit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "sw12",
+      "line": 767,
+      "status": "candidate",
+      "symbol": "sw12_UnHit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "pinner",
+      "line": 787,
+      "status": "candidate",
+      "symbol": "spinner_Spin"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "sw14",
+      "line": 772,
+      "status": "candidate",
+      "symbol": "sw14_Hit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "sw14",
+      "line": 773,
+      "status": "candidate",
+      "symbol": "sw14_UnHit"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "sw15",
+      "line": 763,
+      "status": "candidate",
+      "symbol": "sw15_Hit"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "sw15",
+      "line": 764,
+      "status": "candidate",
+      "symbol": "sw15_UnHit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 760,
+      "status": "candidate",
+      "symbol": "sw16_Hit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 761,
+      "status": "candidate",
+      "symbol": "sw16_UnHit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 674,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 692,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 769,
+      "status": "candidate",
+      "symbol": "sw23_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 770,
+      "status": "candidate",
+      "symbol": "sw23_UnHit"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 707,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 775,
+      "status": "candidate",
+      "symbol": "sw44_Hit"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 776,
+      "status": "candidate",
+      "symbol": "sw44_UnHit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "sw45",
+      "line": 778,
+      "status": "candidate",
+      "symbol": "sw45_Hit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "sw45",
+      "line": 785,
+      "status": "candidate",
+      "symbol": "sw45_UnHit"
+    }
+  ],
+  "version": 1
+}

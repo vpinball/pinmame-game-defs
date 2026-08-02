@@ -1,0 +1,295 @@
+{
+  "driver_ids": [
+    "stargzr"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.stargzr"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "DT Bank Center Reset",
+      "line": 889,
+      "status": "candidate",
+      "symbol": "DTBankCenterReset"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "DT Bank Right Reset",
+      "line": 890,
+      "status": "candidate",
+      "symbol": "DTBankRightReset"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 891,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "DT Bank Left Reset",
+      "line": 892,
+      "status": "candidate",
+      "symbol": "DTBankLeftReset"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Ball Release",
+      "line": 893,
+      "status": "candidate",
+      "symbol": "SolBallRelease"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Game On",
+      "line": 895,
+      "status": "candidate",
+      "symbol": "SolGameOn"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 32,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "_______ _________ _______  _______      _______  _______  _______  _______  _______\n(  ____ \\\\__   __/(  ___  )(  ____ )    (  ____ \\(  ___  )/ ___   )(  ____ \\(  ____ )\n| (    \\/   ) (   | (   ) || (    )|    | (    \\/| (   ) |\\/   )  || (    \\/| (    )|\n| (_____    | |   | (___) || (____)|    | |      | (___) |    /   )| (__    | (____)|\n(_____  )   | |   |  ___  ||     __)    | | ____ |  ___  |   /   / |  __)   |     __)\n     ) |   | |   | (   ) || (\\ (       | | \\_  )| (   ) |  /   /  | (      | (\\ (\n/\\____) |   | |   | )   ( || ) \\ \\__    | (___) || )   ( | /   (_/\\| (____/\\| ) \\ \\__\n\\_______)   )_(   |/     \\||/   \\__/    (_______)|/     \\|(_______/(_______/|/   \\__/\n\n\n              Stern Electronics, Incorporated, 1980; Stern M-200 MPU\n      Star Gazer / IPD No. 2346 / August, 1980 / 4 Players, 869 units produced\n              https://www.ipdb.org/machine.cgi?id=2346\n\n\nVersion 2.0 by UnclePaulie\n********************************************************************************************************************************\n******** Work done by UnclePaulie on Hybrid version 0.01 - 2.0 *********\n    Added latest VPW standards, most recent VPW physics as of 2025, GI VLM, 3D inserts, AllLamps routines, shadows,\n  updated backglass for desktop, animated bumpers, baked walls, roth targets, standalone compatibility, sling corrections,\n  updated flipper physics, updated spinner logic and functionality, VR and fully hybrid,\n  Playfield scan provided by apophis, backglass images provided by Hauntfreaks. Thanks also to the VPW team for testing!\n  Playfield, plastics, targets, apron, and other images created and/or updated by Redbone.\n  Full details at the bottom of the script.\n********************************************************************************************************************************\nPLEASE NOTE:\n- All game options can be adjusted by pressing F12 and then left flipper button during the game. Press start button to save your options."
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Star Gazer (Stern 1980) v2.0.0.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Star Gazer (Stern 1980) v2.0.0.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "6227ec5440f373b2413d3c2349fbf58c64a612ee9a287d20e5bac09206a2b829"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3332,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3334,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3336,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "sw4",
+      "line": 1283,
+      "status": "candidate",
+      "symbol": "sw4_Spin"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3338,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "sw5",
+      "line": 1269,
+      "status": "candidate",
+      "symbol": "sw5_Spin"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3340,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3342,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3344,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3346,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "sw9",
+      "line": 1297,
+      "status": "candidate",
+      "symbol": "sw9_Spin"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3348,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 1365,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 1374,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Bumper3",
+      "line": 1383,
+      "status": "candidate",
+      "symbol": "Bumper3_Hit"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 1006,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 1026,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 907,
+      "status": "candidate",
+      "symbol": "BallRelease_Hit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 908,
+      "status": "candidate",
+      "symbol": "BallRelease_UnHit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 319,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "sw34",
+      "line": 1395,
+      "status": "candidate",
+      "symbol": "sw34_Hit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "sw34",
+      "line": 1396,
+      "status": "candidate",
+      "symbol": "sw34_UnHit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "sw35",
+      "line": 1397,
+      "status": "candidate",
+      "symbol": "sw35_Hit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "sw35",
+      "line": 1398,
+      "status": "candidate",
+      "symbol": "sw35_UnHit"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "sw36",
+      "line": 1412,
+      "status": "candidate",
+      "symbol": "sw36_Hit"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "sw37",
+      "line": 1416,
+      "status": "candidate",
+      "symbol": "sw37_Hit"
+    }
+  ],
+  "version": 1
+}

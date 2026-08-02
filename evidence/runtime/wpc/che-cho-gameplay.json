@@ -1,0 +1,96 @@
+{
+  "driver_ids": [
+    "che_cho"
+  ],
+  "extractor": {
+    "id": "libpinmame-gameplay-harness",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "watacaractr.cheech-chong-road-trippin.2021"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game che_cho --rom-path <roms> --work-dir <isolated-state> --initial-switch 16 --initial-switch 17 --initial-switch 18 --pulse 1:250:0.5 --pulse 13:250:1.2 --pulse 18:80:0.8 --pulse <playfield-switch>:20:1.4 --output <external-json>",
+    "game": "che_cho",
+    "observations": {
+      "gi_addresses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "initial_lamp_addresses": [
+        11,
+        12
+      ],
+      "named_output_addresses": {
+        "game_on": 31,
+        "trough_eject": 2
+      },
+      "switch_to_lamp": {
+        "31": 41,
+        "32": 42,
+        "33": 43,
+        "34": 44,
+        "41": 56,
+        "42": 57,
+        "43": 58,
+        "51": 23,
+        "52": 24,
+        "53": 25,
+        "54": 26,
+        "55": 27,
+        "56": 28,
+        "57": 31,
+        "58": 32,
+        "61": 33,
+        "62": 34,
+        "63": 35,
+        "64": 36,
+        "65": 37,
+        "66": 38
+      }
+    },
+    "raw_runs": [
+      {
+        "name": "target-lamps",
+        "self_test_pulses": 0,
+        "sha256": "f02c828737fda8cb66bbb88c4038607de3c659ce8827bf0f6b7242ed2107f361"
+      },
+      {
+        "name": "playfield-semantics",
+        "self_test_pulses": 0,
+        "sha256": "2e0fad699c5969b74c5d0ce9467c837e6d953f3e431892ca81a932207afc26c3"
+      },
+      {
+        "name": "route-clean-one-edge",
+        "self_test_pulses": 0,
+        "sha256": "dae166cf8f694829e8ff71d4719ef7a2c39ff5c3a1e090cf944042b8f7fa9dda"
+      },
+      {
+        "name": "single-lamps-service",
+        "self_test_pulses": 0,
+        "sha256": "0826401a91c77fb0845e943d0f76cd3d98957f76097dc422aebe16620aff8ad9"
+      }
+    ],
+    "rom_archive_sha256": "34d1f6a3fc31b988fe4c0a38904df2d533e3cb0735995134d113dcb7f96157c2"
+  },
+  "source": {
+    "attribution": "Generated locally from PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-game-code/che_cho/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "f02c828737fda8cb66bbb88c4038607de3c659ce8827bf0f6b7242ed2107f361"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

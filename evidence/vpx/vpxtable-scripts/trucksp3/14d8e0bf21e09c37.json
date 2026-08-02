@@ -1,0 +1,422 @@
+{
+  "driver_ids": [
+    "trucksp3"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.trucksp3"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 40,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "*********************************************************************************************************************************\n=== TABLE OF CONTENTS  ===\n\nYou can quickly jump to a section by searching the four letter tag (ZXXX)\n\nZOPT: User Options\nZCON: Constants and Global Variables\nZTIM: Timers\nZINI: Table Initialization and Exiting\n  ZMAT: General Math Functions\nZBBR: Ball Brightness\nZGIC: GI Colors\nZANI: Misc Animations\nZRBR: Room Brightness\nZPHY: General Advice on Physics\nZNFF: Flipper Corrections\nZKEY: Key Press Handling\nZDRN: Drain, Trough, and Ball Release\nZFLP: Flippers\nZSLG: Slingshots\nZSWI: Switches\n  ZTRI: Triggers\nZTAR: Targets\nZBMP: Bumpers\nZLNS: Lane Steering\nZKIC: Kickers, Saucers\n  ZDMP: Rubber Dampeners\n  ZBOU: VPW TargetBouncer for targets and posts\nZSSC: Slingshot Correction\n  ZRDT: Drop Targets\nZRST: Stand-Up Targets\nZSHA: Ambient Ball Shadows\n  ZBRL: Ball Rolling and Drop Sounds\n  ZRRL: Ramp Rolling SFX\n  ZFLE: Fleep Mechanical Sounds\nZDTD: Desktop Digits\n  ZVRR: VR Room / VR Cabinet\nZVLM: VLM Arrays\n*********************************************************************************************************************************"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Truck Stop (Bally 1988) v1.0.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Truck Stop (Bally 1988) v1.0.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "14d8e0bf21e09c37d18d20e04804a6d3753ee9ae45770e7bf216ca8ad3637ade"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Entry C",
+      "line": 2069,
+      "status": "candidate",
+      "symbol": "swRampEntryC"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Entry I",
+      "line": 2070,
+      "status": "candidate",
+      "symbol": "swRampEntryI"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Entry T",
+      "line": 2071,
+      "status": "candidate",
+      "symbol": "swRampEntryT"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Entry Y",
+      "line": 2072,
+      "status": "candidate",
+      "symbol": "swRampEntryY"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 1699,
+      "status": "candidate",
+      "symbol": "Drain_Hit"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 1679,
+      "status": "candidate",
+      "symbol": "Drain_UnHit"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Outhole",
+      "line": 2073,
+      "status": "candidate",
+      "symbol": "swOuthole"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 321,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Exit Left",
+      "line": 2074,
+      "status": "candidate",
+      "symbol": "swRampExitLeft"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Exit Right",
+      "line": 2075,
+      "status": "candidate",
+      "symbol": "swRampExitRight"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "Tilt Me",
+      "line": 2076,
+      "status": "candidate",
+      "symbol": "swTiltMe"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "Shooter Lane",
+      "line": 2077,
+      "status": "candidate",
+      "symbol": "swShooterLane"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "Bottom Sling Left",
+      "line": 2078,
+      "status": "candidate",
+      "symbol": "swBottomSlingLeft"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Bottom Sling Right",
+      "line": 2079,
+      "status": "candidate",
+      "symbol": "swBottomSlingRight"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "Top Sling Left",
+      "line": 2080,
+      "status": "candidate",
+      "symbol": "swTopSlingLeft"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "Top Sling Right",
+      "line": 2081,
+      "status": "candidate",
+      "symbol": "swTopSlingRight"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Single Target Top",
+      "line": 2082,
+      "status": "candidate",
+      "symbol": "swSingleTargetTop"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Mushroom Left",
+      "line": 2083,
+      "status": "candidate",
+      "symbol": "swMushroomLeft"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Mushroom Right",
+      "line": 2084,
+      "status": "candidate",
+      "symbol": "swMushroomRight"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Spinner Top",
+      "line": 2085,
+      "status": "candidate",
+      "symbol": "swSpinnerTop"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "Drop Target Bottom",
+      "line": 2086,
+      "status": "candidate",
+      "symbol": "swDropTargetBottom"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "Drop Target Middle",
+      "line": 2087,
+      "status": "candidate",
+      "symbol": "swDropTargetMiddle"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "Drop Target Top",
+      "line": 2088,
+      "status": "candidate",
+      "symbol": "swDropTargetTop"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "Top Walls",
+      "line": 2089,
+      "status": "candidate",
+      "symbol": "swTopWalls"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "Kicker Top Left",
+      "line": 2090,
+      "status": "candidate",
+      "symbol": "swKickerTopLeft"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "Saucer Top Right",
+      "line": 2091,
+      "status": "candidate",
+      "symbol": "swSaucerTopRight"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Inlane Left",
+      "line": 2092,
+      "status": "candidate",
+      "symbol": "swInlaneLeft"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "Inlane Right",
+      "line": 2093,
+      "status": "candidate",
+      "symbol": "swInlaneRight"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "Blue Target1",
+      "line": 2094,
+      "status": "candidate",
+      "symbol": "swBlueTarget1"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Blue Target2",
+      "line": 2095,
+      "status": "candidate",
+      "symbol": "swBlueTarget2"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Blue Target3",
+      "line": 2096,
+      "status": "candidate",
+      "symbol": "swBlueTarget3"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Blue Target4",
+      "line": 2097,
+      "status": "candidate",
+      "symbol": "swBlueTarget4"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "Blue Target5",
+      "line": 2098,
+      "status": "candidate",
+      "symbol": "swBlueTarget5"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Blue Target6",
+      "line": 2099,
+      "status": "candidate",
+      "symbol": "swBlueTarget6"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "Outlane Left",
+      "line": 2100,
+      "status": "candidate",
+      "symbol": "swOutlaneLeft"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "Outlane Right",
+      "line": 2101,
+      "status": "candidate",
+      "symbol": "swOutlaneRight"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "Single Target Left",
+      "line": 2102,
+      "status": "candidate",
+      "symbol": "swSingleTargetLeft"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "Single Target Right",
+      "line": 2103,
+      "status": "candidate",
+      "symbol": "swSingleTargetRight"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "Lower Dock",
+      "line": 2104,
+      "status": "candidate",
+      "symbol": "swLowerDock"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "Upper Dock",
+      "line": 2105,
+      "status": "candidate",
+      "symbol": "swUpperDock"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "sw47",
+      "line": 1677,
+      "status": "candidate",
+      "symbol": "sw47_Hit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "sw47",
+      "line": 1678,
+      "status": "candidate",
+      "symbol": "sw47_UnHit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Trough L",
+      "line": 2106,
+      "status": "candidate",
+      "symbol": "swTroughL"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 319,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 1675,
+      "status": "candidate",
+      "symbol": "BallRelease_Hit"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 1676,
+      "status": "candidate",
+      "symbol": "BallRelease_UnHit"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Trough R",
+      "line": 2107,
+      "status": "candidate",
+      "symbol": "swTroughR"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 320,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    }
+  ],
+  "version": 1
+}

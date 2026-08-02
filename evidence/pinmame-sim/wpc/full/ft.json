@@ -1,0 +1,1050 @@
+{
+  "driver_ids": [
+    "ft_d5",
+    "ft_d6",
+    "ft_l3",
+    "ft_l4",
+    "ft_l5",
+    "ft_l5p",
+    "ft_p2",
+    "ft_p4",
+    "ft_p5"
+  ],
+  "extractor": {
+    "id": "pinmame-sim-source",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.fish-tales.1992"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Ball Shooter",
+      "line": 163,
+      "status": "candidate",
+      "symbol": "sBallShooter"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Catapult",
+      "line": 164,
+      "status": "candidate",
+      "symbol": "sCatapult"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Ball Popper",
+      "line": 165,
+      "status": "candidate",
+      "symbol": "sBallPopper"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "L Sling",
+      "line": 166,
+      "status": "candidate",
+      "symbol": "sLSling"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "R Sling",
+      "line": 167,
+      "status": "candidate",
+      "symbol": "sRSling"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "L Gate",
+      "line": 168,
+      "status": "candidate",
+      "symbol": "sLGate"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Knocker",
+      "line": 169,
+      "status": "candidate",
+      "symbol": "sKnocker"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Back Box Fish",
+      "line": 170,
+      "status": "candidate",
+      "symbol": "sBackBoxFish"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Outhole",
+      "line": 171,
+      "status": "candidate",
+      "symbol": "sOuthole"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "Ball Release",
+      "line": 172,
+      "status": "candidate",
+      "symbol": "sBallRelease"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "Eject Hole",
+      "line": 173,
+      "status": "candidate",
+      "symbol": "sEjectHole"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "Drop Target Up",
+      "line": 174,
+      "status": "candidate",
+      "symbol": "sDropTargetUp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "Drop Target Down",
+      "line": 175,
+      "status": "candidate",
+      "symbol": "sDropTargetDown"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "Jet1",
+      "line": 176,
+      "status": "candidate",
+      "symbol": "sJet1"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "Jet2",
+      "line": 177,
+      "status": "candidate",
+      "symbol": "sJet2"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid",
+      "label": "Jet3",
+      "line": 178,
+      "status": "candidate",
+      "symbol": "sJet3"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "label": "Reel Motor",
+      "line": 179,
+      "status": "candidate",
+      "symbol": "sReelMotor"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 18,
+      "line_start": 3,
+      "status": "candidate",
+      "text": "Williams Fishtales (1992) Pinball Simulator\nby Steve Ellenoff (sellenoff@hotmail.com)\nNov.19, 2000\nKnown Issues/Problems with Simulator:\n#1) I don't have access to this game, I guessed most of it from a Playfield picture\nand the rulesheet! I did love to play it though, but it's been years since I have!\n#2) I'm guessing on the reel optos, with help from \"ari 'apz' sovijärvi\"\nChanges:\n05-1-2001: Added GetMech support & Added all 3 fake solenoids to gamedata structure"
+    }
+  ],
+  "source": {
+    "attribution": "PinMAME contributors",
+    "encoding": "windows-1252",
+    "kind": "pinmame_sim",
+    "license": "BSD-3-Clause",
+    "path": "src/wpc/sims/wpc/full/ft.c",
+    "quality": "full",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "debf7604584df994f47c7d19b76ffc2dd606b186eb98ccfa64966de3e5560637"
+  },
+  "states": [
+    {
+      "label": "Not Installed",
+      "line": 250,
+      "next_state": "stDrain",
+      "raw": "{\"Not Installed\",    0,0,           0,        stDrain,     0,0,0,SIM_STNOTEXCL},"
+    },
+    {
+      "label": "Playfield",
+      "line": 252,
+      "raw": "{\"Playfield\",        0,0,           0,        0,           0,0,0,SIM_STNOTEXCL},"
+    },
+    {
+      "exit_output_address": 10,
+      "exit_output_symbol": "sBallRelease",
+      "label": "Right Trough",
+      "line": 255,
+      "next_state": "stShooter",
+      "raw": "{\"Right Trough\",     1,swRTrough,   sBallRelease,  stShooter,  5},",
+      "switch_address": 18,
+      "switch_symbol": "swRTrough"
+    },
+    {
+      "label": "Center Trough",
+      "line": 256,
+      "next_state": "stRTrough",
+      "raw": "{\"Center Trough\",    1,swCTrough,   0,        stRTrough,   1},",
+      "switch_address": 17,
+      "switch_symbol": "swCTrough"
+    },
+    {
+      "label": "Left Trough",
+      "line": 257,
+      "next_state": "stCTrough",
+      "raw": "{\"Left Trough\",      1,swLTrough,   0,        stCTrough,   1},",
+      "switch_address": 16,
+      "switch_symbol": "swLTrough"
+    },
+    {
+      "exit_output_address": 9,
+      "exit_output_symbol": "sOuthole",
+      "label": "Outhole",
+      "line": 258,
+      "next_state": "stLTrough",
+      "raw": "{\"Outhole\",          1,swOuthole,   sOuthole, stLTrough,   5},",
+      "switch_address": 15,
+      "switch_symbol": "swOuthole"
+    },
+    {
+      "label": "Drain",
+      "line": 259,
+      "next_state": "stOuthole",
+      "raw": "{\"Drain\",            1,0,           0,        stOuthole,   0,0,0,SIM_STNOTEXCL},"
+    },
+    {
+      "exit_output_address": 1,
+      "exit_output_symbol": "sBallShooter",
+      "label": "Shooter",
+      "line": 262,
+      "next_state": "stBallLane",
+      "raw": "{\"Shooter\",\t\t1,swBallShooter,   sBallShooter, stBallLane,  1,0,0,SIM_STNOTEXCL},",
+      "switch_address": 56,
+      "switch_symbol": "swBallShooter"
+    },
+    {
+      "label": "Ball Lane",
+      "line": 263,
+      "next_state": "stRLoopUp",
+      "raw": "{\"Ball Lane\",\t\t1, 0,  \t       0,        stRLoopUp,    10,0,0,SIM_STNOTEXCL},\t/*Normally ball should enter Right Loop*/"
+    },
+    {
+      "label": "Right Outlane",
+      "line": 264,
+      "next_state": "stDrain",
+      "raw": "{\"Right Outlane\",\t1,swROut,      0,        stDrain,    20},",
+      "switch_address": 66,
+      "switch_symbol": "swROut"
+    },
+    {
+      "label": "Left Outlane",
+      "line": 265,
+      "next_state": "stDrain",
+      "raw": "{\"Left Outlane\",\t1,swLOut,      0,        stDrain,    20},",
+      "switch_address": 25,
+      "switch_symbol": "swLOut"
+    },
+    {
+      "label": "Right Inlane",
+      "line": 266,
+      "next_state": "stFree",
+      "raw": "{\"Right Inlane\",\t1,swRIn,       0,        stFree,      5},",
+      "switch_address": 65,
+      "switch_symbol": "swRIn"
+    },
+    {
+      "label": "Left Inlane",
+      "line": 267,
+      "next_state": "stFree",
+      "raw": "{\"Left Inlane\",\t1,swLIn,       0,        stFree,      5},",
+      "switch_address": 26,
+      "switch_symbol": "swLIn"
+    },
+    {
+      "label": "Left Slingshot",
+      "line": 268,
+      "next_state": "stFree",
+      "raw": "{\"Left Slingshot\",\t1,swLSling,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 57,
+      "switch_symbol": "swLSling"
+    },
+    {
+      "label": "Rt Slingshot",
+      "line": 269,
+      "next_state": "stFree",
+      "raw": "{\"Rt Slingshot\",\t1,swRSling,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 58,
+      "switch_symbol": "swRSling"
+    },
+    {
+      "label": "Jet Bumper 1",
+      "line": 270,
+      "next_state": "stFree",
+      "raw": "{\"Jet Bumper 1\",\t1,swJet1,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 51,
+      "switch_symbol": "swJet1"
+    },
+    {
+      "label": "Jet Bumper 2",
+      "line": 271,
+      "next_state": "stFree",
+      "raw": "{\"Jet Bumper 2\",\t1,swJet2,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 52,
+      "switch_symbol": "swJet2"
+    },
+    {
+      "label": "Jet Bumper 3",
+      "line": 272,
+      "next_state": "stFree",
+      "raw": "{\"Jet Bumper 3\",\t1,swJet3,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 53,
+      "switch_symbol": "swJet3"
+    },
+    {
+      "label": "Left Loop",
+      "line": 275,
+      "next_state": "stSpinnerLR",
+      "raw": "{\"Left Loop\",\t\t1,swTLLoop,      0,       stSpinnerLR,   2}, /* Left Loop Going Up     */",
+      "switch_address": 64,
+      "switch_symbol": "swTLLoop"
+    },
+    {
+      "label": "Left Loop",
+      "line": 276,
+      "next_state": "stFree",
+      "raw": "{\"Left Loop\",\t\t1,swTLLoop,      0,       stFree,        3}, /* Left Loop Going Down   */",
+      "switch_address": 64,
+      "switch_symbol": "swTLLoop"
+    },
+    {
+      "label": "Spinner",
+      "line": 279,
+      "next_state": "stLLoopDn",
+      "raw": "{\"Spinner\",           1,0,             0,       stLLoopDn,     5},"
+    },
+    {
+      "label": "Spinner",
+      "line": 281,
+      "next_state": "stGateLR",
+      "raw": "{\"Spinner\",           1,swSpinner,     0,       stGateLR,      5,0,0,SIM_STSPINNER},",
+      "switch_address": 34,
+      "switch_symbol": "swSpinner"
+    },
+    {
+      "exit_output_address": 11,
+      "exit_output_symbol": "sEjectHole",
+      "label": "Eject Hole",
+      "line": 284,
+      "next_state": "stLIE_L",
+      "raw": "{\"Eject Hole\",\t1,swTopEject,    sEjectHole,       stLIE_L,    10},",
+      "switch_address": 63,
+      "switch_symbol": "swTopEject"
+    },
+    {
+      "label": "Gate",
+      "line": 285,
+      "raw": "{\"Gate\",\t\t1,0,\t\t 0,\t  0},"
+    },
+    {
+      "label": "Gate",
+      "line": 286,
+      "raw": "{\"Gate\",\t\t1,0,\t\t 0,\t  0},"
+    },
+    {
+      "label": "Right Loop",
+      "line": 289,
+      "next_state": "stGateRL",
+      "raw": "{\"Right Loop\",       1,swTRLoop, \t 0,       stGateRL,   1}, /* Right Loop Going Up     */",
+      "switch_address": 62,
+      "switch_symbol": "swTRLoop"
+    },
+    {
+      "label": "Right Loop",
+      "line": 290,
+      "next_state": "stFree",
+      "raw": "{\"Right Loop\",       1,swTRLoop, \t 0,       stFree,   10},  /* Right Loop Coming Down  */",
+      "switch_address": 62,
+      "switch_symbol": "swTRLoop"
+    },
+    {
+      "label": "L. Ramp Enter",
+      "line": 293,
+      "next_state": "stLRampMade",
+      "raw": "{\"L. Ramp Enter\",\t1,swLBoatEntry,  0,       stLRampMade,\t 5},",
+      "switch_address": 43,
+      "switch_symbol": "swLBoatEntry"
+    },
+    {
+      "label": "L. Ramp Exit",
+      "line": 294,
+      "next_state": "stLIn",
+      "raw": "{\"L. Ramp Exit\",\t1,swLBoatExit,   0,\t  stLIn, \t 10},",
+      "switch_address": 32,
+      "switch_symbol": "swLBoatExit"
+    },
+    {
+      "label": "R. Ramp Enter",
+      "line": 295,
+      "next_state": "stRRampMade",
+      "raw": "{\"R. Ramp Enter\",\t1,swRBoatEntry,  0,       stRRampMade,\t 5},",
+      "switch_address": 42,
+      "switch_symbol": "swRBoatEntry"
+    },
+    {
+      "label": "R. Ramp Exit",
+      "line": 296,
+      "next_state": "stRIn",
+      "raw": "{\"R. Ramp Exit\",\t1,swRBoatExit,   0,\t  stRIn, \t 10},",
+      "switch_address": 33,
+      "switch_symbol": "swRBoatExit"
+    },
+    {
+      "label": "Drop Target",
+      "line": 299,
+      "raw": "{\"Drop Target\",\t1,\t\t  0,  \t  0, \t 0},"
+    },
+    {
+      "exit_output_address": 3,
+      "exit_output_symbol": "sBallPopper",
+      "label": "Caster's Club",
+      "line": 300,
+      "next_state": "stHabitTrail",
+      "raw": "{\"Caster's Club\",     1, swBallPopper,  sBallPopper,   stHabitTrail, 0},",
+      "switch_address": 47,
+      "switch_symbol": "swBallPopper"
+    },
+    {
+      "exit_output_address": 2,
+      "exit_output_symbol": "sCatapult",
+      "label": "Catapult",
+      "line": 301,
+      "next_state": "stCatapult2",
+      "raw": "{\"Catapult\",\t\t1, swCatapult,    sCatapult,     stCatapult2,  1},",
+      "switch_address": 36,
+      "switch_symbol": "swCatapult"
+    },
+    {
+      "label": "Catapult Trail",
+      "line": 302,
+      "next_state": "stFree",
+      "raw": "{\"Catapult Trail\",\t1, 0,\t\t  0,      \t stFree,       10}, //,0,0,SIM_STNOTEXCL},"
+    },
+    {
+      "label": "Habit Trail",
+      "line": 303,
+      "next_state": "stReelEntry",
+      "raw": "{\"Habit Trail\",       1, 0,             0,      stReelEntry,    1},"
+    },
+    {
+      "label": "Reel Entry",
+      "line": 304,
+      "next_state": "stReel",
+      "raw": "{\"Reel Entry\",\t1, swReelEntry,   0,\t  stReel,\t  1},",
+      "switch_address": 35,
+      "switch_symbol": "swReelEntry"
+    },
+    {
+      "label": "Jet Bumper 1",
+      "line": 307,
+      "next_state": "stJet2",
+      "raw": "{\"Jet Bumper 1\",\t1, swJet1,\t 0,\t  stJet2,\t  1},",
+      "switch_address": 51,
+      "switch_symbol": "swJet1"
+    },
+    {
+      "label": "Jet Bumper 2",
+      "line": 308,
+      "next_state": "stJet3",
+      "raw": "{\"Jet Bumper 2\",\t1, swJet2,\t 0,\t  stJet3,\t  1},",
+      "switch_address": 52,
+      "switch_symbol": "swJet2"
+    },
+    {
+      "label": "Jet Bumper 3",
+      "line": 309,
+      "next_state": "stFree",
+      "raw": "{\"Jet Bumper 3\",\t1, swJet3,\t 0,\t  stFree,\t  1},",
+      "switch_address": 53,
+      "switch_symbol": "swJet3"
+    },
+    {
+      "label": "LIE 'L'",
+      "line": 310,
+      "next_state": "stJet1",
+      "raw": "{\"LIE 'L'\",\t\t1, swLIE_L,\t 0,\t  stJet1,\t  1},",
+      "switch_address": 46,
+      "switch_symbol": "swLIE_L"
+    },
+    {
+      "label": "Reel",
+      "line": 313,
+      "raw": "{\"Reel\",\t\t1, 0,\t\t0,\t0,\t\t1},"
+    },
+    {
+      "label": "Reel Lock 1",
+      "line": 314,
+      "next_state": "stCatapult",
+      "raw": "{\"Reel Lock 1\", \t1, 0,\t\tsFakeReel1,\tstCatapult,\t1},"
+    },
+    {
+      "label": "Reel Lock 2",
+      "line": 315,
+      "next_state": "stCatapult",
+      "raw": "{\"Reel Lock 2\", \t1, 0,\t\tsFakeReel2,\tstCatapult,\t1},"
+    },
+    {
+      "label": "Reel Lock 3",
+      "line": 316,
+      "next_state": "stCatapult",
+      "raw": "{\"Reel Lock 3\", \t1, 0,\t\tsFakeReel3,\tstCatapult,\t1},"
+    },
+    {
+      "label": "Lie - L",
+      "line": 319,
+      "next_state": "stFree",
+      "raw": "{\"Lie - L\",\t\t1,swLIE_L,\t0,\t  stFree,\t\t2},",
+      "switch_address": 46,
+      "switch_symbol": "swLIE_L"
+    },
+    {
+      "label": "Lie - I",
+      "line": 320,
+      "next_state": "stFree",
+      "raw": "{\"Lie - I\",\t\t1,swLIE_I,\t0,\t  stFree,\t\t2},",
+      "switch_address": 45,
+      "switch_symbol": "swLIE_I"
+    },
+    {
+      "label": "Lie - E",
+      "line": 321,
+      "next_state": "stFree",
+      "raw": "{\"Lie - E\",\t\t1,swLIE_E,\t0,\t  stFree,\t\t2},",
+      "switch_address": 44,
+      "switch_symbol": "swLIE_E"
+    },
+    {
+      "label": "Rt. Fish Tgt 1",
+      "line": 322,
+      "next_state": "stFree",
+      "raw": "{\"Rt. Fish Tgt 1\",\t1,swRDT1,\t0,\t  stFree,\t\t2},",
+      "switch_address": 54,
+      "switch_symbol": "swRDT1"
+    },
+    {
+      "label": "Rt. Fish Tgt 2",
+      "line": 323,
+      "next_state": "stFree",
+      "raw": "{\"Rt. Fish Tgt 2\",\t1,swRDT2,\t0,\t  stFree,\t\t2},",
+      "switch_address": 55,
+      "switch_symbol": "swRDT2"
+    },
+    {
+      "label": "Lt. Fish Tgt 1",
+      "line": 324,
+      "next_state": "stFree",
+      "raw": "{\"Lt. Fish Tgt 1\",\t1,swLDT1,\t0,\t  stFree,\t\t2},",
+      "switch_address": 27,
+      "switch_symbol": "swLDT1"
+    },
+    {
+      "label": "Lt. Fish Tgt 2",
+      "line": 325,
+      "next_state": "stFree",
+      "raw": "{\"Lt. Fish Tgt 2\",\t1,swLDT2,\t0,\t  stFree,\t\t2},",
+      "switch_address": 28,
+      "switch_symbol": "swLDT2"
+    },
+    {
+      "label": "Extra Ball Tgt",
+      "line": 326,
+      "next_state": "stFree",
+      "raw": "{\"Extra Ball Tgt\",\t1,swExtraBall,  0,\t  stFree,\t\t2},",
+      "switch_address": 61,
+      "switch_symbol": "swExtraBall"
+    },
+    {
+      "label": "Captive Ball",
+      "line": 327,
+      "next_state": "stFree",
+      "raw": "{\"Captive Ball\",\t1,swCaptiveBall,0,\t  stFree,\t\t4},",
+      "switch_address": 41,
+      "switch_symbol": "swCaptiveBall"
+    }
+  ],
+  "switches": [
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Start",
+      "line": 105,
+      "status": "candidate",
+      "symbol": "swStart"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Tilt",
+      "line": 106,
+      "status": "candidate",
+      "symbol": "swTilt"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "Outhole",
+      "line": 107,
+      "state_labels": [
+        "Outhole"
+      ],
+      "status": "candidate",
+      "symbol": "swOuthole"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "L Trough",
+      "line": 108,
+      "state_labels": [
+        "Left Trough"
+      ],
+      "status": "candidate",
+      "symbol": "swLTrough"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "C Trough",
+      "line": 109,
+      "state_labels": [
+        "Center Trough"
+      ],
+      "status": "candidate",
+      "symbol": "swCTrough"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "R Trough",
+      "line": 110,
+      "state_labels": [
+        "Right Trough"
+      ],
+      "status": "candidate",
+      "symbol": "swRTrough"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Slam Tilt",
+      "line": 112,
+      "status": "candidate",
+      "symbol": "swSlamTilt"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Coin Door",
+      "line": 113,
+      "status": "candidate",
+      "symbol": "swCoinDoor"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Ticket",
+      "line": 114,
+      "status": "candidate",
+      "symbol": "swTicket"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Not Used",
+      "line": 115,
+      "status": "candidate",
+      "symbol": "swNotUsed"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "L Out",
+      "line": 116,
+      "state_labels": [
+        "Left Outlane"
+      ],
+      "status": "candidate",
+      "symbol": "swLOut"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "L In",
+      "line": 117,
+      "state_labels": [
+        "Left Inlane"
+      ],
+      "status": "candidate",
+      "symbol": "swLIn"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "LDT1",
+      "line": 118,
+      "state_labels": [
+        "Lt. Fish Tgt 1"
+      ],
+      "status": "candidate",
+      "symbol": "swLDT1"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "LDT2",
+      "line": 119,
+      "state_labels": [
+        "Lt. Fish Tgt 2"
+      ],
+      "status": "candidate",
+      "symbol": "swLDT2"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Cast",
+      "line": 121,
+      "status": "candidate",
+      "symbol": "swCast"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "L Boat Exit",
+      "line": 122,
+      "state_labels": [
+        "L. Ramp Exit"
+      ],
+      "status": "candidate",
+      "symbol": "swLBoatExit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "R Boat Exit",
+      "line": 123,
+      "state_labels": [
+        "R. Ramp Exit"
+      ],
+      "status": "candidate",
+      "symbol": "swRBoatExit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Spinner",
+      "line": 124,
+      "state_labels": [
+        "Spinner"
+      ],
+      "status": "candidate",
+      "symbol": "swSpinner"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Reel Entry",
+      "line": 125,
+      "state_labels": [
+        "Reel Entry"
+      ],
+      "status": "candidate",
+      "symbol": "swReelEntry"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Catapult",
+      "line": 126,
+      "state_labels": [
+        "Catapult"
+      ],
+      "status": "candidate",
+      "symbol": "swCatapult"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "Reel1 Opto",
+      "line": 127,
+      "status": "candidate",
+      "symbol": "swReel1Opto"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Reel2 Opto",
+      "line": 128,
+      "status": "candidate",
+      "symbol": "swReel2Opto"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "Captive Ball",
+      "line": 130,
+      "state_labels": [
+        "Captive Ball"
+      ],
+      "status": "candidate",
+      "symbol": "swCaptiveBall"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "R Boat Entry",
+      "line": 131,
+      "state_labels": [
+        "R. Ramp Enter"
+      ],
+      "status": "candidate",
+      "symbol": "swRBoatEntry"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "L Boat Entry",
+      "line": 132,
+      "state_labels": [
+        "L. Ramp Enter"
+      ],
+      "status": "candidate",
+      "symbol": "swLBoatEntry"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "LIE E",
+      "line": 133,
+      "state_labels": [
+        "Lie - E"
+      ],
+      "status": "candidate",
+      "symbol": "swLIE_E"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "LIE I",
+      "line": 134,
+      "state_labels": [
+        "Lie - I"
+      ],
+      "status": "candidate",
+      "symbol": "swLIE_I"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "LIE L",
+      "line": 135,
+      "state_labels": [
+        "LIE 'L'",
+        "Lie - L"
+      ],
+      "status": "candidate",
+      "symbol": "swLIE_L"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Ball Popper",
+      "line": 136,
+      "state_labels": [
+        "Caster's Club"
+      ],
+      "status": "candidate",
+      "symbol": "swBallPopper"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Drop Target",
+      "line": 137,
+      "status": "candidate",
+      "symbol": "swDropTarget"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Jet1",
+      "line": 139,
+      "state_labels": [
+        "Jet Bumper 1"
+      ],
+      "status": "candidate",
+      "symbol": "swJet1"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "Jet2",
+      "line": 140,
+      "state_labels": [
+        "Jet Bumper 2"
+      ],
+      "status": "candidate",
+      "symbol": "swJet2"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "Jet3",
+      "line": 141,
+      "state_labels": [
+        "Jet Bumper 3"
+      ],
+      "status": "candidate",
+      "symbol": "swJet3"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "label": "RDT1",
+      "line": 142,
+      "state_labels": [
+        "Rt. Fish Tgt 1"
+      ],
+      "status": "candidate",
+      "symbol": "swRDT1"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "RDT2",
+      "line": 143,
+      "state_labels": [
+        "Rt. Fish Tgt 2"
+      ],
+      "status": "candidate",
+      "symbol": "swRDT2"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "label": "Ball Shooter",
+      "line": 144,
+      "state_labels": [
+        "Shooter"
+      ],
+      "status": "candidate",
+      "symbol": "swBallShooter"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "L Sling",
+      "line": 145,
+      "state_labels": [
+        "Left Slingshot"
+      ],
+      "status": "candidate",
+      "symbol": "swLSling"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.input.switch",
+      "label": "R Sling",
+      "line": 146,
+      "state_labels": [
+        "Rt Slingshot"
+      ],
+      "status": "candidate",
+      "symbol": "swRSling"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "Extra Ball",
+      "line": 148,
+      "state_labels": [
+        "Extra Ball Tgt"
+      ],
+      "status": "candidate",
+      "symbol": "swExtraBall"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "TR Loop",
+      "line": 149,
+      "state_labels": [
+        "Right Loop"
+      ],
+      "status": "candidate",
+      "symbol": "swTRLoop"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.input.switch",
+      "label": "Top Eject",
+      "line": 150,
+      "state_labels": [
+        "Eject Hole"
+      ],
+      "status": "candidate",
+      "symbol": "swTopEject"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "label": "TL Loop",
+      "line": 151,
+      "state_labels": [
+        "Left Loop"
+      ],
+      "status": "candidate",
+      "symbol": "swTLLoop"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.input.switch",
+      "label": "R In",
+      "line": 152,
+      "state_labels": [
+        "Right Inlane"
+      ],
+      "status": "candidate",
+      "symbol": "swRIn"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "R Out",
+      "line": 153,
+      "state_labels": [
+        "Right Outlane"
+      ],
+      "status": "candidate",
+      "symbol": "swROut"
+    }
+  ],
+  "version": 1
+}

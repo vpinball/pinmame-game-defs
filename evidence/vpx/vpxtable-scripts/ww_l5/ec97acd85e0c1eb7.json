@@ -1,0 +1,933 @@
+{
+  "driver_ids": [
+    "ww_l5"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.ww_l5"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 2,
+      "group": "pinmame.output.gi",
+      "label": "gi 2",
+      "line": 86,
+      "status": "candidate",
+      "symbol": "gi_2"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "kisort",
+      "line": 539,
+      "status": "candidate",
+      "symbol": "kisort"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Kick Ball To Lane",
+      "line": 540,
+      "status": "candidate",
+      "symbol": "KickBallToLane"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Kick Popper",
+      "line": 541,
+      "status": "candidate",
+      "symbol": "KickPopper"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "Kick Ball Up",
+      "line": 542,
+      "status": "candidate",
+      "symbol": "KickBallUp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Kick",
+      "line": 543,
+      "status": "candidate",
+      "symbol": "SolKick"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Div",
+      "line": 544,
+      "status": "candidate",
+      "symbol": "SolDiv"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Sol Sound",
+      "line": 545,
+      "status": "candidate",
+      "symbol": "vpmSolSound "
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "label": "Flasherset17",
+      "line": 549,
+      "status": "candidate",
+      "symbol": "Flasherset17"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "label": "Flasherset18",
+      "line": 550,
+      "status": "candidate",
+      "symbol": "Flasherset18"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "label": "Flasherset19",
+      "line": 551,
+      "status": "candidate",
+      "symbol": "Flasherset19"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "label": "Flasherset20",
+      "line": 552,
+      "status": "candidate",
+      "symbol": "Flasherset20"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid",
+      "label": "Flasherset21",
+      "line": 553,
+      "status": "candidate",
+      "symbol": "Flasherset21"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid",
+      "label": "Flasherset22",
+      "line": 554,
+      "status": "candidate",
+      "symbol": "Flasherset22"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid",
+      "label": "Flasherset23",
+      "line": 555,
+      "status": "candidate",
+      "symbol": "Flasherset23"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid",
+      "label": "Flasherset24",
+      "line": 556,
+      "status": "candidate",
+      "symbol": "Flasherset24"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Big Foot Drive",
+      "line": 546,
+      "status": "candidate",
+      "symbol": "SolBigFootDrive"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Big Foot Enable",
+      "line": 547,
+      "status": "candidate",
+      "symbol": "SolBigFootEnable"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid",
+      "label": "Tilt Sol",
+      "line": 548,
+      "status": "candidate",
+      "symbol": "TiltSol"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 29,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "__    __  __ __  ____  ______    ___      __    __   ____  ______    ___  ____\n|  |__|  ||  |  ||    ||      |  /  _]    |  |__|  | /    ||      |  /  _]|    \\\n|  |  |  ||  |  | |  | |      | /  [_     |  |  |  ||  o  ||      | /  [_ |  D  )\n|  |  |  ||  _  | |  | |_|  |_||    _]    |  |  |  ||     ||_|  |_||    _]|    /\n|  '  '  ||  |  | |  |   |  |  |   [_     |  '  '  ||  _  |  |  |  |   [_ |    \\\n\\      / |  |  | |  |   |  |  |     |     \\      / |  |  |  |  |  |     ||  .  |\n \\_/\\_/  |__|__||____|  |__|  |_____|      \\_/\\_/  |__|__|  |__|  |_____||__|\\_|\nWilliams White Water / IPD No. 2768 / January, 1993 / 4 Players\nmade for VPX by Flupper\nhttp://www.ipdb.org/machine.cgi?id=2768\nThanks to JPSalas and PacDude's earlier versions\nMany thanks also to:\nrock primitives & base textures, bigfoot, transparent targets by Dark\nplayfield texture and plastic images by Clark Kent\ntexture redraws by Lobotomy\nPhysics tuning by wrd1972 and Clark Kent\nreference images of darkened table by darquayle\nmany mechanical sounds by Knorr\nsound tuning by DjRobX\n\nNotes (from experience during development):\nIf Bigfoot head gets out of sync or VPM crashes, delete NVRAM\nThalamus 2018-07-24\nTable has already \"Positional Sound Playback Functions\" and \"Supporting Ball & Sound Functions\"\nChanged UseSolenoids=1 to 2\nNo special SSF tweaks yet."
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Whitewater 1.0.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Whitewater 1.0.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "ec97acd85e0c1eb7d4517828b56258a699e7d200c5047e1ccfcf6114e7335c06"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 786,
+      "status": "candidate",
+      "symbol": "Drain_hit"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "kisort",
+      "line": 785,
+      "status": "candidate",
+      "symbol": "kisort"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 378,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 379,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Bumper3",
+      "line": 380,
+      "status": "candidate",
+      "symbol": "Bumper3_Hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "whitewater Init",
+      "line": 163,
+      "status": "candidate",
+      "symbol": "whitewater_Init"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "whitewater Init",
+      "line": 164,
+      "status": "candidate",
+      "symbol": "whitewater_Init"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "sw25",
+      "line": 382,
+      "status": "candidate",
+      "symbol": "sw25_Hit"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "sw25",
+      "line": 383,
+      "status": "candidate",
+      "symbol": "sw25_Unhit"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "sw26",
+      "line": 385,
+      "status": "candidate",
+      "symbol": "sw26_Hit"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "sw26",
+      "line": 386,
+      "status": "candidate",
+      "symbol": "sw26_Unhit"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "sw27",
+      "line": 388,
+      "status": "candidate",
+      "symbol": "sw27_Hit"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "sw27",
+      "line": 389,
+      "status": "candidate",
+      "symbol": "sw27_Unhit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 391,
+      "status": "candidate",
+      "symbol": "sw28_Hit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 392,
+      "status": "candidate",
+      "symbol": "sw28_Unhit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 394,
+      "status": "candidate",
+      "symbol": "sw29_Hit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 395,
+      "status": "candidate",
+      "symbol": "sw29_Unhit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "itch31",
+      "line": 397,
+      "status": "candidate",
+      "symbol": "switch31_Hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "itch31",
+      "line": 398,
+      "status": "candidate",
+      "symbol": "switch31_timer"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "itch32",
+      "line": 400,
+      "status": "candidate",
+      "symbol": "switch32_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "itch32",
+      "line": 401,
+      "status": "candidate",
+      "symbol": "switch32_timer"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "itch33",
+      "line": 403,
+      "status": "candidate",
+      "symbol": "switch33_Hit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "itch33",
+      "line": 404,
+      "status": "candidate",
+      "symbol": "switch33_timer"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "itch34",
+      "line": 406,
+      "status": "candidate",
+      "symbol": "switch34_Hit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "itch34",
+      "line": 407,
+      "status": "candidate",
+      "symbol": "switch34_timer"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "itch35",
+      "line": 409,
+      "status": "candidate",
+      "symbol": "switch35_Hit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "itch35",
+      "line": 410,
+      "status": "candidate",
+      "symbol": "switch35_timer"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "itch36",
+      "line": 412,
+      "status": "candidate",
+      "symbol": "switch36_Hit"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "itch36",
+      "line": 413,
+      "status": "candidate",
+      "symbol": "switch36_timer"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "itch37",
+      "line": 415,
+      "status": "candidate",
+      "symbol": "switch37_Hit"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "itch37",
+      "line": 416,
+      "status": "candidate",
+      "symbol": "switch37_timer"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "itch38",
+      "line": 418,
+      "status": "candidate",
+      "symbol": "switch38_Hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "itch38",
+      "line": 419,
+      "status": "candidate",
+      "symbol": "switch38_timer"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "itch41",
+      "line": 421,
+      "status": "candidate",
+      "symbol": "switch41_Hit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "itch41",
+      "line": 422,
+      "status": "candidate",
+      "symbol": "switch41_timer"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "itch42",
+      "line": 424,
+      "status": "candidate",
+      "symbol": "switch42_Hit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "itch42",
+      "line": 425,
+      "status": "candidate",
+      "symbol": "switch42_timer"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "SW43",
+      "line": 427,
+      "status": "candidate",
+      "symbol": "SW43_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "SW43",
+      "line": 428,
+      "status": "candidate",
+      "symbol": "SW43_Unhit"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 430,
+      "status": "candidate",
+      "symbol": "sw44_Hit"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 431,
+      "status": "candidate",
+      "symbol": "sw44_Unhit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "sw45",
+      "line": 433,
+      "status": "candidate",
+      "symbol": "sw45_Hit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "sw45",
+      "line": 434,
+      "status": "candidate",
+      "symbol": "sw45_Unhit"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "sw46",
+      "line": 436,
+      "status": "candidate",
+      "symbol": "sw46_Hit"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "sw46",
+      "line": 437,
+      "status": "candidate",
+      "symbol": "sw46_Unhit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "sw47",
+      "line": 439,
+      "status": "candidate",
+      "symbol": "sw47_Hit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "sw47",
+      "line": 440,
+      "status": "candidate",
+      "symbol": "sw47_Unhit"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "sw48",
+      "line": 442,
+      "status": "candidate",
+      "symbol": "sw48_Hit"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "sw48",
+      "line": 443,
+      "status": "candidate",
+      "symbol": "sw48_Unhit"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 523,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 510,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "Plunger",
+      "line": 445,
+      "status": "candidate",
+      "symbol": "swPlunger_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "Plunger",
+      "line": 446,
+      "status": "candidate",
+      "symbol": "swPlunger_UnHit"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "label": "sw54",
+      "line": 448,
+      "status": "candidate",
+      "symbol": "sw54_Hit"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "sw55",
+      "line": 451,
+      "status": "candidate",
+      "symbol": "sw55_Hit"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "label": "itch56",
+      "line": 452,
+      "status": "candidate",
+      "symbol": "switch56_Hit"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "label": "itch56",
+      "line": 453,
+      "status": "candidate",
+      "symbol": "switch56_timer"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "sw57",
+      "line": 455,
+      "status": "candidate",
+      "symbol": "sw57_Hit"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "sw57",
+      "line": 456,
+      "status": "candidate",
+      "symbol": "sw57_Unhit"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.input.switch",
+      "label": "sw58",
+      "line": 458,
+      "status": "candidate",
+      "symbol": "sw58_Hit"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.input.switch",
+      "label": "sw58",
+      "line": 459,
+      "status": "candidate",
+      "symbol": "sw58_Unhit"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "Kick Popper",
+      "line": 463,
+      "status": "candidate",
+      "symbol": "KickPopper"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "sw61",
+      "line": 462,
+      "status": "candidate",
+      "symbol": "sw61_hit"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "Fall Through2",
+      "line": 465,
+      "status": "candidate",
+      "symbol": "FallThrough2_Hit"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.input.switch",
+      "label": "Kick Ball Up",
+      "line": 475,
+      "status": "candidate",
+      "symbol": "KickBallUp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.input.switch",
+      "label": "sw63",
+      "line": 473,
+      "status": "candidate",
+      "symbol": "sw63_hit"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "label": "sw64",
+      "line": 471,
+      "status": "candidate",
+      "symbol": "sw64_Hit"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "label": "sw64",
+      "line": 472,
+      "status": "candidate",
+      "symbol": "sw64_unHit"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.input.switch",
+      "label": "sw65",
+      "line": 469,
+      "status": "candidate",
+      "symbol": "sw65_Hit"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.input.switch",
+      "label": "sw65",
+      "line": 470,
+      "status": "candidate",
+      "symbol": "sw65_unHit"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "sw66",
+      "line": 478,
+      "status": "candidate",
+      "symbol": "sw66_Hit"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "sw66",
+      "line": 479,
+      "status": "candidate",
+      "symbol": "sw66_Unhit"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.input.switch",
+      "label": "sw68",
+      "line": 481,
+      "status": "candidate",
+      "symbol": "sw68_Hit"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.input.switch",
+      "label": "sw68",
+      "line": 482,
+      "status": "candidate",
+      "symbol": "sw68_Unhit"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.input.switch",
+      "label": "sw71",
+      "line": 484,
+      "status": "candidate",
+      "symbol": "sw71_Hit"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.input.switch",
+      "label": "sw71",
+      "line": 485,
+      "status": "candidate",
+      "symbol": "sw71_Unhit"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.input.switch",
+      "label": "itch73",
+      "line": 487,
+      "status": "candidate",
+      "symbol": "switch73_Hit"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.input.switch",
+      "label": "itch73",
+      "line": 488,
+      "status": "candidate",
+      "symbol": "switch73_timer"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.input.switch",
+      "label": "itch74",
+      "line": 490,
+      "status": "candidate",
+      "symbol": "switch74_Hit"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.input.switch",
+      "label": "itch74",
+      "line": 491,
+      "status": "candidate",
+      "symbol": "switch74_timer"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.input.switch",
+      "label": "sw75",
+      "line": 493,
+      "status": "candidate",
+      "symbol": "sw75_Hit"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.input.switch",
+      "label": "sw75",
+      "line": 494,
+      "status": "candidate",
+      "symbol": "sw75_Unhit"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.input.switch",
+      "label": "ballrelease",
+      "line": 780,
+      "status": "candidate",
+      "symbol": "ballrelease_hit"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.input.switch",
+      "label": "Kick Ball To Lane",
+      "line": 795,
+      "status": "candidate",
+      "symbol": "KickBallToLane"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.input.switch",
+      "label": "sw77",
+      "line": 781,
+      "status": "candidate",
+      "symbol": "sw77_Hit"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.input.switch",
+      "label": "sw77",
+      "line": 782,
+      "status": "candidate",
+      "symbol": "sw77_unHit"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.input.switch",
+      "label": "sw78",
+      "line": 783,
+      "status": "candidate",
+      "symbol": "sw78_Hit"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.input.switch",
+      "label": "sw78",
+      "line": 784,
+      "status": "candidate",
+      "symbol": "sw78_unHit"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.input.switch",
+      "label": "Big Foot Init",
+      "line": 581,
+      "status": "candidate",
+      "symbol": "BigFoot_Init"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.input.switch",
+      "label": "Big Timer",
+      "line": 591,
+      "state_labels": [
+        "Big Timer"
+      ],
+      "status": "candidate",
+      "symbol": "BigTimer_Timer"
+    },
+    {
+      "address": 87,
+      "group": "pinmame.input.switch",
+      "label": "Big Foot Init",
+      "line": 581,
+      "status": "candidate",
+      "symbol": "BigFoot_Init"
+    },
+    {
+      "address": 87,
+      "group": "pinmame.input.switch",
+      "label": "Big Timer",
+      "line": 591,
+      "state_labels": [
+        "Big Timer"
+      ],
+      "status": "candidate",
+      "symbol": "BigTimer_Timer"
+    }
+  ],
+  "version": 1
+}

@@ -1,0 +1,683 @@
+{
+  "driver_ids": [
+    "stargat5"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "gottlieb.stargate.1995"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Left Plunge",
+      "line": 636,
+      "status": "candidate",
+      "symbol": "SolLeftPlunge"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Auto Fire",
+      "line": 637,
+      "status": "candidate",
+      "symbol": "SolAutoFire"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "Left Pop",
+      "line": 638,
+      "status": "candidate",
+      "symbol": "LeftPop"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "Bot Pop",
+      "line": 639,
+      "status": "candidate",
+      "symbol": "BotPop"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "Vuk Top Pop",
+      "line": 640,
+      "status": "candidate",
+      "symbol": "VukTopPop"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Div",
+      "line": 641,
+      "status": "candidate",
+      "symbol": "SolDiv"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Piv L",
+      "line": 642,
+      "status": "candidate",
+      "symbol": "SolPivL"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Piv R",
+      "line": 643,
+      "status": "candidate",
+      "symbol": "SolPivR"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Pyramid",
+      "line": 644,
+      "status": "candidate",
+      "symbol": "SolPyramid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "label": "Left Drop Up",
+      "line": 645,
+      "status": "candidate",
+      "symbol": "LeftDropUp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "label": "Top Drop Up",
+      "line": 646,
+      "status": "candidate",
+      "symbol": "TopDropUp"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "label": "Right Drop Up",
+      "line": 647,
+      "status": "candidate",
+      "symbol": "RightDropUp"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "label": "Right Drop Trip",
+      "line": 648,
+      "status": "candidate",
+      "symbol": "RightDropTrip"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Glid1",
+      "line": 651,
+      "status": "candidate",
+      "symbol": "SolGlid1"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Glid2",
+      "line": 652,
+      "status": "candidate",
+      "symbol": "SolGlid2"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid",
+      "label": "PFGI",
+      "line": 654,
+      "status": "candidate",
+      "symbol": "PFGI"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Release",
+      "line": 656,
+      "status": "candidate",
+      "symbol": "SolRelease"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Trough",
+      "line": 657,
+      "status": "candidate",
+      "symbol": "SolTrough"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 658,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid",
+      "label": "GI State",
+      "line": 659,
+      "status": "candidate",
+      "symbol": "GIState"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 48,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "Stargate (Gottlieb 1995)\n1.3.1 - mcarter78 - Initial physics test (all visual objects hidden, no targets) -- Full physics overhaul, new physical trough & kickers, new playfield mesh, VUK ramps, new posts & rubbers, VPM mapped lights, roth targets added but not hooked up yet, new SSF (will add back in custom Stargate sounds where applicable)\n1.3.6 - Sixtoe - Moved position of pop bumpers, rebuilt inlanes, rebuild left ramp, rebuilt right ramp, rebuilt right upper flipper area, reduced playfield friction, turned slope down to 6, messed around with flipper physics, touched most of the physics on the table. WIP.\n1.3.7 - mcarter78 - Fix flashers to animate with L120-L125, clean up unused primitives/walls etc, add placeholder bg image, set initial state for slingshot animations, some code cleanup\n1.3.8 - mcarter78 - Add options for Lighting colors, LUT, Art Blades,  & Cab Mode\n1.3.9 - mcarter78 - Restore all solenoid sounds recorded from Stargate, animate rollovers & bumpers (WIP)\n1.3.10 - mcarter78 - Add ramp triggers for rolling/drop sounds, add inlane speed limit code, tweak pyramid drop animation, slight flipper size adjustment to match visuals\n1.3.12 - Sixtoe - Rebuilt subway, rebuilt playfield mesh and drop hole areas and deflectors / rubbers, added roof to ramps, turned down all kickers, adjusted sleeve materials, deleted old auto plunger, turned down impulse plunger, tweaked numerous rubbers, unified playfield walls.\n1.3.13 - mcarter78 - Reduce flipper end angles & reshape triggers, animate autoplunger, make some plastics collidable, slightly increase kicking targets resistance spring strength, add walls at left ramp to prevent airballs\n1.3.14 - apophis - Removed a bunch of old images. Removed old plastic primitives. Fixed collections for a few collidable posts. Adjusted URF physics. Removed flipper corrections from URF. Commented out upper flipper sfx for now. Refactored AnimateFlippers. Minor update to playfield_mesh. Minor change to SetInsertsColor. Adjusted bumper size and strength. Added new ball images. Glider sfx volume reduced in sound mgr. Fixed some ramp sfx. Fixed SarcArm animation. Fixed sling animations.\n1.3.15 - Mecha_Enron - Updated render for GI split, fixed drop target UV to correct harsh line in middle, changed env tex to hospital room, added point lights above inserts\n1.3.16 - mcarter78 - Add GI light color options, adjust upper flipper angle, add flipper for autoplunger animation, set slope to 8, adjustable down to 6, slightly increase vuk strength for guardian orbit vuks\n1.3.17 - apophis - Updated vuk kickball code to be more robust. Fixed slingshot wall heights. Fixed GI reflection colors. Set bottom 6 GI lights to cast shadows (in anticipation for next bake).\n1.3.18 - apophis - Fixed KTKick()\n1.3.19 - apophis - Fixed KTHit()\n1.3.20 - Sixtoe - Rebuilt slings (just in Case), tweaked flipper positions and triggers,\n1.3.21 - tomate - Ball trap on the left wireramp fixed\n1.3.22 - rothbauerw - Fixed kicker target code.\n1.3.23 - apophis - Using star triggers for sw90, sw100, and sw110 now. Adjusted flipper polarity curves.\n1.3.24 - Mecha_enron - Fixed pyramid animation\n1.3.25 - Mecha_enron - Updated render to allow for day/night on ramp decals and correct transparancy of shooter ramp\n1.3.26 - Mecha_enron - Added VLM.Bake.Pyramid to RoomBrightness array, fixed GI code, coded Cabinet Mode Option\n1.3.27 - apophis - Fixed GI_002 raytraced ball shadows.\n1.3.28 - mcarter78 - Add physical walls for Guardians, new DT backdrop\n1.3.29 - mcarter78 - Fix autoplunger animation\n********************************************************************************************\n*  STARGATE VPX  from 32Assassin and JLouLoulou                    *\n*  All made from real Stargate scan, redraw etc etc                    *\n*                                              *\n*  With help from:                                     *\n*  Thalamus-JPJ-Fleep-Rothbaeur for SSF                          *\n*  DjRobx for Glidercraft script                             *\n*  Arngrim for DOF                                     *\n*  Thanks to them                                      *\n*                                              *\n*  Specials thanks to Fuzzel, Rascal, Chucky, Mat'for their advise, testing and feedback.  *\n*                                              *\n*  Thanks to Rothbauer and Fleep for TOM soundfiles and SSF script parts         *\n*                                              *\n*  Thanks to Chucky for making b2s backglass and long long testing             *\n*                                              *\n*  And thanks to 32Assassin to be patient with me, its the first time I work on VPX.   *\n*                                              *\n*  VR Conversion by Sixtoe                                 *\n*                                              *\n********************************************************************************************"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Stargate (Gottlieb 1995) v1.3.29.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Stargate (Gottlieb 1995) v1.3.29.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "41e5892edb53222367472dc88e621c6a37683750e058e7d046c566826f6f16f0"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 0,
+      "group": "pinmame.input.switch",
+      "label": "L Coin",
+      "line": 85,
+      "status": "candidate",
+      "symbol": "swLCoin"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "R Coin",
+      "line": 86,
+      "status": "candidate",
+      "symbol": "swRCoin"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "C Coin",
+      "line": 87,
+      "status": "candidate",
+      "symbol": "swCCoin"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "Coin Shuttle",
+      "line": 88,
+      "status": "candidate",
+      "symbol": "swCoinShuttle"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "Start Button",
+      "line": 89,
+      "status": "candidate",
+      "symbol": "swStartButton"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "Tournament",
+      "line": 90,
+      "status": "candidate",
+      "symbol": "swTournament"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "table1 Key Down",
+      "line": 560,
+      "status": "candidate",
+      "symbol": "table1_KeyDown"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "table1 Key Up",
+      "line": 595,
+      "status": "candidate",
+      "symbol": "table1_KeyUp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "Tournament Timer",
+      "line": 3518,
+      "status": "candidate",
+      "symbol": "TournamentTimer_Timer"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.input.switch",
+      "label": "Front Door",
+      "line": 91,
+      "status": "candidate",
+      "symbol": "swFrontDoor"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.input.switch",
+      "label": "Tournament Timer",
+      "line": 3519,
+      "status": "candidate",
+      "symbol": "TournamentTimer_Timer"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 897,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 928,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 1690,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 1664,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Glider Timer",
+      "line": 1268,
+      "state_labels": [
+        "Glider Timer"
+      ],
+      "status": "candidate",
+      "symbol": "GliderTimer_Timer"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 993,
+      "status": "candidate",
+      "symbol": "sw22_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 833,
+      "status": "candidate",
+      "symbol": "sw23_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 840,
+      "status": "candidate",
+      "symbol": "sw23_UnHit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Check Drain",
+      "line": 742,
+      "status": "candidate",
+      "symbol": "CheckDrain"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 739,
+      "status": "candidate",
+      "symbol": "Drain_Hit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Trough4",
+      "line": 736,
+      "status": "candidate",
+      "symbol": "swTrough4_UnHit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 259,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "sw25",
+      "line": 781,
+      "status": "candidate",
+      "symbol": "sw25_Hit"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "sw25",
+      "line": 782,
+      "status": "candidate",
+      "symbol": "sw25_UnHit"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "Glider Timer",
+      "line": 1274,
+      "state_labels": [
+        "Glider Timer"
+      ],
+      "status": "candidate",
+      "symbol": "GliderTimer_Timer"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "SW31",
+      "line": 999,
+      "status": "candidate",
+      "symbol": "SW31_Hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "SW31",
+      "line": 1000,
+      "status": "candidate",
+      "symbol": "SW31_unHit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "table1 Key Up",
+      "line": 586,
+      "status": "candidate",
+      "symbol": "table1_KeyUp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 995,
+      "status": "candidate",
+      "symbol": "sw22_Timer"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "sw33",
+      "line": 808,
+      "status": "candidate",
+      "symbol": "sw33_Hit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "sw33",
+      "line": 815,
+      "status": "candidate",
+      "symbol": "sw33_UnHit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Trough2",
+      "line": 733,
+      "status": "candidate",
+      "symbol": "swTrough2_Hit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Trough2",
+      "line": 732,
+      "status": "candidate",
+      "symbol": "swTrough2_UnHit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 258,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 80,
+      "group": "pinmame.input.switch",
+      "label": "sw80",
+      "line": 858,
+      "status": "candidate",
+      "symbol": "sw80_Hit"
+    },
+    {
+      "address": 80,
+      "group": "pinmame.input.switch",
+      "label": "sw80",
+      "line": 865,
+      "status": "candidate",
+      "symbol": "sw80_UnHit"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.input.switch",
+      "label": "table1 Key Down",
+      "line": 541,
+      "status": "candidate",
+      "symbol": "table1_KeyDown"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.input.switch",
+      "label": "table1 Key Up",
+      "line": 577,
+      "status": "candidate",
+      "symbol": "table1_KeyUp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.input.switch",
+      "label": "table1 Key Down",
+      "line": 545,
+      "status": "candidate",
+      "symbol": "table1_KeyDown"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.input.switch",
+      "label": "table1 Key Up",
+      "line": 581,
+      "status": "candidate",
+      "symbol": "table1_KeyUp"
+    },
+    {
+      "address": 90,
+      "group": "pinmame.input.switch",
+      "label": "sw90",
+      "line": 1070,
+      "status": "candidate",
+      "symbol": "sw90_Hit"
+    },
+    {
+      "address": 91,
+      "group": "pinmame.input.switch",
+      "label": "sw91",
+      "line": 1138,
+      "status": "candidate",
+      "symbol": "sw91_Hit"
+    },
+    {
+      "address": 100,
+      "group": "pinmame.input.switch",
+      "label": "sw100",
+      "line": 1071,
+      "status": "candidate",
+      "symbol": "sw100_Hit"
+    },
+    {
+      "address": 101,
+      "group": "pinmame.input.switch",
+      "label": "Sol Div",
+      "line": 674,
+      "state_labels": [
+        "Sol Div"
+      ],
+      "status": "candidate",
+      "symbol": "SolDiv"
+    },
+    {
+      "address": 102,
+      "group": "pinmame.input.switch",
+      "label": "Sol Pyramid",
+      "line": 1200,
+      "state_labels": [
+        "Sol Pyramid"
+      ],
+      "status": "candidate",
+      "symbol": "SolPyramid"
+    },
+    {
+      "address": 110,
+      "group": "pinmame.input.switch",
+      "label": "sw110",
+      "line": 1072,
+      "status": "candidate",
+      "symbol": "sw110_Hit"
+    },
+    {
+      "address": 111,
+      "group": "pinmame.input.switch",
+      "label": "SW111",
+      "line": 1001,
+      "status": "candidate",
+      "symbol": "SW111_Hit"
+    },
+    {
+      "address": 111,
+      "group": "pinmame.input.switch",
+      "label": "SW111",
+      "line": 1002,
+      "status": "candidate",
+      "symbol": "SW111_unHit"
+    },
+    {
+      "address": 112,
+      "group": "pinmame.input.switch",
+      "label": "SW112",
+      "line": 1003,
+      "status": "candidate",
+      "symbol": "SW112_Hit"
+    },
+    {
+      "address": 112,
+      "group": "pinmame.input.switch",
+      "label": "SW112",
+      "line": 1004,
+      "status": "candidate",
+      "symbol": "SW112_unHit"
+    },
+    {
+      "address": 113,
+      "group": "pinmame.input.switch",
+      "label": "SW113",
+      "line": 1005,
+      "status": "candidate",
+      "symbol": "SW113_Hit"
+    },
+    {
+      "address": 113,
+      "group": "pinmame.input.switch",
+      "label": "SW113",
+      "line": 1006,
+      "status": "candidate",
+      "symbol": "SW113_unHit"
+    },
+    {
+      "address": 114,
+      "group": "pinmame.input.switch",
+      "label": "SW114",
+      "line": 1007,
+      "status": "candidate",
+      "symbol": "SW114_Hit"
+    },
+    {
+      "address": 114,
+      "group": "pinmame.input.switch",
+      "label": "SW114",
+      "line": 1008,
+      "status": "candidate",
+      "symbol": "SW114_unHit"
+    },
+    {
+      "address": 115,
+      "group": "pinmame.input.switch",
+      "label": "SW115",
+      "line": 1009,
+      "status": "candidate",
+      "symbol": "SW115_Hit"
+    },
+    {
+      "address": 115,
+      "group": "pinmame.input.switch",
+      "label": "SW115",
+      "line": 1010,
+      "status": "candidate",
+      "symbol": "SW115_unHit"
+    },
+    {
+      "address": 116,
+      "group": "pinmame.input.switch",
+      "label": "itch 116",
+      "line": 1148,
+      "status": "candidate",
+      "symbol": "switch_116"
+    },
+    {
+      "address": 117,
+      "group": "pinmame.input.switch",
+      "label": "itch 117",
+      "line": 1168,
+      "status": "candidate",
+      "symbol": "switch_117"
+    }
+  ],
+  "version": 1
+}

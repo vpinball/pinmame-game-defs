@@ -1,0 +1,447 @@
+{
+  "driver_ids": [
+    "solaride"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.solaride"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Ball Release",
+      "line": 869,
+      "status": "candidate",
+      "symbol": "SolBallRelease"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 870,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Sound3",
+      "line": 871,
+      "status": "candidate",
+      "symbol": "SolSound3"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Sound4",
+      "line": 872,
+      "status": "candidate",
+      "symbol": "SolSound4"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Sound5",
+      "line": 873,
+      "status": "candidate",
+      "symbol": "SolSound5"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Saucer Right",
+      "line": 874,
+      "status": "candidate",
+      "symbol": "SolSaucerRight"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Saucer Left",
+      "line": 875,
+      "status": "candidate",
+      "symbol": "SolSaucerLeft"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "DT Bank Reset",
+      "line": 876,
+      "status": "candidate",
+      "symbol": "DTBankReset"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Game On",
+      "line": 878,
+      "status": "candidate",
+      "symbol": "SolGameOn"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 28,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "_____  _____ _       ___  ______   ______ ___________ _____\n/  ___||  _  | |     / _ \\ | ___ \\  | ___ \\_   _|  _  \\  ___|\n\\ `--. | | | | |    / /_\\ \\| |_/ /  | |_/ / | | | | | | |__\n`--. \\| | | | |    |  _  ||    /   |    /  | | | | | |  __|\n/\\__/ /\\ \\_/ / |____| | | || |\\ \\   | |\\ \\ _| |_| |/ /| |___\n\\____/  \\___/\\_____/\\_| |_/\\_| \\_|  \\_| \\_|\\___/|___/ \\____/\n\n\n    D. Gottlieb & Company (1977-1983), MPU Gottlieb System 1\n    Solar Ride / IPD No. 2239 / February, 1979 / 4 Players\n    https://www.ipdb.org/machine.cgi?id=2239\n    Production: 8,800 units\n\n\n********************************************************************************************************************************\n******** Work done by UnclePaulie on Hybrid version 0.01 - 2.0 *********\n    Implemented latest VPW standards, physics, GI VLM, 3D inserts, AllLamps routines, shadows, backglass for desktop,\n  roth targets, standalone compatibility, sling corrections, optional DIP adjustments, updated flipper physics,\n  VR and fully hybrid, playfield mesh, Flupper style bumpers and lighting. Used VR backglass images from Hauntfreaks.\n  Redbone updated the playfield graphics (from a cwgoss28 scan), as well other graphics: plastics, flippers, targets, and apron images.\n  Full details at the bottom of the script.\n********************************************************************************************************************************\n\n\nPLEASE NOTE:\n- All game options can be adjusted by pressing F12 and then left flipper button during the game. Press start button to save your options."
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Solar Ride (Gottlieb 1979) v2.0.0.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Solar Ride (Gottlieb 1979) v2.0.0.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "a371e28a439258d50159f71e36a94a0424dd9ad5adef4e9c100e7498b8240f71"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3610,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3612,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3614,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3616,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 3618,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "sw10",
+      "line": 1620,
+      "status": "candidate",
+      "symbol": "sw10_Hit"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "sw10",
+      "line": 1621,
+      "status": "candidate",
+      "symbol": "sw10_UnHit"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "10a",
+      "line": 1622,
+      "status": "candidate",
+      "symbol": "sw10a_Hit"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "10a",
+      "line": 1623,
+      "status": "candidate",
+      "symbol": "sw10a_UnHit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 1624,
+      "status": "candidate",
+      "symbol": "sw11_Hit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 1625,
+      "status": "candidate",
+      "symbol": "sw11_UnHit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "sw122",
+      "line": 1657,
+      "status": "candidate",
+      "symbol": "sw122_Hit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "sw123",
+      "line": 1661,
+      "status": "candidate",
+      "symbol": "sw123_Hit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "sw12",
+      "line": 1653,
+      "status": "candidate",
+      "symbol": "sw12_Hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 001",
+      "line": 1230,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_001_hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 002",
+      "line": 1231,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_002_hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 003",
+      "line": 1232,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_003_hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 004",
+      "line": 1234,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_004_hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 005",
+      "line": 1241,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_005_hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 006",
+      "line": 1250,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_006_hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 1044,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "sw20",
+      "line": 1626,
+      "status": "candidate",
+      "symbol": "sw20_Hit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "sw20",
+      "line": 1627,
+      "status": "candidate",
+      "symbol": "sw20_UnHit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "sw21",
+      "line": 1628,
+      "status": "candidate",
+      "symbol": "sw21_Hit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "sw21",
+      "line": 1629,
+      "status": "candidate",
+      "symbol": "sw21_UnHit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 1630,
+      "status": "candidate",
+      "symbol": "sw22_Hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 1631,
+      "status": "candidate",
+      "symbol": "sw22_UnHit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 1632,
+      "status": "candidate",
+      "symbol": "sw23_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 1633,
+      "status": "candidate",
+      "symbol": "sw23_UnHit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "Bumper3",
+      "line": 1220,
+      "status": "candidate",
+      "symbol": "Bumper3_Hit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "sw41",
+      "line": 1715,
+      "status": "candidate",
+      "symbol": "sw41_Hit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "sw41",
+      "line": 1720,
+      "status": "candidate",
+      "symbol": "sw41_Unhit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 286,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 1748,
+      "status": "candidate",
+      "symbol": "sw42_Hit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 1753,
+      "status": "candidate",
+      "symbol": "sw42_Unhit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 287,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 1200,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 1210,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "Gate 002 Trigger",
+      "line": 1771,
+      "status": "candidate",
+      "symbol": "Gate_002_Trigger_Hit"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 936,
+      "status": "candidate",
+      "symbol": "BallRelease_Hit"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 937,
+      "status": "candidate",
+      "symbol": "BallRelease_UnHit"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 283,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    }
+  ],
+  "version": 1
+}

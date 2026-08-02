@@ -1,0 +1,89 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.sam",
+  "authority": "pinmame",
+  "hardware_family": "Stern S.A.M.",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Switch and dedicated-switch inputs",
+      "address_rules": [
+        { "minimum": -7, "maximum": 72 },
+        { "minimum": 81, "maximum": 88 }
+      ],
+      "transports": {
+        "libpinmame": { "channel": "switch" },
+        "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "SAM uses sequential public switch numbering. Matrix switches are 1-64; dedicated D1-D8 are 65-72; D17-D24 are -7 through 0; flipper D9-D16 are exposed in PinMAME's flipper column as 81-88 with right/left and EOS ordering."
+    },
+	{
+	  "id": "pinmame.input.dip",
+      "direction": "configuration",
+      "kind": "dip_switch",
+      "label": "Dedicated DIP switch bank",
+      "address_rules": [{ "minimum": 1, "maximum": 8 }],
+	  "transports": { "libpinmame": { "channel": "dip" } }
+	},
+	{
+	  "id": "physical.output.ticket",
+	  "direction": "controlled_device",
+	  "kind": "solenoid",
+	  "label": "Optional ticket-dispenser service functions",
+	  "address_rules": [{ "minimum": 33, "maximum": 35 }],
+	  "transports": {},
+	  "notes": "Physical service-diagnostic identities for optional ticket hardware. They are deliberately not LibPinMAME solenoid addresses: SAM public solenoid 33 is PinMAME's synthetic game-on state, and the stable API does not expose these cabinet functions."
+	},
+	{
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Main and auxiliary driver outputs",
+      "address_rules": [{ "minimum": 1, "maximum": 66 }],
+      "transports": {
+        "libpinmame": { "channel": "solenoid" },
+        "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+	  "notes": "SAM main-driver and game-specific auxiliary outputs share PinMAME's public solenoid address space. Addresses 1-32 are the base driver outputs; address 33 is PinMAME's synthetic game-on/fast-flip state and is never a physical transistor. Most six-transistor games expose addresses through 56; games such as Mustang configure sixteen custom outputs and expose the full 51-66 range, including deliberately unused public holes."
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "Lamp matrix outputs",
+      "address_rules": [{ "minimum": 1, "maximum": 339 }],
+      "transports": {
+        "libpinmame": { "channel": "lamp" },
+        "controller_plugin": { "group_id": 512, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "The 1-80 range is the conventional matrix. SAM node-board games expose additional LED channels through backward-compatible ChangedLamps addresses. Star Trek configures four node boards and reaches public address 339; the deliberate compatibility gaps at 145, 210, and 275 are not device addresses."
+    },
+    {
+      "id": "pinmame.output.gi",
+      "direction": "controlled_device",
+      "kind": "gi",
+      "label": "General illumination outputs",
+      "address_rules": [{ "minimum": 0, "maximum": 0 }],
+      "transports": {
+        "libpinmame": { "channel": "gi" },
+        "controller_plugin": { "group_id": 256, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      }
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "locator": "src/wpc/sam.c; src/wpc/core.c; src/libpinmame/libpinmame.cpp"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "a6f6d7266d301249ed09c1b0123f8476513a2228",
+      "locator": "src/libpinmame/libpinmame.cpp SetupMsgApi group definitions"
+    }
+  ]
+}

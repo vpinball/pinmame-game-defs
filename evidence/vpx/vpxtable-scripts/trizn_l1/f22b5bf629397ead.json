@@ -1,0 +1,410 @@
+{
+  "driver_ids": [
+    "trizn_l1"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.trizn_l1"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Ball Release",
+      "line": 662,
+      "status": "candidate",
+      "symbol": "SolBallRelease"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Saucer",
+      "line": 663,
+      "status": "candidate",
+      "symbol": "SolSaucer"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol DT Reset Z",
+      "line": 664,
+      "status": "candidate",
+      "symbol": "SolDTResetZ"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol DT Reset O",
+      "line": 665,
+      "status": "candidate",
+      "symbol": "SolDTResetO"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol DT Reset N",
+      "line": 666,
+      "status": "candidate",
+      "symbol": "SolDTResetN"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol DT Reset E",
+      "line": 667,
+      "status": "candidate",
+      "symbol": "SolDTResetE"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 673,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Game On",
+      "line": 674,
+      "status": "candidate",
+      "symbol": "SolGameOn"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 69,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "_____            _______\n(_   _)     _    (_____  )\n | | _ __ (_)        /'/'   _     ___     __\n | |( '__)| |      /'/'   /'_`\\ /' _ `\\ /'__`\\\n | || |   | |    /'/'___ ( (_) )| ( ) |(  ___/\n (_)(_)   (_)   (_______)`\\___/'(_) (_)`\\____)\n\n              Williams Electronics, Incorporated; System 6\n\n      Tri Zone / IPD No. 2641 / July 30, 1979 / 4 Players\n              https://www.ipdb.org/machine.cgi?id=2641\n\nVersion 2.0 by UnclePaulie\n********************************************************************************************************************************\n******** Work done by UnclePaulie on Hybrid version 0.01 - 2.0 *********\n    Added latest VPW standards, physics, GI VLM, 3D inserts, AllLamps routines, shadows, updated backglass for desktop,\n  roth drop targets, standalone compatibility, sling corrections, updated flipper physics, VR and fully hybrid,\n  plastics and playfield from internet images (and some portions on fp from Kiwi), Flupper style bumpers and lighting.\n  Redbone enhanced the playfield, target, and wall graphics.  I also used some primitives from Kiwi's prior table.\n  Thanks also to the VPW team for testing!\n  Full details at the bottom of the script.\n********************************************************************************************************************************\n\n\nPLEASE NOTE:\n- All game options can be adjusted by pressing F12 and then left flipper button during the game. Press start button to save your options.\n\n*********************************************************************************************************************************\n=== TABLE OF CONTENTS  ===\n\nYou can quickly jump to a section by searching the four letter tag (ZXXX)\n\nZVAR: Constants and Global Variable\nZTIM: Timers\nZINI: Table Initialization and Exiting\n  ZOPT: User Options\n  ZMAT: General Math Functions\nZANI: Misc Animations\n  ZBBR: Ball Brightness\n  ZRBR: Room Brightness\nZKEY: Key Press Handling\nZSOL: Solenoids & Flashers\nZDRN: Drain, Trough, and Ball Release\nZFLP: Flippers\nZSLG: Slingshot Animations\nZSSC: Slingshot Corrections\nZSWI: Switches\n  ZBRL: Ball Rolling and Drop Sounds\n  ZRRL: Ramp Rolling Sound Effects\n  ZFLE: Fleep Mechanical Sounds\nZNFF: Flipper Corrections\n  ZDMP: Rubber Dampeners\n  ZRDT: Drop Targets\nZRST: Stand-Up Targets\n  ZBOU: VPW TargetBouncer for targets and posts\n  ZGIU: GI updates\n  Z3DI: 3D Inserts\n  ZFLD: Flupper Domes\n  ZFLB: Flupper Bumpers\nZSHA: Ambient Ball Shadows\n  ZVRR: VR Room / VR Cabinet\n\n*********************************************************************************************************************************"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in special_audiopan_and_audiofade_patched/Tri Zone (Williams 1979) v2.0.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "special_audiopan_and_audiofade_patched/Tri Zone (Williams 1979) v2.0.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "f22b5bf629397eadf2da83257e68eb079a1eb30aa3d71c482cf977532a9c8cc9"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 2906,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 2908,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 2910,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "mod",
+      "line": 2912,
+      "status": "candidate",
+      "symbol": "swmod"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 687,
+      "status": "candidate",
+      "symbol": "BallRelease_Hit"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 688,
+      "status": "candidate",
+      "symbol": "BallRelease_UnHit"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 281,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "sw10",
+      "line": 1019,
+      "status": "candidate",
+      "symbol": "sw10_Hit"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "sw10",
+      "line": 1020,
+      "status": "candidate",
+      "symbol": "sw10_UnHit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 1021,
+      "status": "candidate",
+      "symbol": "sw11_Hit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 1022,
+      "status": "candidate",
+      "symbol": "sw11_UnHit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 12",
+      "line": 1008,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_12_hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 1003,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 1004,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "Bumper3",
+      "line": 1005,
+      "status": "candidate",
+      "symbol": "Bumper3_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 17",
+      "line": 1009,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_17_hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "sw18",
+      "line": 1051,
+      "status": "candidate",
+      "symbol": "sw18_Hit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "sw19",
+      "line": 1055,
+      "status": "candidate",
+      "symbol": "sw19_Hit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 21",
+      "line": 1010,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_21_hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 1023,
+      "status": "candidate",
+      "symbol": "sw22_Hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 1024,
+      "status": "candidate",
+      "symbol": "sw22_UnHit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 1025,
+      "status": "candidate",
+      "symbol": "sw23_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 1026,
+      "status": "candidate",
+      "symbol": "sw23_UnHit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 809,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "sw25",
+      "line": 723,
+      "status": "candidate",
+      "symbol": "sw25_Hit"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "sw25",
+      "line": 728,
+      "status": "candidate",
+      "symbol": "sw25_Unhit"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 284,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 829,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "sw27",
+      "line": 1027,
+      "status": "candidate",
+      "symbol": "sw27_Hit"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "sw27",
+      "line": 1028,
+      "status": "candidate",
+      "symbol": "sw27_UnHit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 1029,
+      "status": "candidate",
+      "symbol": "sw28_Hit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 1030,
+      "status": "candidate",
+      "symbol": "sw28_UnHit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 29",
+      "line": 1011,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_29_hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "sw31",
+      "line": 987,
+      "status": "candidate",
+      "symbol": "sw31_Spin"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 1031,
+      "status": "candidate",
+      "symbol": "sw32_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 1032,
+      "status": "candidate",
+      "symbol": "sw32_UnHit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Do DT Anim",
+      "line": 3019,
+      "state_labels": [
+        "Do DT Anim"
+      ],
+      "status": "candidate",
+      "symbol": "DoDTAnim"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 315,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    }
+  ],
+  "version": 1
+}

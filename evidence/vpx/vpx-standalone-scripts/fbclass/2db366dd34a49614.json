@@ -1,0 +1,575 @@
+{
+  "driver_ids": [
+    "fbclass"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.fbclass"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "L Saucer",
+      "line": 34,
+      "status": "candidate",
+      "symbol": "sLSaucer"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "R Saucer",
+      "line": 33,
+      "status": "candidate",
+      "symbol": "sRSaucer"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "R Kicker",
+      "line": 38,
+      "status": "candidate",
+      "symbol": "sRKicker"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "YL Bumper",
+      "line": 30,
+      "status": "candidate",
+      "symbol": "sYLBumper"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "YR Bumper",
+      "line": 32,
+      "status": "candidate",
+      "symbol": "sYRBumper"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "B Bumper",
+      "line": 31,
+      "status": "candidate",
+      "symbol": "sBBumper"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "R Sling",
+      "line": 29,
+      "status": "candidate",
+      "symbol": "sRSling"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "Outhole",
+      "line": 36,
+      "status": "candidate",
+      "symbol": "sOuthole"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "Ball Release",
+      "line": 37,
+      "status": "candidate",
+      "symbol": "sBallRelease"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "Knocker",
+      "line": 27,
+      "status": "candidate",
+      "symbol": "sKnocker"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "label": "Gate",
+      "line": 35,
+      "status": "candidate",
+      "symbol": "sGate"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "label": "CLO",
+      "line": 39,
+      "status": "candidate",
+      "symbol": "sCLO"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "label": "Enable",
+      "line": 40,
+      "status": "candidate",
+      "symbol": "sEnable"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 127,
+      "line_start": 124,
+      "status": "candidate",
+      "text": "Spin ball in direction of turntable motion.  Speed > 0 = clockwise.\nStep 2: Determine amount of force to be applied to ball.\nDetermined by distance and current speed of turntable."
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Fireball Classic (Bally 1984)1.2/Fireball Classic (Bally 1984)1.2.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Fireball Classic (Bally 1984)1.2/Fireball Classic (Bally 1984)1.2.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/jsm174/vpx-standalone-scripts",
+    "revision": "15d112648a1b94b9f59eb8b3c335d57283653c50",
+    "sha256": "2db366dd34a4961442c5cbf65aed34e6735fe26793c920bf32cf5949ec960d2e"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "Right Slingshot",
+      "line": 256,
+      "status": "candidate",
+      "symbol": "RightSlingshot_Slingshot"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "Left Slingshot",
+      "line": 257,
+      "status": "candidate",
+      "symbol": "LeftSlingshot_Slingshot"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "Bumper Blue",
+      "line": 258,
+      "status": "candidate",
+      "symbol": "BumperBlue_Hit"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "Bumper Yellow Right",
+      "line": 259,
+      "status": "candidate",
+      "symbol": "BumperYellowRight_Hit"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "Bumper Yellow Left",
+      "line": 260,
+      "status": "candidate",
+      "symbol": "BumperYellowLeft_Hit"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "Wall105",
+      "line": 263,
+      "status": "candidate",
+      "symbol": "Wall105_Slingshot"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "Wall107",
+      "line": 264,
+      "status": "candidate",
+      "symbol": "Wall107_Slingshot"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "Wall139",
+      "line": 265,
+      "status": "candidate",
+      "symbol": "Wall139_Slingshot"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "Wall140",
+      "line": 266,
+      "status": "candidate",
+      "symbol": "Wall140_Slingshot"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "Wall153",
+      "line": 267,
+      "status": "candidate",
+      "symbol": "Wall153_Slingshot"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "Wall154",
+      "line": 268,
+      "status": "candidate",
+      "symbol": "Wall154_Slingshot"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "Wall155",
+      "line": 269,
+      "status": "candidate",
+      "symbol": "Wall155_Slingshot"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "Wall64",
+      "line": 261,
+      "status": "candidate",
+      "symbol": "Wall64_Slingshot"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "Wall78",
+      "line": 262,
+      "status": "candidate",
+      "symbol": "Wall78_Slingshot"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Odin Mushroom",
+      "line": 277,
+      "status": "candidate",
+      "symbol": "OdinMushroom_Hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Zipper Mushroom",
+      "line": 278,
+      "status": "candidate",
+      "symbol": "ZipperMushroom_Hit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Wotan Mushroom",
+      "line": 279,
+      "status": "candidate",
+      "symbol": "WotanMushroom_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "Skill Shot1002",
+      "line": 280,
+      "status": "candidate",
+      "symbol": "SkillShot1002_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "Skill Shot1002",
+      "line": 281,
+      "status": "candidate",
+      "symbol": "SkillShot1002_unHit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Button Kicker Off Left",
+      "line": 294,
+      "status": "candidate",
+      "symbol": "ButtonKickerOffLeft_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Button Kicker Off Left",
+      "line": 295,
+      "status": "candidate",
+      "symbol": "ButtonKickerOffLeft_unHit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Button Kicker Off Right",
+      "line": 292,
+      "status": "candidate",
+      "symbol": "ButtonKickerOffRight_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Button Kicker Off Right",
+      "line": 293,
+      "status": "candidate",
+      "symbol": "ButtonKickerOffRight_unHit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Button Kicker On",
+      "line": 296,
+      "status": "candidate",
+      "symbol": "ButtonKickerOn_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Button Kicker On",
+      "line": 297,
+      "status": "candidate",
+      "symbol": "ButtonKickerOn_unHit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Wheel Trigger1",
+      "line": 282,
+      "status": "candidate",
+      "symbol": "WheelTrigger1_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Wheel Trigger1",
+      "line": 283,
+      "status": "candidate",
+      "symbol": "WheelTrigger1_unHit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Wheel Trigger2",
+      "line": 284,
+      "status": "candidate",
+      "symbol": "WheelTrigger2_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Wheel Trigger2",
+      "line": 285,
+      "status": "candidate",
+      "symbol": "WheelTrigger2_unHit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Wheel Trigger3",
+      "line": 286,
+      "status": "candidate",
+      "symbol": "WheelTrigger3_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Wheel Trigger3",
+      "line": 287,
+      "status": "candidate",
+      "symbol": "WheelTrigger3_unHit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Wheel Trigger4",
+      "line": 288,
+      "status": "candidate",
+      "symbol": "WheelTrigger4_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Wheel Trigger4",
+      "line": 289,
+      "status": "candidate",
+      "symbol": "WheelTrigger4_unHit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Wheel Trigger5",
+      "line": 290,
+      "status": "candidate",
+      "symbol": "WheelTrigger5_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Wheel Trigger5",
+      "line": 291,
+      "status": "candidate",
+      "symbol": "WheelTrigger5_unHit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "Button Kicker Off Left",
+      "line": 294,
+      "status": "candidate",
+      "symbol": "ButtonKickerOffLeft_Hit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "Button Kicker Off Left",
+      "line": 295,
+      "status": "candidate",
+      "symbol": "ButtonKickerOffLeft_unHit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "Button Kicker Off Right",
+      "line": 292,
+      "status": "candidate",
+      "symbol": "ButtonKickerOffRight_Hit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "Button Kicker Off Right",
+      "line": 293,
+      "status": "candidate",
+      "symbol": "ButtonKickerOffRight_unHit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "Button Kicker On",
+      "line": 296,
+      "status": "candidate",
+      "symbol": "ButtonKickerOn_Hit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "Button Kicker On",
+      "line": 297,
+      "status": "candidate",
+      "symbol": "ButtonKickerOn_unHit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Right Outlane",
+      "line": 298,
+      "status": "candidate",
+      "symbol": "RightOutlane_Hit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Right Outlane",
+      "line": 299,
+      "status": "candidate",
+      "symbol": "RightOutlane_unHit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Left Outlane",
+      "line": 300,
+      "status": "candidate",
+      "symbol": "LeftOutlane_Hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Left Outlane",
+      "line": 301,
+      "status": "candidate",
+      "symbol": "LeftOutlane_unHit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Wotan Kicker",
+      "line": 302,
+      "status": "candidate",
+      "symbol": "WotanKicker_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Wotan Kicker",
+      "line": 303,
+      "status": "candidate",
+      "symbol": "WotanKicker_unHit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Odin Kicker",
+      "line": 304,
+      "status": "candidate",
+      "symbol": "OdinKicker_Hit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Odin Kicker",
+      "line": 305,
+      "status": "candidate",
+      "symbol": "OdinKicker_unHit"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "Lane Target",
+      "line": 306,
+      "status": "candidate",
+      "symbol": "LaneTarget_Hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Odin Trigger2",
+      "line": 307,
+      "status": "candidate",
+      "symbol": "OdinTrigger2_Hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Odin Trigger2",
+      "line": 308,
+      "status": "candidate",
+      "symbol": "OdinTrigger2_unHit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "Skill Shot1001",
+      "line": 309,
+      "status": "candidate",
+      "symbol": "SkillShot1001_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "Skill Shot1001",
+      "line": 310,
+      "status": "candidate",
+      "symbol": "SkillShot1001_unHit"
+    }
+  ],
+  "version": 1
+}

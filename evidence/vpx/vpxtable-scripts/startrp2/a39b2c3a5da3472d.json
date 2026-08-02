@@ -1,0 +1,658 @@
+{
+  "driver_ids": [
+    "startrp2"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "sega.starship-troopers.1997"
+  ],
+  "mechanisms": [
+    {
+      "kind": "cvpmMagnet",
+      "line": 304,
+      "raw": "Set mLeftMagnet = New cvpmMagnet",
+      "status": "candidate"
+    },
+    {
+      "kind": "cvpmMagnet",
+      "line": 312,
+      "raw": "Set mRightMagnet = New cvpmMagnet",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 200,
+      "group": "pinmame.output.lamp",
+      "label": "enabled",
+      "line": 1159,
+      "status": "candidate",
+      "symbol": "enabled"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Release",
+      "line": 606,
+      "status": "candidate",
+      "symbol": "SolRelease"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Autolaunch",
+      "line": 607,
+      "status": "candidate",
+      "symbol": "SolAutolaunch"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Leftvuk.Sol Out",
+      "line": 608,
+      "status": "candidate",
+      "symbol": "bsLeftvuk.SolOut"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Left Vuk",
+      "line": 609,
+      "status": "candidate",
+      "symbol": "SolLeftVuk"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Supervuk.Sol Out",
+      "line": 610,
+      "status": "candidate",
+      "symbol": "bsSupervuk.SolOut"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Left Magnet",
+      "line": 611,
+      "status": "candidate",
+      "symbol": "SolLeftMagnet"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Right Magnet",
+      "line": 612,
+      "status": "candidate",
+      "symbol": "SolRightMagnet"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Brain Bug",
+      "line": 613,
+      "status": "candidate",
+      "symbol": "SolBrainBug"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 614,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol R Flipper S",
+      "line": 900,
+      "status": "candidate",
+      "symbol": "SolRFlipperS"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "Flippers Enabled=",
+      "line": 615,
+      "status": "candidate",
+      "symbol": "FlippersEnabled="
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Lamp 123,",
+      "line": 616,
+      "status": "candidate",
+      "symbol": "SetLamp 123,"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol25",
+      "line": 617,
+      "status": "candidate",
+      "symbol": "Sol25"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol26",
+      "line": 618,
+      "status": "candidate",
+      "symbol": "Sol26"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol27",
+      "line": 619,
+      "status": "candidate",
+      "symbol": "Sol27"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol28",
+      "line": 620,
+      "status": "candidate",
+      "symbol": "Sol28"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Lamp 129,",
+      "line": 621,
+      "status": "candidate",
+      "symbol": "SetLamp 129,"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Lamp 130,",
+      "line": 622,
+      "status": "candidate",
+      "symbol": "SetLamp 130,"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Lamp 131,",
+      "line": 623,
+      "status": "candidate",
+      "symbol": "SetLamp 131,"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Lamp 132,",
+      "line": 624,
+      "status": "candidate",
+      "symbol": "SetLamp 132,"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 98,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "_____ __                  __    _\n / ___// /_____ ___________/ /_  (_)___\n \\__ \\/ __/ __ `/ ___/ ___/ __ \\/ / __ \\\n___/ / /_/ /_/ / /  (__  ) / / / / /_/ /\n/____/\\__/\\__,_/_/__/____/_/ /_/_/ .___/\n               /_  __/________ /_/__  ____  ___  __________\n                / / / ___/ __ \\/ __ \\/ __ \\/ _ \\/ ___/ ___/\n               / / / /  / /_/ / /_/ / /_/ /  __/ /  (__  )\n              /_/ /_/   \\____/\\____/ .___/\\___/_/  /____/\n                                  /_/\n*******************************************************\nSEGA PINBALL INC\nSTARSHIP TROOPERS 1997\n*******************************************************\nDesign by:  Joe Balcer, Joe Kaminkow\nArt by:   Morgan Weistling\nMusic by:   Brian Schmidt\nSound by:   Brian Schmidt\nSoftware by:  Neil Falconer, Orin Day\n*******************************************************\n*******************************************************\nRecreated for Visual Pinball by Knorr and Clark Kent\n\nUpdated by VPW\n  Eighties8: Complete rescale and nFozzy physics rebuild, Fleep sounds\n  TastyWasps: VR room integration\niaakki: Physics, lighting, and animation support\n  Aubrel: Lighting adjustments\n  Sixtoe: Table level and target animation fixes\n  apophis: Dynamic shadows, some visual, sound, and physics support\n  leojreimroc and HauntFreaks: VR backglass\n*******************************************************\n*******************************************************\nSpecial Thanks to:\nJPSalas, Arngrim, Vinthar\nToxie, Fuzzel and the VPX Dev Team\n*******************************************************\n*******************************************************\nV1.0    First Release\n*******************************************************\nV1.1    fixed left kicker\n    added missing post\n    slowed down orbit\n*******************************************************\nV2.0    VPW Mod\n    See changelog below\n*******************************************************\n001 e8 - Rescaled the whole project to match the current understanding of physics\n002 iaakki - Rescaled ramp heights, brainbug position and animations fixed, pf physics reworked, light bulb ball reflections fixed (sub addBallReflections), GI bulbs fixed\n003 e8 - Refactored scale from 2.0 to 1.9\n004 e8 - Added nfozzy flipper physics\n005 e8 - Added nfozzy dampening physics code. Applied new physics material settings and added rubbers and primatives to playfield\n006 e8 - Refactored scale to 20.25 and rescaled graphics to match, added latest slings implementation w correction functions\n007 e8 - Updated slings to nfozzy and added correction scripts.Added zCol mat to ramps, Adjusted pops settings.\n008 e8 - Fixed: slingshot sounds, autoplunger, sling geometries, Logo ball, subway drop height\n009 e8 - Fixed: Brain bug position, flipper strength, pf friction, fixed drop targets Z, aligned ramps\n010/14 e8 - Updated WarriorBug positions in script. Fixed ball block from subway wall under target area\n015 e8 - Updated WB script values to match new scale base 222 steps. Synced WB origins to same x/y base. Realigned left ramp inner post/sleeve to match overlay.\n016 e8 - Replaced Wall022 at corner of WB target with rubber post.\n018 e8 - Fixed wall heights around ramps and warrior bug\n019 Aubrel - Lights_BlurU, General_Illumination, FlasherCaps, Lights, Lights_Blur, flasherside layers\n020 e8 - Fixed rubber post sizes broken since scaled-7\n021 e8 - Fixed sleeve positions and sizes around right side drops.\n022 e8 - Fixed PFGI alignment, lowered flipper strength from 3000 to 2850 helps flipper tricks?\n023 e8 - Fixed PFGI alignment again, rescaled playfield mesh to further precision 1.8485 (18.485) to fix PFGI alignment. Rescaled GIFL1 to match PF mesh\n024 e8 - Added n/r physics to small flipper\n025 e8 - Fixed subway floors and wall heights, added block above tanker beetle scoop, lowered flipper strength to 2500\n026 e8 - More tweaks to subway to tighten geometries, removed * from layer names, fixed WP imageswap, replaced post with sleeve at left side DT bank\n027-29 Aubrel - lighting adjustments to account for scaling\n030 Aubrel - fixed side flashers hard edges on sidewalls. Added scripting to scale flasher effects\n031 e8 - Added sub to enable blue \"bugball\" Const BugBall = 1\n032 e8 - Reset glass height back to 400 to try fix cabinent POV\n033 e8 - Added LockBarKey to control right mini flipper\n034 e8 - Added Fleep Sounds, fixed position of PFGI bulbs!\n035 e8 - Added Shooter Groove to help with autoplunge alignment (Thx Uncle_Paulie). Adjusted plunger release speed. Replaced more stock sounds with fleep.\n036 e8 - Fixed spinner Z values! added Fleep SoundSpinner for ramp spinners.Added small flipper fleep sound and collide\n037 e8 - Added WB & BB switches to Fleep Targets. Added all zCol Posts & Sleeves to Fleep Rubbers\n038 e8 - Changed PF friction from .25 to .15 (thanks Apophis)\n039 e8 - Increased difficulty 20->50, flipper strength 2250->3125, flipper length 146.25->147.5, mini flip strength++ Reset target falloffs to 0, adjusted kicker actions\n041 e8 - Added Toys Visibility option and Hopper bug alignment option (need to remove bolt from prim)\n042 e8 - Removed the hex_bolt that sits atop the hopper bug (vpx export->blender import->blender export->vpx insert prim\n043 Sixtoe - Fixed target hit threshold and prim position, fixed right outlane issue, fixed metal fixture prim wrong position, fixed plunger lane guide size, fixed broken target animation and timers\n044 e8 - Enabled plastic ramp sounds (no fleep equivalent). Fixed brainbug wall height to prevent ball locks\n045 TastyWasps - Added hybrid minimal VR Room integration.\n046 iaakki - VR ramp material tweaks and z-fighting fixes. All changes are around UpdateGi sub..\n047 TastyWasps - Added Sphere VR Room as default.  Thanks RajoJoey!\n048 apophis - Added dynamic shadows. Added kick to ball if on top of brainbug when it raises. Updated ball image an ball scratches. Updated environmental image and emission scale. Adjusted flipper DL with GI state.\n049 apophis - Added flipper mod (thanks tomate!)\nRC1 apophis - Reworked ramp rolling sounds. Sound effect file cleanup. Locked all objects.\nRC2 TastyWasps - VR Backglass material and disable lighting settings tweaked. BrainBugCage normal map removed.  AO disabled by default.\nRC3 TastyWasps - VR flippers animated. VR Cabinet shiny factor reduced. Platform for sphere adjusted.\nRC4 apophis -  minor sleeve position adjustment near scoop. Set Wall014 physics material to MetalFO. Reduced WireRamp_Stop volume. Fixed top two bumpers height scale. Top comment block cleanup.\nRC5 apophis - Added inlane slowdown code. Reduced BumperSoundFactor to 3 and VolumeDial to 0.5. Updated desktop background default image (thanks PSD). Updated kicker angles (thanks tomate). Added some kicker randomness.\nv2.0 Release"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Starship Troopers (Sega 1997) VPW Mod v2.0.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Starship Troopers (Sega 1997) VPW Mod v2.0.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "a39b2c3a5da3472d8b037abba51a280c9bdad2cad62cc2b2156cefed483a5a86"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "sw9",
+      "line": 1052,
+      "status": "candidate",
+      "symbol": "sw9_Hit"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "sw9",
+      "line": 1053,
+      "status": "candidate",
+      "symbol": "sw9_UnHit"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "sw10",
+      "line": 813,
+      "status": "candidate",
+      "symbol": "sw10_Hit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 1017,
+      "status": "candidate",
+      "symbol": "sw16_Hit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 1018,
+      "status": "candidate",
+      "symbol": "sw16_UnHit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "T17",
+      "line": 1066,
+      "status": "candidate",
+      "symbol": "T17_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "T18",
+      "line": 1069,
+      "status": "candidate",
+      "symbol": "T18_Hit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "T19",
+      "line": 1072,
+      "status": "candidate",
+      "symbol": "T19_Hit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "T20",
+      "line": 1075,
+      "status": "candidate",
+      "symbol": "T20_Hit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "T21",
+      "line": 1078,
+      "status": "candidate",
+      "symbol": "T21_Hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "T22",
+      "line": 1081,
+      "status": "candidate",
+      "symbol": "T22_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "T23",
+      "line": 1084,
+      "status": "candidate",
+      "symbol": "T23_Hit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "T24",
+      "line": 1087,
+      "status": "candidate",
+      "symbol": "T24_Hit"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "sw25",
+      "line": 1109,
+      "status": "candidate",
+      "symbol": "sw25_Hit"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "sw26",
+      "line": 1113,
+      "status": "candidate",
+      "symbol": "sw26_Hit"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "T27",
+      "line": 1090,
+      "status": "candidate",
+      "symbol": "T27_Hit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "T28",
+      "line": 1093,
+      "status": "candidate",
+      "symbol": "T28_Hit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "T29",
+      "line": 1096,
+      "status": "candidate",
+      "symbol": "T29_Hit"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "T30",
+      "line": 1099,
+      "status": "candidate",
+      "symbol": "T30_Hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "T31",
+      "line": 1102,
+      "status": "candidate",
+      "symbol": "T31_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "T32",
+      "line": 1105,
+      "status": "candidate",
+      "symbol": "T32_Hit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "B Walls",
+      "line": 791,
+      "status": "candidate",
+      "symbol": "BWalls_Hit"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "Sol Brain Bug",
+      "line": 710,
+      "state_labels": [
+        "Sol Brain Bug"
+      ],
+      "status": "candidate",
+      "symbol": "SolBrainBug"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "sw38",
+      "line": 727,
+      "status": "candidate",
+      "symbol": "sw38_timer"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "Sol Brain Bug",
+      "line": 711,
+      "state_labels": [
+        "Sol Brain Bug"
+      ],
+      "status": "candidate",
+      "symbol": "SolBrainBug"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "sw40",
+      "line": 1061,
+      "status": "candidate",
+      "symbol": "sw40_Hit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "sw40",
+      "line": 1062,
+      "status": "candidate",
+      "symbol": "sw40_UnHit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "sw41",
+      "line": 1020,
+      "status": "candidate",
+      "symbol": "sw41_Hit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "sw41",
+      "line": 1021,
+      "status": "candidate",
+      "symbol": "sw41_UnHit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 1023,
+      "status": "candidate",
+      "symbol": "sw42_Hit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 1024,
+      "status": "candidate",
+      "symbol": "sw42_UnHit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 1026,
+      "status": "candidate",
+      "symbol": "sw43_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 1027,
+      "status": "candidate",
+      "symbol": "sw43_UnHit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "sw47",
+      "line": 1042,
+      "status": "candidate",
+      "symbol": "sw47_Hit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "sw47",
+      "line": 1043,
+      "status": "candidate",
+      "symbol": "sw47_UnHit"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "sw48",
+      "line": 1045,
+      "status": "candidate",
+      "symbol": "sw48_Hit"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "sw48",
+      "line": 1046,
+      "status": "candidate",
+      "symbol": "sw48_UnHit"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 1010,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "Bumper3",
+      "line": 1012,
+      "status": "candidate",
+      "symbol": "Bumper3_Hit"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 1011,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "sw52",
+      "line": 1110,
+      "status": "candidate",
+      "symbol": "sw52_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "sw53",
+      "line": 1111,
+      "status": "candidate",
+      "symbol": "sw53_Hit"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "sw57",
+      "line": 1029,
+      "status": "candidate",
+      "symbol": "sw57_Hit"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "sw57",
+      "line": 1030,
+      "status": "candidate",
+      "symbol": "sw57_UnHit"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.input.switch",
+      "label": "sw58",
+      "line": 1032,
+      "status": "candidate",
+      "symbol": "sw58_Hit"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.input.switch",
+      "label": "sw58",
+      "line": 1033,
+      "status": "candidate",
+      "symbol": "sw58_UnHit"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.input.switch",
+      "label": "Rightslingshot",
+      "line": 972,
+      "status": "candidate",
+      "symbol": "Rightslingshot_Slingshot"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.input.switch",
+      "label": "sw60",
+      "line": 1038,
+      "status": "candidate",
+      "symbol": "sw60_Hit"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.input.switch",
+      "label": "sw60",
+      "line": 1039,
+      "status": "candidate",
+      "symbol": "sw60_UnHit"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "sw61",
+      "line": 1035,
+      "status": "candidate",
+      "symbol": "sw61_Hit"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "sw61",
+      "line": 1036,
+      "status": "candidate",
+      "symbol": "sw61_UnHit"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "Leftslingshot",
+      "line": 991,
+      "status": "candidate",
+      "symbol": "Leftslingshot_Slingshot"
+    },
+    {
+      "address": 88,
+      "group": "pinmame.input.switch",
+      "label": "table1 Key Down",
+      "line": 475,
+      "status": "candidate",
+      "symbol": "table1_KeyDown"
+    },
+    {
+      "address": 88,
+      "group": "pinmame.input.switch",
+      "label": "table1 Key Up",
+      "line": 519,
+      "status": "candidate",
+      "symbol": "table1_KeyUp"
+    }
+  ],
+  "version": 1
+}

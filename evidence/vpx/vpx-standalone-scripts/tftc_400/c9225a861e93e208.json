@@ -1,0 +1,972 @@
+{
+  "driver_ids": [
+    "tftc_400"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "data-east.tales-from-the-crypt.1993"
+  ],
+  "mechanisms": [
+    {
+      "kind": "new cvpmMech",
+      "line": 2194,
+      "raw": "Set mTombStone = new cvpmMech",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 2,
+      "group": "pinmame.output.gi",
+      "label": "gi 2",
+      "line": 3983,
+      "status": "candidate",
+      "symbol": "gi_2"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp",
+      "label": "flstate",
+      "line": 277,
+      "status": "candidate",
+      "symbol": "flstate"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "kisort",
+      "line": 166,
+      "status": "candidate",
+      "symbol": "kisort"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Kick Ball To Lane",
+      "line": 167,
+      "status": "candidate",
+      "symbol": "KickBallToLane"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Auto Plunger",
+      "line": 168,
+      "status": "candidate",
+      "symbol": "Auto_Plunger"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "Reset Drops",
+      "line": 169,
+      "status": "candidate",
+      "symbol": "ResetDrops"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Scoop Kick",
+      "line": 170,
+      "status": "candidate",
+      "symbol": "ScoopKick"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Kick Ball Up38",
+      "line": 171,
+      "status": "candidate",
+      "symbol": "KickBallUp38"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Kick Ball Up52",
+      "line": 172,
+      "status": "candidate",
+      "symbol": "KickBallUp52"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Sol Sound Sound FX(",
+      "line": 174,
+      "status": "candidate",
+      "symbol": "vpmSolSound SoundFX("
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Div",
+      "line": 173,
+      "status": "candidate",
+      "symbol": "SolDiv"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "Set GI",
+      "line": 175,
+      "status": "candidate",
+      "symbol": "SetGI"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Shake",
+      "line": 176,
+      "status": "candidate",
+      "symbol": "SolShake"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid",
+      "label": "Solkickback",
+      "line": 177,
+      "status": "candidate",
+      "symbol": "Solkickback"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol1 R",
+      "line": 178,
+      "status": "candidate",
+      "symbol": "Sol1R"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol2 R",
+      "line": 179,
+      "status": "candidate",
+      "symbol": "Sol2R"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol3 R",
+      "line": 180,
+      "status": "candidate",
+      "symbol": "Sol3R"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol4 R",
+      "line": 181,
+      "status": "candidate",
+      "symbol": "Sol4R"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol5 R",
+      "line": 182,
+      "status": "candidate",
+      "symbol": "Sol5R"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol6 R",
+      "line": 183,
+      "status": "candidate",
+      "symbol": "Sol6R"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol7 R",
+      "line": 184,
+      "status": "candidate",
+      "symbol": "Sol7R"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol8 R",
+      "line": 185,
+      "status": "candidate",
+      "symbol": "Sol8R"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 22,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "Tales from the Crypt - IPDB No. 2493\n© Data East 1993\nhttps://www.ipdb.org/machine.cgi?gid=2493\n\nPlease use VPX 10.6, there may be issues with 10.7\n\n*** V-Pin Workshop TFTC Monsters ***\n- Project Manager: Tomate\n- Models and textures with Blender & Octane: Tomate\n- Ramps: Tomate\n- Primitive fading code for GI and flashers: iaakki\n- \"Three layer\" 3D Inserts: iaakki\n- Tombstone Code: Sixtoe, DJRobX\n- PF edits and insert texts: iaakki\n- Additional lighting: iaakki, Sixtoe, Skitso, G5k, Tomate\n- Wylte RTX ball shadows: Wylte, apophis, iaakki\n- VR Stuff: Sixtoe, Rawd-Leojreimroc-Hauntfreaks (Backglass), Gear323 (Plunger)\n- nFozzy physics: iaakki, Benji\n- Rubberizer and TargetBouncer: iaakki\n- Fleep Sounds: iaakki, Benji\n- Miscellaneous fixes and tweaks: Sixtoe, CyberPez, apophis, kingdids, baldgeek, fluffhead35, HauntFreaks\n- Testing: Rik, VPW team"
+    },
+    {
+      "line_end": 2194,
+      "line_start": 2192,
+      "status": "candidate",
+      "text": "RIP Tombstone"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Tales from the Crypt (Data East 1993) VPW v1.22/Tales from the Crypt (Data East 1993) VPW v1.22.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Tales from the Crypt (Data East 1993) VPW v1.22/Tales from the Crypt (Data East 1993) VPW v1.22.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/jsm174/vpx-standalone-scripts",
+    "revision": "15d112648a1b94b9f59eb8b3c335d57283653c50",
+    "sha256": "c9225a861e93e208963468c69090142bdca2c676dc30e2a2e4f82a014ae6c805"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 0,
+      "group": "pinmame.input.switch",
+      "label": "apflag",
+      "line": 3859,
+      "status": "candidate",
+      "symbol": "swapflag"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "apflag",
+      "line": 3876,
+      "status": "candidate",
+      "symbol": "swapflag"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 2241,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Creat Balls",
+      "line": 2406,
+      "status": "candidate",
+      "symbol": "CreatBalls"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 2425,
+      "status": "candidate",
+      "symbol": "Drain_Hit"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 2426,
+      "status": "candidate",
+      "symbol": "Drain_UnHit"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "Creat Balls",
+      "line": 2407,
+      "status": "candidate",
+      "symbol": "CreatBalls"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "sw10",
+      "line": 2427,
+      "status": "candidate",
+      "symbol": "sw10_Hit"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "sw10",
+      "line": 2428,
+      "status": "candidate",
+      "symbol": "sw10_UnHit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "Creat Balls",
+      "line": 2408,
+      "status": "candidate",
+      "symbol": "CreatBalls"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 2429,
+      "status": "candidate",
+      "symbol": "sw11_Hit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 2430,
+      "status": "candidate",
+      "symbol": "sw11_UnHit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Creat Balls",
+      "line": 2409,
+      "status": "candidate",
+      "symbol": "CreatBalls"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "sw12",
+      "line": 2431,
+      "status": "candidate",
+      "symbol": "sw12_Hit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "sw12",
+      "line": 2432,
+      "status": "candidate",
+      "symbol": "sw12_UnHit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Creat Balls",
+      "line": 2410,
+      "status": "candidate",
+      "symbol": "CreatBalls"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 2433,
+      "status": "candidate",
+      "symbol": "sw13_Hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 2434,
+      "status": "candidate",
+      "symbol": "sw13_UnHit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Creat Balls",
+      "line": 2411,
+      "status": "candidate",
+      "symbol": "CreatBalls"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "kisort",
+      "line": 2497,
+      "status": "candidate",
+      "symbol": "kisort"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "sw14",
+      "line": 2435,
+      "status": "candidate",
+      "symbol": "sw14_Hit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "sw14",
+      "line": 2436,
+      "status": "candidate",
+      "symbol": "sw14_UnHit"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "Creat Balls",
+      "line": 2412,
+      "status": "candidate",
+      "symbol": "CreatBalls"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "Kick Ball To Lane",
+      "line": 2468,
+      "status": "candidate",
+      "symbol": "KickBallToLane"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "sw15",
+      "line": 2437,
+      "status": "candidate",
+      "symbol": "sw15_Hit"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "sw15",
+      "line": 2438,
+      "status": "candidate",
+      "symbol": "sw15_UnHit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 2899,
+      "status": "candidate",
+      "symbol": "sw16_Hit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 2900,
+      "status": "candidate",
+      "symbol": "sw16_UnHit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 2901,
+      "status": "candidate",
+      "symbol": "sw17_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 2902,
+      "status": "candidate",
+      "symbol": "sw17_UnHit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "sw18",
+      "line": 2903,
+      "status": "candidate",
+      "symbol": "sw18_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "sw18",
+      "line": 2904,
+      "status": "candidate",
+      "symbol": "sw18_UnHit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 4583,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "sw20",
+      "line": 3046,
+      "status": "candidate",
+      "symbol": "sw20_Hit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "itch 20",
+      "line": 3118,
+      "status": "candidate",
+      "symbol": "switch_20"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "sw21",
+      "line": 3058,
+      "status": "candidate",
+      "symbol": "sw21_Hit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "itch 21",
+      "line": 3120,
+      "status": "candidate",
+      "symbol": "switch_21"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 3070,
+      "status": "candidate",
+      "symbol": "sw22_Hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "itch 22",
+      "line": 3122,
+      "status": "candidate",
+      "symbol": "switch_22"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 2905,
+      "status": "candidate",
+      "symbol": "sw23_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 2906,
+      "status": "candidate",
+      "symbol": "sw23_UnHit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "sw24",
+      "line": 2907,
+      "status": "candidate",
+      "symbol": "sw24_Hit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "sw24",
+      "line": 2908,
+      "status": "candidate",
+      "symbol": "sw24_UnHit"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "sw25",
+      "line": 2909,
+      "status": "candidate",
+      "symbol": "sw25_Hit"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "sw25",
+      "line": 2910,
+      "status": "candidate",
+      "symbol": "sw25_UnHit"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "sw26",
+      "line": 2911,
+      "status": "candidate",
+      "symbol": "sw26_Hit"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "sw26",
+      "line": 2912,
+      "status": "candidate",
+      "symbol": "sw26_UnHit"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 4560,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 3082,
+      "status": "candidate",
+      "symbol": "sw28_Hit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "itch 28",
+      "line": 3124,
+      "status": "candidate",
+      "symbol": "switch_28"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 3094,
+      "status": "candidate",
+      "symbol": "sw29_Hit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "itch 29",
+      "line": 3126,
+      "status": "candidate",
+      "symbol": "switch_29"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "sw30",
+      "line": 3106,
+      "status": "candidate",
+      "symbol": "sw30_Hit"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "itch 30",
+      "line": 3128,
+      "status": "candidate",
+      "symbol": "switch_30"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "sw31",
+      "line": 2913,
+      "status": "candidate",
+      "symbol": "sw31_Hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "sw31",
+      "line": 2914,
+      "status": "candidate",
+      "symbol": "sw31_UnHit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 2915,
+      "status": "candidate",
+      "symbol": "sw32_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 2916,
+      "status": "candidate",
+      "symbol": "sw32_UnHit"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "rip",
+      "line": 3197,
+      "status": "candidate",
+      "symbol": "rip_Hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "sw38",
+      "line": 2525,
+      "status": "candidate",
+      "symbol": "sw38_Hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "sw38",
+      "line": 2554,
+      "status": "candidate",
+      "symbol": "sw38_timer"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "sw39",
+      "line": 3130,
+      "status": "candidate",
+      "symbol": "sw39_Hit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "sw40",
+      "line": 3135,
+      "status": "candidate",
+      "symbol": "sw40_Spin"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 2919,
+      "status": "candidate",
+      "symbol": "sw44_Hit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "sw45",
+      "line": 2936,
+      "status": "candidate",
+      "symbol": "sw45_Hit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "sw45",
+      "line": 2942,
+      "status": "candidate",
+      "symbol": "sw45_UnHit"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "sw46",
+      "line": 2920,
+      "status": "candidate",
+      "symbol": "sw46_Hit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "sw47",
+      "line": 2982,
+      "status": "candidate",
+      "symbol": "sw47_Hit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "sw47",
+      "line": 2989,
+      "status": "candidate",
+      "symbol": "sw47_UnHit"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "sw48",
+      "line": 3136,
+      "status": "candidate",
+      "symbol": "sw48_Spin"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 3142,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 3154,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Bumper3",
+      "line": 3165,
+      "status": "candidate",
+      "symbol": "Bumper3_Hit"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "sw52",
+      "line": 2592,
+      "status": "candidate",
+      "symbol": "sw52_Hit"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "sw52",
+      "line": 2635,
+      "status": "candidate",
+      "symbol": "sw52_timer"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "sw52",
+      "line": 2602,
+      "status": "candidate",
+      "symbol": "sw52_unHit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "sw53",
+      "line": 2566,
+      "status": "candidate",
+      "symbol": "sw53_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "sw53",
+      "line": 2570,
+      "status": "candidate",
+      "symbol": "sw53_unHit"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "label": "sw54",
+      "line": 2575,
+      "status": "candidate",
+      "symbol": "sw54_Hit"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "label": "sw54",
+      "line": 2579,
+      "status": "candidate",
+      "symbol": "sw54_unHit"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "Scoop Kick",
+      "line": 2661,
+      "status": "candidate",
+      "symbol": "ScoopKick"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "sw55",
+      "line": 2650,
+      "status": "candidate",
+      "symbol": "sw55_Hit"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "label": "sw56",
+      "line": 3137,
+      "status": "candidate",
+      "symbol": "sw56_Spin"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "sw57",
+      "line": 3014,
+      "status": "candidate",
+      "symbol": "sw57_Hit"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "sw57",
+      "line": 3021,
+      "status": "candidate",
+      "symbol": "sw57_UnHit"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 2236,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 2325,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 160,
+      "group": "pinmame.input.switch",
+      "label": "45 Target",
+      "line": 2937,
+      "status": "candidate",
+      "symbol": "sw45Target"
+    },
+    {
+      "address": 160,
+      "group": "pinmame.input.switch",
+      "label": "57 Target",
+      "line": 3015,
+      "status": "candidate",
+      "symbol": "sw57Target"
+    },
+    {
+      "address": 180,
+      "group": "pinmame.input.switch",
+      "label": "45 Target",
+      "line": 2943,
+      "status": "candidate",
+      "symbol": "sw45Target"
+    },
+    {
+      "address": 180,
+      "group": "pinmame.input.switch",
+      "label": "47 Target",
+      "line": 2990,
+      "status": "candidate",
+      "symbol": "sw47Target"
+    },
+    {
+      "address": 180,
+      "group": "pinmame.input.switch",
+      "label": "57 Target",
+      "line": 3022,
+      "status": "candidate",
+      "symbol": "sw57Target"
+    },
+    {
+      "address": 200,
+      "group": "pinmame.input.switch",
+      "label": "47 Target",
+      "line": 2983,
+      "status": "candidate",
+      "symbol": "sw47Target"
+    }
+  ],
+  "version": 1
+}

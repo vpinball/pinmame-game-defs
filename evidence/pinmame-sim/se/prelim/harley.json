@@ -1,0 +1,313 @@
+{
+  "driver_ids": [
+    "harl_a10",
+    "harl_a13",
+    "harl_a18",
+    "harl_a30",
+    "harl_a40",
+    "harl_f13",
+    "harl_f18",
+    "harl_f30",
+    "harl_f40",
+    "harl_g13",
+    "harl_g18",
+    "harl_g30",
+    "harl_g40",
+    "harl_i13",
+    "harl_i18",
+    "harl_i30",
+    "harl_i40",
+    "harl_l13",
+    "harl_l18",
+    "harl_l30",
+    "harl_l40",
+    "harl_u13"
+  ],
+  "extractor": {
+    "id": "pinmame-sim-source",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.harl_a13",
+    "stub.pinmame.harl_a40"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 17,
+      "line_start": 3,
+      "status": "candidate",
+      "text": "Harley Davidson (Sega/Stern) Pinball Simulator\nby Steve Ellenoff and Brian Smith\nJul 14, 2011\nNOTES:\nThanks to Destruk for sorting out the mess with the clones, since I couldn't\nmanage it... brain too rusty! Haven't written a sim for PinMAME since, what\nthe year, 2000 or so?\nCode was a rush job, so don't judge harshly..."
+    }
+  ],
+  "source": {
+    "attribution": "PinMAME contributors",
+    "encoding": "utf-8",
+    "kind": "pinmame_sim",
+    "license": "BSD-3-Clause",
+    "path": "src/wpc/sims/se/prelim/harley.c",
+    "quality": "preliminary",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "b86a1a8251e91afa71a936eb008ac49d1dc67a7df252c8256a0a8683be3a403b"
+  },
+  "states": [
+    {
+      "label": "Not Installed",
+      "line": 255,
+      "next_state": "stDrain",
+      "raw": "{\"Not Installed\",\t\t0,0,\t\t 0,\t\tstDrain,\t0,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "label": "Playfield",
+      "line": 257,
+      "raw": "{\"Playfield\",\t\t\t0,0,\t\t 0,\t\t0,\t\t0,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "label": "Trough 1",
+      "line": 260,
+      "next_state": "stTrough3",
+      "raw": "{\"Trough 1\",\t\t\t1,HARLEY_PF_SW_TROUGH1,\t0,\t\tstTrough3,\t1},"
+    },
+    {
+      "label": "Trough 2",
+      "line": 261,
+      "next_state": "stTrough2",
+      "raw": "{\"Trough 2\",\t\t\t1,HARLEY_PF_SW_TROUGH2,\t0,\t\tstTrough2,\t1},"
+    },
+    {
+      "label": "Trough 3",
+      "line": 262,
+      "next_state": "stTrough1",
+      "raw": "{\"Trough 3\",\t\t\t1,HARLEY_PF_SW_TROUGH3,\t0,\t\tstTrough1,\t1},"
+    },
+    {
+      "label": "Trough 4",
+      "line": 263,
+      "next_state": "stTrough",
+      "raw": "{\"Trough 4\",\t\t\t1,HARLEY_PF_SW_TROUGH4,\tHARLEY_COIL_TROUGH_UP,\tstTrough,\t1},"
+    },
+    {
+      "label": "Trough Jam",
+      "line": 264,
+      "next_state": "stShooter",
+      "raw": "{\"Trough Jam\",\t\t1,HARLEY_PF_SW_TROUGH_STACK,  0,\t\tstShooter,\t1},"
+    },
+    {
+      "label": "Drain",
+      "line": 265,
+      "next_state": "stTrough4",
+      "raw": "{\"Drain\",\t\t\t\t1,0,\t\t0,\t\tstTrough4,\t0,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "label": "Shooter",
+      "line": 268,
+      "next_state": "stBallLane",
+      "raw": "{\"Shooter\",\t\t\t1,HARLEY_PF_SW_SHOOTER_LANE,\t HARLEY_COIL_AUTO_LAUNCH,\tstBallLane,\t0,\t0,\t0,\tSIM_STNOTEXCL|SIM_STSHOOT},"
+    },
+    {
+      "label": "Ball Lane",
+      "line": 269,
+      "next_state": "stLoopRL",
+      "raw": "{\"Ball Lane\",\t\t\t1,0,\t\t 0,\t\tstLoopRL,\t\t7,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "label": "Right Outlane",
+      "line": 270,
+      "next_state": "stDrain",
+      "raw": "{\"Right Outlane\",\t\t1,HARLEY_PF_SW_RIGHT_OUTLANE,0,\t\tstDrain,\t15},"
+    },
+    {
+      "label": "Left Outlane",
+      "line": 271,
+      "next_state": "stDrain",
+      "raw": "{\"Left Outlane\",\t\t1,HARLEY_PF_SW_LEFT_OUTLANE, 0,\t\tstDrain,\t15},"
+    },
+    {
+      "label": "Right Inlane",
+      "line": 272,
+      "next_state": "stFree",
+      "raw": "{\"Right Inlane\",\t\t1,HARLEY_PF_SW_RIGHT_RETURN, 0,\t\tstFree,\t\t5},"
+    },
+    {
+      "label": "Left Inlane",
+      "line": 273,
+      "next_state": "stFree",
+      "raw": "{\"Left Inlane\",\t\t1,HARLEY_PF_SW_LEFT_RETURN,\t 0,\t\tstFree,\t\t5},"
+    },
+    {
+      "label": "Left Slingshot",
+      "line": 274,
+      "next_state": "stFree",
+      "raw": "{\"Left Slingshot\",\t1,HARLEY_PF_SW_LEFT_SLING,\t 0,\t\tstFree,\t\t1},"
+    },
+    {
+      "label": "Rt Slingshot",
+      "line": 275,
+      "next_state": "stFree",
+      "raw": "{\"Rt Slingshot\",\t\t1,HARLEY_PF_SW_RIGHT_SLING,\t 0,\t\tstFree,\t\t1},"
+    },
+    {
+      "label": "Moto-Entrance",
+      "line": 278,
+      "raw": "{\"Moto-Entrance\",\t\t1,0,    0,       0, 0},\t// harley_handleBallState handler"
+    },
+    {
+      "label": "Moto-Down",
+      "line": 279,
+      "next_state": "stFree",
+      "raw": "{\"Moto-Down\",\t\t\t1,HARLEY_PF_SW_OPTO,\t\t\t0,\t\tstFree, 5},"
+    },
+    {
+      "label": "Moto-Up",
+      "line": 280,
+      "next_state": "stMTrough4",
+      "raw": "{\"Moto-Up\",\t\t    1,HARLEY_PF_SW_OPTO,\t\t\t0,\t\tstMTrough4, 5},"
+    },
+    {
+      "label": "Moto-Trough 4",
+      "line": 281,
+      "next_state": "stMTrough3",
+      "raw": "{\"Moto-Trough 4\",\t\t1,HARLEY_PF_SW_TROUGH4_MCYCLE,\t0,\t\tstMTrough3,\t1},"
+    },
+    {
+      "label": "Moto-Trough 3",
+      "line": 282,
+      "next_state": "stMTrough2",
+      "raw": "{\"Moto-Trough 3\",\t\t1,HARLEY_PF_SW_TROUGH3_MCYCLE,\t0,\t\tstMTrough2,\t1},"
+    },
+    {
+      "label": "Moto-Trough 2",
+      "line": 283,
+      "next_state": "stMTrough1",
+      "raw": "{\"Moto-Trough 2\",\t\t1,HARLEY_PF_SW_TROUGH2_MCYCLE,\t0,\t\tstMTrough1,\t1},"
+    },
+    {
+      "label": "Moto-Trough 1",
+      "line": 284,
+      "next_state": "stMotoDown",
+      "raw": "{\"Moto-Trough 1\",\t\t1,HARLEY_PF_SW_TROUGH1_MCYCLE,\tHARLEY_COIL_MOTO_LAUNCH,\tstMotoDown,\t1},"
+    },
+    {
+      "label": "Ramp Enter",
+      "line": 287,
+      "next_state": "stRampMiddle",
+      "raw": "{\"Ramp Enter\",\t\t1,HARLEY_PF_SW_RT_RAMP_ENTER,\t0,\t\tstRampMiddle, 5},"
+    },
+    {
+      "label": "Ramp Middle",
+      "line": 288,
+      "next_state": "stRampExit",
+      "raw": "{\"Ramp Middle\",\t\t1,HARLEY_PF_SW_RT_RAMP_MID,\t\t0,\t\tstRampExit,\t  2},"
+    },
+    {
+      "label": "Ramp Exit",
+      "line": 289,
+      "next_state": "stLeftInlane",
+      "raw": "{\"Ramp Exit\",\t\t    1,HARLEY_PF_SW_RT_RAMP_EXIT,\t0,\t\tstLeftInlane, 10},"
+    },
+    {
+      "label": "Traffic Lite",
+      "line": 291,
+      "next_state": "stRightInlane",
+      "raw": "{\"Traffic Lite\",\t\t\t1,HARLEY_PF_SW_SUPER_VUK,\tHARLEY_COIL_SUPER_VUK,\tstRightInlane,\t10},"
+    },
+    {
+      "label": "Next City Scoop",
+      "line": 292,
+      "next_state": "stFree",
+      "raw": "{\"Next City Scoop\",\t\t1,HARLEY_PF_SW_SCOOP_EJECT,\tHARLEY_COIL_SCOOP,\tstFree,\t1},"
+    },
+    {
+      "label": "Behind Traffic",
+      "line": 293,
+      "raw": "{\"Behind Traffic\",\t\t1,0,\t0,\t0,\t0},"
+    },
+    {
+      "label": "Behind Traffic",
+      "line": 294,
+      "raw": "{\"Behind Traffic\",\t\t1,0,\t0,\t0,\t0},"
+    },
+    {
+      "label": "Behind VUK",
+      "line": 295,
+      "next_state": "stTrafficLite",
+      "raw": "{\"Behind VUK\",\t\t\t1,HARLEY_PF_SW_BEHIND_VUK,\t0,\tstTrafficLite,\t10},"
+    },
+    {
+      "label": "Left Loop",
+      "line": 298,
+      "next_state": "stSpinner2",
+      "raw": "{\"Left Loop\",\t\t\t1,HARLEY_PF_SW_LT_ORBIT,\t0,\t\tstSpinner2, 10},"
+    },
+    {
+      "label": "Right Loop",
+      "line": 299,
+      "next_state": "stBehindRL",
+      "raw": "{\"Right Loop\",\t\t1,HARLEY_PF_SW_RT_ORBIT,\t0,\t\tstBehindRL, 10},"
+    },
+    {
+      "label": "Left Loop",
+      "line": 300,
+      "next_state": "stSpinner",
+      "raw": "{\"Left Loop\",\t\t\t1,HARLEY_PF_SW_LT_ORBIT,\t0,\t\tstSpinner, 10},"
+    },
+    {
+      "label": "Right Loop",
+      "line": 301,
+      "next_state": "stFree",
+      "raw": "{\"Right Loop\",\t\t1,HARLEY_PF_SW_RT_ORBIT,\t0,\t\tstFree, 10},"
+    },
+    {
+      "label": "Bumper Jets",
+      "line": 302,
+      "raw": "{\"Bumper Jets\",\t\t1,0,\t0,\t\t0, 0},"
+    },
+    {
+      "label": "L.Bumper",
+      "line": 303,
+      "next_state": "stJetArea",
+      "raw": "{\"L.Bumper\",\t\t\t1,HARLEY_PF_SW_LEFT_BUMPER,\t0,\t\tstJetArea, 1},"
+    },
+    {
+      "label": "R.Bumper",
+      "line": 304,
+      "next_state": "stJetArea",
+      "raw": "{\"R.Bumper\",\t\t\t1,HARLEY_PF_SW_RIGHT_BUMPER,0,\t\tstJetArea, 2},"
+    },
+    {
+      "label": "B.Bumper",
+      "line": 305,
+      "next_state": "stJetArea",
+      "raw": "{\"B.Bumper\",\t\t\t1,HARLEY_PF_SW_BOTT_BUMPER,\t0,\t\tstJetArea, 1},"
+    },
+    {
+      "label": "T.Bumper",
+      "line": 306,
+      "next_state": "stJetArea",
+      "raw": "{\"T.Bumper\",\t\t\t1,HARLEY_PF_SW_TOP_BUMPER,\t0,\t\tstJetArea, 2},"
+    },
+    {
+      "label": "Spinner",
+      "line": 309,
+      "next_state": "stJetArea",
+      "raw": "{\"Spinner\",\t\t\t1,HARLEY_PF_SW_SPINNER, 0, stJetArea, 3, 0,0,SIM_STSPINNER},"
+    },
+    {
+      "label": "Spinner",
+      "line": 310,
+      "next_state": "stBehindLR",
+      "raw": "{\"Spinner\",\t\t\t1,HARLEY_PF_SW_SPINNER, 0, stBehindLR, 3, 0,0,SIM_STSPINNER},"
+    },
+    {
+      "label": "Spinner",
+      "line": 311,
+      "next_state": "stFree",
+      "raw": "{\"Spinner\",\t\t\t1,HARLEY_PF_SW_SPINNER, 0, stFree, 3, 0,0,SIM_STSPINNER}"
+    }
+  ],
+  "switches": [],
+  "version": 1
+}

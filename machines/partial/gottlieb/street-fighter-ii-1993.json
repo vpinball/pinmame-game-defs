@@ -1,0 +1,3768 @@
+{
+  "conflicts": [],
+  "controller": {
+    "inversion_applied_by_emulator": true,
+    "platform": "pinmame.gts3"
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "candidate",
+      "catalog_identity": "observed",
+      "mechanisms": "unknown",
+      "physical_wiring": "candidate",
+      "recreation_knowledge": "candidate",
+      "semantic_naming": "candidate",
+      "variant_coverage": "candidate"
+    },
+    "missing": [
+      "identity",
+      "controller_platform",
+      "input_enumeration",
+      "input_semantics",
+      "output_enumeration",
+      "output_semantics",
+      "display_inventory",
+      "mechanism_inventory",
+      "mechanism_behavior",
+      "polarity",
+      "variant_differences",
+      "recreation_notes",
+      "provenance"
+    ],
+    "status": "partial"
+  },
+  "displays": [],
+  "drivers": [
+    {
+      "description": "Street Fighter II",
+      "flags": 0,
+      "id": "sfight2",
+      "manufacturer": "Gottlieb",
+      "year": "1993"
+    },
+    {
+      "clone_of": "sfight2",
+      "description": "Street Fighter II (rev. 1)",
+      "flags": 0,
+      "id": "sfight2a",
+      "manufacturer": "Gottlieb",
+      "year": "1993"
+    },
+    {
+      "clone_of": "sfight2",
+      "description": "Street Fighter II (rev. 2)",
+      "flags": 0,
+      "id": "sfight2b",
+      "manufacturer": "Gottlieb",
+      "year": "1993"
+    }
+  ],
+  "format": "pinmame-machine-definition",
+  "inputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "05"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "005"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.tournament-mode",
+      "kind": "switch",
+      "label": "Tournament Mode",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "010"
+        }
+      ],
+      "binding": {
+        "device": 10,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.pop-bumper",
+      "kind": "switch",
+      "label": "Pop Bumper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "011"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-slingshot",
+      "kind": "switch",
+      "label": "Left Slingshot",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "012"
+        }
+      ],
+      "binding": {
+        "device": 12,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-slingshot",
+      "kind": "switch",
+      "label": "Right Slingshot",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "013"
+        }
+      ],
+      "binding": {
+        "device": 13,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-kicker-saucer",
+      "kind": "switch",
+      "label": "Left Kicker (Saucer)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "014"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-kicker-saucer",
+      "kind": "switch",
+      "label": "Right Kicker (Saucer)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "015"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.car-crunch-hit",
+      "kind": "switch",
+      "label": "Car Crunch Hit",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "020"
+        }
+      ],
+      "binding": {
+        "device": 20,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.standup-target-swapped-with-30",
+      "kind": "switch",
+      "label": "Standup Target (Swapped with 30)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "021"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-outhole-drain",
+      "kind": "switch",
+      "label": "Trough (Outhole / Drain)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "022"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.shooter-lane-plunger-lane",
+      "kind": "switch",
+      "label": "Shooter Lane / Plunger Lane",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "030"
+        }
+      ],
+      "binding": {
+        "device": 30,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.standup-target-swapped-with-20",
+      "kind": "switch",
+      "label": "Standup Target (Swapped with 20)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "031"
+        }
+      ],
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-ball-stack",
+      "kind": "switch",
+      "label": "Trough Ball Stack",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "032"
+        }
+      ],
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover",
+      "kind": "switch",
+      "label": "Rollover",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "033"
+        }
+      ],
+      "binding": {
+        "device": 33,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-vuk-scoop",
+      "kind": "switch",
+      "label": "Left VUK / Scoop",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "034"
+        }
+      ],
+      "binding": {
+        "device": 34,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-vuk-scoop",
+      "kind": "switch",
+      "label": "Right VUK / Scoop",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "80"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "80"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "080"
+        }
+      ],
+      "binding": {
+        "device": 80,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-ramp-entry",
+      "kind": "switch",
+      "label": "Left Ramp Entry",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "81"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "81"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "081"
+        }
+      ],
+      "binding": {
+        "device": 81,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.car-crunch-complete",
+      "kind": "switch",
+      "label": "Car Crunch Complete",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "82"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "82"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "082"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_flipper_lower_left"
+        }
+      ],
+      "binding": {
+        "device": 82,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-lower-left",
+      "kind": "switch",
+      "label": "Left Flipper Button",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "83"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "83"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "083"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_flipper_lower_right"
+        }
+      ],
+      "binding": {
+        "device": 83,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-lower-right",
+      "kind": "switch",
+      "label": "Right Flipper Button",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "90"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "90"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "090"
+        }
+      ],
+      "binding": {
+        "device": 90,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-ramp-made-ramp-switch",
+      "kind": "switch",
+      "label": "Left Ramp Made / Ramp Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "91"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "91"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "091"
+        }
+      ],
+      "binding": {
+        "device": 91,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-ramp-entry-ramp-switch",
+      "kind": "switch",
+      "label": "Right Ramp Entry / Ramp Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "92"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "92"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "092"
+        }
+      ],
+      "binding": {
+        "device": 92,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.standup-target-left-bank-1",
+      "kind": "switch",
+      "label": "Standup Target (Left Bank 1)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "93"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "93"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "093"
+        }
+      ],
+      "binding": {
+        "device": 93,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.standup-target-left-bank-2",
+      "kind": "switch",
+      "label": "Standup Target (Left Bank 2)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "94"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "94"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "094"
+        }
+      ],
+      "binding": {
+        "device": 94,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.standup-target-left-bank-3",
+      "kind": "switch",
+      "label": "Standup Target (Left Bank 3)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "95"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "95"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "095"
+        }
+      ],
+      "binding": {
+        "device": 95,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-outlane-return-lane",
+      "kind": "switch",
+      "label": "Left Outlane / Return Lane",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "96"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "96"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "096"
+        }
+      ],
+      "binding": {
+        "device": 96,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-outlane-return-lane",
+      "kind": "switch",
+      "label": "Right Outlane / Return Lane",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "100"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "100"
+        }
+      ],
+      "binding": {
+        "device": 100,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.spinner",
+      "kind": "switch",
+      "label": "Spinner",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "101"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "101"
+        }
+      ],
+      "binding": {
+        "device": 101,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-ramp-made-ramp-switch",
+      "kind": "switch",
+      "label": "Right Ramp Made / Ramp Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "102"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "102"
+        }
+      ],
+      "binding": {
+        "device": 102,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.standup-target-center-bank-1",
+      "kind": "switch",
+      "label": "Standup Target (Center Bank 1)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "103"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "103"
+        }
+      ],
+      "binding": {
+        "device": 103,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.standup-target-center-bank-2",
+      "kind": "switch",
+      "label": "Standup Target (Center Bank 2)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "104"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "104"
+        }
+      ],
+      "binding": {
+        "device": 104,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.standup-target-center-bank-3",
+      "kind": "switch",
+      "label": "Standup Target (Center Bank 3)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "105"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "105"
+        }
+      ],
+      "binding": {
+        "device": 105,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-slingshot-area-lane-switch",
+      "kind": "switch",
+      "label": "Left Slingshot Area / Lane Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "106"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "106"
+        }
+      ],
+      "binding": {
+        "device": 106,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-slingshot-area-lane-switch",
+      "kind": "switch",
+      "label": "Right Slingshot Area / Lane Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "110"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "110"
+        }
+      ],
+      "binding": {
+        "device": 110,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-ramp-exit-ramp-switch",
+      "kind": "switch",
+      "label": "Left Ramp Exit / Ramp Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "111"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "111"
+        }
+      ],
+      "binding": {
+        "device": 111,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-ramp-exit-ramp-switch",
+      "kind": "switch",
+      "label": "Right Ramp Exit / Ramp Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "112"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "112"
+        }
+      ],
+      "binding": {
+        "device": 112,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.standup-target-right-bank-1",
+      "kind": "switch",
+      "label": "Standup Target (Right Bank 1)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "113"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "113"
+        }
+      ],
+      "binding": {
+        "device": 113,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.standup-target-right-bank-2",
+      "kind": "switch",
+      "label": "Standup Target (Right Bank 2)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "114"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "114"
+        }
+      ],
+      "binding": {
+        "device": 114,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-lane-switch",
+      "kind": "switch",
+      "label": "Rollover / Lane Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "115"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "115"
+        }
+      ],
+      "binding": {
+        "device": 115,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-lane-switch.115",
+      "kind": "switch",
+      "label": "Rollover / Lane Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "116"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "116"
+        }
+      ],
+      "binding": {
+        "device": 116,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-lane-switch.116",
+      "kind": "switch",
+      "label": "Rollover / Lane Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "151"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "151"
+        }
+      ],
+      "binding": {
+        "device": 151,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.tilt-plumb-bob",
+      "kind": "switch",
+      "label": "Tilt (Plumb Bob)",
+      "normally_closed": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    }
+  ],
+  "knowledge": {
+    "path": "knowledge/gottlieb/street-fighter-ii-1993.md",
+    "status": "partial"
+  },
+  "machine": {
+    "id": "gottlieb.street-fighter-ii.1993",
+    "manufacturer": "Gottlieb",
+    "name": "Street Fighter II",
+    "year": 1993
+  },
+  "mechanisms": [],
+  "outputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "0"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "0"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "00"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "000"
+        }
+      ],
+      "binding": {
+        "device": 0,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-0",
+      "kind": "lamp",
+      "label": "outputs 0",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "02"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "002"
+        }
+      ],
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-2",
+      "kind": "lamp",
+      "label": "outputs 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "03"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "003"
+        }
+      ],
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-3",
+      "kind": "lamp",
+      "label": "outputs 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "04"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "004"
+        }
+      ],
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-4",
+      "kind": "lamp",
+      "label": "outputs 4",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "05"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "005"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-5",
+      "kind": "lamp",
+      "label": "outputs 5",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "06"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "006"
+        }
+      ],
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-6",
+      "kind": "lamp",
+      "label": "outputs 6",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "07"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "007"
+        }
+      ],
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-7",
+      "kind": "lamp",
+      "label": "outputs 7",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "010"
+        }
+      ],
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-10",
+      "kind": "lamp",
+      "label": "outputs 10",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "011"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-11",
+      "kind": "lamp",
+      "label": "outputs 11",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "012"
+        }
+      ],
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-12",
+      "kind": "lamp",
+      "label": "outputs 12",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "013"
+        }
+      ],
+      "binding": {
+        "device": 13,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-13",
+      "kind": "lamp",
+      "label": "outputs 13",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "014"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-14",
+      "kind": "lamp",
+      "label": "outputs 14",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "015"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-15",
+      "kind": "lamp",
+      "label": "outputs 15",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "016"
+        }
+      ],
+      "binding": {
+        "device": 16,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-16",
+      "kind": "lamp",
+      "label": "outputs 16",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "017"
+        }
+      ],
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-17",
+      "kind": "lamp",
+      "label": "outputs 17",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "020"
+        }
+      ],
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-20",
+      "kind": "lamp",
+      "label": "outputs 20",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "021"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-21",
+      "kind": "lamp",
+      "label": "outputs 21",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "022"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-22",
+      "kind": "lamp",
+      "label": "outputs 22",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "023"
+        }
+      ],
+      "binding": {
+        "device": 23,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-23",
+      "kind": "lamp",
+      "label": "outputs 23",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "024"
+        }
+      ],
+      "binding": {
+        "device": 24,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-24",
+      "kind": "lamp",
+      "label": "outputs 24",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "025"
+        }
+      ],
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-25",
+      "kind": "lamp",
+      "label": "outputs 25",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "026"
+        }
+      ],
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-26",
+      "kind": "lamp",
+      "label": "outputs 26",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "027"
+        }
+      ],
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-27",
+      "kind": "lamp",
+      "label": "outputs 27",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "030"
+        }
+      ],
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-30",
+      "kind": "lamp",
+      "label": "outputs 30",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "031"
+        }
+      ],
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-31",
+      "kind": "lamp",
+      "label": "outputs 31",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "032"
+        }
+      ],
+      "binding": {
+        "device": 32,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-32",
+      "kind": "lamp",
+      "label": "outputs 32",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "033"
+        }
+      ],
+      "binding": {
+        "device": 33,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-33",
+      "kind": "lamp",
+      "label": "outputs 33",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "034"
+        }
+      ],
+      "binding": {
+        "device": 34,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-34",
+      "kind": "lamp",
+      "label": "outputs 34",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "035"
+        }
+      ],
+      "binding": {
+        "device": 35,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-35",
+      "kind": "lamp",
+      "label": "outputs 35",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "036"
+        }
+      ],
+      "binding": {
+        "device": 36,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-36",
+      "kind": "lamp",
+      "label": "outputs 36",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "037"
+        }
+      ],
+      "binding": {
+        "device": 37,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-37",
+      "kind": "lamp",
+      "label": "outputs 37",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "040"
+        }
+      ],
+      "binding": {
+        "device": 40,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-40",
+      "kind": "lamp",
+      "label": "outputs 40",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "041"
+        }
+      ],
+      "binding": {
+        "device": 41,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-41",
+      "kind": "lamp",
+      "label": "outputs 41",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "042"
+        }
+      ],
+      "binding": {
+        "device": 42,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-42",
+      "kind": "lamp",
+      "label": "outputs 42",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "043"
+        }
+      ],
+      "binding": {
+        "device": 43,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-43",
+      "kind": "lamp",
+      "label": "outputs 43",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "044"
+        }
+      ],
+      "binding": {
+        "device": 44,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-44",
+      "kind": "lamp",
+      "label": "outputs 44",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "045"
+        }
+      ],
+      "binding": {
+        "device": 45,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-45",
+      "kind": "lamp",
+      "label": "outputs 45",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "046"
+        }
+      ],
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-46",
+      "kind": "lamp",
+      "label": "outputs 46",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "47"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "47"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "047"
+        }
+      ],
+      "binding": {
+        "device": 47,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-47",
+      "kind": "lamp",
+      "label": "outputs 47",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "50"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "50"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "050"
+        }
+      ],
+      "binding": {
+        "device": 50,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-50",
+      "kind": "lamp",
+      "label": "outputs 50",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "51"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "51"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "051"
+        }
+      ],
+      "binding": {
+        "device": 51,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-51",
+      "kind": "lamp",
+      "label": "outputs 51",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "52"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "52"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "052"
+        }
+      ],
+      "binding": {
+        "device": 52,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-52",
+      "kind": "lamp",
+      "label": "outputs 52",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "53"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "53"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "053"
+        }
+      ],
+      "binding": {
+        "device": 53,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-53",
+      "kind": "lamp",
+      "label": "outputs 53",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "54"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "54"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "054"
+        }
+      ],
+      "binding": {
+        "device": 54,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-54",
+      "kind": "lamp",
+      "label": "outputs 54",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "55"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "55"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "055"
+        }
+      ],
+      "binding": {
+        "device": 55,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-55",
+      "kind": "lamp",
+      "label": "outputs 55",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "56"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "56"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "056"
+        }
+      ],
+      "binding": {
+        "device": 56,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-56",
+      "kind": "lamp",
+      "label": "outputs 56",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "57"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "57"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "057"
+        }
+      ],
+      "binding": {
+        "device": 57,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-57",
+      "kind": "lamp",
+      "label": "outputs 57",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "60"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "60"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "060"
+        }
+      ],
+      "binding": {
+        "device": 60,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-60",
+      "kind": "lamp",
+      "label": "outputs 60",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "61"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "61"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "061"
+        }
+      ],
+      "binding": {
+        "device": 61,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.alphanumeric-topper-lamp-1",
+      "kind": "lamp",
+      "label": "Alphanumeric / Topper Lamp 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "62"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "62"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "062"
+        }
+      ],
+      "binding": {
+        "device": 62,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.alphanumeric-topper-lamp-2",
+      "kind": "lamp",
+      "label": "Alphanumeric / Topper Lamp 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "63"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "63"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "063"
+        }
+      ],
+      "binding": {
+        "device": 63,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.alphanumeric-topper-lamp-3",
+      "kind": "lamp",
+      "label": "Alphanumeric / Topper Lamp 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "64"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "64"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "064"
+        }
+      ],
+      "binding": {
+        "device": 64,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.alphanumeric-topper-lamp-4",
+      "kind": "lamp",
+      "label": "Alphanumeric / Topper Lamp 4",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "65"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "65"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "065"
+        }
+      ],
+      "binding": {
+        "device": 65,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.alphanumeric-topper-lamp-5",
+      "kind": "lamp",
+      "label": "Alphanumeric / Topper Lamp 5",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "66"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "66"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "066"
+        }
+      ],
+      "binding": {
+        "device": 66,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.alphanumeric-topper-lamp-6",
+      "kind": "lamp",
+      "label": "Alphanumeric / Topper Lamp 6",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "67"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "67"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "067"
+        }
+      ],
+      "binding": {
+        "device": 67,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.alphanumeric-topper-lamp-7",
+      "kind": "lamp",
+      "label": "Alphanumeric / Topper Lamp 7",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "01"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "001"
+        }
+      ],
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.pop-bumper",
+      "kind": "coil",
+      "label": "Pop Bumper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "02"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "002"
+        }
+      ],
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-slingshot",
+      "kind": "coil",
+      "label": "Left Slingshot",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "03"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "003"
+        }
+      ],
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-slingshot",
+      "kind": "coil",
+      "label": "Right Slingshot",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "04"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "004"
+        }
+      ],
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-vuk-scoop-kicker",
+      "kind": "coil",
+      "label": "Left VUK / Scoop Kicker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "05"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "005"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-vuk-scoop-kicker",
+      "kind": "coil",
+      "label": "Right VUK / Scoop Kicker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "06"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "006"
+        }
+      ],
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.diverter-1-left",
+      "kind": "coil",
+      "label": "Diverter 1 (Left)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "07"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "007"
+        }
+      ],
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.diverter-2-right",
+      "kind": "coil",
+      "label": "Diverter 2 (Right)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "08"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "008"
+        }
+      ],
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-ramp-diverter",
+      "kind": "coil",
+      "label": "Left Ramp Diverter",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "09"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "009"
+        }
+      ],
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-ramp-diverter",
+      "kind": "coil",
+      "label": "Right Ramp Diverter",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "010"
+        }
+      ],
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-kicker-eject",
+      "kind": "coil",
+      "label": "Left Kicker Eject",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "011"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-kicker-eject",
+      "kind": "coil",
+      "label": "Right Kicker Eject",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "014"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.car-crunch-reset-motor",
+      "kind": "coil",
+      "label": "Car Crunch Reset Motor",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "015"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-15",
+      "kind": "flasher",
+      "label": "Flasher 15",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "016"
+        }
+      ],
+      "binding": {
+        "device": 16,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-16",
+      "kind": "flasher",
+      "label": "Flasher 16",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "017"
+        }
+      ],
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-17",
+      "kind": "flasher",
+      "label": "Flasher 17",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "018"
+        }
+      ],
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-18",
+      "kind": "flasher",
+      "label": "Flasher 18",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "019"
+        }
+      ],
+      "binding": {
+        "device": 19,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-19",
+      "kind": "flasher",
+      "label": "Flasher 19",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "020"
+        }
+      ],
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-20",
+      "kind": "flasher",
+      "label": "Flasher 20",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "021"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-21",
+      "kind": "flasher",
+      "label": "Flasher 21",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "022"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-22",
+      "kind": "flasher",
+      "label": "Flasher 22",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "023"
+        }
+      ],
+      "binding": {
+        "device": 23,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-23",
+      "kind": "flasher",
+      "label": "Flasher 23",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "024"
+        }
+      ],
+      "binding": {
+        "device": 24,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.car-flipper-underplayfield",
+      "kind": "coil",
+      "label": "Car Flipper (Underplayfield)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "025"
+        }
+      ],
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.chunli-spinning-flipper-motor",
+      "kind": "coil",
+      "label": "Chunli Spinning Flipper Motor",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "026"
+        }
+      ],
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.backglass-gi-relay",
+      "kind": "flasher",
+      "label": "Backglass GI Relay",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "027"
+        }
+      ],
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.sound-solenoid",
+      "kind": "coil",
+      "label": "Sound Solenoid",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "028"
+        }
+      ],
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.ball-release-trough-to-shooter-lane",
+      "kind": "coil",
+      "label": "Ball Release (Trough to Shooter Lane)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "029"
+        }
+      ],
+      "binding": {
+        "device": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.trough-eject-outhole-to-trough",
+      "kind": "coil",
+      "label": "Trough Eject (Outhole to Trough)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "030"
+        }
+      ],
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.knocker",
+      "kind": "coil",
+      "label": "Knocker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "031"
+        }
+      ],
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.gi-relay-playfield",
+      "kind": "flasher",
+      "label": "GI Relay (Playfield)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "032"
+        }
+      ],
+      "binding": {
+        "device": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.game-on-relay",
+      "kind": "coil",
+      "label": "Game On Relay",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.street-fighter-ii"
+        ],
+        "status": "candidate"
+      }
+    }
+  ],
+  "relationships": [],
+  "schema_version": 1,
+  "sources": [
+    {
+      "attribution": "pinmame-game-defs contributors",
+      "id": "legacy.game.street-fighter-ii",
+      "kind": "legacy_json",
+      "locator": "games/street-fighter-ii.json; origin=vbscript-agent-extracted",
+      "revision": "4ea106d080728648a693af3b4dcabb091eee0a02",
+      "uri": "https://github.com/vpinball/pinmame-game-defs"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.catalog.4ec52ff0ac13",
+      "kind": "pinmame_catalog",
+      "license": "BSD-3-Clause",
+      "locator": "PinmameGetGames",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    }
+  ]
+}

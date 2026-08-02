@@ -1,0 +1,33 @@
+{
+  "driver_ids": [],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 33,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "****************************************************************\n\n          Four Million BC\n          by Scottacus\n              May 2017\n\nBasic DOF config\n  101 Left Flipper, 102 Right Flipper\n  103 Left sling, 104 Right sling\n  105 Bumper1,  106 Bumper2, 107 Bumper3\n  109 Knocker\n  122 Right Kicker, 123 Left Kicker\n  124 Drain, 125 Ball Release\n  212 credit light\n  214 - 217 Bird Ramp\n  129 Knocker and Kicker Strobe\n  160 Ball In Shooter Lane\n  141 Chime1-10s, 142 Chime2-100s, 143 Chime3-1000s\n\n  Code Flow\n                 EndGame\n                  ^\n  Start Game -> New Game -> Check Continue -> Release Ball -> Drain -> Score Bouns -> Advance Player -> Next Ball\n                  ^                                     |\n                EndGame = True <---------------------------------------------------------------\nBall Control Subroutine developed by: rothbauerw\n  Press \"c\" during play to activate, the arrow keys control the ball\n**********************************************************************************************************************\nThalamus 2018-07-23\nAdded/Updated \"Positional Sound Playback Functions\" and \"Supporting Ball & Sound Functions\"\nNo special SSF tweaks yet."
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Four Million BC (Bally 1971) v1.0.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Four Million BC (Bally 1971) v1.0.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "9cf192e06979d72d70f8012f182db81aabf8fa730bbf6e1d588c877b228a1088"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

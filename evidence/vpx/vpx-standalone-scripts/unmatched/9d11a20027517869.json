@@ -1,0 +1,52 @@
+{
+  "driver_ids": [],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [],
+  "mechanisms": [
+    {
+      "kind": "cvpmMagnet",
+      "line": 3574,
+      "raw": "dim RMagnet : set RMagnet = New cvpmMagnet",
+      "status": "candidate"
+    },
+    {
+      "kind": "cvpmMagnet",
+      "line": 3577,
+      "raw": "dim LMagnet : set LMagnet = New cvpmMagnet",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 220,
+      "line_start": 5,
+      "status": "candidate",
+      "text": "*****************************************************************************************************\n* SPACERAMP\n* Table design, drawing, coding and music by SuperEd (Ed Vink)\n* First public beta release\n* Build 1.0.0 (First RTM Release!!!)\n*****************************************************************************************************\n\nRelease 0.9.47\nInitial public beta\n\nRelease 0.9.48\nFixed right ramp not shootable (milky way primitive was collidable)\nFixed locked ball(s), it was not saved after ball loss\nAdded Multiball speech.\nChanged some contrast in playfield, hope it looks better\nChanged the lights. Hope it gives more effect\nChanged material for the ramps, hope it looks better\nAdded option bEasyMultiBall. If 'true', means that multiballlock1 ready is activated at ball2 and multiballlock2 is activated at ball3\nFixed HighScore save.\nAdded a Secret Galaxy Kicker001\nChanged the speed of the Milky Way 2\nChanged the magnets to last longer\nChanged the \"start gane\" button. Its now locked when first ball is in play\n\n\nRelease 0.9.49\nFixed Milky Way sound stop after multiball\nAdded \"ball trail lights\" on the ramps (as requested :-) )\nAdded blue flasher for Secret Galaxy\nFixed some timings kicker->flasher\nAdded some speech\nAdded GI Drain\nChanged ramp Lights\nAdded Jackpot speech\nChanged BS Lights\nChanged Background lights\nAdded timer SkillShot\n\nRelease 0.9.50\nFixed crash when Tilt\nChanged code to support FlexDMD\nAdded the possibility to add the DMD on the Table (for FSS and single screen cabinets)\nAdded the possibility to hide the big floating DMD (For FSS)\nAdded the possibility to switch between UltraDMD and FlexDMD\nFixed MultiBall mode issue when first ball is lost\nChanged some lights (minor)\nChanged DMD color to Blue (fits more with the table colors).\nChanged the ramp back to semi-transparant.\nChanged some of the GI intensity.\nAdded ComboBonus every x combo's with random gift\n\nRelease 1.0.0\nAdded JPs Flasher DMD for systems without UltraDMD.FlexDMD (AT_Games)\nAdded key \"F7\" to reset high scores to 0\nChanged the default HS to 0 when played very first time (AT_Games)\nChanged score calculation between balls\nFixed tilt & ballsave combination\n\nRelease 1.0.1\nFixed player announcment\n\nRelease 3.03\nDarker Playfield\nReflection on the sides\nAdded some more audio (spinner)\nAdded flasher at spinners\nTransparant ramps\n\nCREDITS\nInitial table created by fuzzel, jimmyfingers, jpsalas, toxie & unclewilly (in alphabetical order)\nFlipper primitives by zany\nBall rolling sound script by jpsalas\nBall shadow by ninuzzu\nBall control & ball dropping sound by rothbauerw\nDOF  by arngrim\nPositional sound helper functions by djrobx\nPlus a lot of input from the whole community\nBig thanks to JPSalas for giving me the permission to use his 'Flasher DMD' code\n*****************************************************************************************************\n*********************************************************************\n                DOF Configs\n*********************************************************************\n-E101-Flipper Left-Solenoid\n-E102-Flipper Right-Solenoid\n-E103-Slingshot Left-Solenoid\n-E104-Slingshot right-Solenoid\n-E105-Ball Release-Solenoid-Strobe 300\n-E106-Ball Release\n-E107-Slingshot2 right-Solenoid\n-E108-Slingshot2 left-Solenoid\n-E109-Launch Button\n-E111-Bumper1-Solenoid\n-E112-Bumper2-Solenoid\n-E113-Bumper3-Solenoid\n-E114-Bumper4-Solenoid\n-E115-Bumper5-Solenoid\n\n-E121-UpperLane left->Right\n-E122-UpperLane Right->Left\n\n-E131-Kicker001_Launch\n-E132-Kicker002_Launch\n-E133-Kicker003_Launch\n-E134-Kicker004_Launch\n-E135-HitTargetsLeft\n-E136-HitTargetsCenter\n-E137-HitTargetsRight\n-E138-HitTargetsBack\n-E139-DropTargetsLeft\n-E140-HalfOnRampSplit\n\nSpecials\n-E141-RightRampAward\n-E142-LeftRampAward\n-E143-CenterRampAward\n-E144-RightMultiballAward\n-E145-LeftMultiBallAward\n-E146-SHIPAward\n-E147-SecretAward\n-E148-PlanetAward\n-E149-Extra Ball\n-E150-Kicker005_Launch_KickBack\n\n-E151-Gate002,kicker006\n-E152-MultiBall Beacon\n-E153-MultiBall Start\n-E154-Gate005\n-E155-Gate006\n-E156-Gate007\n-E157-SkillShot,Secret\n-E158-BallLost\n-E159-Knocker\n-E160-Yellow_Left_Right\n-E161-Yellow_Right_Left\n-E162-Center->Out Red\n-E163-Center->Out Yellow\n-E164-Center-Out-Mid (Blue)\n-E165-Center->OUT green\n-E166-Left-White_Spinner\n-E167-Right-White_Spinner\n-E168-BlackHoleTarget\n-E901-Undercab-Blue\n*********************************************************************\n                Sounds Configs\n*********************************************************************\n\nFX_Magnet.wav\nfx_metalrolling.wav\nfx_metalrolling0.wav\nfx_metalrolling1.wav\nfx_metalrolling2.wav\nfx_metalrolling3.wav\nFX_RotatingDisc.mp3\nFX_RotatingDisc.mp3.asd\nFX_RotatingDisc.wav\nfx_shaker.wav\nSFX_70s.wav\nSFX_Acid.wav\nSFX_AlienZap.wav\nSFX_AnotherWorld.wav\nSFX_Cloverfield.wav\nSFX_Daft.wav\nSFX_Electra1.wav\nSFX_FlyAway.wav - Lane,Kicker\nSFX_HorrorMovie.wav\nSFX_KillerDrone.wav\nSFX_MeanFall.wav\nSFX_Plasma.wav\nSFX_Predator1.wav\nSFX_Predator2.wav\nSFX_Predator3.wav\nSFX_Predator4.wav\nSFX_Predator5.wav\nSFX_Predator6.wav\nSFX_Predator7.wav\nSFX_Predator8.wav\nSFX_Ratsl.wav - Lane Bonus\nSFX_Scream.wav\nSFX_SpaceRacer.wav\nSFX_SpaceStation1.wav\nSFX_SpaceStation2.wav\nSFX_SpaceStation3.wav\nSFX_SpaceStation4.wav\nSFX_SpaceStation5.wav\nSFX_SpaceStation6.wav\nSFX_SpaceStation7.wav\nSFX_SpaceStation8.wav\nSFX_Starsl.wav\nSFX_Sword.wav - WormHole\nSFX_TheEnd.wav\nSFX_Uprise3.wav\nSFX_WaveLength.wav - BallLocked\nSFX_Whisper.wav\nSFX_Xarax.wav - Bonus Multiplier\n*********************************************************************\n                DMD SETTINGS\n*********************************************************************\n\nBEST SETTINGS FOR DMD\n\n* ULTRADMD\nConst turnonultradmd = true , Const DmdMode = 0\n\n* FLEXDMD (Default)\nConst turnonultradmd = true , Const DmdMode = 1\nConst ShowVpxDMD = true ' Show the DMD in VPX (FlexDMD Only)\nConst ShowCabinetDMD = true ' SHow the DMD as floating window (Cabinet, FlexDMD only)\n\n* JPDMD 'Not an actually DMD but 2x16 Flasher digits\nConst turnonultradmd = false\nConst JPsDMD = True ' Use JP's flasher DMD. Usefull for FSS without UltraDMD or FlexDMD"
+    },
+    {
+      "line_end": 3574,
+      "line_start": 3572,
+      "status": "candidate",
+      "text": "**********************************************************"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in SpaceRamp (SuperEd) v3.03b/SpaceRamp (SuperEd) v3.03b.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "SpaceRamp (SuperEd) v3.03b/SpaceRamp (SuperEd) v3.03b.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/jsm174/vpx-standalone-scripts",
+    "revision": "15d112648a1b94b9f59eb8b3c335d57283653c50",
+    "sha256": "9d11a20027517869018af659f818cae74b5c86ec546b2f4df4a6fce3ac263d10"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

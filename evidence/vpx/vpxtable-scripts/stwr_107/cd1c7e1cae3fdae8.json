@@ -1,0 +1,461 @@
+{
+  "driver_ids": [
+    "stwr_107"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "data-east.star-wars.1992"
+  ],
+  "mechanisms": [
+    {
+      "kind": "new cvpmMech",
+      "line": 204,
+      "raw": "Set mechDeathStarDoor = new cvpmMech 'cvpmMyMech",
+      "status": "candidate"
+    },
+    {
+      "kind": "new cvpmMech",
+      "line": 218,
+      "raw": "Set mechDeathStar = new cvpmMech 'cvpmMyMech",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 2,
+      "group": "pinmame.output.gi",
+      "label": "gi 2",
+      "line": 1279,
+      "status": "candidate",
+      "symbol": "gi_2"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Trough Sol In",
+      "line": 485,
+      "status": "candidate",
+      "symbol": "bsTroughSolIn"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Trough Sol Out",
+      "line": 486,
+      "status": "candidate",
+      "symbol": "bsTroughSolOut"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Auto Plunger IM",
+      "line": 487,
+      "status": "candidate",
+      "symbol": "SolAutoPlungerIM"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Left Eject.Sol Out",
+      "line": 488,
+      "status": "candidate",
+      "symbol": "SolLeftEject.SolOut"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Left Popper",
+      "line": 489,
+      "status": "candidate",
+      "symbol": "SolLeftPopper"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Reset Drops",
+      "line": 490,
+      "status": "candidate",
+      "symbol": "ResetDrops"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Right Eject.Sol Out",
+      "line": 491,
+      "status": "candidate",
+      "symbol": "SolRightEject.SolOut"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol R2",
+      "line": 492,
+      "status": "candidate",
+      "symbol": "SolR2"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol11",
+      "line": 493,
+      "status": "candidate",
+      "symbol": "Sol11"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Kickback",
+      "line": 498,
+      "status": "candidate",
+      "symbol": "SolKickback"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol25",
+      "line": 506,
+      "status": "candidate",
+      "symbol": "Sol25"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Lamp 126,",
+      "line": 507,
+      "status": "candidate",
+      "symbol": "SetLamp 126,"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol27",
+      "line": 508,
+      "status": "candidate",
+      "symbol": "Sol27"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Lamp 128,",
+      "line": 509,
+      "status": "candidate",
+      "symbol": "SetLamp 128,"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol29",
+      "line": 510,
+      "status": "candidate",
+      "symbol": "Sol29"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol30",
+      "line": 511,
+      "status": "candidate",
+      "symbol": "Sol30"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol31",
+      "line": 512,
+      "status": "candidate",
+      "symbol": "Sol31"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Lamp 132,",
+      "line": 513,
+      "status": "candidate",
+      "symbol": "SetLamp 132,"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 28,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "******************************************* VPW PRESENTS ***********************************************\n    _______.__________.    ___      .______        ____    __    ____  ___      .______        _______.\n   /       |          |   /   \\     |   _  \\       \\   \\  /  \\  /   / /   \\     |   _  \\      /       |\n  |   (----`---|  |---`  /  ^  \\    |  |_)  |       \\   \\/    \\/   / /  ^  \\    |  |_)  |    |   (----`\n   \\   \\       |  |     /  /_\\  \\   |      /         \\            / /  /_\\  \\   |      /      \\   \\\n.----)   |      |  |    /  _____  \\  |  |\\  \\----.     \\    /\\    / /  _____  \\  |  |\\  \\---.---)   |\n|_______/       |__|   /__/     \\__\\ | _| `._____|      \\__/  \\__/ /__/     \\__\\ | _| `.____|_______/\n\n********************************************************************************************************\n\nStar Wars by Data East (1992)\nhttps://www.ipdb.org/machine.cgi?id=2358\n\n************************************\nVPin Workshop Star Wars Rebels\n************************************\nDids666 - Full Table Rendering.\nSixtoe - VPW Project Lead, Vader Wrangling, VPX Abuse.\nDJRobX - Original Script, Table Functional Advice.\nJesperpark - Scanned playfield and plastics.\nSeth Hartman - Other machine photos / images.\nApophis - Tweaking fleep sounds & physics.\nWylte - Ramp Shadows, Reworked R2D2 movement code for new model, LUT's, misc fixes.\nfluffhead - ramprolling sounds.\nTomate - Primitive bugfixing & POV work.\nRawd - Animated R2D2 VR Topper\nArvid - VR 360 Room Textures.\nLeojreimroc - VR Backglass"
+    },
+    {
+      "line_end": 204,
+      "line_start": 202,
+      "status": "candidate",
+      "text": "Death Star"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Star Wars (Data East 1992) VPW v1.2.2.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Star Wars (Data East 1992) VPW v1.2.2.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "cd1c7e1cae3fdae89d6a07c232235d064d93fdc7ad30d9944246dd5cd9b19986"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 823,
+      "status": "candidate",
+      "symbol": "sw17_hit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "sw19",
+      "line": 824,
+      "status": "candidate",
+      "symbol": "sw19_hit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "sw20",
+      "line": 826,
+      "status": "candidate",
+      "symbol": "sw20_hit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "sw21",
+      "line": 830,
+      "status": "candidate",
+      "symbol": "sw21_hit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "sw21",
+      "line": 831,
+      "status": "candidate",
+      "symbol": "sw21_unhit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 832,
+      "status": "candidate",
+      "symbol": "sw22_hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 833,
+      "status": "candidate",
+      "symbol": "sw22_unhit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 834,
+      "status": "candidate",
+      "symbol": "sw23_hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 835,
+      "status": "candidate",
+      "symbol": "sw23_unhit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "sw24",
+      "line": 836,
+      "status": "candidate",
+      "symbol": "sw24_hit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "sw24",
+      "line": 837,
+      "status": "candidate",
+      "symbol": "sw24_unhit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "deathstar In",
+      "line": 257,
+      "status": "candidate",
+      "symbol": "deathstarIn_Hit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "sw33",
+      "line": 871,
+      "status": "candidate",
+      "symbol": "sw33_UnHit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "r2 In",
+      "line": 251,
+      "status": "candidate",
+      "symbol": "r2In_Hit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "sw33",
+      "line": 872,
+      "status": "candidate",
+      "symbol": "sw33_UnHit"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Add VUK",
+      "line": 268,
+      "status": "candidate",
+      "symbol": "AddVUK"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Sol Left Popper",
+      "line": 278,
+      "status": "candidate",
+      "symbol": "SolLeftPopper"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "sw38",
+      "line": 877,
+      "status": "candidate",
+      "symbol": "sw38_hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "sw38",
+      "line": 878,
+      "status": "candidate",
+      "symbol": "sw38_unhit"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "sw39",
+      "line": 879,
+      "status": "candidate",
+      "symbol": "sw39_hit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "sw40",
+      "line": 880,
+      "status": "candidate",
+      "symbol": "sw40_hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 470,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 452,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 889,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 899,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Bumper3",
+      "line": 909,
+      "status": "candidate",
+      "symbol": "Bumper3_Hit"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Bumper4",
+      "line": 919,
+      "status": "candidate",
+      "symbol": "Bumper4_Hit"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 369,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 431,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 370,
+      "state_labels": [
+        "Table1 Key Down"
+      ],
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 432,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    }
+  ],
+  "version": 1
+}

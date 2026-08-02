@@ -1,0 +1,142 @@
+{
+  "driver_ids": [
+    "ali",
+    "alib",
+    "alic"
+  ],
+  "extractor": {
+    "id": "libpinmame-service-harness",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.ali-seven-digit-conversion.2023"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game ali --rom-path <roms> --work-dir <isolated-state> --pulse=-7:120:8 --pulse=-7:120:1 --observe 25 --output <external-json>",
+    "game": "ali",
+    "observations": {
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63
+      ],
+      "lamp_decoder_holes_not_seen": [
+        16,
+        32,
+        48,
+        64
+      ],
+      "physical_service_solenoid_to_public": {
+        "1": 2,
+        "10": 12,
+        "11": 14,
+        "12": 13,
+        "13": 9,
+        "14": 10,
+        "15": 19,
+        "16": 15,
+        "17": 17,
+        "18": 20,
+        "19": 18,
+        "2": 1,
+        "3": 6,
+        "4": 7,
+        "5": 3,
+        "6": 4,
+        "7": 5,
+        "8": 8,
+        "9": 11
+      },
+      "public_solenoid_decoder_holes_not_seen": [
+        16
+      ]
+    },
+    "raw_runs": [
+      {
+        "name": "lamp-test",
+        "self_test_pulses": 1,
+        "sha256": "320e2e140e58235d6ee4ef5cbc66788eb2006b0a6fb743dcae889793865db0c3"
+      },
+      {
+        "name": "solenoid-test",
+        "self_test_pulses": 2,
+        "sha256": "cb14917ee85f7b86b1c4c61b4b9c147c8e7909a97e52e21f2dfe237ac35219bf"
+      }
+    ],
+    "rom_archive_sha256": "bf0edc82cdfcfbcc354faff3b2cf668a11f0aac53e7affd915e44136e3325a4b"
+  },
+  "source": {
+    "attribution": "Generated locally from PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "service_diagnostic",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-game-code/ali/harness/ali-service-solenoids.json",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "cb14917ee85f7b86b1c4c61b4b9c147c8e7909a97e52e21f2dfe237ac35219bf"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

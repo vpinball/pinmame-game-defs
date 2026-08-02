@@ -1,0 +1,645 @@
+{
+  "driver_ids": [
+    "wd_12"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.wd_12"
+  ],
+  "mechanisms": [
+    {
+      "kind": "cvpmMech",
+      "line": 1040,
+      "raw": "' *****  cvpmMech replacement, all because the \"Fast\" parameter is not set on timer update!!   We can't get smooth reels without this.   Until this is addressed in Core.vbs, replacing here.",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 0,
+      "group": "pinmame.output.gi",
+      "label": "Table1 Init",
+      "line": 142,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.gi",
+      "label": "Table1 Init",
+      "line": 142,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.gi",
+      "label": "Table1 exit",
+      "line": 189,
+      "status": "candidate",
+      "symbol": "Table1_exit"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.gi",
+      "label": "Table1 Init",
+      "line": 142,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Trough",
+      "line": 258,
+      "status": "candidate",
+      "symbol": "SolTrough"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Auto Plunger IM",
+      "line": 259,
+      "status": "candidate",
+      "symbol": "SolAutoPlungerIM"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "bs L Saucer.Sol Out",
+      "line": 260,
+      "status": "candidate",
+      "symbol": "bsLSaucer.SolOut"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "bs RB Popper.Sol Out",
+      "line": 261,
+      "status": "candidate",
+      "symbol": "bsRBPopper.SolOut"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Ramp Down",
+      "line": 262,
+      "status": "candidate",
+      "symbol": "SolRampDown"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Sol Sound Sound FX(",
+      "line": 264,
+      "status": "candidate",
+      "symbol": "vpmSolSound SoundFX("
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "bs RF Popper.Solout",
+      "line": 265,
+      "status": "candidate",
+      "symbol": "bsRFPopper.Solout"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Phone Flasher",
+      "line": 271,
+      "status": "candidate",
+      "symbol": "SolPhoneFlasher"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Ramp Up",
+      "line": 273,
+      "status": "candidate",
+      "symbol": "SolRampUp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Back Flashers",
+      "line": 274,
+      "status": "candidate",
+      "symbol": "SolBackFlashers"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "label": "FL18.State=",
+      "line": 275,
+      "status": "candidate",
+      "symbol": "FL18.State="
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Lower Left Flasher",
+      "line": 276,
+      "status": "candidate",
+      "symbol": "SolLowerLeftFlasher"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Spinner Flasher",
+      "line": 277,
+      "status": "candidate",
+      "symbol": "SolSpinnerFlasher"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Lower Right Flasher",
+      "line": 278,
+      "status": "candidate",
+      "symbol": "SolLowerRightFlasher"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Bank",
+      "line": 279,
+      "status": "candidate",
+      "symbol": "SolBank"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Post",
+      "line": 287,
+      "status": "candidate",
+      "symbol": "SolPost"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 10,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "Who Dunnit - IPDB No. 3685\n© Bally(Midway) 1995\nVPX recreation by ninuzzu\nthanks to DJRobX for the help and to the VPDev Team for the amazing VPX!\nThalamus 2018-07-24\nTables has its own \"Positional Sound Playback Functions\" and \"Supporting Ball & Sound Functions\"\nChanged UseSolenoids=1 to 2\nThalamus 2018-12-17 : Added FFv2\nNo special SSF tweaks yet."
+    },
+    {
+      "line_end": 1040,
+      "line_start": 1038,
+      "status": "candidate",
+      "text": "*****  cvpmMech replacement, all because the \"Fast\" parameter is not set on timer update!!   We can't get smooth reels without this.   Until this is addressed in Core.vbs, replacing here."
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in WhoDunnit_1.0.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "WhoDunnit_1.0.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "842eb10c4b84739c69c047882d6f2b5338b03faca215f8824083395d73fc1e3c"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "Bank Move",
+      "line": 367,
+      "state_labels": [
+        "Bank Move"
+      ],
+      "status": "candidate",
+      "symbol": "BankMove_timer"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "Targets Init",
+      "line": 345,
+      "status": "candidate",
+      "symbol": "TargetsInit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 502,
+      "status": "candidate",
+      "symbol": "sw16_hit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 503,
+      "status": "candidate",
+      "symbol": "sw16_unhit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 504,
+      "status": "candidate",
+      "symbol": "sw17_hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 505,
+      "status": "candidate",
+      "symbol": "sw17_unhit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "sw18",
+      "line": 506,
+      "status": "candidate",
+      "symbol": "sw18_hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "sw18",
+      "line": 507,
+      "status": "candidate",
+      "symbol": "sw18_unhit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 168,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 177,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "sw26",
+      "line": 508,
+      "status": "candidate",
+      "symbol": "sw26_hit"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "sw26",
+      "line": 509,
+      "status": "candidate",
+      "symbol": "sw26_unhit"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "sw27",
+      "line": 510,
+      "status": "candidate",
+      "symbol": "sw27_hit"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "sw27",
+      "line": 511,
+      "status": "candidate",
+      "symbol": "sw27_unhit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 512,
+      "status": "candidate",
+      "symbol": "sw28_hit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 513,
+      "status": "candidate",
+      "symbol": "sw28_unhit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Sol Trough",
+      "line": 322,
+      "status": "candidate",
+      "symbol": "SolTrough"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "sw36",
+      "line": 516,
+      "status": "candidate",
+      "symbol": "sw36_hit"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "sw37",
+      "line": 517,
+      "status": "candidate",
+      "symbol": "sw37_hit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "sw41",
+      "line": 521,
+      "status": "candidate",
+      "symbol": "sw41_hit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "sw41",
+      "line": 522,
+      "status": "candidate",
+      "symbol": "sw41_unhit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 523,
+      "status": "candidate",
+      "symbol": "sw42_hit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 524,
+      "status": "candidate",
+      "symbol": "sw42_unhit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "sw47",
+      "line": 525,
+      "status": "candidate",
+      "symbol": "sw47_hit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "sw47",
+      "line": 526,
+      "status": "candidate",
+      "symbol": "sw47_unhit"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "sw52",
+      "line": 530,
+      "status": "candidate",
+      "symbol": "sw52_hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "sw53",
+      "line": 531,
+      "status": "candidate",
+      "symbol": "sw53_hit"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "label": "sw54",
+      "line": 532,
+      "status": "candidate",
+      "symbol": "sw54_hit"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "sw55",
+      "line": 533,
+      "status": "candidate",
+      "symbol": "sw55_hit"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "label": "sw56",
+      "line": 536,
+      "status": "candidate",
+      "symbol": "sw56_hit"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.input.switch",
+      "label": "sw58",
+      "line": 539,
+      "status": "candidate",
+      "symbol": "sw58_hit"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "sw61",
+      "line": 545,
+      "status": "candidate",
+      "symbol": "sw61_slingshot"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "sw62",
+      "line": 552,
+      "status": "candidate",
+      "symbol": "sw62_slingshot"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.input.switch",
+      "label": "sw63",
+      "line": 575,
+      "status": "candidate",
+      "symbol": "sw63_hit"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "label": "sw64",
+      "line": 576,
+      "status": "candidate",
+      "symbol": "sw64_hit"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.input.switch",
+      "label": "sw65",
+      "line": 577,
+      "status": "candidate",
+      "symbol": "sw65_hit"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "sw66",
+      "line": 580,
+      "status": "candidate",
+      "symbol": "sw66_hit"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "label": "sw67",
+      "line": 581,
+      "status": "candidate",
+      "symbol": "sw67_hit"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.input.switch",
+      "label": "sw68",
+      "line": 582,
+      "status": "candidate",
+      "symbol": "sw68_hit"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.input.switch",
+      "label": "sw71",
+      "line": 585,
+      "status": "candidate",
+      "symbol": "sw71_hit"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.input.switch",
+      "label": "sw72",
+      "line": 586,
+      "status": "candidate",
+      "symbol": "sw72_hit"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.input.switch",
+      "label": "Bank Move",
+      "line": 367,
+      "state_labels": [
+        "Bank Move"
+      ],
+      "status": "candidate",
+      "symbol": "BankMove_timer"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.input.switch",
+      "label": "Targets Init",
+      "line": 346,
+      "status": "candidate",
+      "symbol": "TargetsInit"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Init",
+      "line": 398,
+      "status": "candidate",
+      "symbol": "RampInit"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Move",
+      "line": 418,
+      "state_labels": [
+        "Ramp Move"
+      ],
+      "status": "candidate",
+      "symbol": "RampMove_timer"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.input.switch",
+      "label": "sw75",
+      "line": 589,
+      "status": "candidate",
+      "symbol": "sw75_hit"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.input.switch",
+      "label": "sw75",
+      "line": 591,
+      "status": "candidate",
+      "symbol": "sw75_unhit"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.input.switch",
+      "label": "sw76",
+      "line": 592,
+      "status": "candidate",
+      "symbol": "sw76_hit"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.input.switch",
+      "label": "sw76",
+      "line": 594,
+      "status": "candidate",
+      "symbol": "sw76_unhit"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.input.switch",
+      "label": "sw77",
+      "line": 595,
+      "status": "candidate",
+      "symbol": "sw77_hit"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.input.switch",
+      "label": "sw77",
+      "line": 597,
+      "status": "candidate",
+      "symbol": "sw77_unhit"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.input.switch",
+      "label": "sw78",
+      "line": 600,
+      "status": "candidate",
+      "symbol": "sw78_hit"
+    },
+    {
+      "address": 115,
+      "group": "pinmame.input.switch",
+      "label": "sw115",
+      "line": 603,
+      "status": "candidate",
+      "symbol": "sw115_spin"
+    }
+  ],
+  "version": 1
+}

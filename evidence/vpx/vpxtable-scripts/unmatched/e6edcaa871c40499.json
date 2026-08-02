@@ -1,0 +1,33 @@
+{
+  "driver_ids": [],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 49,
+      "line_start": 3,
+      "status": "candidate",
+      "text": "****************************************************************\n\n            Sea Ray\n          by Scottacus\n             April 2018\n\nBasic DOF config\n  101 Left Flipper, 102 Right Flipper\n  103 Left sling, 104 Right sling\n  105 Bumper1,  106 Bumper2, 107 Bumper3\n  109 Advance Right Bonus\n  110 Red Bumper Light\n  111 Top Kicker - 112 Right Bonus Kicker\n  114 - 116 Mushrooms\n  117 Up Post Light\n  118 Blue Bumper Light\n  119 Gate Light\n  120 Extra Ball Light\n  124 Drain, 125 Ball Release\n  127 credit light\n  128 Knocker\n  130 Gate Open/Close\n  141 - 142 Outlanes\n  151 Knocker and Kicker Strobe\n  160 Ball In Shooter Lane\n  161 Ball Launched\n  153 Chime1-10s, 154 Chime2-100s, 155 Chime3-1000s\n\n************************************************ Code Flow ***********************************************************\n                 EndGame\n                  ^\n  Start Game -> New Game -> Check Continue -> Release Ball -> Drain -> Score Bouns -> Advance Player -> Next Ball\n                  |                                     |\n                     -------------------------------------------------------------------------\n**********************************************************************************************************************\nBall Control Subroutine developed by: rothbauerw\n  Press \"c\" during play to activate, the arrow keys control the ball\n******************************************************************************\nThalamus 2018-07-24\nAdded/Updated \"Positional Sound Playback Functions\" and \"Supporting Ball & Sound Functions\"\nThalamus 2018-11-01 : Improved directional sounds\n!! NOTE : Table not verified yet !!\nOptions\nVolume devided by - lower gets higher sound"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Sea Ray (Bally 1971) v 1.0.3.8.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Sea Ray (Bally 1971) v 1.0.3.8.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "e6edcaa871c4049953e1bc3e1f05cb7cc779b9cef4c1d3faa06dc45a01134614"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

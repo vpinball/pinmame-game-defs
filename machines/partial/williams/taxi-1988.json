@@ -1,0 +1,4551 @@
+{
+  "conflicts": [
+    {
+      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Game On Relay'.",
+      "id": "conflict.pinmame-output-solenoid-23-none",
+      "path": "binding:pinmame.output.solenoid/23/None",
+      "source_refs": [
+        "legacy.game.taxi",
+        "legacy.platform.system11"
+      ]
+    }
+  ],
+  "controller": {
+    "inversion_applied_by_emulator": true,
+    "platform": "pinmame.system11"
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "candidate",
+      "catalog_identity": "observed",
+      "mechanisms": "unknown",
+      "physical_wiring": "candidate",
+      "recreation_knowledge": "candidate",
+      "semantic_naming": "candidate",
+      "variant_coverage": "candidate"
+    },
+    "missing": [
+      "identity",
+      "controller_platform",
+      "input_enumeration",
+      "input_semantics",
+      "output_enumeration",
+      "output_semantics",
+      "display_inventory",
+      "mechanism_inventory",
+      "mechanism_behavior",
+      "polarity",
+      "variant_differences",
+      "recreation_notes",
+      "provenance"
+    ],
+    "status": "partial"
+  },
+  "displays": [],
+  "drivers": [
+    {
+      "clone_of": "taxi_l4",
+      "description": "Taxi (Marilyn) (L-3)",
+      "flags": 0,
+      "id": "taxi_l3",
+      "manufacturer": "Williams",
+      "year": "1988"
+    },
+    {
+      "description": "Taxi (Lola) (L-4)",
+      "flags": 0,
+      "id": "taxi_l4",
+      "manufacturer": "Williams",
+      "year": "1988"
+    },
+    {
+      "clone_of": "taxi_l4",
+      "description": "Taxi (Lola) (L-5C Competition MOD)",
+      "flags": 0,
+      "id": "taxi_l5c",
+      "manufacturer": "Williams",
+      "year": "2016"
+    },
+    {
+      "clone_of": "taxi_l4",
+      "description": "Taxi (Marilyn) (L-5C Competition MOD)",
+      "flags": 0,
+      "id": "taxi_l5cm",
+      "manufacturer": "Williams",
+      "year": "2016"
+    },
+    {
+      "clone_of": "taxi_l4",
+      "description": "Taxi (Marilyn) (LG-1 German)",
+      "flags": 0,
+      "id": "taxi_lg1",
+      "manufacturer": "Williams",
+      "year": "1988"
+    },
+    {
+      "clone_of": "taxi_l4",
+      "description": "Taxi (Marilyn) (LU-1 Europe)",
+      "flags": 0,
+      "id": "taxi_lu1",
+      "manufacturer": "Williams",
+      "year": "1988"
+    },
+    {
+      "clone_of": "taxi_l4",
+      "description": "Taxi (P-5 Prototype)",
+      "flags": 0,
+      "id": "taxi_p5",
+      "manufacturer": "Williams",
+      "year": "1988"
+    }
+  ],
+  "format": "pinmame-machine-definition",
+  "inputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-7"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "-7"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_advance"
+        }
+      ],
+      "binding": {
+        "device": -7,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.advance",
+      "kind": "switch",
+      "label": "Advance",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-6"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "-6"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_up_down"
+        }
+      ],
+      "binding": {
+        "device": -6,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.up-down",
+      "kind": "switch",
+      "label": "Up/Down",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-5"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "-5"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_cpu_diagnostics"
+        }
+      ],
+      "binding": {
+        "device": -5,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.cpu-diagnostics",
+      "kind": "switch",
+      "label": "CPU Diagnostics",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-4"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "-4"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_sound_diagnostics"
+        }
+      ],
+      "binding": {
+        "device": -4,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.sound-diagnostics",
+      "kind": "switch",
+      "label": "Sound Diagnostics",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "01"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "001"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_tilt"
+        }
+      ],
+      "binding": {
+        "device": 1,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.tilt",
+      "kind": "switch",
+      "label": "Tilt",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi",
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "02"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "002"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_ball_roll_tilt"
+        }
+      ],
+      "binding": {
+        "device": 2,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.ball-roll-tilt",
+      "kind": "switch",
+      "label": "Ball Roll Tilt",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "03"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "003"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_start_button"
+        }
+      ],
+      "binding": {
+        "device": 3,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.start-button",
+      "kind": "switch",
+      "label": "Start Button",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "cabinet.start"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "04"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "004"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_coin_3"
+        }
+      ],
+      "binding": {
+        "device": 4,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-3",
+      "kind": "switch",
+      "label": "Coin Button 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "cabinet.coin.3"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "05"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "005"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_coin_2"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-2",
+      "kind": "switch",
+      "label": "Coin Button 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "cabinet.coin.2"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "06"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "006"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_coin_1"
+        }
+      ],
+      "binding": {
+        "device": 6,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-1",
+      "kind": "switch",
+      "label": "Coin Button 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "cabinet.coin.1"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "07"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "007"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_slam_tilt"
+        }
+      ],
+      "binding": {
+        "device": 7,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.slam-tilt",
+      "kind": "switch",
+      "label": "Slam Tilt",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "08"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "008"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_high_score_reset"
+        }
+      ],
+      "binding": {
+        "device": 8,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.high-score-reset",
+      "kind": "switch",
+      "label": "High Score Reset",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "010"
+        }
+      ],
+      "binding": {
+        "device": 10,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-switch-1",
+      "kind": "switch",
+      "label": "Trough Switch 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "011"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-switch-2",
+      "kind": "switch",
+      "label": "Trough Switch 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "012"
+        }
+      ],
+      "binding": {
+        "device": 12,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-switch-3",
+      "kind": "switch",
+      "label": "Trough Switch 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "013"
+        }
+      ],
+      "binding": {
+        "device": 13,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.top-hole-joy-ride-saucer",
+      "kind": "switch",
+      "label": "Top Hole / Joy Ride Saucer",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "014"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-lane-switch-14",
+      "kind": "switch",
+      "label": "Rollover / Lane Switch 14",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "015"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-lane-switch-15",
+      "kind": "switch",
+      "label": "Rollover / Lane Switch 15",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "016"
+        }
+      ],
+      "binding": {
+        "device": 16,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-lane-switch-16",
+      "kind": "switch",
+      "label": "Rollover / Lane Switch 16",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "017"
+        }
+      ],
+      "binding": {
+        "device": 17,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.middle-pop-bumper",
+      "kind": "switch",
+      "label": "Middle Pop Bumper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "019"
+        }
+      ],
+      "binding": {
+        "device": 19,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.bottom-pop-bumper",
+      "kind": "switch",
+      "label": "Bottom Pop Bumper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "021"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.top-pop-bumper",
+      "kind": "switch",
+      "label": "Top Pop Bumper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "022"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-lane-switch-22",
+      "kind": "switch",
+      "label": "Rollover / Lane Switch 22",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "023"
+        }
+      ],
+      "binding": {
+        "device": 23,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-lane-switch-23",
+      "kind": "switch",
+      "label": "Rollover / Lane Switch 23",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "024"
+        }
+      ],
+      "binding": {
+        "device": 24,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.standup-target-24",
+      "kind": "switch",
+      "label": "Standup Target 24",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "025"
+        }
+      ],
+      "binding": {
+        "device": 25,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.target-switch-25",
+      "kind": "switch",
+      "label": "Target / Switch 25",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "026"
+        }
+      ],
+      "binding": {
+        "device": 26,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.target-switch-26",
+      "kind": "switch",
+      "label": "Target / Switch 26",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "027"
+        }
+      ],
+      "binding": {
+        "device": 27,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.center-drop-target-1",
+      "kind": "switch",
+      "label": "Center Drop Target 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "028"
+        }
+      ],
+      "binding": {
+        "device": 28,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.center-drop-target-2",
+      "kind": "switch",
+      "label": "Center Drop Target 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "029"
+        }
+      ],
+      "binding": {
+        "device": 29,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.center-drop-target-3",
+      "kind": "switch",
+      "label": "Center Drop Target 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "030"
+        }
+      ],
+      "binding": {
+        "device": 30,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-drop-target-1",
+      "kind": "switch",
+      "label": "Right Drop Target 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "031"
+        }
+      ],
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-drop-target-2",
+      "kind": "switch",
+      "label": "Right Drop Target 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "032"
+        }
+      ],
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-drop-target-3",
+      "kind": "switch",
+      "label": "Right Drop Target 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "033"
+        }
+      ],
+      "binding": {
+        "device": 33,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lane-rollover-switch-33",
+      "kind": "switch",
+      "label": "Lane / Rollover Switch 33",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "034"
+        }
+      ],
+      "binding": {
+        "device": 34,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lane-rollover-switch-34",
+      "kind": "switch",
+      "label": "Lane / Rollover Switch 34",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "035"
+        }
+      ],
+      "binding": {
+        "device": 35,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.catapult-kicker",
+      "kind": "switch",
+      "label": "Catapult Kicker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "036"
+        }
+      ],
+      "binding": {
+        "device": 36,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-hole-saucer",
+      "kind": "switch",
+      "label": "Right Hole Saucer",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "037"
+        }
+      ],
+      "binding": {
+        "device": 37,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-lane-switch-37",
+      "kind": "switch",
+      "label": "Rollover / Lane Switch 37",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "38"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "38"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "038"
+        }
+      ],
+      "binding": {
+        "device": 38,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-lane-switch-38",
+      "kind": "switch",
+      "label": "Rollover / Lane Switch 38",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "39"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "39"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "039"
+        }
+      ],
+      "binding": {
+        "device": 39,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-lane-switch-39",
+      "kind": "switch",
+      "label": "Rollover / Lane Switch 39",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "040"
+        }
+      ],
+      "binding": {
+        "device": 40,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-lane-switch-40",
+      "kind": "switch",
+      "label": "Rollover / Lane Switch 40",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "043"
+        }
+      ],
+      "binding": {
+        "device": 43,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.spinout-kicker",
+      "kind": "switch",
+      "label": "Spinout Kicker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "044"
+        }
+      ],
+      "binding": {
+        "device": 44,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.target-switch-44",
+      "kind": "switch",
+      "label": "Target / Switch 44",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "81"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "81"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "081"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_flipper_upper_right"
+        }
+      ],
+      "binding": {
+        "device": 81,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-upper-right",
+      "kind": "switch",
+      "label": "Upper Right Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "flipper.upper.right"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "82"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "82"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "082"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_flipper_lower_right"
+        }
+      ],
+      "binding": {
+        "device": 82,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-lower-right",
+      "kind": "switch",
+      "label": "Lower Right Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "flipper.lower.right"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "83"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "83"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "083"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_flipper_upper_left"
+        }
+      ],
+      "binding": {
+        "device": 83,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-upper-left",
+      "kind": "switch",
+      "label": "Upper Left Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "flipper.upper.left"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "84"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "84"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "084"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_flipper_lower_left"
+        }
+      ],
+      "binding": {
+        "device": 84,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-lower-left",
+      "kind": "switch",
+      "label": "Lower Left Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "flipper.lower.left"
+      ]
+    }
+  ],
+  "knowledge": {
+    "path": "knowledge/williams/taxi-1988.md",
+    "status": "partial"
+  },
+  "machine": {
+    "id": "williams.taxi.1988",
+    "ipdb_id": 2505,
+    "manufacturer": "Williams",
+    "name": "Taxi",
+    "year": 1988
+  },
+  "mechanisms": [],
+  "outputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "01"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "001"
+        }
+      ],
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.joy-ride-lamp-1",
+      "kind": "lamp",
+      "label": "Joy Ride Lamp 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "02"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "002"
+        }
+      ],
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.joy-ride-lamp-2",
+      "kind": "lamp",
+      "label": "Joy Ride Lamp 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "03"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "003"
+        }
+      ],
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.joy-ride-lamp-3",
+      "kind": "lamp",
+      "label": "Joy Ride Lamp 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "04"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "004"
+        }
+      ],
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.joy-ride-lamp-4",
+      "kind": "lamp",
+      "label": "Joy Ride Lamp 4",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "05"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "005"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.joy-ride-lamp-5",
+      "kind": "lamp",
+      "label": "Joy Ride Lamp 5",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "06"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "006"
+        }
+      ],
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.backbox-lamp-6",
+      "kind": "lamp",
+      "label": "Backbox Lamp 6",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "07"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "007"
+        }
+      ],
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.backbox-lamp-7",
+      "kind": "lamp",
+      "label": "Backbox Lamp 7",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "08"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "008"
+        }
+      ],
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.backbox-lamp-8",
+      "kind": "lamp",
+      "label": "Backbox Lamp 8",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "09"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "009"
+        }
+      ],
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-9",
+      "kind": "lamp",
+      "label": "Playfield Insert 9",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "010"
+        }
+      ],
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-10",
+      "kind": "lamp",
+      "label": "Playfield Insert 10",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "011"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-11",
+      "kind": "lamp",
+      "label": "Playfield Insert 11",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "012"
+        }
+      ],
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-12",
+      "kind": "lamp",
+      "label": "Playfield Insert 12",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "013"
+        }
+      ],
+      "binding": {
+        "device": 13,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-13",
+      "kind": "lamp",
+      "label": "Playfield Insert 13",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "014"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-14",
+      "kind": "lamp",
+      "label": "Playfield Insert 14",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "015"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-15",
+      "kind": "lamp",
+      "label": "Playfield Insert 15",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "016"
+        }
+      ],
+      "binding": {
+        "device": 16,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-16",
+      "kind": "lamp",
+      "label": "Playfield Insert 16",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "017"
+        }
+      ],
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-lamp-17",
+      "kind": "lamp",
+      "label": "Playfield Lamp 17",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "018"
+        }
+      ],
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-18",
+      "kind": "lamp",
+      "label": "Playfield Insert 18",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "019"
+        }
+      ],
+      "binding": {
+        "device": 19,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-19",
+      "kind": "lamp",
+      "label": "Playfield Insert 19",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "020"
+        }
+      ],
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-20",
+      "kind": "lamp",
+      "label": "Playfield Insert 20",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "021"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-21",
+      "kind": "lamp",
+      "label": "Playfield Insert 21",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "022"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-22",
+      "kind": "lamp",
+      "label": "Playfield Insert 22",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "023"
+        }
+      ],
+      "binding": {
+        "device": 23,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-23",
+      "kind": "lamp",
+      "label": "Playfield Insert 23",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "024"
+        }
+      ],
+      "binding": {
+        "device": 24,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-24",
+      "kind": "lamp",
+      "label": "Playfield Insert 24",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "025"
+        }
+      ],
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-lamp-25",
+      "kind": "lamp",
+      "label": "Playfield Lamp 25",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "026"
+        }
+      ],
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-26",
+      "kind": "lamp",
+      "label": "Playfield Insert 26",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "027"
+        }
+      ],
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-27",
+      "kind": "lamp",
+      "label": "Playfield Insert 27",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "028"
+        }
+      ],
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-28",
+      "kind": "lamp",
+      "label": "Playfield Insert 28",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "029"
+        }
+      ],
+      "binding": {
+        "device": 29,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-29",
+      "kind": "lamp",
+      "label": "Playfield Insert 29",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "030"
+        }
+      ],
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-30",
+      "kind": "lamp",
+      "label": "Playfield Insert 30",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "031"
+        }
+      ],
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-31",
+      "kind": "lamp",
+      "label": "Playfield Insert 31",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "032"
+        }
+      ],
+      "binding": {
+        "device": 32,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-32",
+      "kind": "lamp",
+      "label": "Playfield Insert 32",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "033"
+        }
+      ],
+      "binding": {
+        "device": 33,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-33",
+      "kind": "lamp",
+      "label": "Playfield Insert 33",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "034"
+        }
+      ],
+      "binding": {
+        "device": 34,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-34",
+      "kind": "lamp",
+      "label": "Playfield Insert 34",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "035"
+        }
+      ],
+      "binding": {
+        "device": 35,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-35",
+      "kind": "lamp",
+      "label": "Playfield Insert 35",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "036"
+        }
+      ],
+      "binding": {
+        "device": 36,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-36",
+      "kind": "lamp",
+      "label": "Playfield Insert 36",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "037"
+        }
+      ],
+      "binding": {
+        "device": 37,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-37",
+      "kind": "lamp",
+      "label": "Playfield Insert 37",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "38"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "38"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "038"
+        }
+      ],
+      "binding": {
+        "device": 38,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-38",
+      "kind": "lamp",
+      "label": "Playfield Insert 38",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "39"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "39"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "039"
+        }
+      ],
+      "binding": {
+        "device": 39,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-39",
+      "kind": "lamp",
+      "label": "Playfield Insert 39",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "040"
+        }
+      ],
+      "binding": {
+        "device": 40,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-40",
+      "kind": "lamp",
+      "label": "Playfield Insert 40",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "041"
+        }
+      ],
+      "binding": {
+        "device": 41,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-41",
+      "kind": "lamp",
+      "label": "Playfield Insert 41",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "042"
+        }
+      ],
+      "binding": {
+        "device": 42,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-42",
+      "kind": "lamp",
+      "label": "Playfield Insert 42",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "043"
+        }
+      ],
+      "binding": {
+        "device": 43,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.joyride-insert",
+      "kind": "lamp",
+      "label": "Joyride Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "044"
+        }
+      ],
+      "binding": {
+        "device": 44,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.jackpot-insert",
+      "kind": "lamp",
+      "label": "Jackpot Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "045"
+        }
+      ],
+      "binding": {
+        "device": 45,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-45",
+      "kind": "lamp",
+      "label": "Playfield Insert 45",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "046"
+        }
+      ],
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-46",
+      "kind": "lamp",
+      "label": "Playfield Insert 46",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "47"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "47"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "047"
+        }
+      ],
+      "binding": {
+        "device": 47,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-47",
+      "kind": "lamp",
+      "label": "Playfield Insert 47",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "048"
+        }
+      ],
+      "binding": {
+        "device": 48,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.playfield-insert-48",
+      "kind": "lamp",
+      "label": "Playfield Insert 48",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "49"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "49"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "049"
+        }
+      ],
+      "binding": {
+        "device": 49,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.backbox-lamp-49",
+      "kind": "lamp",
+      "label": "Backbox Lamp 49",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "50"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "50"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "050"
+        }
+      ],
+      "binding": {
+        "device": 50,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.backbox-lamp-50",
+      "kind": "lamp",
+      "label": "Backbox Lamp 50",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "51"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "51"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "051"
+        }
+      ],
+      "binding": {
+        "device": 51,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.backbox-lamp-51",
+      "kind": "lamp",
+      "label": "Backbox Lamp 51",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "52"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "52"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "052"
+        }
+      ],
+      "binding": {
+        "device": 52,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.backbox-lamp-52",
+      "kind": "lamp",
+      "label": "Backbox Lamp 52",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "53"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "53"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "053"
+        }
+      ],
+      "binding": {
+        "device": 53,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.backbox-lamp-53",
+      "kind": "lamp",
+      "label": "Backbox Lamp 53",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "54"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "54"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "054"
+        }
+      ],
+      "binding": {
+        "device": 54,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.backbox-lamp-54",
+      "kind": "lamp",
+      "label": "Backbox Lamp 54",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "55"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "55"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "055"
+        }
+      ],
+      "binding": {
+        "device": 55,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.backbox-lamp-55",
+      "kind": "lamp",
+      "label": "Backbox Lamp 55",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "56"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "56"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "056"
+        }
+      ],
+      "binding": {
+        "device": 56,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.backbox-lamp-56",
+      "kind": "lamp",
+      "label": "Backbox Lamp 56",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "57"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "57"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "057"
+        }
+      ],
+      "binding": {
+        "device": 57,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.flasher-lamp-57",
+      "kind": "lamp",
+      "label": "Flasher Lamp 57",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "58"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "58"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "058"
+        }
+      ],
+      "binding": {
+        "device": 58,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.flasher-lamp-58",
+      "kind": "lamp",
+      "label": "Flasher Lamp 58",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "59"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "59"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "059"
+        }
+      ],
+      "binding": {
+        "device": 59,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.flasher-lamp-59",
+      "kind": "lamp",
+      "label": "Flasher Lamp 59",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "60"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "60"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "060"
+        }
+      ],
+      "binding": {
+        "device": 60,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.flasher-lamp-60",
+      "kind": "lamp",
+      "label": "Flasher Lamp 60",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "61"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "61"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "061"
+        }
+      ],
+      "binding": {
+        "device": 61,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.flasher-lamp-61",
+      "kind": "lamp",
+      "label": "Flasher Lamp 61",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "62"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "62"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "062"
+        }
+      ],
+      "binding": {
+        "device": 62,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.flasher-lamp-62",
+      "kind": "lamp",
+      "label": "Flasher Lamp 62",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "63"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "63"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "063"
+        }
+      ],
+      "binding": {
+        "device": 63,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.flasher-lamp-63",
+      "kind": "lamp",
+      "label": "Flasher Lamp 63",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "64"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "64"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "064"
+        }
+      ],
+      "binding": {
+        "device": 64,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.backbox-lamp-64",
+      "kind": "lamp",
+      "label": "Backbox Lamp 64",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "01"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "001"
+        }
+      ],
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.trough-entry-drain-to-trough",
+      "kind": "coil",
+      "label": "Trough Entry (Drain to Trough)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "02"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "002"
+        }
+      ],
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.trough-release-ball-to-plunger",
+      "kind": "coil",
+      "label": "Trough Release (Ball to Plunger)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "03"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "003"
+        }
+      ],
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.catapult",
+      "kind": "coil",
+      "label": "Catapult",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "04"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "004"
+        }
+      ],
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.center-drop-target-bank-reset",
+      "kind": "coil",
+      "label": "Center Drop Target Bank Reset",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "05"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "005"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.top-hole-joy-ride-eject",
+      "kind": "coil",
+      "label": "Top Hole / Joy Ride Eject",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "06"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "006"
+        }
+      ],
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-drop-target-bank-reset",
+      "kind": "coil",
+      "label": "Right Drop Target Bank Reset",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "07"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "007"
+        }
+      ],
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.spinout-kicker",
+      "kind": "coil",
+      "label": "Spinout Kicker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "08"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "008"
+        }
+      ],
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-hole-eject",
+      "kind": "coil",
+      "label": "Right Hole Eject",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "09"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "009"
+        }
+      ],
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.top-left-gate",
+      "kind": "coil",
+      "label": "Top Left Gate",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "010"
+        }
+      ],
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.insert-general-illumination-relay",
+      "kind": "relay",
+      "label": "Insert General Illumination Relay",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "011"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.playfield-general-illumination",
+      "kind": "relay",
+      "label": "Playfield General Illumination",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "012"
+        }
+      ],
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.a-c-select-relay",
+      "kind": "relay",
+      "label": "A/C Select Relay",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "013"
+        }
+      ],
+      "binding": {
+        "device": 13,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.bell",
+      "kind": "coil",
+      "label": "Bell",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "014"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.knocker",
+      "kind": "coil",
+      "label": "Knocker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "015"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.jackpot-flasher",
+      "kind": "flasher",
+      "label": "Jackpot Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "016"
+        }
+      ],
+      "binding": {
+        "device": 16,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.joyride-flasher",
+      "kind": "flasher",
+      "label": "Joyride Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "017"
+        }
+      ],
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.bumper-coil-1",
+      "kind": "coil",
+      "label": "Bumper Coil 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "018"
+        }
+      ],
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-slingshot",
+      "kind": "coil",
+      "label": "Left Slingshot",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "019"
+        }
+      ],
+      "binding": {
+        "device": 19,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.bumper-coil-2",
+      "kind": "coil",
+      "label": "Bumper Coil 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "020"
+        }
+      ],
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-slingshot",
+      "kind": "coil",
+      "label": "Right Slingshot",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "021"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.bumper-coil-3",
+      "kind": "coil",
+      "label": "Bumper Coil 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "023"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "c_game_on"
+        }
+      ],
+      "binding": {
+        "device": 23,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.game-on",
+      "kind": "coil",
+      "label": "ROM Started",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi",
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "025"
+        }
+      ],
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.pinbot-passenger-insert-flasher",
+      "kind": "flasher",
+      "label": "Pinbot Passenger Insert Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "026"
+        }
+      ],
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.dracula-passenger-insert-flasher",
+      "kind": "flasher",
+      "label": "Dracula Passenger Insert Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "027"
+        }
+      ],
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.lola-passenger-insert-flasher",
+      "kind": "flasher",
+      "label": "Lola Passenger Insert Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "028"
+        }
+      ],
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.santa-passenger-insert-flasher",
+      "kind": "flasher",
+      "label": "Santa Passenger Insert Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "029"
+        }
+      ],
+      "binding": {
+        "device": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.gorbachev-passenger-insert-flasher",
+      "kind": "flasher",
+      "label": "Gorbachev Passenger Insert Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "030"
+        }
+      ],
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-ramp-flasher",
+      "kind": "flasher",
+      "label": "Left Ramp Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "031"
+        }
+      ],
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-ramp-flasher",
+      "kind": "flasher",
+      "label": "Right Ramp Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "032"
+        }
+      ],
+      "binding": {
+        "device": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.spinout-flasher",
+      "kind": "flasher",
+      "label": "Spinout Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.taxi"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "034"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "c_flipper_upper_right"
+        }
+      ],
+      "binding": {
+        "device": 34,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flipper-upper-right",
+      "kind": "coil",
+      "label": "Upper Right Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "036"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "c_flipper_upper_left"
+        }
+      ],
+      "binding": {
+        "device": 36,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flipper-upper-left",
+      "kind": "coil",
+      "label": "Upper Left Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "046"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "c_flipper_lower_right"
+        }
+      ],
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flipper-lower-right",
+      "kind": "coil",
+      "label": "Lower Right Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "048"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "c_flipper_lower_left"
+        }
+      ],
+      "binding": {
+        "device": 48,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flipper-lower-left",
+      "kind": "coil",
+      "label": "Lower Left Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.system11"
+        ],
+        "status": "candidate"
+      }
+    }
+  ],
+  "relationships": [],
+  "schema_version": 1,
+  "sources": [
+    {
+      "attribution": "pinmame-game-defs contributors",
+      "id": "legacy.game.taxi",
+      "kind": "legacy_json",
+      "locator": "games/taxi.json; origin=vbscript-parser",
+      "revision": "4ea106d080728648a693af3b4dcabb091eee0a02",
+      "uri": "https://github.com/vpinball/pinmame-game-defs"
+    },
+    {
+      "attribution": "pinmame-game-defs contributors",
+      "id": "legacy.platform.system11",
+      "kind": "legacy_json",
+      "locator": "platforms/system11.json",
+      "revision": "4ea106d080728648a693af3b4dcabb091eee0a02",
+      "uri": "https://github.com/vpinball/pinmame-game-defs"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.catalog.4ec52ff0ac13",
+      "kind": "pinmame_catalog",
+      "license": "BSD-3-Clause",
+      "locator": "PinmameGetGames",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    }
+  ]
+}

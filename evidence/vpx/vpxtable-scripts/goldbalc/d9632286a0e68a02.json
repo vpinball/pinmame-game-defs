@@ -1,0 +1,466 @@
+{
+  "driver_ids": [
+    "goldbalc"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.goldball"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 2,
+      "group": "pinmame.output.gi",
+      "label": "gi 2",
+      "line": 3405,
+      "status": "candidate",
+      "symbol": "gi_2"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Bumper1",
+      "line": 754,
+      "status": "candidate",
+      "symbol": "sBumper1"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Bumper2",
+      "line": 755,
+      "status": "candidate",
+      "symbol": "sBumper2"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Bumper3",
+      "line": 756,
+      "status": "candidate",
+      "symbol": "sBumper3"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "Sling",
+      "line": 757,
+      "status": "candidate",
+      "symbol": "sSling"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Knocker",
+      "line": 758,
+      "status": "candidate",
+      "symbol": "sKnocker"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Ball Release",
+      "line": 759,
+      "status": "candidate",
+      "symbol": "sBallRelease"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Gold Ball Release",
+      "line": 760,
+      "status": "candidate",
+      "symbol": "sGoldBallRelease"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "label": "Open Outhole",
+      "line": 761,
+      "status": "candidate",
+      "symbol": "sOpenOuthole"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "label": "Coindoor",
+      "line": 762,
+      "status": "candidate",
+      "symbol": "sCoindoor"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "label": "K1 Relay",
+      "line": 763,
+      "status": "candidate",
+      "symbol": "sK1Relay"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "label": "Close Outhole",
+      "line": 764,
+      "status": "candidate",
+      "symbol": "sCloseOuthole"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 32,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "*********************************************************************************************************************************\n=== TABLE OF CONTENTS  ===\n\nYou can quickly jump to a section by searching the four letter tag (ZXXX)\n\nZVAR: Constants and Global Variable\nZTIM: Timers\nZINI: Table Initialization and Exiting\n  ZOPT: User Options\n  ZMAT: General Math Functions\nZANI: Misc Animations\n  ZBBR: Ball Brightness\n  ZRBR: Room Brightness\nZKEY: Key Press Handling\nZSOL: Solenoids & Flashers\nZDRN: Drain, Trough, and Ball Release\nZFLP: Flippers\nZSLG: Slingshot Animations\nZSSC: Slingshot Corrections\nZSWI: Switches\n  ZBRL: Ball Rolling and Drop Sounds\n  ZFLE: Fleep Mechanical Sounds\nZPHY: General Advice on Physics\nZNFF: Flipper Corrections\n  ZDMP: Rubber Dampeners\nZRST: Stand-Up Targets\n  ZBOU: VPW TargetBouncer for targets and posts\nZSHA: Ambient Ball Shadows\nZGIU: GI Control\nZVRR: VR Room / VR Cabinet\n\n*********************************************************************************************************************************"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Gold Ball (Bally 1983).vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Gold Ball (Bally 1983).vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "d9632286a0e68a022bc5bd5bd78d988e2981d6103924468a768aa1d60c901b91"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 1057,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 1058,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "Bumper3",
+      "line": 1059,
+      "status": "candidate",
+      "symbol": "Bumper3_Hit"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 869,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 700,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 733,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "SW7",
+      "line": 1183,
+      "status": "candidate",
+      "symbol": "SW7_Spin"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Silver Kick",
+      "line": 1134,
+      "status": "candidate",
+      "symbol": "SilverKick_Hit"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Sol Release",
+      "line": 792,
+      "status": "candidate",
+      "symbol": "SolRelease"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 339,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1163,
+      "status": "candidate",
+      "symbol": "sw29_hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1166,
+      "status": "candidate",
+      "symbol": "sw29_hit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1169,
+      "status": "candidate",
+      "symbol": "sw29_hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "SW17",
+      "line": 1063,
+      "status": "candidate",
+      "symbol": "SW17_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "SW17",
+      "line": 1064,
+      "status": "candidate",
+      "symbol": "SW17_UnHit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "SW18",
+      "line": 1065,
+      "status": "candidate",
+      "symbol": "SW18_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "SW18",
+      "line": 1066,
+      "status": "candidate",
+      "symbol": "SW18_UnHit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "SW19",
+      "line": 1079,
+      "status": "candidate",
+      "symbol": "SW19_Hit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "SW19",
+      "line": 1080,
+      "status": "candidate",
+      "symbol": "SW19_UnHit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "SW20",
+      "line": 1081,
+      "status": "candidate",
+      "symbol": "SW20_Hit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "SW20",
+      "line": 1082,
+      "status": "candidate",
+      "symbol": "SW20_UnHit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "SW21",
+      "line": 1069,
+      "status": "candidate",
+      "symbol": "SW21_Hit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "SW21",
+      "line": 1070,
+      "status": "candidate",
+      "symbol": "SW21_UnHit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "SW22",
+      "line": 1071,
+      "status": "candidate",
+      "symbol": "SW22_Hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "SW22",
+      "line": 1072,
+      "status": "candidate",
+      "symbol": "SW22_UnHit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "SW23",
+      "line": 1073,
+      "status": "candidate",
+      "symbol": "SW23_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "SW23",
+      "line": 1074,
+      "status": "candidate",
+      "symbol": "SW23_UnHit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "SW24",
+      "line": 1075,
+      "status": "candidate",
+      "symbol": "SW24_Hit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "SW24",
+      "line": 1076,
+      "status": "candidate",
+      "symbol": "SW24_UnHit"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1160,
+      "status": "candidate",
+      "symbol": "sw29_hit"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "SW26",
+      "line": 1067,
+      "status": "candidate",
+      "symbol": "SW26_Hit"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "SW26",
+      "line": 1068,
+      "status": "candidate",
+      "symbol": "SW26_UnHit"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "SW27 A",
+      "line": 1145,
+      "status": "candidate",
+      "symbol": "SW27A_Hit"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "SW27 B",
+      "line": 1146,
+      "status": "candidate",
+      "symbol": "SW27B_Hit"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "SW27 C",
+      "line": 1147,
+      "status": "candidate",
+      "symbol": "SW27C_Hit"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "SW27 D",
+      "line": 1148,
+      "status": "candidate",
+      "symbol": "SW27D_Hit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1172,
+      "state_labels": [
+        "sw29"
+      ],
+      "status": "candidate",
+      "symbol": "sw29_hit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1178,
+      "status": "candidate",
+      "symbol": "sw29_hit"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "Gold Kick",
+      "line": 1139,
+      "status": "candidate",
+      "symbol": "GoldKick_Hit"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "G Sol Release",
+      "line": 800,
+      "status": "candidate",
+      "symbol": "GSolRelease"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 340,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    }
+  ],
+  "version": 1
+}

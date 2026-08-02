@@ -1,0 +1,829 @@
+{
+  "driver_ids": [
+    "hurr_d2",
+    "hurr_l2"
+  ],
+  "extractor": {
+    "id": "pinmame-sim-source",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.hurr_l2"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Back Box Motor",
+      "line": 129,
+      "status": "candidate",
+      "symbol": "sBackBoxMotor"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Left Bank",
+      "line": 130,
+      "status": "candidate",
+      "symbol": "sLeftBank"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "Left Juggler",
+      "line": 131,
+      "status": "candidate",
+      "symbol": "sLeftJuggler"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Right Juggler",
+      "line": 132,
+      "status": "candidate",
+      "symbol": "sRightJuggler"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Ferris Wheels",
+      "line": 133,
+      "status": "candidate",
+      "symbol": "sFerrisWheels"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Knocker",
+      "line": 134,
+      "status": "candidate",
+      "symbol": "sKnocker"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Out Hole",
+      "line": 135,
+      "status": "candidate",
+      "symbol": "sOutHole"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "Trough",
+      "line": 136,
+      "status": "candidate",
+      "symbol": "sTrough"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "Left Sling",
+      "line": 137,
+      "status": "candidate",
+      "symbol": "sLeftSling"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "Right Sling",
+      "line": 138,
+      "status": "candidate",
+      "symbol": "sRightSling"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "Left Jet",
+      "line": 139,
+      "status": "candidate",
+      "symbol": "sLeftJet"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "Right Jet",
+      "line": 140,
+      "status": "candidate",
+      "symbol": "sRightJet"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "Bottom Jet",
+      "line": 141,
+      "status": "candidate",
+      "symbol": "sBottomJet"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 17,
+      "line_start": 3,
+      "status": "candidate",
+      "text": "Hurricane (Williams, 1991) Pinball Simulator\nby Marton Larrosa (marton@mail.com)\nNov. 21, 2000 (Updated Dec. 5, 2000)\nKnown Issues/Problems with this Simulator:\nNone.\nThanks goes to Steve Ellenoff for his lamp matrix designer program.\nRead PZ.c or FH.c if you like more help."
+    }
+  ],
+  "source": {
+    "attribution": "PinMAME contributors",
+    "encoding": "utf-8",
+    "kind": "pinmame_sim",
+    "license": "BSD-3-Clause",
+    "path": "src/wpc/sims/wpc/full/hurr.c",
+    "quality": "full",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "ae16eea76617690313971b9ac2a5965bf2e085dd28035ab0a95752852c021d4c"
+  },
+  "states": [
+    {
+      "label": "Not Installed",
+      "line": 154,
+      "next_state": "stDrain",
+      "raw": "{\"Not Installed\",\t0,0,\t\t 0,\t\tstDrain,\t0,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "label": "Playfield",
+      "line": 156,
+      "raw": "{\"Playfield\",\t\t0,0,\t\t 0,\t\t0,\t\t0,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "exit_output_address": 10,
+      "exit_output_symbol": "sTrough",
+      "label": "Right Trough",
+      "line": 159,
+      "next_state": "stShooter",
+      "raw": "{\"Right Trough\",\t1,swRTrough,\t sTrough,\tstShooter,\t5},",
+      "switch_address": 16,
+      "switch_symbol": "swRTrough"
+    },
+    {
+      "label": "Center Trough",
+      "line": 160,
+      "next_state": "stRTrough",
+      "raw": "{\"Center Trough\",\t1,swCTrough,\t 0,\t\tstRTrough,\t1},",
+      "switch_address": 17,
+      "switch_symbol": "swCTrough"
+    },
+    {
+      "label": "Left Trough",
+      "line": 161,
+      "next_state": "stCTrough",
+      "raw": "{\"Left Trough\",\t1,swLTrough,\t 0,\t\tstCTrough,\t1},",
+      "switch_address": 18,
+      "switch_symbol": "swLTrough"
+    },
+    {
+      "exit_output_address": 9,
+      "exit_output_symbol": "sOutHole",
+      "label": "Outhole",
+      "line": 162,
+      "next_state": "stLTrough",
+      "raw": "{\"Outhole\",\t\t1,swOutHole,\t sOutHole,\tstLTrough,\t5},",
+      "switch_address": 15,
+      "switch_symbol": "swOutHole"
+    },
+    {
+      "label": "Drain",
+      "line": 163,
+      "next_state": "stOutHole",
+      "raw": "{\"Drain\",\t\t1,0,\t\t 0,\t\tstOutHole,\t0,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "label": "Shooter",
+      "line": 166,
+      "next_state": "stBallLane",
+      "raw": "{\"Shooter\",\t\t1,swShooter,\t sShooterRel,\tstBallLane,\t2,\t0,\t0,\tSIM_STNOTEXCL|SIM_STSHOOT},",
+      "switch_address": 28,
+      "switch_symbol": "swShooter"
+    },
+    {
+      "label": "Hurricane Ramp",
+      "line": 167,
+      "raw": "{\"Hurricane Ramp\",\t5,0,\t\t 0,\t\t0,\t\t0,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "label": "No Strength",
+      "line": 168,
+      "next_state": "stShooter",
+      "raw": "{\"No Strength\",\t1,0,\t\t 0,\t\tstShooter,\t3},"
+    },
+    {
+      "label": "Right Outlane",
+      "line": 169,
+      "next_state": "stDrain",
+      "raw": "{\"Right Outlane\",\t1,swRightOutlane,0,\t\tstDrain,\t15},",
+      "switch_address": 27,
+      "switch_symbol": "swRightOutlane"
+    },
+    {
+      "label": "Left Outlane",
+      "line": 170,
+      "next_state": "stDrain",
+      "raw": "{\"Left Outlane\",\t1,swLeftOutlane, 0,\t\tstDrain,\t15},",
+      "switch_address": 38,
+      "switch_symbol": "swLeftOutlane"
+    },
+    {
+      "label": "Right Inlane",
+      "line": 171,
+      "next_state": "stFree",
+      "raw": "{\"Right Inlane\",\t1,swRightInlane, 0,\t\tstFree,\t\t5},",
+      "switch_address": 26,
+      "switch_symbol": "swRightInlane"
+    },
+    {
+      "label": "Left Inlane",
+      "line": 172,
+      "next_state": "stFree",
+      "raw": "{\"Left Inlane\",\t1,swLeftInlane,\t 0,\t\tstFree,\t\t5},",
+      "switch_address": 37,
+      "switch_symbol": "swLeftInlane"
+    },
+    {
+      "label": "Left Slingshot",
+      "line": 173,
+      "next_state": "stFree",
+      "raw": "{\"Left Slingshot\",\t1,swLeftSling,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 36,
+      "switch_symbol": "swLeftSling"
+    },
+    {
+      "label": "Rt Slingshot",
+      "line": 174,
+      "next_state": "stFree",
+      "raw": "{\"Rt Slingshot\",\t1,swRightSling,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 25,
+      "switch_symbol": "swRightSling"
+    },
+    {
+      "label": "Enter Hurricne",
+      "line": 177,
+      "next_state": "stHurrMade",
+      "raw": "{\"Enter Hurricne\",\t1,swEnterHurr,\t 0,\t\tstHurrMade,\t10},",
+      "switch_address": 61,
+      "switch_symbol": "swEnterHurr"
+    },
+    {
+      "label": "Hurricane Made",
+      "line": 178,
+      "next_state": "stInHRamp",
+      "raw": "{\"Hurricane Made\",\t1,swHurrMade,\t 0,\t\tstInHRamp,\t5},",
+      "switch_address": 62,
+      "switch_symbol": "swHurrMade"
+    },
+    {
+      "label": "In Ramp",
+      "line": 179,
+      "next_state": "stLeftInlane",
+      "raw": "{\"In Ramp\",\t\t1,0,\t\t 0,\t\tstLeftInlane,\t20},"
+    },
+    {
+      "label": "Enter Comet",
+      "line": 180,
+      "next_state": "stCometMade",
+      "raw": "{\"Enter Comet\",\t1,swEnterComet,  0,\t\tstCometMade,\t7},",
+      "switch_address": 63,
+      "switch_symbol": "swEnterComet"
+    },
+    {
+      "label": "Comet Made",
+      "line": 181,
+      "next_state": "stInCRamp",
+      "raw": "{\"Comet Made\",\t1,swCometMade,\t 0,\t\tstInCRamp,\t3},",
+      "switch_address": 64,
+      "switch_symbol": "swCometMade"
+    },
+    {
+      "label": "Habitrail",
+      "line": 182,
+      "next_state": "stRightInlane",
+      "raw": "{\"Habitrail\",\t\t1,0,\t\t 0,\t\tstRightInlane,\t6},"
+    },
+    {
+      "label": "Ferris Wheel 1",
+      "line": 185,
+      "next_state": "stFerris2",
+      "raw": "{\"Ferris Wheel 1\",\t1,swFerrisWheel, 0,\t\tstFerris2,\t40},",
+      "switch_address": 31,
+      "switch_symbol": "swFerrisWheel"
+    },
+    {
+      "label": "Ferris Wheel 2",
+      "line": 186,
+      "next_state": "stInHRamp",
+      "raw": "{\"Ferris Wheel 2\",\t1,0,\t\t 0,\t\tstInHRamp,\t40},"
+    },
+    {
+      "exit_output_address": 4,
+      "exit_output_symbol": "sLeftJuggler",
+      "label": "Left Juggler",
+      "line": 187,
+      "next_state": "stRJuggler",
+      "raw": "{\"Left Juggler\",\t1,swLeftJuggler, sLeftJuggler,\tstRJuggler,\t0},",
+      "switch_address": 56,
+      "switch_symbol": "swLeftJuggler"
+    },
+    {
+      "exit_output_address": 5,
+      "exit_output_symbol": "sRightJuggler",
+      "label": "Right Juggler",
+      "line": 188,
+      "next_state": "stLJet",
+      "raw": "{\"Right Juggler\",\t1,swRightJuggler,sRightJuggler, stLJet,\t\t1},",
+      "switch_address": 57,
+      "switch_symbol": "swRightJuggler"
+    },
+    {
+      "label": "Left Bumper",
+      "line": 189,
+      "next_state": "stRJet",
+      "raw": "{\"Left Bumper\",\t1,swLeftJet,\t 0,\t\tstRJet,\t\t3},",
+      "switch_address": 51,
+      "switch_symbol": "swLeftJet"
+    },
+    {
+      "label": "Right Bumper",
+      "line": 190,
+      "next_state": "stBJet",
+      "raw": "{\"Right Bumper\",\t1,swRightJet,\t 0,\t\tstBJet,\t\t3},",
+      "switch_address": 52,
+      "switch_symbol": "swRightJet"
+    },
+    {
+      "label": "Bottom Bumper",
+      "line": 191,
+      "next_state": "stDownFCenter",
+      "raw": "{\"Bottom Bumper\",\t1,swBottomJet,\t 0,\t\tstDownFCenter,\t7},",
+      "switch_address": 53,
+      "switch_symbol": "swBottomJet"
+    },
+    {
+      "label": "Down F. Center",
+      "line": 192,
+      "next_state": "stFree",
+      "raw": "{\"Down F. Center\",\t1,0,\t\t 0,\t\tstFree,\t\t5},"
+    },
+    {
+      "label": "Down From Ramp",
+      "line": 193,
+      "next_state": "stFree",
+      "raw": "{\"Down From Ramp\",\t1,swEnterHurr,\t 0,\t\tstFree,\t\t5},",
+      "switch_address": 61,
+      "switch_symbol": "swEnterHurr"
+    },
+    {
+      "label": "Top Drop Tgt",
+      "line": 196,
+      "next_state": "stFree",
+      "raw": "{\"Top Drop Tgt\",\t1,swLDropT,\t 0,\t\tstFree,\t\t3,0,0,SIM_STSWKEEP},",
+      "switch_address": 33,
+      "switch_symbol": "swLDropT"
+    },
+    {
+      "label": "Mid Drop Tgt",
+      "line": 197,
+      "next_state": "stFree",
+      "raw": "{\"Mid Drop Tgt\",\t1,swLDropM,\t 0,\t\tstFree,\t\t3,0,0,SIM_STSWKEEP},",
+      "switch_address": 34,
+      "switch_symbol": "swLDropM"
+    },
+    {
+      "label": "Bot Drop Tgt",
+      "line": 198,
+      "next_state": "stFree",
+      "raw": "{\"Bot Drop Tgt\",\t1,swLDropB,\t 0,\t\tstFree,\t\t3,0,0,SIM_STSWKEEP},",
+      "switch_address": 35,
+      "switch_symbol": "swLDropB"
+    },
+    {
+      "label": "Left Bumper",
+      "line": 199,
+      "next_state": "stFree",
+      "raw": "{\"Left Bumper\",\t1,swLeftJet,\t 0,\t\tstFree,\t\t2},",
+      "switch_address": 51,
+      "switch_symbol": "swLeftJet"
+    },
+    {
+      "label": "Bottom Bumper",
+      "line": 200,
+      "next_state": "stFree",
+      "raw": "{\"Bottom Bumper\",\t1,swBottomJet,\t 0,\t\tstFree,\t\t2},",
+      "switch_address": 53,
+      "switch_symbol": "swBottomJet"
+    },
+    {
+      "label": "Right Bumper",
+      "line": 201,
+      "next_state": "stFree",
+      "raw": "{\"Right Bumper\",\t1,swRightJet,\t 0,\t\tstFree,\t\t2},",
+      "switch_address": 52,
+      "switch_symbol": "swRightJet"
+    },
+    {
+      "label": "Cat Target 1",
+      "line": 202,
+      "next_state": "stFree",
+      "raw": "{\"Cat Target 1\",\t1,swRTarget1,\t 0,\t\tstFree,\t\t2},",
+      "switch_address": 42,
+      "switch_symbol": "swRTarget1"
+    },
+    {
+      "label": "Cat Target 2",
+      "line": 203,
+      "next_state": "stFree",
+      "raw": "{\"Cat Target 2\",\t1,swRTarget2,\t 0,\t\tstFree,\t\t2},",
+      "switch_address": 43,
+      "switch_symbol": "swRTarget2"
+    },
+    {
+      "label": "Cat Target 3",
+      "line": 204,
+      "next_state": "stFree",
+      "raw": "{\"Cat Target 3\",\t1,swRTarget3,\t 0,\t\tstFree,\t\t2},",
+      "switch_address": 44,
+      "switch_symbol": "swRTarget3"
+    },
+    {
+      "label": "Cat Target 4",
+      "line": 205,
+      "next_state": "stFree",
+      "raw": "{\"Cat Target 4\",\t1,swRTarget4,\t 0,\t\tstFree,\t\t2},",
+      "switch_address": 45,
+      "switch_symbol": "swRTarget4"
+    },
+    {
+      "label": "Dunk The Dummy",
+      "line": 206,
+      "next_state": "stFree",
+      "raw": "{\"Dunk The Dummy\",\t1,swDunkTheDummy,0,\t\tstFree,\t\t2},",
+      "switch_address": 55,
+      "switch_symbol": "swDunkTheDummy"
+    }
+  ],
+  "switches": [
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Start",
+      "line": 85,
+      "status": "candidate",
+      "symbol": "swStart"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Tilt",
+      "line": 86,
+      "status": "candidate",
+      "symbol": "swTilt"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "Out Hole",
+      "line": 87,
+      "state_labels": [
+        "Outhole"
+      ],
+      "status": "candidate",
+      "symbol": "swOutHole"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "R Trough",
+      "line": 88,
+      "state_labels": [
+        "Right Trough"
+      ],
+      "status": "candidate",
+      "symbol": "swRTrough"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "C Trough",
+      "line": 89,
+      "state_labels": [
+        "Center Trough"
+      ],
+      "status": "candidate",
+      "symbol": "swCTrough"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "L Trough",
+      "line": 90,
+      "state_labels": [
+        "Left Trough"
+      ],
+      "status": "candidate",
+      "symbol": "swLTrough"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Slam Tilt",
+      "line": 92,
+      "status": "candidate",
+      "symbol": "swSlamTilt"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Coin Door",
+      "line": 93,
+      "status": "candidate",
+      "symbol": "swCoinDoor"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Ticket",
+      "line": 94,
+      "status": "candidate",
+      "symbol": "swTicket"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling",
+      "line": 95,
+      "state_labels": [
+        "Rt Slingshot"
+      ],
+      "status": "candidate",
+      "symbol": "swRightSling"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "Right Inlane",
+      "line": 96,
+      "state_labels": [
+        "Right Inlane"
+      ],
+      "status": "candidate",
+      "symbol": "swRightInlane"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "Right Outlane",
+      "line": 97,
+      "state_labels": [
+        "Right Outlane"
+      ],
+      "status": "candidate",
+      "symbol": "swRightOutlane"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "Shooter",
+      "line": 98,
+      "state_labels": [
+        "Shooter"
+      ],
+      "status": "candidate",
+      "symbol": "swShooter"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Ferris Wheel",
+      "line": 100,
+      "state_labels": [
+        "Ferris Wheel 1"
+      ],
+      "status": "candidate",
+      "symbol": "swFerrisWheel"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "L Drop T",
+      "line": 101,
+      "state_labels": [
+        "Top Drop Tgt"
+      ],
+      "status": "candidate",
+      "symbol": "swLDropT"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "L Drop M",
+      "line": 102,
+      "state_labels": [
+        "Mid Drop Tgt"
+      ],
+      "status": "candidate",
+      "symbol": "swLDropM"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "L Drop B",
+      "line": 103,
+      "state_labels": [
+        "Bot Drop Tgt"
+      ],
+      "status": "candidate",
+      "symbol": "swLDropB"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling",
+      "line": 104,
+      "state_labels": [
+        "Left Slingshot"
+      ],
+      "status": "candidate",
+      "symbol": "swLeftSling"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "Left Inlane",
+      "line": 105,
+      "state_labels": [
+        "Left Inlane"
+      ],
+      "status": "candidate",
+      "symbol": "swLeftInlane"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Left Outlane",
+      "line": 106,
+      "state_labels": [
+        "Left Outlane"
+      ],
+      "status": "candidate",
+      "symbol": "swLeftOutlane"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "R Target1",
+      "line": 108,
+      "state_labels": [
+        "Cat Target 1"
+      ],
+      "status": "candidate",
+      "symbol": "swRTarget1"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "R Target2",
+      "line": 109,
+      "state_labels": [
+        "Cat Target 2"
+      ],
+      "status": "candidate",
+      "symbol": "swRTarget2"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "R Target3",
+      "line": 110,
+      "state_labels": [
+        "Cat Target 3"
+      ],
+      "status": "candidate",
+      "symbol": "swRTarget3"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "R Target4",
+      "line": 111,
+      "state_labels": [
+        "Cat Target 4"
+      ],
+      "status": "candidate",
+      "symbol": "swRTarget4"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Left Jet",
+      "line": 113,
+      "state_labels": [
+        "Left Bumper"
+      ],
+      "status": "candidate",
+      "symbol": "swLeftJet"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "Right Jet",
+      "line": 114,
+      "state_labels": [
+        "Right Bumper"
+      ],
+      "status": "candidate",
+      "symbol": "swRightJet"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "Bottom Jet",
+      "line": 115,
+      "state_labels": [
+        "Bottom Bumper"
+      ],
+      "status": "candidate",
+      "symbol": "swBottomJet"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "Dunk The Dummy",
+      "line": 116,
+      "state_labels": [
+        "Dunk The Dummy"
+      ],
+      "status": "candidate",
+      "symbol": "swDunkTheDummy"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "label": "Left Juggler",
+      "line": 117,
+      "state_labels": [
+        "Left Juggler"
+      ],
+      "status": "candidate",
+      "symbol": "swLeftJuggler"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "Right Juggler",
+      "line": 118,
+      "state_labels": [
+        "Right Juggler"
+      ],
+      "status": "candidate",
+      "symbol": "swRightJuggler"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "Enter Hurr",
+      "line": 120,
+      "state_labels": [
+        "Down From Ramp",
+        "Enter Hurricne"
+      ],
+      "status": "candidate",
+      "symbol": "swEnterHurr"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "Hurr Made",
+      "line": 121,
+      "state_labels": [
+        "Hurricane Made"
+      ],
+      "status": "candidate",
+      "symbol": "swHurrMade"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.input.switch",
+      "label": "Enter Comet",
+      "line": 122,
+      "state_labels": [
+        "Enter Comet"
+      ],
+      "status": "candidate",
+      "symbol": "swEnterComet"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "label": "Comet Made",
+      "line": 123,
+      "state_labels": [
+        "Comet Made"
+      ],
+      "status": "candidate",
+      "symbol": "swCometMade"
+    }
+  ],
+  "version": 1
+}

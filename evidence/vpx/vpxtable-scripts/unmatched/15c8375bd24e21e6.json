@@ -1,0 +1,75 @@
+{
+  "driver_ids": [],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [],
+  "mechanisms": [
+    {
+      "kind": "cvpmMagnet",
+      "line": 1342,
+      "raw": "Set VorMag = New cvpmMagnet",
+      "status": "candidate"
+    },
+    {
+      "kind": "cvpmMagnet",
+      "line": 1351,
+      "raw": "Set MiMag = New cvpmMagnet",
+      "status": "candidate"
+    },
+    {
+      "kind": "cvpmMagnet",
+      "line": 1359,
+      "raw": "Set GrabMag= New cvpmMagnet",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 97,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "********************************************************************************************\n ____  _      ____   ____  _____    __  __          _____ _    _ _____ _   _ ______  _____\n|  _ \\| |    / __ \\ / __ \\|  __ \\  |  \\/  |   /\\   / ____| |  | |_   _| \\ | |  ____|/ ____|\n| |_) | |   | |  | | |  | | |  | | | \\  / |  /  \\ | |    | |__| | | | |  \\| | |__  | (___\n|  _ <| |   | |  | | |  | | |  | | | |\\/| | / /\\ \\| |    |  __  | | | | . ` |  __|  \\___ \\\n| |_) | |___| |__| | |__| | |__| | | |  | |/ ____ \\ |____| |  | |_| |_| |\\  | |____ ____) |\n|____/|______\\____/ \\____/|_____/  |_|  |_/_/    \\_\\_____|_|  |_|_____|_| \\_|______|_____/\n\n********************************************************************************************\n\nBlood Machines\nVPinWorkshop Original, 2022\n\nVPW Blood Machines\n==================\nProject Lead - iaakki\nTable Layout Design - iaakki, Dapheni\nArt Lead & 2D Graphics - Astronasty\n3D Objects & Textures - Tomate, Flupper, iaakki, Sixtoe, D.J.\nScripting & Coding - iaakki, Apophis, oqqsan, Wylte, Lumigado, fluffhead35\nDMD - Oqsan, eMBee, Astronasty, Lumigado\nVR - Sixtoe, leojreimroc, iaakki\nTable Rules - Apophis, iaakki, VPW Team\nShot Tester - gtxjoe\nFixes & Additions - Entire VPW Team\nTesting - Rik, PinStratsDan, VPW Team\n\nA Film by Seth Ickerman\nMusic by Carpenter Brut\n\n*IMPORTANT*\nIn order to fully enjoy the table you will need to purchase the soundtrack MP3s by Carpenter Brut\nand place it in your vpinball/music directory. Usually: C:\\VisualPinball\\Music\\Blood Machines OST/\nhttps://carpenterbrut.bandcamp.com/album/blood-machines-ost\n\nDMD will tell you, if this path is not found.\nYou don't need to rename the songs or edit the script if you optain the songs from BandCamp page.\nIf you are not hearing the opening tune properly in your setup, you probably need to raise the default MusicVol.\n\nScorbit needs 3 exe files to be but into tables folder. sToken.exe and sQRCode.exe are the same as previous Scorbit tables.\nQRView.exe sources are at: https://github.com/iaakki/VPXQRView\nRemember to unblock these files\n\nThis table requires FlexDMD v1.8.0 at least\nhttps://github.com/vbousquet/flexdmd/releases/\n\nThis table requires VPX 10.7.3 at least\nhttps://github.com/vpinball/vpinball/releases/tag/10.7.3\n\nWatch the film on Shudder\nhttps://www.shudder.com/series/watch/blood-machines/033e95260abc2604?season=1\n\n1.22 various pup related edits by HeartbeatMD and Frank\n1.23 iaakki - Pupless Scorbit integration\n1.24 iaakki - merged some old stuff\n1.25 iaakki - EOBbonus counting can be skipped with flips, sling bottom corners removed from bouncer, PF mesh physics values cleaned\n       reverted the old EOBbonus speed\n1.26 iaakki - Cabinetmode scorbit flashers repositioned, Flips gets disabled when drained, game starting is not possible anymore until Scorbit has loaded properly\n1.27 iaakki - Fixed paths with spaces issue, renamed all pupchecks to HasPup variable, some minor improvements, possible fix for 4 player bug\n1.28 iaakki - HighScore input without pup crash fix, qrview binary moved to tables folder, csv log moved to BMQR folder, BMQR folder is now created if not existing.\n       QR image casting time raised from 500 to 700ms as some slower systems may fail to load the image that fast\n1.32 iaakki - all efx sounds uses calloutvolume now, SSF redone using Fleep sounds from TNA. Custom bumpersounds mixes from TNA and BPT samples, various fixes\n1.33 heartbeatDM - hasPuP checks to all related subs\n1.34 Frank  - MX Dof additions\n1.35 iaakki - Error messages shown if Scorbit binaries are not found in correct folders, flipkey and other flip ssf handling tweaks. EOB skip redone,\n1.36-37 - various pup related edits by HeartbeatMD and Frank\n1.38 iaakki - Scorbit player numbering fixed and tested to work with 2 players, Additional DOFs for flips removed, SlingSpin defaulted off, minor bugfix to wizard\n       SSF shaker added with DOF options, all rubber sounds redone\n1.40 iaakki - New baked metalwall\n1.41 Frank - MX Dof changes for  the MODES and MB\n1.42 iaakki -  UnderPF DTs redone with Rothbauer style DTs\n1.44 iaakki -  Hatch flasher tuned for VR. VR PUP DMD support created and reworked to play nice with flex still. It is all done a bit incorrectly\n      as we should be modifying VRBGSpeaker image only; not the backbox. This must be reworked one more time.\n1.45 iaakki - Half of the SSF sounds redone, underpf bug fixed\n1.46 iaakki - bug fixes, ball rebound swapped, some sounds removed\n1.47 iaakki - SSF sounds redone\n1.48 iaakki - Plunger material fix one more time, VR PUP DMD speaker grill redone, TargetCockpit sound change, underpf DT sounds fixed, song playback stutter\n       tested with delayed start. The problem comes from pupplayer side. If I disable audios from VLC player, the stutter disappears.\n1.49 iaakki - Wizard ending fixed, MimaTargetBig threshold increased slightly, ramp reflection fix, wizardphase4 ball rattle reduced\n1.50 iaakki - ssf and other sound balancing\n1.51 iaakki - Possible fix to game stuttering on song change when puppack is in use.\n1.53 iaakki - VR tested  on 10.8 #814. Room lighting baked again and added with GI colors and levels\n1.54 heartbeatDM - Attract and Game over attract Pup, Right flipper Skip Pup attract sequence, Lock Font Size\nRC1 iaakki - some fixes with positions. VRRoom platform added and floor lighting redone.\nRC2 leojreimroc - Fixes to VR Backglass and BG flashers 4-6 redone\nRC3 iaakki - Fix floor effects to not appear without vrroom, scorbit fixed one more time, qrview binary updated\nRC4 iaakki - Music player fixed, platform added to vr collection, floor height adjusted\nRC5 iaakki - Fixed EB handling in wizard, InsertBlooms balanced and added as option, slight tweak to vpx 10.8 hatch, wizard tester ON\nRC6 iaakki - Pup Score update sub redone, DTAnim arrays reworked, MusicDir fetch changed for 10.8.\nRC7 iaakki - pUpdateScores reworked one more time, fix shittalk, GunMotorSoundVolume bug fixed, forceFlexOn option added, optimizations for galdor battle, Apron buttonlight changed\n2.0 iaakki - default values\nSW versions to use:\nDesktop and cabinet:  64bit 10.7.3\nVR:           64bit 10.8 rev814\nFlexDMD 1.8.0"
+    },
+    {
+      "line_end": 1351,
+      "line_start": 1349,
+      "status": "candidate",
+      "text": "MiMag"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Blood Machines 2.0.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Blood Machines 2.0.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "15c8375bd24e21e6982d42ac771b17c9c5fd64030fa3282db95bdbfcc05901e9"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "Switch Gate Sound Level",
+      "line": 15190,
+      "status": "candidate",
+      "symbol": "Switch_Gate_SoundLevel"
+    },
+    {
+      "address": 1500,
+      "group": "pinmame.input.switch",
+      "label": "Switch Hit Recently Time",
+      "line": 6091,
+      "status": "candidate",
+      "symbol": "SwitchHitRecentlyTime"
+    }
+  ],
+  "version": 1
+}

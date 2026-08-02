@@ -1,0 +1,1040 @@
+{
+  "driver_ids": [
+    "t2_d2",
+    "t2_d3",
+    "t2_d4",
+    "t2_d6",
+    "t2_d8",
+    "t2_f19",
+    "t2_f20",
+    "t2_f32",
+    "t2_l2",
+    "t2_l2sp1",
+    "t2_l3",
+    "t2_l4",
+    "t2_l6",
+    "t2_l8",
+    "t2_l81",
+    "t2_l82",
+    "t2_l83",
+    "t2_l84",
+    "t2_p2f",
+    "t2_p2g"
+  ],
+  "extractor": {
+    "id": "pinmame-sim-source",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.terminator-2-judgment-day.1991"
+  ],
+  "mechanisms": [
+    {
+      "kind": "mech_tSwData",
+      "line": 711,
+      "raw": "static mech_tSwData gunSw[] = {{swGunHome, 0, 3},{swGunMark, 75, 85},{0}};",
+      "status": "candidate"
+    },
+    {
+      "kind": "mech_addLong",
+      "line": 713,
+      "raw": "mech_addLong(0, sGunMotor, 0, MECH_NONLINEAR|MECH_REVERSE|MECH_ONESOL,",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Ball Popper",
+      "line": 203,
+      "status": "candidate",
+      "symbol": "sBallPopper"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Gun Kicker",
+      "line": 204,
+      "status": "candidate",
+      "symbol": "sGunKicker"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Outhole",
+      "line": 205,
+      "status": "candidate",
+      "symbol": "sOuthole"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "Ball Rel",
+      "line": 206,
+      "status": "candidate",
+      "symbol": "sBallRel"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "R Sling",
+      "line": 207,
+      "status": "candidate",
+      "symbol": "sRSling"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "L Sling",
+      "line": 208,
+      "status": "candidate",
+      "symbol": "sLSling"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Knocker",
+      "line": 209,
+      "status": "candidate",
+      "symbol": "sKnocker"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Kick Back",
+      "line": 210,
+      "status": "candidate",
+      "symbol": "sKickBack"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Plunger",
+      "line": 211,
+      "status": "candidate",
+      "symbol": "sPlunger"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "Top Lock",
+      "line": 212,
+      "status": "candidate",
+      "symbol": "sTopLock"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "Gun Motor",
+      "line": 213,
+      "status": "candidate",
+      "symbol": "sGunMotor"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "Knock Down",
+      "line": 214,
+      "status": "candidate",
+      "symbol": "sKnockDown"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "Jet1",
+      "line": 215,
+      "status": "candidate",
+      "symbol": "sJet1"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "Jet2",
+      "line": 216,
+      "status": "candidate",
+      "symbol": "sJet2"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "Jet3",
+      "line": 217,
+      "status": "candidate",
+      "symbol": "sJet3"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid",
+      "label": "Left Lock",
+      "line": 218,
+      "status": "candidate",
+      "symbol": "sLeftLock"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "label": "Drop Target",
+      "line": 219,
+      "status": "candidate",
+      "symbol": "sDropTarget"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 38,
+      "line_start": 3,
+      "status": "candidate",
+      "text": "Williams Terminator 2: Judgment Day (1991) Pinball Simulator\nby Steve Ellenoff (sellenoff@hotmail.com)\nNov.2, 2000\nKnown Issues/Problems with Simulator:\n-Gun Position & Timing Totally guessed..\nbut seems ok!! (Sure is hard aiming the gun when you can't see it!)\n-Skull Target does not open when it should,\nso a hack was used... For some reason, during\ngame play, the knockdown solenoid *should* fire when the Drop Target is activated but it does\nnot.. So I had to put in an extra check for the switch being active to pull down the drop target\nrather than just relying on the knockdown solenoid!\nNotes:\nThis game was incredibly easy to simulate. There's very little stuff going on.. No diverters,\nnothing fancy.. The only real pain was the gun. That took 80% of the time to figure out. The\nrest of the stuff are straight on shots which simply trigger switches. The ramps are straightforward!\nNote that T2s own DMD driver code is different (e.g. less brightness levels) from the more recent WPC machines\n(maybe other machines from that era, e.g. HSII also still feature this driver)\nsee technical DMD (and more) info here: https://pinside.com/pinball/forum/topic/inside-the-magic-garden-technical-information-about-the-wpc-system#post-8983286\nDue to PinMAMEs new PWM implementation for DMDs, this should be automatic though\nChanges:\n12-05-2000: Modified custom playfield lamp layout to accomodate new structure.\nAdded support for shared bulbs where necessary\n12-30-2000: Added Sample Support\nExcessive documentation of the T2 ROM: https://www.flippermarkt.de/community/howto/cms/media/pages/pdfs/workshops/Terminator2_L8_3_(FINAL).pdf"
+    }
+  ],
+  "source": {
+    "attribution": "PinMAME contributors",
+    "encoding": "utf-8",
+    "kind": "pinmame_sim",
+    "license": "BSD-3-Clause",
+    "path": "src/wpc/sims/wpc/full/t2.c",
+    "quality": "full",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "e894868e68958d1343abfd89dcd229ff7c7d629effb364026b57d8aedb6924e7"
+  },
+  "states": [
+    {
+      "label": "Not Installed",
+      "line": 272,
+      "next_state": "stDrain",
+      "raw": "{\"Not Installed\",    0,0,           0,        stDrain,     0,0,0,SIM_STNOTEXCL},"
+    },
+    {
+      "label": "Playfield",
+      "line": 274,
+      "raw": "{\"Playfield\",               0,0,           0,        0,           0,0,0,SIM_STNOTEXCL},"
+    },
+    {
+      "exit_output_address": 4,
+      "exit_output_symbol": "sBallRel",
+      "label": "Right Trough",
+      "line": 277,
+      "next_state": "stShooter",
+      "raw": "{\"Right Trough\",     1,swRTrough,   sBallRel, stShooter,  5},",
+      "switch_address": 17,
+      "switch_symbol": "swRTrough"
+    },
+    {
+      "label": "Center Trough",
+      "line": 278,
+      "next_state": "stRTrough",
+      "raw": "{\"Center Trough\",    1,swCTrough,   0,        stRTrough,   1},",
+      "switch_address": 16,
+      "switch_symbol": "swCTrough"
+    },
+    {
+      "label": "Left Trough",
+      "line": 279,
+      "next_state": "stCTrough",
+      "raw": "{\"Left Trough\",      1,swLTrough,   0,        stCTrough,   1},",
+      "switch_address": 15,
+      "switch_symbol": "swLTrough"
+    },
+    {
+      "exit_output_address": 3,
+      "exit_output_symbol": "sOuthole",
+      "label": "Outhole",
+      "line": 280,
+      "next_state": "stLTrough",
+      "raw": "{\"Outhole\",          5,swOuthole,   sOuthole, stLTrough,   5},",
+      "switch_address": 18,
+      "switch_symbol": "swOuthole"
+    },
+    {
+      "label": "Drain",
+      "line": 281,
+      "next_state": "stOuthole",
+      "raw": "{\"Drain\",            1,0,           0,        stOuthole,   0,0,0,SIM_STNOTEXCL},"
+    },
+    {
+      "exit_output_address": 9,
+      "exit_output_symbol": "sPlunger",
+      "label": "Shooter",
+      "line": 283,
+      "next_state": "stBallLane",
+      "raw": "{\"Shooter\",\t\t   1,swShooter,   sPlunger, stBallLane,  1,0,0,SIM_STNOTEXCL},",
+      "switch_address": 78,
+      "switch_symbol": "swShooter"
+    },
+    {
+      "label": "Ball Lane",
+      "line": 284,
+      "next_state": "stTarget2",
+      "raw": "{\"Ball Lane\",\t\t   1, 0,  \t      0,        stTarget2,   5,0,0,SIM_STNOTEXCL},"
+    },
+    {
+      "label": "Right Outlane",
+      "line": 285,
+      "next_state": "stDrain",
+      "raw": "{\"Right Outlane\",    1,swROut,      0,        stDrain,    20},",
+      "switch_address": 28,
+      "switch_symbol": "swROut"
+    },
+    {
+      "label": "Left Outlane",
+      "line": 286,
+      "next_state": "stDrain",
+      "raw": "{\"Left Outlane\",     1,swLOut,      0,        stDrain,    20, sKickBack, stFree},",
+      "switch_address": 25,
+      "switch_symbol": "swLOut"
+    },
+    {
+      "label": "Right Inlane",
+      "line": 287,
+      "next_state": "stFree",
+      "raw": "{\"Right Inlane\",     1,swRIn,       0,        stFree,      5},",
+      "switch_address": 27,
+      "switch_symbol": "swRIn"
+    },
+    {
+      "label": "Left  Inlane",
+      "line": 288,
+      "next_state": "stFree",
+      "raw": "{\"Left  Inlane\",     1,swLIn,       0,        stFree,      5},",
+      "switch_address": 26,
+      "switch_symbol": "swLIn"
+    },
+    {
+      "label": "Left Loop",
+      "line": 290,
+      "next_state": "stLLoopUp2",
+      "raw": "{\"Left Loop\",        1,swEscapeL,    0,       stLLoopUp2,   1},\t/* Left Loop Going Up     */",
+      "switch_address": 53,
+      "switch_symbol": "swEscapeL"
+    },
+    {
+      "label": "Left Loop",
+      "line": 291,
+      "next_state": "stTopLock",
+      "raw": "{\"Left Loop\",        1,swEscapeH,    0,       stTopLock,   15},   /* Left Loop Going Up #2  */",
+      "switch_address": 54,
+      "switch_symbol": "swEscapeH"
+    },
+    {
+      "exit_output_address": 10,
+      "exit_output_symbol": "sTopLock",
+      "label": "Top Lock",
+      "line": 292,
+      "next_state": "stMultL",
+      "raw": "{\"Top Lock\",         5,swLockT,      sTopLock,stMultL,     25},",
+      "switch_address": 55,
+      "switch_symbol": "swLockT"
+    },
+    {
+      "label": "Left Loop",
+      "line": 293,
+      "next_state": "stFree",
+      "raw": "{\"Left Loop\",        1,swEscapeL,    0,       stFree,       1},\t/* Left Loop Coming Down */",
+      "switch_address": 53,
+      "switch_symbol": "swEscapeL"
+    },
+    {
+      "label": "Left Loop",
+      "line": 294,
+      "next_state": "stLLoopDn",
+      "raw": "{\"Left Loop\",        1,swEscapeH,    0,       stLLoopDn,    1},   /* Left Loop Coming Down2  */",
+      "switch_address": 54,
+      "switch_symbol": "swEscapeH"
+    },
+    {
+      "label": "Right Loop",
+      "line": 296,
+      "next_state": "stRLoopUp2",
+      "raw": "{\"Right Loop\",       1,swLChaseLoop, 0,       stRLoopUp2,   1},\t/* Right Loop Going Up     */",
+      "switch_address": 65,
+      "switch_symbol": "swLChaseLoop"
+    },
+    {
+      "label": "Right Loop",
+      "line": 297,
+      "next_state": "stLLoopDn2",
+      "raw": "{\"Right Loop\",       1,swHChaseLoop, 0,       stLLoopDn2,  10},\t/* Right Loop Going Up #2  */",
+      "switch_address": 66,
+      "switch_symbol": "swHChaseLoop"
+    },
+    {
+      "label": "Right Loop",
+      "line": 298,
+      "next_state": "stFree",
+      "raw": "{\"Right Loop\",       1,swLChaseLoop, 0,       stFree,       1},\t/* Right Loop Coming Down  */",
+      "switch_address": 65,
+      "switch_symbol": "swLChaseLoop"
+    },
+    {
+      "label": "Right Loop",
+      "line": 299,
+      "next_state": "stRLoopDn",
+      "raw": "{\"Right Loop\",       1,swHChaseLoop, 0,       stRLoopDn,   10},\t/* Right Loop Coming Down2 */",
+      "switch_address": 66,
+      "switch_symbol": "swHChaseLoop"
+    },
+    {
+      "label": "L. Ramp Enter",
+      "line": 301,
+      "next_state": "stLRamp",
+      "raw": "{\"L. Ramp Enter\",\t   1,swLRampEnt,   0,       stLRamp,\t 5},",
+      "switch_address": 61,
+      "switch_symbol": "swLRampEnt"
+    },
+    {
+      "label": "L. Ramp",
+      "line": 302,
+      "next_state": "stLRampExit",
+      "raw": "{\"L. Ramp\",\t\t   1,swLRampExit,  0,       stLRampExit,15},\t/*Here strickly to fix timing issues*/",
+      "switch_address": 62,
+      "switch_symbol": "swLRampExit"
+    },
+    {
+      "label": "L. Ramp Exit",
+      "line": 303,
+      "next_state": "stLIn",
+      "raw": "{\"L. Ramp Exit\",     1,0,        0,           stLIn,       2},"
+    },
+    {
+      "label": "R. Ramp Enter",
+      "line": 304,
+      "next_state": "stRRamp",
+      "raw": "{\"R. Ramp Enter\",\t   1,swRRampEnt,   0,       stRRamp,\t 5},",
+      "switch_address": 63,
+      "switch_symbol": "swRRampEnt"
+    },
+    {
+      "label": "R. Ramp",
+      "line": 305,
+      "next_state": "stRRampExit",
+      "raw": "{\"R. Ramp\",\t\t   1,swRRampExit,  0,       stRRampExit,15},\t/*Here strickly to fix timing issues*/",
+      "switch_address": 64,
+      "switch_symbol": "swRRampExit"
+    },
+    {
+      "label": "R. Ramp Exit",
+      "line": 306,
+      "next_state": "stRIn",
+      "raw": "{\"R. Ramp Exit\",     1,0,\t\t   0,           stRIn,       2},"
+    },
+    {
+      "exit_output_address": 16,
+      "exit_output_symbol": "sLeftLock",
+      "label": "Left Lock",
+      "line": 308,
+      "next_state": "stFree",
+      "raw": "{\"Left Lock\",        1,swLockL,  sLeftLock,stFree,      10},",
+      "switch_address": 51,
+      "switch_symbol": "swLockL"
+    },
+    {
+      "label": "Skull Drop Target",
+      "line": 309,
+      "raw": "{\"Skull Drop Target\",1,0,  0,  0,  0},"
+    },
+    {
+      "label": "Skull Drop Target",
+      "line": 310,
+      "next_state": "stFree",
+      "raw": "{\"Skull Drop Target\",1,swDropTarget, 0, stFree, 1, 0,0, SIM_STSWKEEP},",
+      "switch_address": 77,
+      "switch_symbol": "swDropTarget"
+    },
+    {
+      "exit_output_address": 1,
+      "exit_output_symbol": "sBallPopper",
+      "label": "Ball Popper",
+      "line": 311,
+      "next_state": "stGunLoaded",
+      "raw": "{\"Ball Popper\",\t   5,swBallPopper, sBallPopper, stGunLoaded, 5},",
+      "switch_address": 76,
+      "switch_symbol": "swBallPopper"
+    },
+    {
+      "exit_output_address": 2,
+      "exit_output_symbol": "sGunKicker",
+      "label": "Gun Loaded",
+      "line": 312,
+      "next_state": "stGunFire",
+      "raw": "{\"Gun Loaded\" ,\t   1,swGunLoaded,  sGunKicker, stGunFire, 1},",
+      "switch_address": 31,
+      "switch_symbol": "swGunLoaded"
+    },
+    {
+      "label": "Gun Fired",
+      "line": 313,
+      "raw": "{\"Gun Fired\",\t\t   1,0,0,0,0},"
+    },
+    {
+      "label": "Orbit Target 1",
+      "line": 315,
+      "next_state": "stFree",
+      "raw": "{\"Orbit Target 1\",   1,swTarget1, 0, stFree, 1},",
+      "switch_address": 71,
+      "switch_symbol": "swTarget1"
+    },
+    {
+      "label": "Orbit Target 2",
+      "line": 316,
+      "next_state": "stFree",
+      "raw": "{\"Orbit Target 2\",   1,swTarget2, 0, stFree, 1},",
+      "switch_address": 72,
+      "switch_symbol": "swTarget2"
+    },
+    {
+      "label": "Orbit Target 3",
+      "line": 317,
+      "next_state": "stFree",
+      "raw": "{\"Orbit Target 3\",   1,swTarget3, 0, stFree, 1},",
+      "switch_address": 73,
+      "switch_symbol": "swTarget3"
+    },
+    {
+      "label": "Orbit Target 4",
+      "line": 318,
+      "next_state": "stFree",
+      "raw": "{\"Orbit Target 4\",   1,swTarget4, 0, stFree, 1},",
+      "switch_address": 74,
+      "switch_symbol": "swTarget4"
+    },
+    {
+      "label": "Orbit Target 5",
+      "line": 319,
+      "next_state": "stFree",
+      "raw": "{\"Orbit Target 5\",   1,swTarget5, 0, stFree, 1},",
+      "switch_address": 75,
+      "switch_symbol": "swTarget5"
+    },
+    {
+      "label": "Left Rollover",
+      "line": 320,
+      "next_state": "stJet1",
+      "raw": "{\"Left Rollover\",    1,swMultL,   0, stJet1, 10},",
+      "switch_address": 56,
+      "switch_symbol": "swMultL"
+    },
+    {
+      "label": "Jet Bumper 1",
+      "line": 321,
+      "next_state": "stJet2",
+      "raw": "{\"Jet Bumper 1\",       1,swJet1,    0, stJet2, 2},",
+      "switch_address": 41,
+      "switch_symbol": "swJet1"
+    },
+    {
+      "label": "Jet Bumper 2",
+      "line": 322,
+      "next_state": "stJet3",
+      "raw": "{\"Jet Bumper 2\",       1,swJet2,    0, stJet3, 2},",
+      "switch_address": 42,
+      "switch_symbol": "swJet2"
+    },
+    {
+      "label": "Jet Bumper 3",
+      "line": 323,
+      "next_state": "stFree",
+      "raw": "{\"Jet Bumper 3\",       1,swJet3,    0, stFree, 3},",
+      "switch_address": 43,
+      "switch_symbol": "swJet3"
+    }
+  ],
+  "switches": [
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Start",
+      "line": 136,
+      "status": "candidate",
+      "symbol": "swStart"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Tilt",
+      "line": 137,
+      "status": "candidate",
+      "symbol": "swTilt"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "L Trough",
+      "line": 138,
+      "state_labels": [
+        "Left Trough"
+      ],
+      "status": "candidate",
+      "symbol": "swLTrough"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "C Trough",
+      "line": 139,
+      "state_labels": [
+        "Center Trough"
+      ],
+      "status": "candidate",
+      "symbol": "swCTrough"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "R Trough",
+      "line": 140,
+      "state_labels": [
+        "Right Trough"
+      ],
+      "status": "candidate",
+      "symbol": "swRTrough"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Outhole",
+      "line": 141,
+      "state_labels": [
+        "Outhole"
+      ],
+      "status": "candidate",
+      "symbol": "swOuthole"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Slam Tilt",
+      "line": 143,
+      "status": "candidate",
+      "symbol": "swSlamTilt"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Coin Door",
+      "line": 144,
+      "status": "candidate",
+      "symbol": "swCoinDoor"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Ticket",
+      "line": 145,
+      "status": "candidate",
+      "symbol": "swTicket"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Not Used",
+      "line": 146,
+      "status": "candidate",
+      "symbol": "swNotUsed"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "L Out",
+      "line": 147,
+      "state_labels": [
+        "Left Outlane"
+      ],
+      "status": "candidate",
+      "symbol": "swLOut"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "L In",
+      "line": 148,
+      "state_labels": [
+        "Left  Inlane"
+      ],
+      "status": "candidate",
+      "symbol": "swLIn"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "R In",
+      "line": 149,
+      "state_labels": [
+        "Right Inlane"
+      ],
+      "status": "candidate",
+      "symbol": "swRIn"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "R Out",
+      "line": 150,
+      "state_labels": [
+        "Right Outlane"
+      ],
+      "status": "candidate",
+      "symbol": "swROut"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Gun Loaded",
+      "line": 152,
+      "state_labels": [
+        "Gun Loaded"
+      ],
+      "status": "candidate",
+      "symbol": "swGunLoaded"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "Gun Mark",
+      "line": 153,
+      "status": "candidate",
+      "symbol": "swGunMark"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "Gun Home",
+      "line": 154,
+      "status": "candidate",
+      "symbol": "swGunHome"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Trigger",
+      "line": 155,
+      "status": "candidate",
+      "symbol": "swTrigger"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Mid Left",
+      "line": 157,
+      "status": "candidate",
+      "symbol": "swMidLeft"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "Mid Center",
+      "line": 158,
+      "status": "candidate",
+      "symbol": "swMidCenter"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Mid Right",
+      "line": 159,
+      "status": "candidate",
+      "symbol": "swMidRight"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "Jet1",
+      "line": 161,
+      "state_labels": [
+        "Jet Bumper 1"
+      ],
+      "status": "candidate",
+      "symbol": "swJet1"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "Jet2",
+      "line": 162,
+      "state_labels": [
+        "Jet Bumper 2"
+      ],
+      "status": "candidate",
+      "symbol": "swJet2"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "Jet3",
+      "line": 163,
+      "state_labels": [
+        "Jet Bumper 3"
+      ],
+      "status": "candidate",
+      "symbol": "swJet3"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "L Sling",
+      "line": 164,
+      "status": "candidate",
+      "symbol": "swLSling"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "R Sling",
+      "line": 165,
+      "status": "candidate",
+      "symbol": "swRSling"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "Top RDT",
+      "line": 166,
+      "status": "candidate",
+      "symbol": "swTopRDT"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Mid RDT",
+      "line": 167,
+      "status": "candidate",
+      "symbol": "swMidRDT"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Bot RDT",
+      "line": 168,
+      "status": "candidate",
+      "symbol": "swBotRDT"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Lock L",
+      "line": 170,
+      "state_labels": [
+        "Left Lock"
+      ],
+      "status": "candidate",
+      "symbol": "swLockL"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "Escape L",
+      "line": 172,
+      "state_labels": [
+        "Left Loop"
+      ],
+      "status": "candidate",
+      "symbol": "swEscapeL"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "label": "Escape H",
+      "line": 173,
+      "state_labels": [
+        "Left Loop"
+      ],
+      "status": "candidate",
+      "symbol": "swEscapeH"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "Lock T",
+      "line": 174,
+      "state_labels": [
+        "Top Lock"
+      ],
+      "status": "candidate",
+      "symbol": "swLockT"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "label": "Mult L",
+      "line": 175,
+      "state_labels": [
+        "Left Rollover"
+      ],
+      "status": "candidate",
+      "symbol": "swMultL"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "Mult C",
+      "line": 176,
+      "status": "candidate",
+      "symbol": "swMultC"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.input.switch",
+      "label": "Mult R",
+      "line": 177,
+      "status": "candidate",
+      "symbol": "swMultR"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "L Ramp Ent",
+      "line": 179,
+      "state_labels": [
+        "L. Ramp Enter"
+      ],
+      "status": "candidate",
+      "symbol": "swLRampEnt"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "L Ramp Exit",
+      "line": 180,
+      "state_labels": [
+        "L. Ramp"
+      ],
+      "status": "candidate",
+      "symbol": "swLRampExit"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.input.switch",
+      "label": "R Ramp Ent",
+      "line": 181,
+      "state_labels": [
+        "R. Ramp Enter"
+      ],
+      "status": "candidate",
+      "symbol": "swRRampEnt"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "label": "R Ramp Exit",
+      "line": 182,
+      "state_labels": [
+        "R. Ramp"
+      ],
+      "status": "candidate",
+      "symbol": "swRRampExit"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.input.switch",
+      "label": "L Chase Loop",
+      "line": 183,
+      "state_labels": [
+        "Right Loop"
+      ],
+      "status": "candidate",
+      "symbol": "swLChaseLoop"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "H Chase Loop",
+      "line": 184,
+      "state_labels": [
+        "Right Loop"
+      ],
+      "status": "candidate",
+      "symbol": "swHChaseLoop"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.input.switch",
+      "label": "Target1",
+      "line": 188,
+      "state_labels": [
+        "Orbit Target 1"
+      ],
+      "status": "candidate",
+      "symbol": "swTarget1"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.input.switch",
+      "label": "Target2",
+      "line": 189,
+      "state_labels": [
+        "Orbit Target 2"
+      ],
+      "status": "candidate",
+      "symbol": "swTarget2"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.input.switch",
+      "label": "Target3",
+      "line": 190,
+      "state_labels": [
+        "Orbit Target 3"
+      ],
+      "status": "candidate",
+      "symbol": "swTarget3"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.input.switch",
+      "label": "Target4",
+      "line": 191,
+      "state_labels": [
+        "Orbit Target 4"
+      ],
+      "status": "candidate",
+      "symbol": "swTarget4"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.input.switch",
+      "label": "Target5",
+      "line": 192,
+      "state_labels": [
+        "Orbit Target 5"
+      ],
+      "status": "candidate",
+      "symbol": "swTarget5"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.input.switch",
+      "label": "Ball Popper",
+      "line": 193,
+      "state_labels": [
+        "Ball Popper"
+      ],
+      "status": "candidate",
+      "symbol": "swBallPopper"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.input.switch",
+      "label": "Drop Target",
+      "line": 194,
+      "state_labels": [
+        "Skull Drop Target"
+      ],
+      "status": "candidate",
+      "symbol": "swDropTarget"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.input.switch",
+      "label": "Shooter",
+      "line": 195,
+      "state_labels": [
+        "Shooter"
+      ],
+      "status": "candidate",
+      "symbol": "swShooter"
+    }
+  ],
+  "version": 1
+}

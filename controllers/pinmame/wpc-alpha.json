@@ -1,0 +1,97 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.wpc-alpha",
+  "authority": "pinmame",
+  "hardware_family": "Williams WPC alphanumeric",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Coin-door, switch-matrix, and flipper inputs",
+      "address_rules": [
+        { "minimum": 1, "maximum": 8 },
+        { "minimum": 11, "maximum": 18 },
+        { "minimum": 21, "maximum": 28 },
+        { "minimum": 31, "maximum": 38 },
+        { "minimum": 41, "maximum": 48 },
+        { "minimum": 51, "maximum": 58 },
+        { "minimum": 61, "maximum": 68 },
+        { "minimum": 71, "maximum": 78 },
+        { "minimum": 81, "maximum": 88 },
+        { "minimum": 111, "maximum": 118 }
+      ],
+      "transports": {
+        "libpinmame": { "channel": "switch" },
+        "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "Addresses 1-8 are the four coin inputs and four coin-door service buttons. Public matrix addresses use WPC column/row notation 11-88; values ending in 9 or 0 are not matrix positions. The generic flipper column is 111-118 in EOS/button pairs. Pre-Fliptronics games can map their physical EOS switches into the regular matrix while retaining generic cabinet-button inputs."
+    },
+    {
+      "id": "pinmame.input.dip",
+      "direction": "configuration",
+      "kind": "dip_switch",
+      "label": "CPU-board option and country configuration bits",
+      "address_rules": [{ "minimum": 1, "maximum": 8 }],
+      "transports": { "libpinmame": { "channel": "dip" } }
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Standard, state, and generic flipper outputs",
+      "address_rules": [{ "minimum": 1, "maximum": 50 }],
+      "transports": {
+        "libpinmame": { "channel": "solenoid" },
+        "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "WPC exposes standard drivers 1-28, J111 state outputs 29-31, generic flipper callbacks such as upper-right 34, upper-left 36, lower-right 46, and lower-left 48, plus explicit unused positions through the first custom-output boundary at 50."
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "Eight-by-eight controlled-lamp matrix",
+      "address_rules": [
+        { "minimum": 11, "maximum": 18 },
+        { "minimum": 21, "maximum": 28 },
+        { "minimum": 31, "maximum": 38 },
+        { "minimum": 41, "maximum": 48 },
+        { "minimum": 51, "maximum": 58 },
+        { "minimum": 61, "maximum": 68 },
+        { "minimum": 71, "maximum": 78 },
+        { "minimum": 81, "maximum": 88 }
+      ],
+      "transports": {
+        "libpinmame": { "channel": "lamp" },
+        "controller_plugin": { "group_id": 512, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "PinMAME applies wpc_sw2m/wpc_m2sw conversion to lamps. ChangedLamps therefore reports public matrix addresses 11-88 rather than sequential indices 1-64."
+    },
+    {
+      "id": "pinmame.output.gi",
+      "direction": "controlled_device",
+      "kind": "gi",
+      "label": "Five general-illumination strings",
+      "address_rules": [{ "minimum": 0, "maximum": 4 }],
+      "transports": {
+        "libpinmame": { "channel": "gi" },
+        "controller_plugin": { "group_id": 256, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      }
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "locator": "src/wpc/wpc.h; src/wpc/wpc.c; src/wpc/core.h; src/wpc/core.c; src/libpinmame/libpinmame.cpp"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "a6f6d7266d301249ed09c1b0123f8476513a2228",
+      "locator": "src/libpinmame/libpinmame.cpp SetupMsgApi group definitions"
+    }
+  ]
+}

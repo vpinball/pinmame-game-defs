@@ -1,0 +1,33 @@
+{
+  "driver_ids": [],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 30,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "****************************************************************\n\n         Skyway (Williams 1954)\n         Script by Scottacus\n             v 2.02\n             June 2022\n\nBasic DOF config\n  80  BackGlass On Image\n  101 Left Flipper\n  102 Start Button\n  105 Bumper1, 106 Bumper2, 107 DeadBumper\n  104 Right Sling\n  120 - 123 Kickers\n  130 - 137 Left Lane Wire Rollovers\n  138 - 140 Lane RollOvers\n  150 - 152 Button RollOvers\n  154 Small Bell, 155 Large Bell\n  128 Knocker\n  Code Flow\n                 EndGame\n                  ^\n  Start Game -> New Game -> Check Continue -> Release Ball -> Drain -> Score Bouns -> Advance Player -> Next Ball\n                  ^                                     |\n                EndGame = True <---------------------------------------------------------------\n\nNote Score Motor Location for sound routines is at shootAgain Light\nBall Control Subroutine developed by: rothbauerw\n  Press \"c\" during play to activate, the arrow keys control the ball"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Skyway (Williams 1954).vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Skyway (Williams 1954).vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "dd7095877ac6ceec0a0ca50258044ab17b30dd8c92282fb64cc631b46cd73f66"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

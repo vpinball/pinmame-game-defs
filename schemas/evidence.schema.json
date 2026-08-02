@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/vpinball/pinmame-game-defs/schemas/evidence.schema.json",
+  "title": "Machine-definition source evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "version", "extractor", "source", "driver_ids", "machine_ids", "switches", "outputs", "states", "mechanisms", "recreation_notes"],
+  "properties": {
+    "format": { "const": "pinmame-machine-evidence" },
+    "version": { "const": 1 },
+    "extractor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "version": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "repository", "revision", "path", "sha256", "license", "quality"],
+      "properties": {
+        "kind": { "enum": ["pinmame_sim", "vpx_script", "pinmame_core", "runtime_scenario", "service_diagnostic"] },
+        "repository": { "type": "string", "minLength": 1 },
+        "revision": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "license": { "type": "string", "minLength": 1 },
+        "attribution": { "type": "string", "minLength": 1 },
+        "quality": { "enum": ["full", "preliminary", "candidate", "core", "observed", "validated"] },
+        "encoding": { "enum": ["utf-8", "windows-1252"] }
+      }
+    },
+    "driver_ids": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9_]+$" } },
+    "machine_ids": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "switches": { "type": "array", "items": { "$ref": "#/$defs/addressCandidate" } },
+    "outputs": { "type": "array", "items": { "$ref": "#/$defs/addressCandidate" } },
+    "states": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["label", "line", "raw"],
+        "properties": {
+          "label": { "type": "string", "minLength": 1 },
+          "switch_symbol": { "type": "string", "minLength": 1 },
+          "switch_address": { "type": "integer" },
+          "exit_output_symbol": { "type": "string", "minLength": 1 },
+          "exit_output_address": { "type": "integer" },
+          "next_state": { "type": "string", "minLength": 1 },
+          "line": { "type": "integer", "minimum": 1 },
+          "raw": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "mechanisms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "line", "raw", "status"],
+        "properties": {
+          "kind": { "type": "string", "minLength": 1 },
+          "line": { "type": "integer", "minimum": 1 },
+          "raw": { "type": "string", "minLength": 1 },
+          "status": { "const": "candidate" }
+        }
+      }
+    },
+    "recreation_notes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["text", "line_start", "line_end", "status"],
+        "properties": {
+          "text": { "type": "string", "minLength": 1 },
+          "line_start": { "type": "integer", "minimum": 1 },
+          "line_end": { "type": "integer", "minimum": 1 },
+          "status": { "const": "candidate" }
+        }
+      }
+    },
+    "runtime": { "$ref": "#/$defs/runtime" }
+  },
+  "$defs": {
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["game", "rom_archive_sha256", "raw_runs", "command_template", "observations"],
+      "properties": {
+        "game": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+        "rom_archive_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "raw_runs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "sha256", "self_test_pulses"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+              "self_test_pulses": { "type": "integer", "minimum": 0 }
+            }
+          }
+        },
+        "command_template": { "type": "string", "minLength": 1 },
+        "observations": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "lamp_addresses_seen": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } },
+            "lamp_decoder_holes_not_seen": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } },
+            "switch_to_lamp": { "type": "object", "propertyNames": { "pattern": "^[0-9]+$" }, "additionalProperties": { "type": "integer" } },
+            "gi_addresses_seen": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } },
+            "solenoid_addresses_seen": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } },
+            "display_layouts_seen": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["type", "width", "height", "depth"],
+                "properties": {
+                  "type": { "type": "integer" },
+                  "width": { "type": "integer", "minimum": 1 },
+                  "height": { "type": "integer", "minimum": 1 },
+                  "depth": { "type": "integer", "minimum": 1 }
+                }
+              }
+            },
+            "initial_lamp_addresses": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } },
+            "named_output_addresses": { "type": "object", "propertyNames": { "pattern": "^[a-z0-9][a-z0-9_-]*$" }, "additionalProperties": { "type": "integer" } },
+            "physical_service_solenoid_to_public": { "type": "object", "propertyNames": { "pattern": "^[0-9]+$" }, "additionalProperties": { "type": "integer" } },
+            "public_solenoid_decoder_holes_not_seen": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } }
+          }
+        }
+      }
+    },
+    "addressCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["symbol", "address", "label", "group", "line", "status"],
+      "properties": {
+        "symbol": { "type": "string", "minLength": 1 },
+        "address": { "type": "integer" },
+        "label": { "type": "string", "minLength": 1 },
+        "group": { "enum": ["pinmame.input.switch", "pinmame.output.solenoid", "pinmame.output.lamp", "pinmame.output.gi"] },
+        "state_labels": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "line": { "type": "integer", "minimum": 1 },
+        "status": { "const": "candidate" }
+      }
+    }
+  }
+}

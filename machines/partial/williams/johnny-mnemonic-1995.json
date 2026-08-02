@@ -1,0 +1,3064 @@
+{
+  "conflicts": [
+    {
+      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Left Slingshot Flasher'.",
+      "id": "conflict.pinmame-output-solenoid-19-none",
+      "path": "binding:pinmame.output.solenoid/19/None",
+      "source_refs": [
+        "legacy.game.jm",
+        "legacy.platform.wpc"
+      ]
+    }
+  ],
+  "controller": {
+    "inversion_applied_by_emulator": true,
+    "platform": "pinmame.wpc"
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "candidate",
+      "catalog_identity": "observed",
+      "mechanisms": "unknown",
+      "physical_wiring": "candidate",
+      "recreation_knowledge": "candidate",
+      "semantic_naming": "candidate",
+      "variant_coverage": "candidate"
+    },
+    "missing": [
+      "identity",
+      "controller_platform",
+      "input_enumeration",
+      "input_semantics",
+      "output_enumeration",
+      "output_semantics",
+      "display_inventory",
+      "mechanism_inventory",
+      "mechanism_behavior",
+      "polarity",
+      "variant_differences",
+      "recreation_notes",
+      "provenance"
+    ],
+    "status": "partial"
+  },
+  "displays": [],
+  "drivers": [
+    {
+      "clone_of": "jm_12r",
+      "description": "Johnny Mnemonic (0.5R Prototype)",
+      "flags": 0,
+      "id": "jm_05r",
+      "manufacturer": "Williams",
+      "year": "1995"
+    },
+    {
+      "clone_of": "jm_12r",
+      "description": "Johnny Mnemonic (1.2B Belgian)",
+      "flags": 0,
+      "id": "jm_12b",
+      "manufacturer": "Williams",
+      "year": "1995"
+    },
+    {
+      "description": "Johnny Mnemonic (1.2R)",
+      "flags": 0,
+      "id": "jm_12r",
+      "manufacturer": "Williams",
+      "year": "1995"
+    }
+  ],
+  "format": "pinmame-machine-definition",
+  "inputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "01"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "001"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_coin_1"
+        }
+      ],
+      "binding": {
+        "device": 1,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-1",
+      "kind": "switch",
+      "label": "Coin Button 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.wpc"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "cabinet.coin.1"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "02"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "002"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_coin_2"
+        }
+      ],
+      "binding": {
+        "device": 2,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-2",
+      "kind": "switch",
+      "label": "Coin Button 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.wpc"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "cabinet.coin.2"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "03"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "003"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_coin_3"
+        }
+      ],
+      "binding": {
+        "device": 3,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-3",
+      "kind": "switch",
+      "label": "Coin Button 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.wpc"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "cabinet.coin.3"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "04"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "004"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_coin_4"
+        }
+      ],
+      "binding": {
+        "device": 4,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-4",
+      "kind": "switch",
+      "label": "Coin Button 4",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.wpc"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "cabinet.coin.4"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "05"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "005"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_cancel"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.cancel",
+      "kind": "switch",
+      "label": "Cancel",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.wpc"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "service.cancel"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "06"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "006"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_down"
+        }
+      ],
+      "binding": {
+        "device": 6,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.down",
+      "kind": "switch",
+      "label": "Down",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.wpc"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "service.down"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "07"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "007"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_up"
+        }
+      ],
+      "binding": {
+        "device": 7,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.up",
+      "kind": "switch",
+      "label": "Up",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.wpc"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "service.up"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "08"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "008"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_enter"
+        }
+      ],
+      "binding": {
+        "device": 8,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.enter",
+      "kind": "switch",
+      "label": "Enter",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.wpc"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "service.enter"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "011"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.ball-launch",
+      "kind": "switch",
+      "label": "Ball Launch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "cabinet.launch"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "012"
+        }
+      ],
+      "binding": {
+        "device": 12,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.x-hand-home",
+      "kind": "switch",
+      "label": "X Hand Home",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "013"
+        }
+      ],
+      "binding": {
+        "device": 13,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.start-button",
+      "kind": "switch",
+      "label": "Start Button",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "014"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.plumb-bob-tilt",
+      "kind": "switch",
+      "label": "Plumb Bob Tilt",
+      "normally_closed": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "015"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.inlane-rollover-left-outlane",
+      "kind": "switch",
+      "label": "Inlane Rollover Left Outlane",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "016"
+        }
+      ],
+      "binding": {
+        "device": 16,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.inlane-rollover-left-return",
+      "kind": "switch",
+      "label": "Inlane Rollover Left Return",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "017"
+        }
+      ],
+      "binding": {
+        "device": 17,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.inlane-rollover-right-return",
+      "kind": "switch",
+      "label": "Inlane Rollover Right Return",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "018"
+        }
+      ],
+      "binding": {
+        "device": 18,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.inlane-rollover-right-outlane",
+      "kind": "switch",
+      "label": "Inlane Rollover Right Outlane",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "021"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.slam-tilt",
+      "kind": "switch",
+      "label": "Slam Tilt",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "022"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-door-closed",
+      "kind": "switch",
+      "label": "Coin Door Closed",
+      "normally_closed": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "023"
+        }
+      ],
+      "binding": {
+        "device": 23,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.buy-in-button",
+      "kind": "switch",
+      "label": "Buy In Button",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "024"
+        }
+      ],
+      "binding": {
+        "device": 24,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.always-closed",
+      "kind": "switch",
+      "label": "Always Closed",
+      "normally_closed": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "025"
+        }
+      ],
+      "binding": {
+        "device": 25,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-slingshot",
+      "kind": "switch",
+      "label": "Left Slingshot",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "026"
+        }
+      ],
+      "binding": {
+        "device": 26,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-slingshot",
+      "kind": "switch",
+      "label": "Right Slingshot",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "027"
+        }
+      ],
+      "binding": {
+        "device": 27,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-standup-target",
+      "kind": "switch",
+      "label": "Left Standup Target",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "028"
+        }
+      ],
+      "binding": {
+        "device": 28,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-standup-target",
+      "kind": "switch",
+      "label": "Right Standup Target",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "031"
+        }
+      ],
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-jam",
+      "kind": "switch",
+      "label": "Trough Jam",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "032"
+        }
+      ],
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-ball-1-nearest-shooter",
+      "kind": "switch",
+      "label": "Trough Ball 1 (Nearest Shooter)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "033"
+        }
+      ],
+      "binding": {
+        "device": 33,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-ball-2",
+      "kind": "switch",
+      "label": "Trough Ball 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "034"
+        }
+      ],
+      "binding": {
+        "device": 34,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-ball-3",
+      "kind": "switch",
+      "label": "Trough Ball 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "035"
+        }
+      ],
+      "binding": {
+        "device": 35,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-ball-4-nearest-drain",
+      "kind": "switch",
+      "label": "Trough Ball 4 (Nearest Drain)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "036"
+        }
+      ],
+      "binding": {
+        "device": 36,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.ball-popper-1-kick-to-glove",
+      "kind": "switch",
+      "label": "Ball Popper 1 (Kick to Glove)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "037"
+        }
+      ],
+      "binding": {
+        "device": 37,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.y-hand-home",
+      "kind": "switch",
+      "label": "Y Hand Home",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "38"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "38"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "038"
+        }
+      ],
+      "binding": {
+        "device": 38,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-rubber-band-leaf-switch",
+      "kind": "switch",
+      "label": "Right Rubber Band Leaf Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "041"
+        }
+      ],
+      "binding": {
+        "device": 41,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-ramp-enter",
+      "kind": "switch",
+      "label": "Left Ramp Enter",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "042"
+        }
+      ],
+      "binding": {
+        "device": 42,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-ramp-made",
+      "kind": "switch",
+      "label": "Left Ramp Made",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "043"
+        }
+      ],
+      "binding": {
+        "device": 43,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.drop-target",
+      "kind": "switch",
+      "label": "Drop Target",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "044"
+        }
+      ],
+      "binding": {
+        "device": 44,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.pop-bumper-left",
+      "kind": "switch",
+      "label": "Pop Bumper Left",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "045"
+        }
+      ],
+      "binding": {
+        "device": 45,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.pop-bumper-bottom",
+      "kind": "switch",
+      "label": "Pop Bumper Bottom",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "046"
+        }
+      ],
+      "binding": {
+        "device": 46,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.pop-bumper-right",
+      "kind": "switch",
+      "label": "Pop Bumper Right",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "47"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "47"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "047"
+        }
+      ],
+      "binding": {
+        "device": 47,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.crazy-bob-s-vuk",
+      "kind": "switch",
+      "label": "Crazy Bob's VUK",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "048"
+        }
+      ],
+      "binding": {
+        "device": 48,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.spinner",
+      "kind": "switch",
+      "label": "Spinner",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "51"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "51"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "051"
+        }
+      ],
+      "binding": {
+        "device": 51,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.hand-matrix-position-1-1-left-back",
+      "kind": "switch",
+      "label": "Hand Matrix Position 1,1 (Left Back)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "52"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "52"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "052"
+        }
+      ],
+      "binding": {
+        "device": 52,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.hand-matrix-position-2-1-centre-back",
+      "kind": "switch",
+      "label": "Hand Matrix Position 2,1 (Centre Back)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "53"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "53"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "053"
+        }
+      ],
+      "binding": {
+        "device": 53,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.hand-matrix-position-3-1-right-back",
+      "kind": "switch",
+      "label": "Hand Matrix Position 3,1 (Right Back)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "54"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "54"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "054"
+        }
+      ],
+      "binding": {
+        "device": 54,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-ramp-enter",
+      "kind": "switch",
+      "label": "Right Ramp Enter",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "55"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "55"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "055"
+        }
+      ],
+      "binding": {
+        "device": 55,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-ramp-made",
+      "kind": "switch",
+      "label": "Right Ramp Made",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "56"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "56"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "056"
+        }
+      ],
+      "binding": {
+        "device": 56,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-outer-orbit-loop",
+      "kind": "switch",
+      "label": "Left Outer Orbit Loop",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "57"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "57"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "057"
+        }
+      ],
+      "binding": {
+        "device": 57,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-outer-orbit-loop",
+      "kind": "switch",
+      "label": "Right Outer Orbit Loop",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "58"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "58"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "058"
+        }
+      ],
+      "binding": {
+        "device": 58,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-inner-loop-entry",
+      "kind": "switch",
+      "label": "Right Inner Loop Entry",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "61"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "61"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "061"
+        }
+      ],
+      "binding": {
+        "device": 61,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.hand-matrix-position-1-2-left-middle",
+      "kind": "switch",
+      "label": "Hand Matrix Position 1,2 (Left Middle)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "62"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "62"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "062"
+        }
+      ],
+      "binding": {
+        "device": 62,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.hand-matrix-position-2-2-centre-middle",
+      "kind": "switch",
+      "label": "Hand Matrix Position 2,2 (Centre Middle)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "63"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "63"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "063"
+        }
+      ],
+      "binding": {
+        "device": 63,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.hand-matrix-position-3-2-right-middle",
+      "kind": "switch",
+      "label": "Hand Matrix Position 3,2 (Right Middle)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "64"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "64"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "064"
+        }
+      ],
+      "binding": {
+        "device": 64,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-jet-lane-rollover",
+      "kind": "switch",
+      "label": "Left Jet Lane Rollover",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "65"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "65"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "065"
+        }
+      ],
+      "binding": {
+        "device": 65,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.middle-jet-lane-rollover",
+      "kind": "switch",
+      "label": "Middle Jet Lane Rollover",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "66"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "66"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "066"
+        }
+      ],
+      "binding": {
+        "device": 66,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-jet-lane-rollover",
+      "kind": "switch",
+      "label": "Right Jet Lane Rollover",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "67"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "67"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "067"
+        }
+      ],
+      "binding": {
+        "device": 67,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-hand-control",
+      "kind": "switch",
+      "label": "Right Hand Control",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "68"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "68"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "068"
+        }
+      ],
+      "binding": {
+        "device": 68,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-hand-control",
+      "kind": "switch",
+      "label": "Left Hand Control",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "71"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "71"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "071"
+        }
+      ],
+      "binding": {
+        "device": 71,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.hand-matrix-position-1-3-left-front",
+      "kind": "switch",
+      "label": "Hand Matrix Position 1,3 (Left Front)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "72"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "72"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "072"
+        }
+      ],
+      "binding": {
+        "device": 72,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.hand-matrix-position-2-3-centre-front",
+      "kind": "switch",
+      "label": "Hand Matrix Position 2,3 (Centre Front)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "73"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "73"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "073"
+        }
+      ],
+      "binding": {
+        "device": 73,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.hand-matrix-position-3-3-right-front",
+      "kind": "switch",
+      "label": "Hand Matrix Position 3,3 (Right Front)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "74"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "74"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "074"
+        }
+      ],
+      "binding": {
+        "device": 74,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.x-hand-encoder-a",
+      "kind": "switch",
+      "label": "X Hand Encoder A",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "75"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "75"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "075"
+        }
+      ],
+      "binding": {
+        "device": 75,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.x-hand-encoder-b",
+      "kind": "switch",
+      "label": "X Hand Encoder B",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "76"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "76"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "076"
+        }
+      ],
+      "binding": {
+        "device": 76,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.y-hand-encoder-a",
+      "kind": "switch",
+      "label": "Y Hand Encoder A",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "77"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "77"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "077"
+        }
+      ],
+      "binding": {
+        "device": 77,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.y-hand-encoder-b",
+      "kind": "switch",
+      "label": "Y Hand Encoder B",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "78"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "78"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "078"
+        }
+      ],
+      "binding": {
+        "device": 78,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.shooter-lane-rollover",
+      "kind": "switch",
+      "label": "Shooter Lane Rollover",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "112"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "112"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_flipper_lower_right"
+        }
+      ],
+      "binding": {
+        "device": 112,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-lower-right",
+      "kind": "switch",
+      "label": "Lower Right Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.wpc"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "flipper.lower.right"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "114"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "114"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_flipper_lower_left"
+        }
+      ],
+      "binding": {
+        "device": 114,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-lower-left",
+      "kind": "switch",
+      "label": "Lower Left Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.wpc"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "flipper.lower.left"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "115"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "115"
+        }
+      ],
+      "binding": {
+        "device": 115,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.glove-magnet-ball-sensor",
+      "kind": "switch",
+      "label": "Glove Magnet Ball Sensor",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "116"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "116"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_flipper_upper_right"
+        }
+      ],
+      "binding": {
+        "device": 116,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-upper-right",
+      "kind": "switch",
+      "label": "Upper Right Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.wpc"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "flipper.upper.right"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "118"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "118"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "s_flipper_upper_left"
+        }
+      ],
+      "binding": {
+        "device": 118,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-upper-left",
+      "kind": "switch",
+      "label": "Upper Left Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.platform.wpc"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "flipper.upper.left"
+      ]
+    }
+  ],
+  "knowledge": {
+    "path": "knowledge/williams/johnny-mnemonic-1995.md",
+    "status": "partial"
+  },
+  "machine": {
+    "id": "williams.johnny-mnemonic.1995",
+    "ipdb_id": 3683,
+    "manufacturer": "Williams",
+    "name": "Johnny Mnemonic",
+    "year": 1995
+  },
+  "mechanisms": [],
+  "outputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "01"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "001"
+        }
+      ],
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.trough-eject",
+      "kind": "coil",
+      "label": "Trough Eject",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "02"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "002"
+        }
+      ],
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.auto-plunger",
+      "kind": "coil",
+      "label": "Auto Plunger",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "03"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "003"
+        }
+      ],
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.popper-kick-up-to-glove",
+      "kind": "coil",
+      "label": "Popper (Kick Up to Glove)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "05"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "005"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.clear-matrix-tip-up",
+      "kind": "coil",
+      "label": "Clear Matrix (Tip Up)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "06"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "006"
+        }
+      ],
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.hand-magnet",
+      "kind": "coil",
+      "label": "Hand Magnet",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "07"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "007"
+        }
+      ],
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.knocker",
+      "kind": "coil",
+      "label": "Knocker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "09"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "009"
+        }
+      ],
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-slingshot",
+      "kind": "coil",
+      "label": "Left Slingshot",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "010"
+        }
+      ],
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-slingshot",
+      "kind": "coil",
+      "label": "Right Slingshot",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "011"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-jet-bumper",
+      "kind": "coil",
+      "label": "Left Jet Bumper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "012"
+        }
+      ],
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.bottom-jet-bumper",
+      "kind": "coil",
+      "label": "Bottom Jet Bumper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "013"
+        }
+      ],
+      "binding": {
+        "device": 13,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-jet-bumper",
+      "kind": "coil",
+      "label": "Right Jet Bumper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "014"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.crazy-bob-s-eject",
+      "kind": "coil",
+      "label": "Crazy Bob's Eject",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "015"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.drop-target-reset",
+      "kind": "coil",
+      "label": "Drop Target Reset",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "016"
+        }
+      ],
+      "binding": {
+        "device": 16,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.drop-target-down",
+      "kind": "coil",
+      "label": "Drop Target Down",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "017"
+        }
+      ],
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.jet-s-flasher",
+      "kind": "flasher",
+      "label": "Jet's Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "018"
+        }
+      ],
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.crazy-bob-s-flasher",
+      "kind": "flasher",
+      "label": "Crazy Bob's Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "019"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "c_game_on"
+        }
+      ],
+      "binding": {
+        "device": 19,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.game-on",
+      "kind": "flasher",
+      "label": "ROM Started",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm",
+          "legacy.platform.wpc"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "020"
+        }
+      ],
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-slingshot-flasher",
+      "kind": "flasher",
+      "label": "Right Slingshot Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "021"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.x-motor-direction",
+      "kind": "coil",
+      "label": "X Motor Direction",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "022"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.x-motor-enable",
+      "kind": "coil",
+      "label": "X Motor Enable",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "023"
+        }
+      ],
+      "binding": {
+        "device": 23,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.y-motor-direction",
+      "kind": "coil",
+      "label": "Y Motor Direction",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "024"
+        }
+      ],
+      "binding": {
+        "device": 24,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.y-motor-enable",
+      "kind": "coil",
+      "label": "Y Motor Enable",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "025"
+        }
+      ],
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-ramp-flasher",
+      "kind": "flasher",
+      "label": "Left Ramp Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "026"
+        }
+      ],
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-ramp-flasher",
+      "kind": "flasher",
+      "label": "Right Ramp Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "027"
+        }
+      ],
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.hand-popper-flasher",
+      "kind": "flasher",
+      "label": "Hand Popper Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "028"
+        }
+      ],
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-backpanel-flasher",
+      "kind": "flasher",
+      "label": "Right Backpanel Flasher",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "034"
+        }
+      ],
+      "binding": {
+        "device": 34,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-diverter",
+      "kind": "coil",
+      "label": "Left Diverter",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "036"
+        }
+      ],
+      "binding": {
+        "device": 36,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-diverter",
+      "kind": "coil",
+      "label": "Right Diverter",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.jm"
+        ],
+        "status": "candidate"
+      }
+    }
+  ],
+  "relationships": [],
+  "schema_version": 1,
+  "sources": [
+    {
+      "attribution": "pinmame-game-defs contributors",
+      "id": "legacy.game.jm",
+      "kind": "legacy_json",
+      "locator": "games/jm.json; origin=vbscript-parser",
+      "revision": "4ea106d080728648a693af3b4dcabb091eee0a02",
+      "uri": "https://github.com/vpinball/pinmame-game-defs"
+    },
+    {
+      "attribution": "pinmame-game-defs contributors",
+      "id": "legacy.platform.wpc",
+      "kind": "legacy_json",
+      "locator": "platforms/wpc.json",
+      "revision": "4ea106d080728648a693af3b4dcabb091eee0a02",
+      "uri": "https://github.com/vpinball/pinmame-game-defs"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.catalog.4ec52ff0ac13",
+      "kind": "pinmame_catalog",
+      "license": "BSD-3-Clause",
+      "locator": "PinmameGetGames",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    }
+  ]
+}

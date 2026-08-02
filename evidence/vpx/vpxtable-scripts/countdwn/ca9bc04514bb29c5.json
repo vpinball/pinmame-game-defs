@@ -1,0 +1,402 @@
+{
+  "driver_ids": [
+    "countdwn"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "gottlieb.count-down.1979"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Ball Release",
+      "line": 950,
+      "status": "candidate",
+      "symbol": "SolBallRelease"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "vpmsolsound Sound FX(",
+      "line": 951,
+      "status": "candidate",
+      "symbol": "vpmsolsound SoundFX("
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "If Play Chimes = 1 Then Vpm Sol Sound",
+      "line": 952,
+      "status": "candidate",
+      "symbol": "If PlayChimes = 1 Then VpmSolSound"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "If Play Chimes = 1 Then Vpm Sol Sound",
+      "line": 953,
+      "status": "candidate",
+      "symbol": "If PlayChimes = 1 Then VpmSolSound"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "If Play Chimes = 1 Then Vpm Sol Sound",
+      "line": 954,
+      "status": "candidate",
+      "symbol": "If PlayChimes = 1 Then VpmSolSound"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Saucer Release",
+      "line": 955,
+      "status": "candidate",
+      "symbol": "SolSaucerRelease"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Reset Drops Green",
+      "line": 956,
+      "status": "candidate",
+      "symbol": "ResetDropsGreen"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Reset Drops Red",
+      "line": 957,
+      "status": "candidate",
+      "symbol": "ResetDropsRed"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Nudge.Sol Game On",
+      "line": 958,
+      "status": "candidate",
+      "symbol": "vpmNudge.SolGameOn"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 88,
+      "line_start": 1,
+      "status": "candidate",
+      "text": ":#@@@@@-                                     :+:\n    *@@@@@@@@@*   .%@@@@@@@@@@@- ..@@@@@. .@@@@@  #@@@@@@@+ ::@@@@@@*@@@@@@@@@@@@@@#        =#@@@@@@@@@@=   =@@@@@@@@%.  +*%%@+   .-++    -@@@@@\n  #@@@@@@@@@@@@@=.@@@@@+--=@@@@@=-:@@@@@.-:@@@@@.-%@@@@@@@@+--@@@@@@#@@@@@@@@@@@@@@-     ---@@@@@@@@@@@@@#-@@@@@@@@@@@@%-*@@@@@-.:#@@@%.-:%@@@@-=@@@@@@@+ -:@@@@@@+\n =@@@@%.---.-:.::#@@@+------.@@@@.:@@@@@:-:@@@@@:-+@@@@@@@@@.-@@@@@@-----.@@@@@:::       ---@@@@#=..*@@@@@*@@@-----:@@@@@:@@@@@@::@@@@@--:@@@@@:+@@@@@@@@=-:@@@@@@+\n %@@@+-::--:---:#@%@@::   :--*@@@#.@@@@@:-:@@@@%--=@@@@@@@@@@:@@@@@@:  --:@@@@@=   ::::: .-:@@@@.----.@@@@%#@:..:----@@@@*.@@@@@+:@@@@@@-@@@@@+-=@@@@@@@@@.:@@@@@@+\n.@@@@-        @@@@ @@-     ..@@@@-=@@@@#--:@@@@#--:@@@@=#@@@@@@@@@@@*  ---@@@@@= -+@@@@@@=--+@@@# .---#@@@@=@     ---%@@@*-=@@@@@@@@-:@@@@@@@@:--@@@@@@@@@@+@@@@@@=\n-:@@@@:    -:@@@@%+@@@@=  .%@@@@#::@@@@@%%@@@@@:--.@@@@+-+@@@@@@@@@@=  ---#@@@@:.- =+++++ --.@@@@   -.@@@@%%@%    -:%@@@@--:@@@@@@@#--#@@@@@@.--=@@@@:@@@@@@@@@@@@=\n--*@@@@@%*%@@@@@@::%@@@@@@@@@@@=.--:@@@@@@@@@@----.@@@@+--+@@@@@@@@@-  ---+@@@@: :------. ---@@@@*+#@@@@@@-@@@@@@@@@@@@@ ---.@@@@@@:--:@@@@@%.---@@@@--%@@@@@@@@@@=\n:==.@@@@@@@@@@@: -==:+@@@@@@%.-: -==-.%@@@@@- .-==.@@@%----.:-------   ---+@@@@:           ---@@@@@@@@@@%.:.*@@@@@@@@@-  .---+@@@#: ---..... .--:@@@@---#@@@@@@@@@=\n .=+== -%@@+ :-   .==========-    .========:  .--.====   .------::     -: -===             -=-@@@@@*: :--:-----:   :--    :------   .:-----  .-----:  -----------\n    =+++++++:         .--:.                                                                ..-=====--.     :=======:\n\n                                   Count-Down (Gottlieb 1979)\n                              https://www.ipdb.org/machine.cgi?id=573\nv1 - version by JPSalas 2024, version 5.5.0\n...\nv4  - FrankEnstein - Blender noodling until pretty comes out.\nv5  - mcarter78 - Replace all posts/rubbers, add nFozzy/Fleep, set up vpm mapped lights, update code to latest VPW standards, add physical kicker/trough\nv6  - FrankEnstein -  added inserts edge details, better light core, added bump to rail walls, fixed the apron model, bumper correct size and added protector under, bunch of other visual tuneups\nv7  - FrankEnstein - 2k batch, animate flippers, fixed positions and proportions that were off,\nv8  - mcarter78 - implement drop targets (broken), animate bumper/rollovers, light controlled drop resets, tune rubbers physics, add chimes\nv9  - FrankEnstein - Added raytraced shadows, added option for reflections control (off, static, lighting), added options for apron light mod, removed ghost reflection objects\nv10 - FrankEnstein - Added custom instruction card in F12 menu, back to 4k bake. rendered multiple sling positions. separated rails and lockbar and added options to disable.\nv11 - FrankEnstein - Fixed drop targets (thanks to Apophis's wisdom)\nv12 - bthlonewolf - Added animations for VUK and slings\nv13 - FrankEnstein - Actually fixed all the drop targed, moved the sling timers to Timers layer, added shadow flashers over dropped targets to darken below playfield\nv14 - bthlonewolf - Added InitRubberState to set default animation state for moveables.Added animations for rubbers\nv15 - DGrimmReaper - VR Hybrid Support Added (Thanks to Ext2k, Apophis and RajoJoey for VR Assets)\nv16 - FrankEnstein - Rebalanced apron light and ball brightness, updated playfield mesh for less saucer wiggle, added TOC, added clean or rough reflections option\nv17 - FrankEnstein - added post adjustement options in F12 (conservative and liberal, per manuals wording), added outlane bottom edge pins.\nv18 - FrankEnstein - Matched flippers gap to real table, updated UV maps on areas with issues, fixed apron light on launch not picking up correct value, Bumper skirt is movable.\nv19 - bthlonewolf - Added handlers for each sling difficulty (sw53j_RL / sw53j_RC for right, sw53i_LL / sw53i_LC); fixed right sling visibility; reduced zCol_RubberBands_Middles elasticity to .95\nv20 - FrankEnstein - Rebalanced flippers power based on reference videos. Fixed the rougue ball reflection from the apron light,\nv21 - FrankEnstein - Fixed and improved flipper routines.\nv22 - FrankEnstein - Fixed GI lights height/RT shadows. Fixed lower and mid rubbers that weren't firing correctly. Adjusted the rubber knob to match reference videos. Added skirt tilt animation. Dialed ring reponse. Updated desktop BG\nv23 - FrankEnstein - Added dynamic drop target shadows.\nv24 - DGrimmReaper - Swapped VR Backglass assets with Hauntfreaks\nv25 - FrankEnstein - Playfield image overhaul with lots of the questionable areas patched with better source, added variation to insert bulbs positions, better rubber knob, flippers have better UVs\nv26 - FrankEnstein - fixed blue insert ring. This is looking a lot like an RC1 now\nv27 - mcarter78 - Narrow scoring area in rubbers to near leaf switches, add rubbers for liberal/conservative difficulty\nv28 - mcarter78 - Remove non-scoring rubbers from Rubbers collection to disable sounds, animate rubbers on non-scoring hits\nv29 - FrankEnstein - fixed some pf mapping. lower sets of drop target shadows played a bit stronger\n1.0   Release\n1.0.1 - FrankEnstein - Adjusted flipper distance to correct/exact measurements. Added F12 option to set flipper distance back to casual mode.\n1.0.2 - FrankEnstein - Fixed visual inconsistency with the top rail wire and replaced it with metal panel, repainted the lower playfield from better sources. Added metal prims to drop ball from getting stuck on edge of flipper\n1.1   Release\n1.1.1 - FrankEnstein - Fixed apron light affecting the apron\n1.1.2 - bthlonewolf - Added intial Post-it high score.\n1.1.3 - bthlonewolf - Added tweak menu for Post-it\n1.1.4 - bthlonewolf - Fixed post-it for VR\n1.1.5 - bthlonewolf - Fixed HS bug for right-flipper+start (game restart) - cancels post-it if high score\n1.1.6 - FrankEnstein - Fixed the missing plunger texture and rebalanced postit lighting\n1.1.7 - apophis - Added gate hit sound effect. Increased drain kicker strength.\n1.1.8 - mcarter78 - Make chimes optional, default to just ROM sounds\n1.1.9 - Mecha_Enron - Changed Desktop background and made reels darker\n1.2   Release\nTABLE OF CONTENTS\n-----------------\n  ZVAR: Constants and Global Variables\n  ZTIM: Timers\n  ZINI: Table Initialization and Exiting\n  ZOPT: User Options\n  ZMAT: General Math Functions\n  ZBBR: Ball Brightness\n  ZRBR: Room Brightness\nZKEY: Key Press Handling\nZSOL: Solenoids & Flashers\nZDRN: Drain, Trough, and Ball Release\nZFLP: Flippers\nZANI: Misc Animations\nZSLG: Slingshot Animations\nZBMP: Bumpers\nZSWI: Switches\nZFRG: Frogs\nZVUK: VUKs and Kickers\nZSHA: Ambient ball shadows\nZBRL: Ball Rolling and Drop Sounds\n  ZRRL: Ramp Rolling SFX\n  ZFLE: Fleep Mechanical Sounds\nZNFF: Flipper Corrections and Tricks\n  ZDMP: Rubber Dampeners\nZRST: Stand Up Targets\n  ZBOU: VPW TargetBouncer\n  ZVBG: VR Backglass\n  ZVRR: VR Room"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Count-Down (Gottlieb 1979) VPW v1.2.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Count-Down (Gottlieb 1979) VPW v1.2.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "ca9bc04514bb29c57a995211be70700dee1b1a1ec627ba34976a008e74f57752"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "sw10",
+      "line": 1026,
+      "status": "candidate",
+      "symbol": "sw10_Hit"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "sw10",
+      "line": 1027,
+      "status": "candidate",
+      "symbol": "sw10_UnHit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 1029,
+      "status": "candidate",
+      "symbol": "sw11_Hit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 1030,
+      "status": "candidate",
+      "symbol": "sw11_UnHit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 1032,
+      "status": "candidate",
+      "symbol": "sw13_Hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 1033,
+      "status": "candidate",
+      "symbol": "sw13_UnHit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "sw14",
+      "line": 1035,
+      "status": "candidate",
+      "symbol": "sw14_Hit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "sw14",
+      "line": 1036,
+      "status": "candidate",
+      "symbol": "sw14_UnHit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "sw40",
+      "line": 1038,
+      "status": "candidate",
+      "symbol": "sw40_Hit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "sw40",
+      "line": 1039,
+      "status": "candidate",
+      "symbol": "sw40_UnHit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "Sol Saucer Release",
+      "line": 1518,
+      "state_labels": [
+        "Sol Saucer Release"
+      ],
+      "status": "candidate",
+      "symbol": "SolSaucerRelease"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "sw41",
+      "line": 1512,
+      "status": "candidate",
+      "symbol": "sw41_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 1044,
+      "status": "candidate",
+      "symbol": "sw43_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 1045,
+      "status": "candidate",
+      "symbol": "sw43_UnHit"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 1047,
+      "status": "candidate",
+      "symbol": "sw44_Hit"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 1048,
+      "status": "candidate",
+      "symbol": "sw44_UnHit"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "sw50",
+      "line": 1041,
+      "status": "candidate",
+      "symbol": "sw50_Hit"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "sw50",
+      "line": 1042,
+      "status": "candidate",
+      "symbol": "sw50_UnHit"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 1431,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53a",
+      "line": 1003,
+      "status": "candidate",
+      "symbol": "sw53a_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53b",
+      "line": 1005,
+      "status": "candidate",
+      "symbol": "sw53b_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53c",
+      "line": 983,
+      "status": "candidate",
+      "symbol": "sw53c_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53d",
+      "line": 985,
+      "status": "candidate",
+      "symbol": "sw53d_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53e",
+      "line": 981,
+      "status": "candidate",
+      "symbol": "sw53e_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53f",
+      "line": 979,
+      "status": "candidate",
+      "symbol": "sw53f_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53g",
+      "line": 989,
+      "status": "candidate",
+      "symbol": "sw53g_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53h",
+      "line": 987,
+      "status": "candidate",
+      "symbol": "sw53h_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53i",
+      "line": 991,
+      "status": "candidate",
+      "symbol": "sw53i_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53i LC",
+      "line": 993,
+      "status": "candidate",
+      "symbol": "sw53i_LC_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53i LL",
+      "line": 995,
+      "status": "candidate",
+      "symbol": "sw53i_LL_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53j",
+      "line": 997,
+      "status": "candidate",
+      "symbol": "sw53j_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53j RC",
+      "line": 999,
+      "status": "candidate",
+      "symbol": "sw53j_RC_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "53j RL",
+      "line": 1001,
+      "status": "candidate",
+      "symbol": "sw53j_RL_Hit"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 1023,
+      "status": "candidate",
+      "symbol": "Drain_Hit"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "Sol Ball Release",
+      "line": 969,
+      "status": "candidate",
+      "symbol": "SolBallRelease"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "table1 Init",
+      "line": 393,
+      "status": "candidate",
+      "symbol": "table1_Init"
+    }
+  ],
+  "version": 1
+}

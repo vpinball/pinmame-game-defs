@@ -1,0 +1,33 @@
+{
+  "driver_ids": [],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 37,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "****************************************************************\n\n          Four Million BC\n            v 2.0.1\n        Script by Scottacus\n             July 2021\n\nBasic DOF config\n  101 Left Flipper, 102 Right Flipper\n  103 Left sling, 104 Right sling (these have side fx)\n  105 Bumper1,  106 Bumper2, 107 Bumper3\n  109 Knocker\n  112 left red at0\n  118 left red flash at50 Volcano\n  121 right dark orange blink at80 Shooter Lane\n  122 Right Kicker, 123 Left Kicker\n  124 Drain, 125 Ball Release\n  127 left blue at0 (left outlane kickerBall)\n  212 credit light\n  214 - 217 Bird Ramp\n  223 - 225 Tar Pit\n  129 Knocker and Kicker Strobe\n  160 Ball In Shooter Lane\n  141 Chime1-10s, 142 Chime2-100s, 143 Chime3-1000s\n\n  Code Flow\n                 EndGame\n                  ^\n  Start Game -> New Game -> Check Continue -> Release Ball -> Drain -> Score Bouns -> Advance Player -> Next Ball\n                  ^                                     |\n                EndGame = True <---------------------------------------------------------------\n            EndGame = True <---------------------------------------------------------------\n\nNote Score Motor Location for sound routines is at shootAgain Light\nBall Control Subroutine developed by: rothbauerw\n  Press \"c\" during play to activate, the arrow keys control the ball"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Four Million B.C. (Bally 1971).vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Four Million B.C. (Bally 1971).vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "6846d3d92cf64829cc508822f28c8e121b82779d38d4aa923dee42f4aa05df14"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

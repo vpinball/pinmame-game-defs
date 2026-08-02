@@ -1,0 +1,513 @@
+# Ripley's Believe It or Not!
+
+Coverage: **partial - source-derived recreation knowledge requiring validation**
+
+## Overview
+
+Legacy evidence identifies this candidate as Stern (2004). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+
+## Playfield devices
+
+Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+
+## Custom mechanisms
+
+No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+
+## Ball-state transitions
+
+Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+
+## Controller interactions
+
+Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+
+## Service and setup information
+
+Unknown; locate operator/service documentation.
+
+## Timing and tuning observations
+
+Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+
+## Recreation guidance
+
+Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+
+## Evidence notes
+
+- `games/ripleys.json#/switches/0._vbscript_name`: sw9
+- `games/ripleys.json#/switches/0._vbscript_callback`: STHit 9
+- `games/ripleys.json#/switches/0._inferred_type`: standup_target
+- `games/ripleys.json#/switches/0._note`: STHit internally calls vpmTimer.PulseSw 9
+- `games/ripleys.json#/switches/1._vbscript_name`: sw11
+- `games/ripleys.json#/switches/1._vbscript_callback`: Controller.Switch(11)
+- `games/ripleys.json#/switches/1._inferred_type`: trough
+- `games/ripleys.json#/switches/2._vbscript_name`: sw12
+- `games/ripleys.json#/switches/2._vbscript_callback`: Controller.Switch(12)
+- `games/ripleys.json#/switches/2._inferred_type`: trough
+- `games/ripleys.json#/switches/3._vbscript_name`: sw13
+- `games/ripleys.json#/switches/3._vbscript_callback`: Controller.Switch(13)
+- `games/ripleys.json#/switches/3._inferred_type`: trough
+- `games/ripleys.json#/switches/4._vbscript_name`: sw14
+- `games/ripleys.json#/switches/4._vbscript_callback`: Controller.Switch(14)
+- `games/ripleys.json#/switches/4._inferred_type`: trough
+- `games/ripleys.json#/switches/5._vbscript_callback`: vpmTimer.PulseSw 15
+- `games/ripleys.json#/switches/5._inferred_type`: trough
+- `games/ripleys.json#/switches/5._note`: Pulsed on ball release from trough (ReleaseBall/SolTrough)
+- `games/ripleys.json#/switches/6._vbscript_name`: swPlunger
+- `games/ripleys.json#/switches/6._vbscript_callback`: plungerIM.switch 16
+- `games/ripleys.json#/switches/6._inferred_type`: shooter_lane
+- `games/ripleys.json#/switches/7._vbscript_name`: sw17
+- `games/ripleys.json#/switches/7._vbscript_callback`: STHit 17
+- `games/ripleys.json#/switches/7._inferred_type`: standup_target
+- `games/ripleys.json#/switches/7._note`: STHit internally calls vpmTimer.PulseSw 17
+- `games/ripleys.json#/switches/8._vbscript_name`: sw18
+- `games/ripleys.json#/switches/8._vbscript_callback`: Controller.Switch(18)
+- `games/ripleys.json#/switches/8._inferred_type`: opto
+- `games/ripleys.json#/switches/9._vbscript_name`: sw19
+- `games/ripleys.json#/switches/9._vbscript_callback`: STHit 19
+- `games/ripleys.json#/switches/9._inferred_type`: standup_target
+- `games/ripleys.json#/switches/9._note`: STHit internally calls vpmTimer.PulseSw 19
+- `games/ripleys.json#/switches/10._vbscript_name`: sw20
+- `games/ripleys.json#/switches/10._vbscript_callback`: vpmTimer.PulseSw 20
+- `games/ripleys.json#/switches/10._inferred_type`: spinner
+- `games/ripleys.json#/switches/11._vbscript_name`: sw21
+- `games/ripleys.json#/switches/11._vbscript_callback`: vpmTimer.PulseSw 21
+- `games/ripleys.json#/switches/11._inferred_type`: spinner
+- `games/ripleys.json#/switches/12._vbscript_name`: sw22
+- `games/ripleys.json#/switches/12._vbscript_callback`: STHit 22
+- `games/ripleys.json#/switches/12._inferred_type`: standup_target
+- `games/ripleys.json#/switches/12._note`: STHit internally calls vpmTimer.PulseSw 22
+- `games/ripleys.json#/switches/13._vbscript_name`: SMagnetOpto
+- `games/ripleys.json#/switches/13._vbscript_callback`: Controller.Switch(23)
+- `games/ripleys.json#/switches/13._inferred_type`: opto
+- `games/ripleys.json#/switches/14._vbscript_name`: IMagnet
+- `games/ripleys.json#/switches/14._vbscript_callback`: Controller.Switch(24)
+- `games/ripleys.json#/switches/14._inferred_type`: opto
+- `games/ripleys.json#/switches/15._vbscript_name`: Bumper4
+- `games/ripleys.json#/switches/15._vbscript_callback`: vpmTimer.PulseSw 25
+- `games/ripleys.json#/switches/15._inferred_type`: bumper
+- `games/ripleys.json#/switches/16._vbscript_name`: Bumper6
+- `games/ripleys.json#/switches/16._vbscript_callback`: vpmTimer.PulseSw 26
+- `games/ripleys.json#/switches/16._inferred_type`: bumper
+- `games/ripleys.json#/switches/17._vbscript_name`: Bumper5
+- `games/ripleys.json#/switches/17._vbscript_callback`: vpmTimer.PulseSw 27
+- `games/ripleys.json#/switches/17._inferred_type`: bumper
+- `games/ripleys.json#/switches/18._vbscript_name`: sw28
+- `games/ripleys.json#/switches/18._vbscript_callback`: Controller.Switch(28)
+- `games/ripleys.json#/switches/18._inferred_type`: scoop
+- `games/ripleys.json#/switches/19._vbscript_name`: sw29
+- `games/ripleys.json#/switches/19._vbscript_callback`: Controller.Switch(29)
+- `games/ripleys.json#/switches/19._inferred_type`: scoop
+- `games/ripleys.json#/switches/20._vbscript_name`: sw30
+- `games/ripleys.json#/switches/20._vbscript_callback`: Controller.Switch(30)
+- `games/ripleys.json#/switches/20._inferred_type`: ramp_entry
+- `games/ripleys.json#/switches/21._vbscript_name`: sw31
+- `games/ripleys.json#/switches/21._vbscript_callback`: Controller.Switch(31)
+- `games/ripleys.json#/switches/21._inferred_type`: ramp_entry
+- `games/ripleys.json#/switches/22._vbscript_name`: sw32
+- `games/ripleys.json#/switches/22._vbscript_callback`: STHit 32
+- `games/ripleys.json#/switches/22._inferred_type`: standup_target
+- `games/ripleys.json#/switches/22._note`: STHit internally calls vpmTimer.PulseSw 32. Also sw32a (STHit 132 -> PulseSw 32) for second hit surface
+- `games/ripleys.json#/switches/23._vbscript_name`: sw33
+- `games/ripleys.json#/switches/23._vbscript_callback`: Controller.Switch(33)
+- `games/ripleys.json#/switches/23._inferred_type`: ramp_exit
+- `games/ripleys.json#/switches/24._vbscript_name`: sw34
+- `games/ripleys.json#/switches/24._vbscript_callback`: Controller.Switch(34)
+- `games/ripleys.json#/switches/24._inferred_type`: ramp_exit
+- `games/ripleys.json#/switches/25._vbscript_name`: sw35
+- `games/ripleys.json#/switches/25._vbscript_callback`: Controller.Switch(35)
+- `games/ripleys.json#/switches/25._inferred_type`: ramp_exit
+- `games/ripleys.json#/switches/26._vbscript_name`: sw36
+- `games/ripleys.json#/switches/26._vbscript_callback`: Controller.Switch(36)
+- `games/ripleys.json#/switches/26._inferred_type`: ramp_exit
+- `games/ripleys.json#/switches/27._vbscript_name`: sw38
+- `games/ripleys.json#/switches/27._vbscript_callback`: Controller.Switch(38)
+- `games/ripleys.json#/switches/27._inferred_type`: outlane
+- `games/ripleys.json#/switches/28._vbscript_name`: sw39
+- `games/ripleys.json#/switches/28._vbscript_callback`: Controller.Switch(39)
+- `games/ripleys.json#/switches/28._inferred_type`: inlane
+- `games/ripleys.json#/switches/29._vbscript_name`: sw40
+- `games/ripleys.json#/switches/29._vbscript_callback`: Controller.Switch(40)
+- `games/ripleys.json#/switches/29._inferred_type`: inlane
+- `games/ripleys.json#/switches/30._vbscript_name`: sw41
+- `games/ripleys.json#/switches/30._vbscript_callback`: Controller.Switch(41)
+- `games/ripleys.json#/switches/30._inferred_type`: varitarget
+- `games/ripleys.json#/switches/31._vbscript_name`: sw42
+- `games/ripleys.json#/switches/31._vbscript_callback`: Controller.Switch(42)
+- `games/ripleys.json#/switches/31._inferred_type`: varitarget
+- `games/ripleys.json#/switches/31._note`: Initialized as closed in table_init
+- `games/ripleys.json#/switches/32._vbscript_name`: sw43
+- `games/ripleys.json#/switches/32._vbscript_callback`: Controller.Switch(43)
+- `games/ripleys.json#/switches/32._inferred_type`: varitarget
+- `games/ripleys.json#/switches/32._note`: Initialized as closed in table_init
+- `games/ripleys.json#/switches/33._vbscript_name`: sw44
+- `games/ripleys.json#/switches/33._vbscript_callback`: Controller.Switch(44)
+- `games/ripleys.json#/switches/33._inferred_type`: opto
+- `games/ripleys.json#/switches/34._vbscript_name`: sw45
+- `games/ripleys.json#/switches/34._vbscript_callback`: Controller.Switch(45)
+- `games/ripleys.json#/switches/34._inferred_type`: opto
+- `games/ripleys.json#/switches/35._vbscript_name`: sw46
+- `games/ripleys.json#/switches/35._vbscript_callback`: Controller.Switch(46)
+- `games/ripleys.json#/switches/35._inferred_type`: opto
+- `games/ripleys.json#/switches/36._vbscript_name`: sw47
+- `games/ripleys.json#/switches/36._vbscript_callback`: Controller.Switch(47)
+- `games/ripleys.json#/switches/36._inferred_type`: opto
+- `games/ripleys.json#/switches/37._vbscript_name`: sw48
+- `games/ripleys.json#/switches/37._vbscript_callback`: Controller.Switch(48)
+- `games/ripleys.json#/switches/37._inferred_type`: opto
+- `games/ripleys.json#/switches/38._vbscript_name`: Bumper1
+- `games/ripleys.json#/switches/38._vbscript_callback`: vpmTimer.PulseSw 49
+- `games/ripleys.json#/switches/38._inferred_type`: bumper
+- `games/ripleys.json#/switches/39._vbscript_name`: Bumper3
+- `games/ripleys.json#/switches/39._vbscript_callback`: vpmTimer.PulseSw 50
+- `games/ripleys.json#/switches/39._inferred_type`: bumper
+- `games/ripleys.json#/switches/40._vbscript_name`: Bumper2
+- `games/ripleys.json#/switches/40._vbscript_callback`: vpmTimer.PulseSw 51
+- `games/ripleys.json#/switches/40._inferred_type`: bumper
+- `games/ripleys.json#/switches/41._vbscript_name`: sw52
+- `games/ripleys.json#/switches/41._vbscript_callback`: Controller.Switch(52)
+- `games/ripleys.json#/switches/41._inferred_type`: vuk
+- `games/ripleys.json#/switches/42._vbscript_name`: sw53
+- `games/ripleys.json#/switches/42._vbscript_callback`: Controller.Switch(53)
+- `games/ripleys.json#/switches/42._inferred_type`: outlane
+- `games/ripleys.json#/switches/43._vbscript_callback`: vpmNudge.TiltSwitch = 56
+- `games/ripleys.json#/switches/43._inferred_type`: tilt
+- `games/ripleys.json#/switches/44._vbscript_name`: sw57
+- `games/ripleys.json#/switches/44._vbscript_callback`: Controller.Switch(57)
+- `games/ripleys.json#/switches/44._inferred_type`: inlane
+- `games/ripleys.json#/switches/45._vbscript_name`: sw58
+- `games/ripleys.json#/switches/45._vbscript_callback`: Controller.Switch(58)
+- `games/ripleys.json#/switches/45._inferred_type`: inlane
+- `games/ripleys.json#/switches/46._vbscript_name`: LeftSlingShot
+- `games/ripleys.json#/switches/46._vbscript_callback`: vpmTimer.PulseSw 59
+- `games/ripleys.json#/switches/46._inferred_type`: slingshot
+- `games/ripleys.json#/switches/47._vbscript_name`: sw60
+- `games/ripleys.json#/switches/47._vbscript_callback`: Controller.Switch(60)
+- `games/ripleys.json#/switches/47._inferred_type`: inlane
+- `games/ripleys.json#/switches/48._vbscript_name`: sw61
+- `games/ripleys.json#/switches/48._vbscript_callback`: Controller.Switch(61)
+- `games/ripleys.json#/switches/48._inferred_type`: inlane
+- `games/ripleys.json#/switches/49._vbscript_name`: RightSlingShot
+- `games/ripleys.json#/switches/49._vbscript_callback`: vpmTimer.PulseSw 62
+- `games/ripleys.json#/switches/49._inferred_type`: slingshot
+- `games/ripleys.json#/coils/0._vbscript_callback`: ReleaseBall
+- `games/ripleys.json#/coils/0._inferred_type`: ball_management
+- `games/ripleys.json#/coils/1._vbscript_callback`: Auto_Plunger
+- `games/ripleys.json#/coils/1._inferred_type`: auto_plunger
+- `games/ripleys.json#/coils/2._vbscript_callback`: SolVUK
+- `games/ripleys.json#/coils/2._inferred_type`: vuk
+- `games/ripleys.json#/coils/3._vbscript_callback`: vpmSolDiverter TempleDiv,1,
+- `games/ripleys.json#/coils/3._inferred_type`: diverter
+- `games/ripleys.json#/coils/4._vbscript_callback`: vpmSolDiverter LockDiverter,1,
+- `games/ripleys.json#/coils/4._inferred_type`: diverter
+- `games/ripleys.json#/coils/5._vbscript_callback`: SolSkillScoop
+- `games/ripleys.json#/coils/5._inferred_type`: kicker
+- `games/ripleys.json#/coils/6._vbscript_callback`: SolLock
+- `games/ripleys.json#/coils/6._inferred_type`: kicker
+- `games/ripleys.json#/coils/7._inferred_type`: magnet
+- `games/ripleys.json#/coils/7._note`: Configured via mIdolMag.Solenoid = 19 in table_init
+- `games/ripleys.json#/coils/8._vbscript_callback`: SolUpperMagnet
+- `games/ripleys.json#/coils/8._inferred_type`: magnet
+- `games/ripleys.json#/coils/9._vbscript_callback`: SolVReset
+- `games/ripleys.json#/coils/9._inferred_type`: mechanism
+- `games/ripleys.json#/coils/10._vbscript_callback`: Lampz.SetLamp 102,
+- `games/ripleys.json#/coils/10._inferred_type`: flasher
+- `games/ripleys.json#/coils/10._note`: Mapped to Lampz index 102 (vpx objects f22, f22a)
+- `games/ripleys.json#/coils/11._vbscript_callback`: SolPost
+- `games/ripleys.json#/coils/11._inferred_type`: mechanism
+- `games/ripleys.json#/coils/12._vbscript_callback`: SolKnocker
+- `games/ripleys.json#/coils/12._inferred_type`: knocker
+- `games/ripleys.json#/coils/12._note`: Commented out in SolCallback — disabled to prevent knock on insert coin
+- `games/ripleys.json#/coils/13._vbscript_callback`: Flash125
+- `games/ripleys.json#/coils/13._inferred_type`: flasher
+- `games/ripleys.json#/coils/14._vbscript_callback`: Lampz.SetLamp 106,
+- `games/ripleys.json#/coils/14._inferred_type`: flasher
+- `games/ripleys.json#/coils/14._note`: Mapped to Lampz index 106 (vpx objects f26, f26a)
+- `games/ripleys.json#/coils/15._vbscript_callback`: Flash127
+- `games/ripleys.json#/coils/15._inferred_type`: flasher
+- `games/ripleys.json#/coils/16._vbscript_callback`: Flash128
+- `games/ripleys.json#/coils/16._inferred_type`: flasher
+- `games/ripleys.json#/coils/17._vbscript_callback`: Flash129
+- `games/ripleys.json#/coils/17._inferred_type`: flasher
+- `games/ripleys.json#/coils/18._vbscript_callback`: Flash130
+- `games/ripleys.json#/coils/18._inferred_type`: flasher
+- `games/ripleys.json#/coils/19._vbscript_callback`: Lampz.SetLamp 111,
+- `games/ripleys.json#/coils/19._inferred_type`: flasher
+- `games/ripleys.json#/coils/19._note`: Mapped to Lampz index 111 (vpx objects f31, f31a)
+- `games/ripleys.json#/coils/20._vbscript_callback`: Flash132
+- `games/ripleys.json#/coils/20._inferred_type`: flasher
+- `games/ripleys.json#/coils/21._vbscript_name`: sLRFlipper
+- `games/ripleys.json#/coils/21._vbscript_callback`: SolRFlipper
+- `games/ripleys.json#/coils/21._inferred_type`: flipper
+- `games/ripleys.json#/coils/21._note`: Framework-defined constant (SEGA.VBS: sLRFlipper=46)
+- `games/ripleys.json#/coils/22._vbscript_name`: sLLFlipper
+- `games/ripleys.json#/coils/22._vbscript_callback`: SolLFlipper
+- `games/ripleys.json#/coils/22._inferred_type`: flipper
+- `games/ripleys.json#/coils/22._note`: Framework-defined constant (SEGA.VBS: sLLFlipper=48)
+- `games/ripleys.json#/coils/23._vbscript_name`: sURFlipper
+- `games/ripleys.json#/coils/23._vbscript_callback`: SolURFlipper
+- `games/ripleys.json#/coils/23._inferred_type`: flipper
+- `games/ripleys.json#/coils/23._note`: Framework-defined constant from SEGA.VBS; numeric ID not specified in table script
+- `games/ripleys.json#/lamps/0._vbscript_name`: l1
+- `games/ripleys.json#/lamps/0._vbscript_callback`: Lampz.MassAssign(1)
+- `games/ripleys.json#/lamps/0._inferred_type`: insert
+- `games/ripleys.json#/lamps/1._vbscript_name`: l2
+- `games/ripleys.json#/lamps/1._vbscript_callback`: Lampz.MassAssign(2)
+- `games/ripleys.json#/lamps/1._inferred_type`: insert
+- `games/ripleys.json#/lamps/2._vbscript_name`: l3
+- `games/ripleys.json#/lamps/2._vbscript_callback`: Lampz.MassAssign(3)
+- `games/ripleys.json#/lamps/2._inferred_type`: insert
+- `games/ripleys.json#/lamps/3._vbscript_name`: l4
+- `games/ripleys.json#/lamps/3._vbscript_callback`: Lampz.MassAssign(4)
+- `games/ripleys.json#/lamps/3._inferred_type`: insert
+- `games/ripleys.json#/lamps/4._vbscript_name`: l5
+- `games/ripleys.json#/lamps/4._vbscript_callback`: Lampz.MassAssign(5)
+- `games/ripleys.json#/lamps/4._inferred_type`: insert
+- `games/ripleys.json#/lamps/5._vbscript_name`: l6
+- `games/ripleys.json#/lamps/5._vbscript_callback`: Lampz.MassAssign(6)
+- `games/ripleys.json#/lamps/5._inferred_type`: insert
+- `games/ripleys.json#/lamps/6._vbscript_name`: l7
+- `games/ripleys.json#/lamps/6._vbscript_callback`: Lampz.MassAssign(7)
+- `games/ripleys.json#/lamps/6._inferred_type`: insert
+- `games/ripleys.json#/lamps/7._vbscript_name`: l8
+- `games/ripleys.json#/lamps/7._vbscript_callback`: Lampz.MassAssign(8)
+- `games/ripleys.json#/lamps/7._inferred_type`: insert
+- `games/ripleys.json#/lamps/7._note`: Also mapped to l8a
+- `games/ripleys.json#/lamps/8._vbscript_name`: l9
+- `games/ripleys.json#/lamps/8._vbscript_callback`: Lampz.MassAssign(9)
+- `games/ripleys.json#/lamps/8._inferred_type`: insert
+- `games/ripleys.json#/lamps/8._note`: Also mapped to l9a
+- `games/ripleys.json#/lamps/9._vbscript_name`: l10
+- `games/ripleys.json#/lamps/9._vbscript_callback`: Lampz.MassAssign(10)
+- `games/ripleys.json#/lamps/9._inferred_type`: insert
+- `games/ripleys.json#/lamps/10._vbscript_name`: l11
+- `games/ripleys.json#/lamps/10._vbscript_callback`: Lampz.MassAssign(11)
+- `games/ripleys.json#/lamps/10._inferred_type`: insert
+- `games/ripleys.json#/lamps/11._vbscript_name`: l12
+- `games/ripleys.json#/lamps/11._vbscript_callback`: Lampz.MassAssign(12)
+- `games/ripleys.json#/lamps/11._inferred_type`: insert
+- `games/ripleys.json#/lamps/12._vbscript_name`: l13
+- `games/ripleys.json#/lamps/12._vbscript_callback`: Lampz.MassAssign(13)
+- `games/ripleys.json#/lamps/12._inferred_type`: insert
+- `games/ripleys.json#/lamps/13._vbscript_name`: l14
+- `games/ripleys.json#/lamps/13._vbscript_callback`: Lampz.MassAssign(14)
+- `games/ripleys.json#/lamps/13._inferred_type`: insert
+- `games/ripleys.json#/lamps/14._vbscript_name`: l15
+- `games/ripleys.json#/lamps/14._vbscript_callback`: Lampz.MassAssign(15)
+- `games/ripleys.json#/lamps/14._inferred_type`: insert
+- `games/ripleys.json#/lamps/14._note`: Also mapped to l15a
+- `games/ripleys.json#/lamps/15._vbscript_name`: l16
+- `games/ripleys.json#/lamps/15._vbscript_callback`: Lampz.Callback(16)
+- `games/ripleys.json#/lamps/15._inferred_type`: insert
+- `games/ripleys.json#/lamps/15._note`: MassAssign commented out; callback targets arrow_bulb
+- `games/ripleys.json#/lamps/16._vbscript_name`: l17
+- `games/ripleys.json#/lamps/16._vbscript_callback`: Lampz.MassAssign(17)
+- `games/ripleys.json#/lamps/16._inferred_type`: insert
+- `games/ripleys.json#/lamps/17._vbscript_name`: l18
+- `games/ripleys.json#/lamps/17._vbscript_callback`: Lampz.MassAssign(18)
+- `games/ripleys.json#/lamps/17._inferred_type`: insert
+- `games/ripleys.json#/lamps/18._vbscript_name`: l19
+- `games/ripleys.json#/lamps/18._vbscript_callback`: Lampz.MassAssign(19)
+- `games/ripleys.json#/lamps/18._inferred_type`: insert
+- `games/ripleys.json#/lamps/19._vbscript_name`: l20
+- `games/ripleys.json#/lamps/19._vbscript_callback`: Lampz.MassAssign(20)
+- `games/ripleys.json#/lamps/19._inferred_type`: insert
+- `games/ripleys.json#/lamps/20._vbscript_name`: l21
+- `games/ripleys.json#/lamps/20._vbscript_callback`: Lampz.MassAssign(21)
+- `games/ripleys.json#/lamps/20._inferred_type`: insert
+- `games/ripleys.json#/lamps/21._vbscript_name`: l22
+- `games/ripleys.json#/lamps/21._vbscript_callback`: Lampz.MassAssign(22)
+- `games/ripleys.json#/lamps/21._inferred_type`: insert
+- `games/ripleys.json#/lamps/22._vbscript_name`: l23
+- `games/ripleys.json#/lamps/22._vbscript_callback`: Lampz.MassAssign(23)
+- `games/ripleys.json#/lamps/22._inferred_type`: insert
+- `games/ripleys.json#/lamps/23._vbscript_name`: l24
+- `games/ripleys.json#/lamps/23._vbscript_callback`: Lampz.MassAssign(24)
+- `games/ripleys.json#/lamps/23._inferred_type`: insert
+- `games/ripleys.json#/lamps/24._vbscript_name`: l25
+- `games/ripleys.json#/lamps/24._vbscript_callback`: Lampz.MassAssign(25)
+- `games/ripleys.json#/lamps/24._inferred_type`: insert
+- `games/ripleys.json#/lamps/25._vbscript_name`: l26
+- `games/ripleys.json#/lamps/25._vbscript_callback`: Lampz.MassAssign(26)
+- `games/ripleys.json#/lamps/25._inferred_type`: insert
+- `games/ripleys.json#/lamps/26._vbscript_name`: l27
+- `games/ripleys.json#/lamps/26._vbscript_callback`: Lampz.MassAssign(27)
+- `games/ripleys.json#/lamps/26._inferred_type`: insert
+- `games/ripleys.json#/lamps/27._vbscript_name`: l28
+- `games/ripleys.json#/lamps/27._vbscript_callback`: Lampz.MassAssign(28)
+- `games/ripleys.json#/lamps/27._inferred_type`: insert
+- `games/ripleys.json#/lamps/28._vbscript_name`: l29
+- `games/ripleys.json#/lamps/28._vbscript_callback`: Lampz.MassAssign(29)
+- `games/ripleys.json#/lamps/28._inferred_type`: insert
+- `games/ripleys.json#/lamps/29._vbscript_name`: l30
+- `games/ripleys.json#/lamps/29._vbscript_callback`: Lampz.MassAssign(30)
+- `games/ripleys.json#/lamps/29._inferred_type`: insert
+- `games/ripleys.json#/lamps/30._vbscript_name`: l31
+- `games/ripleys.json#/lamps/30._vbscript_callback`: Lampz.MassAssign(31)
+- `games/ripleys.json#/lamps/30._inferred_type`: insert
+- `games/ripleys.json#/lamps/31._vbscript_name`: l32
+- `games/ripleys.json#/lamps/31._vbscript_callback`: Lampz.MassAssign(32)
+- `games/ripleys.json#/lamps/31._inferred_type`: insert
+- `games/ripleys.json#/lamps/32._vbscript_name`: bumperbiglight4
+- `games/ripleys.json#/lamps/32._vbscript_callback`: Lampz.MassAssign(33)
+- `games/ripleys.json#/lamps/32._inferred_type`: bumper_lamp
+- `games/ripleys.json#/lamps/32._note`: Also mapped to bumpersmalllight4, bumperhighlight4
+- `games/ripleys.json#/lamps/33._vbscript_name`: bumperbiglight5
+- `games/ripleys.json#/lamps/33._vbscript_callback`: Lampz.MassAssign(34)
+- `games/ripleys.json#/lamps/33._inferred_type`: bumper_lamp
+- `games/ripleys.json#/lamps/33._note`: Also mapped to bumpersmalllight5, bumperhighlight5
+- `games/ripleys.json#/lamps/34._vbscript_name`: bumperbiglight6
+- `games/ripleys.json#/lamps/34._vbscript_callback`: Lampz.MassAssign(35)
+- `games/ripleys.json#/lamps/34._inferred_type`: bumper_lamp
+- `games/ripleys.json#/lamps/34._note`: Also mapped to bumpersmalllight6, bumperhighlight6
+- `games/ripleys.json#/lamps/35._vbscript_name`: l36
+- `games/ripleys.json#/lamps/35._vbscript_callback`: Lampz.MassAssign(36)
+- `games/ripleys.json#/lamps/35._inferred_type`: insert
+- `games/ripleys.json#/lamps/36._vbscript_name`: l37
+- `games/ripleys.json#/lamps/36._vbscript_callback`: Lampz.MassAssign(37)
+- `games/ripleys.json#/lamps/36._inferred_type`: insert
+- `games/ripleys.json#/lamps/37._vbscript_name`: l38
+- `games/ripleys.json#/lamps/37._vbscript_callback`: Lampz.MassAssign(38)
+- `games/ripleys.json#/lamps/37._inferred_type`: insert
+- `games/ripleys.json#/lamps/38._vbscript_name`: l39
+- `games/ripleys.json#/lamps/38._vbscript_callback`: Lampz.MassAssign(39)
+- `games/ripleys.json#/lamps/38._inferred_type`: insert
+- `games/ripleys.json#/lamps/39._vbscript_name`: l40
+- `games/ripleys.json#/lamps/39._vbscript_callback`: Lampz.MassAssign(40)
+- `games/ripleys.json#/lamps/39._inferred_type`: insert
+- `games/ripleys.json#/lamps/40._vbscript_name`: l41
+- `games/ripleys.json#/lamps/40._vbscript_callback`: Lampz.MassAssign(41)
+- `games/ripleys.json#/lamps/40._inferred_type`: insert
+- `games/ripleys.json#/lamps/41._vbscript_name`: l42
+- `games/ripleys.json#/lamps/41._vbscript_callback`: Lampz.MassAssign(42)
+- `games/ripleys.json#/lamps/41._inferred_type`: insert
+- `games/ripleys.json#/lamps/42._vbscript_name`: l43
+- `games/ripleys.json#/lamps/42._vbscript_callback`: Lampz.MassAssign(43)
+- `games/ripleys.json#/lamps/42._inferred_type`: insert
+- `games/ripleys.json#/lamps/43._vbscript_name`: l44
+- `games/ripleys.json#/lamps/43._vbscript_callback`: Lampz.MassAssign(44)
+- `games/ripleys.json#/lamps/43._inferred_type`: insert
+- `games/ripleys.json#/lamps/44._vbscript_name`: l45
+- `games/ripleys.json#/lamps/44._vbscript_callback`: Lampz.MassAssign(45)
+- `games/ripleys.json#/lamps/44._inferred_type`: insert
+- `games/ripleys.json#/lamps/45._vbscript_name`: l46
+- `games/ripleys.json#/lamps/45._vbscript_callback`: Lampz.MassAssign(46)
+- `games/ripleys.json#/lamps/45._inferred_type`: insert
+- `games/ripleys.json#/lamps/46._vbscript_name`: l47
+- `games/ripleys.json#/lamps/46._vbscript_callback`: Lampz.MassAssign(47)
+- `games/ripleys.json#/lamps/46._inferred_type`: insert
+- `games/ripleys.json#/lamps/47._vbscript_name`: l48
+- `games/ripleys.json#/lamps/47._vbscript_callback`: Lampz.MassAssign(48)
+- `games/ripleys.json#/lamps/47._inferred_type`: insert
+- `games/ripleys.json#/lamps/48._vbscript_name`: l49
+- `games/ripleys.json#/lamps/48._vbscript_callback`: Lampz.MassAssign(49)
+- `games/ripleys.json#/lamps/48._inferred_type`: insert
+- `games/ripleys.json#/lamps/48._note`: Also mapped to l49a
+- `games/ripleys.json#/lamps/49._vbscript_name`: l50
+- `games/ripleys.json#/lamps/49._vbscript_callback`: Lampz.MassAssign(50)
+- `games/ripleys.json#/lamps/49._inferred_type`: insert
+- `games/ripleys.json#/lamps/50._vbscript_name`: l51
+- `games/ripleys.json#/lamps/50._vbscript_callback`: Lampz.MassAssign(51)
+- `games/ripleys.json#/lamps/50._inferred_type`: insert
+- `games/ripleys.json#/lamps/51._vbscript_name`: l52
+- `games/ripleys.json#/lamps/51._vbscript_callback`: Lampz.MassAssign(52)
+- `games/ripleys.json#/lamps/51._inferred_type`: insert
+- `games/ripleys.json#/lamps/52._vbscript_name`: l53
+- `games/ripleys.json#/lamps/52._vbscript_callback`: Lampz.MassAssign(53)
+- `games/ripleys.json#/lamps/52._inferred_type`: insert
+- `games/ripleys.json#/lamps/53._vbscript_name`: l54
+- `games/ripleys.json#/lamps/53._vbscript_callback`: Lampz.MassAssign(54)
+- `games/ripleys.json#/lamps/53._inferred_type`: insert
+- `games/ripleys.json#/lamps/54._vbscript_name`: l55
+- `games/ripleys.json#/lamps/54._vbscript_callback`: Lampz.MassAssign(55)
+- `games/ripleys.json#/lamps/54._inferred_type`: insert
+- `games/ripleys.json#/lamps/55._vbscript_name`: l56
+- `games/ripleys.json#/lamps/55._vbscript_callback`: Lampz.MassAssign(56)
+- `games/ripleys.json#/lamps/55._inferred_type`: insert
+- `games/ripleys.json#/lamps/56._vbscript_name`: l57
+- `games/ripleys.json#/lamps/56._vbscript_callback`: Lampz.MassAssign(57)
+- `games/ripleys.json#/lamps/56._inferred_type`: insert
+- `games/ripleys.json#/lamps/57._vbscript_name`: l58
+- `games/ripleys.json#/lamps/57._vbscript_callback`: Lampz.MassAssign(58)
+- `games/ripleys.json#/lamps/57._inferred_type`: insert
+- `games/ripleys.json#/lamps/58._vbscript_name`: l59
+- `games/ripleys.json#/lamps/58._vbscript_callback`: Lampz.MassAssign(59)
+- `games/ripleys.json#/lamps/58._inferred_type`: insert
+- `games/ripleys.json#/lamps/59._vbscript_name`: bumperbiglight1
+- `games/ripleys.json#/lamps/59._vbscript_callback`: Lampz.MassAssign(60)
+- `games/ripleys.json#/lamps/59._inferred_type`: bumper_lamp
+- `games/ripleys.json#/lamps/59._note`: Also mapped to bumpersmalllight1, bumperhighlight1
+- `games/ripleys.json#/lamps/60._vbscript_name`: bumperbiglight2
+- `games/ripleys.json#/lamps/60._vbscript_callback`: Lampz.MassAssign(61)
+- `games/ripleys.json#/lamps/60._inferred_type`: bumper_lamp
+- `games/ripleys.json#/lamps/60._note`: Also mapped to bumpersmalllight2, bumperhighlight2
+- `games/ripleys.json#/lamps/61._vbscript_name`: bumperbiglight3
+- `games/ripleys.json#/lamps/61._vbscript_callback`: Lampz.MassAssign(62)
+- `games/ripleys.json#/lamps/61._inferred_type`: bumper_lamp
+- `games/ripleys.json#/lamps/61._note`: Also mapped to bumpersmalllight3, bumperhighlight3
+- `games/ripleys.json#/lamps/62._vbscript_name`: l63
+- `games/ripleys.json#/lamps/62._vbscript_callback`: Lampz.MassAssign(63)
+- `games/ripleys.json#/lamps/62._inferred_type`: insert
+- `games/ripleys.json#/lamps/62._note`: Also mapped to l63a
+- `games/ripleys.json#/lamps/63._vbscript_name`: l64
+- `games/ripleys.json#/lamps/63._vbscript_callback`: Lampz.MassAssign(64)
+- `games/ripleys.json#/lamps/63._inferred_type`: insert
+- `games/ripleys.json#/lamps/64._vbscript_name`: l65
+- `games/ripleys.json#/lamps/64._vbscript_callback`: Lampz.MassAssign(65)
+- `games/ripleys.json#/lamps/64._inferred_type`: insert
+- `games/ripleys.json#/lamps/65._vbscript_name`: l66
+- `games/ripleys.json#/lamps/65._vbscript_callback`: Lampz.MassAssign(66)
+- `games/ripleys.json#/lamps/65._inferred_type`: insert
+- `games/ripleys.json#/lamps/66._vbscript_name`: l67
+- `games/ripleys.json#/lamps/66._vbscript_callback`: Lampz.MassAssign(67)
+- `games/ripleys.json#/lamps/66._inferred_type`: insert
+- `games/ripleys.json#/lamps/67._vbscript_name`: l68
+- `games/ripleys.json#/lamps/67._vbscript_callback`: Lampz.MassAssign(68)
+- `games/ripleys.json#/lamps/67._inferred_type`: insert
+- `games/ripleys.json#/lamps/68._vbscript_name`: l69
+- `games/ripleys.json#/lamps/68._vbscript_callback`: Lampz.MassAssign(69)
+- `games/ripleys.json#/lamps/68._inferred_type`: insert
+- `games/ripleys.json#/lamps/68._note`: Also mapped to l69a
+- `games/ripleys.json#/lamps/69._vbscript_name`: l70
+- `games/ripleys.json#/lamps/69._vbscript_callback`: Lampz.MassAssign(70)
+- `games/ripleys.json#/lamps/69._inferred_type`: insert
+- `games/ripleys.json#/lamps/70._vbscript_name`: l71
+- `games/ripleys.json#/lamps/70._vbscript_callback`: Lampz.MassAssign(71)
+- `games/ripleys.json#/lamps/70._inferred_type`: insert
+- `games/ripleys.json#/lamps/71._vbscript_name`: l72
+- `games/ripleys.json#/lamps/71._vbscript_callback`: Lampz.MassAssign(72)
+- `games/ripleys.json#/lamps/71._inferred_type`: insert
+- `games/ripleys.json#/lamps/72._vbscript_name`: l73
+- `games/ripleys.json#/lamps/72._vbscript_callback`: Lampz.MassAssign(73)
+- `games/ripleys.json#/lamps/72._inferred_type`: insert
+- `games/ripleys.json#/lamps/72._note`: Also mapped to l73a
+- `games/ripleys.json#/lamps/73._vbscript_name`: l74
+- `games/ripleys.json#/lamps/73._vbscript_callback`: Lampz.MassAssign(74)
+- `games/ripleys.json#/lamps/73._inferred_type`: insert
+- `games/ripleys.json#/lamps/73._note`: Also mapped to l74a
+- `games/ripleys.json#/lamps/74._vbscript_name`: l75
+- `games/ripleys.json#/lamps/74._vbscript_callback`: Lampz.MassAssign(75)
+- `games/ripleys.json#/lamps/74._inferred_type`: insert
+- `games/ripleys.json#/lamps/74._note`: Also mapped to l75a
+- `games/ripleys.json#/lamps/75._vbscript_name`: l76
+- `games/ripleys.json#/lamps/75._vbscript_callback`: Lampz.MassAssign(76)
+- `games/ripleys.json#/lamps/75._inferred_type`: insert
+- `games/ripleys.json#/lamps/76._vbscript_name`: l77
+- `games/ripleys.json#/lamps/76._vbscript_callback`: Lampz.MassAssign(77)
+- `games/ripleys.json#/lamps/76._inferred_type`: insert
+- `games/ripleys.json#/lamps/77._vbscript_name`: l78
+- `games/ripleys.json#/lamps/77._vbscript_callback`: Lampz.MassAssign(78)
+- `games/ripleys.json#/lamps/77._inferred_type`: insert
+- `games/ripleys.json#/_source/confidence_notes`: High confidence on switches/coils from Controller.Switch() calls and SolCallback assignments. Platform is Sega (SEGA.VBS loaded via LoadVPM). No SolModCallBack used in this script — flasher coils use regular SolCallBack with Lampz.SetLamp or Flash* subs. Standup targets use STHit() helper which internally calls vpmTimer.PulseSw (switch mod 100). Switches 42/43 initialized as closed in table_init. Flipper solenoid IDs (sLRFlipper=46, sLLFlipper=48, sURFlipper) are framework-defined constants from SEGA.VBS.
+
+## Unresolved questions
+
+- Is the I/O enumeration complete for every supported physical/controller variant?
+- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
+- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+
+## Sources
+
+- `legacy.game.ripleys`: `games/ripleys.json` at the pinned migration revision.

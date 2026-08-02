@@ -1,0 +1,437 @@
+{
+  "driver_ids": [
+    "grand_l4"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.grand_l4"
+  ],
+  "mechanisms": [
+    {
+      "kind": "cvpmMagnet",
+      "line": 477,
+      "raw": "Set mLeftMagnet=New cvpmMagnet",
+      "status": "candidate"
+    },
+    {
+      "kind": "cvpmMagnet",
+      "line": 485,
+      "raw": "Set mRightMagnet=New cvpmMagnet",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Trough.Sol In",
+      "line": 987,
+      "status": "candidate",
+      "symbol": "bsTrough.SolIn"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "dt3 B.Sol Drop Up",
+      "line": 989,
+      "status": "candidate",
+      "symbol": "dt3B.SolDropUp"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "dt4 L.Sol Drop Up",
+      "line": 990,
+      "status": "candidate",
+      "symbol": "dt4L.SolDropUp"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "dt4 R.Sol Drop Up",
+      "line": 991,
+      "status": "candidate",
+      "symbol": "dt4R.SolDropUp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Lock Kick",
+      "line": 992,
+      "status": "candidate",
+      "symbol": "LockKick"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Flasher68",
+      "line": 996,
+      "status": "candidate",
+      "symbol": "SetFlasher68"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Flasher69",
+      "line": 997,
+      "status": "candidate",
+      "symbol": "SetFlasher69"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Trough.Sol Out",
+      "line": 988,
+      "status": "candidate",
+      "symbol": "bsTrough.SolOut"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "PFGI",
+      "line": 993,
+      "status": "candidate",
+      "symbol": "PFGI"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Flasher67",
+      "line": 995,
+      "status": "candidate",
+      "symbol": "SetFlasher67"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Flasher66",
+      "line": 994,
+      "status": "candidate",
+      "symbol": "SetFlasher66"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Sol Soundknocker",
+      "line": 1001,
+      "status": "candidate",
+      "symbol": "vpmSolSoundknocker"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Sol Sound Bell",
+      "line": 1002,
+      "status": "candidate",
+      "symbol": "vpmSolSoundBell"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Sol Sound",
+      "line": 999,
+      "status": "candidate",
+      "symbol": "vpmSolSound "
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Sol Sound",
+      "line": 1000,
+      "status": "candidate",
+      "symbol": "vpmSolSound "
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Flasher70",
+      "line": 998,
+      "status": "candidate",
+      "symbol": "SetFlasher70"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 25,
+      "line_start": 2,
+      "status": "candidate",
+      "text": "__      __.___.____    .____    .___   _____      _____    _________  ____ ________  ______   ________\n/  \\    /  \\   |    |   |    |   |   | /  _  \\    /     \\  /   _____/ /_   /   __   \\/  __  \\ /  _____/\n\\   \\/\\/   /   |    |   |    |   |   |/  /_\\  \\  /  \\ /  \\ \\_____  \\   |   \\____    />      </   __  \\\n\\        /|   |    |___|    |___|   /    |    \\/    Y    \\/        \\  |   |  /    //   --   \\  |__\\  \\\n \\__/\\  / |___|_______ \\_______ \\___\\____|__  /\\____|__  /_______  /  |___| /____/ \\______  /\\_____  /\n      \\/              \\/       \\/           \\/         \\/        \\/                       \\/       \\/\n __________________    _____    _______  ________    .____    ._____________  _____ __________________\n/  _____/\\______   \\  /  _  \\   \\      \\ \\______ \\   |    |   |   \\____    / /  _  \\\\______   \\______ \\\n/   \\  ___ |       _/ /  /_\\  \\  /   |   \\ |    |  \\  |    |   |   | /     / /  /_\\  \\|       _/|    |  \\\n\\    \\_\\  \\|    |   \\/    |    \\/    |    \\|    `   \\ |    |___|   |/     /_/    |    \\    |   \\|    `   \\\n\\______  /|____|_  /\\____|__  /\\____|__  /_______  / |_______ \\___/_______ \\____|__  /____|_  /_______  /\n       \\/        \\/         \\/         \\/        \\/          \\/           \\/       \\/       \\/        \\/\n\n                                                  Grand Lizard V1.8.5\n\n                                           A 3rdaxis & Slydog43 Collaboration\n\n-Special Thanks\n-Thanks to JP Salas for his VP9 version\n-Thanks to Rosve for his VP9 version\n-Thanks to G5K for the flippers\n-Thanks to VP Dev Team for making VPX so awesome!!!"
+    },
+    {
+      "line_end": 477,
+      "line_start": 475,
+      "status": "candidate",
+      "text": "Magnets"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Grand Lizard (Williams 1986) V1.8.5.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Grand Lizard (Williams 1986) V1.8.5.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "3eab3100fb8bfc84f3f5e5cebf953ccf138c7f3397789700336f584eb74b06fb"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 1339,
+      "status": "candidate",
+      "symbol": "sw11_Hit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 1340,
+      "status": "candidate",
+      "symbol": "sw11_Unhit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 575,
+      "state_labels": [
+        "Table1 Key Up"
+      ],
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "sw15",
+      "line": 1341,
+      "status": "candidate",
+      "symbol": "sw15_Hit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 1342,
+      "status": "candidate",
+      "symbol": "sw16_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 1343,
+      "status": "candidate",
+      "symbol": "sw17_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "sw18",
+      "line": 1344,
+      "status": "candidate",
+      "symbol": "sw18_Hit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "sw19",
+      "line": 1345,
+      "status": "candidate",
+      "symbol": "sw19_Hit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 1354,
+      "status": "candidate",
+      "symbol": "sw28_Spin"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1362,
+      "status": "candidate",
+      "symbol": "sw29_Hit"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "sw30",
+      "line": 1363,
+      "status": "candidate",
+      "symbol": "sw30_Hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "sw31",
+      "line": 1364,
+      "status": "candidate",
+      "symbol": "sw31_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 1365,
+      "status": "candidate",
+      "symbol": "sw32_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 1366,
+      "status": "candidate",
+      "symbol": "sw32_Unhit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "sw33",
+      "line": 1367,
+      "status": "candidate",
+      "symbol": "sw33_Hit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "sw33",
+      "line": 1368,
+      "status": "candidate",
+      "symbol": "sw33_Unhit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "sw34",
+      "line": 1369,
+      "status": "candidate",
+      "symbol": "sw34_Hit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "sw34",
+      "line": 1370,
+      "status": "candidate",
+      "symbol": "sw34_Unhit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 1371,
+      "status": "candidate",
+      "symbol": "sw42_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 693,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 1372,
+      "status": "candidate",
+      "symbol": "sw43_Slingshot"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 661,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 1373,
+      "status": "candidate",
+      "symbol": "sw44_Slingshot"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 539,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 571,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 538,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 570,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 537,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 569,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 536,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 568,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    }
+  ],
+  "version": 1
+}

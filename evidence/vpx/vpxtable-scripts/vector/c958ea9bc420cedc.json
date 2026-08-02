@@ -1,0 +1,535 @@
+{
+  "driver_ids": [
+    "vector"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.vector"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 2,
+      "group": "pinmame.output.gi",
+      "label": "gi 2",
+      "line": 4276,
+      "status": "candidate",
+      "symbol": "gi_2"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "dt Upper",
+      "line": 913,
+      "status": "candidate",
+      "symbol": "dtUpper"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "dt L",
+      "line": 914,
+      "status": "candidate",
+      "symbol": "dtL"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Do Saucer L",
+      "line": 916,
+      "status": "candidate",
+      "symbol": "DoSaucerL"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "dt LL",
+      "line": 915,
+      "status": "candidate",
+      "symbol": "dtLL"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Do Saucer R",
+      "line": 917,
+      "status": "candidate",
+      "symbol": "DoSaucerR"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 918,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Eject To Shooter",
+      "line": 919,
+      "status": "candidate",
+      "symbol": "EjectToShooter"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Do Upper Saucer3 Up",
+      "line": 920,
+      "status": "candidate",
+      "symbol": "DoUpperSaucer3Up"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "Do Upper Saucer3 Down",
+      "line": 921,
+      "status": "candidate",
+      "symbol": "DoUpperSaucer3Down"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "Do Upper Saucer2",
+      "line": 922,
+      "status": "candidate",
+      "symbol": "DoUpperSaucer2"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "Do Upper Saucer1",
+      "line": 923,
+      "status": "candidate",
+      "symbol": "DoUpperSaucer1"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "label": "Relay AC",
+      "line": 925,
+      "status": "candidate",
+      "symbol": "RelayAC"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid",
+      "label": "Drop1",
+      "line": 928,
+      "status": "candidate",
+      "symbol": "Drop1"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid",
+      "label": "Drop2",
+      "line": 929,
+      "status": "candidate",
+      "symbol": "Drop2"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid",
+      "label": "Drop3",
+      "line": 930,
+      "status": "candidate",
+      "symbol": "Drop3"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid",
+      "label": "Drop4",
+      "line": 931,
+      "status": "candidate",
+      "symbol": "Drop4"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.solenoid",
+      "label": "Drop5",
+      "line": 932,
+      "status": "candidate",
+      "symbol": "Drop5"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.solenoid",
+      "label": "Drop6",
+      "line": 933,
+      "status": "candidate",
+      "symbol": "Drop6"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 45,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "'Vector (Bally 1982)\nhttps://www.ipdb.org/showpic.pl?id=2723\n*********************************************************************************************************************************\n=== TABLE OF CONTENTS  ===\n\nYou can quickly jump to a section by searching the four letter tag (ZXXX)\n\nZVAR: Constants and Global Variable\nZTIM: Timers\nZINI: Table Initialization and Exiting\n  ZOPT: User Options\n  ZMAT: General Math Functions\nZANI: Misc Animations\n  ZBBR: Ball Brightness\n  ZRBR: Room Brightness\nZGIC: GI Colors\nZKEY: Key Press Handling\nZSOL: Solenoids & Flashers\nZDRN: Drain, Trough, and Ball Release\nZFLP: Flippers\nZSLG: Slingshot Animations\nZSSC: Slingshot Corrections\nZSWI: Switches\nZVUK: VUKs and Kickers\n  ZBRL: Ball Rolling and Drop Sounds\n  ZRRL: Ramp Rolling Sound Effects\n  ZFLE: Fleep Mechanical Sounds\nZPHY: General Advice on Physics\nZNFF: Flipper Corrections\n  ZDMP: Rubber Dampeners\n  ZRDT: Drop Targets\nZRST: Stand-Up Targets\n  ZBOU: VPW TargetBouncer for targets and posts\n  ZGIU: GI updates\n  Z3DI: 3D Inserts\n  ZFLD: Flupper Domes\n  ZFLB: Flupper Bumpers\nZSHA: Ambient Ball Shadows\nZVLM: VLM Arrays\n  ZVRR: VR Room / VR Cabinet\n\n\n*********************************************************************************************************************************"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Vector (Bally 1982) 1.2.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Vector (Bally 1982) 1.2.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "c958ea9bc420cedc3c51c71b185c336eb4920192231831a84092408308237375"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release002",
+      "line": 1011,
+      "status": "candidate",
+      "symbol": "BallRelease002_Hit"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release002",
+      "line": 1010,
+      "status": "candidate",
+      "symbol": "BallRelease002_UnHit"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "Ball Stack1",
+      "line": 313,
+      "status": "candidate",
+      "symbol": "swBallStack1"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 177,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release001",
+      "line": 1009,
+      "status": "candidate",
+      "symbol": "BallRelease001_Hit"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release001",
+      "line": 1008,
+      "status": "candidate",
+      "symbol": "BallRelease001_UnHit"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "Ball Stack2",
+      "line": 314,
+      "status": "candidate",
+      "symbol": "swBallStack2"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 176,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "Outhole",
+      "line": 315,
+      "status": "candidate",
+      "symbol": "swOuthole"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 175,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "Right Bottom Saucer",
+      "line": 316,
+      "status": "candidate",
+      "symbol": "swRightBottomSaucer"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "Left Bottom Saucer",
+      "line": 317,
+      "status": "candidate",
+      "symbol": "swLeftBottomSaucer"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Shooter Lane",
+      "line": 318,
+      "status": "candidate",
+      "symbol": "swShooterLane"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Top Right Lane",
+      "line": 319,
+      "status": "candidate",
+      "symbol": "swTopRightLane"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Vector Scan Gate",
+      "line": 320,
+      "status": "candidate",
+      "symbol": "swVectorScanGate"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "Tilt Me",
+      "line": 321,
+      "status": "candidate",
+      "symbol": "swTiltMe"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 870,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "Upper Saucer1",
+      "line": 322,
+      "status": "candidate",
+      "symbol": "swUpperSaucer1"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Upper Saucer2",
+      "line": 323,
+      "status": "candidate",
+      "symbol": "swUpperSaucer2"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "Upper Saucer3",
+      "line": 324,
+      "status": "candidate",
+      "symbol": "swUpperSaucer3"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Target E",
+      "line": 325,
+      "status": "candidate",
+      "symbol": "swTargetE"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Target P",
+      "line": 326,
+      "status": "candidate",
+      "symbol": "swTargetP"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Target Y",
+      "line": 327,
+      "status": "candidate",
+      "symbol": "swTargetY"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Target H",
+      "line": 328,
+      "status": "candidate",
+      "symbol": "swTargetH"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "Lower Drop Target Right",
+      "line": 329,
+      "status": "candidate",
+      "symbol": "swLowerDropTargetRight"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "Lower Drop Target Middle",
+      "line": 330,
+      "status": "candidate",
+      "symbol": "swLowerDropTargetMiddle"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "Lower Drop Target Left",
+      "line": 331,
+      "status": "candidate",
+      "symbol": "swLowerDropTargetLeft"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "Upper Drop Target Right",
+      "line": 332,
+      "status": "candidate",
+      "symbol": "swUpperDropTargetRight"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "Upper Drop Target Middle",
+      "line": 333,
+      "status": "candidate",
+      "symbol": "swUpperDropTargetMiddle"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Upper Drop Target Left",
+      "line": 334,
+      "status": "candidate",
+      "symbol": "swUpperDropTargetLeft"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 837,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "Right Out Lane",
+      "line": 335,
+      "status": "candidate",
+      "symbol": "swRightOutLane"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Right Return Lane",
+      "line": 336,
+      "status": "candidate",
+      "symbol": "swRightReturnLane"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Left Out Lane",
+      "line": 337,
+      "status": "candidate",
+      "symbol": "swLeftOutLane"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Left Return Lane",
+      "line": 338,
+      "status": "candidate",
+      "symbol": "swLeftReturnLane"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "Advance Bonus Roll Over",
+      "line": 339,
+      "status": "candidate",
+      "symbol": "swAdvanceBonusRollOver"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Sling Right",
+      "line": 340,
+      "status": "candidate",
+      "symbol": "swSlingRight"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 1295,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "Sling Left",
+      "line": 341,
+      "status": "candidate",
+      "symbol": "swSlingLeft"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "Bumper",
+      "line": 342,
+      "status": "candidate",
+      "symbol": "swBumper"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "Top Drop Target Z",
+      "line": 343,
+      "status": "candidate",
+      "symbol": "swTopDropTargetZ"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Top Drop Target Y",
+      "line": 344,
+      "status": "candidate",
+      "symbol": "swTopDropTargetY"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Top Drop Target X",
+      "line": 345,
+      "status": "candidate",
+      "symbol": "swTopDropTargetX"
+    }
+  ],
+  "version": 1
+}

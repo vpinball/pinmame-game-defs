@@ -1,0 +1,1151 @@
+{
+  "driver_ids": [
+    "wcs_d2",
+    "wcs_f10",
+    "wcs_f50",
+    "wcs_f62",
+    "wcs_f62b",
+    "wcs_l1",
+    "wcs_l2",
+    "wcs_l3c",
+    "wcs_la1",
+    "wcs_la2",
+    "wcs_p2",
+    "wcs_p3",
+    "wcs_p5",
+    "wcs_p6"
+  ],
+  "extractor": {
+    "id": "pinmame-sim-source",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "midway.world-cup-soccer.1994"
+  ],
+  "mechanisms": [
+    {
+      "kind": "mech_tInitData",
+      "line": 274,
+      "raw": "static mech_tInitData wcs_goalieMech = {",
+      "status": "candidate"
+    },
+    {
+      "kind": "mech_tInitData",
+      "line": 278,
+      "raw": "static mech_tInitData wcs_ballMech = {",
+      "status": "candidate"
+    },
+    {
+      "kind": "mech_add",
+      "line": 509,
+      "raw": "mech_add(0, &wcs_goalieMech);",
+      "status": "candidate"
+    },
+    {
+      "kind": "mech_add",
+      "line": 510,
+      "raw": "mech_add(1, &wcs_ballMech);",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Goal Pop",
+      "line": 167,
+      "status": "candidate",
+      "symbol": "sGoalPop"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "TV Pop",
+      "line": 168,
+      "status": "candidate",
+      "symbol": "sTVPop"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Kick Back",
+      "line": 169,
+      "status": "candidate",
+      "symbol": "sKickBack"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "Lock",
+      "line": 170,
+      "status": "candidate",
+      "symbol": "sLock"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "U Hole",
+      "line": 171,
+      "status": "candidate",
+      "symbol": "sUHole"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Trough",
+      "line": 172,
+      "status": "candidate",
+      "symbol": "sTrough"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Knocker",
+      "line": 173,
+      "status": "candidate",
+      "symbol": "sKnocker"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Ramp Div",
+      "line": 174,
+      "status": "candidate",
+      "symbol": "sRampDiv"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Jet1",
+      "line": 175,
+      "status": "candidate",
+      "symbol": "sJet1"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "Jet2",
+      "line": 176,
+      "status": "candidate",
+      "symbol": "sJet2"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "Jet3",
+      "line": 177,
+      "status": "candidate",
+      "symbol": "sJet3"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "L Sling",
+      "line": 178,
+      "status": "candidate",
+      "symbol": "sLSling"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "R Sling",
+      "line": 179,
+      "status": "candidate",
+      "symbol": "sRSling"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "R Hole",
+      "line": 180,
+      "status": "candidate",
+      "symbol": "sRHole"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "L Hole",
+      "line": 181,
+      "status": "candidate",
+      "symbol": "sLHole"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid",
+      "label": "Div Hold",
+      "line": 182,
+      "status": "candidate",
+      "symbol": "sDivHold"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid",
+      "label": "Goalie Mot",
+      "line": 183,
+      "status": "candidate",
+      "symbol": "sGoalieMot"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid",
+      "label": "Ball Mot",
+      "line": 184,
+      "status": "candidate",
+      "symbol": "sBallMot"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid",
+      "label": "Ball CW",
+      "line": 185,
+      "status": "candidate",
+      "symbol": "sBallCW"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid",
+      "label": "Ball CCW",
+      "line": 186,
+      "status": "candidate",
+      "symbol": "sBallCCW"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid",
+      "label": "Mag Goalie",
+      "line": 187,
+      "status": "candidate",
+      "symbol": "sMagGoalie"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid",
+      "label": "Loop Gate",
+      "line": 188,
+      "status": "candidate",
+      "symbol": "sLoopGate"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.solenoid",
+      "label": "Mag Lock",
+      "line": 189,
+      "status": "candidate",
+      "symbol": "sMagLock"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 40,
+      "line_start": 15,
+      "status": "candidate",
+      "text": "/ Keys\n/   +R   L/R Ramp\n/   +I   L/R Inlane\n/   +-   L/R Slingshot\n/   +O   L/R Outlane\n/   +X   L/R Buy Ticket lane\n/   +F   L/R Free Kick saucer\n/   []   Light Kickback / Light Magna Goalie\n/   L    Left Loop\n/   A    Assist saucer\n/   W    Spinner\n/   T    TV-Scoop\n/   F    Free Kick target\n/   E    Tackle\n/   S    Striker's Hideout\n/ YUIO   Rollover (4)\n/  ZXC   Striker Targets (3)\n/  VBN   Jet (3)\n/   G    Goal\n/   K    Keeper\n/   H    Header Lane\n/   Q    Drain\n/   M    Magna Goalie\n/   2    Extra Ball buy-in"
+    }
+  ],
+  "source": {
+    "attribution": "PinMAME contributors",
+    "encoding": "utf-8",
+    "kind": "pinmame_sim",
+    "license": "BSD-3-Clause",
+    "path": "src/wpc/sims/wpc/full/wcs.c",
+    "quality": "full",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "6f890a1ae1855fcee40360ad93d54a8cca714b1cf8548799af99cbabc6b45a5a"
+  },
+  "states": [
+    {
+      "label": "Not Installed",
+      "line": 211,
+      "next_state": "stDrain",
+      "raw": "{\"Not Installed\",      0,0,         0,        stDrain,     0,0,0,SIM_STNOTEXCL},"
+    },
+    {
+      "label": "Moving",
+      "line": 212,
+      "raw": "{\"Moving\",},"
+    },
+    {
+      "label": "Playfield",
+      "line": 213,
+      "raw": "{\"Playfield\",          0,0,         0,        0,           0,0,0,SIM_STNOTEXCL},"
+    },
+    {
+      "label": "Buy Ticket Area",
+      "line": 214,
+      "raw": "{\"Buy Ticket Area\",    0,0,         0,        0,           0,0,0,SIM_STNOTEXCL},"
+    },
+    {
+      "label": "Drain",
+      "line": 215,
+      "next_state": "stOuthole",
+      "raw": "{\"Drain\",              1,0,         0,        stOuthole,  10,0,0,SIM_STNOTEXCL},"
+    },
+    {
+      "label": "Left Ramp Ent",
+      "line": 216,
+      "next_state": "stLRampEx",
+      "raw": "{\"Left Ramp Ent\",      1,swLRampEnt,0,        stLRampEx,  15,sLRampDiv,stLRampDiv},",
+      "switch_address": 72,
+      "switch_symbol": "swLRampEnt"
+    },
+    {
+      "label": "Left Ramp Exit",
+      "line": 217,
+      "next_state": "stFree",
+      "raw": "{\"Left Ramp Exit\",     1,swLRampEx, 0,        stFree,      5,0,0},",
+      "switch_address": 74,
+      "switch_symbol": "swLRampEx"
+    },
+    {
+      "label": "Left Ramp Divirted",
+      "line": 218,
+      "next_state": "stRRampEx",
+      "raw": "{\"Left Ramp Divirted\", 1,swLRampDiv,0,        stRRampEx,  15,0,0},",
+      "switch_address": 71,
+      "switch_symbol": "swLRampDiv"
+    },
+    {
+      "label": "Right Ramp Ent",
+      "line": 219,
+      "next_state": "stRRampEx",
+      "raw": "{\"Right Ramp Ent\",     1,swRRampEnt,0,        stRRampEx,  15,0,0},",
+      "switch_address": 75,
+      "switch_symbol": "swRRampEnt"
+    },
+    {
+      "label": "Right Ramp Exit",
+      "line": 220,
+      "next_state": "stLIn",
+      "raw": "{\"Right Ramp Exit\",    5,swRRampEx, 0,        stLIn,       5,sMagLock,stMagLock},",
+      "switch_address": 78,
+      "switch_symbol": "swRRampEx"
+    },
+    {
+      "label": "Lock Magnet",
+      "line": 221,
+      "raw": "{\"Lock Magnet\",        1,0,         0,        0,           0,0,0},"
+    },
+    {
+      "label": "Lock Upper",
+      "line": 222,
+      "next_state": "stLLock",
+      "raw": "{\"Lock Upper\",         1,swLockU,   0,        stLLock,     5,0,0},",
+      "switch_address": 77,
+      "switch_symbol": "swLockU"
+    },
+    {
+      "exit_output_address": 4,
+      "exit_output_symbol": "sLock",
+      "label": "Lock Lower",
+      "line": 223,
+      "next_state": "stLIn",
+      "raw": "{\"Lock Lower\",         1,swLockL,   sLock,    stLIn,      15,0,0},",
+      "switch_address": 76,
+      "switch_symbol": "swLockL"
+    },
+    {
+      "label": "Left Inlane",
+      "line": 224,
+      "next_state": "stFree",
+      "raw": "{\"Left Inlane\",        1,swLIn,     0,        stFree,      5,0,0},",
+      "switch_address": 15,
+      "switch_symbol": "swLIn"
+    },
+    {
+      "label": "Left Outlane",
+      "line": 225,
+      "next_state": "stDrain",
+      "raw": "{\"Left Outlane\",       3,swLOut,    0,        stDrain,     3,sKickBack,stUKickBack},",
+      "switch_address": 86,
+      "switch_symbol": "swLOut"
+    },
+    {
+      "label": "Kickback Upper",
+      "line": 226,
+      "next_state": "stFree",
+      "raw": "{\"Kickback Upper\",     1,swKickBackU,0,       stFree,      5,0,0},",
+      "switch_address": 26,
+      "switch_symbol": "swKickBackU"
+    },
+    {
+      "label": "Right Outlane",
+      "line": 227,
+      "next_state": "stDrain",
+      "raw": "{\"Right Outlane\",      1,swROut,    0,        stDrain,     5,0,0},",
+      "switch_address": 18,
+      "switch_symbol": "swROut"
+    },
+    {
+      "label": "Buy Lane",
+      "line": 228,
+      "next_state": "stFree",
+      "raw": "{\"Buy Lane\",           1,swLLane,   0,        stFree,      5,0,0},",
+      "switch_address": 87,
+      "switch_symbol": "swLLane"
+    },
+    {
+      "label": "Ticket Lane",
+      "line": 229,
+      "next_state": "stFree",
+      "raw": "{\"Ticket Lane\",        1,swRLane,   0,        stFree,      5,0,0},",
+      "switch_address": 88,
+      "switch_symbol": "swRLane"
+    },
+    {
+      "exit_output_address": 15,
+      "exit_output_symbol": "sLHole",
+      "label": "Left Free Kick Hole",
+      "line": 230,
+      "next_state": "stFree",
+      "raw": "{\"Left Free Kick Hole\",1,swLHole,   sLHole,   stFree,      5,0,0},",
+      "switch_address": 56,
+      "switch_symbol": "swLHole"
+    },
+    {
+      "exit_output_address": 14,
+      "exit_output_symbol": "sRHole",
+      "label": "Right Free Kick Hole",
+      "line": 231,
+      "next_state": "stFree",
+      "raw": "{\"Right Free Kick Hole\",1,swRHole,  sRHole,   stFree,      5,0,0},",
+      "switch_address": 54,
+      "switch_symbol": "swRHole"
+    },
+    {
+      "label": "Loop Spinner",
+      "line": 232,
+      "next_state": "stTravel",
+      "raw": "{\"Loop Spinner\",       1,swSpinner, 0,        stTravel,    5,0,0,SIM_STSPINNER},",
+      "switch_address": 27,
+      "switch_symbol": "swSpinner"
+    },
+    {
+      "label": "Travel Lane",
+      "line": 233,
+      "next_state": "stTicketArea",
+      "raw": "{\"Travel Lane\",        1,swTravel,  0,        stTicketArea,10,sLoopGate,stFree},",
+      "switch_address": 47,
+      "switch_symbol": "swTravel"
+    },
+    {
+      "exit_output_address": 5,
+      "exit_output_symbol": "sUHole",
+      "label": "Assist Hole",
+      "line": 234,
+      "raw": "{\"Assist Hole\",        1,swUHole,   sUHole,   0,           0,0,0},",
+      "switch_address": 55,
+      "switch_symbol": "swUHole"
+    },
+    {
+      "label": "Goal",
+      "line": 235,
+      "next_state": "stGoalPop",
+      "raw": "{\"Goal\",               2,swGoalTrough,0,      stGoalPop,   5,0,0},",
+      "switch_address": 41,
+      "switch_symbol": "swGoalTrough"
+    },
+    {
+      "exit_output_address": 1,
+      "exit_output_symbol": "sGoalPop",
+      "label": "Goal Popper",
+      "line": 236,
+      "next_state": "stRIn",
+      "raw": "{\"Goal Popper\",        1,swGoalPop, sGoalPop, stRIn,      15,0,0},",
+      "switch_address": 42,
+      "switch_symbol": "swGoalPop"
+    },
+    {
+      "label": "Right Inlane",
+      "line": 237,
+      "next_state": "stFree",
+      "raw": "{\"Right Inlane\",       1,swRIn,     0,        stFree,      5,0,0},",
+      "switch_address": 17,
+      "switch_symbol": "swRIn"
+    },
+    {
+      "label": "Goalie",
+      "line": 238,
+      "next_state": "stFree",
+      "raw": "{\"Goalie\",             1,swGoalie,  0,        stFree,      5,0,0},",
+      "switch_address": 48,
+      "switch_symbol": "swGoalie"
+    },
+    {
+      "label": "Spinner",
+      "line": 239,
+      "next_state": "stFree",
+      "raw": "{\"Spinner\",            1,swSpinner, 0,        stFree,     10,0,0,SIM_STSPINNER},",
+      "switch_address": 27,
+      "switch_symbol": "swSpinner"
+    },
+    {
+      "exit_output_address": 2,
+      "exit_output_symbol": "sTVPop",
+      "label": "TV Popper",
+      "line": 240,
+      "next_state": "stFree",
+      "raw": "{\"TV Popper\",          1,swTVPop,   sTVPop,   stFree,      5,0,0},",
+      "switch_address": 45,
+      "switch_symbol": "swTVPop"
+    },
+    {
+      "label": "Header Lane",
+      "line": 241,
+      "next_state": "stLOut",
+      "raw": "{\"Header Lane\",        1,swKickBackU,0,       stLOut,     10,0,0},",
+      "switch_address": 26,
+      "switch_symbol": "swKickBackU"
+    },
+    {
+      "label": "Trough 5",
+      "line": 242,
+      "next_state": "stTrough4",
+      "raw": "{\"Trough 5\",           1,swTrough5, 0,        stTrough4,   5},",
+      "switch_address": 35,
+      "switch_symbol": "swTrough5"
+    },
+    {
+      "exit_output_address": 6,
+      "exit_output_symbol": "sTrough",
+      "label": "Trough 1",
+      "line": 243,
+      "next_state": "stTroughS",
+      "raw": "{\"Trough 1\",           1,swTrough1, sTrough,  stTroughS,   2},",
+      "switch_address": 31,
+      "switch_symbol": "swTrough1"
+    },
+    {
+      "label": "Trough 2",
+      "line": 244,
+      "next_state": "stTrough1",
+      "raw": "{\"Trough 2\",           1,swTrough2, 0,        stTrough1,   5},",
+      "switch_address": 32,
+      "switch_symbol": "swTrough2"
+    },
+    {
+      "label": "Trough 3",
+      "line": 245,
+      "next_state": "stTrough2",
+      "raw": "{\"Trough 3\",           1,swTrough3, 0,        stTrough2,   5},",
+      "switch_address": 33,
+      "switch_symbol": "swTrough3"
+    },
+    {
+      "label": "Trough 4",
+      "line": 246,
+      "next_state": "stTrough3",
+      "raw": "{\"Trough 4\",           1,swTrough4, 0,        stTrough3,   5},",
+      "switch_address": 34,
+      "switch_symbol": "swTrough4"
+    },
+    {
+      "label": "Trough stack",
+      "line": 247,
+      "next_state": "stSLane",
+      "raw": "{\"Trough stack\",       1,swTroughS, 0,        stSLane,     1},",
+      "switch_address": 36,
+      "switch_symbol": "swTroughS"
+    },
+    {
+      "label": "Shooter Lane",
+      "line": 248,
+      "raw": "{\"Shooter Lane\",       1,swBallShoot,sShooterRel,0,        0,0,0,SIM_STSHOOT},",
+      "switch_address": 38,
+      "switch_symbol": "swBallShoot"
+    },
+    {
+      "label": "Skill Front",
+      "line": 249,
+      "next_state": "stRIn",
+      "raw": "{\"Skill Front\",        1,swSkillF,  0,        stRIn,       15},",
+      "switch_address": 51,
+      "switch_symbol": "swSkillF"
+    },
+    {
+      "label": "Skill Center",
+      "line": 250,
+      "next_state": "stRIn",
+      "raw": "{\"Skill Center\",       1,swSkillC,  0,        stRIn,       15},",
+      "switch_address": 52,
+      "switch_symbol": "swSkillC"
+    },
+    {
+      "label": "Skill Rear",
+      "line": 251,
+      "next_state": "stRIn",
+      "raw": "{\"Skill Rear\",         1,swSkillR,  0,        stRIn,       15},",
+      "switch_address": 53,
+      "switch_symbol": "swSkillR"
+    }
+  ],
+  "switches": [
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Mag Goalie",
+      "line": 98,
+      "status": "candidate",
+      "symbol": "swMagGoalie"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Start",
+      "line": 99,
+      "status": "candidate",
+      "symbol": "swStart"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Tilt",
+      "line": 100,
+      "status": "candidate",
+      "symbol": "swTilt"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "L In",
+      "line": 101,
+      "state_labels": [
+        "Left Inlane"
+      ],
+      "status": "candidate",
+      "symbol": "swLIn"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "Striker3",
+      "line": 102,
+      "status": "candidate",
+      "symbol": "swStriker3"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "R In",
+      "line": 103,
+      "state_labels": [
+        "Right Inlane"
+      ],
+      "status": "candidate",
+      "symbol": "swRIn"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "R Out",
+      "line": 104,
+      "state_labels": [
+        "Right Outlane"
+      ],
+      "status": "candidate",
+      "symbol": "swROut"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Slam Tilt",
+      "line": 106,
+      "status": "candidate",
+      "symbol": "swSlamTilt"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Coin Door",
+      "line": 107,
+      "status": "candidate",
+      "symbol": "swCoinDoor"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Buy In",
+      "line": 108,
+      "status": "candidate",
+      "symbol": "swBuyIn"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "Free Kick",
+      "line": 109,
+      "status": "candidate",
+      "symbol": "swFreeKick"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "Kick Back U",
+      "line": 110,
+      "state_labels": [
+        "Header Lane",
+        "Kickback Upper"
+      ],
+      "status": "candidate",
+      "symbol": "swKickBackU"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "Spinner",
+      "line": 111,
+      "state_labels": [
+        "Loop Spinner",
+        "Spinner"
+      ],
+      "status": "candidate",
+      "symbol": "swSpinner"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "Lite Kick",
+      "line": 112,
+      "status": "candidate",
+      "symbol": "swLiteKick"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Trough1",
+      "line": 114,
+      "state_labels": [
+        "Trough 1"
+      ],
+      "status": "candidate",
+      "symbol": "swTrough1"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "Trough2",
+      "line": 115,
+      "state_labels": [
+        "Trough 2"
+      ],
+      "status": "candidate",
+      "symbol": "swTrough2"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "Trough3",
+      "line": 116,
+      "state_labels": [
+        "Trough 3"
+      ],
+      "status": "candidate",
+      "symbol": "swTrough3"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Trough4",
+      "line": 117,
+      "state_labels": [
+        "Trough 4"
+      ],
+      "status": "candidate",
+      "symbol": "swTrough4"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Trough5",
+      "line": 118,
+      "state_labels": [
+        "Trough 5"
+      ],
+      "status": "candidate",
+      "symbol": "swTrough5"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Trough S",
+      "line": 119,
+      "state_labels": [
+        "Trough stack"
+      ],
+      "status": "candidate",
+      "symbol": "swTroughS"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "Lite Mag",
+      "line": 120,
+      "status": "candidate",
+      "symbol": "swLiteMag"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Ball Shoot",
+      "line": 121,
+      "state_labels": [
+        "Shooter Lane"
+      ],
+      "status": "candidate",
+      "symbol": "swBallShoot"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "Goal Trough",
+      "line": 123,
+      "state_labels": [
+        "Goal"
+      ],
+      "status": "candidate",
+      "symbol": "swGoalTrough"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "Goal Pop",
+      "line": 124,
+      "state_labels": [
+        "Goal Popper"
+      ],
+      "status": "candidate",
+      "symbol": "swGoalPop"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "Goalie L",
+      "line": 125,
+      "status": "candidate",
+      "symbol": "swGoalieL"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "Goalie R",
+      "line": 126,
+      "status": "candidate",
+      "symbol": "swGoalieR"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "TV Pop",
+      "line": 127,
+      "state_labels": [
+        "TV Popper"
+      ],
+      "status": "candidate",
+      "symbol": "swTVPop"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Travel",
+      "line": 128,
+      "state_labels": [
+        "Travel Lane"
+      ],
+      "status": "candidate",
+      "symbol": "swTravel"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Goalie",
+      "line": 129,
+      "state_labels": [
+        "Goalie"
+      ],
+      "status": "candidate",
+      "symbol": "swGoalie"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "R Top Roll",
+      "line": 130,
+      "status": "candidate",
+      "symbol": "swRTopRoll"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Skill F",
+      "line": 132,
+      "state_labels": [
+        "Skill Front"
+      ],
+      "status": "candidate",
+      "symbol": "swSkillF"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "Skill C",
+      "line": 133,
+      "state_labels": [
+        "Skill Center"
+      ],
+      "status": "candidate",
+      "symbol": "swSkillC"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "Skill R",
+      "line": 134,
+      "state_labels": [
+        "Skill Rear"
+      ],
+      "status": "candidate",
+      "symbol": "swSkillR"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "label": "R Hole",
+      "line": 135,
+      "state_labels": [
+        "Right Free Kick Hole"
+      ],
+      "status": "candidate",
+      "symbol": "swRHole"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "U Hole",
+      "line": 136,
+      "state_labels": [
+        "Assist Hole"
+      ],
+      "status": "candidate",
+      "symbol": "swUHole"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "label": "L Hole",
+      "line": 137,
+      "state_labels": [
+        "Left Free Kick Hole"
+      ],
+      "status": "candidate",
+      "symbol": "swLHole"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "Roll1",
+      "line": 139,
+      "status": "candidate",
+      "symbol": "swRoll1"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "Roll2",
+      "line": 140,
+      "status": "candidate",
+      "symbol": "swRoll2"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.input.switch",
+      "label": "Roll3",
+      "line": 141,
+      "status": "candidate",
+      "symbol": "swRoll3"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "label": "Roll4",
+      "line": 142,
+      "status": "candidate",
+      "symbol": "swRoll4"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.input.switch",
+      "label": "Tackle",
+      "line": 143,
+      "status": "candidate",
+      "symbol": "swTackle"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "Striker1",
+      "line": 144,
+      "status": "candidate",
+      "symbol": "swStriker1"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "label": "Striker2",
+      "line": 145,
+      "status": "candidate",
+      "symbol": "swStriker2"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.input.switch",
+      "label": "L Ramp Div",
+      "line": 147,
+      "state_labels": [
+        "Left Ramp Divirted"
+      ],
+      "status": "candidate",
+      "symbol": "swLRampDiv"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.input.switch",
+      "label": "L Ramp Ent",
+      "line": 148,
+      "state_labels": [
+        "Left Ramp Ent"
+      ],
+      "status": "candidate",
+      "symbol": "swLRampEnt"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.input.switch",
+      "label": "L Ramp Ex",
+      "line": 149,
+      "state_labels": [
+        "Left Ramp Exit"
+      ],
+      "status": "candidate",
+      "symbol": "swLRampEx"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.input.switch",
+      "label": "R Ramp Ent",
+      "line": 150,
+      "state_labels": [
+        "Right Ramp Ent"
+      ],
+      "status": "candidate",
+      "symbol": "swRRampEnt"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.input.switch",
+      "label": "Lock L",
+      "line": 151,
+      "state_labels": [
+        "Lock Lower"
+      ],
+      "status": "candidate",
+      "symbol": "swLockL"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.input.switch",
+      "label": "Lock U",
+      "line": 152,
+      "state_labels": [
+        "Lock Upper"
+      ],
+      "status": "candidate",
+      "symbol": "swLockU"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.input.switch",
+      "label": "R Ramp Ex",
+      "line": 153,
+      "state_labels": [
+        "Right Ramp Exit"
+      ],
+      "status": "candidate",
+      "symbol": "swRRampEx"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.input.switch",
+      "label": "Jet1",
+      "line": 155,
+      "status": "candidate",
+      "symbol": "swJet1"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.input.switch",
+      "label": "Jet2",
+      "line": 156,
+      "status": "candidate",
+      "symbol": "swJet2"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.input.switch",
+      "label": "Jet3",
+      "line": 157,
+      "status": "candidate",
+      "symbol": "swJet3"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.input.switch",
+      "label": "L Sling",
+      "line": 158,
+      "status": "candidate",
+      "symbol": "swLSling"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.input.switch",
+      "label": "R Sling",
+      "line": 159,
+      "status": "candidate",
+      "symbol": "swRSling"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.input.switch",
+      "label": "L Out",
+      "line": 160,
+      "state_labels": [
+        "Left Outlane"
+      ],
+      "status": "candidate",
+      "symbol": "swLOut"
+    },
+    {
+      "address": 87,
+      "group": "pinmame.input.switch",
+      "label": "L Lane",
+      "line": 161,
+      "state_labels": [
+        "Buy Lane"
+      ],
+      "status": "candidate",
+      "symbol": "swLLane"
+    },
+    {
+      "address": 88,
+      "group": "pinmame.input.switch",
+      "label": "R Lane",
+      "line": 162,
+      "state_labels": [
+        "Ticket Lane"
+      ],
+      "status": "candidate",
+      "symbol": "swRLane"
+    }
+  ],
+  "version": 1
+}

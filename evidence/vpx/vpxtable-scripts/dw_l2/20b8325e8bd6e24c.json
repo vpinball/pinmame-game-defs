@@ -1,0 +1,698 @@
+{
+  "driver_ids": [
+    "dw_l2"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.doctor-who.1992"
+  ],
+  "mechanisms": [
+    {
+      "kind": "new cvpmmech",
+      "line": 107,
+      "raw": "set mMinipf=new cvpmmech",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 2,
+      "group": "pinmame.output.gi",
+      "label": "gi 2",
+      "line": 44,
+      "status": "candidate",
+      "symbol": "gi_2"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Trap Door",
+      "line": 359,
+      "status": "candidate",
+      "symbol": "SolTrapDoor"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Auto Fire",
+      "line": 360,
+      "status": "candidate",
+      "symbol": "SolAutoFire"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Tardis Exit",
+      "line": 361,
+      "status": "candidate",
+      "symbol": "TardisExit"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "olmpfl",
+      "line": 362,
+      "status": "candidate",
+      "symbol": "solmpfl"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "olmpfr",
+      "line": 363,
+      "status": "candidate",
+      "symbol": "solmpfr"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Flash06",
+      "line": 364,
+      "status": "candidate",
+      "symbol": "Flash06"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "vpmsolsound",
+      "line": 365,
+      "status": "candidate",
+      "symbol": "vpmsolsound "
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "bpr1",
+      "line": 367,
+      "status": "candidate",
+      "symbol": "bpr1"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "bpr2",
+      "line": 368,
+      "status": "candidate",
+      "symbol": "bpr2"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "bpr3",
+      "line": 369,
+      "status": "candidate",
+      "symbol": "bpr3"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Trough.Sol In",
+      "line": 370,
+      "status": "candidate",
+      "symbol": "bsTrough.SolIn"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Trough.Sol Out",
+      "line": 371,
+      "status": "candidate",
+      "symbol": "bsTrough.SolOut"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "label": "Flash17",
+      "line": 372,
+      "status": "candidate",
+      "symbol": "Flash17"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "label": "Flash18",
+      "line": 373,
+      "status": "candidate",
+      "symbol": "Flash18"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "label": "Flash19",
+      "line": 374,
+      "status": "candidate",
+      "symbol": "Flash19"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "label": "flash20",
+      "line": 375,
+      "status": "candidate",
+      "symbol": "flash20"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid",
+      "label": "Flash21",
+      "line": 376,
+      "status": "candidate",
+      "symbol": "Flash21"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid",
+      "label": "who h",
+      "line": 377,
+      "status": "candidate",
+      "symbol": "who_h"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid",
+      "label": "who o",
+      "line": 378,
+      "status": "candidate",
+      "symbol": "who_o"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid",
+      "label": "Flash24",
+      "line": 379,
+      "status": "candidate",
+      "symbol": "Flash24"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 16,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "*********************************************************************\n*                                                                   *\n*                           Doctor  who                             *\n*                            Script by                              *\n*                    oooPLAYER1ooo & Unclewilly                     *\n*                               2010                                *\n*                                                     *\n*                         Updated 2017 for VPX By                   *\n*               Sliderpoint                           *\n*********************************************************************\nThalamus 2018-07-20\nAdded/Updated \"Positional Sound Playback Functions\" and \"Supporting Ball & Sound Functions\"\nChanged UseSolenoids=1 to 2\nNo special SSF tweaks yet.\nThis table doesn't contain the standard subs I normally add."
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Doctor Who (Bally 1992) ssfmod v1.2.2.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Doctor Who (Bally 1992) ssfmod v1.2.2.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "20b8325e8bd6e24c5f77210b1d2615964ffe5efd05b6e5c603d4a2ac7e0de09d"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "leftsling",
+      "line": 348,
+      "status": "candidate",
+      "symbol": "leftsling_Slingshot"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "rightsling",
+      "line": 349,
+      "status": "candidate",
+      "symbol": "rightsling_Slingshot"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "Shooter Lane",
+      "line": 220,
+      "status": "candidate",
+      "symbol": "ShooterLane_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "Shooter Lane",
+      "line": 221,
+      "status": "candidate",
+      "symbol": "ShooterLane_Unhit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "sw18",
+      "line": 344,
+      "status": "candidate",
+      "symbol": "sw18_Hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 80,
+      "state_labels": [
+        "Table1 Init"
+      ],
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 81,
+      "state_labels": [
+        "Table1 Init"
+      ],
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Tardis Entrance",
+      "line": 219,
+      "status": "candidate",
+      "symbol": "TardisEntrance_hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Tardis Exit",
+      "line": 423,
+      "status": "candidate",
+      "symbol": "TardisExit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "Update Mini PF",
+      "line": 593,
+      "state_labels": [
+        "Update Mini PF"
+      ],
+      "status": "candidate",
+      "symbol": "UpdateMiniPF"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "sw33",
+      "line": 308,
+      "status": "candidate",
+      "symbol": "sw33_Hit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 198,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 209,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "gate5",
+      "line": 309,
+      "status": "candidate",
+      "symbol": "gate5_Hit"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "sw36",
+      "line": 306,
+      "status": "candidate",
+      "symbol": "sw36_Hit"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "gate3",
+      "line": 307,
+      "status": "candidate",
+      "symbol": "gate3_Hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "sw38",
+      "line": 280,
+      "status": "candidate",
+      "symbol": "sw38_Hit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "sw41",
+      "line": 316,
+      "status": "candidate",
+      "symbol": "sw41_Hit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 317,
+      "status": "candidate",
+      "symbol": "sw42_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 318,
+      "status": "candidate",
+      "symbol": "sw43_Hit"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 319,
+      "status": "candidate",
+      "symbol": "sw44_Hit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "sw45",
+      "line": 320,
+      "status": "candidate",
+      "symbol": "sw45_Hit"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "sw46",
+      "line": 321,
+      "status": "candidate",
+      "symbol": "sw46_Hit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Left Middle",
+      "line": 340,
+      "status": "candidate",
+      "symbol": "LeftMiddle_Hit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Left Middle",
+      "line": 341,
+      "status": "candidate",
+      "symbol": "LeftMiddle_UnHit"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "sw48",
+      "line": 345,
+      "status": "candidate",
+      "symbol": "sw48_Hit"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "sw51",
+      "line": 324,
+      "status": "candidate",
+      "symbol": "sw51_Hit"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "sw52",
+      "line": 325,
+      "status": "candidate",
+      "symbol": "sw52_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "sw53",
+      "line": 326,
+      "status": "candidate",
+      "symbol": "sw53_Hit"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "label": "sw54",
+      "line": 327,
+      "status": "candidate",
+      "symbol": "sw54_Hit"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "sw55",
+      "line": 328,
+      "status": "candidate",
+      "symbol": "sw55_Hit"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "label": "sw56",
+      "line": 329,
+      "status": "candidate",
+      "symbol": "sw56_Hit"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "TD Down Timer",
+      "line": 407,
+      "status": "candidate",
+      "symbol": "TDDownTimer_timer"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "TD Up Timer",
+      "line": 397,
+      "status": "candidate",
+      "symbol": "TDUpTimer_timer"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.input.switch",
+      "label": "sw58",
+      "line": 313,
+      "status": "candidate",
+      "symbol": "sw58_Hit"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 354,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 355,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.input.switch",
+      "label": "Bumper4",
+      "line": 356,
+      "status": "candidate",
+      "symbol": "Bumper4_Hit"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "label": "Left Outlane",
+      "line": 336,
+      "status": "candidate",
+      "symbol": "LeftOutlane_Hit"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "label": "Left Outlane",
+      "line": 337,
+      "status": "candidate",
+      "symbol": "LeftOutlane_UnHit"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.input.switch",
+      "label": "Left Inlane",
+      "line": 338,
+      "status": "candidate",
+      "symbol": "LeftInlane_Hit"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.input.switch",
+      "label": "Left Inlane",
+      "line": 339,
+      "status": "candidate",
+      "symbol": "LeftInlane_UnHit"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "Right Inlane",
+      "line": 334,
+      "status": "candidate",
+      "symbol": "RightInlane_Hit"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "Right Inlane",
+      "line": 335,
+      "status": "candidate",
+      "symbol": "RightInlane_UnHit"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "label": "Right Outlane",
+      "line": 332,
+      "status": "candidate",
+      "symbol": "RightOutlane_Hit"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "label": "Right Outlane",
+      "line": 333,
+      "status": "candidate",
+      "symbol": "RightOutlane_UnHit"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.input.switch",
+      "label": "sw68",
+      "line": 224,
+      "status": "candidate",
+      "symbol": "sw68_Hit"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.input.switch",
+      "label": "sw71",
+      "line": 294,
+      "status": "candidate",
+      "symbol": "sw71_Hit"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.input.switch",
+      "label": "sw72",
+      "line": 293,
+      "status": "candidate",
+      "symbol": "sw72_Hit"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.input.switch",
+      "label": "sw73",
+      "line": 292,
+      "status": "candidate",
+      "symbol": "sw73_Hit"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.input.switch",
+      "label": "sw74",
+      "line": 291,
+      "status": "candidate",
+      "symbol": "sw74_Hit"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.input.switch",
+      "label": "sw75",
+      "line": 290,
+      "status": "candidate",
+      "symbol": "sw75_Hit"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.input.switch",
+      "label": "sw76",
+      "line": 217,
+      "status": "candidate",
+      "symbol": "sw76_hit"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.input.switch",
+      "label": "sw76",
+      "line": 218,
+      "status": "candidate",
+      "symbol": "sw76_unhit"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.input.switch",
+      "label": "sw77",
+      "line": 215,
+      "status": "candidate",
+      "symbol": "sw77_hit"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.input.switch",
+      "label": "sw77",
+      "line": 216,
+      "status": "candidate",
+      "symbol": "sw77_unhit"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.input.switch",
+      "label": "sw78",
+      "line": 287,
+      "status": "candidate",
+      "symbol": "sw78_Hit"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 82,
+      "state_labels": [
+        "Table1 Init"
+      ],
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 88,
+      "group": "pinmame.input.switch",
+      "label": "sw88",
+      "line": 282,
+      "status": "candidate",
+      "symbol": "sw88_Hit"
+    }
+  ],
+  "version": 1
+}

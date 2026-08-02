@@ -1,0 +1,439 @@
+{
+  "driver_ids": [
+    "thegames"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.thegames"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Saucer",
+      "line": 201,
+      "status": "candidate",
+      "symbol": "SolSaucer"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 202,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Trough",
+      "line": 203,
+      "status": "candidate",
+      "symbol": "SolTrough"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Game Over",
+      "line": 204,
+      "status": "candidate",
+      "symbol": "SolGameOver"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol GI",
+      "line": 205,
+      "status": "candidate",
+      "symbol": "SolGI"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 17,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "The Games / IPD No. 3391 / August, 1984 / 4 Players\n\n ________  ________   _________    __  ______________\n/_  __/ / / / ____/  / ____/   |  /  |/  / ____/ ___/\n / / / /_/ / __/    / / __/ /| | / /|_/ / __/  \\__ \\\n/ / / __  / /___   / /_/ / ___ |/ /  / / /___ ___/ /\n/_/ /_/ /_/_____/   \\____/_/  |_/_/  /_/_____//____/\n\n\n********************************************************************************************************************************\n******** Work done by UnclePaulie on Hybrid version 0.01 - 2.0 *********\n    Added latest VPW standards, physics, GI baking, Lampz and 3D inserts, shadows, updated backglass for desktop,\n  roth standup and vari targets, standalone compatibility,\n  optional DIP adjustments, updated flipper physics, VR and fully hybrid, Flupper style bumpers and lighting.\n  Full details at the bottom of the script.  Redbone did the playfield, plastics, and other graphics.\n********************************************************************************************************************************"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in special_audiopan_and_audiofade_patched/The Games (Gottlieb 1984) v2.0.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "special_audiopan_and_audiofade_patched/The Games (Gottlieb 1984) v2.0.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "54ea59895b8b5ac953f77b767839821aeee86795a0705fca50796100258ff2e5"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 0,
+      "group": "pinmame.input.switch",
+      "label": "itch 0",
+      "line": 2737,
+      "status": "candidate",
+      "symbol": "switch_0"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "itch 10",
+      "line": 2737,
+      "status": "candidate",
+      "symbol": "switch_10"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "itch 20",
+      "line": 2737,
+      "status": "candidate",
+      "symbol": "switch_20"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "itch 30",
+      "line": 2737,
+      "status": "candidate",
+      "symbol": "switch_30"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 303,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "sw31",
+      "line": 710,
+      "status": "candidate",
+      "symbol": "sw31_Hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "sw31",
+      "line": 711,
+      "status": "candidate",
+      "symbol": "sw31_UnHit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 718,
+      "status": "candidate",
+      "symbol": "sw32_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 719,
+      "status": "candidate",
+      "symbol": "sw32_UnHit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "sw34",
+      "line": 724,
+      "status": "candidate",
+      "symbol": "sw34_Hit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "sw34",
+      "line": 725,
+      "status": "candidate",
+      "symbol": "sw34_UnHit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 645,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 651,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Bumper3",
+      "line": 657,
+      "status": "candidate",
+      "symbol": "Bumper3_Hit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Bumper4",
+      "line": 663,
+      "status": "candidate",
+      "symbol": "Bumper4_Hit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "itch 40",
+      "line": 2737,
+      "status": "candidate",
+      "symbol": "switch_40"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 302,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "sw41",
+      "line": 712,
+      "status": "candidate",
+      "symbol": "sw41_Hit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "sw41",
+      "line": 713,
+      "status": "candidate",
+      "symbol": "sw41_UnHit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 720,
+      "status": "candidate",
+      "symbol": "sw42_Hit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 721,
+      "status": "candidate",
+      "symbol": "sw42_UnHit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 622,
+      "status": "candidate",
+      "symbol": "sw43_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 628,
+      "status": "candidate",
+      "symbol": "sw43_Unhit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 297,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 726,
+      "status": "candidate",
+      "symbol": "sw44_Hit"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 727,
+      "status": "candidate",
+      "symbol": "sw44_UnHit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "Sensor45",
+      "line": 702,
+      "status": "candidate",
+      "symbol": "Sensor45_Hit"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "itch 50",
+      "line": 2737,
+      "status": "candidate",
+      "symbol": "switch_50"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 301,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "sw51",
+      "line": 714,
+      "status": "candidate",
+      "symbol": "sw51_Hit"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "sw51",
+      "line": 715,
+      "status": "candidate",
+      "symbol": "sw51_UnHit"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "sw52",
+      "line": 722,
+      "status": "candidate",
+      "symbol": "sw52_Hit"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "sw52",
+      "line": 723,
+      "status": "candidate",
+      "symbol": "sw52_UnHit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "Spinner",
+      "line": 762,
+      "status": "candidate",
+      "symbol": "Spinner_Spin"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "label": "sw54",
+      "line": 728,
+      "status": "candidate",
+      "symbol": "sw54_Hit"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "label": "sw54",
+      "line": 729,
+      "status": "candidate",
+      "symbol": "sw54_UnHit"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.input.switch",
+      "label": "itch 60",
+      "line": 2737,
+      "status": "candidate",
+      "symbol": "switch_60"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 300,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "sw61",
+      "line": 716,
+      "status": "candidate",
+      "symbol": "sw61_Hit"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "sw61",
+      "line": 717,
+      "status": "candidate",
+      "symbol": "sw61_UnHit"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "label": "sw64",
+      "line": 730,
+      "status": "candidate",
+      "symbol": "sw64_Hit"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "label": "sw64",
+      "line": 731,
+      "status": "candidate",
+      "symbol": "sw64_UnHit"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "label": "Slot1",
+      "line": 553,
+      "status": "candidate",
+      "symbol": "Slot1_Hit"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "label": "Slot1",
+      "line": 554,
+      "status": "candidate",
+      "symbol": "Slot1_UnHit"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 290,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    }
+  ],
+  "version": 1
+}

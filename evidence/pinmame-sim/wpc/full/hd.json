@@ -1,0 +1,1085 @@
+{
+  "driver_ids": [
+    "che_cho",
+    "hd_d1",
+    "hd_d2",
+    "hd_d3",
+    "hd_l1",
+    "hd_l2",
+    "hd_l3"
+  ],
+  "extractor": {
+    "id": "pinmame-sim-source",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.che_cho",
+    "stub.pinmame.hd_l3"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Out Hole",
+      "line": 146,
+      "status": "candidate",
+      "symbol": "sOutHole"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Trough",
+      "line": 147,
+      "status": "candidate",
+      "symbol": "sTrough"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "L Drop",
+      "line": 148,
+      "status": "candidate",
+      "symbol": "sLDrop"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "C Drop",
+      "line": 149,
+      "status": "candidate",
+      "symbol": "sCDrop"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Left Jet",
+      "line": 150,
+      "status": "candidate",
+      "symbol": "sLeftJet"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Right Jet",
+      "line": 151,
+      "status": "candidate",
+      "symbol": "sRightJet"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Knocker",
+      "line": 152,
+      "status": "candidate",
+      "symbol": "sKnocker"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Bottom Jet",
+      "line": 153,
+      "status": "candidate",
+      "symbol": "sBottomJet"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "LR Eject",
+      "line": 154,
+      "status": "candidate",
+      "symbol": "sLREject"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "TR Eject",
+      "line": 155,
+      "status": "candidate",
+      "symbol": "sTREject"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "TL Eject",
+      "line": 156,
+      "status": "candidate",
+      "symbol": "sTLEject"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "R Gate",
+      "line": 157,
+      "status": "candidate",
+      "symbol": "sRGate"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "L Gate",
+      "line": 158,
+      "status": "candidate",
+      "symbol": "sLGate"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "Left Sling",
+      "line": 159,
+      "status": "candidate",
+      "symbol": "sLeftSling"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid",
+      "label": "Right Sling",
+      "line": 160,
+      "status": "candidate",
+      "symbol": "sRightSling"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 19,
+      "line_start": 3,
+      "status": "candidate",
+      "text": "Harley-Davidson (Bally, 1991) Pinball Simulator\nby Marton Larrosa (marton@mail.com)\nJan. 5, 2001\nKnown Issues/Problems with this Simulator:\nNone.\nChanges:\n050101 - First version\nRead PZ.c or FH.c if you like more help."
+    }
+  ],
+  "source": {
+    "attribution": "PinMAME contributors",
+    "encoding": "utf-8",
+    "kind": "pinmame_sim",
+    "license": "BSD-3-Clause",
+    "path": "src/wpc/sims/wpc/full/hd.c",
+    "quality": "full",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "8d838fbe16bde8a98bb5d81a6e5da963c8d4b990f66f0b74731036ddab1bff4f"
+  },
+  "states": [
+    {
+      "label": "Not Installed",
+      "line": 174,
+      "next_state": "stDrain",
+      "raw": "{\"Not Installed\",\t0,0,\t\t 0,\t\tstDrain,\t0,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "label": "Playfield",
+      "line": 176,
+      "raw": "{\"Playfield\",\t\t0,0,\t\t 0,\t\t0,\t\t0,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "exit_output_address": 2,
+      "exit_output_symbol": "sTrough",
+      "label": "Right Trough",
+      "line": 179,
+      "next_state": "stShooter",
+      "raw": "{\"Right Trough\",\t1,swRTrough,\t sTrough,\tstShooter,\t5},",
+      "switch_address": 16,
+      "switch_symbol": "swRTrough"
+    },
+    {
+      "label": "Center Trough",
+      "line": 180,
+      "next_state": "stRTrough",
+      "raw": "{\"Center Trough\",\t1,swCTrough,\t 0,\t\tstRTrough,\t1},",
+      "switch_address": 17,
+      "switch_symbol": "swCTrough"
+    },
+    {
+      "label": "Left Trough",
+      "line": 181,
+      "next_state": "stCTrough",
+      "raw": "{\"Left Trough\",\t1,swLTrough,\t 0,\t\tstCTrough,\t1},",
+      "switch_address": 18,
+      "switch_symbol": "swLTrough"
+    },
+    {
+      "exit_output_address": 1,
+      "exit_output_symbol": "sOutHole",
+      "label": "Outhole",
+      "line": 182,
+      "next_state": "stLTrough",
+      "raw": "{\"Outhole\",\t\t1,swOutHole,\t sOutHole,\tstLTrough,\t5},",
+      "switch_address": 15,
+      "switch_symbol": "swOutHole"
+    },
+    {
+      "label": "Drain",
+      "line": 183,
+      "next_state": "stOutHole",
+      "raw": "{\"Drain\",\t\t1,0,\t\t 0,\t\tstOutHole,\t0,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "label": "Shooter",
+      "line": 186,
+      "next_state": "stBallLane",
+      "raw": "{\"Shooter\",\t\t1,swShooter,\t sShooterRel,\tstBallLane,\t0,\t0,\t0,\tSIM_STNOTEXCL|SIM_STSHOOT},",
+      "switch_address": 75,
+      "switch_symbol": "swShooter"
+    },
+    {
+      "label": "Ball Lane",
+      "line": 187,
+      "raw": "{\"Ball Lane\",\t\t1,0,\t\t 0,\t\t0,\t\t10,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "label": "No Strength",
+      "line": 188,
+      "next_state": "stShooter",
+      "raw": "{\"No Strength\",\t1,0,\t\t 0,\t\tstShooter,\t3},"
+    },
+    {
+      "label": "Right Outlane",
+      "line": 189,
+      "next_state": "stDrain",
+      "raw": "{\"Right Outlane\",\t1,swRightOutlane,0,\t\tstDrain,\t15},",
+      "switch_address": 74,
+      "switch_symbol": "swRightOutlane"
+    },
+    {
+      "label": "Left Outlane",
+      "line": 190,
+      "next_state": "stDrain",
+      "raw": "{\"Left Outlane\",\t1,swLeftOutlane, 0,\t\tstDrain,\t15},",
+      "switch_address": 73,
+      "switch_symbol": "swLeftOutlane"
+    },
+    {
+      "label": "BIKE - B",
+      "line": 191,
+      "next_state": "stFree",
+      "raw": "{\"BIKE - B\",\t\t1,swBike,\t 0,\t\tstFree,\t\t5},",
+      "switch_address": 31,
+      "switch_symbol": "swBike"
+    },
+    {
+      "label": "BIKE - I",
+      "line": 192,
+      "next_state": "stFree",
+      "raw": "{\"BIKE - I\",\t\t1,swbIke,\t 0,\t\tstFree,\t\t5},",
+      "switch_address": 32,
+      "switch_symbol": "swbIke"
+    },
+    {
+      "label": "BIKE - K",
+      "line": 193,
+      "next_state": "stFree",
+      "raw": "{\"BIKE - K\",\t\t1,swbiKe,\t 0,\t\tstFree,\t\t5},",
+      "switch_address": 33,
+      "switch_symbol": "swbiKe"
+    },
+    {
+      "label": "BIKE - E",
+      "line": 194,
+      "next_state": "stFree",
+      "raw": "{\"BIKE - E\",\t\t1,swbikE,\t 0,\t\tstFree,\t\t5},",
+      "switch_address": 34,
+      "switch_symbol": "swbikE"
+    },
+    {
+      "label": "Left Slingshot",
+      "line": 195,
+      "next_state": "stFree",
+      "raw": "{\"Left Slingshot\",\t1,swLeftSling,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 37,
+      "switch_symbol": "swLeftSling"
+    },
+    {
+      "label": "Rt Slingshot",
+      "line": 196,
+      "next_state": "stFree",
+      "raw": "{\"Rt Slingshot\",\t1,swRightSling,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 38,
+      "switch_symbol": "swRightSling"
+    },
+    {
+      "label": "Left Bumper",
+      "line": 197,
+      "next_state": "stFree",
+      "raw": "{\"Left Bumper\",\t1,swLeftJet,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 25,
+      "switch_symbol": "swLeftJet"
+    },
+    {
+      "label": "Right Bumper",
+      "line": 198,
+      "next_state": "stFree",
+      "raw": "{\"Right Bumper\",\t1,swRightJet,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 26,
+      "switch_symbol": "swRightJet"
+    },
+    {
+      "label": "Bottom Bumper",
+      "line": 199,
+      "next_state": "stFree",
+      "raw": "{\"Bottom Bumper\",\t1,swBottomJet,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 27,
+      "switch_symbol": "swBottomJet"
+    },
+    {
+      "exit_output_address": 11,
+      "exit_output_symbol": "sTLEject",
+      "label": "Top Left Hole",
+      "line": 202,
+      "next_state": "stFree",
+      "raw": "{\"Top Left Hole\",\t1,swTLEject,\t sTLEject,\tstFree,\t\t0},",
+      "switch_address": 36,
+      "switch_symbol": "swTLEject"
+    },
+    {
+      "exit_output_address": 10,
+      "exit_output_symbol": "sTREject",
+      "label": "Top Right Hole",
+      "line": 203,
+      "next_state": "stFree",
+      "raw": "{\"Top Right Hole\",\t1,swTREject,\t sTREject,\tstFree,\t\t0},",
+      "switch_address": 35,
+      "switch_symbol": "swTREject"
+    },
+    {
+      "exit_output_address": 9,
+      "exit_output_symbol": "sLREject",
+      "label": "Bot Right Hole",
+      "line": 204,
+      "next_state": "stFree",
+      "raw": "{\"Bot Right Hole\",\t1,swLREject,\t sLREject,\tstFree,\t\t0},",
+      "switch_address": 28,
+      "switch_symbol": "swLREject"
+    },
+    {
+      "label": "Left Spinner",
+      "line": 205,
+      "next_state": "stLLoop2",
+      "raw": "{\"Left Spinner\",\t1,swLSpinner,\t 0,\t\tstLLoop2,\t4,0,0,SIM_STSPINNER},",
+      "switch_address": 68,
+      "switch_symbol": "swLSpinner"
+    },
+    {
+      "label": "Left Loop",
+      "line": 206,
+      "next_state": "stuSa2",
+      "raw": "{\"Left Loop\",\t\t1,swLLoop,\t 0,\t\tstuSa2,\t\t5,sRGate,stRLoop3},",
+      "switch_address": 71,
+      "switch_symbol": "swLLoop"
+    },
+    {
+      "label": "Right Spinner",
+      "line": 207,
+      "next_state": "stRLoop2",
+      "raw": "{\"Right Spinner\",\t1,swRSpinner,\t 0,\t\tstRLoop2,\t4,0,0,SIM_STSPINNER},",
+      "switch_address": 67,
+      "switch_symbol": "swRSpinner"
+    },
+    {
+      "label": "Right Loop",
+      "line": 208,
+      "next_state": "stuSa2",
+      "raw": "{\"Right Loop\",\t1,swRLoop,\t 0,\t\tstuSa2,\t\t5,sLGate,stLLoop3},",
+      "switch_address": 72,
+      "switch_symbol": "swRLoop"
+    },
+    {
+      "label": "Right Loop",
+      "line": 209,
+      "next_state": "stRLoop4",
+      "raw": "{\"Right Loop\",\t1,swRLoop,\t 0,\t\tstRLoop4,\t4},",
+      "switch_address": 72,
+      "switch_symbol": "swRLoop"
+    },
+    {
+      "label": "Right Spinner",
+      "line": 210,
+      "next_state": "stFree",
+      "raw": "{\"Right Spinner\",\t1,swRSpinner,\t 0,\t\tstFree,\t\t4,0,0,SIM_STSPINNER},",
+      "switch_address": 67,
+      "switch_symbol": "swRSpinner"
+    },
+    {
+      "label": "Left Loop",
+      "line": 211,
+      "next_state": "stLLoop4",
+      "raw": "{\"Left Loop\",\t\t1,swLLoop,\t 0,\t\tstLLoop4,\t4},",
+      "switch_address": 71,
+      "switch_symbol": "swLLoop"
+    },
+    {
+      "label": "Left Spinner",
+      "line": 212,
+      "next_state": "stFree",
+      "raw": "{\"Left Spinner\",\t1,swLSpinner,\t 0,\t\tstFree,\t\t4,0,0,SIM_STSPINNER},",
+      "switch_address": 68,
+      "switch_symbol": "swLSpinner"
+    },
+    {
+      "label": "USA - U",
+      "line": 215,
+      "next_state": "stFree",
+      "raw": "{\"USA - U\",\t\t1,swUsa,\t 0,\t\tstFree,\t\t5},",
+      "switch_address": 41,
+      "switch_symbol": "swUsa"
+    },
+    {
+      "label": "USA - S",
+      "line": 216,
+      "next_state": "stFree",
+      "raw": "{\"USA - S\",\t\t1,swuSa,\t 0,\t\tstFree,\t\t5},",
+      "switch_address": 42,
+      "switch_symbol": "swuSa"
+    },
+    {
+      "label": "USA - A",
+      "line": 217,
+      "next_state": "stFree",
+      "raw": "{\"USA - A\",\t\t1,swusA,\t 0,\t\tstFree,\t\t5},",
+      "switch_address": 43,
+      "switch_symbol": "swusA"
+    },
+    {
+      "label": "USA - U",
+      "line": 218,
+      "next_state": "stLJet",
+      "raw": "{\"USA - U\",\t\t1,swUsa,\t 0,\t\tstLJet,\t\t5},",
+      "switch_address": 41,
+      "switch_symbol": "swUsa"
+    },
+    {
+      "label": "USA - S",
+      "line": 219,
+      "next_state": "stLJet",
+      "raw": "{\"USA - S\",\t\t1,swuSa,\t 0,\t\tstLJet,\t\t5},",
+      "switch_address": 42,
+      "switch_symbol": "swuSa"
+    },
+    {
+      "label": "USA - A",
+      "line": 220,
+      "next_state": "stLJet",
+      "raw": "{\"USA - A\",\t\t1,swusA,\t 0,\t\tstLJet,\t\t5},",
+      "switch_address": 43,
+      "switch_symbol": "swusA"
+    },
+    {
+      "label": "Left Bumper",
+      "line": 221,
+      "next_state": "stRJet",
+      "raw": "{\"Left Bumper\",\t1,swLeftJet,\t 0,\t\tstRJet,\t\t3},",
+      "switch_address": 25,
+      "switch_symbol": "swLeftJet"
+    },
+    {
+      "label": "Right Bumper",
+      "line": 222,
+      "next_state": "stBJet",
+      "raw": "{\"Right Bumper\",\t1,swRightJet,\t 0,\t\tstBJet,\t\t3},",
+      "switch_address": 26,
+      "switch_symbol": "swRightJet"
+    },
+    {
+      "label": "Bottom Bumper",
+      "line": 223,
+      "next_state": "stFree",
+      "raw": "{\"Bottom Bumper\",\t1,swBottomJet,\t 0,\t\tstFree,\t\t3},",
+      "switch_address": 27,
+      "switch_symbol": "swBottomJet"
+    },
+    {
+      "label": "Harley - H",
+      "line": 226,
+      "next_state": "stFree",
+      "raw": "{\"Harley - H\",\t1,swHarley,\t 0,\t\tstFree,\t\t3,0,0,SIM_STSWKEEP},",
+      "switch_address": 51,
+      "switch_symbol": "swHarley"
+    },
+    {
+      "label": "Harley - A",
+      "line": 227,
+      "next_state": "stFree",
+      "raw": "{\"Harley - A\",\t1,swhArley,\t 0,\t\tstFree,\t\t3,0,0,SIM_STSWKEEP},",
+      "switch_address": 52,
+      "switch_symbol": "swhArley"
+    },
+    {
+      "label": "Harley - R",
+      "line": 228,
+      "next_state": "stFree",
+      "raw": "{\"Harley - R\",\t1,swhaRley,\t 0,\t\tstFree,\t\t3,0,0,SIM_STSWKEEP},",
+      "switch_address": 53,
+      "switch_symbol": "swhaRley"
+    },
+    {
+      "label": "Harley - L",
+      "line": 229,
+      "next_state": "stFree",
+      "raw": "{\"Harley - L\",\t1,swharLey,\t 0,\t\tstFree,\t\t3,0,0,SIM_STSWKEEP},",
+      "switch_address": 54,
+      "switch_symbol": "swharLey"
+    },
+    {
+      "label": "Harley - E",
+      "line": 230,
+      "next_state": "stFree",
+      "raw": "{\"Harley - E\",\t1,swharlEy,\t 0,\t\tstFree,\t\t3,0,0,SIM_STSWKEEP},",
+      "switch_address": 55,
+      "switch_symbol": "swharlEy"
+    },
+    {
+      "label": "Harley - Y",
+      "line": 231,
+      "next_state": "stFree",
+      "raw": "{\"Harley - Y\",\t1,swharleY,\t 0,\t\tstFree,\t\t3,0,0,SIM_STSWKEEP},",
+      "switch_address": 56,
+      "switch_symbol": "swharleY"
+    },
+    {
+      "label": "DAVIDSON - D",
+      "line": 234,
+      "next_state": "stFree",
+      "raw": "{\"DAVIDSON - D\",\t1,swDavidson,\t 0,\t\tstFree,\t\t3},",
+      "switch_address": 57,
+      "switch_symbol": "swDavidson"
+    },
+    {
+      "label": "DAVIDSON - A",
+      "line": 235,
+      "next_state": "stFree",
+      "raw": "{\"DAVIDSON - A\",\t1,swdAvidson,\t 0,\t\tstFree,\t\t3},",
+      "switch_address": 58,
+      "switch_symbol": "swdAvidson"
+    },
+    {
+      "label": "DAVIDSON - V",
+      "line": 236,
+      "next_state": "stFree",
+      "raw": "{\"DAVIDSON - V\",\t1,swdaVidson,\t 0,\t\tstFree,\t\t3},",
+      "switch_address": 61,
+      "switch_symbol": "swdaVidson"
+    },
+    {
+      "label": "DAVIDSON - I",
+      "line": 237,
+      "next_state": "stFree",
+      "raw": "{\"DAVIDSON - I\",\t1,swdavIdson,\t 0,\t\tstFree,\t\t3},",
+      "switch_address": 62,
+      "switch_symbol": "swdavIdson"
+    },
+    {
+      "label": "DAVIDSON - D",
+      "line": 238,
+      "next_state": "stFree",
+      "raw": "{\"DAVIDSON - D\",\t1,swdaviDson,\t 0,\t\tstFree,\t\t3},",
+      "switch_address": 63,
+      "switch_symbol": "swdaviDson"
+    },
+    {
+      "label": "DAVIDSON - S",
+      "line": 239,
+      "next_state": "stFree",
+      "raw": "{\"DAVIDSON - S\",\t1,swdavidSon,\t 0,\t\tstFree,\t\t3},",
+      "switch_address": 64,
+      "switch_symbol": "swdavidSon"
+    },
+    {
+      "label": "DAVIDSON - O",
+      "line": 240,
+      "next_state": "stFree",
+      "raw": "{\"DAVIDSON - O\",\t1,swdavidsOn,\t 0,\t\tstFree,\t\t3},",
+      "switch_address": 65,
+      "switch_symbol": "swdavidsOn"
+    },
+    {
+      "label": "DAVIDSON - N",
+      "line": 241,
+      "next_state": "stFree",
+      "raw": "{\"DAVIDSON - N\",\t1,swdavidsoN,\t 0,\t\tstFree,\t\t3},",
+      "switch_address": 66,
+      "switch_symbol": "swdavidsoN"
+    }
+  ],
+  "switches": [
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Start",
+      "line": 97,
+      "status": "candidate",
+      "symbol": "swStart"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Tilt",
+      "line": 98,
+      "status": "candidate",
+      "symbol": "swTilt"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "Out Hole",
+      "line": 99,
+      "state_labels": [
+        "Outhole"
+      ],
+      "status": "candidate",
+      "symbol": "swOutHole"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "R Trough",
+      "line": 100,
+      "state_labels": [
+        "Right Trough"
+      ],
+      "status": "candidate",
+      "symbol": "swRTrough"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "C Trough",
+      "line": 101,
+      "state_labels": [
+        "Center Trough"
+      ],
+      "status": "candidate",
+      "symbol": "swCTrough"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "L Trough",
+      "line": 102,
+      "state_labels": [
+        "Left Trough"
+      ],
+      "status": "candidate",
+      "symbol": "swLTrough"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Slam Tilt",
+      "line": 103,
+      "status": "candidate",
+      "symbol": "swSlamTilt"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Coin Door",
+      "line": 104,
+      "status": "candidate",
+      "symbol": "swCoinDoor"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Ticket",
+      "line": 105,
+      "status": "candidate",
+      "symbol": "swTicket"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "Left Jet",
+      "line": 106,
+      "state_labels": [
+        "Left Bumper"
+      ],
+      "status": "candidate",
+      "symbol": "swLeftJet"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "Right Jet",
+      "line": 107,
+      "state_labels": [
+        "Right Bumper"
+      ],
+      "status": "candidate",
+      "symbol": "swRightJet"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "Bottom Jet",
+      "line": 108,
+      "state_labels": [
+        "Bottom Bumper"
+      ],
+      "status": "candidate",
+      "symbol": "swBottomJet"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "LR Eject",
+      "line": 109,
+      "state_labels": [
+        "Bot Right Hole"
+      ],
+      "status": "candidate",
+      "symbol": "swLREject"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Bike",
+      "line": 110,
+      "state_labels": [
+        "BIKE - B"
+      ],
+      "status": "candidate",
+      "symbol": "swBike"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "b Ike",
+      "line": 111,
+      "state_labels": [
+        "BIKE - I"
+      ],
+      "status": "candidate",
+      "symbol": "swbIke"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "bi Ke",
+      "line": 112,
+      "state_labels": [
+        "BIKE - K"
+      ],
+      "status": "candidate",
+      "symbol": "swbiKe"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "bik E",
+      "line": 113,
+      "state_labels": [
+        "BIKE - E"
+      ],
+      "status": "candidate",
+      "symbol": "swbikE"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "TR Eject",
+      "line": 114,
+      "state_labels": [
+        "Top Right Hole"
+      ],
+      "status": "candidate",
+      "symbol": "swTREject"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "TL Eject",
+      "line": 115,
+      "state_labels": [
+        "Top Left Hole"
+      ],
+      "status": "candidate",
+      "symbol": "swTLEject"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling",
+      "line": 116,
+      "state_labels": [
+        "Left Slingshot"
+      ],
+      "status": "candidate",
+      "symbol": "swLeftSling"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling",
+      "line": 117,
+      "state_labels": [
+        "Rt Slingshot"
+      ],
+      "status": "candidate",
+      "symbol": "swRightSling"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "Usa",
+      "line": 118,
+      "state_labels": [
+        "USA - U"
+      ],
+      "status": "candidate",
+      "symbol": "swUsa"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "u Sa",
+      "line": 119,
+      "state_labels": [
+        "USA - S"
+      ],
+      "status": "candidate",
+      "symbol": "swuSa"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "us A",
+      "line": 120,
+      "state_labels": [
+        "USA - A"
+      ],
+      "status": "candidate",
+      "symbol": "swusA"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Harley",
+      "line": 121,
+      "state_labels": [
+        "Harley - H"
+      ],
+      "status": "candidate",
+      "symbol": "swHarley"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "h Arley",
+      "line": 122,
+      "state_labels": [
+        "Harley - A"
+      ],
+      "status": "candidate",
+      "symbol": "swhArley"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "ha Rley",
+      "line": 123,
+      "state_labels": [
+        "Harley - R"
+      ],
+      "status": "candidate",
+      "symbol": "swhaRley"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "label": "har Ley",
+      "line": 124,
+      "state_labels": [
+        "Harley - L"
+      ],
+      "status": "candidate",
+      "symbol": "swharLey"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "harl Ey",
+      "line": 125,
+      "state_labels": [
+        "Harley - E"
+      ],
+      "status": "candidate",
+      "symbol": "swharlEy"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "label": "harle Y",
+      "line": 126,
+      "state_labels": [
+        "Harley - Y"
+      ],
+      "status": "candidate",
+      "symbol": "swharleY"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "Davidson",
+      "line": 127,
+      "state_labels": [
+        "DAVIDSON - D"
+      ],
+      "status": "candidate",
+      "symbol": "swDavidson"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.input.switch",
+      "label": "d Avidson",
+      "line": 128,
+      "state_labels": [
+        "DAVIDSON - A"
+      ],
+      "status": "candidate",
+      "symbol": "swdAvidson"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "da Vidson",
+      "line": 129,
+      "state_labels": [
+        "DAVIDSON - V"
+      ],
+      "status": "candidate",
+      "symbol": "swdaVidson"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "dav Idson",
+      "line": 130,
+      "state_labels": [
+        "DAVIDSON - I"
+      ],
+      "status": "candidate",
+      "symbol": "swdavIdson"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.input.switch",
+      "label": "davi Dson",
+      "line": 131,
+      "state_labels": [
+        "DAVIDSON - D"
+      ],
+      "status": "candidate",
+      "symbol": "swdaviDson"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "label": "david Son",
+      "line": 132,
+      "state_labels": [
+        "DAVIDSON - S"
+      ],
+      "status": "candidate",
+      "symbol": "swdavidSon"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.input.switch",
+      "label": "davids On",
+      "line": 133,
+      "state_labels": [
+        "DAVIDSON - O"
+      ],
+      "status": "candidate",
+      "symbol": "swdavidsOn"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "label": "davidso N",
+      "line": 134,
+      "state_labels": [
+        "DAVIDSON - N"
+      ],
+      "status": "candidate",
+      "symbol": "swdavidsoN"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "label": "R Spinner",
+      "line": 135,
+      "state_labels": [
+        "Right Spinner"
+      ],
+      "status": "candidate",
+      "symbol": "swRSpinner"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.input.switch",
+      "label": "L Spinner",
+      "line": 136,
+      "state_labels": [
+        "Left Spinner"
+      ],
+      "status": "candidate",
+      "symbol": "swLSpinner"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.input.switch",
+      "label": "L Loop",
+      "line": 137,
+      "state_labels": [
+        "Left Loop"
+      ],
+      "status": "candidate",
+      "symbol": "swLLoop"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.input.switch",
+      "label": "R Loop",
+      "line": 138,
+      "state_labels": [
+        "Right Loop"
+      ],
+      "status": "candidate",
+      "symbol": "swRLoop"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.input.switch",
+      "label": "Left Outlane",
+      "line": 139,
+      "state_labels": [
+        "Left Outlane"
+      ],
+      "status": "candidate",
+      "symbol": "swLeftOutlane"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.input.switch",
+      "label": "Right Outlane",
+      "line": 140,
+      "state_labels": [
+        "Right Outlane"
+      ],
+      "status": "candidate",
+      "symbol": "swRightOutlane"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.input.switch",
+      "label": "Shooter",
+      "line": 141,
+      "state_labels": [
+        "Shooter"
+      ],
+      "status": "candidate",
+      "symbol": "swShooter"
+    }
+  ],
+  "version": 1
+}

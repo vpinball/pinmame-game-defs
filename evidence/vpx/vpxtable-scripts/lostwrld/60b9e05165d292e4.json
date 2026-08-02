@@ -1,0 +1,346 @@
+{
+  "driver_ids": [
+    "lostwrld"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.lostwrld"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Solknocker",
+      "line": 100,
+      "status": "candidate",
+      "symbol": "Solknocker"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Trough.Sol Out",
+      "line": 101,
+      "status": "candidate",
+      "symbol": "bsTrough.SolOut"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol L Saucer",
+      "line": 102,
+      "status": "candidate",
+      "symbol": "SolLSaucer"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol R Saucer",
+      "line": 103,
+      "status": "candidate",
+      "symbol": "SolRSaucer"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Nudge.Sol Game On",
+      "line": 104,
+      "status": "candidate",
+      "symbol": "vpmNudge.SolGameOn"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 22,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "__           _     __    __           _     _\n / /  ___  ___| |_  / / /\\ \\ \\___  _ __| | __| |\n/ /  / _ \\/ __| __| \\ \\/  \\/ / _ \\| '__| |/ _` |\n/ /__| (_) \\__ \\ |_   \\  /\\  / (_) | |  | | (_| |\n\\____/\\___/|___/\\__|   \\/  \\/ \\___/|_|  |_|\\__,_|\n002 - iaakki - physics codes updated, frametimer added\n003 - iaakki - most of the ssf sounds included; lot still missing\n004 - bord - tuned insert brightness for 10.8 beta 6\n005 - TastyWasps - Fleep sounds, VR integration, Dynamic Ball Shadows, script organization\n006 - TastyWasps - Desktop Digits, VR Deluxe Room\n007 - TastyWasps - VR Backglass updated from Hauntfreaks\n008 - bord - incorporate Wylte physics feedback, minor visual tweaks\n009 - iaakki - physics change for top lane nails, bumper ring speed increased slightly, minor change to sling rubber, ball release sound added, lowered zcol_posts falloff to 0.05 as Wylte proposed\n      Upped flipper elasticity and zcol_rubbers friction\n010 - bord - bumper base visuals tweak, refraction reduction, siderails added to DT\n011 - iaakki - bumpers chopped\n012 - TastyWasps - VR cab art upscaled by DGrimmReaper/DarthVito\n013 - TastyWasps - VR cab art upscaled by Hauntfreaks / DGrimmReaper\n014 - TastyWasps - visible tag fixed on VR Deluxe room book object.\n015 - bord - cleanup for release"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in special_audiopan_and_audiofade_patched/bord_probably/Lost World (Bally 1979).vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "special_audiopan_and_audiofade_patched/bord_probably/Lost World (Bally 1979).vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "60b9e05165d292e4fbf0556caefa8af307c38d87c9786e55c3ee734c785be7dd"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "sw1",
+      "line": 491,
+      "status": "candidate",
+      "symbol": "sw1_Hit"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "sw2",
+      "line": 495,
+      "status": "candidate",
+      "symbol": "sw2_Hit"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "sw3",
+      "line": 476,
+      "status": "candidate",
+      "symbol": "sw3_Hit"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "sw3",
+      "line": 477,
+      "status": "candidate",
+      "symbol": "sw3_unHit"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "sw4",
+      "line": 478,
+      "status": "candidate",
+      "symbol": "sw4_Hit"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "sw4",
+      "line": 479,
+      "status": "candidate",
+      "symbol": "sw4_unHit"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "sw5",
+      "line": 470,
+      "status": "candidate",
+      "symbol": "sw5_Hit"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "sw5",
+      "line": 471,
+      "status": "candidate",
+      "symbol": "sw5_unHit"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "5a",
+      "line": 518,
+      "status": "candidate",
+      "symbol": "sw5a_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 499,
+      "status": "candidate",
+      "symbol": "sw17_Spin"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw5",
+      "line": 472,
+      "state_labels": [
+        "sw5"
+      ],
+      "status": "candidate",
+      "symbol": "sw5_unHit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 539,
+      "status": "candidate",
+      "symbol": "sw22_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "23b",
+      "line": 335,
+      "status": "candidate",
+      "symbol": "sw23b_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "23b",
+      "line": 340,
+      "status": "candidate",
+      "symbol": "sw23b_unHit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "24b",
+      "line": 374,
+      "status": "candidate",
+      "symbol": "sw24b_Hit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "24b",
+      "line": 379,
+      "status": "candidate",
+      "symbol": "sw24b_unHit"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "sw25",
+      "line": 480,
+      "status": "candidate",
+      "symbol": "sw25_Hit"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "sw25",
+      "line": 481,
+      "status": "candidate",
+      "symbol": "sw25_unHit"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "sw26",
+      "line": 482,
+      "status": "candidate",
+      "symbol": "sw26_Hit"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "sw26",
+      "line": 483,
+      "status": "candidate",
+      "symbol": "sw26_unHit"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "sw27",
+      "line": 560,
+      "status": "candidate",
+      "symbol": "sw27_Hit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 581,
+      "status": "candidate",
+      "symbol": "sw28_Hit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 602,
+      "status": "candidate",
+      "symbol": "sw29_Hit"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "sw30",
+      "line": 623,
+      "status": "candidate",
+      "symbol": "sw30_Hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "sw31",
+      "line": 484,
+      "status": "candidate",
+      "symbol": "sw31_Hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "sw31",
+      "line": 485,
+      "status": "candidate",
+      "symbol": "sw31_unHit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 486,
+      "status": "candidate",
+      "symbol": "sw32_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 487,
+      "status": "candidate",
+      "symbol": "sw32_unHit"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 656,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 676,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "sw38",
+      "line": 451,
+      "status": "candidate",
+      "symbol": "sw38_Hit"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "sw39",
+      "line": 432,
+      "status": "candidate",
+      "symbol": "sw39_Hit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "sw40",
+      "line": 413,
+      "status": "candidate",
+      "symbol": "sw40_Hit"
+    }
+  ],
+  "version": 1
+}

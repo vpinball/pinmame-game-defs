@@ -1,0 +1,609 @@
+{
+  "driver_ids": [
+    "atlantis"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.atlantis"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol VUK Kickout",
+      "line": 596,
+      "status": "candidate",
+      "symbol": "SolVUKKickout"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Drop Target Reset",
+      "line": 597,
+      "status": "candidate",
+      "symbol": "SolDropTargetReset"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Ramp Up",
+      "line": 598,
+      "status": "candidate",
+      "symbol": "SolRampUp"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Drain Post",
+      "line": 599,
+      "status": "candidate",
+      "symbol": "SolDrainPost"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Ramp Down",
+      "line": 600,
+      "status": "candidate",
+      "symbol": "SolRampDown"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Saucer Kickout",
+      "line": 601,
+      "status": "candidate",
+      "symbol": "SolSaucerKickout"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Ball Release",
+      "line": 602,
+      "status": "candidate",
+      "symbol": "SolBallRelease"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Outhole",
+      "line": 603,
+      "status": "candidate",
+      "symbol": "SolOuthole"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 604,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Release Locked Ball",
+      "line": 605,
+      "status": "candidate",
+      "symbol": "SolReleaseLockedBall"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 205,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "AAAAA    TTTTTTTT  LL           AA AA    NN      NN  TTTTTTTT   II   SSSSSSS\n AA   AA      TT     LL          AA   AA   NNN     NN     TT      II  SS     SS\nAA     AA     TT     LL         AA     AA  NNNN    NN     TT      II  SS\nAA     AA     TT     LL         AA     AA  NN NN   NN     TT      II  SS\nAAAAAAAAA     TT     LL         AAAAAAAAA  NN NN   NN     TT      II   SSSSSSS\nAA     AA     TT     LL         AA     AA  NN   NN NN     TT      II         SS\nAA     AA     TT     LL         AA     AA  NN    NNNN     TT      II         SS\nAA     AA     TT     LL         AA     AA  NN     NNN     TT      II  SS     SS\nAA     AA     TT     LLLLLLLLL  AA     AA  NN      NN     TT      II   SSSSSSS   by Bally/Midway, 1989\n\n\nDevelopment by Herweh 2019 for Visual Pinball 10\nVersion 1.1\n\nVery special thanks to\n- Schreibi34: For the playfield mesh, playfield insert templates and two awesome sub models\n- 32assassin: For original red bumper caps, sub model, flipper bats, desktop score display and for sure some more.\n        And for being a very cool guy who is always helping and supporting with a WIP build or other resources\n- OldSkoolGamer: For providing me all the wonderful artwork he designed for the VP9 build\n- Cosmic80: For reworking nearly all the inserts of the playfield\n\nSpecial thanks to\n- OldSkoolGamer, ICPjuggla, Herweh (:-): For creating a very cool VP9 build from where I borrowed a few table elements\n- Bord: For the ramp lift stuff and for being such a great guy who is always helping when help is needed\n- Rosve: For the drain plug from his 'Skyrocket' table\n- Batch: For the backglass image of the desktop view\n- Vogliadicane: For the blue and transparent bumper caps from his 'Fathom' mods. They do match perfectly into the 'Atlantis' theme.\n- Flupper: Once again for his plastic and wire ramp tutorial and for the flasher domes\n- Ninuzzu: For his flipper shadows\n- Dark: For the gates primitives template\n- Dark and nFozzy: Locknuts and screws\n- DJRobX, RothbauerW and maybe some other ones: For some code in my script like the SSF routines\n- Thalamus: For beta testing, some good hints and a missing sound ;-)\n- VPX development team: For always lifting VP to the next level\n- All I have forgotten. Please send me a PM if you think I should add you to the 'Thx' section here. My fault!\n\nRelease notes:\nVersion 1.1  : New backwall image for desktop mode and replaced third ballroling sound\nVersion 1.0.2: Some graphical finetuning\n       - reworked the right wire ramp to get it more authentic\n       - smoother transition for a lot objects from GI off to on and vice versa\nVersion 1.0.1: Some minor fixes\n       - added a missing rubber to the GI\n       - added some missing sounds when hitting objects\n       - improved the shadows of the drop targets\n       - emended the left bonus held flasher\n       - reworked the wire ramp a tiny bit\n       - added a GI option to de-/activate bulbs under the inlanes ('EnableGIInlane')\nVersion 1.0: Initial release\n\n******** Revisions done by UnclePaulie on Hybrid version 0.1 - 2.0 *********\nv0.1  Added hybrid mode for VR room, cabinet, and desktop\n  Added minimal VR room.\n  Added VR elements (power cord, several options: clock, posters, topper (HiRez image)\n  Added 4 ball options, dark, bright, and brightest\n    Added DTRails collection for left and right rails in desktop mode\n  Animated plunger, start button, and flippers in VR.  Had to assign individual materials to each.\n  Adjusted the digital tilt sensitivity to 6, and the nudge strength to 1.\n  Removed rollingtimer, removed debug mode code and ballcontroltimer, ballsearch, and manual ball control.\n  Added groove to plunger lane, and small ball release ramp to get up.\n  Completely changed the trough logic to handle balls on table\n  Changed the apron wall structure to create a trough\n    No longer destroy balls.  Use a global gBOT throughout all of script.\n  Removed all the getballs calls and am only useing gBOT.  Will help eliminate stutter on slower CPU machines\n  Created a sub to control the VUK and and sw39 saucer.\n  Removed startcontrol manual ball control trigger.  No longer needed.\n    Added option to turn magnasave option on and off\n    Readjusted flipper size down to be 147 VP units per VPW recommendations.  (was 151).  Tweaked physics\n  Updated to nFozzy / Roth flipper physics\n  Got rid of LetTheBallJump code.  VPW physics will replace\n  Modified the GetBallID function\n  Flipper shadows and options moved to FlipperVisualUpdate timer.  Removed graphicstimer.\n  VPW ball rolling sounds implemented\nv0.2  Redid the desktop backglass displays to align middle vertical LEDs correctly.\nv0.3  Adjusted VR room and LED displays\n  Added optional plywood grain sideblades\n  Added animated backglass in VR\nv0.4  Changed GIOverhead and GIOverheadUpperPF to a flasher from a light.  Looked wierd in VR, and wasn't angled correctly.\n  Ensured all lights stayed within the playfield... could see lights outside of table in VR.\n  Modified the desktop background.  Too busy before.\n  Adjusted the plunger groove\nv0.5  Added dynamic shadows solution to the solution created by iaakki, apophis, Wylte\n  Modded the playfield image to include two more trigger holes in the top lanes\nv0.6  Added plywood cutouts for the target and trigger holes\n  Aligned the triggers per the real table, and adjusted the height.  Also moved the plunger location slightly to the right to align correctly.\n  Positioned the sling and wall primatives correctly.  Adjusted sling rubbers, and moved those and all rubbers up by 5 VP units.\n  Modified the apron primitive image to include a cutout for the ball release\n  Made the apron walls visible, and slightly higher, as you could see under apron easily in VR\n  Enababled bumper sounds\n  Added knocker solenoid subroutine and KnockerPosition Primitive for sound\nv0.7  Slight flipper trigger position adjustment\n  Adjusted pegs and posts for actual table alignment\n  Added all rubbers, dPosts, dSleeves, metal walls, rollovers, spinner, gates, walls. saucers, and sub for Fleep sounds and VPW physics.\n  Replaced rest of a_physics materials to new VPW physics materials\nv0.8  Added updated ramprolling sounds solution created by nFozzy and VPW.  Removed LoopTimer\n  Added GI relay sounds\n  Removed spinnertimer and added spinner sub to FrameTimer\nv0.9  Added updated standup targets with VPW physics, original code created by Rothbauerw and VPW team\nv0.10 Put Rothbaierw drop targets in\n  Removed wDoubleDrop1And2 walls, SW_Timer, and old drop target subs.  Added GI droptarget lights to DTHit sub.\n  Corrected getting shadows off on a light drop target hit, and it actually didn't drop.\nv0.11 Adjusted the height of standup targets and hiddin bouncer walls.  Also adjusted the amount of drop the drop targets go down.\n  Updated playfield physics, bumpers, slings, ramps per VPW recommendations.\n  The rebounders weren't registering, as they were coded to be just a hit event.  They were made as slings, and needed the sw39_slingshot sub call.\n  Changed the physics on the rebounders as well.\n  Added a simple trigger to slow the ball down heading for the left saucer slightly, as it would rarely stay in that saucer.\n    There was a z fighting issue on the metal wall near the right standup targets.\nv0.12 Further adjustments to lighting on desktop backglass\n  Rewrote some of the code for sw39_timer and kickersol. It was forcing a z height when releasing, and sometimes caused balls on the sub trough\n  to drop to a z height of 25, and fall below sub.  I forced the kicker to work as it should, and have a random kickout value.\n  Have SW44 on the wSubRamp wall now, and the sub ramps have walls now.  Just in case.\n  Turned sound off at startup for SW44. It should only sound when a ball is in there.\n  Implemented a similar approach for the VUK.  Using an actual kicker now instead of xyz values.\n  Added a Z height limitation to sw39 saucer circle condition\n  Added code in the saucers_on sub to handle a corner condition where a ball could slow to a stop on top of the right metal guide.\nv0.13 Improved drain kick action, GI Timer control in and not in multiball, and sounds\n  Removed GetBallID and lockedBallID, as not a part of updated code.\n    Adjusted when top saucer sound triggered.\n  Edited sounds for drain post.\n  Adjusted the pov for desktop\nv0.14 Moved the post to the right of the left VUK, and the metal guide, and widened the ramp slightly to help getting ball up the left VUK. Too hard before.\n  Also moved the lift ramp slightly, and increased the base by 7 vp units.  Aligns with the primative closer.\nv0.15 Changed all the flasher lights to transmit = 0.1 from zero on layer 11.\n  Modified the image for the model 2 sub texture so you can see ball go in, and the ball that's in there... especially in VR.\n  Added a GIRightTop collection to control the brightness at the upper right area of playfield.  The white was too bright there.\n  Reduced intensity of l66a and l66b from 25 to 20.\n  Adjusted full cab pov.\n  Put gilvl correctly in GITimer\n  Adjusted the intensity of l12, 12a, and 12b from 200 to 125.  They flash bright when a drop target is hit.  They were two bright.\n  Added dome flasher relay sounds, and adjusted volume of all relay sounds.\nv0.16 Rewrote the RampLiftTimer code to not rely on timer intervals. I think it was impacting an NVRAM corruption corner condition, similar to mousin' around.\n  Modified the sounds of the ramp lift to only a low solenoid snap.  It's too fast for a motor sound.\n  Code CleanUp\nv0.17 Changed the rebounders to just be bouncy and not a sling. It was causing too much extra energy on the ball.\nv0.18 Added Flupper Flasher Domes\nv0.19 Tomate added new pMetalWallsLift primitive.  The left wall was broken, and didn't have a face.  He corrected the prim, as you could see through one side.\n  Tomate also added/baked new flippers for Bally.\n  Adjusted the bally flippers material to colormaxnoreflectionhalf.  Also changed the blenddisablelighting of them to 0.5 (was 0.. a bit too dark)\n  Removed the yellow/green/bally and the gray/dark gray/bally flipper options.\n  Modified the backwall image slightly for around flasher domes\n  Slightly adjusted the left edge in of PlasticL3, as it was sticking through the lift ramp wall.\nv0.20 Added 3D insert prims.  Updated the playfield for insert cutouts.  Added a text only ramp overlay.\n  Changed bulb intensity scale to 0.35\nv0.21 Added Lampz in code\nv0.22 Adjusting light insert values: started with default values: falloff 50, falloff power 2, intensity 10, scale mesh 10, transmit 0.5.\n  Then adjusted using the light editor mode.\n  Put the text image for inserts at alpha = 50\n  Adjusted the Lampz.FadeSpeedDown(x) = 1/20 (was 1/40).\nv0.23 Feedback from apophis:\n    The L1 insert should be tied to L46... old way of controlling inserts, via timer, it was called, \"automatic light mapping feature\". the lamp number needed to be entered in the Timer Interval parameter for the light\n    Removed the off insert primitives from the Lampz controller code.\n    Disabled screeen space reflections.\n    Removed the pflightscount routines. No longer needed.\n    Made the flupper dome flare less bright.(from 0.3 to 0.1)\n    Added bloom lights for all inserts (about half had them previously).  Adjusted to a darker bloom, lower intensity and matching color\n  Lowered the white rectangle inserts z height slightly.\n  Blue inserts were too bright, darkened the material for those.\n  Lots of insert lighting adjustments\n  Adjusted the targets for GI lighting\nv0.24 Adjusted the disablelighting of the flasher dome lights to fade with the same GI / GIStep like the rest of the table.\nv0.25 Adjusted the ball brightness GI level\nv0.26 Added script to make the insert lights get brighter as GI gets darker\nv0.27 Additional Feedback from apophis:\n    Made the inserts fade faster, as hard to see blink.  Lampz.fadespeedup to 1/3 and speed down to 1/8.\n    Reduced amount of dynamic sources for shadows from 20 to 8. This will reduce processing, and if too many some shadows disappear\n    pDrainPost needed more DL applied to it and lowered the bloom level of the associated L78 lights\n    Lowered the brightness of the apron when GI is off.\nv0.28 Changed the apron cards to a ramp rather than decal.  Adjusted the brigthness of the apron cards in the GI script.  Just added to GITarget collection.\nv0.29 Wylte recommended changing the playfield friction from .2 to .25.  Also knocker postion was visible.\nv0.30 Tomate added Wood walls mapped correction\nv0.31 Changed the GI on the ramplift flaps to be controlled via disable lighting rather than a material step.  It was flashing, and turned black during GI before.\nv0.32 Changed the GI on the ApronPlungerCover like apron cards... created a ramp and tied to GITarget collection.\n  Updated cab pov per BountyBob's suggestions.\n  Removing the pflights portion of code removed the backglass jackpot lights.  Added to lampz MassAssign\nv0.33 Aubrel suggested changing the ball's playfield reflection to a smaller value like 0.35 (instead of 1).  Had a slight ball ring.\n  To better match the PAPA gameplay, increased the bumper force from 10.5 to 11.5, flippers from 2800 to 3200, and slings from 4.5 to 5.\n  Changed the slowdown to saucer sub velocity from \"/2\" to \"/2.5\"\n  Updated the spinner to move correctly by putting a negative value in it's .RotX callout.\n  Added a small curved wall to top of metal guides between in and outlanes to stop ball from occassionally stopping there.\n  Added a blocking wall behind the left loop ramp. Pinstratsdan got the ball to jump out of the loop and onto the adjacent plastic. Should have been there from start.\n  Moved the plunger wall back slightly to get ball closer to plunger.\n  The jackpot numbers on the desktop were blurry.  Modified image slightly to look better.\nv0.34 Added a flashing light on the desktop backglass\nv0.35 Added updated center drain post dome from Bord's space shuttle (done by Rothbauerw).\nv2.0  Released version\nv2.01 Hot fix for a small corner condition where when a ball shoots out of the sub, and you hit another multiball at the same time, and they collide, it can bounce behind the loop.\n   fix was to all an invisible, physical wall on the left side of ramp.\n  Thank you to all the testers on the VPW team for testing, feedback, and suggestions for improvement:\n    nFozzy, apophis, Aubrel, Wylte, Rik, Rajo Joey, iaaki, BountyBob, rothbauerw, tomate, PinStratsDan, Lumi\n-------------------------------------------------\nIF YOU HAVE PERFORMANCE ISSUES or LOW FRAME RATE:\n-------------------------------------------------\nTry to set some of the objects to \"Static rendering\". Open layer 7, select all screws and/or locknuts and select \"Static Rendering\" in the options windows\nTry disabling \"Reflect Elements On Playfield\". This will increase performance for lesser powerful systems, and increase frame rate.\nALSO NOTE:  If you have issues with the ROM, or it's not accepting coins... it is likely you will need the:\nPre-initialized NVRAM files for Bally MPU A084-91786-AH06 (6803) and Gottlieb System 3 VPM Tables to accept coins:\nhttps://www.vpforums.org/index.php?app=downloads&showfile=1362"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Atlantis (Bally 1989) w VR Room v2.01.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Atlantis (Bally 1989) w VR Room v2.01.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "464fb3b7b14080cb685e7be728d22b96d0051f8e040e095affc635799097b28b"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 0,
+      "group": "pinmame.input.switch",
+      "label": "39 Step",
+      "line": 1049,
+      "status": "candidate",
+      "symbol": "sw39Step"
+    },
+    {
+      "address": 0,
+      "group": "pinmame.input.switch",
+      "label": "40 Step",
+      "line": 1114,
+      "status": "candidate",
+      "symbol": "sw40Step"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "Atlantis Key Down",
+      "line": 523,
+      "status": "candidate",
+      "symbol": "Atlantis_KeyDown"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "Atlantis Key Up",
+      "line": 575,
+      "state_labels": [
+        "Atlantis Key Up"
+      ],
+      "status": "candidate",
+      "symbol": "Atlantis_KeyUp"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "Atlantis Key Down",
+      "line": 529,
+      "status": "candidate",
+      "symbol": "Atlantis_KeyDown"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 646,
+      "status": "candidate",
+      "symbol": "Drain_Hit"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 665,
+      "status": "candidate",
+      "symbol": "Drain_UnHit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "sw12",
+      "line": 925,
+      "status": "candidate",
+      "symbol": "sw12_Hit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "sw12",
+      "line": 926,
+      "status": "candidate",
+      "symbol": "sw12_Unhit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 927,
+      "status": "candidate",
+      "symbol": "sw13_Hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 928,
+      "status": "candidate",
+      "symbol": "sw13_Unhit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 947,
+      "status": "candidate",
+      "symbol": "sw16_Hit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 948,
+      "status": "candidate",
+      "symbol": "sw16_UnHit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "Bumper17",
+      "line": 841,
+      "status": "candidate",
+      "symbol": "Bumper17_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Bumper18",
+      "line": 842,
+      "status": "candidate",
+      "symbol": "Bumper18_Hit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "Bumper19",
+      "line": 843,
+      "status": "candidate",
+      "symbol": "Bumper19_Hit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 780,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 797,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Sol Drain Post",
+      "line": 1381,
+      "status": "candidate",
+      "symbol": "SolDrainPost"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 937,
+      "status": "candidate",
+      "symbol": "sw23_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 938,
+      "status": "candidate",
+      "symbol": "sw23_Unhit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "sw24",
+      "line": 939,
+      "status": "candidate",
+      "symbol": "sw24_Hit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "sw24",
+      "line": 940,
+      "status": "candidate",
+      "symbol": "sw24_Unhit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "31a",
+      "line": 952,
+      "status": "candidate",
+      "symbol": "sw31a_hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "31b",
+      "line": 953,
+      "status": "candidate",
+      "symbol": "sw31b_hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "31c",
+      "line": 954,
+      "status": "candidate",
+      "symbol": "sw31c_hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 961,
+      "status": "candidate",
+      "symbol": "sw32_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 962,
+      "status": "candidate",
+      "symbol": "sw32_Unhit"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "sw36",
+      "line": 957,
+      "status": "candidate",
+      "symbol": "sw36_Spin"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Lift Timer",
+      "line": 1243,
+      "status": "candidate",
+      "symbol": "RampLiftTimer_Timer"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "38a",
+      "line": 941,
+      "status": "candidate",
+      "symbol": "sw38a_Hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "38a",
+      "line": 942,
+      "status": "candidate",
+      "symbol": "sw38a_Unhit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "38b",
+      "line": 943,
+      "status": "candidate",
+      "symbol": "sw38b_Hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "38b",
+      "line": 944,
+      "status": "candidate",
+      "symbol": "sw38b_Unhit"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "aucers on",
+      "line": 1170,
+      "state_labels": [
+        "aucers on"
+      ],
+      "status": "candidate",
+      "symbol": "saucers_on"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "sw39",
+      "line": 1062,
+      "state_labels": [
+        "sw39"
+      ],
+      "status": "candidate",
+      "symbol": "sw39_Timer"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "sw39",
+      "line": 1044,
+      "status": "candidate",
+      "symbol": "sw39_Unhit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "aucers on",
+      "line": 1182,
+      "state_labels": [
+        "aucers on"
+      ],
+      "status": "candidate",
+      "symbol": "saucers_on"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "sw40",
+      "line": 1126,
+      "state_labels": [
+        "sw40"
+      ],
+      "status": "candidate",
+      "symbol": "sw40_Timer"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "sw40",
+      "line": 1109,
+      "status": "candidate",
+      "symbol": "sw40_Unhit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 1288,
+      "status": "candidate",
+      "symbol": "sw42_Hit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 1289,
+      "status": "candidate",
+      "symbol": "sw42_Unhit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 1298,
+      "status": "candidate",
+      "symbol": "sw43_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 1299,
+      "status": "candidate",
+      "symbol": "sw43_Unhit"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "Sol Release Locked Ball",
+      "line": 1309,
+      "state_labels": [
+        "Sol Release Locked Ball"
+      ],
+      "status": "candidate",
+      "symbol": "SolReleaseLockedBall"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 1284,
+      "status": "candidate",
+      "symbol": "sw44_Hit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "45a",
+      "line": 931,
+      "status": "candidate",
+      "symbol": "sw45a_Hit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "45a",
+      "line": 932,
+      "status": "candidate",
+      "symbol": "sw45a_Unhit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "45b",
+      "line": 933,
+      "status": "candidate",
+      "symbol": "sw45b_Hit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "45b",
+      "line": 934,
+      "status": "candidate",
+      "symbol": "sw45b_Unhit"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "Atlantis Init",
+      "line": 399,
+      "status": "candidate",
+      "symbol": "Atlantis_Init"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "sw46",
+      "line": 623,
+      "status": "candidate",
+      "symbol": "sw46_Hit"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "sw46",
+      "line": 624,
+      "status": "candidate",
+      "symbol": "sw46_UnHit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Atlantis Init",
+      "line": 400,
+      "status": "candidate",
+      "symbol": "Atlantis_Init"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "sw47",
+      "line": 621,
+      "status": "candidate",
+      "symbol": "sw47_Hit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "sw47",
+      "line": 622,
+      "status": "candidate",
+      "symbol": "sw47_UnHit"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Atlantis Init",
+      "line": 401,
+      "status": "candidate",
+      "symbol": "Atlantis_Init"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 619,
+      "status": "candidate",
+      "symbol": "BallRelease_Hit"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 620,
+      "status": "candidate",
+      "symbol": "BallRelease_UnHit"
+    }
+  ],
+  "version": 1
+}

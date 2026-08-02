@@ -1,0 +1,4000 @@
+{
+  "conflicts": [],
+  "controller": {
+    "inversion_applied_by_emulator": true,
+    "platform": "pinmame.dataeast"
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "candidate",
+      "catalog_identity": "observed",
+      "mechanisms": "unknown",
+      "physical_wiring": "candidate",
+      "recreation_knowledge": "candidate",
+      "semantic_naming": "candidate",
+      "variant_coverage": "candidate"
+    },
+    "missing": [
+      "identity",
+      "controller_platform",
+      "input_enumeration",
+      "input_semantics",
+      "output_enumeration",
+      "output_semantics",
+      "display_inventory",
+      "mechanism_inventory",
+      "mechanism_behavior",
+      "polarity",
+      "variant_differences",
+      "recreation_notes",
+      "provenance"
+    ],
+    "status": "partial"
+  },
+  "displays": [],
+  "drivers": [
+    {
+      "clone_of": "lw3_208",
+      "description": "Lethal Weapon 3 (2.00)",
+      "flags": 0,
+      "id": "lw3_200",
+      "manufacturer": "Data East",
+      "year": "1992"
+    },
+    {
+      "clone_of": "lw3_208",
+      "description": "Lethal Weapon 3 (2.03)",
+      "flags": 0,
+      "id": "lw3_203",
+      "manufacturer": "Data East",
+      "year": "1992"
+    },
+    {
+      "clone_of": "lw3_208",
+      "description": "Lethal Weapon 3 (2.05)",
+      "flags": 0,
+      "id": "lw3_205",
+      "manufacturer": "Data East",
+      "year": "1992"
+    },
+    {
+      "clone_of": "lw3_208",
+      "description": "Lethal Weapon 3 (2.07 Canadian)",
+      "flags": 0,
+      "id": "lw3_207",
+      "manufacturer": "Data East",
+      "year": "1992"
+    },
+    {
+      "description": "Lethal Weapon 3 (2.08)",
+      "flags": 0,
+      "id": "lw3_208",
+      "manufacturer": "Data East",
+      "year": "1992"
+    },
+    {
+      "clone_of": "lw3_208",
+      "description": "Lethal Weapon 3 (2.08p, Voices Mod)",
+      "flags": 0,
+      "id": "lw3_208p",
+      "manufacturer": "Data East",
+      "year": "2013"
+    },
+    {
+      "clone_of": "lw3_208",
+      "description": "Lethal Weapon 3 (3.00 unofficial MOD)",
+      "flags": 0,
+      "id": "lw3_300",
+      "manufacturer": "Data East",
+      "year": "2020"
+    },
+    {
+      "clone_of": "lw3_208",
+      "description": "Lethal Weapon 3 (3.01 unofficial MOD)",
+      "flags": 0,
+      "id": "lw3_301",
+      "manufacturer": "Data East",
+      "year": "2020"
+    },
+    {
+      "clone_of": "lw3_208",
+      "description": "Lethal Weapon 3 (2.04 English)",
+      "flags": 0,
+      "id": "lw3_e204",
+      "manufacturer": "Data East",
+      "year": "1992"
+    }
+  ],
+  "format": "pinmame-machine-definition",
+  "inputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "01"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "001"
+        }
+      ],
+      "binding": {
+        "device": 1,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.tilt",
+      "kind": "switch",
+      "label": "Tilt",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "09"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "009"
+        }
+      ],
+      "binding": {
+        "device": 9,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.plunger-button-lockbar-launch",
+      "kind": "switch",
+      "label": "Plunger Button / Lockbar Launch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "010"
+        }
+      ],
+      "binding": {
+        "device": 10,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-drain-entry",
+      "kind": "switch",
+      "label": "Trough Drain Entry",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "011"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-1-front",
+      "kind": "switch",
+      "label": "Trough 1 (Front)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "012"
+        }
+      ],
+      "binding": {
+        "device": 12,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-2-middle",
+      "kind": "switch",
+      "label": "Trough 2 (Middle)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "013"
+        }
+      ],
+      "binding": {
+        "device": 13,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-3-deepest-ball-release",
+      "kind": "switch",
+      "label": "Trough 3 (Deepest / Ball Release)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "014"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.auto-plunger-shooter-lane",
+      "kind": "switch",
+      "label": "Auto-Plunger / Shooter Lane",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "015"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-flipper-button",
+      "kind": "switch",
+      "label": "Left Flipper Button",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "016"
+        }
+      ],
+      "binding": {
+        "device": 16,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-flipper-button",
+      "kind": "switch",
+      "label": "Right Flipper Button",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "017"
+        }
+      ],
+      "binding": {
+        "device": 17,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.stand-up-target-left-bank-1",
+      "kind": "switch",
+      "label": "Stand-Up Target (Left Bank 1)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "018"
+        }
+      ],
+      "binding": {
+        "device": 18,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.stand-up-target-left-bank-2",
+      "kind": "switch",
+      "label": "Stand-Up Target (Left Bank 2)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "019"
+        }
+      ],
+      "binding": {
+        "device": 19,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.stand-up-target-left-bank-3",
+      "kind": "switch",
+      "label": "Stand-Up Target (Left Bank 3)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "020"
+        }
+      ],
+      "binding": {
+        "device": 20,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.stand-up-target-left-bank-4",
+      "kind": "switch",
+      "label": "Stand-Up Target (Left Bank 4)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "021"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.wire-trigger-lane-switch",
+      "kind": "switch",
+      "label": "Wire Trigger / Lane Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "022"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.wire-trigger-lane-switch.22",
+      "kind": "switch",
+      "label": "Wire Trigger / Lane Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "025"
+        }
+      ],
+      "binding": {
+        "device": 25,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-drop-target-1",
+      "kind": "switch",
+      "label": "Left Drop Target 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "026"
+        }
+      ],
+      "binding": {
+        "device": 26,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-drop-target-2",
+      "kind": "switch",
+      "label": "Left Drop Target 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "027"
+        }
+      ],
+      "binding": {
+        "device": 27,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-drop-target-3",
+      "kind": "switch",
+      "label": "Left Drop Target 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "028"
+        }
+      ],
+      "binding": {
+        "device": 28,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-inlane",
+      "kind": "switch",
+      "label": "Left Inlane",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "029"
+        }
+      ],
+      "binding": {
+        "device": 29,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-inlane-lower",
+      "kind": "switch",
+      "label": "Left Inlane (Lower)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "030"
+        }
+      ],
+      "binding": {
+        "device": 30,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-slingshot",
+      "kind": "switch",
+      "label": "Left Slingshot",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "031"
+        }
+      ],
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.vuk-top-pop-kicker",
+      "kind": "switch",
+      "label": "VUK / Top Pop Kicker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "032"
+        }
+      ],
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.ball-lock-2-saucer",
+      "kind": "switch",
+      "label": "Ball Lock 2 (Saucer)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "033"
+        }
+      ],
+      "binding": {
+        "device": 33,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-drop-target-1",
+      "kind": "switch",
+      "label": "Right Drop Target 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "034"
+        }
+      ],
+      "binding": {
+        "device": 34,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-drop-target-2",
+      "kind": "switch",
+      "label": "Right Drop Target 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "035"
+        }
+      ],
+      "binding": {
+        "device": 35,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-drop-target-3",
+      "kind": "switch",
+      "label": "Right Drop Target 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "036"
+        }
+      ],
+      "binding": {
+        "device": 36,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-outlane",
+      "kind": "switch",
+      "label": "Right Outlane",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "037"
+        }
+      ],
+      "binding": {
+        "device": 37,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-inlane",
+      "kind": "switch",
+      "label": "Right Inlane",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "38"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "38"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "038"
+        }
+      ],
+      "binding": {
+        "device": 38,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-slingshot",
+      "kind": "switch",
+      "label": "Right Slingshot",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "39"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "39"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "039"
+        }
+      ],
+      "binding": {
+        "device": 39,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.stand-up-target-upper",
+      "kind": "switch",
+      "label": "Stand-Up Target (Upper)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "040"
+        }
+      ],
+      "binding": {
+        "device": 40,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.ball-lock-1-saucer",
+      "kind": "switch",
+      "label": "Ball Lock 1 (Saucer)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "041"
+        }
+      ],
+      "binding": {
+        "device": 41,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.wire-trigger-lane-switch.41",
+      "kind": "switch",
+      "label": "Wire Trigger / Lane Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "042"
+        }
+      ],
+      "binding": {
+        "device": 42,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.wire-trigger-lane-switch.42",
+      "kind": "switch",
+      "label": "Wire Trigger / Lane Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "043"
+        }
+      ],
+      "binding": {
+        "device": 43,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.wire-trigger-lane-switch.43",
+      "kind": "switch",
+      "label": "Wire Trigger / Lane Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "044"
+        }
+      ],
+      "binding": {
+        "device": 44,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.top-pop-bumper",
+      "kind": "switch",
+      "label": "Top Pop Bumper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "045"
+        }
+      ],
+      "binding": {
+        "device": 45,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.middle-pop-bumper",
+      "kind": "switch",
+      "label": "Middle Pop Bumper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "046"
+        }
+      ],
+      "binding": {
+        "device": 46,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.bottom-pop-bumper",
+      "kind": "switch",
+      "label": "Bottom Pop Bumper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "47"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "47"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "047"
+        }
+      ],
+      "binding": {
+        "device": 47,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.spinner-left",
+      "kind": "switch",
+      "label": "Spinner (Left)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "048"
+        }
+      ],
+      "binding": {
+        "device": 48,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.spinner-right",
+      "kind": "switch",
+      "label": "Spinner (Right)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "49"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "49"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "049"
+        }
+      ],
+      "binding": {
+        "device": 49,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-wire-trigger",
+      "kind": "switch",
+      "label": "Rollover / Wire Trigger",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "50"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "50"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "050"
+        }
+      ],
+      "binding": {
+        "device": 50,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.rollover-wire-trigger.50",
+      "kind": "switch",
+      "label": "Rollover / Wire Trigger",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "52"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "52"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "052"
+        }
+      ],
+      "binding": {
+        "device": 52,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.wire-trigger-lane-switch.52",
+      "kind": "switch",
+      "label": "Wire Trigger / Lane Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "54"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "54"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "054"
+        }
+      ],
+      "binding": {
+        "device": 54,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.wire-trigger-lane-switch.54",
+      "kind": "switch",
+      "label": "Wire Trigger / Lane Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "55"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "55"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "055"
+        }
+      ],
+      "binding": {
+        "device": 55,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.wire-trigger-lane-switch.55",
+      "kind": "switch",
+      "label": "Wire Trigger / Lane Switch",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    }
+  ],
+  "knowledge": {
+    "path": "knowledge/data-east/lethal-weapon-3-1992.md",
+    "status": "partial"
+  },
+  "machine": {
+    "id": "data-east.lethal-weapon-3.1992",
+    "ipdb_id": 1433,
+    "manufacturer": "Data East",
+    "name": "Lethal Weapon 3",
+    "year": 1992
+  },
+  "mechanisms": [],
+  "outputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "01"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "001"
+        }
+      ],
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-1",
+      "kind": "lamp",
+      "label": "outputs 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "02"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "002"
+        }
+      ],
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-2",
+      "kind": "lamp",
+      "label": "outputs 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "03"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "003"
+        }
+      ],
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-3",
+      "kind": "lamp",
+      "label": "outputs 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "04"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "004"
+        }
+      ],
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-4",
+      "kind": "lamp",
+      "label": "outputs 4",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "05"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "005"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-5",
+      "kind": "lamp",
+      "label": "outputs 5",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "06"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "006"
+        }
+      ],
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-6",
+      "kind": "lamp",
+      "label": "outputs 6",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "07"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "007"
+        }
+      ],
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-7",
+      "kind": "lamp",
+      "label": "outputs 7",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "08"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "008"
+        }
+      ],
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-8",
+      "kind": "lamp",
+      "label": "outputs 8",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "09"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "009"
+        }
+      ],
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-9",
+      "kind": "lamp",
+      "label": "outputs 9",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "010"
+        }
+      ],
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-10",
+      "kind": "lamp",
+      "label": "outputs 10",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "011"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-11",
+      "kind": "lamp",
+      "label": "outputs 11",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "012"
+        }
+      ],
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-12",
+      "kind": "lamp",
+      "label": "outputs 12",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "013"
+        }
+      ],
+      "binding": {
+        "device": 13,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-13",
+      "kind": "lamp",
+      "label": "outputs 13",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "014"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-14",
+      "kind": "lamp",
+      "label": "outputs 14",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "015"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-15",
+      "kind": "lamp",
+      "label": "outputs 15",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "016"
+        }
+      ],
+      "binding": {
+        "device": 16,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-16",
+      "kind": "lamp",
+      "label": "outputs 16",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "017"
+        }
+      ],
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-17",
+      "kind": "lamp",
+      "label": "outputs 17",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "018"
+        }
+      ],
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-18",
+      "kind": "lamp",
+      "label": "outputs 18",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "019"
+        }
+      ],
+      "binding": {
+        "device": 19,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-19",
+      "kind": "lamp",
+      "label": "outputs 19",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "020"
+        }
+      ],
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-20",
+      "kind": "lamp",
+      "label": "outputs 20",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "021"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-21",
+      "kind": "lamp",
+      "label": "outputs 21",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "022"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-22",
+      "kind": "lamp",
+      "label": "outputs 22",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "023"
+        }
+      ],
+      "binding": {
+        "device": 23,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-23",
+      "kind": "lamp",
+      "label": "outputs 23",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "024"
+        }
+      ],
+      "binding": {
+        "device": 24,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-24",
+      "kind": "lamp",
+      "label": "outputs 24",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "025"
+        }
+      ],
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-25",
+      "kind": "lamp",
+      "label": "outputs 25",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "026"
+        }
+      ],
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-26",
+      "kind": "lamp",
+      "label": "outputs 26",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "027"
+        }
+      ],
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-27",
+      "kind": "lamp",
+      "label": "outputs 27",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "028"
+        }
+      ],
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-28",
+      "kind": "lamp",
+      "label": "outputs 28",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "029"
+        }
+      ],
+      "binding": {
+        "device": 29,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-29",
+      "kind": "lamp",
+      "label": "outputs 29",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "030"
+        }
+      ],
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-30",
+      "kind": "lamp",
+      "label": "outputs 30",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "031"
+        }
+      ],
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-31",
+      "kind": "lamp",
+      "label": "outputs 31",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "032"
+        }
+      ],
+      "binding": {
+        "device": 32,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-32",
+      "kind": "lamp",
+      "label": "outputs 32",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "034"
+        }
+      ],
+      "binding": {
+        "device": 34,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-34",
+      "kind": "lamp",
+      "label": "outputs 34",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "035"
+        }
+      ],
+      "binding": {
+        "device": 35,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-35",
+      "kind": "lamp",
+      "label": "outputs 35",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "036"
+        }
+      ],
+      "binding": {
+        "device": 36,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-36",
+      "kind": "lamp",
+      "label": "outputs 36",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "037"
+        }
+      ],
+      "binding": {
+        "device": 37,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-37",
+      "kind": "lamp",
+      "label": "outputs 37",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "38"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "38"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "038"
+        }
+      ],
+      "binding": {
+        "device": 38,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-38",
+      "kind": "lamp",
+      "label": "outputs 38",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "39"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "39"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "039"
+        }
+      ],
+      "binding": {
+        "device": 39,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-39",
+      "kind": "lamp",
+      "label": "outputs 39",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "040"
+        }
+      ],
+      "binding": {
+        "device": 40,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-40",
+      "kind": "lamp",
+      "label": "outputs 40",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "041"
+        }
+      ],
+      "binding": {
+        "device": 41,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-41",
+      "kind": "lamp",
+      "label": "outputs 41",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "042"
+        }
+      ],
+      "binding": {
+        "device": 42,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-42",
+      "kind": "lamp",
+      "label": "outputs 42",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "043"
+        }
+      ],
+      "binding": {
+        "device": 43,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-43",
+      "kind": "lamp",
+      "label": "outputs 43",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "044"
+        }
+      ],
+      "binding": {
+        "device": 44,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-44",
+      "kind": "lamp",
+      "label": "outputs 44",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "045"
+        }
+      ],
+      "binding": {
+        "device": 45,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-45",
+      "kind": "lamp",
+      "label": "outputs 45",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "046"
+        }
+      ],
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-46",
+      "kind": "lamp",
+      "label": "outputs 46",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "47"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "47"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "047"
+        }
+      ],
+      "binding": {
+        "device": 47,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-47",
+      "kind": "lamp",
+      "label": "outputs 47",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "048"
+        }
+      ],
+      "binding": {
+        "device": 48,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-48",
+      "kind": "lamp",
+      "label": "outputs 48",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "49"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "49"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "049"
+        }
+      ],
+      "binding": {
+        "device": 49,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-49",
+      "kind": "lamp",
+      "label": "outputs 49",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "50"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "50"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "050"
+        }
+      ],
+      "binding": {
+        "device": 50,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-50",
+      "kind": "lamp",
+      "label": "outputs 50",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "51"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "51"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "051"
+        }
+      ],
+      "binding": {
+        "device": 51,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-51",
+      "kind": "lamp",
+      "label": "outputs 51",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "52"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "52"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "052"
+        }
+      ],
+      "binding": {
+        "device": 52,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-52",
+      "kind": "lamp",
+      "label": "outputs 52",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "53"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "53"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "053"
+        }
+      ],
+      "binding": {
+        "device": 53,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-53",
+      "kind": "lamp",
+      "label": "outputs 53",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "54"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "54"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "054"
+        }
+      ],
+      "binding": {
+        "device": 54,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-54",
+      "kind": "lamp",
+      "label": "outputs 54",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "55"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "55"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "055"
+        }
+      ],
+      "binding": {
+        "device": 55,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-55",
+      "kind": "lamp",
+      "label": "outputs 55",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "56"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "56"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "056"
+        }
+      ],
+      "binding": {
+        "device": 56,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-56",
+      "kind": "lamp",
+      "label": "outputs 56",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "58"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "58"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "058"
+        }
+      ],
+      "binding": {
+        "device": 58,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-58",
+      "kind": "lamp",
+      "label": "outputs 58",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "59"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "59"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "059"
+        }
+      ],
+      "binding": {
+        "device": 59,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-59",
+      "kind": "lamp",
+      "label": "outputs 59",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "60"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "60"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "060"
+        }
+      ],
+      "binding": {
+        "device": 60,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-60",
+      "kind": "lamp",
+      "label": "outputs 60",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "61"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "61"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "061"
+        }
+      ],
+      "binding": {
+        "device": 61,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-61",
+      "kind": "lamp",
+      "label": "outputs 61",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "62"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "62"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "062"
+        }
+      ],
+      "binding": {
+        "device": 62,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-62",
+      "kind": "lamp",
+      "label": "outputs 62",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "63"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "63"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "063"
+        }
+      ],
+      "binding": {
+        "device": 63,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-63",
+      "kind": "lamp",
+      "label": "outputs 63",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "64"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "64"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "064"
+        }
+      ],
+      "binding": {
+        "device": 64,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outputs-64",
+      "kind": "lamp",
+      "label": "outputs 64",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "01"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "001"
+        }
+      ],
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.trough-eject-drain-to-trough",
+      "kind": "coil",
+      "label": "Trough Eject (Drain to Trough)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "02"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "002"
+        }
+      ],
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.ball-release-trough-to-shooter",
+      "kind": "coil",
+      "label": "Ball Release (Trough to Shooter)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "04"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "004"
+        }
+      ],
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.ball-lock-1-release",
+      "kind": "coil",
+      "label": "Ball Lock 1 Release",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "05"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "005"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.ball-lock-2-release",
+      "kind": "coil",
+      "label": "Ball Lock 2 Release",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "06"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "006"
+        }
+      ],
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-drop-target-bank-reset-m",
+      "kind": "coil",
+      "label": "Left Drop Target Bank Reset (M)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "7"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "07"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "007"
+        }
+      ],
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-drop-target-bank-reset-r",
+      "kind": "coil",
+      "label": "Right Drop Target Bank Reset (R)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "08"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "008"
+        }
+      ],
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.knocker",
+      "kind": "coil",
+      "label": "Knocker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "09"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "009"
+        }
+      ],
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-x4-lights-iwsc-building",
+      "kind": "flasher",
+      "label": "Flasher / X4 Lights (IWSC Building)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "011"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.gi-relay",
+      "kind": "coil",
+      "label": "GI Relay",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "012"
+        }
+      ],
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.auto-plunger-auto-fire",
+      "kind": "coil",
+      "label": "Auto-Plunger / Auto-Fire",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "014"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.rotate-beacons-mars-light",
+      "kind": "coil",
+      "label": "Rotate Beacons (Mars Light)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "015"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.vuk-top-pop-kicker",
+      "kind": "coil",
+      "label": "VUK / Top Pop Kicker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "016"
+        }
+      ],
+      "binding": {
+        "device": 16,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-x4-lights-backglass-top-right-copter",
+      "kind": "flasher",
+      "label": "Flasher / X4 Lights (Backglass Top Right Copter)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "022"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.kickback",
+      "kind": "coil",
+      "label": "Kickback",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "025"
+        }
+      ],
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-1r-playfield",
+      "kind": "flasher",
+      "label": "Flasher 1R (Playfield)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "026"
+        }
+      ],
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-2r-flippers-dome",
+      "kind": "flasher",
+      "label": "Flasher 2R (Flippers Dome)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "027"
+        }
+      ],
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-3r-flippers-dome-pf",
+      "kind": "flasher",
+      "label": "Flasher 3R (Flippers Dome + PF)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "028"
+        }
+      ],
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-4r-flippers-dome",
+      "kind": "flasher",
+      "label": "Flasher 4R (Flippers Dome)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "029"
+        }
+      ],
+      "binding": {
+        "device": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-5r-flippers-dome-pf",
+      "kind": "flasher",
+      "label": "Flasher 5R (Flippers Dome + PF)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "030"
+        }
+      ],
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-6r-flippers-dome-pf",
+      "kind": "flasher",
+      "label": "Flasher 6R (Flippers Dome + PF)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "031"
+        }
+      ],
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-7r-playfield",
+      "kind": "flasher",
+      "label": "Flasher 7R (Playfield)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "032"
+        }
+      ],
+      "binding": {
+        "device": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flasher-8r-playfield",
+      "kind": "flasher",
+      "label": "Flasher 8R (Playfield)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "046"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "c_flipper_lower_right"
+        }
+      ],
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flipper-lower-right",
+      "kind": "coil",
+      "label": "Right Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "048"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "c_flipper_lower_left"
+        }
+      ],
+      "binding": {
+        "device": 48,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flipper-lower-left",
+      "kind": "coil",
+      "label": "Left Flipper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.lw3"
+        ],
+        "status": "candidate"
+      }
+    }
+  ],
+  "relationships": [],
+  "schema_version": 1,
+  "sources": [
+    {
+      "attribution": "pinmame-game-defs contributors",
+      "id": "legacy.game.lw3",
+      "kind": "legacy_json",
+      "locator": "games/lw3.json; origin=vbscript-parser",
+      "revision": "4ea106d080728648a693af3b4dcabb091eee0a02",
+      "uri": "https://github.com/vpinball/pinmame-game-defs"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.catalog.4ec52ff0ac13",
+      "kind": "pinmame_catalog",
+      "license": "BSD-3-Clause",
+      "locator": "PinmameGetGames",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    }
+  ]
+}

@@ -1,0 +1,460 @@
+{
+  "driver_ids": [
+    "pharo_l2"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.pharo_l2"
+  ],
+  "mechanisms": [
+    {
+      "kind": "cvpmMagnet",
+      "line": 381,
+      "raw": "Set LMAG=New cvpmMagnet",
+      "status": "candidate"
+    },
+    {
+      "kind": "cvpmMagnet",
+      "line": 387,
+      "raw": "Set RMAG=New cvpmMagnet",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Outhole",
+      "line": 264,
+      "status": "candidate",
+      "symbol": "SolOuthole"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Ball Release",
+      "line": 265,
+      "status": "candidate",
+      "symbol": "SolBallRelease"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol BG3",
+      "line": 266,
+      "status": "candidate",
+      "symbol": "SolBG3"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "UGI",
+      "line": 267,
+      "status": "candidate",
+      "symbol": "UGI"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "PGI",
+      "line": 268,
+      "status": "candidate",
+      "symbol": "PGI"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Slaves Tomb Shooter",
+      "line": 269,
+      "status": "candidate",
+      "symbol": "SolSlavesTombShooter"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Hidden Tomb Shooter",
+      "line": 270,
+      "status": "candidate",
+      "symbol": "SolHiddenTombShooter"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Dt UL",
+      "line": 271,
+      "status": "candidate",
+      "symbol": "SolDtUL"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Dt UR",
+      "line": 272,
+      "status": "candidate",
+      "symbol": "SolDtUR"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "SOL Dt LL",
+      "line": 273,
+      "status": "candidate",
+      "symbol": "SOLDtLL"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Dt LR",
+      "line": 274,
+      "status": "candidate",
+      "symbol": "SolDtLR"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Upper Eject Hole",
+      "line": 275,
+      "status": "candidate",
+      "symbol": "SolUpperEjectHole"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Lower Eject Hole",
+      "line": 276,
+      "status": "candidate",
+      "symbol": "SolLowerEjectHole"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 277,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 144,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "Pharaoh / IPD No. 1778 / May, 1981 / 4 Players\nVPX - version 1 by 32assassin\n******** Revisions done by UnclePaulie on Hybrid version 0.01 - 2.0 *********\nv.01: Updated playfield images, and sharpened it.  (Images used from TAB on vpforums)\n\tMoved all the elements (posts, rubbers, walls, etc.) to match layout on real playfield\n\tAdded posts, sleeves, pins, rubbers, walls as needed to match the real table.\n\tChanged the lower flippers to new williams flipper bats\n\tAdjusted the table physics to recommended standards, and then tweaked to match other era tables.\n\tUpdated ramp, playfield, upper playfield physics\nv.02\tStarted with the ramp primitives and plastic acrylics from Watacaractr's Pharoah Dead Rise\n\tAdded flipper shadows\n\tNot all the playfield lights were working, had to get them corrected.\n\t\tChanged all the screw prims, sleeves, posts\n\tAdded GI lights from Watacaractr as a better basis.  The original was very basic. Made lots of mods to them.\n\tI adjusted GI from there, such that drop target shadows will hide, and minimal bends around posts.\n\tAdded GI Bulb primitives.\n\tChanged the sidewalls to black, and the wood to the lighter color.\nv.03: Enabled hybrid code for desktop, VR, and cabinet modes\n\tCreated a new desktop mode backdrop\n\tRemoved displaytimer and added to frame timer\n\tAdded fastflips\n\t\tAdded updated knocker position and code\n\tAdded fleep sounds, images, materials, and code from solar fire to start base.\n\t\tAdded basic VR Room elements, images, and materials.  Animated flippers and plunger.  Added room and clock options.\n\t\tAdded Fleep Sounds, nFozzy / Roth physics and flippers.  Updated the flipper physics per recommendations.\n\tAdded code for DT, ST, slingshot corrections, flippers, physics, dampeners, shadows\n\t\tAdded Apophis sling corrections, and updated the physics.\n\tAdded flipper physics\n\tAdded GI Relay Sound, LUT Click sound. Cleaned up other sounds.\n\t\tCompletely changed the trough logic to handle balls on table\n\tChanged the apron wall structure to create a trough.\n\t\tNo longer destroy balls.  Use a global gBOT throughout all of script.\n\tRemoved all the getballs calls and am only useing gBOT.  Will help eliminate stutter on slower CPU machines\n\tChanged the outer walls to be a lighter wood (like real table... it was black)\n\t\tRemoved the Enter1 and 2 kickers, as it destroyed balls.  I put a physics ramp prim in there from Bord's Black Knight.\n\tUpdated LUT's to additional images, and new subroutines, and ability to save to user text file.\n\t\tAdded lighter ball images provided by hauntfreaks and g5k ball scratches, changeable in script\n\tAdjusted the playfield material to ensure active, and visible.\nv.04\tAdded a physical VUK for the hidden tomb shooter, and associated walls.  It would destroy balls, rather than sending them up.\n\t\tAdded a backrail metal wall.\n\tAdded ballrolling to top playfield\nv.05\tAdded VPW Dynamic Ball Shadows to the solution done Iakki, Apophis, and Wylte.  For upper playfield, had to change value of 110 to 90, since this upper playfield is lower\n\tUpdated all elements physics and sound routines.\n\tInstead of adding ramp triggers for ramp rolling sounds, I decided to have metal ramps have just a metal hit sound, since they were short.\n\tUpdated saucer / kicker logic with sub method and fleep sounds\n\tAdded groove to plunger lane, and small ball release ramp to get up.\n\tAdded a couple GI lights under apron\n\tChanged primitive and image of the plunger cover.  Also changed the plunger pull speed.\n\tChanged the desktop background to something more basic.\n\t\tAdded the game over, BIP, etc. to the desktop backglass\nv0.6\tAdded new drop and standup targets to the solution done by Rothbauerw\n\tAdded Drop Target Shadows\n\t\tChanged DT texture images to pharaoh ones.\nv0.7\tCut holes in playfield for slings and triggers\n  \tUpdated the playfield for slings, triggers holes, and target holes, and added plywood hole images.\n\tModified the sling primatives and sling walls to drop below playfield.  Looks better in VR.\n\tMagnasaves weren't working. Fixed.\nv0.8\tUpdated to Lampz lighting routine by VPW, and modified the solenoid routines to accomodate.\n\tChanged insert light colors and parameter settings\n\tUpdated some of the table1.init calls\n\tAdded GI lights to Lampz.\nv0.9\tAdded sling corrections to top sling\n\tChanged credit light to L2.  Moved to correct location, and adjusted the height. Added a credit light prim\n\tAdded top right wall for upper playfield. Also lengthened the left top side wall.\n\tAdjusted vertical walls between UPF and Lower PF\n\t\tChanged the fat sleeves to different primitives. Looked really weird in VR.\n\tAdjusted the apron height, image, and changed the plunger cover primitive.\n\tAdjusted the lower inlane metal rails down\n\tLots of adjustments of upper VUK locations, and associated walls and plastics.\n\tAdjusted how far the slings came out, as they were way too far.\n\tDid additional GI updates, and added another GI light to the captive ball area.\n\tAdjusted all rubbers size and height.  Also changed the height of slings, and the screws and caps.\nv0.10\tAdded GI to white screws, rubbbers, posts, apron, plunger, flippers, side walls, and targets (each target needed separate material since active)\n\tAdded GI to the sleeves\n\tAdded basic ball GI brightness level.\n\tAdded separate routines for the brightness of the captive ball, and when other balls are on top or lower playfield.\nv0.11\tAlso added nicer looking Williams gray kicker primitives.\n\tChanged metal GI plates, walls, and rails to include aluminum and aluminum scratched dark images.\nv0.12\tAnimated VR Backglass, and changed both the desktop and VR backglass lamps and GI to Lampz.\nv0.13\tAdded playfield mesh for saucers, and added a a slight wall/ramp on the left side of right lower saucer, emulating real table.\n\tChanged width of metal walls to 1.\nv0.14\tAdded a mesh for the saucers on the upper playfield and adjusted kickers.\n\tMade the top acrylics collidable\n\tChanged the physics of the upperplayfield_mesh slightly.\n\tAdjusted saucer walls and saucer strength to ensure accurate to ball rollouts like online videos.\nv0.15\tUpdated some VR Graphics.\n\tUpdated drop target decals and associated GI.\n\tAdjusted left desktop side rail location, and height of both.\n\tAdded bonus ball timer to desktop backglass.\n\tAdded ruleset to table info.\n\tAdded additional GI to pharaoh's chamber and slave's tomb, as they should be lit nicely\nv0.16\tAdded updated playfield and insert text for 3D inserts.  Needed both upper and lower playfield inserts.\n\tAdjusted all the insert light intensities, fade, falloff, heights, colors, etc.\n\tSet alpha channel on text overlays to 50.  Made the text on inserts look so much better.\n\tAdded insert light blooms\n\tAdjusted topper and cab graphics in VR\n\tUpdated the playfield text insert overlay\nv0.17 Updated the upper playfield text overlay for Pharaoh\n\tCorrection to rollover triggers\n\tAdded GI Brightness increase to inserts when GI is off and reduced it when GI on for both top and bottom Playfield\n\tFully animated and intensity adjusted the VR Backglass.\nv0.18\tAdded flipper tricks to the top flippers.\n\tAdjusted the Ramp13 wall to avoid it hitting the post coming out, also reduced the strength of kicker43 slightly.\nv0.19\tCompleted VR backglass with the text lamps\n\tEdited the magna save text on the playfield image.\n\tIncreased the strength of the magna saves\n\tCleaned up some images.\n\tAdjusted strength of flippers.  Was a little too strong.\n\tUpdated topper image for VR.\n\tAdded a backbox grill for VR.\nv0.20\tChanged flipper strength to 1700 and end angle to 70 to ensure accurate shots are made per videos online\n\tRounded the ends of the inlane metal guides, as ball got stuck once on top of it.\n\tAdjusted magnet radius and strength\n\t\tUpdated POV for cab\n\tChanged alpha setting on playfield image to 254 (could see around the inserts)\n\tAdjusted the cutout prims around triggers.\n\tTurned off \"reflect on playfield\" for triggers, slings, sling walls, and targets (anything over an open hole)\nv0.21\tVisual mods: Reduced overall reflectivity, playfield material to 164, made drop target shadows darker, changed some GI shapes\n\tRemoved ball light reflection under rollover holes when ball rolls over. (could see ball reflection on nothing (was gray)).\n\tChanged cab side walls to be taller if selected in cab mode.\nv0.22 Slightly moved and rotated the standup target (sw32).\n\tThe lower left post and rubber (by outlane) wasn't set to proper medium difficulty.  Aligned accordingly.\nv0.23 Modified the GI Posts to a little brighter when GI is off.  (Thalamus pointed out)\nv0.24 Increased the radius of the magna save magnets, and the strength up a little (PinstratsDan pointed out)\n\tTurned off in game AO, as some saw halo on ball.\n\tTurned down Day/Night down 1/2 tick, and upped the GI slightly (Apophis recommendation)\n\tRemoved the physical element of the \"death save\" anti-biff ball snubbers behind the flippers.  Shouldn't need on VPX. (Issue report on another Table, so removed here)\n\tCorrected script error on upper flipper tricks\n\tMoved the VR topper up a little and forward.  (Thanks leojreimroc)\nv0.25\tUsed a cylinder primitive for the anti-biff ball snubbers (Rothbaurerw recommended, and also raising apron wall higher)\n\tRaised the backrail.\nv2.0\tReleased Version\n\tSlight rotation of saucer prims.\n\tModified the trough logic for updating on outhole and BallRelease.  Increased the drain kicker slightly.\n\tThe outhole solenoid is quite fast for kicking a ball out, so I added a slight delay to the drain swtich setting.\n\tAdded an apron wall block for physics\nv2.01 Hauntfreaks updated the plastics, playfields, and the side woods to look much better.  Also JasonDH provided a better image behind the upper sling and tomb exit. I merged with HF's image.\nv2.02\tHiRez provided an updated Apron image.\n\tMinor correction to the flipper tricks on the upper playfield.\nv2.03\tUpdated Credit light to be tied to actual number of credits.\nThanks to the VPW team for testing (especially Thalamus, Apophis, Bord, Rothbaurerw, leojreimroc, Sixtoe, and PinStratsDan)"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Pharaoh (Williams 1981) w VR Room v2.0.3/Pharaoh (Williams 1981) w VR Room v2.0.3.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Pharaoh (Williams 1981) w VR Room v2.0.3/Pharaoh (Williams 1981) w VR Room v2.0.3.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/jsm174/vpx-standalone-scripts",
+    "revision": "15d112648a1b94b9f59eb8b3c335d57283653c50",
+    "sha256": "253998540e86f424fa70588eec8cc063f010df47f29babbb1d078251901fad08"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 442,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 510,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 448,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 515,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "SW13",
+      "line": 799,
+      "status": "candidate",
+      "symbol": "SW13_Hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "SW13",
+      "line": 800,
+      "status": "candidate",
+      "symbol": "SW13_unHit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "SW14",
+      "line": 801,
+      "status": "candidate",
+      "symbol": "SW14_Hit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "SW14",
+      "line": 802,
+      "status": "candidate",
+      "symbol": "SW14_unHit"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "SW15",
+      "line": 803,
+      "status": "candidate",
+      "symbol": "SW15_Hit"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "SW15",
+      "line": 804,
+      "status": "candidate",
+      "symbol": "SW15_unHit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "SW16",
+      "line": 805,
+      "status": "candidate",
+      "symbol": "SW16_Hit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "SW16",
+      "line": 806,
+      "status": "candidate",
+      "symbol": "SW16_unHit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "sw20",
+      "line": 649,
+      "status": "candidate",
+      "symbol": "sw20_Slingshot"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 669,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "Kicker33",
+      "line": 753,
+      "status": "candidate",
+      "symbol": "Kicker33_Hit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "Sol Slaves Tomb Shooter",
+      "line": 761,
+      "status": "candidate",
+      "symbol": "SolSlavesTombShooter"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Kicker34",
+      "line": 766,
+      "status": "candidate",
+      "symbol": "Kicker34_Hit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Sol Upper Eject Hole",
+      "line": 774,
+      "status": "candidate",
+      "symbol": "SolUpperEjectHole"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Kicker35",
+      "line": 779,
+      "status": "candidate",
+      "symbol": "Kicker35_Hit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Sol Lower Eject Hole",
+      "line": 787,
+      "status": "candidate",
+      "symbol": "SolLowerEjectHole"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 730,
+      "status": "candidate",
+      "symbol": "Drain_Hit"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 735,
+      "status": "candidate",
+      "symbol": "Drain_UnHit"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 372,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Slot",
+      "line": 692,
+      "status": "candidate",
+      "symbol": "Slot_Hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Slot",
+      "line": 693,
+      "status": "candidate",
+      "symbol": "Slot_UnHit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 371,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 690,
+      "status": "candidate",
+      "symbol": "BallRelease_Hit"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 691,
+      "status": "candidate",
+      "symbol": "BallRelease_UnHit"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 370,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "SW40",
+      "line": 812,
+      "status": "candidate",
+      "symbol": "SW40_Hit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "SW40",
+      "line": 813,
+      "status": "candidate",
+      "symbol": "SW40_unHit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 369,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "SW41",
+      "line": 807,
+      "status": "candidate",
+      "symbol": "SW41_Hit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "SW41",
+      "line": 808,
+      "status": "candidate",
+      "symbol": "SW41_unHit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "Kicker43",
+      "line": 740,
+      "status": "candidate",
+      "symbol": "Kicker43_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "Sol Hidden Tomb Shooter",
+      "line": 748,
+      "status": "candidate",
+      "symbol": "SolHiddenTombShooter"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 630,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    }
+  ],
+  "version": 1
+}

@@ -1,0 +1,518 @@
+{
+  "driver_ids": [
+    "pop_dx5",
+    "pop_la4",
+    "pop_lx4",
+    "pop_lx5",
+    "pop_pa3",
+    "pop_pa4"
+  ],
+  "extractor": {
+    "id": "pinmame-sim-source",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.pop_lx5"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Launch",
+      "line": 123,
+      "status": "candidate",
+      "symbol": "sLaunch"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Trough",
+      "line": 124,
+      "status": "candidate",
+      "symbol": "sTrough"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Knocker",
+      "line": 125,
+      "status": "candidate",
+      "symbol": "sKnocker"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Left Jet",
+      "line": 126,
+      "status": "candidate",
+      "symbol": "sLeftJet"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "Right Jet",
+      "line": 127,
+      "status": "candidate",
+      "symbol": "sRightJet"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "Center Jet",
+      "line": 128,
+      "status": "candidate",
+      "symbol": "sCenterJet"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "Left Sling",
+      "line": 129,
+      "status": "candidate",
+      "symbol": "sLeftSling"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "Right Sling",
+      "line": 130,
+      "status": "candidate",
+      "symbol": "sRightSling"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 11,
+      "line_start": 3,
+      "status": "candidate",
+      "text": "Preliminary Popeye Saves the Earth (Bally, 1994) Pinball Simulator\nby Marton Larrosa (marton@mail.com)\nDec. 24, 2000\nRead PZ.c or FH.c if you like more help."
+    }
+  ],
+  "source": {
+    "attribution": "PinMAME contributors",
+    "encoding": "utf-8",
+    "kind": "pinmame_sim",
+    "license": "BSD-3-Clause",
+    "path": "src/wpc/sims/wpc/prelim/pop.c",
+    "quality": "preliminary",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "2b52e8698a12dfbafe56bcbc078bc87a840060e5b1d631ab5ff73bdc9f650dfb"
+  },
+  "states": [
+    {
+      "label": "Not Installed",
+      "line": 141,
+      "next_state": "stDrain",
+      "raw": "{\"Not Installed\",\t0,0,\t\t 0,\t\tstDrain,\t0,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "label": "Playfield",
+      "line": 143,
+      "raw": "{\"Playfield\",\t\t0,0,\t\t 0,\t\t0,\t\t0,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "label": "Trough 6",
+      "line": 146,
+      "next_state": "stTrough5",
+      "raw": "{\"Trough 6\",\t\t1,swTrough6,\t0,\t\tstTrough5,\t1},",
+      "switch_address": 56,
+      "switch_symbol": "swTrough6"
+    },
+    {
+      "label": "Trough 5",
+      "line": 147,
+      "next_state": "stTrough4",
+      "raw": "{\"Trough 5\",\t\t1,swTrough5,\t0,\t\tstTrough4,\t1},",
+      "switch_address": 55,
+      "switch_symbol": "swTrough5"
+    },
+    {
+      "label": "Trough 4",
+      "line": 148,
+      "next_state": "stTrough3",
+      "raw": "{\"Trough 4\",\t\t1,swTrough4,\t0,\t\tstTrough3,\t1},",
+      "switch_address": 54,
+      "switch_symbol": "swTrough4"
+    },
+    {
+      "label": "Trough 3",
+      "line": 149,
+      "next_state": "stTrough2",
+      "raw": "{\"Trough 3\",\t\t1,swTrough3,\t0,\t\tstTrough2,\t1},",
+      "switch_address": 53,
+      "switch_symbol": "swTrough3"
+    },
+    {
+      "label": "Trough 2",
+      "line": 150,
+      "next_state": "stTrough1",
+      "raw": "{\"Trough 2\",\t\t1,swTrough2,\t0,\t\tstTrough1,\t1},",
+      "switch_address": 52,
+      "switch_symbol": "swTrough2"
+    },
+    {
+      "exit_output_address": 5,
+      "exit_output_symbol": "sTrough",
+      "label": "Trough 1",
+      "line": 151,
+      "next_state": "stTrough",
+      "raw": "{\"Trough 1\",\t\t1,swTrough1,\tsTrough,\tstTrough,\t1},",
+      "switch_address": 51,
+      "switch_symbol": "swTrough1"
+    },
+    {
+      "label": "Trough Jam",
+      "line": 152,
+      "next_state": "stShooter",
+      "raw": "{\"Trough Jam\",\t1,swTroughJam,  0,\t\tstShooter,\t1},",
+      "switch_address": 57,
+      "switch_symbol": "swTroughJam"
+    },
+    {
+      "label": "Drain",
+      "line": 153,
+      "next_state": "stTrough6",
+      "raw": "{\"Drain\",\t\t1,0,\t\t0,\t\tstTrough6,\t0,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "exit_output_address": 3,
+      "exit_output_symbol": "sLaunch",
+      "label": "Shooter",
+      "line": 156,
+      "next_state": "stBallLane",
+      "raw": "{\"Shooter\",\t\t1,swShooter,\t sLaunch,\tstBallLane,\t0,\t0,\t0,\tSIM_STNOTEXCL|SIM_STSHOOT},",
+      "switch_address": 86,
+      "switch_symbol": "swShooter"
+    },
+    {
+      "label": "Habitrail",
+      "line": 157,
+      "next_state": "stWheelExit",
+      "raw": "{\"Habitrail\",\t\t1,0,\t\t 0,\t\tstWheelExit,\t12,\t0,\t0,\tSIM_STNOTEXCL},"
+    },
+    {
+      "label": "Right Outlane",
+      "line": 158,
+      "next_state": "stDrain",
+      "raw": "{\"Right Outlane\",\t1,swRightOutlane,0,\t\tstDrain,\t15},",
+      "switch_address": 85,
+      "switch_symbol": "swRightOutlane"
+    },
+    {
+      "label": "Left Outlane",
+      "line": 159,
+      "next_state": "stDrain",
+      "raw": "{\"Left Outlane\",\t1,swLeftOutlane, 0,\t\tstDrain,\t15},",
+      "switch_address": 74,
+      "switch_symbol": "swLeftOutlane"
+    },
+    {
+      "label": "Right Inlane",
+      "line": 160,
+      "next_state": "stFree",
+      "raw": "{\"Right Inlane\",\t1,swRightInlane, 0,\t\tstFree,\t\t5},",
+      "switch_address": 78,
+      "switch_symbol": "swRightInlane"
+    },
+    {
+      "label": "Left Inlane",
+      "line": 161,
+      "next_state": "stFree",
+      "raw": "{\"Left Inlane\",\t1,swLeftInlane,\t 0,\t\tstFree,\t\t5},",
+      "switch_address": 75,
+      "switch_symbol": "swLeftInlane"
+    },
+    {
+      "label": "Left Slingshot",
+      "line": 162,
+      "next_state": "stFree",
+      "raw": "{\"Left Slingshot\",\t1,swLeftSling,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 76,
+      "switch_symbol": "swLeftSling"
+    },
+    {
+      "label": "Rt Slingshot",
+      "line": 163,
+      "next_state": "stFree",
+      "raw": "{\"Rt Slingshot\",\t1,swRightSling,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 77,
+      "switch_symbol": "swRightSling"
+    },
+    {
+      "label": "Left Bumper",
+      "line": 164,
+      "next_state": "stFree",
+      "raw": "{\"Left Bumper\",\t1,swLeftJet,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 16,
+      "switch_symbol": "swLeftJet"
+    },
+    {
+      "label": "Right Bumper",
+      "line": 165,
+      "next_state": "stFree",
+      "raw": "{\"Right Bumper\",\t1,swRightJet,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 17,
+      "switch_symbol": "swRightJet"
+    },
+    {
+      "label": "Center Bumper",
+      "line": 166,
+      "next_state": "stFree",
+      "raw": "{\"Center Bumper\",\t1,swCenterJet,\t 0,\t\tstFree,\t\t1},",
+      "switch_address": 18,
+      "switch_symbol": "swCenterJet"
+    },
+    {
+      "label": "Wheel Exit",
+      "line": 167,
+      "next_state": "stFree",
+      "raw": "{\"Wheel Exit\",\t1,swWheelExit,\t 0,\t\tstFree,\t\t5},",
+      "switch_address": 37,
+      "switch_symbol": "swWheelExit"
+    }
+  ],
+  "switches": [
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Start",
+      "line": 94,
+      "status": "candidate",
+      "symbol": "swStart"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Tilt",
+      "line": 95,
+      "status": "candidate",
+      "symbol": "swTilt"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "Left Jet",
+      "line": 100,
+      "state_labels": [
+        "Left Bumper"
+      ],
+      "status": "candidate",
+      "symbol": "swLeftJet"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "Right Jet",
+      "line": 101,
+      "state_labels": [
+        "Right Bumper"
+      ],
+      "status": "candidate",
+      "symbol": "swRightJet"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Center Jet",
+      "line": 102,
+      "state_labels": [
+        "Center Bumper"
+      ],
+      "status": "candidate",
+      "symbol": "swCenterJet"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Slam Tilt",
+      "line": 96,
+      "status": "candidate",
+      "symbol": "swSlamTilt"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Coin Door",
+      "line": 97,
+      "status": "candidate",
+      "symbol": "swCoinDoor"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Launch",
+      "line": 103,
+      "status": "candidate",
+      "symbol": "swLaunch"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "Wheel Exit",
+      "line": 104,
+      "state_labels": [
+        "Wheel Exit"
+      ],
+      "status": "candidate",
+      "symbol": "swWheelExit"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Trough1",
+      "line": 105,
+      "state_labels": [
+        "Trough 1"
+      ],
+      "status": "candidate",
+      "symbol": "swTrough1"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "Trough2",
+      "line": 106,
+      "state_labels": [
+        "Trough 2"
+      ],
+      "status": "candidate",
+      "symbol": "swTrough2"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "Trough3",
+      "line": 107,
+      "state_labels": [
+        "Trough 3"
+      ],
+      "status": "candidate",
+      "symbol": "swTrough3"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "label": "Trough4",
+      "line": 108,
+      "state_labels": [
+        "Trough 4"
+      ],
+      "status": "candidate",
+      "symbol": "swTrough4"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "Trough5",
+      "line": 109,
+      "state_labels": [
+        "Trough 5"
+      ],
+      "status": "candidate",
+      "symbol": "swTrough5"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "label": "Trough6",
+      "line": 110,
+      "state_labels": [
+        "Trough 6"
+      ],
+      "status": "candidate",
+      "symbol": "swTrough6"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "Trough Jam",
+      "line": 111,
+      "state_labels": [
+        "Trough Jam"
+      ],
+      "status": "candidate",
+      "symbol": "swTroughJam"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.input.switch",
+      "label": "Left Outlane",
+      "line": 112,
+      "state_labels": [
+        "Left Outlane"
+      ],
+      "status": "candidate",
+      "symbol": "swLeftOutlane"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.input.switch",
+      "label": "Left Inlane",
+      "line": 113,
+      "state_labels": [
+        "Left Inlane"
+      ],
+      "status": "candidate",
+      "symbol": "swLeftInlane"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling",
+      "line": 114,
+      "state_labels": [
+        "Left Slingshot"
+      ],
+      "status": "candidate",
+      "symbol": "swLeftSling"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling",
+      "line": 115,
+      "state_labels": [
+        "Rt Slingshot"
+      ],
+      "status": "candidate",
+      "symbol": "swRightSling"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.input.switch",
+      "label": "Right Inlane",
+      "line": 116,
+      "state_labels": [
+        "Right Inlane"
+      ],
+      "status": "candidate",
+      "symbol": "swRightInlane"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.input.switch",
+      "label": "Right Outlane",
+      "line": 117,
+      "state_labels": [
+        "Right Outlane"
+      ],
+      "status": "candidate",
+      "symbol": "swRightOutlane"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.input.switch",
+      "label": "Shooter",
+      "line": 118,
+      "state_labels": [
+        "Shooter"
+      ],
+      "status": "candidate",
+      "symbol": "swShooter"
+    }
+  ],
+  "version": 1
+}

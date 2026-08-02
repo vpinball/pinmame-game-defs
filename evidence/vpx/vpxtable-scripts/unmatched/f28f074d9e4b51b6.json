@@ -1,0 +1,33 @@
+{
+  "driver_ids": [],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 55,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "-------------------------------------------------\n  NOBS\n  -------------------------------------------------\n\n  by BorgDog, 2016\n\n  Scoring Rules\n\n      Scoring is by standard cribbage rules... mostly... with a \"game\" to 121 pegs.\n      Tracks cribbage games won, including skunks and double skunks on 2 player games.\n\n      Clear a hand to count cribbage pegs for that \"hand\" including \"turn\" card (roto target).\n      Hands resets after clearing and at end of ball, excpet at end of ball when shoot again is lit.\n\n      Hands are as follows and all include the \"turn\" card (RotoTarget) in the scoring.:\n           4 left side drops  (6, 5, 5, 4)\n           3 center drops and right side rollover (A, 2, 2, 3)\n           2 right drops, right outlane, and left inlane (6, 7, 8, 9)\n           3 top rollovers and left outlane (K, Q, J, 5)\n\n      Clearing all four hands in a single ball turns on Double pegs. Double pegs lights clear at end of ball always.\n\n      Clear K,Q,J and 7,8 rollovers to light star rollovers. Each lit star \"pegs\" 1 during \"play\".\n      Clear any 6 lit wire rollovers to light extra ball (target) and open right outlane gate.\n\n      Clearing the \"5\" rollover opens left outlane gate, reset if hand 3 is complete or on next ball.\n\n      When a player reaches an end of the cribbage board (>120 pegs) that player scores a game win.\n          If opposing players pegs is less than 90 the player also scores a skunk (another game).\n          If opposing players pegs is less than 60 the player scores a double-skunk (4 games total)\n          New cribbage game, both players game pegs, reset to 0 when a game is won.\n\n      If any rollover or drop target hit during play matches the turn card (roto) a \"pair for 2\" is pegged.\n      If any rollover or drop target hit during play + turn card = 15, then a \"15 for 2\" is pegged, face cards count as 10.\n      Hitting roto pegs the displayed card (K,Q,J are worth 10, etc) and spins the roto.\n      Hitting bullseye target pegs 1 and spins the roto.\n      Skill shot pegs 2 for \"heels\"  (well should only be Jack but where is the fun in that)\n\n  This table uses a simplified and modified version of Wizards_Hat's Alphanumeric Display Tutorial table\n  for the system 1 type displays, expanded to include b2s. Thanks!\n\n  DOF config\n      101 Left Flipper, 102 Right Flipper,\n      105 right sling, 106 right sling flasher,\n      107 Bumper1, 108 Bumper1 flasher, 109 bumper2, 110 bumper2 Flasher\n      115 Roto-gear, 116 left DT reset, 117 mid DT reset, 118 Right DT Reset\n      134 Drain, 135 Ball Release\n      136 Shooter Lane/launch ball, 137 credit light, 138 knocker, 139 knocker Flasher\n      141 Chime1-10s, 142 Chime2-100s, 143 Chime3-1000s\n\n  -------------------------------------------------\nThalamus 2018-08-04\nNo special SSF tweaks yet.\nDue to ramp changes Trough1 and Trough2 needs Physics->Hit Threshold set to 0 on both left/right walls."
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Nobs (BorgDog 2016) 1.2.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Nobs (BorgDog 2016) 1.2.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "f28f074d9e4b51b6b8eb47eebb71a94e202a7738e905c67f996cc028654419bc"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

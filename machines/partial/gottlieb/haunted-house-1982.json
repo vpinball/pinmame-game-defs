@@ -1,0 +1,2916 @@
+{
+  "conflicts": [],
+  "controller": {
+    "inversion_applied_by_emulator": true,
+    "platform": "pinmame.gts80"
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "candidate",
+      "catalog_identity": "observed",
+      "mechanisms": "unknown",
+      "physical_wiring": "candidate",
+      "recreation_knowledge": "candidate",
+      "semantic_naming": "candidate",
+      "variant_coverage": "candidate"
+    },
+    "missing": [
+      "identity",
+      "controller_platform",
+      "input_enumeration",
+      "input_semantics",
+      "output_enumeration",
+      "output_semantics",
+      "display_inventory",
+      "mechanism_inventory",
+      "mechanism_behavior",
+      "polarity",
+      "variant_differences",
+      "recreation_notes",
+      "provenance"
+    ],
+    "status": "partial"
+  },
+  "displays": [],
+  "drivers": [
+    {
+      "clone_of": "gts80",
+      "description": "Haunted House (rev. 2)",
+      "flags": 0,
+      "id": "hh",
+      "manufacturer": "Gottlieb",
+      "year": "1982"
+    },
+    {
+      "clone_of": "hh",
+      "description": "Haunted House (rev. 2, 7-digit conversion)",
+      "flags": 0,
+      "id": "hh7",
+      "manufacturer": "Oliver",
+      "year": "2008"
+    },
+    {
+      "clone_of": "hh",
+      "description": "Haunted House (rev. 1)",
+      "flags": 0,
+      "id": "hh_1",
+      "manufacturer": "Gottlieb",
+      "year": "1982"
+    },
+    {
+      "clone_of": "hh",
+      "description": "Haunted House (rev. 3 unofficial MOD)",
+      "flags": 0,
+      "id": "hh_3",
+      "manufacturer": "Flipprojets",
+      "year": "1982"
+    },
+    {
+      "clone_of": "hh",
+      "description": "Haunted House (rev. 3 unofficial MOD, LED)",
+      "flags": 0,
+      "id": "hh_3a",
+      "manufacturer": "Flipprojets",
+      "year": "1982"
+    },
+    {
+      "clone_of": "hh",
+      "description": "Haunted House (rev. 3 unofficial MOD, LED+Secret Tunnel)",
+      "flags": 0,
+      "id": "hh_3b",
+      "manufacturer": "Flipprojets",
+      "year": "1982"
+    },
+    {
+      "clone_of": "hh",
+      "description": "Haunted House (rev. 4 unofficial Votrax speech MOD)",
+      "flags": 0,
+      "id": "hh_4",
+      "manufacturer": "Flipprojets",
+      "year": "1982"
+    },
+    {
+      "clone_of": "hh",
+      "description": "Haunted House (rev. 4 unofficial Votrax speech MOD, LED)",
+      "flags": 0,
+      "id": "hh_4a",
+      "manufacturer": "Flipprojets",
+      "year": "1982"
+    },
+    {
+      "clone_of": "hh",
+      "description": "Haunted House (rev. 4 unofficial Votrax speech MOD, LED+Secret Tunnel)",
+      "flags": 0,
+      "id": "hh_4b",
+      "manufacturer": "Flipprojets",
+      "year": "1982"
+    }
+  ],
+  "format": "pinmame-machine-definition",
+  "inputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "0"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "0"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "00"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "000"
+        }
+      ],
+      "binding": {
+        "device": 0,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-drop-target-1",
+      "kind": "switch",
+      "label": "Lower Drop Target 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "01"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "001"
+        }
+      ],
+      "binding": {
+        "device": 1,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-pop-bumper",
+      "kind": "switch",
+      "label": "Lower Pop Bumper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "02"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "002"
+        }
+      ],
+      "binding": {
+        "device": 2,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-drop-target-1",
+      "kind": "switch",
+      "label": "Upper Drop Target 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "03"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "003"
+        }
+      ],
+      "binding": {
+        "device": 3,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-standup-target-1",
+      "kind": "switch",
+      "label": "Upper Standup Target 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "4"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "04"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "004"
+        }
+      ],
+      "binding": {
+        "device": 4,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-left-lane",
+      "kind": "switch",
+      "label": "Upper Left Lane",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "05"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "005"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.main-standup-target-1",
+      "kind": "switch",
+      "label": "Main Standup Target 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "06"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "006"
+        }
+      ],
+      "binding": {
+        "device": 6,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-through-lane-1",
+      "kind": "switch",
+      "label": "Lower Through Lane 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "010"
+        }
+      ],
+      "binding": {
+        "device": 10,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-drop-target-2",
+      "kind": "switch",
+      "label": "Lower Drop Target 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "011"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.kicking-target-1",
+      "kind": "switch",
+      "label": "Kicking Target 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "012"
+        }
+      ],
+      "binding": {
+        "device": 12,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-drop-target-2",
+      "kind": "switch",
+      "label": "Upper Drop Target 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "013"
+        }
+      ],
+      "binding": {
+        "device": 13,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-standup-target-2",
+      "kind": "switch",
+      "label": "Upper Standup Target 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "14"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "014"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.kicking-target-2",
+      "kind": "switch",
+      "label": "Kicking Target 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "015"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.main-standup-target-2",
+      "kind": "switch",
+      "label": "Main Standup Target 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "016"
+        }
+      ],
+      "binding": {
+        "device": 16,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-through-lane-2",
+      "kind": "switch",
+      "label": "Lower Through Lane 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "020"
+        }
+      ],
+      "binding": {
+        "device": 20,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-drop-target-3",
+      "kind": "switch",
+      "label": "Lower Drop Target 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "021"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-wire-rollover",
+      "kind": "switch",
+      "label": "Upper Wire Rollover",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "022"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-drop-target-3",
+      "kind": "switch",
+      "label": "Upper Drop Target 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "023"
+        }
+      ],
+      "binding": {
+        "device": 23,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-standup-target-3",
+      "kind": "switch",
+      "label": "Upper Standup Target 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "024"
+        }
+      ],
+      "binding": {
+        "device": 24,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.kicking-target-3",
+      "kind": "switch",
+      "label": "Kicking Target 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "025"
+        }
+      ],
+      "binding": {
+        "device": 25,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.kicking-target-4",
+      "kind": "switch",
+      "label": "Kicking Target 4",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "026"
+        }
+      ],
+      "binding": {
+        "device": 26,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-through-lane-3",
+      "kind": "switch",
+      "label": "Lower Through Lane 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "030"
+        }
+      ],
+      "binding": {
+        "device": 30,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-drop-target-4",
+      "kind": "switch",
+      "label": "Lower Drop Target 4",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "031"
+        }
+      ],
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.basement-kicker",
+      "kind": "switch",
+      "label": "Basement Kicker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "032"
+        }
+      ],
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-drop-target-4",
+      "kind": "switch",
+      "label": "Upper Drop Target 4",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "033"
+        }
+      ],
+      "binding": {
+        "device": 33,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-standup-target-4",
+      "kind": "switch",
+      "label": "Upper Standup Target 4",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "034"
+        }
+      ],
+      "binding": {
+        "device": 34,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.main-playfield-rollover",
+      "kind": "switch",
+      "label": "Main Playfield Rollover",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "035"
+        }
+      ],
+      "binding": {
+        "device": 35,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.main-playfield-gate",
+      "kind": "switch",
+      "label": "Main Playfield Gate",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "036"
+        }
+      ],
+      "binding": {
+        "device": 36,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-through-lane-4",
+      "kind": "switch",
+      "label": "Lower Through Lane 4",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "040"
+        }
+      ],
+      "binding": {
+        "device": 40,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-drop-target-5",
+      "kind": "switch",
+      "label": "Lower Drop Target 5",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "041"
+        }
+      ],
+      "binding": {
+        "device": 41,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.basement-special-kicker",
+      "kind": "switch",
+      "label": "Basement Special Kicker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "042"
+        }
+      ],
+      "binding": {
+        "device": 42,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-scoring-rubber",
+      "kind": "switch",
+      "label": "Upper Scoring Rubber",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "43"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "043"
+        }
+      ],
+      "binding": {
+        "device": 43,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-pop-bumper",
+      "kind": "switch",
+      "label": "Upper Pop Bumper",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "044"
+        }
+      ],
+      "binding": {
+        "device": 44,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.main-pop-bumpers",
+      "kind": "switch",
+      "label": "Main Pop Bumpers",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "045"
+        }
+      ],
+      "binding": {
+        "device": 45,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.main-playfield-kicker",
+      "kind": "switch",
+      "label": "Main Playfield Kicker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "046"
+        }
+      ],
+      "binding": {
+        "device": 46,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.main-playfield-saucer-ball-start",
+      "kind": "switch",
+      "label": "Main Playfield Saucer / Ball Start",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "50"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "50"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "050"
+        }
+      ],
+      "binding": {
+        "device": 50,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-standup-target-1",
+      "kind": "switch",
+      "label": "Lower Standup Target 1",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "51"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "51"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "051"
+        }
+      ],
+      "binding": {
+        "device": 51,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-slingshot",
+      "kind": "switch",
+      "label": "Lower Slingshot",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "54"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "54"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "054"
+        }
+      ],
+      "binding": {
+        "device": 54,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.main-playfield-lane",
+      "kind": "switch",
+      "label": "Main Playfield Lane",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "55"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "55"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "055"
+        }
+      ],
+      "binding": {
+        "device": 55,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.main-standup-target-3",
+      "kind": "switch",
+      "label": "Main Standup Target 3",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "57"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "57"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "057"
+        }
+      ],
+      "binding": {
+        "device": 57,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.tilt",
+      "kind": "switch",
+      "label": "Tilt",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "60"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "60"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "060"
+        }
+      ],
+      "binding": {
+        "device": 60,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-standup-target-2",
+      "kind": "switch",
+      "label": "Lower Standup Target 2",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "64"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "64"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "064"
+        }
+      ],
+      "binding": {
+        "device": 64,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-playfield-gate",
+      "kind": "switch",
+      "label": "Upper Playfield Gate",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "65"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "65"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "065"
+        }
+      ],
+      "binding": {
+        "device": 65,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.shooter-lane-auto-plunger",
+      "kind": "switch",
+      "label": "Shooter Lane / Auto Plunger",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "66"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "66"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "066"
+        }
+      ],
+      "binding": {
+        "device": 66,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-slingshot-main-scoring-rubber",
+      "kind": "switch",
+      "label": "Upper Slingshot / Main Scoring Rubber",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "67"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "67"
+        },
+        {
+          "namespace": "vpe-legacy.switch",
+          "value": "067"
+        }
+      ],
+      "binding": {
+        "device": 67,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough",
+      "kind": "switch",
+      "label": "Trough",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    }
+  ],
+  "knowledge": {
+    "path": "knowledge/gottlieb/haunted-house-1982.md",
+    "status": "partial"
+  },
+  "machine": {
+    "id": "gottlieb.haunted-house.1982",
+    "ipdb_id": 1133,
+    "manufacturer": "Gottlieb",
+    "name": "Haunted House",
+    "year": 1982
+  },
+  "mechanisms": [],
+  "outputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "02"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "002"
+        }
+      ],
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.upper-playfield-insert",
+      "kind": "lamp",
+      "label": "Upper Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "3"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "03"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "003"
+        }
+      ],
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "08"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "008"
+        }
+      ],
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.8",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "12"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "012"
+        }
+      ],
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "device.basement-up-kick-sw31",
+      "kind": "coil",
+      "label": "Basement Up Kick (sw31)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "13"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "013"
+        }
+      ],
+      "binding": {
+        "device": 13,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "device.lower-drop-targets-reset",
+      "kind": "coil",
+      "label": "Lower Drop Targets Reset",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "15"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "015"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "device.auto-plunger-kick-sw65",
+      "kind": "coil",
+      "label": "Auto Plunger Kick (sw65)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "16"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "016"
+        }
+      ],
+      "binding": {
+        "device": 16,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "device.trap-door",
+      "kind": "coil",
+      "label": "Trap Door",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "17"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "017"
+        }
+      ],
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "device.gi-state-relay",
+      "kind": "relay",
+      "label": "GI State Relay",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "18"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "018"
+        }
+      ],
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.18",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "19"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "019"
+        }
+      ],
+      "binding": {
+        "device": 19,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.19",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "20"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "020"
+        }
+      ],
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.20",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "21"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "021"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.upper-playfield-insert.21",
+      "kind": "lamp",
+      "label": "Upper Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "22"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "022"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.22",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "23"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "023"
+        }
+      ],
+      "binding": {
+        "device": 23,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.lower-playfield-insert",
+      "kind": "lamp",
+      "label": "Lower Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "24"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "024"
+        }
+      ],
+      "binding": {
+        "device": 24,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.lower-playfield-insert.24",
+      "kind": "lamp",
+      "label": "Lower Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "25"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "025"
+        }
+      ],
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.lower-playfield-insert.25",
+      "kind": "lamp",
+      "label": "Lower Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "26"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "026"
+        }
+      ],
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.lower-playfield-insert.26",
+      "kind": "lamp",
+      "label": "Lower Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "27"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "027"
+        }
+      ],
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.27",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "28"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "028"
+        }
+      ],
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.28",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "29"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "029"
+        }
+      ],
+      "binding": {
+        "device": 29,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.29",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "30"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "030"
+        }
+      ],
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.30",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "31"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "031"
+        }
+      ],
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.31",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "32"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "032"
+        }
+      ],
+      "binding": {
+        "device": 32,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.32",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "33"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "033"
+        }
+      ],
+      "binding": {
+        "device": 33,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.33",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "34"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "034"
+        }
+      ],
+      "binding": {
+        "device": 34,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.34",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "35"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "035"
+        }
+      ],
+      "binding": {
+        "device": 35,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.35",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "36"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "036"
+        }
+      ],
+      "binding": {
+        "device": 36,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.36",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "37"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "037"
+        }
+      ],
+      "binding": {
+        "device": 37,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.37",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "38"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "38"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "038"
+        }
+      ],
+      "binding": {
+        "device": 38,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.38",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "39"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "39"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "039"
+        }
+      ],
+      "binding": {
+        "device": 39,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.39",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "40"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "040"
+        }
+      ],
+      "binding": {
+        "device": 40,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.upper-playfield-insert.40",
+      "kind": "lamp",
+      "label": "Upper Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "41"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "041"
+        }
+      ],
+      "binding": {
+        "device": 41,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.upper-playfield-insert.41",
+      "kind": "lamp",
+      "label": "Upper Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "42"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "042"
+        }
+      ],
+      "binding": {
+        "device": 42,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.upper-playfield-insert.42",
+      "kind": "lamp",
+      "label": "Upper Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "44"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "044"
+        }
+      ],
+      "binding": {
+        "device": 44,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.upper-playfield-insert.44",
+      "kind": "lamp",
+      "label": "Upper Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "45"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "045"
+        }
+      ],
+      "binding": {
+        "device": 45,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.lower-playfield-insert.45",
+      "kind": "lamp",
+      "label": "Lower Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "046"
+        }
+      ],
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.46",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "47"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "47"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "047"
+        }
+      ],
+      "binding": {
+        "device": 47,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.47",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "51"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "51"
+        },
+        {
+          "namespace": "vpe-legacy.lamp",
+          "value": "051"
+        }
+      ],
+      "binding": {
+        "device": 51,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.main-playfield-insert.51",
+      "kind": "lamp",
+      "label": "Main Playfield Insert",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "1"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "01"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "001"
+        }
+      ],
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.saucer-kick-sw46",
+      "kind": "coil",
+      "label": "Saucer Kick (sw46)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "2"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "02"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "002"
+        }
+      ],
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.up-kick-sw45",
+      "kind": "coil",
+      "label": "Up Kick (sw45)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "5"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "05"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "005"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.upper-drop-targets-reset",
+      "kind": "coil",
+      "label": "Upper Drop Targets Reset",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "6"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "06"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "006"
+        }
+      ],
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.basement-special-kick-sw41",
+      "kind": "coil",
+      "label": "Basement Special Kick (sw41)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "8"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "08"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "008"
+        }
+      ],
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.knocker",
+      "kind": "coil",
+      "label": "Knocker",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "9"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "09"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "009"
+        }
+      ],
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.ball-release-trough-kick",
+      "kind": "coil",
+      "label": "Ball Release / Trough Kick",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "10"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "010"
+        }
+      ],
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.game-over-relay",
+      "kind": "coil",
+      "label": "Game Over Relay",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "11"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "011"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.gi-relay",
+      "kind": "relay",
+      "label": "GI Relay",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "46"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "046"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "c_flipper_lower_right"
+        }
+      ],
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flipper-lower-right",
+      "kind": "coil",
+      "label": "Right Flipper (Main)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "48"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "048"
+        },
+        {
+          "namespace": "vpe-legacy.coil",
+          "value": "c_flipper_lower_left"
+        }
+      ],
+      "binding": {
+        "device": 48,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flipper-lower-left",
+      "kind": "coil",
+      "label": "Left Flipper (Main)",
+      "provenance": {
+        "source_refs": [
+          "legacy.game.hauntedhouse"
+        ],
+        "status": "candidate"
+      }
+    }
+  ],
+  "relationships": [],
+  "schema_version": 1,
+  "sources": [
+    {
+      "attribution": "pinmame-game-defs contributors",
+      "id": "legacy.game.hauntedhouse",
+      "kind": "legacy_json",
+      "locator": "games/hauntedhouse.json; origin=vbscript-parser",
+      "revision": "4ea106d080728648a693af3b4dcabb091eee0a02",
+      "uri": "https://github.com/vpinball/pinmame-game-defs"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.catalog.4ec52ff0ac13",
+      "kind": "pinmame_catalog",
+      "license": "BSD-3-Clause",
+      "locator": "PinmameGetGames",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    }
+  ]
+}

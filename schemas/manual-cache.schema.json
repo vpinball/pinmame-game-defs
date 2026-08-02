@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/vpinball/pinmame-game-defs/schemas/manual-cache.schema.json",
+  "title": "Local machine-manual cache manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "version", "documents"],
+  "properties": {
+    "format": { "const": "pinmame-manual-cache" },
+    "version": { "const": 1 },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "machine_id", "source", "source_id", "source_url", "title", "document_type", "language", "relative_path", "bytes", "sha256", "acquired_at", "extraction_status"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "machine_id": { "type": "string", "minLength": 1 },
+          "source": { "enum": ["ipdb", "internet_archive", "manufacturer", "other"] },
+          "source_id": { "type": "string", "minLength": 1 },
+          "source_url": { "type": "string", "minLength": 1 },
+          "download_url": { "type": "string", "minLength": 1 },
+          "original_filename": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "document_type": { "enum": ["manual", "schematics", "parts_list", "service_bulletin", "rulesheet", "other"] },
+          "language": { "type": "string", "pattern": "^[a-z]{2,3}(?:-[A-Z]{2})?$" },
+          "relative_path": { "type": "string", "minLength": 1 },
+          "bytes": { "type": "integer", "minimum": 1 },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "md5": { "type": "string", "pattern": "^[0-9a-f]{32}$" },
+          "sha1": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+          "uploader": { "type": "string" },
+          "rights": { "type": "string" },
+          "attribution": { "type": "string" },
+          "acquired_at": { "type": "string", "format": "date-time" },
+          "extraction_status": { "enum": ["pending", "text_native", "ocr_required", "partial", "complete", "failed"] },
+          "extraction": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["relative_path", "sha256", "page_count", "text_page_count", "character_count", "table_pages", "extracted_at"],
+            "properties": {
+              "relative_path": { "type": "string", "minLength": 1 },
+              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+              "page_count": { "type": "integer", "minimum": 1 },
+              "text_page_count": { "type": "integer", "minimum": 0 },
+              "character_count": { "type": "integer", "minimum": 0 },
+              "table_pages": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 1 } },
+              "extracted_at": { "type": "string", "format": "date-time" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

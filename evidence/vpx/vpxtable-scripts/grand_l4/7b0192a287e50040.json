@@ -1,0 +1,450 @@
+{
+  "driver_ids": [
+    "grand_l4"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.grand_l4"
+  ],
+  "mechanisms": [
+    {
+      "kind": "cvpmMagnet",
+      "line": 549,
+      "raw": "Set mLeftMagnet=New cvpmMagnet",
+      "status": "candidate"
+    },
+    {
+      "kind": "cvpmMagnet",
+      "line": 557,
+      "raw": "Set mRightMagnet=New cvpmMagnet",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Trough.Sol In",
+      "line": 1023,
+      "status": "candidate",
+      "symbol": "bsTrough.SolIn"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "dt3 B.Sol Drop Up",
+      "line": 1025,
+      "status": "candidate",
+      "symbol": "dt3B.SolDropUp"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "dt4 L.Sol Drop Up",
+      "line": 1026,
+      "status": "candidate",
+      "symbol": "dt4L.SolDropUp"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "dt4 R.Sol Drop Up",
+      "line": 1027,
+      "status": "candidate",
+      "symbol": "dt4R.SolDropUp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Lock Kick",
+      "line": 1028,
+      "status": "candidate",
+      "symbol": "LockKick"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Flasher68",
+      "line": 1032,
+      "status": "candidate",
+      "symbol": "SetFlasher68"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Flasher69",
+      "line": 1033,
+      "status": "candidate",
+      "symbol": "SetFlasher69"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Trough.Sol Out",
+      "line": 1024,
+      "status": "candidate",
+      "symbol": "bsTrough.SolOut"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "label": "PFGI",
+      "line": 1029,
+      "status": "candidate",
+      "symbol": "PFGI"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Flasher67",
+      "line": 1031,
+      "status": "candidate",
+      "symbol": "SetFlasher67"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Flasher66",
+      "line": 1030,
+      "status": "candidate",
+      "symbol": "SetFlasher66"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Sol Soundknocker",
+      "line": 1037,
+      "status": "candidate",
+      "symbol": "vpmSolSoundknocker"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Sol Sound Bell",
+      "line": 1038,
+      "status": "candidate",
+      "symbol": "vpmSolSoundBell"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Sol Sound",
+      "line": 1035,
+      "status": "candidate",
+      "symbol": "vpmSolSound "
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "label": "vpm Sol Sound",
+      "line": 1036,
+      "status": "candidate",
+      "symbol": "vpmSolSound "
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "label": "Set Flasher70",
+      "line": 1034,
+      "status": "candidate",
+      "symbol": "SetFlasher70"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 39,
+      "line_start": 2,
+      "status": "candidate",
+      "text": "__      __.___.____    .____    .___   _____      _____    _________  ____ ________  ______   ________\n/  \\    /  \\   |    |   |    |   |   | /  _  \\    /     \\  /   _____/ /_   /   __   \\/  __  \\ /  _____/\n\\   \\/\\/   /   |    |   |    |   |   |/  /_\\  \\  /  \\ /  \\ \\_____  \\   |   \\____    />      </   __  \\\n\\        /|   |    |___|    |___|   /    |    \\/    Y    \\/        \\  |   |  /    //   --   \\  |__\\  \\\n \\__/\\  / |___|_______ \\_______ \\___\\____|__  /\\____|__  /_______  /  |___| /____/ \\______  /\\_____  /\n      \\/              \\/       \\/           \\/         \\/        \\/                       \\/       \\/\n __________________    _____    _______  ________    .____    ._____________  _____ __________________\n/  _____/\\______   \\  /  _  \\   \\      \\ \\______ \\   |    |   |   \\____    / /  _  \\\\______   \\______ \\\n/   \\  ___ |       _/ /  /_\\  \\  /   |   \\ |    |  \\  |    |   |   | /     / /  /_\\  \\|       _/|    |  \\\n\\    \\_\\  \\|    |   \\/    |    \\/    |    \\|    `   \\ |    |___|   |/     /_/    |    \\    |   \\|    `   \\\n\\______  /|____|_  /\\____|__  /\\____|__  /_______  / |_______ \\___/_______ \\____|__  /____|_  /_______  /\n       \\/        \\/         \\/         \\/        \\/          \\/           \\/       \\/       \\/        \\/\n\n                                        Grand Lizard  V1.5\n\n                                A 3rdaxis & Slydog43 Collaboration\n\n-Special Thanks\n-Thanks to JP Salas for his VP9 version\n-Thanks to Rosve for his VP9 version\n-Thanks to G5K for the flippers\n-Thanks to VP Dev Team for making VPX so awesome!!!\n\n///////////////////////////////////////////////\n//Layers                                     //\n//1=Primitive, Walls, Rubbers, Lamps, Timers //\n//2=Lamps B                                  //\n//3=GI                                       //\n//4=Flashers                                 //\n//5=Silkscreened Plastics                    //\n//6=Clear Plastics, Hal 9000                 //\n//7=Flashers Large                           //\n//8=Drop Targets                             //\n//9=Outlane Posts                            //\n//10=Outlane Posts                           //\n//11=Outlane Posts                           //\n///////////////////////////////////////////////"
+    },
+    {
+      "line_end": 549,
+      "line_start": 547,
+      "status": "candidate",
+      "text": "Magnets"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in GrandLizardV1.5.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "GrandLizardV1.5.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "7b0192a287e500407a0e7563384ad46d20647333757f8bfcc11a7dd6cd354412"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "Gameover6",
+      "line": 1852,
+      "status": "candidate",
+      "symbol": "Gameover6_Hit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 1278,
+      "status": "candidate",
+      "symbol": "sw11_Hit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "sw11",
+      "line": 1279,
+      "status": "candidate",
+      "symbol": "sw11_Unhit"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "sw15",
+      "line": 1280,
+      "status": "candidate",
+      "symbol": "sw15_Hit"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "sw16",
+      "line": 1281,
+      "status": "candidate",
+      "symbol": "sw16_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 1282,
+      "status": "candidate",
+      "symbol": "sw17_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "sw18",
+      "line": 1283,
+      "status": "candidate",
+      "symbol": "sw18_Hit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "sw19",
+      "line": 1284,
+      "status": "candidate",
+      "symbol": "sw19_Hit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 1292,
+      "status": "candidate",
+      "symbol": "sw28_Spin"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1293,
+      "status": "candidate",
+      "symbol": "sw29_Hit"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "sw30",
+      "line": 1294,
+      "status": "candidate",
+      "symbol": "sw30_Hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "sw31",
+      "line": 1295,
+      "status": "candidate",
+      "symbol": "sw31_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 1296,
+      "status": "candidate",
+      "symbol": "sw32_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "sw32",
+      "line": 1297,
+      "status": "candidate",
+      "symbol": "sw32_Unhit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "sw33",
+      "line": 1298,
+      "status": "candidate",
+      "symbol": "sw33_Hit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "sw33",
+      "line": 1299,
+      "status": "candidate",
+      "symbol": "sw33_Unhit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "sw34",
+      "line": 1300,
+      "status": "candidate",
+      "symbol": "sw34_Hit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "sw34",
+      "line": 1301,
+      "status": "candidate",
+      "symbol": "sw34_Unhit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 1302,
+      "status": "candidate",
+      "symbol": "sw42_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 856,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 1303,
+      "status": "candidate",
+      "symbol": "sw43_Slingshot"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 828,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "sw44",
+      "line": 1304,
+      "status": "candidate",
+      "symbol": "sw44_Slingshot"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 590,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 628,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "Trigger LMS",
+      "line": 2008,
+      "status": "candidate",
+      "symbol": "TriggerLMS_Hit"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 589,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 627,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "Trigger RMS",
+      "line": 2014,
+      "status": "candidate",
+      "symbol": "TriggerRMS_Hit"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 588,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 626,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Down",
+      "line": 587,
+      "status": "candidate",
+      "symbol": "Table1_KeyDown"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 625,
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    }
+  ],
+  "version": 1
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/vpinball/pinmame-game-defs/schemas/catalog.schema.json",
+  "title": "PinMAME driver-to-machine catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "schema_version", "source", "summary", "abstract_parents", "drivers", "machines"],
+  "properties": {
+    "format": { "const": "pinmame-driver-catalog" },
+    "schema_version": { "const": 1 },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pinmame_revision", "library_sha256", "library_version"],
+      "properties": {
+        "pinmame_revision": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "library_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "library_version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["driver_count", "root_driver_count", "machine_count", "game_count", "non_game_count", "stub_count", "partial_count", "author_ready_count"],
+      "properties": {
+        "driver_count": { "type": "integer", "minimum": 1 },
+        "root_driver_count": { "type": "integer", "minimum": 1 },
+          "machine_count": { "type": "integer", "minimum": 1 },
+          "game_count": { "type": "integer", "minimum": 1 },
+          "non_game_count": { "type": "integer", "minimum": 0 },
+        "stub_count": { "type": "integer", "minimum": 0 },
+        "partial_count": { "type": "integer", "minimum": 0 },
+        "author_ready_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "abstract_parents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "direct_child_count"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+          "direct_child_count": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "drivers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "root_driver", "description", "year", "manufacturer", "flags", "machine_id", "definition", "definition_sha256", "coverage_status"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+          "clone_of": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+          "root_driver": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+          "description": { "type": "string", "minLength": 1 },
+          "year": { "type": "string", "minLength": 1 },
+          "manufacturer": { "type": "string", "minLength": 1 },
+          "flags": { "type": "integer", "minimum": 0 },
+          "machine_id": { "type": "string", "minLength": 1 },
+          "definition": { "type": "string", "pattern": "^machines/.+\\.json$" },
+          "definition_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "coverage_status": { "enum": ["stub", "partial", "author_ready"] }
+        }
+      }
+    },
+    "machines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "root_drivers", "definition", "definition_sha256", "driver_count", "processing_order", "processing_year", "machine_kind", "coverage_status", "missing"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "root_drivers": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^[a-z0-9_]+$" }
+          },
+          "definition": { "type": "string", "pattern": "^machines/.+\\.json$" },
+          "definition_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "driver_count": { "type": "integer", "minimum": 1 },
+          "processing_order": { "type": "integer", "minimum": 1 },
+          "processing_year": { "type": ["integer", "null"], "minimum": 1900, "maximum": 2100 },
+          "machine_kind": { "enum": ["physical_pinball", "physical_conversion", "virtual_pinball", "redemption_game", "diagnostic_software", "system_software", "unknown"] },
+          "coverage_status": { "enum": ["stub", "partial", "author_ready"] },
+          "missing": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

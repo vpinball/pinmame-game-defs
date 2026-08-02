@@ -1,0 +1,350 @@
+{
+  "driver_ids": [
+    "trucksp3"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.trucksp3"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 46,
+      "line_start": 4,
+      "status": "candidate",
+      "text": "Big Betty's Truck Stop (Bally 1988)\n\nDevelopment by agentEighty6 2020 for Visual Pinball X\nVersion 2.1.0\nI would like to send a very special thanks to the following.\n- sindbad : For being able to use his VP9 table resources.\n- JPSalas : VERY much improved \"Arcade Physics 3.0\" materials, script changes, and techniques.\n- BrandonLaw : Playfield and plastics cleanup and enhancement\n- bigus1 : Beta testing and lighting tweeks\n- flupper, nFozzy, and others : Flipper physics, flasher lighting, etc.\n- VPX development team: As always, thanks for your work in keeping VP alive and well\n- To anyone I may have forgotten, please let me know and I'll add you.\nRelease notes:\nVersion 2.1.0 - Physics overhaul and added dampening plus a bunch of table tweeks/corrections\nVersion 2.0.0 - Major update to add JPs Arcade Physics V3 and also to clean up a few issues and tweeks.\nVersion 1.1.0 - Minor update to clean up a few small asthetic issues and add Brandon's improved PF and images.\n\t\t\t Added changes from Arngrim and Thalamus to improve directional sounds and updates other sounds.\nVersion 1.0.0 - New VPX version built from the V9 version graphical resources.\n\t\t\tScript and lighting was (mostly) rebuilt from scratch.\n\t\t\tNew VPX routines (flipper physics, shadowing, flasher lighting, ball jumping, etc.).\n\t\t\tPlayfield cleanup/optimization.\nTable Components\nLayer1 - Table Mechanics\nLayer2 - Ramps\nLayer3 - Primitives\nLayer4 - Plastics\nLayer5 - Walls\nLayer6 - Misc, timers, outer walls, testing tools, etc.\nLayer7 - Export to Blender, Dampeners\nLayer8 - Flashers\nLayer9 - Table Lamps\nLayer10 - Controlled GI Lights\nLayer11 - GI Lights\n****************************************************\nOPTIONS\n****************************************************\nVolume devided by - lower gets higher sound"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Truck Stop (Bally 1988) v2.1.0/Truck Stop (Bally 1988) v2.1.0.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Truck Stop (Bally 1988) v2.1.0/Truck Stop (Bally 1988) v2.1.0.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/jsm174/vpx-standalone-scripts",
+    "revision": "15d112648a1b94b9f59eb8b3c335d57283653c50",
+    "sha256": "dac137d64e48c0b0fc5d83362856617efc8d8de4c0c737ee77e00ec398f02eea"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Entry C",
+      "line": 570,
+      "status": "candidate",
+      "symbol": "swRampEntryC"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Entry I",
+      "line": 571,
+      "status": "candidate",
+      "symbol": "swRampEntryI"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Entry T",
+      "line": 572,
+      "status": "candidate",
+      "symbol": "swRampEntryT"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Entry Y",
+      "line": 573,
+      "status": "candidate",
+      "symbol": "swRampEntryY"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Outhole",
+      "line": 574,
+      "status": "candidate",
+      "symbol": "swOuthole"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Exit Left",
+      "line": 575,
+      "status": "candidate",
+      "symbol": "swRampExitLeft"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "Ramp Exit Right",
+      "line": 576,
+      "status": "candidate",
+      "symbol": "swRampExitRight"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.input.switch",
+      "label": "Tilt Me",
+      "line": 577,
+      "status": "candidate",
+      "symbol": "swTiltMe"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "Shooter Lane",
+      "line": 578,
+      "status": "candidate",
+      "symbol": "swShooterLane"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "Bottom Sling Left",
+      "line": 579,
+      "status": "candidate",
+      "symbol": "swBottomSlingLeft"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Bottom Sling Right",
+      "line": 580,
+      "status": "candidate",
+      "symbol": "swBottomSlingRight"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "Top Sling Left",
+      "line": 581,
+      "status": "candidate",
+      "symbol": "swTopSlingLeft"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "Top Sling Right",
+      "line": 582,
+      "status": "candidate",
+      "symbol": "swTopSlingRight"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Single Target Top",
+      "line": 583,
+      "status": "candidate",
+      "symbol": "swSingleTargetTop"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Mushroom Left",
+      "line": 584,
+      "status": "candidate",
+      "symbol": "swMushroomLeft"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Mushroom Right",
+      "line": 585,
+      "status": "candidate",
+      "symbol": "swMushroomRight"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Spinner Top",
+      "line": 586,
+      "status": "candidate",
+      "symbol": "swSpinnerTop"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "Drop Target Bottom",
+      "line": 587,
+      "status": "candidate",
+      "symbol": "swDropTargetBottom"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "Drop Target Middle",
+      "line": 588,
+      "status": "candidate",
+      "symbol": "swDropTargetMiddle"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "Drop Target Top",
+      "line": 589,
+      "status": "candidate",
+      "symbol": "swDropTargetTop"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "Top Walls",
+      "line": 590,
+      "status": "candidate",
+      "symbol": "swTopWalls"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "Kicker Top Left",
+      "line": 591,
+      "status": "candidate",
+      "symbol": "swKickerTopLeft"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "Saucer Top Right",
+      "line": 592,
+      "status": "candidate",
+      "symbol": "swSaucerTopRight"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Inlane Left",
+      "line": 593,
+      "status": "candidate",
+      "symbol": "swInlaneLeft"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "Inlane Right",
+      "line": 594,
+      "status": "candidate",
+      "symbol": "swInlaneRight"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "Blue Target1",
+      "line": 595,
+      "status": "candidate",
+      "symbol": "swBlueTarget1"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Blue Target2",
+      "line": 596,
+      "status": "candidate",
+      "symbol": "swBlueTarget2"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Blue Target3",
+      "line": 597,
+      "status": "candidate",
+      "symbol": "swBlueTarget3"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Blue Target4",
+      "line": 598,
+      "status": "candidate",
+      "symbol": "swBlueTarget4"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "Blue Target5",
+      "line": 599,
+      "status": "candidate",
+      "symbol": "swBlueTarget5"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Blue Target6",
+      "line": 600,
+      "status": "candidate",
+      "symbol": "swBlueTarget6"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "Outlane Left",
+      "line": 601,
+      "status": "candidate",
+      "symbol": "swOutlaneLeft"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "Outlane Right",
+      "line": 602,
+      "status": "candidate",
+      "symbol": "swOutlaneRight"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "Single Target Left",
+      "line": 603,
+      "status": "candidate",
+      "symbol": "swSingleTargetLeft"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "Single Target Right",
+      "line": 604,
+      "status": "candidate",
+      "symbol": "swSingleTargetRight"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "Lower Dock",
+      "line": 605,
+      "status": "candidate",
+      "symbol": "swLowerDock"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "label": "Upper Dock",
+      "line": 606,
+      "status": "candidate",
+      "symbol": "swUpperDock"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Trough L",
+      "line": 607,
+      "status": "candidate",
+      "symbol": "swTroughL"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Trough R",
+      "line": 608,
+      "status": "candidate",
+      "symbol": "swTroughR"
+    }
+  ],
+  "version": 1
+}

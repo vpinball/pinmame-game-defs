@@ -1,0 +1,33 @@
+{
+  "driver_ids": [],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 49,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "A crude Recreation of Chicago Coins Mini Baseball\nby TGX 2023.\nVersion 1.7\n  - High Score Reset Function (f6 Key) fix\n  - Improvement to skill gage lamps (cosmetic to accomadate dual playfields)\n  - Graphic adjustments to overlay to support dual playfields\n  - Script changes to support mechanical plunger lever animation\n  - Object changes to support mechanical Plunger\n  - Improvements for sound when ball does not reach field of play\n  - Added ball return trigger (cosmetic emulation of original cabinet)\n  - Marquee adjustments\n  - Run Scored Ding Added per original\n  - More original score incrementing\nVersion 1.6\n    - New option for cabinet art switch! Go for the fence with the full Lounge Lizard treatment!\n  - Fix for missing 'zero' in high score tape\n  - Fix for edge case in plunger sound\nVersion 1,5\n  - Launcher active sound fix\n  - New cabinet lighting activates with Game Start/End\n  - Increased size of High Score tape\n  - New Skill Gage lighting\n  - Improved Playfield Art and cabinet by Lounge Lizard\n  - Revamped Out lamps based on new art with new illumination.\n  - 10 Run arrows now correctly cancelled if Out is hit.\n.\nNote: 'Gage' spelling is from the original game. 'Gage' is an alternative\nspelling of \"Gauge', pronounced the same but 'Gage' is rarely used...\nI use it in the script below to adhere to the usage on the game playfield\nand to pass on a bit of trivia about the game..\nThanks to JPSalas for inspiration and bearing with my inane coding questions.\nSome LUT's included credit goes to 3rdAxis, Fleep and Skitso\nHigh Score code by Darquayle\nAnimated Shooter by STAT\nAll new Reel-O-Matic\nThanks to Kiwi for mechanical plunger script suggestions\n***Note: There is a bug in VPX regarding reels, which still exists as ofAugust 2023), which requires extra coding and graphic work to rotate the\nbuilt in VPX reesls. The issue occurs when the table is rotated to 270 which is what most cabinet owners run.I have reported the flaw to Toxie in\nhopes that it will be fixed in a future VP release.\nAt this time, I have implemented what I call the Reel-O-Matic which works around the problems with reel rotation. It simply uses a series\nof flashers which rotate properly with the table instead of the built in reel system which does not.This eliminates one half of the graphics\nand code required to support the errant VPX code.\nAnother bug: line660 is completely ignored, no idea why.\nThe position of the reel flashers may need adjustment for your specific case.....\nInitialize Variables"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in MiniBaseball(Chicago Coin 1972)v1.7.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "MiniBaseball(Chicago Coin 1972)v1.7.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "c67ef29d0ccd995615c21374f327976e0cbf1c87d630350b2a920b63ae82161a"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

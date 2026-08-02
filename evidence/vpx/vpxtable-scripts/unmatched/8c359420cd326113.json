@@ -1,0 +1,33 @@
+{
+  "driver_ids": [],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 69,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "NOTES\nif gobblelight or gobblelightred are lit then layer1d.image=\"layer1\"\nif gobblelight or gobblelightred are NOT lit (in between roto indexes) thenlayer1d.image=\"layer1b\"\nrototarget spins on objroty\nTexture changes for lit L/R slingshots\ncig2.visible=0 when game is only 1 player or when player 1 is up in a 2 player game\nIf slingleftlit=1 Then\nFor each xx in slinglampsleft:xx.State = 1: Next\nFor each xx in slinglampsright:xx.State = 0: Next\nFor each xx in layer1acol: xx.image = \"layer1\": Next\nFor each xx in layer1bcol: xx.image = \"layer1b\": Next\nFor each xx in layer2acol: xx.image = \"layer2\": Next\nFor each xx in layer2bcol: xx.image = \"layer2b\": Next\nFor each xx in layer3acol: xx.image = \"layer3\": Next\nFor each xx in layer3bcol: xx.image = \"layer3b\": Next\nIf slingrightlit=1 Then\nFor each xx in slinglampsleft:xx.State = 0: Next\nFor each xx in slinglampsright:xx.State = 1: Next\nFor each xx in layer1acol: xx.image = \"layer1b\": Next\nFor each xx in layer1bcol: xx.image = \"layer1\": Next\nFor each xx in layer2acol: xx.image = \"layer2b\": Next\nFor each xx in layer2bcol: xx.image = \"layer2\": Next\nFor each xx in layer3acol: xx.image = \"layer3b\": Next\nFor each xx in layer3bcol: xx.image = \"layer3\": Next\ndead bumpers trigger with a hit to phys_deadbumps (spin), phys_deadbumps001 (Left center), phys_deadbumps002 (Right center)\n1 pt switches trigger with scoringswitches1pt and scoringswitches.\n****************************************************************\n\n         Whirl-Wind (Gottlieb 1958)\n         Script by Scottacus\n            v 1.0\n             November 2020\n\nBasic DOF config\n  90  BackGlass On Image\n  101 Left Flipper, 102 Right Flipper\n  105 Bumper1, 106 Bumper2, 107 Bumper3\n  103 Left Sling, 104 Right Sling\n  120 Kickers\n  125 Ball Release\n  130 - 138 Wire Rollovers\n  141 Chime 1-10s, 142 Chime2-100s, 143 Chime3-1000s\n  160 - 161 Rollover Buttons\n  170 - 173 Mushrooms\n  199 credit light\n  128 Knocker\n\n  Code Flow\n                 EndGame\n                  ^\n  Start Game -> New Game -> Check Continue -> Release Ball -> Drain -> Score Bouns -> Advance Player -> Next Ball\n                  ^                                     |\n                EndGame = True <---------------------------------------------------------------\n\nNote Score Motor Location for sound routines is at shootAgain Light\nBall Control Subroutine developed by: rothbauerw\n  Press \"c\" during play to activate, the arrow keys control the ball"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Whirl-Wind (Gottlieb 1958).vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Whirl-Wind (Gottlieb 1958).vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "8c359420cd326113e7ff8c20c9b97c1c6bd6c8efc2d8951f9d1e88a7bc39a883"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -1,0 +1,220 @@
+{
+  "driver_ids": [
+    "diner_l4"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.diner.1990"
+  ],
+  "mechanisms": [
+    {
+      "kind": "New cvpmMech",
+      "line": 588,
+      "raw": "Set WheelMech = New cvpmMech",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 2,
+      "group": "pinmame.output.gi",
+      "label": "gi 2",
+      "line": 268,
+      "status": "candidate",
+      "symbol": "gi_2"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Outhole",
+      "line": 332,
+      "status": "candidate",
+      "symbol": "sOuthole"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Right Ramp Flasher",
+      "line": 333,
+      "status": "candidate",
+      "symbol": "sRightRampFlasher"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "A Cselectrelay",
+      "line": 334,
+      "status": "candidate",
+      "symbol": "sACselectrelay"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol14 Diverter",
+      "line": 491,
+      "status": "candidate",
+      "symbol": "Sol14Diverter"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "label": "L Sling",
+      "line": 335,
+      "status": "candidate",
+      "symbol": "sLSling"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid",
+      "label": "Tilt Sol",
+      "line": 465,
+      "status": "candidate",
+      "symbol": "TiltSol"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Haji F",
+      "line": 478,
+      "status": "candidate",
+      "symbol": "SolHajiF"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Babs F",
+      "line": 479,
+      "status": "candidate",
+      "symbol": "SolBabsF"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Boris F",
+      "line": 480,
+      "status": "candidate",
+      "symbol": "SolBorisF"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Pepe F",
+      "line": 481,
+      "status": "candidate",
+      "symbol": "SolPepeF"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Buck F",
+      "line": 482,
+      "status": "candidate",
+      "symbol": "SolBuckF"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Cup F",
+      "line": 483,
+      "status": "candidate",
+      "symbol": "SolCupF"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol31",
+      "line": 492,
+      "status": "candidate",
+      "symbol": "Sol31"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol32",
+      "line": 493,
+      "status": "candidate",
+      "symbol": "Sol32"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 64,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "*****************************************************************************************\n*****************************************************************************************\n****************************** Diner, Williams 1990 *************************************\n*****************************************************************************************\nDiner by Flupper\nBased on VP9 version by Tamoore which was based on Pac-Dude's version\nPlayfield redraw by Bodydump\nPlastics redraws by Ben Logan\nSeveral plastics photos from George\nstandup target by Dark\nmany sounds from Knorr's sound package\ntesting by Clark Kent and Ben Logan\nShadow ball code by Ninuzzu\nVPW CHANGE LOG\nv01 - Fluffhead35  - Removed Duplicate Functions.  Enabled flipper calls in keyup. Changed UseSolenoids to 2. Fixed Bumpers, slings, and gates to be in line with Doc.  Removed slings from rubbers collection.\n                   - Changed Gameplay Difficult to 56.  Changed min/max slope of table to 6 and 7. Created a rubbers Layer and disabled all rubbers.  Created sleeves layer and moved sleeves and rubber post primitives there\n                   - Reshaping the flipper triggers. Added all rubber walls and corners to the table, Created Rubber posts and sleeve primitives. Reshapped rubber at slings and corrected corners.  Fixed sling position\n                   - Changed all old sleves to be toys.\nv01a               - Gave slope to Ramp7 so ball would not get suck.  Added Materials to missing collidable objects.\nv01b               - Reorganize Code. Uncomment AmbientBallShadows code. ReEnabled the AlternateDroptargets. Deleted new Lut and restored original lut setting. Deleted BallShadow Code.\nv01c               - Changed the ramp drop hit triggers to stars, put them at 60 hight, moved wireramp_off sound to hit trigger.  Trigger is hit height of 0, might need to make more.\n                   - Reimported the sounds as the rolling sounds were not playing correctly.  Adjusted the cup values to make it spin more.  Fixed ballshadows.  Updated SoundCode to latest.\n                   - Updated Physics to latest.  Changed switch a to be asw, it was conflicting with a redim.\nv01d               - Updated collections to have correct sound values.  Added physics materials to collidables where they were missing.\nv02                - Commented out bumper sounds and wired up kicker sound\nv02a               - added fluppper domes\nv02b               - Adjusting drop target locations for hamburger.  Changed long rubber on left side to middles.\nv02c               - Roth drop targets and new sling correction code\nv03  -Leojreimroc  - VR Room, Animated Backglass\nv04 - Fluffhead35  - Adjusted Lights for Customers and Diner Inserts.  Adjusted Flasher postion and size on backwall, Adjusted Flasher fading based on apophis recomendations.\nv05 - fluffhead35  - Setting SSR to .1.  Adjusting Materials on walls to be metal from wood. Reverted right ramp beginning to orignal settings.  Reverted Gate3 to original settings.  Fixed Flasher bloom\nv05a - Rawd        - Added Burger and Fries to VR Room\nv06 - fluffhead35  - Adjusting Digital Nudge\nv07 - Leojreimroc  - Various VR adjustements, reduced size for backglass images, turned ball reflection on, changed Beer to Coke in VR\nv08 - fluffhead35  - Changed DT POV based on Apophis suggistion to remove black borde in desktop.  Removed commented out code.  Removed unused sound files.  Adjusted Tilt Sensitivity.\nv08a - fluffhead35 - Added in BountyBob pov\nv08b               - added Blacksad b2s code and flag to enable it\nv09 -              - merged in leojreimroc alphanumerics for desktop\nv10 - Leojreimroc  - Fixed Alphanumerics\nv11 - fluffhead35  - updating fs pov.   Adjusted flasher bloom brightness.\nv12 - Leojreimroc  - Set VR objects to non-visible, non static rendering\nv13 - sixtoe       - FIxed left Ramp\nv14 - fluffhead35  - Adjusted cup speed along with right ramp physic materials.\nv15 - fluffhead35  - Adjusted cupspeed logic and added CupSpeedValue variable.\nv15a               - Set CoffeCup to material of plastic.\nv16 - fluffhead35  - Changed Tabler slope to 6.2/6.2   Changed CupSpeedValue to 3.  Added collidable walls for wires under flippers\n                   - Added ability to set the cupspinner logic to a random value between min and max, or use static cupspeed value of 3\n                   - Added in Rawds vr code for foam and set geight to -224\nv17 - skitso       - Updated GI, LUT, Few Textures.\nv18 - fluffhead35  - merge of v17 in with v16 because of table corruption.\nv18a  fluffhead35  - Removed Static rendering from plastics as missed this chagne from v17 merge\nv18c               - Updated lights from skitso and updated droptargets from apophis\nv18d  skitoe       - fixed lights and inserts\nv18e  fluffhead35  - Added logic to enable displaytimer if in desktop.  Updated cupspeed to make more random.\nv19   fluffhead35  - Updated falloff for light10 and 11.  Added in new flipper bats.\nv19a  fluffhead35  - Changed bats to .5 dl as they were too dark.\nv20 iaakki     - Tied flip prims to GI, adjusted flip rest angle 1.5 degree lower and reworked flip trigger areas, smoothed out left ramp at curve\nv21 Sixtoe     - Various VR fixes, dropped and lengthened trigger wires, dropped lower right flasher height, dropped flipper heights.\nv22 apophis    - Realigned the playfieldlights flasher on layer_3, modified DINER light shapes and falloff on layer_2\nv1.0 Release\nv1.0.1 fluffhead35 - Rotated Flasher on back wall 180 degrees.  Fixed flipper shadow overlaying serve again light.  Increased apron wall height to prevent lost ball. Fixed droptargets alternative decals from not showing up.\nv1.0.2 fluffhead35 - Updated Lut to load durring it, so default contrast settings are applied at table init."
+    },
+    {
+      "line_end": 588,
+      "line_start": 586,
+      "status": "candidate",
+      "text": "*** mechanic for clock hand ***"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Diner (Williams 1990) VPW Mod 1.0.2.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Diner (Williams 1990) VPW Mod 1.0.2.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "f4912fa51e0019bab4a7b6c0d905705f7efb9abad6380cbf7c5986d871ac3d79"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Outhole",
+      "line": 326,
+      "status": "candidate",
+      "symbol": "swOuthole"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "label": "Sub Plfd Shooter2",
+      "line": 327,
+      "status": "candidate",
+      "symbol": "swSubPlfdShooter2"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "Right Ramp Entry",
+      "line": 328,
+      "status": "candidate",
+      "symbol": "swRightRampEntry"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Left Ramp Exit",
+      "line": 329,
+      "status": "candidate",
+      "symbol": "swLeftRampExit"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.input.switch",
+      "label": "Upper Left Eject",
+      "line": 330,
+      "status": "candidate",
+      "symbol": "swUpperLeftEject"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "Right Jet Bumper",
+      "line": 331,
+      "status": "candidate",
+      "symbol": "swRightJetBumper"
+    }
+  ],
+  "version": 1
+}

@@ -1,0 +1,271 @@
+{
+  "driver_ids": [
+    "newwave"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.blakpyra"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol DT Reset",
+      "line": 896,
+      "status": "candidate",
+      "symbol": "SolDTReset"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Ball Release",
+      "line": 897,
+      "status": "candidate",
+      "symbol": "SolBallRelease"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 898,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Gate Diverter",
+      "line": 899,
+      "status": "candidate",
+      "symbol": "SolGateDiverter"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 27,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "_______                   __      __\n\\      \\   ______  _  __ /  \\    /  \\_____ ___  __ ____\n/   |   \\_/ __ \\ \\/ \\/ / \\   \\/\\/   /\\__  \\\\  \\/ // __ \\\n/    |    \\  ___/\\     /   \\        /  / __ \\\\   /\\  ___/\n\\____|__  /\\___  >\\/\\_/     \\__/\\  /  (____  /\\_/  \\___  >\n       \\/     \\/                \\/        \\/          \\/\n\n               Bell Games (1985)\n\n               https://www.ipdb.org/machine.cgi?id=3482\n********************************************************************************************************************************\n******** Work done by UnclePaulie on Hybrid version 0.01 - 2.0 *********\n  Complete reuse from UnclePaulie's Black Pyramid table, as New Wave is a conversion kit\n  Things implemented from Black Pyramid:\n    Implemented latest VPW standards, physics, GI VLM, 3D inserts, AllLamps routines, shadows, backglass for desktop,\n  roth drop and standup targets, standalone compatibility, sling corrections, swinging target and physics/bounce,\n  optional DIP adjustments, updated flipper physics, VR and fully hybrid, Flupper style bumpers and lighting.\n  Redbone created the playfield with images from the web, as well as target and bumpers images.\n  Full details at the bottom of the script.\n********************************************************************************************************************************\n\n\nPLEASE NOTE:\n- All game options can be adjusted by pressing F12 and then left flipper button during the game. Press start button to save your options."
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in New Wave (Bell Games 1985) v2.0.0.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "New Wave (Bell Games 1985) v2.0.0.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "e97abbc4b1f92fd2a85dca73f3e02bbf3ddb38999203fecdc8e2ff5bb2997f1b"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 1050,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 1030,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 1205,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 1206,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "sw7",
+      "line": 1217,
+      "status": "candidate",
+      "symbol": "sw7_Hit"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "sw7",
+      "line": 1218,
+      "status": "candidate",
+      "symbol": "sw7_UnHit"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 911,
+      "status": "candidate",
+      "symbol": "BallRelease_Hit"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 912,
+      "status": "candidate",
+      "symbol": "BallRelease_UnHit"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 265,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 12a",
+      "line": 1209,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_12a_hit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 12b",
+      "line": 1210,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_12b_hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 1251,
+      "status": "candidate",
+      "symbol": "sw13_Hit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "sw14",
+      "line": 1254,
+      "status": "candidate",
+      "symbol": "sw14_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 1219,
+      "status": "candidate",
+      "symbol": "sw17_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 1220,
+      "status": "candidate",
+      "symbol": "sw17_UnHit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 1221,
+      "status": "candidate",
+      "symbol": "sw22_Hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 1222,
+      "status": "candidate",
+      "symbol": "sw22_UnHit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 1223,
+      "status": "candidate",
+      "symbol": "sw23_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 1224,
+      "status": "candidate",
+      "symbol": "sw23_UnHit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "sw24",
+      "line": 1225,
+      "status": "candidate",
+      "symbol": "sw24_Hit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "sw24",
+      "line": 1226,
+      "status": "candidate",
+      "symbol": "sw24_UnHit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 1227,
+      "status": "candidate",
+      "symbol": "sw28_Hit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 1228,
+      "status": "candidate",
+      "symbol": "sw28_UnHit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1229,
+      "status": "candidate",
+      "symbol": "sw29_Hit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1230,
+      "status": "candidate",
+      "symbol": "sw29_UnHit"
+    }
+  ],
+  "version": 1
+}

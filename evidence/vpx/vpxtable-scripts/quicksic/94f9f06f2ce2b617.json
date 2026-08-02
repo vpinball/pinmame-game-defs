@@ -1,0 +1,402 @@
+{
+  "driver_ids": [
+    "quicksic"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.quicksilver.1980"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 305,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "label": "Green Drops Up",
+      "line": 306,
+      "status": "candidate",
+      "symbol": "GreenDropsUp"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Yellow Drops Up",
+      "line": 307,
+      "status": "candidate",
+      "symbol": "YellowDropsUp"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Kicker",
+      "line": 308,
+      "status": "candidate",
+      "symbol": "bsKicker"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "bs Trough.Sol Out",
+      "line": 309,
+      "status": "candidate",
+      "symbol": "bsTrough.SolOut"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "label": "Flipper Relay",
+      "line": 310,
+      "status": "candidate",
+      "symbol": "FlipperRelay"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 62,
+      "line_start": 1,
+      "status": "candidate",
+      "text": ".--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--.\n / .. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\\n \\ \\/\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ \\/ /\n  \\/ /`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'\\/ /\n  / /\\    _______           __          __              __   __                           / /\\\n / /\\ \\  |   _   | .--.--. |__| .----. |  |--. .-----. |__| |  | .--.--. .-----. .----.  / /\\ \\\n \\ \\/ /  |.  |   | |  |  | |  | |  __| |    <  |__ --| |  | |  | |  |  | |  -__| |   _|  \\ \\/ /\n  \\/ /   |.  |   | |_____| |__| |____| |__|__| |_____| |__| |__|  \\___/  |_____| |__|     \\/ /\n  / /\\   |:  |   |                                                                        / /\\\n / /\\ \\  |::..   |                                                                       / /\\ \\\n \\ \\/ /  `----|:.|                                                                       \\ \\/ /\n  \\/ /        `--'                                                                        \\/ /\n  / /\\.--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--./ /\\\n / /\\ \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\.. \\/\\ \\\n \\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `'\\ `' /\n  `--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'\n\n\nQuicksilver\nStern 1980\nhttps://www.ipdb.org/machine.cgi?id=1895\nVPW TEAM\nBlender VLM Table Build, VR Cab & Coding by MetaTed\nPlayfield image provided by BorgDog\nPlastic scans provided by bord\nBlender VLM Baking by MechaEnron\nBackglass by Hauntfreaks\nVLM & Coding Tutelage by apophis\nBlender Assistance by FrankEnstein\nModded ROM provided by Carny_Priest\nCode assistance by somatik\nFont assist by ZandysArcade\nPhysical Saucer by Sixtoe\n=== TABLE OF CONTENTS  ===\n\nYou can quickly jump to a section by searching the four letter tag (ZXXX)\n\nZOPT: User Options\nZCON: Constants and Global Variables\nZTIM: Timers\nZINI: Table Initialization and Exiting\n  ZMAT: General Math Functions\nZANI: MISC ANIMATIONS\nZDRN: Drain, Trough, and Ball Release\nZKEY: Key Press Handling\nZFLP: Flippers\nZSLG: Slingshots\nZSOL: Other Solenoids\nZSHA: AMBIENT BALL SHADOWS\nZPHY: GNEREAL ADVICE ON PHYSICS\nZNFF: FLIPPER CORRECTIONS\n  ZDMP: RUBBER DAMPENERS\n  ZBOU: VPW TargetBouncer for targets and posts\nZSSC: SLINGSHOT CORRECTION\n  ZBRL: BALL ROLLING AND DROP SOUNDS\n  ZFLE: FLEEP MECHANICAL SOUNDS\n  ZVRR: VR Room / VR Cabinet\n\n*********************************************************************************************************************************"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Quicksilver (Stern 1980) VPW 1.0.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Quicksilver (Stern 1980) VPW 1.0.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "94f9f06f2ce2b617430f9fd525a3b012374b678860c673bd0fa61e58cb2ce944"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "sw4",
+      "line": 1824,
+      "status": "candidate",
+      "symbol": "sw4_Spin"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.input.switch",
+      "label": "sw5",
+      "line": 1873,
+      "status": "candidate",
+      "symbol": "sw5_Spin"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 1796,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 1797,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "label": "Bumper3",
+      "line": 1798,
+      "status": "candidate",
+      "symbol": "Bumper3_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 1904,
+      "status": "candidate",
+      "symbol": "sw17_hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 1905,
+      "status": "candidate",
+      "symbol": "sw17_unhit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "sw18",
+      "line": 1906,
+      "status": "candidate",
+      "symbol": "sw18_hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "sw18",
+      "line": 1907,
+      "status": "candidate",
+      "symbol": "sw18_unhit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "sw19",
+      "line": 1908,
+      "status": "candidate",
+      "symbol": "sw19_hit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "sw19",
+      "line": 1909,
+      "status": "candidate",
+      "symbol": "sw19_unhit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 1548,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "sw20",
+      "line": 1910,
+      "status": "candidate",
+      "symbol": "sw20_hit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "sw20",
+      "line": 1911,
+      "status": "candidate",
+      "symbol": "sw20_unhit"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 1574,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 1967,
+      "status": "candidate",
+      "symbol": "sw28_hit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 1968,
+      "status": "candidate",
+      "symbol": "sw28_unhit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "bs Kicker",
+      "line": 1783,
+      "state_labels": [
+        "bs Kicker"
+      ],
+      "status": "candidate",
+      "symbol": "bsKicker"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1753,
+      "status": "candidate",
+      "symbol": "sw29_Hit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1777,
+      "status": "candidate",
+      "symbol": "sw29_timer"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1761,
+      "status": "candidate",
+      "symbol": "sw29_unHit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 454,
+      "status": "candidate",
+      "symbol": "Drain_Hit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "Drain",
+      "line": 460,
+      "status": "candidate",
+      "symbol": "Drain_UnHit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "itch 33",
+      "line": 1513,
+      "status": "candidate",
+      "symbol": "switch_33"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "sw34",
+      "line": 1912,
+      "status": "candidate",
+      "symbol": "sw34_hit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "sw34",
+      "line": 1913,
+      "status": "candidate",
+      "symbol": "sw34_unhit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "sw35",
+      "line": 1914,
+      "status": "candidate",
+      "symbol": "sw35_hit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "sw35",
+      "line": 1915,
+      "status": "candidate",
+      "symbol": "sw35_unhit"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "sw36",
+      "line": 1916,
+      "status": "candidate",
+      "symbol": "sw36_hit"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "sw36",
+      "line": 1917,
+      "status": "candidate",
+      "symbol": "sw36_unhit"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "sw37",
+      "line": 1918,
+      "status": "candidate",
+      "symbol": "sw37_hit"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "label": "sw37",
+      "line": 1919,
+      "status": "candidate",
+      "symbol": "sw37_unhit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "38a",
+      "line": 1946,
+      "status": "candidate",
+      "symbol": "sw38a_Hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "38b",
+      "line": 1950,
+      "status": "candidate",
+      "symbol": "sw38b_Hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "38c",
+      "line": 1954,
+      "status": "candidate",
+      "symbol": "sw38c_Hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "38d",
+      "line": 1958,
+      "status": "candidate",
+      "symbol": "sw38d_Hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "38e",
+      "line": 1962,
+      "status": "candidate",
+      "symbol": "sw38e_Hit"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "sw39",
+      "line": 1969,
+      "status": "candidate",
+      "symbol": "sw39_hit"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "sw39",
+      "line": 1970,
+      "status": "candidate",
+      "symbol": "sw39_unhit"
+    }
+  ],
+  "version": 1
+}

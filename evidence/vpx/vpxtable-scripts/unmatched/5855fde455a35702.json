@@ -1,0 +1,33 @@
+{
+  "driver_ids": [],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 70,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "### Lucky Luke Mod by kds70 & vogliadicane\n### What has been done:\n###\n### 12-09 instr.cards added with lights\n### 13-09 added flipper holding buzz sounds and generates random kicker sounds\n###       tilt dof knocker added, ending flipper buzz sounds when tilt/ game ends (line 429)\n### 14-09 line 446: flipper dof off when buttons being pressed and game ended added\n### 15-09 ballshadow / flippershadow / hopping ball sounds added\n### 17-09 todo: VolZ and other volume adjustment\n### 23-09 ballmass / size working now and modified balldrop random interval\n### 24-09 added glas hit but deactivated\n### 26-09 line 565 reel score override backglas b2s lamp 25 (player1) 26 (player2) etc integration\n###       to show when 99.999 points are overidden.\n### 29-09 droptarget back light switching added\n### 02-10 2nd layer insert lights for casting insert lights to ball\n### 08-10 2x / 3x bonus insert added / scripted. added extra ball insert and Function\n###       line 1218 and 1174 check / add extra ball when DTargets 1st time dropped\n### 11-10 inserts new (gottlieb font)\n### 13-10 extraball (one time per game and one per player works now for testing)\n### 19-10 extraball error fixed: if got an extra ball with the last 3rd ball the table thought it was the last ball; didn´t play\n###       a ball release sound again for the extra ball. fixed with a counter \"DT5kHits\" variable at endbonus timer line 1539\n### 13-11 added collect bonus routine & timer (line 950-978) if left / right kicker is lit\n###     DropTargets Reset / upfiring combined with dof 128 (Bumper left/right) solenoid call line 1362 and 1380\n###     ShadowMap modified by vogliadicane\n### 20-03 some music / sound effects added\n### 21-03 Pin1, Pin2, Pin3 and Pin4 ( height set to 25) and Wall78 (friction to 0.3)\n############################################################################################\n############################################################################################\n#######                                                                             ########\n#######          Fast Draw (Lucky Luke Mod)                                         ########\n#######          (Gottlieb 1975)                                                    ########\n#######                                                                             ########\n############################################################################################\n############################################################################################\nVersion 1.4 mfuegemann 2016\n\nThanks To:\nZany for the Flipper model and texture\nJPSalas for the EM Reel images\nGTXJoe for the Highscore saving code\n\nVersion 1.1:\n- GI light modulation set to 0.99 - thanks to hauntfreaks\n- Shadow layer and environment map by hauntfreaks\n- Kicker animation added\n- Coin sound added - thanks to STAT\n- Minor bugfixes\n\nVersion 1.2:\n- EM Reel reset sequence fixed, no additional reset after first points\n- Primitive Apron\n- some sounds reviewed\n\nVersion 1.3:\n- adjustable sound level for ball rolling sound\n- fixed standard sounds for rubbers, posts etc.\n- 2 rubber leaf switches animated\n- new inside case texture for DT mode\n\nVersion 1.4:\n- B2S HighScore display fixed\n- Lane guide elasticity adjusted\n- 5K DropTarget reset animation changed\n- DOF support added by Arngrim\n- Chimes added by Arngrim\n- Option to mute Chimes added by mfuegemann ;)\n- Option to control Chime volume added"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Lucky Luke (Gottlieb 1975 - FastDrawMod) v0.91.vbs and repository contributors",
+    "encoding": "windows-1252",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Lucky Luke (Gottlieb 1975 - FastDrawMod) v0.91.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "5855fde455a35702145da3757cabcbed20b4f4c2c9cd8dd6e5a7a8fe2f4f3d7d"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

@@ -1,0 +1,368 @@
+{
+  "driver_ids": [
+    "alienstr"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.alienstr"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Saucer",
+      "line": 873,
+      "status": "candidate",
+      "symbol": "SolSaucer"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 874,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Trough",
+      "line": 875,
+      "status": "candidate",
+      "symbol": "SolTrough"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Game Over",
+      "line": 876,
+      "status": "candidate",
+      "symbol": "SolGameOver"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 29,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "___   _     _____ _____ _   _   _____ _____ ___  ______\n/ _ \\ | |   |_   _|  ___| \\ | | /  ___|_   _/ _ \\ | ___ \\\n/ /_\\ \\| |     | | | |__ |  \\| | \\ `--.  | |/ /_\\ \\| |_/ /\n|  _  || |     | | |  __|| . ` |  `--. \\ | ||  _  ||    /\n| | | || |_____| |_| |___| |\\  | /\\__/ / | || | | || |\\ \\\n\\_| |_/\\_____/\\___/\\____/\\_| \\_/ \\____/  \\_/\\_| |_/\\_| \\_|\n\n\n              Mylstar Electronics, Incorporated (1983-1984) [Trade Name: Gottlieb]\n      Alien Star / IPD No. 49 / June, 1984 / 4 Players\n              https://www.ipdb.org/machine.cgi?id=49\n\n\n********************************************************************************************************************************\n******** Work done by UnclePaulie on Hybrid version 2.0.3 - 3.0 *********\n  Completely redid the table from ground up, Corrected table dimensions from prior table.\n    Implemented latest VPW standards (2025), physics, debounce, raytracing, SSF, GI VLM, 3D inserts, AllLamps routines, roth standups,\n  standalone compatibility, updated flipper physics, new VR cabinet and fully hybrid, Updated Flupper style bumpers and lighting,\n  Baked GI, metal walls, interior wood walls, spinner, plastic posts, and the reflections on them, also DIP adjustments, sling corrections.\n  Full details at the bottom of the script.\n  Redbone did the playfield, plastics, and other graphics.\n  Original scans, image assets, cab artwork stencils all used with permission from Borgdog.\n********************************************************************************************************************************\n\nPLEASE NOTE:\n- All game options can be adjusted by pressing F12 and then left flipper button during the game. Press start button to save your options."
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Alien Star (Gottlieb 1984) v3.0.1.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Alien Star (Gottlieb 1984) v3.0.1.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "8512fb6a8637d3a976e323d15083b2ab3b0ea6beed06e195ea748960d74097dd"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 0,
+      "group": "pinmame.input.switch",
+      "label": "sw00",
+      "line": 1237,
+      "status": "candidate",
+      "symbol": "sw00_Hit"
+    },
+    {
+      "address": 0,
+      "group": "pinmame.input.switch",
+      "label": "sw00",
+      "line": 1238,
+      "status": "candidate",
+      "symbol": "sw00_UnHit"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "sw4",
+      "line": 1322,
+      "status": "candidate",
+      "symbol": "sw4_Hit"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "sw4",
+      "line": 1327,
+      "status": "candidate",
+      "symbol": "sw4_Unhit"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 323,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "sw10",
+      "line": 1239,
+      "status": "candidate",
+      "symbol": "sw10_Hit"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.input.switch",
+      "label": "sw10",
+      "line": 1240,
+      "status": "candidate",
+      "symbol": "sw10_UnHit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "sw12",
+      "line": 1241,
+      "status": "candidate",
+      "symbol": "sw12_Hit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "sw12",
+      "line": 1242,
+      "status": "candidate",
+      "symbol": "sw12_UnHit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 1243,
+      "status": "candidate",
+      "symbol": "sw13_Hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 1244,
+      "status": "candidate",
+      "symbol": "sw13_UnHit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 904,
+      "status": "candidate",
+      "symbol": "BallRelease_Hit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 905,
+      "status": "candidate",
+      "symbol": "BallRelease_UnHit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 319,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Sol L Flipper",
+      "line": 943,
+      "state_labels": [
+        "Sol L Flipper"
+      ],
+      "status": "candidate",
+      "symbol": "SolLFlipper"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Sol R Flipper",
+      "line": 965,
+      "state_labels": [
+        "Sol R Flipper"
+      ],
+      "status": "candidate",
+      "symbol": "SolRFlipper"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Key Up",
+      "line": 852,
+      "state_labels": [
+        "Table1 Key Up"
+      ],
+      "status": "candidate",
+      "symbol": "Table1_KeyUp"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "sw40",
+      "line": 1245,
+      "status": "candidate",
+      "symbol": "sw40_Hit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "sw40",
+      "line": 1246,
+      "status": "candidate",
+      "symbol": "sw40_UnHit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 1247,
+      "status": "candidate",
+      "symbol": "sw42_Hit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "sw42",
+      "line": 1248,
+      "status": "candidate",
+      "symbol": "sw42_UnHit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 1249,
+      "status": "candidate",
+      "symbol": "sw43_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "sw43",
+      "line": 1250,
+      "status": "candidate",
+      "symbol": "sw43_UnHit"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "Slot1",
+      "line": 906,
+      "status": "candidate",
+      "symbol": "Slot1_Hit"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "Slot1",
+      "line": 907,
+      "status": "candidate",
+      "symbol": "Slot1_UnHit"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 320,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 1188,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 1194,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "label": "Bumper3",
+      "line": 1200,
+      "status": "candidate",
+      "symbol": "Bumper3_Hit"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "sw50",
+      "line": 1251,
+      "status": "candidate",
+      "symbol": "sw50_Hit"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "sw50",
+      "line": 1252,
+      "status": "candidate",
+      "symbol": "sw50_UnHit"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "sw52",
+      "line": 1388,
+      "status": "candidate",
+      "symbol": "sw52_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "Spinner",
+      "line": 1343,
+      "status": "candidate",
+      "symbol": "Spinner_Spin"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 1008,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 1028,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "label": "Sensor55",
+      "line": 1228,
+      "status": "candidate",
+      "symbol": "Sensor55_Hit"
+    }
+  ],
+  "version": 1
+}

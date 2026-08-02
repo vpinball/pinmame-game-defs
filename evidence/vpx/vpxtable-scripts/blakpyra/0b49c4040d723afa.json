@@ -1,0 +1,295 @@
+{
+  "driver_ids": [
+    "blakpyra"
+  ],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stub.pinmame.blakpyra"
+  ],
+  "mechanisms": [],
+  "outputs": [
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Saucer",
+      "line": 864,
+      "status": "candidate",
+      "symbol": "SolSaucer"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol DT Reset",
+      "line": 865,
+      "status": "candidate",
+      "symbol": "SolDTReset"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Ball Release",
+      "line": 866,
+      "status": "candidate",
+      "symbol": "SolBallRelease"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Knocker",
+      "line": 867,
+      "status": "candidate",
+      "symbol": "SolKnocker"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "label": "Sol Gate Diverter",
+      "line": 868,
+      "status": "candidate",
+      "symbol": "SolGateDiverter"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 26,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "888 88b, 888         e Y8b       e88'Y88 888 88P   888 88e  Y88b Y8P 888 88e      e Y8b         e   e     888 888 88e\n888 88P' 888        d8b Y8b     d888  'Y 888 8P    888 888D  Y88b Y  888 888D    d8b Y8b       d8b d8b    888 888 888b\n888 8K   888       d888b Y8b   C8888     888 K     888 88\"    Y88b   888 88\"    d888b Y8b     e Y8b Y8b   888 888 8888D\n888 88b, 888  ,d  d888888888b   Y888  ,d 888 8b    888         888   888 b,    d888888888b   d8b Y8b Y8b  888 888 888P\n888 88P' 888,d88 d8888888b Y8b   \"88,d88 888 88b   888         888   888 88b, d8888888b Y8b d888b Y8b Y8b 888 888 88\"\n\n\n               Bally Midway Manufacturing Company (1984)\n\n               https://www.ipdb.org/machine.cgi?id=312\n********************************************************************************************************************************\n******** Work done by UnclePaulie on Hybrid version 0.01 - 2.0 *********\n    Implemented latest VPW standards, physics, GI VLM, 3D inserts, AllLamps routines, shadows, backglass for desktop,\n  roth drop and standup targets, standalone compatibility, sling corrections, swinging target and physics/bounce,\n  optional DIP adjustments, updated flipper physics, VR and fully hybrid, Flupper style bumpers and lighting.\n  Redbone created the playfield with images from the web, as well as target and bumpers images.\n  Full details at the bottom of the script.\n********************************************************************************************************************************\n\n\nPLEASE NOTE:\n- All game options can be adjusted by pressing F12 and then left flipper button during the game. Press start button to save your options."
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Black Pyramid (Bally 1984) v2.0.1.vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Black Pyramid (Bally 1984) v2.0.1.vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "0b49c4040d723afa4c53a804e7e86d181c7babff72e696467d29886f6e4e8dc5"
+  },
+  "states": [],
+  "switches": [
+    {
+      "address": 0,
+      "group": "pinmame.input.switch",
+      "label": "7 Step",
+      "line": 927,
+      "status": "candidate",
+      "symbol": "sw7Step"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "label": "Left Sling Shot",
+      "line": 1062,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "label": "Right Sling Shot",
+      "line": 1042,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "label": "Bumper1",
+      "line": 1217,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch",
+      "label": "Bumper2",
+      "line": 1218,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "sw7",
+      "line": 918,
+      "status": "candidate",
+      "symbol": "sw7_Hit"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "sw7",
+      "line": 946,
+      "status": "candidate",
+      "symbol": "sw7_Unhit"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 266,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 880,
+      "status": "candidate",
+      "symbol": "BallRelease_Hit"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Ball Release",
+      "line": 881,
+      "status": "candidate",
+      "symbol": "BallRelease_UnHit"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.input.switch",
+      "label": "Table1 Init",
+      "line": 263,
+      "status": "candidate",
+      "symbol": "Table1_Init"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 12a",
+      "line": 1221,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_12a_hit"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "label": "Phys Sensor 12b",
+      "line": 1222,
+      "status": "candidate",
+      "symbol": "Phys_Sensor_12b_hit"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "label": "sw13",
+      "line": 1258,
+      "status": "candidate",
+      "symbol": "sw13_Hit"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "label": "sw14",
+      "line": 1261,
+      "status": "candidate",
+      "symbol": "sw14_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 1229,
+      "status": "candidate",
+      "symbol": "sw17_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "sw17",
+      "line": 1230,
+      "status": "candidate",
+      "symbol": "sw17_UnHit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 1231,
+      "status": "candidate",
+      "symbol": "sw22_Hit"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "sw22",
+      "line": 1232,
+      "status": "candidate",
+      "symbol": "sw22_UnHit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 1233,
+      "status": "candidate",
+      "symbol": "sw23_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "sw23",
+      "line": 1234,
+      "status": "candidate",
+      "symbol": "sw23_UnHit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "sw24",
+      "line": 1235,
+      "status": "candidate",
+      "symbol": "sw24_Hit"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "sw24",
+      "line": 1236,
+      "status": "candidate",
+      "symbol": "sw24_UnHit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 1237,
+      "status": "candidate",
+      "symbol": "sw28_Hit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "sw28",
+      "line": 1238,
+      "status": "candidate",
+      "symbol": "sw28_UnHit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1239,
+      "status": "candidate",
+      "symbol": "sw29_Hit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "sw29",
+      "line": 1240,
+      "status": "candidate",
+      "symbol": "sw29_UnHit"
+    }
+  ],
+  "version": 1
+}

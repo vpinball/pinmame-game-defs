@@ -1,0 +1,88 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.stern-mpu200",
+  "authority": "pinmame",
+  "hardware_family": "Stern MPU-200",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Cabinet, switch-matrix, and synthetic flipper inputs",
+      "address_rules": [
+        { "minimum": -7, "maximum": -5 },
+        { "minimum": 1, "maximum": 40 },
+        { "minimum": 81, "maximum": 84 }
+      ],
+      "transports": {
+        "libpinmame": { "channel": "switch" },
+        "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "Public switches 1-40 are the five-column by eight-return matrix. Self-test, CPU diagnostic, and sound diagnostic are -7 through -5. VPinMAME exposes the four generic flipper-button positions at 81-84; Ali uses lower-right 82 and lower-left 84."
+    },
+    {
+      "id": "physical.input.direct",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Hard-wired physical contacts outside the MPU input API",
+      "address_rules": [{ "values": [1, 2] }],
+      "transports": {},
+      "notes": "Addresses 1 and 2 are profile-local identities for left and right flipper end-of-stroke contacts. These contacts switch the dual-winding flipper circuits directly and are not PinMAME switch addresses."
+    },
+    {
+      "id": "pinmame.input.dip",
+      "direction": "configuration",
+      "kind": "dip_switch",
+      "label": "MPU option-switch banks S1-S32",
+      "address_rules": [{ "minimum": 1, "maximum": 32 }],
+      "transports": { "libpinmame": { "channel": "dip" } }
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Decoder, continuous, and synthetic flipper outputs",
+      "address_rules": [
+        { "minimum": 1, "maximum": 15 },
+        { "minimum": 17, "maximum": 20 },
+        { "values": [46, 48] }
+      ],
+      "transports": {
+        "libpinmame": { "channel": "solenoid" },
+        "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "The decoder exposes public outputs 1-15; value 16 is an unaddressable decoder slot. PinMAME exposes the four continuous outputs at 17-20. Generic VPinMAME flipper callbacks expose lower-right at 46 and lower-left at 48. Physical service-diagnostic numbering is game wiring and remains a machine-level alias."
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "Discrete SCR controlled-lamp outputs",
+      "address_rules": [
+        { "minimum": 1, "maximum": 15 },
+        { "minimum": 17, "maximum": 31 },
+        { "minimum": 33, "maximum": 47 },
+        { "minimum": 49, "maximum": 63 }
+      ],
+      "transports": {
+        "libpinmame": { "channel": "lamp" },
+		"controller_plugin": { "group_id": 512, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "The LDA-100 has sixty discrete SCR outputs, not a lamp matrix. PinMAME's four groups contain public values 1-15, 17-31, 33-47, and 49-63; 16, 32, 48, and 64 are unaddressable decoder slots."
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "locator": "src/wpc/by35.c; src/wpc/by35.h; src/wpc/stgames.c; src/wpc/core.c; src/libpinmame/libpinmame.cpp"
+    },
+    {
+	  "uri": "https://github.com/vpinball/pinmame",
+	  "revision": "a6f6d7266d301249ed09c1b0123f8476513a2228",
+	  "locator": "src/libpinmame/libpinmame.cpp SetupMsgApi group definitions"
+    }
+  ]
+}

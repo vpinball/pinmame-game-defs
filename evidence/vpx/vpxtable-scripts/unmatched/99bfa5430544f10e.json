@@ -1,0 +1,33 @@
+{
+  "driver_ids": [],
+  "extractor": {
+    "id": "vpx-vbscript",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [
+    {
+      "line_end": 41,
+      "line_start": 1,
+      "status": "candidate",
+      "text": "****************************************************************\n\n           Sea Ray (Bally 1971)\n            v2.06\n          by Scottacus\n              July 2022\n\nBasic DOF config\n  101 Left Flipper, 102 Right Flipper\n  103 Left sling, 104 Right sling\n  105 Bumper1,  106 Bumper2, 107 Bumper3\n  110 Red Bumper Light\n  109 Top Kicker - 112 Right Bonus Kicker\n  114 - 116 Mushrooms\n  117 Up Post Light\n  118 Blue Bumper Light\n  119 Gate Light\n  120 Extra Ball Ligh\n  124 Drain, 125 Ball Release\n  127 credit light\n  128 Knocker\n  130 Gate Open/Close\n  131 - 135 Red Standups\n  136 - 139 Rollover Buttons\n  140 Left Wiggle Lane\n  141 - 142 Outlanes\n  151 Knocker and Kicker Strobe\n  153 Chime1-10s, 154 Chime2-100s, 155 Chime3-1000s\n\n  Code Flow\n                 EndGame\n                  ^\n  Start Game -> New Game -> Check Continue -> Release Ball -> Drain -> Score Bouns -> Advance Player -> Next Ball\n                  ^                                     |\n                EndGame = True <---------------------------------------------------------------\n\nNote Score Motor Location for sound routines is at shootAgain Light\nBall Control Subroutine developed by: rothbauerw\n  Press \"c\" during play to activate, the arrow keys control the ball"
+    }
+  ],
+  "source": {
+    "attribution": "Authors credited in Sea Ray (Bally 1971).vbs and repository contributors",
+    "encoding": "utf-8",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "Sea Ray (Bally 1971).vbs",
+    "quality": "candidate",
+    "repository": "https://github.com/sverrewl/vpxtable_scripts",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "sha256": "99bfa5430544f10e079b84698e87bb63dea4e41b2bff49b640c227bbfa2240b8"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
