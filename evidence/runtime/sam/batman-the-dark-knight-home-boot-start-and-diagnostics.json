@@ -1,0 +1,157 @@
+{
+  "driver_ids": [
+    "bdk_300"
+  ],
+  "extractor": {
+    "id": "libpinmame-gameplay-harness",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.batman-the-dark-knight-standard-home-edition.2010"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "Boot: python tools/run_pinmame_harness.py --library <libpinmame> --game bdk_300 --rom-path <vpinmame-roms> --work-dir <isolated-state> --initial-switch 15 --initial-switch 53 --initial-switch 54 --initial-switch 55 --pulse 65:300:0.7 <six coin pulses> --pulse 35:500:3 --observe 3 --output <external-json>; held switch/lamp/coil diagnostics: use service switches 0/-1 with --snapshot-while-held and the exact scenario sequences preserved in each external run",
+    "game": "bdk_300",
+    "observations": {
+      "display_layouts_seen": [
+        {
+          "depth": 4,
+          "height": 32,
+          "type": 14,
+          "width": 128
+        }
+      ],
+      "gi_addresses_seen": [
+        0
+      ],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        86,
+        87,
+        88
+      ],
+      "lamp_decoder_holes_not_seen": [
+        30,
+        46
+      ],
+      "solenoid_addresses_seen": []
+    },
+    "raw_runs": [
+      {
+        "name": "boot-start-v3",
+        "self_test_pulses": 0,
+        "sha256": "1e53a038cdf49bfea8524d938a56560dc36eba03d6ef45c3d18e75629d675029"
+      },
+      {
+        "name": "switch-matrix-held-v3",
+        "self_test_pulses": 64,
+        "sha256": "028db927129a01aeb2226081b21c63203b0f6fc547187e7b487113538f16a7d1"
+      },
+      {
+        "name": "lamp-diagnostic-v2",
+        "self_test_pulses": 80,
+        "sha256": "cb5eedfa59f79658cd91f68104c8062dd329cbe9cc582d504b822c16584f50f6"
+      },
+      {
+        "name": "coil-diagnostic-v2",
+        "self_test_pulses": 32,
+        "sha256": "fb2850475661a0e3470e7dbeb2d5d1ff852db86e421a625204fa1b0640a4c52e"
+      }
+    ],
+    "rom_archive_sha256": "4d34254e60422503a203206e2a50970a2becdb20941f008da159927ed8292612"
+  },
+  "source": {
+    "attribution": "Generated locally from PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-game-code/bdk_300/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "1e53a038cdf49bfea8524d938a56560dc36eba03d6ef45c3d18e75629d675029"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
