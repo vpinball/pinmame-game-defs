@@ -15,9 +15,57 @@ SPEC.loader.exec_module(HARNESS)
 
 
 class RuntimeHarnessTests(unittest.TestCase):
+	class FakeLibrary:
+		def __init__(self) -> None:
+			self.switch_calls: list[tuple[int, int]] = []
+
+		def PinmameSetSwitch(self, switch: int, state: int) -> None:
+			self.switch_calls.append((switch, state))
+
+		def PinmameGetMaxLamps(self) -> int:
+			return 0
+
+		def PinmameGetChangedLamps(self, _states: object) -> int:
+			return 0
+
+		def PinmameGetMaxGIs(self) -> int:
+			return 0
+
+		def PinmameGetChangedGIs(self, _states: object) -> int:
+			return 0
+
 	def test_pulse_parser_supports_service_switches_and_timing(self) -> None:
 		self.assertEqual((-7, 100, 1.0), HARNESS._parse_pulse("-7"))
 		self.assertEqual((-7, 120, 8.0), HARNESS._parse_pulse("-7:120:8"))
+
+	def test_optional_held_snapshot_runs_before_switch_release(self) -> None:
+		library = self.FakeLibrary()
+		recorder = HARNESS.Recorder()
+		observed: list[tuple[int, int]] = []
+		HARNESS._hold_switch(
+			library,
+			recorder,
+			41,
+			0.001,
+			lambda: observed.append(library.switch_calls[-1]),
+		)
+		self.assertEqual([(41, 1)], observed)
+		self.assertEqual((41, 0), library.switch_calls[-1])
+
+	def test_held_snapshot_cli_is_opt_in(self) -> None:
+		parser = HARNESS.build_parser()
+		args = parser.parse_args([
+			"--library", "pinmame64.dll", "--game", "twenty4_150",
+			"--rom-path", "roms", "--work-dir", "state",
+		])
+		self.assertFalse(args.snapshot_while_held)
+
+	def test_held_snapshot_helper_preserves_label_and_next_index(self) -> None:
+		snapshots = [{"label": "existing"}]
+		HARNESS._append_output_snapshot(snapshots, HARNESS.Recorder(), "while pulse 2: switch 41 held", None)
+		self.assertEqual(2, len(snapshots))
+		self.assertEqual("while pulse 2: switch 41 held", snapshots[1]["label"])
+		self.assertEqual([], snapshots[1]["displays"])
 
 	def test_config_abi_keeps_vpm_path_before_callback_table(self) -> None:
 		fields = [name for name, _field_type in HARNESS.PinmameConfig._fields_]

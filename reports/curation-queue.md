@@ -34,9 +34,9 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 29 | 2010 | Avatar Limited Edition | Stern | author_ready |
 | 30 | 2010 | Avatar Pro | Stern | author_ready |
 | 31 | 2010 | Iron Man | Stern | author_ready |
-| 32 | 2010 | STUB - 24 (V1.5) | Stern | stub |
-| 33 | 2010 | STUB - Batman: The Dark Knight (V2.94) | Stern | stub |
-| 34 | 2010 | STUB - Big Buck Hunter Pro (V1.7) | Stern | stub |
+| 32 | 2010 | STUB - Batman: The Dark Knight (V2.94) | Stern | stub |
+| 33 | 2010 | STUB - Big Buck Hunter Pro (V1.7) | Stern | stub |
+| 34 | 2009 | 24 | Stern | author_ready |
 | 35 | 2009 | STUB - CSI: Crime Scene Investigation (V2.4) | Stern | stub |
 | 36 | 2009 | STUB - Indiana Jones (V2.1) | Stern | stub |
 | 37 | 2009 | STUB - NBA (V8.02) | Stern | stub |

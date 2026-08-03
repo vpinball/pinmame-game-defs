@@ -2,13 +2,13 @@
 
 PinMAME revision: `4ec52ff0ac133ac251681518aed2249e19fe26eb`
 
-Author-ready coverage: **31 / 787 physical-machine records (3.9390%)**
+Author-ready coverage: **32 / 787 physical-machine records (4.0661%)**
 
 - Supported drivers: 2873
 - Catalog records: 788 (1 diagnostic/system-software records excluded from game coverage)
-- Explicit stubs: 686
+- Explicit stubs: 685
 - Partial definitions: 70
-- Author-ready definitions: 31
+- Author-ready definitions: 32
 - Completion gate: FAIL
 
 Stubs and partial definitions are not usable completion credit. A clone driver contributes coverage only through its fully resolved physical-machine definition.

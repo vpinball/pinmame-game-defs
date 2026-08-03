@@ -18,8 +18,9 @@ import re
 import sys
 import threading
 import time
+from functools import partial
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 
 PINMAME_MAX_PATH = 512
@@ -414,14 +415,23 @@ def _wait_with_poll(library: ctypes.CDLL, recorder: Recorder, seconds: float) ->
 
 
 def _hold_switch(
-	library: ctypes.CDLL, recorder: Recorder, switch: int, hold_seconds: float
+	library: ctypes.CDLL,
+	recorder: Recorder,
+	switch: int,
+	hold_seconds: float,
+	before_release: Callable[[], None] | None = None,
 ) -> None:
 	"""Keep a switch asserted even when a hardware driver refreshes its cabinet column."""
 	deadline = time.monotonic() + hold_seconds
-	while time.monotonic() < deadline:
+	while True:
 		library.PinmameSetSwitch(switch, 1)
 		_poll_outputs(library, recorder)
-		time.sleep(min(0.01, max(deadline - time.monotonic(), 0)))
+		remaining = deadline - time.monotonic()
+		if remaining <= 0:
+			break
+		time.sleep(min(0.01, remaining))
+	if before_release is not None:
+		before_release()
 	library.PinmameSetSwitch(switch, 0)
 	_poll_outputs(library, recorder)
 
@@ -440,6 +450,15 @@ def _output_snapshot(
 		"active_gis": recorder.snapshot_active_gis(),
 		"displays": recorder.snapshot_displays(dmd_dir, snapshot_index, label),
 	}
+
+
+def _append_output_snapshot(
+	snapshots: list[dict[str, Any]],
+	recorder: Recorder,
+	label: str,
+	dmd_dir: Path | None,
+) -> None:
+	snapshots.append(_output_snapshot(recorder, label, dmd_dir, len(snapshots)))
 
 
 def _path_bytes(path: Path) -> bytes:
@@ -596,7 +615,22 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		snapshots.append(_output_snapshot(recorder, "booted", args.dmd_dir, len(snapshots)))
 		for step, (switch, hold_ms, settle_s) in enumerate(args.pulse, start=1):
 			recorder.record("switch", number=switch, state=1, step=step)
-			_hold_switch(library, recorder, switch, hold_ms / 1000)
+			before_release = None
+			if args.snapshot_while_held:
+				before_release = partial(
+					_append_output_snapshot,
+					snapshots,
+					recorder,
+					f"while pulse {step}: switch {switch} held",
+					args.dmd_dir,
+				)
+			_hold_switch(
+				library,
+				recorder,
+				switch,
+				hold_ms / 1000,
+				before_release,
+			)
 			recorder.record("switch", number=switch, state=0, step=step)
 			_wait_with_poll(library, recorder, settle_s)
 			snapshots.append(
@@ -673,6 +707,11 @@ def build_parser() -> argparse.ArgumentParser:
 		"--dmd-dir",
 		type=Path,
 		help="optional directory for grayscale PGM snapshots of DMD displays",
+	)
+	parser.add_argument(
+		"--snapshot-while-held",
+		action="store_true",
+		help="capture an additional output/DMD snapshot immediately before each pulsed switch is released",
 	)
 	parser.add_argument("--output", type=Path, help="write JSON here instead of stdout")
 	return parser
