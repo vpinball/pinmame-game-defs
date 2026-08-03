@@ -1,4 +1,4 @@
-"""Reviewed AC/DC Vault Edition normalized playfield placements."""
+"""Reviewed AC/DC normalized playfield placements for LED Pro and Vault editions."""
 
 from __future__ import annotations
 
@@ -65,6 +65,11 @@ LAMP_POSITIONS = {
 	71: [(0.558824, 0.007329)], 72: [(0.558824, 0.007329)],
 }
 
+LED_PRO_LAMP_POSITIONS = {
+	**LAMP_POSITIONS,
+	14: [(0.387038, 0.534787)], 15: [(0.520102, 0.534166)], 17: [(0.452994, 0.604875)],
+}
+
 GI_POSITIONS = [
 	(0.900285, 0.469020), (0.874862, 0.583358), (0.042912, 0.489004), (0.786737, 0.291340), (0.048016, 0.289073),
 	(0.147091, 0.159873), (0.051867, 0.020208), (0.835677, 0.052008), (0.692302, 0.824228), (0.216433, 0.825743),
@@ -76,6 +81,17 @@ GI_POSITIONS = [
 	(0.697530, 0.758900), (0.206559, 0.759480), (0.100182, 0.411436),
 	(0.026665, 0.029661), (0.337830, 0.029661), (0.643099, 0.029661), (0.972992, 0.030127),
 	(0.175828, 0.029661), (0.485041, 0.029661), (0.820140, 0.029661),
+]
+
+LED_PRO_GI_POSITIONS = [
+	*GI_POSITIONS[:11],
+	(0.833431, 0.123162), (0.949749, 0.004389), (0.370579, 0.030689), (0.187581, 0.043841),
+	(0.348518, 0.210027), (0.541245, 0.281441), (0.355565, 0.269611), (0.206599, 0.287503),
+	(0.758747, 0.800958), (0.720491, 0.723627), (0.181816, 0.697513), (0.151883, 0.802175),
+	(0.757544, 0.227540), (0.498101, 0.085920), (0.587316, 0.075908), (0.677718, 0.066970),
+	(0.768350, 0.057755), (0.497783, 0.090017), (0.588134, 0.081884), (0.677903, 0.073225),
+	(0.766505, 0.061943),
+	*GI_POSITIONS[32:],
 ]
 
 
@@ -95,17 +111,19 @@ def _not_applicable(device: dict[str, object], reason: str, *source_refs: str) -
 	device["spatial"] = {"status": "not_applicable", "reason": reason, "provenance": _provenance(*source_refs)}
 
 
-def apply_vault_spatial(
+def _apply_spatial(
 	inputs: list[dict[str, object]],
 	outputs: list[dict[str, object]],
 	*,
-	table_source: str,
-	script_source: str,
+	input_positions: dict[int, list[tuple[float, float]]],
+	lamp_positions: dict[int, list[tuple[float, float]]],
+	gi_positions: list[tuple[float, float]],
+	located_sources: tuple[str, ...],
+	switch36_sources: tuple[str, ...],
 	manual_source: str,
 	core_source: str,
 ) -> None:
-	"""Apply the fail-closed, manually reviewed spatial disposition to every Vault device."""
-	located_sources = (table_source, script_source, manual_source)
+	"""Apply a fail-closed, manually reviewed spatial disposition to every device."""
 	for device in inputs:
 		group = str(device["binding"]["group"])
 		address = int(device["binding"]["device"])
@@ -113,13 +131,14 @@ def apply_vault_spatial(
 			_not_applicable(device, "dip_switch", manual_source)
 		elif device["availability"] == "unused":
 			_not_applicable(device, "unused", manual_source)
-		elif address in INPUT_POSITIONS:
-			_located(device, "sensor", INPUT_POSITIONS[address], located_sources)
+		elif address in input_positions:
+			spatial_sources = switch36_sources if group == "pinmame.input.switch" and address == 36 else located_sources
+			_located(device, "sensor", input_positions[address], spatial_sources)
 		elif address in CABINET_INPUT_ROLES:
 			device["roles"] = [CABINET_INPUT_ROLES[address]]
 			_not_applicable(device, "cabinet_or_service", manual_source)
 		else:
-			raise ValueError(f"Vault input {group} {address} has no reviewed spatial disposition")
+			raise ValueError(f"AC/DC input {group} {address} has no reviewed spatial disposition")
 		if group == "pinmame.input.switch" and address in {18, 19, 20, 21, 22}:
 			device.setdefault("physical", {})["location"] = "Under-apron four-ball trough assembly 500-6318-24-ND"
 		if group == "pinmame.input.switch" and address in {61, 62}:
@@ -143,10 +162,60 @@ def apply_vault_spatial(
 			_located(device, "emitter" if kind == "flasher" else "effect", SOLENOID_POSITIONS[address], located_sources)
 			if address == 25:
 				device.setdefault("physical", {})["quantity"] = 3
-		elif group == "pinmame.output.lamp" and address in LAMP_POSITIONS:
-			_located(device, "emitter", LAMP_POSITIONS[address], located_sources)
+		elif group == "pinmame.output.lamp" and address in lamp_positions:
+			_located(device, "emitter", lamp_positions[address], located_sources)
 		elif group == "pinmame.output.gi" and address == 0:
-			_located(device, "emitter", GI_POSITIONS, located_sources)
+			_located(device, "emitter", gi_positions, located_sources)
 			device.setdefault("physical", {}).update({"quantity": 45, "notes": "One conventional GI channel drives 38 reviewed playfield bulbs and seven back-panel bulbs."})
 		else:
-			raise ValueError(f"Vault output {group} {address} ({kind}) has no reviewed spatial disposition")
+			raise ValueError(f"AC/DC output {group} {address} ({kind}) has no reviewed spatial disposition")
+
+
+def apply_vault_spatial(
+	inputs: list[dict[str, object]],
+	outputs: list[dict[str, object]],
+	*,
+	table_source: str,
+	script_source: str,
+	manual_source: str,
+	core_source: str,
+) -> None:
+	"""Apply the reviewed normalized spatial disposition to every Vault device."""
+	located_sources = (table_source, script_source, manual_source)
+	_apply_spatial(
+		inputs,
+		outputs,
+		input_positions=INPUT_POSITIONS,
+		lamp_positions=LAMP_POSITIONS,
+		gi_positions=GI_POSITIONS,
+		located_sources=located_sources,
+		switch36_sources=located_sources,
+		manual_source=manual_source,
+		core_source=core_source,
+	)
+
+
+def apply_led_pro_spatial(
+	inputs: list[dict[str, object]],
+	outputs: list[dict[str, object]],
+	*,
+	table_source: str,
+	script_source: str,
+	manual_source: str,
+	core_source: str,
+	bell_table_source: str,
+	bell_script_source: str,
+	identity_source: str,
+) -> None:
+	"""Apply the reviewed normalized spatial disposition to every LED Pro device."""
+	_apply_spatial(
+		inputs,
+		outputs,
+		input_positions=INPUT_POSITIONS,
+		lamp_positions=LED_PRO_LAMP_POSITIONS,
+		gi_positions=LED_PRO_GI_POSITIONS,
+		located_sources=(table_source, script_source, manual_source),
+		switch36_sources=(bell_table_source, bell_script_source, identity_source),
+		manual_source=manual_source,
+		core_source=core_source,
+	)

@@ -6,7 +6,7 @@ import json
 import re
 from pathlib import Path
 
-from curate_acdc_spatial import apply_vault_spatial
+from curate_acdc_spatial import apply_led_pro_spatial, apply_vault_spatial
 from pinmame_game_defs.jsonio import write_json, write_text
 from pinmame_game_defs.spatial import SPATIAL_RETROFIT_PENDING_MACHINE_IDS, fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
@@ -24,6 +24,7 @@ LUCI_MANUAL = "manual.acdc-luci-premium"
 PRO_MANUAL = "manual.acdc-pro"
 PREMIUM_VPX = "vpx.acdc-luci-premium-vpw-1.1.4"
 PRO_VPX = "vpx.acdc-pro-1.0-lighting-fix"
+PRO_TABLE = "vpx-table.acdc-pro-1.0"
 VAULT_VPX = "vpx.acdc-pro-vault-1.0-lighting-fix"
 VAULT_TABLE = "vpx-table.acdc-pro-vault-1.0"
 PREMIUM_RUNTIME = "runtime.acdc-premium.boot-start"
@@ -497,6 +498,7 @@ MANUAL_SOURCES = {
 VPX_SOURCES = {
 	PREMIUM_VPX: {"id": PREMIUM_VPX, "kind": "vpx_script", "uri": "https://github.com/vpinball/vpxtable_scripts", "revision": VPX_REVISION, "sha256": "b478b21272befd41908aa3ef4daf3a90d4838334346718cb4d5fde7f23bb2fc0", "locator": "AC-DC LUCI Premium VR (Stern 2013) v1.1.4.vbs; callbacks, initial state, routes, cannon, bell, diverters, lamps, and mechanism behavior", "license": "NOASSERTION", "attribution": "VPW table contributors credited in the script"},
 	PRO_VPX: {"id": PRO_VPX, "kind": "vpx_script", "uri": "https://github.com/vpinball/vpxtable_scripts", "revision": VPX_REVISION, "sha256": "e0fdef84892ea8bce6eae179509ac8262f103bac0173c2e822a4fe10aafcf7fa", "locator": "AC-DC Pro-1.0 Lighting Bug Fix.vbs; exact Pro controller callbacks, ball devices, cannon positions, switch semantics, GI, lamps, and flashers", "license": "NOASSERTION", "attribution": "ninuzzu and credited AC/DC Pro table contributors"},
+	PRO_TABLE: {"id": PRO_TABLE, "kind": "vpx_table", "uri": "local-evidence://vpx-table/acdc-pro-1.0", "sha256": "44bf3d67f96968103ab71f26b8b12786e5590f62bd73589b85060983dc62d9e9", "locator": "AC-DC Pro-1.0.vpx (78,274,560 bytes); cGameName=acd_170 and splash says AC/DC Pro (Stern 2012); 235 centered candidates; normalized bounds 0,0-952,2115; geometry-only shared original-Pro/LED-Pro evidence, not LED-Pro product identity", "license": "NOASSERTION", "attribution": "AC/DC Pro table contributors; geometry reviewed locally", "original_filename": "AC-DC Pro-1.0.vpx", "rights": "NOASSERTION"},
 	VAULT_VPX: {"id": VAULT_VPX, "kind": "vpx_script", "uri": "https://github.com/vpinball/vpxtable_scripts", "revision": VPX_REVISION, "sha256": "88101e2184729f952d196fdfe5885f9d7e81ec211b7b1b675d724419fcb6a7f1", "locator": "AC-DC Pro Vault-1.0 Lighting Bug Fix.vbs; exact passive swinging-bell behavior at switch 36 and removed inserts 14, 15, and 17", "license": "NOASSERTION", "attribution": "ninuzzu and credited AC/DC Pro Vault table contributors"},
 	VAULT_TABLE: {"id": VAULT_TABLE, "kind": "vpx_table", "uri": "https://vpuniverse.com/files/file/5489-acdc/", "sha256": "10a460c6b84fc1b8b372bf7b3d92b1904ee5eed9d5aad29fe384e7a6502fa328", "locator": "AC-DC Pro Vault-1.0.vpx (79,429,632 bytes); verified and extracted with vpxtool git:v0.33.3; normalized gameitem geometry and collection membership reviewed against manual pages 17, 19, 21, 42, and 48", "license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "ninuzzu and credited AC/DC Pro Vault table contributors", "original_filename": "AC-DC Pro Vault-1.0.vpx"},
 }
@@ -518,7 +520,7 @@ def source_set(variant: str) -> list[dict[str, object]]:
 	elif variant == "pro":
 		ids = [PRO_MANUAL, PRO_VPX, PRO_RUNTIME, STERN_PRODUCT]
 	elif variant == "led-pro":
-		ids = [PRO_MANUAL, PRO_VPX, VAULT_VPX, PRO_RUNTIME, STERN_PRODUCT, STERN_LED_PRO]
+		ids = [PRO_MANUAL, PRO_TABLE, PRO_VPX, VAULT_VPX, VAULT_TABLE, PRO_RUNTIME, STERN_PRODUCT, STERN_LED_PRO]
 	else:
 		ids = [PRO_MANUAL, VAULT_VPX, VAULT_TABLE, PRO_RUNTIME, STERN_PRODUCT, STERN_LED_PRO]
 	lookup = {**MANUAL_SOURCES, **VPX_SOURCES, **RUNTIME_SOURCES, **WEB_SOURCES}
@@ -561,7 +563,21 @@ def build(variant: str) -> dict[str, object]:
 		"sources": source_set(variant),
 		"knowledge": {"path": f"knowledge/stern/{MACHINE_META[variant]['id'].split('.', 1)[1].replace('.', '-')}.md", "status": "complete"},
 	}
-	if variant == "vault":
+	if variant == "led-pro":
+		apply_led_pro_spatial(
+			inputs,
+			outputs,
+			table_source=PRO_TABLE,
+			script_source=PRO_VPX,
+			manual_source=PRO_MANUAL,
+			core_source=CORE_SOURCE,
+			bell_table_source=VAULT_TABLE,
+			bell_script_source=VAULT_VPX,
+			identity_source=STERN_LED_PRO,
+		)
+		definition["schema_version"] = 2
+		definition["coverage"]["dimensions"]["spatial_placement"] = "validated"
+	elif variant == "vault":
 		apply_vault_spatial(inputs, outputs, table_source=VAULT_TABLE, script_source=VAULT_VPX, manual_source=PRO_MANUAL, core_source=CORE_SOURCE)
 		definition["schema_version"] = 2
 		definition["coverage"]["dimensions"]["spatial_placement"] = "validated"
@@ -647,17 +663,19 @@ The working script sweeps the cannon from roughly 110 degrees to 20 and back, as
 """,
 	"led-pro": """# AC/DC LED Pro recreation knowledge
 
+Coverage: **author-ready - complete Pro-derived I/O, wiring, mechanisms, LED lighting, spatial dispositions, and product boundary validated**
+
 ## Identity
 
-This is Stern's upgraded 2014 LED Pro production: the original Pro routes and controller topology, factory LED lighting, a modernized cabinet/backbox, and a newly designed passive swinging Hell's Bell. It owns the 1.68 and 1.68 colored PinMAME drivers. The official August 5, 2014 announcement is the edition boundary.
+This is Stern's upgraded 2014 LED Pro production and it owns the 1.68 and 1.68 colored PinMAME drivers. The physical differences from the original Pro are all-LED lighting, a newly designed passive swinging Hell's Bell, and the modern metal/wood backbox and cabinet. The game's features, playfield art, and music remain otherwise unchanged. Stern's official August 5, 2014 announcement is the product-identity boundary.
 
 ## Recreation delta from original Pro
 
-Use the complete original Pro switch, lamp, solenoid, cannon, ramp, trough, shooter, pop, sling, and flipper contract. Replace the standup bell with a freely swinging captive-ball pendulum whose score contact is still public switch 36. There is no bell magnet or bell actuator; collision energy alone moves it. Retain the VPX-visible original Pro insert addresses 14, 15, and 17 even though the Pro service manual labels those matrix positions unused; the Vault script's explicit removal is the edition-delta evidence. Implement the illumination with factory LEDs without changing the 1-80 PinMAME bindings.
+Use the complete original Pro switch, lamp, solenoid, cannon, ramp, trough, shooter, pop, sling, flipper, art, music, and game-feature contract. Replace the standup bell with a freely swinging captive-ball pendulum whose score contact is still public switch 36. There is no bell magnet or bell actuator; collision energy alone moves it. Retain the VPX-visible original Pro insert addresses 14, 15, and 17 even though the Pro service manual labels those matrix positions unused; the Vault script's explicit removal is the edition-delta evidence. Implement the factory all-LED lighting without changing the 1-80 PinMAME bindings.
 
-## Evidence and timing
+## Spatial evidence and timing
 
-The exact Vault VPX script proves the passive swinging-bell contact behavior at switch 36, while Stern's LED Pro announcement proves this mechanism belongs to the 2014 physical product. The Pro manual and working Pro script define the rest of the playfield. Cannon and ball-device timing remains as documented for the original Pro.
+The supplied AC-DC Pro VPX table is used only as shared original-Pro/LED-Pro geometry evidence: its `cGameName=acd_170` and splash identify it as AC/DC Pro (Stern 2012), so it does not establish LED Pro product identity. Its 235 centered candidates provide the normalized VPX/player-view geometry for the shared playfield, including active LED-Pro lamps 14, 15, and 17 and GI 0. The Pro script and manual supply the shared controller, wiring, and physical placement conventions. The exact Vault VPX table and script, together with Stern's LED Pro announcement, establish the passive swinging-bell contact at switch 36 and its 2014 product boundary. Cannon and ball-device timing remains as documented for the original Pro.
 """,
 	"vault": """# AC/DC Vault Edition recreation knowledge
 
@@ -718,6 +736,7 @@ for stale in [
 	ROOT / "knowledge/stern/ac-dc-pro.2012.md",
 	ROOT / "knowledge/stern/ac-dc-led-pro.2014.md",
 	ROOT / "knowledge/stern/ac-dc-vault-edition.2018.md",
+	ROOT / "machines/partial/stern/ac-dc-led-pro-2014.json",
 	ROOT / "machines/partial/stern/ac-dc-vault-edition-2018.json",
 ]:
 	if stale.exists():
@@ -726,7 +745,7 @@ for stale in [
 PATHS = {
 	"premium": ROOT / "machines/partial/stern/ac-dc-premium-limited-edition-luci-2012.json",
 	"pro": ROOT / "machines/partial/stern/ac-dc-pro-2012.json",
-	"led-pro": ROOT / "machines/partial/stern/ac-dc-led-pro-2014.json",
+	"led-pro": ROOT / "machines/author-ready/stern/ac-dc-led-pro-2014.json",
 	"vault": ROOT / "machines/author-ready/stern/ac-dc-vault-edition-2018.json",
 }
 for variant, path in PATHS.items():
