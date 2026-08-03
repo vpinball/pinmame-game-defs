@@ -26,7 +26,7 @@ Machine schema v2 adds optional device-level `spatial` evidence while retaining 
 
 ## VPE boundary
 
-Canonical definitions do not contain Unity object-name regexes, device matching hints, match counts, VPE input-map actions, or an open-ended `extensions.vpe` object. Portable cabinet roles such as `cabinet.start`, `service.up`, and `flipper.lower.left` are allowed. VPE owns role-to-input configuration and table-object mapping.
+Canonical definitions do not contain Unity object-name regexes, device matching hints, match counts, VPE input-map actions, or an open-ended `extensions.vpe` object. Portable cabinet roles such as `cabinet.start`, `service.up`, and `flipper.lower.left` are allowed. The `internal.*` namespace identifies installed nonvisual electrical loads and must not be treated as cabinet controls. VPE owns role-to-input configuration and table-object mapping.
 
 Legacy numeric and zero-padded IDs can be retained as explicitly namespaced compatibility aliases while old tables migrate. The import report records every dropped hint.
 

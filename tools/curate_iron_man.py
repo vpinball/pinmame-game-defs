@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json, write_text
-from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+from pinmame_game_defs.spatial import SPATIAL_RETROFIT_PENDING_MACHINE_IDS, fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -199,7 +199,11 @@ COILS: dict[int, tuple[str, str, str, str | None]] = {
 	25: ("Iron Monger flash x2", "flasher", "used", "113-5034-08"), 26: ("Right-ramp top flash", "flasher", "used", "113-5034-08"),
 	27: ("War Machine flash x3", "flasher", "used", "113-5034-08"), 28: ("Iron Monger chest flash x3", "flasher", "used", "113-5034-08"),
 	29: ("Whiplash flash x2", "flasher", "used", "113-5034-05"), 30: ("Mark VI flash x2", "flasher", "used", "113-5034-08"),
-	31: ("Left-ramp bottom flash", "flasher", "used", "113-5034-08"), 32: ("Right-ramp bottom flash", "flasher", "used", "113-5034-08"),
+	31: ("Left-ramp bottom flash x2", "flasher", "used", "113-5034-08"), 32: ("Right-ramp bottom flash", "flasher", "used", "113-5034-08"),
+}
+FLASHER_QUANTITIES = {
+	20: 1, 21: 1, 22: 2, 23: 1, 25: 2, 26: 1,
+	27: 3, 28: 3, 29: 2, 30: 2, 31: 2, 32: 1,
 }
 CONTROL_WIRE = ["BRN-BLK", "BRN-RED", "BRN-ORG", "BRN-YEL", "BRN-GRN", "BRN-BLU", "BRN-VIO", "BRN-GRY", "BLU-BRN", "BLU-RED", "BLU-ORG", "BLU-YEL", "BLU-GRN", "BLU-BLK", "ORG-GRY", "ORG-VIO", "VIO-BRN", "VIO-RED", "VIO-ORG", "VIO-YEL", "VIO-GRN", "VIO-BLU", "VIO-BLK", "VIO-GRY", "BLK-BRN", "BLK-RED", "BLK-ORG", "BLK-YEL", "BLK-GRN", "BLK-BLU", "BLK-VIO", "BLK-GRY"]
 CONTROL_CONNECTION = ["J8-P1", "J8-P3", "J8-P4", "J8-P5", "J8-P6", "J8-P7", "J8-P8", "J8-P9", "J9-P1", "J9-P2", "J9-P4", "J9-P5", "J9-P6", "J9-P7", "J9-P8", "J9-P9", "J7-P2", "J7-P3", "J7-P4", "J7-P6", "J7-P7", "J7-P8", "J7-P9", "J7-P10", "J6-P1", "J6-P2", "J6-P3", "J6-P4", "J6-P5", "J6-P6", "J6-P7", "J6-P8"]
@@ -258,6 +262,13 @@ def main_outputs(vault_edition: bool) -> list[dict[str, object]]:
 			physical["notes"] = "Vault Edition LED flasher module as specified by the 2014 service manual."
 		elif kind == "flasher":
 			physical["notes"] = "The original 2010 construction uses incandescent flash lighting; preserve the logical Q address but do not substitute the Vault Edition LED-module part number."
+		if kind == "flasher" and availability == "used":
+			physical["quantity"] = FLASHER_QUANTITIES[address]
+		if address == 31:
+			if vault_edition:
+				physical["notes"] += " The 2014 official coil-location map marks two separately located Q31 emitters and the exact Vault VPW script independently labels this callback x2, although the service Q-table omits the multiplier. Preserve both physical emitters."
+			else:
+				physical["notes"] += " Cross-edition evidence from the same logical/playfield layout fixes this quantity: the 2014 Vault coil-location map marks two Q31 emitters and the exact Vault VPW script labels the callback x2. The 2010 parts book does not number coil addresses, so preserve both original incandescent emitters as an explicit shared-layout inference rather than an original-manual callout."
 		items.append(make_output(address, label, kind, availability, (VE_MANUAL_SOURCE, ORIGINAL_MANUAL_SOURCE, PRESS_SOURCE, VPX_SOURCE, CORE_SOURCE, CODE_COMPAT_SOURCE), manual_address=str(address), physical=physical, wiring=coil_wiring(address), stable_id=output_id(address)))
 	items.append(make_output(33, "PinMAME SAM game-on state", "virtual", "used", (CORE_SOURCE, RUNTIME_SOURCE), physical={"notes": "Synthetic SAM fast-flip game-on output. It has no physical Q33 device; public addresses 34-36 are legacy query aliases rather than additional outputs."}, stable_id="virtual.game-on"))
 	for address in range(51, 67):
@@ -303,7 +314,16 @@ def lamps(vault_edition: bool) -> list[dict[str, object]]:
 				physical = {"part_number": "112-5033-08", "location": label, "notes": "Vault Edition D.O.T.S. LED module."}
 			else:
 				physical = {"location": label, "notes": "Original 2010 incandescent matrix-lamp construction. The original parts book shows twist-lock sockets across the playfield underside; the later Vault Edition logical address remains compatible but its LED-module part number does not."}
-		items.append(make_output(address, label, "lamp", availability, (VE_MANUAL_SOURCE, ORIGINAL_MANUAL_SOURCE, PRESS_SOURCE, ROM_SOURCE, VPX_SOURCE, CODE_COMPAT_SOURCE), group="pinmame.output.lamp", manual_address=str(address), physical=physical, wiring={"board": "I/O Power Driver board lamp matrix", "drive_wire": LAMP_DRIVE[column][0], "drive_connection": LAMP_DRIVE[column][1], "return_wire": LAMP_RETURN[row][0], "return_connection": LAMP_RETURN[row][1]}, stable_id=f"lamp.{address}-{slug(label)}"))
+		if address == 55 and physical is not None:
+			physical["quantity"] = 2
+			if vault_edition:
+				physical["notes"] += " The 2014 official lamp-location map marks two physical Mark VI emitters controlled together at address 55; the exact Vault VPW collapses them into one central light pool."
+			else:
+				physical["notes"] += " Cross-edition evidence from the same logical/playfield layout fixes this quantity: the 2014 Vault lamp-location map marks two Mark VI emitters at address 55 and the exact Vault VPW collapses them into one light pool. The 2010 parts book does not number lamp addresses, so retain two original incandescent emitters as an explicit shared-layout inference rather than an original-manual callout."
+		lamp = make_output(address, label, "lamp", availability, (VE_MANUAL_SOURCE, ORIGINAL_MANUAL_SOURCE, PRESS_SOURCE, ROM_SOURCE, VPX_SOURCE, CODE_COMPAT_SOURCE), group="pinmame.output.lamp", manual_address=str(address), physical=physical, wiring={"board": "I/O Power Driver board lamp matrix", "drive_wire": LAMP_DRIVE[column][0], "drive_connection": LAMP_DRIVE[column][1], "return_wire": LAMP_RETURN[row][0], "return_connection": LAMP_RETURN[row][1]}, stable_id=f"lamp.{address}-{slug(label)}")
+		if address in {73, 79, 80}:
+			lamp["roles"] = ["internal.load"]
+		items.append(lamp)
 	gi_notes = "Vault Edition shipped with LED playfield lighting while retaining the SAM aggregate GI callback." if vault_edition else "Original 2010 playfield uses incandescent GI; do not project the Vault Edition LED conversion backward."
 	items.append(make_output(0, "General illumination master", "gi", "used", (VE_MANUAL_SOURCE, ORIGINAL_MANUAL_SOURCE, PRESS_SOURCE, VPX_SOURCE, RUNTIME_SOURCE, CODE_COMPAT_SOURCE), group="pinmame.output.gi", manual_address="GI-0", physical={"location": "Playfield general illumination", "notes": f"PinMAME exposes the machine's general illumination as aggregate channel 0. {gi_notes}"}, stable_id="gi.master"))
 	return items
@@ -421,7 +441,7 @@ Output 6 commands the orbit up-post and output 12 the center-lane up-post; both 
 
 ## Lamps, flashers, and controller capacity
 
-Lamp addresses 1-63 are populated, 64-72 are unused, 73/79/80 are hidden clear #555 row-10 bulbs, and 74-78 are unused. The original parts drawing shows unnumbered twist-lock sockets over the playfield underside; population of 73/79/80 on the original is a documented cross-edition inference from that construction, Stern's shared-code compatibility, and the later service grid rather than a numbered 2010 callout. Bind Q20-23 and Q25-32 as incandescent flashers, lamp matrix 1-80, GI 0, synthetic game-on 33, explicit unused auxiliary compatibility addresses 51-66, and the 128x32 four-bit DMD. Public solenoids 34-36 are legacy aliases of game-on 33 and are not physical outputs.
+Lamp addresses 1-63 are populated, 64-72 are unused, 73/79/80 are hidden clear #555 row-10 bulbs, and 74-78 are unused. Address 55 has quantity two and Q20-23/Q25-32 carry explicit physical quantities, including the two Q31 lower-left-ramp emitters. Those multiplicities are documented cross-edition inferences from the same logical/playfield layout: the numbered callouts are in the 2014 Vault location maps and the exact working table is the Vault VPW, while the 2010 parts book does not number lamp or coil addresses. The original parts drawing shows unnumbered twist-lock sockets over the playfield underside; population of 73/79/80 is likewise a documented cross-edition inference from that construction, Stern's shared-code compatibility, and the later service grid rather than a numbered 2010 callout. Preserve original incandescent construction for every shared emitter, and bind lamp matrix 1-80, GI 0, synthetic game-on 33, explicit unused auxiliary compatibility addresses 51-66, and the 128x32 four-bit DMD. Public solenoids 34-36 are legacy aliases of game-on 33 and are not physical outputs.
 
 ## Author construction checklist
 
@@ -461,19 +481,31 @@ Output 19 toggles the Iron Monger lift between endpoint switch 1 down and switch
 
 ## Standard devices, lamps, and capacity
 
-Flippers are outputs 15/16 with button/EOS pairs 84/83 and 82/81; EOS contacts are normally closed. Pops pair 9/30, 10/31, 11/32, and slings 17/26, 18/27. Output 8 is an optional 16 VAC shaker on RED-WHT/J17-P7; the manual's Q8 table says 50 VDC but its transformer/I/O schematics prove the 16 VAC feed. Q7/Q13/Q14 are unused. Q24 is the manual's optional 5 V coin-meter/device channel even though the proven VPW table includes it in the SetLampMod flasher block; the physical service table wins and no stock Q24 playfield flasher should be created. Q20-23/Q25-32 are LED flashers with exact module parts in the JSON. Lamp 1-63 and 73/79/80 are populated; 64-72 and 74-78 are unused. Bind GI 0, synthetic game-on 33, explicit unused SAM auxiliary capacity 51-66, and the 128x32 four-bit DMD; never turn legacy aliases 34-36 or auxiliary capacity into playfield hardware.
+Flippers are outputs 15/16 with button/EOS pairs 84/83 and 82/81; EOS contacts are normally closed. Pops pair 9/30, 10/31, 11/32, and slings 17/26, 18/27. Output 8 is an optional 16 VAC shaker on RED-WHT/J17-P7; the manual's Q8 table says 50 VDC but its transformer/I/O schematics prove the 16 VAC feed. Q7/Q13/Q14 are unused. Q24 is the manual's optional 5 V coin-meter/device channel even though the proven VPW table includes it in the SetLampMod flasher block; the physical service table wins and no stock Q24 playfield flasher should be created. Q20-23/Q25-32 are LED flashers with exact module parts in the JSON; Q31 drives the two lower-left-ramp emitters shown in the location map and called x2 by the exact script. Lamp 1-63 and 73/79/80 are populated; address 55 drives two physical Mark VI emitters, 64-72 and 74-78 are unused, and the hidden row-10 bulbs are non-playfield electrical loads. Bind GI 0, synthetic game-on 33, explicit unused SAM auxiliary capacity 51-66, and the 128x32 four-bit DMD; never turn legacy aliases 34-36 or auxiliary capacity into playfield hardware.
+
+## Spatial construction and multiplicity
+
+Player-view positions use x=0 left, x=1 right, y=0 rear/backglass, and y=1 apron. Exact coordinates come from the organized 245,182,464-byte VPW table after semantic reconciliation against the official switch, lamp, coil, and GI maps. The controller script is runtime ground truth, but VLM light-map callbacks, reflections, transmission layers, and room/VR effects are renderer helpers rather than physical devices. Jam opto 22 has no table object; its disclosed approximate anchor is a least-squares continuation of the exact consecutive sw18-sw21 centers, with about plus or minus 0.02 normalized x/y uncertainty.
+
+The official GI schematic fixes 27 playfield emitters on circuits B/Y/V (10/7/10), ten rear-panel emitters on circuit G, and two US or three European coin-door bulbs. Playfield construction is 25 under-playfield #44 bulbs plus one above-playfield #555 bulb on circuit Y and one on circuit V. The latter use exact `Lspot1`/`Lspot2` source centers: the VPW changelog says spotlight bulbs were separated and its ball-shadow code treats those objects as sources. Nearby `gi004`/`gi014` are the separated halo/render passes, not two more sockets; the other 25 physical playfield positions use exact `giNNN` centers. Objects `gi024`, `gi027`, `gi030`, and `gi031` are four rear-wall render pools introduced for backwall illumination, not physical sockets. The ten physical rear #44 sockets are represented by an explicit evenly spaced y=0 projection across the manual's single rear-panel row because the perspective sketch proves row and count but not ten independently measurable centers. The US coin-door branch has two #555 bulbs and the European branch three; cabinet bulbs intentionally have no playfield coordinate. The JSON uses US quantity 39 and documents European quantity 40.
+
+Physical multiplicity follows the service maps even when VPW combines light output: Q22 has two modules at one War Machine-front cluster, Q27 has three War Machine modules, Q28 has three moving Iron Monger chest modules at one toy anchor, Q30 has two separately located Mark VI flashers around one combined table pool, and Q31 has two separately located lower-left-ramp emitters around one combined table pool. Lamp 55 likewise drives two separately mapped physical Mark VI emitters through one address while VPW exposes one central pool. Hidden row-10 lamps 73/79/80 are explicit internal nonvisual electrical loads with no invented playfield position; they are not cabinet devices. Cluster anchors preserve the correct construction region and quantity without misclassifying visual fanout as additional hardware.
+
+Where the exact table collapses distinct modules, the individual Q27/Q30/Q31/lamp-55 construction anchors are calibrated from multiple official-map callouts against exact shared table points. Those manual projections have practical uncertainty of about plus or minus 0.01 normalized x and 0.02-0.04 normalized y; they preserve proven physical region and separation without claiming unrecoverable table precision.
 
 ## Author construction checklist
 
 - Build the typed four-ball trough, one-piece manual/auto launch, War Machine capture/kickback, strengthened moving Iron Monger with endpoints/targets/magnet, Whiplash target/magnet, both unsensed up-posts, ramps/orbits/spinners, fixed target banks, flippers, pops, slings, and optional shaker.
 - Initialize switches 18-21 and Iron Monger down switch 1. Preserve ball occupancy, normally-closed EOS contacts, moving collision geometry, and real endpoint timing.
 - Bind every matrix/dedicated/DIP input, Q1-Q32, game-on 33, unused auxiliary 51-66, lamp 1-80, GI 0, and DMD, including the three unlabeled clear matrix bulbs.
+- Recreate all documented emitter multiplicities, ten rear-panel GI sockets, the applicable two- or three-bulb coin-door GI branch, and both address-55 Mark VI emitters; do not use the number of VPX render helpers as a parts count.
 - Use the exact VPW behavior as the runtime tie-breaker and the official 2014 service manual for construction, wiring, parts, and lamp technology.
 
 ## Sources
 
 - `manual.iron-man-vault-edition.2014`: official manual SHA-256 `20f04adaba96926b74aa91dba7f88024a70012eb601242d18dfb15ed3da1f990`; organized under the external manual cache.
 - `vpx.iron-man-vault-vpw-1.0.1`: pinned known-working exact-ROM script SHA-256 `d0d37548468d67aa895121fd6ff82fdacc1d1a301a702c92325fb3ee9d7a89ea`.
+- `vpx-table.iron-man-vault-vpw-1.0-geometry`: organized exact table SHA-256 `c0abc5d90d77a4cf7c3f0455cff91d4f0b9f7e750264742b987e9ddb30ab7a4b`; table bounds are 0..952 by 0..2215 and only semantically reconciled geometry is used.
 - `rom.iron-man-vault.im-185ve`: exact external archive SHA-256 `e04c56ca08cdd6b0aaa6fcacd601e183d338dae7a863a4486216f76b25d6738f`; contained binary SHA-256 `c827da1c3f5305b27e9e504d7553bcd9c39547f357dd3827122adcc4c173c257`.
 - `runtime.iron-man-vault.boot-start`: exact boot/start trace SHA-256 `2b1f7d59482a7428eaf4413dfa3fdf25a5eccc8bdad5479da5532947cecbdab9` with game-on 33, DMD, lamps, and GI observed.
 """
@@ -499,7 +531,8 @@ def runtime_evidence() -> dict[str, object]:
 
 def main() -> None:
 	write_json(spatial_partial_path(ROOT / "machines/partial/stern/iron-man-2010.json"), fail_closed_spatial_partial(build(False)))
-	write_json(spatial_partial_path(ROOT / "machines/partial/stern/iron-man-vault-edition-2014.json"), fail_closed_spatial_partial(build(True)))
+	if "stern.iron-man-vault-edition.2014" in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
+		write_json(spatial_partial_path(ROOT / "machines/partial/stern/iron-man-vault-edition-2014.json"), fail_closed_spatial_partial(build(True)))
 	write_json(ROOT / "evidence/runtime/sam/iron-man-vault-edition-boot-start.json", runtime_evidence())
 	write_text(ROOT / "knowledge/stern/iron-man-2010.md", fail_closed_spatial_knowledge("stern.iron-man.2010", ORIGINAL_KNOWLEDGE))
 	write_text(ROOT / "knowledge/stern/iron-man-vault-edition-2014.md", fail_closed_spatial_knowledge("stern.iron-man-vault-edition.2014", VE_KNOWLEDGE))

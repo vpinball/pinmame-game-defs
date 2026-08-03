@@ -102,7 +102,16 @@ def _validate_provenance_refs(provenance: Any, path: str, source_ids: set[str], 
 
 def _has_cabinet_or_service_role(device: dict[str, Any]) -> bool:
 	roles = device.get("roles")
-	return isinstance(roles, list) and any(isinstance(role, str) and role.startswith(("cabinet.", "service.")) for role in roles)
+	return isinstance(roles, list) and any(
+		isinstance(role, str)
+		and (role.startswith(("cabinet.", "service.")) or (role.startswith("flipper.") and role.endswith(".button")))
+		for role in roles
+	)
+
+
+def _has_internal_role(device: dict[str, Any]) -> bool:
+	roles = device.get("roles")
+	return isinstance(roles, list) and any(isinstance(role, str) and role.startswith("internal.") for role in roles)
 
 
 def _fractional_precision(value: float) -> int:
@@ -158,6 +167,8 @@ def _validate_spatial(
 				expected = "unused"
 			elif kind in EMITTER_OUTPUT_KINDS | EFFECT_OUTPUT_KINDS and availability in {"used", "optional"} and _has_cabinet_or_service_role(device):
 				expected = "cabinet_or_service"
+			elif kind in EMITTER_OUTPUT_KINDS | EFFECT_OUTPUT_KINDS and availability in {"used", "optional"} and _has_internal_role(device):
+				expected = "internal_nonvisual"
 			elif kind in EFFECT_OUTPUT_KINDS and availability in {"used", "optional"}:
 				expected = "internal_nonvisual"
 			else:

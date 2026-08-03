@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ORIGINAL_PATH = ROOT / "machines" / "partial" / "stern" / "iron-man-2010.json"
-VAULT_PATH = ROOT / "machines" / "partial" / "stern" / "iron-man-vault-edition-2014.json"
+VAULT_PATH = ROOT / "machines" / "author-ready" / "stern" / "iron-man-vault-edition-2014.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "iron-man-vault-edition-boot-start.json"
 
 
@@ -27,17 +27,21 @@ class IronManDefinitionTests(unittest.TestCase):
 		cls.vault = load_json(VAULT_PATH)
 		cls.evidence = load_json(EVIDENCE_PATH)
 
-	def test_physical_products_are_split_and_fail_closed_for_spatial_retrofit(self) -> None:
+	def test_physical_products_are_split_and_only_the_reviewed_vault_product_is_author_ready(self) -> None:
 		for definition in (self.original, self.vault):
 			self.assertEqual(2, definition["schema_version"])
-			self.assertEqual("partial", definition["coverage"]["status"])
-			self.assertIn("spatial_placement", definition["coverage"]["missing"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
 			self.assertEqual([], definition["conflicts"])
+		self.assertEqual("partial", self.original["coverage"]["status"])
+		self.assertIn("spatial_placement", self.original["coverage"]["missing"])
+		self.assertEqual("author_ready", self.vault["coverage"]["status"])
+		self.assertEqual([], self.vault["coverage"]["missing"])
+		self.assertEqual("validated", self.vault["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual({"id": "stern.iron-man.2010", "ipdb_id": 5550, "kind": "physical_pinball", "manufacturer": "Stern", "model_number": "I-00B3", "name": "Iron Man", "year": 2010}, self.original["machine"])
 		self.assertEqual({"id": "stern.iron-man-vault-edition.2014", "ipdb_id": 6154, "kind": "physical_pinball", "manufacturer": "Stern", "model_number": "I-00B0", "name": "Iron Man Pro Vault Edition", "year": 2014}, self.vault["machine"])
 		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "iron-man-vault-edition-2010.json").exists())
 		self.assertFalse((ROOT / "knowledge" / "stern" / "iron-man-vault-edition-2010.md").exists())
+		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "iron-man-vault-edition-2014.json").exists())
 
 	def test_driver_split_exhaustively_covers_the_clone_family(self) -> None:
 		original = {driver["id"] for driver in self.original["drivers"]}
@@ -139,6 +143,9 @@ class IronManDefinitionTests(unittest.TestCase):
 				self.assertEqual("used", lamps[address]["availability"])
 				self.assertIn("clear matrix bulb", lamps[address]["label"])
 				self.assertIn("hidden", lamps[address]["physical"]["notes"].casefold())
+				self.assertEqual(["internal.load"], lamps[address]["roles"])
+			self.assertEqual(2, lamps[55]["physical"]["quantity"])
+			self.assertRegex(lamps[55]["physical"]["notes"], r"two .*emitters")
 			self.assertEqual("J13-P9", lamps[1]["wiring"]["drive_connection"])
 			self.assertEqual("J12-P11", lamps[80]["wiring"]["return_connection"])
 			self.assertEqual({0}, set(bindings(definition, "outputs", "pinmame.output.gi")))
@@ -166,6 +173,14 @@ class IronManDefinitionTests(unittest.TestCase):
 		self.assertIn("original 2010 multi-piece Iron Monger", {mechanism["id"]: mechanism for mechanism in self.original["mechanisms"]}["mechanism.iron-monger"]["behavior"])
 		self.assertIn("strengthened one-piece molded Iron Monger", {mechanism["id"]: mechanism for mechanism in self.vault["mechanisms"]}["mechanism.iron-monger"]["behavior"])
 
+	def test_cross_edition_multiplicity_is_structured_and_explicitly_qualified(self) -> None:
+		expected_quantities = {20: 1, 21: 1, 22: 2, 23: 1, 25: 2, 26: 1, 27: 3, 28: 3, 29: 2, 30: 2, 31: 2, 32: 1}
+		for definition in (self.original, self.vault):
+			solenoids = bindings(definition, "outputs", "pinmame.output.solenoid")
+			self.assertEqual(expected_quantities, {address: solenoids[address]["physical"]["quantity"] for address in expected_quantities})
+		self.assertIn("Cross-edition evidence", bindings(self.original, "outputs", "pinmame.output.solenoid")[31]["physical"]["notes"])
+		self.assertIn("2010 parts book does not number", bindings(self.original, "outputs", "pinmame.output.lamp")[55]["physical"]["notes"])
+
 	def test_exact_manual_script_rom_and_runtime_hashes_are_pinned(self) -> None:
 		for definition in (self.original, self.vault):
 			sources = {source["id"]: source for source in definition["sources"]}
@@ -182,6 +197,73 @@ class IronManDefinitionTests(unittest.TestCase):
 			self.assertIn(model, ipdb["locator"])
 			switches = bindings(definition, "inputs", "pinmame.input.switch")
 			self.assertIn("human-review.stern.iron-man-code-1.86", switches[1]["provenance"]["source_refs"])
+		vault_sources = {source["id"]: source for source in self.vault["sources"]}
+		self.assertEqual("c0abc5d90d77a4cf7c3f0455cff91d4f0b9f7e750264742b987e9ddb30ab7a4b", vault_sources["vpx-table.iron-man-vault-vpw-1.0-geometry"]["sha256"])
+		self.assertTrue(vault_sources["vpx-table.iron-man-vault-vpw-1.0-geometry"]["known_working"])
+
+	def test_vault_spatial_inventory_disposes_every_device_and_preserves_physical_multiplicity(self) -> None:
+		devices = self.vault["inputs"] + self.vault["outputs"]
+		self.assertTrue(all(device["spatial"]["status"] in {"validated", "not_applicable"} for device in devices))
+		self.assertEqual(47, sum(device["spatial"]["status"] == "validated" for device in self.vault["inputs"]))
+		self.assertEqual(89, sum(device["spatial"]["status"] == "validated" for device in self.vault["outputs"]))
+		switches = bindings(self.vault, "inputs", "pinmame.input.switch")
+		self.assertEqual((0.446429, 0.42113), tuple(switches[1]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.930439, 0.845121), tuple(switches[22]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual(["vpx-table.iron-man-vault-vpw-1.0-geometry"], switches[22]["spatial"]["placements"][0]["provenance"]["source_refs"])
+		self.assertIn("least-squares continuation", switches[22]["physical"]["notes"])
+		self.assertEqual(["flipper.lower.left.button"], switches[84]["roles"])
+		self.assertEqual(["flipper.lower.right.button"], switches[82]["roles"])
+		self.assertEqual(["cabinet.tournament-start"], switches[15]["roles"])
+
+		solenoids = bindings(self.vault, "outputs", "pinmame.output.solenoid")
+		expected_quantities = {20: 1, 21: 1, 22: 2, 23: 1, 25: 2, 26: 1, 27: 3, 28: 3, 29: 2, 30: 2, 31: 2, 32: 1}
+		self.assertEqual(expected_quantities, {address: solenoids[address]["physical"]["quantity"] for address in expected_quantities})
+		self.assertEqual(3, len(solenoids[27]["spatial"]["placements"]))
+		self.assertEqual(2, len(solenoids[31]["spatial"]["placements"]))
+		for address in expected_quantities:
+			self.assertEqual(expected_quantities[address], len(solenoids[address]["spatial"]["placements"]))
+		for address in (22, 28):
+			self.assertIn("shared assembly/cluster anchor", solenoids[address]["physical"]["notes"])
+		self.assertEqual([(0.410511, 0.720898), (0.563715, 0.721215)], [tuple(point[axis] for axis in ("x", "y")) for point in solenoids[30]["spatial"]["placements"]])
+		self.assertEqual([(0.055666, 0.542583), (0.05488, 0.614537)], [tuple(point[axis] for axis in ("x", "y")) for point in solenoids[31]["spatial"]["placements"]])
+		for address in (30, 31):
+			self.assertTrue(all(point["provenance"]["source_refs"] == ["manual.iron-man-vault-edition.2014"] for point in solenoids[address]["spatial"]["placements"]))
+		self.assertEqual(["manual.iron-man-vault-edition.2014"], solenoids[27]["spatial"]["placements"][2]["provenance"]["source_refs"])
+		self.assertIn("official coil-location map marks two", solenoids[31]["physical"]["notes"])
+
+		lamps = bindings(self.vault, "outputs", "pinmame.output.lamp")
+		self.assertEqual((2, 2), (lamps[55]["physical"]["quantity"], len(lamps[55]["spatial"]["placements"])))
+		self.assertEqual([(0.484716, 0.68168), (0.484376, 0.707115)], [tuple(point[axis] for axis in ("x", "y")) for point in lamps[55]["spatial"]["placements"]])
+		self.assertTrue(all(point["provenance"]["source_refs"] == ["manual.iron-man-vault-edition.2014"] for point in lamps[55]["spatial"]["placements"]))
+		self.assertIn("individual placement IDs", lamps[55]["physical"]["notes"])
+		for address in (73, 79, 80):
+			self.assertEqual(("not_applicable", "internal_nonvisual"), (lamps[address]["spatial"]["status"], lamps[address]["spatial"]["reason"]))
+
+		gi = bindings(self.vault, "outputs", "pinmame.output.gi")[0]
+		self.assertEqual(39, gi["physical"]["quantity"])
+		self.assertEqual(37, len(gi["spatial"]["placements"]))
+		self.assertEqual(10, sum(point["y"] == 0 for point in gi["spatial"]["placements"]))
+		self.assertEqual({"brown": 10, "yellow": 7, "violet": 10, "green": 10}, {
+			circuit: sum(f".{circuit}." in point["id"] for point in gi["spatial"]["placements"])
+			for circuit in ("brown", "yellow", "violet", "green")
+		})
+		self.assertIn("European cabinets use three", gi["physical"]["notes"])
+		self.assertIn("gi024/gi027/gi030/gi031", gi["physical"]["notes"])
+		self.assertIn("25 under-playfield #44 bulbs plus two above-playfield #555 bulbs", gi["physical"]["notes"])
+		self.assertIn("gi004/gi014", gi["physical"]["notes"])
+		gi_points = {point["id"]: point for point in gi["spatial"]["placements"]}
+		self.assertEqual((0.230629, 0.685078), tuple(gi_points["gi.master.emitter.yellow.above-playfield-555"][axis] for axis in ("x", "y")))
+		self.assertEqual((0.743541, 0.692584), tuple(gi_points["gi.master.emitter.violet.above-playfield-555"][axis] for axis in ("x", "y")))
+		self.assertTrue(all(point["provenance"]["source_refs"] == ["vpx-table.iron-man-vault-vpw-1.0-geometry"] for point in gi["spatial"]["placements"][:27]))
+		self.assertTrue(all(point["provenance"]["source_refs"] == ["manual.iron-man-vault-edition.2014"] for point in gi["spatial"]["placements"][27:]))
+
+		for device in devices:
+			if device["spatial"]["status"] == "validated":
+				for point in device["spatial"]["placements"]:
+					self.assertGreaterEqual(point["x"], 0)
+					self.assertLessEqual(point["x"], 1)
+					self.assertGreaterEqual(point["y"], 0)
+					self.assertLessEqual(point["y"], 1)
 
 	def test_runtime_evidence_records_exact_observed_addresses(self) -> None:
 		self.assertEqual(["stern.iron-man.2010", "stern.iron-man-vault-edition.2014"], self.evidence["machine_ids"])

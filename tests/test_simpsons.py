@@ -10,7 +10,7 @@ from pinmame_game_defs.jsonio import content_sha256
 ROOT = Path(__file__).resolve().parents[1]
 LEGACY_PATH = ROOT / "games" / "simp.json"
 DEFINITION_PATH = ROOT / "machines" / "partial" / "stern" / "the-simpsons-pinball-party-2003.json"
-IRON_MAN_VAULT_PATH = ROOT / "machines" / "partial" / "stern" / "iron-man-vault-edition-2014.json"
+IRON_MAN_VAULT_PATH = ROOT / "machines" / "author-ready" / "stern" / "iron-man-vault-edition-2014.json"
 CATALOG_PATH = ROOT / "catalog" / "pinmame.json"
 
 
