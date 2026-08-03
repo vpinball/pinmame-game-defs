@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PREMIUM_PATH = ROOT / "machines" / "author-ready" / "stern" / "the-walking-dead-premium-limited-edition-2014.json"
-PRO_PATH = ROOT / "machines" / "partial" / "stern" / "the-walking-dead-pro-2014.json"
+PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "the-walking-dead-pro-2014.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "walking-dead-pro-boot-start.json"
 
 
@@ -35,10 +35,11 @@ class WalkingDeadDefinitionTests(unittest.TestCase):
 		self.assertEqual(2, self.premium["schema_version"])
 		self.assertEqual("author_ready", self.premium["coverage"]["status"])
 		self.assertEqual(2, self.pro["schema_version"])
-		self.assertEqual("partial", self.pro["coverage"]["status"])
+		self.assertEqual("author_ready", self.pro["coverage"]["status"])
 		self.assertEqual([], self.premium["coverage"]["missing"])
+		self.assertEqual([], self.pro["coverage"]["missing"])
 		self.assertEqual("validated", self.premium["coverage"]["dimensions"]["spatial_placement"])
-		self.assertIn("spatial_placement", self.pro["coverage"]["missing"])
+		self.assertEqual("validated", self.pro["coverage"]["dimensions"]["spatial_placement"])
 		premium_drivers = {driver["id"] for driver in self.premium["drivers"]}
 		pro_drivers = {driver["id"] for driver in self.pro["drivers"]}
 		self.assertEqual({"twd_111h", "twd_119h", "twd_124h", "twd_125h", "twd_128h", "twd_141h", "twd_153h", "twd_156h", "twd_156hc", "twd_160h", "twd_160hc"}, premium_drivers)
@@ -153,6 +154,39 @@ class WalkingDeadDefinitionTests(unittest.TestCase):
 					self.assertGreaterEqual(point["y"], 0)
 					self.assertLessEqual(point["y"], 1)
 
+	def test_pro_spatial_inventory_uses_the_model_specific_maps_and_all_emitters(self) -> None:
+		devices = [*self.pro["inputs"], *self.pro["outputs"]]
+		self.assertTrue(all(device["spatial"]["status"] in {"validated", "not_applicable"} for device in devices))
+		switches = bindings(self.pro, "inputs", "pinmame.input.switch")
+		self.assertEqual((0.594538, 0.186566), tuple(switches[12]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.593487, 0.237721), tuple(switches[13]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		lamps = bindings(self.pro, "outputs", "pinmame.output.lamp")
+		self.assertEqual((0.455414, 0.904621), tuple(lamps[4]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertTrue(all(lamps[address]["physical"]["quantity"] == 1 for address in range(3, 81)))
+		gi = bindings(self.pro, "outputs", "pinmame.output.gi")[0]
+		self.assertEqual((33, 33), (gi["physical"]["quantity"], len(gi["spatial"]["placements"])))
+		self.assertTrue(all(point["y"] == 0 for point in gi["spatial"]["placements"][-5:]))
+		flashers = {address: item for address, item in bindings(self.pro, "outputs", "pinmame.output.solenoid").items() if item["kind"] == "flasher"}
+		self.assertEqual({19, 21, 25, 26, 27, 28, 29, 31, 32}, set(flashers))
+		self.assertEqual(2, flashers[27]["physical"]["quantity"])
+		self.assertEqual(10, sum(item["physical"]["quantity"] for item in flashers.values()))
+		self.assertEqual((0.457401, 0.711049), tuple(flashers[21]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.285, 0.213), tuple(flashers[32]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertNotEqual(
+			tuple(flashers[32]["spatial"]["placements"][0][axis] for axis in ("x", "y")),
+			tuple(lamps[58]["spatial"]["placements"][0][axis] for axis in ("x", "y")),
+		)
+		self.assertEqual(["manual.walking-dead-pro"], flashers[32]["spatial"]["placements"][0]["provenance"]["source_refs"])
+		self.assertTrue(all(point["provenance"]["source_refs"] == ["manual.walking-dead-pro"] for point in gi["spatial"]["placements"]))
+		self.assertEqual(["vpx-table.walking-dead-jp-salas-6.0.0-geometry"], lamps[58]["spatial"]["placements"][0]["provenance"]["source_refs"])
+		for device in devices:
+			if device["spatial"]["status"] == "validated":
+				for point in device["spatial"]["placements"]:
+					self.assertGreaterEqual(point["x"], 0)
+					self.assertLessEqual(point["x"], 1)
+					self.assertGreaterEqual(point["y"], 0)
+					self.assertLessEqual(point["y"], 1)
+
 	def test_sources_are_hash_anchored_identity_is_model_specific_and_partial_is_removed(self) -> None:
 		sources = {source["id"]: source for source in self.pro["sources"]}
 		self.assertEqual(6155, self.pro["machine"]["ipdb_id"])
@@ -161,8 +195,13 @@ class WalkingDeadDefinitionTests(unittest.TestCase):
 		self.assertEqual("18d92b612f8d4f0fe1c0f20131fbeb3588d8393502330ca321deb36c9fcbcac4", sources["vpx.walking-dead-pro.jp-salas-v5.5.0"]["sha256"])
 		self.assertEqual("bfc4e21042b59e7c6495604166e9219d52c6b813", sources["vpx.walking-dead-pro.jp-salas-v5.5.0"]["revision"])
 		self.assertEqual("ffb741cfa5f1238d756035c4c113b77ad94fdd2a9e015c21a92af0813595bccb", sources["runtime.walking-dead-pro.boot-start"]["sha256"])
+		geometry = sources["vpx-table.walking-dead-jp-salas-6.0.0-geometry"]
+		self.assertEqual("859589b1d1ebea3be6e66844c7126d22d42da0877e551c9f7cf90b76e4c30383", geometry["sha256"])
+		self.assertFalse(geometry["known_working"])
+		self.assertIn("rejected for Pro semantics", geometry["locator"])
 		self.assertEqual("complete", self.pro["knowledge"]["status"])
-		self.assertTrue((ROOT / "machines" / "partial" / "stern" / "the-walking-dead-pro-2014.json").exists())
+		self.assertTrue(PRO_PATH.exists())
+		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "the-walking-dead-pro-2014.json").exists())
 		premium_sources = {source["id"]: source for source in self.premium["sources"]}
 		self.assertEqual("2aca72eb73ac11cc1f8d5633cd8bb302146ac2dd91bfa5fb8364a314b5179987", premium_sources["vpx-table.walking-dead-premium-le-vpw-day-1.1"]["sha256"])
 		self.assertEqual("c8f78d6bd0d52632049f1f1ee445e47d10db698355a681dc7e8d1da14b6c4a64", premium_sources["runtime.walking-dead-premium-le.gi-lamp-diagnostic"]["sha256"])

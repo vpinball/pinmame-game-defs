@@ -345,8 +345,8 @@ def pro_lamps() -> list[dict[str, object]]:
 			note = "Physical lamp #2 is identified by the Pro manual. The known-working Pro table omits its render callback, which is a table-object omission rather than evidence that the cabinet lamp is absent."
 		elif number in {73, 74, 75}:
 			note = f"Physical lamp #{number} is identified by the Pro manual. The known-working Pro script retains but comments out its table-render callback; the manual remains authoritative for the physical lamp."
-		items.append(output_device(number, label, "lamp", "used", (PRO_MANUAL, PRO_VPX_SOURCE), "validated", "pinmame.output.lamp", str(number), {"location": "Playfield or cabinet as shown on manual PDF pages 17-18", "notes": note}, output_id=f"lamp.{slug(label)}"))
-	items.append(output_device(0, "General illumination", "gi", "used", (PRO_MANUAL, PRO_VPX_SOURCE, PRO_RUNTIME_SOURCE), "validated", "pinmame.output.gi", "GI-0", {"location": "Playfield and backbox", "notes": "The known-working Pro script uses GICallback and the isolated ROM run observes public GI address 0."}, output_id="gi.general-illumination"))
+		items.append(output_device(number, label, "lamp", "used", (PRO_MANUAL, PRO_VPX_SOURCE), "validated", "pinmame.output.lamp", str(number), {"location": "Playfield or cabinet as shown on manual PDF page 19", "notes": note}, output_id=f"lamp.{slug(label)}"))
+	items.append(output_device(0, "General illumination", "gi", "used", (PRO_MANUAL, PRO_VPX_SOURCE, PRO_RUNTIME_SOURCE), "validated", "pinmame.output.gi", "GI-0", {"quantity": 33, "location": "Twenty-eight white playfield bayonets plus five white back-panel bayonets", "notes": "Official Pro manual PDF page 38 / printed page 36 is the physical emitter map. The known-working Pro script uses one GICallback and the isolated ROM run observes public GI address 0."}, output_id="gi.general-illumination"))
 	return items
 
 
@@ -430,7 +430,7 @@ def sources(manual: str, premium: bool) -> list[dict[str, object]]:
 	manual_record = {
 		"id": manual, "kind": "manual", "uri": "https://archive.org/details/WalkingDeadPinballManual" if premium else "https://archive.org/details/SternPinballTheWalkingDeadProModelManual",
 		"sha256": "4dd644210cc0432b254b8252b836c73c878517fa16eda119902155ece24f0b3e" if premium else "03bbf27093ad8b851ffe5b6284b1f14a4ccbce1ca0a68e79800db728bc92a5ae",
-		"locator": "Walking Dead pinball Manual.pdf, PDF pages 8-15 and mechanism/parts drawings" if premium else "WD-PRO-MAN.pdf, PDF pages 12-19 and 39-43",
+		"locator": "Walking Dead pinball Manual.pdf, PDF pages 8-15 and mechanism/parts drawings" if premium else "WD-PRO-MAN.pdf: switch map page 13, coil map page 16, lamp map page 19, GI map page 38, and wiring/assembly pages 39-45",
 		"license": "CC0-1.0" if premium else "NOASSERTION", "attribution": "Stern Pinball", "source_id": "WalkingDeadPinballManual" if premium else "SternPinballTheWalkingDeadProModelManual",
 		"original_filename": "Walking Dead pinball Manual.pdf" if premium else "WD-PRO-MAN.pdf", "rights": "http://creativecommons.org/publicdomain/zero/1.0/" if premium else "NOASSERTION",
 		"acquired_at": "2026-08-02T11:12:01.288660Z" if premium else "2026-08-02T11:11:58.008489Z",
