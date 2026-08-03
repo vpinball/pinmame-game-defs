@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines" / "partial" / "stern" / "ali-seven-digit-conversion-2023.json"
+DEFINITION_PATH = ROOT / "machines" / "partial" / "stern" / "ali-1980.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "stern" / "ali-service-diagnostics.json"
 
 
@@ -19,19 +19,30 @@ def manual_alias(device: dict[str, object]) -> str:
 	return next(alias["value"] for alias in device["aliases"] if alias["namespace"] == "manual.address")
 
 
-class AliConversionDefinitionTests(unittest.TestCase):
+class AliDefinitionTests(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls) -> None:
 		cls.definition = load_json(DEFINITION_PATH)
 		cls.evidence = load_json(EVIDENCE_PATH)
 
-	def test_both_conversion_roots_share_one_physical_definition(self) -> None:
-		self.assertEqual("physical_conversion", self.definition["machine"]["kind"])
+	def test_physical_family_contains_stock_clone_and_conversion_roots(self) -> None:
+		self.assertEqual({"id": "stern.ali.1980", "name": "Ali", "manufacturer": "Stern", "year": 1980, "kind": "physical_pinball", "ipdb_id": 43}, self.definition["machine"])
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertIn("spatial_placement", self.definition["coverage"]["missing"])
-		self.assertEqual({"alib", "alic"}, {driver["id"] for driver in self.definition["drivers"]})
-		self.assertTrue(all(driver["physical_compatibility"] == "identical" for driver in self.definition["drivers"]))
+		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
+		self.assertEqual("unknown", self.definition["coverage"]["dimensions"]["spatial_placement"])
+		self.assertTrue(all(state == "validated" for dimension, state in self.definition["coverage"]["dimensions"].items() if dimension != "spatial_placement"))
+		drivers = {driver["id"]: driver for driver in self.definition["drivers"]}
+		self.assertEqual({"ali", "alifp", "alib", "alic"}, set(drivers))
+		self.assertNotIn("clone_of", drivers["ali"])
+		self.assertEqual("ali", drivers["alifp"]["clone_of"])
+		self.assertNotIn("clone_of", drivers["alib"])
+		self.assertNotIn("clone_of", drivers["alic"])
+		self.assertEqual(("1980", "Stern", "identical"), tuple(drivers["ali"][key] for key in ("year", "manufacturer", "physical_compatibility")))
+		self.assertEqual(("1980", "Stern", "identical"), tuple(drivers["alifp"][key] for key in ("year", "manufacturer", "physical_compatibility")))
+		self.assertEqual(("2023", "Stern / Idleman", "compatible"), tuple(drivers["alib"][key] for key in ("year", "manufacturer", "physical_compatibility")))
+		self.assertEqual(("2023", "Stern / slochar", "compatible"), tuple(drivers["alic"][key] for key in ("year", "manufacturer", "physical_compatibility")))
+		self.assertIn("not a separately manufactured game", drivers["alib"]["variant_notes"])
 
 	def test_complete_switch_matrix_and_cabinet_inputs_are_explicit(self) -> None:
 		public_switches = {
@@ -80,11 +91,39 @@ class AliConversionDefinitionTests(unittest.TestCase):
 		self.assertEqual([], mechanisms["mechanism.middle-left-passive-saucer"]["actuators"])
 		self.assertIn("one ball", mechanisms["mechanism.outhole"]["behavior"].lower())
 
-	def test_display_conversion_is_not_merged_with_six_digit_parent(self) -> None:
-		widths = [display["width"] for display in self.definition["displays"]]
-		self.assertEqual([7, 7, 7, 7, 2, 2], widths)
+	def test_stock_display_inventory_has_explicit_conversion_overrides(self) -> None:
+		displays = {display["id"]: display for display in self.definition["displays"]}
+		self.assertEqual(
+			{
+				"display.player-1": (0, 2, 6),
+				"display.player-2": (1, 10, 6),
+				"display.player-3": (2, 18, 6),
+				"display.player-4": (3, 26, 6),
+				"display.credits": (4, 35, 2),
+				"display.ball-match": (5, 38, 2),
+			},
+			{display_id: (display["controller_index"], display["segment_start"], display["width"]) for display_id, display in displays.items()},
+		)
+		drivers = {driver["id"]: driver for driver in self.definition["drivers"]}
+		self.assertNotIn("display_overrides", drivers["ali"])
+		self.assertNotIn("display_overrides", drivers["alifp"])
+		for driver_id in ("alib", "alic"):
+			overrides = {override["target"]: override for override in drivers[driver_id]["display_overrides"]}
+			self.assertEqual(
+				{
+					"display.player-1": (1, 7),
+					"display.player-2": (9, 7),
+					"display.player-3": (17, 7),
+					"display.player-4": (25, 7),
+				},
+				{target: (override["segment_start"], override["width"]) for target, override in overrides.items()},
+			)
+			self.assertTrue(all("controller_index" not in override for override in overrides.values()))
+			self.assertTrue(all(override["provenance"]["source_refs"] == ["pinmame.core.4ec52ff0ac13"] for override in overrides.values()))
 
 	def test_runtime_evidence_keeps_external_rom_and_run_hashes(self) -> None:
+		self.assertEqual(["ali"], self.evidence["driver_ids"])
+		self.assertEqual(["stern.ali.1980"], self.evidence["machine_ids"])
 		runtime = self.evidence["runtime"]
 		self.assertEqual("bf0edc82cdfcfbcc354faff3b2cf668a11f0aac53e7affd915e44136e3325a4b", runtime["rom_archive_sha256"])
 		self.assertEqual([16, 32, 48, 64], runtime["observations"]["lamp_decoder_holes_not_seen"])

@@ -180,6 +180,12 @@
         "flags": { "type": "integer", "minimum": 0 },
         "physical_compatibility": { "description": "Compatibility of this ROM driver with the physical machine described by the containing definition.", "enum": ["identical", "compatible", "different", "unknown"] },
         "variant_notes": { "type": "string", "minLength": 1 },
+        "display_overrides": {
+          "description": "Driver-specific display-layout differences from the canonical physical-machine display inventory.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/displayOverride" }
+        },
         "overrides": {
           "type": "array",
           "items": { "$ref": "#/$defs/deviceOverride" }
@@ -300,10 +306,42 @@
           "type": "integer",
           "minimum": 0
         },
+        "segment_start": {
+          "description": "Zero-based start position in controller display memory for a segment display, measured in digits.",
+          "type": "integer",
+          "minimum": 0
+        },
         "width": { "type": "integer", "minimum": 1 },
         "height": { "type": "integer", "minimum": 1 },
         "provenance": { "$ref": "#/$defs/provenance" }
       }
+    },
+    "displayOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "provenance"],
+      "properties": {
+        "target": { "$ref": "#/$defs/identifier" },
+        "controller_index": {
+          "description": "Replacement zero-based controller display-layout index for the target display.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "segment_start": {
+          "description": "Replacement zero-based controller display-memory start position for the target segment display, measured in digits.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "provenance": { "$ref": "#/$defs/provenance" }
+      },
+      "anyOf": [
+        { "required": ["controller_index"] },
+        { "required": ["segment_start"] },
+        { "required": ["width"] },
+        { "required": ["height"] }
+      ]
     },
     "mechanism": {
       "type": "object",

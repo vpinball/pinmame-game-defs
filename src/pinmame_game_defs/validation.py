@@ -402,11 +402,22 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 			else:
 				errors.append(f"{path}.provenance: must be an object")
 	displays = definition.get("displays")
+	display_ids: set[str] = set()
+	displays_by_id: dict[str, dict[str, Any]] = {}
 	if isinstance(displays, list):
 		for index, display in enumerate(displays):
 			path = f"$.displays[{index}]"
 			if not isinstance(display, dict):
 				continue
+			display_id = display.get("id")
+			_validate_identifier(display_id, f"{path}.id", errors)
+			if isinstance(display_id, str):
+				if display_id in display_ids:
+					errors.append(f"{path}.id: duplicate display ID {display_id!r}")
+				display_ids.add(display_id)
+				displays_by_id[display_id] = display
+			if "segment_start" in display:
+				_expect(display.get("kind") == "segment", f"{path}.segment_start", "is only valid for segment displays", errors)
 			provenance = display.get("provenance")
 			if not isinstance(provenance, dict):
 				errors.append(f"{path}.provenance: must be an object")
@@ -417,6 +428,67 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 				_expect(provenance.get("status") == "validated", f"{path}.provenance.status", "author-ready display assertions must be validated", errors)
 				if display.get("kind") in {"dmd", "video"}:
 					_expect(isinstance(display.get("width"), int) and isinstance(display.get("height"), int), path, "pixel displays require width and height", errors)
+				elif display.get("kind") == "segment":
+					_expect(
+						all(isinstance(display.get(field), int) for field in ("controller_index", "segment_start", "width")),
+						path,
+						"segment displays require controller_index, segment_start, and width",
+						errors,
+					)
+	if isinstance(drivers, list):
+		for driver_index, driver in enumerate(drivers):
+			if not isinstance(driver, dict):
+				continue
+			path = f"$.drivers[{driver_index}]"
+			if driver.get("physical_compatibility") == "identical" and "display_overrides" in driver:
+				errors.append(f"{path}.display_overrides: physically identical drivers cannot carry display overrides")
+			overrides = driver.get("display_overrides")
+			if overrides is None:
+				continue
+			_expect(isinstance(overrides, list), f"{path}.display_overrides", "must be an array", errors)
+			if not isinstance(overrides, list):
+				continue
+			targets: set[str] = set()
+			for override_index, override in enumerate(overrides):
+				override_path = f"{path}.display_overrides[{override_index}]"
+				if not isinstance(override, dict):
+					errors.append(f"{override_path}: must be an object")
+					continue
+				target = override.get("target")
+				_validate_identifier(target, f"{override_path}.target", errors)
+				_expect(isinstance(target, str) and target in display_ids, f"{override_path}.target", "must resolve to a canonical display ID", errors)
+				if isinstance(target, str):
+					if target in targets:
+						errors.append(f"{override_path}.target: duplicate display override target {target!r}")
+					targets.add(target)
+				_expect(
+					any(field in override for field in ("controller_index", "segment_start", "width", "height")),
+					override_path,
+					"must override at least one of controller_index, segment_start, width, or height",
+					errors,
+				)
+				if isinstance(target, str) and target in displays_by_id:
+					canonical_display = displays_by_id[target]
+					if "segment_start" in override:
+						_expect(canonical_display.get("kind") == "segment", f"{override_path}.segment_start", "is only valid for segment displays", errors)
+					_expect(
+						any(
+							field in override and override[field] != canonical_display.get(field)
+							for field in ("controller_index", "segment_start", "width", "height")
+						),
+						override_path,
+						"must change at least one canonical display value",
+						errors,
+					)
+				_validate_provenance_refs(override.get("provenance"), f"{override_path}.provenance", source_ids, errors)
+				if status == "author_ready":
+					provenance = override.get("provenance")
+					_expect(
+						isinstance(provenance, dict) and provenance.get("status") == "validated",
+						f"{override_path}.provenance.status",
+						"author-ready display override provenance must be validated",
+						errors,
+					)
 	if status == "author_ready":
 		_expect(bool(definition.get("inputs")), "$.inputs", "author-ready definition requires a complete input inventory", errors)
 		_expect(bool(definition.get("outputs")), "$.outputs", "author-ready definition requires a complete output inventory", errors)

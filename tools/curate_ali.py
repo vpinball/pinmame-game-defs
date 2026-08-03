@@ -399,7 +399,7 @@ def relationships() -> list[dict[str, object]]:
 
 
 SOURCES: list[dict[str, object]] = [
-	{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames entries alib and alic", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
+	{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames entries ali, alifp (clone of ali), alib, and alic", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 	{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/stgames.c lines 7-16 and 595-632; src/wpc/by35.c; src/wpc/by35.h", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 	{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://www.pinballrebel.com/pinball/cards/Tech_Charts/Stern_Ali_Tech_Chart.pdf", "sha256": "455ea85f99eff031ffcca75489ab4dfea0a587a864522fb2fa30a4bfd160d78b", "locator": "Stern_Ali_Tech_Chart.pdf page 1: switch matrix, controlled-lamp chart, coil table, flipper circuits, boards, and fuses", "license": "NOASSERTION", "attribution": "Inkochnito; hosted by Pinball Rebel", "source_id": "pinballrebel", "original_filename": "Stern_Ali_Tech_Chart.pdf", "rights": "NOASSERTION"},
 	{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Ali-v1.0.1.vbs", "revision": VPX_REVISION, "sha256": "6dbde0131a367c643ae87fe511052d28d83ed0cb6b74b87ba731a900678f1849", "locator": "Ali-v1.0.1.vbs: initialization, switches 1-40, outputs 6-11/19/46/48, lamp objects 1-63, ball stacks, drop banks, and mechanism callbacks", "license": "NOASSERTION", "attribution": "JP Salas, table contributors, and vpxtable_scripts contributors"},
@@ -413,55 +413,81 @@ def build_definition() -> dict[str, object]:
 	return {
 		"format": "pinmame-machine-definition",
 		"schema_version": 1,
-		"machine": {"id": "stern.ali-seven-digit-conversion.2023", "name": "Ali seven-digit conversion", "manufacturer": "Stern / Idleman / slochar", "year": 2023, "kind": "physical_conversion", "ipdb_id": 43},
+		"machine": {"id": "stern.ali.1980", "name": "Ali", "manufacturer": "Stern", "year": 1980, "kind": "physical_pinball", "ipdb_id": 43},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.stern-mpu200", "inversion_applied_by_emulator": True},
 		"drivers": [
-			{"id": "alib", "description": "Ali (7-digit conversion Free Play rev. 76)", "year": "2023", "manufacturer": "Stern / Idleman", "flags": 0, "physical_compatibility": "identical", "variant_notes": "Revision 76 conversion software for the same physical Ali playfield, Stern MPU-200 I/O, ST300 sound board, and seven-digit display conversion."},
-			{"id": "alic", "description": "Ali (7-digit conversion Free Play rev. 85)", "year": "2023", "manufacturer": "Stern / slochar", "flags": 0, "physical_compatibility": "identical", "variant_notes": "Revision 85 conversion software for the same physical Ali playfield, Stern MPU-200 I/O, ST300 sound board, and seven-digit display conversion."},
+			{"id": "ali", "description": "Ali", "year": "1980", "manufacturer": "Stern", "flags": 0, "physical_compatibility": "identical", "variant_notes": "Stock Ali ROM and six-digit display hardware."},
+			{"id": "alifp", "clone_of": "ali", "description": "Ali (Free Play)", "year": "1980", "manufacturer": "Stern", "flags": 0, "physical_compatibility": "identical", "variant_notes": "Stock Ali free-play clone with the same six-digit display hardware."},
+			{
+				"id": "alib",
+				"description": "Ali (7-digit conversion Free Play rev. 76)",
+				"year": "2023",
+				"manufacturer": "Stern / Idleman",
+				"flags": 0,
+				"physical_compatibility": "compatible",
+				"variant_notes": "Conversion software and seven-digit display-hardware variant for the Ali physical family; not a separately manufactured game.",
+				"display_overrides": [
+					{"target": f"display.player-{number}", "segment_start": segment_start, "width": 7, "provenance": provenance(CORE_SOURCE)}
+					for number, segment_start in enumerate((1, 9, 17, 25), start=1)
+				],
+			},
+			{
+				"id": "alic",
+				"description": "Ali (7-digit conversion Free Play rev. 85)",
+				"year": "2023",
+				"manufacturer": "Stern / slochar",
+				"flags": 0,
+				"physical_compatibility": "compatible",
+				"variant_notes": "Conversion software and seven-digit display-hardware variant for the Ali physical family; not a separately manufactured game.",
+				"display_overrides": [
+					{"target": f"display.player-{number}", "segment_start": segment_start, "width": 7, "provenance": provenance(CORE_SOURCE)}
+					for number, segment_start in enumerate((1, 9, 17, 25), start=1)
+				],
+			},
 		],
 		"inputs": all_inputs(),
 		"outputs": all_outputs(),
 		"displays": [
-			{"id": f"display.player-{number}", "label": f"Player {number} seven-digit score display", "kind": "segment", "width": 7, "provenance": provenance(CORE_SOURCE)}
-			for number in range(1, 5)
+			{"id": f"display.player-{number}", "label": f"Player {number} score display", "kind": "segment", "controller_index": number - 1, "segment_start": segment_start, "width": 6, "provenance": provenance(CORE_SOURCE)}
+			for number, segment_start in enumerate((2, 10, 18, 26), start=1)
 		] + [
-			{"id": "display.credits", "label": "Two-digit credit display", "kind": "segment", "width": 2, "provenance": provenance(CORE_SOURCE)},
-			{"id": "display.ball-match", "label": "Two-digit ball / match display", "kind": "segment", "width": 2, "provenance": provenance(CORE_SOURCE)},
+			{"id": "display.credits", "label": "Credits display", "kind": "segment", "controller_index": 4, "segment_start": 35, "width": 2, "provenance": provenance(CORE_SOURCE)},
+			{"id": "display.ball-match", "label": "Ball / match display", "kind": "segment", "controller_index": 5, "segment_start": 38, "width": 2, "provenance": provenance(CORE_SOURCE)},
 		],
 		"mechanisms": mechanisms(),
 		"relationships": relationships(),
 		"sources": SOURCES,
-		"knowledge": {"path": "knowledge/stern/ali-seven-digit-conversion-2023.md", "status": "complete"},
+		"knowledge": {"path": "knowledge/stern/ali-1980.md", "status": "complete"},
 		"conflicts": [],
 	}
 
 
-KNOWLEDGE = """# Ali seven-digit conversion (Stern, 2023 software on the 1980 playfield)
+KNOWLEDGE = """# Ali (Stern, 1980)
 
 Coverage: **author-ready - complete physical inventory, controller bindings, wiring, mechanisms, and recreation behavior validated**
 
 ## Identity and evidence precedence
 
-This definition covers PinMAME `alib` revision 76 and `alic` revision 85. They are seven-digit free-play software conversions for the physical Stern Ali playfield (IPDB 43), not newly manufactured 2023 tables. Both PinMAME declarations use Stern MPU-200, the same switch-port definition, ST300 sound, and the seven-digit `dispst7` layout. The original six-digit `ali`/`alifp` drivers will receive their own definition because their score displays differ.
+This definition is the one physical Stern Ali family (IPDB 43). PinMAME `ali` is the stock root and `alifp` is its stock free-play clone; both use the six-digit `dispst6` layout and are physically identical. PinMAME `alib` revision 76 and `alic` revision 85 are independent-root conversion ROMs. Their catalog years identify conversion software releases, not separately manufactured games. They remain compatible with the Ali playfield, Stern MPU-200 I/O, left-flipper configuration, and ST300 sound board, but their seven-digit display hardware makes them display-hardware variants rather than physically identical stock machines.
 
-The known-working `Ali-v1.0.1.vbs` script is ground truth for controller-facing semantics and mechanism behavior. The Ali technical chart is authoritative for physical inventory, board connectors, wire colors, driver transistors, coil types, and diagnostic numbers. Pinned PinMAME source is authoritative for driver identity and public controller topology. The repeatable ROM harness used the available original `ali` image to validate the unchanged MPU-200 public-address translation; the conversion ROM archives were not present locally, so the harness is not used to infer conversion-only rules.
+The stock known-working `Ali-v1.0.1.vbs` script and the Ali technical chart are ground truth for stock physical playfield semantics. The script is ground truth for stock controller-facing semantics and mechanism behavior; the chart is authoritative for physical inventory, board connectors, wire colors, driver transistors, coil types, and diagnostic numbers. Pinned PinMAME source is authoritative for all driver identities, clone relationships, controller topology, and display layouts. The repeatable ROM harness ran only the available stock `ali` image, so it validates the stock MPU-200 public-address translation only and must not be used to infer conversion-only display rules.
 
 ## Controller address translations
 
-The 19 physical service solenoids do not line up numerically with PinMAME callbacks. The service sweep proves this physical-to-public sequence: `1->2, 2->1, 3->6, 4->7, 5->3, 6->4, 7->5, 8->8, 9->11, 10->12, 11->14, 12->13, 13->9, 14->10, 15->19, 16->15, 17->17, 18->20, 19->18`. Public output 16 is an unaddressable decoder slot. Lower flippers are generic callbacks 46 right and 48 left, gated by public output 19.
+The 19 physical service solenoids do not line up numerically with PinMAME callbacks. The stock service sweep proves this physical-to-public sequence: `1->2, 2->1, 3->6, 4->7, 5->3, 6->4, 7->5, 8->8, 9->11, 10->12, 11->14, 12->13, 13->9, 14->10, 15->19, 16->15, 17->17, 18->20, 19->18`. Public output 16 is an unaddressable decoder slot. Lower flippers are generic callbacks 46 right and 48 left, gated by public output 19.
 
-The LDA-100 has sixty discrete SCR outputs, not a lamp matrix. The JSON maps each public address to its physical Q-number, connector, wire, and SCR type. Public 16, 32, 48, and 64 are unaddressable decoder slots and therefore are not devices. The ROM lamp test exercised every other address, including unused Q01, Q20, Q24, Q25, Q54, and Q58. The manual leaves Q15 unnamed, but the working script identifies its public address 29 as Ball in Play; script semantics win.
+The LDA-100 has sixty discrete SCR outputs, not a lamp matrix. The JSON maps each public address to its physical Q-number, connector, wire, and SCR type. Public 16, 32, 48, and 64 are unaddressable decoder slots and therefore are not devices. The stock ROM lamp test exercised every other address, including unused Q01, Q20, Q24, Q25, Q54, and Q58. The manual leaves Q15 unnamed, but the working stock script identifies its public address 29 as Ball in Play; script semantics win.
 
 ## Switches and shared contacts
 
-The switch matrix is five strobes by eight returns, public addresses 1-40. Addresses 4, 10, 17, 18, and 40 are physically unused. Two separate middle rollover buttons share address 11 and must be wired in parallel. The technical chart calls address 9 a top-left rollover button, while the proven recreation pulses it from the spinner; build the spinner shown by the working table and bind it to 9. Service controls are -7 self-test, -6 CPU diagnostic, and -5 sound diagnostic. Cabinet flipper inputs are 82 right and 84 left; 81/83 are unused upper positions. All 32 MPU option switches are retained as configuration inputs.
+The switch matrix is five strobes by eight returns, public addresses 1-40. Addresses 4, 10, 17, 18, and 40 are physically unused. Two separate middle rollover buttons share address 11 and must be wired in parallel. The technical chart calls address 9 a top-left rollover button, while the proven stock recreation pulses it from the spinner; build the spinner shown by the working table and bind it to 9. Service controls are -7 self-test, -6 CPU diagnostic, and -5 sound diagnostic. Cabinet flipper inputs are 82 right and 84 left; 81/83 are unused upper positions. All 32 MPU option switches are retained as configuration inputs.
 
 ## Ball lifecycle and saucers
 
 Ali is a single-ball game with no trough stack. Initialize one ball in the outhole on switch 33. Public output 11/service solenoid 9 sends it toward the shooter lane at 115 degrees with nominal force 3; launching from the shooter lane is manual.
 
-Top saucer switches 30, 31, and 32 share one physical eject output: public 7/service solenoid 4. The working table fires every occupied top cup toward 180 degrees at force 10 with force and angle variation 3, and resets its visual cup state after 200 ms. The middle-right cup holds on switch 38 and ejects through public 10/service solenoid 14 with the same vector and variation. The physical chart names switch 39 Middle Left Saucer, but the working table gives it no kicker or capture stack; model the known passive geometry and do not invent an output.
+Top saucer switches 30, 31, and 32 share one physical eject output: public 7/service solenoid 4. The working stock table fires every occupied top cup toward 180 degrees at force 10 with force and angle variation 3, and resets its visual cup state after 200 ms. The middle-right cup holds on switch 38 and ejects through public 10/service solenoid 14 with the same vector and variation. The physical chart names switch 39 Middle Left Saucer, but the working table gives it no kicker or capture stack; model the known passive geometry and do not invent an output.
 
 ## Drop targets, bumpers, and slings
 
@@ -473,26 +499,27 @@ The public callback mapping for direct playfield coils is intentionally non-obvi
 
 Output 19 drives the 48 V flipper-enabling relay. The two J-25-450/34-4500 assemblies are hard-wired dual-winding circuits: public 48 represents the left coil and public 46 the right, with local normally-closed EOS contacts transferring from power to hold windings. The manual preserves power, coil, and button wire colors and connectors in the JSON.
 
-Public 14/service 11 is the physical general-illumination relay. The working VPX table turns GI on whenever a ball exists and off when none exists rather than subscribing to that callback. Build the relay-controlled GI circuit from the physical chart; treat the script's ball-count behavior as a compatibility fallback, not extra ROM I/O. Public 18/service 19 is the coin-lockout coil. Public 12, 13, 15, 17, and 20 are wired diagnostic positions with no installed device and remain explicitly unused.
+Public 14/service 11 is the physical general-illumination relay. The working stock VPX table turns GI on whenever a ball exists and off when none exists rather than subscribing to that callback. Build the relay-controlled GI circuit from the physical chart; treat the script's ball-count behavior as a compatibility fallback, not extra ROM I/O. Public 18/service 19 is the coin-lockout coil. Public 12, 13, 15, 17, and 20 are wired diagnostic positions with no installed device and remain explicitly unused.
 
 ## Displays and sound
 
-The conversion uses four seven-digit player score displays, a two-digit credit display, and a two-digit ball/match display. PinMAME `dispst7` is the exact layout contract. The original Ali hardware used six-digit player displays, which is why original and conversion drivers must not be merged. Sound is Stern ST300; sound-command behavior belongs to PinMAME and does not add playfield devices.
+The canonical display inventory is stock Ali: four generic Player N six-digit score displays at controller layout indices 0-3 and segment-memory starts 2, 10, 18, and 26; the two-digit credits display is layout 4/start 35; and the two-digit ball/match display is layout 5/start 38. This is PinMAME `dispst6`. Only `alib` and `alic` apply explicit display overrides: their Player 1-4 displays remain at layout indices 0-3 but become seven digits with segment-memory starts 1, 9, 17, and 25, matching `dispst7`. The stock VPX/manual evidence does not validate those conversion-only rules. Sound is Stern ST300; sound-command behavior belongs to PinMAME and does not add playfield devices.
 
 ## Recreation checklist
 
-- Build every JSON input and output, including unused wired positions, both physical EOS contacts, shared switch 11, all sixty valid SCR lamp outputs, and the two seven-digit-conversion auxiliary displays.
+- Build the stock Ali base: every JSON input and output, including unused wired positions, both physical EOS contacts, shared switch 11, all sixty valid SCR lamp outputs, and the six-digit stock display inventory.
 - Initialize one ball at switch 33; initialize both drop banks raised and every saucer empty.
 - Use PinMAME public bindings for runtime callbacks and retain physical service numbers/Q-numbers as diagnostic aliases.
 - Reproduce shared top-saucer actuation, passive switch-39 geometry, manual shooter launch, hard-wired dual-winding flippers, GI relay, and coin lockout.
-- Treat the working VPX force, angle, variance, and 200 ms visual reset values as validated authoring starting points; refine only geometry-dependent tuning without changing controller causality.
+- Apply the explicit Player 1-4 display overrides only for `alib` or `alic`; do not promote stock VPX/manual or `ali` runtime results into conversion-only rules.
+- Treat the working stock VPX force, angle, variance, and 200 ms visual reset values as validated authoring starting points; refine only geometry-dependent tuning without changing controller causality.
 
 ## Sources
 
 - `manual.ali.tech-chart`: organized external `Stern_Ali_Tech_Chart.pdf`, SHA-256 `455ea85f99eff031ffcca75489ab4dfea0a587a864522fb2fa30a4bfd160d78b`; one-page switch, lamp, coil, flipper, board, and fuse chart.
-- `vpx.ali.jp-salas.1.0.1`: pinned known-working script, SHA-256 `6dbde0131a367c643ae87fe511052d28d83ed0cb6b74b87ba731a900678f1849`.
-- `vpx-table.ali.jp-salas.1.0.1`: locally available working VPX used only for embedded playfield art/object-position confirmation, SHA-256 `14137b288aee843e834f509b467dd288fcf0e3269afcbd397e2276d31c24533f`.
-- `runtime.ali.service-lamp-test` and `runtime.ali.service-solenoid-test`: isolated harness captures from exact `ali.zip` SHA-256 `bf0edc82cdfcfbcc354faff3b2cf668a11f0aac53e7affd915e44136e3325a4b`; ROM bytes and raw mutable NVRAM remain outside the repository.
+- `vpx.ali.jp-salas.1.0.1`: pinned stock known-working script, SHA-256 `6dbde0131a367c643ae87fe511052d28d83ed0cb6b74b87ba731a900678f1849`.
+- `vpx-table.ali.jp-salas.1.0.1`: locally available working stock VPX used only for embedded playfield art/object-position confirmation, SHA-256 `14137b288aee843e834f509b467dd288fcf0e3269afcbd397e2276d31c24533f`.
+- `runtime.ali.service-lamp-test` and `runtime.ali.service-solenoid-test`: isolated stock harness captures from exact `ali.zip` SHA-256 `bf0edc82cdfcfbcc354faff3b2cf668a11f0aac53e7affd915e44136e3325a4b`; ROM bytes and raw mutable NVRAM remain outside the repository.
 - `pinmame.core.4ec52ff0ac13`: pinned driver declarations, MPU-200 implementation, public-address conversion, and display layouts.
 """
 
@@ -511,8 +538,8 @@ EVIDENCE_SUMMARY = {
 		"attribution": "Generated locally from PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
 		"quality": "validated",
 	},
-	"driver_ids": ["ali", "alib", "alic"],
-	"machine_ids": ["stern.ali-seven-digit-conversion.2023"],
+	"driver_ids": ["ali"],
+	"machine_ids": ["stern.ali.1980"],
 	"switches": [],
 	"outputs": [],
 	"states": [],
@@ -543,14 +570,22 @@ def write_json(path: Path, value: object) -> None:
 	write_json_file(path, value)
 
 
-for driver_id in ("alib", "alic"):
+for driver_id in ("ali", "alifp", "alib", "alic"):
 	for path in (ROOT / f"machines/stubs/{driver_id}.json", ROOT / f"knowledge/stubs/{driver_id}.md"):
 		if path.exists():
 			path.unlink()
 
 
-write_json(ROOT / "machines/partial/stern/ali-seven-digit-conversion-2023.json", build_definition())
+for path in (
+	ROOT / "machines/partial/stern/ali-seven-digit-conversion-2023.json",
+	ROOT / "knowledge/stern/ali-seven-digit-conversion-2023.md",
+):
+	if path.exists():
+		path.unlink()
+
+
+write_json(ROOT / "machines/partial/stern/ali-1980.json", build_definition())
 write_json(ROOT / "evidence/runtime/stern/ali-service-diagnostics.json", EVIDENCE_SUMMARY)
-knowledge_path = ROOT / "knowledge/stern/ali-seven-digit-conversion-2023.md"
+knowledge_path = ROOT / "knowledge/stern/ali-1980.md"
 knowledge_path.parent.mkdir(parents=True, exist_ok=True)
-write_text(knowledge_path, fail_closed_spatial_knowledge("stern.ali-seven-digit-conversion.2023", KNOWLEDGE))
+write_text(knowledge_path, fail_closed_spatial_knowledge("stern.ali.1980", KNOWLEDGE))

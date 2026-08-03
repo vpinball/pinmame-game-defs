@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import load_json
+from pinmame_game_defs.schema_validation import validate_against_schema
 from pinmame_game_defs.validation import _validate_runtime_observations, validate_machine, validate_repository
 
 
@@ -31,6 +32,97 @@ class RepositoryValidationTests(unittest.TestCase):
 		definition["drivers"][0]["physical_compatibility"] = "different"
 		errors = validate_machine(definition)
 		self.assertTrue(any("physically compatible with the containing machine definition" in error for error in errors))
+
+	def display_override_fixture(self) -> dict[str, object]:
+		definition = copy.deepcopy(self.transformers)
+		driver = definition["drivers"][0]
+		driver["physical_compatibility"] = "compatible"
+		driver["display_overrides"] = [
+			{
+				"target": definition["displays"][0]["id"],
+				"width": definition["displays"][0].get("width", 128) + 1,
+				"provenance": {"status": "validated", "source_refs": [definition["sources"][0]["id"]]},
+			}
+		]
+		return definition
+
+	def test_display_override_accepts_a_canonical_display_target(self) -> None:
+		self.assertEqual([], validate_machine(self.display_override_fixture()))
+
+	def test_display_override_rejects_invalid_targets_and_duplicate_targets(self) -> None:
+		definition = self.display_override_fixture()
+		definition["drivers"][0]["display_overrides"].append(
+			{
+				"target": definition["displays"][0]["id"],
+				"controller_index": 9,
+				"provenance": {"status": "validated", "source_refs": [definition["sources"][0]["id"]]},
+			}
+		)
+		for override in definition["drivers"][0]["display_overrides"]:
+			override["target"] = "display.not-declared"
+		errors = validate_machine(definition)
+		self.assertTrue(any("must resolve to a canonical display ID" in error for error in errors))
+		self.assertTrue(any("duplicate display override target" in error for error in errors))
+
+	def test_display_override_requires_resolved_validated_provenance_and_nonidentical_driver(self) -> None:
+		definition = self.display_override_fixture()
+		override = definition["drivers"][0]["display_overrides"][0]
+		override["provenance"]["source_refs"] = ["missing.source"]
+		definition["drivers"][0]["physical_compatibility"] = "identical"
+		errors = validate_machine(definition)
+		self.assertTrue(any("unknown source reference 'missing.source'" in error for error in errors))
+		self.assertTrue(any("physically identical drivers cannot carry display overrides" in error for error in errors))
+		definition = self.author_ready_fixture()
+		definition["drivers"][0]["physical_compatibility"] = "compatible"
+		definition["drivers"][0]["display_overrides"] = [
+			{
+				"target": definition["displays"][0]["id"],
+				"width": definition["displays"][0].get("width", 128),
+				"provenance": {"status": "candidate", "source_refs": [definition["sources"][0]["id"]]},
+			}
+		]
+		errors = validate_machine(definition)
+		self.assertTrue(any("author-ready display override provenance must be validated" in error for error in errors))
+
+	def test_display_override_schema_requires_a_dimension_and_rejects_extra_fields(self) -> None:
+		definition = self.display_override_fixture()
+		override = definition["drivers"][0]["display_overrides"][0]
+		del override["width"]
+		override["unexpected"] = True
+		errors = validate_against_schema(definition, ROOT / "schemas" / "machine.schema.json", "fixture")
+		self.assertTrue(any("is not valid under any of the given schemas" in error for error in errors))
+		self.assertTrue(any("Additional properties are not allowed" in error for error in errors))
+
+	def test_segment_start_is_valid_only_for_segment_displays(self) -> None:
+		definition = self.display_override_fixture()
+		display = definition["displays"][0]
+		override = definition["drivers"][0]["display_overrides"][0]
+		display["segment_start"] = 2
+		override["segment_start"] = 1
+		errors = validate_machine(definition)
+		self.assertTrue(any("segment_start: is only valid for segment displays" in error for error in errors))
+		display["kind"] = "segment"
+		del display["height"]
+		self.assertEqual([], validate_machine(definition))
+
+	def test_author_ready_segment_displays_require_index_start_and_width(self) -> None:
+		definition = self.author_ready_fixture()
+		display = definition["displays"][0]
+		display["kind"] = "segment"
+		del display["height"]
+		display["segment_start"] = 2
+		errors = validate_machine(definition)
+		self.assertTrue(any("segment displays require controller_index, segment_start, and width" in error for error in errors))
+		display["controller_index"] = 0
+		errors = validate_machine(definition)
+		self.assertFalse(any("segment displays require" in error for error in errors))
+
+	def test_display_override_must_change_a_canonical_value(self) -> None:
+		definition = self.display_override_fixture()
+		override = definition["drivers"][0]["display_overrides"][0]
+		override["width"] = definition["displays"][0]["width"]
+		errors = validate_machine(definition)
+		self.assertTrue(any("must change at least one canonical display value" in error for error in errors))
 
 	def test_virtual_machine_records_and_virtual_only_drivers_are_rejected(self) -> None:
 		definition = self.author_ready_fixture()

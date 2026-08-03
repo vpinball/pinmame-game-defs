@@ -22,95 +22,218 @@
   },
   "displays": [
     {
+      "controller_index": 0,
       "id": "display.player-1",
       "kind": "segment",
-      "label": "Player 1 seven-digit score display",
+      "label": "Player 1 score display",
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
       },
-      "width": 7
+      "segment_start": 2,
+      "width": 6
     },
     {
+      "controller_index": 1,
       "id": "display.player-2",
       "kind": "segment",
-      "label": "Player 2 seven-digit score display",
+      "label": "Player 2 score display",
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
       },
-      "width": 7
+      "segment_start": 10,
+      "width": 6
     },
     {
+      "controller_index": 2,
       "id": "display.player-3",
       "kind": "segment",
-      "label": "Player 3 seven-digit score display",
+      "label": "Player 3 score display",
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
       },
-      "width": 7
+      "segment_start": 18,
+      "width": 6
     },
     {
+      "controller_index": 3,
       "id": "display.player-4",
       "kind": "segment",
-      "label": "Player 4 seven-digit score display",
+      "label": "Player 4 score display",
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
       },
-      "width": 7
+      "segment_start": 26,
+      "width": 6
     },
     {
+      "controller_index": 4,
       "id": "display.credits",
       "kind": "segment",
-      "label": "Two-digit credit display",
+      "label": "Credits display",
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
       },
+      "segment_start": 35,
       "width": 2
     },
     {
+      "controller_index": 5,
       "id": "display.ball-match",
       "kind": "segment",
-      "label": "Two-digit ball / match display",
+      "label": "Ball / match display",
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
       },
+      "segment_start": 38,
       "width": 2
     }
   ],
   "drivers": [
     {
+      "description": "Ali",
+      "flags": 0,
+      "id": "ali",
+      "manufacturer": "Stern",
+      "physical_compatibility": "identical",
+      "variant_notes": "Stock Ali ROM and six-digit display hardware.",
+      "year": "1980"
+    },
+    {
+      "clone_of": "ali",
+      "description": "Ali (Free Play)",
+      "flags": 0,
+      "id": "alifp",
+      "manufacturer": "Stern",
+      "physical_compatibility": "identical",
+      "variant_notes": "Stock Ali free-play clone with the same six-digit display hardware.",
+      "year": "1980"
+    },
+    {
       "description": "Ali (7-digit conversion Free Play rev. 76)",
+      "display_overrides": [
+        {
+          "provenance": {
+            "source_refs": [
+              "pinmame.core.4ec52ff0ac13"
+            ],
+            "status": "validated"
+          },
+          "segment_start": 1,
+          "target": "display.player-1",
+          "width": 7
+        },
+        {
+          "provenance": {
+            "source_refs": [
+              "pinmame.core.4ec52ff0ac13"
+            ],
+            "status": "validated"
+          },
+          "segment_start": 9,
+          "target": "display.player-2",
+          "width": 7
+        },
+        {
+          "provenance": {
+            "source_refs": [
+              "pinmame.core.4ec52ff0ac13"
+            ],
+            "status": "validated"
+          },
+          "segment_start": 17,
+          "target": "display.player-3",
+          "width": 7
+        },
+        {
+          "provenance": {
+            "source_refs": [
+              "pinmame.core.4ec52ff0ac13"
+            ],
+            "status": "validated"
+          },
+          "segment_start": 25,
+          "target": "display.player-4",
+          "width": 7
+        }
+      ],
       "flags": 0,
       "id": "alib",
       "manufacturer": "Stern / Idleman",
-      "physical_compatibility": "identical",
-      "variant_notes": "Revision 76 conversion software for the same physical Ali playfield, Stern MPU-200 I/O, ST300 sound board, and seven-digit display conversion.",
+      "physical_compatibility": "compatible",
+      "variant_notes": "Conversion software and seven-digit display-hardware variant for the Ali physical family; not a separately manufactured game.",
       "year": "2023"
     },
     {
       "description": "Ali (7-digit conversion Free Play rev. 85)",
+      "display_overrides": [
+        {
+          "provenance": {
+            "source_refs": [
+              "pinmame.core.4ec52ff0ac13"
+            ],
+            "status": "validated"
+          },
+          "segment_start": 1,
+          "target": "display.player-1",
+          "width": 7
+        },
+        {
+          "provenance": {
+            "source_refs": [
+              "pinmame.core.4ec52ff0ac13"
+            ],
+            "status": "validated"
+          },
+          "segment_start": 9,
+          "target": "display.player-2",
+          "width": 7
+        },
+        {
+          "provenance": {
+            "source_refs": [
+              "pinmame.core.4ec52ff0ac13"
+            ],
+            "status": "validated"
+          },
+          "segment_start": 17,
+          "target": "display.player-3",
+          "width": 7
+        },
+        {
+          "provenance": {
+            "source_refs": [
+              "pinmame.core.4ec52ff0ac13"
+            ],
+            "status": "validated"
+          },
+          "segment_start": 25,
+          "target": "display.player-4",
+          "width": 7
+        }
+      ],
       "flags": 0,
       "id": "alic",
       "manufacturer": "Stern / slochar",
-      "physical_compatibility": "identical",
-      "variant_notes": "Revision 85 conversion software for the same physical Ali playfield, Stern MPU-200 I/O, ST300 sound board, and seven-digit display conversion.",
+      "physical_compatibility": "compatible",
+      "variant_notes": "Conversion software and seven-digit display-hardware variant for the Ali physical family; not a separately manufactured game.",
       "year": "2023"
     }
   ],
@@ -3022,16 +3145,16 @@
     }
   ],
   "knowledge": {
-    "path": "knowledge/stern/ali-seven-digit-conversion-2023.md",
+    "path": "knowledge/stern/ali-1980.md",
     "status": "complete"
   },
   "machine": {
-    "id": "stern.ali-seven-digit-conversion.2023",
+    "id": "stern.ali.1980",
     "ipdb_id": 43,
-    "kind": "physical_conversion",
-    "manufacturer": "Stern / Idleman / slochar",
-    "name": "Ali seven-digit conversion",
-    "year": 2023
+    "kind": "physical_pinball",
+    "manufacturer": "Stern",
+    "name": "Ali",
+    "year": 1980
   },
   "mechanisms": [
     {
@@ -6570,7 +6693,7 @@
       "id": "pinmame.catalog.4ec52ff0ac13",
       "kind": "pinmame_catalog",
       "license": "BSD-3-Clause",
-      "locator": "PinmameGetGames entries alib and alic",
+      "locator": "PinmameGetGames entries ali, alifp (clone of ali), alib, and alic",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
     },
