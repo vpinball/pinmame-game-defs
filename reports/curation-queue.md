@@ -8,7 +8,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 2 | 2016 | Spider-Man Vault Edition | Stern | author_ready |
 | 3 | 2014 | AC/DC LED Pro | Stern | author_ready |
 | 4 | 2014 | Iron Man Pro Vault Edition | Stern | author_ready |
-| 5 | 2014 | Mustang Premium / Limited Edition / Boss | Stern | partial |
+| 5 | 2014 | Mustang Premium / Limited Edition / Boss | Stern | author_ready |
 | 6 | 2014 | Mustang Pro | Stern | partial |
 | 7 | 2014 | The Walking Dead Premium / Limited Edition | Stern | author_ready |
 | 8 | 2014 | The Walking Dead Pro | Stern | author_ready |

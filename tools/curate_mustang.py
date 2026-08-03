@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json, write_text
-from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+from pinmame_game_defs.spatial import SPATIAL_RETROFIT_PENDING_MACHINE_IDS, fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
@@ -409,8 +409,16 @@ def standard_lamps(manual: str, validated: bool) -> list[dict[str, object]]:
 		return_wire, return_connection, transistor = STANDARD_LAMP_RETURN[row]
 		availability = "unused" if label.startswith("Unused") else "used"
 		sources = (manual, VPX_SOURCE, ROM_SOURCE) if validated and availability != "unused" else (manual,)
-		part_number = "112-5033-04" if 65 <= number <= 70 else "112-5033-02" if 77 <= number <= 80 else "112-5033-08"
-		items.append(output_device(number, label, "lamp", availability, sources, status, "pinmame.output.lamp", str(number), {"part_number": part_number, "location": "Playfield or cabinet as shown on the lamp-location map"}, {"board": "I/O Power Driver board", "driver_transistor": transistor, "power_wire": power_wire, "power_connection": power_connection, "return_wire": return_wire, "return_connection": return_connection, "nominal_voltage_v": 18, "voltage_type": "dc"}, f"lamp.{slug(label)}"))
+		if availability == "unused":
+			physical = {"notes": "The service-manual lamp matrix cell is blank; no physical lamp is populated at this controller address."}
+		else:
+			part_number = "112-5033-04" if 65 <= number <= 70 else "112-5033-02" if 77 <= number <= 80 else "112-5033-08"
+			physical = {
+				"part_number": part_number,
+				"location": "Playfield or cabinet as shown on the lamp-location map",
+				"notes": "The service-manual lamp-location drawing shows one physical emitter for this controller channel; VPX bloom and reflection helpers do not add sockets.",
+			}
+		items.append(output_device(number, label, "lamp", availability, sources, status, "pinmame.output.lamp", str(number), physical, {"board": "I/O Power Driver board", "driver_transistor": transistor, "power_wire": power_wire, "power_connection": power_connection, "return_wire": return_wire, "return_connection": return_connection, "nominal_voltage_v": 18, "voltage_type": "dc"}, f"lamp.{slug(label)}"))
 	return items
 
 
@@ -421,7 +429,10 @@ def extended_lamps() -> list[dict[str, object]]:
 		color_channel = label.rsplit(" ", 1)[-1] in {"red", "green", "blue"}
 		kind = "rgb_lamp" if color_channel and (label.startswith("Shot arrow") or label.startswith("Action button")) else "lamp"
 		location = "Lockbar action button" if manual_number >= 141 else "Playfield" if manual_number not in range(98, 108) else "Playfield sign"
-		physical: dict[str, object] = {"location": location, "notes": f"Physical diagnostic lamp #{manual_number} on Mustang node-board system"}
+		physical: dict[str, object] = {
+			"location": location,
+			"notes": f"Physical diagnostic lamp #{manual_number} on the Mustang node-board system. The service-manual location drawing shows one physical emitter for this diagnostic channel; VPX bloom and reflection helpers do not add sockets.",
+		}
 		if 81 <= manual_number <= 97:
 			physical.update({"part_number": "520-6822-00A", "location": "Playfield; onboard Board 5 LED"})
 		elif 98 <= manual_number <= 107:
@@ -432,6 +443,25 @@ def extended_lamps() -> list[dict[str, object]]:
 			physical["part_number"] = "520-5333-00"
 		items.append(output_device(public_address, label, kind, "used", (PREMIUM_MANUAL, VPX_SOURCE, ROM_SOURCE, CORE_SOURCE), "validated", "pinmame.output.lamp", str(manual_number), physical, output_id=f"lamp.{slug(label)}"))
 	return items
+
+
+def premium_gi() -> dict[str, object]:
+	return output_device(
+		0,
+		"General illumination",
+		"gi",
+		"used",
+		(PREMIUM_MANUAL, VPX_SOURCE, CORE_SOURCE),
+		"validated",
+		"pinmame.output.gi",
+		"GI-0..GI-3",
+		{
+			"location": "25 playfield bulbs and seven red rear lamps",
+			"quantity": 32,
+			"notes": "The official lighting drawing inventories 15 wedge-base playfield bulbs, eight GI-0 bayonet playfield bulbs, two separately called-out GI-1 spot assemblies, and seven red GI-2 rear bayonet lamps. The physical GI-0 through GI-3 circuits share one PinMAME transport channel; the working VPX drives a larger render collection from public lamp 98, which does not change the physical inventory or remap lamp 98 into GI.",
+		},
+		output_id="gi.general-illumination",
+	)
 
 
 PRO_COILS: dict[int, tuple[str, str, str, str | None]] = {
@@ -624,7 +654,7 @@ def build_premium() -> dict[str, object]:
 		"machine": {"id": "stern.mustang-premium-limited-edition-boss.2014", "name": "Mustang Premium / Limited Edition / Boss", "manufacturer": "Stern", "year": 2014, "ipdb_id": 6099},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
-		"drivers": driver_records(True), "inputs": complete_inputs(PREMIUM_SWITCHES, PREMIUM_MANUAL, True, True), "outputs": premium_coils() + standard_lamps(PREMIUM_MANUAL, True) + extended_lamps(),
+		"drivers": driver_records(True), "inputs": complete_inputs(PREMIUM_SWITCHES, PREMIUM_MANUAL, True, True), "outputs": premium_coils() + standard_lamps(PREMIUM_MANUAL, True) + extended_lamps() + [premium_gi()],
 		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance("validated", CORE_SOURCE, VPX_SOURCE)}],
 		"mechanisms": premium_mechanisms(), "relationships": [], "sources": sources(PREMIUM_MANUAL, True),
 		"knowledge": {"path": "knowledge/stern/mustang-premium-limited-edition-boss-2014.md", "status": "complete"}, "conflicts": [],
@@ -779,16 +809,23 @@ def write(path: Path, value: dict[str, object]) -> None:
 	write_json(path, value)
 
 
-old_stub = ROOT / "machines/stubs/mt_145h.json"
-if old_stub.exists():
-	old_stub.unlink()
-old_knowledge = ROOT / "knowledge/stubs/mt_145h.md"
-if old_knowledge.exists():
-	old_knowledge.unlink()
-write(ROOT / "machines/partial/stern/mustang-premium-limited-edition-boss-2014.json", build_premium())
-old_pro = ROOT / "machines/partial/stern/mustang-pro-2014.json"
-if old_pro.exists():
-	old_pro.unlink()
-write(ROOT / "machines/partial/stern/mustang-pro-2014.json", build_pro())
-write_text(ROOT / "knowledge/stern/mustang-premium-limited-edition-boss-2014.md", fail_closed_spatial_knowledge("stern.mustang-premium-limited-edition-boss.2014", PREMIUM_KNOWLEDGE))
-write_text(ROOT / "knowledge/stern/mustang-pro-2014.md", fail_closed_spatial_knowledge("stern.mustang-pro.2014", PRO_KNOWLEDGE))
+def main() -> None:
+	old_stub = ROOT / "machines/stubs/mt_145h.json"
+	if old_stub.exists():
+		old_stub.unlink()
+	old_knowledge = ROOT / "knowledge/stubs/mt_145h.md"
+	if old_knowledge.exists():
+		old_knowledge.unlink()
+	premium_machine_id = "stern.mustang-premium-limited-edition-boss.2014"
+	if premium_machine_id in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
+		write(ROOT / "machines/partial/stern/mustang-premium-limited-edition-boss-2014.json", build_premium())
+		write_text(ROOT / "knowledge/stern/mustang-premium-limited-edition-boss-2014.md", fail_closed_spatial_knowledge(premium_machine_id, PREMIUM_KNOWLEDGE))
+	old_pro = ROOT / "machines/partial/stern/mustang-pro-2014.json"
+	if old_pro.exists():
+		old_pro.unlink()
+	write(old_pro, build_pro())
+	write_text(ROOT / "knowledge/stern/mustang-pro-2014.md", fail_closed_spatial_knowledge("stern.mustang-pro.2014", PRO_KNOWLEDGE))
+
+
+if __name__ == "__main__":
+	main()

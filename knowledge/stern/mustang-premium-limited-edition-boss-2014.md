@@ -1,7 +1,6 @@
 # Mustang Premium / Limited Edition / Boss (Stern, 2014)
 
-Coverage: **partial — normalized spatial placements pending.**
-Previously validated non-spatial scope: **physical inventory, PinMAME bindings, mechanisms, and recreation behavior validated**
+Coverage: **author-ready - physical inventory, PinMAME bindings, mechanisms, recreation behavior, and spatial placements validated**
 
 ## Identity and variants
 
@@ -55,9 +54,18 @@ Four pop bumpers pair switches 30-33 with outputs 9-12. Slingshots pair switches
 - Preserve separate power and hold windings for both ramps even though the working VPX animation keys primarily from hold outputs.
 - Treat VPX force, angle, travel, and timing values as proven authoring starting points; refine geometry against physical measurements without changing controller causality.
 
+## Spatial coordinate model
+
+Every physical playfield input, actuator, lamp, and GI socket has a normalized player-view placement: x=0 left, x=1 right, y=0 rear/backglass end, and y=1 apron. Exact object centers come from the known-working VPW table only after script/manual reconciliation. The seven trough contacts, ramp-position sensors, implicit EOS contacts, white-arrow companions, and 25 playfield GI callouts use explicitly disclosed assembly or drawing projections with practical uncertainty; cabinet, service, speaker-panel, backbox, virtual, unpopulated, and DIP devices are explicitly outside playfield space.
+
+The official lighting drawing proves 32 physical GI emitters across four physical circuits behind one PinMAME transport channel: seven GI-3 and eight non-spot GI-1 wedge lamps, two separately called-out GI-1 spot assemblies, eight GI-0 bayonet lamps, and seven red GI-2 rear bayonet lamps. The seven rear red centers additionally reconcile to exact VPW geometry. The VPW `GI_ALL` collection contains 52 render lights and broad GI field helpers; those are excluded from the physical count. Public lamp 98 remains manual white-arrow diagnostic 109 even though the table also uses that state as a render trigger for `GI_ALL`.
+
+The service manual proves trough switches 17-22 plus jam 23, but provides only one assembly callout. Their seven distinct points are calibrated projections within that region and preserve physical ordering. The proven VPW shortcut initializes 18-23 and omits physical 17; this is retained as a runtime discrepancy, not promoted into a false hardware inventory.
+
 ## Sources
 
 - `manual.mustang-premium-boss-le`: official Stern manual `Mustang_LE_web.pdf`, SHA-256 `b2ae8cdffdfba0640e4f82951369b0596d7599f52111acd1cf794918145917cc`; I/O tables on PDF pages 8-17 and parts/mechanism drawings later in the document.
+- `vpx-table.mustang-premium-le-vpw-1.27-geometry`: exact known-working table `Mustang (Stern 2014) v1.27.vpx`, 192,118,784 bytes, SHA-256 `f3f5e24665cf8bc0231f16e9cb28eed7c2cc1ff265d9c7e3cf93bf8589fe59e1`; retained externally under `pinmame-vpx-sources/stern/mustang-premium-limited-edition-boss-2014/source`.
 - `vpx.mustang-premium-le-vpw-1.27`: known-working VPW script at vpxtable_scripts revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`, SHA-256 `092611fc754374d11d032b81b63638b5a2dc2f43464ee6c7c3cd27874c77e5c3`.
 - `pinmame.core.4ec52ff0ac13`: pinned SAM implementation and Mustang node-board/custom-solenoid configuration.
 - `rom.mustang-le-1.45-static-analysis`: exact 1.45 LE image, CRC32 `20ec78b3`, SHA-256 `4d26f0cca37435800ea84fa6687e0d6be006437194db36d9087e0e8bcdb9cf25`; ROM bytes remain external and are never committed.

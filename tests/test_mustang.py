@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+import ast
 import json
 import unittest
 from pathlib import Path
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
-PREMIUM_PATH = REPOSITORY_ROOT / "machines" / "partial" / "stern" / "mustang-premium-limited-edition-boss-2014.json"
+PREMIUM_PATH = REPOSITORY_ROOT / "machines" / "author-ready" / "stern" / "mustang-premium-limited-edition-boss-2014.json"
 PRO_PATH = REPOSITORY_ROOT / "machines" / "partial" / "stern" / "mustang-pro-2014.json"
 
 
@@ -32,10 +33,12 @@ class MustangDefinitionTests(unittest.TestCase):
 		self.assertEqual({"mt_120", "mt_130", "mt_140", "mt_145", "mt_145c"}, pro_drivers)
 		self.assertFalse(premium_drivers & pro_drivers)
 
-	def test_both_working_script_validated_editions_are_fail_closed_for_spatial_retrofit(self) -> None:
+	def test_premium_is_author_ready_while_pro_remains_fail_closed_for_spatial_retrofit(self) -> None:
 		self.assertEqual(2, self.premium["schema_version"])
-		self.assertEqual("partial", self.premium["coverage"]["status"])
-		self.assertIn("spatial_placement", self.premium["coverage"]["missing"])
+		self.assertEqual("physical_pinball", self.premium["machine"]["kind"])
+		self.assertEqual("author_ready", self.premium["coverage"]["status"])
+		self.assertEqual([], self.premium["coverage"]["missing"])
+		self.assertEqual("validated", self.premium["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual(2, self.pro["schema_version"])
 		self.assertEqual("partial", self.pro["coverage"]["status"])
 		self.assertIn("spatial_placement", self.pro["coverage"]["missing"])
@@ -53,6 +56,8 @@ class MustangDefinitionTests(unittest.TestCase):
 		trough = next(item for item in self.premium["mechanisms"] if item["id"] == "mechanism.trough")
 		self.assertEqual(7, len(trough["sensors"]))
 		self.assertIn("23,22,21,20,19,18", trough["behavior"])
+		self.assertEqual(7, len({tuple(by_address[number]["spatial"]["placements"][0][axis] for axis in ("x", "y")) for number in range(17, 24)}))
+		self.assertTrue(all(by_address[number]["spatial"]["placements"][0]["provenance"]["source_refs"] == ["manual.mustang-premium-boss-le"] for number in range(17, 24)))
 
 	def test_auxiliary_board_manual_numbers_map_to_public_addresses(self) -> None:
 		by_address = {
@@ -80,6 +85,39 @@ class MustangDefinitionTests(unittest.TestCase):
 		self.assertEqual(144, by_manual["142"]["binding"]["device"])
 		self.assertEqual("lamp", by_manual["81"]["kind"])
 		self.assertEqual("rgb_lamp", by_manual["117"]["kind"])
+
+	def test_premium_spatial_inventory_preserves_physical_multiplicity_and_scope(self) -> None:
+		devices = [*self.premium["inputs"], *self.premium["outputs"]]
+		self.assertTrue(all(device["spatial"]["status"] in {"validated", "not_applicable"} for device in devices))
+		inputs = {item["binding"]["device"]: item for item in self.premium["inputs"] if item["binding"]["group"] == "pinmame.input.switch"}
+		self.assertEqual((0.836685, 0.552217), tuple(inputs[1]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual(("not_applicable", "cabinet_or_service"), (inputs[71]["spatial"]["status"], inputs[71]["spatial"]["reason"]))
+		self.assertEqual(inputs[52]["spatial"]["placements"][0]["x"], inputs[53]["spatial"]["placements"][0]["x"])
+		outputs = {(item["binding"]["group"], item["binding"]["device"]): item for item in self.premium["outputs"]}
+		for address in (31, 32, 61, 62, 63):
+			self.assertEqual(("not_applicable", "cabinet_or_service"), (outputs[("pinmame.output.solenoid", address)]["spatial"]["status"], outputs[("pinmame.output.solenoid", address)]["spatial"]["reason"]))
+		self.assertEqual((0.069490, 0.082959), tuple(outputs[("pinmame.output.solenoid", 21)]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.920713, 0.070765), tuple(outputs[("pinmame.output.solenoid", 23)]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		for address in (20, 21, 22, 23, 79, *range(102, 112)):
+			lamp = outputs[("pinmame.output.lamp", address)]
+			self.assertEqual((1, 1), (lamp["physical"]["quantity"], len(lamp["spatial"]["placements"])))
+		for channels in ((117, 118, 119), (120, 121, 122), (123, 124, 125), (126, 127, 128), (130, 131, 132), (133, 134, 135), (136, 137, 138), (139, 140, 141)):
+			points = {tuple(outputs[("pinmame.output.lamp", address)]["spatial"]["placements"][0][axis] for axis in ("x", "y")) for address in channels}
+			self.assertEqual(1, len(points))
+
+	def test_premium_gi_is_one_transport_channel_with_four_circuits_and_thirty_two_emitters(self) -> None:
+		gi = next(item for item in self.premium["outputs"] if item["binding"]["group"] == "pinmame.output.gi")
+		self.assertEqual(0, gi["binding"]["device"])
+		self.assertEqual(32, gi["physical"]["quantity"])
+		self.assertEqual(32, len(gi["spatial"]["placements"]))
+		self.assertEqual(7, sum("rear-red.gi2" in point["id"] for point in gi["spatial"]["placements"]))
+		self.assertEqual(7, sum("wedge.gi3" in point["id"] for point in gi["spatial"]["placements"]))
+		self.assertEqual(8, sum("wedge.gi1" in point["id"] for point in gi["spatial"]["placements"]))
+		self.assertEqual(2, sum("spot-gi1" in point["id"] for point in gi["spatial"]["placements"]))
+		self.assertEqual(8, sum("bayonet.gi0" in point["id"] for point in gi["spatial"]["placements"]))
+		self.assertFalse(any(token in point["id"] for point in gi["spatial"]["placements"] for token in ("GI_ALL", "GIFlash", "field")))
+		lamp_98 = next(item for item in self.premium["outputs"] if item["binding"] == {"group": "pinmame.output.lamp", "device": 98})
+		self.assertEqual("Shot arrow #1 white", lamp_98["label"])
 
 	def test_pro_extended_lamps_use_proven_runtime_shuffle(self) -> None:
 		by_manual = {
@@ -120,6 +158,8 @@ class MustangDefinitionTests(unittest.TestCase):
 		rom = next(source for source in self.premium["sources"] if source["kind"] == "rom_static_analysis")
 		self.assertEqual("4d26f0cca37435800ea84fa6687e0d6be006437194db36d9087e0e8bcdb9cf25", rom["sha256"])
 		self.assertIn("CRC32 20ec78b3", rom["locator"])
+		premium_table = next(source for source in self.premium["sources"] if source["id"] == "vpx-table.mustang-premium-le-vpw-1.27-geometry")
+		self.assertEqual("f3f5e24665cf8bc0231f16e9cb28eed7c2cc1ff265d9c7e3cf93bf8589fe59e1", premium_table["sha256"])
 		pro_script = next(source for source in self.pro["sources"] if source["id"] == "vpx.mustang-pro-85vett-gtxjoe-1.0")
 		pro_table = next(source for source in self.pro["sources"] if source["id"] == "vpx-table.mustang-pro-85vett-gtxjoe-1.0")
 		pro_runtime = next(source for source in self.pro["sources"] if source["id"] == "runtime.mustang-pro.boot-start")
@@ -127,6 +167,23 @@ class MustangDefinitionTests(unittest.TestCase):
 		self.assertEqual("3ff72f7f2c58064f96991f8284a16ac2da90c369c217e878cb8603660ffc1b3c", pro_table["sha256"])
 		self.assertEqual("c5002a38d3a392aec6e0160e1cd7988917e38e6118e375ef8e7f03e8d9b7bfe2", pro_runtime["sha256"])
 		self.assertTrue((REPOSITORY_ROOT / "evidence" / "runtime" / "sam" / "mustang-pro-boot-start.json").is_file())
+
+	def test_base_generator_has_no_import_time_writes(self) -> None:
+		source = (REPOSITORY_ROOT / "tools" / "curate_mustang.py").read_text(encoding="utf-8")
+		tree = ast.parse(source)
+		mutating_calls = []
+		for statement in tree.body:
+			if isinstance(statement, (ast.FunctionDef, ast.ClassDef, ast.Import, ast.ImportFrom, ast.Assign, ast.AnnAssign)):
+				continue
+			if isinstance(statement, ast.If) and isinstance(statement.test, ast.Compare) and isinstance(statement.test.left, ast.Name) and statement.test.left.id == "__name__":
+				continue
+			for node in ast.walk(statement):
+				if not isinstance(node, ast.Call):
+					continue
+				name = node.func.id if isinstance(node.func, ast.Name) else node.func.attr if isinstance(node.func, ast.Attribute) else ""
+				if name in {"write", "write_json", "write_text", "unlink"}:
+					mutating_calls.append(name)
+		self.assertEqual([], mutating_calls)
 
 
 if __name__ == "__main__":
