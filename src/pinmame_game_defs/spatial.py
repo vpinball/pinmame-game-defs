@@ -37,7 +37,6 @@ SPATIAL_RETROFIT_PENDING_MACHINE_IDS = (
 	"stern.mustang-pro.2014",
 	"stern.ripley-s-believe-it-or-not.2004",
 	"stern.spider-man.2007",
-	"stern.spider-man-vault-edition.2016",
 	"stern.star-trek-premium-limited-edition.2013",
 	"stern.star-trek-pro.2013",
 	"stern.the-rolling-stones-limited-edition.2011",
