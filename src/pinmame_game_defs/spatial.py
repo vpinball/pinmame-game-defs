@@ -40,7 +40,6 @@ SPATIAL_RETROFIT_PENDING_MACHINE_IDS = (
 	"stern.star-trek-pro.2013",
 	"stern.the-rolling-stones-limited-edition.2011",
 	"stern.the-rolling-stones-standard.2011",
-	"stern.the-walking-dead-premium-limited-edition.2014",
 	"stern.the-walking-dead-pro.2014",
 	"stern.transformers-limited-edition.2011",
 	"stern.transformers-pro.2011",

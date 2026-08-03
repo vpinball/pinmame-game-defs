@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PREMIUM_PATH = ROOT / "machines" / "partial" / "stern" / "the-walking-dead-premium-limited-edition-2014.json"
+PREMIUM_PATH = ROOT / "machines" / "author-ready" / "stern" / "the-walking-dead-premium-limited-edition-2014.json"
 PRO_PATH = ROOT / "machines" / "partial" / "stern" / "the-walking-dead-pro-2014.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "walking-dead-pro-boot-start.json"
 
@@ -31,12 +31,13 @@ class WalkingDeadDefinitionTests(unittest.TestCase):
 		cls.pro = load_json(PRO_PATH)
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
 
-	def test_both_physical_editions_are_fail_closed_with_disjoint_exact_driver_sets(self) -> None:
+	def test_physical_editions_have_disjoint_exact_driver_sets_and_independent_coverage(self) -> None:
 		self.assertEqual(2, self.premium["schema_version"])
-		self.assertEqual("partial", self.premium["coverage"]["status"])
+		self.assertEqual("author_ready", self.premium["coverage"]["status"])
 		self.assertEqual(2, self.pro["schema_version"])
 		self.assertEqual("partial", self.pro["coverage"]["status"])
-		self.assertIn("spatial_placement", self.premium["coverage"]["missing"])
+		self.assertEqual([], self.premium["coverage"]["missing"])
+		self.assertEqual("validated", self.premium["coverage"]["dimensions"]["spatial_placement"])
 		self.assertIn("spatial_placement", self.pro["coverage"]["missing"])
 		premium_drivers = {driver["id"] for driver in self.premium["drivers"]}
 		pro_drivers = {driver["id"] for driver in self.pro["drivers"]}
@@ -120,7 +121,37 @@ class WalkingDeadDefinitionTests(unittest.TestCase):
 		premium_lamps = {item["id"]: item["binding"]["device"] for item in self.premium["outputs"] if item["binding"]["group"] == "pinmame.output.lamp"}
 		self.assertEqual(168, premium_lamps["lamp.right-loop-arrow.red"])
 		self.assertEqual(106, premium_lamps["lamp.gi-white"])
-		self.assertEqual(107, premium_lamps["lamp.gi-red"])
+		self.assertEqual(107, premium_lamps["lamp.gi-back-panel-red"])
+		self.assertEqual(108, premium_lamps["lamp.gi-left-drop-target-bank"])
+		self.assertEqual(109, premium_lamps["lamp.gi-red"])
+
+	def test_premium_spatial_inventory_disposes_every_device_and_reconciles_physical_emitters(self) -> None:
+		devices = [*self.premium["inputs"], *self.premium["outputs"]]
+		self.assertTrue(all(device["spatial"]["status"] in {"validated", "not_applicable"} for device in devices))
+		self.assertEqual(46, sum(device["spatial"]["status"] == "validated" for device in self.premium["inputs"]))
+		lamps = bindings(self.premium, "outputs", "pinmame.output.lamp")
+		self.assertEqual((23, 23), (lamps[106]["physical"]["quantity"], len(lamps[106]["spatial"]["placements"])))
+		self.assertEqual((2, 2), (lamps[107]["physical"]["quantity"], len(lamps[107]["spatial"]["placements"])))
+		self.assertEqual((3, 3), (lamps[108]["physical"]["quantity"], len(lamps[108]["spatial"]["placements"])))
+		self.assertEqual((14, 14), (lamps[109]["physical"]["quantity"], len(lamps[109]["spatial"]["placements"])))
+		self.assertTrue(all(point["y"] == 0 for address in (107, 108) for point in lamps[address]["spatial"]["placements"]))
+		self.assertEqual([0.9679, 0.771], [point["x"] for point in lamps[107]["spatial"]["placements"]])
+		self.assertEqual([0.5464, 0.48, 0.4158], [point["x"] for point in lamps[108]["spatial"]["placements"]])
+		self.assertIn("service/rear-face view", lamps[107]["physical"]["notes"])
+		self.assertIn("077-5000-00", lamps[107]["physical"]["notes"])
+		self.assertIn("does not assert", lamps[108]["physical"]["notes"])
+		self.assertNotIn("above the left drop-target bank", lamps[108]["physical"]["location"])
+		self.assertIn("vpx.walking-dead-premium-le-vpw-day-1.1", lamps[106]["provenance"]["source_refs"])
+		flashers = {address: item for address, item in bindings(self.premium, "outputs", "pinmame.output.solenoid").items() if item["kind"] == "flasher"}
+		self.assertEqual(2, len(flashers[27]["spatial"]["placements"]))
+		self.assertTrue(all(len(item["spatial"]["placements"]) == item["physical"]["quantity"] for item in flashers.values()))
+		for device in devices:
+			if device["spatial"]["status"] == "validated":
+				for point in device["spatial"]["placements"]:
+					self.assertGreaterEqual(point["x"], 0)
+					self.assertLessEqual(point["x"], 1)
+					self.assertGreaterEqual(point["y"], 0)
+					self.assertLessEqual(point["y"], 1)
 
 	def test_sources_are_hash_anchored_identity_is_model_specific_and_partial_is_removed(self) -> None:
 		sources = {source["id"]: source for source in self.pro["sources"]}
@@ -132,6 +163,23 @@ class WalkingDeadDefinitionTests(unittest.TestCase):
 		self.assertEqual("ffb741cfa5f1238d756035c4c113b77ad94fdd2a9e015c21a92af0813595bccb", sources["runtime.walking-dead-pro.boot-start"]["sha256"])
 		self.assertEqual("complete", self.pro["knowledge"]["status"])
 		self.assertTrue((ROOT / "machines" / "partial" / "stern" / "the-walking-dead-pro-2014.json").exists())
+		premium_sources = {source["id"]: source for source in self.premium["sources"]}
+		self.assertEqual("2aca72eb73ac11cc1f8d5633cd8bb302146ac2dd91bfa5fb8364a314b5179987", premium_sources["vpx-table.walking-dead-premium-le-vpw-day-1.1"]["sha256"])
+		self.assertEqual("c8f78d6bd0d52632049f1f1ee445e47d10db698355a681dc7e8d1da14b6c4a64", premium_sources["runtime.walking-dead-premium-le.gi-lamp-diagnostic"]["sha256"])
+		self.assertEqual("dc40cfe85c90de2cc8c2ae16a8ca5a0d3cf2f8cbdc24d7eba39600601506fa77", premium_sources["runtime.walking-dead-premium-le.boot-start"]["sha256"])
+		rom = premium_sources["rom-static.walking-dead-premium-le-output-names"]
+		self.assertEqual("rom_static_analysis", rom["kind"])
+		self.assertEqual("e09cba4477c9d551e858c0b4c8ee005fb041d3008a4cc5e928d502127329d3fd", rom["sha256"])
+		self.assertIn("TWD160h.BIN", rom["locator"])
+		self.assertIn("SHA-256 5f618c875d160ce27a73a0edf30659b63f08478147c4476b5b8916a614d6d6a3", rom["locator"])
+		self.assertIn("SHA-1 1fbaa077ec834ff9d289008ef1169e0e7fd68271", rom["locator"])
+		self.assertIn("CRC32 1ed7b80a", rom["locator"])
+		self.assertIn("0x1090c8-0x1090e0", rom["locator"])
+		self.assertIn("WHITE, BACK PANEL, LEFT DROP TARGET BANK, and RED", rom["locator"])
+		self.assertIn("public lamp 82+i", rom["locator"])
+		self.assertIn("IDs 25-28 are indices 24-27", rom["locator"])
+		self.assertTrue(PREMIUM_PATH.exists())
+		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "the-walking-dead-premium-limited-edition-2014.json").exists())
 
 
 if __name__ == "__main__":

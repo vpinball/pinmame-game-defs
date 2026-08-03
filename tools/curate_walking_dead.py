@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json
-from pinmame_game_defs.spatial import fail_closed_spatial_partial, spatial_partial_path
+from pinmame_game_defs.spatial import SPATIAL_RETROFIT_PENDING_MACHINE_IDS, fail_closed_spatial_partial, spatial_partial_path
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
@@ -23,6 +23,8 @@ PRO_MANUAL = "manual.walking-dead-pro"
 VPX_SOURCE = "vpx.walking-dead-premium-le-vpw-day-1.1"
 PRO_VPX_SOURCE = "vpx.walking-dead-pro.jp-salas-v5.5.0"
 PRO_RUNTIME_SOURCE = "runtime.walking-dead-pro.boot-start"
+PREMIUM_ROM_SOURCE = "rom-static.walking-dead-premium-le-output-names"
+PREMIUM_BOOT_SOURCE = "runtime.walking-dead-premium-le.boot-start"
 
 
 def slug(value: str) -> str:
@@ -324,9 +326,13 @@ def premium_lamps() -> list[dict[str, object]]:
 	for manual_number, (label, channels) in RGB_LAMPS.items():
 		for color, address in channels.items():
 			items.append(output_device(address, f"{label} ({color})", "rgb_lamp", "used", (PREMIUM_MANUAL, VPX_SOURCE, CORE_SOURCE), "validated", "pinmame.output.lamp", f"{manual_number}:{color}", {"location": "Playfield" if manual_number != 81 else "Lockbar fire button", "notes": f"{color.capitalize()} channel of physical RGB lamp #{manual_number}"}, output_id=f"lamp.{slug(label)}.{color}"))
-	items.append(output_device(106, "White general illumination", "gi", "used", (VPX_SOURCE, CORE_SOURCE), "validated", "pinmame.output.lamp", "GI:white", {"location": "Playfield GI", "notes": "Known-working VPW script treats ChangedLamps address 106 as the white GI intensity channel."}, output_id="lamp.gi-white"))
+	items.append(output_device(106, "White general illumination", "gi", "used", (PREMIUM_MANUAL, VPX_SOURCE, PREMIUM_ROM_SOURCE, CORE_SOURCE, PREMIUM_BOOT_SOURCE), "validated", "pinmame.output.lamp", "GI-0-WHT", {"quantity": 23, "location": "Twenty-three white bayonet LEDs around the playfield", "notes": "Exact-ROM output name WHITE and manual circuit GI-0-WHT; the known-working VPW script consumes public address 106 as white GI. Socket positions come from manual sheet Y26 in player view."}, output_id="lamp.gi-white"))
 	items[-1]["range"] = {"minimum": 0, "maximum": 255, "steps": 256}
-	items.append(output_device(107, "Red general illumination", "gi", "used", (VPX_SOURCE, CORE_SOURCE), "validated", "pinmame.output.lamp", "GI:red", {"location": "Playfield GI", "notes": "Known-working VPW script treats ChangedLamps address 107 as the red GI intensity channel."}, output_id="lamp.gi-red"))
+	items.append(output_device(107, "Rear-panel red general illumination", "gi", "used", (PREMIUM_MANUAL, PREMIUM_ROM_SOURCE, CORE_SOURCE, PREMIUM_BOOT_SOURCE), "validated", "pinmame.output.lamp", "GI-1-BACK PANEL", {"quantity": 2, "location": "Two red bayonet LEDs on the five-socket GI mounting panel shown in the manual Y26 inset, projected to the rear playfield edge", "notes": "Exact-ROM output name BACK PANEL and manual circuit GI-1-BACK PANEL identify this red pair. The VPW table instead applies address 107 as a broad red-GI rendering shortcut. The Y26 inset exposes the 077-5000-00 staple-bayonet socket mounting hardware and rear connector/board enclosure, establishing a service/rear-face view; socket x positions are normalized within the panel outline and reflected into player view."}, output_id="lamp.gi-back-panel-red"))
+	items[-1]["range"] = {"minimum": 0, "maximum": 255, "steps": 256}
+	items.append(output_device(108, "Left drop-target-bank green illumination", "gi", "used", (PREMIUM_MANUAL, PREMIUM_ROM_SOURCE, CORE_SOURCE, PREMIUM_BOOT_SOURCE), "validated", "pinmame.output.lamp", "GI-2-GRN", {"quantity": 3, "location": "Three green bayonet LEDs on the five-socket GI mounting panel shown in the manual Y26 inset, projected to the rear playfield edge", "notes": "Exact-ROM output name LEFT DROP TARGET BANK identifies the controller effect; manual circuit GI-2-GRN identifies its green three-socket group. The firmware name does not assert that the sockets sit directly above the drop targets. The Y26 inset exposes the 077-5000-00 staple-bayonet socket mounting hardware and rear connector/board enclosure, establishing a service/rear-face view; socket x positions are normalized within the panel outline and reflected into player view."}, output_id="lamp.gi-left-drop-target-bank"))
+	items[-1]["range"] = {"minimum": 0, "maximum": 255, "steps": 256}
+	items.append(output_device(109, "Red general illumination", "gi", "used", (PREMIUM_MANUAL, PREMIUM_ROM_SOURCE, CORE_SOURCE, PREMIUM_BOOT_SOURCE), "validated", "pinmame.output.lamp", "GI-3-RED", {"quantity": 14, "location": "Fourteen red bayonet LEDs around the playfield", "notes": "Exact-ROM output name RED and manual circuit GI-3-RED identify the fourteen red playfield emitters. Socket positions come from manual sheet Y26 in player view."}, output_id="lamp.gi-red"))
 	items[-1]["range"] = {"minimum": 0, "maximum": 255, "steps": 256}
 	return items
 
@@ -431,7 +437,11 @@ def sources(manual: str, premium: bool) -> list[dict[str, object]]:
 	}
 	result = [manual_record]
 	if premium:
-		result.append({"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/The%20Walking%20Dead%20LE%20Premium%20(Stern%202014)%20day%201.1.vbs", "revision": VPX_REVISION, "sha256": "bd6868c93f180c58f6835cccd869c0fa1e28832fea6afc5bb4f9660505908e47", "locator": "The Walking Dead LE Premium (Stern 2014) day 1.1.vbs lines 123-300, 315-728, 1320-1710, and 4328-4470", "license": "NOASSERTION", "attribution": "Flupper1, Robby King Pin, Rothbauerw, VPW contributors, prior table authors, and vpxtable_scripts contributors"})
+		result.extend([
+			{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/The%20Walking%20Dead%20LE%20Premium%20(Stern%202014)%20day%201.1.vbs", "revision": VPX_REVISION, "sha256": "bd6868c93f180c58f6835cccd869c0fa1e28832fea6afc5bb4f9660505908e47", "locator": "The Walking Dead LE Premium (Stern 2014) day 1.1.vbs lines 123-300, 315-728, 1320-1710, and 4328-4470", "license": "NOASSERTION", "attribution": "Flupper1, Robby King Pin, Rothbauerw, VPW contributors, prior table authors, and vpxtable_scripts contributors"},
+			{"id": PREMIUM_ROM_SOURCE, "kind": "rom_static_analysis", "uri": "external:vpinmame-roms/twd_160h.zip", "revision": "V1.60", "sha256": "e09cba4477c9d551e858c0b4c8ee005fb041d3008a4cc5e928d502127329d3fd", "locator": "Exact user-authorized twd_160h.zip archive. Its member is named TWD160h.BIN (96,994,376 bytes), SHA-256 5f618c875d160ce27a73a0edf30659b63f08478147c4476b5b8916a614d6d6a3, SHA-1 1fbaa077ec834ff9d289008ef1169e0e7fd68271, CRC32 1ed7b80a; PinMAME declares the same bytes under canonical filename twd_160h.bin. Localized records at file offsets 0x109060, 0x109078, 0x109090, and 0x1090a8 are referenced by 1-based output IDs 25-28 at 0x1090c8-0x1090e0: WHITE, BACK PANEL, LEFT DROP TARGET BANK, and RED. PinMAME sam.c:1913-1919 maps node-board-3 ledMap index i to CORE_MODOUT_LAMP0+81+i, public lamp 82+i; IDs 25-28 are indices 24-27 and therefore public addresses 106-109. ROM bytes remain external.", "license": "NOASSERTION", "attribution": "Stern Pinball game code; analyzed locally from the user-authorized ROM corpus"},
+			{"id": PREMIUM_BOOT_SOURCE, "kind": "runtime_scenario", "uri": "external:pinmame-game-code/twd_160h/harness/boot-start-le-1.json", "revision": PINMAME_REVISION, "sha256": "dc40cfe85c90de2cc8c2ae16a8ca5a0d3cf2f8cbdc24d7eba39600601506fa77", "locator": "Exact twd_160h boot/start trace using PinMAME DLL SHA-256 79f6cfb0048470218b2302ca4fb0d078839acf7f05883c36fc93881ba8abac84 and ROM archive SHA-256 e09cba4477c9d551e858c0b4c8ee005fb041d3008a4cc5e928d502127329d3fd. Public 106 modulates independently; 107-109 have byte-for-byte identical event streams in this observed window.", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"},
+		])
 	else:
 		result.extend([
 			{"id": PRO_VPX_SOURCE, "kind": "vpx_script", "uri": f"https://github.com/LegendsUnchained/vpx-standalone-alp4k/blob/{PRO_VPX_REVISION}/external/vpx-thewalkingdead/table.vbs", "revision": PRO_VPX_REVISION, "sha256": "18d92b612f8d4f0fe1c0f20131fbeb3588d8393502330ca321deb36c9fcbcac4", "locator": "external/vpx-thewalkingdead/table.vbs lines 1-165, 322-525, and 661-770", "license": "NOASSERTION", "attribution": "JPSalas and LegendsUnchained/vpx-standalone-alp4k contributors"},
@@ -471,18 +481,27 @@ def build_pro() -> dict[str, object]:
 	}
 
 
-def write(path: Path, value: dict[str, object]) -> None:
+def write_pending(path: Path, value: dict[str, object]) -> None:
+	if value["machine"]["id"] not in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
+		return
 	path = spatial_partial_path(path)
 	value = fail_closed_spatial_partial(value)
 	path.parent.mkdir(parents=True, exist_ok=True)
 	write_json(path, value)
 
 
-old_definition = ROOT / "machines/partial/stern/the-walking-dead-limited-edition-2014.json"
-if old_definition.exists():
-	old_definition.unlink()
-old_pro_definition = ROOT / "machines/partial/stern/the-walking-dead-pro-2014.json"
-if old_pro_definition.exists():
-	old_pro_definition.unlink()
-write(ROOT / "machines/partial/stern/the-walking-dead-premium-limited-edition-2014.json", build_premium())
-write(ROOT / "machines/partial/stern/the-walking-dead-pro-2014.json", build_pro())
+def curate() -> None:
+	stale_paths = (
+		ROOT / "machines/partial/stern/the-walking-dead-limited-edition-2014.json",
+		ROOT / "machines/partial/stern/the-walking-dead-premium-limited-edition-2014.json",
+		ROOT / "machines/partial/stern/the-walking-dead-pro-2014.json",
+	)
+	for stale_path in stale_paths:
+		if stale_path.exists():
+			stale_path.unlink()
+	write_pending(ROOT / "machines/author-ready/stern/the-walking-dead-premium-limited-edition-2014.json", build_premium())
+	write_pending(ROOT / "machines/author-ready/stern/the-walking-dead-pro-2014.json", build_pro())
+
+
+if __name__ == "__main__":
+	curate()
