@@ -1,0 +1,175 @@
+{
+  "driver_ids": [
+    "ripleys"
+  ],
+  "extractor": {
+    "id": "libpinmame-gameplay-harness",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.ripley-s-believe-it-or-not.2004"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game ripleys --rom-path <vpinmame-roms> --work-dir <isolated-state> --initial-switch 11 --initial-switch 12 --initial-switch 13 --initial-switch 14 --initial-switch 42 --initial-switch 43 --pulse 6:150:0.3 <three coin pulses> --pulse 54:400:2 --pulse 14:80:0.2 --pulse 15:100:0.3 --pulse 16:150:1 --pulse <targeted gameplay switches> --observe 2 --dmd-dir <external-dmd-dir> --output <external-json>",
+    "game": "ripleys",
+    "observations": {
+      "display_indices_seen": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "display_layouts_seen": [
+        {
+          "depth": 2,
+          "height": 32,
+          "type": 14,
+          "width": 128
+        },
+        {
+          "depth": 2,
+          "height": 7,
+          "type": 526,
+          "width": 5
+        }
+      ],
+      "gi_addresses_seen": [
+        0
+      ],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        80
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        15,
+        21,
+        22,
+        24,
+        25,
+        26,
+        27,
+        29,
+        30,
+        31,
+        32,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "name": "boot-v1",
+        "self_test_pulses": 0,
+        "sha256": "1ef3c8baa88ace776fdf3ddbc59137afca0e7e9a6803339627985378a818270e"
+      },
+      {
+        "name": "boot-start-v1",
+        "self_test_pulses": 0,
+        "sha256": "e98f6058ba3d4cbd4e772606f1bc8f03039d334cde8d6045ec18d15444bf8ecc"
+      },
+      {
+        "name": "gameplay-v1",
+        "self_test_pulses": 0,
+        "sha256": "d389ced56f57bccd2704758cdac167b56d0a6f1621f306033adcc74d22fd57c7"
+      }
+    ],
+    "rom_archive_sha256": "092aab171d90eda62411496b387a90de5ca4a3273997ffb64de10c322cf366d3"
+  },
+  "source": {
+    "attribution": "Generated locally from PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-game-code/ripleys",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "d389ced56f57bccd2704758cdac167b56d0a6f1621f306033adcc74d22fd57c7"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

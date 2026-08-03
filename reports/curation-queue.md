@@ -56,7 +56,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 51 | 2005 | STUB - Firepower (Sys.7/6-digit /10 Scoring rev. 31) | Williams / Oliver | stub |
 | 52 | 2005 | STUB - Firepower (Sys.7/6-digit conversion rev. 31) | Williams / Oliver | stub |
 | 53 | 2005 | STUB - Firepower (Sys.7/7-digit conversion rev. 31) | Williams / Oliver | stub |
-| 54 | 2004 | Ripley's Believe It or Not! | Stern | partial |
+| 54 | 2004 | Ripley's Believe It or Not! | Stern | author_ready |
 | 55 | 2004 | STUB - Elvis (5.00) | Stern | stub |
 | 56 | 2004 | STUB - Harley-Davidson (Stern, 4.00) | Stern | stub |
 | 57 | 2003 | Lord of the Rings | Stern | partial |

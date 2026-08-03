@@ -202,6 +202,10 @@
         },
         "normally_closed": { "type": "boolean" },
         "pulse": { "type": "boolean" },
+        "initial_active": {
+          "description": "Controller-facing active state that a recreation must establish before starting the game controller; omitted means the definition does not declare a startup state.",
+          "type": "boolean"
+        },
         "availability": { "enum": ["used", "unused", "optional", "unknown"] },
         "physical": { "$ref": "#/$defs/physical" },
         "wiring": { "$ref": "#/$defs/wiring" },
@@ -210,7 +214,10 @@
           "uniqueItems": true,
           "items": { "$ref": "#/$defs/identifier" }
         },
-        "constant_active": { "type": "boolean" },
+        "constant_active": {
+          "description": "Whether a constant or virtual input remains permanently active while the controller runs; omitted means the definition does not declare constant activity.",
+          "type": "boolean"
+        },
         "provenance": { "$ref": "#/$defs/provenance" }
       }
     },
@@ -254,6 +261,11 @@
         "id": { "$ref": "#/$defs/identifier" },
         "label": { "type": "string", "minLength": 1 },
         "kind": { "enum": ["segment", "dmd", "video"] },
+        "controller_index": {
+          "description": "Zero-based display-layout index exposed by the controller for this physical display.",
+          "type": "integer",
+          "minimum": 0
+        },
         "width": { "type": "integer", "minimum": 1 },
         "height": { "type": "integer", "minimum": 1 },
         "provenance": { "$ref": "#/$defs/provenance" }

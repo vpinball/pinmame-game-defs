@@ -1,0 +1,83 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.whitestar",
+  "authority": "pinmame",
+  "hardware_family": "Sega/Stern Whitestar",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Sequential matrix, cabinet-service, and flipper-column inputs",
+      "address_rules": [
+        { "minimum": -3, "maximum": 0 },
+        { "minimum": 1, "maximum": 64 },
+        { "minimum": 81, "maximum": 88 }
+      ],
+      "transports": {
+        "libpinmame": { "channel": "switch" },
+        "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "Whitestar uses PinMAME's sequential switch conversion. Public 1-64 are the eight-by-eight playfield/cabinet matrix. Public -3 is coin-door memory protect, -2/-1/0 are the red/green/black coin-door service buttons, 81-84 are right EOS/right button/left EOS/left button, and 88 supplies the fifth dedicated input used by games with an upper flipper. Addresses 85-87 are explicit generic flipper-column holes."
+    },
+    {
+      "id": "pinmame.input.dip",
+      "direction": "configuration",
+      "kind": "dip_switch",
+      "label": "CPU-board country configuration bits",
+      "address_rules": [{ "minimum": 1, "maximum": 8 }],
+      "transports": { "libpinmame": { "channel": "dip" } },
+      "notes": "The physical SW300 country selector consumes the low five bits. The eight-address LibPinMAME DIP contract is retained so definitions can enumerate the complete public bank and mark bits 6-8 unused."
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Main, auxiliary, synthetic-state, and generic flipper outputs",
+      "address_rules": [{ "minimum": 1, "maximum": 50 }],
+      "transports": {
+        "libpinmame": { "channel": "solenoid" },
+        "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "Physical main-board Q1-Q14 and Q17-Q32 retain their public numbers. Physical Q15/Q16 are removed from public 15/16 and exposed through legacy lower-flipper pairs: Q16 right at power-phase address 45 and canonical callback 46, Q15 left at power-phase address 47 and canonical callback 48. PinMAME synthesizes each canonical callback's hold state whenever its power bit is active, so a recreation must not create duplicate flipper devices. Public 15 is PinMAME's synthetic fast-flip/game-on state and public 16 is its unused companion slot. Whitestar auxiliary boards use 33-36; board 520-5068-01 exposes three outputs at 33-35 and leaves 36 unused. Addresses 37-44 are reserved compatibility holes, 49 is the simulation shooter slot, and 50 is reserved."
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "Eight-column by ten-row controlled-lamp matrix",
+      "address_rules": [{ "minimum": 1, "maximum": 80 }],
+      "transports": {
+        "libpinmame": { "channel": "lamp" },
+        "controller_plugin": { "group_id": 512, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "Whitestar reports eight drive columns by ten return rows as sequential public addresses 1-80, with addresses ordered across the eight columns before advancing to the next return row. Game-specific LED or mini-display compatibility data can use additional layouts or explicitly documented compatibility channels rather than being mistaken for matrix lamps."
+    },
+    {
+      "id": "pinmame.output.gi",
+      "direction": "controlled_device",
+      "kind": "gi",
+      "label": "General-illumination relay state",
+      "address_rules": [{ "minimum": 0, "maximum": 0 }],
+      "transports": {
+        "libpinmame": { "channel": "gi" },
+        "controller_plugin": { "group_id": 256, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "PinMAME exposes Whitestar's GI relay as aggregate channel 0 even when the cabinet has several separately fused physical illumination strings behind that relay."
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "locator": "src/wpc/se.h; src/wpc/se.c; src/wpc/segames.c; src/wpc/core.h; src/wpc/core.c; src/libpinmame/libpinmame.cpp"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "a6f6d7266d301249ed09c1b0123f8476513a2228",
+      "locator": "src/libpinmame/libpinmame.cpp SetupMsgApi group definitions"
+    }
+  ]
+}
