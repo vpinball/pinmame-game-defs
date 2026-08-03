@@ -1,0 +1,69 @@
+{
+  "driver_ids": [
+    "avr_120h"
+  ],
+  "extractor": {
+    "id": "libpinmame-service-diagnostic-harness",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.avatar-limited-edition.2010"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game avr_120h --rom-path <vpinmame-roms> --work-dir <isolated-state> --initial-switch 18 --initial-switch 19 --initial-switch 20 --initial-switch 21 --initial-switch 46 --initial-switch 48 --initial-switch 58 --pulse 0:150:0.3 --pulse 0:150:0.3 --pulse 0:150:0.3 --pulse -1:150:0.2 --pulse -1:150:0.2 --pulse -1:150:0.2 --pulse -1:150:0.2 --pulse 0:150:0.5 --pulse -1:150:0.25 --pulse -1:150:0.25 --pulse 0:150:1.5 --pulse 0:300:1.0 --observe 1 --dmd-dir <external-dmd-dir> --output <external-json>",
+    "game": "avr_120h",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            13,
+            19
+          ],
+          "display_index": 0,
+          "interpreted_text": "AMP SUIT MOTOR TEST; #58; #57; MOVING TO SWITCH #57. Starting at active endpoint 58/up, the test finishes with direction relay 13 and motor 19 active.",
+          "label": "after pulse 12: switch 0",
+          "nonzero_pixels": 725,
+          "pixel_sha256": "0fa290638c0cdd0939e698629612c9579ff1c4ce83653606114066a5ba363363"
+        }
+      ],
+      "display_layouts_seen": [
+        {
+          "depth": 4,
+          "height": 32,
+          "type": 14,
+          "width": 128
+        }
+      ],
+      "solenoid_addresses_seen": [
+        13,
+        14,
+        19
+      ]
+    },
+    "raw_runs": [
+      {
+        "name": "amp-suit-motor",
+        "self_test_pulses": 12,
+        "sha256": "0dc74feaa609f588691138a9907d5261615fccbb334ed8d77a724a240c126881"
+      }
+    ],
+    "rom_archive_sha256": "264a1ad74e2d247b212837951d9528910ee9b6a127a5eaaac51dcd6572344269"
+  },
+  "source": {
+    "attribution": "Exact-ROM LibPinMAME service test cross-checked against the authenticated real-machine DMD diagnostic dump; ROM and dump bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-game-code/avatar-limited-edition/harness/amp-suit-motor-test/run.json",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "0dc74feaa609f588691138a9907d5261615fccbb334ed8d77a724a240c126881"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

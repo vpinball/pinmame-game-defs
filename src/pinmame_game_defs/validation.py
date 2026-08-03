@@ -385,6 +385,10 @@ def _validate_runtime_observations(evidence: dict[str, Any], relative_path: str,
 			for address in observations.get(observation_name, []):
 				if address not in declared[group]:
 					errors.append(f"{relative_path} $.runtime.observations.{observation_name}: address {address} is not declared in {machine_id!r} group {group!r}")
+		for snapshot_index, snapshot in enumerate(observations.get("diagnostic_snapshots", [])):
+			for address in snapshot.get("active_solenoid_addresses", []):
+				if address not in declared["pinmame.output.solenoid"]:
+					errors.append(f"{relative_path} $.runtime.observations.diagnostic_snapshots[{snapshot_index}].active_solenoid_addresses: address {address} is not declared in {machine_id!r} group 'pinmame.output.solenoid'")
 
 
 def validate_catalog(catalog: dict[str, Any], repository_root: Path) -> list[str]:

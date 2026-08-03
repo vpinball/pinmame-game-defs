@@ -132,6 +132,22 @@
                 }
               }
             },
+            "diagnostic_snapshots": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["label", "display_index", "pixel_sha256", "interpreted_text", "active_solenoid_addresses"],
+                "properties": {
+                  "label": { "type": "string", "minLength": 1 },
+                  "display_index": { "type": "integer", "minimum": 0 },
+                  "pixel_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+                  "nonzero_pixels": { "type": "integer", "minimum": 0 },
+                  "interpreted_text": { "type": "string", "minLength": 1 },
+                  "active_solenoid_addresses": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } }
+                }
+              }
+            },
             "initial_lamp_addresses": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } },
             "named_output_addresses": { "type": "object", "propertyNames": { "pattern": "^[a-z0-9][a-z0-9_-]*$" }, "additionalProperties": { "type": "integer" } },
             "physical_service_solenoid_to_public": { "type": "object", "propertyNames": { "pattern": "^[0-9]+$" }, "additionalProperties": { "type": "integer" } },

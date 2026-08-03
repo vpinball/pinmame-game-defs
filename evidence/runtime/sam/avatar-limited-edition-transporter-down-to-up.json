@@ -1,0 +1,66 @@
+{
+  "driver_ids": [
+    "avr_120h"
+  ],
+  "extractor": {
+    "id": "libpinmame-service-diagnostic-harness",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.avatar-limited-edition.2010"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game avr_120h --rom-path <vpinmame-roms> --work-dir <isolated-state> --initial-switch 18 --initial-switch 19 --initial-switch 20 --initial-switch 21 --initial-switch 46 --initial-switch 47 --initial-switch 58 --pulse 0:150:0.3 --pulse 0:150:0.3 --pulse 0:150:0.3 --pulse -1:150:0.2 --pulse -1:150:0.2 --pulse -1:150:0.2 --pulse -1:150:0.2 --pulse 0:150:0.5 --pulse 0:150:1.5 --pulse 0:300:1.0 --observe 1 --dmd-dir <external-dmd-dir> --output <external-json>",
+    "game": "avr_120h",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            14
+          ],
+          "display_index": 0,
+          "interpreted_text": "TRANSPORTER MOTOR TEST; #48 - TRANSPORTER (UP); #47 - TRANSPORTER (DN); MOVING TO SWITCH #48. Starting at active endpoint 47/down, the test finishes with output 14 active.",
+          "label": "after pulse 10: switch 0",
+          "nonzero_pixels": 940,
+          "pixel_sha256": "5c14f36a70c48867c1f57d6349f956cdb3f444513c37fe3e4899910f79a29323"
+        }
+      ],
+      "display_layouts_seen": [
+        {
+          "depth": 4,
+          "height": 32,
+          "type": 14,
+          "width": 128
+        }
+      ],
+      "solenoid_addresses_seen": [
+        14
+      ]
+    },
+    "raw_runs": [
+      {
+        "name": "transporter-down-to-up",
+        "self_test_pulses": 10,
+        "sha256": "761ba656664c40c8fe7f71c1203142c6b50a452a416bfa48dcf614edc546b628"
+      }
+    ],
+    "rom_archive_sha256": "264a1ad74e2d247b212837951d9528910ee9b6a127a5eaaac51dcd6572344269"
+  },
+  "source": {
+    "attribution": "Exact-ROM LibPinMAME service test cross-checked against the authenticated real-machine DMD diagnostic dump; ROM and dump bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-game-code/avatar-limited-edition/harness/service-nav-12/run.json",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "761ba656664c40c8fe7f71c1203142c6b50a452a416bfa48dcf614edc546b628"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

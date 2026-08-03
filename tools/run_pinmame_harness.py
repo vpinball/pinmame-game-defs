@@ -11,8 +11,10 @@ from __future__ import annotations
 
 import argparse
 import ctypes
+import hashlib
 import json
 import os
+import re
 import sys
 import threading
 import time
@@ -28,6 +30,7 @@ PINMAME_FILE_TYPE_CONFIG = 3
 PINMAME_FILE_TYPE_HIGHSCORE = 4
 PINMAME_STATUS_OK = 0
 SEGMENT_16_DISPLAY_TYPES = {0, 1, 16, 17}
+MAX_DMD_EVENTS_PER_DISPLAY = 256
 
 # PinMAME's regular 16-segment patterns (core_ascii2seg16). Some ROMs use
 # bespoke animation glyphs; those remain visible as ``?`` while ordinary
@@ -207,6 +210,9 @@ class Recorder:
 		self.events: list[dict[str, Any]] = []
 		self.display_layouts: dict[int, dict[str, int]] = {}
 		self.display_frames: dict[int, list[int]] = {}
+		self.dmd_change_counts: dict[int, int] = {}
+		self.dmd_suppressed_counts: dict[int, int] = {}
+		self.solenoid_states: dict[int, int] = {}
 		self.lamp_states: dict[int, int] = {}
 		self.gi_states: dict[int, int] = {}
 
@@ -216,21 +222,61 @@ class Recorder:
 				{"time_s": round(time.monotonic() - self.started_at, 6), "event": event, **values}
 			)
 
-	def snapshot_displays(self) -> list[dict[str, Any]]:
+	def snapshot_displays(
+		self,
+		dmd_dir: Path | None = None,
+		snapshot_index: int | None = None,
+		snapshot_label: str | None = None,
+	) -> list[dict[str, Any]]:
 		with self.lock:
 			displays = []
 			for index, frame in sorted(self.display_frames.items()):
 				layout = self.display_layouts.get(index, {})
-				display = {
-					"index": index,
-					"layout": layout,
-					"segments": frame,
-				}
+				display: dict[str, Any] = {"index": index, "layout": layout}
+				if (layout.get("type", -1) & 0x1F) == 14:
+					pixels = bytes(frame)
+					display["pixel_sha256"] = hashlib.sha256(pixels).hexdigest()
+					display["nonzero_pixels"] = sum(pixel != 0 for pixel in pixels)
+					if dmd_dir is not None and snapshot_index is not None:
+						dmd_dir.mkdir(parents=True, exist_ok=True)
+						slug = re.sub(r"[^a-z0-9]+", "-", (snapshot_label or "snapshot").lower()).strip("-")
+						artifact = dmd_dir / f"{snapshot_index:03d}-{slug}-display-{index}.pgm"
+						depth = max(int(layout.get("depth", 1)), 1)
+						max_level = max((1 << depth) - 1, 1)
+						grayscale = (
+							bytes(round(pixel * 255 / max_level) for pixel in pixels)
+							if max(pixels, default=0) <= max_level
+							else pixels
+						)
+						header = f"P5\n{layout['width']} {layout['height']}\n255\n".encode("ascii")
+						artifact.write_bytes(header + grayscale)
+						display["artifact"] = str(artifact)
+				else:
+					display["segments"] = frame
 				text = _decode_segment_frame(layout.get("type", -1), frame)
 				if text is not None:
 					display["text"] = text
 				displays.append(display)
 			return displays
+
+	def record_dmd_frame(self, index: int, frame: list[int]) -> None:
+		with self.lock:
+			if self.display_frames.get(index) == frame:
+				return
+			self.display_frames[index] = frame
+			change_count = self.dmd_change_counts.get(index, 0) + 1
+			self.dmd_change_counts[index] = change_count
+			if change_count <= MAX_DMD_EVENTS_PER_DISPLAY:
+				self.events.append({"time_s": round(time.monotonic() - self.started_at, 6), "event": "display", "index": index, "pixel_sha256": hashlib.sha256(bytes(frame)).hexdigest()})
+			else:
+				self.dmd_suppressed_counts[index] = self.dmd_suppressed_counts.get(index, 0) + 1
+
+	def snapshot_dmd_event_summary(self) -> dict[str, dict[str, int]]:
+		with self.lock:
+			return {
+				str(index): {"changed_frames": count, "recorded_events": min(count, MAX_DMD_EVENTS_PER_DISPLAY), "suppressed_events": self.dmd_suppressed_counts.get(index, 0)}
+				for index, count in sorted(self.dmd_change_counts.items())
+			}
 
 	def record_lamp(self, number: int, state: int) -> None:
 		with self.lock:
@@ -247,6 +293,22 @@ class Recorder:
 	def snapshot_active_lamps(self) -> list[int]:
 		with self.lock:
 			return sorted(number for number, state in self.lamp_states.items() if state)
+
+	def record_solenoid(self, number: int, state: int) -> None:
+		with self.lock:
+			self.solenoid_states[number] = state
+			self.events.append(
+				{
+					"time_s": round(time.monotonic() - self.started_at, 6),
+					"event": "solenoid",
+					"number": number,
+					"state": state,
+				}
+			)
+
+	def snapshot_active_solenoids(self) -> list[int]:
+		with self.lock:
+			return sorted(number for number, state in self.solenoid_states.items() if state)
 
 	def record_gi(self, number: int, state: int) -> None:
 		with self.lock:
@@ -364,19 +426,19 @@ def _hold_switch(
 	_poll_outputs(library, recorder)
 
 
-def _output_snapshot(library: ctypes.CDLL, recorder: Recorder, label: str) -> dict[str, Any]:
-	max_solenoids = library.PinmameGetMaxSolenoids()
+def _output_snapshot(
+	recorder: Recorder,
+	label: str,
+	dmd_dir: Path | None = None,
+	snapshot_index: int | None = None,
+) -> dict[str, Any]:
 	return {
 		"label": label,
 		"time_s": round(time.monotonic() - recorder.started_at, 6),
-		"active_solenoids": [
-			index
-			for index in range(1, max_solenoids + 1)
-			if library.PinmameGetSolenoid(index)
-		],
+		"active_solenoids": recorder.snapshot_active_solenoids(),
 		"active_lamps": recorder.snapshot_active_lamps(),
 		"active_gis": recorder.snapshot_active_gis(),
-		"displays": recorder.snapshot_displays(),
+		"displays": recorder.snapshot_displays(dmd_dir, snapshot_index, label),
 	}
 
 
@@ -433,7 +495,16 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		_user_data: int,
 	) -> None:
 		layout = layout_pointer.contents
-		if not data or layout.length <= 0 or layout.type == 15 or (layout.type & 0x1F) == 14:
+		if not data:
+			return
+		display_type = layout.type & 0x1F
+		if display_type == 14:
+			if layout.width <= 0 or layout.height <= 0:
+				return
+			frame = list(ctypes.string_at(data, layout.width * layout.height))
+			recorder.record_dmd_frame(index, frame)
+			return
+		if layout.length <= 0 or display_type == 15:
 			return
 		segments = ctypes.cast(data, ctypes.POINTER(ctypes.c_uint16))
 		frame = [segments[offset] for offset in range(layout.length)]
@@ -470,7 +541,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		state_pointer: ctypes.POINTER(PinmameSolenoidState), _user_data: int
 	) -> None:
 		state = state_pointer.contents
-		recorder.record("solenoid", number=state.solNo, state=state.state)
+		recorder.record_solenoid(state.solNo, state.state)
 
 	@KeyPressedCallback
 	def is_key_pressed(_keycode: int, _user_data: int) -> int:
@@ -522,16 +593,27 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 			library.PinmameSetSwitch(switch, state)
 			recorder.record("switch", number=switch, state=state, initial=True)
 		_wait_with_poll(library, recorder, args.boot_wait)
-		snapshots.append(_output_snapshot(library, recorder, "booted"))
+		snapshots.append(_output_snapshot(recorder, "booted", args.dmd_dir, len(snapshots)))
 		for step, (switch, hold_ms, settle_s) in enumerate(args.pulse, start=1):
 			recorder.record("switch", number=switch, state=1, step=step)
 			_hold_switch(library, recorder, switch, hold_ms / 1000)
 			recorder.record("switch", number=switch, state=0, step=step)
 			_wait_with_poll(library, recorder, settle_s)
-			snapshots.append(_output_snapshot(library, recorder, f"after pulse {step}: switch {switch}"))
+			snapshots.append(
+				_output_snapshot(
+					recorder,
+					f"after pulse {step}: switch {switch}",
+					args.dmd_dir,
+					len(snapshots),
+				)
+			)
 		if args.observe > 0:
 			_wait_with_poll(library, recorder, args.observe)
-			snapshots.append(_output_snapshot(library, recorder, "final observation"))
+			snapshots.append(
+				_output_snapshot(
+					recorder, "final observation", args.dmd_dir, len(snapshots)
+				)
+			)
 	finally:
 		if library.PinmameIsRunning():
 			library.PinmameStop()
@@ -547,6 +629,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		"library": str(dll_path),
 		"rom_path": str(rom_path),
 		"work_dir": str(work_dir),
+		"dmd_dir": str(args.dmd_dir.resolve()) if args.dmd_dir else None,
 		"initial_switches": [
 			{"switch": switch, "state": state} for switch, state in args.initial_switch
 		],
@@ -556,6 +639,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		],
 		"snapshots": snapshots,
 		"events": recorder.events,
+		"dmd_event_summary": recorder.snapshot_dmd_event_summary(),
 	}
 
 
@@ -585,6 +669,11 @@ def build_parser() -> argparse.ArgumentParser:
 	parser.add_argument("--ready-timeout", type=float, default=10.0)
 	parser.add_argument("--boot-wait", type=float, default=2.0)
 	parser.add_argument("--observe", type=float, default=0.0)
+	parser.add_argument(
+		"--dmd-dir",
+		type=Path,
+		help="optional directory for grayscale PGM snapshots of DMD displays",
+	)
 	parser.add_argument("--output", type=Path, help="write JSON here instead of stdout")
 	return parser
 
