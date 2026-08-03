@@ -1,5 +1,7 @@
 # AC/DC LED Pro recreation knowledge
 
+Coverage: **partial — normalized spatial placements pending.**
+
 ## Identity
 
 This is Stern's upgraded 2014 LED Pro production: the original Pro routes and controller topology, factory LED lighting, a modernized cabinet/backbox, and a newly designed passive swinging Hell's Bell. It owns the 1.68 and 1.68 colored PinMAME drivers. The official August 5, 2014 announcement is the edition boundary.

@@ -1,6 +1,7 @@
 # The Walking Dead Pro (Stern, 2014)
 
-Coverage: **author-ready - complete Pro I/O, wiring, lighting, mechanisms, initial state, and controller bindings validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **complete Pro I/O, wiring, lighting, mechanisms, initial state, and controller bindings validated**
 
 ## Identity and evidence precedence
 

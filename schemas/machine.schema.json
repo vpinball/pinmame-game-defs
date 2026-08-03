@@ -20,7 +20,10 @@
   ],
   "properties": {
     "format": { "const": "pinmame-machine-definition" },
-    "schema_version": { "const": 1 },
+    "schema_version": {
+      "description": "Version 2 adds optional spatial evidence. Version 1 definitions remain valid, but author-ready definitions must use version 2.",
+      "enum": [1, 2]
+    },
     "machine": { "$ref": "#/$defs/machineIdentity" },
     "coverage": { "$ref": "#/$defs/coverage" },
     "controller": { "$ref": "#/$defs/controller" },
@@ -59,6 +62,34 @@
       "items": { "$ref": "#/$defs/conflict" }
     }
   },
+  "allOf": [
+    {
+      "if": { "properties": { "schema_version": { "const": 2 } }, "required": ["schema_version"] },
+      "then": {
+        "properties": {
+          "coverage": {
+            "properties": {
+              "dimensions": { "required": ["spatial_placement"] }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "coverage": {
+            "properties": { "status": { "const": "author_ready" } },
+            "required": ["status"]
+          }
+        },
+        "required": ["coverage"]
+      },
+      "then": {
+        "properties": { "schema_version": { "const": 2 } }
+      }
+    }
+  ],
   "$defs": {
     "identifier": {
       "type": "string",
@@ -103,6 +134,7 @@
               "variant_differences",
               "recreation_notes",
               "provenance",
+              "spatial_placement",
               "unresolved_conflicts"
             ]
           }
@@ -208,6 +240,7 @@
         },
         "availability": { "enum": ["used", "unused", "optional", "unknown"] },
         "physical": { "$ref": "#/$defs/physical" },
+        "spatial": { "$ref": "#/$defs/spatial" },
         "wiring": { "$ref": "#/$defs/wiring" },
         "roles": {
           "type": "array",
@@ -239,6 +272,7 @@
         "model": { "$ref": "#/$defs/identifier" },
         "availability": { "enum": ["used", "unused", "optional", "unknown"] },
         "physical": { "$ref": "#/$defs/physical" },
+        "spatial": { "$ref": "#/$defs/spatial" },
         "wiring": { "$ref": "#/$defs/wiring" },
         "range": {
           "type": "object",
@@ -327,7 +361,7 @@
       "properties": {
         "id": { "$ref": "#/$defs/identifier" },
         "kind": {
-          "enum": ["pinmame_catalog", "pinmame_core", "pinmame_sim", "vpe_csharp", "legacy_json", "vpx_script", "vpx_table", "manual", "service_bulletin", "service_diagnostic", "rom_static_analysis", "runtime_scenario", "human_review"]
+          "enum": ["pinmame_catalog", "pinmame_core", "pinmame_sim", "vpe_csharp", "vpe_scene", "legacy_json", "vpx_script", "vpx_table", "manual", "service_bulletin", "service_diagnostic", "rom_static_analysis", "runtime_scenario", "human_review"]
         },
         "uri": { "type": "string", "minLength": 1 },
         "revision": { "type": "string", "minLength": 1 },
@@ -338,7 +372,51 @@
         "source_id": { "type": "string", "minLength": 1 },
         "original_filename": { "type": "string", "minLength": 1 },
         "rights": { "type": "string", "minLength": 1 },
+        "known_working": { "type": "boolean" },
         "acquired_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "spatial": {
+      "description": "Optional spatial evidence in the canonical global playfield space: x=0 is left, x=1 is right, y=0 is the rear/backglass end, and y=1 is the front/apron end. This is normalized VPX/player view and is never inferred from physical.location prose.",
+      "oneOf": [
+        { "$ref": "#/$defs/spatialLocated" },
+        { "$ref": "#/$defs/spatialNotApplicable" }
+      ]
+    },
+    "spatialLocated": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "placements"],
+      "properties": {
+        "status": { "enum": ["candidate", "observed", "validated", "conflicted"] },
+        "placements": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/spatialPlacement" }
+        }
+      }
+    },
+    "spatialNotApplicable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason", "provenance"],
+      "properties": {
+        "status": { "const": "not_applicable" },
+        "reason": { "enum": ["unused", "virtual", "constant", "dip_switch", "cabinet_or_service", "internal_nonvisual", "no_physical_device"] },
+        "provenance": { "$ref": "#/$defs/provenance" }
+      }
+    },
+    "spatialPlacement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "role", "space", "x", "y", "provenance"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "role": { "enum": ["sensor", "effect", "emitter"] },
+        "space": { "const": "playfield" },
+        "x": { "type": "number", "minimum": 0, "maximum": 1 },
+        "y": { "type": "number", "minimum": 0, "maximum": 1 },
+        "provenance": { "$ref": "#/$defs/provenance" }
       }
     },
     "knowledge": {

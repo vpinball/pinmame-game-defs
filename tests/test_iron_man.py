@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ORIGINAL_PATH = ROOT / "machines" / "author-ready" / "stern" / "iron-man-2010.json"
-VAULT_PATH = ROOT / "machines" / "author-ready" / "stern" / "iron-man-vault-edition-2014.json"
+ORIGINAL_PATH = ROOT / "machines" / "partial" / "stern" / "iron-man-2010.json"
+VAULT_PATH = ROOT / "machines" / "partial" / "stern" / "iron-man-vault-edition-2014.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "iron-man-vault-edition-boot-start.json"
 
 
@@ -27,11 +27,11 @@ class IronManDefinitionTests(unittest.TestCase):
 		cls.vault = load_json(VAULT_PATH)
 		cls.evidence = load_json(EVIDENCE_PATH)
 
-	def test_physical_products_are_split_and_author_ready(self) -> None:
+	def test_physical_products_are_split_and_fail_closed_for_spatial_retrofit(self) -> None:
 		for definition in (self.original, self.vault):
-			self.assertEqual("author_ready", definition["coverage"]["status"])
-			self.assertEqual([], definition["coverage"]["missing"])
-			self.assertTrue(all(state == "validated" for state in definition["coverage"]["dimensions"].values()))
+			self.assertEqual(2, definition["schema_version"])
+			self.assertEqual("partial", definition["coverage"]["status"])
+			self.assertIn("spatial_placement", definition["coverage"]["missing"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
 			self.assertEqual([], definition["conflicts"])
 		self.assertEqual({"id": "stern.iron-man.2010", "ipdb_id": 5550, "kind": "physical_pinball", "manufacturer": "Stern", "model_number": "I-00B3", "name": "Iron Man", "year": 2010}, self.original["machine"])

@@ -1,6 +1,7 @@
 # Ali seven-digit conversion (Stern, 2023 software on the 1980 playfield)
 
-Coverage: **author-ready - complete physical inventory, controller bindings, wiring, mechanisms, and recreation behavior validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **complete physical inventory, controller bindings, wiring, mechanisms, and recreation behavior validated**
 
 ## Identity and evidence precedence
 

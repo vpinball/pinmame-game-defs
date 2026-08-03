@@ -1,6 +1,7 @@
 # Ripley's Believe It or Not! (Stern, 2004)
 
-Coverage: **author-ready - complete public I/O inventory, factory wiring and parts, native displays, custom mechanisms, firmware/language variants, and recreation behavior validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **complete public I/O inventory, factory wiring and parts, native displays, custom mechanisms, firmware/language variants, and recreation behavior validated**
 
 ## Identity and evidence precedence
 

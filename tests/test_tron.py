@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "tron-legacy-pro-2011.json"
-LE_PATH = ROOT / "machines" / "author-ready" / "stern" / "tron-legacy-limited-edition-2011.json"
+PRO_PATH = ROOT / "machines" / "partial" / "stern" / "tron-legacy-pro-2011.json"
+LE_PATH = ROOT / "machines" / "partial" / "stern" / "tron-legacy-limited-edition-2011.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "tron-legacy-pro-boot-start.json"
 LE_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "tron-legacy-limited-edition-boot-start.json"
 
@@ -29,14 +29,14 @@ class TronDefinitionTests(unittest.TestCase):
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
 		cls.le_evidence = load_json(LE_EVIDENCE_PATH)
 
-	def test_both_physical_editions_are_author_ready_and_replace_partial(self) -> None:
+	def test_both_physical_editions_are_fail_closed_for_spatial_retrofit(self) -> None:
 		for definition in (self.pro, self.le):
-			self.assertEqual("author_ready", definition["coverage"]["status"])
-			self.assertEqual([], definition["coverage"]["missing"])
-			self.assertTrue(all(value == "validated" for value in definition["coverage"]["dimensions"].values()))
+			self.assertEqual(2, definition["schema_version"])
+			self.assertEqual("partial", definition["coverage"]["status"])
+			self.assertIn("spatial_placement", definition["coverage"]["missing"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
 			self.assertEqual([], definition["conflicts"])
-		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "tron-legacy-limited-edition-2011.json").exists())
+		self.assertTrue((ROOT / "machines" / "partial" / "stern" / "tron-legacy-limited-edition-2011.json").exists())
 
 	def test_supported_driver_family_is_exhaustively_split_by_physical_model(self) -> None:
 		pro = {driver["id"] for driver in self.pro["drivers"]}

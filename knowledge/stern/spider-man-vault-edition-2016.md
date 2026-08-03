@@ -1,6 +1,6 @@
 # Spider-Man Vault Edition
 
-Coverage: **author-ready**
+Coverage: **partial — normalized spatial placements pending.**
 
 This note supplements the canonical definition with the physical and behavioral information an author needs to reproduce the table. The adjacent JSON enumerates all 96 controller inputs, 126 outputs, the 128×32 DMD, four supported ROM variants, and 14 ball-device or moving assemblies.
 

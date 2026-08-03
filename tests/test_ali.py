@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines" / "author-ready" / "stern" / "ali-seven-digit-conversion-2023.json"
+DEFINITION_PATH = ROOT / "machines" / "partial" / "stern" / "ali-seven-digit-conversion-2023.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "stern" / "ali-service-diagnostics.json"
 
 
@@ -27,7 +27,9 @@ class AliConversionDefinitionTests(unittest.TestCase):
 
 	def test_both_conversion_roots_share_one_physical_definition(self) -> None:
 		self.assertEqual("physical_conversion", self.definition["machine"]["kind"])
-		self.assertEqual("author_ready", self.definition["coverage"]["status"])
+		self.assertEqual(2, self.definition["schema_version"])
+		self.assertEqual("partial", self.definition["coverage"]["status"])
+		self.assertIn("spatial_placement", self.definition["coverage"]["missing"])
 		self.assertEqual({"alib", "alic"}, {driver["id"] for driver in self.definition["drivers"]})
 		self.assertTrue(all(driver["physical_compatibility"] == "identical" for driver in self.definition["drivers"]))
 

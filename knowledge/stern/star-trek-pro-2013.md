@@ -1,6 +1,7 @@
 # Star Trek Pro (Stern, 2013)
 
-Coverage: **author-ready - physical inventory, public PinMAME bindings, lamp semantics, mechanisms, and edition differences validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **physical inventory, public PinMAME bindings, lamp semantics, mechanisms, and edition differences validated**
 
 ## Identity and evidence precedence
 
@@ -18,7 +19,7 @@ The dedicated controls use public PinMAME addresses rather than the manual's D l
 
 ## Lamp matrix
 
-All 80 public lamp callbacks are explicit. Physical unused channels are 1, 2, 6, 31, 39, 47, 58, and 77-79. Lamps 25-30, 33-38, and 41-46 are the red, green, and blue channels for six physical emblems: left orbit, left ramp, right orbit, right ramp, left eject, and center lane. The JSON records each channel and the exact VPX playfield coordinates. The remaining inserts are named from the working table and playfield artwork, including the four TREK letters at 4/5/7/8, status ladder 17-24, six red-target inserts at 50/57/59/60/68/69, six Enterprise arrows, the banks, missions, locks, and awards. Address 80 is the right-side blue playfield spotlight represented by table objects `l80`/`f80`. Script-only visual aliases 119, 120, 129, and 131 are driven from solenoids and are not physical/public lamp addresses, so they are intentionally excluded.
+All 80 public lamp callbacks are explicit. Physical unused channels are 1, 2, 6, 31, 39, 47, 58, and 77-79. Lamps 25-30, 33-38, and 41-46 are the red, green, and blue channels for six physical emblems: left orbit, left ramp, right orbit, right ramp, left eject, and center lane. Exact VPX playfield coordinates were observed during curation but have not yet been normalized and promoted into the definition. The remaining inserts are named from the working table and playfield artwork, including the four TREK letters at 4/5/7/8, status ladder 17-24, six red-target inserts at 50/57/59/60/68/69, six Enterprise arrows, the banks, missions, locks, and awards. Address 80 is the right-side blue playfield spotlight represented by table objects `l80`/`f80`. Script-only visual aliases 119, 120, 129, and 131 are driven from solenoids and are not physical/public lamp addresses, so they are intentionally excluded.
 
 ## Center target, lock, and Vengeance
 
@@ -32,7 +33,7 @@ The complete target inventory is three BEAM ME UP standups at 1/2/4, four TREK s
 
 ## Resolved upper-right flipper discrepancy
 
-The legacy Pro table writes public switch 90 and visually couples the upper-right flipper to lower-right output 16. The service manual's dedicated-input table, coil chart, and PinMAME `sam.vbs` agree that the physical machine instead uses public switch 86/D15 and output 12. The author-ready definition therefore uses 86/12 and preserves the table discrepancy here as a portability warning. The rest of the table remains the proven behavioral source; this narrow exception is resolved by concordant physical and controller documentation rather than guessed.
+The legacy Pro table writes public switch 90 and visually couples the upper-right flipper to lower-right output 16. The service manual's dedicated-input table, coil chart, and PinMAME `sam.vbs` agree that the physical machine instead uses public switch 86/D15 and output 12. This definition therefore uses 86/12 and preserves the table discrepancy here as a portability warning. The rest of the table remains the proven behavioral source; this narrow exception is resolved by concordant physical and controller documentation rather than guessed.
 
 ## Recreation checklist
 

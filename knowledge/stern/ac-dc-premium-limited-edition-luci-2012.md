@@ -1,5 +1,7 @@
 # AC/DC Premium / Limited Edition / LUCI Premium recreation knowledge
 
+Coverage: **partial — normalized spatial placements pending.**
+
 ## Identity and variants
 
 This definition covers every in-scope h and hc PinMAME driver from 1.50 through 1.70 for the shared Stern Premium, Limited Edition, and LUCI Premium physical playfield. LUCI changes art and presentation; the LE trim packages and colored-ROM derivatives do not change controller-facing devices or mechanisms.

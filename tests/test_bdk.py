@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "batman-the-dark-knight-pro-2008.json"
-HOME_PATH = ROOT / "machines" / "author-ready" / "stern" / "batman-the-dark-knight-standard-home-edition-2010.json"
+PRO_PATH = ROOT / "machines" / "partial" / "stern" / "batman-the-dark-knight-pro-2008.json"
+HOME_PATH = ROOT / "machines" / "partial" / "stern" / "batman-the-dark-knight-standard-home-edition-2010.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "batman-the-dark-knight-pro-boot-start.json"
 HOME_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "batman-the-dark-knight-home-boot-start-and-diagnostics.json"
 HOME_KNOWLEDGE_PATH = ROOT / "knowledge" / "stern" / "batman-the-dark-knight-standard-home-edition-2010.md"
@@ -31,13 +31,13 @@ class BatmanDarkKnightDefinitionTests(unittest.TestCase):
 		cls.home_evidence = load_json(HOME_EVIDENCE_PATH)
 		cls.home_knowledge = HOME_KNOWLEDGE_PATH.read_text(encoding="utf-8")
 
-	def test_two_physical_products_are_author_ready(self) -> None:
+	def test_two_physical_products_are_fail_closed_for_spatial_retrofit(self) -> None:
 		self.assertEqual(("stern.batman-the-dark-knight-pro.2008", 5307, 2008), (self.pro["machine"]["id"], self.pro["machine"]["ipdb_id"], self.pro["machine"]["year"]))
 		self.assertEqual(("stern.batman-the-dark-knight-standard-home-edition.2010", 5583, 2010), (self.home["machine"]["id"], self.home["machine"]["ipdb_id"], self.home["machine"]["year"]))
 		for definition in (self.pro, self.home):
-			self.assertEqual("author_ready", definition["coverage"]["status"])
-			self.assertEqual([], definition["coverage"]["missing"])
-			self.assertTrue(all(value == "validated" for value in definition["coverage"]["dimensions"].values()))
+			self.assertEqual(2, definition["schema_version"])
+			self.assertEqual("partial", definition["coverage"]["status"])
+			self.assertIn("spatial_placement", definition["coverage"]["missing"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
 			self.assertEqual([], definition["conflicts"])
 		self.assertFalse((ROOT / "machines" / "stubs" / "bdk_294.json").exists())

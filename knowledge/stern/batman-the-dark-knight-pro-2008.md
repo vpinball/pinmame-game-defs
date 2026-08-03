@@ -1,6 +1,7 @@
 # Batman: The Dark Knight Pro (Stern, 2008)
 
-Coverage: **author-ready - complete public I/O inventory, factory wiring and lamp parts, custom mechanisms, firmware family, and recreation behavior validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **complete public I/O inventory, factory wiring and lamp parts, custom mechanisms, firmware family, and recreation behavior validated**
 
 ## Identity and evidence precedence
 

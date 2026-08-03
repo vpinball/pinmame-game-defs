@@ -7,6 +7,7 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json, write_text
+from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -522,8 +523,8 @@ def service_diagnostic_evidence(name: str, raw_folder: str, raw_hash: str, self_
 
 
 def main() -> None:
-	write_json(ROOT / "machines/author-ready/stern/avatar-pro-2010.json", build(False))
-	write_json(ROOT / "machines/author-ready/stern/avatar-limited-edition-2010.json", build(True))
+	write_json(spatial_partial_path(ROOT / "machines/partial/stern/avatar-pro-2010.json"), fail_closed_spatial_partial(build(False)))
+	write_json(spatial_partial_path(ROOT / "machines/partial/stern/avatar-limited-edition-2010.json"), fail_closed_spatial_partial(build(True)))
 	write_json(ROOT / "evidence/runtime/sam/avatar-pro-boot-start.json", runtime_evidence(False))
 	write_json(ROOT / "evidence/runtime/sam/avatar-limited-edition-boot-start.json", runtime_evidence(True))
 	common_command = "python tools/run_pinmame_harness.py --library <libpinmame> --game avr_120h --rom-path <vpinmame-roms> --work-dir <isolated-state> --initial-switch 18 --initial-switch 19 --initial-switch 20 --initial-switch 21 --initial-switch 46"
@@ -532,8 +533,8 @@ def main() -> None:
 	write_json(ROOT / "evidence/runtime/sam/avatar-limited-edition-transporter-down-to-up.json", service_diagnostic_evidence("transporter-down-to-up", "service-nav-12", "761ba656664c40c8fe7f71c1203142c6b50a452a416bfa48dcf614edc546b628", 10, [14], common_command + menu_command.replace("--initial-switch 48", "--initial-switch 47") + " --pulse 0:150:1.5 --pulse 0:300:1.0 --observe 1 --dmd-dir <external-dmd-dir> --output <external-json>", {"label": "after pulse 10: switch 0", "display_index": 0, "pixel_sha256": "5c14f36a70c48867c1f57d6349f956cdb3f444513c37fe3e4899910f79a29323", "nonzero_pixels": 940, "interpreted_text": "TRANSPORTER MOTOR TEST; #48 - TRANSPORTER (UP); #47 - TRANSPORTER (DN); MOVING TO SWITCH #48. Starting at active endpoint 47/down, the test finishes with output 14 active.", "active_solenoid_addresses": [14]}))
 	write_json(ROOT / "evidence/runtime/sam/avatar-limited-edition-amp-suit-motor.json", service_diagnostic_evidence("amp-suit-motor", "amp-suit-motor-test", "0dc74feaa609f588691138a9907d5261615fccbb334ed8d77a724a240c126881", 12, [13, 14, 19], common_command + menu_command + " --pulse -1:150:0.25 --pulse -1:150:0.25 --pulse 0:150:1.5 --pulse 0:300:1.0 --observe 1 --dmd-dir <external-dmd-dir> --output <external-json>", {"label": "after pulse 12: switch 0", "display_index": 0, "pixel_sha256": "0fa290638c0cdd0939e698629612c9579ff1c4ce83653606114066a5ba363363", "nonzero_pixels": 725, "interpreted_text": "AMP SUIT MOTOR TEST; #58; #57; MOVING TO SWITCH #57. Starting at active endpoint 58/up, the test finishes with direction relay 13 and motor 19 active.", "active_solenoid_addresses": [13, 19]}))
 	write_json(ROOT / "evidence/runtime/sam/avatar-limited-edition-three-bank-motor.json", service_diagnostic_evidence("three-bank-motor", "three-bank-motor-test", "b5e62835a39af924b757d9f2cac6f73312c149c668699f5882ca1ea932cf901a", 11, [5, 14], common_command + menu_command + " --pulse -1:150:0.25 --pulse 0:150:1.5 --pulse 0:300:1.0 --observe 1 --dmd-dir <external-dmd-dir> --output <external-json>", {"label": "after pulse 11: switch 0", "display_index": 0, "pixel_sha256": "50244361cd9a54cb473f02e3ad5a504c515f234d97a90967fb12363c0988f1ad", "nonzero_pixels": 950, "interpreted_text": "AMP SUIT 3-BANK MOTOR TEST; #46 - 3-BANK MOTOR (UP); #45 - 3-BANK MOTOR (DN); MOVING TO SWITCH #45. Starting at active endpoint 46/up, the test finishes with output 5 active.", "active_solenoid_addresses": [5]}))
-	write_text(ROOT / "knowledge/stern/avatar-pro-2010.md", PRO_KNOWLEDGE)
-	write_text(ROOT / "knowledge/stern/avatar-limited-edition-2010.md", LE_KNOWLEDGE)
+	write_text(ROOT / "knowledge/stern/avatar-pro-2010.md", fail_closed_spatial_knowledge("stern.avatar-pro.2010", PRO_KNOWLEDGE))
+	write_text(ROOT / "knowledge/stern/avatar-limited-edition-2010.md", fail_closed_spatial_knowledge("stern.avatar-limited-edition.2010", LE_KNOWLEDGE))
 
 
 if __name__ == "__main__":

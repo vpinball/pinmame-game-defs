@@ -1,0 +1,6638 @@
+{
+  "conflicts": [],
+  "controller": {
+    "inversion_applied_by_emulator": true,
+    "platform": "pinmame.stern-mpu200"
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "validated",
+      "catalog_identity": "validated",
+      "mechanisms": "validated",
+      "physical_wiring": "validated",
+      "recreation_knowledge": "validated",
+      "semantic_naming": "validated",
+      "spatial_placement": "unknown",
+      "variant_coverage": "validated"
+    },
+    "missing": [
+      "spatial_placement"
+    ],
+    "status": "partial"
+  },
+  "displays": [
+    {
+      "id": "display.player-1",
+      "kind": "segment",
+      "label": "Player 1 seven-digit score display",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "width": 7
+    },
+    {
+      "id": "display.player-2",
+      "kind": "segment",
+      "label": "Player 2 seven-digit score display",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "width": 7
+    },
+    {
+      "id": "display.player-3",
+      "kind": "segment",
+      "label": "Player 3 seven-digit score display",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "width": 7
+    },
+    {
+      "id": "display.player-4",
+      "kind": "segment",
+      "label": "Player 4 seven-digit score display",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "width": 7
+    },
+    {
+      "id": "display.credits",
+      "kind": "segment",
+      "label": "Two-digit credit display",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "width": 2
+    },
+    {
+      "id": "display.ball-match",
+      "kind": "segment",
+      "label": "Two-digit ball / match display",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "width": 2
+    }
+  ],
+  "drivers": [
+    {
+      "description": "Ali (7-digit conversion Free Play rev. 76)",
+      "flags": 0,
+      "id": "alib",
+      "manufacturer": "Stern / Idleman",
+      "physical_compatibility": "identical",
+      "variant_notes": "Revision 76 conversion software for the same physical Ali playfield, Stern MPU-200 I/O, ST300 sound board, and seven-digit display conversion.",
+      "year": "2023"
+    },
+    {
+      "description": "Ali (7-digit conversion Free Play rev. 85)",
+      "flags": 0,
+      "id": "alic",
+      "manufacturer": "Stern / slochar",
+      "physical_compatibility": "identical",
+      "variant_notes": "Revision 85 conversion software for the same physical Ali playfield, Stern MPU-200 I/O, ST300 sound board, and seven-digit display conversion.",
+      "year": "2023"
+    }
+  ],
+  "format": "pinmame-machine-definition",
+  "inputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-7"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": -7,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.self-test-button",
+      "kind": "switch",
+      "label": "Self-test button",
+      "normally_closed": false,
+      "physical": {
+        "location": "Cabinet or MPU service controls",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "service"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-6"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": -6,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.cpu-diagnostic-button",
+      "kind": "switch",
+      "label": "CPU diagnostic button",
+      "normally_closed": false,
+      "physical": {
+        "location": "Cabinet or MPU service controls",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "service"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-5"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": -5,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.sound-diagnostic-button",
+      "kind": "switch",
+      "label": "Sound diagnostic button",
+      "normally_closed": false,
+      "physical": {
+        "location": "Cabinet or MPU service controls",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "service"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "1"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "1"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 1,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-chute-i-center",
+      "kind": "switch",
+      "label": "Coin chute I (center)",
+      "normally_closed": false,
+      "physical": {
+        "location": "Coin chute I (center)",
+        "notes": "Switch-matrix return I0, strobe ST0.",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-1 / A4J3-2",
+        "control_wire": "WHT-RED / RED-YEL",
+        "return_connection": "A4J2-8 / A4J3-9",
+        "return_wire": "BRN / RED-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "2"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "2"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 2,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-chute-ii-left",
+      "kind": "switch",
+      "label": "Coin chute II (left)",
+      "normally_closed": false,
+      "physical": {
+        "location": "Coin chute II (left)",
+        "notes": "Switch-matrix return I1, strobe ST0.",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-1 / A4J3-2",
+        "control_wire": "WHT-RED / RED-YEL",
+        "return_connection": "A4J2-9 / A4J3-10",
+        "return_wire": "GRY / BRN-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "3"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "3"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 3,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-chute-iii-right",
+      "kind": "switch",
+      "label": "Coin chute III (right)",
+      "normally_closed": false,
+      "physical": {
+        "location": "Coin chute III (right)",
+        "notes": "Switch-matrix return I2, strobe ST0.",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-1 / A4J3-2",
+        "control_wire": "WHT-RED / RED-YEL",
+        "return_connection": "A4J2-10 / A4J3-11",
+        "return_wire": "WHT-ORN / BLU"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "4"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "4"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 4,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-position-i3-st0",
+      "kind": "switch",
+      "label": "Unused matrix position I3/ST0",
+      "normally_closed": false,
+      "physical": {
+        "location": "Unused matrix position I3/ST0",
+        "notes": "Switch-matrix return I3, strobe ST0.",
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-1 / A4J3-2",
+        "control_wire": "WHT-RED / RED-YEL",
+        "return_connection": "A4J2-11 / A4J3-12 (second connection not used)",
+        "return_wire": "WHT-BLK"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "5"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "5"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 5,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.bottom-rollover-button",
+      "kind": "switch",
+      "label": "Bottom rollover button",
+      "normally_closed": false,
+      "physical": {
+        "location": "Bottom rollover button",
+        "notes": "Switch-matrix return I4, strobe ST0.",
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-1 / A4J3-2",
+        "control_wire": "WHT-RED / RED-YEL",
+        "return_connection": "A4J2-12 / A4J3-13 (second connection not used)",
+        "return_wire": "WHT-GRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "6"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "6"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 6,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.credit-start-button",
+      "kind": "switch",
+      "label": "Credit / start button",
+      "normally_closed": false,
+      "physical": {
+        "location": "Credit / start button",
+        "notes": "Switch-matrix return I5, strobe ST0.",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-1 / A4J3-2",
+        "control_wire": "WHT-RED / RED-YEL",
+        "return_connection": "A4J2-13 / A4J3-14",
+        "return_wire": "WHT-BRN / BLU-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "7"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "7"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 7,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.tilt",
+      "kind": "switch",
+      "label": "Tilt",
+      "normally_closed": false,
+      "physical": {
+        "location": "Tilt",
+        "notes": "Switch-matrix return I6, strobe ST0.",
+        "switch_type": "tilt"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-1 / A4J3-2",
+        "control_wire": "WHT-RED / RED-YEL",
+        "return_connection": "A4J2-14 / A4J3-15",
+        "return_wire": "BRN-YEL / BLU-ORN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "8"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "8"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 8,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.slam-tilt",
+      "kind": "switch",
+      "label": "Slam tilt",
+      "normally_closed": false,
+      "physical": {
+        "location": "Slam tilt",
+        "notes": "Switch-matrix return I7, strobe ST0.",
+        "switch_type": "tilt"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-1 / A4J3-2",
+        "control_wire": "WHT-RED / RED-YEL",
+        "return_connection": "A4J2-15 / A4J3-16",
+        "return_wire": "ORN / YEL"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "9"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "9"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 9,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.top-left-spinner",
+      "kind": "switch",
+      "label": "Top-left spinner",
+      "normally_closed": false,
+      "physical": {
+        "location": "Top-left spinner",
+        "notes": "The technical chart calls this a top-left rollover button; the known-working table pulses the same address from its spinner, which is the runtime ground truth.",
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-2 / A4J3-3 (second connection not used)",
+        "control_wire": "BRN-WHT",
+        "return_connection": "A4J2-8 / A4J3-9",
+        "return_wire": "BRN / RED-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "10"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "10"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 10,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-position-i1-st1",
+      "kind": "switch",
+      "label": "Unused matrix position I1/ST1",
+      "normally_closed": false,
+      "physical": {
+        "location": "Unused matrix position I1/ST1",
+        "notes": "Switch-matrix return I1, strobe ST1.",
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-2 / A4J3-3 (second connection not used)",
+        "control_wire": "BRN-WHT",
+        "return_connection": "A4J2-9 / A4J3-10",
+        "return_wire": "GRY / BRN-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "11"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "11"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 11,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.two-middle-rollover-buttons-shared-input",
+      "kind": "switch",
+      "label": "Two middle rollover buttons (shared input)",
+      "normally_closed": false,
+      "physical": {
+        "location": "Two middle rollover buttons (shared input)",
+        "notes": "Two physical middle rollover buttons are wired in parallel to one MPU input.",
+        "quantity": 2,
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-2 / A4J3-3 (second connection not used)",
+        "control_wire": "BRN-WHT",
+        "return_connection": "A4J2-10 / A4J3-11",
+        "return_wire": "WHT-ORN / BLU"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "12"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "12"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 12,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-thumper-bumper",
+      "kind": "switch",
+      "label": "Right thumper bumper",
+      "normally_closed": false,
+      "physical": {
+        "location": "Right thumper bumper",
+        "notes": "Switch-matrix return I3, strobe ST1.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-2 / A4J3-3 (second connection not used)",
+        "control_wire": "BRN-WHT",
+        "return_connection": "A4J2-11 / A4J3-12 (second connection not used)",
+        "return_wire": "WHT-BLK"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "13"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "13"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 13,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-thumper-bumper",
+      "kind": "switch",
+      "label": "Left thumper bumper",
+      "normally_closed": false,
+      "physical": {
+        "location": "Left thumper bumper",
+        "notes": "Switch-matrix return I4, strobe ST1.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-2 / A4J3-3 (second connection not used)",
+        "control_wire": "BRN-WHT",
+        "return_connection": "A4J2-12 / A4J3-13 (second connection not used)",
+        "return_wire": "WHT-GRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "14"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "14"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 14,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.middle-thumper-bumper",
+      "kind": "switch",
+      "label": "Middle thumper bumper",
+      "normally_closed": false,
+      "physical": {
+        "location": "Middle thumper bumper",
+        "notes": "Switch-matrix return I5, strobe ST1.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-2 / A4J3-3 (second connection not used)",
+        "control_wire": "BRN-WHT",
+        "return_connection": "A4J2-13 / A4J3-14",
+        "return_wire": "WHT-BRN / BLU-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "15"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "15"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 15,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-slingshot",
+      "kind": "switch",
+      "label": "Right slingshot",
+      "normally_closed": false,
+      "physical": {
+        "location": "Right slingshot",
+        "notes": "Switch-matrix return I6, strobe ST1.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-2 / A4J3-3 (second connection not used)",
+        "control_wire": "BRN-WHT",
+        "return_connection": "A4J2-14 / A4J3-15",
+        "return_wire": "BRN-YEL / BLU-ORN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "16"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "16"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 16,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-slingshot",
+      "kind": "switch",
+      "label": "Left slingshot",
+      "normally_closed": false,
+      "physical": {
+        "location": "Left slingshot",
+        "notes": "Switch-matrix return I7, strobe ST1.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-2 / A4J3-3 (second connection not used)",
+        "control_wire": "BRN-WHT",
+        "return_connection": "A4J2-15 / A4J3-16",
+        "return_wire": "ORN / YEL"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "17"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "17"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 17,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-position-i0-st2",
+      "kind": "switch",
+      "label": "Unused matrix position I0/ST2",
+      "normally_closed": false,
+      "physical": {
+        "location": "Unused matrix position I0/ST2",
+        "notes": "Switch-matrix return I0, strobe ST2.",
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-3",
+        "control_wire": "WHT-BLU",
+        "return_connection": "A4J2-8 / A4J3-9",
+        "return_wire": "BRN / RED-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "18"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "18"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 18,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-position-i1-st2",
+      "kind": "switch",
+      "label": "Unused matrix position I1/ST2",
+      "normally_closed": false,
+      "physical": {
+        "location": "Unused matrix position I1/ST2",
+        "notes": "Switch-matrix return I1, strobe ST2.",
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-3",
+        "control_wire": "WHT-BLU",
+        "return_connection": "A4J2-9 / A4J3-10",
+        "return_wire": "GRY / BRN-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "19"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "19"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 19,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.top-three-bank-drop-target-left",
+      "kind": "switch",
+      "label": "Top three-bank drop target (left)",
+      "normally_closed": false,
+      "physical": {
+        "location": "Top three-bank drop target (left)",
+        "notes": "Switch-matrix return I2, strobe ST2.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-3",
+        "control_wire": "WHT-BLU",
+        "return_connection": "A4J2-10 / A4J3-11",
+        "return_wire": "WHT-ORN / BLU"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "20"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "20"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 20,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.top-three-bank-drop-target-middle",
+      "kind": "switch",
+      "label": "Top three-bank drop target (middle)",
+      "normally_closed": false,
+      "physical": {
+        "location": "Top three-bank drop target (middle)",
+        "notes": "Switch-matrix return I3, strobe ST2.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-3",
+        "control_wire": "WHT-BLU",
+        "return_connection": "A4J2-11 / A4J3-12 (second connection not used)",
+        "return_wire": "WHT-BLK"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "21"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "21"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 21,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.top-three-bank-drop-target-right",
+      "kind": "switch",
+      "label": "Top three-bank drop target (right)",
+      "normally_closed": false,
+      "physical": {
+        "location": "Top three-bank drop target (right)",
+        "notes": "Switch-matrix return I4, strobe ST2.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-3",
+        "control_wire": "WHT-BLU",
+        "return_connection": "A4J2-12 / A4J3-13 (second connection not used)",
+        "return_wire": "WHT-GRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "22"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "22"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 22,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-three-bank-drop-target-bottom",
+      "kind": "switch",
+      "label": "Left three-bank drop target (bottom)",
+      "normally_closed": false,
+      "physical": {
+        "location": "Left three-bank drop target (bottom)",
+        "notes": "Switch-matrix return I5, strobe ST2.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-3",
+        "control_wire": "WHT-BLU",
+        "return_connection": "A4J2-13 / A4J3-14",
+        "return_wire": "WHT-BRN / BLU-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "23"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "23"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 23,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-three-bank-drop-target-middle",
+      "kind": "switch",
+      "label": "Left three-bank drop target (middle)",
+      "normally_closed": false,
+      "physical": {
+        "location": "Left three-bank drop target (middle)",
+        "notes": "Switch-matrix return I6, strobe ST2.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-3",
+        "control_wire": "WHT-BLU",
+        "return_connection": "A4J2-14 / A4J3-15",
+        "return_wire": "BRN-YEL / BLU-ORN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "24"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "24"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 24,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-three-bank-drop-target-top",
+      "kind": "switch",
+      "label": "Left three-bank drop target (top)",
+      "normally_closed": false,
+      "physical": {
+        "location": "Left three-bank drop target (top)",
+        "notes": "Switch-matrix return I7, strobe ST2.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-3",
+        "control_wire": "WHT-BLU",
+        "return_connection": "A4J2-15 / A4J3-16",
+        "return_wire": "ORN / YEL"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "25"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "25"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 25,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.g-stand-up-target",
+      "kind": "switch",
+      "label": "G stand-up target",
+      "normally_closed": false,
+      "physical": {
+        "location": "G stand-up target",
+        "notes": "Switch-matrix return I0, strobe ST3.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-4",
+        "control_wire": "WHT-YEL",
+        "return_connection": "A4J2-8 / A4J3-9",
+        "return_wire": "BRN / RED-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "26"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "26"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 26,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.r-stand-up-target",
+      "kind": "switch",
+      "label": "R stand-up target",
+      "normally_closed": false,
+      "physical": {
+        "location": "R stand-up target",
+        "notes": "Switch-matrix return I1, strobe ST3.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-4",
+        "control_wire": "WHT-YEL",
+        "return_connection": "A4J2-9 / A4J3-10",
+        "return_wire": "GRY / BRN-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "27"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "27"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 27,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.e-stand-up-target",
+      "kind": "switch",
+      "label": "E stand-up target",
+      "normally_closed": false,
+      "physical": {
+        "location": "E stand-up target",
+        "notes": "Switch-matrix return I2, strobe ST3.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-4",
+        "control_wire": "WHT-YEL",
+        "return_connection": "A4J2-10 / A4J3-11",
+        "return_wire": "WHT-ORN / BLU"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "28"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "28"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 28,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.a-stand-up-target",
+      "kind": "switch",
+      "label": "A stand-up target",
+      "normally_closed": false,
+      "physical": {
+        "location": "A stand-up target",
+        "notes": "Switch-matrix return I3, strobe ST3.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-4",
+        "control_wire": "WHT-YEL",
+        "return_connection": "A4J2-11 / A4J3-12 (second connection not used)",
+        "return_wire": "WHT-BLK"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "29"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "29"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 29,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.t-stand-up-target",
+      "kind": "switch",
+      "label": "T stand-up target",
+      "normally_closed": false,
+      "physical": {
+        "location": "T stand-up target",
+        "notes": "Switch-matrix return I4, strobe ST3.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-4",
+        "control_wire": "WHT-YEL",
+        "return_connection": "A4J2-12 / A4J3-13 (second connection not used)",
+        "return_wire": "WHT-GRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "30"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "30"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 30,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.top-left-saucer",
+      "kind": "switch",
+      "label": "Top-left saucer",
+      "normally_closed": false,
+      "physical": {
+        "location": "Top-left saucer",
+        "notes": "Switch-matrix return I5, strobe ST3.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-4",
+        "control_wire": "WHT-YEL",
+        "return_connection": "A4J2-13 / A4J3-14",
+        "return_wire": "WHT-BRN / BLU-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "31"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "31"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.top-middle-saucer",
+      "kind": "switch",
+      "label": "Top-middle saucer",
+      "normally_closed": false,
+      "physical": {
+        "location": "Top-middle saucer",
+        "notes": "Switch-matrix return I6, strobe ST3.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-4",
+        "control_wire": "WHT-YEL",
+        "return_connection": "A4J2-14 / A4J3-15",
+        "return_wire": "BRN-YEL / BLU-ORN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "32"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "32"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.top-right-saucer",
+      "kind": "switch",
+      "label": "Top-right saucer",
+      "normally_closed": false,
+      "physical": {
+        "location": "Top-right saucer",
+        "notes": "Switch-matrix return I7, strobe ST3.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-4",
+        "control_wire": "WHT-YEL",
+        "return_connection": "A4J2-15 / A4J3-16",
+        "return_wire": "ORN / YEL"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "33"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "33"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 33,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.outhole",
+      "kind": "switch",
+      "label": "Outhole",
+      "normally_closed": false,
+      "physical": {
+        "location": "Outhole",
+        "notes": "Switch-matrix return I0, strobe ST4.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-5",
+        "control_wire": "YEL-RED",
+        "return_connection": "A4J2-8 / A4J3-9",
+        "return_wire": "BRN / RED-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "34"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "34"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 34,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-outlane",
+      "kind": "switch",
+      "label": "Right outlane",
+      "normally_closed": false,
+      "physical": {
+        "location": "Right outlane",
+        "notes": "Switch-matrix return I1, strobe ST4.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-5",
+        "control_wire": "YEL-RED",
+        "return_connection": "A4J2-9 / A4J3-10",
+        "return_wire": "GRY / BRN-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "35"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "35"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 35,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-outlane",
+      "kind": "switch",
+      "label": "Left outlane",
+      "normally_closed": false,
+      "physical": {
+        "location": "Left outlane",
+        "notes": "Switch-matrix return I2, strobe ST4.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-5",
+        "control_wire": "YEL-RED",
+        "return_connection": "A4J2-10 / A4J3-11",
+        "return_wire": "WHT-ORN / BLU"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "36"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "36"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 36,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-return-lane",
+      "kind": "switch",
+      "label": "Right return lane",
+      "normally_closed": false,
+      "physical": {
+        "location": "Right return lane",
+        "notes": "Switch-matrix return I3, strobe ST4.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-5",
+        "control_wire": "YEL-RED",
+        "return_connection": "A4J2-11 / A4J3-12 (second connection not used)",
+        "return_wire": "WHT-BLK"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "37"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "37"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 37,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-return-lane",
+      "kind": "switch",
+      "label": "Left return lane",
+      "normally_closed": false,
+      "physical": {
+        "location": "Left return lane",
+        "notes": "Switch-matrix return I4, strobe ST4.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-5",
+        "control_wire": "YEL-RED",
+        "return_connection": "A4J2-12 / A4J3-13 (second connection not used)",
+        "return_wire": "WHT-GRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "38"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "38"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 38,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.middle-right-saucer",
+      "kind": "switch",
+      "label": "Middle-right saucer",
+      "normally_closed": false,
+      "physical": {
+        "location": "Middle-right saucer",
+        "notes": "Switch-matrix return I5, strobe ST4.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-5",
+        "control_wire": "YEL-RED",
+        "return_connection": "A4J2-13 / A4J3-14",
+        "return_wire": "WHT-BRN / BLU-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "39"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "39"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 39,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.middle-left-passive-saucer",
+      "kind": "switch",
+      "label": "Middle-left passive saucer",
+      "normally_closed": false,
+      "physical": {
+        "location": "Middle-left passive saucer",
+        "notes": "Switch-matrix return I6, strobe ST4.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-5",
+        "control_wire": "YEL-RED",
+        "return_connection": "A4J2-14 / A4J3-15",
+        "return_wire": "BRN-YEL / BLU-ORN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "40"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "40"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 40,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-position-i7-st4",
+      "kind": "switch",
+      "label": "Unused matrix position I7/ST4",
+      "normally_closed": false,
+      "physical": {
+        "location": "Unused matrix position I7/ST4",
+        "notes": "Switch-matrix return I7, strobe ST4.",
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "MPU module M-200 A4",
+        "control_connection": "A4J2-5",
+        "control_wire": "YEL-RED",
+        "return_connection": "A4J2-15 / A4J3-16",
+        "return_wire": "ORN / YEL"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "81"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 81,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-right-flipper-button-position",
+      "kind": "switch",
+      "label": "Upper-right flipper button position",
+      "normally_closed": false,
+      "physical": {
+        "location": "Cabinet side",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "82"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 82,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-right-flipper-button",
+      "kind": "switch",
+      "label": "Lower-right flipper button",
+      "normally_closed": false,
+      "physical": {
+        "location": "Cabinet side",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "83"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 83,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-left-flipper-button-position",
+      "kind": "switch",
+      "label": "Upper-left flipper button position",
+      "normally_closed": false,
+      "physical": {
+        "location": "Cabinet side",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "84"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 84,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-left-flipper-button",
+      "kind": "switch",
+      "label": "Lower-left flipper button",
+      "normally_closed": false,
+      "physical": {
+        "location": "Cabinet side",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "1"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S1"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 1,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s1",
+      "kind": "dip_switch",
+      "label": "MPU option switch S1",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "2"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S2"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 2,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s2",
+      "kind": "dip_switch",
+      "label": "MPU option switch S2",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "3"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S3"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 3,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s3",
+      "kind": "dip_switch",
+      "label": "MPU option switch S3",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "4"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S4"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 4,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s4",
+      "kind": "dip_switch",
+      "label": "MPU option switch S4",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "5"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S5"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 5,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s5",
+      "kind": "dip_switch",
+      "label": "MPU option switch S5",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "6"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S6"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 6,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s6",
+      "kind": "dip_switch",
+      "label": "MPU option switch S6",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "7"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S7"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 7,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s7",
+      "kind": "dip_switch",
+      "label": "MPU option switch S7",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "8"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S8"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 8,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s8",
+      "kind": "dip_switch",
+      "label": "MPU option switch S8",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "9"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S9"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 9,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s9",
+      "kind": "dip_switch",
+      "label": "MPU option switch S9",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "10"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S10"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 10,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s10",
+      "kind": "dip_switch",
+      "label": "MPU option switch S10",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "11"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S11"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 11,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s11",
+      "kind": "dip_switch",
+      "label": "MPU option switch S11",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "12"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S12"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 12,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s12",
+      "kind": "dip_switch",
+      "label": "MPU option switch S12",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "13"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S13"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 13,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s13",
+      "kind": "dip_switch",
+      "label": "MPU option switch S13",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "14"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S14"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 14,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s14",
+      "kind": "dip_switch",
+      "label": "MPU option switch S14",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "15"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S15"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 15,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s15",
+      "kind": "dip_switch",
+      "label": "MPU option switch S15",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "16"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S16"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 16,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s16",
+      "kind": "dip_switch",
+      "label": "MPU option switch S16",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "17"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S17"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 17,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s17",
+      "kind": "dip_switch",
+      "label": "MPU option switch S17",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "18"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S18"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 18,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s18",
+      "kind": "dip_switch",
+      "label": "MPU option switch S18",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "19"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S19"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 19,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s19",
+      "kind": "dip_switch",
+      "label": "MPU option switch S19",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "20"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S20"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 20,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s20",
+      "kind": "dip_switch",
+      "label": "MPU option switch S20",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "21"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S21"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 21,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s21",
+      "kind": "dip_switch",
+      "label": "MPU option switch S21",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "22"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S22"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 22,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s22",
+      "kind": "dip_switch",
+      "label": "MPU option switch S22",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "23"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S23"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 23,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s23",
+      "kind": "dip_switch",
+      "label": "MPU option switch S23",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "24"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S24"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 24,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s24",
+      "kind": "dip_switch",
+      "label": "MPU option switch S24",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "25"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S25"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 25,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s25",
+      "kind": "dip_switch",
+      "label": "MPU option switch S25",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "26"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S26"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 26,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s26",
+      "kind": "dip_switch",
+      "label": "MPU option switch S26",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "27"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S27"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 27,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s27",
+      "kind": "dip_switch",
+      "label": "MPU option switch S27",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "28"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S28"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 28,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s28",
+      "kind": "dip_switch",
+      "label": "MPU option switch S28",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "29"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S29"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 29,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s29",
+      "kind": "dip_switch",
+      "label": "MPU option switch S29",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "30"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S30"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 30,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s30",
+      "kind": "dip_switch",
+      "label": "MPU option switch S30",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "31"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S31"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s31",
+      "kind": "dip_switch",
+      "label": "MPU option switch S31",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "32"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S32"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.s32",
+      "kind": "dip_switch",
+      "label": "MPU option switch S32",
+      "physical": {
+        "location": "MPU module M-200 A4",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "manual.address",
+          "value": "left-flipper-eos"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 1,
+        "group": "physical.input.direct"
+      },
+      "id": "switch.left-flipper-end-of-stroke",
+      "kind": "switch",
+      "label": "Left flipper end-of-stroke contact",
+      "normally_closed": true,
+      "physical": {
+        "location": "Left flipper assembly",
+        "notes": "Hard-wired dual-winding flipper contact; this is not a PinMAME switch address.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "manual.address",
+          "value": "right-flipper-eos"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 2,
+        "group": "physical.input.direct"
+      },
+      "id": "switch.right-flipper-end-of-stroke",
+      "kind": "switch",
+      "label": "Right flipper end-of-stroke contact",
+      "normally_closed": true,
+      "physical": {
+        "location": "Right flipper assembly",
+        "notes": "Hard-wired dual-winding flipper contact; this is not a PinMAME switch address.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "pulse": false
+    }
+  ],
+  "knowledge": {
+    "path": "knowledge/stern/ali-seven-digit-conversion-2023.md",
+    "status": "complete"
+  },
+  "machine": {
+    "id": "stern.ali-seven-digit-conversion.2023",
+    "ipdb_id": 43,
+    "kind": "physical_conversion",
+    "manufacturer": "Stern / Idleman / slochar",
+    "name": "Ali seven-digit conversion",
+    "year": 2023
+  },
+  "mechanisms": [
+    {
+      "actuators": [
+        "device.outhole-eject"
+      ],
+      "behavior": "Ali has no multi-position trough. Initialize one ball at the outhole. Public output 11 ejects a ball held on switch 33 toward 115 degrees with nominal force 3 in the working table; the player then launches it manually.",
+      "id": "mechanism.outhole",
+      "kind": "kicker",
+      "label": "Single-ball outhole and manual shooter feed",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.outhole"
+      ]
+    },
+    {
+      "actuators": [
+        "device.top-three-saucer-eject"
+      ],
+      "behavior": "Switches 30, 31, and 32 independently detect held balls, but all three physical cups share public output 7/service solenoid 4. When asserted, the working table exposes all three kicker holes, ejects every occupied cup toward 180 degrees at force 10 with force/angle variation 3, then restores the visual cup state after 200 ms.",
+      "id": "mechanism.top-three-saucers",
+      "kind": "kicker",
+      "label": "Three top saucers with shared eject",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.top-left-saucer",
+        "switch.top-middle-saucer",
+        "switch.top-right-saucer"
+      ]
+    },
+    {
+      "actuators": [
+        "device.middle-right-saucer-eject"
+      ],
+      "behavior": "Switch 38 remains active while a ball is held. Public output 10/service solenoid 14 ejects toward 180 degrees at nominal force 10 with force/angle variation 3; the working table restores the visual cup after 200 ms.",
+      "id": "mechanism.middle-right-saucer",
+      "kind": "kicker",
+      "label": "Middle-right saucer",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.middle-right-saucer"
+      ]
+    },
+    {
+      "actuators": [],
+      "behavior": "The physical chart names switch 39 Middle Left Saucer, but the proven table supplies no capture or eject actuator and only mirrors hit/unhit state to the ROM. Recreate it as the passive, gravity-clearing playfield feature shown by the working geometry; do not invent a PinMAME coil.",
+      "id": "mechanism.middle-left-passive-saucer",
+      "kind": "other",
+      "label": "Middle-left passive saucer",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.middle-left-passive-saucer"
+      ]
+    },
+    {
+      "actuators": [
+        "device.top-three-bank-drop-target-reset"
+      ],
+      "behavior": "Switches 19-21 stay active while their respective targets are down. Public output 8/service solenoid 8 resets the complete bank.",
+      "id": "mechanism.top-drop-bank",
+      "kind": "drop_target_bank",
+      "label": "Top three-bank drop targets",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.top-three-bank-drop-target-left",
+        "switch.top-three-bank-drop-target-middle",
+        "switch.top-three-bank-drop-target-right"
+      ]
+    },
+    {
+      "actuators": [
+        "device.left-three-bank-drop-target-reset"
+      ],
+      "behavior": "Switches 22-24 stay active while their respective targets are down. Public output 9/service solenoid 13 resets the complete bank.",
+      "id": "mechanism.left-drop-bank",
+      "kind": "drop_target_bank",
+      "label": "Left three-bank drop targets",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.left-three-bank-drop-target-bottom",
+        "switch.left-three-bank-drop-target-middle",
+        "switch.left-three-bank-drop-target-top"
+      ]
+    },
+    {
+      "actuators": [
+        "device.left-thumper-bumper",
+        "device.middle-thumper-bumper",
+        "device.right-thumper-bumper"
+      ],
+      "behavior": "Left switch 13 drives public output 3/service solenoid 5, middle switch 14 drives public output 4/service solenoid 6, and right switch 12 drives public output 5/service solenoid 7.",
+      "id": "mechanism.thumper-bumpers",
+      "kind": "kicker",
+      "label": "Three thumper bumpers",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "runtime.ali.service-solenoid-test"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.left-thumper-bumper",
+        "switch.middle-thumper-bumper",
+        "switch.right-thumper-bumper"
+      ]
+    },
+    {
+      "actuators": [
+        "device.left-slingshot",
+        "device.right-slingshot"
+      ],
+      "behavior": "Left switch 16 drives public output 1/service solenoid 2. Right switch 15 drives public output 2/service solenoid 1. This reversed-looking public/service numbering is confirmed by the ROM service sweep and working script semantics.",
+      "id": "mechanism.slingshots",
+      "kind": "kicker",
+      "label": "Left and right slingshots",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "runtime.ali.service-solenoid-test"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.left-slingshot",
+        "switch.right-slingshot"
+      ]
+    },
+    {
+      "actuators": [
+        "device.left-flipper",
+        "device.right-flipper"
+      ],
+      "behavior": "Output 19 gates both hard-wired 43 V flipper circuits. Synthetic public switch 84/button and output 48 represent the left flipper; switch 82 and output 46 represent the right. Each J-25-450/34-4500 assembly uses its normally-closed local EOS contact to transfer from power to hold winding.",
+      "id": "mechanism.flippers",
+      "kind": "other",
+      "label": "Two lower dual-winding flippers",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.lower-left-flipper-button",
+        "switch.lower-right-flipper-button",
+        "switch.left-flipper-end-of-stroke",
+        "switch.right-flipper-end-of-stroke"
+      ]
+    },
+    {
+      "actuators": [],
+      "behavior": "Each completed spinner rotation pulses public switch 9. The technical chart calls address 9 a Top Left Rollover Button, but the known-working table script is ground truth for the recreated physical feature and maps its spinner directly to 9.",
+      "id": "mechanism.spinner",
+      "kind": "other",
+      "label": "Top-left spinner",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.top-left-spinner"
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "1"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "2"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-slingshot",
+      "kind": "coil",
+      "label": "Left slingshot",
+      "physical": {
+        "location": "Left slingshot",
+        "part_number": "J-27-1700"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J2-4, J1-3",
+        "drive_wire": "GRN-BLU",
+        "driver_transistor": "Q2",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "2"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "1"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-slingshot",
+      "kind": "coil",
+      "label": "Right slingshot",
+      "physical": {
+        "location": "Right slingshot",
+        "part_number": "J-27-1700"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J2-9, J1-2",
+        "drive_wire": "GRN-ORN",
+        "driver_transistor": "Q1",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "3"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "5"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-thumper-bumper",
+      "kind": "coil",
+      "label": "Left thumper bumper",
+      "physical": {
+        "location": "Left thumper bumper",
+        "part_number": "J-26-1200"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J2-10",
+        "drive_wire": "GRN-YEL",
+        "driver_transistor": "Q5",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "4"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "6"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.middle-thumper-bumper",
+      "kind": "coil",
+      "label": "Middle thumper bumper",
+      "physical": {
+        "location": "Middle thumper bumper",
+        "part_number": "J-26-1200"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J2-11",
+        "drive_wire": "GRY-RED",
+        "driver_transistor": "Q6",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "5"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "7"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-thumper-bumper",
+      "kind": "coil",
+      "label": "Right thumper bumper",
+      "physical": {
+        "location": "Right thumper bumper",
+        "part_number": "J-26-1200"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J2-12",
+        "drive_wire": "RED-YEL",
+        "driver_transistor": "Q7",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "6"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "3"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.knocker",
+      "kind": "coil",
+      "label": "Knocker",
+      "physical": {
+        "location": "Knocker",
+        "part_number": "N-26-1200"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J2-5, J3-4",
+        "drive_wire": "GRN-BLK",
+        "driver_transistor": "Q3",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "7"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "4"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.top-three-saucer-eject",
+      "kind": "coil",
+      "label": "Top three-saucer eject",
+      "physical": {
+        "location": "Top three-saucer eject",
+        "part_number": "J-28-2300"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J1-5",
+        "drive_wire": "BLK-BLU",
+        "driver_transistor": "Q4",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "8"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "8"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.top-three-bank-drop-target-reset",
+      "kind": "coil",
+      "label": "Top three-bank drop-target reset",
+      "physical": {
+        "location": "Top three-bank drop-target reset",
+        "part_number": "B-27-2300"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J5-10",
+        "drive_wire": "BLK-ORN",
+        "driver_transistor": "Q8",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "9"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "13"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-three-bank-drop-target-reset",
+      "kind": "coil",
+      "label": "Left three-bank drop-target reset",
+      "physical": {
+        "location": "Left three-bank drop-target reset",
+        "part_number": "B-27-2300"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J5-12",
+        "drive_wire": "BLK-YEL",
+        "driver_transistor": "Q13",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "10"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "14"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.middle-right-saucer-eject",
+      "kind": "coil",
+      "label": "Middle-right saucer eject",
+      "physical": {
+        "location": "Middle-right saucer eject",
+        "part_number": "J-28-2300"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J5-11",
+        "drive_wire": "BLK-GRN",
+        "driver_transistor": "Q14",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "11"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "9"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.outhole-eject",
+      "kind": "coil",
+      "label": "Outhole eject",
+      "physical": {
+        "location": "Outhole eject",
+        "part_number": "JX-26-1100"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J5-9",
+        "drive_wire": "RED-BLU",
+        "driver_transistor": "Q9",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "12"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "10"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-momentary-output-10",
+      "kind": "coil",
+      "label": "Unused momentary output 10",
+      "physical": {
+        "location": "Unused momentary output 10"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J5-15",
+        "driver_transistor": "Q10",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "13"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "12"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 13,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-momentary-output-12",
+      "kind": "coil",
+      "label": "Unused momentary output 12",
+      "physical": {
+        "location": "Unused momentary output 12"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J5-13",
+        "driver_transistor": "Q12",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "14"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "11"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.general-illumination-relay",
+      "kind": "relay",
+      "label": "General-illumination relay",
+      "physical": {
+        "location": "General-illumination relay",
+        "part_number": "48V relay"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J5-14",
+        "drive_wire": "ORN-BLK",
+        "driver_transistor": "Q11",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "15"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "16"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-momentary-output-16",
+      "kind": "coil",
+      "label": "Unused momentary output 16",
+      "physical": {
+        "location": "Unused momentary output 16"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J5-8, J2-6, J3-7",
+        "driver_transistor": "Q16",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "17"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "17"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-continuous-output-17",
+      "kind": "relay",
+      "label": "Unused continuous output 17",
+      "physical": {
+        "location": "Unused continuous output 17"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J5-7",
+        "driver_transistor": "Q17",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "18"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "19"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.coin-lockout-coil",
+      "kind": "coil",
+      "label": "Coin-lockout coil",
+      "physical": {
+        "location": "Coin-lockout coil",
+        "part_number": "C-36-5300"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J2-8",
+        "drive_wire": "YEL-WHT",
+        "driver_transistor": "Q19",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "19"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "15"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 19,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.flipper-enabling-relay",
+      "kind": "relay",
+      "label": "Flipper-enabling relay",
+      "physical": {
+        "location": "Flipper-enabling relay",
+        "part_number": "48V relay"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "Hard-wired enable circuit",
+        "driver_transistor": "Q15",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "20"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "18"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-continuous-output-18",
+      "kind": "relay",
+      "label": "Unused continuous output 18",
+      "physical": {
+        "location": "Unused continuous output 18"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "runtime.ali.service-solenoid-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Solenoid Driver / Voltage Regulator module SDU-100 A3",
+        "drive_connection": "A3J5-3, J2-15, J3-9",
+        "driver_transistor": "Q18",
+        "nominal_voltage_v": 43,
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "46"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "right-flipper"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-flipper",
+      "kind": "coil",
+      "label": "Right lower flipper dual-winding coil",
+      "physical": {
+        "location": "Right flipper assembly",
+        "part_number": "J-25-450/34-4500"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Hard-wired flipper circuit gated by output 19",
+        "control_connection": "A3J2-1",
+        "control_wire": "RED",
+        "drive_connection": "A3J1-9",
+        "drive_wire": "ORN",
+        "nominal_voltage_v": 43,
+        "power_wire": "BLU-WHT",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "48"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "left-flipper"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 48,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-flipper",
+      "kind": "coil",
+      "label": "Left lower flipper dual-winding coil",
+      "physical": {
+        "location": "Left flipper assembly",
+        "part_number": "J-25-450/34-4500"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Hard-wired flipper circuit gated by output 19",
+        "control_connection": "A3J2-2",
+        "control_wire": "BLU",
+        "drive_connection": "A3J1-8",
+        "drive_wire": "GRN",
+        "nominal_voltage_v": 43,
+        "power_wire": "BLU-WHT",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "1"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q14"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.arch-g",
+      "kind": "lamp",
+      "label": "Arch G",
+      "physical": {
+        "location": "Arch G",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-18",
+        "drive_wire": "BRN-BLK",
+        "driver_transistor": "Q14 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "2"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q12"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.arch-t-first",
+      "kind": "lamp",
+      "label": "Arch T (first)",
+      "physical": {
+        "location": "Arch T (first)",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-19",
+        "drive_wire": "GRY-GRN",
+        "driver_transistor": "Q12 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "3"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q13"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.target-g",
+      "kind": "lamp",
+      "label": "Target G",
+      "physical": {
+        "location": "Target G",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-17",
+        "drive_wire": "PUR",
+        "driver_transistor": "Q13 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "4"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q08"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.target-t",
+      "kind": "lamp",
+      "label": "Target T",
+      "physical": {
+        "location": "Target T",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-23",
+        "drive_wire": "GRY-BLK",
+        "driver_transistor": "Q08 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "5"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q09"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.top-drop-targets-5-000",
+      "kind": "lamp",
+      "label": "Top drop targets 5,000",
+      "physical": {
+        "location": "Top drop targets 5,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-14",
+        "drive_wire": "GRY-ORN",
+        "driver_transistor": "Q09 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "6"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q10"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-drop-targets-4-000",
+      "kind": "lamp",
+      "label": "Left drop targets 4,000",
+      "physical": {
+        "location": "Left drop targets 4,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-15",
+        "drive_wire": "GRY-YEL",
+        "driver_transistor": "Q10 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "7"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q11"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-200-g",
+      "kind": "lamp",
+      "label": "Center 200 G",
+      "physical": {
+        "location": "Center 200 G",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-16",
+        "drive_wire": "BLK",
+        "driver_transistor": "Q11 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "8"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q04"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-rollover-button-1-000",
+      "kind": "lamp",
+      "label": "Center rollover button 1,000",
+      "physical": {
+        "location": "Center rollover button 1,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-28",
+        "drive_wire": "BLK-BLU",
+        "driver_transistor": "Q04 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "9"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q01"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-controlled-lamp-scr-q01",
+      "kind": "lamp",
+      "label": "Unused controlled-lamp SCR Q01",
+      "physical": {
+        "location": "Unused controlled-lamp SCR Q01",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-24",
+        "driver_transistor": "Q01 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "10"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q02"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.bonus-multiplier-4x",
+      "kind": "lamp",
+      "label": "Bonus multiplier 4X",
+      "physical": {
+        "location": "Bonus multiplier 4X",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-25",
+        "drive_wire": "PUR-BLK",
+        "driver_transistor": "Q02 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "11"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q03"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.shoot-again-playfield-and-backglass",
+      "kind": "lamp",
+      "label": "Shoot Again (playfield and backglass)",
+      "physical": {
+        "location": "Shoot Again (playfield and backglass)",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-26/J2-21",
+        "drive_wire": "GRY-RED",
+        "driver_transistor": "Q03 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "12"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q07"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.bonus-8-000",
+      "kind": "lamp",
+      "label": "Bonus 8,000",
+      "physical": {
+        "location": "Bonus 8,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-13",
+        "drive_wire": "GRY-GRN",
+        "driver_transistor": "Q07 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "13"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q16"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 13,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.high-score-to-date",
+      "kind": "lamp",
+      "label": "High Score to Date",
+      "physical": {
+        "location": "High Score to Date",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-22",
+        "drive_wire": "GRY-ORN",
+        "driver_transistor": "Q16 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "14"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q05"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.top-saucer-special",
+      "kind": "lamp",
+      "label": "Top saucer Special",
+      "physical": {
+        "location": "Top saucer Special",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-16",
+        "drive_wire": "YEL-BLU",
+        "driver_transistor": "Q05 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "15"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q06"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.top-ali-a",
+      "kind": "lamp",
+      "label": "Top ALI A",
+      "physical": {
+        "location": "Top ALI A",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-14",
+        "drive_wire": "BLU-RED",
+        "driver_transistor": "Q06 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "17"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q29"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.arch-r",
+      "kind": "lamp",
+      "label": "Arch R",
+      "physical": {
+        "location": "Arch R",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-1",
+        "drive_wire": "BLU-RED",
+        "driver_transistor": "Q29 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "18"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q27"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.arch-s",
+      "kind": "lamp",
+      "label": "Arch S",
+      "physical": {
+        "location": "Arch S",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-9",
+        "drive_wire": "GRY",
+        "driver_transistor": "Q27 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "19"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q28"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 19,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.target-r",
+      "kind": "lamp",
+      "label": "Target R",
+      "physical": {
+        "location": "Target R",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-8",
+        "drive_wire": "GRN-BLK",
+        "driver_transistor": "Q28 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "20"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q35"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.return-lane-s-left",
+      "kind": "lamp",
+      "label": "Return lane S (left)",
+      "physical": {
+        "location": "Return lane S (left)",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-3",
+        "drive_wire": "RED-GRN",
+        "driver_transistor": "Q35 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "21"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q34"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.top-drop-targets-10-000",
+      "kind": "lamp",
+      "label": "Top drop targets 10,000",
+      "physical": {
+        "location": "Top drop targets 10,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-2",
+        "drive_wire": "PUR-WHT",
+        "driver_transistor": "Q34 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "22"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q22"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-drop-targets-6-000",
+      "kind": "lamp",
+      "label": "Left drop targets 6,000",
+      "physical": {
+        "location": "Left drop targets 6,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-10",
+        "drive_wire": "GRY-BLU",
+        "driver_transistor": "Q22 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "23"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q26"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 23,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-400-r",
+      "kind": "lamp",
+      "label": "Center 400 R",
+      "physical": {
+        "location": "Center 400 R",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-7",
+        "drive_wire": "YEL-GRN",
+        "driver_transistor": "Q26 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "24"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q24"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 24,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-controlled-lamp-scr-q24",
+      "kind": "lamp",
+      "label": "Unused controlled-lamp SCR Q24",
+      "physical": {
+        "location": "Unused controlled-lamp SCR Q24",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-5",
+        "driver_transistor": "Q24 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "25"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q25"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-controlled-lamp-scr-q25",
+      "kind": "lamp",
+      "label": "Unused controlled-lamp SCR Q25",
+      "physical": {
+        "location": "Unused controlled-lamp SCR Q25",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-6",
+        "driver_transistor": "Q25 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "26"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q17"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.bonus-multiplier-5x",
+      "kind": "lamp",
+      "label": "Bonus multiplier 5X",
+      "physical": {
+        "location": "Bonus multiplier 5X",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-11",
+        "drive_wire": "BLK-ORN",
+        "driver_transistor": "Q17 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "27"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q23"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.bonus-2-000",
+      "kind": "lamp",
+      "label": "Bonus 2,000",
+      "physical": {
+        "location": "Bonus 2,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-8",
+        "drive_wire": "PUR-YEL",
+        "driver_transistor": "Q23 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "28"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q21"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.bonus-10-000",
+      "kind": "lamp",
+      "label": "Bonus 10,000",
+      "physical": {
+        "location": "Bonus 10,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-12",
+        "drive_wire": "WHT-YEL",
+        "driver_transistor": "Q21 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "29"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q15"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 29,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.ball-in-play",
+      "kind": "lamp",
+      "label": "Ball in Play",
+      "physical": {
+        "location": "Ball in Play",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-23",
+        "driver_transistor": "Q15 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "30"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q18"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outlane-left",
+      "kind": "lamp",
+      "label": "Outlane left",
+      "physical": {
+        "location": "Outlane left",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-20",
+        "drive_wire": "YEL-BLK",
+        "driver_transistor": "Q18 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "31"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q19"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.top-ali-l",
+      "kind": "lamp",
+      "label": "Top ALI L",
+      "physical": {
+        "location": "Top ALI L",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-15",
+        "drive_wire": "BLK-BLU",
+        "driver_transistor": "Q19 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "33"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q36"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 33,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.arch-e-first",
+      "kind": "lamp",
+      "label": "Arch E (first)",
+      "physical": {
+        "location": "Arch E (first)",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-26",
+        "drive_wire": "BLK-WHT",
+        "driver_transistor": "Q36 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "34"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q38"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 34,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.arch-t-second",
+      "kind": "lamp",
+      "label": "Arch T (second)",
+      "physical": {
+        "location": "Arch T (second)",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-25",
+        "drive_wire": "RED-YEL",
+        "driver_transistor": "Q38 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "35"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q44"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 35,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.target-e",
+      "kind": "lamp",
+      "label": "Target E",
+      "physical": {
+        "location": "Target E",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-19",
+        "drive_wire": "BLK-RED",
+        "driver_transistor": "Q44 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "36"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q49"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 36,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.return-lane-t-right",
+      "kind": "lamp",
+      "label": "Return lane T (right)",
+      "physical": {
+        "location": "Return lane T (right)",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-17",
+        "drive_wire": "YEL-BLU",
+        "driver_transistor": "Q49 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "37"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q48"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 37,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.top-drop-targets-15-000",
+      "kind": "lamp",
+      "label": "Top drop targets 15,000",
+      "physical": {
+        "location": "Top drop targets 15,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-16",
+        "drive_wire": "RED-BLK",
+        "driver_transistor": "Q48 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "38"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q37"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 38,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-drop-targets-8-000",
+      "kind": "lamp",
+      "label": "Left drop targets 8,000",
+      "physical": {
+        "location": "Left drop targets 8,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-23",
+        "drive_wire": "WHT-GRY",
+        "driver_transistor": "Q37 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "39"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q32"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 39,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-600-s",
+      "kind": "lamp",
+      "label": "Center 600 S",
+      "physical": {
+        "location": "Center 600 S",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-27",
+        "drive_wire": "ORN-WHT",
+        "driver_transistor": "Q32 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "40"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q20"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 40,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-controlled-lamp-scr-q20",
+      "kind": "lamp",
+      "label": "Unused controlled-lamp SCR Q20",
+      "physical": {
+        "location": "Unused controlled-lamp SCR Q20",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J1-13",
+        "driver_transistor": "Q20 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "41"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q42"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 41,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.bonus-multiplier-2x",
+      "kind": "lamp",
+      "label": "Bonus multiplier 2X",
+      "physical": {
+        "location": "Bonus multiplier 2X",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-21",
+        "drive_wire": "BLK-GRN",
+        "driver_transistor": "Q42 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "42"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q46"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 42,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.extra-ball-left",
+      "kind": "lamp",
+      "label": "Extra Ball (left)",
+      "physical": {
+        "location": "Extra Ball (left)",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-18",
+        "drive_wire": "RED-BLU",
+        "driver_transistor": "Q46 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "43"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q40"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 43,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.bonus-4-000",
+      "kind": "lamp",
+      "label": "Bonus 4,000",
+      "physical": {
+        "location": "Bonus 4,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-9",
+        "drive_wire": "GRY",
+        "driver_transistor": "Q40 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "44"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q39"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 44,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.bonus-20-000",
+      "kind": "lamp",
+      "label": "Bonus 20,000",
+      "physical": {
+        "location": "Bonus 20,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-4",
+        "drive_wire": "PUR-BLK",
+        "driver_transistor": "Q39 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "45"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q33"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 45,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.game-over",
+      "kind": "lamp",
+      "label": "Game Over",
+      "physical": {
+        "location": "Game Over",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-11",
+        "drive_wire": "GRY-WHT",
+        "driver_transistor": "Q33 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "46"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q30"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.outlane-right",
+      "kind": "lamp",
+      "label": "Outlane right",
+      "physical": {
+        "location": "Outlane right",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-6",
+        "drive_wire": "BLU-WHT",
+        "driver_transistor": "Q30 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "47"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q31"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 47,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.top-ali-i",
+      "kind": "lamp",
+      "label": "Top ALI I",
+      "physical": {
+        "location": "Top ALI I",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-2",
+        "drive_wire": "RED-BLU",
+        "driver_transistor": "Q31 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "49"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q57"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 49,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.arch-a",
+      "kind": "lamp",
+      "label": "Arch A",
+      "physical": {
+        "location": "Arch A",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-1",
+        "drive_wire": "GRN-RED",
+        "driver_transistor": "Q57 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "50"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q50"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 50,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.arch-e-second",
+      "kind": "lamp",
+      "label": "Arch E (second)",
+      "physical": {
+        "location": "Arch E (second)",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-12",
+        "drive_wire": "ORN-RED",
+        "driver_transistor": "Q50 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "51"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q51"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 51,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.target-a",
+      "kind": "lamp",
+      "label": "Target A",
+      "physical": {
+        "location": "Target A",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-15",
+        "drive_wire": "WHT-BLK",
+        "driver_transistor": "Q51 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "52"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q54"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 52,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-controlled-lamp-scr-q54",
+      "kind": "lamp",
+      "label": "Unused controlled-lamp SCR Q54",
+      "physical": {
+        "location": "Unused controlled-lamp SCR Q54",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-11",
+        "driver_transistor": "Q54 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "53"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q55"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 53,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.top-drop-targets-20-000",
+      "kind": "lamp",
+      "label": "Top drop targets 20,000",
+      "physical": {
+        "location": "Top drop targets 20,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-9",
+        "drive_wire": "WHT-RED",
+        "driver_transistor": "Q55 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "54"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q60"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 54,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-drop-targets-10-000",
+      "kind": "lamp",
+      "label": "Left drop targets 10,000",
+      "physical": {
+        "location": "Left drop targets 10,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-3",
+        "drive_wire": "GRN",
+        "driver_transistor": "Q60 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "55"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q59"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 55,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-800-e",
+      "kind": "lamp",
+      "label": "Center 800 E",
+      "physical": {
+        "location": "Center 800 E",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-4",
+        "drive_wire": "RED-WHT",
+        "driver_transistor": "Q59 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "56"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q58"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 56,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-controlled-lamp-scr-q58",
+      "kind": "lamp",
+      "label": "Unused controlled-lamp SCR Q58",
+      "physical": {
+        "location": "Unused controlled-lamp SCR Q58",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-2",
+        "driver_transistor": "Q58 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "57"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q56"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 57,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.bonus-multiplier-3x",
+      "kind": "lamp",
+      "label": "Bonus multiplier 3X",
+      "physical": {
+        "location": "Bonus multiplier 3X",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-10",
+        "drive_wire": "GRY-BLK",
+        "driver_transistor": "Q56 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "58"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q41"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 58,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.extra-ball-right",
+      "kind": "lamp",
+      "label": "Extra Ball (right)",
+      "physical": {
+        "location": "Extra Ball (right)",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J3-20",
+        "drive_wire": "WHT-ORN",
+        "driver_transistor": "Q41 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "59"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q52"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 59,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.bonus-6-000",
+      "kind": "lamp",
+      "label": "Bonus 6,000",
+      "physical": {
+        "location": "Bonus 6,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-5",
+        "drive_wire": "BLK-YEL",
+        "driver_transistor": "Q52 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "60"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q53"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 60,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.top-saucer-10-000",
+      "kind": "lamp",
+      "label": "Top saucer 10,000",
+      "physical": {
+        "location": "Top saucer 10,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-3",
+        "drive_wire": "BLK-WHT",
+        "driver_transistor": "Q53 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "61"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q47"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 61,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.tilt",
+      "kind": "lamp",
+      "label": "Tilt",
+      "physical": {
+        "location": "Tilt",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-10",
+        "drive_wire": "GRY-BLK",
+        "driver_transistor": "Q47 (MCR-106)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "62"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q43"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 62,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.top-saucer-5-000",
+      "kind": "lamp",
+      "label": "Top saucer 5,000",
+      "physical": {
+        "location": "Top saucer 5,000",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-7",
+        "drive_wire": "YEL-WHT",
+        "driver_transistor": "Q43 (2N5060)"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "63"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "Q45"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 63,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.match",
+      "kind": "lamp",
+      "label": "Match",
+      "physical": {
+        "location": "Match",
+        "notes": "Discrete controlled-lamp circuit; this is not a row/column lamp matrix."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1",
+          "vpx-table.ali.jp-salas.1.0.1",
+          "runtime.ali.service-lamp-test"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "Lamp Driver module LDA-100 A5",
+        "drive_connection": "A5J2-1",
+        "drive_wire": "GRY-YEL",
+        "driver_transistor": "Q45 (2N5060)"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "destination": "device.left-slingshot",
+      "id": "relationship.left-sling",
+      "kind": "direct",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.left-slingshot"
+    },
+    {
+      "destination": "device.right-slingshot",
+      "id": "relationship.right-sling",
+      "kind": "direct",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.right-slingshot"
+    },
+    {
+      "destination": "device.left-thumper-bumper",
+      "id": "relationship.left-pop",
+      "kind": "direct",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.left-thumper-bumper"
+    },
+    {
+      "destination": "device.middle-thumper-bumper",
+      "id": "relationship.middle-pop",
+      "kind": "direct",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.middle-thumper-bumper"
+    },
+    {
+      "destination": "device.right-thumper-bumper",
+      "id": "relationship.right-pop",
+      "kind": "direct",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.right-thumper-bumper"
+    },
+    {
+      "destination": "device.outhole-eject",
+      "id": "relationship.outhole",
+      "kind": "pulse",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.outhole"
+    },
+    {
+      "destination": "device.middle-right-saucer-eject",
+      "id": "relationship.middle-right-saucer",
+      "kind": "pulse",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.middle-right-saucer"
+    },
+    {
+      "destination": "device.left-flipper",
+      "id": "relationship.left-flipper",
+      "kind": "relay_gated",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.lower-left-flipper-button"
+    },
+    {
+      "destination": "device.right-flipper",
+      "id": "relationship.right-flipper",
+      "kind": "relay_gated",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.lower-right-flipper-button"
+    },
+    {
+      "destination": "device.top-three-saucer-eject",
+      "id": "relationship.top-left-saucer",
+      "kind": "pulse",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.top-left-saucer"
+    },
+    {
+      "destination": "device.top-three-saucer-eject",
+      "id": "relationship.top-middle-saucer",
+      "kind": "pulse",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.top-middle-saucer"
+    },
+    {
+      "destination": "device.top-three-saucer-eject",
+      "id": "relationship.top-right-saucer",
+      "kind": "pulse",
+      "provenance": {
+        "source_refs": [
+          "manual.ali.tech-chart",
+          "vpx.ali.jp-salas.1.0.1"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.top-right-saucer"
+    }
+  ],
+  "schema_version": 2,
+  "sources": [
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.catalog.4ec52ff0ac13",
+      "kind": "pinmame_catalog",
+      "license": "BSD-3-Clause",
+      "locator": "PinmameGetGames entries alib and alic",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.4ec52ff0ac13",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/stgames.c lines 7-16 and 595-632; src/wpc/by35.c; src/wpc/by35.h",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "Inkochnito; hosted by Pinball Rebel",
+      "id": "manual.ali.tech-chart",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "Stern_Ali_Tech_Chart.pdf page 1: switch matrix, controlled-lamp chart, coil table, flipper circuits, boards, and fuses",
+      "original_filename": "Stern_Ali_Tech_Chart.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "455ea85f99eff031ffcca75489ab4dfea0a587a864522fb2fa30a4bfd160d78b",
+      "source_id": "pinballrebel",
+      "uri": "https://www.pinballrebel.com/pinball/cards/Tech_Charts/Stern_Ali_Tech_Chart.pdf"
+    },
+    {
+      "attribution": "JP Salas, table contributors, and vpxtable_scripts contributors",
+      "id": "vpx.ali.jp-salas.1.0.1",
+      "kind": "vpx_script",
+      "license": "NOASSERTION",
+      "locator": "Ali-v1.0.1.vbs: initialization, switches 1-40, outputs 6-11/19/46/48, lamp objects 1-63, ball stacks, drop banks, and mechanism callbacks",
+      "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+      "sha256": "6dbde0131a367c643ae87fe511052d28d83ed0cb6b74b87ba731a900678f1849",
+      "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Ali-v1.0.1.vbs"
+    },
+    {
+      "attribution": "JP Salas and table contributors",
+      "id": "vpx-table.ali.jp-salas.1.0.1",
+      "kind": "vpx_table",
+      "license": "NOASSERTION",
+      "locator": "Ali (Stern 1980).vpx, 3571712 bytes; embedded playfield art and object positions inspected without modifying the table",
+      "original_filename": "Ali (Stern 1980).vpx",
+      "rights": "NOASSERTION",
+      "sha256": "14137b288aee843e834f509b467dd288fcf0e3269afcbd397e2276d31c24533f",
+      "uri": "local-evidence://vpx/Ali-Stern-1980.vpx"
+    },
+    {
+      "attribution": "Generated locally from PinMAME and the user-authorized ROM corpus; ROM bytes are external",
+      "id": "runtime.ali.service-lamp-test",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "tools/run_pinmame_harness.py; exact ali.zip SHA-256 bf0edc82cdfcfbcc354faff3b2cf668a11f0aac53e7affd915e44136e3325a4b; one -7 self-test pulse; all 60 valid lamp addresses observed and invalid 16/32/48/64 absent",
+      "sha256": "320e2e140e58235d6ee4ef5cbc66788eb2006b0a6fb743dcae889793865db0c3",
+      "uri": "local-evidence://pinmame-harness/ali-service-single.json"
+    },
+    {
+      "attribution": "Generated locally from PinMAME and the user-authorized ROM corpus; ROM bytes are external",
+      "id": "runtime.ali.service-solenoid-test",
+      "kind": "service_diagnostic",
+      "license": "NOASSERTION",
+      "locator": "tools/run_pinmame_harness.py; exact ali.zip SHA-256 bf0edc82cdfcfbcc354faff3b2cf668a11f0aac53e7affd915e44136e3325a4b; two -7 self-test pulses; repeated physical 1-19 to public-output sweep captured",
+      "sha256": "cb14917ee85f7b86b1c4c61b4b9c147c8e7909a97e52e21f2dfe237ac35219bf",
+      "uri": "local-evidence://pinmame-harness/ali-service-solenoids.json"
+    }
+  ]
+}

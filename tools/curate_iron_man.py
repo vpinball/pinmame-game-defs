@@ -7,6 +7,7 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json, write_text
+from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -497,11 +498,11 @@ def runtime_evidence() -> dict[str, object]:
 
 
 def main() -> None:
-	write_json(ROOT / "machines/author-ready/stern/iron-man-2010.json", build(False))
-	write_json(ROOT / "machines/author-ready/stern/iron-man-vault-edition-2014.json", build(True))
+	write_json(spatial_partial_path(ROOT / "machines/partial/stern/iron-man-2010.json"), fail_closed_spatial_partial(build(False)))
+	write_json(spatial_partial_path(ROOT / "machines/partial/stern/iron-man-vault-edition-2014.json"), fail_closed_spatial_partial(build(True)))
 	write_json(ROOT / "evidence/runtime/sam/iron-man-vault-edition-boot-start.json", runtime_evidence())
-	write_text(ROOT / "knowledge/stern/iron-man-2010.md", ORIGINAL_KNOWLEDGE)
-	write_text(ROOT / "knowledge/stern/iron-man-vault-edition-2014.md", VE_KNOWLEDGE)
+	write_text(ROOT / "knowledge/stern/iron-man-2010.md", fail_closed_spatial_knowledge("stern.iron-man.2010", ORIGINAL_KNOWLEDGE))
+	write_text(ROOT / "knowledge/stern/iron-man-vault-edition-2014.md", fail_closed_spatial_knowledge("stern.iron-man-vault-edition.2014", VE_KNOWLEDGE))
 
 
 if __name__ == "__main__":

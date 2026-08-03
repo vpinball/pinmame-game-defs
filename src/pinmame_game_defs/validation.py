@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 import re
 from collections import Counter
 from pathlib import Path, PurePosixPath
@@ -28,7 +29,22 @@ AUTHOR_READY_DIMENSIONS = {
 	"mechanisms",
 	"variant_coverage",
 	"recreation_knowledge",
+	"spatial_placement",
 }
+BASE_COVERAGE_DIMENSIONS = AUTHOR_READY_DIMENSIONS - {"spatial_placement"}
+SPATIAL_NA_REASONS = {
+	"unused",
+	"virtual",
+	"constant",
+	"dip_switch",
+	"cabinet_or_service",
+	"internal_nonvisual",
+	"no_physical_device",
+}
+SPATIAL_ROLES = {"sensor", "effect", "emitter"}
+EMITTER_OUTPUT_KINDS = {"lamp", "rgb_lamp", "flasher", "gi"}
+EFFECT_OUTPUT_KINDS = {"coil", "motor", "servo", "magnet", "relay"}
+LOCAL_L_DRIVE_PATTERN = re.compile(r"(?:^|[^a-z0-9])l:[\\/]", re.IGNORECASE)
 
 
 def _expect(condition: bool, path: str, message: str, errors: list[str]) -> None:
@@ -71,11 +87,135 @@ def _required_mapping(value: Any, path: str, keys: set[str], errors: list[str]) 
 	return value
 
 
+def _validate_provenance_refs(provenance: Any, path: str, source_ids: set[str], errors: list[str], require_validated: bool = False) -> None:
+	if not isinstance(provenance, dict):
+		errors.append(f"{path}: must be an object")
+		return
+	refs = provenance.get("source_refs")
+	_expect(isinstance(refs, list) and bool(refs), f"{path}.source_refs", "must contain a source reference", errors)
+	if isinstance(refs, list):
+		for source_ref in refs:
+			_expect(source_ref in source_ids, f"{path}.source_refs", f"unknown source reference {source_ref!r}", errors)
+	if require_validated:
+		_expect(provenance.get("status") == "validated", f"{path}.status", "author-ready spatial assertions must be validated", errors)
+
+
+def _has_cabinet_or_service_role(device: dict[str, Any]) -> bool:
+	roles = device.get("roles")
+	return isinstance(roles, list) and any(isinstance(role, str) and role.startswith(("cabinet.", "service.")) for role in roles)
+
+
+def _fractional_precision(value: float) -> int:
+	text = format(value, ".15f").rstrip("0").rstrip(".")
+	return len(text.partition(".")[2])
+
+
+def _validate_spatial(
+	device: dict[str, Any],
+	collection_name: str,
+	path: str,
+	status: Any,
+	source_ids: set[str],
+	placement_ids: set[str],
+	errors: list[str],
+) -> None:
+	spatial = device.get("spatial")
+	if spatial is None:
+		if status == "author_ready":
+			errors.append(f"{path}.spatial: author-ready devices require spatial evidence or a controlled not_applicable record")
+		return
+	if not isinstance(spatial, dict):
+		errors.append(f"{path}.spatial: must be an object")
+		return
+	spatial_status = spatial.get("status")
+	if spatial_status == "not_applicable":
+		reason = spatial.get("reason")
+		_expect(reason in SPATIAL_NA_REASONS, f"{path}.spatial.reason", "must be a controlled not_applicable reason", errors)
+		_expect("placements" not in spatial, f"{path}.spatial.placements", "not_applicable records cannot contain placements", errors)
+		_validate_provenance_refs(spatial.get("provenance"), f"{path}.spatial.provenance", source_ids, errors, status == "author_ready")
+		if status != "author_ready":
+			return
+		availability = device.get("availability")
+		kind = device.get("kind")
+		if collection_name == "inputs":
+			if kind == "virtual":
+				expected = "virtual"
+			elif kind == "constant":
+				expected = "constant"
+			elif kind == "dip_switch":
+				expected = "dip_switch"
+			elif availability == "unused":
+				expected = "unused"
+			elif kind == "switch" and availability in {"used", "optional"} and _has_cabinet_or_service_role(device):
+				expected = "cabinet_or_service"
+			else:
+				expected = None
+			_expect(reason == expected, f"{path}.spatial.reason", "does not align with this author-ready input's physical status", errors)
+		else:
+			if kind == "virtual":
+				expected = "virtual"
+			elif availability == "unused":
+				expected = "unused"
+			elif kind in EFFECT_OUTPUT_KINDS and availability in {"used", "optional"}:
+				expected = "internal_nonvisual"
+			else:
+				expected = None
+			_expect(reason == expected, f"{path}.spatial.reason", "does not align with this author-ready output's physical status", errors)
+		return
+	_expect(spatial_status in {"candidate", "observed", "validated", "conflicted"}, f"{path}.spatial.status", "must be a located spatial assertion or not_applicable", errors)
+	placements = spatial.get("placements")
+	_expect(isinstance(placements, list) and bool(placements), f"{path}.spatial.placements", "located spatial evidence requires one or more placements", errors)
+	if not isinstance(placements, list):
+		return
+	roles: list[Any] = []
+	for index, placement in enumerate(placements):
+		placement_path = f"{path}.spatial.placements[{index}]"
+		if not isinstance(placement, dict):
+			errors.append(f"{placement_path}: must be an object")
+			continue
+		placement_id = placement.get("id")
+		_validate_identifier(placement_id, f"{placement_path}.id", errors)
+		if isinstance(placement_id, str):
+			if placement_id in placement_ids:
+				errors.append(f"{placement_path}.id: duplicate spatial placement ID {placement_id!r}")
+			placement_ids.add(placement_id)
+		role = placement.get("role")
+		roles.append(role)
+		_expect(role in SPATIAL_ROLES, f"{placement_path}.role", "must be sensor, effect, or emitter", errors)
+		_expect(placement.get("space") == "playfield", f"{placement_path}.space", "must use the canonical playfield coordinate space", errors)
+		for coordinate in ("x", "y"):
+			value = placement.get(coordinate)
+			valid_number = isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(float(value))
+			_expect(valid_number, f"{placement_path}.{coordinate}", "must be a finite number", errors)
+			if valid_number:
+				_expect(0 <= value <= 1, f"{placement_path}.{coordinate}", "must be within the inclusive 0..1 playfield bounds", errors)
+				_expect(_fractional_precision(float(value)) <= 6, f"{placement_path}.{coordinate}", "must use no more than six fractional decimal places", errors)
+		_validate_provenance_refs(placement.get("provenance"), f"{placement_path}.provenance", source_ids, errors, status == "author_ready")
+	if status != "author_ready":
+		return
+	_expect(spatial_status == "validated", f"{path}.spatial.status", "author-ready spatial assertions must be validated", errors)
+	availability = device.get("availability")
+	kind = device.get("kind")
+	if collection_name == "inputs":
+		if kind == "switch" and availability in {"used", "optional"}:
+			_expect(all(role == "sensor" for role in roles), f"{path}.spatial.placements", "used or optional physical switches require only sensor placements", errors)
+		else:
+			errors.append(f"{path}.spatial: author-ready input requires a controlled not_applicable record")
+	else:
+		if kind in EMITTER_OUTPUT_KINDS and availability in {"used", "optional"}:
+			_expect(all(role == "emitter" for role in roles), f"{path}.spatial.placements", "lamp, rgb_lamp, flasher, and gi outputs require only emitter placements", errors)
+		elif kind in EFFECT_OUTPUT_KINDS and availability in {"used", "optional"}:
+			_expect(all(role == "effect" for role in roles), f"{path}.spatial.placements", "coil, motor, servo, magnet, and relay outputs require only effect placements", errors)
+		else:
+			errors.append(f"{path}.spatial: author-ready output requires a controlled not_applicable record")
+
+
 def validate_machine(definition: dict[str, Any], repository_root: Path | None = None) -> list[str]:
 	errors: list[str] = []
 	_walk_forbidden(definition, "$", errors)
 	_expect(definition.get("format") == "pinmame-machine-definition", "$.format", "must equal pinmame-machine-definition", errors)
-	_expect(definition.get("schema_version") == 1, "$.schema_version", "must equal 1", errors)
+	schema_version = definition.get("schema_version")
+	_expect(schema_version in {1, 2}, "$.schema_version", "must equal 1 or 2", errors)
 	machine = _required_mapping(definition.get("machine"), "$.machine", {"id", "name", "manufacturer", "year"}, errors)
 	machine_id = machine.get("id")
 	_validate_identifier(machine_id, "$.machine.id", errors)
@@ -90,7 +230,7 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 	dimensions = coverage.get("dimensions")
 	_expect(isinstance(dimensions, dict), "$.coverage.dimensions", "must be an object", errors)
 	if isinstance(dimensions, dict):
-		for dimension in AUTHOR_READY_DIMENSIONS:
+		for dimension in (AUTHOR_READY_DIMENSIONS if schema_version == 2 else BASE_COVERAGE_DIMENSIONS):
 			_expect(dimension in dimensions, f"$.coverage.dimensions.{dimension}", "required coverage dimension is missing", errors)
 	if status == "stub":
 		_expect(isinstance(machine_id, str) and machine_id.startswith("stub.pinmame."), "$.machine.id", "stub IDs must start with stub.pinmame.", errors)
@@ -101,6 +241,7 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 	if status == "partial":
 		_expect(isinstance(missing, list) and bool(missing), "$.coverage.missing", "partial definition must list missing authoring requirements", errors)
 	if status == "author_ready":
+		_expect(schema_version == 2, "$.schema_version", "author-ready definitions must use schema version 2", errors)
 		_expect(missing == [], "$.coverage.missing", "author-ready definition cannot have missing requirements", errors)
 		if isinstance(dimensions, dict):
 			for dimension in AUTHOR_READY_DIMENSIONS:
@@ -136,7 +277,10 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 			if source.get("kind") in {"vpx_script", "manual", "service_bulletin"}:
 				_expect(bool(source.get("license")), f"$.sources[{index}].license", "required for community scripts and documents", errors)
 				_expect(bool(source.get("attribution")), f"$.sources[{index}].attribution", "required for community scripts and documents", errors)
+			for field, value in source.items():
+				_expect(not isinstance(value, str) or not LOCAL_L_DRIVE_PATTERN.search(value), f"$.sources[{index}].{field}", "canonical machine sources cannot store local L: paths", errors)
 	device_ids: set[str] = set()
+	spatial_placement_ids: set[str] = set()
 	bindings: set[tuple[str, int, int | None]] = set()
 	physical_output_connections: dict[tuple[str, str], str] = {}
 	sam_game_on_outputs: list[tuple[str, dict[str, Any]]] = []
@@ -192,6 +336,7 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 						_expect(source_ref in source_ids, f"{path}.provenance.source_refs", f"unknown source reference {source_ref!r}", errors)
 				if status == "author_ready":
 					_expect(provenance.get("status") == "validated", f"{path}.provenance.status", "author-ready device assertions must be validated", errors)
+			_validate_spatial(device, collection_name, path, status, source_ids, spatial_placement_ids, errors)
 	if status == "author_ready" and definition.get("controller", {}).get("platform") == "pinmame.sam":
 		_expect(len(sam_game_on_outputs) == 1, "$.outputs", "author-ready SAM definition must declare public solenoid 33 exactly once as PinMAME's synthetic game-on state", errors)
 		for path, output in sam_game_on_outputs:

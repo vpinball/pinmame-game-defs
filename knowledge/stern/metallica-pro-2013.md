@@ -1,6 +1,7 @@
 # Metallica Pro (Stern, 2013)
 
-Coverage: **author-ready - complete physical I/O, mechanisms, variant split, wiring, and recreation behavior validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **complete physical I/O, mechanisms, variant split, wiring, and recreation behavior validated**
 
 ## Identity and evidence precedence
 

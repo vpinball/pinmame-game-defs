@@ -1,6 +1,7 @@
 # Batman: The Dark Knight Standard/Home Edition (Stern, 2010)
 
-Coverage: **author-ready - complete V3.00 public I/O inventory, physical product differences, retained crane, transport corrections, and recreation behavior validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **complete V3.00 public I/O inventory, physical product differences, retained crane, transport corrections, and recreation behavior validated**
 
 ## Identity and evidence precedence
 

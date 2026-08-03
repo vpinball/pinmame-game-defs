@@ -1,6 +1,7 @@
 # Metallica Premium / Limited Edition (Stern, 2013)
 
-Coverage: **author-ready - complete physical inventory, public PinMAME bindings, custom mechanisms, and recreation behavior validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **complete physical inventory, public PinMAME bindings, custom mechanisms, and recreation behavior validated**
 
 ## Identity and evidence precedence
 
@@ -16,7 +17,7 @@ All matrix positions 1-64, dedicated D1-D24, and DIP inputs are explicit. The ma
 
 ## Lamps, RGB connectors, and GI
 
-Standard lamps 1-80 follow the Premium service table; unused matrix addresses are explicit. The RGB/GI board's public addresses are not sequential by physical connector. Exact table timer bindings prove CN4 blue/green/red at 87/88/89, CN5 at 90/91/92, CN9 at 99/100/101, CN11 at 102/103/104, CN13 at 108/109/110, and CN19 at 126/127/128. Every other address from 81 through 128 is an unused controller channel for this playfield. GI uses public lamp addresses 130 red, 132 blue, 134 white upper, and 136 white playfield; group `pinmame.output.gi/0` remains the aggregate compatibility state. The JSON also records the physical RGB object coordinates recovered from the exact working table.
+Standard lamps 1-80 follow the Premium service table; unused matrix addresses are explicit. The RGB/GI board's public addresses are not sequential by physical connector. Exact table timer bindings prove CN4 blue/green/red at 87/88/89, CN5 at 90/91/92, CN9 at 99/100/101, CN11 at 102/103/104, CN13 at 108/109/110, and CN19 at 126/127/128. Every other address from 81 through 128 is an unused controller channel for this playfield. GI uses public lamp addresses 130 red, 132 blue, 134 white upper, and 136 white playfield; group `pinmame.output.gi/0` remains the aggregate compatibility state. Physical RGB-object coordinates were recovered from the exact working table during curation but have not yet been normalized and promoted into the definition.
 
 ## Grave marker, electric chair, hammer, and drop bank
 

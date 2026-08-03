@@ -1,5 +1,7 @@
 # AC/DC Pro (original) recreation knowledge
 
+Coverage: **partial — normalized spatial placements pending.**
+
 ## Identity and variants
 
 This record is the original 2012 Pro playfield and owns non-h firmware revisions 1.21 through 1.65. Later 1.68 software is assigned to the separately documented 2014 LED Pro, and 1.70 to the Vault Edition. The split is intentional: the original has a conventional standup Hell's Bell target at switch 36, while the later products use a passive swinging bell.

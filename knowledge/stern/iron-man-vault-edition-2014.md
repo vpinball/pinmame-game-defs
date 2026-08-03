@@ -1,6 +1,7 @@
 # Iron Man Pro Vault Edition (Stern, 2014)
 
-Coverage: **author-ready - complete physical I/O inventory, PinMAME bindings, wiring, custom mechanisms, edition construction, and recreation behavior validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **complete physical I/O inventory, PinMAME bindings, wiring, custom mechanisms, edition construction, and recreation behavior validated**
 
 ## Identity and evidence precedence
 

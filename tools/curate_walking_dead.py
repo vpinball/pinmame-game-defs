@@ -6,6 +6,9 @@ import json
 import re
 from pathlib import Path
 
+from pinmame_game_defs.jsonio import write_json
+from pinmame_game_defs.spatial import fail_closed_spatial_partial, spatial_partial_path
+
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
 DRIVERS = {driver["id"]: driver for driver in CATALOG["drivers"] if driver["id"].startswith("twd_")}
@@ -469,8 +472,10 @@ def build_pro() -> dict[str, object]:
 
 
 def write(path: Path, value: dict[str, object]) -> None:
+	path = spatial_partial_path(path)
+	value = fail_closed_spatial_partial(value)
 	path.parent.mkdir(parents=True, exist_ok=True)
-	path.write_text(json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
+	write_json(path, value)
 
 
 old_definition = ROOT / "machines/partial/stern/the-walking-dead-limited-edition-2014.json"
@@ -479,5 +484,5 @@ if old_definition.exists():
 old_pro_definition = ROOT / "machines/partial/stern/the-walking-dead-pro-2014.json"
 if old_pro_definition.exists():
 	old_pro_definition.unlink()
-write(ROOT / "machines/author-ready/stern/the-walking-dead-premium-limited-edition-2014.json", build_premium())
-write(ROOT / "machines/author-ready/stern/the-walking-dead-pro-2014.json", build_pro())
+write(ROOT / "machines/partial/stern/the-walking-dead-premium-limited-edition-2014.json", build_premium())
+write(ROOT / "machines/partial/stern/the-walking-dead-pro-2014.json", build_pro())

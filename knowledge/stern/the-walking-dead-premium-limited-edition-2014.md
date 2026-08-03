@@ -1,6 +1,7 @@
 # The Walking Dead Premium / Limited Edition (Stern, 2014)
 
-Coverage: **author-ready - physical inventory, PinMAME bindings, mechanisms, and recreation behavior validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **physical inventory, PinMAME bindings, mechanisms, and recreation behavior validated**
 
 ## Identity and variants
 
@@ -65,4 +66,3 @@ The left and right spinners pulse switches 40 and 1. Pop bumpers pair switches 3
 - `manual.walking-dead-premium-le`: Stern service manual cached from Internet Archive, SHA-256 `4dd644210cc0432b254b8252b836c73c878517fa16eda119902155ece24f0b3e`; device tables on PDF pages 8-15 and assembly/parts drawings later in the document.
 - `vpx.walking-dead-premium-le-vpw-day-1.1`: known-working VPW script at vpxtable_scripts revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`, SHA-256 `bd6868c93f180c58f6835cccd869c0fa1e28832fea6afc5bb4f9660505908e47`.
 - `pinmame.core.4ec52ff0ac13`: pinned PinMAME SAM implementation, including TWD node-board emulation and backward-compatible LED channel maps.
-

@@ -7,10 +7,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFINITION_PATHS = {
-	"premium": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-premium-limited-edition-luci-2012.json",
-	"pro": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-pro-2012.json",
-	"led_pro": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-led-pro-2014.json",
-	"vault": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-vault-edition-2018.json",
+	"premium": ROOT / "machines" / "partial" / "stern" / "ac-dc-premium-limited-edition-luci-2012.json",
+	"pro": ROOT / "machines" / "partial" / "stern" / "ac-dc-pro-2012.json",
+	"led_pro": ROOT / "machines" / "partial" / "stern" / "ac-dc-led-pro-2014.json",
+	"vault": ROOT / "machines" / "partial" / "stern" / "ac-dc-vault-edition-2018.json",
 }
 PREMIUM_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "ac-dc-premium-boot-start.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "ac-dc-pro-boot-start.json"
@@ -36,11 +36,12 @@ class AcDcDefinitionTests(unittest.TestCase):
 		cls.premium_evidence = load_json(PREMIUM_EVIDENCE_PATH)
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
 
-	def test_all_four_physical_products_are_author_ready(self) -> None:
+	def test_all_four_physical_products_are_fail_closed_for_spatial_retrofit(self) -> None:
 		for definition in self.definitions.values():
-			self.assertEqual("author_ready", definition["coverage"]["status"])
-			self.assertEqual([], definition["coverage"]["missing"])
-			self.assertTrue(all(value == "validated" for value in definition["coverage"]["dimensions"].values()))
+			self.assertEqual(2, definition["schema_version"])
+			self.assertEqual("partial", definition["coverage"]["status"])
+			self.assertIn("spatial_placement", definition["coverage"]["missing"])
+			self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
 
 	def test_driver_family_is_split_without_overlap_or_omission(self) -> None:

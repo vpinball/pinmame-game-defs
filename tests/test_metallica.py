@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PREMIUM_PATH = ROOT / "machines" / "author-ready" / "stern" / "metallica-premium-limited-edition-2013.json"
-PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "metallica-pro-2013.json"
+PREMIUM_PATH = ROOT / "machines" / "partial" / "stern" / "metallica-premium-limited-edition-2013.json"
+PRO_PATH = ROOT / "machines" / "partial" / "stern" / "metallica-pro-2013.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "metallica-premium-boot-start.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "metallica-pro-boot-start.json"
 
@@ -29,13 +29,13 @@ class MetallicaDefinitionTests(unittest.TestCase):
 		cls.evidence = load_json(EVIDENCE_PATH)
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
 
-	def test_both_physical_editions_are_author_ready(self) -> None:
+	def test_both_physical_editions_are_fail_closed_for_spatial_retrofit(self) -> None:
 		for definition in (self.premium, self.pro):
-			self.assertEqual("author_ready", definition["coverage"]["status"])
-			self.assertEqual([], definition["coverage"]["missing"])
-			self.assertTrue(all(value == "validated" for value in definition["coverage"]["dimensions"].values()))
+			self.assertEqual(2, definition["schema_version"])
+			self.assertEqual("partial", definition["coverage"]["status"])
+			self.assertIn("spatial_placement", definition["coverage"]["missing"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
-		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "metallica-pro-2013.json").exists())
+		self.assertTrue((ROOT / "machines" / "partial" / "stern" / "metallica-pro-2013.json").exists())
 
 	def test_driver_family_is_split_without_overlap_or_omission(self) -> None:
 		expected_premium = {"mtl_113h", "mtl_116h", "mtl_120h", "mtl_122h", "mtl_150h", "mtl_151h", "mtl_160h", "mtl_163h", "mtl_164h", "mtl_164hc", "mtl_170h", "mtl_170hc", "mtl_180h", "mtl_180hc"}

@@ -16,6 +16,14 @@ Every definition declares `coverage.status` as `stub`, `partial`, or `author_rea
 
 Generated placeholders are named `stub.pinmame.<root-driver>` and stored under `machines/stubs/` so they are conspicuous in source, indexes, and consumer APIs. Stubs and partial definitions contribute zero to completed-game coverage.
 
+## Spatial placement evidence
+
+Machine schema v2 adds optional device-level `spatial` evidence while retaining full compatibility for v1 stubs and partial definitions. The canonical global `playfield` space is normalized VPX/player view: `x=0` is left, `x=1` is right, `y=0` is the rear/backglass end, and `y=1` is the front/apron end. It is defined once globally rather than repeated in each machine definition.
+
+`physical.location` remains construction prose and is never promoted automatically. A located spatial assertion contains one or more source-backed sensor, effect, or emitter placements. A controlled `not_applicable` assertion records why a device has no playfield point; it is not a distributed-GI/flasher exemption. Author-ready v2 definitions require validated spatial evidence for every device, including individual emitter placements for lamps, GI, and flashers.
+
+`extract-spatial` reads a vpxtool extraction directory (with the source VPX supplied for hashing) or invokes an explicitly supplied external vpxtool executable. It emits candidate geometry only; it never claims a semantic controller mapping or writes canonical placements. `render-spatial-overlay` produces a deterministic stdlib-only SVG of canonical placements without committing a licensed playfield image.
+
 ## VPE boundary
 
 Canonical definitions do not contain Unity object-name regexes, device matching hints, match counts, VPE input-map actions, or an open-ended `extensions.vpe` object. Portable cabinet roles such as `cabinet.start`, `service.up`, and `flipper.lower.left` are allowed. VPE owns role-to-input configuration and table-object mapping.

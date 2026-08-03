@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "transformers-pro-2011.json"
-LE_PATH = ROOT / "machines" / "author-ready" / "stern" / "transformers-limited-edition-2011.json"
+PRO_PATH = ROOT / "machines" / "partial" / "stern" / "transformers-pro-2011.json"
+LE_PATH = ROOT / "machines" / "partial" / "stern" / "transformers-limited-edition-2011.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "transformers-pro-boot-start.json"
 LE_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "transformers-limited-edition-boot-start.json"
 
@@ -29,11 +29,11 @@ class TransformersDefinitionTests(unittest.TestCase):
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
 		cls.le_evidence = load_json(LE_EVIDENCE_PATH)
 
-	def test_both_editions_are_author_ready_and_replace_the_stub(self) -> None:
+	def test_both_editions_are_fail_closed_for_spatial_retrofit(self) -> None:
 		for definition in (self.pro, self.le):
-			self.assertEqual("author_ready", definition["coverage"]["status"])
-			self.assertEqual([], definition["coverage"]["missing"])
-			self.assertTrue(all(value == "validated" for value in definition["coverage"]["dimensions"].values()))
+			self.assertEqual(2, definition["schema_version"])
+			self.assertEqual("partial", definition["coverage"]["status"])
+			self.assertIn("spatial_placement", definition["coverage"]["missing"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
 			self.assertEqual([], definition["conflicts"])
 		self.assertFalse((ROOT / "machines" / "stubs" / "tf_180h.json").exists())

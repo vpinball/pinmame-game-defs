@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines" / "author-ready" / "stern" / "twenty-four-2009.json"
+DEFINITION_PATH = ROOT / "machines" / "partial" / "stern" / "twenty-four-2009.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "twenty-four-boot-start-and-diagnostics.json"
 
 
@@ -25,11 +25,12 @@ class TwentyFourDefinitionTests(unittest.TestCase):
 		cls.definition = load_json(DEFINITION_PATH)
 		cls.evidence = load_json(EVIDENCE_PATH)
 
-	def test_identity_and_coverage_are_author_ready(self) -> None:
+	def test_identity_and_coverage_are_fail_closed_for_spatial_retrofit(self) -> None:
 		self.assertEqual({"id": "stern.twenty-four.2009", "ipdb_id": 5419, "kind": "physical_pinball", "manufacturer": "Stern", "name": "24", "year": 2009}, self.definition["machine"])
-		self.assertEqual("author_ready", self.definition["coverage"]["status"])
-		self.assertEqual([], self.definition["coverage"]["missing"])
-		self.assertTrue(all(state == "validated" for state in self.definition["coverage"]["dimensions"].values()))
+		self.assertEqual(2, self.definition["schema_version"])
+		self.assertEqual("partial", self.definition["coverage"]["status"])
+		self.assertIn("spatial_placement", self.definition["coverage"]["missing"])
+		self.assertEqual("unknown", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
 		self.assertEqual([], self.definition["conflicts"])
 		self.assertFalse((ROOT / "machines" / "stubs" / "twenty4_150.json").exists())

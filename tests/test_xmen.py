@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-LE_PATH = ROOT / "machines" / "author-ready" / "stern" / "x-men-limited-edition-2012.json"
-PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "x-men-pro-2012.json"
+LE_PATH = ROOT / "machines" / "partial" / "stern" / "x-men-limited-edition-2012.json"
+PRO_PATH = ROOT / "machines" / "partial" / "stern" / "x-men-pro-2012.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "x-men-limited-edition-boot-start.json"
 
 
@@ -27,15 +27,15 @@ class XMenDefinitionTests(unittest.TestCase):
 		cls.pro = load_json(PRO_PATH)
 		cls.evidence = load_json(EVIDENCE_PATH)
 
-	def test_both_editions_are_author_ready(self) -> None:
+	def test_both_editions_are_fail_closed_for_spatial_retrofit(self) -> None:
 		for definition in (self.le, self.pro):
-			self.assertEqual("author_ready", definition["coverage"]["status"])
-			self.assertEqual([], definition["coverage"]["missing"])
-			self.assertTrue(all(value == "validated" for value in definition["coverage"]["dimensions"].values()))
+			self.assertEqual(2, definition["schema_version"])
+			self.assertEqual("partial", definition["coverage"]["status"])
+			self.assertIn("spatial_placement", definition["coverage"]["missing"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
 			self.assertEqual([], definition["conflicts"])
-		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "x-men-le-2012.json").exists())
-		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "x-men-pro-2012.json").exists())
+		self.assertTrue((ROOT / "machines" / "partial" / "stern" / "x-men-limited-edition-2012.json").exists())
+		self.assertTrue((ROOT / "machines" / "partial" / "stern" / "x-men-pro-2012.json").exists())
 
 	def test_editions_split_every_supported_xmen_driver(self) -> None:
 		limited_edition = {driver["id"] for driver in self.le["drivers"]}

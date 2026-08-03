@@ -1,6 +1,7 @@
 # TRON: Legacy Pro (Stern, 2011)
 
-Coverage: **author-ready - complete physical inventory, PinMAME bindings, wiring, mechanisms, initial state, and edition boundary validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **complete physical inventory, PinMAME bindings, wiring, mechanisms, initial state, and edition boundary validated**
 
 ## Identity and evidence precedence
 

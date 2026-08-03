@@ -1,10 +1,11 @@
 # Star Trek Premium / Limited Edition (Stern, 2013)
 
-Coverage: **author-ready - physical inventory, PinMAME bindings, custom mechanisms, and recreation behavior validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **physical inventory, PinMAME bindings, custom mechanisms, and recreation behavior validated**
 
 ## Identity and evidence precedence
 
-This definition covers `st_*h` and `st_*hc` drivers. Those revisions share the Premium/LE playfield; `c` only changes ROM display colorization. Non-`h` drivers are the different Pro machine and have their own author-ready definition. The known-working `Star Trek LE (Stern 2013) v1.10.vbs` is ground truth for controller bindings, callbacks, initial state, mechanism causality, and active behavior. The official Stern manual governs physical inventory, wiring, diagnostic numbering, and assemblies. Pinned PinMAME source governs the SAM transport, display, custom-solenoid serialization, node-board topology, and driver identity.
+This definition covers `st_*h` and `st_*hc` drivers. Those revisions share the Premium/LE playfield; `c` only changes ROM display colorization. Non-`h` drivers are the different Pro machine and have their own definition. The known-working `Star Trek LE (Stern 2013) v1.10.vbs` is ground truth for controller bindings, callbacks, initial state, mechanism causality, and active behavior. The official Stern manual governs physical inventory, wiring, diagnostic numbering, and assemblies. Pinned PinMAME source governs the SAM transport, display, custom-solenoid serialization, node-board topology, and driver identity.
 
 ## Controller topology
 

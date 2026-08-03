@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PREMIUM_PATH = ROOT / "machines" / "author-ready" / "stern" / "star-trek-premium-limited-edition-2013.json"
-PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "star-trek-pro-2013.json"
+PREMIUM_PATH = ROOT / "machines" / "partial" / "stern" / "star-trek-premium-limited-edition-2013.json"
+PRO_PATH = ROOT / "machines" / "partial" / "stern" / "star-trek-pro-2013.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "star-trek-pro-boot-start.json"
 
 
@@ -27,13 +27,13 @@ class StarTrekDefinitionTests(unittest.TestCase):
 		cls.pro = load_json(PRO_PATH)
 		cls.evidence = load_json(EVIDENCE_PATH)
 
-	def test_both_physical_editions_are_author_ready(self) -> None:
+	def test_both_physical_editions_are_fail_closed_for_spatial_retrofit(self) -> None:
 		for definition in (self.premium, self.pro):
-			self.assertEqual("author_ready", definition["coverage"]["status"])
-			self.assertEqual([], definition["coverage"]["missing"])
-			self.assertTrue(all(value == "validated" for value in definition["coverage"]["dimensions"].values()))
+			self.assertEqual(2, definition["schema_version"])
+			self.assertEqual("partial", definition["coverage"]["status"])
+			self.assertIn("spatial_placement", definition["coverage"]["missing"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
-		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "star-trek-pro-2013.json").exists())
+		self.assertTrue((ROOT / "machines" / "partial" / "stern" / "star-trek-pro-2013.json").exists())
 
 	def test_editions_split_the_complete_driver_family(self) -> None:
 		premium = {driver["id"] for driver in self.premium["drivers"]}

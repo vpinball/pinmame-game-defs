@@ -4,6 +4,9 @@ import json
 import re
 from pathlib import Path
 
+from pinmame_game_defs.jsonio import write_json as write_json_file, write_text
+from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PINMAME_REVISION = "4ec52ff0ac133ac251681518aed2249e19fe26eb"
@@ -534,8 +537,10 @@ EVIDENCE_SUMMARY = {
 
 
 def write_json(path: Path, value: object) -> None:
+	path = spatial_partial_path(path)
+	value = fail_closed_spatial_partial(value)
 	path.parent.mkdir(parents=True, exist_ok=True)
-	path.write_text(json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
+	write_json_file(path, value)
 
 
 for driver_id in ("alib", "alic"):
@@ -544,8 +549,8 @@ for driver_id in ("alib", "alic"):
 			path.unlink()
 
 
-write_json(ROOT / "machines/author-ready/stern/ali-seven-digit-conversion-2023.json", build_definition())
+write_json(ROOT / "machines/partial/stern/ali-seven-digit-conversion-2023.json", build_definition())
 write_json(ROOT / "evidence/runtime/stern/ali-service-diagnostics.json", EVIDENCE_SUMMARY)
 knowledge_path = ROOT / "knowledge/stern/ali-seven-digit-conversion-2023.md"
 knowledge_path.parent.mkdir(parents=True, exist_ok=True)
-knowledge_path.write_text(KNOWLEDGE, encoding="utf-8")
+write_text(knowledge_path, fail_closed_spatial_knowledge("stern.ali-seven-digit-conversion.2023", KNOWLEDGE))

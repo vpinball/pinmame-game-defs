@@ -6,6 +6,9 @@ import json
 import re
 from pathlib import Path
 
+from pinmame_game_defs.jsonio import write_json as write_json_file, write_text
+from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
@@ -524,7 +527,7 @@ All matrix positions 1-64, dedicated D1-D24, and DIP inputs are explicit. The ma
 
 ## Lamps, RGB connectors, and GI
 
-Standard lamps 1-80 follow the Premium service table; unused matrix addresses are explicit. The RGB/GI board's public addresses are not sequential by physical connector. Exact table timer bindings prove CN4 blue/green/red at 87/88/89, CN5 at 90/91/92, CN9 at 99/100/101, CN11 at 102/103/104, CN13 at 108/109/110, and CN19 at 126/127/128. Every other address from 81 through 128 is an unused controller channel for this playfield. GI uses public lamp addresses 130 red, 132 blue, 134 white upper, and 136 white playfield; group `pinmame.output.gi/0` remains the aggregate compatibility state. The JSON also records the physical RGB object coordinates recovered from the exact working table.
+Standard lamps 1-80 follow the Premium service table; unused matrix addresses are explicit. The RGB/GI board's public addresses are not sequential by physical connector. Exact table timer bindings prove CN4 blue/green/red at 87/88/89, CN5 at 90/91/92, CN9 at 99/100/101, CN11 at 102/103/104, CN13 at 108/109/110, and CN19 at 126/127/128. Every other address from 81 through 128 is an unused controller channel for this playfield. GI uses public lamp addresses 130 red, 132 blue, 134 white upper, and 136 white playfield; group `pinmame.output.gi/0` remains the aggregate compatibility state. Physical RGB-object coordinates were recovered from the exact working table during curation but have not yet been normalized and promoted into the definition.
 
 ## Grave marker, electric chair, hammer, and drop bank
 
@@ -648,8 +651,10 @@ def pro_runtime_evidence() -> dict[str, object]:
 
 
 def write_json(path: Path, value: dict[str, object]) -> None:
+	path = spatial_partial_path(path)
+	value = fail_closed_spatial_partial(value)
 	path.parent.mkdir(parents=True, exist_ok=True)
-	path.write_text(json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
+	write_json_file(path, value)
 
 
 for stale in (
@@ -659,9 +664,9 @@ for stale in (
 ):
 	if stale.exists():
 		stale.unlink()
-write_json(ROOT / "machines/author-ready/stern/metallica-premium-limited-edition-2013.json", build_premium())
-write_json(ROOT / "machines/author-ready/stern/metallica-pro-2013.json", build_pro())
+write_json(ROOT / "machines/partial/stern/metallica-premium-limited-edition-2013.json", build_premium())
+write_json(ROOT / "machines/partial/stern/metallica-pro-2013.json", build_pro())
 write_json(ROOT / "evidence/runtime/sam/metallica-premium-boot-start.json", runtime_evidence())
 write_json(ROOT / "evidence/runtime/sam/metallica-pro-boot-start.json", pro_runtime_evidence())
-(ROOT / "knowledge/stern/metallica-premium-limited-edition-2013.md").write_text(PREMIUM_KNOWLEDGE, encoding="utf-8")
-(ROOT / "knowledge/stern/metallica-pro-2013.md").write_text(PRO_KNOWLEDGE, encoding="utf-8")
+write_text(ROOT / "knowledge/stern/metallica-premium-limited-edition-2013.md", fail_closed_spatial_knowledge("stern.metallica-premium-limited-edition.2013", PREMIUM_KNOWLEDGE))
+write_text(ROOT / "knowledge/stern/metallica-pro-2013.md", fail_closed_spatial_knowledge("stern.metallica-pro.2013", PRO_KNOWLEDGE))

@@ -1,6 +1,7 @@
 # Mustang Pro (Stern, 2014)
 
-Coverage: **author-ready - physical inventory, PinMAME bindings, mechanisms, and recreation behavior validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **physical inventory, PinMAME bindings, mechanisms, and recreation behavior validated**
 
 ## Identity and variants
 

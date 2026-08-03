@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PREMIUM_PATH = ROOT / "machines" / "author-ready" / "stern" / "the-walking-dead-premium-limited-edition-2014.json"
-PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "the-walking-dead-pro-2014.json"
+PREMIUM_PATH = ROOT / "machines" / "partial" / "stern" / "the-walking-dead-premium-limited-edition-2014.json"
+PRO_PATH = ROOT / "machines" / "partial" / "stern" / "the-walking-dead-pro-2014.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "walking-dead-pro-boot-start.json"
 
 
@@ -31,11 +31,13 @@ class WalkingDeadDefinitionTests(unittest.TestCase):
 		cls.pro = load_json(PRO_PATH)
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
 
-	def test_both_physical_editions_are_author_ready_with_disjoint_exact_driver_sets(self) -> None:
-		self.assertEqual("author_ready", self.premium["coverage"]["status"])
-		self.assertEqual("author_ready", self.pro["coverage"]["status"])
-		self.assertEqual([], self.premium["coverage"]["missing"])
-		self.assertEqual([], self.pro["coverage"]["missing"])
+	def test_both_physical_editions_are_fail_closed_with_disjoint_exact_driver_sets(self) -> None:
+		self.assertEqual(2, self.premium["schema_version"])
+		self.assertEqual("partial", self.premium["coverage"]["status"])
+		self.assertEqual(2, self.pro["schema_version"])
+		self.assertEqual("partial", self.pro["coverage"]["status"])
+		self.assertIn("spatial_placement", self.premium["coverage"]["missing"])
+		self.assertIn("spatial_placement", self.pro["coverage"]["missing"])
 		premium_drivers = {driver["id"] for driver in self.premium["drivers"]}
 		pro_drivers = {driver["id"] for driver in self.pro["drivers"]}
 		self.assertEqual({"twd_111h", "twd_119h", "twd_124h", "twd_125h", "twd_128h", "twd_141h", "twd_153h", "twd_156h", "twd_156hc", "twd_160h", "twd_160hc"}, premium_drivers)
@@ -129,7 +131,7 @@ class WalkingDeadDefinitionTests(unittest.TestCase):
 		self.assertEqual("bfc4e21042b59e7c6495604166e9219d52c6b813", sources["vpx.walking-dead-pro.jp-salas-v5.5.0"]["revision"])
 		self.assertEqual("ffb741cfa5f1238d756035c4c113b77ad94fdd2a9e015c21a92af0813595bccb", sources["runtime.walking-dead-pro.boot-start"]["sha256"])
 		self.assertEqual("complete", self.pro["knowledge"]["status"])
-		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "the-walking-dead-pro-2014.json").exists())
+		self.assertTrue((ROOT / "machines" / "partial" / "stern" / "the-walking-dead-pro-2014.json").exists())
 
 
 if __name__ == "__main__":

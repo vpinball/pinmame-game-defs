@@ -6,6 +6,9 @@ import json
 import re
 from pathlib import Path
 
+from pinmame_game_defs.jsonio import write_json as write_json_file, write_text
+from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
@@ -596,8 +599,10 @@ def runtime_evidence(limited_edition: bool) -> dict[str, object]:
 
 
 def write_json(path: Path, value: dict[str, object]) -> None:
+	path = spatial_partial_path(path)
+	value = fail_closed_spatial_partial(value)
 	path.parent.mkdir(parents=True, exist_ok=True)
-	path.write_text(json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
+	write_json_file(path, value)
 
 
 stub = ROOT / "machines/stubs/avs_170h.json"
@@ -607,10 +612,10 @@ stub_knowledge = ROOT / "knowledge/stubs/avs_170h.md"
 if stub_knowledge.exists():
 	stub_knowledge.unlink()
 
-write_json(ROOT / "machines/author-ready/stern/avengers-limited-edition-2012.json", build(True))
-write_json(ROOT / "machines/author-ready/stern/avengers-pro-2012.json", build(False))
+write_json(ROOT / "machines/partial/stern/avengers-limited-edition-2012.json", build(True))
+write_json(ROOT / "machines/partial/stern/avengers-pro-2012.json", build(False))
 write_json(ROOT / "evidence/runtime/sam/avengers-limited-edition-boot-start.json", runtime_evidence(True))
 write_json(ROOT / "evidence/runtime/sam/avengers-pro-boot-start.json", runtime_evidence(False))
 (ROOT / "knowledge/stern").mkdir(parents=True, exist_ok=True)
-(ROOT / "knowledge/stern/avengers-limited-edition-2012.md").write_text(LE_KNOWLEDGE, encoding="utf-8")
-(ROOT / "knowledge/stern/avengers-pro-2012.md").write_text(PRO_KNOWLEDGE, encoding="utf-8")
+write_text(ROOT / "knowledge/stern/avengers-limited-edition-2012.md", fail_closed_spatial_knowledge("stern.avengers-limited-edition.2012", LE_KNOWLEDGE))
+write_text(ROOT / "knowledge/stern/avengers-pro-2012.md", fail_closed_spatial_knowledge("stern.avengers-pro.2012", PRO_KNOWLEDGE))

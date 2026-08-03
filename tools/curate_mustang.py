@@ -6,6 +6,9 @@ import json
 import re
 from pathlib import Path
 
+from pinmame_game_defs.jsonio import write_json, write_text
+from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
 DRIVERS = {driver["id"]: driver for driver in CATALOG["drivers"] if driver["id"].startswith("mt_")}
@@ -770,8 +773,10 @@ GEARS switches 34-38 latch individually while down; output 7 raises the complete
 
 
 def write(path: Path, value: dict[str, object]) -> None:
+	path = spatial_partial_path(path)
+	value = fail_closed_spatial_partial(value)
 	path.parent.mkdir(parents=True, exist_ok=True)
-	path.write_text(json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
+	write_json(path, value)
 
 
 old_stub = ROOT / "machines/stubs/mt_145h.json"
@@ -780,10 +785,10 @@ if old_stub.exists():
 old_knowledge = ROOT / "knowledge/stubs/mt_145h.md"
 if old_knowledge.exists():
 	old_knowledge.unlink()
-write(ROOT / "machines/author-ready/stern/mustang-premium-limited-edition-boss-2014.json", build_premium())
+write(ROOT / "machines/partial/stern/mustang-premium-limited-edition-boss-2014.json", build_premium())
 old_pro = ROOT / "machines/partial/stern/mustang-pro-2014.json"
 if old_pro.exists():
 	old_pro.unlink()
-write(ROOT / "machines/author-ready/stern/mustang-pro-2014.json", build_pro())
-(ROOT / "knowledge/stern/mustang-premium-limited-edition-boss-2014.md").write_text(PREMIUM_KNOWLEDGE, encoding="utf-8")
-(ROOT / "knowledge/stern/mustang-pro-2014.md").write_text(PRO_KNOWLEDGE, encoding="utf-8")
+write(ROOT / "machines/partial/stern/mustang-pro-2014.json", build_pro())
+write_text(ROOT / "knowledge/stern/mustang-premium-limited-edition-boss-2014.md", fail_closed_spatial_knowledge("stern.mustang-premium-limited-edition-boss.2014", PREMIUM_KNOWLEDGE))
+write_text(ROOT / "knowledge/stern/mustang-pro-2014.md", fail_closed_spatial_knowledge("stern.mustang-pro.2014", PRO_KNOWLEDGE))

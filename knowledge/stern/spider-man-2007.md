@@ -1,6 +1,6 @@
 # Spider-Man (Stern 2007)
 
-Coverage: **author-ready**
+Coverage: **partial — normalized spatial placements pending.**
 
 This note supplements the canonical definition with the physical and behavioral information needed to reproduce Stern's original Spider-Man table. The JSON enumerates all 96 controller inputs, 117 outputs, the 128×32 DMD, all 45 supported ROM variants, and 15 ball-device or moving assemblies.
 

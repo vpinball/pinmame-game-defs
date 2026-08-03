@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "avatar-pro-2010.json"
-LE_PATH = ROOT / "machines" / "author-ready" / "stern" / "avatar-limited-edition-2010.json"
+PRO_PATH = ROOT / "machines" / "partial" / "stern" / "avatar-pro-2010.json"
+LE_PATH = ROOT / "machines" / "partial" / "stern" / "avatar-limited-edition-2010.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "avatar-pro-boot-start.json"
 LE_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "avatar-limited-edition-boot-start.json"
 LE_DIAGNOSTIC_PATHS = {
@@ -36,11 +36,11 @@ class AvatarDefinitionTests(unittest.TestCase):
 		cls.le_evidence = load_json(LE_EVIDENCE_PATH)
 		cls.le_diagnostics = {name: load_json(path) for name, path in LE_DIAGNOSTIC_PATHS.items()}
 
-	def test_both_physical_editions_are_author_ready_and_replace_the_stub(self) -> None:
+	def test_both_physical_editions_are_fail_closed_for_spatial_retrofit(self) -> None:
 		for definition in (self.pro, self.le):
-			self.assertEqual("author_ready", definition["coverage"]["status"])
-			self.assertEqual([], definition["coverage"]["missing"])
-			self.assertTrue(all(value == "validated" for value in definition["coverage"]["dimensions"].values()))
+			self.assertEqual(2, definition["schema_version"])
+			self.assertEqual("partial", definition["coverage"]["status"])
+			self.assertIn("spatial_placement", definition["coverage"]["missing"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
 			self.assertEqual([], definition["conflicts"])
 		self.assertFalse((ROOT / "machines" / "stubs" / "avr_120h.json").exists())

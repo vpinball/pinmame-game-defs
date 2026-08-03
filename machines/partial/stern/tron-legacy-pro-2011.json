@@ -1,0 +1,7680 @@
+{
+  "conflicts": [],
+  "controller": {
+    "inversion_applied_by_emulator": true,
+    "platform": "pinmame.sam"
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "validated",
+      "catalog_identity": "validated",
+      "mechanisms": "validated",
+      "physical_wiring": "validated",
+      "recreation_knowledge": "validated",
+      "semantic_naming": "validated",
+      "spatial_placement": "unknown",
+      "variant_coverage": "validated"
+    },
+    "missing": [
+      "spatial_placement"
+    ],
+    "status": "partial"
+  },
+  "displays": [
+    {
+      "height": 32,
+      "id": "display.dmd",
+      "kind": "dmd",
+      "label": "Dot-matrix display",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "width": 128
+    }
+  ],
+  "drivers": [
+    {
+      "clone_of": "trn_174h",
+      "description": "TRON: Legacy (V1.1)",
+      "flags": 0,
+      "id": "trn_110",
+      "manufacturer": "Stern",
+      "physical_compatibility": "identical",
+      "variant_notes": "Firmware revision for the Pro physical playfield; the PinMAME LE clone root records software lineage only.",
+      "year": "2011"
+    },
+    {
+      "clone_of": "trn_174h",
+      "description": "TRON: Legacy (V1.2)",
+      "flags": 0,
+      "id": "trn_120",
+      "manufacturer": "Stern",
+      "physical_compatibility": "identical",
+      "variant_notes": "Firmware revision for the Pro physical playfield; the PinMAME LE clone root records software lineage only.",
+      "year": "2011"
+    },
+    {
+      "clone_of": "trn_174h",
+      "description": "TRON: Legacy (V1.4)",
+      "flags": 0,
+      "id": "trn_140",
+      "manufacturer": "Stern",
+      "physical_compatibility": "identical",
+      "variant_notes": "Firmware revision for the Pro physical playfield; the PinMAME LE clone root records software lineage only.",
+      "year": "2011"
+    },
+    {
+      "clone_of": "trn_174h",
+      "description": "TRON: Legacy (V1.5)",
+      "flags": 0,
+      "id": "trn_150",
+      "manufacturer": "Stern",
+      "physical_compatibility": "identical",
+      "variant_notes": "Firmware revision for the Pro physical playfield; the PinMAME LE clone root records software lineage only.",
+      "year": "2011"
+    },
+    {
+      "clone_of": "trn_174h",
+      "description": "TRON: Legacy (V1.6)",
+      "flags": 0,
+      "id": "trn_160",
+      "manufacturer": "Stern",
+      "physical_compatibility": "identical",
+      "variant_notes": "Firmware revision for the Pro physical playfield; the PinMAME LE clone root records software lineage only.",
+      "year": "2011"
+    },
+    {
+      "clone_of": "trn_174h",
+      "description": "TRON: Legacy (V1.7)",
+      "flags": 0,
+      "id": "trn_170",
+      "manufacturer": "Stern",
+      "physical_compatibility": "identical",
+      "variant_notes": "Firmware revision for the Pro physical playfield; the PinMAME LE clone root records software lineage only.",
+      "year": "2011"
+    },
+    {
+      "clone_of": "trn_174h",
+      "description": "TRON: Legacy (V1.74)",
+      "flags": 0,
+      "id": "trn_174",
+      "manufacturer": "Stern",
+      "physical_compatibility": "identical",
+      "variant_notes": "Firmware revision for the Pro physical playfield; the PinMAME LE clone root records software lineage only.",
+      "year": "2013"
+    },
+    {
+      "clone_of": "trn_174h",
+      "description": "TRON: Legacy (V1.7402)",
+      "flags": 0,
+      "id": "trn_17402",
+      "manufacturer": "Stern",
+      "physical_compatibility": "identical",
+      "variant_notes": "Firmware revision for the Pro physical playfield; the PinMAME LE clone root records software lineage only.",
+      "year": "2013"
+    }
+  ],
+  "format": "pinmame-machine-definition",
+  "inputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "1"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "1"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 1,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.tron-n-target",
+      "kind": "switch",
+      "label": "TRON N target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Four-bank resettable drop target on Limited Edition; fixed standup target on Pro. The same switch address reports a hit on either physical assembly.",
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J6-P9",
+        "return_wire": "WHT-BRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "2"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "2"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 2,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.tron-o-target",
+      "kind": "switch",
+      "label": "TRON O target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Four-bank resettable drop target on Limited Edition; fixed standup target on Pro. The same switch address reports a hit on either physical assembly.",
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J6-P8",
+        "return_wire": "WHT-RED"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "3"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "3"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 3,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.tron-r-target",
+      "kind": "switch",
+      "label": "TRON R target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Four-bank resettable drop target on Limited Edition; fixed standup target on Pro. The same switch address reports a hit on either physical assembly.",
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J6-P7",
+        "return_wire": "WHT-ORG"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "4"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "4"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 4,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.tron-t-target",
+      "kind": "switch",
+      "label": "TRON T target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Four-bank resettable drop target on Limited Edition; fixed standup target on Pro. The same switch address reports a hit on either physical assembly.",
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J6-P6",
+        "return_wire": "WHT-YEL"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "5"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "5"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 5,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-5",
+      "kind": "switch",
+      "label": "Unused matrix switch 5",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J6-P5",
+        "return_wire": "WHT-GRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "6"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "6"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 6,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-6",
+      "kind": "switch",
+      "label": "Unused matrix switch 6",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J6-P3",
+        "return_wire": "WHT-BLU"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "7"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "7"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 7,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.zuse-z-target",
+      "kind": "switch",
+      "label": "ZUSE Z target",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J6-P2",
+        "return_wire": "WHT-VIO"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "8"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "8"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 8,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.zuse-u-target",
+      "kind": "switch",
+      "label": "ZUSE U target",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J6-P1",
+        "return_wire": "WHT-GRY"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "9"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "9"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 9,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-9",
+      "kind": "switch",
+      "label": "Unused matrix switch 9",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J12-P9",
+        "return_wire": "TAN-BLK"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "10"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "10"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 10,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-10",
+      "kind": "switch",
+      "label": "Unused matrix switch 10",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J12-P8",
+        "return_wire": "TAN-RED"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "11"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "11"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 11,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.video-game-eject",
+      "kind": "switch",
+      "label": "Video game eject",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "ball.position"
+      ],
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J12-P7",
+        "return_wire": "TAN-ORG"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "12"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "12"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 12,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.zen-rollover",
+      "kind": "switch",
+      "label": "Zen rollover",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J12-P6",
+        "return_wire": "TAN-YEL"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "13"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "13"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 13,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.zuse-e-target",
+      "kind": "switch",
+      "label": "ZUSE E target",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J12-P4",
+        "return_wire": "TAN-GRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "14"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "14"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 14,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.clu-l-lane",
+      "kind": "switch",
+      "label": "CLU L lane",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J12-P3",
+        "return_wire": "TAN-BLU"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "15"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "15"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 15,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.tournament-start",
+      "kind": "switch",
+      "label": "Tournament start",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "cabinet.tournament-start"
+      ],
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J12-P2",
+        "return_wire": "TAN-VIO"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "16"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "16"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 16,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.start",
+      "kind": "switch",
+      "label": "Start",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "cabinet.start"
+      ],
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P1",
+        "drive_wire": "GRN-BRN",
+        "return_connection": "J12-P1",
+        "return_wire": "TAN-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "17"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "17"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 17,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-17",
+      "kind": "switch",
+      "label": "Unused matrix switch 17",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J6-P9",
+        "return_wire": "WHT-BRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "18"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "18"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 18,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-4-left",
+      "kind": "switch",
+      "label": "Trough 4 left",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "ball.position"
+      ],
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J6-P8",
+        "return_wire": "WHT-RED"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "19"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "19"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 19,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-3",
+      "kind": "switch",
+      "label": "Trough 3",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "ball.position"
+      ],
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J6-P7",
+        "return_wire": "WHT-ORG"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "20"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "20"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 20,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-2",
+      "kind": "switch",
+      "label": "Trough 2",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "ball.position"
+      ],
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J6-P6",
+        "return_wire": "WHT-YEL"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "21"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "21"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 21,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-1-right",
+      "kind": "switch",
+      "label": "Trough 1 right",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "ball.position"
+      ],
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J6-P5",
+        "return_wire": "WHT-GRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "22"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "22"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 22,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.trough-jam",
+      "kind": "switch",
+      "label": "Trough jam",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "opto"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "roles": [
+        "ball.position"
+      ],
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J6-P3",
+        "return_wire": "WHT-BLU"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "23"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "23"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 23,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.shooter-lane",
+      "kind": "switch",
+      "label": "Shooter lane",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "ball.position"
+      ],
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J6-P2",
+        "return_wire": "WHT-VIO"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "24"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "24"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 24,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-outlane",
+      "kind": "switch",
+      "label": "Left outlane",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J6-P1",
+        "return_wire": "WHT-GRY"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "25"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "25"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 25,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.clu-c-lane",
+      "kind": "switch",
+      "label": "CLU C lane",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J12-P9",
+        "return_wire": "TAN-BLK"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "26"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "26"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 26,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-slingshot",
+      "kind": "switch",
+      "label": "Left slingshot",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J12-P8",
+        "return_wire": "TAN-RED"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "27"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "27"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 27,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-slingshot",
+      "kind": "switch",
+      "label": "Right slingshot",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J12-P7",
+        "return_wire": "TAN-ORG"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "28"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "28"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 28,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.clu-u-lane",
+      "kind": "switch",
+      "label": "CLU U lane",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J12-P6",
+        "return_wire": "TAN-YEL"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "29"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "29"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 29,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-outlane",
+      "kind": "switch",
+      "label": "Right outlane",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J12-P4",
+        "return_wire": "TAN-GRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "30"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "30"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 30,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-pop-bumper",
+      "kind": "switch",
+      "label": "Left pop bumper",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J12-P3",
+        "return_wire": "TAN-BLU"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "31"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "31"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-pop-bumper",
+      "kind": "switch",
+      "label": "Right pop bumper",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J12-P2",
+        "return_wire": "TAN-VIO"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "32"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "32"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.bottom-pop-bumper",
+      "kind": "switch",
+      "label": "Bottom pop bumper",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P3",
+        "drive_wire": "GRN-RED",
+        "return_connection": "J12-P1",
+        "return_wire": "TAN-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "33"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "33"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 33,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-33",
+      "kind": "switch",
+      "label": "Unused matrix switch 33",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J6-P9",
+        "return_wire": "WHT-BRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "34"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "34"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 34,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-ramp-exit",
+      "kind": "switch",
+      "label": "Right ramp exit",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J6-P8",
+        "return_wire": "WHT-RED"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "35"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "35"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 35,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-ramp-entrance",
+      "kind": "switch",
+      "label": "Left ramp entrance",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J6-P7",
+        "return_wire": "WHT-ORG"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "36"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "36"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 36,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-orbit-spinner",
+      "kind": "switch",
+      "label": "Right orbit spinner",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J6-P6",
+        "return_wire": "WHT-YEL"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "37"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "37"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 37,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-ramp-exit",
+      "kind": "switch",
+      "label": "Left ramp exit",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J6-P5",
+        "return_wire": "WHT-GRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "38"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "38"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 38,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-ramp-entrance",
+      "kind": "switch",
+      "label": "Right ramp entrance",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J6-P3",
+        "return_wire": "WHT-BLU"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "39"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "39"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 39,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-inner-loop",
+      "kind": "switch",
+      "label": "Right inner loop",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J6-P2",
+        "return_wire": "WHT-VIO"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "40"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "40"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 40,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-40",
+      "kind": "switch",
+      "label": "Unused matrix switch 40",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J6-P1",
+        "return_wire": "WHT-GRY"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "41"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "41"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 41,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.disc-opto",
+      "kind": "switch",
+      "label": "Disc opto",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "opto"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "ball.position"
+      ],
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J12-P9",
+        "return_wire": "TAN-BLK"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "42"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "42"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 42,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-42",
+      "kind": "switch",
+      "label": "Unused matrix switch 42",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J12-P8",
+        "return_wire": "TAN-RED"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "43"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "43"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 43,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-orbit",
+      "kind": "switch",
+      "label": "Left orbit",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J12-P7",
+        "return_wire": "TAN-ORG"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "44"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "44"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 44,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-spinner",
+      "kind": "switch",
+      "label": "Left spinner",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J12-P6",
+        "return_wire": "TAN-YEL"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "45"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "45"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 45,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-45",
+      "kind": "switch",
+      "label": "Unused matrix switch 45",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J12-P4",
+        "return_wire": "TAN-GRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "46"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "46"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 46,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-orbit",
+      "kind": "switch",
+      "label": "Right orbit",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J12-P3",
+        "return_wire": "TAN-BLU"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "47"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "47"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 47,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-47",
+      "kind": "switch",
+      "label": "Unused matrix switch 47",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J12-P2",
+        "return_wire": "TAN-VIO"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "48"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "48"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 48,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.zuse-s-target",
+      "kind": "switch",
+      "label": "ZUSE S target",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P4",
+        "drive_wire": "GRN-ORG",
+        "return_connection": "J12-P1",
+        "return_wire": "TAN-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "49"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "49"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 49,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.recognizer-three-bank-left-target",
+      "kind": "switch",
+      "label": "Recognizer three-bank left target",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J6-P9",
+        "return_wire": "WHT-BRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "50"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "50"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 50,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.recognizer-three-bank-center-target",
+      "kind": "switch",
+      "label": "Recognizer three-bank center target",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J6-P8",
+        "return_wire": "WHT-RED"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "51"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "51"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 51,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.recognizer-three-bank-right-target",
+      "kind": "switch",
+      "label": "Recognizer three-bank right target",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J6-P7",
+        "return_wire": "WHT-ORG"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "52"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "52"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 52,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.recognizer-three-bank-down",
+      "kind": "switch",
+      "label": "Recognizer three-bank down",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "position.down"
+      ],
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J6-P6",
+        "return_wire": "WHT-YEL"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "53"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "53"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 53,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.recognizer-three-bank-up",
+      "kind": "switch",
+      "label": "Recognizer three-bank up",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "position.up"
+      ],
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J6-P5",
+        "return_wire": "WHT-GRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "54"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "54"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 54,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-54",
+      "kind": "switch",
+      "label": "Unused matrix switch 54",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J6-P3",
+        "return_wire": "WHT-BLU"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "55"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "55"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 55,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-55",
+      "kind": "switch",
+      "label": "Unused matrix switch 55",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J6-P2",
+        "return_wire": "WHT-VIO"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "56"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "56"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 56,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-56",
+      "kind": "switch",
+      "label": "Unused matrix switch 56",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J6-P1",
+        "return_wire": "WHT-GRY"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "57"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "57"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 57,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-57",
+      "kind": "switch",
+      "label": "Unused matrix switch 57",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J12-P9",
+        "return_wire": "TAN-BLK"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "58"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "58"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 58,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-58",
+      "kind": "switch",
+      "label": "Unused matrix switch 58",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J12-P8",
+        "return_wire": "TAN-RED"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "59"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "59"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 59,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-59",
+      "kind": "switch",
+      "label": "Unused matrix switch 59",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J12-P7",
+        "return_wire": "TAN-ORG"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "60"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "60"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 60,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-60",
+      "kind": "switch",
+      "label": "Unused matrix switch 60",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J12-P6",
+        "return_wire": "TAN-YEL"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "61"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "61"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 61,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-61",
+      "kind": "switch",
+      "label": "Unused matrix switch 61",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J12-P4",
+        "return_wire": "TAN-GRN"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "62"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "62"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 62,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-62",
+      "kind": "switch",
+      "label": "Unused matrix switch 62",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J12-P3",
+        "return_wire": "TAN-BLU"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "63"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "63"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 63,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-63",
+      "kind": "switch",
+      "label": "Unused matrix switch 63",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J12-P2",
+        "return_wire": "TAN-VIO"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "64"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "64"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 64,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-matrix-switch-64",
+      "kind": "switch",
+      "label": "Unused matrix switch 64",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "wiring": {
+        "board": "CPU/Sound board",
+        "drive_connection": "J1-P5",
+        "drive_wire": "GRN-YEL",
+        "return_connection": "J12-P1",
+        "return_wire": "TAN-WHT"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "65"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-1"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 65,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-coin-chute",
+      "kind": "switch",
+      "label": "Left coin chute",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "roles": [
+        "cabinet.coin.left"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "66"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-2"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 66,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.center-coin-chute",
+      "kind": "switch",
+      "label": "Center coin chute",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "roles": [
+        "cabinet.coin.center"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "67"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-3"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 67,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-coin-chute",
+      "kind": "switch",
+      "label": "Right coin chute",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "roles": [
+        "cabinet.coin.right"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "68"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-4"
+        }
+      ],
+      "availability": "optional",
+      "binding": {
+        "device": 68,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.fourth-coin-chute",
+      "kind": "switch",
+      "label": "Fourth coin chute",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "roles": [
+        "cabinet.coin.fourth"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "69"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-5"
+        }
+      ],
+      "availability": "optional",
+      "binding": {
+        "device": 69,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.fifth-coin-chute",
+      "kind": "switch",
+      "label": "Fifth coin chute",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": true,
+      "roles": [
+        "cabinet.coin.fifth"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "70"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-6"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 70,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-dedicated-switch-d6",
+      "kind": "switch",
+      "label": "Unused dedicated switch D6",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "71"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-7"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 71,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-dedicated-switch-d7",
+      "kind": "switch",
+      "label": "Unused dedicated switch D7",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "72"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-8"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 72,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-dedicated-switch-d8",
+      "kind": "switch",
+      "label": "Unused dedicated switch D8",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "84"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-9"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 84,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-flipper-button",
+      "kind": "switch",
+      "label": "Left flipper button",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "flipper.lower.left.button"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "83"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-10"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 83,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-flipper-end-of-stroke",
+      "kind": "switch",
+      "label": "Left flipper end-of-stroke",
+      "normally_closed": true,
+      "physical": {
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "flipper.lower.left.eos"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "82"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-11"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 82,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-flipper-button",
+      "kind": "switch",
+      "label": "Right flipper button",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "flipper.lower.right.button"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "81"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-12"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 81,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-flipper-end-of-stroke",
+      "kind": "switch",
+      "label": "Right flipper end-of-stroke",
+      "normally_closed": true,
+      "physical": {
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "flipper.lower.right.eos"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "88"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-13"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 88,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-left-flipper-button",
+      "kind": "switch",
+      "label": "Upper-left flipper button",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Official Pro dedicated-switch chart (PDF page 49, D-13) identifies this contact as the upper-left flipper button; the LE chart on PDF page 55 leaves D-13 blank.",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "flipper.upper.left.button"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "87"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-14"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 87,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-left-flipper-end-of-stroke",
+      "kind": "switch",
+      "label": "Upper-left flipper end-of-stroke",
+      "normally_closed": true,
+      "physical": {
+        "notes": "Official Pro dedicated-switch chart (PDF page 49, D-14) identifies this normally-closed contact as the upper-left flipper EOS; the LE chart on PDF page 55 leaves D-14 blank.",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "flipper.upper.left.eos"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "86"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-15"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 86,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-dedicated-switch-d15",
+      "kind": "switch",
+      "label": "Unused dedicated switch D15",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "85"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-16"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 85,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-dedicated-switch-d16",
+      "kind": "switch",
+      "label": "Unused dedicated switch D16",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-7"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-17"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": -7,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.pendulum-tilt",
+      "kind": "switch",
+      "label": "Pendulum tilt",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "tilt"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "cabinet.tilt"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-6"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-18"
+        }
+      ],
+      "availability": "optional",
+      "binding": {
+        "device": -6,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.slam-tilt",
+      "kind": "switch",
+      "label": "Slam tilt",
+      "normally_closed": true,
+      "physical": {
+        "switch_type": "tilt"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "cabinet.slam-tilt"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-5"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-19"
+        }
+      ],
+      "availability": "optional",
+      "binding": {
+        "device": -5,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.ticket-notch",
+      "kind": "switch",
+      "label": "Ticket notch",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "microswitch"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "cabinet.ticket-notch"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-4"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-20"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": -4,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.unused-dedicated-switch-d20",
+      "kind": "switch",
+      "label": "Unused dedicated switch D20",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "unknown"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-3"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-21"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": -3,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-door-back-button",
+      "kind": "switch",
+      "label": "Coin-door Back button",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "service.back"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-2"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-22"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": -2,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-door-minus-button",
+      "kind": "switch",
+      "label": "Coin-door Minus button",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "service.down"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-1"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-23"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": -1,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-door-plus-button",
+      "kind": "switch",
+      "label": "Coin-door Plus button",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "service.up"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "0"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-24"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 0,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.coin-door-select-button",
+      "kind": "switch",
+      "label": "Coin-door Select button",
+      "normally_closed": false,
+      "physical": {
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "pulse": false,
+      "roles": [
+        "service.enter"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "1"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-25"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 1,
+        "group": "pinmame.input.dip"
+      },
+      "id": "switch.dip-1",
+      "kind": "dip_switch",
+      "label": "CPU/Sound board DIP switch 1",
+      "physical": {
+        "location": "CPU/Sound board",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "2"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-26"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 2,
+        "group": "pinmame.input.dip"
+      },
+      "id": "switch.dip-2",
+      "kind": "dip_switch",
+      "label": "CPU/Sound board DIP switch 2",
+      "physical": {
+        "location": "CPU/Sound board",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "3"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-27"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 3,
+        "group": "pinmame.input.dip"
+      },
+      "id": "switch.dip-3",
+      "kind": "dip_switch",
+      "label": "CPU/Sound board DIP switch 3",
+      "physical": {
+        "location": "CPU/Sound board",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "4"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-28"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 4,
+        "group": "pinmame.input.dip"
+      },
+      "id": "switch.dip-4",
+      "kind": "dip_switch",
+      "label": "CPU/Sound board DIP switch 4",
+      "physical": {
+        "location": "CPU/Sound board",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "5"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-29"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 5,
+        "group": "pinmame.input.dip"
+      },
+      "id": "switch.dip-5",
+      "kind": "dip_switch",
+      "label": "CPU/Sound board DIP switch 5",
+      "physical": {
+        "location": "CPU/Sound board",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "6"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-30"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 6,
+        "group": "pinmame.input.dip"
+      },
+      "id": "switch.dip-6",
+      "kind": "dip_switch",
+      "label": "CPU/Sound board DIP switch 6",
+      "physical": {
+        "location": "CPU/Sound board",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "7"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-31"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 7,
+        "group": "pinmame.input.dip"
+      },
+      "id": "switch.dip-7",
+      "kind": "dip_switch",
+      "label": "CPU/Sound board DIP switch 7",
+      "physical": {
+        "location": "CPU/Sound board",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "8"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "D-32"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 8,
+        "group": "pinmame.input.dip"
+      },
+      "id": "switch.dip-8",
+      "kind": "dip_switch",
+      "label": "CPU/Sound board DIP switch 8",
+      "physical": {
+        "location": "CPU/Sound board",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    }
+  ],
+  "knowledge": {
+    "path": "knowledge/stern/tron-legacy-pro-2011.md",
+    "status": "complete"
+  },
+  "machine": {
+    "id": "stern.tron-legacy-pro.2011",
+    "ipdb_id": 5682,
+    "kind": "physical_pinball",
+    "manufacturer": "Stern",
+    "model_number": "I-00B9",
+    "name": "TRON: Legacy Pro",
+    "year": 2011
+  },
+  "mechanisms": [
+    {
+      "actuators": [
+        "device.trough-up-kicker"
+      ],
+      "behavior": "Four balls initialize on switches 18-21, left to right. Output 1 ejects from the right end through jam opto 22; the proven table fires at 90 degrees with force 8 and briefly pulses 22 after release.",
+      "id": "mechanism.trough",
+      "kind": "kicker",
+      "label": "Four-ball trough",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.trough-4-left",
+        "switch.trough-3",
+        "switch.trough-2",
+        "switch.trough-1-right",
+        "switch.trough-jam"
+      ]
+    },
+    {
+      "actuators": [
+        "device.auto-launch"
+      ],
+      "behavior": "Output 2 fires a ball held at shooter-lane switch 23. The proven recreation retains the manual plunger and uses impulse power 150, time 0.7, and random variation 0.3.",
+      "id": "mechanism.auto-launcher",
+      "kind": "kicker",
+      "label": "Auto launcher and manual plunger",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.shooter-lane"
+      ]
+    },
+    {
+      "actuators": [
+        "device.video-game-eject"
+      ],
+      "behavior": "Switch 11 stays active while a ball is held. Output 4 ejects toward 200 degrees with force 24, Z 0.4, and force variation 2 in the proven table.",
+      "id": "mechanism.video-game-eject",
+      "kind": "kicker",
+      "label": "Flynn's video-game eject",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.video-game-eject"
+      ]
+    },
+    {
+      "actuators": [
+        "device.recognizer-three-bank-motor-relay"
+      ],
+      "behavior": "Output 6 toggles the three-target bank between raised and lowered endpoints. Switch 53 is active fully up and clears near the start of downward travel; switch 52 becomes active fully down. The proven 29-step model moves targets from Z -20 to -76, disables their collision near the lower endpoint, and initializes down on switch 52.",
+      "id": "mechanism.recognizer-bank",
+      "kind": "motorized",
+      "label": "Motorized Recognizer three-target bank",
+      "positions": [
+        {
+          "id": "position.up",
+          "label": "Raised and hittable",
+          "sensors": [
+            "switch.recognizer-three-bank-up"
+          ]
+        },
+        {
+          "id": "position.down",
+          "label": "Lowered",
+          "sensors": [
+            "switch.recognizer-three-bank-down"
+          ]
+        }
+      ],
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.recognizer-three-bank-left-target",
+        "switch.recognizer-three-bank-center-target",
+        "switch.recognizer-three-bank-right-target",
+        "switch.recognizer-three-bank-down",
+        "switch.recognizer-three-bank-up"
+      ]
+    },
+    {
+      "actuators": [
+        "device.orbit-up-down-post"
+      ],
+      "behavior": "Output 7 raises the post while asserted and drops it when clear. It initializes dropped and has no endpoint switch; nearby orbit and loop inputs report ball travel, not post position.",
+      "id": "mechanism.orbit-post",
+      "kind": "gate",
+      "label": "Orbit up/down post",
+      "positions": [
+        {
+          "id": "position.down",
+          "label": "Dropped",
+          "sensors": []
+        },
+        {
+          "id": "position.up",
+          "label": "Raised",
+          "sensors": []
+        }
+      ],
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "sensors": []
+    },
+    {
+      "actuators": [
+        "device.disc-motor-power",
+        "device.disc-direction-relay",
+        "device.disc-motor-relay"
+      ],
+      "behavior": "Output 5 enables disc power, the edition-specific direction relay is output 22 on LE and output 3 on Pro, and output 30 is the physical motor relay. The proven table simplifies this to output 5 plus direction state, uses maximum turntable speed 8, starts at direction step +40, reverses to -40, and decelerates by 0.1 per 10 ms tick. Preserve rotating ball contact so the disc can carry and throw balls; switch 41 is the disc-area opto, not a motor index.",
+      "id": "mechanism.disc",
+      "kind": "rotary",
+      "label": "Rinzler spinning identity disc",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.disc-opto"
+      ]
+    },
+    {
+      "actuators": [
+        "device.left-flipper",
+        "device.right-flipper",
+        "device.upper-left-flipper"
+      ],
+      "behavior": "Outputs 15/16 drive the lower left/right flippers and output 12 drives the upper-left flipper used to reach the right ramp. Pro has dedicated upper-left button/EOS inputs D13/D14 (public 88/87). LE leaves D13/D14 unpopulated; its proven table stages the upper flipper from the left control or a separate authoring key. Lower EOS contacts 83/81 and Pro upper EOS 87 are normally closed.",
+      "id": "mechanism.flippers",
+      "kind": "other",
+      "label": "Three-flipper assembly",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.left-flipper-button",
+        "switch.left-flipper-end-of-stroke",
+        "switch.right-flipper-button",
+        "switch.right-flipper-end-of-stroke",
+        "switch.upper-left-flipper-button",
+        "switch.upper-left-flipper-end-of-stroke"
+      ]
+    },
+    {
+      "actuators": [
+        "device.left-pop-bumper",
+        "device.right-pop-bumper",
+        "device.bottom-pop-bumper"
+      ],
+      "behavior": "Left, right, and bottom output/switch pairs are 9/30, 10/31, and 11/32.",
+      "id": "mechanism.pop-bumpers",
+      "kind": "kicker",
+      "label": "Three pop bumpers",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.left-pop-bumper",
+        "switch.right-pop-bumper",
+        "switch.bottom-pop-bumper"
+      ]
+    },
+    {
+      "actuators": [
+        "device.left-slingshot",
+        "device.right-slingshot"
+      ],
+      "behavior": "Left and right output/switch pairs are 13/26 and 14/27.",
+      "id": "mechanism.slingshots",
+      "kind": "kicker",
+      "label": "Two slingshots",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.left-slingshot",
+        "switch.right-slingshot"
+      ]
+    },
+    {
+      "actuators": [],
+      "behavior": "Right ramp exit is 34; left ramp entrance/exit 35/37; right ramp entrance 38; right inner loop 39; left/right orbits 43/46; and right/left spinners 36/44. The two light-cycle ramps are independently illuminated by the LE tricolor board; use the manual location drawings for unsensed path geometry.",
+      "id": "mechanism.ramps-orbits-loops",
+      "kind": "other",
+      "label": "Ramps, orbits, loops, and spinners",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.right-ramp-exit",
+        "switch.left-ramp-entrance",
+        "switch.right-orbit-spinner",
+        "switch.left-ramp-exit",
+        "switch.right-ramp-entrance",
+        "switch.right-inner-loop",
+        "switch.left-orbit",
+        "switch.left-spinner",
+        "switch.right-orbit"
+      ]
+    },
+    {
+      "actuators": [],
+      "behavior": "ZUSE standup targets are 7/8/13/48. The physical location drawing and sustained Hit/UnHit handlers identify CLU L/C/U 14/25/28 as ball lanes rather than pulsed standup targets. Zen rollover is 12 and outlanes are 24/29.",
+      "id": "mechanism.targets-and-lanes",
+      "kind": "other",
+      "label": "CLU lanes, ZUSE targets, Zen rollover, and outlanes",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.zuse-z-target",
+        "switch.zuse-u-target",
+        "switch.zuse-e-target",
+        "switch.zuse-s-target",
+        "switch.clu-l-lane",
+        "switch.clu-c-lane",
+        "switch.clu-u-lane",
+        "switch.zen-rollover",
+        "switch.left-outlane",
+        "switch.right-outlane"
+      ]
+    },
+    {
+      "actuators": [
+        "device.shaker-motor"
+      ],
+      "behavior": "Output 8 is the optional 16 VAC shaker installation and may be absent from a stock machine.",
+      "id": "mechanism.optional-shaker",
+      "kind": "motorized",
+      "label": "Optional shaker motor",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4"
+        ],
+        "status": "validated"
+      },
+      "sensors": []
+    },
+    {
+      "actuators": [],
+      "behavior": "The Pro uses four fixed standup targets on switches 1-4. It has no reset output; output 3 is reassigned to disc direction. Do not import the LE drop-target motion or reset coil.",
+      "id": "mechanism.tron-standups",
+      "kind": "other",
+      "label": "TRON four-bank standup targets",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.tron-n-target",
+        "switch.tron-o-target",
+        "switch.tron-r-target",
+        "switch.tron-t-target"
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "1"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "1"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.trough-up-kicker",
+      "kind": "coil",
+      "label": "Trough up-kicker",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P1",
+        "control_wire": "BRN-BLK",
+        "driver_transistor": "Q1",
+        "nominal_voltage_v": 50,
+        "power_connection": "J10-P9/10",
+        "power_wire": "YEL-VIO",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "2"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "2"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.auto-launch",
+      "kind": "coil",
+      "label": "Auto launch",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P3",
+        "control_wire": "BRN-RED",
+        "driver_transistor": "Q2",
+        "nominal_voltage_v": 50,
+        "power_connection": "J10-P9/10",
+        "power_wire": "YEL-VIO",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "3"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "3"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.disc-direction-relay",
+      "kind": "relay",
+      "label": "Disc direction relay",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P4",
+        "control_wire": "BRN-ORG",
+        "driver_transistor": "Q3",
+        "nominal_voltage_v": 20,
+        "power_connection": "J7-P1",
+        "power_wire": "BRN",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "4"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "4"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.video-game-eject",
+      "kind": "coil",
+      "label": "Video game eject",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P5",
+        "control_wire": "BRN-YEL",
+        "driver_transistor": "Q4",
+        "nominal_voltage_v": 50,
+        "power_connection": "J10-P9/10",
+        "power_wire": "YEL-VIO",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "5"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "5"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.disc-motor-power",
+      "kind": "motor",
+      "label": "Disc motor power",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P6",
+        "control_wire": "BRN-GRN",
+        "driver_transistor": "Q5",
+        "nominal_voltage_v": 20,
+        "power_connection": "J7-P1",
+        "power_wire": "BRN",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "6"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "6"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.recognizer-three-bank-motor-relay",
+      "kind": "motor",
+      "label": "Recognizer three-bank motor relay",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P7",
+        "control_wire": "BRN-BLU",
+        "driver_transistor": "Q6",
+        "nominal_voltage_v": 20,
+        "power_connection": "J7-P1",
+        "power_wire": "BRN",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "7"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "7"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.orbit-up-down-post",
+      "kind": "coil",
+      "label": "Orbit up/down post",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P8",
+        "control_wire": "BRN-VIO",
+        "driver_transistor": "Q7",
+        "nominal_voltage_v": 50,
+        "power_connection": "J10-P9/10",
+        "power_wire": "YEL-VIO",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "8"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "8"
+        }
+      ],
+      "availability": "optional",
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.shaker-motor",
+      "kind": "motor",
+      "label": "Shaker motor",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P9",
+        "control_wire": "BRN-GRY",
+        "driver_transistor": "Q8",
+        "nominal_voltage_v": 16,
+        "power_connection": "J17-P7",
+        "power_wire": "RED-WHT",
+        "voltage_type": "ac"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "9"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "9"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-pop-bumper",
+      "kind": "coil",
+      "label": "Left pop bumper",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P11",
+        "control_wire": "BLU-BRN",
+        "driver_transistor": "Q9",
+        "nominal_voltage_v": 50,
+        "power_connection": "J10-P9/10",
+        "power_wire": "YEL-VIO",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "10"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "10"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-pop-bumper",
+      "kind": "coil",
+      "label": "Right pop bumper",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P12",
+        "control_wire": "BLU-RED",
+        "driver_transistor": "Q10",
+        "nominal_voltage_v": 50,
+        "power_connection": "J10-P9/10",
+        "power_wire": "YEL-VIO",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "11"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "11"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.bottom-pop-bumper",
+      "kind": "coil",
+      "label": "Bottom pop bumper",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P14",
+        "control_wire": "BLU-ORG",
+        "driver_transistor": "Q11",
+        "nominal_voltage_v": 50,
+        "power_connection": "J10-P9/10",
+        "power_wire": "YEL-VIO",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "12"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "12"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.upper-left-flipper",
+      "kind": "coil",
+      "label": "Upper-left flipper",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P15",
+        "control_wire": "BLU-YEL",
+        "driver_transistor": "Q12",
+        "nominal_voltage_v": 50,
+        "power_connection": "J10-P6/7",
+        "power_wire": "BLU-BRN",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "13"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "13"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 13,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-slingshot",
+      "kind": "coil",
+      "label": "Left slingshot",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P16",
+        "control_wire": "BLU-GRN",
+        "driver_transistor": "Q13",
+        "nominal_voltage_v": 50,
+        "power_connection": "J10-P9/10",
+        "power_wire": "YEL-VIO",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "14"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "14"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-slingshot",
+      "kind": "coil",
+      "label": "Right slingshot",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P17",
+        "control_wire": "BLU-BLU",
+        "driver_transistor": "Q14",
+        "nominal_voltage_v": 50,
+        "power_connection": "J10-P9/10",
+        "power_wire": "YEL-VIO",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "15"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "15"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.left-flipper",
+      "kind": "coil",
+      "label": "Left flipper",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P18",
+        "control_wire": "ORG-GRY",
+        "driver_transistor": "Q15",
+        "nominal_voltage_v": 50,
+        "power_connection": "J10-P6/7",
+        "power_wire": "GRY-YEL / RED-YEL",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "16"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "16"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 16,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.right-flipper",
+      "kind": "coil",
+      "label": "Right flipper",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J8-P19",
+        "control_wire": "ORG-VIO",
+        "driver_transistor": "Q16",
+        "nominal_voltage_v": 50,
+        "power_connection": "J10-P6/7",
+        "power_wire": "BLU-YEL / RED-YEL",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "17"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "17"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.zen-flasher",
+      "kind": "flasher",
+      "label": "Zen flasher",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J7-P2",
+        "control_wire": "VIO-BRN",
+        "driver_transistor": "Q17",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "18"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "18"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.video-game-flasher",
+      "kind": "flasher",
+      "label": "Video game flasher",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J7-P3",
+        "control_wire": "VIO-RED",
+        "driver_transistor": "Q18",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "19"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "19"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 19,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.back-center-flasher",
+      "kind": "flasher",
+      "label": "Back center flasher",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J7-P4",
+        "control_wire": "VIO-ORG",
+        "driver_transistor": "Q19",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "20"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "20"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.bottom-arch-left-flasher",
+      "kind": "flasher",
+      "label": "Bottom arch left flasher",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J7-P6",
+        "control_wire": "VIO-YEL",
+        "driver_transistor": "Q20",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "21"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "21"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.bottom-arch-right-flasher",
+      "kind": "flasher",
+      "label": "Bottom arch right flasher",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J7-P7",
+        "control_wire": "VIO-GRN",
+        "driver_transistor": "Q21",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "22"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "22"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.lower-left-flasher",
+      "kind": "flasher",
+      "label": "Lower left flasher",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J7-P8",
+        "control_wire": "VIO-BLU",
+        "driver_transistor": "Q22",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "23"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "23"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 23,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.lower-right-flasher",
+      "kind": "flasher",
+      "label": "Lower right flasher",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J7-P9",
+        "control_wire": "VIO-BLK",
+        "driver_transistor": "Q23",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "24"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "24"
+        }
+      ],
+      "availability": "optional",
+      "binding": {
+        "device": 24,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.coin-meter",
+      "kind": "coil",
+      "label": "Coin meter",
+      "physical": {
+        "notes": "Optional 5 VDC coin meter circuit."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J7-P10",
+        "control_wire": "VIO-GRY",
+        "driver_transistor": "Q24",
+        "nominal_voltage_v": 5,
+        "power_connection": "J16-P4-8",
+        "power_wire": "RED",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "25"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "25"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.back-left-flasher",
+      "kind": "flasher",
+      "label": "Back left flasher",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J6-P1",
+        "control_wire": "BLK-BRN",
+        "driver_transistor": "Q25",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "26"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "26"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.disc-left-flasher",
+      "kind": "flasher",
+      "label": "Disc left flasher",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J6-P2",
+        "control_wire": "BLK-RED",
+        "driver_transistor": "Q26",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "27"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "27"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.disc-right-flasher",
+      "kind": "flasher",
+      "label": "Disc right flasher",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J6-P3",
+        "control_wire": "BLK-ORG",
+        "driver_transistor": "Q27",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "28"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "28"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.backpanel-flashers-x2",
+      "kind": "flasher",
+      "label": "Backpanel flashers x2",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J6-P4",
+        "control_wire": "BLK-YEL",
+        "driver_transistor": "Q28",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "29"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "29"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.recognizer-flasher",
+      "kind": "flasher",
+      "label": "Recognizer flasher",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J6-P5",
+        "control_wire": "BLK-GRN",
+        "driver_transistor": "Q29",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "30"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "30"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.disc-motor-relay",
+      "kind": "relay",
+      "label": "Disc motor relay",
+      "physical": {
+        "notes": "Physical disc-motor relay. The proven VPX table simplifies disc motion under output 5 and routes output 30 only to a visual effect; a physical recreation must retain this relay."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J6-P6",
+        "control_wire": "BLK-BLU",
+        "driver_transistor": "Q30",
+        "nominal_voltage_v": 20,
+        "power_connection": "J7-P1",
+        "power_wire": "BRN",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "31"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "31"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.red-disc-left-flashers-x2",
+      "kind": "flasher",
+      "label": "Red disc left flashers x2",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J6-P7",
+        "control_wire": "BLK-VIO",
+        "driver_transistor": "Q31",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "32"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "32"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.red-disc-right-flashers-x2",
+      "kind": "flasher",
+      "label": "Red disc right flashers x2",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "wiring": {
+        "board": "I/O Power Driver board",
+        "control_connection": "J6-P8",
+        "control_wire": "BLK-GRY",
+        "driver_transistor": "Q32",
+        "nominal_voltage_v": 20,
+        "power_connection": "J6-P10",
+        "power_wire": "ORG",
+        "voltage_type": "dc"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "33"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 33,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "virtual.game-on",
+      "kind": "virtual",
+      "label": "PinMAME SAM game-on state",
+      "physical": {
+        "notes": "PinMAME synthetic SAM fast-flip game-on output; no physical Q33 device."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "34"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 34,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "virtual.unused-upper-left-flipper-compatibility",
+      "kind": "virtual",
+      "label": "Unused VPX upper-left flipper compatibility callback",
+      "physical": {
+        "notes": "The proven script contains a commented-out SolCallback(34) compatibility hook and instead calls SolULFlipper directly from its local staged-flipper key handlers. Its physical upper-left flipper remains I/O Power Driver output 12. PinMAME's legacy scalar SAM getter aliases addresses 33-36 to the synthetic game-on bit when modulated-flipper handling is inactive, and the exact runtime traces observe only public game-on 33; do not build or wire a second flipper coil at 34."
+      },
+      "provenance": {
+        "source_refs": [
+          "vpx.tron-legacy-le-vpm-1.1.4",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "1"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "1"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.start-button-1",
+      "kind": "lamp",
+      "label": "Start button",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "2"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "2"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.tournament-start-button-2",
+      "kind": "lamp",
+      "label": "Tournament start button",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "3"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "3"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.shoot-again-3",
+      "kind": "lamp",
+      "label": "Shoot Again",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "4"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "4"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-flynn-4",
+      "kind": "lamp",
+      "label": "Center Flynn",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "5"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "5"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-gem-5",
+      "kind": "lamp",
+      "label": "Center Gem",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "6"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "6"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-clu-6",
+      "kind": "lamp",
+      "label": "Center CLU",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "7"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "7"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-zuse-7",
+      "kind": "lamp",
+      "label": "Center Zuse",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "8"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "8"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-outlane-8",
+      "kind": "lamp",
+      "label": "Left outlane",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "9"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "9"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 9,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.clu-c-9",
+      "kind": "lamp",
+      "label": "CLU C",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "10"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "10"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 10,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.zuse-e-10",
+      "kind": "lamp",
+      "label": "ZUSE E",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "11"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "11"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 11,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.clu-l-11",
+      "kind": "lamp",
+      "label": "CLU L",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "12"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "12"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 12,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.clu-u-12",
+      "kind": "lamp",
+      "label": "CLU U",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "13"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "13"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 13,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.right-outlane-13",
+      "kind": "lamp",
+      "label": "Right outlane",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "14"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "14"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.tron-n-14",
+      "kind": "lamp",
+      "label": "TRON N",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "15"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "15"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.tron-o-15",
+      "kind": "lamp",
+      "label": "TRON O",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "16"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "16"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 16,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.tron-r-16",
+      "kind": "lamp",
+      "label": "TRON R",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "17"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "17"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 17,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.tron-t-17",
+      "kind": "lamp",
+      "label": "TRON T",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "18"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "18"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 18,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.tron-double-scoring-18",
+      "kind": "lamp",
+      "label": "TRON double scoring",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "19"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "19"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 19,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.bumpers-19",
+      "kind": "lamp",
+      "label": "Bumpers",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "20"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "20"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 20,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.spinners-20",
+      "kind": "lamp",
+      "label": "Spinners",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "21"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "21"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-portal-21",
+      "kind": "lamp",
+      "label": "Center Portal",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "22"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "22"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-tron-22",
+      "kind": "lamp",
+      "label": "Center TRON",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "23"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "23"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 23,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-recognizer-23",
+      "kind": "lamp",
+      "label": "Center Recognizer",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "24"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "24"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 24,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-light-cycle-24",
+      "kind": "lamp",
+      "label": "Center Light Cycle",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "25"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "25"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 25,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-disc-25",
+      "kind": "lamp",
+      "label": "Center Disc",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "26"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "26"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 26,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.center-quorra-26",
+      "kind": "lamp",
+      "label": "Center Quorra",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "27"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "27"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 27,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.eject-clu-27",
+      "kind": "lamp",
+      "label": "Eject CLU",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "28"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "28"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 28,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.eject-portal-28",
+      "kind": "lamp",
+      "label": "Eject Portal",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "29"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "29"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 29,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.eject-quorra-29",
+      "kind": "lamp",
+      "label": "Eject Quorra",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "30"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "30"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.eject-light-cycle-30",
+      "kind": "lamp",
+      "label": "Eject Light Cycle",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "31"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "31"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.eject-extra-ball-31",
+      "kind": "lamp",
+      "label": "Eject Extra Ball",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "32"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "32"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 32,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.right-orbit-clu-32",
+      "kind": "lamp",
+      "label": "Right orbit CLU",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "33"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "33"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 33,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.zuse-s-33",
+      "kind": "lamp",
+      "label": "ZUSE S",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "34"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "34"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 34,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.right-orbit-light-cycle-34",
+      "kind": "lamp",
+      "label": "Right orbit Light Cycle",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "35"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "35"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 35,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.flynn-s-arcade-35",
+      "kind": "lamp",
+      "label": "Flynn's Arcade",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "36"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "36"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 36,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-36-36",
+      "kind": "lamp",
+      "label": "Unused lamp 36",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "37"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "37"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 37,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.right-loop-arrow-37",
+      "kind": "lamp",
+      "label": "Right loop arrow",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "38"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "38"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 38,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.right-orbit-disc-38",
+      "kind": "lamp",
+      "label": "Right orbit Disc",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "39"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "39"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 39,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.right-ramp-light-cycle-39",
+      "kind": "lamp",
+      "label": "Right ramp Light Cycle",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "40"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "40"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 40,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-orbit-clu-40",
+      "kind": "lamp",
+      "label": "Left orbit CLU",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "41"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "41"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 41,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.zuse-z-41",
+      "kind": "lamp",
+      "label": "ZUSE Z",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "42"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "42"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 42,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-ramp-light-cycle-42",
+      "kind": "lamp",
+      "label": "Left ramp Light Cycle",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "43"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "43"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 43,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.zuse-u-43",
+      "kind": "lamp",
+      "label": "ZUSE U",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "44"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "44"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 44,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.recognizer-three-bank-44",
+      "kind": "lamp",
+      "label": "Recognizer three-bank",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "45"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "45"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 45,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-inner-loop-clu-45",
+      "kind": "lamp",
+      "label": "Left inner loop CLU",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "46"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "46"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-46-46",
+      "kind": "lamp",
+      "label": "Unused lamp 46",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "47"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "47"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 47,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-47-47",
+      "kind": "lamp",
+      "label": "Unused lamp 47",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "48"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "48"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 48,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.advance-quorra-48",
+      "kind": "lamp",
+      "label": "Advance Quorra",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "49"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "49"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 49,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.right-inner-loop-light-cycle-49",
+      "kind": "lamp",
+      "label": "Right inner loop Light Cycle",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "50"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "50"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 50,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.right-ramp-disc-50",
+      "kind": "lamp",
+      "label": "Right ramp Disc",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "51"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "51"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 51,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.right-inner-loop-disc-51",
+      "kind": "lamp",
+      "label": "Right inner loop Disc",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "52"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "52"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 52,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.right-ramp-arrow-52",
+      "kind": "lamp",
+      "label": "Right ramp arrow",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "53"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "53"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 53,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.right-inner-loop-arrow-53",
+      "kind": "lamp",
+      "label": "Right inner loop arrow",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "54"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "54"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 54,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-54-54",
+      "kind": "lamp",
+      "label": "Unused lamp 54",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "55"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "55"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 55,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-inner-loop-disc-55",
+      "kind": "lamp",
+      "label": "Left inner loop Disc",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "56"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "56"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 56,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-inner-loop-arrow-56",
+      "kind": "lamp",
+      "label": "Left inner loop arrow",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "57"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "57"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 57,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-ramp-arrow-57",
+      "kind": "lamp",
+      "label": "Left ramp arrow",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "58"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "58"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 58,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-ramp-disc-58",
+      "kind": "lamp",
+      "label": "Left ramp Disc",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "59"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "59"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 59,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-orbit-light-cycle-59",
+      "kind": "lamp",
+      "label": "Left orbit Light Cycle",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "60"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "60"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 60,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-bumper-60",
+      "kind": "lamp",
+      "label": "Left bumper",
+      "physical": {
+        "notes": "Factory LED on Pro; other populated Pro matrix lamps use incandescent #555 lamps."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "61"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "61"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 61,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.right-bumper-61",
+      "kind": "lamp",
+      "label": "Right bumper",
+      "physical": {
+        "notes": "Factory LED on Pro; other populated Pro matrix lamps use incandescent #555 lamps."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "62"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "62"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 62,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.bottom-bumper-62",
+      "kind": "lamp",
+      "label": "Bottom bumper",
+      "physical": {
+        "notes": "Factory LED on Pro; other populated Pro matrix lamps use incandescent #555 lamps."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "63"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "63"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 63,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-inner-loop-light-cycle-63",
+      "kind": "lamp",
+      "label": "Left inner loop Light Cycle",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "64"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "64"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 64,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-loop-arrow-64",
+      "kind": "lamp",
+      "label": "Left loop arrow",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "65"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "65"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 65,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-65-65",
+      "kind": "lamp",
+      "label": "Unused lamp 65",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "66"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "66"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 66,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.left-orbit-disc-66",
+      "kind": "lamp",
+      "label": "Left orbit Disc",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "67"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "67"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 67,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-67-67",
+      "kind": "lamp",
+      "label": "Unused lamp 67",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "68"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "68"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 68,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-68-68",
+      "kind": "lamp",
+      "label": "Unused lamp 68",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "69"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "69"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 69,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-69-69",
+      "kind": "lamp",
+      "label": "Unused lamp 69",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "70"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "70"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 70,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-70-70",
+      "kind": "lamp",
+      "label": "Unused lamp 70",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "71"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "71"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 71,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-71-71",
+      "kind": "lamp",
+      "label": "Unused lamp 71",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "72"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "72"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 72,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-72-72",
+      "kind": "lamp",
+      "label": "Unused lamp 72",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "73"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "73"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 73,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-73-73",
+      "kind": "lamp",
+      "label": "Unused lamp 73",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "74"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "74"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 74,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-74-74",
+      "kind": "lamp",
+      "label": "Unused lamp 74",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "75"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "75"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 75,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-75-75",
+      "kind": "lamp",
+      "label": "Unused lamp 75",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "76"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "76"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 76,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-76-76",
+      "kind": "lamp",
+      "label": "Unused lamp 76",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "77"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "77"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 77,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-77-77",
+      "kind": "lamp",
+      "label": "Unused lamp 77",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "78"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "78"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 78,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-78-78",
+      "kind": "lamp",
+      "label": "Unused lamp 78",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "79"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "79"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 79,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-79-79",
+      "kind": "lamp",
+      "label": "Unused lamp 79",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "80"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "80"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 80,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.unused-lamp-80-80",
+      "kind": "lamp",
+      "label": "Unused lamp 80",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "101"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 101,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.rgb-101-right-ramp-blue",
+      "kind": "lamp",
+      "label": "Unpopulated Pro channel 101 (Right ramp blue)",
+      "physical": {
+        "notes": "PinMAME serializes the tricolor board as two B/G/R public triples. The proven table reverses each BGR triplet when calling its RGB helper; PinMAME source identifies 101-103 as right and 104-106 as left. Pro firmware shares the public compatibility channels, but the factory Pro lacks the LE tricolor ramp assembly."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "102"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 102,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.rgb-102-right-ramp-green",
+      "kind": "lamp",
+      "label": "Unpopulated Pro channel 102 (Right ramp green)",
+      "physical": {
+        "notes": "PinMAME serializes the tricolor board as two B/G/R public triples. The proven table reverses each BGR triplet when calling its RGB helper; PinMAME source identifies 101-103 as right and 104-106 as left. Pro firmware shares the public compatibility channels, but the factory Pro lacks the LE tricolor ramp assembly."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "103"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 103,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.rgb-103-right-ramp-red",
+      "kind": "lamp",
+      "label": "Unpopulated Pro channel 103 (Right ramp red)",
+      "physical": {
+        "notes": "PinMAME serializes the tricolor board as two B/G/R public triples. The proven table reverses each BGR triplet when calling its RGB helper; PinMAME source identifies 101-103 as right and 104-106 as left. Pro firmware shares the public compatibility channels, but the factory Pro lacks the LE tricolor ramp assembly."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "104"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 104,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.rgb-104-left-ramp-blue",
+      "kind": "lamp",
+      "label": "Unpopulated Pro channel 104 (Left ramp blue)",
+      "physical": {
+        "notes": "PinMAME serializes the tricolor board as two B/G/R public triples. The proven table reverses each BGR triplet when calling its RGB helper; PinMAME source identifies 101-103 as right and 104-106 as left. Pro firmware shares the public compatibility channels, but the factory Pro lacks the LE tricolor ramp assembly."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "105"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 105,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.rgb-105-left-ramp-green",
+      "kind": "lamp",
+      "label": "Unpopulated Pro channel 105 (Left ramp green)",
+      "physical": {
+        "notes": "PinMAME serializes the tricolor board as two B/G/R public triples. The proven table reverses each BGR triplet when calling its RGB helper; PinMAME source identifies 101-103 as right and 104-106 as left. Pro firmware shares the public compatibility channels, but the factory Pro lacks the LE tricolor ramp assembly."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.lamp",
+          "value": "106"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 106,
+        "group": "pinmame.output.lamp"
+      },
+      "id": "lamp.rgb-106-left-ramp-red",
+      "kind": "lamp",
+      "label": "Unpopulated Pro channel 106 (Left ramp red)",
+      "physical": {
+        "notes": "PinMAME serializes the tricolor board as two B/G/R public triples. The proven table reverses each BGR triplet when calling its RGB helper; PinMAME source identifies 101-103 as right and 104-106 as left. Pro firmware shares the public compatibility channels, but the factory Pro lacks the LE tricolor ramp assembly."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.gi",
+          "value": "0"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "GI-0"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 0,
+        "group": "pinmame.output.gi"
+      },
+      "id": "gi.master",
+      "kind": "gi",
+      "label": "General illumination master",
+      "provenance": {
+        "source_refs": [
+          "manual.tron-legacy-pro-le.2011",
+          "vpx.tron-legacy-le-vpm-1.1.4",
+          "runtime.tron-legacy-pro.boot-start"
+        ],
+        "status": "validated"
+      }
+    }
+  ],
+  "relationships": [],
+  "schema_version": 2,
+  "sources": [
+    {
+      "acquired_at": "2026-08-02T23:21:40.923848Z",
+      "attribution": "Stern Pinball, Inc.",
+      "id": "manual.tron-legacy-pro-le.2011",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "Official 111-page scanned Stern manual: Pro switches/coils/lamps PDF pages 49/51/53, LE pages 55/57/59, location maps on following pages, major assemblies 1-30, and wiring 93-111",
+      "original_filename": "Tron-Manual.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "1212d9f1f5bdb33e9b248299d0e1693ad1103f82129234a1348f0aa8edd47e84",
+      "source_id": "stern",
+      "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/Tron-Manual.pdf"
+    },
+    {
+      "attribution": "Table authors credited in the script; vpxtable_scripts contributors",
+      "id": "vpx.tron-legacy-le-vpm-1.1.4",
+      "kind": "vpx_script",
+      "license": "NOASSERTION",
+      "locator": "Known-working trn_174h script: four-ball initialization, eject and launcher constants, drop bank, target-bank travel, Recognizer positions, disc and post callbacks, staged upper flipper, and BGR ramp-light consumption",
+      "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+      "sha256": "d257913fb05fa054bbf15a8605d4b9b3af2887514355784cbfbc5c92a36adfcc",
+      "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Tron%20Legacy%20LE%20(Stern%202011)%20VPMmod%20v1.1.4.vbs"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.4ec52ff0ac13",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/sam.c TRON driver family, SAM_5COL+1 custom lamp column, tricolor board C/D strobes, fast-flip addresses, GI 0, game-on 33, and 128x32 DMD",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.catalog.4ec52ff0ac13",
+      "kind": "pinmame_catalog",
+      "license": "BSD-3-Clause",
+      "locator": "PinmameGetGames trn_ records and clone graph",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "acquired_at": "2026-08-02T23:00:00Z",
+      "attribution": "Stern Pinball",
+      "id": "stern.tron-legacy-product-page",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Manufacturer product identity and common feature inventory: two ramps, motorized Recognizer target bank, spinning identity disc, three flippers, and licensed presentation",
+      "uri": "https://sternpinball.com/game/tron/"
+    },
+    {
+      "acquired_at": "2026-08-02T23:00:00Z",
+      "attribution": "Internet Pinball Database",
+      "id": "ipdb.tron-legacy-pro.5682",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Physical product identity for Stern Disney TRON Legacy first-edition Pro, IPDB 5682, model I-00B9",
+      "uri": "https://www.ipdb.org/machine.cgi?id=5682"
+    },
+    {
+      "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.tron-legacy-pro.boot-start",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Exact trn_174 boot/start scenario with switches 18-21 and target bank down 52 initialized, four coin pulses, and start; LE also initializes Recognizer center 55; ROM archive SHA-256 610e8fc71fdd83a94748ebe8691aeaa5964986e2d236ce6b7c46ed13602ff772",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "sha256": "51af7aa06cbdd8286101a9dba0b8d2376f957d14a9ae6b0172ed6806683be490",
+      "uri": "external:pinmame-game-code/tron-legacy-pro/harness/boot-start.raw.json"
+    }
+  ]
+}

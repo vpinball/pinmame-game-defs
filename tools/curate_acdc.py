@@ -7,6 +7,7 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json, write_text
+from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -707,16 +708,16 @@ for stale in [
 		stale.unlink()
 
 PATHS = {
-	"premium": ROOT / "machines/author-ready/stern/ac-dc-premium-limited-edition-luci-2012.json",
-	"pro": ROOT / "machines/author-ready/stern/ac-dc-pro-2012.json",
-	"led-pro": ROOT / "machines/author-ready/stern/ac-dc-led-pro-2014.json",
-	"vault": ROOT / "machines/author-ready/stern/ac-dc-vault-edition-2018.json",
+	"premium": ROOT / "machines/partial/stern/ac-dc-premium-limited-edition-luci-2012.json",
+	"pro": ROOT / "machines/partial/stern/ac-dc-pro-2012.json",
+	"led-pro": ROOT / "machines/partial/stern/ac-dc-led-pro-2014.json",
+	"vault": ROOT / "machines/partial/stern/ac-dc-vault-edition-2018.json",
 }
 for variant, path in PATHS.items():
 	definition = build(variant)
-	write_json(path, definition)
+	write_json(spatial_partial_path(path), fail_closed_spatial_partial(definition))
 	knowledge_path = ROOT.joinpath(*str(definition["knowledge"]["path"]).split("/"))
-	write_text(knowledge_path, KNOWLEDGE[variant])
+	write_text(knowledge_path, fail_closed_spatial_knowledge(definition["machine"]["id"], KNOWLEDGE[variant]))
 
 write_json(ROOT / "evidence/runtime/sam/ac-dc-premium-boot-start.json", runtime_evidence(True))
 write_json(ROOT / "evidence/runtime/sam/ac-dc-pro-boot-start.json", runtime_evidence(False))

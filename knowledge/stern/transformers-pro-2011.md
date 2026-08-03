@@ -1,6 +1,7 @@
 # Transformers Pro (Stern, 2011)
 
-Coverage: **author-ready - physical inventory, PinMAME bindings, mechanism behavior, and edition differences validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **physical inventory, PinMAME bindings, mechanism behavior, and edition differences validated**
 
 ## Identity and evidence precedence
 

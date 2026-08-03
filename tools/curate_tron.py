@@ -7,6 +7,7 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json, write_text
+from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -477,12 +478,12 @@ def runtime_evidence(limited_edition: bool) -> dict[str, object]:
 
 
 def main() -> None:
-	write_json(ROOT / "machines/author-ready/stern/tron-legacy-pro-2011.json", build(False))
-	write_json(ROOT / "machines/author-ready/stern/tron-legacy-limited-edition-2011.json", build(True))
+	write_json(spatial_partial_path(ROOT / "machines/partial/stern/tron-legacy-pro-2011.json"), fail_closed_spatial_partial(build(False)))
+	write_json(spatial_partial_path(ROOT / "machines/partial/stern/tron-legacy-limited-edition-2011.json"), fail_closed_spatial_partial(build(True)))
 	write_json(ROOT / "evidence/runtime/sam/tron-legacy-pro-boot-start.json", runtime_evidence(False))
 	write_json(ROOT / "evidence/runtime/sam/tron-legacy-limited-edition-boot-start.json", runtime_evidence(True))
-	write_text(ROOT / "knowledge/stern/tron-legacy-pro-2011.md", PRO_KNOWLEDGE)
-	write_text(ROOT / "knowledge/stern/tron-legacy-limited-edition-2011.md", LE_KNOWLEDGE)
+	write_text(ROOT / "knowledge/stern/tron-legacy-pro-2011.md", fail_closed_spatial_knowledge("stern.tron-legacy-pro.2011", PRO_KNOWLEDGE))
+	write_text(ROOT / "knowledge/stern/tron-legacy-limited-edition-2011.md", fail_closed_spatial_knowledge("stern.tron-legacy-limited-edition.2011", LE_KNOWLEDGE))
 
 
 if __name__ == "__main__":

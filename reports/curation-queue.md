@@ -4,48 +4,48 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 
 | Order | Year | Machine | Manufacturer | Status |
 | ---: | ---: | --- | --- | --- |
-| 1 | 2023 | Ali seven-digit conversion | Stern / Idleman / slochar | author_ready |
-| 2 | 2018 | AC/DC Vault Edition | Stern | author_ready |
-| 3 | 2016 | Spider-Man Vault Edition | Stern | author_ready |
-| 4 | 2014 | AC/DC LED Pro | Stern | author_ready |
-| 5 | 2014 | Iron Man Pro Vault Edition | Stern | author_ready |
-| 6 | 2014 | Mustang Premium / Limited Edition / Boss | Stern | author_ready |
-| 7 | 2014 | Mustang Pro | Stern | author_ready |
-| 8 | 2014 | The Walking Dead Premium / Limited Edition | Stern | author_ready |
-| 9 | 2014 | The Walking Dead Pro | Stern | author_ready |
-| 10 | 2013 | Metallica Premium / Limited Edition | Stern | author_ready |
-| 11 | 2013 | Metallica Pro | Stern | author_ready |
-| 12 | 2013 | Star Trek Premium / Limited Edition | Stern | author_ready |
-| 13 | 2013 | Star Trek Pro | Stern | author_ready |
-| 14 | 2012 | AC/DC Premium / Limited Edition / LUCI Premium | Stern | author_ready |
-| 15 | 2012 | AC/DC Pro (original) | Stern | author_ready |
-| 16 | 2012 | The Avengers Limited Edition | Stern | author_ready |
-| 17 | 2012 | The Avengers Pro | Stern | author_ready |
-| 18 | 2012 | X-Men Limited Edition (Magneto / Wolverine) | Stern | author_ready |
-| 19 | 2012 | X-Men Pro | Stern | author_ready |
-| 20 | 2011 | The Rolling Stones (Standard) | Stern | author_ready |
-| 21 | 2011 | The Rolling Stones Limited Edition | Stern | author_ready |
-| 22 | 2011 | Transformers Limited Edition | Stern | author_ready |
-| 23 | 2011 | Transformers Pro | Stern | author_ready |
-| 24 | 2011 | TRON: Legacy Limited Edition | Stern | author_ready |
-| 25 | 2011 | TRON: Legacy Pro | Stern | author_ready |
-| 26 | 2010 | Avatar Limited Edition | Stern | author_ready |
-| 27 | 2010 | Avatar Pro | Stern | author_ready |
-| 28 | 2010 | Batman: The Dark Knight Standard/Home Edition | Stern | author_ready |
-| 29 | 2010 | Iron Man | Stern | author_ready |
+| 1 | 2023 | Ali seven-digit conversion | Stern / Idleman / slochar | partial |
+| 2 | 2018 | AC/DC Vault Edition | Stern | partial |
+| 3 | 2016 | Spider-Man Vault Edition | Stern | partial |
+| 4 | 2014 | AC/DC LED Pro | Stern | partial |
+| 5 | 2014 | Iron Man Pro Vault Edition | Stern | partial |
+| 6 | 2014 | Mustang Premium / Limited Edition / Boss | Stern | partial |
+| 7 | 2014 | Mustang Pro | Stern | partial |
+| 8 | 2014 | The Walking Dead Premium / Limited Edition | Stern | partial |
+| 9 | 2014 | The Walking Dead Pro | Stern | partial |
+| 10 | 2013 | Metallica Premium / Limited Edition | Stern | partial |
+| 11 | 2013 | Metallica Pro | Stern | partial |
+| 12 | 2013 | Star Trek Premium / Limited Edition | Stern | partial |
+| 13 | 2013 | Star Trek Pro | Stern | partial |
+| 14 | 2012 | AC/DC Premium / Limited Edition / LUCI Premium | Stern | partial |
+| 15 | 2012 | AC/DC Pro (original) | Stern | partial |
+| 16 | 2012 | The Avengers Limited Edition | Stern | partial |
+| 17 | 2012 | The Avengers Pro | Stern | partial |
+| 18 | 2012 | X-Men Limited Edition (Magneto / Wolverine) | Stern | partial |
+| 19 | 2012 | X-Men Pro | Stern | partial |
+| 20 | 2011 | The Rolling Stones (Standard) | Stern | partial |
+| 21 | 2011 | The Rolling Stones Limited Edition | Stern | partial |
+| 22 | 2011 | Transformers Limited Edition | Stern | partial |
+| 23 | 2011 | Transformers Pro | Stern | partial |
+| 24 | 2011 | TRON: Legacy Limited Edition | Stern | partial |
+| 25 | 2011 | TRON: Legacy Pro | Stern | partial |
+| 26 | 2010 | Avatar Limited Edition | Stern | partial |
+| 27 | 2010 | Avatar Pro | Stern | partial |
+| 28 | 2010 | Batman: The Dark Knight Standard/Home Edition | Stern | partial |
+| 29 | 2010 | Iron Man | Stern | partial |
 | 30 | 2010 | STUB - Big Buck Hunter Pro (V1.7) | Stern | stub |
-| 31 | 2009 | 24 | Stern | author_ready |
+| 31 | 2009 | 24 | Stern | partial |
 | 32 | 2009 | STUB - CSI: Crime Scene Investigation (V2.4) | Stern | stub |
 | 33 | 2009 | STUB - Indiana Jones (V2.1) | Stern | stub |
 | 34 | 2009 | STUB - NBA (V8.02) | Stern | stub |
-| 35 | 2008 | Batman: The Dark Knight Pro | Stern | author_ready |
+| 35 | 2008 | Batman: The Dark Knight Pro | Stern | partial |
 | 36 | 2008 | STUB - Family Guy (V12.0 English, German) | Stern | stub |
 | 37 | 2008 | STUB - Pirates of the Caribbean (V6.0 English, French) | Stern | stub |
 | 38 | 2008 | STUB - S.A.M. Boot Flash Update (V3.1) | Stern | stub |
 | 39 | 2008 | STUB - Shrek (V1.41) | Stern | stub |
 | 40 | 2008 | STUB - Simpsons Kooky Carnival, The (Redemption) (V2.0) | Stern | stub |
 | 41 | 2008 | STUB - World Poker Tour (V14.0) | Stern | stub |
-| 42 | 2007 | Spider-Man | Stern | author_ready |
+| 42 | 2007 | Spider-Man | Stern | partial |
 | 43 | 2007 | STUB - Wheel of Fortune (V5.0) | Stern | stub |
 | 44 | 2006 | STUB - Dale Jr. (5.00) | Stern | stub |
 | 45 | 2006 | STUB - Grand Prix (4.50) | Stern | stub |
@@ -54,7 +54,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 48 | 2005 | STUB - Firepower (Sys.7/6-digit /10 Scoring rev. 31) | Williams / Oliver | stub |
 | 49 | 2005 | STUB - Firepower (Sys.7/6-digit conversion rev. 31) | Williams / Oliver | stub |
 | 50 | 2005 | STUB - Firepower (Sys.7/7-digit conversion rev. 31) | Williams / Oliver | stub |
-| 51 | 2004 | Ripley's Believe It or Not! | Stern | author_ready |
+| 51 | 2004 | Ripley's Believe It or Not! | Stern | partial |
 | 52 | 2004 | STUB - Elvis (5.00) | Stern | stub |
 | 53 | 2004 | STUB - Harley-Davidson (Stern, 4.00) | Stern | stub |
 | 54 | 2003 | Lord of the Rings | Stern | partial |

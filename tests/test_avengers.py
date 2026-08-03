@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-LE_PATH = ROOT / "machines" / "author-ready" / "stern" / "avengers-limited-edition-2012.json"
-PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "avengers-pro-2012.json"
+LE_PATH = ROOT / "machines" / "partial" / "stern" / "avengers-limited-edition-2012.json"
+PRO_PATH = ROOT / "machines" / "partial" / "stern" / "avengers-pro-2012.json"
 LE_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "avengers-limited-edition-boot-start.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "avengers-pro-boot-start.json"
 
@@ -33,11 +33,13 @@ class AvengersDefinitionTests(unittest.TestCase):
 		cls.le_evidence = load_json(LE_EVIDENCE_PATH)
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
 
-	def test_both_physical_editions_are_author_ready_and_driver_sets_do_not_overlap(self) -> None:
-		self.assertEqual("author_ready", self.le["coverage"]["status"])
-		self.assertEqual("author_ready", self.pro["coverage"]["status"])
-		self.assertEqual([], self.le["coverage"]["missing"])
-		self.assertEqual([], self.pro["coverage"]["missing"])
+	def test_both_physical_editions_are_fail_closed_for_spatial_retrofit(self) -> None:
+		self.assertEqual("partial", self.le["coverage"]["status"])
+		self.assertEqual("partial", self.pro["coverage"]["status"])
+		self.assertEqual(2, self.le["schema_version"])
+		self.assertEqual(2, self.pro["schema_version"])
+		self.assertIn("spatial_placement", self.le["coverage"]["missing"])
+		self.assertIn("spatial_placement", self.pro["coverage"]["missing"])
 		le_drivers = {driver["id"] for driver in self.le["drivers"]}
 		pro_drivers = {driver["id"] for driver in self.pro["drivers"]}
 		self.assertEqual({"avs_120h", "avs_140h", "avs_170h", "avs_170hc"}, le_drivers)

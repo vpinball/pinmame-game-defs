@@ -10,10 +10,12 @@ from .catalog import generate_stub_catalog
 from .coverage import build_coverage_report, write_coverage_report
 from .errors import DefinitionError
 from .legacy import import_legacy_definitions
+from .jsonio import load_json, write_json, write_text
 from .manuals import acquire_archive_document, acquire_url_document, extract_manual_document
 from .pinmame_source import extract_pinmame_simulations
 from .registry import rebuild_catalog
 from .roms import index_rom_corpus
+from .spatial import extract_from_vpx, extract_spatial_candidates, render_spatial_overlay
 from .validation import validate_repository
 from .vpx_source import extract_vpx_corpora
 
@@ -93,6 +95,16 @@ def _build_parser() -> argparse.ArgumentParser:
 	extract_manual_parser.add_argument("--table-pages", type=_positive_page_set, default=set(), help="Comma-separated PDF pages or ranges whose tables should also be extracted.")
 	coverage_parser = subparsers.add_parser("coverage", help="Print or update the fail-closed coverage report.")
 	coverage_parser.add_argument("--write", action="store_true", help="Write reports/coverage.json and reports/coverage.md.")
+	spatial_parser = subparsers.add_parser("extract-spatial", help="Extract deterministic, candidate-only normalized geometry from a VPX table.")
+	spatial_input = spatial_parser.add_mutually_exclusive_group(required=True)
+	spatial_input.add_argument("--extracted-dir", type=_path, help="Existing vpxtool extraction directory containing JSON game data and items.")
+	spatial_input.add_argument("--vpx", type=_path, help="VPX source file to extract with --vpxtool.")
+	spatial_parser.add_argument("--source-vpx", type=_path, help="Source VPX for --extracted-dir; required because evidence records its SHA-256 and byte size.")
+	spatial_parser.add_argument("--vpxtool", type=_path, help="External vpxtool executable; required with --vpx and never vendored by this repository.")
+	spatial_parser.add_argument("--output", required=True, type=_path, help="Candidate evidence JSON output path.")
+	overlay_parser = subparsers.add_parser("render-spatial-overlay", help="Render canonical machine spatial records as a deterministic SVG overlay.")
+	overlay_parser.add_argument("--definition", required=True, type=_path, help="Canonical machine-definition JSON file.")
+	overlay_parser.add_argument("--output", required=True, type=_path, help="SVG output path.")
 	return parser
 
 
@@ -136,6 +148,22 @@ def main(argv: Sequence[str] | None = None) -> None:
 			status = _validate(repository_root)
 		elif args.command == "coverage":
 			status = _coverage(args, repository_root)
+		elif args.command == "extract-spatial":
+			if args.extracted_dir is not None:
+				if args.source_vpx is None:
+					raise DefinitionError("--source-vpx is required with --extracted-dir so candidate evidence can record the VPX SHA-256 and byte size")
+				report = extract_spatial_candidates(args.extracted_dir, args.source_vpx)
+			else:
+				if args.vpxtool is None:
+					raise DefinitionError("--vpxtool is required with --vpx")
+				report = extract_from_vpx(args.vpx, args.vpxtool)
+			write_json(args.output, report)
+			print(f"Extracted {len(report['objects'])} candidate spatial points.")
+			status = 0
+		elif args.command == "render-spatial-overlay":
+			write_text(args.output, render_spatial_overlay(load_json(args.definition)))
+			print(f"Rendered spatial overlay: {args.output}")
+			status = 0
 		elif args.command == "import-legacy":
 			report = import_legacy_definitions(repository_root)
 			write_coverage_report(repository_root)

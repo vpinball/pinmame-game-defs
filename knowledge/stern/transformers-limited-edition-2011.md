@@ -1,6 +1,7 @@
 # Transformers Limited Edition (Stern, 2011)
 
-Coverage: **author-ready - physical inventory, PinMAME bindings, custom mechanisms, and recreation behavior validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **physical inventory, PinMAME bindings, custom mechanisms, and recreation behavior validated**
 
 ## Identity and evidence precedence
 

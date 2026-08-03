@@ -1,6 +1,7 @@
 # X-Men Pro (Stern, 2012)
 
-Coverage: **author-ready - physical inventory, public PinMAME bindings, lamp semantics, mechanisms, and edition differences validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **physical inventory, public PinMAME bindings, lamp semantics, mechanisms, and edition differences validated**
 
 ## Identity and evidence precedence
 
@@ -12,7 +13,7 @@ The SAM switch matrix is public 1-64; dedicated cabinet inputs occupy 65-72, 81-
 
 ## Lamps and physical placement
 
-All public lamp addresses 1-80 are explicit in the JSON. The authenticated table consumes exactly 3-25, 28-31, 33-38, 43-57, 60-62, and 65-71; every other address is explicitly unused. Each used lamp has its extracted VPX coordinate and a semantic label read from the table's playfield art. Descriptive location labels are retained for otherwise unlabeled red route arrows and the two Magneto completion medallions so an author can place them without inventing rule terminology. Lamps 11 and 38 carry left/right Nightcrawler feature artwork but are ordinary static inserts on the Pro, not moving toys. Lamp callbacks and GI 0 are active-high in the proven scripts.
+All public lamp addresses 1-80 are explicit in the JSON. The authenticated table consumes exactly 3-25, 28-31, 33-38, 43-57, 60-62, and 65-71; every other address is explicitly unused. Each used lamp was correlated with an extracted VPX coordinate during curation, but those coordinates have not yet been normalized and promoted into this definition. Semantic labels come from the table's playfield art. Descriptive location labels are retained for otherwise unlabeled red route arrows and the two Magneto completion medallions so an author can identify them without inventing rule terminology. Lamps 11 and 38 carry left/right Nightcrawler feature artwork but are ordinary static inserts on the Pro, not moving toys. Lamp callbacks and GI 0 are active-high in the proven scripts.
 
 ## Coils, flashers, and the upper flipper exception
 
@@ -34,5 +35,5 @@ The Pro omits the LE motorized Iceman Ice Slide, both latched Nightcrawler pop-u
 
 - Build the four-ball trough, shooter/manual plunger, auto launcher, Power Scoop eject, left VUK, four-level Magneto lock and diverter, two playfield magnets, passive Wolverine bash toy, three flippers, three pops, two slings, Cyclops spinner, seven standup/bash targets, two molded ramps, inner loop, and both outer orbits.
 - Bind every public input and output from the JSON, including explicit unused lamp and coil channels, GI 0, the 128x32 DMD, and the upper-right physical flipper exception.
-- Place the 58 standard lamps and flasher groups using the stored coordinates and the pinned playfield-art hash; do not invent LE hardware where the Pro art retains only a themed insert.
+- Recover and normalize the 58 standard-lamp and flasher-group placements from the authenticated table and pinned playfield art before authoring; these coordinates are not yet stored in the definition. Do not invent LE hardware where the Pro art retains only a themed insert.
 - Treat working-table kick force, angle, animation, capture, and magnet values as proven authoring baselines, while preserving controller causality and physical channel assignments.

@@ -1,6 +1,7 @@
 # The Rolling Stones Standard (Stern, 2011)
 
-Coverage: **author-ready - complete physical inventory, PinMAME bindings, mechanism causality, wiring, and edition boundary validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **complete physical inventory, PinMAME bindings, mechanism causality, wiring, and edition boundary validated**
 
 ## Identity and evidence precedence
 

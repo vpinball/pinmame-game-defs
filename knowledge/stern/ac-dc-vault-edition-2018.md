@@ -1,5 +1,7 @@
 # AC/DC Vault Edition recreation knowledge
 
+Coverage: **partial — normalized spatial placements pending.**
+
 ## Identity
 
 This record covers the 2018 1.70 and 1.70 colored PinMAME drivers on the AC/DC Vault Edition physical product. It retains the Pro ball paths and passive swinging-bell product line but changes artwork and removes lamp inserts 14, 15, and 17.

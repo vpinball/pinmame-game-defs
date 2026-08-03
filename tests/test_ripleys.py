@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines" / "author-ready" / "stern" / "ripley-s-believe-it-or-not-2004.json"
+DEFINITION_PATH = ROOT / "machines" / "partial" / "stern" / "ripley-s-believe-it-or-not-2004.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "whitestar" / "ripleys-boot-start-and-gameplay.json"
 PROFILE_PATH = ROOT / "controllers" / "pinmame" / "whitestar.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "stern" / "ripley-s-believe-it-or-not-2004.md"
@@ -29,21 +29,22 @@ class RipleysDefinitionTests(unittest.TestCase):
 		cls.profile = load_json(PROFILE_PATH)
 		cls.knowledge = KNOWLEDGE_PATH.read_text(encoding="utf-8")
 
-	def test_identity_driver_family_and_author_ready_gate(self) -> None:
+	def test_identity_driver_family_and_fail_closed_spatial_gate(self) -> None:
 		self.assertEqual(
 			{"id": "stern.ripley-s-believe-it-or-not.2004", "ipdb_id": 4917, "kind": "physical_pinball", "manufacturer": "Stern", "name": "Ripley's Believe It or Not!", "year": 2004},
 			self.definition["machine"],
 		)
-		self.assertEqual("author_ready", self.definition["coverage"]["status"])
-		self.assertEqual([], self.definition["coverage"]["missing"])
-		self.assertTrue(all(value == "validated" for value in self.definition["coverage"]["dimensions"].values()))
+		self.assertEqual(2, self.definition["schema_version"])
+		self.assertEqual("partial", self.definition["coverage"]["status"])
+		self.assertIn("spatial_placement", self.definition["coverage"]["missing"])
+		self.assertEqual("unknown", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
 		self.assertEqual([], self.definition["conflicts"])
 		expected = {f"rip{version}{language}" for version in ("300", "301", "302", "310") for language in ("", "f", "g", "i", "l")} | {f"ripleys{language}" for language in ("", "f", "g", "i", "l")}
 		self.assertEqual(expected, {driver["id"] for driver in self.definition["drivers"]})
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		self.assertEqual(expected, {driver["id"] for driver in catalog["drivers"] if driver["root_driver"] == "ripleys"})
-		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "ripley-s-believe-it-or-not-2004.json").exists())
+		self.assertTrue((ROOT / "machines" / "partial" / "stern" / "ripley-s-believe-it-or-not-2004.json").exists())
 
 	def test_whitestar_profile_and_complete_input_spaces(self) -> None:
 		self.assertEqual("pinmame.whitestar", self.profile["id"])

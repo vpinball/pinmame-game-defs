@@ -1,6 +1,7 @@
 # The Avengers Pro (Stern, 2012)
 
-Coverage: **author-ready - complete Pro I/O, wiring, mechanisms, initial state, and controller bindings validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **complete Pro I/O, wiring, mechanisms, initial state, and controller bindings validated**
 
 ## Identity and evidence precedence
 

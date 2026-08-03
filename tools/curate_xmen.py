@@ -6,6 +6,9 @@ import json
 import re
 from pathlib import Path
 
+from pinmame_game_defs.jsonio import write_json, write_text
+from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
@@ -486,7 +489,7 @@ The SAM switch matrix is public 1-64; dedicated cabinet inputs occupy 65-72, 81-
 
 ## Lamps and physical placement
 
-All public lamp addresses 1-80 are explicit in the JSON. The authenticated table consumes exactly 3-25, 28-31, 33-38, 43-57, 60-62, and 65-71; every other address is explicitly unused. Each used lamp has its extracted VPX coordinate and a semantic label read from the table's playfield art. Descriptive location labels are retained for otherwise unlabeled red route arrows and the two Magneto completion medallions so an author can place them without inventing rule terminology. Lamps 11 and 38 carry left/right Nightcrawler feature artwork but are ordinary static inserts on the Pro, not moving toys. Lamp callbacks and GI 0 are active-high in the proven scripts.
+All public lamp addresses 1-80 are explicit in the JSON. The authenticated table consumes exactly 3-25, 28-31, 33-38, 43-57, 60-62, and 65-71; every other address is explicitly unused. Each used lamp was correlated with an extracted VPX coordinate during curation, but those coordinates have not yet been normalized and promoted into this definition. Semantic labels come from the table's playfield art. Descriptive location labels are retained for otherwise unlabeled red route arrows and the two Magneto completion medallions so an author can identify them without inventing rule terminology. Lamps 11 and 38 carry left/right Nightcrawler feature artwork but are ordinary static inserts on the Pro, not moving toys. Lamp callbacks and GI 0 are active-high in the proven scripts.
 
 ## Coils, flashers, and the upper flipper exception
 
@@ -508,7 +511,7 @@ The Pro omits the LE motorized Iceman Ice Slide, both latched Nightcrawler pop-u
 
 - Build the four-ball trough, shooter/manual plunger, auto launcher, Power Scoop eject, left VUK, four-level Magneto lock and diverter, two playfield magnets, passive Wolverine bash toy, three flippers, three pops, two slings, Cyclops spinner, seven standup/bash targets, two molded ramps, inner loop, and both outer orbits.
 - Bind every public input and output from the JSON, including explicit unused lamp and coil channels, GI 0, the 128x32 DMD, and the upper-right physical flipper exception.
-- Place the 58 standard lamps and flasher groups using the stored coordinates and the pinned playfield-art hash; do not invent LE hardware where the Pro art retains only a themed insert.
+- Recover and normalize the 58 standard-lamp and flasher-group placements from the authenticated table and pinned playfield art before authoring; these coordinates are not yet stored in the definition. Do not invent LE hardware where the Pro art retains only a themed insert.
 - Treat working-table kick force, angle, animation, capture, and magnet values as proven authoring baselines, while preserving controller causality and physical channel assignments.
 """
 
@@ -523,22 +526,21 @@ def runtime_evidence() -> dict[str, object]:
 
 
 def write(path: Path, value: dict[str, object]) -> None:
+	path = spatial_partial_path(path)
+	value = fail_closed_spatial_partial(value)
 	path.parent.mkdir(parents=True, exist_ok=True)
-	path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+	write_json(path, value)
 
 
 def main() -> None:
-	write(ROOT / "machines/author-ready/stern/x-men-limited-edition-2012.json", build_le())
-	write(ROOT / "machines/author-ready/stern/x-men-pro-2012.json", build_pro())
+	write(ROOT / "machines/partial/stern/x-men-limited-edition-2012.json", build_le())
+	write(ROOT / "machines/partial/stern/x-men-pro-2012.json", build_pro())
 	write(ROOT / "evidence/runtime/sam/x-men-limited-edition-boot-start.json", runtime_evidence())
-	(ROOT / "knowledge/stern/x-men-limited-edition-2012.md").write_text(LE_KNOWLEDGE, encoding="utf-8")
-	(ROOT / "knowledge/stern/x-men-pro-2012.md").write_text(PRO_KNOWLEDGE, encoding="utf-8")
+	write_text(ROOT / "knowledge/stern/x-men-limited-edition-2012.md", fail_closed_spatial_knowledge("stern.x-men-limited-edition.2012", LE_KNOWLEDGE))
+	write_text(ROOT / "knowledge/stern/x-men-pro-2012.md", fail_closed_spatial_knowledge("stern.x-men-pro.2012", PRO_KNOWLEDGE))
 	stale = ROOT / "machines/partial/stern/x-men-le-2012.json"
 	if stale.exists():
 		stale.unlink()
-	stale_pro = ROOT / "machines/partial/stern/x-men-pro-2012.json"
-	if stale_pro.exists():
-		stale_pro.unlink()
 
 
 if __name__ == "__main__":

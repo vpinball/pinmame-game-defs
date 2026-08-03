@@ -1,6 +1,7 @@
 # TRON: Legacy Limited Edition (Stern, 2011)
 
-Coverage: **author-ready - complete physical inventory, PinMAME bindings, custom mechanisms, wiring, initial state, and recreation behavior validated**
+Coverage: **partial — normalized spatial placements pending.**
+Previously validated non-spatial scope: **complete physical inventory, PinMAME bindings, custom mechanisms, wiring, initial state, and recreation behavior validated**
 
 ## Identity and evidence precedence
 

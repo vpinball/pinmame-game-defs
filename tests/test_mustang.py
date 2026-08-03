@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
-PREMIUM_PATH = REPOSITORY_ROOT / "machines" / "author-ready" / "stern" / "mustang-premium-limited-edition-boss-2014.json"
-PRO_PATH = REPOSITORY_ROOT / "machines" / "author-ready" / "stern" / "mustang-pro-2014.json"
+PREMIUM_PATH = REPOSITORY_ROOT / "machines" / "partial" / "stern" / "mustang-premium-limited-edition-boss-2014.json"
+PRO_PATH = REPOSITORY_ROOT / "machines" / "partial" / "stern" / "mustang-pro-2014.json"
 
 
 def load_definition(path: Path) -> dict[str, object]:
@@ -32,11 +32,13 @@ class MustangDefinitionTests(unittest.TestCase):
 		self.assertEqual({"mt_120", "mt_130", "mt_140", "mt_145", "mt_145c"}, pro_drivers)
 		self.assertFalse(premium_drivers & pro_drivers)
 
-	def test_both_working_script_validated_editions_are_author_ready(self) -> None:
-		self.assertEqual("author_ready", self.premium["coverage"]["status"])
-		self.assertEqual([], self.premium["coverage"]["missing"])
-		self.assertEqual("author_ready", self.pro["coverage"]["status"])
-		self.assertEqual([], self.pro["coverage"]["missing"])
+	def test_both_working_script_validated_editions_are_fail_closed_for_spatial_retrofit(self) -> None:
+		self.assertEqual(2, self.premium["schema_version"])
+		self.assertEqual("partial", self.premium["coverage"]["status"])
+		self.assertIn("spatial_placement", self.premium["coverage"]["missing"])
+		self.assertEqual(2, self.pro["schema_version"])
+		self.assertEqual("partial", self.pro["coverage"]["status"])
+		self.assertIn("spatial_placement", self.pro["coverage"]["missing"])
 		self.assertEqual(6098, self.pro["machine"]["ipdb_id"])
 
 	def test_physical_trough_inventory_keeps_six_positions_and_jam(self) -> None:

@@ -14,19 +14,26 @@ ROOT = Path(__file__).resolve().parents[1]
 class RepositoryValidationTests(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls) -> None:
-		cls.transformers = load_json(ROOT / "machines" / "author-ready" / "stern" / "transformers-limited-edition-2011.json")
+		cls.transformers = load_json(ROOT / "machines" / "partial" / "stern" / "transformers-limited-edition-2011.json")
+
+	def author_ready_fixture(self) -> dict[str, object]:
+		definition = copy.deepcopy(self.transformers)
+		definition["coverage"]["status"] = "author_ready"
+		definition["coverage"]["missing"] = []
+		definition["coverage"]["dimensions"]["spatial_placement"] = "validated"
+		return definition
 
 	def test_repository_is_valid(self) -> None:
 		self.assertEqual([], validate_repository(ROOT))
 
 	def test_author_ready_driver_must_match_containing_physical_definition(self) -> None:
-		definition = copy.deepcopy(self.transformers)
+		definition = self.author_ready_fixture()
 		definition["drivers"][0]["physical_compatibility"] = "different"
 		errors = validate_machine(definition)
 		self.assertTrue(any("physically compatible with the containing machine definition" in error for error in errors))
 
 	def test_virtual_machine_records_and_virtual_only_drivers_are_rejected(self) -> None:
-		definition = copy.deepcopy(self.transformers)
+		definition = self.author_ready_fixture()
 		definition["machine"]["kind"] = "virtual_pinball"
 		definition["drivers"][0]["id"] = "che_cho"
 		errors = validate_machine(definition)
@@ -34,14 +41,14 @@ class RepositoryValidationTests(unittest.TestCase):
 		self.assertTrue(any("outside the physical-machine scope" in error and "$.drivers[0].id" in error for error in errors))
 
 	def test_mechanism_actuator_can_have_only_one_owner(self) -> None:
-		definition = copy.deepcopy(self.transformers)
+		definition = self.author_ready_fixture()
 		actuator = definition["mechanisms"][0]["actuators"][0]
 		definition["mechanisms"][1]["actuators"].append(actuator)
 		errors = validate_machine(definition)
 		self.assertTrue(any("is already owned" in error for error in errors))
 
 	def test_physical_solenoid_connection_can_have_only_one_owner(self) -> None:
-		definition = copy.deepcopy(self.transformers)
+		definition = self.author_ready_fixture()
 		physical_outputs = [output for output in definition["outputs"] if output["binding"]["group"] == "pinmame.output.solenoid" and output.get("kind") != "virtual" and output.get("availability") in {"used", "optional"} and output.get("wiring", {}).get("control_connection")]
 		physical_outputs[1]["wiring"]["board"] = physical_outputs[0]["wiring"]["board"]
 		physical_outputs[1]["wiring"]["control_connection"] = physical_outputs[0]["wiring"]["control_connection"]
@@ -49,10 +56,10 @@ class RepositoryValidationTests(unittest.TestCase):
 		self.assertTrue(any("duplicates physical output connection" in error for error in errors))
 
 	def test_author_ready_sam_requires_one_unwired_virtual_game_on_output(self) -> None:
-		definition = copy.deepcopy(self.transformers)
+		definition = self.author_ready_fixture()
 		definition["outputs"] = [output for output in definition["outputs"] if output["binding"] != {"device": 33, "group": "pinmame.output.solenoid"}]
 		self.assertTrue(any("must declare public solenoid 33 exactly once" in error for error in validate_machine(definition)))
-		definition = copy.deepcopy(self.transformers)
+		definition = self.author_ready_fixture()
 		game_on = next(output for output in definition["outputs"] if output["binding"] == {"device": 33, "group": "pinmame.output.solenoid"})
 		game_on["kind"] = "coil"
 		game_on["wiring"] = {"board": "invented"}
@@ -61,13 +68,14 @@ class RepositoryValidationTests(unittest.TestCase):
 		self.assertTrue(any("cannot have physical wiring" in error for error in errors))
 
 	def test_runtime_observations_must_map_to_author_ready_outputs(self) -> None:
-		evidence = {"machine_ids": [self.transformers["machine"]["id"]], "runtime": {"observations": {"solenoid_addresses_seen": [999]}}}
+		definition = self.author_ready_fixture()
+		evidence = {"machine_ids": [definition["machine"]["id"]], "runtime": {"observations": {"solenoid_addresses_seen": [999]}}}
 		errors: list[str] = []
-		_validate_runtime_observations(evidence, "evidence/test.json", {self.transformers["machine"]["id"]: self.transformers}, errors)
+		_validate_runtime_observations(evidence, "evidence/test.json", {definition["machine"]["id"]: definition}, errors)
 		self.assertTrue(any("address 999 is not declared" in error for error in errors))
 
-	def test_every_author_ready_sam_definition_has_consistent_game_on_semantics(self) -> None:
-		for path in (ROOT / "machines" / "author-ready").rglob("*.json"):
+	def test_current_sam_partials_retain_consistent_game_on_semantics(self) -> None:
+		for path in (ROOT / "machines" / "partial" / "stern").rglob("*.json"):
 			definition = load_json(path)
 			if definition.get("controller", {}).get("platform") != "pinmame.sam":
 				continue
