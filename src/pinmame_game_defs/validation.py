@@ -156,6 +156,8 @@ def _validate_spatial(
 				expected = "virtual"
 			elif availability == "unused":
 				expected = "unused"
+			elif kind in EMITTER_OUTPUT_KINDS | EFFECT_OUTPUT_KINDS and availability in {"used", "optional"} and _has_cabinet_or_service_role(device):
+				expected = "cabinet_or_service"
 			elif kind in EFFECT_OUTPUT_KINDS and availability in {"used", "optional"}:
 				expected = "internal_nonvisual"
 			else:

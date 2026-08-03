@@ -6,8 +6,9 @@ import json
 import re
 from pathlib import Path
 
+from curate_acdc_spatial import apply_vault_spatial
 from pinmame_game_defs.jsonio import write_json, write_text
-from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+from pinmame_game_defs.spatial import SPATIAL_RETROFIT_PENDING_MACHINE_IDS, fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,6 +25,7 @@ PRO_MANUAL = "manual.acdc-pro"
 PREMIUM_VPX = "vpx.acdc-luci-premium-vpw-1.1.4"
 PRO_VPX = "vpx.acdc-pro-1.0-lighting-fix"
 VAULT_VPX = "vpx.acdc-pro-vault-1.0-lighting-fix"
+VAULT_TABLE = "vpx-table.acdc-pro-vault-1.0"
 PREMIUM_RUNTIME = "runtime.acdc-premium.boot-start"
 PRO_RUNTIME = "runtime.acdc-pro.boot-start"
 STERN_PRODUCT = "stern.acdc-product-page"
@@ -165,14 +167,14 @@ PRO_SWITCHES: dict[int, dict[str, object]] = {
 	32: switch("Bottom pop bumper", "leaf", pulse=True),
 	33: switch("Loop spinner", "other", pulse=True),
 	34: switch("Thunder standup target (left)", "microswitch", pulse=True),
-	35: switch("Thunder standup target (right)", "microswitch", pulse=True),
+	35: switch("Thunder standup target (center)", "microswitch", pulse=True),
 	36: switch("Hell's Bell standup target", "microswitch", pulse=True),
 	37: switch("Jukebox / top eject saucer", "microswitch", roles=["ball.loaded"]),
 	38: switch("Top lane rollover (left)", "leaf"),
 	39: switch("Top lane rollover (center)", "leaf"),
 	40: switch("Top lane rollover (right)", "leaf"),
 	41: switch("Right ramp entrance", "leaf"),
-	42: switch("Thunder standup target (center)", "microswitch", pulse=True),
+	42: switch("Thunder standup target (right)", "microswitch", pulse=True),
 	43: switch("Right ramp exit", "leaf"),
 	44: switch("Left orbit", "leaf"),
 	45: switch("Cannon entry / loaded", "microswitch", roles=["ball.loaded"]),
@@ -316,7 +318,7 @@ PRO_LAMPS = {
 	1: "Start button", 2: "Tournament start button", 3: "Left outlane", 4: "Left return lane", 5: "2X", 6: "3X", 7: "Right return lane", 8: "Right outlane",
 	9: "AC/DC last C", 10: "AC/DC D", 11: "AC/DC slash", 12: "AC/DC first C", 13: "AC/DC A", 14: "VPX playfield insert l14", 15: "VPX playfield insert l15", 17: "VPX playfield insert l17", 18: "Left-loop arrow (white)",
 	19: "Left-ramp standup (left)", 20: "Left-ramp arrow (white)", 21: "Left-ramp standup (right)", 22: "TNT T (left)", 23: "TNT N", 24: "TNT T (right)",
-	25: "TNT arrow (white)", 26: "Right-ramp arrow (white)", 27: "Extra Ball", 28: "Left-loop arrow (red / horns)", 29: "Right-loop arrow (white)",
+	25: "TNT arrow (white)", 26: "Right-ramp arrow (white)", 27: "Extra Ball", 28: "Right-loop arrow (red / horns)", 29: "Right-loop arrow (white)",
 	30: "ROCK R", 31: "ROCK O", 32: "ROCK C", 33: "ROCK K", 34: "Special", 35: "Bell arrow (red / horns)", 36: "Bell arrow (white)",
 	37: "Left top lane", 38: "Center top lane", 39: "Right top lane", 40: "Tunes N Stuff", 41: "Jam Multiball", 42: "Super Targets",
 	43: "Super Lanes", 44: "Album Multiball", 45: "Cannon Fodder", 46: "Cannon Volley", 47: "Cannon Chaos", 48: "Rock Again",
@@ -496,6 +498,7 @@ VPX_SOURCES = {
 	PREMIUM_VPX: {"id": PREMIUM_VPX, "kind": "vpx_script", "uri": "https://github.com/vpinball/vpxtable_scripts", "revision": VPX_REVISION, "sha256": "b478b21272befd41908aa3ef4daf3a90d4838334346718cb4d5fde7f23bb2fc0", "locator": "AC-DC LUCI Premium VR (Stern 2013) v1.1.4.vbs; callbacks, initial state, routes, cannon, bell, diverters, lamps, and mechanism behavior", "license": "NOASSERTION", "attribution": "VPW table contributors credited in the script"},
 	PRO_VPX: {"id": PRO_VPX, "kind": "vpx_script", "uri": "https://github.com/vpinball/vpxtable_scripts", "revision": VPX_REVISION, "sha256": "e0fdef84892ea8bce6eae179509ac8262f103bac0173c2e822a4fe10aafcf7fa", "locator": "AC-DC Pro-1.0 Lighting Bug Fix.vbs; exact Pro controller callbacks, ball devices, cannon positions, switch semantics, GI, lamps, and flashers", "license": "NOASSERTION", "attribution": "ninuzzu and credited AC/DC Pro table contributors"},
 	VAULT_VPX: {"id": VAULT_VPX, "kind": "vpx_script", "uri": "https://github.com/vpinball/vpxtable_scripts", "revision": VPX_REVISION, "sha256": "88101e2184729f952d196fdfe5885f9d7e81ec211b7b1b675d724419fcb6a7f1", "locator": "AC-DC Pro Vault-1.0 Lighting Bug Fix.vbs; exact passive swinging-bell behavior at switch 36 and removed inserts 14, 15, and 17", "license": "NOASSERTION", "attribution": "ninuzzu and credited AC/DC Pro Vault table contributors"},
+	VAULT_TABLE: {"id": VAULT_TABLE, "kind": "vpx_table", "uri": "https://vpuniverse.com/files/file/5489-acdc/", "sha256": "10a460c6b84fc1b8b372bf7b3d92b1904ee5eed9d5aad29fe384e7a6502fa328", "locator": "AC-DC Pro Vault-1.0.vpx (79,429,632 bytes); verified and extracted with vpxtool git:v0.33.3; normalized gameitem geometry and collection membership reviewed against manual pages 17, 19, 21, 42, and 48", "license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "ninuzzu and credited AC/DC Pro Vault table contributors", "original_filename": "AC-DC Pro Vault-1.0.vpx"},
 }
 RUNTIME_SOURCES = {
 	PREMIUM_RUNTIME: {"id": PREMIUM_RUNTIME, "kind": "runtime_scenario", "uri": "local-evidence://pinmame-harness/acd_170h/boot-start-premium-1.json", "sha256": "31d6c8a83091c62785ce5b23cb1417a12bfb229ed61b5366354451510e4940c0", "locator": "Exact acd_170h.zip SHA-256 1ace847619af4864769b053f641d3e035a1c72d517ac750af7088600cdd291d4; four-ball trough plus cannon-home initial state; boot, four credits, start, and observation", "license": "NOASSERTION", "attribution": "Generated locally from PinMAME and the user-authorized ROM corpus; ROM bytes are external"},
@@ -517,7 +520,7 @@ def source_set(variant: str) -> list[dict[str, object]]:
 	elif variant == "led-pro":
 		ids = [PRO_MANUAL, PRO_VPX, VAULT_VPX, PRO_RUNTIME, STERN_PRODUCT, STERN_LED_PRO]
 	else:
-		ids = [PRO_MANUAL, VAULT_VPX, PRO_RUNTIME, STERN_PRODUCT, STERN_LED_PRO]
+		ids = [PRO_MANUAL, VAULT_VPX, VAULT_TABLE, PRO_RUNTIME, STERN_PRODUCT, STERN_LED_PRO]
 	lookup = {**MANUAL_SOURCES, **VPX_SOURCES, **RUNTIME_SOURCES, **WEB_SOURCES}
 	return [*COMMON_SOURCES, *(lookup[source_id] for source_id in ids)]
 
@@ -546,7 +549,7 @@ def build(variant: str) -> dict[str, object]:
 	}[variant]
 	inputs = complete_inputs(variant, source_ids)
 	outputs = complete_outputs(variant, source_ids)
-	return {
+	definition = {
 		"format": "pinmame-machine-definition", "schema_version": 1, "machine": MACHINE_META[variant],
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "hardware_generation": "0x00000040", "inversion_applied_by_emulator": True},
@@ -558,6 +561,11 @@ def build(variant: str) -> dict[str, object]:
 		"sources": source_set(variant),
 		"knowledge": {"path": f"knowledge/stern/{MACHINE_META[variant]['id'].split('.', 1)[1].replace('.', '-')}.md", "status": "complete"},
 	}
+	if variant == "vault":
+		apply_vault_spatial(inputs, outputs, table_source=VAULT_TABLE, script_source=VAULT_VPX, manual_source=PRO_MANUAL, core_source=CORE_SOURCE)
+		definition["schema_version"] = 2
+		definition["coverage"]["dimensions"]["spatial_placement"] = "validated"
+	return definition
 
 
 KNOWLEDGE = {
@@ -665,9 +673,16 @@ The known-working AC/DC Pro Vault 1.0 script is ground truth. Switch 36 is a phy
 
 Start four balls on trough switches 18-21 and the cannon at home on 61. Output 1 ejects, output 2 launches, output 12 clears Jukebox switch 37, output 4 routes into the cannon, output 32 rotates, and output 3 fires the ball held on 45. Switch 62 is the cannon timing mark. The right control gate is output 5.
 
+## Spatial reconstruction
+
+Every physical playfield switch, effect, insert, flasher, and GI emitter has a reviewed normalized placement in VPX/player view (`x=0` left, `x=1` right, `y=0` rear, `y=1` apron). Coordinates come from the exact working `AC-DC Pro Vault-1.0.vpx` table and were checked against the official switch, lamp, and coil location sheets. Switches 18-22 follow the real under-apron trough assembly from drain end to eject/jam end rather than collapsing onto the table's two simulated kicker objects. Cannon switches 61 and 62 share the rotating assembly's projected center because their physical contacts differ by cam state, not playfield position. Vertical back-panel lamps intentionally share projected x/y positions where their difference is height, which the canonical two-dimensional playfield space does not encode.
+
+Solenoid 25 has three emitter placements, one at each pop bumper. GI 0 has 45 emitter placements: the 38 bulbs in the script's red, white, and blue GI collections plus the seven physical back-panel bulbs corroborated by the back-panel parts diagram. Cosmetic reflection and desktop-render helper objects are not duplicate physical emitters. Cabinet/start/tournament/FIRE lamps, cabinet/service switches, the shaker, knocker, and optional ticket hardware are explicitly marked `cabinet_or_service` instead of being forced into playfield coordinates.
+
 ## Evidence
 
 - Vault script SHA-256 88101e2184729f952d196fdfe5885f9d7e81ec211b7b1b675d724419fcb6a7f1.
+- Exact working VPX SHA-256 10a460c6b84fc1b8b372bf7b3d92b1904ee5eed9d5aad29fe384e7a6502fa328; 79,429,632 bytes; verified and extracted with vpxtool git:v0.33.3. The source table is retained in the organized external VPX cache and is not redistributed by this repository.
 - Official Pro manual SHA-256 987d42c68b586af1b0d66100b9f34d5215dfaf67574032849adb1c2f18c6cab5 supplies the unchanged base wiring.
 - Exact acd_170 run SHA-256 f3c237db82c4686bd58908a9b1935b21a483fe99b753bd6f25ab9b375c372511; exact ROM archive remains external.
 """,
@@ -703,6 +718,7 @@ for stale in [
 	ROOT / "knowledge/stern/ac-dc-pro.2012.md",
 	ROOT / "knowledge/stern/ac-dc-led-pro.2014.md",
 	ROOT / "knowledge/stern/ac-dc-vault-edition.2018.md",
+	ROOT / "machines/partial/stern/ac-dc-vault-edition-2018.json",
 ]:
 	if stale.exists():
 		stale.unlink()
@@ -711,11 +727,12 @@ PATHS = {
 	"premium": ROOT / "machines/partial/stern/ac-dc-premium-limited-edition-luci-2012.json",
 	"pro": ROOT / "machines/partial/stern/ac-dc-pro-2012.json",
 	"led-pro": ROOT / "machines/partial/stern/ac-dc-led-pro-2014.json",
-	"vault": ROOT / "machines/partial/stern/ac-dc-vault-edition-2018.json",
+	"vault": ROOT / "machines/author-ready/stern/ac-dc-vault-edition-2018.json",
 }
 for variant, path in PATHS.items():
 	definition = build(variant)
-	write_json(spatial_partial_path(path), fail_closed_spatial_partial(definition))
+	output_path = spatial_partial_path(path) if definition["machine"]["id"] in SPATIAL_RETROFIT_PENDING_MACHINE_IDS else path
+	write_json(output_path, fail_closed_spatial_partial(definition))
 	knowledge_path = ROOT.joinpath(*str(definition["knowledge"]["path"]).split("/"))
 	write_text(knowledge_path, fail_closed_spatial_knowledge(definition["machine"]["id"], KNOWLEDGE[variant]))
 

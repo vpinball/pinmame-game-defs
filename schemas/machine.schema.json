@@ -279,6 +279,11 @@
         "availability": { "enum": ["used", "unused", "optional", "unknown"] },
         "physical": { "$ref": "#/$defs/physical" },
         "spatial": { "$ref": "#/$defs/spatial" },
+        "roles": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
         "wiring": { "$ref": "#/$defs/wiring" },
         "range": {
           "type": "object",

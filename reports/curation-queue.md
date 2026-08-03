@@ -4,7 +4,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 
 | Order | Year | Machine | Manufacturer | Status |
 | ---: | ---: | --- | --- | --- |
-| 1 | 2018 | AC/DC Vault Edition | Stern | partial |
+| 1 | 2018 | AC/DC Vault Edition | Stern | author_ready |
 | 2 | 2016 | Spider-Man Vault Edition | Stern | partial |
 | 3 | 2014 | AC/DC LED Pro | Stern | partial |
 | 4 | 2014 | Iron Man Pro Vault Edition | Stern | partial |

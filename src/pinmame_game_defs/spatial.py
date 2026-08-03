@@ -22,7 +22,6 @@ SPATIAL_RETROFIT_PENDING_MACHINE_IDS = (
 	"stern.ac-dc-led-pro.2014",
 	"stern.ac-dc-premium-limited-edition-luci.2012",
 	"stern.ac-dc-pro.2012",
-	"stern.ac-dc-vault-edition.2018",
 	"stern.ali.1980",
 	"stern.avatar-limited-edition.2010",
 	"stern.avatar-pro.2010",
