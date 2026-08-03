@@ -10,6 +10,7 @@ from .errors import DefinitionError
 from .identifiers import slug
 from .jsonio import file_sha256, load_json, write_json
 from .pinmame_source import _read_source, _symbol_label
+from .scope import is_in_scope_driver
 
 EXTRACTOR_VERSION = 1
 GAME_NAME_PATTERN = re.compile(r'^\s*(?:Const\s+)?cGameName\s*=\s*"([a-z0-9_]+)"', re.IGNORECASE | re.MULTILINE)
@@ -78,8 +79,9 @@ def extract_vpx_file(
 	revision: str,
 	repository_url: str,
 	catalog: dict[str, Any],
+	source_content: tuple[str, str] | None = None,
 ) -> dict[str, Any]:
-	text, encoding = _read_source(path)
+	text, encoding = source_content or _read_source(path)
 	lines = text.splitlines()
 	driver_ids = sorted(set(GAME_NAME_PATTERN.findall(text)))
 	driver_by_casefold = {driver["id"].casefold(): driver for driver in catalog["drivers"]}
@@ -173,7 +175,11 @@ def extract_vpx_corpora(corpora: list[tuple[str, Path, str]], repository_root: P
 	for corpus_id, source_root, repository_url in corpora:
 		revision = _revision(source_root)
 		for path in sorted(source_root.glob("**/*.vbs")):
-			evidence = extract_vpx_file(path, source_root, revision, repository_url, catalog)
+			text, encoding = _read_source(path)
+			declared_driver_ids = sorted(set(GAME_NAME_PATTERN.findall(text)))
+			if declared_driver_ids and all(not is_in_scope_driver(driver_id) for driver_id in declared_driver_ids):
+				continue
+			evidence = extract_vpx_file(path, source_root, revision, repository_url, catalog, (text, encoding))
 			driver_folder = evidence["driver_ids"][0] if evidence["driver_ids"] else "unmatched"
 			output_path = repository_root / "evidence" / "vpx" / slug(corpus_id) / driver_folder / f"{evidence['source']['sha256'][:16]}.json"
 			write_json(output_path, evidence)
@@ -183,7 +189,7 @@ def extract_vpx_corpora(corpora: list[tuple[str, Path, str]], repository_root: P
 					"revision": revision,
 					"source": evidence["source"]["path"],
 					"evidence": output_path.relative_to(repository_root).as_posix(),
-					"declared_driver_ids": sorted(set(GAME_NAME_PATTERN.findall(_read_source(path)[0]))),
+					"declared_driver_ids": [driver_id for driver_id in declared_driver_ids if is_in_scope_driver(driver_id)],
 					"driver_ids": evidence["driver_ids"],
 					"machine_ids": evidence["machine_ids"],
 					"switch_candidate_count": len(evidence["switches"]),

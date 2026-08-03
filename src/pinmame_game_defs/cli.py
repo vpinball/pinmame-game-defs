@@ -51,7 +51,7 @@ def _build_parser() -> argparse.ArgumentParser:
 	parser.add_argument("--repository-root", help="Repository checkout to read or update; defaults to the current directory.")
 	subparsers = parser.add_subparsers(dest="command", required=True)
 
-	catalog_parser = subparsers.add_parser("generate-catalog", help="Enumerate every public LibPinMAME driver and generate explicit stubs.")
+	catalog_parser = subparsers.add_parser("generate-catalog", help="Enumerate in-scope physical-machine LibPinMAME drivers and generate explicit stubs.")
 	catalog_parser.add_argument("--library", required=True, type=_path, help="Pinned LibPinMAME shared library.")
 	catalog_parser.add_argument("--pinmame-source", required=True, type=_path, help="Pinned PinMAME source checkout used to build the library.")
 

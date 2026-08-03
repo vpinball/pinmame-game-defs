@@ -7,6 +7,7 @@ from typing import Any
 from .catalog import Driver, make_stub_definition, make_stub_knowledge
 from .errors import CatalogError
 from .jsonio import content_sha256, load_json, write_json, write_text
+from .scope import is_in_scope_driver
 
 
 NON_GAME_KINDS = {"diagnostic_software", "system_software"}
@@ -77,7 +78,7 @@ def rebuild_catalog(repository_root: Path) -> dict[str, Any]:
 	if not catalog_path.is_file():
 		raise CatalogError("Generate the pinned PinMAME catalog before rebuilding the registry")
 	previous = load_json(catalog_path)
-	driver_records = {record["id"]: dict(record) for record in previous["drivers"]}
+	driver_records = {record["id"]: dict(record) for record in previous["drivers"] if is_in_scope_driver(record["id"])}
 	all_drivers = {driver_id: _driver_from_record(record) for driver_id, record in driver_records.items()}
 	assignments: dict[str, tuple[dict[str, Any], str]] = {}
 	curated: list[tuple[dict[str, Any], str]] = []
@@ -161,6 +162,7 @@ def rebuild_catalog(repository_root: Path) -> dict[str, Any]:
 	previous["summary"].update(
 		{
 			"driver_count": len(driver_records),
+			"root_driver_count": len({record["root_driver"] for record in driver_records.values()}),
 			"machine_count": len(machines),
 			"game_count": game_count,
 			"non_game_count": len(machines) - game_count,

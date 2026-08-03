@@ -9,7 +9,7 @@ This note was generated from PinMAME catalog identity only. It deliberately cont
 - Candidate root driver: `hlywoodh`
 - Candidate manufacturer: Gottlieb
 - Candidate year: 1986
-- Drivers currently grouped by the PinMAME clone chain: `beachbms`, `bubba`, `hlywdhfp`, `hlywhffp`, `hlywhgfp`, `hlywodhf`, `hlywodhg`, `hlywoodh`, `tomjerry`
+- Drivers currently grouped by the PinMAME clone chain: `hlywdhfp`, `hlywhffp`, `hlywhgfp`, `hlywodhf`, `hlywodhg`, `hlywoodh`
 
 ## Playfield devices
 

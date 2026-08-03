@@ -1,10 +1,12 @@
-"""Build reviewed AC/DC physical-edition and American Country definitions."""
+"""Build reviewed AC/DC physical-edition definitions."""
 
 from __future__ import annotations
 
 import json
 import re
 from pathlib import Path
+
+from pinmame_game_defs.jsonio import write_json, write_text
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,7 +27,6 @@ PREMIUM_RUNTIME = "runtime.acdc-premium.boot-start"
 PRO_RUNTIME = "runtime.acdc-pro.boot-start"
 STERN_PRODUCT = "stern.acdc-product-page"
 STERN_LED_PRO = "stern.acdc-led-pro-announcement"
-AMERICAN_PAGE = "vpu.american-country-1.0.1"
 IPDB_LUCI = "ipdb.acdc-luci.6060"
 IPDB_PREMIUM = "ipdb.acdc-premium.5775"
 
@@ -33,7 +34,6 @@ PREMIUM_IDS = ["acd_150h", "acd_152h", "acd_160h", "acd_161h", "acd_163h", "acd_
 ORIGINAL_PRO_IDS = ["acd_121", "acd_125", "acd_130", "acd_140", "acd_150", "acd_152", "acd_160", "acd_161", "acd_163", "acd_165"]
 LED_PRO_IDS = ["acd_168", "acd_168c"]
 VAULT_IDS = ["acd_170", "acd_170c"]
-AMERICAN_IDS = ["acd_170_ac"]
 
 
 def slug(value: str) -> str:
@@ -183,27 +183,14 @@ PRO_SWITCHES: dict[int, dict[str, object]] = {
 }
 
 
-def retheme_premium_switches() -> dict[int, dict[str, object]]:
-	result = {number: dict(spec) for number, spec in PREMIUM_SWITCHES.items()}
-	for number, label in {
-		36: "Liberty Bell eject saucer",
-		37: "Playlist eject saucer",
-		45: "Gun entry / loaded",
-		46: "Freedom detonator target",
-		47: "Liberty Bell score opto",
-	}.items():
-		result[number]["label"] = label
-	return result
-
-
 def input_id(number: int, label: str, group: str = "switch") -> str:
 	address = f"neg{abs(number)}" if number < 0 else str(number)
 	return f"input.{group}.{address}.{slug(label)}"
 
 
 def complete_inputs(variant: str, sources: tuple[str, ...]) -> list[dict[str, object]]:
-	premium = variant in {"premium", "american"}
-	specs = retheme_premium_switches() if variant == "american" else PREMIUM_SWITCHES if premium else {number: dict(spec) for number, spec in PRO_SWITCHES.items()}
+	premium = variant == "premium"
+	specs = PREMIUM_SWITCHES if premium else {number: dict(spec) for number, spec in PRO_SWITCHES.items()}
 	if variant in {"led-pro", "vault"}:
 		specs[36] = switch("Swinging Hell's Bell score switch", "leaf", pulse=True, notes="Passive pendulum score sensor; no bell actuator is fitted.")
 	items: list[dict[str, object]] = []
@@ -373,17 +360,12 @@ def standard_lamp_wiring(address: int) -> dict[str, object]:
 
 
 def complete_outputs(variant: str, sources: tuple[str, ...]) -> list[dict[str, object]]:
-	premium = variant in {"premium", "american"}
+	premium = variant == "premium"
 	manual = LUCI_MANUAL if premium else PRO_MANUAL
 	solenoids = PREMIUM_SOLENOIDS if premium else PRO_SOLENOIDS
 	items: list[dict[str, object]] = []
 	for address, (base_label, kind, availability, manual_address) in sorted(solenoids.items()):
 		label = base_label
-		if variant == "american":
-			label = {
-				12: "Playlist eject", 17: "Pickup-truck flasher", 18: "Freedom detonator mechanism", 32: "Gun rotation motor",
-				51: "Animated country-stage figures", 52: "Liberty Bell eject", 53: "Gun eject / fire", 54: "Liberty Bell magnet",
-			}.get(address, label)
 		if address in {33, 34, 35}:
 			items.append(output_record(address, label, kind, availability, "physical.output.ticket", (manual,), manual_address, physical={"notes": "Optional physical ticket-dispenser service function. The stable LibPinMAME solenoid API does not expose this service identity."}))
 			continue
@@ -397,8 +379,6 @@ def complete_outputs(variant: str, sources: tuple[str, ...]) -> list[dict[str, o
 		if variant == "vault" and address in {14, 15, 17}:
 			used = False
 			label = f"Removed Vault Edition insert #{address}"
-		if variant == "american" and 65 <= address <= 76:
-			label = f"Country Playlist tag {address - 64} (inherited {lamp_labels[address]})"
 		items.append(output_record(address, label, "lamp", "used" if used else "unused", "pinmame.output.lamp", sources if used else (manual,), str(address), standard_lamp_wiring(address)))
 	items.append(output_record(0, "Conventional GI / game-on illumination channel", "gi", "used", "pinmame.output.gi", sources, "GI-0", {"board": "I/O power-driver board", "control_connection": "GI channel 0", "nominal_voltage_v": 6.3, "voltage_type": "ac"}))
 	if not premium:
@@ -410,8 +390,6 @@ def complete_outputs(variant: str, sources: tuple[str, ...]) -> list[dict[str, o
 	for address in range(81, 129):
 		if address in extended:
 			label, connector = extended[address]
-			if variant == "american":
-				label = label.replace("Bell", "Liberty Bell").replace("Tunes N Stuff", "Country Playlist")
 			items.append(output_record(address, label, "rgb_lamp", "used", "pinmame.output.lamp", sources, f"LED board {connector}", {"board": "LED board 520-5331-00", "drive_connection": connector, "nominal_voltage_v": 18, "voltage_type": "dc"}, {"notes": f"One {label.rsplit(' ', 1)[-1]} channel of a tri-color playfield LED."}, True))
 		else:
 			items.append(output_record(address, f"Unused extended lamp output #{address}", "lamp", "unused", "pinmame.output.lamp", (manual,), str(address), {"board": "LED board 520-5331-00"}))
@@ -434,7 +412,7 @@ def binding_map(devices: list[dict[str, object]]) -> dict[tuple[str, int], str]:
 
 
 def mechanisms(variant: str, inputs: list[dict[str, object]], outputs: list[dict[str, object]], sources: tuple[str, ...]) -> list[dict[str, object]]:
-	premium = variant in {"premium", "american"}
+	premium = variant == "premium"
 	by_binding = binding_map([*inputs, *outputs])
 	def refs(group: str, *addresses: int) -> list[str]:
 		return [by_binding[(group, address)] for address in addresses]
@@ -475,7 +453,7 @@ def mechanisms(variant: str, inputs: list[dict[str, object]], outputs: list[dict
 
 
 def relationships(variant: str, inputs: list[dict[str, object]], outputs: list[dict[str, object]], sources: tuple[str, ...]) -> list[dict[str, object]]:
-	premium = variant in {"premium", "american"}
+	premium = variant == "premium"
 	by_binding = binding_map([*inputs, *outputs])
 	pairs = [
 		("trough-eject-stack", 1, 22), ("auto-launch-lane", 2, 23), ("top-eject-release", 12, 37),
@@ -525,7 +503,6 @@ RUNTIME_SOURCES = {
 WEB_SOURCES = {
 	STERN_PRODUCT: {"id": STERN_PRODUCT, "kind": "human_review", "uri": "https://sternpinball.com/game/ac-dc/", "locator": "Official edition feature inventory for Pro, Premium, and LUCI; reviewed 2026-08-02", "attribution": "Stern Pinball, Inc."},
 	STERN_LED_PRO: {"id": STERN_LED_PRO, "kind": "service_bulletin", "uri": "https://sternpinball.com/2014/08/05/improved-ac-dc-pro-with-leds-and-swinging-bell/", "locator": "Official August 5, 2014 announcement proving LED Pro and newly designed swinging bell", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc."},
-	AMERICAN_PAGE: {"id": AMERICAN_PAGE, "kind": "vpx_table", "uri": "https://vpuniverse.com/files/file/18381-american-country-vpx/", "locator": "Version 1.0.1 page: exact AC/DC LUCI VPW 1.1 reskin lineage, custom acd_170h-derived ROM, unchanged gameplay, and toy retheme mappings", "license": "LicenseRef-Personal-Use-Only", "attribution": "linojon and credited precursor contributors"},
 	IPDB_LUCI: {"id": IPDB_LUCI, "kind": "human_review", "uri": "https://www.ipdb.org/machine.cgi?id=6060", "locator": "AC/DC (LUCI Premium), December 2013; identity and notable-feature inventory reviewed in interactive browser"},
 	IPDB_PREMIUM: {"id": IPDB_PREMIUM, "kind": "human_review", "uri": "https://www.ipdb.org/machine.cgi?id=5775", "locator": "AC/DC Premium identity and shared service-document association reviewed in interactive browser"},
 }
@@ -534,8 +511,6 @@ WEB_SOURCES = {
 def source_set(variant: str) -> list[dict[str, object]]:
 	if variant == "premium":
 		ids = [PREMIUM_MANUAL, LUCI_MANUAL, PREMIUM_VPX, PREMIUM_RUNTIME, STERN_PRODUCT, IPDB_PREMIUM, IPDB_LUCI]
-	elif variant == "american":
-		ids = [PREMIUM_MANUAL, LUCI_MANUAL, PREMIUM_VPX, AMERICAN_PAGE]
 	elif variant == "pro":
 		ids = [PRO_MANUAL, PRO_VPX, PRO_RUNTIME, STERN_PRODUCT]
 	elif variant == "led-pro":
@@ -551,22 +526,19 @@ MACHINE_META = {
 	"pro": {"id": "stern.ac-dc-pro.2012", "name": "AC/DC Pro (original)", "manufacturer": "Stern", "year": 2012, "kind": "physical_pinball", "model_number": "500-55C0-01"},
 	"led-pro": {"id": "stern.ac-dc-led-pro.2014", "name": "AC/DC LED Pro", "manufacturer": "Stern", "year": 2014, "kind": "physical_pinball"},
 	"vault": {"id": "stern.ac-dc-vault-edition.2018", "name": "AC/DC Vault Edition", "manufacturer": "Stern", "year": 2018, "kind": "physical_pinball"},
-	"american": {"id": "virtual.american-country.2024", "name": "American Country", "manufacturer": "linojon / Freedom Dawg Games", "year": 2024, "kind": "virtual_pinball"},
 }
-DRIVER_GROUPS = {"premium": PREMIUM_IDS, "pro": ORIGINAL_PRO_IDS, "led-pro": LED_PRO_IDS, "vault": VAULT_IDS, "american": AMERICAN_IDS}
+DRIVER_GROUPS = {"premium": PREMIUM_IDS, "pro": ORIGINAL_PRO_IDS, "led-pro": LED_PRO_IDS, "vault": VAULT_IDS}
 VARIANT_NOTES = {
 	"premium": "Firmware revision for the shared Premium/LE/LUCI playfield; cabinet art and trim packages do not change controller-facing I/O or mechanisms.",
 	"pro": "Firmware revision intended for the original 2012 Pro playfield with a standup Hell's Bell target and no Premium auxiliary mechanisms.",
 	"led-pro": "Firmware release paired with the 2014 LED Pro hardware: Pro playfield topology, factory LED lighting, and a passive swinging Hell's Bell at switch 36.",
 	"vault": "Firmware release paired with the Vault Edition: passive swinging Hell's Bell and the Vault playfield's removal of inserts 14, 15, and 17.",
-	"american": "Custom acd_170h-derived American Country ROM for the virtual AC/DC LUCI VPW 1.1 reskin; the physical simulation topology is identical while art, audio, DMD content, playlists, and toy names are rethemed.",
 }
 
 
 def build(variant: str) -> dict[str, object]:
 	source_ids = {
 		"premium": (PREMIUM_MANUAL, LUCI_MANUAL, PREMIUM_VPX, PREMIUM_RUNTIME),
-		"american": (PREMIUM_MANUAL, LUCI_MANUAL, PREMIUM_VPX, AMERICAN_PAGE),
 		"pro": (PRO_MANUAL, PRO_VPX, PRO_RUNTIME),
 		"led-pro": (PRO_MANUAL, PRO_VPX, VAULT_VPX, STERN_LED_PRO),
 		"vault": (PRO_MANUAL, VAULT_VPX, PRO_RUNTIME),
@@ -579,11 +551,11 @@ def build(variant: str) -> dict[str, object]:
 		"controller": {"platform": "pinmame.sam", "hardware_generation": "0x00000040", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(DRIVER_GROUPS[variant], VARIANT_NOTES[variant]),
 		"inputs": inputs, "outputs": outputs,
-		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance(CORE_SOURCE, PREMIUM_RUNTIME if variant == "premium" else PRO_RUNTIME if variant != "american" else AMERICAN_PAGE)}],
+		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance(CORE_SOURCE, PREMIUM_RUNTIME if variant == "premium" else PRO_RUNTIME)}],
 		"mechanisms": mechanisms(variant, inputs, outputs, source_ids),
 		"relationships": relationships(variant, inputs, outputs, source_ids),
 		"sources": source_set(variant),
-		"knowledge": {"path": f"knowledge/{'virtual' if variant == 'american' else 'stern'}/{MACHINE_META[variant]['id'].split('.', 1)[1].replace('.', '-')}.md", "status": "complete"},
+		"knowledge": {"path": f"knowledge/stern/{MACHINE_META[variant]['id'].split('.', 1)[1].replace('.', '-')}.md", "status": "complete"},
 	}
 
 
@@ -592,7 +564,7 @@ KNOWLEDGE = {
 
 ## Identity and variants
 
-This definition covers every h and hc PinMAME driver from 1.50 through 1.70 for the shared Stern Premium, Limited Edition, and LUCI Premium physical playfield. LUCI changes art and presentation; the LE trim packages and colored-ROM derivatives do not change controller-facing devices or mechanisms. American Country is deliberately separate because it is a virtual retheme with its own PinMAME driver and author-facing semantics.
+This definition covers every in-scope h and hc PinMAME driver from 1.50 through 1.70 for the shared Stern Premium, Limited Edition, and LUCI Premium physical playfield. LUCI changes art and presentation; the LE trim packages and colored-ROM derivatives do not change controller-facing devices or mechanisms.
 
 ## Source precedence
 
@@ -698,28 +670,6 @@ Start four balls on trough switches 18-21 and the cannon at home on 61. Output 1
 - Official Pro manual SHA-256 987d42c68b586af1b0d66100b9f34d5215dfaf67574032849adb1c2f18c6cab5 supplies the unchanged base wiring.
 - Exact acd_170 run SHA-256 f3c237db82c4686bd58908a9b1935b21a483fe99b753bd6f25ab9b375c372511; exact ROM archive remains external.
 """,
-	"american": """# American Country recreation knowledge
-
-## Identity and source lineage
-
-American Country 1.0.1 is a 2024 virtual pinball original by linojon/Freedom Dawg Games. Its release page explicitly identifies it as a reskin of AC/DC LUCI VPW 1.1 with unchanged intense gameplay and a custom ROM derived from acd_170h despite the historical download naming it acd_170. PinMAME now exposes that custom image as driver acd_170_ac and clones it from acd_170h.
-
-## Complete inherited machine contract
-
-Recreate the complete AC/DC Premium/LE/LUCI physical simulation: four-ball trough, auto-launch, two main and two lower-playfield flippers, five-bank and three-bank drops, two saucers, lower mini-playfield, both ramp diverters, right control gate, rotating ball-holding cannon, swinging captive-ball bell with magnet, animated figures, detonator, three pops, two slings, spinner, orbits, ramps, standard/extended RGB lamps, four color-GI channels, and flame tunnel. All controller bindings are identical to the Premium definition and are repeated in this record so an author needs no cross-file merge.
-
-## Retheme mapping
-
-The release maps Hell's Bell to the Liberty Bell, the train to a pickup truck, the cannon to a gun, and the Jukebox to the Country Playlist. The twelve song inserts become Playlist tags occupying inherited lamps 65-76. The minigame theme changes from fighting the devil to fighting for freedom. Rules timing and mechanism causality remain the AC/DC LUCI VPW behavior; presentation, audio, DMD content, playfield art, and toy meshes are American Country assets.
-
-## ROM and media boundary
-
-The custom ROM contains replaced sound effects, voices, and music clips and is not stored here. The table release's VPX, DirectB2S, Serum colorization, wheel, music, and README are also external personal-use media. This definition records only the authoring contract and provenance. When sourcing the exact custom ROM in the future, place it in L:/Visual Pinball/VPinMAME/roms as requested and record its hash; do not substitute the stock acd_170 image.
-
-## Recreation guidance
-
-Use the working LUCI 1.1.4 script for every switch/output transaction and the official Premium/LUCI manuals for physical construction. Apply American Country labels and assets only after the digital twin passes the inherited trough, cannon, bell, drop-bank, diverter, lower-playfield, and lamp tests. This prevents a visually correct reskin from silently changing game logic.
-""",
 }
 
 
@@ -745,11 +695,6 @@ def runtime_evidence(premium: bool) -> dict[str, object]:
 	}
 
 
-def write_json(path: Path, value: dict[str, object]) -> None:
-	path.parent.mkdir(parents=True, exist_ok=True)
-	path.write_text(json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
-
-
 for stale in [
 	ROOT / "machines/partial/stern/ac-dc-luci-premium-2013.json",
 	ROOT / "knowledge/stern/ac-dc-luci-premium-2013.md",
@@ -757,7 +702,6 @@ for stale in [
 	ROOT / "knowledge/stern/ac-dc-pro.2012.md",
 	ROOT / "knowledge/stern/ac-dc-led-pro.2014.md",
 	ROOT / "knowledge/stern/ac-dc-vault-edition.2018.md",
-	ROOT / "knowledge/virtual/american-country.2024.md",
 ]:
 	if stale.exists():
 		stale.unlink()
@@ -767,14 +711,12 @@ PATHS = {
 	"pro": ROOT / "machines/author-ready/stern/ac-dc-pro-2012.json",
 	"led-pro": ROOT / "machines/author-ready/stern/ac-dc-led-pro-2014.json",
 	"vault": ROOT / "machines/author-ready/stern/ac-dc-vault-edition-2018.json",
-	"american": ROOT / "machines/author-ready/virtual/american-country-2024.json",
 }
 for variant, path in PATHS.items():
 	definition = build(variant)
 	write_json(path, definition)
 	knowledge_path = ROOT.joinpath(*str(definition["knowledge"]["path"]).split("/"))
-	knowledge_path.parent.mkdir(parents=True, exist_ok=True)
-	knowledge_path.write_text(KNOWLEDGE[variant], encoding="utf-8")
+	write_text(knowledge_path, KNOWLEDGE[variant])
 
 write_json(ROOT / "evidence/runtime/sam/ac-dc-premium-boot-start.json", runtime_evidence(True))
 write_json(ROOT / "evidence/runtime/sam/ac-dc-pro-boot-start.json", runtime_evidence(False))

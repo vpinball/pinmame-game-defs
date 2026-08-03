@@ -41,14 +41,17 @@ def build_coverage_report(repository_root: Path) -> dict[str, Any]:
 def build_curation_queue(repository_root: Path) -> dict[str, Any]:
 	catalog = load_json(repository_root / "catalog" / "pinmame.json")
 	entries: list[dict[str, Any]] = []
-	for machine in sorted(catalog["machines"], key=lambda record: record["processing_order"]):
-		if machine.get("machine_kind", "unknown") in NON_GAME_KINDS:
-			continue
+	machines = [
+		machine
+		for machine in sorted(catalog["machines"], key=lambda record: record["processing_order"])
+		if machine.get("machine_kind", "unknown") not in NON_GAME_KINDS
+	]
+	for order, machine in enumerate(machines, start=1):
 		definition = load_json(repository_root / machine["definition"])
 		identity = definition["machine"]
 		entries.append(
 			{
-				"order": machine["processing_order"],
+				"order": order,
 				"machine_id": machine["id"],
 				"name": identity["name"],
 				"manufacturer": identity["manufacturer"],
@@ -77,7 +80,7 @@ PinMAME revision: `{report['pinmame_revision']}`
 
 Author-ready coverage: **{report['author_ready_count']} / {report['machine_count']} physical-machine records ({report['author_ready_percent']:.4f}%)**
 
-- Supported drivers: {report['driver_count']}
+- In-scope drivers: {report['driver_count']}
 - Catalog records: {report['catalog_record_count']} ({report['non_game_record_count']} diagnostic/system-software records excluded from game coverage)
 - Explicit stubs: {report['stub_count']}
 - Partial definitions: {report['partial_count']}

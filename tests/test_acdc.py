@@ -11,7 +11,6 @@ DEFINITION_PATHS = {
 	"pro": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-pro-2012.json",
 	"led_pro": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-led-pro-2014.json",
 	"vault": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-vault-edition-2018.json",
-	"american": ROOT / "machines" / "author-ready" / "virtual" / "american-country-2024.json",
 }
 PREMIUM_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "ac-dc-premium-boot-start.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "ac-dc-pro-boot-start.json"
@@ -37,7 +36,7 @@ class AcDcDefinitionTests(unittest.TestCase):
 		cls.premium_evidence = load_json(PREMIUM_EVIDENCE_PATH)
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
 
-	def test_all_five_products_are_author_ready(self) -> None:
+	def test_all_four_physical_products_are_author_ready(self) -> None:
 		for definition in self.definitions.values():
 			self.assertEqual("author_ready", definition["coverage"]["status"])
 			self.assertEqual([], definition["coverage"]["missing"])
@@ -50,7 +49,6 @@ class AcDcDefinitionTests(unittest.TestCase):
 			"pro": {"acd_121", "acd_125", "acd_130", "acd_140", "acd_150", "acd_152", "acd_160", "acd_161", "acd_163", "acd_165"},
 			"led_pro": {"acd_168", "acd_168c"},
 			"vault": {"acd_170", "acd_170c"},
-			"american": {"acd_170_ac"},
 		}
 		seen: set[str] = set()
 		for name, definition in self.definitions.items():
@@ -133,21 +131,6 @@ class AcDcDefinitionTests(unittest.TestCase):
 		self.assertEqual([], pro["mechanism.bell"]["actuators"])
 		self.assertEqual([], led["mechanism.bell"]["actuators"])
 		self.assertIn("freely swinging", led["mechanism.bell"]["behavior"].casefold())
-
-	def test_american_country_repeats_the_inherited_contract_with_retheme_labels(self) -> None:
-		premium = self.definitions["premium"]
-		american = self.definitions["american"]
-		for collection in ("inputs", "outputs"):
-			premium_contract = {(item["binding"]["group"], item["binding"]["device"]): (item["kind"], item["availability"]) for item in premium[collection]}
-			american_contract = {(item["binding"]["group"], item["binding"]["device"]): (item["kind"], item["availability"]) for item in american[collection]}
-			self.assertEqual(premium_contract, american_contract)
-		american_outputs = bindings(american, "outputs", "pinmame.output.solenoid")
-		american_lamps = bindings(american, "outputs", "pinmame.output.lamp")
-		self.assertEqual("Pickup-truck flasher", american_outputs[17]["label"])
-		self.assertEqual("Gun rotation motor", american_outputs[32]["label"])
-		self.assertEqual("Liberty Bell magnet", american_outputs[54]["label"])
-		self.assertTrue(all(american_lamps[address]["label"].startswith("Country Playlist tag") for address in range(65, 77)))
-		self.assertEqual({mechanism["id"] for mechanism in premium["mechanisms"]}, {mechanism["id"] for mechanism in american["mechanisms"]})
 
 	def test_exact_rom_runs_anchor_display_gi_and_source_hashes(self) -> None:
 		for evidence, driver, rom_sha, raw_sha in (

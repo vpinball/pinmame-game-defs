@@ -2,7 +2,7 @@
 
 ## Identity and variants
 
-This definition covers every h and hc PinMAME driver from 1.50 through 1.70 for the shared Stern Premium, Limited Edition, and LUCI Premium physical playfield. LUCI changes art and presentation; the LE trim packages and colored-ROM derivatives do not change controller-facing devices or mechanisms. American Country is deliberately separate because it is a virtual retheme with its own PinMAME driver and author-facing semantics.
+This definition covers every in-scope h and hc PinMAME driver from 1.50 through 1.70 for the shared Stern Premium, Limited Edition, and LUCI Premium physical playfield. LUCI changes art and presentation; the LE trim packages and colored-ROM derivatives do not change controller-facing devices or mechanisms.
 
 ## Source precedence
 

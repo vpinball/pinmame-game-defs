@@ -9,6 +9,7 @@ from .errors import ValidationError
 from .evidence_policy import EvidenceAssertion, evidence_priority
 from .jsonio import content_sha256, load_json
 from .schema_validation import check_schema_documents, validate_against_schema
+from .scope import OUT_OF_SCOPE_DRIVER_IDS
 
 IDENTIFIER_PATTERN = re.compile(r"^[a-z0-9]+(?:[._-][a-z0-9]+)*$")
 GENERIC_LABEL_PATTERN = re.compile(r"^(?:switch|output|solenoid|lamp|gi)\s*#?\s*-?\d+$", re.IGNORECASE)
@@ -78,6 +79,7 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 	machine = _required_mapping(definition.get("machine"), "$.machine", {"id", "name", "manufacturer", "year"}, errors)
 	machine_id = machine.get("id")
 	_validate_identifier(machine_id, "$.machine.id", errors)
+	_expect(machine.get("kind") != "virtual_pinball", "$.machine.kind", "virtual pinball records are outside the physical-machine scope", errors)
 	coverage = _required_mapping(definition.get("coverage"), "$.coverage", {"status", "missing", "dimensions"}, errors)
 	status = coverage.get("status")
 	_expect(status in {"stub", "partial", "author_ready"}, "$.coverage.status", "must be stub, partial, or author_ready", errors)
@@ -110,6 +112,7 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 		_unique(driver_ids, "$.drivers[].id", errors)
 		for index, driver_id in enumerate(driver_ids):
 			_validate_identifier(driver_id, f"$.drivers[{index}].id", errors)
+			_expect(driver_id not in OUT_OF_SCOPE_DRIVER_IDS, f"$.drivers[{index}].id", "custom-ROM-only virtual driver is outside the physical-machine scope", errors)
 			if status == "author_ready":
 				driver = drivers[index]
 				_expect(driver.get("physical_compatibility") in {"identical", "compatible"}, f"$.drivers[{index}].physical_compatibility", "author-ready variants must be physically compatible with the containing machine definition", errors)
@@ -405,6 +408,8 @@ def validate_catalog(catalog: dict[str, Any], repository_root: Path) -> list[str
 		return errors
 	driver_records = {record.get("id"): record for record in drivers if isinstance(record, dict)}
 	_expect(len(driver_records) == len(drivers), "$.drivers", "driver IDs must be unique and non-null", errors)
+	for driver_id in sorted(OUT_OF_SCOPE_DRIVER_IDS & set(driver_records)):
+		errors.append(f"$.drivers: custom-ROM-only virtual driver {driver_id!r} is outside the physical-machine scope")
 	abstract_parents = catalog.get("abstract_parents")
 	_expect(isinstance(abstract_parents, list), "$.abstract_parents", "must be an array", errors)
 	abstract_parent_ids = {parent.get("id") for parent in abstract_parents if isinstance(parent, dict)} if isinstance(abstract_parents, list) else set()
@@ -499,6 +504,10 @@ def validate_repository(repository_root: Path) -> list[str]:
 		relative_path = path.relative_to(repository_root).as_posix()
 		evidence = load_json(path)
 		errors.extend(validate_against_schema(evidence, repository_root / "schemas" / "evidence.schema.json", relative_path))
+		evidence_driver_ids = evidence.get("driver_ids")
+		if isinstance(evidence_driver_ids, list):
+			for driver_id in sorted(OUT_OF_SCOPE_DRIVER_IDS & {driver_id for driver_id in evidence_driver_ids if isinstance(driver_id, str)}):
+				errors.append(f"{relative_path} $.driver_ids: custom-ROM-only virtual driver {driver_id!r} is outside the physical-machine scope")
 		_validate_runtime_observations(evidence, relative_path, definitions_by_machine, errors)
 	return errors
 

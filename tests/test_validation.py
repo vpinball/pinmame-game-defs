@@ -25,6 +25,14 @@ class RepositoryValidationTests(unittest.TestCase):
 		errors = validate_machine(definition)
 		self.assertTrue(any("physically compatible with the containing machine definition" in error for error in errors))
 
+	def test_virtual_machine_records_and_virtual_only_drivers_are_rejected(self) -> None:
+		definition = copy.deepcopy(self.transformers)
+		definition["machine"]["kind"] = "virtual_pinball"
+		definition["drivers"][0]["id"] = "che_cho"
+		errors = validate_machine(definition)
+		self.assertTrue(any("outside the physical-machine scope" in error and "$.machine.kind" in error for error in errors))
+		self.assertTrue(any("outside the physical-machine scope" in error and "$.drivers[0].id" in error for error in errors))
+
 	def test_mechanism_actuator_can_have_only_one_owner(self) -> None:
 		definition = copy.deepcopy(self.transformers)
 		actuator = definition["mechanisms"][0]["actuators"][0]

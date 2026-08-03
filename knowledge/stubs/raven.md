@@ -9,7 +9,7 @@ This note was generated from PinMAME catalog identity only. It deliberately cont
 - Candidate root driver: `raven`
 - Candidate manufacturer: Gottlieb
 - Candidate year: 1986
-- Drivers currently grouped by the PinMAME clone chain: `rambo`, `raven`, `ravena`, `ravenafp`, `ravenfp`, `raveng`, `ravengfp`
+- Drivers currently grouped by the PinMAME clone chain: `raven`, `ravena`, `ravenafp`, `ravenfp`, `raveng`, `ravengfp`
 
 ## Playfield devices
 

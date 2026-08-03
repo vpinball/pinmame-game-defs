@@ -4,7 +4,7 @@ This repository builds a VPE-neutral, independently versioned catalog of the swi
 
 When evidence disagrees, a known-working VPX table script is the tie-breaker for controller mapping and behavior, the physical manual controls wiring and assembly facts, and pinned PinMAME source controls emulator routing and display/output metadata.
 
-The legacy `games/` and `platforms/` directories are migration inputs. Canonical definitions live under `machines/`, the complete LibPinMAME driver catalog lives under `catalog/`, evidence lives under `evidence/`, and source-linked recreation knowledge lives under `knowledge/`.
+The legacy `games/` and `platforms/` directories are migration inputs. Canonical definitions live under `machines/`, the physical-machine-scope LibPinMAME driver catalog lives under `catalog/`, evidence lives under `evidence/`, and source-linked recreation knowledge lives under `knowledge/`. Custom ROMs made only for community virtual tables are excluded; ROM revisions and conversions that can run on physical hardware remain in scope.
 
 ## Coverage is fail-closed
 

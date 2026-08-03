@@ -12,6 +12,7 @@ from typing import Iterable
 from . import SCHEMA_VERSION
 from .errors import CatalogError
 from .jsonio import content_sha256, file_sha256, write_json, write_text
+from .scope import is_in_scope_driver
 
 PINMAME_MAX_PATH = 512
 PINMAME_CALLBACK_COUNT = 12
@@ -322,7 +323,7 @@ Do not use this stub as an authoring definition.
 
 
 def generate_stub_catalog(library_path: Path, pinmame_source: Path, repository_root: Path) -> dict[str, object]:
-	drivers = load_libpinmame_games(library_path)
+	drivers = [driver for driver in load_libpinmame_games(library_path) if is_in_scope_driver(driver.id)]
 	revision = pinmame_revision(pinmame_source)
 	version = pinmame_version(pinmame_source)
 	by_id = {driver.id: driver for driver in drivers}
