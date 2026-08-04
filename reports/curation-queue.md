@@ -19,7 +19,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 13 | 2012 | AC/DC Premium / Limited Edition / LUCI Premium | Stern | author_ready |
 | 14 | 2012 | AC/DC Pro (original) | Stern | author_ready |
 | 15 | 2012 | The Avengers Limited Edition | Stern | partial |
-| 16 | 2012 | The Avengers Pro | Stern | partial |
+| 16 | 2012 | The Avengers Pro | Stern | author_ready |
 | 17 | 2012 | X-Men Limited Edition (Magneto / Wolverine) | Stern | partial |
 | 18 | 2012 | X-Men Pro | Stern | partial |
 | 19 | 2011 | The Rolling Stones (Standard) | Stern | partial |

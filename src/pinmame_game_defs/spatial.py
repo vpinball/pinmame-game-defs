@@ -23,7 +23,6 @@ SPATIAL_RETROFIT_PENDING_MACHINE_IDS = (
 	"stern.avatar-limited-edition.2010",
 	"stern.avatar-pro.2010",
 	"stern.avengers-limited-edition.2012",
-	"stern.avengers-pro.2012",
 	"stern.batman-the-dark-knight-pro.2008",
 	"stern.batman-the-dark-knight-standard-home-edition.2010",
 	"stern.iron-man.2010",

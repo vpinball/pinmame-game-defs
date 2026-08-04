@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json as write_json_file, write_text
-from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+from pinmame_game_defs.spatial import SPATIAL_RETROFIT_PENDING_MACHINE_IDS, fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -131,7 +131,7 @@ def matrix_switch(number: int, manual: str, script: str, limited_edition: bool) 
 	used = spec is not None
 	label = spec[0] if spec else f"Unused matrix switch {number}"
 	row, column = divmod(number - 1, 16)
-	return {
+	result = {
 		"id": f"switch.{slug(label)}", "label": label, "kind": "switch",
 		"binding": {"group": "pinmame.input.switch", "device": number},
 		"aliases": aliases("pinmame.switch", number, str(number)),
@@ -141,6 +141,11 @@ def matrix_switch(number: int, manual: str, script: str, limited_edition: bool) 
 		"wiring": {"board": "CPU/Sound board", "drive_wire": MATRIX_DRIVE[row][0], "drive_connection": MATRIX_DRIVE[row][1], "return_wire": MATRIX_RETURN[column][0], "return_connection": MATRIX_RETURN[column][1]},
 		"provenance": provenance(manual, script),
 	}
+	if not limited_edition and number in {18, 19, 20, 21}:
+		result["roles"] = ["ball.position"]
+	elif not limited_edition and number == 22:
+		result["roles"] = ["ball.jam"]
+	return result
 
 
 def dedicated_switch(device: int, manual_number: int, label: str, availability: str, switch_type: str, normally_closed: bool, manual: str, script: str) -> dict[str, object]:
@@ -605,17 +610,21 @@ def write_json(path: Path, value: dict[str, object]) -> None:
 	write_json_file(path, value)
 
 
-stub = ROOT / "machines/stubs/avs_170h.json"
-if stub.exists():
-	stub.unlink()
-stub_knowledge = ROOT / "knowledge/stubs/avs_170h.md"
-if stub_knowledge.exists():
-	stub_knowledge.unlink()
+if __name__ == "__main__":
+	stub = ROOT / "machines/stubs/avs_170h.json"
+	if stub.exists():
+		stub.unlink()
+	stub_knowledge = ROOT / "knowledge/stubs/avs_170h.md"
+	if stub_knowledge.exists():
+		stub_knowledge.unlink()
 
-write_json(ROOT / "machines/partial/stern/avengers-limited-edition-2012.json", build(True))
-write_json(ROOT / "machines/partial/stern/avengers-pro-2012.json", build(False))
-write_json(ROOT / "evidence/runtime/sam/avengers-limited-edition-boot-start.json", runtime_evidence(True))
-write_json(ROOT / "evidence/runtime/sam/avengers-pro-boot-start.json", runtime_evidence(False))
-(ROOT / "knowledge/stern").mkdir(parents=True, exist_ok=True)
-write_text(ROOT / "knowledge/stern/avengers-limited-edition-2012.md", fail_closed_spatial_knowledge("stern.avengers-limited-edition.2012", LE_KNOWLEDGE))
-write_text(ROOT / "knowledge/stern/avengers-pro-2012.md", fail_closed_spatial_knowledge("stern.avengers-pro.2012", PRO_KNOWLEDGE))
+	le_machine_id = "stern.avengers-limited-edition.2012"
+	if le_machine_id in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
+		write_json(ROOT / "machines/partial/stern/avengers-limited-edition-2012.json", build(True))
+		write_text(ROOT / "knowledge/stern/avengers-limited-edition-2012.md", fail_closed_spatial_knowledge(le_machine_id, LE_KNOWLEDGE))
+	pro_machine_id = "stern.avengers-pro.2012"
+	if pro_machine_id in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
+		write_json(ROOT / "machines/partial/stern/avengers-pro-2012.json", build(False))
+		write_text(ROOT / "knowledge/stern/avengers-pro-2012.md", fail_closed_spatial_knowledge(pro_machine_id, PRO_KNOWLEDGE))
+	write_json(ROOT / "evidence/runtime/sam/avengers-limited-edition-boot-start.json", runtime_evidence(True))
+	write_json(ROOT / "evidence/runtime/sam/avengers-pro-boot-start.json", runtime_evidence(False))

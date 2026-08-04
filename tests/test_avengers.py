@@ -7,9 +7,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LE_PATH = ROOT / "machines" / "partial" / "stern" / "avengers-limited-edition-2012.json"
-PRO_PATH = ROOT / "machines" / "partial" / "stern" / "avengers-pro-2012.json"
+PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "avengers-pro-2012.json"
 LE_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "avengers-limited-edition-boot-start.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "avengers-pro-boot-start.json"
+PRO_SCRIPT_EVIDENCE_PATH = ROOT / "evidence" / "vpx" / "vpxtable-scripts" / "avs_170c" / "85ea928246dbdf4b.json"
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -32,14 +33,16 @@ class AvengersDefinitionTests(unittest.TestCase):
 		cls.pro = load_json(PRO_PATH)
 		cls.le_evidence = load_json(LE_EVIDENCE_PATH)
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
+		cls.pro_script_evidence = load_json(PRO_SCRIPT_EVIDENCE_PATH)
 
-	def test_both_physical_editions_are_fail_closed_for_spatial_retrofit(self) -> None:
+	def test_only_pro_is_promoted_after_spatial_reconciliation(self) -> None:
 		self.assertEqual("partial", self.le["coverage"]["status"])
-		self.assertEqual("partial", self.pro["coverage"]["status"])
+		self.assertEqual("author_ready", self.pro["coverage"]["status"])
 		self.assertEqual(2, self.le["schema_version"])
 		self.assertEqual(2, self.pro["schema_version"])
 		self.assertIn("spatial_placement", self.le["coverage"]["missing"])
-		self.assertIn("spatial_placement", self.pro["coverage"]["missing"])
+		self.assertEqual([], self.pro["coverage"]["missing"])
+		self.assertEqual("validated", self.pro["coverage"]["dimensions"]["spatial_placement"])
 		le_drivers = {driver["id"] for driver in self.le["drivers"]}
 		pro_drivers = {driver["id"] for driver in self.pro["drivers"]}
 		self.assertEqual({"avs_120h", "avs_140h", "avs_170h", "avs_170hc"}, le_drivers)
@@ -120,6 +123,97 @@ class AvengersDefinitionTests(unittest.TestCase):
 		self.assertEqual(3, len(le["mechanism.loki-lock"]["positions"]))
 		self.assertEqual(3, len(pro["mechanism.loki-lock"]["positions"]))
 
+	def test_pro_spatial_dispositions_cover_every_device_and_preserve_physical_multiplicity(self) -> None:
+		pro_inputs = bindings(self.pro, "inputs", "pinmame.input.switch")
+		pro_outputs = {
+			(item["binding"]["group"], item["binding"]["device"]): item
+			for item in self.pro["outputs"]
+		}
+		for device in [*self.pro["inputs"], *self.pro["outputs"]]:
+			self.assertIn("spatial", device)
+			self.assertIn(device["spatial"]["status"], {"validated", "not_applicable"})
+			if device["spatial"]["status"] == "validated":
+				for placement in device["spatial"]["placements"]:
+					self.assertEqual("playfield", placement["space"])
+					self.assertTrue(0 <= placement["x"] <= 1)
+					self.assertTrue(0 <= placement["y"] <= 1)
+		trough_positions = {
+			address: [(placement["x"], placement["y"]) for placement in pro_inputs[address]["spatial"]["placements"]]
+			for address in (18, 19, 20, 21, 22)
+		}
+		self.assertEqual({18, 19, 20, 21, 22}, {address for address, item in pro_inputs.items() if item["spatial"]["status"] == "validated" and address in {18, 19, 20, 21, 22}})
+		self.assertEqual([(0.532206, 0.948554)], trough_positions[18])
+		self.assertEqual([(0.641676, 0.922299)], trough_positions[19])
+		self.assertEqual([(0.751147, 0.896045)], trough_positions[20])
+		self.assertEqual([(0.860617, 0.86979)], trough_positions[21])
+		self.assertEqual([(0.898, 0.883)], trough_positions[22])
+		for address in (18, 19, 20, 21):
+			self.assertEqual(["ball.position"], pro_inputs[address]["roles"])
+		self.assertEqual(["ball.jam"], pro_inputs[22]["roles"])
+		self.assertEqual("validated", pro_outputs[("pinmame.output.solenoid", 1)]["spatial"]["status"])
+		self.assertEqual([(0.860617, 0.86979)], [(placement["x"], placement["y"]) for placement in pro_outputs[("pinmame.output.solenoid", 1)]["spatial"]["placements"]])
+		self.assertIn("BallRelease", pro_outputs[("pinmame.output.solenoid", 1)]["physical"]["notes"])
+		for address in (41, 42):
+			self.assertEqual([(0.393908, 0.220213)], [(placement["x"], placement["y"]) for placement in pro_inputs[address]["spatial"]["placements"]])
+		for address in (45, 46):
+			self.assertEqual([(0.536243, 0.379225)], [(placement["x"], placement["y"]) for placement in pro_inputs[address]["spatial"]["placements"]])
+		self.assertEqual("not_applicable", pro_outputs[("pinmame.output.solenoid", 27)]["spatial"]["status"])
+		self.assertEqual("cabinet_or_service", pro_outputs[("pinmame.output.solenoid", 27)]["spatial"]["reason"])
+		flasher_positions = {
+			address: [(placement["x"], placement["y"]) for placement in pro_outputs[("pinmame.output.solenoid", address)]["spatial"]["placements"]]
+			for address in {18, 19, 20, 21, 25}
+		}
+		self.assertEqual([(0.043766, 0.43)], flasher_positions[18])
+		self.assertEqual([(0.954245, 0.49)], flasher_positions[19])
+		self.assertEqual([(0.707750, 0.735671), (0.197012, 0.728527)], flasher_positions[20])
+		self.assertEqual([(0.374, 0.252)], flasher_positions[21])
+		self.assertEqual([(0.790702, 0.232974)], flasher_positions[25])
+		lamp_positions = {
+			address: [(placement["x"], placement["y"]) for placement in pro_outputs[("pinmame.output.lamp", address)]["spatial"]["placements"]]
+			for address in {71, 73, 75}
+		}
+		self.assertEqual([(0.157235, 0.068047)], lamp_positions[71])
+		self.assertEqual([(0.156911, 0.068193)], lamp_positions[73])
+		self.assertEqual([(0.163438, 0.067535)], lamp_positions[75])
+		self.assertEqual(3, len({position[0] for position in lamp_positions.values()}))
+		self.assertEqual(2, pro_outputs[("pinmame.output.solenoid", 20)]["physical"]["quantity"])
+		for address in {18, 19, 21, 25}:
+			self.assertEqual(1, pro_outputs[("pinmame.output.solenoid", address)]["physical"]["quantity"])
+		self.assertEqual(27, pro_outputs[("pinmame.output.gi", 0)]["physical"]["quantity"])
+		self.assertEqual(27, len(pro_outputs[("pinmame.output.gi", 0)]["spatial"]["placements"]))
+		self.assertEqual("not_applicable", pro_outputs[("pinmame.output.solenoid", 53)]["spatial"]["status"])
+		self.assertEqual("virtual", pro_outputs[("pinmame.output.solenoid", 53)]["spatial"]["reason"])
+
+	def test_pro_spatial_placement_keeps_manual_physics_separate_from_vpx_callback_names(self) -> None:
+		pro_inputs = bindings(self.pro, "inputs", "pinmame.input.switch")
+		pro_outputs = bindings(self.pro, "outputs", "pinmame.output.solenoid")
+		self.assertEqual([(0.678933, 0.213986)], [(placement["x"], placement["y"]) for placement in pro_inputs[30]["spatial"]["placements"]])
+		self.assertEqual([(0.880455, 0.1929)], [(placement["x"], placement["y"]) for placement in pro_inputs[31]["spatial"]["placements"]])
+		self.assertEqual([(0.80385, 0.297933)], [(placement["x"], placement["y"]) for placement in pro_inputs[32]["spatial"]["placements"]])
+		self.assertEqual([(0.678933, 0.213986)], [(placement["x"], placement["y"]) for placement in pro_outputs[9]["spatial"]["placements"]])
+		self.assertEqual([(0.880455, 0.1929)], [(placement["x"], placement["y"]) for placement in pro_outputs[10]["spatial"]["placements"]])
+		self.assertEqual([(0.80385, 0.297933)], [(placement["x"], placement["y"]) for placement in pro_outputs[11]["spatial"]["placements"]])
+		self.assertEqual([(0.057307, 0.47)], [(placement["x"], placement["y"]) for placement in pro_outputs[12]["spatial"]["placements"]])
+		for address in (12, 18, 19, 21):
+			placement = pro_outputs[address]["spatial"]["placements"][0]
+			self.assertEqual(["manual.avengers-pro"], placement["provenance"]["source_refs"])
+			self.assertIn("manual", pro_outputs[address]["physical"]["notes"].casefold())
+		for address in (30, 31, 9, 10):
+			device = pro_inputs[address] if address in (30, 31) else pro_outputs[address]
+			self.assertIn("anomaly", device["physical"]["notes"].casefold())
+		script_switches = {entry["label"]: entry["address"] for entry in self.pro_script_evidence["switches"]}
+		self.assertEqual(31, script_switches["Bumper1b"])
+		self.assertEqual(30, script_switches["Bumper2b"])
+
+	def test_catalog_and_definition_paths_promote_pro_only(self) -> None:
+		catalog = load_json(ROOT / "catalog" / "pinmame.json")
+		machines = {machine["id"]: machine for machine in catalog["machines"] if machine["id"] in {"stern.avengers-limited-edition.2012", "stern.avengers-pro.2012"}}
+		self.assertEqual("partial", machines["stern.avengers-limited-edition.2012"]["coverage_status"])
+		self.assertEqual("machines/partial/stern/avengers-limited-edition-2012.json", machines["stern.avengers-limited-edition.2012"]["definition"])
+		self.assertEqual("author_ready", machines["stern.avengers-pro.2012"]["coverage_status"])
+		self.assertEqual("physical_pinball", machines["stern.avengers-pro.2012"]["machine_kind"])
+		self.assertEqual("machines/author-ready/stern/avengers-pro-2012.json", machines["stern.avengers-pro.2012"]["definition"])
+
 	def test_exact_rom_runs_anchor_display_gi_and_clone_root_artifact(self) -> None:
 		le_runtime = self.le_evidence["runtime"]
 		pro_runtime = self.pro_evidence["runtime"]
@@ -141,10 +235,15 @@ class AvengersDefinitionTests(unittest.TestCase):
 		self.assertEqual("c6da231a360a0f062fa5b434d08faca3c1b7b6a5436cc51b5b54dac924e1a3b4", le_sources["vpx.avengers-le.jp-salas-v600"]["sha256"])
 		self.assertEqual("fdabec154947bc814d1b172fe68e91ad440780282c759f71668cfe7754f50031", pro_sources["manual.avengers-pro"]["sha256"])
 		self.assertEqual("85ea928246dbdf4b59a73e5237b6d248970770d3146381b06a1620c92cba21e8", pro_sources["vpx.avengers-pro.vpw-1-3-1"]["sha256"])
+		self.assertEqual("45de396493ddf562f06baa6950a5b3b46d7803f4aca1ed1df4ad7f45a6a4c5df", pro_sources["vpx-table.avengers-pro-archive-45de3964"]["sha256"])
+		self.assertIn("952,2115", pro_sources["vpx-table.avengers-pro-archive-45de3964"]["locator"])
+		self.assertIn("avs_170", pro_sources["vpx-table.avengers-pro-archive-45de3964"]["locator"])
+		self.assertNotIn("vpx-table.avengers-pro-archive-45de3964", le_sources)
 		self.assertFalse((ROOT / "machines" / "stubs" / "avs_170h.json").exists())
 		self.assertFalse((ROOT / "knowledge" / "stubs" / "avs_170h.md").exists())
 		self.assertEqual("complete", self.le["knowledge"]["status"])
 		self.assertEqual("complete", self.pro["knowledge"]["status"])
+		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "avengers-pro-2012.json").exists())
 
 
 if __name__ == "__main__":

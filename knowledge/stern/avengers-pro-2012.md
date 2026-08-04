@@ -1,7 +1,6 @@
 # The Avengers Pro (Stern, 2012)
 
-Coverage: **partial — normalized spatial placements pending.**
-Previously validated non-spatial scope: **complete Pro I/O, wiring, mechanisms, initial state, and controller bindings validated**
+Coverage: **author-ready - complete Pro I/O, wiring, mechanisms, initial state, controller bindings, and spatial placements validated**
 
 ## Identity and evidence precedence
 
@@ -34,8 +33,21 @@ All 80 matrix addresses are present, with unused 40, 56, 59, 64, 72, 74, 76, 77,
 - Treat exact Pro manual addresses as authoritative over clone-root callback capacity; observed public 53/54 activity during boot is not proof of physical Pro coils.
 - Preserve sustained/PWM semantics for motors, magnet, lock, gates, and flippers, and use the proven script motion/force values as authoring baselines.
 
+## Spatial coordinate model
+
+All located records use the exact plain Pro table's 952 by 2115 player-view frame: x=0 is left, x=1 is right, y=0 is the rear/backglass end, and y=1 is the apron. The working Pro script establishes causality and semantic addresses; the official Pro manual establishes physical inventory and multiplicity; the exact table is used only for reconciled geometry. Cabinet, service, backpanel, virtual, unused, DIP, and other off-playfield records are explicit N/A dispositions with no fabricated XY. Paired GI render layers and unrelated VPX bloom/render helpers are collapsed or excluded; lock lamps 71/73/75 retain the three dedicated on-playfield L71/L73/L75 bulb-cover primitive centers rather than the unrelated Q18 S118a helper or off-playfield glow planes.
+
+The official maps override two explicitly recorded VPX anomalies. First, the physical switch/coil maps put 30/Q9 left, 31/Q10 right, and 32/Q11 bottom; the exact table's Bumper1 at x=.678933 is scripted to sw31 and Bumper2 at x=.880455 to sw30. The controller bindings stay as scripted, but the physical XY assignments follow the manual. Second, the official coil-test map puts Q18 left flasher at y≈.43, Q12 left ramp gate at y≈.47, and Q19 right flasher at y≈.49. The archive's named S118p/S118a, RampControlGate, and S119a/S119b objects instead land at y=.182622/.264379/.355755. Adjacent mapped assemblies reconcile, so these three isolated vertical VPX placements are rejected; the manual-map approximate anchors are retained without inventing sub-map precision.
+
+The Pro topology remains four trough balls on 18-21 plus jam 22, matrix shooter 23, center HULK reset 6, ramp gate 12, Hulk arms 17, Loki 22, magnet 23, and right orbit 61. No LE bridge, auxiliary board, six-ball trough, or LE-only mechanism is introduced.
+
+Q21 is a manual-map assembly projection at about (0.374,0.252) on Hulk, between the Q17/Q3-Q4 and Q23/Q6 callouts on manual page 15. The VPX S121/S121a centroid at (0.663449,0.238199) is a conflicting render proxy, so it is rejected rather than silently retained; Q21's placement provenance is manual-only.
+
+The four trough sensors and jam sensor are disclosed assembly projections. The exact table's Kicker.Drain and Kicker.BallRelease provide the trough endpoints, Primitive.Apron identifies the apron boundary, and the working script supplies the 18-to-21 physical order and four-ball inventory. Q1 uses the BallRelease assembly anchor. Switches 41/42 use the Hulk assembly anchor and 45/46 use the Tesseract base anchor; these points describe assemblies, not hidden contact leaves.
+
 ## Sources
 
 - `manual.avengers-pro`: official Stern `Avengers-Pro-Manual.pdf`, SHA-256 `fdabec154947bc814d1b172fe68e91ad440780282c759f71668cfe7754f50031`; switch chart PDF page 13, coil chart page 16, lamp chart page 19, location maps, and model-specific assembly drawings.
+- `vpx-table.avengers-pro-archive-45de3964`: exact plain Pro table `Avengers (Pro), The (Stern 2012).vpx` for ROM `avs_170`, SHA-256 `45de396493ddf562f06baa6950a5b3b46d7803f4aca1ed1df4ad7f45a6a4c5df`; bounds 0,0 through 952,2115; read-only extraction and candidate report `03-archive-pro`.
 - `vpx.avengers-pro.vpw-1-3-1`: known-working Pro script at vpxtable_scripts revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`, SHA-256 `85ea928246dbdf4b59a73e5237b6d248970770d3146381b06a1620c92cba21e8`.
 - `runtime.avengers-pro.boot-start`: isolated exact `avs_170.zip` run, raw SHA-256 `4fa936ed6307059ef69f17100390a96ef91b9a28a65346d6ca8f45e1823122d6`; ROM archive SHA-256 `5bf37fe0f4a7a101d941de3659dd29dd9913b01f020d3202d644a86ed8802cc3` remains external.
