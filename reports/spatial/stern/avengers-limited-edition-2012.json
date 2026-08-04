@@ -1,0 +1,281 @@
+{
+  "coordinate_convention": {
+    "x": "left_to_right",
+    "y": "rear_to_apron"
+  },
+  "coordinate_space": "playfield",
+  "evidence_policy": "manual-only; disputed upper-right-orbit address withheld; no Pro geometry is promoted to LE",
+  "format": "pinmame-spatial-review",
+  "machine_id": "stern.avengers-limited-edition.2012",
+  "manual": {
+    "pages": [
+      63,
+      64,
+      66,
+      68,
+      117
+    ],
+    "sha256": "4687ae0ed0ac249411deff3b0284d5c13d8fab154e430e95b6bd9f7bb82dca62",
+    "source_id": "manual.avengers-limited-edition"
+  },
+  "promoted": {
+    "inputs": [
+      "switch.bottom-pop-bumper",
+      "switch.center-spinner",
+      "switch.center-top-lane",
+      "switch.h-u-lk-drop-target",
+      "switch.h-ulk-drop-target",
+      "switch.hu-l-k-drop-target",
+      "switch.hul-k-drop-target",
+      "switch.hulk-eject",
+      "switch.hulk-platter",
+      "switch.hulk-target",
+      "switch.hulk-wheel-opto-1",
+      "switch.hulk-wheel-opto-2",
+      "switch.left-flipper-end-of-stroke",
+      "switch.left-inner-loop",
+      "switch.left-orbit",
+      "switch.left-outlane",
+      "switch.left-pop-bumper",
+      "switch.left-ramp-exit",
+      "switch.left-return-lane",
+      "switch.left-slingshot",
+      "switch.left-top-lane",
+      "switch.loki-lock-1-bottom",
+      "switch.loki-lock-2",
+      "switch.loki-lock-3",
+      "switch.right-2-bank-target-bottom",
+      "switch.right-2-bank-target-top",
+      "switch.right-flipper-end-of-stroke",
+      "switch.right-outlane",
+      "switch.right-pop-bumper",
+      "switch.right-ramp-exit",
+      "switch.right-return-lane",
+      "switch.right-slingshot",
+      "switch.right-top-lane",
+      "switch.shield-target",
+      "switch.t-h-or-drop-target",
+      "switch.t-hor-drop-target",
+      "switch.tesseract-standup-1",
+      "switch.tesseract-standup-2",
+      "switch.tesseract-standup-3",
+      "switch.tesseract-wheel-1",
+      "switch.tesseract-wheel-2",
+      "switch.th-o-r-drop-target",
+      "switch.tho-r-drop-target"
+    ],
+    "outputs": [
+      "device.bottom-pop-bumper",
+      "device.center-4-bank-drop-reset",
+      "device.hulk-arms",
+      "device.hulk-clockwise",
+      "device.hulk-counterclockwise",
+      "device.hulk-eject",
+      "device.hulk-flasher",
+      "device.hulk-magnet",
+      "device.left-4-bank-drop-reset",
+      "device.left-flipper",
+      "device.left-orbit-control-gate",
+      "device.left-pop-bumper",
+      "device.left-side-flasher",
+      "device.left-slingshot",
+      "device.loki-lockup",
+      "device.pop-bumper-flasher",
+      "device.right-flipper",
+      "device.right-orbit-control-gate",
+      "device.right-pop-bumper",
+      "device.right-side-flasher",
+      "device.right-slingshot",
+      "device.slingshot-flashers",
+      "device.tesseract-flasher",
+      "device.trough-up-kicker"
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "disposition": "rejected_edition_mismatch",
+      "organized_path": "pinmame-vpx-sources/stern/avengers-limited-edition-2012/Avengers (Stern 2012)-WIP HD neo Hulk rascalV2.vpx",
+      "reason": "The VPX script/table is Pro-family evidence; it is not the physical Limited Edition machine and cannot supply LE coordinates.",
+      "rom": "avs_170",
+      "sha256": "1972c6bc5c032f8a2eeac30cb89c88479bc38d9f77e33bbc0893ae48795018a6"
+    }
+  ],
+  "unresolved_blockers": [
+    {
+      "blocker": "Unresolved LE upper-right-orbit address mapping: the official physical switch-location drawing marks the disputed coordinate as switch 61, the same manual's switch matrix grid identifies switch 58 as RIGHT ORBIT, and the known-working LE VPX script drives sw58 without a sw61 handler. Neither address receives a spatial placement or an unused classification.",
+      "devices": {
+        "inputs": [
+          58,
+          61
+        ]
+      }
+    },
+    {
+      "blocker": "Bridge down/up endpoint placement is not separated by a trustworthy LE spatial record.",
+      "devices": {
+        "inputs": [
+          8,
+          9
+        ]
+      }
+    },
+    {
+      "blocker": "Six-ball trough contacts and jam switch are grouped in the manual; individual switch centers and the jam geometry remain unlocated.",
+      "devices": {
+        "inputs": [
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ]
+      }
+    },
+    {
+      "blocker": "Shooter-lane switch placement is not yet reconciled to a normalized LE map coordinate.",
+      "devices": {
+        "inputs": [
+          86
+        ]
+      }
+    },
+    {
+      "blocker": "Used physical output placement remains missing for these addresses; no Pro coordinate was projected.",
+      "devices": {
+        "outputs": [
+          "device.auto-launch",
+          "device.bridge-motor",
+          "device.left-ramp-control-gate",
+          "device.right-ramp-control-gate",
+          "gi.general-illumination",
+          "lamp.black-widow",
+          "lamp.black-widow-1-bottom",
+          "lamp.black-widow-2",
+          "lamp.black-widow-3",
+          "lamp.black-widow-4",
+          "lamp.bottom-pop-bumper",
+          "lamp.c-o-smic",
+          "lamp.c-osmic",
+          "lamp.captain-america",
+          "lamp.captain-america-1-bottom",
+          "lamp.captain-america-2",
+          "lamp.captain-america-3",
+          "lamp.captain-america-4",
+          "lamp.co-s-mic",
+          "lamp.cos-m-ic",
+          "lamp.cosm-i-c",
+          "lamp.cosmi-c",
+          "lamp.extra-ball",
+          "lamp.h-u-lk",
+          "lamp.h-ulk",
+          "lamp.hawkeye",
+          "lamp.hawkeye-1-bottom",
+          "lamp.hawkeye-2",
+          "lamp.hawkeye-3",
+          "lamp.hawkeye-4",
+          "lamp.hu-l-k",
+          "lamp.hul-k",
+          "lamp.hulk",
+          "lamp.hulk-eject-green",
+          "lamp.hulk-target-arrow",
+          "lamp.iron-man",
+          "lamp.iron-man-1-bottom",
+          "lamp.iron-man-2",
+          "lamp.iron-man-3",
+          "lamp.iron-man-4",
+          "lamp.left-inner-loop-red",
+          "lamp.left-orbit-purple",
+          "lamp.left-outlane",
+          "lamp.left-pop-bumper",
+          "lamp.left-ramp-green",
+          "lamp.left-ramp-red",
+          "lamp.left-return-lane",
+          "lamp.lock-1",
+          "lamp.lock-2",
+          "lamp.lock-3",
+          "lamp.right-2-bank-target-bottom",
+          "lamp.right-2-bank-target-top",
+          "lamp.right-orbit-red",
+          "lamp.right-outlane",
+          "lamp.right-pop-bumper",
+          "lamp.right-return-lane",
+          "lamp.shield-agent",
+          "lamp.shoot-again",
+          "lamp.special",
+          "lamp.t-h-or",
+          "lamp.t-hor",
+          "lamp.tesseract-1",
+          "lamp.tesseract-2",
+          "lamp.tesseract-3",
+          "lamp.tesseract-4",
+          "lamp.tesseract-5",
+          "lamp.tesseract-standup",
+          "lamp.tesseract-standup-left",
+          "lamp.tesseract-standup-right",
+          "lamp.th-o-r",
+          "lamp.tho-r",
+          "lamp.thor",
+          "lamp.top-lane-black-widow",
+          "lamp.top-lane-captain-america",
+          "lamp.top-lane-hawkeye",
+          "lamp.top-lane-hulk",
+          "lamp.top-lane-iron-man",
+          "lamp.top-lane-thor"
+        ]
+      }
+    },
+    {
+      "blocker": "RGB GI requires physical per-emitter multiplicity and color/location reconciliation; the current schema cannot treat the relay as the emitter set.",
+      "devices": {
+        "outputs": [
+          0
+        ]
+      }
+    },
+    {
+      "blocker": "Schema v2 has no display spatial-placement field, so DMD location cannot be recorded without a schema extension.",
+      "devices": {
+        "display": [
+          "display.dmd"
+        ]
+      }
+    },
+    {
+      "blocker": "LE lock lamps 45-47 and Tesseract lamps 57-61 are grouped on the LE lamp map; individual emitter locations and multiplicity are not yet reconciled.",
+      "devices": {
+        "outputs": [
+          45,
+          46,
+          47,
+          57,
+          58,
+          59,
+          60,
+          61
+        ]
+      }
+    },
+    {
+      "blocker": "Remaining physical inputs lack a manual-reconciled placement or controlled non-playfield N/A assertion.",
+      "devices": {
+        "inputs": [
+          "switch.bridge-motor-down",
+          "switch.bridge-motor-up",
+          "switch.right-orbit",
+          "switch.shooter-lane",
+          "switch.trough-1-right",
+          "switch.trough-2",
+          "switch.trough-3",
+          "switch.trough-4",
+          "switch.trough-5",
+          "switch.trough-6-left",
+          "switch.trough-jam",
+          "switch.unresolved-upper-right-orbit-address"
+        ]
+      }
+    }
+  ],
+  "version": 1
+}

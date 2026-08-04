@@ -1,7 +1,7 @@
 # The Avengers Limited Edition (Stern, 2012)
 
 Coverage: **partial — normalized spatial placements pending.**
-Previously validated non-spatial scope: **complete Limited Edition I/O, wiring, mechanisms, lighting, initial state, and controller bindings validated**
+Previously validated non-spatial scope: **complete Limited Edition I/O, wiring, mechanisms, lighting, initial state, and controller bindings validated; spatial evidence is partial**
 
 ## Identity and evidence precedence
 
@@ -30,6 +30,14 @@ The bridge uses motor output 22, direction/state relay 23, down switch 8, and up
 ## Lighting and standard devices
 
 The conventional 1-80 lamp matrix is fully enumerated, including unused 13, 69-71, and 79. GI is public address 0. The LE additionally uses three physical color relays: main 17 is blue, auxiliary 55/physical 45 is green, and auxiliary 58/physical 48 is red. These switch the 112-5033 RGB GI LED rails shown on the manual location map and must remain distinct even if a renderer also offers combined brightness. Three pops are switches 30-32/outputs 9-11, slings are 26/27 and 13/14, and lower flippers are outputs 15/16 with dedicated buttons and normally-closed EOS contacts.
+
+## Spatial evidence pass
+
+Coordinates use normalized playfield space: x=0 is left and x=1 is right; y=0 is rear/backglass and y=1 is the apron. The promoted subset is observed against the official LE switch, lamp, coil, and RGB-GI maps on manual pages 63, 64, 66, 68, and 117. Assembly anchors are explicitly labeled when the manual groups paired optos or a multi-device mechanism. No coordinate in this LE definition is sourced from a Pro VPX table.
+
+The organized local VPX candidate `Avengers (Stern 2012)-WIP HD neo Hulk rascalV2.vpx` is retained as a review artifact but rejected for LE spatial use: its script identifies ROM `avs_170`, which is Pro-family evidence. The LE evidence itself has an unresolved upper-right-orbit address: the manual's physical location drawing marks the disputed coordinate 61, its switch matrix grid says 58, and the known-working LE script drives `sw58` without a `sw61` handler. Neither input receives that coordinate, and 61 is not classified as unused. The same fail-closed rule applies to LE bridge, auxiliary-board, lock-lamp, Tesseract-lamp, and any relocated geometry.
+
+Controlled N/A assertions cover DIP switches, unused devices, cabinet/service controls, rear-panel flashers, internal GI/bridge relays, the optional shaker and coin meter, and the virtual game-on output. Remaining physical devices intentionally have no spatial assertion until their individual LE geometry is reconciled: bridge endpoints 8/9, trough contacts 17-23, shooter switch 86, unlocated coils/auxiliary effects, the used lamp matrix, RGB-GI per-emitter locations and multiplicity, and the DMD display field (schema v2 has no display spatial-placement member). This keeps the machine schema-v2 partial and identifies the exact authoring blockers instead of inventing placements.
 
 ## Recreation checklist
 

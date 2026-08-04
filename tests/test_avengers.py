@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import ast
+import importlib.util
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -11,6 +14,7 @@ PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "avengers-pro-2012.jso
 LE_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "avengers-limited-edition-boot-start.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "avengers-pro-boot-start.json"
 PRO_SCRIPT_EVIDENCE_PATH = ROOT / "evidence" / "vpx" / "vpxtable-scripts" / "avs_170c" / "85ea928246dbdf4b.json"
+LE_SPATIAL_AUDIT_PATH = ROOT / "reports" / "spatial" / "stern" / "avengers-limited-edition-2012.json"
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -34,6 +38,7 @@ class AvengersDefinitionTests(unittest.TestCase):
 		cls.le_evidence = load_json(LE_EVIDENCE_PATH)
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
 		cls.pro_script_evidence = load_json(PRO_SCRIPT_EVIDENCE_PATH)
+		cls.le_spatial_audit = load_json(LE_SPATIAL_AUDIT_PATH)
 
 	def test_only_pro_is_promoted_after_spatial_reconciliation(self) -> None:
 		self.assertEqual("partial", self.le["coverage"]["status"])
@@ -244,6 +249,105 @@ class AvengersDefinitionTests(unittest.TestCase):
 		self.assertEqual("complete", self.le["knowledge"]["status"])
 		self.assertEqual("complete", self.pro["knowledge"]["status"])
 		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "avengers-pro-2012.json").exists())
+
+	def test_base_generator_has_no_import_time_writes_or_deletes(self) -> None:
+		source = (ROOT / "tools" / "curate_avengers.py").read_text(encoding="utf-8")
+		tree = ast.parse(source)
+		mutating_calls = []
+		for statement in tree.body:
+			if isinstance(statement, (ast.FunctionDef, ast.ClassDef, ast.Import, ast.ImportFrom, ast.Assign, ast.AnnAssign)):
+				continue
+			if isinstance(statement, ast.If) and isinstance(statement.test, ast.Compare) and isinstance(statement.test.left, ast.Name) and statement.test.left.id == "__name__":
+				continue
+			for node in ast.walk(statement):
+				if not isinstance(node, ast.Call):
+					continue
+				name = node.func.id if isinstance(node.func, ast.Name) else node.func.attr if isinstance(node.func, ast.Attribute) else ""
+				if name in {"write", "write_json", "write_text", "write_json_file", "unlink", "mkdir"}:
+					mutating_calls.append(name)
+		self.assertEqual([], mutating_calls)
+
+	def test_base_generator_does_not_clobber_promoted_le_or_curated_pro_artifacts(self) -> None:
+		spec = importlib.util.spec_from_file_location("curate_avengers_no_clobber_test", ROOT / "tools" / "curate_avengers.py")
+		self.assertIsNotNone(spec)
+		self.assertIsNotNone(spec.loader)
+		module = importlib.util.module_from_spec(spec)
+		spec.loader.exec_module(module)
+		with tempfile.TemporaryDirectory() as temporary:
+			module.ROOT = Path(temporary)
+			le_author_ready = module.ROOT / "machines" / "author-ready" / "stern" / "avengers-limited-edition-2012.json"
+			pro_author_ready = module.ROOT / "machines" / "author-ready" / "stern" / "avengers-pro-2012.json"
+			pro_knowledge = module.ROOT / "knowledge" / "stern" / "avengers-pro-2012.md"
+			for path in (le_author_ready, pro_author_ready, pro_knowledge):
+				path.parent.mkdir(parents=True, exist_ok=True)
+			le_author_ready.write_text('{"promoted": "le"}\n', encoding="utf-8")
+			pro_author_ready.write_text('{"promoted": "pro"}\n', encoding="utf-8")
+			pro_knowledge.write_text("curated Pro spatial knowledge\n", encoding="utf-8")
+
+			module.main()
+
+			self.assertEqual('{"promoted": "le"}\n', le_author_ready.read_text(encoding="utf-8"))
+			self.assertEqual('{"promoted": "pro"}\n', pro_author_ready.read_text(encoding="utf-8"))
+			self.assertEqual("curated Pro spatial knowledge\n", pro_knowledge.read_text(encoding="utf-8"))
+			self.assertFalse((module.ROOT / "machines" / "partial" / "stern" / "avengers-limited-edition-2012.json").exists())
+			self.assertFalse((module.ROOT / "machines" / "partial" / "stern" / "avengers-pro-2012.json").exists())
+
+	def test_le_spatial_subset_is_manual_only_and_edition_guarded(self) -> None:
+		le_inputs = bindings(self.le, "inputs", "pinmame.input.switch")
+		le_solenoids = bindings(self.le, "outputs", "pinmame.output.solenoid")
+		le_lamps = bindings(self.le, "outputs", "pinmame.output.lamp")
+		self.assertEqual("conflicted", le_inputs[58]["provenance"]["status"])
+		self.assertEqual("unknown", le_inputs[61]["availability"])
+		self.assertEqual("conflicted", le_inputs[61]["provenance"]["status"])
+		self.assertNotIn("spatial", le_inputs[58])
+		self.assertNotIn("spatial", le_inputs[61])
+		self.assertIn("address", le_inputs[58]["physical"]["notes"])
+		self.assertIn("classified unused", le_inputs[61]["physical"]["notes"])
+		self.assertNotIn("spatial", le_inputs[17])
+		self.assertNotIn("spatial", le_inputs[86])
+		self.assertEqual("not_applicable", le_inputs[65]["spatial"]["status"])
+		self.assertEqual("cabinet_or_service", le_inputs[65]["spatial"]["reason"])
+
+		slingshot_emitters = le_solenoids[20]["spatial"]["placements"]
+		self.assertEqual(2, len(slingshot_emitters))
+		self.assertEqual(2, le_solenoids[20]["physical"]["quantity"])
+		self.assertEqual({"manual.avengers-limited-edition"}, {
+			ref
+			for device in [*le_inputs.values(), *le_solenoids.values(), *le_lamps.values()]
+			for placement in device.get("spatial", {}).get("placements", [])
+			for ref in placement["provenance"]["source_refs"]
+		})
+		self.assertEqual("not_applicable", le_solenoids[23]["spatial"]["status"])
+		self.assertEqual("internal_nonvisual", le_solenoids[23]["spatial"]["reason"])
+		self.assertNotIn("spatial", le_solenoids[2])
+		self.assertNotIn("spatial", le_lamps[45])
+		self.assertNotIn("spatial", le_lamps[57])
+		self.assertEqual("cabinet_or_service", le_lamps[55]["spatial"]["reason"])
+
+		rejected = self.le_spatial_audit["rejected_candidates"]
+		self.assertEqual(1, len(rejected))
+		self.assertEqual("avs_170", rejected[0]["rom"])
+		self.assertEqual("rejected_edition_mismatch", rejected[0]["disposition"])
+		self.assertEqual("1972c6bc5c032f8a2eeac30cb89c88479bc38d9f77e33bbc0893ae48795018a6", rejected[0]["sha256"])
+		address_blockers = [
+			blocker for blocker in self.le_spatial_audit["unresolved_blockers"]
+			if blocker.get("devices", {}).get("inputs") == [58, 61]
+		]
+		self.assertEqual(1, len(address_blockers))
+		self.assertIn("manual", address_blockers[0]["blocker"])
+		self.assertIn("sw58", address_blockers[0]["blocker"])
+		self.assertIn("sw61", address_blockers[0]["blocker"])
+		self.assertEqual("conflict.le-upper-right-orbit-address", self.le["conflicts"][0]["id"])
+		self.assertIn("display.dmd", {
+			display_id
+			for blocker in self.le_spatial_audit["unresolved_blockers"]
+			for display_id in blocker.get("devices", {}).get("display", [])
+		})
+		self.assertTrue(any(
+			8 in blocker.get("devices", {}).get("inputs", [])
+			and 9 in blocker.get("devices", {}).get("inputs", [])
+			for blocker in self.le_spatial_audit["unresolved_blockers"]
+		))
 
 
 if __name__ == "__main__":

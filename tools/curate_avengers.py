@@ -7,7 +7,13 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json as write_json_file, write_text
-from pinmame_game_defs.spatial import SPATIAL_RETROFIT_PENDING_MACHINE_IDS, fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+try:
+	from avengers_le_spatial import apply_spatial, spatial_audit
+except ModuleNotFoundError:
+	# Direct execution puts tools/ on sys.path; module-oriented callers use
+	# the repository namespace package instead.
+	from tools.avengers_le_spatial import apply_spatial, spatial_audit
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,6 +33,21 @@ PRO_RUNTIME = "runtime.avengers-pro.boot-start"
 
 LE_DRIVER_IDS = {"avs_120h", "avs_140h", "avs_170h", "avs_170hc"}
 PRO_DRIVER_IDS = {"avs_110", "avs_140", "avs_170", "avs_170c"}
+
+# This base generator owns the fail-closed LE bundle.  Pro definitions and
+# knowledge may be built from the pure helpers below, but their files belong
+# to the separately reviewed Pro curation flow and are deliberately absent
+# from this output manifest.
+LE_MACHINE_ID = "stern.avengers-limited-edition.2012"
+LE_PARTIAL_PATH = Path("machines/partial/stern/avengers-limited-edition-2012.json")
+LE_AUTHOR_READY_PATH = Path("machines/author-ready/stern/avengers-limited-edition-2012.json")
+LE_EVIDENCE_PATH = Path("evidence/runtime/sam/avengers-limited-edition-boot-start.json")
+LE_KNOWLEDGE_PATH = Path("knowledge/stern/avengers-limited-edition-2012.md")
+LE_SPATIAL_AUDIT_PATH = Path("reports/spatial/stern/avengers-limited-edition-2012.json")
+LE_LEGACY_STUB_PATHS = (
+	Path("machines/stubs/avs_170h.json"),
+	Path("knowledge/stubs/avs_170h.md"),
+)
 
 
 def slug(value: str) -> str:
@@ -145,7 +166,32 @@ def matrix_switch(number: int, manual: str, script: str, limited_edition: bool) 
 		result["roles"] = ["ball.position"]
 	elif not limited_edition and number == 22:
 		result["roles"] = ["ball.jam"]
+	if limited_edition and number == 58:
+		result["physical"]["notes"] = "Runtime causality identifies sw58 as the right-orbit callback, but the LE physical switch-location drawing marks the disputed upper-right-orbit coordinate 61. Spatial placement is withheld pending address reconciliation."
+		result["provenance"] = {"status": "conflicted", "source_refs": [manual, script]}
+	if limited_edition and number == 61:
+		result.update({
+			"id": "switch.unresolved-upper-right-orbit-address",
+			"label": "Unresolved upper-right orbit address",
+			"availability": "unknown",
+			"physical": {
+				"switch_type": "unknown",
+				"notes": "The LE physical switch-location drawing marks the disputed upper-right-orbit coordinate 61, while the manual switch matrix grid and known-working LE VPX script identify 58. This address is neither promoted nor classified unused.",
+			},
+			"provenance": {"status": "conflicted", "source_refs": [manual, script]},
+		})
 	return result
+
+
+def conflicts(limited_edition: bool, manual: str, script: str) -> list[dict[str, object]]:
+	if not limited_edition:
+		return []
+	return [{
+		"id": "conflict.le-upper-right-orbit-address",
+		"path": "inputs[pinmame.input.switch:58|61]",
+		"description": "The official LE physical switch-location drawing marks the disputed upper-right-orbit coordinate as switch 61, while the same manual's switch matrix grid identifies switch 58 as RIGHT ORBIT and the known-working LE VPX script drives sw58 without a sw61 handler. The address mapping cannot be reconciled without guessing, so both spatial placements and the unused classification for 61 are withheld.",
+		"source_refs": [manual, script],
+	}]
 
 
 def dedicated_switch(device: int, manual_number: int, label: str, availability: str, switch_type: str, normally_closed: bool, manual: str, script: str) -> dict[str, object]:
@@ -477,7 +523,7 @@ def build(limited_edition: bool) -> dict[str, object]:
 	name = "The Avengers Limited Edition" if limited_edition else "The Avengers Pro"
 	machine_id = "stern.avengers-limited-edition.2012" if limited_edition else "stern.avengers-pro.2012"
 	knowledge_path = "knowledge/stern/avengers-limited-edition-2012.md" if limited_edition else "knowledge/stern/avengers-pro-2012.md"
-	return {
+	definition = {
 		"format": "pinmame-machine-definition", "schema_version": 1,
 		"machine": {"id": machine_id, "name": name, "manufacturer": "Stern", "year": 2012, "ipdb_id": 5940},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
@@ -486,13 +532,14 @@ def build(limited_edition: bool) -> dict[str, object]:
 		"outputs": coils(manual, script, limited_edition) + lamps(manual, script, limited_edition),
 		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance(CORE_SOURCE, runtime)}],
 		"mechanisms": common_mechanisms(limited_edition), "relationships": [], "sources": sources(limited_edition),
-		"knowledge": {"path": knowledge_path, "status": "complete"}, "conflicts": [],
+		"knowledge": {"path": knowledge_path, "status": "complete"}, "conflicts": conflicts(limited_edition, manual, script),
 	}
+	return apply_spatial(definition) if limited_edition else definition
 
 
 LE_KNOWLEDGE = """# The Avengers Limited Edition (Stern, 2012)
 
-Coverage: **author-ready - complete Limited Edition I/O, wiring, mechanisms, lighting, initial state, and controller bindings validated**
+Coverage: **author-ready - complete Limited Edition I/O, wiring, mechanisms, lighting, initial state, and controller bindings validated; spatial evidence is partial**
 
 ## Identity and evidence precedence
 
@@ -521,6 +568,14 @@ The bridge uses motor output 22, direction/state relay 23, down switch 8, and up
 ## Lighting and standard devices
 
 The conventional 1-80 lamp matrix is fully enumerated, including unused 13, 69-71, and 79. GI is public address 0. The LE additionally uses three physical color relays: main 17 is blue, auxiliary 55/physical 45 is green, and auxiliary 58/physical 48 is red. These switch the 112-5033 RGB GI LED rails shown on the manual location map and must remain distinct even if a renderer also offers combined brightness. Three pops are switches 30-32/outputs 9-11, slings are 26/27 and 13/14, and lower flippers are outputs 15/16 with dedicated buttons and normally-closed EOS contacts.
+
+## Spatial evidence pass
+
+Coordinates use normalized playfield space: x=0 is left and x=1 is right; y=0 is rear/backglass and y=1 is the apron. The promoted subset is observed against the official LE switch, lamp, coil, and RGB-GI maps on manual pages 63, 64, 66, 68, and 117. Assembly anchors are explicitly labeled when the manual groups paired optos or a multi-device mechanism. No coordinate in this LE definition is sourced from a Pro VPX table.
+
+The organized local VPX candidate `Avengers (Stern 2012)-WIP HD neo Hulk rascalV2.vpx` is retained as a review artifact but rejected for LE spatial use: its script identifies ROM `avs_170`, which is Pro-family evidence. The LE evidence itself has an unresolved upper-right-orbit address: the manual's physical location drawing marks the disputed coordinate 61, its switch matrix grid says 58, and the known-working LE script drives `sw58` without a `sw61` handler. Neither input receives that coordinate, and 61 is not classified as unused. The same fail-closed rule applies to LE bridge, auxiliary-board, lock-lamp, Tesseract-lamp, and any relocated geometry.
+
+Controlled N/A assertions cover DIP switches, unused devices, cabinet/service controls, rear-panel flashers, internal GI/bridge relays, the optional shaker and coin meter, and the virtual game-on output. Remaining physical devices intentionally have no spatial assertion until their individual LE geometry is reconciled: bridge endpoints 8/9, trough contacts 17-23, shooter switch 86, unlocated coils/auxiliary effects, the used lamp matrix, RGB-GI per-emitter locations and multiplicity, and the DMD display field (schema v2 has no display spatial-placement member). This keeps the machine schema-v2 partial and identifies the exact authoring blockers instead of inventing placements.
 
 ## Recreation checklist
 
@@ -610,21 +665,39 @@ def write_json(path: Path, value: dict[str, object]) -> None:
 	write_json_file(path, value)
 
 
-if __name__ == "__main__":
-	stub = ROOT / "machines/stubs/avs_170h.json"
-	if stub.exists():
-		stub.unlink()
-	stub_knowledge = ROOT / "knowledge/stubs/avs_170h.md"
-	if stub_knowledge.exists():
-		stub_knowledge.unlink()
+def _remove_legacy_stubs() -> None:
+	for relative_path in LE_LEGACY_STUB_PATHS:
+		path = ROOT / relative_path
+		if path.exists():
+			path.unlink()
 
-	le_machine_id = "stern.avengers-limited-edition.2012"
-	if le_machine_id in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
-		write_json(ROOT / "machines/partial/stern/avengers-limited-edition-2012.json", build(True))
-		write_text(ROOT / "knowledge/stern/avengers-limited-edition-2012.md", fail_closed_spatial_knowledge(le_machine_id, LE_KNOWLEDGE))
-	pro_machine_id = "stern.avengers-pro.2012"
-	if pro_machine_id in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
-		write_json(ROOT / "machines/partial/stern/avengers-pro-2012.json", build(False))
-		write_text(ROOT / "knowledge/stern/avengers-pro-2012.md", fail_closed_spatial_knowledge(pro_machine_id, PRO_KNOWLEDGE))
-	write_json(ROOT / "evidence/runtime/sam/avengers-limited-edition-boot-start.json", runtime_evidence(True))
-	write_json(ROOT / "evidence/runtime/sam/avengers-pro-boot-start.json", runtime_evidence(False))
+
+def main() -> None:
+	"""Generate the canonical, fail-closed Avengers LE base bundle.
+
+	The Pro definition is intentionally not generated here.  A separately
+	reviewed Pro promotion may own either its partial or author-ready definition
+	and its knowledge, and the base LE generator must be safe to run before or
+	after that work.  Likewise, a promoted LE definition is authoritative over
+	the base partial and spatial knowledge, so it is never replaced here.
+	"""
+	if (ROOT / LE_AUTHOR_READY_PATH).exists():
+		_remove_legacy_stubs()
+		return
+
+	# Build every LE artifact before the first write so generation order cannot
+	# leave a newly written artifact based on a later build failure.
+	le_definition = build(True)
+	le_evidence = runtime_evidence(True)
+	le_audit = spatial_audit(le_definition)
+	le_knowledge = fail_closed_spatial_knowledge(LE_MACHINE_ID, LE_KNOWLEDGE)
+
+	_remove_legacy_stubs()
+	write_json(ROOT / LE_PARTIAL_PATH, le_definition)
+	write_json(ROOT / LE_EVIDENCE_PATH, le_evidence)
+	write_json_file(ROOT / LE_SPATIAL_AUDIT_PATH, le_audit)
+	write_text(ROOT / LE_KNOWLEDGE_PATH, le_knowledge)
+
+
+if __name__ == "__main__":
+	main()
