@@ -1,9 +1,10 @@
-"""Build reviewed, author-ready X-Men Limited Edition and Pro definitions."""
+"""Build reviewed X-Men Limited Edition and Pro definitions."""
 
 from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json, write_text
@@ -11,6 +12,7 @@ from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed
 
 
 ROOT = Path(__file__).resolve().parents[1]
+TOOLS = Path(__file__).resolve().parent
 CATALOG = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
 DRIVERS = {driver["id"]: driver for driver in CATALOG["drivers"] if driver["id"].startswith("xmn_")}
 
@@ -390,7 +392,7 @@ def driver_records(le: bool) -> list[dict[str, object]]:
 def sources(le: bool) -> list[dict[str, object]]:
 	vpx_source = {"id": LE_VPX_SOURCE if le else PRO_VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/X-Men%20LE%20(Stern%202012)%20VPW%20v1.0.6.vbs" if le else "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/X-Men(ICPjuggla)6-27c.vbs", "revision": VPX_REVISION, "sha256": "6d445e52398640bd35a498553bb0ba32f1b9ce23e2964d0694c18ff2e9225650" if le else "2441d88ab8aef581fcdef3dd5c0b9523a36feb3ce4afb6133811f1f01b381afb", "locator": "X-Men LE (Stern 2012) VPW v1.0.6.vbs: initialization, solenoid callbacks, GI callbacks, Iceman movement, Nightcrawler state machines, Magneto disc, lock, kickers, trough, and switches" if le else "X-Men(ICPjuggla)6-27c.vbs: Pro ROM xmn_151, solenoid callbacks, lamp callback addresses, Wolverine and Magneto magnets, trough, lock, kickers, ramps, and switches", "license": "NOASSERTION", "attribution": "Table authors credited in the script and vpxtable_scripts contributors"}
 	result = [
-		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/XMenManual_042214.pdf", "sha256": "0812b91d0950ff8c1b15c5bc17afc827029ca8aaaa0bbb78cc11ea606b629bf8", "locator": "XMenManual_042214.pdf: PDF pages 56-62 and 97-117; official low-resolution manufacturer copy", "license": "NOASSERTION", "attribution": "Stern Pinball", "source_id": "stern", "original_filename": "XMenManual_042214.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T00:00:00Z"},
+		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/XMenManual_042214.pdf", "sha256": "0812b91d0950ff8c1b15c5bc17afc827029ca8aaaa0bbb78cc11ea606b629bf8", "locator": "XMenManual_042214.pdf: PDF pages 56-62 and 97-117; official low-resolution manufacturer copy; page 60 was visually verified at the root for the F17/F18 flasher quantities", "license": "NOASSERTION", "attribution": "Stern Pinball", "source_id": "stern", "original_filename": "XMenManual_042214.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T00:00:00Z"},
 		{"id": MANUAL_HIRES_SOURCE, "kind": "manual", "uri": "https://primetimeamusements.com/wp-content/uploads/2015/05/XMenManual_042214.pdf", "sha256": "d793836fefab6c0de53463943e36245c7ed800d5ca86675e3c2b2f46df693643", "locator": "Higher-resolution scan of the same Stern manual; switch table page 56, lamp table page 58, coil table page 60, eight-transistor board page 101, LE LED boards pages 103-104, GI maps pages 109-111", "license": "NOASSERTION", "attribution": "Stern Pinball manual mirrored by PrimeTime Amusements", "original_filename": "XMenManual_042214-high-resolution.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T00:00:00Z"},
 		vpx_source,
 		{"id": PRODUCT_SOURCE, "kind": "human_review", "uri": "https://sternpinball.com/game/x-men-pro/", "locator": "Manufacturer Pro and Limited Edition feature inventories, including edition-only Ice Slide, Nightcrawler, spinning disc, and color GI mechanisms", "license": "NOASSERTION", "attribution": "Stern Pinball", "acquired_at": "2026-08-02T00:00:00Z"},
@@ -532,15 +534,27 @@ def write(path: Path, value: dict[str, object]) -> None:
 	write_json(path, value)
 
 
+def refuse_if_canonical_definition_exists(path: Path) -> None:
+	"""Refuse generation when an author-ready definition could be overwritten."""
+	if path.exists():
+		raise RuntimeError(
+			f"Refusing to regenerate {path}: an author-ready canonical definition already exists; "
+			"resolve the promotion or conflict explicitly before curating again."
+		)
+
+
 def main() -> None:
-	write(ROOT / "machines/partial/stern/x-men-limited-edition-2012.json", build_le())
+	# The LE spatial curator owns the canonical LE output. Keeping this
+	# delegation here prevents a later base-curator run from erasing reviewed
+	# spatial placements and restoring the no-spatial build_le() result.
+	if str(TOOLS) not in sys.path:
+		sys.path.insert(0, str(TOOLS))
+	from curate_xmen_le_spatial import generate as generate_le_spatial
+
+	generate_le_spatial(root=ROOT)
 	write(ROOT / "machines/partial/stern/x-men-pro-2012.json", build_pro())
 	write(ROOT / "evidence/runtime/sam/x-men-limited-edition-boot-start.json", runtime_evidence())
-	write_text(ROOT / "knowledge/stern/x-men-limited-edition-2012.md", fail_closed_spatial_knowledge("stern.x-men-limited-edition.2012", LE_KNOWLEDGE))
 	write_text(ROOT / "knowledge/stern/x-men-pro-2012.md", fail_closed_spatial_knowledge("stern.x-men-pro.2012", PRO_KNOWLEDGE))
-	stale = ROOT / "machines/partial/stern/x-men-le-2012.json"
-	if stale.exists():
-		stale.unlink()
 
 
 if __name__ == "__main__":
