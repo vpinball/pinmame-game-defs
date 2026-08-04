@@ -23,7 +23,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 17 | 2012 | X-Men Limited Edition (Magneto / Wolverine) | Stern | partial |
 | 18 | 2012 | X-Men Pro | Stern | partial |
 | 19 | 2011 | The Rolling Stones (Standard) | Stern | author_ready |
-| 20 | 2011 | The Rolling Stones Limited Edition | Stern | partial |
+| 20 | 2011 | The Rolling Stones Limited Edition | Stern | author_ready |
 | 21 | 2011 | Transformers Limited Edition | Stern | partial |
 | 22 | 2011 | Transformers Pro | Stern | partial |
 | 23 | 2011 | TRON: Legacy Limited Edition | Stern | partial |

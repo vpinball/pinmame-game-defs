@@ -1,7 +1,6 @@
 # The Rolling Stones Limited Edition (Stern, 2011)
 
-Coverage: **partial — normalized spatial placements pending.**
-Previously validated non-spatial scope: **complete physical inventory, PinMAME bindings, custom mechanisms, wiring, and recreation behavior validated**
+Coverage: **author-ready - complete physical inventory, PinMAME bindings, custom mechanisms, wiring, recreation behavior, and normalized spatial placements validated**
 
 ## Identity and evidence precedence
 
@@ -34,9 +33,21 @@ Lamps 1-53, 58, and 60-62 are used; 54-57, 59, and 63-80 are unused. Output 29 d
 - Treat public 87/85 as proven VPX compatibility states with no physical D14/D16; do not turn them into extra cabinet controls. Treat service-manual “Premium” notes as this LE hardware variant.
 - Bind the complete explicit I/O address spaces, including unused channels, synthetic game-on 33, GI 0, and the 128x32 DMD.
 
+## Normalized spatial model and reconciliation
+
+Coordinates use the global player-view playfield frame: x=0 is left, x=1 is right, y=0 is the rear/backglass end, and y=1 is the front/apron. Exact VPX centers were normalized from its 1000 x 2000 bounds after reconciling the known-working script's callback names with the official manual's physical inventory. Named walls and moving primitives are represented by their main collision/assembly center. Paired render layers are never promoted as separate hardware.
+
+Every used physical switch has a sensor placement, including the manual-ordered derived projection for SW22 and all seven positions of the one shared Moving Mick hit switch 72. Every used physical coil, magnet, relay, and post effect has an effect placement; moving endpoints remain explicit in the mechanism inventory. Matrix lamps, flashers, and all 40 individual GI collection emitters have emitter placements. Light20 is excluded from GI because it is the same physical/object center as matrix lamp 20. The two rear-panel flashers, cabinet lamps, shaker, coin meter, tilts/service controls, virtual compatibility states, unused channels, DIP switches, and internal magnetic detector are explicit controlled non-playfield N/A records. The aggregate DMD remains a display record without a playfield coordinate in the base schema. The exact VPX's F25/F25a/F25pf, F27/F27a/F27pf, and F28/F28a/F28pf objects are synchronized render layers collapsed to one physical socket per manual circuit; manual page 55 marks only F29 X2, while F25/F27/F28 have no multiplier; output 29 retains that manual-proven X2 multiplicity.
+
+SW22 reuses the committed Standard sibling's `(0.727167, 0.982)` manual-ordered trough-region projection because the manual establishes the same downstream jam-opto arrangement for LE/Premium and the exact LE table supplies no competing SW22 object. This is a derived physical-equivalence marker with practical uncertainty of about plus or minus 0.02 normalized x and 0.02 normalized y, never an exact VPX coordinate.
+
+The official manual remains authoritative for LE/Premium multiplicity and edition boundary. The exact table is authoritative for edition-matched geometry only after that semantic reconciliation. The Standard definition intentionally remains spatially fail-closed and receives none of these LE coordinates.
+
 ## Sources
 
 - `manual.rolling-stones-standard-le.2011`: official Stern manual, SHA-256 `1c9dd7f3085ccb159ec2ef976c29602b704c979e7ffcbbfe6bad987916bd22bf`; Premium-only switch/output notes and magnetized-diverter wiring are on PDF pages 51, 55, and 95.
-- `vpx.rolling-stones-le-1.0.6i`: known-working LE script at revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`, SHA-256 `969b5a547874f611e55a2cf09dfabcc02f63a816b27e6d459b65f7f6f5298033`.
+- `vpx.rolling-stones-le-1.0.6i`: known-working LE script at revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`, SHA-256 `969b5a547874f611e55a2cf09dfabcc02f63a816b27e6d459b65f7f6f5298033`; semantic and causality ground truth.
+- `vpuniverse.rolling-stones-balutito-mod-2-0-24384`: authenticated VPUniverse metadata page identifies ROM Name `rsn_110h`; identity evidence only, with no table artifact downloaded or hashed.
+- `vpx-table.rolling-stones-le-archive-2020`: exact archive VPX, SHA-256 `da987677bdad1cdf07ff4a6f65e7bbbd056619fb4490e3d926147503fd90cf10`; embedded `rsn_110h`, exact 1000x2000 geometry, and retained 176-point candidate extraction.
 - `runtime.rolling-stones-limited-edition.boot-start`: exact `rsn_110h` harness, SHA-256 `81e0780965d9af7f37fffe036da6e6d6bee76905f14b594fbc744534f57bc72c`.
 - `pinmame.core.4ec52ff0ac13`: pinned SAM implementation, driver family, display, and no-aux configuration.

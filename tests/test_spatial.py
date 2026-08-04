@@ -223,6 +223,12 @@ class SpatialToolTests(unittest.TestCase):
 		self.assertIn("N/A devices: unused=1", first)
 		self.assertIn("#1769aa", first)
 
+	def test_rolling_stones_spatial_promotion_has_no_fixed_review_artifact_path(self) -> None:
+		source = (ROOT / "tools" / "curate_rolling_stones_le_spatial.py").read_text(encoding="utf-8").casefold()
+		self.assertNotIn("e:\\_vpe-2025", source)
+		self.assertNotIn("e:/_vpe-2025", source)
+		self.assertIn("explicit-output", source)
+
 
 class SpatialMigrationTests(unittest.TestCase):
 	def test_knowledge_banner_is_idempotent_and_nonpending_is_unchanged(self) -> None:
@@ -244,35 +250,35 @@ class SpatialMigrationTests(unittest.TestCase):
 		definitions = [load_json(path) for path in sorted((ROOT / "machines" / "partial").rglob("*.json"))]
 		migrated = {definition["machine"]["id"]: definition for definition in definitions if definition["machine"]["id"] in SPATIAL_RETROFIT_PENDING_MACHINE_IDS}
 		self.assertEqual(set(SPATIAL_RETROFIT_PENDING_MACHINE_IDS), set(migrated))
-		self.assertEqual(17, len(migrated))
+		self.assertEqual(16, len(migrated))
 		for definition in migrated.values():
 			self.assertEqual(2, definition["schema_version"])
 			self.assertEqual("partial", definition["coverage"]["status"])
 			self.assertEqual(["spatial_placement"], definition["coverage"]["missing"])
 			self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 			self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
-		self.assertEqual(16, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
+		self.assertEqual(17, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		report = build_coverage_report(ROOT)
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
 		self.assertEqual(catalog["summary"]["game_count"], report["machine_count"])
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
 		self.assertEqual(785, report["machine_count"])
-		self.assertEqual(16, report["author_ready_count"])
-		self.assertEqual(86, report["partial_count"])
+		self.assertEqual(17, report["author_ready_count"])
+		self.assertEqual(85, report["partial_count"])
 		self.assertEqual(683, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
 		self.assertEqual(786, report["catalog_record_count"])
-		self.assertEqual(17, report["missing_requirement_counts"]["spatial_placement"])
+		self.assertEqual(16, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(786, len(catalog["machines"]))
 		self.assertEqual(785, catalog["summary"]["game_count"])
 		self.assertEqual(786, catalog["summary"]["machine_count"])
-		self.assertEqual(16, catalog["summary"]["author_ready_count"])
+		self.assertEqual(17, catalog["summary"]["author_ready_count"])
 		self.assertEqual(683, catalog["summary"]["stub_count"])
-		self.assertEqual(87, catalog["summary"]["partial_count"])
+		self.assertEqual(86, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
-		self.assertEqual(17, len(note_paths))
+		self.assertEqual(16, len(note_paths))
 		for relative_path in note_paths:
 			note = (ROOT / relative_path).read_text(encoding="utf-8")
 			self.assertIn("Coverage: **partial — normalized spatial placements pending.**", note.splitlines())

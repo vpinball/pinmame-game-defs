@@ -7,7 +7,6 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json, write_text
-from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,6 +22,7 @@ VPX_SOURCE = "vpx.rolling-stones-le-1.0.6i"
 STERN_SOURCE = "stern.rolling-stones-product-page"
 IPDB_STANDARD_SOURCE = "ipdb.rolling-stones-standard.5668"
 IPDB_LE_SOURCE = "ipdb.rolling-stones-limited-edition.5708"
+VPU_LE_SOURCE = "vpuniverse.rolling-stones-balutito-mod-2-0-24384"
 STANDARD_RUNTIME_SOURCE = "runtime.rolling-stones-standard.boot-start"
 LE_RUNTIME_SOURCE = "runtime.rolling-stones-limited-edition.boot-start"
 
@@ -344,7 +344,7 @@ def sources(limited_edition: bool) -> list[dict[str, object]]:
 	game = "rsn_110h" if limited_edition else "rsn_110"
 	ipdb_source = IPDB_LE_SOURCE if limited_edition else IPDB_STANDARD_SOURCE
 	ipdb_id = 5708 if limited_edition else 5668
-	return [
+	result = [
 		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/Rolling-Stones-Manual.pdf", "sha256": "1c9dd7f3085ccb159ec2ef976c29602b704c979e7ffcbbfe6bad987916bd22bf", "locator": "Official 99-page scanned Stern manual: switch matrix chart PDF page 51, physical switch-location drawing page 52, lamps 53, flasher/coil chart 55/78, major assemblies 1-24, wiring 85-95, and Premium-only notes on 51/55", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "Rolling-Stones-Manual.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T22:32:15.219822Z"},
 		{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/The%20Rolling%20Stones%20LE%20(Stern%202011)%20v1.0.6i.vbs", "revision": VPX_REVISION, "sha256": "969b5a547874f611e55a2cf09dfabcc02f63a816b27e6d459b65f7f6f5298033", "locator": "Known-working rsn_110h table script: callbacks, switches, lamps/GI, trough and ceramic-ball identity, center lock, magnets/posts, controlled gate, auto launch, and seven-position Moving Mick causality", "license": "NOASSERTION", "attribution": "Table authors credited in the script; vpxtable_scripts contributors"},
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c rsn INITGAME/driver family, SAM_NO_AUX, SAM switch serialization, game-on output, and 128x32 DMD", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
@@ -353,6 +353,17 @@ def sources(limited_edition: bool) -> list[dict[str, object]]:
 		{"id": ipdb_source, "kind": "human_review", "uri": f"https://www.ipdb.org/machine.cgi?id={ipdb_id}", "locator": f"Physical product identity and edition record IPDB {ipdb_id}", "license": "NOASSERTION", "attribution": "Internet Pinball Database", "acquired_at": "2026-08-02T22:00:00Z"},
 		{"id": runtime_source, "kind": "runtime_scenario", "uri": f"external:pinmame-game-code/rolling-stones-{'limited-edition' if limited_edition else 'standard'}/harness/boot-start.raw.json", "revision": PINMAME_REVISION, "sha256": raw_hash, "locator": f"Exact {game} boot/start scenario with physical trough switches initialized, four coin pulses, and start; ROM archive SHA-256 {rom_hash}", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"},
 	]
+	if limited_edition:
+		result.append({
+			"id": VPU_LE_SOURCE,
+			"kind": "human_review",
+			"uri": "https://vpuniverse.com/files/file/24384-rolling-stones-the-stern-2011-balutitomod-20/",
+			"locator": "Authenticated VPUniverse metadata page for Rolling Stones, The (Stern 2011) Balutito(MOD) 2.0; the page identifies ROM Name rsn_110h. This page is identity evidence only; no table artifact was downloaded or hashed.",
+			"license": "NOASSERTION",
+			"attribution": "VPUniverse, balutito, and capnclaw",
+			"acquired_at": "2026-08-04T00:00:00Z",
+		})
+	return result
 
 
 def build(limited_edition: bool) -> dict[str, object]:
@@ -474,17 +485,18 @@ def runtime_evidence(limited_edition: bool) -> dict[str, object]:
 
 
 def main() -> None:
-	# The Standard spatial retrofit owns its author-ready output. Keep this
-	# historical two-edition curator deterministic when it is rerun by delegating
-	# that one record to the reviewed generator and retaining the LE fail-closed
-	# output here.
-	from curate_rolling_stones_standard_spatial import promote
+	standard_author_ready = ROOT / "machines/author-ready/stern/the-rolling-stones-standard-2011.json"
+	if not standard_author_ready.exists():
+		from curate_rolling_stones_standard_spatial import promote as promote_standard
 
-	promote()
-	write_json(spatial_partial_path(ROOT / "machines/partial/stern/the-rolling-stones-limited-edition-2011.json"), fail_closed_spatial_partial(build(True)))
+		promote_standard()
+	limited_edition_author_ready = ROOT / "machines/author-ready/stern/the-rolling-stones-limited-edition-2011.json"
+	if not limited_edition_author_ready.exists():
+		from curate_rolling_stones_le_spatial import promote as promote_limited_edition
+
+		promote_limited_edition()
 	write_json(ROOT / "evidence/runtime/sam/rolling-stones-standard-boot-start.json", runtime_evidence(False))
 	write_json(ROOT / "evidence/runtime/sam/rolling-stones-limited-edition-boot-start.json", runtime_evidence(True))
-	write_text(ROOT / "knowledge/stern/the-rolling-stones-limited-edition-2011.md", fail_closed_spatial_knowledge("stern.the-rolling-stones-limited-edition.2011", LE_KNOWLEDGE))
 
 
 if __name__ == "__main__":
