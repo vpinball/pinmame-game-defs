@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PREMIUM_PATH = ROOT / "machines" / "author-ready" / "stern" / "metallica-premium-limited-edition-2013.json"
-PRO_PATH = ROOT / "machines" / "partial" / "stern" / "metallica-pro-2013.json"
+PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "metallica-pro-2013.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "metallica-premium-boot-start.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "metallica-pro-boot-start.json"
 
@@ -32,7 +32,7 @@ class MetallicaDefinitionTests(unittest.TestCase):
 		cls.evidence = load_json(EVIDENCE_PATH)
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
 
-	def test_premium_is_author_ready_while_pro_remains_fail_closed(self) -> None:
+	def test_both_physical_editions_are_author_ready(self) -> None:
 		self.assertEqual(2, self.premium["schema_version"])
 		self.assertEqual("physical_pinball", self.premium["machine"]["kind"])
 		self.assertEqual("author_ready", self.premium["coverage"]["status"])
@@ -40,11 +40,63 @@ class MetallicaDefinitionTests(unittest.TestCase):
 		self.assertEqual("validated", self.premium["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual("complete", self.premium["knowledge"]["status"])
 		self.assertEqual(2, self.pro["schema_version"])
-		self.assertEqual("partial", self.pro["coverage"]["status"])
-		self.assertIn("spatial_placement", self.pro["coverage"]["missing"])
+		self.assertEqual("physical_pinball", self.pro["machine"]["kind"])
+		self.assertEqual("author_ready", self.pro["coverage"]["status"])
+		self.assertEqual([], self.pro["coverage"]["missing"])
+		self.assertEqual("validated", self.pro["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual("complete", self.pro["knowledge"]["status"])
-		self.assertTrue((ROOT / "machines" / "partial" / "stern" / "metallica-pro-2013.json").exists())
+		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "metallica-pro-2013.json").exists())
 		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "metallica-premium-limited-edition-2013.json").exists())
+
+	def test_pro_spatial_inventory_disposes_every_device(self) -> None:
+		devices = [*self.pro["inputs"], *self.pro["outputs"]]
+		self.assertTrue(all(device["spatial"]["status"] in {"validated", "not_applicable"} for device in devices))
+		for device in devices:
+			for placement in device["spatial"].get("placements", []):
+				self.assertGreaterEqual(placement["x"], 0)
+				self.assertLessEqual(placement["x"], 1)
+				self.assertGreaterEqual(placement["y"], 0)
+				self.assertLessEqual(placement["y"], 1)
+		inputs = bindings(self.pro, "inputs", "pinmame.input.switch")
+		self.assertEqual((0.285308, 0.719582), tuple(inputs[26]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.700483, 0.718992), tuple(inputs[27]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual(["flipper.lower.left.eos"], inputs[83]["roles"])
+		self.assertEqual(["flipper.lower.right.eos"], inputs[81]["roles"])
+		for address in (15, 16, 65, 66, 67, 68, 69, 82, 84):
+			self.assertEqual(("not_applicable", "cabinet_or_service"), (inputs[address]["spatial"]["status"], inputs[address]["spatial"]["reason"]))
+
+	def test_pro_spatial_lighting_preserves_manual_multiplicity(self) -> None:
+		lamps = bindings(self.pro, "outputs", "pinmame.output.lamp")
+		for address in (4, 27):
+			self.assertEqual((2, 2), (lamps[address]["physical"]["quantity"], len(lamps[address]["spatial"]["placements"])))
+		for address in (9, 10, 11, 12, 31, 32, 41, 48, 53, 60, 61, 62, 70, 71):
+			self.assertEqual((1, 1), (lamps[address]["physical"]["quantity"], len(lamps[address]["spatial"]["placements"])))
+			self.assertIn("exact table also has", lamps[address]["physical"]["notes"])
+		self.assertEqual((0.607377, 0.767861), tuple(lamps[9]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.536961, 0.767861), tuple(lamps[10]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.466000, 0.767861), tuple(lamps[11]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.637197, 0.490049), tuple(lamps[31]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.342713, 0.463963), tuple(lamps[41]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.173198, 0.378365), tuple(lamps[48]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.398406, 0.348492), tuple(lamps[53]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual(("not_applicable", "cabinet_or_service"), (lamps[1]["spatial"]["status"], lamps[1]["spatial"]["reason"]))
+		self.assertEqual(("not_applicable", "cabinet_or_service"), (lamps[2]["spatial"]["status"], lamps[2]["spatial"]["reason"]))
+		gi = bindings(self.pro, "outputs", "pinmame.output.gi")[0]
+		self.assertEqual((39, 33), (gi["physical"]["quantity"], len(gi["spatial"]["placements"])))
+		self.assertIn("six back-panel sockets", gi["physical"]["notes"])
+
+	def test_pro_spatial_flashers_reconcile_render_helpers_with_manual(self) -> None:
+		solenoids = bindings(self.pro, "outputs", "pinmame.output.solenoid")
+		for address in (26, 27, 28, 31):
+			self.assertEqual((2, 2), (solenoids[address]["physical"]["quantity"], len(solenoids[address]["spatial"]["placements"])))
+		self.assertEqual((1, 1), (solenoids[20]["physical"]["quantity"], len(solenoids[20]["spatial"]["placements"])))
+		self.assertIn("conflict with that physical geometry", solenoids[20]["physical"]["notes"])
+		self.assertEqual((1, 1), (solenoids[30]["physical"]["quantity"], len(solenoids[30]["spatial"]["placements"])))
+		self.assertIn("three glow objects", solenoids[30]["physical"]["notes"])
+		for address in (21, 22):
+			self.assertEqual(1, solenoids[address]["physical"]["quantity"])
+			self.assertEqual(("not_applicable", "cabinet_or_service"), (solenoids[address]["spatial"]["status"], solenoids[address]["spatial"]["reason"]))
+		self.assertIn("does not add a physical knocker", solenoids[24]["physical"]["notes"])
 
 	def test_premium_spatial_inventory_disposes_every_device(self) -> None:
 		devices = [*self.premium["inputs"], *self.premium["outputs"]]

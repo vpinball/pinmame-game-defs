@@ -1,7 +1,6 @@
 # Metallica Pro (Stern, 2013)
 
-Coverage: **partial — normalized spatial placements pending.**
-Previously validated non-spatial scope: **complete physical I/O, mechanisms, variant split, wiring, and recreation behavior validated**
+Coverage: **author-ready - complete physical I/O, mechanisms, variant split, wiring, recreation behavior, and spatial placements validated**
 
 ## Identity and evidence precedence
 
@@ -39,10 +38,18 @@ Output 8 is the optional shaker and output 24 is the optional coin meter. The op
 - Do not copy Premium-only outputs 51-58, RGB/GI lamp channels, coffin mechanisms, hammer, moving grave marker, motorized snake jaw, or loop-spinner scoring switches.
 - Use the working VPX strengths, angles, timing, and state transitions as initial authoring values and the manual's service drawings for physical placement and wiring.
 
+## Spatial coordinate model
+
+Every physical playfield sensor, actuator, controlled lamp, flasher, and ordinary-GI anchor uses one normalized player-view frame from the exact 952 by 2162 JP table: x=0 left, x=1 right, y=0 rear/backglass end, and y=1 apron. The working script establishes controller causality and the official manual confirms physical inventory and multiplicity. Cabinet, service, rear-panel, virtual, DIP, and unused records never receive fake playfield points. Trough contacts, the shooter-path jam opto, slingshot contacts/coils, EOS contacts, and drop-bank reset are explicitly disclosed as assembly or regional projections.
+
+Physical lighting multiplicity follows the Pro service maps rather than the count of VPX glow helpers. Only matrix outputs 4 and 27 drive two physical lamps. For outputs 9-12, 31, 32, 41, 48, 53, 60-62, 70, and 71, one of two VPX render objects is retained as the approximate physical socket anchor; every affected record discloses the discarded helper and residual uncertainty. Flashers 26, 27, 28, and 31 are pairs; every other playfield flasher is one bulb. The two VPX glow objects driven by snake flasher 20 occupy the slings and conflict with the official physical map, so the definition uses a disclosed snake-assembly projection. Captive-ball flasher 30 is one physical bulb represented by three overlapping/spread glow helpers, so only its central composite anchor is retained. Rear-panel outputs 21/22 each drive one off-playfield bulb. Ordinary GI has 33 deduplicated exact playfield anchors plus six manual-proven rear-panel sockets; all 39 are retained in physical quantity without invented rear-panel coordinates.
+
+Output 24 is physically the optional coin meter on the Pro wiring chart. JP's callback plays a knocker sound as cabinet feedback, but that render/audio choice is not evidence for a physical knocker. The Pro mechanism topology otherwise stays intentionally simpler than Premium/LE: the grave marker and snake are static, the captive ball is passive, there is no coffin lock/magnet processor, and decorative VPX spinners remain non-scoring.
+
 ## Sources
 
-- `manual.metallica-pro-premium`: official Stern `MTLAB1-compressed.pdf`, SHA-256 `f82ecc04bded7117d4c5e3b724dc85e60b5057768bbf7bf5e46c0d1e71a91090`; Pro service tables on PDF pages 119-129.
+- `manual.metallica-pro-premium`: official Stern `MTLAB1-compressed.pdf`, SHA-256 `f82ecc04bded7117d4c5e3b724dc85e60b5057768bbf7bf5e46c0d1e71a91090`; ordinary-GI physical map on PDF page 114 and Pro coil/flasher chart, coil location, lamp matrix, and lamp location on pages 119, 120, 122, and 123.
 - `vpx.metallica-pro-jps-6.0.0`: extracted known-working `mtl_180` script, SHA-256 `d5ea2810308e05daee22c2a75b3d80a4b19fbd3f89e67144a38f9c20bdb33307`; callbacks and mechanisms on lines 35, 81-165, and 200-453.
-- `vpx-table.metallica-pro-jps-6.0.0`: VPForums table, SHA-256 `837ee8d05e0f61e51136d397737d85e4ec14d41859abfb6e789785b82a60a118`; downloaded archive SHA-256 `5fafb136ed9f76ad32dcc035bd72c4dadd856562778f9fae53d7e1bcc9396ff0`.
+- `vpx-table.metallica-pro-jps-6.0.0`: exact known-working `JP's Metallica Pro (Stern 2013) v600.vpx`, SHA-256 `837ee8d05e0f61e51136d397737d85e4ec14d41859abfb6e789785b82a60a118`; downloaded archive SHA-256 `5fafb136ed9f76ad32dcc035bd72c4dadd856562778f9fae53d7e1bcc9396ff0`, retained externally under `pinmame-vpx-sources/stern/metallica-pro-2013/source`, and extracted read-only with vpxtool git:v0.33.3 for the sole normalized geometry frame.
 - `runtime.metallica-pro.boot-start`: family-compatible `mtl_170` ROM run, raw SHA-256 `65fa45916ba42165b334bdcee7dea1bae25d0e0feee44cc887102b167c70d49e`, ROM archive SHA-256 `2f11830ffb35f2a80258e47a5ea0abd17fc2350995bb1d1d1a165480be61f654`.
 - `pinmame.core.4ec52ff0ac13`: pinned SAM platform, display, and driver configuration.

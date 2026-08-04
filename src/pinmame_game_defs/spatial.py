@@ -29,7 +29,6 @@ SPATIAL_RETROFIT_PENDING_MACHINE_IDS = (
 	"stern.batman-the-dark-knight-pro.2008",
 	"stern.batman-the-dark-knight-standard-home-edition.2010",
 	"stern.iron-man.2010",
-	"stern.metallica-pro.2013",
 	"stern.ripley-s-believe-it-or-not.2004",
 	"stern.spider-man.2007",
 	"stern.the-rolling-stones-limited-edition.2011",
