@@ -867,12 +867,15 @@ def validate_repository(repository_root: Path) -> list[str]:
 	for path in sorted((repository_root / "evidence").glob("**/*.json")):
 		relative_path = path.relative_to(repository_root).as_posix()
 		evidence = load_json(path)
-		evidence_schema = (
-			repository_root / "schemas" / "vpx-spatial-candidates.schema.json"
-			if evidence.get("format") == "pinmame-vpx-spatial-candidates"
-			else repository_root / "schemas" / "evidence.schema.json"
-		)
+		if evidence.get("format") == "pinmame-vpx-candidate-register":
+			evidence_schema = repository_root / "schemas" / "vpx-candidate-register.schema.json"
+		elif evidence.get("format") == "pinmame-vpx-spatial-candidates":
+			evidence_schema = repository_root / "schemas" / "vpx-spatial-candidates.schema.json"
+		else:
+			evidence_schema = repository_root / "schemas" / "evidence.schema.json"
 		errors.extend(validate_against_schema(evidence, evidence_schema, relative_path))
+		if evidence.get("format") == "pinmame-vpx-candidate-register":
+			continue
 		evidence_driver_ids = evidence.get("driver_ids")
 		if isinstance(evidence_driver_ids, list):
 			for driver_id in sorted(OUT_OF_SCOPE_DRIVER_IDS & {driver_id for driver_id in evidence_driver_ids if isinstance(driver_id, str)}):

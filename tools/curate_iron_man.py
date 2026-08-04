@@ -29,6 +29,208 @@ ORIGINAL_IPDB_SOURCE = "ipdb.iron-man.5550"
 VE_IPDB_SOURCE = "ipdb.iron-man-vault-edition.6154"
 PRESS_SOURCE = "human-review.stern.iron-man-is-back.2014"
 CODE_COMPAT_SOURCE = "human-review.stern.iron-man-code-1.86"
+CANDIDATE_REGISTER_PATH = ROOT / "evidence/vpx/source-candidate-register/stern/iron-man-2010.json"
+
+VPX_CANDIDATE_SOURCES = [
+	{
+		"id": "vpx.candidate.tier1-im2-160",
+		"kind": "vpx_table",
+		"uri": "external:local-vpx-search/Visual Pinball/Tables/_tmp/iron man 080215a.vpx",
+		"sha256": "eaada74973ecb1c320420b287d5dca4970a39a25bb5c1ea2a10372786c6e2958",
+		"locator": "Tier 1 search candidate; vpxtool romname reports im2_160, which is not an in-scope original Iron Man driver. Rejected as an unsupported/non-target variant. Readable script extraction is retained at evidence:vpx/source-scripts/stern/iron-man-2010/tier1-tmp-im2-160.vbs.",
+		"license": "NOASSERTION",
+		"attribution": "Local user-provided VPX table; credits remain in the retained extraction",
+		"original_filename": "iron man 080215a.vpx",
+	},
+	{
+		"id": "vpx.candidate.tier1-jpsalas-ironman2",
+		"kind": "vpx_table",
+		"uri": "external:local-vpx-search/Visual Pinball/Tables/JP's IronMan 2 v3.0.vpx",
+		"sha256": "8bf4c377be4240b1de4842d2d3324da7d6683de9ff59f393b86c0373fbdb9ed5",
+		"locator": "Tier 1 search candidate; vpxtool romname reports im_186ve, while info show names the community JP's IronMan Armored Adventures table. Its script defaults to the Vault ROM and only comments the original im_186 binding; the description says its playfield was made by the table author. Rejected as a community retheme/unsupported virtual variant. Readable script extraction is retained at evidence:vpx/source-scripts/stern/iron-man-2010/tier1-jpsalas-ironman2.vbs.",
+		"license": "NOASSERTION",
+		"attribution": "JP and table authors credited in the retained extraction",
+		"original_filename": "JP's IronMan 2 v3.0.vpx",
+	},
+	{
+		"id": "vpx.candidate.tier1-vault-vpw",
+		"kind": "vpx_table",
+		"uri": "external:local-vpx-search/Visual Pinball/Tables/Iron Man Vault Edition (Stern 2010) VPW v1.0.vpx",
+		"sha256": "c0abc5d90d77a4cf7c3f0455cff91d4f0b9f7e750264742b987e9ddb30ab7a4b",
+		"locator": "Tier 1 search candidate; vpxtool romname reports im_185ve and the embedded script identifies Iron Man Vault Edition (Stern 2014). This is the known-working Vault Edition geometry source and is not eligible for original 2010 placement. Readable script extraction is retained at evidence:vpx/source-scripts/stern/iron-man-2010/tier1-vault-vpw.vbs.",
+		"license": "NOASSERTION",
+		"attribution": "VPW and table authors credited in the retained extraction",
+		"original_filename": "Iron Man Vault Edition (Stern 2010) VPW v1.0.vpx",
+	},
+	{
+		"id": "vpx.candidate.tier2-archive-im183ve",
+		"kind": "vpx_table",
+		"uri": "external:local-vpx-search/Visual Pinball/Tables Archive/Iron Man (Stern 2010).vpx",
+		"sha256": "dd4cc46c3002645c9f8cf9905699caf3d14231e069a98f8c47f25a0c35944cb1",
+		"locator": "Tier 2 search candidate; despite its filename and generic IronMan (Stern 2010) splash, vpxtool romname and the embedded script report im_183ve, the Vault Edition driver. Rejected for original-edition geometry. Readable script extraction is retained at evidence:vpx/source-scripts/stern/iron-man-2010/tier2-archive-iron-man.vbs.",
+		"license": "NOASSERTION",
+		"attribution": "Local user-provided VPX table; credits remain in the retained extraction",
+		"original_filename": "Iron Man (Stern 2010).vpx",
+	},
+	{
+		"id": "vpx.candidate.tier2-archive-pro-vault",
+		"kind": "vpx_table",
+		"uri": "external:local-vpx-search/Visual Pinball/Tables Archive/Iron Man (Pro Vault Edition) (Stern 2010).vpx",
+		"sha256": "dd4cc46c3002645c9f8cf9905699caf3d14231e069a98f8c47f25a0c35944cb1",
+		"locator": "Tier 2 search candidate; byte-identical to the adjacent archive Iron Man file and reports im_183ve, the Vault Edition driver. Rejected for original-edition geometry. Reuses the retained readable extraction at evidence:vpx/source-scripts/stern/iron-man-2010/tier2-archive-iron-man.vbs.",
+		"license": "NOASSERTION",
+		"attribution": "Local user-provided VPX table; credits remain in the retained extraction",
+		"original_filename": "Iron Man (Pro Vault Edition) (Stern 2010).vpx",
+	},
+	{
+		"id": "vpx.candidate.tier3-vpuniverse-8679-siggis",
+		"kind": "vpx_table",
+		"uri": "https://vpuniverse.com/files/file/8679-ironman-siggis-mod/",
+		"sha256": "8e3e175161b8f6671188762b831f843c168b854aa5bf79fadde7f2946e727c96",
+		"locator": "Required-order VPU candidate for the physical Stern 2010 table, retained externally as Ironman (Stern 2010) Siggis MOD 2.0.vpx (67,338,240 bytes). Its im_183ve binding is compatible code, not product-identity proof. The 309-point candidate report and readable script are retained in repository evidence. Accepted only as 2D shared-layout corroboration after manual and exact-table reconciliation; no construction, Z, height, or Vault-specific hardware is imported.",
+		"license": "NOASSERTION",
+		"attribution": "Siggi and the table authors credited by the VPU distribution",
+		"original_filename": "Ironman (Stern 2010) Siggis MOD 2.0.vpx",
+	},
+	{
+		"id": "vpx.candidate.tier4-vpforums-16172-francisco",
+		"kind": "vpx_table",
+		"uri": "https://www.vpforums.org/index.php?app=downloads&showfile=16172",
+		"sha256": "aafb93a1f4d7c65baf6f6458a6e10c51757db0bc48e5e2c89b40ab794ac37df4",
+		"locator": "Required-order VPF candidate for Iron Man (Stern 2010) 1.0, retained externally as the extracted 179,437,568-byte VPX. The source page and table metadata identify the physical 2010 product; the script explicitly says positions were rearranged according to Iron Man Vault and binds compatible im_186ve code. Its 419-point candidate report and readable script are retained in repository evidence. Accepted only as 2D shared-layout corroboration; construction remains controlled by the 2010 parts book.",
+		"license": "NOASSERTION",
+		"attribution": "freneticamnesic, 32assassin, francisco666, and credited table contributors",
+		"original_filename": "Iron Man (Stern 2010)_Francisco666MOD_1.vpx",
+	},
+	{
+		"id": "vpx.candidate.tier4-vpforums-16778-bigus",
+		"kind": "vpx_table",
+		"uri": "https://www.vpforums.org/index.php?app=downloads&showfile=16778",
+		"sha256": "5802d8a326366d67b48c6d477b4225121e0c4c17e1ac22651eb27406f99a79c5",
+		"locator": "Required-order VPF candidate for Iron Man (Stern 2010)_Bigus(MOD) 2.1, retained externally as the extracted 185,057,280-byte VPX. It descends from the VPF 16172 reconstruction, retains the same physical identity and im_186ve-compatible script, and adds later layout/physics/lighting changes. Its 436-point candidate report and readable script are retained in repository evidence. Accepted as corroboration, never as independent evidence for construction or unsupported 3D measurements.",
+		"license": "NOASSERTION",
+		"attribution": "Bigus1, freneticamnesic, 32assassin, francisco666, and credited table contributors",
+		"original_filename": "Iron Man (Stern 2010)_Bigus(MOD)2.1.vpx",
+	},
+]
+
+VPX_CANDIDATE_REGISTER = {
+	"format": "pinmame-vpx-candidate-register",
+	"version": 1,
+	"machine_id": "stern.iron-man.2010",
+	"search_order": ["Visual Pinball/Tables", "Visual Pinball/Tables Archive", "vpuniverse.com", "vpforums.org"],
+	"vpxtool": {"version": "git:v0.33.3", "operation": "script extract plus romname/info show"},
+	"candidates": [
+		{
+			"search_rank": 1,
+			"root": "Visual Pinball/Tables",
+			"relative_path": "_tmp/iron man 080215a.vpx",
+			"original_filename": "iron man 080215a.vpx",
+			"bytes": 31019008,
+			"sha256": "eaada74973ecb1c320420b287d5dca4970a39a25bb5c1ea2a10372786c6e2958",
+			"vpxtool_romname": "im2_160",
+			"vpxtool_table_name": "",
+			"decision": "rejected",
+			"reason": "Unsupported/non-target driver; not one of the in-scope original Iron Man drivers.",
+			"extracted_script": {"path": "evidence/vpx/source-scripts/stern/iron-man-2010/tier1-tmp-im2-160.vbs", "bytes": 28510, "sha256": "e74ec59709a1a0c14e2cabf8173b35f040a1908bd62048dd7ba0e1aeacf11cc2"},
+		},
+		{
+			"search_rank": 2,
+			"root": "Visual Pinball/Tables",
+			"relative_path": "JP's IronMan 2 v3.0.vpx",
+			"original_filename": "JP's IronMan 2 v3.0.vpx",
+			"bytes": 32436224,
+			"sha256": "8bf4c377be4240b1de4842d2d3324da7d6683de9ff59f393b86c0373fbdb9ed5",
+			"vpxtool_romname": "im_186ve",
+			"vpxtool_table_name": "JP's IronMan Armored Adventures",
+			"decision": "rejected",
+			"reason": "Community retheme/unsupported virtual variant: the script defaults to im_186ve Vault Edition and only comments the original im_186 ROM binding.",
+			"extracted_script": {"path": "evidence/vpx/source-scripts/stern/iron-man-2010/tier1-jpsalas-ironman2.vbs", "bytes": 29305, "sha256": "0645884ae539467cd2d54f531771054d26912c80596ccaec50431c1f4e5a63eb"},
+		},
+		{
+			"search_rank": 3,
+			"root": "Visual Pinball/Tables",
+			"relative_path": "Iron Man Vault Edition (Stern 2010) VPW v1.0.vpx",
+			"original_filename": "Iron Man Vault Edition (Stern 2010) VPW v1.0.vpx",
+			"bytes": 245182464,
+			"sha256": "c0abc5d90d77a4cf7c3f0455cff91d4f0b9f7e750264742b987e9ddb30ab7a4b",
+			"vpxtool_romname": "im_185ve",
+			"vpxtool_table_name": "Iron Man Vault Edition",
+			"decision": "rejected",
+			"reason": "Vault Edition driver and explicit 2014 product identity; not eligible for original 2010 geometry.",
+			"extracted_script": {"path": "evidence/vpx/source-scripts/stern/iron-man-2010/tier1-vault-vpw.vbs", "bytes": 279163, "sha256": "d05c786a7a2e0384f47c6581ddfefd664573dda274be4da0b991fb23d9c0c5b6"},
+		},
+		{
+			"search_rank": 4,
+			"root": "Visual Pinball/Tables Archive",
+			"relative_path": "Iron Man (Stern 2010).vpx",
+			"original_filename": "Iron Man (Stern 2010).vpx",
+			"bytes": 54112256,
+			"sha256": "dd4cc46c3002645c9f8cf9905699caf3d14231e069a98f8c47f25a0c35944cb1",
+			"vpxtool_romname": "im_183ve",
+			"vpxtool_table_name": "",
+			"decision": "rejected",
+			"reason": "Vault Edition driver despite the filename and generic splash; not eligible for original 2010 geometry.",
+			"extracted_script": {"path": "evidence/vpx/source-scripts/stern/iron-man-2010/tier2-archive-iron-man.vbs", "bytes": 29106, "sha256": "d913cc86286c9a42605e88823a1341425c44c4716042f5d66688e5335cc1be43"},
+		},
+		{
+			"search_rank": 5,
+			"root": "Visual Pinball/Tables Archive",
+			"relative_path": "Iron Man (Pro Vault Edition) (Stern 2010).vpx",
+			"original_filename": "Iron Man (Pro Vault Edition) (Stern 2010).vpx",
+			"bytes": 54112256,
+			"sha256": "dd4cc46c3002645c9f8cf9905699caf3d14231e069a98f8c47f25a0c35944cb1",
+			"vpxtool_romname": "im_183ve",
+			"vpxtool_table_name": "",
+			"decision": "rejected",
+			"reason": "Vault Edition driver; byte-identical to the adjacent archive candidate and not eligible for original 2010 geometry.",
+			"same_source_as": "Iron Man (Stern 2010).vpx",
+			"extracted_script": {"path": "evidence/vpx/source-scripts/stern/iron-man-2010/tier2-archive-iron-man.vbs", "bytes": 29106, "sha256": "d913cc86286c9a42605e88823a1341425c44c4716042f5d66688e5335cc1be43"},
+		},
+		{
+			"search_rank": 6,
+			"root": "vpuniverse.com",
+			"source_uri": "https://vpuniverse.com/files/file/8679-ironman-siggis-mod/",
+			"relative_path": "Ironman (Stern 2010) Siggis MOD 2.0.vpx",
+			"original_filename": "Ironman (Stern 2010) Siggis MOD 2.0.vpx",
+			"bytes": 67338240,
+			"sha256": "8e3e175161b8f6671188762b831f843c168b854aa5bf79fadde7f2946e727c96",
+			"vpxtool_romname": "im_183ve",
+			"vpxtool_table_name": "",
+			"decision": "accepted",
+			"reason": "Physical Stern 2010 reconstruction accepted only as 2D shared-layout corroboration. The compatible VE ROM binding is not treated as product identity, and no construction or unsupported 3D measurement is imported.",
+			"extracted_script": {"path": "evidence/vpx/source-scripts/stern/iron-man-2010/tier3-vpuniverse-8679-siggis-2.0.vbs", "bytes": 52170, "sha256": "3b4cc90353672bae686ad90c833c92fc33c8e347a394d8473aaeaabdcac7139d"},
+		},
+		{
+			"search_rank": 7,
+			"root": "vpforums.org",
+			"source_uri": "https://www.vpforums.org/index.php?app=downloads&showfile=16172",
+			"relative_path": "Iron Man (Stern 2010)_Francisco666MOD_1.vpx",
+			"original_filename": "Iron Man (Stern 2010)_Francisco666MOD_1.vpx",
+			"bytes": 179437568,
+			"sha256": "aafb93a1f4d7c65baf6f6458a6e10c51757db0bc48e5e2c89b40ab794ac37df4",
+			"vpxtool_romname": "im_186ve",
+			"vpxtool_table_name": "Iron Man (Stern 2010)",
+			"decision": "accepted",
+			"reason": "Physical Stern 2010 reconstruction accepted as 2D shared-layout corroboration. Its script explicitly records rearrangement against Iron Man Vault; original construction remains controlled by the 2010 parts book.",
+			"extracted_script": {"path": "evidence/vpx/source-scripts/stern/iron-man-2010/tier4-vpforums-16172-francisco.vbs", "bytes": 37787, "sha256": "9bfa427b1728b5f5fcc7302cdad51b91ba13f0a682ec1045f51bd2b25fa29a14"},
+		},
+		{
+			"search_rank": 8,
+			"root": "vpforums.org",
+			"source_uri": "https://www.vpforums.org/index.php?app=downloads&showfile=16778",
+			"relative_path": "Iron Man (Stern 2010)_Bigus(MOD)2.1.vpx",
+			"original_filename": "Iron Man (Stern 2010)_Bigus(MOD)2.1.vpx",
+			"bytes": 185057280,
+			"sha256": "5802d8a326366d67b48c6d477b4225121e0c4c17e1ac22651eb27406f99a79c5",
+			"vpxtool_romname": "im_186ve",
+			"vpxtool_table_name": "Iron Man (Stern 2010)",
+			"decision": "accepted",
+			"reason": "Later physical Stern 2010 reconstruction in the same VPF lineage, accepted only as corroboration for the normalized 2D shared layout; later lighting, physics, and layout edits are not promoted automatically.",
+			"extracted_script": {"path": "evidence/vpx/source-scripts/stern/iron-man-2010/tier4-vpforums-16778-bigus.vbs", "bytes": 36685, "sha256": "1e158fec5ee9f0b9818345483770c924d33a1cfb56421a201114a94d7021fca6"},
+		},
+	],
+}
 
 
 def slug(value: str) -> str:
@@ -398,6 +600,8 @@ def sources(vault_edition: bool) -> list[dict[str, object]]:
 		{"id": CODE_COMPAT_SOURCE, "kind": "human_review", "uri": "https://sternpinball.com/2020/05/04/stern-of-the-union-address-may-2020/", "locator": "Official Stern release note states Iron Man code 1.86 applies to both original and Vault editions.", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "acquired_at": "2026-08-03T00:00:00Z"},
 		{"id": RUNTIME_SOURCE, "kind": "runtime_scenario", "uri": "external:pinmame-game-code/iron-man-vault-edition/harness/boot-start-v3/run.json", "revision": PINMAME_REVISION, "sha256": "2b1f7d59482a7428eaf4413dfa3fdf25a5eccc8bdad5479da5532947cecbdab9", "locator": "Exact im_185ve boot/start with switches 1 and 18-21 initialized, six deliberately debounced coin pulses, start, 128x32x4 DMD artifacts, lamp 1 and 3-63 transitions, GI 0, and callback-tracked synthetic game-on 33; ROM archive SHA-256 e04c56ca08cdd6b0aaa6fcacd601e183d338dae7a863a4486216f76b25d6738f.", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"},
 	]
+	if not vault_edition:
+		result.extend(VPX_CANDIDATE_SOURCES)
 	return result
 
 
@@ -450,12 +654,24 @@ Lamp addresses 1-63 are populated, 64-72 are unused, 73/79/80 are hidden clear #
 - Bind every explicit matrix/dedicated/DIP input, Q1-Q32, game-on 33, unused auxiliary capacity 51-66, lamp 1-80, GI 0, and DMD. Keep unused and optional channels explicit.
 - Use the proven VPX script when runtime behavior is ambiguous, but use the 2010 parts book for original construction and the 2014 manual only for the shared logical/wiring map.
 
+## Ordered VPX search and shared-layout reconciliation
+
+Search was performed in the required order: `Visual Pinball/Tables`, `Visual Pinball/Tables Archive`, VPinball Universe, then VPForums. Every retained candidate was inspected with `vpxtool git:v0.33.3` using `romname`, `info show`, readable script extraction, and normalized candidate extraction. The complete portable register is `evidence/vpx/source-candidate-register/stern/iron-man-2010.json`; scripts and candidate reports are retained under `evidence/vpx/`.
+
+The local temporary `im2_160` table and JP's community Armored Adventures retheme remain rejected. The local VPW and archive files are explicit Vault products and remain ineligible as standalone proof of original construction. The VPU Siggi table and both authenticated VPF downloads identify the physical Stern 2010 product. The VPF lineage explicitly says its positions were rearranged according to Iron Man Vault and binds `im_186ve`; Stern separately confirms that 1.86 code applies to both products. A VE suffix therefore proves firmware selection, not physical edition identity.
+
+The official 2010 parts-book assembly drawings on PDF pages 25-26 and the official 2014 numbered switch/lamp/coil maps on PDF pages 17, 19, and 21 show the same two-dimensional playfield device layout. The three original-product VPX candidates independently retain that topology, while their raw render-object centers differ where authors rebuilt lights, moved cosmetic helpers, or collapsed physical emitter clusters. Switch 37 is the clearest conflict: the three raw centers are `(0.970588, 0.256501)`, `(0.912831, 0.059858)`, and `(0.932986, 0.078329)`, while the reviewed manual-reconciled anchor is `(0.915480, 0.092892)`. Canonical positions therefore use the reviewed shared-layout frame, never an average of raw table centers. The content-locked candidate register and retained 309/419/436-point reports make the decision reproducible.
+
+This promotion is deliberately two-dimensional and edition-safe. It reuses only x/y locations for devices whose physical region and controller semantics are shared. Original incandescent lighting, multi-piece toys and launcher, cabinet/backbox construction, and every other 2010-specific physical fact remain sourced from the original parts book. Vault LED modules, one-piece toys, exact edition parts, Z coordinates, heights, and renderer helpers are never projected backward.
+
 ## Sources
 
 - `manual.iron-man-original-parts.2010`: official scanned 2010 parts book SHA-256 `0948d154156860d351daa943ab3b5882ef4c86bb42cde630bcd04067ab85ed1a`; organized under the external manual cache.
 - `manual.iron-man-vault-edition.2014`: official native-text service manual SHA-256 `20f04adaba96926b74aa91dba7f88024a70012eb601242d18dfb15ed3da1f990`; shared logical tables and wiring are on PDF pages 16-21 and 48-58.
 - `vpx.iron-man-vault-vpw-1.0.1`: exact known-working `im_185ve` script SHA-256 `d0d37548468d67aa895121fd6ff82fdacc1d1a301a702c92325fb3ee9d7a89ea` at pinned revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`.
 - `runtime.iron-man-vault.boot-start`: exact-ROM compatible-code trace SHA-256 `2b1f7d59482a7428eaf4413dfa3fdf25a5eccc8bdad5479da5532947cecbdab9`; ROM bytes remain external.
+- `evidence/vpx/source-candidate-register/stern/iron-man-2010.json`: deterministic four-tier VPX candidate register with full-table hashes, page identities, decisions, and retained extraction hashes.
+- `human-review.iron-man-original-shared-layout.2026-08-04`: fail-closed reconciliation of both manuals, the reviewed Vault geometry, and three original-product candidate reports; licenses no inference beyond normalized 2D shared layout.
 """
 
 
@@ -530,10 +746,12 @@ def runtime_evidence() -> dict[str, object]:
 
 
 def main() -> None:
-	write_json(spatial_partial_path(ROOT / "machines/partial/stern/iron-man-2010.json"), fail_closed_spatial_partial(build(False)))
+	if "stern.iron-man.2010" in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
+		write_json(spatial_partial_path(ROOT / "machines/partial/stern/iron-man-2010.json"), fail_closed_spatial_partial(build(False)))
 	if "stern.iron-man-vault-edition.2014" in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
 		write_json(spatial_partial_path(ROOT / "machines/partial/stern/iron-man-vault-edition-2014.json"), fail_closed_spatial_partial(build(True)))
 	write_json(ROOT / "evidence/runtime/sam/iron-man-vault-edition-boot-start.json", runtime_evidence())
+	write_json(CANDIDATE_REGISTER_PATH, VPX_CANDIDATE_REGISTER)
 	write_text(ROOT / "knowledge/stern/iron-man-2010.md", fail_closed_spatial_knowledge("stern.iron-man.2010", ORIGINAL_KNOWLEDGE))
 	write_text(ROOT / "knowledge/stern/iron-man-vault-edition-2014.md", fail_closed_spatial_knowledge("stern.iron-man-vault-edition.2014", VE_KNOWLEDGE))
 

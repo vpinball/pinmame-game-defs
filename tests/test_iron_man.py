@@ -1,14 +1,18 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ORIGINAL_PATH = ROOT / "machines" / "partial" / "stern" / "iron-man-2010.json"
+ORIGINAL_PATH = ROOT / "machines" / "author-ready" / "stern" / "iron-man-2010.json"
+ORIGINAL_PARTIAL_PATH = ROOT / "machines" / "partial" / "stern" / "iron-man-2010.json"
 VAULT_PATH = ROOT / "machines" / "author-ready" / "stern" / "iron-man-vault-edition-2014.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "iron-man-vault-edition-boot-start.json"
+CANDIDATE_REGISTER_PATH = ROOT / "evidence" / "vpx" / "source-candidate-register" / "stern" / "iron-man-2010.json"
+SHARED_LAYOUT_SOURCE = "human-review.iron-man-original-shared-layout.2026-08-04"
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -26,22 +30,115 @@ class IronManDefinitionTests(unittest.TestCase):
 		cls.original = load_json(ORIGINAL_PATH)
 		cls.vault = load_json(VAULT_PATH)
 		cls.evidence = load_json(EVIDENCE_PATH)
+		cls.candidates = load_json(CANDIDATE_REGISTER_PATH)
 
-	def test_physical_products_are_split_and_only_the_reviewed_vault_product_is_author_ready(self) -> None:
+	def test_physical_products_are_split_and_both_reviewed_products_are_author_ready(self) -> None:
 		for definition in (self.original, self.vault):
 			self.assertEqual(2, definition["schema_version"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
 			self.assertEqual([], definition["conflicts"])
-		self.assertEqual("partial", self.original["coverage"]["status"])
-		self.assertIn("spatial_placement", self.original["coverage"]["missing"])
-		self.assertEqual("author_ready", self.vault["coverage"]["status"])
-		self.assertEqual([], self.vault["coverage"]["missing"])
-		self.assertEqual("validated", self.vault["coverage"]["dimensions"]["spatial_placement"])
+			self.assertEqual("author_ready", definition["coverage"]["status"])
+			self.assertEqual([], definition["coverage"]["missing"])
+			self.assertEqual("validated", definition["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual({"id": "stern.iron-man.2010", "ipdb_id": 5550, "kind": "physical_pinball", "manufacturer": "Stern", "model_number": "I-00B3", "name": "Iron Man", "year": 2010}, self.original["machine"])
 		self.assertEqual({"id": "stern.iron-man-vault-edition.2014", "ipdb_id": 6154, "kind": "physical_pinball", "manufacturer": "Stern", "model_number": "I-00B0", "name": "Iron Man Pro Vault Edition", "year": 2014}, self.vault["machine"])
+		self.assertFalse(ORIGINAL_PARTIAL_PATH.exists())
 		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "iron-man-vault-edition-2010.json").exists())
 		self.assertFalse((ROOT / "knowledge" / "stern" / "iron-man-vault-edition-2010.md").exists())
 		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "iron-man-vault-edition-2014.json").exists())
+
+	def test_original_candidate_register_is_strict_complete_and_fail_closed(self) -> None:
+		self.assertEqual(["Visual Pinball/Tables", "Visual Pinball/Tables Archive", "vpuniverse.com", "vpforums.org"], self.candidates["search_order"])
+		candidates = self.candidates["candidates"]
+		self.assertEqual(
+			[
+				"_tmp/iron man 080215a.vpx",
+				"JP's IronMan 2 v3.0.vpx",
+				"Iron Man Vault Edition (Stern 2010) VPW v1.0.vpx",
+				"Iron Man (Stern 2010).vpx",
+				"Iron Man (Pro Vault Edition) (Stern 2010).vpx",
+				"Ironman (Stern 2010) Siggis MOD 2.0.vpx",
+				"Iron Man (Stern 2010)_Francisco666MOD_1.vpx",
+				"Iron Man (Stern 2010)_Bigus(MOD)2.1.vpx",
+			],
+			[candidate["relative_path"] for candidate in candidates],
+		)
+		self.assertEqual(["im2_160", "im_186ve", "im_185ve", "im_183ve", "im_183ve", "im_183ve", "im_186ve", "im_186ve"], [candidate["vpxtool_romname"] for candidate in candidates])
+		self.assertEqual(["rejected"] * 5 + ["accepted"] * 3, [candidate["decision"] for candidate in candidates])
+		self.assertIn("community", candidates[1]["reason"].lower())
+		self.assertIn("Vault Edition", candidates[2]["reason"])
+		self.assertIn("generic splash", candidates[3]["reason"])
+		self.assertIn("byte-identical", candidates[4]["reason"])
+		self.assertEqual(candidates[3]["relative_path"], candidates[4]["same_source_as"])
+		self.assertTrue(all("2D" in candidate["reason"] or "2d" in candidate["reason"] for candidate in candidates[5:]))
+		self.assertEqual("git:v0.33.3", self.candidates["vpxtool"]["version"])
+		candidate_source_ids = {source["id"] for source in self.original["sources"] if source["id"].startswith("vpx.candidate.")}
+		self.assertEqual(
+			{"vpx.candidate.tier1-im2-160", "vpx.candidate.tier1-jpsalas-ironman2", "vpx.candidate.tier1-vault-vpw", "vpx.candidate.tier2-archive-im183ve", "vpx.candidate.tier2-archive-pro-vault", "vpx.candidate.tier3-vpuniverse-8679-siggis", "vpx.candidate.tier4-vpforums-16172-francisco", "vpx.candidate.tier4-vpforums-16778-bigus"},
+			candidate_source_ids,
+		)
+		self.assertFalse(any(source["id"].startswith("vpx.candidate.") for source in self.vault["sources"]))
+		for candidate in candidates:
+			artifact = ROOT / candidate["extracted_script"]["path"]
+			self.assertTrue(artifact.is_file(), artifact)
+			self.assertEqual(candidate["extracted_script"]["bytes"], artifact.stat().st_size)
+			self.assertEqual(candidate["extracted_script"]["sha256"], hashlib.sha256(artifact.read_bytes()).hexdigest())
+		for value in self.candidates.values():
+			self.assertNotIn("L:\\", json.dumps(value))
+
+	def test_original_shared_layout_evidence_is_exact_and_edition_safe(self) -> None:
+		reports = [
+			("evidence/vpx/iron-man-2010-siggis-2.0-spatial-candidates.json", 309, "9ed49e4c58e18d6b0e1cbc18dbc489a3ea42d409cec53d9b85cc678c9f5e639b"),
+			("evidence/vpx/iron-man-2010-vpforums-16172-spatial-candidates.json", 419, "216e555ff20da69526fd08666d672bb690b54a1ab9a5e6df135a316a13b3e9df"),
+			("evidence/vpx/iron-man-2010-vpforums-16778-spatial-candidates.json", 436, "aa21d1e7ac6d0a0e59f4c7b090b737f329b2e27c44d441261f4fcb6b88648f21"),
+		]
+		for relative_path, object_count, sha256 in reports:
+			path = ROOT / relative_path
+			report = load_json(path)
+			self.assertEqual({"left": 0.0, "top": 0.0, "right": 952.0, "bottom": 2115.0}, report["bounds"])
+			self.assertEqual(object_count, len(report["objects"]))
+			self.assertEqual("git:v0.33.3", report["source"]["vpxtool_version"])
+			self.assertEqual(sha256, hashlib.sha256(path.read_bytes()).hexdigest())
+		raw_sw37 = []
+		for relative_path, _object_count, _sha256 in reports:
+			report = load_json(ROOT / relative_path)
+			raw_sw37.append(next((item["x"], item["y"]) for item in report["objects"] if item["name"] == "sw37"))
+		self.assertEqual([(0.970588, 0.256501), (0.912831, 0.059858), (0.932986, 0.078329)], raw_sw37)
+		canonical_sw37 = bindings(self.original, "inputs", "pinmame.input.switch")[37]["spatial"]["placements"][0]
+		self.assertEqual((0.91548, 0.092892), (canonical_sw37["x"], canonical_sw37["y"]))
+		sources = {source["id"]: source for source in self.original["sources"]}
+		self.assertIn(SHARED_LAYOUT_SOURCE, sources)
+		self.assertEqual(hashlib.sha256(CANDIDATE_REGISTER_PATH.read_bytes()).hexdigest(), sources[SHARED_LAYOUT_SOURCE]["sha256"])
+		self.assertIn("2D shared-layout", sources[SHARED_LAYOUT_SOURCE]["locator"])
+		self.assertIn("Z/heights", sources[SHARED_LAYOUT_SOURCE]["locator"])
+		self.assertIn("never averaged", sources[SHARED_LAYOUT_SOURCE]["locator"])
+
+	def test_original_spatial_inventory_matches_shared_layout_without_vault_construction(self) -> None:
+		original_devices = self.original["inputs"] + self.original["outputs"]
+		self.assertTrue(all(device["spatial"]["status"] in {"validated", "not_applicable"} for device in original_devices))
+		for collection in ("inputs", "outputs"):
+			vault_by_id = {device["id"]: device for device in self.vault[collection]}
+			for original in self.original[collection]:
+				vault = vault_by_id[original["id"]]
+				if original["spatial"]["status"] != "validated":
+					continue
+				self.assertEqual(
+					[(point["role"], point["x"], point["y"]) for point in vault["spatial"]["placements"]],
+					[(point["role"], point["x"], point["y"]) for point in original["spatial"]["placements"]],
+				)
+				self.assertTrue(all(point["provenance"]["source_refs"] == [SHARED_LAYOUT_SOURCE] for point in original["spatial"]["placements"]))
+		original_outputs = bindings(self.original, "outputs", "pinmame.output.solenoid")
+		self.assertTrue(all("part_number" not in original_outputs[address]["physical"] for address in list(range(20, 24)) + list(range(25, 33))))
+		self.assertTrue(all("incandescent" in original_outputs[address]["physical"]["notes"] for address in list(range(20, 24)) + list(range(25, 33))))
+		self.assertNotIn("LED flasher module", json.dumps(self.original))
+		original_gi = bindings(self.original, "outputs", "pinmame.output.gi")[0]
+		vault_gi = bindings(self.vault, "outputs", "pinmame.output.gi")[0]
+		self.assertEqual("Playfield general illumination", original_gi["physical"]["location"])
+		self.assertNotIn("quantity", original_gi["physical"])
+		self.assertNotEqual(original_gi["physical"]["location"], vault_gi["physical"]["location"])
+		self.assertNotIn("25 under-playfield #44 bulbs", original_gi["physical"]["notes"])
+		self.assertNotIn("playfield circuits B/Y/V", original_gi["physical"]["notes"])
+		self.assertIn("do not transfer Vault bulb inventory", original_gi["physical"]["notes"])
 
 	def test_driver_split_exhaustively_covers_the_clone_family(self) -> None:
 		original = {driver["id"] for driver in self.original["drivers"]}

@@ -191,8 +191,16 @@ def _set_placement_sources(device: dict[str, object], index: int, *source_refs: 
 	device["spatial"]["placements"][index]["provenance"] = _provenance(*source_refs)
 
 
-def apply_spatial(definition: dict[str, object]) -> None:
-	"""Apply one reviewed spatial disposition to every physical input and output."""
+def apply_spatial(
+	definition: dict[str, object],
+	*,
+	geometry_source: str = TABLE_SOURCE,
+	manual_source: str = VE_MANUAL_SOURCE,
+	projection_source: str = VE_MANUAL_SOURCE,
+	product_label: str = "Iron Man Vault",
+	preserve_existing_gi_construction: bool = False,
+) -> None:
+	"""Apply one reviewed shared-layout disposition without changing edition construction."""
 	if len(GI_PLAYFIELD_POSITIONS) != 27 or len(GI_REAR_PANEL_POSITIONS) != 10:
 		raise ValueError("Iron Man Vault GI map must contain 27 playfield and ten rear-panel placements")
 	for device in definition["inputs"]:
@@ -200,18 +208,18 @@ def apply_spatial(definition: dict[str, object]) -> None:
 		group = str(device["binding"]["group"])
 		address = int(device["binding"]["device"])
 		if group == "pinmame.input.dip":
-			_not_applicable(device, "dip_switch", VE_MANUAL_SOURCE)
+			_not_applicable(device, "dip_switch", manual_source)
 		elif device["availability"] == "unused":
-			_not_applicable(device, "unused", VE_MANUAL_SOURCE)
+			_not_applicable(device, "unused", manual_source)
 		elif address in INPUT_POSITIONS:
-			_located(device, "sensor", INPUT_POSITIONS[address], (TABLE_SOURCE,))
+			_located(device, "sensor", INPUT_POSITIONS[address], (geometry_source,))
 			if address == 22:
 				device.setdefault("physical", {})["notes"] = "The exact VPW omits a sw22 object. This approximate jam-opto anchor is the six-decimal least-squares continuation of the exact consecutive sw18-sw21 trough-sensor centers; it preserves trough order without claiming a directly measured switch center. Practical uncertainty is about plus or minus 0.02 normalized x and y."
 		elif address in CABINET_INPUT_ROLES:
 			device.setdefault("roles", [CABINET_INPUT_ROLES[address]])
-			_not_applicable(device, "cabinet_or_service", VE_MANUAL_SOURCE)
+			_not_applicable(device, "cabinet_or_service", manual_source)
 		else:
-			raise ValueError(f"Iron Man Vault input {group} {address} has no reviewed spatial disposition")
+			raise ValueError(f"{product_label} input {group} {address} has no reviewed spatial disposition")
 
 	for device in definition["outputs"]:
 		device.pop("spatial", None)
@@ -221,49 +229,56 @@ def apply_spatial(definition: dict[str, object]) -> None:
 		if kind == "virtual":
 			_not_applicable(device, "virtual", CORE_SOURCE)
 		elif device["availability"] == "unused":
-			_not_applicable(device, "unused", VE_MANUAL_SOURCE)
+			_not_applicable(device, "unused", manual_source)
 		elif (group, address) in CABINET_OUTPUT_ROLES:
 			device.setdefault("roles", [CABINET_OUTPUT_ROLES[(group, address)]])
-			_not_applicable(device, "cabinet_or_service", VE_MANUAL_SOURCE)
+			_not_applicable(device, "cabinet_or_service", manual_source)
 		elif (group, address) in INTERNAL_OUTPUT_ROLES:
 			device.setdefault("roles", [INTERNAL_OUTPUT_ROLES[(group, address)]])
-			_not_applicable(device, "internal_nonvisual", VE_MANUAL_SOURCE)
+			_not_applicable(device, "internal_nonvisual", manual_source)
 		elif group == "pinmame.output.solenoid" and address in SOLENOID_POSITIONS:
-			_located(device, "emitter" if kind == "flasher" else "effect", SOLENOID_POSITIONS[address], (TABLE_SOURCE,))
+			_located(device, "emitter" if kind == "flasher" else "effect", SOLENOID_POSITIONS[address], (geometry_source,))
 			physical = device.setdefault("physical", {})
 			if kind == "flasher":
 				physical["quantity"] = FLASHER_QUANTITIES[address]
 			if address in {22, 28}:
 				physical["notes"] += " Each manual-listed physical module retains an individual placement ID at the shared assembly/cluster anchor because the exact VPW table collapses the modules into one light pool; the co-located projection does not claim recoverable separation, and VLM fanout is not extra hardware."
 			elif address == 27:
-				_set_placement_sources(device, 2, VE_MANUAL_SOURCE)
+				_set_placement_sources(device, 2, projection_source)
 				physical["notes"] += " Two emitter points come directly from l127a/l127b; the third is a calibrated projection from the official location-map callout because l127r is only a co-located render pass. Manual-projected anchors have practical uncertainty of about plus or minus 0.01 normalized x and 0.02-0.04 normalized y."
 			elif address == 30:
 				for index in range(len(SOLENOID_POSITIONS[address])):
-					_set_placement_sources(device, index, VE_MANUAL_SOURCE)
+					_set_placement_sources(device, index, projection_source)
 				physical["notes"] += " The two physical placements are calibrated approximate anchors from the official location-map callouts; exact VPW object l130 is one collapsed light pool between them, while its VLM fanout is not extra hardware. Manual-projected anchors have practical uncertainty of about plus or minus 0.01 normalized x and 0.02-0.04 normalized y."
 			elif address == 31:
 				for index in range(len(SOLENOID_POSITIONS[address])):
-					_set_placement_sources(device, index, VE_MANUAL_SOURCE)
+					_set_placement_sources(device, index, projection_source)
 				physical["notes"] += " Both physical placements are calibrated approximate anchors from the separately marked Q31 callouts in the official location map; exact VPW object l131 is one collapsed light pool between them. Manual-projected anchors have practical uncertainty of about plus or minus 0.01 normalized x and 0.02-0.04 normalized y."
 		elif group == "pinmame.output.lamp" and address in LAMP_POSITIONS:
-			_located(device, "emitter", LAMP_POSITIONS[address], (TABLE_SOURCE,))
+			_located(device, "emitter", LAMP_POSITIONS[address], (geometry_source,))
 			device.setdefault("physical", {}).setdefault("quantity", 1)
 			if address == 55:
 				for index in range(len(LAMP_POSITIONS[address])):
-					_set_placement_sources(device, index, VE_MANUAL_SOURCE)
+					_set_placement_sources(device, index, projection_source)
 				device["physical"]["notes"] += " Both manual-listed emitters retain individual placement IDs at calibrated approximate anchors from the two separately printed callouts; exact VPW objects l55/l55r are co-located render passes that collapse the physical separation into one light pool. Manual-projected anchors have practical uncertainty of about plus or minus 0.01 normalized x and 0.02-0.04 normalized y."
 		elif group == "pinmame.output.gi" and address == 0:
-			_located(device, "emitter", [*GI_PLAYFIELD_POSITIONS, *GI_REAR_PANEL_POSITIONS], (TABLE_SOURCE,))
+			_located(device, "emitter", [*GI_PLAYFIELD_POSITIONS, *GI_REAR_PANEL_POSITIONS], (geometry_source,))
 			for index in range(len(GI_PLAYFIELD_POSITIONS), len(GI_PLAYFIELD_POSITIONS) + len(GI_REAR_PANEL_POSITIONS)):
-				_set_placement_sources(device, index, VE_MANUAL_SOURCE)
-			device.setdefault("physical", {}).update({
-				"quantity": 39,
-				"location": "27 playfield bulbs, 10 rear-panel bulbs, and two US coin-door bulbs; European cabinets use three coin-door bulbs",
-				"notes": "The manual fixes playfield circuits B/Y/V at 10/7/10 and rear circuit G at 10. The playfield inventory is 25 under-playfield #44 bulbs plus two above-playfield #555 bulbs: placement IDs yellow.above-playfield-555 and violet.above-playfield-555 use exact Lspot1/Lspot2 source centers. Nearby gi004/gi014 are separated halo/render passes for those spot bulbs, not additional sockets; VPW's changelog says the spotlight bulbs were separated and its ball-shadow code treats Lspot1/Lspot2 as the light sources. The other 25 playfield points are exact reconciled giNNN objects. VPW gi024/gi027/gi030/gi031 are four rear-wall render pools, not physical sockets. Ten rear #44 sockets are projected as an explicitly documented evenly spaced y=0 row because the perspective drawing proves the row/count but not ten exact centers. The US cabinet's two #555 coin-door bulbs intentionally have no playfield coordinate; European cabinets use three instead, for a total physical quantity of 40 rather than 39.",
-			})
+				_set_placement_sources(device, index, projection_source)
+			physical = device.setdefault("physical", {})
+			if preserve_existing_gi_construction:
+				construction_notes = str(physical.get("notes", "")).strip()
+				spatial_notes = "The shared 2D frame uses exact Lspot1/Lspot2 source centers for placement IDs yellow.above-playfield-555 and violet.above-playfield-555. Nearby gi004/gi014 are separated halo/render passes, not additional placement points. The other 25 playfield points are exact reconciled giNNN objects. VPW gi024/gi027/gi030/gi031 are four rear-wall render pools, not physical sockets; the rear-row anchors are explicit evenly spaced projections at y=0 from the reviewed shared layout rather than independently measurable centers. These geometry notes do not transfer Vault bulb inventory, circuit counts, or cabinet construction to the original edition."
+				physical["notes"] = " ".join(part for part in (construction_notes, spatial_notes) if part)
+			else:
+				spatial_notes = "The manual fixes playfield circuits B/Y/V at 10/7/10 and rear circuit G at 10. The playfield inventory is 25 under-playfield #44 bulbs plus two above-playfield #555 bulbs: placement IDs yellow.above-playfield-555 and violet.above-playfield-555 use exact Lspot1/Lspot2 source centers. Nearby gi004/gi014 are separated halo/render passes for those spot bulbs, not additional sockets; VPW's changelog says the spotlight bulbs were separated and its ball-shadow code treats Lspot1/Lspot2 as the light sources. The other 25 playfield points are exact reconciled giNNN objects. VPW gi024/gi027/gi030/gi031 are four rear-wall render pools, not physical sockets. Ten rear #44 sockets are projected as an explicitly documented evenly spaced y=0 row because the perspective drawing proves the row/count but not ten exact centers. The US cabinet's two #555 coin-door bulbs intentionally have no playfield coordinate; European cabinets use three instead, for a total physical quantity of 40 rather than 39."
+				physical.update({
+					"quantity": 39,
+					"location": "27 playfield bulbs, 10 rear-panel bulbs, and two US coin-door bulbs; European cabinets use three coin-door bulbs",
+					"notes": spatial_notes,
+				})
 		else:
-			raise ValueError(f"Iron Man Vault output {group} {address} ({kind}) has no reviewed spatial disposition")
+			raise ValueError(f"{product_label} output {group} {address} ({kind}) has no reviewed spatial disposition")
 
 
 def promote() -> None:

@@ -1,7 +1,6 @@
 # Iron Man (Stern, 2010)
 
-Coverage: **partial — normalized spatial placements pending.**
-Previously validated non-spatial scope: **complete physical I/O inventory, PinMAME bindings, wiring, mechanism causality, original-versus-Vault boundary, and recreation behavior validated**
+Coverage: **author-ready - complete physical I/O inventory, PinMAME bindings, wiring, mechanism causality, original-versus-Vault boundary, and recreation behavior validated**
 
 ## Identity and evidence precedence
 
@@ -34,9 +33,21 @@ Lamp addresses 1-63 are populated, 64-72 are unused, 73/79/80 are hidden clear #
 - Bind every explicit matrix/dedicated/DIP input, Q1-Q32, game-on 33, unused auxiliary capacity 51-66, lamp 1-80, GI 0, and DMD. Keep unused and optional channels explicit.
 - Use the proven VPX script when runtime behavior is ambiguous, but use the 2010 parts book for original construction and the 2014 manual only for the shared logical/wiring map.
 
+## Ordered VPX search and shared-layout reconciliation
+
+Search was performed in the required order: `Visual Pinball/Tables`, `Visual Pinball/Tables Archive`, VPinball Universe, then VPForums. Every retained candidate was inspected with `vpxtool git:v0.33.3` using `romname`, `info show`, readable script extraction, and normalized candidate extraction. The complete portable register is `evidence/vpx/source-candidate-register/stern/iron-man-2010.json`; scripts and candidate reports are retained under `evidence/vpx/`.
+
+The local temporary `im2_160` table and JP's community Armored Adventures retheme remain rejected. The local VPW and archive files are explicit Vault products and remain ineligible as standalone proof of original construction. The VPU Siggi table and both authenticated VPF downloads identify the physical Stern 2010 product. The VPF lineage explicitly says its positions were rearranged according to Iron Man Vault and binds `im_186ve`; Stern separately confirms that 1.86 code applies to both products. A VE suffix therefore proves firmware selection, not physical edition identity.
+
+The official 2010 parts-book assembly drawings on PDF pages 25-26 and the official 2014 numbered switch/lamp/coil maps on PDF pages 17, 19, and 21 show the same two-dimensional playfield device layout. The three original-product VPX candidates independently retain that topology, while their raw render-object centers differ where authors rebuilt lights, moved cosmetic helpers, or collapsed physical emitter clusters. Switch 37 is the clearest conflict: the three raw centers are `(0.970588, 0.256501)`, `(0.912831, 0.059858)`, and `(0.932986, 0.078329)`, while the reviewed manual-reconciled anchor is `(0.915480, 0.092892)`. Canonical positions therefore use the reviewed shared-layout frame, never an average of raw table centers. The content-locked candidate register and retained 309/419/436-point reports make the decision reproducible.
+
+This promotion is deliberately two-dimensional and edition-safe. It reuses only x/y locations for devices whose physical region and controller semantics are shared. Original incandescent lighting, multi-piece toys and launcher, cabinet/backbox construction, and every other 2010-specific physical fact remain sourced from the original parts book. Vault LED modules, one-piece toys, exact edition parts, Z coordinates, heights, and renderer helpers are never projected backward.
+
 ## Sources
 
 - `manual.iron-man-original-parts.2010`: official scanned 2010 parts book SHA-256 `0948d154156860d351daa943ab3b5882ef4c86bb42cde630bcd04067ab85ed1a`; organized under the external manual cache.
 - `manual.iron-man-vault-edition.2014`: official native-text service manual SHA-256 `20f04adaba96926b74aa91dba7f88024a70012eb601242d18dfb15ed3da1f990`; shared logical tables and wiring are on PDF pages 16-21 and 48-58.
 - `vpx.iron-man-vault-vpw-1.0.1`: exact known-working `im_185ve` script SHA-256 `d0d37548468d67aa895121fd6ff82fdacc1d1a301a702c92325fb3ee9d7a89ea` at pinned revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`.
 - `runtime.iron-man-vault.boot-start`: exact-ROM compatible-code trace SHA-256 `2b1f7d59482a7428eaf4413dfa3fdf25a5eccc8bdad5479da5532947cecbdab9`; ROM bytes remain external.
+- `evidence/vpx/source-candidate-register/stern/iron-man-2010.json`: deterministic four-tier VPX candidate register with full-table hashes, page identities, decisions, and retained extraction hashes.
+- `human-review.iron-man-original-shared-layout.2026-08-04`: fail-closed reconciliation of both manuals, the reviewed Vault geometry, and three original-product candidate reports; licenses no inference beyond normalized 2D shared layout.
