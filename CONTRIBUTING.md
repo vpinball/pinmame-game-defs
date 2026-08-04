@@ -146,8 +146,6 @@ not, or every table mapping breaks.
 
 ## Where to read more
 
-- [`docs/MACHINE_DEFINITIONS_PLAN.md`](docs/MACHINE_DEFINITIONS_PLAN.md) — the specification: identity
-  hierarchy, group and routing model, device and mechanism model, provenance states, merge rules.
 - [`schemas/`](schemas/) — JSON Schema for machines, controllers, the catalog and evidence.
 - [Reading a definition](https://games.visualpinball.org/guide) — the same vocabulary,
   explained for readers rather than authors.
