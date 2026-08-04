@@ -656,7 +656,7 @@ def build_premium() -> dict[str, object]:
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(True), "inputs": complete_inputs(PREMIUM_SWITCHES, PREMIUM_MANUAL, True, True), "outputs": premium_coils() + standard_lamps(PREMIUM_MANUAL, True) + extended_lamps() + [premium_gi()],
-		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance("validated", CORE_SOURCE, VPX_SOURCE)}],
+		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": {"status": "validated", "source_refs": [CORE_SOURCE, PREMIUM_MANUAL]}}, "provenance": provenance("validated", CORE_SOURCE, VPX_SOURCE)}],
 		"mechanisms": premium_mechanisms(), "relationships": [], "sources": sources(PREMIUM_MANUAL, True),
 		"knowledge": {"path": "knowledge/stern/mustang-premium-limited-edition-boss-2014.md", "status": "complete"}, "conflicts": [],
 	}
@@ -669,7 +669,7 @@ def build_pro() -> dict[str, object]:
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(False), "inputs": complete_inputs(PRO_SWITCHES, PRO_MANUAL, True, False), "outputs": pro_coils() + pro_lamps(),
-		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance("validated", CORE_SOURCE, PRO_RUNTIME_SOURCE)}],
+		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": {"status": "validated", "source_refs": [CORE_SOURCE, PRO_MANUAL]}}, "provenance": provenance("validated", CORE_SOURCE, PRO_RUNTIME_SOURCE)}],
 		"mechanisms": pro_mechanisms(), "relationships": [], "sources": sources(PRO_MANUAL, False),
 		"knowledge": {"path": "knowledge/stern/mustang-pro-2014.md", "status": "complete"}, "conflicts": [],
 	}

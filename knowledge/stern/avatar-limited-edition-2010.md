@@ -34,6 +34,20 @@ LE makes previously unused scoring inserts 20 and 44-46 physical and adds bottom
 - Bind every matrix/dedicated/DIP input, Q1-Q32, game-on 33, explicit unused auxiliary 51-66, lamp 1-80, GI 0, and the DMD. Do not add a physical aux board or device merely because PinMAME reserves address capacity.
 - Use the proven Pro script for shared runtime behavior, exact LE service diagnostics for added mechanism direction/endpoints, and the manual/IPDB records for physical construction boundaries.
 
+## Spatial review status
+
+The ordered table search found no exact LE VPX table. The two retained local candidates are Pro `avr_200` tables. The partial definition retains only direct centers of named Pro playfield objects whose semantics reconcile to common LE devices; the source hashes and retained extraction object records are the reproducible anchors. The canonical space is normalized player view: x=0 left, x=1 right, y=0 rear/backglass end, and y=1 front/apron end.
+
+Exact blockers are deliberately visible:
+
+- Inputs 8, 18-23, 26-27, 41-46, 47-48, 57-58, and 72 are explicit blockers. Their switch semantics and physical presence are retained, but the prior right-bank/slingshot/trough/AMP/transporter/detector points were manual, hidden, or LE-only projections without a reproducible named Pro anchor.
+- Outputs Q4, Q5, Q12-Q14, Q17-Q19, and Q27 are explicit blockers. Their physical devices and quantities remain documented, but marching-leg, AMP-bank, suit, slingshot, transporter, and bottom-arch coordinates are not asserted without exact LE/manual socket anchors.
+- Q20, Q22, Q23, Q25, Q26, and Q28-Q32 retain physical flasher quantities but no spatial records. Q22's Pro `Light.f22` is explicitly a fantasy placement, and the other retained VPX flasher objects are not proven physical sockets.
+- Lamps 20 and 44-46 retain their LE physical inventory but no spatial records because the previous manual/IPDB/photo points were calibrated projections, not named Pro centers.
+- GI-0 retains its one controller channel but no physical quantity or coordinates. `GIWhite` is a table-wide render light, not a physical socket map. The DMD is explicitly controlled N/A because it is a cabinet display.
+
+The exact ROM/service diagnostics, manual, IPDB record, and photo continue to establish LE-only semantics, quantities, and mechanism causality. They do not manufacture missing normalized coordinates.
+
 ## Sources
 
 - `manual.avatar-pro-le.2010`: official Stern manual, SHA-256 `afaed95b1b3406193a234a4afa579f15bc5bb3c4cd92859def4ad7b202fab04b`; organized under the external Avatar manual cache.

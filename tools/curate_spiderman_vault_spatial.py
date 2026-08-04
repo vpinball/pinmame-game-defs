@@ -280,6 +280,8 @@ def promote() -> None:
 	definition["coverage"]["missing"] = []
 	definition["coverage"]["dimensions"]["spatial_placement"] = "validated"
 	apply_spatial(definition)
+	for display in definition["displays"]:
+		display["spatial"] = {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": {"status": "validated", "source_refs": [CORE_SOURCE, MANUAL_SOURCE]}}
 	write_json(AUTHOR_READY_PATH, definition)
 	if PARTIAL_PATH.exists():
 		PARTIAL_PATH.unlink()

@@ -373,7 +373,7 @@ def build(limited_edition: bool) -> dict[str, object]:
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(limited_edition), "inputs": inputs(limited_edition), "outputs": main_outputs(limited_edition) + lamps(limited_edition),
-		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance(CORE_SOURCE, runtime_source)}],
+		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": provenance(CORE_SOURCE, MANUAL_SOURCE)}, "provenance": provenance(CORE_SOURCE, runtime_source)}],
 		"mechanisms": mechanisms(limited_edition), "relationships": [], "sources": sources(limited_edition),
 		"knowledge": {"path": f"knowledge/stern/tron-legacy-{'limited-edition' if limited_edition else 'pro'}-2011.md", "status": "complete"}, "conflicts": [],
 	}

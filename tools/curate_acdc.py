@@ -561,7 +561,7 @@ def build(variant: str) -> dict[str, object]:
 		"controller": {"platform": "pinmame.sam", "hardware_generation": "0x00000040", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(DRIVER_GROUPS[variant], VARIANT_NOTES[variant]),
 		"inputs": inputs, "outputs": outputs,
-		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance(CORE_SOURCE, PREMIUM_RUNTIME if variant == "premium" else PRO_RUNTIME)}],
+		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": {"status": "validated", "source_refs": [CORE_SOURCE, PREMIUM_MANUAL if variant == "premium" else PRO_MANUAL]}}, "provenance": provenance(CORE_SOURCE, PREMIUM_RUNTIME if variant == "premium" else PRO_RUNTIME)}],
 		"mechanisms": mechanisms(variant, inputs, outputs, source_ids),
 		"relationships": relationships(variant, inputs, outputs, source_ids),
 		"sources": source_set(variant),

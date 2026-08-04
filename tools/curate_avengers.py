@@ -530,7 +530,7 @@ def build(limited_edition: bool) -> dict[str, object]:
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(limited_edition), "inputs": inputs(manual, script, limited_edition),
 		"outputs": coils(manual, script, limited_edition) + lamps(manual, script, limited_edition),
-		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance(CORE_SOURCE, runtime)}],
+		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": provenance(CORE_SOURCE, manual)}, "provenance": provenance(CORE_SOURCE, runtime)}],
 		"mechanisms": common_mechanisms(limited_edition), "relationships": [], "sources": sources(limited_edition),
 		"knowledge": {"path": knowledge_path, "status": "complete"}, "conflicts": conflicts(limited_edition, manual, script),
 	}

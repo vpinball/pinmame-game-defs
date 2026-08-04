@@ -318,7 +318,7 @@
         },
         "width": { "type": "integer", "minimum": 1 },
         "height": { "type": "integer", "minimum": 1 },
-        "spatial": { "$ref": "#/$defs/spatial" },
+        "spatial": { "$ref": "#/$defs/displaySpatial" },
         "provenance": { "$ref": "#/$defs/provenance" }
       }
     },
@@ -421,7 +421,7 @@
       }
     },
     "spatial": {
-      "description": "Optional spatial evidence in the canonical global playfield space: x=0 is left, x=1 is right, y=0 is the rear/backglass end, and y=1 is the front/apron end. This is normalized VPX/player view and is never inferred from physical.location prose.",
+      "description": "Optional spatial evidence for a device or display in the canonical global playfield space: x=0 is left, x=1 is right, y=0 is the rear/backglass end, and y=1 is the front/apron end. This is normalized VPX/player view and is never inferred from physical.location prose.",
       "oneOf": [
         { "$ref": "#/$defs/spatialLocated" },
         { "$ref": "#/$defs/spatialNotApplicable" }
@@ -449,6 +449,10 @@
         "reason": { "enum": ["unused", "virtual", "constant", "dip_switch", "cabinet_or_service", "internal_nonvisual", "no_physical_device"] },
         "provenance": { "$ref": "#/$defs/provenance" }
       }
+    },
+    "displaySpatial": {
+      "description": "Displays are cabinet/backbox services, not playfield devices; located playfield display coordinates are unsupported.",
+      "$ref": "#/$defs/spatialNotApplicable"
     },
     "spatialPlacement": {
       "type": "object",

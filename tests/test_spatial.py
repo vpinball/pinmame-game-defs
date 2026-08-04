@@ -54,7 +54,7 @@ def author_ready_definition() -> dict[str, object]:
 		"drivers": [{"id": "testspat", "description": "Spatial Test", "year": "2000", "manufacturer": "Test", "flags": 0, "physical_compatibility": "identical", "variant_notes": "Same physical test machine."}],
 		"inputs": [{"id": "switch.target", "label": "Target", "kind": "switch", "binding": {"group": "test.input", "device": 1}, "aliases": [], "availability": "used", "normally_closed": False, "provenance": provenance(), "spatial": {"status": "validated", "placements": [placement("switch.target.sensor", "sensor")]}}],
 		"outputs": [{"id": "lamp.target", "label": "Target lamp", "kind": "lamp", "binding": {"group": "test.output", "device": 1}, "aliases": [], "availability": "used", "provenance": provenance(), "spatial": {"status": "validated", "placements": [placement("lamp.target.emitter", "emitter", 0.5, 0.5)]}}],
-		"displays": [{"id": "display.dmd", "label": "Display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance()}],
+		"displays": [{"id": "display.dmd", "label": "Display", "kind": "dmd", "width": 128, "height": 32, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": provenance()}, "provenance": provenance()}],
 		"mechanisms": [{"id": "mechanism.target", "label": "Target", "kind": "other", "actuators": ["lamp.target"], "sensors": ["switch.target"], "behavior": "Test mechanism.", "provenance": provenance()}],
 		"relationships": [],
 		"sources": [{"id": "review.geometry", "kind": "human_review", "uri": "https://example.invalid/spatial-test", "locator": "reviewed geometry", "known_working": True}],
@@ -93,6 +93,10 @@ class SpatialSchemaAndValidationTests(unittest.TestCase):
 		del definition["inputs"][0]["spatial"]
 		errors = validate_machine(definition)
 		self.assertTrue(any("author-ready devices require spatial evidence" in error for error in errors))
+		definition = author_ready_definition()
+		del definition["displays"][0]["spatial"]
+		errors = validate_machine(definition)
+		self.assertTrue(any("author-ready displays require spatial evidence" in error for error in errors))
 
 	def test_author_ready_display_spatial_is_controlled_and_not_playfield(self) -> None:
 		definition = author_ready_definition()
@@ -107,14 +111,14 @@ class SpatialSchemaAndValidationTests(unittest.TestCase):
 			"placements": [placement("display.dmd.screen", "emitter")],
 		}
 		errors = validate_machine(definition)
-		self.assertTrue(any("display spatial records must be controlled not_applicable records" in error for error in errors))
+		self.assertTrue(any("located playfield display coordinates are not supported" in error for error in errors))
 		definition["displays"][0]["spatial"] = {
 			"status": "not_applicable",
 			"reason": "internal_nonvisual",
 			"provenance": provenance(),
 		}
 		errors = validate_machine(definition)
-		self.assertTrue(any("display spatial record must explicitly identify its cabinet/service location" in error for error in errors))
+		self.assertTrue(any("displays must use reason cabinet_or_service" in error for error in errors))
 
 	def test_schema_shape_and_coordinate_rules_fail_closed(self) -> None:
 		self.assertEqual([], validate_machine(author_ready_definition()))
@@ -174,6 +178,31 @@ class SpatialSchemaAndValidationTests(unittest.TestCase):
 		definition["outputs"][0]["roles"] = ["cabinet.knocker"]
 		definition["outputs"][0]["spatial"] = {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": provenance()}
 		self.assertEqual([], validate_machine(definition))
+
+	def test_author_ready_physical_displays_are_fail_closed_to_cabinet_service_na(self) -> None:
+		definition = author_ready_definition()
+		self.assertEqual([], validate_machine(definition))
+		for reason in ("dip_switch", "unused", "virtual", "optional_absent", "internal_nonvisual"):
+			invalid = author_ready_definition()
+			invalid["displays"][0]["spatial"]["reason"] = reason
+			errors = validate_machine(invalid)
+			self.assertTrue(any("displays must use reason cabinet_or_service" in error for error in errors), reason)
+
+		valid = author_ready_definition()
+		valid["displays"][0]["spatial"] = {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": provenance()}
+		self.assertEqual([], validate_machine(valid))
+
+	def test_located_playfield_displays_are_rejected_by_the_canonical_policy(self) -> None:
+		definition = author_ready_definition()
+		definition["displays"][0]["spatial"] = {
+			"status": "validated",
+			"placements": [{"id": "display.dmd.emitter", "role": "emitter", "space": "playfield", "x": 0.5, "y": 0.5, "provenance": provenance()}],
+		}
+		errors = validate_machine(definition)
+		self.assertEqual(
+			"$.displays[0].spatial.status: located playfield display coordinates are not supported; displays must use not_applicable with reason cabinet_or_service",
+			next(error for error in errors if "located playfield display coordinates" in error),
+		)
 
 	def test_local_l_drive_source_is_rejected(self) -> None:
 		definition = author_ready_definition()

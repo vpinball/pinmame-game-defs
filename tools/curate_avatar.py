@@ -11,6 +11,7 @@ from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed
 
 
 ROOT = Path(__file__).resolve().parents[1]
+AUTHOR_READY_PATH = ROOT / "machines/author-ready/stern/avatar-limited-edition-2010.json"
 CATALOG = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
 DRIVERS = {driver["id"]: driver for driver in CATALOG["drivers"] if driver["id"].startswith("avr_")}
 
@@ -258,6 +259,8 @@ def main_outputs(limited_edition: bool) -> list[dict[str, object]]:
 			physical = {"notes": "The exact LE ROM and real-machine diagnostic name the installed device. The common scanned manual documents only the Pro configuration and leaves this channel's power feed blank, so the definition preserves the proven Q transistor/control pin without inventing an LE power wire or voltage."}
 		elif address == 8:
 			physical = {"notes": "Optional on Pro; factory-included shaker on Limited Edition."}
+		elif address == 21:
+			physical = {"quantity": 2, "notes": "Two physical backpanel flasher bulbs; cabinet/backpanel-only and outside normalized playfield space."}
 		elif address == 24:
 			physical = {"notes": "Service-chart optional channel for a coil or 5 V accounting meter; preserve it as optional rather than inventing a playfield device."}
 		if edition == "limited" and limited_edition:
@@ -523,6 +526,8 @@ def service_diagnostic_evidence(name: str, raw_folder: str, raw_hash: str, self_
 
 
 def main() -> None:
+	if AUTHOR_READY_PATH.exists():
+		raise RuntimeError(f"Refusing to regenerate Avatar LE partial state while author-ready artifact exists: {AUTHOR_READY_PATH}")
 	write_json(spatial_partial_path(ROOT / "machines/partial/stern/avatar-pro-2010.json"), fail_closed_spatial_partial(build(False)))
 	write_json(spatial_partial_path(ROOT / "machines/partial/stern/avatar-limited-edition-2010.json"), fail_closed_spatial_partial(build(True)))
 	write_json(ROOT / "evidence/runtime/sam/avatar-pro-boot-start.json", runtime_evidence(False))
@@ -535,6 +540,8 @@ def main() -> None:
 	write_json(ROOT / "evidence/runtime/sam/avatar-limited-edition-three-bank-motor.json", service_diagnostic_evidence("three-bank-motor", "three-bank-motor-test", "b5e62835a39af924b757d9f2cac6f73312c149c668699f5882ca1ea932cf901a", 11, [5, 14], common_command + menu_command + " --pulse -1:150:0.25 --pulse 0:150:1.5 --pulse 0:300:1.0 --observe 1 --dmd-dir <external-dmd-dir> --output <external-json>", {"label": "after pulse 11: switch 0", "display_index": 0, "pixel_sha256": "50244361cd9a54cb473f02e3ad5a504c515f234d97a90967fb12363c0988f1ad", "nonzero_pixels": 950, "interpreted_text": "AMP SUIT 3-BANK MOTOR TEST; #46 - 3-BANK MOTOR (UP); #45 - 3-BANK MOTOR (DN); MOVING TO SWITCH #45. Starting at active endpoint 46/up, the test finishes with output 5 active.", "active_solenoid_addresses": [5]}))
 	write_text(ROOT / "knowledge/stern/avatar-pro-2010.md", fail_closed_spatial_knowledge("stern.avatar-pro.2010", PRO_KNOWLEDGE))
 	write_text(ROOT / "knowledge/stern/avatar-limited-edition-2010.md", fail_closed_spatial_knowledge("stern.avatar-limited-edition.2010", LE_KNOWLEDGE))
+	from curate_avatar_le_spatial import curate
+	curate()
 
 
 if __name__ == "__main__":

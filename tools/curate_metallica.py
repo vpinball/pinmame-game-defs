@@ -315,7 +315,7 @@ def build_premium() -> dict[str, object]:
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(True), "inputs": inputs(True), "outputs": coils(True) + lamps(True),
-		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance("validated", CORE_SOURCE, VPX_SOURCE, RUNTIME_SOURCE)}],
+		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": {"status": "validated", "source_refs": [CORE_SOURCE, MANUAL_SOURCE]}}, "provenance": provenance("validated", CORE_SOURCE, VPX_SOURCE, RUNTIME_SOURCE)}],
 		"mechanisms": mechanisms(), "relationships": relationships(), "sources": sources(True),
 		"knowledge": {"path": "knowledge/stern/metallica-premium-limited-edition-2013.md", "status": "complete"}, "conflicts": [],
 	}
@@ -503,7 +503,7 @@ def build_pro() -> dict[str, object]:
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(False), "inputs": pro_inputs(), "outputs": pro_outputs(),
-		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance("validated", CORE_SOURCE, PRO_VPX_SOURCE, PRO_RUNTIME_SOURCE)}],
+		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": {"status": "validated", "source_refs": [CORE_SOURCE, MANUAL_SOURCE]}}, "provenance": provenance("validated", CORE_SOURCE, PRO_VPX_SOURCE, PRO_RUNTIME_SOURCE)}],
 		"mechanisms": pro_mechanisms(), "relationships": pro_relationships(), "sources": pro_sources(),
 		"knowledge": {"path": "knowledge/stern/metallica-pro-2013.md", "status": "complete"}, "conflicts": [],
 	}

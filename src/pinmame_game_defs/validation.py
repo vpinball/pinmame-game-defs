@@ -130,26 +130,28 @@ def _validate_spatial(
 	placement_ids: set[str],
 	errors: list[str],
 ) -> None:
+	subject = "display" if collection_name == "displays" else "device"
 	spatial = device.get("spatial")
 	if spatial is None:
-		if collection_name == "displays":
-			return
 		if status == "author_ready":
-			errors.append(f"{path}.spatial: author-ready devices require spatial evidence or a controlled not_applicable record")
+			errors.append(f"{path}.spatial: author-ready {subject}s require spatial evidence or a controlled not_applicable record")
 		return
 	if not isinstance(spatial, dict):
 		errors.append(f"{path}.spatial: must be an object")
 		return
 	spatial_status = spatial.get("status")
+	if collection_name == "displays" and spatial_status != "not_applicable":
+		errors.append(f"{path}.spatial.status: located playfield display coordinates are not supported; displays must use not_applicable with reason cabinet_or_service")
+		return
 	if spatial_status == "not_applicable":
 		reason = spatial.get("reason")
 		_expect(reason in SPATIAL_NA_REASONS, f"{path}.spatial.reason", "must be a controlled not_applicable reason", errors)
 		_expect("placements" not in spatial, f"{path}.spatial.placements", "not_applicable records cannot contain placements", errors)
 		_validate_provenance_refs(spatial.get("provenance"), f"{path}.spatial.provenance", source_ids, errors, status == "author_ready")
-		if status != "author_ready":
-			return
 		if collection_name == "displays":
-			_expect(reason == "cabinet_or_service", f"{path}.spatial.reason", "a display spatial record must explicitly identify its cabinet/service location", errors)
+			_expect(reason == "cabinet_or_service", f"{path}.spatial.reason", "displays must use reason cabinet_or_service", errors)
+			return
+		if status != "author_ready":
 			return
 		availability = device.get("availability")
 		kind = device.get("kind")
@@ -185,9 +187,6 @@ def _validate_spatial(
 			_expect(reason == expected, f"{path}.spatial.reason", "does not align with this author-ready output's physical status", errors)
 		return
 	_expect(spatial_status in {"candidate", "observed", "validated", "conflicted"}, f"{path}.spatial.status", "must be a located spatial assertion or not_applicable", errors)
-	if collection_name == "displays":
-		_expect(False, f"{path}.spatial", "display spatial records must be controlled not_applicable records", errors)
-		return
 	placements = spatial.get("placements")
 	_expect(isinstance(placements, list) and bool(placements), f"{path}.spatial.placements", "located spatial evidence requires one or more placements", errors)
 	if not isinstance(placements, list):
@@ -582,8 +581,7 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 						"segment displays require controller_index, segment_start, and width",
 						errors,
 					)
-			if "spatial" in display:
-				_validate_spatial(display, "displays", path, status, source_ids, spatial_placement_ids, errors)
+			_validate_spatial(display, "displays", path, status, source_ids, spatial_placement_ids, errors)
 	if isinstance(drivers, list):
 		for driver_index, driver in enumerate(drivers):
 			if not isinstance(driver, dict):

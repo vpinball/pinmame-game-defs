@@ -62,6 +62,27 @@ class RepositoryValidationTests(unittest.TestCase):
 	def test_repository_is_valid(self) -> None:
 		self.assertEqual([], validate_repository(ROOT))
 
+	def test_author_ready_display_na_provenance_has_core_and_physical_manual_evidence(self) -> None:
+		checked = []
+		display_count = 0
+		for path in sorted((ROOT / "machines" / "author-ready").rglob("*.json")):
+			definition = load_json(path)
+			if definition.get("coverage", {}).get("status") != "author_ready":
+				continue
+			for display in definition.get("displays", []):
+				spatial = display.get("spatial")
+				display_count += 1
+				self.assertIsNotNone(spatial, path.as_posix())
+				self.assertEqual("not_applicable", spatial.get("status"), path.as_posix())
+				self.assertEqual("cabinet_or_service", spatial.get("reason"), path.as_posix())
+				sources = {source["id"]: source for source in definition["sources"]}
+				refs = spatial["provenance"]["source_refs"]
+				self.assertTrue(any(sources[ref].get("kind") == "pinmame_core" for ref in refs), path.as_posix())
+				self.assertTrue(any(sources[ref].get("kind") in {"manual", "human_review"} for ref in refs), path.as_posix())
+				checked.append(path)
+		self.assertGreater(display_count, 0)
+		self.assertEqual(display_count, len(checked))
+
 	def test_author_ready_driver_must_match_containing_physical_definition(self) -> None:
 		definition = self.author_ready_fixture()
 		definition["drivers"][0]["physical_compatibility"] = "different"

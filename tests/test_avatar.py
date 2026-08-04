@@ -1,8 +1,13 @@
 from __future__ import annotations
 
 import json
+import importlib
+import subprocess
+import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,15 +41,190 @@ class AvatarDefinitionTests(unittest.TestCase):
 		cls.le_evidence = load_json(LE_EVIDENCE_PATH)
 		cls.le_diagnostics = {name: load_json(path) for name, path in LE_DIAGNOSTIC_PATHS.items()}
 
-	def test_both_physical_editions_are_fail_closed_for_spatial_retrofit(self) -> None:
+	def test_both_editions_remain_fail_closed_for_spatial_retrofit(self) -> None:
 		for definition in (self.pro, self.le):
 			self.assertEqual(2, definition["schema_version"])
 			self.assertEqual("partial", definition["coverage"]["status"])
-			self.assertIn("spatial_placement", definition["coverage"]["missing"])
-			self.assertEqual("complete", definition["knowledge"]["status"])
-			self.assertEqual([], definition["conflicts"])
+			self.assertEqual(["spatial_placement"], definition["coverage"]["missing"])
+			self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
+			if definition is self.le:
+				self.assertEqual("not_applicable", definition["displays"][0]["spatial"]["status"])
+				self.assertEqual("cabinet_or_service", definition["displays"][0]["spatial"]["reason"])
+				self.assertEqual(
+					["pinmame.core.4ec52ff0ac13", "manual.avatar-pro-le.2010"],
+					definition["displays"][0]["spatial"]["provenance"]["source_refs"],
+				)
+		self.assertEqual("complete", self.pro["knowledge"]["status"])
+		self.assertEqual("complete", self.le["knowledge"]["status"])
+		self.assertEqual([], self.pro["conflicts"])
+		self.assertEqual([], self.le["conflicts"])
 		self.assertFalse((ROOT / "machines" / "stubs" / "avr_120h.json").exists())
 		self.assertFalse((ROOT / "knowledge" / "stubs" / "avr_120h.md").exists())
+
+	def test_le_spatial_retrofit_keeps_edition_specific_devices_out_of_pro_geometry(self) -> None:
+		inputs = bindings(self.le, "inputs", "pinmame.input.switch")
+		outputs = bindings(self.le, "outputs", "pinmame.output.solenoid")
+		for address in (41, 47, 48, 72):
+			self.assertNotIn("vpx.avatar-pro-lw-vpumod-1.12", inputs[address]["provenance"]["source_refs"])
+			self.assertNotIn("vpx-table.avatar-pro.local-archive-2020", inputs[address].get("spatial", {}).get("placements", [{}])[0].get("provenance", {}).get("source_refs", []))
+		self.assertNotIn("spatial", inputs[41])
+		self.assertIn("LeftRampStart", inputs[41]["physical"]["notes"])
+		for address in (8, 18, 19, 20, 21, 22, 23, 26, 27, 41, 42, 43, 44, 45, 46, 47, 48, 57, 58, 72):
+			self.assertNotIn("spatial", inputs[address])
+			self.assertIn("Spatial blocker:", inputs[address]["physical"]["notes"])
+		for address in (4, 5, 12, 13, 14, 17, 18, 19, 27):
+			self.assertNotIn("spatial", outputs[address])
+			self.assertIn("Spatial blocker:", outputs[address]["physical"]["notes"])
+		self.assertEqual(2, outputs[27]["physical"]["quantity"])
+		self.assertEqual(2, outputs[21]["physical"]["quantity"])
+		self.assertEqual("not_applicable", outputs[21]["spatial"]["status"])
+		self.assertNotIn("spatial", outputs[22])
+		self.assertIn("fantasy placement", outputs[22]["physical"]["notes"])
+		for address in (20, 22, 23, 25, 26, 28, 29, 30, 31, 32):
+			self.assertNotIn("spatial", outputs[address])
+		lamps = bindings(self.le, "outputs", "pinmame.output.lamp")
+		for address in (20, 44, 45, 46):
+			self.assertNotIn("spatial", lamps[address])
+			self.assertIn("Spatial blocker:", lamps[address]["physical"]["notes"])
+		gi = next(item for item in self.le["outputs"] if item["binding"] == {"group": "pinmame.output.gi", "device": 0})
+		self.assertNotIn("spatial", gi)
+		self.assertNotIn("quantity", gi.get("physical", {}))
+		self.assertIn("GIWhite", gi["physical"]["notes"])
+
+	def test_le_only_mechanisms_and_generator_artifacts_are_fail_closed(self) -> None:
+		mechanisms = {item["id"]: item for item in self.le["mechanisms"]}
+		for mechanism_id in ("mechanism.transporter", "mechanism.amp-marching-legs", "mechanism.ceramic-ball"):
+			self.assertIn(mechanism_id, mechanisms)
+			self.assertNotIn("vpx.avatar-pro-lw-vpumod-1.12", mechanisms[mechanism_id]["provenance"]["source_refs"])
+		generator = (ROOT / "tools" / "curate_avatar_le_spatial.py").read_text(encoding="utf-8")
+		self.assertNotIn("E:\\_vpe-2025", generator)
+		self.assertIn("--artifact-root", generator)
+
+	def test_le_spatial_curator_check_is_deterministic_and_non_mutating(self) -> None:
+		paths = [LE_PATH, ROOT / "knowledge" / "stern" / "avatar-limited-edition-2010.md"]
+		before = {path: path.read_bytes() for path in paths}
+		with tempfile.TemporaryDirectory() as artifact_root:
+			artifact_path = Path(artifact_root)
+			result = subprocess.run(
+				[sys.executable, str(ROOT / "tools" / "curate_avatar_le_spatial.py"), "--check", "--artifact-root", artifact_root],
+				cwd=ROOT,
+				capture_output=True,
+				text=True,
+				check=False,
+			)
+			self.assertEqual(0, result.returncode, result.stderr)
+			self.assertIn("no files were written or deleted", result.stdout)
+			self.assertFalse((artifact_path / "analysis").exists())
+		self.assertEqual(before, {path: path.read_bytes() for path in paths})
+
+	def test_le_spatial_curator_check_reports_mismatch_without_deleting_author_ready(self) -> None:
+		sys.path.insert(0, str(ROOT / "tools"))
+		try:
+			curator = importlib.import_module("curate_avatar_le_spatial")
+		finally:
+			sys.path.pop(0)
+		with tempfile.TemporaryDirectory() as root:
+			temp_root = Path(root)
+			partial_path = temp_root / "partial.json"
+			knowledge_path = temp_root / "knowledge.md"
+			author_ready_path = temp_root / "author-ready.json"
+			partial_path.write_bytes(b"stale")
+			knowledge_path.write_bytes(b"stale")
+			author_ready_path.write_bytes(b"preserve this file")
+			with patch.object(curator, "PARTIAL_PATH", partial_path), patch.object(curator, "KNOWLEDGE_PATH", knowledge_path), patch.object(curator, "AUTHOR_READY_PATH", author_ready_path):
+				self.assertEqual(1, curator.check(temp_root / "external-artifacts"))
+			self.assertEqual(b"preserve this file", author_ready_path.read_bytes())
+			self.assertFalse((temp_root / "external-artifacts").exists())
+
+	def test_le_spatial_curator_write_refuses_to_clobber_or_create_conflicting_partial(self) -> None:
+		sys.path.insert(0, str(ROOT / "tools"))
+		try:
+			curator = importlib.import_module("curate_avatar_le_spatial")
+		finally:
+			sys.path.pop(0)
+		with tempfile.TemporaryDirectory() as root:
+			temp_root = Path(root)
+			partial_path = temp_root / "partial.json"
+			knowledge_path = temp_root / "knowledge.md"
+			author_ready_path = temp_root / "author-ready.json"
+			partial_path.write_bytes(b"existing partial")
+			knowledge_path.write_bytes(b"existing knowledge")
+			author_ready_path.write_bytes(b"canonical author-ready bytes")
+			before = {path: path.read_bytes() for path in (partial_path, knowledge_path, author_ready_path)}
+			with patch.object(curator, "PARTIAL_PATH", partial_path), patch.object(curator, "KNOWLEDGE_PATH", knowledge_path), patch.object(curator, "AUTHOR_READY_PATH", author_ready_path):
+				with self.assertRaisesRegex(RuntimeError, "author-ready artifact exists"):
+					curator.curate(temp_root / "external-artifacts")
+			self.assertEqual(before, {path: path.read_bytes() for path in before})
+			self.assertFalse((temp_root / "external-artifacts").exists())
+
+	def test_regular_avatar_generator_fails_before_creating_partial_conflict(self) -> None:
+		sys.path.insert(0, str(ROOT / "tools"))
+		try:
+			generator = importlib.import_module("curate_avatar")
+		finally:
+			sys.path.pop(0)
+		with tempfile.TemporaryDirectory() as root:
+			author_ready_path = Path(root) / "avatar-le-author-ready.json"
+			author_ready_path.write_bytes(b"canonical author-ready bytes")
+			paths = [LE_PATH, PRO_PATH, ROOT / "knowledge" / "stern" / "avatar-limited-edition-2010.md"]
+			before = {path: path.read_bytes() for path in paths}
+			with patch.object(generator, "AUTHOR_READY_PATH", author_ready_path):
+				with self.assertRaisesRegex(RuntimeError, "author-ready artifact exists"):
+					generator.main()
+			self.assertEqual(before, {path: path.read_bytes() for path in paths})
+
+	def test_le_cabinet_controls_quantities_and_spatial_provenance_are_audited(self) -> None:
+		inputs = bindings(self.le, "inputs", "pinmame.input.switch")
+		cabinet_inputs = {15, 16, 65, 66, 67, 68, 69, 84, 82, -7, -6, -5, -3, -2, -1, 0}
+		self.assertEqual(cabinet_inputs, {address for address, device in inputs.items() if device.get("spatial", {}).get("reason") == "cabinet_or_service"})
+		self.assertTrue(all(any(role.startswith(("cabinet.", "service.", "flipper.")) for role in inputs[address].get("roles", [])) for address in cabinet_inputs))
+		outputs = bindings(self.le, "outputs", "pinmame.output.solenoid")
+		self.assertEqual("cabinet.shaker", outputs[8]["roles"][0])
+		self.assertEqual("cabinet.backpanel-flasher", outputs[21]["roles"][0])
+		self.assertEqual(2, outputs[21]["physical"]["quantity"])
+		self.assertEqual("cabinet.coin-meter", outputs[24]["roles"][0])
+		self.assertEqual({20: 1, 21: 2, 22: 1, 23: 1, 25: 1, 26: 1, 27: 2, 28: 2, 29: 1, 30: 1, 31: 1, 32: 1}, {address: outputs[address]["physical"]["quantity"] for address in (20, 21, 22, 23, 25, 26, 27, 28, 29, 30, 31, 32)})
+		pro_geometry = {"vpx.avatar-pro-lw-vpumod-1.12", "vpx-table.avatar-pro.local-archive-2020", "vpx-table.avatar-pro.local-primary-2020"}
+		for address in (41, 47, 48, 72):
+			spatial_refs = {
+				ref
+				for placement in inputs[address].get("spatial", {}).get("placements", [])
+				for ref in placement["provenance"]["source_refs"]
+			}
+			self.assertFalse(pro_geometry & spatial_refs)
+		for address in (4, 12, 14, 27):
+			self.assertNotIn("spatial", outputs[address])
+
+	def test_each_promoted_coordinate_cites_the_candidate_that_contains_its_named_object(self) -> None:
+		archive = "vpx-table.avatar-pro.local-archive-2020"
+		primary = "vpx-table.avatar-pro.local-primary-2020"
+		manual = "manual.avatar-pro-le.2010"
+		inputs = bindings(self.le, "inputs", "pinmame.input.switch")
+		primary_inputs = {2, 3, 4, 5, 17, 36, 37, 38, 39}
+		located_inputs = {address for address, device in inputs.items() if device.get("spatial", {}).get("placements")}
+		for address in located_inputs:
+			expected_geometry = primary if address in primary_inputs else archive
+			for placement in inputs[address]["spatial"]["placements"]:
+				self.assertEqual([manual, expected_geometry], placement["provenance"]["source_refs"])
+
+		outputs = bindings(self.le, "outputs", "pinmame.output.solenoid")
+		archive_solenoids = {2, 3, 6, 7, 11, 15, 16}
+		located_solenoids = {address for address, device in outputs.items() if device.get("spatial", {}).get("placements")}
+		for address in located_solenoids:
+			expected_geometry = archive if address in archive_solenoids else primary
+			for placement in outputs[address]["spatial"]["placements"]:
+				self.assertEqual([manual, expected_geometry], placement["provenance"]["source_refs"])
+
+		lamps = bindings(self.le, "outputs", "pinmame.output.lamp")
+		for device in lamps.values():
+			for placement in device.get("spatial", {}).get("placements", []):
+				self.assertEqual([manual, archive], placement["provenance"]["source_refs"])
+
+	def test_spatial_source_locators_and_rendered_knowledge_are_followable(self) -> None:
+		sources = {source["id"]: source for source in self.le["sources"]}
+		self.assertTrue(sources["vpx-table.avatar-pro.local-primary-2020"]["uri"].endswith("/avatar 080116a mod 1.19.vpx"))
+		knowledge = (ROOT / "knowledge" / "stern" / "avatar-limited-edition-2010.md").read_text(encoding="utf-8")
+		self.assertFalse(any(line.startswith("\t") for line in knowledge.splitlines()))
 
 	def test_editions_exhaustively_split_the_mixed_pinmame_clone_tree(self) -> None:
 		pro = {driver["id"] for driver in self.pro["drivers"]}
@@ -82,7 +262,7 @@ class AvatarDefinitionTests(unittest.TestCase):
 		self.assertEqual("Alternate shooter-lane metal detector", limited_edition[72]["label"])
 		self.assertFalse(limited_edition[72]["normally_closed"])
 		self.assertIn("steel ball bridges", limited_edition[72]["physical"]["notes"])
-		for address in (41, 47, 48):
+		for address in (41, 47, 48, 72):
 			self.assertNotIn("vpx.avatar-pro-lw-vpumod-1.12", limited_edition[address]["provenance"]["source_refs"])
 
 	def test_main_solenoids_game_on_and_auxiliary_capacity_are_explicit(self) -> None:

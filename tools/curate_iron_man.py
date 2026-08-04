@@ -409,7 +409,7 @@ def build(vault_edition: bool) -> dict[str, object]:
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(vault_edition), "inputs": inputs(), "outputs": main_outputs(vault_edition) + lamps(vault_edition),
-		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance(CORE_SOURCE, RUNTIME_SOURCE, CODE_COMPAT_SOURCE)}],
+		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": {"status": "validated", "source_refs": [CORE_SOURCE, VE_MANUAL_SOURCE if vault_edition else ORIGINAL_MANUAL_SOURCE]}}, "provenance": provenance(CORE_SOURCE, RUNTIME_SOURCE, CODE_COMPAT_SOURCE)}],
 		"mechanisms": mechanisms(vault_edition), "relationships": [], "sources": sources(vault_edition),
 		"knowledge": {"path": f"knowledge/stern/iron-man-{'vault-edition-2014' if vault_edition else '2010'}.md", "status": "complete"}, "conflicts": [],
 	}
