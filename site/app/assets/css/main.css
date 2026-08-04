@@ -1,0 +1,424 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Design tokens
+
+   The palette is built around a pinball service manual read under playfield
+   light: a near-black backplane, hairline rules, warm plasma-DMD amber for
+   anything the reader should act on, and a fixed hue per device kind so a
+   colour means the same thing on every page.
+--------------------------------------------------------------------------- */
+
+/*
+ * `static` matters: Tailwind only emits a `@theme` variable when some generated
+ * utility references it, and the device-kind colours are referenced from
+ * TypeScript (`kindColor()`) rather than from class names. Without it, kinds
+ * that never appear as a `text-k-*` utility are dropped from the dark theme and
+ * silently fall back to grey — while the light block, being plain CSS, keeps
+ * all of them.
+ */
+@theme static {
+	--font-sans: 'Inter var', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	--font-mono: ui-monospace, 'JetBrains Mono', 'SFMono-Regular', 'Cascadia Mono', Menlo, Consolas, monospace;
+
+	/* surfaces. Note: no token may be named after a Tailwind font-size step
+	   (`sm`, `base`, `lg`…) — `text-<name>` would resolve to the colour and
+	   silently swallow the size. */
+	--color-void: #07080a;
+	--color-canvas: #0b0d10;
+	--color-panel: #101317;
+	--color-raised: #161a20;
+	--color-hover: #1c212a;
+	--color-line: #232932;
+	--color-line-soft: #171b22;
+
+	/* ink */
+	--color-ink: #e9ecf1;
+	--color-ink-2: #a2abb8;
+	--color-ink-3: #6b7583;
+	--color-ink-4: #4a525e;
+
+	/* brand */
+	--color-amber: #ff9e2c;
+	--color-amber-soft: #ffc47a;
+	--color-amber-dim: #7a4a0e;
+	--color-plasma: #ff7a18;
+
+	/* coverage status */
+	--color-ready: #35d399;
+	--color-partial: #ffb020;
+	--color-stub: #5c6673;
+
+	/* attention — conflicts and failed gates. Deliberately not a device-kind
+	   colour: a warning must not read as "this is a coil". */
+	--color-alert: #ff6b5e;
+
+	/* device kinds — one hue per kind, used in chips, tables and matrices */
+	--color-k-switch: #56c8f5;
+	--color-k-dip: #99a5b4;
+	--color-k-coil: #ff7d5e;
+	--color-k-flasher: #ffe08a;
+	--color-k-lamp: #ffd23f;
+	--color-k-rgb: #c48cff;
+	--color-k-gi: #ffb27a;
+	--color-k-motor: #4ade80;
+	--color-k-servo: #4ade80;
+	--color-k-magnet: #f472b6;
+	--color-k-relay: #7dd3fc;
+	--color-k-virtual: #7a8492;
+	--color-k-constant: #7a8492;
+	--color-k-display: #a5b4fc;
+	--color-k-unused: #2b3138;
+
+	/* Playfield vignette. Its own pair rather than reused surface colours: the
+	   light theme's surfaces are within a few percent of each other, so a
+	   gradient between them is invisible. */
+	--color-pf-center: #191e25;
+	--color-pf-edge: #0c0f13;
+
+	--radius-panel: 14px;
+}
+
+/* Light theme keeps the same semantics on paper stock. */
+:root[data-theme='light'] {
+	--color-void: #eceef1;
+	--color-canvas: #f6f7f9;
+	--color-panel: #ffffff;
+	--color-raised: #f2f4f7;
+	--color-hover: #e9edf2;
+	--color-line: #d9dee6;
+	--color-line-soft: #e8ecf1;
+
+	--color-ink: #11151b;
+	--color-ink-2: #4a5462;
+	--color-ink-3: #6f7b8a;
+	--color-ink-4: #97a1ae;
+
+	--color-amber: #b45c00;
+	--color-amber-soft: #8a4700;
+	--color-amber-dim: #f6d9b3;
+	--color-plasma: #d2521a;
+
+	--color-ready: #06845a;
+	--color-partial: #a86a00;
+	--color-stub: #8b95a3;
+
+	--color-alert: #b42318;
+
+	--color-k-switch: #0f7fae;
+	--color-k-dip: #5c6875;
+	--color-k-coil: #c2452a;
+	--color-k-flasher: #9a7400;
+	--color-k-lamp: #9b7900;
+	--color-k-rgb: #7b3fc4;
+	--color-k-gi: #a45c1c;
+	--color-k-motor: #14804a;
+	--color-k-servo: #14804a;
+	--color-k-magnet: #b93374;
+	--color-k-relay: #1173a8;
+	--color-k-virtual: #6f7b8a;
+	--color-k-constant: #6f7b8a;
+	--color-k-display: #4a56b8;
+	--color-k-unused: #dfe4ea;
+
+	--color-pf-center: #ffffff;
+	--color-pf-edge: #e4e9ef;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+
+:root {
+	color-scheme: dark;
+	--dot: color-mix(in srgb, var(--color-ink) 6%, transparent);
+}
+
+:root[data-theme='light'] {
+	color-scheme: light;
+	--dot: color-mix(in srgb, #0b0d10 7%, transparent);
+}
+
+html {
+	scroll-behavior: smooth;
+	scroll-padding-top: 5.5rem;
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	background-color: var(--color-canvas);
+	color: var(--color-ink);
+	font-family: var(--font-sans);
+	font-feature-settings: 'cv05' 1, 'ss01' 1;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+::selection {
+	background: color-mix(in srgb, var(--color-amber) 35%, transparent);
+	color: var(--color-ink);
+}
+
+:focus-visible {
+	outline: 2px solid var(--color-amber);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+/* Text fields show focus through their own border and caret. A second offset
+   ring around a full-width input just draws a heavy box around the field. */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+	outline: none;
+}
+
+/* Slim scrollbars so dense tables do not feel like spreadsheets. */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-line) transparent;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--color-line);
+	border-radius: 99px;
+	border: 3px solid transparent;
+	background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--color-ink-4);
+	background-clip: padding-box;
+	border: 3px solid transparent;
+}
+
+/* ---------------------------------------------------------------------------
+   Reusable primitives
+--------------------------------------------------------------------------- */
+
+@utility panel {
+	background-color: var(--color-panel);
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-panel);
+}
+
+/* Uppercase micro-label, the way a service manual titles a column. */
+@utility eyebrow {
+	font-size: 0.6875rem;
+	line-height: 1;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--color-ink-3);
+}
+
+@utility num {
+	font-family: var(--font-mono);
+	font-variant-numeric: tabular-nums;
+	font-feature-settings: 'zero' 1;
+}
+
+/* The dot grid behind hero areas — a playfield insert pattern, very faint. */
+@utility dotfield {
+	background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+	background-size: 22px 22px;
+	background-position: -1px -1px;
+}
+
+@utility glow-amber {
+	box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-amber) 30%, transparent),
+		0 0 28px -10px color-mix(in srgb, var(--color-amber) 70%, transparent);
+}
+
+/* ---------------------------------------------------------------------------
+   Knowledge notes — long-form markdown rendered from the defs repository
+--------------------------------------------------------------------------- */
+
+.knowledge {
+	color: var(--color-ink-2);
+	font-size: 0.9375rem;
+	line-height: 1.75;
+	/* Notes quote 64-character SHA-256 digests as plain prose, not just inside
+	   backticks. `anywhere` rather than `break-word` because only the former
+	   also shrinks min-content width — otherwise the article still forces the
+	   page to scroll sideways on a phone. */
+	overflow-wrap: anywhere;
+}
+
+.knowledge > * + * {
+	margin-top: 1rem;
+}
+
+/* The first block sits against the card padding; only later ones need the
+   between-sections gap. */
+.knowledge > :first-child {
+	margin-top: 0;
+}
+
+.knowledge h2 {
+	margin-top: 2.25rem;
+	margin-bottom: 0.75rem;
+	color: var(--color-ink);
+	font-size: 1rem;
+	font-weight: 650;
+	letter-spacing: -0.01em;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid var(--color-line-soft);
+	scroll-margin-top: 6rem;
+}
+
+.knowledge h3 {
+	margin-top: 1.5rem;
+	color: var(--color-ink);
+	font-size: 0.9375rem;
+	font-weight: 620;
+}
+
+.knowledge strong {
+	color: var(--color-ink);
+	font-weight: 600;
+}
+
+.knowledge a {
+	color: var(--color-amber);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	text-decoration-color: color-mix(in srgb, var(--color-amber) 40%, transparent);
+}
+
+.knowledge a:hover {
+	text-decoration-color: currentColor;
+}
+
+.knowledge code {
+	font-family: var(--font-mono);
+	font-size: 0.8125em;
+	background: var(--color-raised);
+	border: 1px solid var(--color-line-soft);
+	border-radius: 5px;
+	padding: 0.1em 0.35em;
+	color: var(--color-amber-soft);
+	/* Notes quote 64-character SHA-256 digests inline; nowrap would set the
+	   article's min-content width and scroll the whole page sideways. */
+	overflow-wrap: anywhere;
+}
+
+.knowledge pre {
+	background: var(--color-raised);
+	border: 1px solid var(--color-line);
+	border-radius: 10px;
+	padding: 1rem;
+	overflow-x: auto;
+	font-size: 0.8125rem;
+}
+
+.knowledge pre code {
+	background: none;
+	border: 0;
+	padding: 0;
+	white-space: pre;
+	color: var(--color-ink-2);
+}
+
+.knowledge ul,
+.knowledge ol {
+	padding-left: 1.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+}
+
+.knowledge ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+.knowledge ul > li {
+	position: relative;
+	padding-left: 1.25rem;
+}
+
+.knowledge ul > li::before {
+	content: '';
+	position: absolute;
+	left: 0.25rem;
+	top: 0.72em;
+	width: 5px;
+	height: 5px;
+	border-radius: 1px;
+	background: var(--color-amber);
+	opacity: 0.7;
+}
+
+.knowledge ol {
+	list-style: decimal;
+}
+
+.knowledge blockquote {
+	border-left: 2px solid var(--color-amber-dim);
+	padding-left: 1rem;
+	color: var(--color-ink-3);
+}
+
+.knowledge table {
+	width: 100%;
+	font-size: 0.875rem;
+	border-collapse: collapse;
+}
+
+.knowledge th,
+.knowledge td {
+	border-bottom: 1px solid var(--color-line-soft);
+	padding: 0.5rem 0.75rem;
+	text-align: left;
+}
+
+.knowledge th {
+	color: var(--color-ink-3);
+	font-weight: 600;
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+
+/* ---------------------------------------------------------------------------
+   Motion
+--------------------------------------------------------------------------- */
+
+@keyframes rise {
+	from { opacity: 0; transform: translateY(6px); }
+	to { opacity: 1; transform: none; }
+}
+
+.rise {
+	animation: rise 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.page-enter-active,
+.page-leave-active {
+	transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.page-enter-from {
+	opacity: 0;
+	transform: translateY(4px);
+}
+
+.page-leave-to {
+	opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}

@@ -1,0 +1,31 @@
+{
+  "name": "pinmame-games",
+  "private": true,
+  "type": "module",
+  "description": "Static reference site for the PinMAME machine-definition catalog",
+  "scripts": {
+    "data": "tsx scripts/prepare-data.ts && tsx scripts/prepare-schema.ts && tsx scripts/prepare-icons.ts && tsx scripts/make-og-image.ts",
+    "dev": "npm run data && nuxt dev",
+    "build": "npm run data && nuxt build",
+    "generate": "npm run data && nuxt generate && tsx scripts/verify-build.ts",
+    "verify": "tsx scripts/verify-build.ts",
+    "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "nuxt": "^4.2.1",
+    "vue": "^3.5.22",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@iconify-json/lucide": "^1.2.68",
+    "@nuxt/icon": "^2.0.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "@types/node": "^22.15.3",
+    "marked": "^15.0.12",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^2.2.10"
+  }
+}
