@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-STANDARD_PATH = ROOT / "machines" / "partial" / "stern" / "the-rolling-stones-standard-2011.json"
+STANDARD_PATH = ROOT / "machines" / "author-ready" / "stern" / "the-rolling-stones-standard-2011.json"
 LE_PATH = ROOT / "machines" / "partial" / "stern" / "the-rolling-stones-limited-edition-2011.json"
 STANDARD_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "rolling-stones-standard-boot-start.json"
 LE_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "rolling-stones-limited-edition-boot-start.json"
@@ -29,15 +29,64 @@ class RollingStonesDefinitionTests(unittest.TestCase):
 		cls.standard_evidence = load_json(STANDARD_EVIDENCE_PATH)
 		cls.le_evidence = load_json(LE_EVIDENCE_PATH)
 
-	def test_both_editions_are_fail_closed_for_spatial_retrofit(self) -> None:
+	def test_standard_is_spatially_ready_and_le_remains_fail_closed(self) -> None:
+		self.assertEqual(2, self.standard["schema_version"])
+		self.assertEqual("author_ready", self.standard["coverage"]["status"])
+		self.assertEqual([], self.standard["coverage"]["missing"])
+		self.assertEqual("validated", self.standard["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual(2, self.le["schema_version"])
+		self.assertEqual("partial", self.le["coverage"]["status"])
+		self.assertIn("spatial_placement", self.le["coverage"]["missing"])
 		for definition in (self.standard, self.le):
-			self.assertEqual(2, definition["schema_version"])
-			self.assertEqual("partial", definition["coverage"]["status"])
-			self.assertIn("spatial_placement", definition["coverage"]["missing"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
 			self.assertEqual([], definition["conflicts"])
 		self.assertFalse((ROOT / "machines" / "stubs" / "rsn_110h.json").exists())
 		self.assertFalse((ROOT / "knowledge" / "stubs" / "rsn_110h.md").exists())
+
+	def test_standard_spatial_inventory_is_complete_and_excludes_le_only_hardware(self) -> None:
+		for collection in (self.standard["inputs"], self.standard["outputs"]):
+			self.assertTrue(all("spatial" in device for device in collection))
+			self.assertTrue(all(device["spatial"]["status"] in {"validated", "not_applicable"} for device in collection))
+		self.assertEqual("not_applicable", self.standard["displays"][0]["spatial"]["status"])
+		self.assertEqual("cabinet_or_service", self.standard["displays"][0]["spatial"]["reason"])
+		outputs = bindings(self.standard, "outputs", "pinmame.output.solenoid")
+		switches = bindings(self.standard, "inputs", "pinmame.input.switch")
+		self.assertEqual((0.4745, 0.9745), (switches[18]["spatial"]["placements"][0]["x"], switches[18]["spatial"]["placements"][0]["y"]))
+		self.assertEqual((0.5385, 0.9775), (switches[19]["spatial"]["placements"][0]["x"], switches[19]["spatial"]["placements"][0]["y"]))
+		self.assertEqual((0.727167, 0.982), (switches[22]["spatial"]["placements"][0]["x"], switches[22]["spatial"]["placements"][0]["y"]))
+		self.assertNotEqual((0.664, 0.979), (switches[22]["spatial"]["placements"][0]["x"], switches[22]["spatial"]["placements"][0]["y"]))
+		self.assertIn("disclosed", switches[22]["physical"]["notes"])
+		self.assertEqual("not_applicable", switches[82]["spatial"]["status"])
+		self.assertEqual("cabinet_or_service", switches[82]["spatial"]["reason"])
+		self.assertEqual("not_applicable", switches[84]["spatial"]["status"])
+		self.assertEqual("cabinet_or_service", switches[84]["spatial"]["reason"])
+		for address in (81, 83):
+			self.assertEqual("validated", switches[address]["spatial"]["status"])
+			self.assertIn("hidden-switch convention", switches[address]["physical"]["notes"])
+			self.assertEqual(1, len(switches[address]["spatial"]["placements"]))
+		self.assertEqual((0.664, 0.979), (outputs[1]["spatial"]["placements"][0]["x"], outputs[1]["spatial"]["placements"][0]["y"]))
+		self.assertEqual((0.916, 0.92625), (outputs[2]["spatial"]["placements"][0]["x"], outputs[2]["spatial"]["placements"][0]["y"]))
+		self.assertTrue(all(outputs[address]["spatial"]["reason"] == "cabinet_or_service" for address in (20, 21)))
+		for address in (5, 7, 17, 29, 30, 32):
+			self.assertEqual("unused", outputs[address]["spatial"]["reason"])
+		self.assertEqual(7, len(bindings(self.standard, "inputs", "pinmame.input.switch")[72]["spatial"]["placements"]))
+		for address in (25, 27, 28):
+			self.assertEqual(1, outputs[address]["physical"]["quantity"])
+			self.assertEqual(1, len(outputs[address]["spatial"]["placements"]))
+			self.assertIn("synchronized LE render layers", outputs[address]["physical"]["notes"])
+		gi = bindings(self.standard, "outputs", "pinmame.output.gi")[0]
+		self.assertEqual(40, len(gi["spatial"]["placements"]))
+		self.assertEqual(40, gi["physical"]["quantity"])
+		lamp20 = bindings(self.standard, "outputs", "pinmame.output.lamp")[20]["spatial"]["placements"][0]
+		self.assertNotIn((lamp20["x"], lamp20["y"]), {(point["x"], point["y"]) for point in gi["spatial"]["placements"]})
+		sources = {source["id"]: source for source in self.standard["sources"]}
+		self.assertEqual("vpx_table", sources["vpx-table.rolling-stones-le-bound-shared-geometry"]["kind"])
+		self.assertFalse(sources["vpx-table.rolling-stones-le-bound-shared-geometry"]["known_working"])
+		self.assertIn("LE-only", sources["vpx-table.rolling-stones-le-bound-shared-geometry"]["locator"])
+		self.assertIn("rsn_110h", sources["vpuniverse.rolling-stones-balutito-mod-2-0-24384"]["locator"])
+		self.assertIn("disqualified", sources["vpuniverse.rolling-stones-balutito-mod-2-0-24384"]["locator"])
+		self.assertNotIn("exact-looking", sources["vpuniverse.rolling-stones-balutito-mod-2-0-24384"]["locator"])
+		self.assertNotIn("inaccessible", sources["vpuniverse.rolling-stones-balutito-mod-2-0-24384"]["locator"])
 
 	def test_editions_exhaustively_split_the_supported_driver_family(self) -> None:
 		standard = {driver["id"] for driver in self.standard["drivers"]}
@@ -148,6 +197,9 @@ class RollingStonesDefinitionTests(unittest.TestCase):
 		for evidence in (self.standard_evidence, self.le_evidence):
 			self.assertEqual([{"depth": 4, "height": 32, "type": 14, "width": 128}], evidence["runtime"]["observations"]["display_layouts_seen"])
 			self.assertEqual({1} | set(range(3, 54)) | {58, 60, 61, 62}, set(evidence["runtime"]["observations"]["lamp_addresses_seen"]))
+		self.assertIn("<external-json>", self.standard_evidence["runtime"]["command_template"])
+		self.assertNotIn("E:\\", self.standard_evidence["runtime"]["command_template"])
+		self.assertNotIn("L:\\", self.standard_evidence["runtime"]["command_template"])
 
 	def test_every_runtime_observation_resolves_to_a_declared_output(self) -> None:
 		for definition, evidence in ((self.standard, self.standard_evidence), (self.le, self.le_evidence)):

@@ -29,7 +29,6 @@ SPATIAL_RETROFIT_PENDING_MACHINE_IDS = (
 	"stern.ripley-s-believe-it-or-not.2004",
 	"stern.spider-man.2007",
 	"stern.the-rolling-stones-limited-edition.2011",
-	"stern.the-rolling-stones-standard.2011",
 	"stern.transformers-limited-edition.2011",
 	"stern.transformers-pro.2011",
 	"stern.tron-legacy-limited-edition.2011",

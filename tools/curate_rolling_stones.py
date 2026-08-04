@@ -345,7 +345,7 @@ def sources(limited_edition: bool) -> list[dict[str, object]]:
 	ipdb_source = IPDB_LE_SOURCE if limited_edition else IPDB_STANDARD_SOURCE
 	ipdb_id = 5708 if limited_edition else 5668
 	return [
-		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/Rolling-Stones-Manual.pdf", "sha256": "1c9dd7f3085ccb159ec2ef976c29602b704c979e7ffcbbfe6bad987916bd22bf", "locator": "Official 99-page scanned Stern manual: switch chart PDF page 51, lamps 53, coils 55/78, major assemblies 1-24, wiring 85-95, and Premium-only notes on 51/55", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "Rolling-Stones-Manual.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T22:32:15.219822Z"},
+		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/Rolling-Stones-Manual.pdf", "sha256": "1c9dd7f3085ccb159ec2ef976c29602b704c979e7ffcbbfe6bad987916bd22bf", "locator": "Official 99-page scanned Stern manual: switch matrix chart PDF page 51, physical switch-location drawing page 52, lamps 53, flasher/coil chart 55/78, major assemblies 1-24, wiring 85-95, and Premium-only notes on 51/55", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "Rolling-Stones-Manual.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T22:32:15.219822Z"},
 		{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/The%20Rolling%20Stones%20LE%20(Stern%202011)%20v1.0.6i.vbs", "revision": VPX_REVISION, "sha256": "969b5a547874f611e55a2cf09dfabcc02f63a816b27e6d459b65f7f6f5298033", "locator": "Known-working rsn_110h table script: callbacks, switches, lamps/GI, trough and ceramic-ball identity, center lock, magnets/posts, controlled gate, auto launch, and seven-position Moving Mick causality", "license": "NOASSERTION", "attribution": "Table authors credited in the script; vpxtable_scripts contributors"},
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c rsn INITGAME/driver family, SAM_NO_AUX, SAM switch serialization, game-on output, and 128x32 DMD", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 		{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames rsn_ driver records and clone graph", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
@@ -377,11 +377,11 @@ Coverage: **author-ready - complete physical inventory, PinMAME bindings, mechan
 
 ## Identity and evidence precedence
 
-This definition covers non-`h` drivers `rsn_103`, `rsn_105`, and `rsn_110`. PinMAME roots them under `rsn_110h` for software lineage, but they run the Standard physical playfield. IPDB identifies the Standard machine as 5668. The official Stern service chart governs physical inventory and wiring. The known-working LE VPX script is ground truth for public addresses and shared mechanism causality; its Premium-only devices are never projected onto Standard. Pinned PinMAME governs SAM serialization, `SAM_NO_AUX`, synthetic game-on 33, and the native 128x32 four-bit DMD.
+This definition covers non-`h` drivers `rsn_103`, `rsn_105`, and `rsn_110`. PinMAME roots them under `rsn_110h` for software lineage, but they run the Standard physical playfield. IPDB identifies the Standard machine as 5668. The authenticated VPUniverse page for Balutito(MOD) 2.0 identifies ROM Name `rsn_110h`; it is explicitly disqualified as an exact Standard table and is not used for Standard geometry or bindings. The official Stern service chart governs physical inventory and wiring. The known-working LE VPX script is ground truth for public addresses and shared mechanism causality; its Premium-only devices are never projected onto Standard. Pinned PinMAME governs SAM serialization, `SAM_NO_AUX`, synthetic game-on 33, and the native 128x32 four-bit DMD.
 
 ## Edition boundary and initial state
 
-The Standard trough contains four steel balls at switches 18-21. It omits matrix switch 17, top shooter switch 50, dedicated magnetic detector D7/public 71, cabinet post buttons D13/D15, both magnets, all three up/down posts, and Premium bottom-arch output 29. Accordingly outputs 5, 7, 17, 29, 30, and 32 are explicit unused Standard channels. The manual calls the fuller service-chart variant “Premium”; that hardware corresponds to PinMAME's Limited Edition `h` drivers. Standard still uses moving target D8/public 72 and common Mick position switches 33-39.
+The Standard trough contains four steel balls at switches 18-21 and a distinct downstream jam opto at switch 22. The official switch-location drawing establishes that physical SW22 position; the retained LE table/script has no SW22 object, so the Standard definition discloses its normalized point as a trough-region projection rather than copying SW21. It omits matrix switch 17, top shooter switch 50, dedicated magnetic detector D7/public 71, cabinet post buttons D13/D15, both magnets, all three up/down posts, and Premium bottom-arch output 29. Accordingly outputs 5, 7, 17, 29, 30, and 32 are explicit unused Standard channels. The manual calls the fuller service-chart variant “Premium”; that hardware corresponds to PinMAME's Limited Edition `h` drivers. Standard still uses moving target D8/public 72 and common Mick position switches 33-39.
 
 ## Moving Mick
 
@@ -404,10 +404,11 @@ The two flippers are outputs 15/16 with public button/EOS pairs 84/83 and 82/81;
 
 ## Sources
 
-- `manual.rolling-stones-standard-le.2011`: official Stern manual, SHA-256 `1c9dd7f3085ccb159ec2ef976c29602b704c979e7ffcbbfe6bad987916bd22bf`; switches PDF page 51, lamps 53, coils 55/78, assemblies 1-24, and wiring 85-95.
+- `manual.rolling-stones-standard-le.2011`: official Stern manual, SHA-256 `1c9dd7f3085ccb159ec2ef976c29602b704c979e7ffcbbfe6bad987916bd22bf`; switch matrix PDF page 51, physical switch-location drawing page 52, lamps 53, flasher/coil chart 55/78, assemblies 1-24, and wiring 85-95.
 - `vpx.rolling-stones-le-1.0.6i`: known-working script at revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`, SHA-256 `969b5a547874f611e55a2cf09dfabcc02f63a816b27e6d459b65f7f6f5298033`; used only for shared hardware causality on Standard.
 - `runtime.rolling-stones-standard.boot-start`: exact `rsn_110` harness, SHA-256 `56292ef32243878eb6347fbb64dc8e0684ae2b49e0c33f75593a2de133329c59`.
 - `pinmame.core.4ec52ff0ac13`: pinned SAM implementation and driver family.
+- `vpuniverse.rolling-stones-balutito-mod-2-0-24384`: authenticated VPUniverse metadata identifies `rsn_110h`; it is explicitly disqualified as an exact Standard table and contributes no Standard geometry or bindings.
 """
 
 
@@ -473,11 +474,16 @@ def runtime_evidence(limited_edition: bool) -> dict[str, object]:
 
 
 def main() -> None:
-	write_json(spatial_partial_path(ROOT / "machines/partial/stern/the-rolling-stones-standard-2011.json"), fail_closed_spatial_partial(build(False)))
+	# The Standard spatial retrofit owns its author-ready output. Keep this
+	# historical two-edition curator deterministic when it is rerun by delegating
+	# that one record to the reviewed generator and retaining the LE fail-closed
+	# output here.
+	from curate_rolling_stones_standard_spatial import promote
+
+	promote()
 	write_json(spatial_partial_path(ROOT / "machines/partial/stern/the-rolling-stones-limited-edition-2011.json"), fail_closed_spatial_partial(build(True)))
 	write_json(ROOT / "evidence/runtime/sam/rolling-stones-standard-boot-start.json", runtime_evidence(False))
 	write_json(ROOT / "evidence/runtime/sam/rolling-stones-limited-edition-boot-start.json", runtime_evidence(True))
-	write_text(ROOT / "knowledge/stern/the-rolling-stones-standard-2011.md", fail_closed_spatial_knowledge("stern.the-rolling-stones-standard.2011", STANDARD_KNOWLEDGE))
 	write_text(ROOT / "knowledge/stern/the-rolling-stones-limited-edition-2011.md", fail_closed_spatial_knowledge("stern.the-rolling-stones-limited-edition.2011", LE_KNOWLEDGE))
 
 

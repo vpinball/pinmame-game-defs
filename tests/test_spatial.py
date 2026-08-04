@@ -91,6 +91,28 @@ class SpatialSchemaAndValidationTests(unittest.TestCase):
 		errors = validate_machine(definition)
 		self.assertTrue(any("author-ready devices require spatial evidence" in error for error in errors))
 
+	def test_author_ready_display_spatial_is_controlled_and_not_playfield(self) -> None:
+		definition = author_ready_definition()
+		definition["displays"][0]["spatial"] = {
+			"status": "not_applicable",
+			"reason": "cabinet_or_service",
+			"provenance": provenance(),
+		}
+		self.assertEqual([], validate_machine(definition))
+		definition["displays"][0]["spatial"] = {
+			"status": "validated",
+			"placements": [placement("display.dmd.screen", "emitter")],
+		}
+		errors = validate_machine(definition)
+		self.assertTrue(any("display spatial records must be controlled not_applicable records" in error for error in errors))
+		definition["displays"][0]["spatial"] = {
+			"status": "not_applicable",
+			"reason": "internal_nonvisual",
+			"provenance": provenance(),
+		}
+		errors = validate_machine(definition)
+		self.assertTrue(any("display spatial record must explicitly identify its cabinet/service location" in error for error in errors))
+
 	def test_schema_shape_and_coordinate_rules_fail_closed(self) -> None:
 		self.assertEqual([], validate_machine(author_ready_definition()))
 		for coordinate, value, expected in (("x", 1.1, "inclusive 0..1"), ("y", float("nan"), "finite number"), ("x", 0.1234567, "six fractional")):
@@ -222,35 +244,35 @@ class SpatialMigrationTests(unittest.TestCase):
 		definitions = [load_json(path) for path in sorted((ROOT / "machines" / "partial").rglob("*.json"))]
 		migrated = {definition["machine"]["id"]: definition for definition in definitions if definition["machine"]["id"] in SPATIAL_RETROFIT_PENDING_MACHINE_IDS}
 		self.assertEqual(set(SPATIAL_RETROFIT_PENDING_MACHINE_IDS), set(migrated))
-		self.assertEqual(18, len(migrated))
+		self.assertEqual(17, len(migrated))
 		for definition in migrated.values():
 			self.assertEqual(2, definition["schema_version"])
 			self.assertEqual("partial", definition["coverage"]["status"])
 			self.assertEqual(["spatial_placement"], definition["coverage"]["missing"])
 			self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 			self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
-		self.assertEqual(15, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
+		self.assertEqual(16, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		report = build_coverage_report(ROOT)
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
 		self.assertEqual(catalog["summary"]["game_count"], report["machine_count"])
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
 		self.assertEqual(785, report["machine_count"])
-		self.assertEqual(15, report["author_ready_count"])
-		self.assertEqual(87, report["partial_count"])
+		self.assertEqual(16, report["author_ready_count"])
+		self.assertEqual(86, report["partial_count"])
 		self.assertEqual(683, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
 		self.assertEqual(786, report["catalog_record_count"])
-		self.assertEqual(18, report["missing_requirement_counts"]["spatial_placement"])
+		self.assertEqual(17, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(786, len(catalog["machines"]))
 		self.assertEqual(785, catalog["summary"]["game_count"])
 		self.assertEqual(786, catalog["summary"]["machine_count"])
-		self.assertEqual(15, catalog["summary"]["author_ready_count"])
+		self.assertEqual(16, catalog["summary"]["author_ready_count"])
 		self.assertEqual(683, catalog["summary"]["stub_count"])
-		self.assertEqual(88, catalog["summary"]["partial_count"])
+		self.assertEqual(87, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
-		self.assertEqual(18, len(note_paths))
+		self.assertEqual(17, len(note_paths))
 		for relative_path in note_paths:
 			note = (ROOT / relative_path).read_text(encoding="utf-8")
 			self.assertIn("Coverage: **partial — normalized spatial placements pending.**", note.splitlines())
