@@ -12,6 +12,7 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 PRO_PATH = ROOT / "machines" / "partial" / "stern" / "avatar-pro-2010.json"
+PRO_KNOWLEDGE_PATH = ROOT / "knowledge" / "stern" / "avatar-pro-2010.md"
 LE_PATH = ROOT / "machines" / "partial" / "stern" / "avatar-limited-edition-2010.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "avatar-pro-boot-start.json"
 LE_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "avatar-limited-edition-boot-start.json"
@@ -56,10 +57,75 @@ class AvatarDefinitionTests(unittest.TestCase):
 				)
 		self.assertEqual("complete", self.pro["knowledge"]["status"])
 		self.assertEqual("complete", self.le["knowledge"]["status"])
-		self.assertEqual([], self.pro["conflicts"])
+		self.assertEqual(
+			{"conflict.pro-le-target-and-sling-spatial", "conflict.pro-le-mechanism-spatial", "conflict.pro-le-flasher-quantity"},
+			{conflict["id"] for conflict in self.pro["conflicts"]},
+		)
 		self.assertEqual([], self.le["conflicts"])
 		self.assertFalse((ROOT / "machines" / "stubs" / "avr_120h.json").exists())
 		self.assertFalse((ROOT / "knowledge" / "stubs" / "avr_120h.md").exists())
+
+	def test_pro_spatial_inventory_retains_only_defensible_geometry_and_quantities(self) -> None:
+		inputs = bindings(self.pro, "inputs", "pinmame.input.switch")
+		outputs = bindings(self.pro, "outputs", "pinmame.output.solenoid")
+		lamps = bindings(self.pro, "outputs", "pinmame.output.lamp")
+		devices = [*self.pro["inputs"], *self.pro["outputs"]]
+		self.assertTrue(all(device.get("spatial", {}).get("status") in {None, "validated", "not_applicable"} for device in devices))
+		self.assertEqual({"unused"}, {inputs[address]["spatial"].get("reason", "located") for address in (41, 47, 48, 72)})
+		blocked_inputs = {18, 19, 20, 21, 45, 46, 57, 58}
+		self.assertTrue(all("spatial" not in inputs[address] for address in blocked_inputs))
+		self.assertTrue(all("intentionally withheld" in inputs[address]["physical"]["notes"] for address in blocked_inputs))
+		self.assertEqual((0.848214, 0.871661), tuple(inputs[22]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.949580, 0.881560), tuple(inputs[23]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		for address in (7, 8, 26, 27):
+			self.assertNotIn("spatial", inputs[address])
+			self.assertIn("polygon-derived", inputs[address]["physical"]["notes"])
+		blocked_flashers = {20, 21, 22, 23, 26}
+		self.assertTrue(all("spatial" not in outputs[address] for address in blocked_flashers))
+		self.assertEqual({20: 1, 21: 2, 22: 1, 23: 1, 26: 1}, {address: outputs[address]["physical"]["quantity"] for address in blocked_flashers})
+		self.assertTrue(all("intentionally withheld" in outputs[address]["physical"]["notes"] for address in blocked_flashers))
+		for address in (6, 7, 17, 18, 25, 30, 31):
+			self.assertNotIn("spatial", outputs[address])
+			self.assertIn("intentionally withheld", outputs[address]["physical"]["notes"])
+		for address in (25, 30, 31):
+			self.assertNotIn("quantity", outputs[address]["physical"])
+			self.assertIn("conflict", outputs[address]["physical"]["notes"])
+		self.assertIn("disagree", outputs[6]["physical"]["notes"])
+		self.assertIn("disagree", outputs[7]["physical"]["notes"])
+		for address in (5, 13, 19):
+			self.assertEqual(("not_applicable", "internal_nonvisual"), (outputs[address]["spatial"]["status"], outputs[address]["spatial"]["reason"]))
+			self.assertIn("internal mechanism load", outputs[address]["physical"]["notes"])
+		self.assertEqual((2, 2), (outputs[28]["physical"]["quantity"], len(outputs[28]["spatial"]["placements"])))
+		self.assertEqual((1, 1), (outputs[29]["physical"]["quantity"], len(outputs[29]["spatial"]["placements"])))
+		self.assertEqual((1, 1), (outputs[32]["physical"]["quantity"], len(outputs[32]["spatial"]["placements"])))
+		self.assertTrue(all(lamps[address]["physical"]["quantity"] == len(lamps[address]["spatial"]["placements"]) for address in lamps if lamps[address]["availability"] == "used" and address not in {1, 2}))
+		gi = bindings(self.pro, "outputs", "pinmame.output.gi")[0]
+		self.assertEqual(37, gi["physical"]["quantity"])
+		self.assertNotIn("spatial", gi)
+		self.assertIn("23 generic VPX GI render-pool objects", gi["physical"]["notes"])
+
+	def test_pro_spatial_source_and_display_contract_are_pinned(self) -> None:
+		sources = {source["id"]: source for source in self.pro["sources"]}
+		archive = sources["vpx-table.avatar-pro.archive-080116a-geometry"]
+		self.assertEqual("aaff981437470f8c4edf6b2902e7a6d78db19d826a04d9662e3bcb812dd9740d", archive["sha256"])
+		self.assertFalse(archive["known_working"])
+		self.assertNotIn("L:\\", archive["locator"])
+		self.assertIn("byte-distinct", archive["locator"])
+		self.assertFalse(sources["vpx-table.avatar-pro.vpuniverse-4755"]["known_working"])
+		self.assertIn("byte-distinct", sources["vpx-table.avatar-pro.vpuniverse-4755"]["locator"])
+		display = self.pro["displays"][0]
+		self.assertEqual((128, 32, "dmd"), (display["width"], display["height"], display["kind"]))
+		self.assertIn("runtime.avatar-pro.boot-start", display["provenance"]["source_refs"])
+		self.assertEqual(("not_applicable", "cabinet_or_service"), (display["spatial"]["status"], display["spatial"]["reason"]))
+
+	def test_pro_spatial_generator_matches_committed_artifacts(self) -> None:
+		sys.path.insert(0, str(ROOT / "tools"))
+		try:
+			curator = importlib.import_module("curate_avatar_pro_spatial")
+		finally:
+			sys.path.pop(0)
+		self.assertEqual(self.pro, curator.build_curated_definition())
+		self.assertEqual(PRO_KNOWLEDGE_PATH.read_text(encoding="utf-8"), curator.SPATIAL_KNOWLEDGE)
 
 	def test_le_spatial_retrofit_keeps_edition_specific_devices_out_of_pro_geometry(self) -> None:
 		inputs = bindings(self.le, "inputs", "pinmame.input.switch")
@@ -172,6 +238,21 @@ class AvatarDefinitionTests(unittest.TestCase):
 				with self.assertRaisesRegex(RuntimeError, "author-ready artifact exists"):
 					generator.main()
 			self.assertEqual(before, {path: path.read_bytes() for path in paths})
+
+	def test_regular_avatar_generator_preserves_curated_pro_artifacts(self) -> None:
+		sys.path.insert(0, str(ROOT / "tools"))
+		try:
+			generator = importlib.import_module("curate_avatar")
+			le_curator = importlib.import_module("curate_avatar_le_spatial")
+		finally:
+			sys.path.pop(0)
+		with tempfile.TemporaryDirectory() as root:
+			author_ready_path = Path(root) / "missing-author-ready.json"
+			with patch.object(generator, "AUTHOR_READY_PATH", author_ready_path), patch.object(generator, "write_json") as write_json_mock, patch.object(generator, "write_text") as write_text_mock, patch.object(le_curator, "curate") as le_curate_mock:
+				generator.main()
+			self.assertFalse(any(call.args[0] == PRO_PATH for call in write_json_mock.call_args_list))
+			self.assertFalse(any(call.args[0] == PRO_KNOWLEDGE_PATH for call in write_text_mock.call_args_list))
+			le_curate_mock.assert_called_once_with()
 
 	def test_le_cabinet_controls_quantities_and_spatial_provenance_are_audited(self) -> None:
 		inputs = bindings(self.le, "inputs", "pinmame.input.switch")

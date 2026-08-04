@@ -1,5 +1,36 @@
 {
-  "conflicts": [],
+  "conflicts": [
+    {
+      "description": "The retained Pro table offers polygon-derived target and slingshot centers, but the reviewed Limited Edition record either disagrees materially or explicitly rejects the corresponding manually calibrated points. No polygon centroid is promoted as a physical switch or actuator placement until the cross-edition object mapping is reconciled.",
+      "id": "conflict.pro-le-target-and-sling-spatial",
+      "path": "inputs[pinmame.input.switch:7|8|26|27],outputs[pinmame.output.solenoid:17|18]",
+      "source_refs": [
+        "manual.avatar-pro-le.2010",
+        "vpx-table.avatar-pro.archive-080116a-geometry",
+        "vpx.avatar-pro-lw-vpumod-1.12"
+      ]
+    },
+    {
+      "description": "The Pro candidate projected relay, motor, and Link lockup channels onto shared mechanism or target anchors that the Limited Edition review rejects or places differently. Internal relay/motor loads are nonvisual and Q6/Q7 remain unlocated until the mechanism crosswalk is reconciled.",
+      "id": "conflict.pro-le-mechanism-spatial",
+      "path": "outputs[pinmame.output.solenoid:5|6|7|13|19]",
+      "source_refs": [
+        "manual.avatar-pro-le.2010",
+        "vpx-table.avatar-pro.archive-080116a-geometry",
+        "vpx.avatar-pro-lw-vpumod-1.12"
+      ]
+    },
+    {
+      "description": "Q25/Q30/Q31 physical quantities inferred from Pro render objects contradict the reviewed Limited Edition record derived from the same manual. Near-co-located helper objects do not prove separate physical emitters, so quantities and placements remain withheld.",
+      "id": "conflict.pro-le-flasher-quantity",
+      "path": "outputs[pinmame.output.solenoid:25|30|31]",
+      "source_refs": [
+        "manual.avatar-pro-le.2010",
+        "vpx-table.avatar-pro.archive-080116a-geometry",
+        "vpx.avatar-pro-lw-vpumod-1.12"
+      ]
+    }
+  ],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.sam"
@@ -32,6 +63,17 @@
           "runtime.avatar-pro.boot-start"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       },
       "width": 128
     }
@@ -102,6 +144,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.1-left-return-lane-r.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.186581,
+            "y": 0.707801
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -142,6 +203,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.2-navi-n-target.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.090089,
+            "y": 0.525258
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -182,6 +262,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.3-navi-a-target.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.101497,
+            "y": 0.496883
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -222,6 +321,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.4-navi-v-target.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.112097,
+            "y": 0.469522
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -262,6 +380,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.5-navi-i-target.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.124633,
+            "y": 0.441681
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -301,6 +438,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -330,6 +478,7 @@
       "label": "Right two-bank bottom target",
       "normally_closed": false,
       "physical": {
+        "notes": "Spatial placement is intentionally withheld because the retained Pro polygon-derived center conflicts with or is explicitly rejected by the reviewed Limited Edition record. A physical target or sling crosswalk is required before promotion.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -370,6 +519,7 @@
       "label": "Right two-bank top target",
       "normally_closed": false,
       "physical": {
+        "notes": "Spatial placement is intentionally withheld because the retained Pro polygon-derived center conflicts with or is explicitly rejected by the reviewed Limited Edition record. A physical target or sling crosswalk is required before promotion.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -421,6 +571,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.9-left-orbit-spinner.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.128414,
+            "y": 0.32896
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -461,6 +630,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.10-left-orbit.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.102416,
+            "y": 0.082506
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -501,6 +689,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.11-left-top-lane.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.340902,
+            "y": 0.060967
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -541,6 +748,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.12-center-top-lane.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.431239,
+            "y": 0.061913
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -581,6 +807,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.13-right-top-lane.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.518423,
+            "y": 0.067114
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -624,6 +869,25 @@
       "roles": [
         "ball.position"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.14-link-lockup.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.339811,
+            "y": 0.266371
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -667,6 +931,16 @@
       "roles": [
         "cabinet.tournament-start"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -710,6 +984,16 @@
       "roles": [
         "cabinet.start"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P1",
@@ -750,6 +1034,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.17-center-target.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.453127,
+            "y": 0.260051
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P3",
@@ -779,6 +1082,7 @@
       "label": "Trough 4",
       "normally_closed": false,
       "physical": {
+        "notes": "Spatial placement is intentionally withheld: the working script and manual establish the switch identity/order, but the retained geometry has no one-to-one physical switch object or defensible endpoint crosswalk.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -822,6 +1126,7 @@
       "label": "Trough 3",
       "normally_closed": false,
       "physical": {
+        "notes": "Spatial placement is intentionally withheld: the working script and manual establish the switch identity/order, but the retained geometry has no one-to-one physical switch object or defensible endpoint crosswalk.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -865,6 +1170,7 @@
       "label": "Trough 2",
       "normally_closed": false,
       "physical": {
+        "notes": "Spatial placement is intentionally withheld: the working script and manual establish the switch identity/order, but the retained geometry has no one-to-one physical switch object or defensible endpoint crosswalk.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -908,6 +1214,7 @@
       "label": "Trough 1",
       "normally_closed": false,
       "physical": {
+        "notes": "Spatial placement is intentionally withheld: the working script and manual establish the switch identity/order, but the retained geometry has no one-to-one physical switch object or defensible endpoint crosswalk.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -965,6 +1272,26 @@
       "roles": [
         "ball.position"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.22-trough-jam.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.848214,
+            "y": 0.871661
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P3",
@@ -1008,6 +1335,26 @@
       "roles": [
         "ball.position"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.23-shooter-lane.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.94958,
+            "y": 0.88156
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P3",
@@ -1048,6 +1395,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.24-left-outlane.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.047966,
+            "y": 0.743852
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P3",
@@ -1088,6 +1454,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.25-left-return-lane-l.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.120071,
+            "y": 0.702405
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P3",
@@ -1117,6 +1502,7 @@
       "label": "Left slingshot",
       "normally_closed": false,
       "physical": {
+        "notes": "Spatial placement is intentionally withheld because the retained Pro polygon-derived center conflicts with or is explicitly rejected by the reviewed Limited Edition record. A physical target or sling crosswalk is required before promotion.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -1157,6 +1543,7 @@
       "label": "Right slingshot",
       "normally_closed": false,
       "physical": {
+        "notes": "Spatial placement is intentionally withheld because the retained Pro polygon-derived center conflicts with or is explicitly rejected by the reviewed Limited Edition record. A physical target or sling crosswalk is required before promotion.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -1208,6 +1595,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.28-right-return-lane.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.799874,
+            "y": 0.7145
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P3",
@@ -1248,6 +1654,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.29-right-outlane.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.88415,
+            "y": 0.747728
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P3",
@@ -1288,6 +1713,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.30-left-pop-bumper.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.310465,
+            "y": 0.142791
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P3",
@@ -1328,6 +1772,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.31-right-pop-bumper.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.575565,
+            "y": 0.133134
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P3",
@@ -1368,6 +1831,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.32-bottom-pop-bumper.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.443293,
+            "y": 0.214691
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P3",
@@ -1407,6 +1889,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -1446,6 +1939,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -1486,6 +1990,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.35-right-orbit.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.889747,
+            "y": 0.069832
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -1526,6 +2049,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.36-center-amp-target.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.730655,
+            "y": 0.175925
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -1566,6 +2108,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.37-left-amp-target.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.612371,
+            "y": 0.263978
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -1606,6 +2167,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.38-right-amp-target.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.752508,
+            "y": 0.276196
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -1647,6 +2227,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.39-captive-ball.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.77416,
+            "y": 0.376832
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -1687,6 +2286,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.40-right-orbit-spinner.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.836774,
+            "y": 0.422809
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -1727,6 +2345,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -1767,6 +2396,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.42-amp-three-bank-left-target.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.59828,
+            "y": 0.318706
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -1807,6 +2455,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.43-amp-three-bank-center-target.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.652836,
+            "y": 0.324586
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -1847,6 +2514,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.44-amp-three-bank-right-target.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.707458,
+            "y": 0.330496
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -1876,6 +2562,7 @@
       "label": "AMP three-bank down",
       "normally_closed": false,
       "physical": {
+        "notes": "Spatial placement is intentionally withheld: the working script and manual establish the switch identity/order, but the retained geometry has no one-to-one physical switch object or defensible endpoint crosswalk.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1919,6 +2606,7 @@
       "label": "AMP three-bank up",
       "normally_closed": false,
       "physical": {
+        "notes": "Spatial placement is intentionally withheld: the working script and manual establish the switch identity/order, but the retained geometry has no one-to-one physical switch object or defensible endpoint crosswalk.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1973,6 +2661,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -2013,6 +2712,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P4",
@@ -2052,6 +2762,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2091,6 +2812,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2130,6 +2862,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2170,6 +2913,25 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.52-left-ramp-exit.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.941477,
+            "y": 0.167447
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2209,6 +2971,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2248,6 +3021,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2287,6 +3071,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2326,6 +3121,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2355,6 +3161,7 @@
       "label": "AMP suit motor down",
       "normally_closed": false,
       "physical": {
+        "notes": "Spatial placement is intentionally withheld: the working script and manual establish the switch identity/order, but the retained geometry has no one-to-one physical switch object or defensible endpoint crosswalk.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2398,6 +3205,7 @@
       "label": "AMP suit motor up",
       "normally_closed": false,
       "physical": {
+        "notes": "Spatial placement is intentionally withheld: the working script and manual establish the switch identity/order, but the retained geometry has no one-to-one physical switch object or defensible endpoint crosswalk.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -2451,6 +3259,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2490,6 +3309,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2529,6 +3359,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2568,6 +3409,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2607,6 +3459,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2646,6 +3509,17 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P5",
@@ -2687,7 +3561,17 @@
       "pulse": true,
       "roles": [
         "cabinet.coin.left"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -2722,7 +3606,17 @@
       "pulse": true,
       "roles": [
         "cabinet.coin.center"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -2757,7 +3651,17 @@
       "pulse": true,
       "roles": [
         "cabinet.coin.right"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -2792,7 +3696,17 @@
       "pulse": true,
       "roles": [
         "cabinet.coin.fourth"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -2827,7 +3741,17 @@
       "pulse": true,
       "roles": [
         "cabinet.coin.fifth"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -2859,7 +3783,18 @@
         ],
         "status": "validated"
       },
-      "pulse": false
+      "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -2891,7 +3826,18 @@
         ],
         "status": "validated"
       },
-      "pulse": false
+      "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -2923,7 +3869,18 @@
         ],
         "status": "validated"
       },
-      "pulse": false
+      "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -2958,7 +3915,17 @@
       "pulse": false,
       "roles": [
         "flipper.lower.left.button"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -2993,7 +3960,26 @@
       "pulse": false,
       "roles": [
         "flipper.lower.left.eos"
-      ]
+      ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.d10-left-flipper-end-of-stroke.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.320378,
+            "y": 0.831324
+          }
+        ],
+        "status": "validated"
+      }
     },
     {
       "aliases": [
@@ -3028,7 +4014,17 @@
       "pulse": false,
       "roles": [
         "flipper.lower.right.button"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3063,7 +4059,26 @@
       "pulse": false,
       "roles": [
         "flipper.lower.right.eos"
-      ]
+      ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.d12-right-flipper-end-of-stroke.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.66372,
+            "y": 0.829669
+          }
+        ],
+        "status": "validated"
+      }
     },
     {
       "aliases": [
@@ -3095,7 +4110,18 @@
         ],
         "status": "validated"
       },
-      "pulse": false
+      "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3127,7 +4153,18 @@
         ],
         "status": "validated"
       },
-      "pulse": false
+      "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3159,7 +4196,18 @@
         ],
         "status": "validated"
       },
-      "pulse": false
+      "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3191,7 +4239,18 @@
         ],
         "status": "validated"
       },
-      "pulse": false
+      "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3226,7 +4285,17 @@
       "pulse": false,
       "roles": [
         "cabinet.tilt"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3261,7 +4330,17 @@
       "pulse": false,
       "roles": [
         "cabinet.slam-tilt"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3296,7 +4375,17 @@
       "pulse": false,
       "roles": [
         "cabinet.ticket-notch"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3328,7 +4417,18 @@
         ],
         "status": "validated"
       },
-      "pulse": false
+      "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3363,7 +4463,17 @@
       "pulse": false,
       "roles": [
         "service.back"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3398,7 +4508,17 @@
       "pulse": false,
       "roles": [
         "service.down"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3433,7 +4553,17 @@
       "pulse": false,
       "roles": [
         "service.up"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3468,7 +4598,17 @@
       "pulse": false,
       "roles": [
         "service.enter"
-      ]
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3499,6 +4639,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3530,6 +4680,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3561,6 +4721,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3592,6 +4762,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3623,6 +4803,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3654,6 +4844,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3685,6 +4885,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3716,6 +4926,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     }
   ],
@@ -4028,6 +5248,26 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.1-trough-up-kicker.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.848214,
+            "y": 0.871661
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "I/O Power Driver board",
         "control_connection": "J8-P1",
@@ -4067,6 +5307,26 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.2-auto-launch.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.95109,
+            "y": 0.977482
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "I/O Power Driver board",
         "control_connection": "J8-P3",
@@ -4103,6 +5363,26 @@
           "rom.avatar-pro.avr-200",
           "pinmame.core.4ec52ff0ac13",
           "vpx.avatar-pro-lw-vpumod-1.12"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.3-amp-suit-magnet.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.621849,
+            "y": 0.385057
+          }
         ],
         "status": "validated"
       },
@@ -4147,6 +5427,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board",
         "control_connection": "J8-P5",
@@ -4173,6 +5464,9 @@
       "id": "device.5-amp-three-bank-motor-relay",
       "kind": "relay",
       "label": "AMP three-bank motor relay",
+      "physical": {
+        "notes": "This relay or motor is an internal mechanism load. Its previously shared assembly or target point is rejected as a device location and is not a playfield effect placement."
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -4181,6 +5475,17 @@
           "vpx.avatar-pro-lw-vpumod-1.12"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "internal_nonvisual",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "I/O Power Driver board",
@@ -4212,6 +5517,9 @@
       "id": "device.6-link-lockup-up",
       "kind": "coil",
       "label": "Link lockup up",
+      "physical": {
+        "notes": "Spatial placement is intentionally withheld because the Pro and Limited Edition review records disagree between the Link lockup switch anchor and captive-ball assembly anchor; neither point is promoted until the shared mechanism crosswalk is reconciled."
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -4251,6 +5559,9 @@
       "id": "device.7-link-lockup-latch",
       "kind": "coil",
       "label": "Link lockup latch",
+      "physical": {
+        "notes": "Spatial placement is intentionally withheld because the Pro and Limited Edition review records disagree between the Link lockup switch anchor and captive-ball assembly anchor; neither point is promoted until the shared mechanism crosswalk is reconciled."
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -4301,6 +5612,19 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.shaker"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board",
         "control_connection": "J8-P9",
@@ -4337,6 +5661,26 @@
           "rom.avatar-pro.avr-200",
           "pinmame.core.4ec52ff0ac13",
           "vpx.avatar-pro-lw-vpumod-1.12"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.9-left-pop-bumper.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.310465,
+            "y": 0.142791
+          }
         ],
         "status": "validated"
       },
@@ -4379,6 +5723,26 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.10-right-pop-bumper.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.575565,
+            "y": 0.133134
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "I/O Power Driver board",
         "control_connection": "J9-P2",
@@ -4415,6 +5779,26 @@
           "rom.avatar-pro.avr-200",
           "pinmame.core.4ec52ff0ac13",
           "vpx.avatar-pro-lw-vpumod-1.12"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.11-bottom-pop-bumper.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.443293,
+            "y": 0.214691
+          }
         ],
         "status": "validated"
       },
@@ -4459,6 +5843,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board",
         "control_connection": "J9-P5",
@@ -4485,6 +5880,9 @@
       "id": "device.13-amp-suit-motor-direction-relay",
       "kind": "relay",
       "label": "AMP suit motor direction relay",
+      "physical": {
+        "notes": "This relay or motor is an internal mechanism load. Its previously shared assembly or target point is rejected as a device location and is not a playfield effect placement."
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -4493,6 +5891,17 @@
           "vpx.avatar-pro-lw-vpumod-1.12"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "internal_nonvisual",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "I/O Power Driver board",
@@ -4535,6 +5944,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board",
         "control_connection": "J9-P7",
@@ -4567,6 +5987,26 @@
           "rom.avatar-pro.avr-200",
           "pinmame.core.4ec52ff0ac13",
           "vpx.avatar-pro-lw-vpumod-1.12"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.15-left-flipper.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.320378,
+            "y": 0.831324
+          }
         ],
         "status": "validated"
       },
@@ -4609,6 +6049,26 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.16-right-flipper.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.66372,
+            "y": 0.829669
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "I/O Power Driver board",
         "control_connection": "J9-P9",
@@ -4639,6 +6099,9 @@
       "id": "device.17-left-slingshot",
       "kind": "coil",
       "label": "Left slingshot",
+      "physical": {
+        "notes": "Spatial placement is intentionally withheld because the retained polygon-derived sling center is explicitly rejected by the reviewed Limited Edition record. No actuator point is promoted until the physical sling crosswalk is reconciled."
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -4678,6 +6141,9 @@
       "id": "device.18-right-slingshot",
       "kind": "coil",
       "label": "Right slingshot",
+      "physical": {
+        "notes": "Spatial placement is intentionally withheld because the retained polygon-derived sling center is explicitly rejected by the reviewed Limited Edition record. No actuator point is promoted until the physical sling crosswalk is reconciled."
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -4717,6 +6183,9 @@
       "id": "device.19-amp-suit-motor",
       "kind": "motor",
       "label": "AMP suit motor",
+      "physical": {
+        "notes": "This relay or motor is an internal mechanism load. Its previously shared assembly or target point is rejected as a device location and is not a playfield effect placement."
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -4725,6 +6194,17 @@
           "vpx.avatar-pro-lw-vpumod-1.12"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "vpx.avatar-pro-lw-vpumod-1.12"
+          ],
+          "status": "validated"
+        },
+        "reason": "internal_nonvisual",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "I/O Power Driver board",
@@ -4756,6 +6236,10 @@
       "id": "device.20-link-flasher",
       "kind": "flasher",
       "label": "Link flasher",
+      "physical": {
+        "notes": "Spatial placement is intentionally withheld. The manual establishes the physical flasher and multiplicity, but Q20/Q22/Q23 are rendered through Link helper passes, Q21 is a two-bulb backpanel assembly outside playfield space, and Q26 has no defensible one-to-one physical anchor in the retained candidate.",
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -4796,7 +6280,7 @@
       "kind": "flasher",
       "label": "Backpanel flashers x2",
       "physical": {
-        "notes": "Two physical backpanel flasher bulbs; cabinet/backpanel-only and outside normalized playfield space.",
+        "notes": "Two physical backpanel flasher bulbs; cabinet/backpanel-only and outside normalized playfield space. Spatial placement is intentionally withheld. The manual establishes the physical flasher and multiplicity, but Q20/Q22/Q23 are rendered through Link helper passes, Q21 is a two-bulb backpanel assembly outside playfield space, and Q26 has no defensible one-to-one physical anchor in the retained candidate.",
         "quantity": 2
       },
       "provenance": {
@@ -4838,6 +6322,10 @@
       "id": "device.22-link-left-flasher",
       "kind": "flasher",
       "label": "Link left flasher",
+      "physical": {
+        "notes": "Spatial placement is intentionally withheld. The manual establishes the physical flasher and multiplicity, but Q20/Q22/Q23 are rendered through Link helper passes, Q21 is a two-bulb backpanel assembly outside playfield space, and Q26 has no defensible one-to-one physical anchor in the retained candidate.",
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -4877,6 +6365,10 @@
       "id": "device.23-link-right-flasher",
       "kind": "flasher",
       "label": "Link right flasher",
+      "physical": {
+        "notes": "Spatial placement is intentionally withheld. The manual establishes the physical flasher and multiplicity, but Q20/Q22/Q23 are rendered through Link helper passes, Q21 is a two-bulb backpanel assembly outside playfield space, and Q26 has no defensible one-to-one physical anchor in the retained candidate.",
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -4927,6 +6419,19 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.coin-meter"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board",
         "control_connection": "J7-P10",
@@ -4957,6 +6462,9 @@
       "id": "device.25-pop-bumper-flasher",
       "kind": "flasher",
       "label": "Pop bumper flasher",
+      "physical": {
+        "notes": "Spatial placement and physical quantity are intentionally withheld. Q25/Q30/Q31 conflict with the same-manual Limited Edition record, and Q30/Q31 expose near-co-located render objects that do not prove separate physical #89 emitters."
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -4996,6 +6504,10 @@
       "id": "device.26-amp-multiball-flasher",
       "kind": "flasher",
       "label": "AMP multiball flasher",
+      "physical": {
+        "notes": "Spatial placement is intentionally withheld. The manual establishes the physical flasher and multiplicity, but Q20/Q22/Q23 are rendered through Link helper passes, Q21 is a two-bulb backpanel assembly outside playfield space, and Q26 has no defensible one-to-one physical anchor in the retained candidate.",
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -5046,6 +6558,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board",
         "control_connection": "J6-P3",
@@ -5072,12 +6595,51 @@
       "id": "device.28-amp-suit-flashers-x2",
       "kind": "flasher",
       "label": "AMP suit flashers x2",
+      "physical": {
+        "notes": "The manual multiplicity is preserved as two separate physical #89 flasher emitters; the two well-separated exact f28 table centers are used after script/manual reconciliation.",
+        "quantity": 2
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "pinmame.core.4ec52ff0ac13",
           "vpx.avatar-pro-lw-vpumod-1.12"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.28-amp-suit-flashers-x2.emitter.1",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.779945,
+            "y": 0.232257
+          },
+          {
+            "id": "device.28-amp-suit-flashers-x2.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.631835,
+            "y": 0.214576
+          }
         ],
         "status": "validated"
       },
@@ -5111,12 +6673,36 @@
       "id": "device.29-left-side-flasher",
       "kind": "flasher",
       "label": "Left side flasher",
+      "physical": {
+        "notes": "The manual calls out one physical flasher. The two same-channel table helper objects are render passes of that one emitter and are represented by their center average.",
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "pinmame.core.4ec52ff0ac13",
           "vpx.avatar-pro-lw-vpumod-1.12"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.29-left-side-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.064306,
+            "y": 0.39573
+          }
         ],
         "status": "validated"
       },
@@ -5150,6 +6736,9 @@
       "id": "device.30-left-blue-flasher",
       "kind": "flasher",
       "label": "Left blue flasher",
+      "physical": {
+        "notes": "Spatial placement and physical quantity are intentionally withheld. Q25/Q30/Q31 conflict with the same-manual Limited Edition record, and Q30/Q31 expose near-co-located render objects that do not prove separate physical #89 emitters."
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -5189,6 +6778,9 @@
       "id": "device.31-right-blue-flasher",
       "kind": "flasher",
       "label": "Right blue flasher",
+      "physical": {
+        "notes": "Spatial placement and physical quantity are intentionally withheld. Q25/Q30/Q31 conflict with the same-manual Limited Edition record, and Q30/Q31 expose near-co-located render objects that do not prove separate physical #89 emitters."
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
@@ -5228,12 +6820,36 @@
       "id": "device.32-right-side-flasher",
       "kind": "flasher",
       "label": "Right side flasher",
+      "physical": {
+        "notes": "The manual calls out one physical flasher. The two same-channel table helper objects are render passes of that one emitter and are represented by their center average.",
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "pinmame.core.4ec52ff0ac13",
           "vpx.avatar-pro-lw-vpumod-1.12"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.32-right-side-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.avatar-pro-le.2010",
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.963465,
+            "y": 0.55365
+          }
         ],
         "status": "validated"
       },
@@ -5272,6 +6888,17 @@
           "runtime.avatar-pro.boot-start"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5298,6 +6925,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5324,6 +6962,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5350,6 +6999,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5376,6 +7036,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5402,6 +7073,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5428,6 +7110,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5454,6 +7147,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5480,6 +7184,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5506,6 +7221,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5532,6 +7258,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5558,6 +7295,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5584,6 +7332,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5610,6 +7369,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5636,6 +7406,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5662,6 +7443,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5688,6 +7480,17 @@
           "rom.avatar-pro.avr-200"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.avatar-pro.boot-start"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -5716,6 +7519,19 @@
           "runtime.avatar-pro.boot-start"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "cabinet.start"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
@@ -5752,6 +7568,19 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.tournament"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P8",
@@ -5779,11 +7608,33 @@
       "id": "lamp.3-shoot-again",
       "kind": "lamp",
       "label": "Shoot Again",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.3-shoot-again.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.490606,
+            "y": 0.871016
+          }
         ],
         "status": "validated"
       },
@@ -5814,11 +7665,33 @@
       "id": "lamp.4-grace",
       "kind": "lamp",
       "label": "Grace",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.4-grace.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.489311,
+            "y": 0.803019
+          }
         ],
         "status": "validated"
       },
@@ -5849,11 +7722,33 @@
       "id": "lamp.5-tsu-tey",
       "kind": "lamp",
       "label": "Tsu'tey",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.5-tsu-tey.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.490046,
+            "y": 0.775875
+          }
         ],
         "status": "validated"
       },
@@ -5884,11 +7779,33 @@
       "id": "lamp.6-mo-at",
       "kind": "lamp",
       "label": "Mo'at",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.6-mo-at.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.490108,
+            "y": 0.748433
+          }
         ],
         "status": "validated"
       },
@@ -5919,11 +7836,33 @@
       "id": "lamp.7-eytukan",
       "kind": "lamp",
       "label": "Eytukan",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.7-eytukan.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.49032,
+            "y": 0.721313
+          }
         ],
         "status": "validated"
       },
@@ -5954,11 +7893,33 @@
       "id": "lamp.8-neytiri",
       "kind": "lamp",
       "label": "Neytiri",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.8-neytiri.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.491633,
+            "y": 0.694519
+          }
         ],
         "status": "validated"
       },
@@ -5989,11 +7950,33 @@
       "id": "lamp.9-jake",
       "kind": "lamp",
       "label": "Jake",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.9-jake.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.490593,
+            "y": 0.666413
+          }
         ],
         "status": "validated"
       },
@@ -6024,11 +8007,33 @@
       "id": "lamp.10-navi-i",
       "kind": "lamp",
       "label": "NAVI I",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.10-navi-i.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.204757,
+            "y": 0.45881
+          }
         ],
         "status": "validated"
       },
@@ -6059,11 +8064,33 @@
       "id": "lamp.11-navi-v",
       "kind": "lamp",
       "label": "NAVI V",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.11-navi-v.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.197404,
+            "y": 0.486528
+          }
         ],
         "status": "validated"
       },
@@ -6094,11 +8121,33 @@
       "id": "lamp.12-navi-a",
       "kind": "lamp",
       "label": "NAVI A",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.12-navi-a.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.190051,
+            "y": 0.514483
+          }
         ],
         "status": "validated"
       },
@@ -6129,11 +8178,33 @@
       "id": "lamp.13-navi-n",
       "kind": "lamp",
       "label": "NAVI N",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.13-navi-n.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.183092,
+            "y": 0.542734
+          }
         ],
         "status": "validated"
       },
@@ -6164,11 +8235,33 @@
       "id": "lamp.14-right-outlane",
       "kind": "lamp",
       "label": "Right outlane",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.14-right-outlane.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.881488,
+            "y": 0.671041
+          }
         ],
         "status": "validated"
       },
@@ -6199,11 +8292,33 @@
       "id": "lamp.15-right-return-lane",
       "kind": "lamp",
       "label": "Right return lane",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.15-right-return-lane.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.79675,
+            "y": 0.645379
+          }
         ],
         "status": "validated"
       },
@@ -6234,11 +8349,33 @@
       "id": "lamp.16-right-two-bank-arrow",
       "kind": "lamp",
       "label": "Right two-bank arrow",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.16-right-two-bank-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.718503,
+            "y": 0.598145
+          }
         ],
         "status": "validated"
       },
@@ -6269,11 +8406,33 @@
       "id": "lamp.17-left-return-lane-r",
       "kind": "lamp",
       "label": "Left return lane R",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.17-left-return-lane-r.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.18695,
+            "y": 0.658666
+          }
         ],
         "status": "validated"
       },
@@ -6304,11 +8463,33 @@
       "id": "lamp.18-left-return-lane-l",
       "kind": "lamp",
       "label": "Left return lane L",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.18-left-return-lane-l.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.120206,
+            "y": 0.653066
+          }
         ],
         "status": "validated"
       },
@@ -6339,11 +8520,33 @@
       "id": "lamp.19-left-outlane",
       "kind": "lamp",
       "label": "Left outlane",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.19-left-outlane.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.048361,
+            "y": 0.691689
+          }
         ],
         "status": "validated"
       },
@@ -6385,6 +8588,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P6",
@@ -6412,11 +8626,33 @@
       "id": "lamp.21-right-two-bank-bottom-target",
       "kind": "lamp",
       "label": "Right two-bank bottom target",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.21-right-two-bank-bottom-target.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.794232,
+            "y": 0.563551
+          }
         ],
         "status": "validated"
       },
@@ -6447,11 +8683,33 @@
       "id": "lamp.22-right-two-bank-top-target",
       "kind": "lamp",
       "label": "Right two-bank top target",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.22-right-two-bank-top-target.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.784566,
+            "y": 0.535861
+          }
         ],
         "status": "validated"
       },
@@ -6482,11 +8740,33 @@
       "id": "lamp.23-extra-ball",
       "kind": "lamp",
       "label": "Extra Ball",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.23-extra-ball.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.205179,
+            "y": 0.261519
+          }
         ],
         "status": "validated"
       },
@@ -6517,11 +8797,33 @@
       "id": "lamp.24-navi",
       "kind": "lamp",
       "label": "Navi",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.24-navi.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.302713,
+            "y": 0.636794
+          }
         ],
         "status": "validated"
       },
@@ -6560,6 +8862,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P9",
@@ -6587,11 +8900,33 @@
       "id": "lamp.26-left-four-bank-arrow",
       "kind": "lamp",
       "label": "Left four-bank arrow",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.26-left-four-bank-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.227358,
+            "y": 0.590894
+          }
         ],
         "status": "validated"
       },
@@ -6622,11 +8957,33 @@
       "id": "lamp.27-amp-suit-x",
       "kind": "lamp",
       "label": "AMP suit X",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.27-amp-suit-x.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.546577,
+            "y": 0.531511
+          }
         ],
         "status": "validated"
       },
@@ -6657,11 +9014,33 @@
       "id": "lamp.28-captive-ball-x",
       "kind": "lamp",
       "label": "Captive ball X",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.28-captive-ball-x.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.651375,
+            "y": 0.534054
+          }
         ],
         "status": "validated"
       },
@@ -6692,11 +9071,33 @@
       "id": "lamp.29-link-x",
       "kind": "lamp",
       "label": "Link X",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.29-link-x.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.448355,
+            "y": 0.489142
+          }
         ],
         "status": "validated"
       },
@@ -6727,11 +9128,33 @@
       "id": "lamp.30-amp-suit-arrow",
       "kind": "lamp",
       "label": "AMP suit arrow",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.30-amp-suit-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.568368,
+            "y": 0.486411
+          }
         ],
         "status": "validated"
       },
@@ -6762,11 +9185,33 @@
       "id": "lamp.31-captive-ball-arrow",
       "kind": "lamp",
       "label": "Captive ball arrow",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.31-captive-ball-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.686702,
+            "y": 0.49159
+          }
         ],
         "status": "validated"
       },
@@ -6797,11 +9242,33 @@
       "id": "lamp.32-right-orbit-x",
       "kind": "lamp",
       "label": "Right orbit X",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.32-right-orbit-x.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.767487,
+            "y": 0.501427
+          }
         ],
         "status": "validated"
       },
@@ -6832,11 +9299,33 @@
       "id": "lamp.33-right-loop-arrow",
       "kind": "lamp",
       "label": "Right loop arrow",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.33-right-loop-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.802111,
+            "y": 0.457354
+          }
         ],
         "status": "validated"
       },
@@ -6867,11 +9356,33 @@
       "id": "lamp.34-eywa",
       "kind": "lamp",
       "label": "Eywa",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.34-eywa.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.728551,
+            "y": 0.437536
+          }
         ],
         "status": "validated"
       },
@@ -6902,11 +9413,33 @@
       "id": "lamp.35-amp-p",
       "kind": "lamp",
       "label": "AMP P",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.35-amp-p.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.651247,
+            "y": 0.43508
+          }
         ],
         "status": "validated"
       },
@@ -6937,11 +9470,33 @@
       "id": "lamp.36-amp-m",
       "kind": "lamp",
       "label": "AMP M",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.36-amp-m.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.596263,
+            "y": 0.436781
+          }
         ],
         "status": "validated"
       },
@@ -6972,11 +9527,33 @@
       "id": "lamp.37-amp-a",
       "kind": "lamp",
       "label": "AMP A",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.37-amp-a.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.549382,
+            "y": 0.424034
+          }
         ],
         "status": "validated"
       },
@@ -7007,11 +9584,33 @@
       "id": "lamp.38-link-arrow",
       "kind": "lamp",
       "label": "Link arrow",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.38-link-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.424333,
+            "y": 0.443473
+          }
         ],
         "status": "validated"
       },
@@ -7042,11 +9641,33 @@
       "id": "lamp.39-left-orbit-x",
       "kind": "lamp",
       "label": "Left orbit X",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.39-left-orbit-x.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.186908,
+            "y": 0.410505
+          }
         ],
         "status": "validated"
       },
@@ -7077,11 +9698,33 @@
       "id": "lamp.40-left-ramp-x",
       "kind": "lamp",
       "label": "Left ramp X",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.40-left-ramp-x.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.343304,
+            "y": 0.460807
+          }
         ],
         "status": "validated"
       },
@@ -7112,11 +9755,33 @@
       "id": "lamp.41-left-ramp-arrow",
       "kind": "lamp",
       "label": "Left ramp arrow",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.41-left-ramp-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.312156,
+            "y": 0.416686
+          }
         ],
         "status": "validated"
       },
@@ -7147,11 +9812,33 @@
       "id": "lamp.42-left-loop-arrow",
       "kind": "lamp",
       "label": "Left loop arrow",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.42-left-loop-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.157942,
+            "y": 0.371003
+          }
         ],
         "status": "validated"
       },
@@ -7182,11 +9869,33 @@
       "id": "lamp.43-link",
       "kind": "lamp",
       "label": "Link",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.43-link.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.392223,
+            "y": 0.379691
+          }
         ],
         "status": "validated"
       },
@@ -7228,6 +9937,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P6",
@@ -7265,6 +9985,17 @@
           "runtime.avatar-pro.boot-start"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
@@ -7304,6 +10035,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P4",
@@ -7331,11 +10073,33 @@
       "id": "lamp.47-left-ramp-banshee",
       "kind": "lamp",
       "label": "Left ramp Banshee",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.47-left-ramp-banshee.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.273348,
+            "y": 0.35463
+          }
         ],
         "status": "validated"
       },
@@ -7366,11 +10130,33 @@
       "id": "lamp.48-light-unobtanium",
       "kind": "lamp",
       "label": "Light Unobtanium",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.48-light-unobtanium.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.463374,
+            "y": 0.291765
+          }
         ],
         "status": "validated"
       },
@@ -7401,11 +10187,33 @@
       "id": "lamp.49-center-target-arrow",
       "kind": "lamp",
       "label": "Center target arrow",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.49-center-target-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.473082,
+            "y": 0.348597
+          }
         ],
         "status": "validated"
       },
@@ -7436,11 +10244,33 @@
       "id": "lamp.50-center-target-x",
       "kind": "lamp",
       "label": "Center target X",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.50-center-target-x.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.479694,
+            "y": 0.392849
+          }
         ],
         "status": "validated"
       },
@@ -7471,11 +10301,33 @@
       "id": "lamp.51-amp-suit-arrow-top",
       "kind": "lamp",
       "label": "AMP suit arrow top",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.51-amp-suit-arrow-top.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.68143,
+            "y": 0.273536
+          }
         ],
         "status": "validated"
       },
@@ -7506,11 +10358,33 @@
       "id": "lamp.52-special",
       "kind": "lamp",
       "label": "Special",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.52-special.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.182784,
+            "y": 0.227682
+          }
         ],
         "status": "validated"
       },
@@ -7541,11 +10415,33 @@
       "id": "lamp.53-amp-multiball",
       "kind": "lamp",
       "label": "AMP Multiball",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.53-amp-multiball.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.71073,
+            "y": 0.214331
+          }
         ],
         "status": "validated"
       },
@@ -7576,11 +10472,33 @@
       "id": "lamp.54-left-top-lane",
       "kind": "lamp",
       "label": "Left top lane",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.54-left-top-lane.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.36117,
+            "y": 0.095972
+          }
         ],
         "status": "validated"
       },
@@ -7611,11 +10529,33 @@
       "id": "lamp.55-center-top-lane",
       "kind": "lamp",
       "label": "Center top lane",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.55-center-top-lane.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.427346,
+            "y": 0.104674
+          }
         ],
         "status": "validated"
       },
@@ -7646,11 +10586,33 @@
       "id": "lamp.56-right-top-lane",
       "kind": "lamp",
       "label": "Right top lane",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.56-right-top-lane.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.50336,
+            "y": 0.103347
+          }
         ],
         "status": "validated"
       },
@@ -7681,11 +10643,33 @@
       "id": "lamp.57-banshee",
       "kind": "lamp",
       "label": "Banshee",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.57-banshee.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.38101,
+            "y": 0.624996
+          }
         ],
         "status": "validated"
       },
@@ -7716,11 +10700,33 @@
       "id": "lamp.58-link",
       "kind": "lamp",
       "label": "Link",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.58-link.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.452981,
+            "y": 0.616932
+          }
         ],
         "status": "validated"
       },
@@ -7751,11 +10757,33 @@
       "id": "lamp.59-amp",
       "kind": "lamp",
       "label": "AMP",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.59-amp.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.530136,
+            "y": 0.61686
+          }
         ],
         "status": "validated"
       },
@@ -7786,11 +10814,33 @@
       "id": "lamp.60-left-pop-bumper",
       "kind": "lamp",
       "label": "Left pop bumper",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.60-left-pop-bumper.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.305714,
+            "y": 0.141477
+          }
         ],
         "status": "validated"
       },
@@ -7821,11 +10871,33 @@
       "id": "lamp.61-right-pop-bumper",
       "kind": "lamp",
       "label": "Right pop bumper",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.61-right-pop-bumper.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.574984,
+            "y": 0.135021
+          }
         ],
         "status": "validated"
       },
@@ -7856,11 +10928,33 @@
       "id": "lamp.62-bottom-pop-bumper",
       "kind": "lamp",
       "label": "Bottom pop bumper",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.62-bottom-pop-bumper.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.448272,
+            "y": 0.216258
+          }
         ],
         "status": "validated"
       },
@@ -7891,11 +10985,33 @@
       "id": "lamp.63-valkyrie",
       "kind": "lamp",
       "label": "Valkyrie",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.63-valkyrie.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.605783,
+            "y": 0.625215
+          }
         ],
         "status": "validated"
       },
@@ -7926,11 +11042,33 @@
       "id": "lamp.64-seeds",
       "kind": "lamp",
       "label": "Seeds",
+      "physical": {
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
           "manual.avatar-pro-le.2010",
           "rom.avatar-pro.avr-200",
           "runtime.avatar-pro.boot-start"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.64-seeds.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.avatar-pro.archive-080116a-geometry",
+                "vpx.avatar-pro-lw-vpumod-1.12"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.681766,
+            "y": 0.636594
+          }
         ],
         "status": "validated"
       },
@@ -7969,6 +11107,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P9",
@@ -8003,6 +11152,17 @@
           "runtime.avatar-pro.boot-start"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
@@ -8039,6 +11199,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P7",
@@ -8073,6 +11244,17 @@
           "runtime.avatar-pro.boot-start"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
@@ -8109,6 +11291,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P5",
@@ -8143,6 +11336,17 @@
           "runtime.avatar-pro.boot-start"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
@@ -8179,6 +11383,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P3",
@@ -8213,6 +11428,17 @@
           "runtime.avatar-pro.boot-start"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
@@ -8249,6 +11475,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P9",
@@ -8283,6 +11520,17 @@
           "runtime.avatar-pro.boot-start"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
@@ -8319,6 +11567,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P7",
@@ -8353,6 +11612,17 @@
           "runtime.avatar-pro.boot-start"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
@@ -8389,6 +11659,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P5",
@@ -8423,6 +11704,17 @@
           "runtime.avatar-pro.boot-start"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
@@ -8459,6 +11751,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P3",
@@ -8494,6 +11797,17 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.avatar-pro-le.2010",
+            "rom.avatar-pro.avr-200"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P1",
@@ -8522,7 +11836,8 @@
       "kind": "gi",
       "label": "General illumination master",
       "physical": {
-        "notes": "PinMAME exposes the machine's general illumination as master GI channel 0."
+        "notes": "PinMAME exposes the machine's general illumination as master GI channel 0. Spatial placement is intentionally withheld. The official Pro GI wiring drawing proves 27 playfield sockets plus 10 backpanel sockets on circuits BRN, YELLOW, GREEN, and VIOLET, but the 23 generic VPX GI render-pool objects have no one-to-one manual/physical crosswalk. Manual multiplicity proves quantity, not those object locations; render helpers and evenly spaced manual points are not physical sockets.",
+        "quantity": 37
       },
       "provenance": {
         "source_refs": [
@@ -8564,7 +11879,8 @@
       "attribution": "VPU upload and table authors credited on the linked page",
       "id": "vpx-table.avatar-pro.vpuniverse-4755",
       "kind": "vpx_table",
-      "locator": "Authenticated VPU exact Pro table archive; extracted Avatar (Stern 2010).vpx SHA-256 1838f6fc52c3599dd57382999a2ff7200e38cf741f658c479037b614c51d307a and embedded script SHA-256 0fa91c9232c2eca200c1598c759bd7b1dee742ccc63fb0de87105a062de4b4bd",
+      "known_working": false,
+      "locator": "Authenticated VPU exact Pro geometry candidate; extracted Avatar (Stern 2010).vpx SHA-256 1838f6fc52c3599dd57382999a2ff7200e38cf741f658c479037b614c51d307a and embedded script SHA-256 0fa91c9232c2eca200c1598c759bd7b1dee742ccc63fb0de87105a062de4b4bd, byte-distinct from known-working semantic script SHA-256 8fc8cb6ce0c02af97feb69f3271dce02b5531c79ead4171f614a4bc02614db29; geometry confirmation only",
       "sha256": "8ddff84ad8f5c8c6f583153f058458ed17bdd6fbafe60304fa2621920872590e",
       "uri": "https://vpuniverse.com/files/file/4755-avatar-pro-real-mod-10-neo/"
     },
@@ -8614,6 +11930,18 @@
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "sha256": "d4d289134836b9e352b32aa8d75fc192b702d9d44580c9389fd38319137ca8e7",
       "uri": "external:pinmame-game-code/avatar-pro/harness/boot-start-v2/run.json"
+    },
+    {
+      "attribution": "Table authors credited in the retained VPX table; archive copy retained for review",
+      "id": "vpx-table.avatar-pro.archive-080116a-geometry",
+      "kind": "vpx_table",
+      "known_working": false,
+      "license": "NOASSERTION",
+      "locator": "Exact edition-matched archive table, VPX conversion 080116a, cGameName avr_200; embedded script SHA-256 0fa91c9232c2eca200c1598c759bd7b1dee742ccc63fb0de87105a062de4b4bd is byte-distinct from the known-working semantic script SHA-256 8fc8cb6ce0c02af97feb69f3271dce02b5531c79ead4171f614a4bc02614db29. Retained only for exact candidate geometry after limited semantic reconciliation; authenticated VPU geometry has the same embedded script hash and normalized candidate payload.",
+      "original_filename": "Avatar.vpx",
+      "rights": "NOASSERTION",
+      "sha256": "aaff981437470f8c4edf6b2902e7a6d78db19d826a04d9662e3bcb812dd9740d",
+      "uri": "external:pinmame-vpx-sources/stern/avatar-pro-2010/inventory/archive/Avatar.vpx"
     }
   ]
 }
