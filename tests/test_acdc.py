@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFINITION_PATHS = {
-	"premium": ROOT / "machines" / "partial" / "stern" / "ac-dc-premium-limited-edition-luci-2012.json",
+	"premium": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-premium-limited-edition-luci-2012.json",
 	"pro": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-pro-2012.json",
 	"led_pro": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-led-pro-2014.json",
 	"vault": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-vault-edition-2018.json",
@@ -36,11 +36,11 @@ class AcDcDefinitionTests(unittest.TestCase):
 		cls.premium_evidence = load_json(PREMIUM_EVIDENCE_PATH)
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
 
-	def test_led_pro_and_vault_are_author_ready_and_other_products_remain_fail_closed(self) -> None:
+	def test_completed_products_are_author_ready(self) -> None:
 		for name, definition in self.definitions.items():
 			self.assertEqual(2, definition["schema_version"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
-			if name in {"pro", "led_pro", "vault"}:
+			if name in {"premium", "pro", "led_pro", "vault"}:
 				self.assertEqual("author_ready", definition["coverage"]["status"])
 				self.assertEqual([], definition["coverage"]["missing"])
 				self.assertEqual("validated", definition["coverage"]["dimensions"]["spatial_placement"])
@@ -250,6 +250,67 @@ class AcDcDefinitionTests(unittest.TestCase):
 		self.assertFalse(any(output["spatial"].get("reason") == "internal_nonvisual" for output in vault["outputs"]))
 		self.assertEqual(11, len(vault["mechanisms"]))
 
+	def test_premium_luci_spatial_map_is_exact_and_author_ready(self) -> None:
+		premium = self.definitions["premium"]
+		switches = bindings(premium, "inputs", "pinmame.input.switch")
+		solenoids = bindings(premium, "outputs", "pinmame.output.solenoid")
+		lamps = bindings(premium, "outputs", "pinmame.output.lamp")
+		gi0 = bindings(premium, "outputs", "pinmame.output.gi")[0]
+		self.assertTrue(all(device["spatial"]["status"] in {"validated", "not_applicable"} for device in [*premium["inputs"], *premium["outputs"]]))
+		self.assertEqual({"x": 0.084339, "y": 0.567704}, {key: switches[1]["spatial"]["placements"][0][key] for key in ("x", "y")})
+		self.assertIn("Wall.sw1", switches[1]["physical"]["notes"])
+		self.assertEqual({"x": 0.719565, "y": 0.694476}, {key: switches[61]["spatial"]["placements"][0][key] for key in ("x", "y")})
+		self.assertEqual("internal_nonvisual", switches[18]["spatial"]["reason"])
+		for address in (18, 19, 20, 21):
+			self.assertEqual(["ball.position", "internal.trough"], switches[address]["roles"])
+			self.assertEqual("500-6318-24-ND", switches[address]["physical"]["assembly_part_number"])
+		self.assertEqual(["ball.jam", "internal.trough"], switches[22]["roles"])
+		self.assertEqual("500-6318-24-ND", switches[22]["physical"]["assembly_part_number"])
+		self.assertEqual("cabinet_or_service", switches[64]["spatial"]["reason"])
+		self.assertEqual("validated", switches[47]["spatial"]["status"])
+		self.assertEqual(2, len(solenoids[19]["spatial"]["placements"]))
+		self.assertEqual(3, len(solenoids[25]["spatial"]["placements"]))
+		self.assertEqual("cabinet_or_service", solenoids[22]["spatial"]["reason"])
+		self.assertEqual(["cabinet.rear-panel"], solenoids[22]["roles"])
+		self.assertEqual("internal_nonvisual", solenoids[1]["spatial"]["reason"])
+		self.assertEqual("500-6318-24-ND", solenoids[1]["physical"]["assembly_part_number"])
+		self.assertEqual(2, solenoids[6]["physical"]["quantity"])
+		self.assertEqual(["internal.drop-bank-reset"], solenoids[6]["roles"])
+		self.assertEqual("not_applicable", gi0["spatial"]["status"])
+		self.assertEqual("internal_nonvisual", gi0["spatial"]["reason"])
+		self.assertEqual(["internal.compatibility"], gi0["roles"])
+		self.assertIn("UseGI=0", gi0["physical"]["notes"])
+		self.assertNotIn("prior", gi0["physical"]["notes"])
+		for address in (87, 88, 89):
+			self.assertEqual({"x": 0.636148, "y": 0.038464}, {key: lamps[address]["spatial"]["placements"][0][key] for key in ("x", "y")})
+		tnt_positions = {
+			address: {key: lamps[address]["spatial"]["placements"][0][key] for key in ("x", "y")}
+			for address in (49, 50, 51)
+		}
+		self.assertEqual({49: {"x": 0.494674, "y": 0.346085}, 50: {"x": 0.552000, "y": 0.355585}, 51: {"x": 0.611106, "y": 0.366080}}, tnt_positions)
+		self.assertEqual(["Light.l22", "Light.l23", "Light.l24"], [lamps[address]["physical"]["notes"] for address in (49, 50, 51)])
+		white_gi_positions = {(placement["x"], placement["y"]) for placement in lamps[136]["spatial"]["placements"]}
+		self.assertFalse({(position["x"], position["y"]) for position in tnt_positions.values()} & white_gi_positions)
+		self.assertEqual(11, len(bindings(premium, "outputs", "pinmame.output.lamp")[130]["spatial"]["placements"]))
+		self.assertEqual(9, len(lamps[132]["spatial"]["placements"]))
+		self.assertEqual(6, len(lamps[134]["spatial"]["placements"]))
+		self.assertEqual(24, len(lamps[136]["spatial"]["placements"]))
+		self.assertEqual({130: 13, 132: 10, 134: 6, 136: 28}, {address: lamps[address]["physical"]["quantity"] for address in (130, 132, 134, 136)})
+		for address in (53, 54, *range(65, 77)):
+			self.assertEqual("cabinet_or_service", lamps[address]["spatial"]["reason"])
+			self.assertEqual(["cabinet.rear-panel"], lamps[address]["roles"])
+			self.assertEqual(1, lamps[address]["physical"]["quantity"])
+		self.assertEqual("Jukebox horn (right)", lamps[53]["label"])
+		self.assertEqual("Jukebox horn (left)", lamps[54]["label"])
+		self.assertEqual("0adcd0b3801856ae2687185dffac068e2ff42edf473696ed653ae168b11f1d4d", next(source["sha256"] for source in premium["sources"] if source["id"] == "vpx-table.acdc-luci-premium-v15"))
+		exact_table = next(source for source in premium["sources"] if source["id"] == "vpx-table.acdc-luci-premium-v15")
+		self.assertIn("156,454,912 bytes", exact_table["locator"])
+		self.assertIn("952.9412231445312,2117.64697265625", exact_table["locator"])
+		self.assertEqual("55755ddbde8bdab343775e46d8c8aeec9878c7694f34619942c5701d8ad3a832", next(source["sha256"] for source in premium["sources"] if source["id"] == "vpx-script.acdc-luci-premium-v15"))
+		knowledge = (ROOT / premium["knowledge"]["path"]).read_text(encoding="utf-8")
+		self.assertIn("part number", knowledge)
+		self.assertNotIn("conflict remain", knowledge)
+
 	def test_premium_auxiliary_board_uses_public_addresses_and_manual_aliases(self) -> None:
 		solenoids = bindings(self.definitions["premium"], "outputs", "pinmame.output.solenoid")
 		self.assertTrue(set(range(51, 59)).issubset(solenoids))
@@ -280,6 +341,9 @@ class AcDcDefinitionTests(unittest.TestCase):
 		self.assertEqual({130, 132, 134, 136}, {address for address, item in lamps.items() if 129 <= address <= 150 and item["kind"] == "gi"})
 		self.assertEqual(set(range(151, 159)), {address for address, item in lamps.items() if "flame-tunnel" in item["label"]})
 		self.assertFalse(set(range(177, 192)) & set(lamps))
+		self.assertEqual("unused", lamps[56]["availability"])
+		self.assertEqual("Start button", lamps[57]["label"])
+		self.assertEqual("Tournament start button", lamps[58]["label"])
 
 	def test_custom_mechanisms_capture_sensors_actuators_and_passive_bell(self) -> None:
 		premium = {mechanism["id"]: mechanism for mechanism in self.definitions["premium"]["mechanisms"]}

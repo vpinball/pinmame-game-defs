@@ -157,6 +157,8 @@ def _validate_spatial(
 				expected = "unused"
 			elif kind == "switch" and availability in {"used", "optional"} and _has_cabinet_or_service_role(device):
 				expected = "cabinet_or_service"
+			elif kind == "switch" and availability in {"used", "optional"} and _has_internal_role(device):
+				expected = "internal_nonvisual"
 			else:
 				expected = None
 			_expect(reason == expected, f"{path}.spatial.reason", "does not align with this author-ready input's physical status", errors)

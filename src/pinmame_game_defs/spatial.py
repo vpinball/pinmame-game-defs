@@ -19,7 +19,6 @@ from .jsonio import file_sha256, load_json
 
 PLAYFIELD_SPACE_DESCRIPTION = "playfield is normalized VPX/player view: x=0 left, x=1 right, y=0 rear/backglass end, y=1 front/apron end."
 SPATIAL_RETROFIT_PENDING_MACHINE_IDS = (
-	"stern.ac-dc-premium-limited-edition-luci.2012",
 	"stern.ali.1980",
 	"stern.avatar-limited-edition.2010",
 	"stern.avatar-pro.2010",

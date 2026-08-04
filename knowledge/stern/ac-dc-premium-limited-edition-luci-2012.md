@@ -1,6 +1,6 @@
 # AC/DC Premium / Limited Edition / LUCI Premium recreation knowledge
 
-Coverage: **partial — normalized spatial placements pending.**
+Coverage: **author-ready.**
 
 ## Identity and variants
 
@@ -8,11 +8,11 @@ This definition covers every in-scope h and hc PinMAME driver from 1.50 through 
 
 ## Source precedence
 
-The known-working VPW-derived LUCI 1.1.4 script is ground truth for public PinMAME addresses, callback routing, initial ball state, and mechanism causality. The exact Premium and LUCI manuals are authoritative for construction, wiring, assemblies, connector identities, and parts. Pinned PinMAME source defines the SAM transport, clone lineage, auxiliary-board translation, and 128x32 four-bit DMD. Manual geometric switch descriptions that disagree with the working script are retained as manual aliases/locators but do not override the proven table behavior.
+The exact LUCI v15 table and extracted script are ground truth for public PinMAME addresses, callback routing, object identity, initial ball state, and mechanism causality. The exact Premium and LUCI manuals are authoritative for construction, wiring, assemblies, connector identities, physical multiplicity, and parts. Pinned PinMAME source defines the SAM transport, clone lineage, auxiliary-board translation, and 128x32 four-bit DMD. Manual geometric switch descriptions that disagree with the working script are retained as manual aliases/locators but do not override the proven table behavior.
 
 ## Ball inventory and startup
 
-Create four trough balls and close switches 18, 19, 20, and 21. Leave stack opto 22 open until output 1 moves a ball through the eject end; the script pulses 22 when another ball remains. Initialize the cannon empty at home with switch 61 active and 62 inactive. The bell contains a captive steel ball that is part of its pendulum assembly, not a playable trough ball. The lower mini-playfield eject and both saucers start empty.
+Create four trough balls in under-apron assembly `500-6318-24-ND` and close switches 18, 19, 20, and 21. Leave stack opto 22 open until output 1 moves a ball through the eject end; the script pulses 22 when another ball remains. Initialize the cannon empty at home with switch 61 active and 62 inactive. The bell contains a captive steel ball that is part of its pendulum assembly, not a playable trough ball. The lower mini-playfield eject and both saucers start empty.
 
 ## Ball paths
 
@@ -24,7 +24,7 @@ The cannon motor sweeps a ball-holding cannon from about 110 degrees home toward
 
 ## Lamps and flashers
 
-Standard lamps 1-80 are the manual matrix. Public lamps 81-128 are tri-color LED channels; each three-address group is blue, green, red as proven by the VPX script. Addresses 114-116 and 129 are unused. Color-GI channels 130, 132, 134, and 136 arrive through ChangedLamps and drive red, blue, lower-playfield, and white GI respectively; GI 0 remains a separate emulator-level channel. Flame-tunnel LEDs are 151-158. Local VPX array indices 177, 179, 180, 182, 183, and 185-190 are solenoid-flasher mirrors, not physical PinMAME lamp outputs, and must never be recreated as duplicate lamps.
+Standard lamps 1-80 are the manual matrix. Public lamps 81-128 are tri-color LED channels; each three-address group is blue, green, red as proven by the VPX script. Addresses 114-116 and 129 are unused. Color-GI channels 130, 132, 134, and 136 arrive through ChangedLamps and drive red, blue, lower-playfield, and white GI respectively; GI 0 remains a separate emulator-level channel. Flame-tunnel LEDs are 151-158. Local VPX array indices 177, 179, 180, 182, 183, and 185-190 are solenoid-flasher mirrors, not physical PinMAME lamp outputs, and must never be recreated as duplicate lamps. The exact v15 table declares `UseGI=0`, so GI-0 has no direct table-object placement and remains N/A. Public RGB addresses 87-89 share the center-top playfield emitter represented by `Light.l38`; the manual's separate #89 notation is a bulb part number in the back-panel parts list, not public lamp address 89. Lamps 53-54 and 65-76 are physically mounted on the rear panel and therefore intentionally have no normalized playfield coordinates; the manual identifies 53 as the right Jukebox horn and 54 as the left. Lamps 12/13 and 43/44 use the working VPX placements and the manual-confirmed left/right outlane and return-lane labels.
 
 ## Auxiliary output translation
 
@@ -43,5 +43,6 @@ The working table's exact impulses are implementation evidence rather than unive
 ## Evidence
 
 - Official Premium manual SHA-256 d3de500b504b165023e3858883067ca518543307387ec2460397b740ebe240b6 and LUCI manual SHA-256 65bb776389508259513cb72f4c24f054f97dfaa0eee87557a0f76e3175acf524 are organized under E:/_vpe-2025/pinmame-manuals.
-- Working LUCI script SHA-256 b478b21272befd41908aa3ef4daf3a90d4838334346718cb4d5fde7f23bb2fc0 comes from pinned vpxtable_scripts revision 0c036bb61b4b4e8c778c37559f6795df8cd1521e.
+- Exact LUCI v15 table SHA-256 0adcd0b3801856ae2687185dffac068e2ff42edf473696ed653ae168b11f1d4d; size 156,454,912 bytes; cGameName `acd_170hc`; VPX bounds `0,0-952.9412231445312,2117.64697265625`; extracted with vpxtool git:v0.33.3 and retained in the external review artifact directory.
+- Exact LUCI v15 extracted script SHA-256 55755ddbde8bdab343775e46d8c8aeec9878c7694f34619942c5701d8ad3a832. The older VPW-derived LUCI 1.1.4 script SHA-256 b478b21272befd41908aa3ef4daf3a90d4838334346718cb4d5fde7f23bb2fc0 remains a separate semantic baseline.
 - Exact acd_170h boot/start evidence SHA-256 31d6c8a83091c62785ce5b23cb1417a12bfb229ed61b5366354451510e4940c0; ROM archive SHA-256 1ace847619af4864769b053f641d3e035a1c72d517ac750af7088600cdd291d4 remains external.

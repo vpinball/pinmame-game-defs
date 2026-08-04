@@ -16,7 +16,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 10 | 2013 | Metallica Pro | Stern | author_ready |
 | 11 | 2013 | Star Trek Premium / Limited Edition | Stern | author_ready |
 | 12 | 2013 | Star Trek Pro | Stern | author_ready |
-| 13 | 2012 | AC/DC Premium / Limited Edition / LUCI Premium | Stern | partial |
+| 13 | 2012 | AC/DC Premium / Limited Edition / LUCI Premium | Stern | author_ready |
 | 14 | 2012 | AC/DC Pro (original) | Stern | author_ready |
 | 15 | 2012 | The Avengers Limited Edition | Stern | partial |
 | 16 | 2012 | The Avengers Pro | Stern | partial |

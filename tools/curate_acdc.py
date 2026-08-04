@@ -6,7 +6,7 @@ import json
 import re
 from pathlib import Path
 
-from curate_acdc_spatial import apply_led_pro_spatial, apply_original_pro_spatial, apply_vault_spatial
+from curate_acdc_spatial import apply_led_pro_spatial, apply_original_pro_spatial, apply_premium_luci_spatial, apply_vault_spatial
 from pinmame_game_defs.jsonio import write_json, write_text
 from pinmame_game_defs.spatial import SPATIAL_RETROFIT_PENDING_MACHINE_IDS, fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
@@ -23,6 +23,8 @@ PREMIUM_MANUAL = "manual.acdc-premium-le"
 LUCI_MANUAL = "manual.acdc-luci-premium"
 PRO_MANUAL = "manual.acdc-pro"
 PREMIUM_VPX = "vpx.acdc-luci-premium-vpw-1.1.4"
+PREMIUM_TABLE = "vpx-table.acdc-luci-premium-v15"
+PREMIUM_SCRIPT = "vpx-script.acdc-luci-premium-v15"
 PRO_VPX = "vpx.acdc-pro-1.0-lighting-fix"
 PRO_TABLE = "vpx-table.acdc-pro-1.0"
 VAULT_VPX = "vpx.acdc-pro-vault-1.0-lighting-fix"
@@ -308,7 +310,7 @@ PREMIUM_LAMPS = {
 	19: "AC/DC slash", 20: "AC/DC first C", 21: "AC/DC A", 22: "Left-ramp standup (left)", 23: "Left-ramp standup (right)", 24: "TNT arrow (white)",
 	25: "Lower mini-playfield loop arrow (left)", 32: "Train extra ball", 33: "ROCK K", 34: "ROCK C", 35: "ROCK O", 36: "ROCK R",
 	37: "Lower mini-playfield loop arrow (right)", 38: "Special", 40: "Extra Ball", 41: "Right-ramp standup", 42: "3X", 43: "Right return lane", 44: "Right outlane",
-	49: "TNT T (left)", 50: "TNT N", 51: "TNT T (right)", 53: "Jukebox horn (left)", 54: "Jukebox horn (right)", 57: "Start button",
+	49: "TNT T (left)", 50: "TNT N", 51: "TNT T (right)", 53: "Jukebox horn (right)", 54: "Jukebox horn (left)", 57: "Start button",
 	58: "Tournament start button", 59: "FIRE button red", 60: "FIRE button green", 61: "FIRE button blue", 62: "Left pop-bumper insert", 63: "Right pop-bumper insert", 64: "Bottom pop-bumper insert",
 	65: "Track: You Shook Me All Night Long", 66: "Track: Highway to Hell", 67: "Track: Rock N Roll Train", 68: "Track: Whole Lotta Rosie",
 	69: "Track: Hells Bells", 70: "Track: Thunderstruck", 71: "Track: Let There Be Rock", 72: "Track: Hell Ain't a Bad Place to Be",
@@ -497,6 +499,8 @@ MANUAL_SOURCES = {
 }
 VPX_SOURCES = {
 	PREMIUM_VPX: {"id": PREMIUM_VPX, "kind": "vpx_script", "uri": "https://github.com/vpinball/vpxtable_scripts", "revision": VPX_REVISION, "sha256": "b478b21272befd41908aa3ef4daf3a90d4838334346718cb4d5fde7f23bb2fc0", "locator": "AC-DC LUCI Premium VR (Stern 2013) v1.1.4.vbs; callbacks, initial state, routes, cannon, bell, diverters, lamps, and mechanism behavior", "license": "NOASSERTION", "attribution": "VPW table contributors credited in the script"},
+	PREMIUM_TABLE: {"id": PREMIUM_TABLE, "kind": "vpx_table", "uri": "local-evidence://vpx-table/acdc-luci-v15", "sha256": "0adcd0b3801856ae2687185dffac068e2ff42edf473696ed653ae168b11f1d4d", "locator": "ACDC LUCI (Stern 2013) v15.vpx (156,454,912 bytes); cGameName=acd_170hc; VPX bounds 0,0-952.9412231445312,2117.64697265625; exact object/collection extraction retained under the review artifact manifest", "license": "NOASSERTION", "attribution": "LUCI table contributors credited in the table", "original_filename": "ACDC LUCI (Stern 2013) v15.vpx", "rights": "NOASSERTION"},
+	PREMIUM_SCRIPT: {"id": PREMIUM_SCRIPT, "kind": "vpx_script", "uri": "local-evidence://vpx-table/acdc-luci-v15/script.vbs", "sha256": "55755ddbde8bdab343775e46d8c8aeec9878c7694f34619942c5701d8ad3a832", "locator": "script.vbs extracted from exact LUCI v15; cGameName=acd_170hc, UseGI=0, controller callbacks, initial cannon/bell state, switch computations, lamp assignments, flasher mirrors, and auxiliary routes", "license": "NOASSERTION", "attribution": "LUCI table contributors credited in the script", "original_filename": "script.vbs", "rights": "NOASSERTION"},
 	PRO_VPX: {"id": PRO_VPX, "kind": "vpx_script", "uri": "https://github.com/vpinball/vpxtable_scripts", "revision": VPX_REVISION, "sha256": "e0fdef84892ea8bce6eae179509ac8262f103bac0173c2e822a4fe10aafcf7fa", "locator": "AC-DC Pro-1.0 Lighting Bug Fix.vbs; exact Pro controller callbacks, ball devices, cannon positions, switch semantics, GI, lamps, and flashers", "license": "NOASSERTION", "attribution": "ninuzzu and credited AC/DC Pro table contributors"},
 	PRO_TABLE: {"id": PRO_TABLE, "kind": "vpx_table", "uri": "local-evidence://vpx-table/acdc-pro-1.0", "sha256": "44bf3d67f96968103ab71f26b8b12786e5590f62bd73589b85060983dc62d9e9", "locator": "AC-DC Pro-1.0.vpx (78,274,560 bytes); cGameName=acd_170 and splash says AC/DC Pro (Stern 2012); 235 centered candidates; normalized bounds 0,0-952,2115; geometry-only shared original-Pro/LED-Pro evidence, not LED-Pro product identity", "license": "NOASSERTION", "attribution": "AC/DC Pro table contributors; geometry reviewed locally", "original_filename": "AC-DC Pro-1.0.vpx", "rights": "NOASSERTION"},
 	VAULT_VPX: {"id": VAULT_VPX, "kind": "vpx_script", "uri": "https://github.com/vpinball/vpxtable_scripts", "revision": VPX_REVISION, "sha256": "88101e2184729f952d196fdfe5885f9d7e81ec211b7b1b675d724419fcb6a7f1", "locator": "AC-DC Pro Vault-1.0 Lighting Bug Fix.vbs; exact passive swinging-bell behavior at switch 36 and removed inserts 14, 15, and 17", "license": "NOASSERTION", "attribution": "ninuzzu and credited AC/DC Pro Vault table contributors"},
@@ -516,7 +520,7 @@ WEB_SOURCES = {
 
 def source_set(variant: str) -> list[dict[str, object]]:
 	if variant == "premium":
-		ids = [PREMIUM_MANUAL, LUCI_MANUAL, PREMIUM_VPX, PREMIUM_RUNTIME, STERN_PRODUCT, IPDB_PREMIUM, IPDB_LUCI]
+		ids = [PREMIUM_MANUAL, LUCI_MANUAL, PREMIUM_VPX, PREMIUM_TABLE, PREMIUM_SCRIPT, PREMIUM_RUNTIME, STERN_PRODUCT, IPDB_PREMIUM, IPDB_LUCI]
 	elif variant == "pro":
 		ids = [PRO_MANUAL, PRO_TABLE, PRO_VPX, PRO_RUNTIME, STERN_PRODUCT]
 	elif variant == "led-pro":
@@ -544,7 +548,7 @@ VARIANT_NOTES = {
 
 def build(variant: str) -> dict[str, object]:
 	source_ids = {
-		"premium": (PREMIUM_MANUAL, LUCI_MANUAL, PREMIUM_VPX, PREMIUM_RUNTIME),
+		"premium": (PREMIUM_MANUAL, LUCI_MANUAL, PREMIUM_VPX, PREMIUM_TABLE, PREMIUM_SCRIPT, PREMIUM_RUNTIME),
 		"pro": (PRO_MANUAL, PRO_VPX, PRO_RUNTIME),
 		"led-pro": (PRO_MANUAL, PRO_VPX, VAULT_VPX, STERN_LED_PRO),
 		"vault": (PRO_MANUAL, VAULT_VPX, PRO_RUNTIME),
@@ -563,7 +567,19 @@ def build(variant: str) -> dict[str, object]:
 		"sources": source_set(variant),
 		"knowledge": {"path": f"knowledge/stern/{MACHINE_META[variant]['id'].split('.', 1)[1].replace('.', '-')}.md", "status": "complete"},
 	}
-	if variant == "pro":
+	if variant == "premium":
+		apply_premium_luci_spatial(
+			inputs,
+			outputs,
+			table_source=PREMIUM_TABLE,
+			script_source=PREMIUM_SCRIPT,
+			premium_manual_source=PREMIUM_MANUAL,
+			luci_manual_source=LUCI_MANUAL,
+			core_source=CORE_SOURCE,
+		)
+		definition["schema_version"] = 2
+		definition["coverage"]["dimensions"]["spatial_placement"] = "validated"
+	elif variant == "pro":
 		apply_original_pro_spatial(
 			inputs,
 			outputs,
@@ -598,17 +614,19 @@ def build(variant: str) -> dict[str, object]:
 KNOWLEDGE = {
 	"premium": """# AC/DC Premium / Limited Edition / LUCI Premium recreation knowledge
 
+Coverage: **author-ready.**
+
 ## Identity and variants
 
 This definition covers every in-scope h and hc PinMAME driver from 1.50 through 1.70 for the shared Stern Premium, Limited Edition, and LUCI Premium physical playfield. LUCI changes art and presentation; the LE trim packages and colored-ROM derivatives do not change controller-facing devices or mechanisms.
 
 ## Source precedence
 
-The known-working VPW-derived LUCI 1.1.4 script is ground truth for public PinMAME addresses, callback routing, initial ball state, and mechanism causality. The exact Premium and LUCI manuals are authoritative for construction, wiring, assemblies, connector identities, and parts. Pinned PinMAME source defines the SAM transport, clone lineage, auxiliary-board translation, and 128x32 four-bit DMD. Manual geometric switch descriptions that disagree with the working script are retained as manual aliases/locators but do not override the proven table behavior.
+The exact LUCI v15 table and extracted script are ground truth for public PinMAME addresses, callback routing, object identity, initial ball state, and mechanism causality. The exact Premium and LUCI manuals are authoritative for construction, wiring, assemblies, connector identities, physical multiplicity, and parts. Pinned PinMAME source defines the SAM transport, clone lineage, auxiliary-board translation, and 128x32 four-bit DMD. Manual geometric switch descriptions that disagree with the working script are retained as manual aliases/locators but do not override the proven table behavior.
 
 ## Ball inventory and startup
 
-Create four trough balls and close switches 18, 19, 20, and 21. Leave stack opto 22 open until output 1 moves a ball through the eject end; the script pulses 22 when another ball remains. Initialize the cannon empty at home with switch 61 active and 62 inactive. The bell contains a captive steel ball that is part of its pendulum assembly, not a playable trough ball. The lower mini-playfield eject and both saucers start empty.
+Create four trough balls in under-apron assembly `500-6318-24-ND` and close switches 18, 19, 20, and 21. Leave stack opto 22 open until output 1 moves a ball through the eject end; the script pulses 22 when another ball remains. Initialize the cannon empty at home with switch 61 active and 62 inactive. The bell contains a captive steel ball that is part of its pendulum assembly, not a playable trough ball. The lower mini-playfield eject and both saucers start empty.
 
 ## Ball paths
 
@@ -620,7 +638,7 @@ The cannon motor sweeps a ball-holding cannon from about 110 degrees home toward
 
 ## Lamps and flashers
 
-Standard lamps 1-80 are the manual matrix. Public lamps 81-128 are tri-color LED channels; each three-address group is blue, green, red as proven by the VPX script. Addresses 114-116 and 129 are unused. Color-GI channels 130, 132, 134, and 136 arrive through ChangedLamps and drive red, blue, lower-playfield, and white GI respectively; GI 0 remains a separate emulator-level channel. Flame-tunnel LEDs are 151-158. Local VPX array indices 177, 179, 180, 182, 183, and 185-190 are solenoid-flasher mirrors, not physical PinMAME lamp outputs, and must never be recreated as duplicate lamps.
+Standard lamps 1-80 are the manual matrix. Public lamps 81-128 are tri-color LED channels; each three-address group is blue, green, red as proven by the VPX script. Addresses 114-116 and 129 are unused. Color-GI channels 130, 132, 134, and 136 arrive through ChangedLamps and drive red, blue, lower-playfield, and white GI respectively; GI 0 remains a separate emulator-level channel. Flame-tunnel LEDs are 151-158. Local VPX array indices 177, 179, 180, 182, 183, and 185-190 are solenoid-flasher mirrors, not physical PinMAME lamp outputs, and must never be recreated as duplicate lamps. The exact v15 table declares `UseGI=0`, so GI-0 has no direct table-object placement and remains N/A. Public RGB addresses 87-89 share the center-top playfield emitter represented by `Light.l38`; the manual's separate #89 notation is a bulb part number in the back-panel parts list, not public lamp address 89. Lamps 53-54 and 65-76 are physically mounted on the rear panel and therefore intentionally have no normalized playfield coordinates; the manual identifies 53 as the right Jukebox horn and 54 as the left. Lamps 12/13 and 43/44 use the working VPX placements and the manual-confirmed left/right outlane and return-lane labels.
 
 ## Auxiliary output translation
 
@@ -639,7 +657,8 @@ The working table's exact impulses are implementation evidence rather than unive
 ## Evidence
 
 - Official Premium manual SHA-256 d3de500b504b165023e3858883067ca518543307387ec2460397b740ebe240b6 and LUCI manual SHA-256 65bb776389508259513cb72f4c24f054f97dfaa0eee87557a0f76e3175acf524 are organized under E:/_vpe-2025/pinmame-manuals.
-- Working LUCI script SHA-256 b478b21272befd41908aa3ef4daf3a90d4838334346718cb4d5fde7f23bb2fc0 comes from pinned vpxtable_scripts revision 0c036bb61b4b4e8c778c37559f6795df8cd1521e.
+- Exact LUCI v15 table SHA-256 0adcd0b3801856ae2687185dffac068e2ff42edf473696ed653ae168b11f1d4d; size 156,454,912 bytes; cGameName `acd_170hc`; VPX bounds `0,0-952.9412231445312,2117.64697265625`; extracted with vpxtool git:v0.33.3 and retained in the external review artifact directory.
+- Exact LUCI v15 extracted script SHA-256 55755ddbde8bdab343775e46d8c8aeec9878c7694f34619942c5701d8ad3a832. The older VPW-derived LUCI 1.1.4 script SHA-256 b478b21272befd41908aa3ef4daf3a90d4838334346718cb4d5fde7f23bb2fc0 remains a separate semantic baseline.
 - Exact acd_170h boot/start evidence SHA-256 31d6c8a83091c62785ce5b23cb1417a12bfb229ed61b5366354451510e4940c0; ROM archive SHA-256 1ace847619af4864769b053f641d3e035a1c72d517ac750af7088600cdd291d4 remains external.
 """,
 	"pro": """# AC/DC Pro (original) recreation knowledge
@@ -757,12 +776,13 @@ for stale in [
 	ROOT / "knowledge/stern/ac-dc-vault-edition.2018.md",
 	ROOT / "machines/partial/stern/ac-dc-led-pro-2014.json",
 	ROOT / "machines/partial/stern/ac-dc-vault-edition-2018.json",
+	ROOT / "machines/partial/stern/ac-dc-premium-limited-edition-luci-2012.json",
 ]:
 	if stale.exists():
 		stale.unlink()
 
 PATHS = {
-	"premium": ROOT / "machines/partial/stern/ac-dc-premium-limited-edition-luci-2012.json",
+	"premium": ROOT / "machines/author-ready/stern/ac-dc-premium-limited-edition-luci-2012.json",
 	"pro": ROOT / "machines/author-ready/stern/ac-dc-pro-2012.json",
 	"led-pro": ROOT / "machines/author-ready/stern/ac-dc-led-pro-2014.json",
 	"vault": ROOT / "machines/author-ready/stern/ac-dc-vault-edition-2018.json",
