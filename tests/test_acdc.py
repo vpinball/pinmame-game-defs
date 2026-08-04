@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DEFINITION_PATHS = {
 	"premium": ROOT / "machines" / "partial" / "stern" / "ac-dc-premium-limited-edition-luci-2012.json",
-	"pro": ROOT / "machines" / "partial" / "stern" / "ac-dc-pro-2012.json",
+	"pro": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-pro-2012.json",
 	"led_pro": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-led-pro-2014.json",
 	"vault": ROOT / "machines" / "author-ready" / "stern" / "ac-dc-vault-edition-2018.json",
 }
@@ -40,7 +40,7 @@ class AcDcDefinitionTests(unittest.TestCase):
 		for name, definition in self.definitions.items():
 			self.assertEqual(2, definition["schema_version"])
 			self.assertEqual("complete", definition["knowledge"]["status"])
-			if name in {"led_pro", "vault"}:
+			if name in {"pro", "led_pro", "vault"}:
 				self.assertEqual("author_ready", definition["coverage"]["status"])
 				self.assertEqual([], definition["coverage"]["missing"])
 				self.assertEqual("validated", definition["coverage"]["dimensions"]["spatial_placement"])
@@ -95,6 +95,22 @@ class AcDcDefinitionTests(unittest.TestCase):
 		self.assertIn("center", vault_switches[35]["label"].casefold())
 		self.assertIn("right", vault_switches[42]["label"].casefold())
 
+	def test_original_pro_excludes_premium_only_mechanisms_and_auxiliary_outputs(self) -> None:
+		pro = self.definitions["pro"]
+		mechanism_ids = {mechanism["id"] for mechanism in pro["mechanisms"]}
+		self.assertIn("mechanism.cannon", mechanism_ids)
+		self.assertNotIn("mechanism.lower-playfield-eject", mechanism_ids)
+		self.assertNotIn("mechanism.lower-playfield-flippers", mechanism_ids)
+		self.assertNotIn("mechanism.bell-eject", mechanism_ids)
+		self.assertNotIn("mechanism.swinging-bell", mechanism_ids)
+		self.assertNotIn("mechanism.detonator", mechanism_ids)
+		self.assertNotIn("mechanism.band-members", mechanism_ids)
+		self.assertNotIn("mechanism.left-ramp-diverter", mechanism_ids)
+		solenoids = bindings(pro, "outputs", "pinmame.output.solenoid")
+		self.assertEqual(set(range(1, 34)), set(solenoids))
+		bell = next(mechanism for mechanism in pro["mechanisms"] if mechanism["id"] == "mechanism.bell")
+		self.assertEqual([], bell["actuators"])
+
 	def test_led_pro_spatial_layout_preserves_exact_deltas_and_na_counts(self) -> None:
 		led = self.definitions["led_pro"]
 		switches = bindings(led, "inputs", "pinmame.input.switch")
@@ -125,8 +141,10 @@ class AcDcDefinitionTests(unittest.TestCase):
 				lamps[address]["spatial"]["placements"][0]["provenance"]["source_refs"],
 			)
 		self.assertEqual("unused", lamps[16]["spatial"]["reason"])
-		self.assertEqual(45, len(gi["spatial"]["placements"]))
+		self.assertEqual(38, len(gi["spatial"]["placements"]))
 		self.assertEqual(45, gi["physical"]["quantity"])
+		self.assertIn("seven off-playfield back-panel bulbs", gi["physical"]["notes"])
+		self.assertEqual(("not_applicable", "cabinet_or_service"), (solenoids[22]["spatial"]["status"], solenoids[22]["spatial"]["reason"]))
 		self.assertEqual({"x": 0.833431, "y": 0.123162}, {key: gi["spatial"]["placements"][11][key] for key in ("x", "y")})
 		self.assertEqual(
 			["vpx-table.acdc-pro-1.0", "vpx.acdc-pro-1.0-lighting-fix", "manual.acdc-pro"],
@@ -135,7 +153,7 @@ class AcDcDefinitionTests(unittest.TestCase):
 		located_inputs = sum(device["spatial"]["status"] == "validated" for device in led["inputs"])
 		located_outputs = sum(device["spatial"]["status"] == "validated" for device in led["outputs"])
 		placements = sum(len(device["spatial"].get("placements", [])) for device in [*led["inputs"], *led["outputs"]])
-		self.assertEqual((48, 94, 188), (located_inputs, located_outputs, placements))
+		self.assertEqual((48, 81, 168), (located_inputs, located_outputs, placements))
 		na_counts = {
 			(collection, reason): sum(device["spatial"].get("reason") == reason for device in led[collection])
 			for collection in ("inputs", "outputs")
@@ -144,7 +162,7 @@ class AcDcDefinitionTests(unittest.TestCase):
 		self.assertEqual(17, na_counts[("inputs", "cabinet_or_service")])
 		self.assertEqual(8, na_counts[("inputs", "dip_switch")])
 		self.assertEqual(23, na_counts[("inputs", "unused")])
-		self.assertEqual(8, na_counts[("outputs", "cabinet_or_service")])
+		self.assertEqual(21, na_counts[("outputs", "cabinet_or_service")])
 		self.assertEqual(14, na_counts[("outputs", "unused")])
 		self.assertEqual(1, na_counts[("outputs", "virtual")])
 		self.assertEqual(0, na_counts[("outputs", "internal_nonvisual")])
@@ -160,6 +178,55 @@ class AcDcDefinitionTests(unittest.TestCase):
 		self.assertIn("cGameName=acd_170", led_sources["vpx-table.acdc-pro-1.0"]["locator"])
 		self.assertIn("AC/DC Pro (Stern 2012)", led_sources["vpx-table.acdc-pro-1.0"]["locator"])
 
+	def test_original_pro_spatial_layout_uses_standup_bell_and_original_lamps(self) -> None:
+		pro = self.definitions["pro"]
+		switches = bindings(pro, "inputs", "pinmame.input.switch")
+		solenoids = bindings(pro, "outputs", "pinmame.output.solenoid")
+		lamps = bindings(pro, "outputs", "pinmame.output.lamp")
+		gi = bindings(pro, "outputs", "pinmame.output.gi")[0]
+		self.assertEqual({"x": 0.387677, "y": 0.092558}, {key: switches[36]["spatial"]["placements"][0][key] for key in ("x", "y")})
+		self.assertEqual(
+			["vpx-table.acdc-pro-1.0", "vpx.acdc-pro-1.0-lighting-fix", "manual.acdc-pro"],
+			switches[36]["spatial"]["placements"][0]["provenance"]["source_refs"],
+		)
+		bell = {mechanism["id"]: mechanism for mechanism in pro["mechanisms"]}["mechanism.bell"]
+		self.assertEqual("Hell's Bell standup target", bell["label"])
+		self.assertEqual("other", bell["kind"])
+		self.assertEqual([], bell["actuators"])
+		for address, expected in {
+			14: (0.387038, 0.534787), 15: (0.520102, 0.534166), 17: (0.452994, 0.604875),
+		}.items():
+			self.assertEqual(expected, (lamps[address]["spatial"]["placements"][0]["x"], lamps[address]["spatial"]["placements"][0]["y"]))
+		self.assertEqual({"x": 0.833431, "y": 0.123162}, {key: gi["spatial"]["placements"][11][key] for key in ("x", "y")})
+		located_inputs = sum(device["spatial"]["status"] == "validated" for device in pro["inputs"])
+		located_outputs = sum(device["spatial"]["status"] == "validated" for device in pro["outputs"])
+		placements = sum(len(device["spatial"].get("placements", [])) for device in [*pro["inputs"], *pro["outputs"]])
+		self.assertEqual((48, 81, 168), (located_inputs, located_outputs, placements))
+		self.assertEqual(38, len(gi["spatial"]["placements"]))
+		self.assertEqual(45, gi["physical"]["quantity"])
+		self.assertEqual(("not_applicable", "cabinet_or_service"), (solenoids[22]["spatial"]["status"], solenoids[22]["spatial"]["reason"]))
+		pro_sources = {source["id"]: source for source in pro["sources"]}
+		self.assertEqual("vpx_table", pro_sources["vpx-table.acdc-pro-1.0"]["kind"])
+		self.assertEqual("44bf3d67f96968103ab71f26b8b12786e5590f62bd73589b85060983dc62d9e9", pro_sources["vpx-table.acdc-pro-1.0"]["sha256"])
+		self.assertIn("78,274,560 bytes", pro_sources["vpx-table.acdc-pro-1.0"]["locator"])
+		self.assertIn("235 centered candidates", pro_sources["vpx-table.acdc-pro-1.0"]["locator"])
+		self.assertIn("bounds 0,0-952,2115", pro_sources["vpx-table.acdc-pro-1.0"]["locator"])
+		self.assertIn("cGameName=acd_170", pro_sources["vpx-table.acdc-pro-1.0"]["locator"])
+
+	def test_pro_derived_rear_panel_fixtures_keep_physical_records_without_playfield_coordinates(self) -> None:
+		for variant in ("pro", "led_pro", "vault"):
+			definition = self.definitions[variant]
+			lamps = bindings(definition, "outputs", "pinmame.output.lamp")
+			solenoids = bindings(definition, "outputs", "pinmame.output.solenoid")
+			for address in (53, 54, 55, 56, 65, 66, 67, 68, 69, 70, 71, 72):
+				self.assertEqual(("not_applicable", "cabinet_or_service"), (lamps[address]["spatial"]["status"], lamps[address]["spatial"]["reason"]))
+				self.assertEqual(["cabinet.rear-panel"], lamps[address]["roles"])
+				self.assertEqual(1, lamps[address]["physical"]["quantity"])
+				self.assertIn("no playfield coordinate", lamps[address]["physical"]["notes"])
+			self.assertEqual(["cabinet.rear-panel"], solenoids[22]["roles"])
+			self.assertEqual(1, solenoids[22]["physical"]["quantity"])
+			self.assertIn("no playfield coordinate", solenoids[22]["physical"]["notes"])
+
 	def test_vault_spatial_layout_preserves_physical_multiplicity_and_cabinet_scope(self) -> None:
 		vault = self.definitions["vault"]
 		switches = bindings(vault, "inputs", "pinmame.input.switch")
@@ -172,8 +239,9 @@ class AcDcDefinitionTests(unittest.TestCase):
 		self.assertEqual("cabinet_or_service", lamps[1]["spatial"]["reason"])
 		self.assertEqual(3, len(solenoids[25]["spatial"]["placements"]))
 		self.assertEqual(3, solenoids[25]["physical"]["quantity"])
-		self.assertEqual(45, len(gi["spatial"]["placements"]))
+		self.assertEqual(38, len(gi["spatial"]["placements"]))
 		self.assertEqual(45, gi["physical"]["quantity"])
+		self.assertEqual(("not_applicable", "cabinet_or_service"), (solenoids[22]["spatial"]["status"], solenoids[22]["spatial"]["reason"]))
 		self.assertEqual("not_applicable", lamps[14]["spatial"]["status"])
 		self.assertEqual("unused", lamps[14]["spatial"]["reason"])
 		self.assertEqual("cabinet_or_service", solenoids[8]["spatial"]["reason"])
@@ -246,6 +314,8 @@ class AcDcDefinitionTests(unittest.TestCase):
 		self.assertEqual("b478b21272befd41908aa3ef4daf3a90d4838334346718cb4d5fde7f23bb2fc0", premium_sources["vpx.acdc-luci-premium-vpw-1.1.4"]["sha256"])
 		self.assertEqual("987d42c68b586af1b0d66100b9f34d5215dfaf67574032849adb1c2f18c6cab5", pro_sources["manual.acdc-pro"]["sha256"])
 		self.assertEqual("e0fdef84892ea8bce6eae179509ac8262f103bac0173c2e822a4fe10aafcf7fa", pro_sources["vpx.acdc-pro-1.0-lighting-fix"]["sha256"])
+		self.assertEqual("44bf3d67f96968103ab71f26b8b12786e5590f62bd73589b85060983dc62d9e9", pro_sources["vpx-table.acdc-pro-1.0"]["sha256"])
+		self.assertIn("78,274,560 bytes", pro_sources["vpx-table.acdc-pro-1.0"]["locator"])
 		vault_sources = {source["id"]: source for source in self.definitions["vault"]["sources"]}
 		self.assertEqual("10a460c6b84fc1b8b372bf7b3d92b1904ee5eed9d5aad29fe384e7a6502fa328", vault_sources["vpx-table.acdc-pro-vault-1.0"]["sha256"])
 		self.assertIn("79,429,632 bytes", vault_sources["vpx-table.acdc-pro-vault-1.0"]["locator"])

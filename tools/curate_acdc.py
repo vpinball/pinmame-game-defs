@@ -6,7 +6,7 @@ import json
 import re
 from pathlib import Path
 
-from curate_acdc_spatial import apply_led_pro_spatial, apply_vault_spatial
+from curate_acdc_spatial import apply_led_pro_spatial, apply_original_pro_spatial, apply_vault_spatial
 from pinmame_game_defs.jsonio import write_json, write_text
 from pinmame_game_defs.spatial import SPATIAL_RETROFIT_PENDING_MACHINE_IDS, fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
@@ -518,7 +518,7 @@ def source_set(variant: str) -> list[dict[str, object]]:
 	if variant == "premium":
 		ids = [PREMIUM_MANUAL, LUCI_MANUAL, PREMIUM_VPX, PREMIUM_RUNTIME, STERN_PRODUCT, IPDB_PREMIUM, IPDB_LUCI]
 	elif variant == "pro":
-		ids = [PRO_MANUAL, PRO_VPX, PRO_RUNTIME, STERN_PRODUCT]
+		ids = [PRO_MANUAL, PRO_TABLE, PRO_VPX, PRO_RUNTIME, STERN_PRODUCT]
 	elif variant == "led-pro":
 		ids = [PRO_MANUAL, PRO_TABLE, PRO_VPX, VAULT_VPX, VAULT_TABLE, PRO_RUNTIME, STERN_PRODUCT, STERN_LED_PRO]
 	else:
@@ -563,7 +563,18 @@ def build(variant: str) -> dict[str, object]:
 		"sources": source_set(variant),
 		"knowledge": {"path": f"knowledge/stern/{MACHINE_META[variant]['id'].split('.', 1)[1].replace('.', '-')}.md", "status": "complete"},
 	}
-	if variant == "led-pro":
+	if variant == "pro":
+		apply_original_pro_spatial(
+			inputs,
+			outputs,
+			table_source=PRO_TABLE,
+			script_source=PRO_VPX,
+			manual_source=PRO_MANUAL,
+			core_source=CORE_SOURCE,
+		)
+		definition["schema_version"] = 2
+		definition["coverage"]["dimensions"]["spatial_placement"] = "validated"
+	elif variant == "led-pro":
 		apply_led_pro_spatial(
 			inputs,
 			outputs,
@@ -649,6 +660,12 @@ The Pro replaces Premium drop banks with standup AC/DC, ROCK, and TNT targets an
 
 Only the 1-80 lamp matrix and GI 0 are controller outputs. The service manual marks matrix positions 14, 15, 16, and 17 unused, but the proven Pro VPX script actively binds l14, l15, and l17 and the Vault script explicitly comments those same three bindings out as removed in the Vault Edition. Preserve 14, 15, and 17 as VPX-visible original/LED-Pro playfield inserts, preserve 16 as unused, and treat their artwork semantics as table-asset-defined rather than inventing manual names. The VPX script's 177-191 values are private flasher mirror indices fed by solenoid callbacks and are not lamps. Flashers remain solenoid outputs 17 and 20-31. Public dedicated flipper switches are 84/83 left and 82/81 right; lower-playfield dedicated slots are unused.
 
+## Spatial reconstruction
+
+Every playfield switch, effect, insert, flasher, and GI emitter has a reviewed normalized placement in VPX/player view (`x=0` left, `x=1` right, `y=0` rear, `y=1` apron). Coordinates come from the exact working `AC-DC Pro-1.0.vpx` table. The original standup target at switch 36 uses that table's target point rather than the different swinging-bell contact point used by LED Pro and Vault. Switches 18-22 describe the real under-apron trough order, while cannon switches 61 and 62 share one projected assembly center because their distinction is cam state rather than playfield position.
+
+GI 0 has 38 normalized playfield emitter placements and physical quantity 45; the seven rear-panel GI bulbs are documented physically but receive no playfield coordinates. Rear-panel lamp addresses 53-56 and 65-72 and rear-panel flasher solenoid 22 likewise retain their physical quantity and construction notes while remaining spatially N/A. This keeps cabinet/rear-panel fixtures out of the normalized playfield plane without losing hardware needed to recreate the machine.
+
 PinMAME public solenoid 33 is the synthetic SAM game-on/fast-flip state, not a Q33 ticket driver. Optional physical ticket-service identities 33-35 are preserved in the untransported `physical.output.ticket` group.
 
 ## Timing and service
@@ -659,6 +676,7 @@ The working script sweeps the cannon from roughly 110 degrees to 20 and back, as
 
 - Official Pro manual SHA-256 987d42c68b586af1b0d66100b9f34d5215dfaf67574032849adb1c2f18c6cab5 is organized under E:/_vpe-2025/pinmame-manuals.
 - Working Pro script SHA-256 e0fdef84892ea8bce6eae179509ac8262f103bac0173c2e822a4fe10aafcf7fa.
+- Exact working `AC-DC Pro-1.0.vpx` SHA-256 44bf3d67f96968103ab71f26b8b12786e5590f62bd73589b85060983dc62d9e9; 78,274,560 bytes; verified and extracted with vpxtool. The source table is retained in the organized external VPX cache and is not redistributed by this repository.
 - Exact acd_170 topology run SHA-256 f3c237db82c4686bd58908a9b1935b21a483fe99b753bd6f25ab9b375c372511; ROM archive SHA-256 e55c7386950272568dd639f3c8d70beff6fbd584ed49601d4196b46cb1e66ca5 remains external.
 """,
 	"led-pro": """# AC/DC LED Pro recreation knowledge
@@ -675,7 +693,7 @@ Use the complete original Pro switch, lamp, solenoid, cannon, ramp, trough, shoo
 
 ## Spatial evidence and timing
 
-The supplied AC-DC Pro VPX table is used only as shared original-Pro/LED-Pro geometry evidence: its `cGameName=acd_170` and splash identify it as AC/DC Pro (Stern 2012), so it does not establish LED Pro product identity. Its 235 centered candidates provide the normalized VPX/player-view geometry for the shared playfield, including active LED-Pro lamps 14, 15, and 17 and GI 0. The Pro script and manual supply the shared controller, wiring, and physical placement conventions. The exact Vault VPX table and script, together with Stern's LED Pro announcement, establish the passive swinging-bell contact at switch 36 and its 2014 product boundary. Cannon and ball-device timing remains as documented for the original Pro.
+The supplied AC-DC Pro VPX table is used only as shared original-Pro/LED-Pro geometry evidence: its `cGameName=acd_170` and splash identify it as AC/DC Pro (Stern 2012), so it does not establish LED Pro product identity. Its 235 centered candidates provide the normalized VPX/player-view geometry for the shared playfield, including active LED-Pro lamps 14, 15, and 17 and GI 0. The Pro script and manual supply the shared controller, wiring, and physical placement conventions. The exact Vault VPX table and script, together with Stern's LED Pro announcement, establish the passive swinging-bell contact at switch 36 and its 2014 product boundary. Cannon and ball-device timing remains as documented for the original Pro. Rear-panel lamp addresses 53-56 and 65-72, the seven rear-panel GI bulbs, and flasher solenoid 22 are physical fixtures with recorded quantities but intentionally have no normalized playfield coordinates.
 """,
 	"vault": """# AC/DC Vault Edition recreation knowledge
 
@@ -693,9 +711,9 @@ Start four balls on trough switches 18-21 and the cannon at home on 61. Output 1
 
 ## Spatial reconstruction
 
-Every physical playfield switch, effect, insert, flasher, and GI emitter has a reviewed normalized placement in VPX/player view (`x=0` left, `x=1` right, `y=0` rear, `y=1` apron). Coordinates come from the exact working `AC-DC Pro Vault-1.0.vpx` table and were checked against the official switch, lamp, and coil location sheets. Switches 18-22 follow the real under-apron trough assembly from drain end to eject/jam end rather than collapsing onto the table's two simulated kicker objects. Cannon switches 61 and 62 share the rotating assembly's projected center because their physical contacts differ by cam state, not playfield position. Vertical back-panel lamps intentionally share projected x/y positions where their difference is height, which the canonical two-dimensional playfield space does not encode.
+Every physical playfield switch, effect, insert, flasher, and GI emitter has a reviewed normalized placement in VPX/player view (`x=0` left, `x=1` right, `y=0` rear, `y=1` apron). Coordinates come from the exact working `AC-DC Pro Vault-1.0.vpx` table and were checked against the official switch, lamp, and coil location sheets. Switches 18-22 follow the real under-apron trough assembly from drain end to eject/jam end rather than collapsing onto the table's two simulated kicker objects. Cannon switches 61 and 62 share the rotating assembly's projected center because their physical contacts differ by cam state, not playfield position. Rear-panel lamp addresses 53-56 and 65-72 and rear-panel flasher solenoid 22 retain physical quantities and construction notes but intentionally have no normalized playfield coordinates.
 
-Solenoid 25 has three emitter placements, one at each pop bumper. GI 0 has 45 emitter placements: the 38 bulbs in the script's red, white, and blue GI collections plus the seven physical back-panel bulbs corroborated by the back-panel parts diagram. Cosmetic reflection and desktop-render helper objects are not duplicate physical emitters. Cabinet/start/tournament/FIRE lamps, cabinet/service switches, the shaker, knocker, and optional ticket hardware are explicitly marked `cabinet_or_service` instead of being forced into playfield coordinates.
+Solenoid 25 has three emitter placements, one at each pop bumper. GI 0 has 38 normalized playfield emitter placements; its physical quantity is 45 because the back-panel parts diagram corroborates another seven bulbs that are intentionally left without playfield coordinates. Cosmetic reflection and desktop-render helper objects are not duplicate physical emitters. Cabinet/start/tournament/FIRE lamps, cabinet/service switches, the shaker, knocker, and optional ticket hardware are explicitly marked `cabinet_or_service` instead of being forced into playfield coordinates.
 
 ## Evidence
 
@@ -731,6 +749,7 @@ def runtime_evidence(premium: bool) -> dict[str, object]:
 
 for stale in [
 	ROOT / "machines/partial/stern/ac-dc-luci-premium-2013.json",
+	ROOT / "machines/partial/stern/ac-dc-pro-2012.json",
 	ROOT / "knowledge/stern/ac-dc-luci-premium-2013.md",
 	ROOT / "knowledge/stern/ac-dc-premium-limited-edition-luci.2012.md",
 	ROOT / "knowledge/stern/ac-dc-pro.2012.md",
@@ -744,7 +763,7 @@ for stale in [
 
 PATHS = {
 	"premium": ROOT / "machines/partial/stern/ac-dc-premium-limited-edition-luci-2012.json",
-	"pro": ROOT / "machines/partial/stern/ac-dc-pro-2012.json",
+	"pro": ROOT / "machines/author-ready/stern/ac-dc-pro-2012.json",
 	"led-pro": ROOT / "machines/author-ready/stern/ac-dc-led-pro-2014.json",
 	"vault": ROOT / "machines/author-ready/stern/ac-dc-vault-edition-2018.json",
 }

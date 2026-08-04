@@ -1,4 +1,4 @@
-"""Reviewed AC/DC normalized playfield placements for LED Pro and Vault editions."""
+"""Reviewed AC/DC normalized playfield placements for the Pro-derived editions."""
 
 from __future__ import annotations
 
@@ -28,6 +28,7 @@ CABINET_INPUT_ROLES = {
 
 CABINET_OUTPUT_ROLES = {
 	("pinmame.output.solenoid", 8): "cabinet.shaker",
+	("pinmame.output.solenoid", 22): "cabinet.rear-panel",
 	("pinmame.output.solenoid", 24): "cabinet.knocker",
 	("physical.output.ticket", 33): "service.ticket",
 	("physical.output.ticket", 34): "service.ticket",
@@ -39,7 +40,7 @@ SOLENOID_POSITIONS = {
 	5: [(0.783568, 0.017554)], 9: [(0.524113, 0.155556)], 10: [(0.736963, 0.151240)], 11: [(0.639000, 0.235974)],
 	12: [(0.450843, 0.016417)], 13: [(0.220215, 0.726524)], 14: [(0.685802, 0.726524)],
 	15: [(0.284974, 0.847281)], 16: [(0.620752, 0.847281)], 17: [(0.085300, 0.064573)],
-	20: [(0.268998, 0.232922)], 21: [(0.140206, 0.658291)], 22: [(0.926880, 0.064573)], 23: [(0.340202, 0.012178)],
+	20: [(0.268998, 0.232922)], 21: [(0.140206, 0.658291)], 23: [(0.340202, 0.012178)],
 	25: [(0.524113, 0.155556), (0.736963, 0.151240), (0.639000, 0.235974)], 26: [(0.416532, 0.219762)],
 	27: [(0.220513, 0.336352)], 28: [(0.370644, 0.308138)], 29: [(0.799869, 0.345778)],
 	30: [(0.768324, 0.258153)], 31: [(0.863152, 0.622217)], 32: [(0.720277, 0.695345)],
@@ -58,17 +59,21 @@ LAMP_POSITIONS = {
 	42: [(0.365233, 0.788881)], 43: [(0.385618, 0.820375)], 44: [(0.450544, 0.758364)], 45: [(0.452709, 0.784999)],
 	46: [(0.452292, 0.806801)], 47: [(0.452909, 0.830226)], 48: [(0.453572, 0.855999)], 49: [(0.577164, 0.762689)],
 	50: [(0.539155, 0.790352)], 51: [(0.521402, 0.820196)], 52: [(0.126360, 0.300005)],
-	53: [(0.417017, 0.007329)], 54: [(0.417017, 0.007329)], 55: [(0.417017, 0.007329)], 56: [(0.417017, 0.007329)],
 	57: [(0.344369, 0.009803)], 58: [(0.724697, 0.009803)], 60: [(0.523187, 0.157771)], 61: [(0.734840, 0.151549)],
-	62: [(0.637734, 0.236849)], 64: [(0.762463, 0.390665)], 65: [(0.417017, 0.007329)], 66: [(0.417017, 0.007329)],
-	67: [(0.558824, 0.007329)], 68: [(0.558824, 0.007329)], 69: [(0.558824, 0.007329)], 70: [(0.558824, 0.007329)],
-	71: [(0.558824, 0.007329)], 72: [(0.558824, 0.007329)],
+	62: [(0.637734, 0.236849)], 64: [(0.762463, 0.390665)],
 }
 
 LED_PRO_LAMP_POSITIONS = {
 	**LAMP_POSITIONS,
 	14: [(0.387038, 0.534787)], 15: [(0.520102, 0.534166)], 17: [(0.452994, 0.604875)],
 }
+
+ORIGINAL_PRO_INPUT_POSITIONS = {
+	**INPUT_POSITIONS,
+	36: [(0.387677, 0.092558)],
+}
+
+ORIGINAL_PRO_LAMP_POSITIONS = LED_PRO_LAMP_POSITIONS
 
 GI_POSITIONS = [
 	(0.900285, 0.469020), (0.874862, 0.583358), (0.042912, 0.489004), (0.786737, 0.291340), (0.048016, 0.289073),
@@ -79,8 +84,6 @@ GI_POSITIONS = [
 	(0.587316, 0.077237), (0.677718, 0.068298), (0.768350, 0.059083), (0.497783, 0.091346), (0.588134, 0.083212),
 	(0.677903, 0.074554), (0.766505, 0.063271), (0.653348, 0.275933), (0.033099, 0.599149), (0.896912, 0.524478),
 	(0.697530, 0.758900), (0.206559, 0.759480), (0.100182, 0.411436),
-	(0.026665, 0.029661), (0.337830, 0.029661), (0.643099, 0.029661), (0.972992, 0.030127),
-	(0.175828, 0.029661), (0.485041, 0.029661), (0.820140, 0.029661),
 ]
 
 LED_PRO_GI_POSITIONS = [
@@ -93,6 +96,8 @@ LED_PRO_GI_POSITIONS = [
 	(0.766505, 0.061943),
 	*GI_POSITIONS[32:],
 ]
+
+REAR_PANEL_LAMP_ADDRESSES = {53, 54, 55, 56, 65, 66, 67, 68, 69, 70, 71, 72}
 
 
 def _provenance(*source_refs: str) -> dict[str, object]:
@@ -119,9 +124,9 @@ def _apply_spatial(
 	lamp_positions: dict[int, list[tuple[float, float]]],
 	gi_positions: list[tuple[float, float]],
 	located_sources: tuple[str, ...],
-	switch36_sources: tuple[str, ...],
 	manual_source: str,
 	core_source: str,
+	switch36_sources: tuple[str, ...] | None = None,
 ) -> None:
 	"""Apply a fail-closed, manually reviewed spatial disposition to every device."""
 	for device in inputs:
@@ -132,7 +137,7 @@ def _apply_spatial(
 		elif device["availability"] == "unused":
 			_not_applicable(device, "unused", manual_source)
 		elif address in input_positions:
-			spatial_sources = switch36_sources if group == "pinmame.input.switch" and address == 36 else located_sources
+			spatial_sources = switch36_sources if switch36_sources is not None and group == "pinmame.input.switch" and address == 36 else located_sources
 			_located(device, "sensor", input_positions[address], spatial_sources)
 		elif address in CABINET_INPUT_ROLES:
 			device["roles"] = [CABINET_INPUT_ROLES[address]]
@@ -158,15 +163,23 @@ def _apply_spatial(
 		elif (group, address) in CABINET_OUTPUT_ROLES:
 			device["roles"] = [CABINET_OUTPUT_ROLES[(group, address)]]
 			_not_applicable(device, "cabinet_or_service", manual_source)
+			if group == "pinmame.output.solenoid" and address == 22:
+				device.setdefault("physical", {}).update({"quantity": 1, "location": "Rear-panel right flasher fixture", "notes": "The official coil/location chart proves one physical rear-panel flasher bulb outside normalized playfield space; no playfield coordinate is asserted."})
 		elif group == "pinmame.output.solenoid" and address in SOLENOID_POSITIONS:
 			_located(device, "emitter" if kind == "flasher" else "effect", SOLENOID_POSITIONS[address], located_sources)
 			if address == 25:
 				device.setdefault("physical", {})["quantity"] = 3
+		elif group == "pinmame.output.lamp" and address in REAR_PANEL_LAMP_ADDRESSES:
+			device["roles"] = ["cabinet.rear-panel"]
+			_not_applicable(device, "cabinet_or_service", manual_source)
+			device.setdefault("physical", {}).update({"quantity": 1, "location": "Rear-panel song/track lamp assembly", "notes": "The official lamp-location chart proves one physical rear-panel lamp at this address outside normalized playfield space; no playfield coordinate is asserted."})
 		elif group == "pinmame.output.lamp" and address in lamp_positions:
 			_located(device, "emitter", lamp_positions[address], located_sources)
 		elif group == "pinmame.output.gi" and address == 0:
+			if len(gi_positions) != 38:
+				raise ValueError(f"AC/DC reviewed playfield GI map must contain 38 placements, got {len(gi_positions)}")
 			_located(device, "emitter", gi_positions, located_sources)
-			device.setdefault("physical", {}).update({"quantity": 45, "notes": "One conventional GI channel drives 38 reviewed playfield bulbs and seven back-panel bulbs."})
+			device.setdefault("physical", {}).update({"quantity": 45, "notes": "One conventional GI channel drives 38 reviewed playfield bulbs and seven off-playfield back-panel bulbs. Only the 38 playfield bulbs receive normalized coordinates."})
 		else:
 			raise ValueError(f"AC/DC output {group} {address} ({kind}) has no reviewed spatial disposition")
 
@@ -189,7 +202,29 @@ def apply_vault_spatial(
 		lamp_positions=LAMP_POSITIONS,
 		gi_positions=GI_POSITIONS,
 		located_sources=located_sources,
-		switch36_sources=located_sources,
+		manual_source=manual_source,
+		core_source=core_source,
+	)
+
+
+def apply_original_pro_spatial(
+	inputs: list[dict[str, object]],
+	outputs: list[dict[str, object]],
+	*,
+	table_source: str,
+	script_source: str,
+	manual_source: str,
+	core_source: str,
+) -> None:
+	"""Apply the reviewed normalized spatial disposition to the original Pro."""
+	located_sources = (table_source, script_source, manual_source)
+	_apply_spatial(
+		inputs,
+		outputs,
+		input_positions=ORIGINAL_PRO_INPUT_POSITIONS,
+		lamp_positions=ORIGINAL_PRO_LAMP_POSITIONS,
+		gi_positions=LED_PRO_GI_POSITIONS,
+		located_sources=located_sources,
 		manual_source=manual_source,
 		core_source=core_source,
 	)
