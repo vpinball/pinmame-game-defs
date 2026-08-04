@@ -44,7 +44,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 38 | 2008 | STUB - Shrek (V1.41) | Stern | stub |
 | 39 | 2008 | STUB - Simpsons Kooky Carnival, The (Redemption) (V2.0) | Stern | stub |
 | 40 | 2008 | STUB - World Poker Tour (V14.0) | Stern | stub |
-| 41 | 2007 | Spider-Man | Stern | partial |
+| 41 | 2007 | Spider-Man | Stern | author_ready |
 | 42 | 2007 | STUB - Wheel of Fortune (V5.0) | Stern | stub |
 | 43 | 2006 | STUB - Dale Jr. (5.00) | Stern | stub |
 | 44 | 2006 | STUB - Grand Prix (4.50) | Stern | stub |

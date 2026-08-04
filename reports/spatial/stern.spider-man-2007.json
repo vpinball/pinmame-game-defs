@@ -1,0 +1,88 @@
+{
+  "format": "pinmame-spatial-review",
+  "version": 1,
+  "machine_id": "stern.spider-man.2007",
+  "status": "validated",
+  "source": {
+    "id": "vpx-table.spider-man-3.0",
+    "sha256": "97a0a94e122ab070bd98300b191d5c6e58c255dc285a846f4f52d9ff3ffa7c47",
+    "vpxtool": "git:v0.33.3",
+    "bounds": {"left": 0, "top": 0, "right": 952, "bottom": 2115}
+  },
+  "script": {
+    "id": "vpx.spider-man-3.0",
+    "role": "causality_authoritative_embedded_script",
+    "table_sha256": "97a0a94e122ab070bd98300b191d5c6e58c255dc285a846f4f52d9ff3ffa7c47",
+    "sha256": "ce456682b9161116b167ff7c70095d986901e2c226aa5e48a0ee7e572374d128",
+    "uri": "external:pinmame-vpx-sources/stern/spider-man-2007/source/Spider-Man_3.0.vpx",
+    "vpxtool": "git:v0.33.3",
+    "locator": "Embedded Script stream freshly extracted from the exact retained table; the stream contains RightFlipperKey -> switch 86 and SolCallback(14) -> solURFlipper, but does not assert switch 85."
+  },
+  "sidecar_script": {
+    "id": "vpx-sidecar.spider-man-3.0",
+    "role": "secondary_corroborating_unpaired_script",
+    "paired_with_table": false,
+    "sha256": "cf34b7ccad9aa3bac58b0338914315fa97f74479d52914037b42921e113bb237",
+    "uri": "external:pinmame-vpx-sources/stern/spider-man-2007/source/Spider-Man_3.0.vbs",
+    "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+    "locator": "Secondary sidecar only; it declares NoUpperRightFlipper and NoUpperLeftFlipper and Const UseSolenoids = 2, while the paired embedded stream omits both declarations and uses Const UseSolenoids = 1. The sidecar also has cvpmSaucer exit-variance settings and later audio/rolling-helper changes absent from the embedded stream."
+  },
+  "manual": {
+    "id": "manual.spider-man.2007-service",
+    "sha256": "63462d261c7558739b198e96db47a32d7edd4e01bb1e89cd3483736c51043cbe",
+    "pages": [6, 8, 9, 10, 11, 37, 68, 69, 85, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 118, 119, 120, 121]
+  },
+  "review_artifacts": {
+    "uri": "external:pinmame-review-artifacts/stern/spider-man-2007/manual-pages",
+    "files": [
+      {"page": 6, "filename": "manual-006-006.png", "sha256": "6190a25cda334f9a55163ac79a491e8e2f5510feb591dc8cb426a4e4881de930"},
+      {"page": 8, "filename": "manual-008.png", "sha256": "5ab6687cc929bb28efdfa49503ad65a3d4f73198e19053c049c751dafee541a3"},
+      {"page": 9, "filename": "manual-009.png", "sha256": "e0ed3258d4565166cfcb5550d1ae86449ba551ce63eb112f499ac0bb8d266dec"},
+      {"page": 10, "filename": "manual-010.png", "sha256": "7fc6a5456eb8c0ea3365ca8b14bf25d7ecdad5c85d627ca953d5580460ff087a"},
+      {"page": 11, "filename": "manual-011.png", "sha256": "867580067ad1d52052865440a19748fd8763a111f562687730aaffc40535c1df"},
+      {"page": 37, "filename": "manual-037-037.png", "sha256": "5747f491e8ce58e98808e7a79df8d08f6ba036094584e3c88a4b0d080b89a16f"},
+      {"page": 68, "filename": "manual-068.png", "sha256": "35051163d0be0fbc366d67f54b5fd9d4806b589f069d3998e010a338788fbc3d"},
+      {"page": 69, "filename": "manual-069.png", "sha256": "89f730af977f38352d13343f3023f304b91ddd0e6bf58f901ce5c05b4b63042b"},
+      {"page": 85, "filename": "manual-085.png", "sha256": "58e139e1060618b796d42fe4cbe057ceb57d1cfa6a572fcf7337e72554c2e36b"},
+      {"page": 91, "filename": "manual-091.png", "sha256": "70f1d18a192ea5057b9a7a3cfc9002bd3a8aa3e74f2c32927225fc6f1d91c546"},
+      {"page": 92, "filename": "manual-092.png", "sha256": "773d32fa71028c138f154a293c39a906a31b1125413f2158ec2495766c0b176a"},
+      {"page": 93, "filename": "manual-093.png", "sha256": "13bda06503cebc91e55a995b3d6bbdd42db5a5d8b08521295458461998045b2a"},
+      {"page": 94, "filename": "manual-094.png", "sha256": "b26dc6ded65b294e38a5154228234b9fcd26f3b5a1b2228dc9fcd911dcd3f57a"},
+      {"page": 95, "filename": "manual-095.png", "sha256": "4ac15a51cd548d6315c9d13a48e532ec9896364f23de2506944c3c72de67f767"},
+      {"page": 96, "filename": "manual-096.png", "sha256": "d69707750d04b45ba6d4d0346a5ca17b083c6a77dff25883eb37deb67211f08e"},
+      {"page": 97, "filename": "manual-097.png", "sha256": "2a294abd5ba774587e7a1b298850a4249b51a9ae4687da5d7ffd91d1b49fd158"},
+      {"page": 98, "filename": "manual-098.png", "sha256": "697d742b9cfd06861855f0a5464dd4cbe820f09a26cc8b459725a48aea50b89f"},
+      {"page": 99, "filename": "manual-099.png", "sha256": "1b029f28fa3641c7903102b6b73d4ee95d324ea702a8654ac1fd7ef5929e0f80"},
+      {"page": 100, "filename": "manual-100.png", "sha256": "b19f1b11b402a8c02e6c1c9a912d5b7c241b399854c097bb8123f4c60473c6af"},
+      {"page": 118, "filename": "manual-118.png", "sha256": "4d0a54462ec625b57c5464e16e3e60d571e54f446541735468f2e086f46a0c28"},
+      {"page": 119, "filename": "manual-119.png", "sha256": "a25cdf6327b0a28345249d1128f39970d6ae3e4fc3d1e5408e8ccb9cabd66df2"},
+      {"page": 120, "filename": "manual-120.png", "sha256": "d31c9eb0aa982f07f0b2a996670f27cbf408c685dfdce3b3f734a977196ef98a"},
+      {"page": 121, "filename": "manual-121.png", "sha256": "f03dd1913575c6054070d2c6f19dca56e5af6cc13d798d8af5f56438cfd4c00c"}
+    ]
+  },
+  "promotion_seed": {
+    "path": "tools/seeds/stern/spider-man-2007.json",
+    "sha256": "f7a34de84cac7e19d852c54f2d83939f995902578cd6ae64b01ed1aff1c06f6c",
+    "byte_identical_to_author_ready": true,
+    "purpose": "Tracked complete seed used when the promoting commit has removed the partial input."
+  },
+  "resolved": {
+    "inputs": 96,
+    "outputs": 117,
+    "located_devices": 159,
+    "not_applicable_devices": 54,
+    "display_spatial_records": 1,
+    "upper_right_flipper_switches": [86, 85],
+    "gi_placements": 42,
+    "gi_physical_quantity": 44,
+    "gi_regional_scope": "US/non-Euro",
+    "flasher_multiplicities": {"23": 2, "25": 2, "28": 2, "31": 3},
+    "rear_panel_lamps": [66, 67, 68, 69, 70, 71]
+  },
+  "causality_review": {
+    "embedded_authority": "All runtime mappings and callbacks use the embedded Script stream from the exact retained table. It registers output 14 to solURFlipper, output 19 to solGoblin, the trough/motor/VUK callbacks, and SolModCallback flashers 21/23/25-31; it uses Const UseSolenoids = 1.",
+    "manual_authority": "The manual remains authoritative for D15/public 86, D16/public 85, and the normally-closed physical EOS wiring. The embedded script asserts 86 from RightFlipperKey but does not assert 85, so the EOS claim is not attributed to either script.",
+    "sidecar_divergence": "The retained sidecar SHA cf34b7ccad9aa3bac58b0338914315fa97f74479d52914037b42921e113bb237 is secondary/corroborating only and must not override the embedded SHA ce456682b9161116b167ff7c70095d986901e2c226aa5e48a0ee7e572374d128."
+  },
+  "projection_policy": "Assembly projections are disclosed in device notes; render-only VPX helpers are not physical sockets."
+}
