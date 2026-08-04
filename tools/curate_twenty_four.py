@@ -1,4 +1,4 @@
-"""Build the reviewed, author-ready Stern 24 machine definition."""
+"""Build the reviewed Stern 24 machine definition."""
 
 from __future__ import annotations
 
@@ -7,7 +7,6 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json, write_text
-from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -93,7 +92,7 @@ def matrix_switch(number: int) -> dict[str, object]:
 	row, column = divmod(number - 1, 16)
 	physical: dict[str, object] = {"switch_type": "unknown"}
 	if spec:
-		physical["notes"] = "The exact factory contact construction is not established by Stern's partial parts book. The ROM diagnostic and proven table validate this semantic binding and its sustained/pulse behavior; choose a suitable physical sensor when recreating it."
+		physical["notes"] = "The exact factory contact construction is not established by Stern's partial parts book. The ROM diagnostic and proven table validate this semantic binding and its sustained/pulse behavior; choose a suitable physical sensor when recreating it. The normally_closed=false field records the controller's inactive logical state, not a sourced claim about the factory contact's physical normal state."
 	if number == 15:
 		physical["switch_type"] = "button"
 		physical["notes"] = "Physical Tournament Start cabinet button. A proven table script pulses this address as a software-only trough-release acknowledgement; never create a trough sensor at switch 15."
@@ -318,7 +317,7 @@ def driver_records() -> list[dict[str, object]]:
 
 def sources() -> list[dict[str, object]]:
 	return [
-		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://sternpinball.com/wp-content/uploads/2018/11/24Manual.pdf", "sha256": "c547202e54b3ffbe53ba955db9eed8d52a6fef4b4807416de2f31ccf18aaf71f", "locator": "Official 72-page partial Pink/Blue parts and assembly book. Custom assemblies are on PDF pages 39-47; suitcase motor assembly 511-5092-00 and 24 V stepper 511-5072-00 are on page 43. This is not a complete service I/O chart; pages 1-52 are image scans and later pages are generic appendices.", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "24Manual.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-03T04:08:34.2127718Z"},
+		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://sternpinball.com/wp-content/uploads/2018/11/24Manual.pdf", "sha256": "c547202e54b3ffbe53ba955db9eed8d52a6fef4b4807416de2f31ccf18aaf71f", "locator": "Official 72-page partial Pink/Blue parts and assembly book. Custom assemblies are on PDF pages 39-47; suitcase assembly 511-5092-00, 24 V stepper 511-5072-00, 180-5119-02 light-actuation microswitch, and 180-5119-00 microswitch are identified on page 43. It gives no Q21/Q23/Q25/Q30 phase sequence, wire-color map, or complete factory contact seating, and is not a complete service I/O chart; pages 1-52 are image scans and later pages are generic appendices.", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "24Manual.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-03T04:08:34.2127718Z"},
 		{"id": SAM_REFERENCE_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2022/06/IronMan_Vault_web.pdf", "sha256": "20f04adaba96926b74aa91dba7f88024a70012eb601242d18dfb15ed3da1f990", "locator": "Later official service manual for a machine using the same SAM CPU/Sound and I/O Power Driver boards. Used only for standardized SAM matrix, dedicated-input, lamp-matrix, Q-control connector pinouts, and supply topology; it is not evidence for any 24 game semantic or installed device.", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "IronMan_Vault_web.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-03T03:02:35.240041Z"},
 		{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/24%20%28Stern%202009%29%20v.2.3.1.vbs", "revision": VPX_REVISION, "sha256": "7bf550806bd87c17417a974ed75b1700885da883e0dce5ce31d7dc7ba6cc094f", "locator": "Known-working exact twenty4_150 table script: all switch handlers, four-ball trough, corrected suitcase lock mapping and animation, Safe House and Sniper facades, gates/posts, drop resets, flippers, flashers, lamps, and GI. Line 626 registers only SolCallback(21) as the logical animation trigger while its inline hardware comment explicitly lists suitcase motor solenoid positions 21, 23, 25, and 30; the unregistered positions are physical stepper drives, not separate VPX callbacks.", "license": "NOASSERTION", "attribution": "Table authors credited in the script; vpxtable_scripts contributors"},
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c twenty4 INITGAME/driver family, SAM_NO_AUX, SAM public switch translation, synthetic game-on output, and 128x32 DMD.", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
@@ -351,7 +350,7 @@ def build() -> dict[str, object]:
 
 KNOWLEDGE = """# 24 (Stern, 2009)
 
-Coverage: **author-ready - complete public I/O inventory, wiring, custom mechanisms, firmware variants, and recreation behavior validated**
+Coverage: **partial - public I/O inventory and controller causality are documented, but authoring-critical physical construction remains unresolved**
 
 ## Identity and evidence precedence
 
@@ -384,6 +383,15 @@ Lamp-matrix addresses 1-80 are populated except explicit unused address 9. The R
 - Bind every matrix/dedicated/DIP input, Q1-Q32, synthetic game-on 33, explicit unused auxiliary 51-66, lamp 1-80, GI 0, and the DMD. Do not create playfield hardware from aliases or emulator capacity.
 - Use the proven VPX script as the runtime tie-breaker, ROM diagnostics for exact semantics and wire labels, Stern's partial manual for 24 construction, and the later SAM schematic only for standardized board connector pins.
 
+## Coverage blockers
+
+This definition is intentionally partial. The following are recreation blockers, not coordinate-tolerance notes:
+
+- Suitcase phase causality is incomplete. The pinned v2.3.1 script establishes that Q21, Q23, Q25, and Q30 are four physical drive positions for the 24 V stepper and that Q21 is the logical animation callback. Its proven behavior does not identify the physical A/B/C/D phase order or individual supply/control wire colors. The official Stern page-43 assembly list identifies the motor and microswitch hardware but no phase map; the ordinary ROM coil test skips these decoder holes, and the suitcase menu run proves only that a separate test exists. A physical recreation therefore cannot yet be wired from this record without a continuity/diagnostic capture or authoritative schematic, nor can an equivalent driver abstraction be claimed to preserve factory causality.
+- Contact construction and normal-state coverage is incomplete. The manual identifies suitcase microswitch parts 180-5119-02 and 180-5119-00, but does not map those contacts or establish the factory construction, normal state, and seat for every used playfield switch. The JSON deliberately retains `switch_type: unknown` and the validated matrix semantics instead of telling an author to substitute a sensor while calling the result complete.
+- Trough geometry is only an ordered shared-assembly projection. The exact VPX exposes Drain and BallRelease, not SW18-SW22 contact objects; the five recorded points preserve the order and controller causality with about +/-0.03 normalized practical uncertainty, but do not establish the physical seat or contact/optic construction of each trough position.
+- Lamp addresses 72-78 are semantically grouped by the ROM diagnostic as CTU (72-75) and MOLE (76-78), but their individual face order is not established. Q27 also retains the exact script's tentative `under jet?` comment rather than an unsupported named physical target. Their controller bindings and direct/derived coordinates are preserved, but the unresolved physical naming must not be read as author-ready recreation semantics.
+
 ## Sources
 
 - `manual.stern-24-parts.2009`: official partial parts book SHA-256 `c547202e54b3ffbe53ba955db9eed8d52a6fef4b4807416de2f31ccf18aaf71f`, organized under the external manual cache with searchable text and rendered pages.
@@ -391,6 +399,10 @@ Lamp-matrix addresses 1-80 are populated except explicit unused address 9. The R
 - `rom.stern-24.twenty4-150`: exact external archive SHA-256 `f6ea60175911fe259f45d7d10bc792c2f3e6f2b06583b5311d62cccb76f5a1b4`; the ROM readme supplies revision-specific mechanism fixes.
 - `runtime.stern-24-switch-diagnostic-1-17`, `runtime.stern-24-switch-diagnostic-22-64`, `runtime.stern-24-coil-diagnostic`, `runtime.stern-24-lamp-diagnostic`, and `runtime.stern-24-suitcase-motor-menu`: separately hashed held-switch, coil, lamp, and menu traces with their evidence limits stated in JSON.
 """
+
+
+def partial_knowledge() -> str:
+	return KNOWLEDGE
 
 
 def runtime_evidence() -> dict[str, object]:
@@ -416,9 +428,17 @@ def runtime_evidence() -> dict[str, object]:
 
 
 def main() -> None:
-	write_json(spatial_partial_path(ROOT / "machines/partial/stern/twenty-four-2009.json"), fail_closed_spatial_partial(build()))
+	author_ready_path = ROOT / "machines/author-ready/stern/twenty-four-2009.json"
+	partial_path = ROOT / "machines/partial/stern/twenty-four-2009.json"
+	if not author_ready_path.exists() and not partial_path.exists():
+		definition = build()
+		definition["schema_version"] = 2
+		definition["coverage"]["status"] = "partial"  # type: ignore[index]
+		definition["coverage"]["missing"] = ["spatial_placement"]  # type: ignore[index]
+		definition["coverage"]["dimensions"]["spatial_placement"] = "unknown"  # type: ignore[index]
+		write_json(partial_path, definition)
+		write_text(ROOT / "knowledge/stern/twenty-four-2009.md", partial_knowledge())
 	write_json(ROOT / "evidence/runtime/sam/twenty-four-boot-start-and-diagnostics.json", runtime_evidence())
-	write_text(ROOT / "knowledge/stern/twenty-four-2009.md", fail_closed_spatial_knowledge("stern.twenty-four.2009", KNOWLEDGE))
 
 
 if __name__ == "__main__":

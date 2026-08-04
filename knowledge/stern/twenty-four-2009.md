@@ -1,7 +1,6 @@
 # 24 (Stern, 2009)
 
-Coverage: **partial — normalized spatial placements pending.**
-Previously validated non-spatial scope: **complete public I/O inventory, wiring, custom mechanisms, firmware variants, and recreation behavior validated**
+Coverage: **partial - public I/O inventory and controller causality are documented, but authoring-critical physical construction remains unresolved**
 
 ## Identity and evidence precedence
 
@@ -34,9 +33,38 @@ Lamp-matrix addresses 1-80 are populated except explicit unused address 9. The R
 - Bind every matrix/dedicated/DIP input, Q1-Q32, synthetic game-on 33, explicit unused auxiliary 51-66, lamp 1-80, GI 0, and the DMD. Do not create playfield hardware from aliases or emulator capacity.
 - Use the proven VPX script as the runtime tie-breaker, ROM diagnostics for exact semantics and wire labels, Stern's partial manual for 24 construction, and the later SAM schematic only for standardized board connector pins.
 
+## Coverage blockers
+
+This definition is intentionally partial. The following are recreation blockers, not coordinate-tolerance notes:
+
+- Suitcase phase causality is incomplete. The pinned v2.3.1 script establishes that Q21, Q23, Q25, and Q30 are four physical drive positions for the 24 V stepper and that Q21 is the logical animation callback. Its proven behavior does not identify the physical A/B/C/D phase order or individual supply/control wire colors. The official Stern page-43 assembly list identifies the motor and microswitch hardware but no phase map; the ordinary ROM coil test skips these decoder holes, and the suitcase menu run proves only that a separate test exists. A physical recreation therefore cannot yet be wired from this record without a continuity/diagnostic capture or authoritative schematic, nor can an equivalent driver abstraction be claimed to preserve factory causality.
+- Contact construction and normal-state coverage is incomplete. The manual identifies suitcase microswitch parts 180-5119-02 and 180-5119-00, but does not map those contacts or establish the factory construction, normal state, and seat for every used playfield switch. The JSON deliberately retains `switch_type: unknown` and the validated matrix semantics instead of telling an author to substitute a sensor while calling the result complete.
+- Trough geometry is only an ordered shared-assembly projection. The exact VPX exposes Drain and BallRelease, not SW18-SW22 contact objects; the five recorded points preserve the order and controller causality with about +/-0.03 normalized practical uncertainty, but do not establish the physical seat or contact/optic construction of each trough position.
+- Lamp addresses 72-78 are semantically grouped by the ROM diagnostic as CTU (72-75) and MOLE (76-78), but their individual face order is not established. Q27 also retains the exact script's tentative `under jet?` comment rather than an unsupported named physical target. Their controller bindings and direct/derived coordinates are preserved, but the unresolved physical naming must not be read as author-ready recreation semantics.
+
 ## Sources
 
 - `manual.stern-24-parts.2009`: official partial parts book SHA-256 `c547202e54b3ffbe53ba955db9eed8d52a6fef4b4807416de2f31ccf18aaf71f`, organized under the external manual cache with searchable text and rendered pages.
 - `vpx.stern-24-2.3.1`: pinned known-working script SHA-256 `7bf550806bd87c17417a974ed75b1700885da883e0dce5ce31d7dc7ba6cc094f`.
 - `rom.stern-24.twenty4-150`: exact external archive SHA-256 `f6ea60175911fe259f45d7d10bc792c2f3e6f2b06583b5311d62cccb76f5a1b4`; the ROM readme supplies revision-specific mechanism fixes.
 - `runtime.stern-24-switch-diagnostic-1-17`, `runtime.stern-24-switch-diagnostic-22-64`, `runtime.stern-24-coil-diagnostic`, `runtime.stern-24-lamp-diagnostic`, and `runtime.stern-24-suitcase-motor-menu`: separately hashed held-switch, coil, lamp, and menu traces with their evidence limits stated in JSON.
+
+## Normalized spatial retrofit
+
+Coordinates use the global playfield space: x=0 is left, x=1 is right, y=0 is rear/backglass, and y=1 is front/apron. The exact working VPX was found in the required search order at `L:\Visual Pinball\Tables\24 (Stern 2009).vpx`, copied to the established external VPX cache, and extracted with vpxtool `git:v0.33.3`. Its embedded `twenty4_150` script is retained as an object/callback artifact, while the pinned known-working v2.3.1 script remains the semantic and causality tie-breaker where the older embedded script differs.
+
+Direct centers are used for the exact VPX playfield objects: targets, bumpers, gates, lanes, routes, flippers, slingshots, toy anchors, visible lock, lamps, and flasher helpers. The suitcase, Safe House, Sniper House, Q21/Q23/Q25/Q30 stepper drives, and switch 48 deliberately use shared-assembly anchors. EOS contacts are disclosed projections to exact flipper centers. Trough switches 18-22 are an ordered projection between the exact VPX Drain and BallRelease anchors because the working VPX has no trough-contact objects; the stated uncertainty is practical authoring tolerance, not coordinate precision. No coordinate is inferred from a perspective drawing.
+
+The 40 exact VPX GI objects are not 40 physical sockets: each broad odd `GI_n` and its localized even helper are synchronized render layers for one physical GI position, and four lane-guide objects provide the remaining anchors. The definition therefore carries 22 physical GI anchors. Flasher quantities follow the semantic comments and physical inventory (`Q19` x3, `Q20` x2, `Q26` x3, `Q27` x1, `Q31` x2, `Q32` x3), while synchronized VPX helper objects are not multiplied into hardware.
+
+The older embedded script's visible-lock ordering is superseded by the reviewed v2.3.1 mapping: physical bottom/middle/top contacts 43/44/45 bind to ROM switches 45/44/43. The official Stern parts book, IPDB, and manufacturer evidence remain authoritative for physical multiplicity and custom mechanisms; the SAM reference manual remains limited to shared board topology and connector pinouts. The unresolved suitcase stepper phase order, exact factory contact construction, and precise hidden trough contact seats remain concrete author tasks documented in the base knowledge and mechanism records.
+
+## Spatial evidence
+
+- `vpx-table.stern-24-2009-local`: exact VPX SHA-256 `7e8bf294f3b3dd4bfe53e2727957d000568bc9d079caeed60038ceeb8d1b89f5`, 61,915,136 bytes, retained under the external VPX source cache; extracted object packet and candidate map are retained under the external review-artifact cache.
+- `vpx.stern-24-embedded-2.0.1`: extracted script SHA-256 `be3a0e0e96df6d232fa1fa99110e63781abdca5484a1b97de75de0fd1760135a`; it is an older embedded artifact and does not override the pinned semantic v2.3.1 script.
+- The geometry source search stopped after the exact table was found in `L:\Visual Pinball\Tables`; the archive folder and public VPU/VPF fallback were not needed.
+
+## Status decision
+
+This is a schema-v2 **partial**, not author-ready. The direct VPX coordinates, disclosed shared-assembly anchors, ordered trough projection, physical quantities, and controller-to-mechanism records are retained as evidence. The conflicts above remain open because an author still lacks the suitcase phase wiring, complete factory contact construction/normal states, precise hidden trough seats, and a few physical names needed for a full recreation.

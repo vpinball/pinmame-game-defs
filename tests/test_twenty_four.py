@@ -1,6 +1,10 @@
 from __future__ import annotations
 
 import json
+import ast
+import importlib.util
+import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -25,15 +29,25 @@ class TwentyFourDefinitionTests(unittest.TestCase):
 		cls.definition = load_json(DEFINITION_PATH)
 		cls.evidence = load_json(EVIDENCE_PATH)
 
-	def test_identity_and_coverage_are_fail_closed_for_spatial_retrofit(self) -> None:
+	def test_identity_and_coverage_remain_conspicuous_partial(self) -> None:
 		self.assertEqual({"id": "stern.twenty-four.2009", "ipdb_id": 5419, "kind": "physical_pinball", "manufacturer": "Stern", "name": "24", "year": 2009}, self.definition["machine"])
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertIn("spatial_placement", self.definition["coverage"]["missing"])
-		self.assertEqual("unknown", self.definition["coverage"]["dimensions"]["spatial_placement"])
-		self.assertEqual("complete", self.definition["knowledge"]["status"])
-		self.assertEqual([], self.definition["conflicts"])
+		self.assertEqual({"input_semantics", "output_semantics", "mechanism_behavior", "recreation_notes", "spatial_placement", "unresolved_conflicts"}, set(self.definition["coverage"]["missing"]))
+		self.assertEqual("observed", self.definition["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual("partial", self.definition["knowledge"]["status"])
+		self.assertEqual({"conflict.suitcase-stepper-phase-order", "conflict.playfield-contact-construction", "conflict.hidden-trough-seats", "conflict.lamp-face-and-q27-naming"}, {conflict["id"] for conflict in self.definition["conflicts"]})
+		self.assertFalse((ROOT / "machines" / "author-ready" / "stern" / "twenty-four-2009.json").exists())
 		self.assertFalse((ROOT / "machines" / "stubs" / "twenty4_150.json").exists())
+
+	def test_partial_status_names_every_authoring_blocker_without_author_ready_claim(self) -> None:
+		knowledge = (ROOT / "knowledge" / "stern" / "twenty-four-2009.md").read_text(encoding="utf-8")
+		self.assertIn("Coverage: **partial -", knowledge)
+		self.assertNotIn("Coverage: **author-ready", knowledge)
+		for phrase in ("phase causality is incomplete", "Contact construction and normal-state coverage is incomplete", "ordered shared-assembly projection", "Lamp addresses 72-78"):
+			self.assertIn(phrase, knowledge)
+		for conflict in self.definition["conflicts"]:
+			self.assertGreaterEqual(len(conflict["source_refs"]), 2)
 
 	def test_driver_family_is_exhaustive_and_one_physical_product(self) -> None:
 		drivers = {driver["id"]: driver for driver in self.definition["drivers"]}
@@ -102,7 +116,27 @@ class TwentyFourDefinitionTests(unittest.TestCase):
 		self.assertIn("without claiming an unverified face order", lamps[72]["physical"]["notes"])
 		self.assertIn("without claiming an unverified face order", lamps[76]["physical"]["notes"])
 		self.assertEqual({0}, set(bindings(self.definition, "outputs", "pinmame.output.gi")))
-		self.assertEqual([{"height": 32, "id": "display.dmd", "kind": "dmd", "label": "Dot-matrix display", "provenance": self.definition["displays"][0]["provenance"], "width": 128}], self.definition["displays"])
+		self.assertEqual([{"height": 32, "id": "display.dmd", "kind": "dmd", "label": "Dot-matrix display", "provenance": self.definition["displays"][0]["provenance"], "spatial": self.definition["displays"][0]["spatial"], "width": 128}], self.definition["displays"])
+
+	def test_spatial_inventory_is_explicit_and_preserves_derived_geometry(self) -> None:
+		for device in self.definition["inputs"] + self.definition["outputs"]:
+			self.assertIn("spatial", device)
+			self.assertIn(device["spatial"]["status"], {"candidate", "observed", "validated", "not_applicable"})
+		inputs = bindings(self.definition, "inputs", "pinmame.input.switch")
+		self.assertEqual("observed", inputs[48]["spatial"]["status"])
+		self.assertIn("shared-assembly projection", inputs[48]["physical"]["notes"])
+		self.assertEqual(1, len(inputs[18]["spatial"]["placements"]))
+		self.assertEqual(5, len({inputs[address]["spatial"]["placements"][0]["x"] for address in range(18, 23)}))
+		self.assertIn("trough-region projection", inputs[22]["physical"]["notes"])
+		outputs = bindings(self.definition, "outputs", "pinmame.output.solenoid")
+		self.assertEqual(3, outputs[19]["physical"]["quantity"])
+		self.assertEqual(2, outputs[31]["physical"]["quantity"])
+		self.assertEqual(outputs[21]["spatial"]["placements"][0]["x"], outputs[30]["spatial"]["placements"][0]["x"])
+		self.assertEqual(22, bindings(self.definition, "outputs", "pinmame.output.gi")[0]["physical"]["quantity"])
+		lamps = bindings(self.definition, "outputs", "pinmame.output.lamp")
+		self.assertEqual("not_applicable", lamps[1]["spatial"]["status"])
+		self.assertEqual("not_applicable", lamps[9]["spatial"]["status"])
+		self.assertEqual("validated", lamps[80]["spatial"]["status"])
 
 	def test_custom_mechanisms_capture_physical_causality(self) -> None:
 		mechanisms = {mechanism["id"]: mechanism for mechanism in self.definition["mechanisms"]}
@@ -127,6 +161,9 @@ class TwentyFourDefinitionTests(unittest.TestCase):
 		self.assertEqual("20f04adaba96926b74aa91dba7f88024a70012eb601242d18dfb15ed3da1f990", sources["manual.stern-sam-io-reference.2014"]["sha256"])
 		self.assertIn("not evidence for any 24 game semantic", sources["manual.stern-sam-io-reference.2014"]["locator"])
 		self.assertEqual("7bf550806bd87c17417a974ed75b1700885da883e0dce5ce31d7dc7ba6cc094f", sources["vpx.stern-24-2.3.1"]["sha256"])
+		self.assertEqual("7e8bf294f3b3dd4bfe53e2727957d000568bc9d079caeed60038ceeb8d1b89f5", sources["vpx-table.stern-24-2009-local"]["sha256"])
+		self.assertEqual("be3a0e0e96df6d232fa1fa99110e63781abdca5484a1b97de75de0fd1760135a", sources["vpx.stern-24-embedded-2.0.1"]["sha256"])
+		self.assertNotIn("L:\\Visual Pinball\\Tables", sources["vpx-table.stern-24-2009-local"]["locator"])
 		self.assertEqual("f6ea60175911fe259f45d7d10bc792c2f3e6f2b06583b5311d62cccb76f5a1b4", sources["rom.stern-24.twenty4-150"]["sha256"])
 		self.assertIn("6678046c447b92a5965747a40035a13e312cc5f436ab13f0585267f65635ae17", sources["rom.stern-24.twenty4-150"]["locator"])
 		self.assertEqual("a1fca511fbebd25e045af4e22e08505820e633c9be493808572b7245c85886db", sources["runtime.stern-24.boot-start"]["sha256"])
@@ -157,6 +194,81 @@ class TwentyFourDefinitionTests(unittest.TestCase):
 			self.assertEqual(len(ids), len(set(ids)))
 			controller_bindings = [(item["binding"]["group"], item["binding"]["device"]) for item in collection]
 			self.assertEqual(len(controller_bindings), len(set(controller_bindings)))
+
+	def test_curators_are_import_pure_and_base_preserves_reviewed_partial(self) -> None:
+		for filename in ("curate_twenty_four.py", "curate_twenty_four_spatial.py"):
+			tree = ast.parse((ROOT / "tools" / filename).read_text(encoding="utf-8"))
+			mutating_calls = []
+			for statement in tree.body:
+				if isinstance(statement, (ast.FunctionDef, ast.ClassDef, ast.Import, ast.ImportFrom, ast.Assign, ast.AnnAssign)):
+					continue
+				if isinstance(statement, ast.If) and isinstance(statement.test, ast.Compare) and isinstance(statement.test.left, ast.Name) and statement.test.left.id == "__name__":
+					continue
+				for node in ast.walk(statement):
+					if isinstance(node, ast.Call):
+						name = node.func.id if isinstance(node.func, ast.Name) else node.func.attr if isinstance(node.func, ast.Attribute) else ""
+						if name in {"write", "write_json", "write_text", "unlink"}:
+							mutating_calls.append(name)
+			self.assertEqual([], mutating_calls, filename)
+		spec = importlib.util.spec_from_file_location("curate_twenty_four_no_clobber_test", ROOT / "tools" / "curate_twenty_four.py")
+		self.assertIsNotNone(spec)
+		self.assertIsNotNone(spec.loader)
+		module = importlib.util.module_from_spec(spec)
+		spec.loader.exec_module(module)
+		sys.modules["curate_twenty_four"] = module
+		with tempfile.TemporaryDirectory() as temporary:
+			module.ROOT = Path(temporary)
+			definition_path = module.ROOT / "machines" / "partial" / "stern" / "twenty-four-2009.json"
+			definition_path.parent.mkdir(parents=True)
+			definition_path.write_text('{"reviewed": true}\n', encoding="utf-8")
+			module.main()
+			self.assertEqual('{"reviewed": true}\n', definition_path.read_text(encoding="utf-8"))
+			self.assertFalse((module.ROOT / "machines" / "author-ready" / "stern" / "twenty-four-2009.json").exists())
+			evidence_path = module.ROOT / "evidence" / "runtime" / "sam" / "twenty-four-boot-start-and-diagnostics.json"
+			first_evidence = evidence_path.read_bytes()
+			module.main()
+			self.assertEqual(first_evidence, evidence_path.read_bytes())
+
+		spec = importlib.util.spec_from_file_location("curate_twenty_four_spatial_determinism_test", ROOT / "tools" / "curate_twenty_four_spatial.py")
+		self.assertIsNotNone(spec)
+		self.assertIsNotNone(spec.loader)
+		spatial_module = importlib.util.module_from_spec(spec)
+		spec.loader.exec_module(spatial_module)
+		with tempfile.TemporaryDirectory() as temporary:
+			spatial_module.ROOT = Path(temporary)
+			spatial_module.PARTIAL_PATH = spatial_module.ROOT / "machines" / "partial" / "stern" / "twenty-four-2009.json"
+			spatial_module.AUTHOR_READY_PATH = spatial_module.ROOT / "machines" / "author-ready" / "stern" / "twenty-four-2009.json"
+			spatial_module.KNOWLEDGE_PATH = spatial_module.ROOT / "knowledge" / "stern" / "twenty-four-2009.md"
+			spatial_module.demote()
+			first_definition = spatial_module.PARTIAL_PATH.read_bytes()
+			spatial_module.demote()
+			self.assertEqual(first_definition, spatial_module.PARTIAL_PATH.read_bytes())
+			self.assertFalse(spatial_module.AUTHOR_READY_PATH.exists())
+
+		with tempfile.TemporaryDirectory() as temporary:
+			spatial_module.ROOT = Path(temporary)
+			spatial_module.PARTIAL_PATH = spatial_module.ROOT / "machines" / "partial" / "stern" / "twenty-four-2009.json"
+			spatial_module.AUTHOR_READY_PATH = spatial_module.ROOT / "machines" / "author-ready" / "stern" / "twenty-four-2009.json"
+			spatial_module.KNOWLEDGE_PATH = spatial_module.ROOT / "knowledge" / "stern" / "twenty-four-2009.md"
+			spatial_module.PARTIAL_PATH.parent.mkdir(parents=True)
+			spatial_module.PARTIAL_PATH.write_bytes(b"reviewed partial\n")
+			with self.assertRaisesRegex(FileExistsError, "reviewed partial"):
+				spatial_module.demote()
+			self.assertEqual(b"reviewed partial\n", spatial_module.PARTIAL_PATH.read_bytes())
+			self.assertFalse(spatial_module.KNOWLEDGE_PATH.exists())
+
+		with tempfile.TemporaryDirectory() as temporary:
+			spatial_module.ROOT = Path(temporary)
+			spatial_module.PARTIAL_PATH = spatial_module.ROOT / "machines" / "partial" / "stern" / "twenty-four-2009.json"
+			spatial_module.AUTHOR_READY_PATH = spatial_module.ROOT / "machines" / "author-ready" / "stern" / "twenty-four-2009.json"
+			spatial_module.KNOWLEDGE_PATH = spatial_module.ROOT / "knowledge" / "stern" / "twenty-four-2009.md"
+			spatial_module.AUTHOR_READY_PATH.parent.mkdir(parents=True)
+			spatial_module.AUTHOR_READY_PATH.write_bytes(b"reviewed author-ready\n")
+			with self.assertRaisesRegex(FileExistsError, "author-ready"):
+				spatial_module.demote()
+			self.assertEqual(b"reviewed author-ready\n", spatial_module.AUTHOR_READY_PATH.read_bytes())
+			self.assertFalse(spatial_module.PARTIAL_PATH.exists())
+			self.assertFalse(spatial_module.KNOWLEDGE_PATH.exists())
 
 
 if __name__ == "__main__":
