@@ -1,52 +1,39 @@
-# Terminator 2: Judgment Day
+# Terminator 2: Judgment Day (Williams, 1991)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+Coverage: **partial — complete semantic inventory and reviewed normalized coordinates are retained, but author-ready status is blocked by explicit spatial and source conflicts.** This is the physical Williams machine only. FreeWPC custom-ROM drivers and virtual/community rethemes are not claimed by the canonical definition.
 
-## Overview
+## Evidence precedence and exact identity
 
-Legacy evidence identifies this candidate as Williams (1991). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+The retained known-working VPW 0022 embedded script is the semantic controller authority. The Williams operations manual is the physical wiring, switch/coil/lamp, GI, and assembly authority. Pinned PinMAME revision `4ec52ff0ac13` controls public address routing, the WPC-DMD hardware generation (`0x4`), and the driver family. The retained table SHA-256 is `3727bf57102fceb13b9f8e6370bd7bc4fbd2571d95affb7bff34eb7c5f2e9f8c`; its embedded script SHA-256 is `b5153ac46f6d4b58afb676c1f7bfdff17c6ffb953941daed8dd841c679f4e831`. The manual SHA-256 is `8540d654b39c58ad3b19ece0f42eb1dfdb8460d249e9480f8906385c8ecdb16b`; the authorized external `t2_l8.zip` evidence SHA-256 is `4cdd95d435334c3bd6fe19556b410b558e67266b30e7fb767f52f4d14ed525b1`.
 
-## Playfield devices
+The canonical driver set is `t2_d2`, `t2_d3`, `t2_d4`, `t2_d6`, `t2_d8`, `t2_l2`, `t2_l2sp1`, `t2_l3`, `t2_l4`, `t2_l6`, `t2_l8`, `t2_l81`, `t2_l82`, `t2_l83`, `t2_l84`, `t2_p2f`, `t2_p2g`, `t2_f19`, `t2_f20`, and `t2_f32`. D-series ghost fixes, sound/attract/profanity revisions, and the L83/L84 physical-compatible MODs retain the same physical I/O. The FreeWPC records are alternative firmware for the stock physical T2 hardware; they remain controller variants of this machine and do not create a separate physical machine or community retheme entry.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+## Controller inventory
 
-## Custom mechanisms
+All 64 printed switch-matrix positions `11` through `88` are present, including printed Not Used positions. Cabinet/service inputs `1`-`8`, optional generic flipper inputs `111`-`118`, and DIP inputs `1`-`8` are explicit. All printed lamp addresses `11`-`88` are present, including lamp `18` Not Used and the optional cabinet start-button lamp `84`. Solenoids `1`-`28`, the two lower-flipper aliases `46`/`48`, five GI address slots `0`-`4`, and the 128x32 DMD are explicit. Public lamp addresses remain WPC matrix addresses; do not replace them with sequential 1-64 values.
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+The retained script callbacks are: 1 `SolSkull` (physical Ball Popper, opening the skull path from switch 76), 2 gun fire/kicker, 3 outhole, 4 trough ball release, 7 knocker, 8 left outer-lane kickback saver, 9 auto plunger, 10 top lock, 11 gun motor, 16 left lock, and 28 drop-target reset. Flashers 17-27 use the script's `SetLamp 117` through `SetLamp 127` mappings except 24, which has no retained callback. The manual's physical output names remain authoritative even when the script callback name is thematic.
 
-## Ball-state transitions
+The manual solenoid table's exact wire/connector/transistor/part-number data is retained on every physical solenoid output. High-power outputs 1-8 use J130, low-power outputs 9-16 use J127, flashers use the J126/J125/J122 branches shown on manual page 48, and drop-target reset 28 is J122-4/Q20/AE-26-1200. The two lower flippers are output 46 `Blu-Yel/J109-7/FL-11630` and output 48 `Gry-Yel/J109-5/FL-11630`. GI strings retain the printed rows: GI1 `Wht-Brn/J120-7/Q18/#555`, GI2 `Wht-Vio/J119-1/Q10/#555`, GI3 `Wht-Yel/J121-9/Q14/#555`, GI4 `Wht-Orn/J120-8/Q16` with no printed lamp part, and GI5 `Wht-Grn/J120-10/Q12/#555`. Lamp-matrix connector labels are not copied into output wiring because the later schematic disagrees with the matrix table.
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+## Mechanisms and physical assemblies
 
-## Controller interactions
+The three-ball trough initializes `bsTrough.InitSw 18,17,16,15`, with switch 18 as the outhole/exit and switches 17, 16, and 15 as the three stack seats, and sets `Balls=3`; BallRelease kicks at 90 degrees with strength 8. The shooter lane is switch 78 with a 0-degree/50-strength kick and variance 3. The left lock is switch 51 at 160/13; the top lock is switch 55 at 270/5 with variance 6. The single drop target is switch 77 reset by solenoid 28.
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+The cannon is a `cvpmMech` one-solenoid, reverse, non-linear mechanism driven by solenoid 11, length 240, steps 240. Home switch 33 is the 0-5 window and mark switch 32 is the 98-105 window. The retained firing callback kicks switch 31 by `-CurrentPos` with strength 45 and clears the loaded ball; the visual callback uses `CurrentPos=aNewPos/3`. Recreating the cannon requires a motorized traverse and loaded-ball/fire state, not the modern comparison script's keyframed or magnet device. The VPW table's `T2_Gun` primitive is a shared assembly anchor for the internal mark/home contacts, not a substitute for the manual's A-14507/A-14504/A-13892-2 physical assemblies. Switch 34 is the trigger on the cabinet gun grip; the working script maps `PlungerKey` directly to that controller switch, so it intentionally has no playfield coordinate.
 
-## Service and setup information
+The manual mechanism map and assembly pages identify the A-8039-3 outhole/trough, C-9638 shooter, A-14525 right kickback, B-11873 left kickback, C-13174-L/R lower flipper assemblies, B-12665 kicker arms with B-13935 coils, A-14507 gun-kicker assembly, A-14504 cannon platform, A-13892-2 motor regulator, ball eject assemblies, A-14501 ball popper, A-14615 single-bank drop target, and lamp boards A-K. These relationships are retained as physical authoring knowledge; ambiguous manual assembly naming is not silently relabeled.
 
-Unknown; locate operator/service documentation.
+## Printed conflicts and script boundaries
 
-## Timing and tuning observations
+Solenoid 12 is deliberately optional/conflicted: the early solenoid/location list says Knock Down / SM1-26-600, while the later electrical table says Not Used; the retained script has no `SolCallback(12)`. The later lamp schematic connector labels differ from the lamp matrix table; matrix address/name identity is retained without invented connector wiring. The manual names five GI strings as GI 1 Top Insert, GI 2 Left Playfield, GI 3 Right Playfield, GI 4 Not Used, and GI 5 Bottom Insert. The retained script instead toggles `GI2` (B1-B6 plus named GI objects 1-20/001/002) and `GI3` (named GI objects 21-35) for Case 2, has a separate Case 3 `Light2`-`Light5` branch, no Case 1 behavior, and exits on Case 4. Decorative Light2-Light5 and laser overlays are not promoted as physical GI or cannon emitters. The spatial audit retains the exact Case 2 object centers as conflicted evidence and leaves the other string routing unresolved.
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+The modern comparison script is not semantic authority. Its four-position trough, pulsed 62/64, virtual devices, and keyframed/magnet cannon are excluded. The g5k script is corroborating only where it agrees with the retained VPW behavior.
 
-## Recreation guidance
+## Normalized playfield geometry
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+The exact coordinate convention is `x=raw_x/964`, `y=raw_y/2162`, with x=0 left and x=1 right, y=0 rear/backglass and y=1 apron/player. Placements name their exact retained VPX object and use the `vpx-table.t2-vpw-0022` source. The extraction contains 548 retained files totaling 132,477,924 bytes. Its retained `extracted-vpxtool.manifest.json` lists every sorted relative POSIX path with byte size and SHA-256; canonical JSON bytes hash to `f56ab9a0b6287c71b984c42d97c88cbf98345a0614a8a920e93374e06ba2fab9`. The curator recomputes and verifies the complete manifest before regeneration and whenever the evidence root is configured during `--check`.
 
-## Evidence notes
+Lamp, switch, flasher, cannon, trough, lock, shooter, popper, bumper, slingshot, ramp-entry, and lower-flipper positions with exact named table objects or disclosed assembly projections are retained in the definition. Switches 41-43 and outputs 13-15 share the exact three bumper centers. Switches 44/45 and outputs 6/5 use the extractor's exact left/right slingshot-wall drag-point centroids. Gates `sw61` and `sw63` locate the two ramp-entry switches. The left-outlane switch 25 anchors kickback output 8. Cabinet grip switch 34, knocker output 7, backglass flasher 24, start-button lamp 84, and the DMD are controlled non-playfield records rather than fake playfield points. Lamp 52 drives the exact object-space `Primitive.L52` skull-eye mesh; because that primitive reports `(0,0)`, its coordinate is an observed projection to the adjacent exact skull drop-target center and says so explicitly.
 
-- `platforms/wpc.json#/coils/1`: Unbound legacy outputs record `c_flipper_lower_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/2`: Unbound legacy outputs record `c_flipper_lower_left` was retained as a migration note only.
-- `platforms/wpc.json#/coils/3`: Unbound legacy outputs record `c_flipper_upper_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/4`: Unbound legacy outputs record `c_flipper_upper_left` was retained as a migration note only.
-
-## Unresolved questions
-
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
-
-## Sources
-
-- `legacy.game.t2`: `games/t2.json` at the pinned migration revision.
+The three physical trough contacts are retained as an ordered 40/60/80-percent projection between the exact drain and ball-release anchors, consistent with the manual left/center/right map and carrying about plus or minus 0.03 normalized practical uncertainty. Their behavior and address order are complete, but the working table exposes only the cvpmBallStack rather than exact hidden contact seats. The remaining spatial blockers are optional/conflicted solenoid 12 and the unresolved GI 1/2/5 physical-string routing. The separate solenoid 12, GI-routing, and lamp-connector evidence conflicts also remain author-critical. The definition must remain partial until those exact facts are resolved by retained evidence.

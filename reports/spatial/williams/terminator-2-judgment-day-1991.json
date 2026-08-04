@@ -1,0 +1,652 @@
+{
+  "blockers": [
+    "The working VPX models the three trough contacts as controller state inside one cvpmBallStack and exposes no separate sensor centers; the retained ordered projection has about +/-0.03 normalized practical uncertainty rather than exact hidden-seat coordinates.",
+    "Manual GI 1-5 naming conflicts with the retained script's GI2/GI3 arrays and Case 3 Light2-Light5 branch; output 2 retains a conflicted direct group placement, while the remaining physical string placements stay unresolved.",
+    "Solenoid 12 is Knock Down / SM1-26-600 in the early manual table but Not Used in the later electrical table; the retained script has no SolCallback(12).",
+    "Later lamp schematic connector labels differ from the lamp matrix table; no connector pinout is manufactured."
+  ],
+  "candidate_geometry": {
+    "effect_objects": [
+      "Bumper.Bumper1",
+      "Bumper.Bumper2",
+      "Bumper.Bumper3",
+      "Drain",
+      "HitTarget.sw77",
+      "Kicker.BallRelease",
+      "Kicker.sw31",
+      "Kicker.sw51",
+      "Kicker.sw55",
+      "Kicker.sw76",
+      "Plunger1",
+      "Primitive.T2_Gun",
+      "Trigger.sw25 kickback assembly",
+      "TriggerLF",
+      "TriggerRF",
+      "Wall.LeftSlingshot drag-point centroid",
+      "Wall.RightSlingshot drag-point centroid"
+    ],
+    "excluded_graphical_objects": [
+      "Light2",
+      "Light3",
+      "Light4",
+      "Light5",
+      "T2_Gun laser overlays"
+    ],
+    "flasher_objects": [
+      "F117",
+      "F1172",
+      "F118",
+      "F119",
+      "F120",
+      "F121",
+      "F121b",
+      "F122",
+      "F123",
+      "F125",
+      "F126",
+      "F126a",
+      "F127",
+      "F127a"
+    ],
+    "gi_case_2_objects": [
+      "B1",
+      "B2",
+      "B3",
+      "GI_001",
+      "GI_002",
+      "GI_15",
+      "GI_16",
+      "GI_17",
+      "GI_18",
+      "GI_19",
+      "GI_20",
+      "GI_21",
+      "GI_22",
+      "GI_23",
+      "GI_24",
+      "GI_25",
+      "GI_26",
+      "GI_27",
+      "GI_28",
+      "GI_29",
+      "GI_30",
+      "GI_31",
+      "GI_32",
+      "GI_33",
+      "GI_34",
+      "GI_35",
+      "GI_37",
+      "GI_38"
+    ],
+    "input_objects": [
+      "Bumper.Bumper1",
+      "Bumper.Bumper2",
+      "Bumper.Bumper3",
+      "Drain",
+      "Drain-to-BallRelease trough projection 1",
+      "Drain-to-BallRelease trough projection 2",
+      "Drain-to-BallRelease trough projection 3",
+      "Gate.sw61",
+      "Gate.sw63",
+      "HitTarget.sw36",
+      "HitTarget.sw37",
+      "HitTarget.sw38",
+      "HitTarget.sw46",
+      "HitTarget.sw47",
+      "HitTarget.sw48",
+      "HitTarget.sw71",
+      "HitTarget.sw72",
+      "HitTarget.sw73",
+      "HitTarget.sw74",
+      "HitTarget.sw75",
+      "HitTarget.sw77",
+      "Kicker.sw31",
+      "Kicker.sw51",
+      "Kicker.sw55",
+      "Kicker.sw76",
+      "Kicker.sw78",
+      "Primitive.T2_Gun assembly",
+      "Trigger.sw25",
+      "Trigger.sw26",
+      "Trigger.sw27",
+      "Trigger.sw28",
+      "Trigger.sw53",
+      "Trigger.sw54",
+      "Trigger.sw56",
+      "Trigger.sw57",
+      "Trigger.sw58",
+      "Trigger.sw62",
+      "Trigger.sw64",
+      "Trigger.sw65",
+      "Trigger.sw66",
+      "TriggerLF",
+      "TriggerRF",
+      "Wall.LeftSlingshot drag-point centroid",
+      "Wall.RightSlingshot drag-point centroid"
+    ],
+    "lamp_objects": [
+      "L11",
+      "L12",
+      "L13",
+      "L14",
+      "L15",
+      "L16",
+      "L17",
+      "L21",
+      "L22a",
+      "L22b",
+      "L23",
+      "L24",
+      "L25",
+      "L26",
+      "L27",
+      "L28",
+      "L31",
+      "L32",
+      "L33",
+      "L34",
+      "L35",
+      "L36",
+      "L37",
+      "L38",
+      "L41",
+      "L42",
+      "L43",
+      "L44",
+      "L45",
+      "L46",
+      "L47",
+      "L48",
+      "L51a",
+      "L51b",
+      "L53",
+      "L54",
+      "L55",
+      "L56",
+      "L57",
+      "L58",
+      "L61",
+      "L62",
+      "L63",
+      "L64",
+      "L65",
+      "L66",
+      "L67",
+      "L68",
+      "L71",
+      "L72",
+      "L73",
+      "L74",
+      "L75",
+      "L76",
+      "L77",
+      "L78",
+      "L81",
+      "L82",
+      "L83",
+      "L85",
+      "L86",
+      "L87",
+      "L88",
+      "Primitive.L52 skull assembly projection"
+    ]
+  },
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162,
+      "left": 0,
+      "right": 964,
+      "top": 0
+    },
+    "space": "playfield",
+    "x": "x/964; 0=left, 1=right",
+    "y": "y/2162; 0=rear/backglass, 1=apron/player"
+  },
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 548,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "f56ab9a0b6287c71b984c42d97c88cbf98345a0614a8a920e93374e06ba2fab9",
+    "manifest_uri": "external:pinmame-vpx-sources/williams/terminator-2-judgment-day-1991/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.t2-vpw-0022",
+    "total_bytes": 132477924
+  },
+  "format": "pinmame-spatial-audit",
+  "machine_id": "williams.terminator-2-judgment-day.1991",
+  "resolved_input_addresses": [
+    11,
+    12,
+    15,
+    16,
+    17,
+    18,
+    25,
+    26,
+    27,
+    28,
+    31,
+    32,
+    33,
+    36,
+    37,
+    38,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    51,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 2,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 87,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 88,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "b5153ac46f6d4b58afb676c1f7bfdff17c6ffb953941daed8dd841c679f4e831",
+    "manual_sha256": "8540d654b39c58ad3b19ece0f42eb1dfdb8460d249e9480f8906385c8ecdb16b",
+    "rom_sha256": "4cdd95d435334c3bd6fe19556b410b558e67266b30e7fb767f52f4d14ed525b1",
+    "table_sha256": "3727bf57102fceb13b9f8e6370bd7bc4fbd2571d95affb7bff34eb7c5f2e9f8c"
+  },
+  "status": "partial",
+  "unresolved": [
+    {
+      "addresses": [
+        12
+      ],
+      "kind": "spatial",
+      "scope": "solenoid/effect geometry"
+    },
+    {
+      "addresses": [
+        0,
+        1,
+        4
+      ],
+      "group": "pinmame.output.gi",
+      "kind": "spatial",
+      "scope": "GI string geometry/routing"
+    }
+  ],
+  "version": 1
+}
