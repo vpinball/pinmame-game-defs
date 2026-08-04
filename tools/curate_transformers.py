@@ -1,18 +1,27 @@
-"""Build reviewed, author-ready Transformers Pro and Limited Edition definitions."""
+"""Build fail-closed Transformers Pro and Limited Edition partial definitions."""
 
 from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 
-from pinmame_game_defs.jsonio import write_json, write_text
-from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
-
-
 ROOT = Path(__file__).resolve().parents[1]
+SOURCE_ROOT = ROOT / "src"
+if str(SOURCE_ROOT) not in sys.path:
+	sys.path.insert(0, str(SOURCE_ROOT))
+
+from pinmame_game_defs.jsonio import write_json, write_text
+from pinmame_game_defs.spatial import SPATIAL_RETROFIT_PENDING_MACHINE_IDS, fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+
+
 CATALOG = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
-DRIVERS = {driver["id"]: driver for driver in CATALOG["drivers"] if driver["id"].startswith("tf_")}
+DRIVERS = {
+	driver["id"]: driver
+	for driver in sorted(CATALOG["drivers"], key=lambda item: item["id"])
+	if driver["id"].startswith("tf_")
+}
 
 PINMAME_REVISION = "4ec52ff0ac133ac251681518aed2249e19fe26eb"
 VPX_REVISION = "0c036bb61b4b4e8c778c37559f6795df8cd1521e"
@@ -484,6 +493,12 @@ The LE service chart uses lamps 17-59 and 61-80; 1-16 and 60 are unused. Many fe
 - Preserve the four-ball Megatron stack, all motor endpoints, Starscream limits, Ironhide ball optos, and Optimus route change as causal state, not cosmetic animation.
 - Keep the official manual files in the external organized cache; both official URLs currently resolve to byte-identical 134-page PDFs and are retained under their separate machine identities.
 
+## Spatial retrofit blocker register
+
+The normalized playfield placement gate remains fail-closed. The ordered local search found only `Transformers (Stern 2011) SG1bsoN Mod.vpx` in the primary tables folder and `Transformers (Stern 2011) v1 mod 1.vpx` in the archive; both identify JP's **Pro** recreation and embed `tf_180`, so neither can provide LE geometry. The archived `Transformers G1 Generation One (TBA 2018).vpx` is unrelated community content and is excluded. Browser escalation identified the [VPUniverse detail mod](https://vpuniverse.com/files/file/6355-transformers-stern-2011-detail-mod/) and [VPForums JP table](https://www.vpforums.org/index.php?app=downloads&showfile=13612) as Pro candidates only; no exact LE VPX or LE controller script was identified.
+
+The manual, exact `tf_180h` runtime harness, and physical review establish LE inventory, wiring, multiplicity, and custom-mechanism causality, but they do not establish normalized VPX/player-view coordinates for every LE sensor, effect, lamp/GI/flasher emitter, or moving assembly. In particular, Starscream, Ironhide, the Megatron drop-target/cannon assembly, and the additional LE gate cannot be located from the Pro frame without violating the edition boundary. Keep `coverage.status` as `partial` and `coverage.missing` as `spatial_placement` until an exact LE source with an LE driver identity and visibly matching playfield is acquired and reconciled.
+
 ## Sources
 
 - `manual.transformers-pro-le.2011`: official combined Stern manual, SHA-256 `9a4ff4cc3f5391bf730d226eb969c855c7c8c0f429c33e66d846d4069c7898b8`; LE switches/coils/lamps on PDF pages 60/62-63/65 and custom assemblies on 36-39.
@@ -508,13 +523,25 @@ def runtime_evidence(limited_edition: bool) -> dict[str, object]:
 	}
 
 
+def write_pending_machine(limited_edition: bool) -> None:
+	filename = "transformers-limited-edition-2011.json" if limited_edition else "transformers-pro-2011.json"
+	machine_id = "stern.transformers-limited-edition.2011" if limited_edition else "stern.transformers-pro.2011"
+	if machine_id not in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
+		return
+	if (ROOT / "machines/author-ready/stern" / filename).exists():
+		return
+	definition_path = spatial_partial_path(ROOT / "machines/partial/stern" / filename)
+	write_json(definition_path, fail_closed_spatial_partial(build(limited_edition)))
+	knowledge_filename = filename.removesuffix(".json") + ".md"
+	knowledge = LE_KNOWLEDGE if limited_edition else PRO_KNOWLEDGE
+	write_text(ROOT / "knowledge/stern" / knowledge_filename, fail_closed_spatial_knowledge(machine_id, knowledge))
+
+
 def main() -> None:
-	write_json(spatial_partial_path(ROOT / "machines/partial/stern/transformers-pro-2011.json"), fail_closed_spatial_partial(build(False)))
-	write_json(spatial_partial_path(ROOT / "machines/partial/stern/transformers-limited-edition-2011.json"), fail_closed_spatial_partial(build(True)))
+	write_pending_machine(False)
+	write_pending_machine(True)
 	write_json(ROOT / "evidence/runtime/sam/transformers-pro-boot-start.json", runtime_evidence(False))
 	write_json(ROOT / "evidence/runtime/sam/transformers-limited-edition-boot-start.json", runtime_evidence(True))
-	write_text(ROOT / "knowledge/stern/transformers-pro-2011.md", fail_closed_spatial_knowledge("stern.transformers-pro.2011", PRO_KNOWLEDGE))
-	write_text(ROOT / "knowledge/stern/transformers-limited-edition-2011.md", fail_closed_spatial_knowledge("stern.transformers-limited-edition.2011", LE_KNOWLEDGE))
 
 
 if __name__ == "__main__":

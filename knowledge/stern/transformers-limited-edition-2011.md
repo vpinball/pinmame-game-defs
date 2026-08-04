@@ -38,6 +38,12 @@ The LE service chart uses lamps 17-59 and 61-80; 1-16 and 60 are unused. Many fe
 - Preserve the four-ball Megatron stack, all motor endpoints, Starscream limits, Ironhide ball optos, and Optimus route change as causal state, not cosmetic animation.
 - Keep the official manual files in the external organized cache; both official URLs currently resolve to byte-identical 134-page PDFs and are retained under their separate machine identities.
 
+## Spatial retrofit blocker register
+
+The normalized playfield placement gate remains fail-closed. The ordered local search found only `Transformers (Stern 2011) SG1bsoN Mod.vpx` in the primary tables folder and `Transformers (Stern 2011) v1 mod 1.vpx` in the archive; both identify JP's **Pro** recreation and embed `tf_180`, so neither can provide LE geometry. The archived `Transformers G1 Generation One (TBA 2018).vpx` is unrelated community content and is excluded. Browser escalation identified the [VPUniverse detail mod](https://vpuniverse.com/files/file/6355-transformers-stern-2011-detail-mod/) and [VPForums JP table](https://www.vpforums.org/index.php?app=downloads&showfile=13612) as Pro candidates only; no exact LE VPX or LE controller script was identified.
+
+The manual, exact `tf_180h` runtime harness, and physical review establish LE inventory, wiring, multiplicity, and custom-mechanism causality, but they do not establish normalized VPX/player-view coordinates for every LE sensor, effect, lamp/GI/flasher emitter, or moving assembly. In particular, Starscream, Ironhide, the Megatron drop-target/cannon assembly, and the additional LE gate cannot be located from the Pro frame without violating the edition boundary. Keep `coverage.status` as `partial` and `coverage.missing` as `spatial_placement` until an exact LE source with an LE driver identity and visibly matching playfield is acquired and reconciled.
+
 ## Sources
 
 - `manual.transformers-pro-le.2011`: official combined Stern manual, SHA-256 `9a4ff4cc3f5391bf730d226eb969c855c7c8c0f429c33e66d846d4069c7898b8`; LE switches/coils/lamps on PDF pages 60/62-63/65 and custom assemblies on 36-39.

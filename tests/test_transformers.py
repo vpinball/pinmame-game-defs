@@ -1,8 +1,16 @@
 from __future__ import annotations
 
 import json
+import importlib.util
+import os
+import subprocess
+import sys
+import tempfile
 import unittest
 from pathlib import Path
+
+from pinmame_game_defs import spatial
+from pinmame_game_defs.jsonio import canonical_bytes
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +27,14 @@ def load_json(path: Path) -> dict[str, object]:
 
 def bindings(definition: dict[str, object], collection: str, group: str) -> dict[int, dict[str, object]]:
 	return {item["binding"]["device"]: item for item in definition[collection] if item["binding"]["group"] == group}
+
+
+def load_curator_module() -> object:
+	spec = importlib.util.spec_from_file_location("curate_transformers_test", ROOT / "tools" / "curate_transformers.py")
+	assert spec is not None and spec.loader is not None
+	module = importlib.util.module_from_spec(spec)
+	spec.loader.exec_module(module)
+	return module
 
 
 class TransformersDefinitionTests(unittest.TestCase):
@@ -38,6 +54,9 @@ class TransformersDefinitionTests(unittest.TestCase):
 			self.assertEqual([], definition["conflicts"])
 		self.assertFalse((ROOT / "machines" / "stubs" / "tf_180h.json").exists())
 		self.assertFalse((ROOT / "knowledge" / "stubs" / "tf_180h.md").exists())
+		knowledge = (ROOT / self.le["knowledge"]["path"]).read_text(encoding="utf-8")
+		self.assertIn("## Spatial retrofit blocker register", knowledge)
+		self.assertIn("cannot be located from the Pro frame", knowledge)
 
 	def test_editions_exhaustively_split_the_supported_driver_family(self) -> None:
 		pro = {driver["id"] for driver in self.pro["drivers"]}
@@ -144,6 +163,114 @@ class TransformersDefinitionTests(unittest.TestCase):
 				self.assertEqual(len(bindings_seen), len(set(bindings_seen)))
 				ids = [item["id"] for item in collection]
 				self.assertEqual(len(ids), len(set(ids)))
+
+	def test_generator_build_is_deterministic_and_preserves_edition_boundary(self) -> None:
+		curator = load_curator_module()
+		pro = curator.fail_closed_spatial_partial(curator.build(False))
+		limited_edition = curator.fail_closed_spatial_partial(curator.build(True))
+		self.assertEqual(canonical_bytes(pro), canonical_bytes(curator.fail_closed_spatial_partial(curator.build(False))))
+		self.assertEqual(canonical_bytes(limited_edition), canonical_bytes(curator.fail_closed_spatial_partial(curator.build(True))))
+		self.assertEqual(2, pro["schema_version"])
+		self.assertEqual(2, limited_edition["schema_version"])
+		self.assertEqual("partial", limited_edition["coverage"]["status"])
+		self.assertIn("spatial_placement", limited_edition["coverage"]["missing"])
+		self.assertFalse(any("spatial" in device for device in limited_edition["inputs"] + limited_edition["outputs"]))
+		self.assertEqual({driver["id"] for driver in self.pro["drivers"]}, {driver["id"] for driver in pro["drivers"]})
+		self.assertEqual({driver["id"] for driver in self.le["drivers"]}, {driver["id"] for driver in limited_edition["drivers"]})
+
+	def test_curator_source_path_shim_is_cwd_independent(self) -> None:
+		environment = os.environ.copy()
+		environment.pop("PYTHONPATH", None)
+		environment["PYTHONNOUSERSITE"] = "1"
+		with tempfile.TemporaryDirectory() as temporary:
+			result = subprocess.run(
+				[
+					sys.executable,
+					"-c",
+					"""
+import importlib.util
+import sys
+from pathlib import Path
+
+curator_path = Path(sys.argv[1]).resolve()
+repository_root = curator_path.parents[1]
+source_root = repository_root / "src"
+
+def is_repository_or_site_package_path(entry: str) -> bool:
+    if not entry:
+        return True
+    path = Path(entry).resolve()
+    return (
+        path == repository_root
+        or repository_root in path.parents
+        or any(part.casefold() in {"site-packages", "dist-packages"} for part in path.parts)
+    )
+
+sys.path[:] = [entry for entry in sys.path if not is_repository_or_site_package_path(entry)]
+assert "pinmame_game_defs" not in sys.modules
+assert importlib.util.find_spec("pinmame_game_defs") is None
+
+spec = importlib.util.spec_from_file_location("isolated_curate_transformers", curator_path)
+assert spec is not None and spec.loader is not None
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+
+loaded = sys.modules["pinmame_game_defs"]
+assert Path(loaded.__file__).resolve().is_relative_to(source_root)
+assert str(source_root) in sys.path
+""",
+					str(ROOT / "tools" / "curate_transformers.py"),
+				],
+				cwd=temporary,
+				env=environment,
+				capture_output=True,
+				text=True,
+				check=False,
+			)
+		self.assertEqual(0, result.returncode, result.stderr)
+
+	def test_generator_skips_removed_pending_editions_without_author_ready(self) -> None:
+		curator = load_curator_module()
+		original_pending_ids = tuple(curator.SPATIAL_RETROFIT_PENDING_MACHINE_IDS)
+		original_spatial_pending_ids = tuple(spatial.SPATIAL_RETROFIT_PENDING_MACHINE_IDS)
+		for limited_edition in (False, True):
+			with self.subTest(edition="limited edition" if limited_edition else "pro"):
+				filename = "transformers-limited-edition-2011.json" if limited_edition else "transformers-pro-2011.json"
+				machine_id = "stern.transformers-limited-edition.2011" if limited_edition else "stern.transformers-pro.2011"
+				knowledge_filename = filename.removesuffix(".json") + ".md"
+				evidence_filename = "transformers-limited-edition-boot-start.json" if limited_edition else "transformers-pro-boot-start.json"
+				with tempfile.TemporaryDirectory() as temporary:
+					curator.ROOT = Path(temporary)
+					removed_pending_ids = tuple(identifier for identifier in original_pending_ids if identifier != machine_id)
+					curator.SPATIAL_RETROFIT_PENDING_MACHINE_IDS = removed_pending_ids
+					spatial.SPATIAL_RETROFIT_PENDING_MACHINE_IDS = removed_pending_ids
+					try:
+						curator.main()
+					finally:
+						curator.SPATIAL_RETROFIT_PENDING_MACHINE_IDS = original_pending_ids
+						spatial.SPATIAL_RETROFIT_PENDING_MACHINE_IDS = original_spatial_pending_ids
+					self.assertFalse((curator.ROOT / "machines/partial/stern" / filename).exists())
+					self.assertFalse((curator.ROOT / "knowledge/stern" / knowledge_filename).exists())
+					self.assertTrue((curator.ROOT / "evidence/runtime/sam" / evidence_filename).exists())
+
+	def test_generator_does_not_clobber_a_promoted_edition(self) -> None:
+		curator = load_curator_module()
+		for limited_edition in (False, True):
+			with self.subTest(edition="limited edition" if limited_edition else "pro"):
+				filename = "transformers-limited-edition-2011.json" if limited_edition else "transformers-pro-2011.json"
+				knowledge_filename = filename.removesuffix(".json") + ".md"
+				with tempfile.TemporaryDirectory() as temporary:
+					curator.ROOT = Path(temporary)
+					promoted_definition = curator.ROOT / "machines/author-ready/stern" / filename
+					promoted_definition.parent.mkdir(parents=True)
+					promoted_definition.write_text('{"promoted": true}\n', encoding="utf-8")
+					promoted_knowledge = curator.ROOT / "knowledge/stern" / knowledge_filename
+					promoted_knowledge.parent.mkdir(parents=True)
+					promoted_knowledge.write_text("promoted spatial knowledge\n", encoding="utf-8")
+					curator.main()
+					self.assertEqual('{"promoted": true}\n', promoted_definition.read_text(encoding="utf-8"))
+					self.assertEqual("promoted spatial knowledge\n", promoted_knowledge.read_text(encoding="utf-8"))
+					self.assertFalse((curator.ROOT / "machines/partial/stern" / filename).exists())
 
 
 if __name__ == "__main__":
