@@ -317,7 +317,7 @@ def mechanism(mechanism_id: str, label: str, kind: str, actuators: list[str], se
 def premium_mechanisms() -> list[dict[str, object]]:
 	m = PREMIUM_MANUAL
 	return [
-		mechanism("mechanism.trough", "Four-ball trough", "kicker", ["device.trough-up-kicker"], ["switch.trough-4-left", "switch.trough-3", "switch.trough-2", "switch.trough-1", "switch.trough-jam"], "The physical trough uses position switches 18-21 and jam opto 22. The known-working script initializes four balls on switches 19-22, leaving leftmost switch 18 clear, and output 1 ejects from the right end.", m, True),
+		mechanism("mechanism.trough", "Four-ball trough", "kicker", ["device.trough-up-kicker"], ["switch.trough-4-left", "switch.trough-3", "switch.trough-2", "switch.trough-1", "switch.trough-jam"], "The physical trough uses position switches 18-21 and downstream jam opto 22. The official manual and exact Neo table agree that four balls occupy 18-21 and output 1 ejects from switch 21; Neo pulses switch 22 on ejection. The older v1.10 table's 19-22 ball chain and switch-18 drain are a documented virtual-table layout exception, not physical construction evidence.", m, True),
 		mechanism("mechanism.auto-launcher", "Auto launcher", "kicker", ["device.auto-launch"], ["switch.shooter-lane"], "Output 2 launches a ball resting at shooter-lane switch 23. The working table uses power 52 with random variation 3.", m, True),
 		mechanism("mechanism.left-eject", "Left eject and rotating VUK", "kicker", ["device.left-eject", "device.rotating-vuk"], ["switch.left-eject"], "Switch 10 stays active with a captured ball. Output 55 rotates the two-way VUK/deflector; output 6 then ejects along the selected path. The working table's standard path uses direction 85 degrees, force 38, and Z 100.", m, True, [{"id": "position.normal", "label": "Normal route", "sensors": []}, {"id": "position.rotated", "label": "Rotated route", "sensors": []}]),
 		mechanism("mechanism.center-drop-target", "Center memory drop target", "drop_target_bank", ["device.center-drop-target-up", "device.center-drop-target-down"], ["switch.center-drop-target"], "Output 4 raises and output 5 lowers the single memory target. Switch 11 is active while down; a ball held behind it is released when the target rises.", m, True, [{"id": "position.up", "label": "Up", "sensors": []}, {"id": "position.down", "label": "Down", "sensors": ["switch.center-drop-target"]}]),
@@ -427,7 +427,7 @@ Coverage: **author-ready - physical inventory, PinMAME bindings, custom mechanis
 
 ## Identity and evidence precedence
 
-This definition covers `st_*h` and `st_*hc` drivers. Those revisions share the Premium/LE playfield; `c` only changes ROM display colorization. Non-`h` drivers are the different Pro machine and have their own definition. The known-working `Star Trek LE (Stern 2013) v1.10.vbs` is ground truth for controller bindings, callbacks, initial state, mechanism causality, and active behavior. The official Stern manual governs physical inventory, wiring, diagnostic numbering, and assemblies. Pinned PinMAME source governs the SAM transport, display, custom-solenoid serialization, node-board topology, and driver identity.
+This definition covers `st_*h` and `st_*hc` drivers. Those revisions share the Premium/LE playfield; `c` only changes ROM display colorization. Non-`h` drivers are the different Pro machine and have their own definition. The known-working `Star Trek LE (Stern 2013) v1.10.vbs` is ground truth for controller bindings, callbacks, mechanism causality, and active behavior. For the trough alone, the exact Neo table governs initialization and ejection sensing because its switches 18-21 and downstream switch-22 pulse agree with the official manual; v1.10's switch-18 drain and 19-22 ball chain remain a documented virtual-table exception. The official Stern manual governs physical inventory, wiring, diagnostic numbering, and assemblies. Pinned PinMAME source governs the SAM transport, display, custom-solenoid serialization, node-board topology, and driver identity.
 
 ## Controller topology
 
@@ -435,7 +435,7 @@ The four node boards expose public lamp ranges 81-144, 146-209, 211-274, and 276
 
 ## Switches and initial ball state
 
-All matrix positions 1-64, dedicated D1-D24, and DIP inputs are enumerated. The physical four-ball trough has left-to-right sensors 18-21 plus jam opto 22. The working script initializes four balls on 19-22, leaving 18 clear. Shooter lane is 23. Fire is public 71/D7; the upper-right flipper button is public 86/D15. Lower buttons are 84 left and 82 right, with normally-closed EOS contacts 83 left and 81 right.
+All matrix positions 1-64, dedicated D1-D24, and DIP inputs are enumerated. The physical four-ball trough has left-to-right sensors 18-21 plus downstream jam opto 22. The official manual and exact Neo table agree that the four balls occupy 18-21 and output 1 ejects from switch 21; Neo pulses switch 22 on ejection. The older v1.10 table instead uses switch 18 as its drain and creates balls on 19-22. That virtual-table layout is preserved as a portability warning but rejected for physical construction and initial switch state. Shooter lane is 23. Fire is public 71/D7; the upper-right flipper button is public 86/D15. Lower buttons are 84 left and 82 right, with normally-closed EOS contacts 83 left and 81 right.
 
 ## Lamps
 
@@ -460,7 +460,7 @@ Outputs 51/52 control the left/right orbit gates. Output 54 is the bottom right-
 ## Recreation checklist
 
 - Construct all physical inputs and outputs, including explicit unused controller addresses, four node boards, auxiliary board, GI group, and native 128x32 DMD.
-- Initialize four trough balls exactly as the working script does: 19-22 active and 18 clear.
+- Initialize four physical trough balls on switches 18-21 and keep downstream jam opto 22 clear until ejection; do not reproduce the older v1.10 table's switch-18 drain and 19-22 ball-chain simplification.
 - Preserve PWM for the center magnet and Vengeance actuator; do not reduce either to a simple pulse.
 - Model the memory target, multi-ball magnet hold, rotating VUK route, Vengeance latch/crash/return sequence, orbit gates, bottom kickback, laser motor, upper flipper, and all sensed ball paths.
 - Use public JSON callback bindings for node LEDs and auxiliary outputs; use manual numbers only in service/diagnostic UI.

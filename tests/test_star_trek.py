@@ -75,12 +75,14 @@ class StarTrekDefinitionTests(unittest.TestCase):
 		self.assertEqual("Vengeance crash opto", bindings(self.premium, "inputs", "pinmame.input.switch")[53]["label"])
 
 	def test_trough_has_four_positions_and_a_downstream_jam_opto(self) -> None:
-		by_address = bindings(self.pro, "inputs", "pinmame.input.switch")
-		self.assertEqual(["microswitch"] * 4, [by_address[number]["physical"]["switch_type"] for number in range(18, 22)])
-		self.assertEqual("opto", by_address[22]["physical"]["switch_type"])
-		trough = next(item for item in self.pro["mechanisms"] if item["id"] == "mechanism.trough")
-		self.assertEqual(5, len(trough["sensors"]))
-		self.assertIn("18-21", trough["behavior"])
+		for definition in (self.premium, self.pro):
+			by_address = bindings(definition, "inputs", "pinmame.input.switch")
+			self.assertEqual(["microswitch"] * 4, [by_address[number]["physical"]["switch_type"] for number in range(18, 22)])
+			self.assertEqual("opto", by_address[22]["physical"]["switch_type"])
+			trough = next(item for item in definition["mechanisms"] if item["id"] == "mechanism.trough")
+			self.assertEqual(5, len(trough["sensors"]))
+			self.assertIn("18-21", trough["behavior"])
+		self.assertIn("virtual-table layout exception", next(item for item in self.premium["mechanisms"] if item["id"] == "mechanism.trough")["behavior"])
 
 	def test_pro_has_only_the_32_main_outputs(self) -> None:
 		solenoids = bindings(self.pro, "outputs", "pinmame.output.solenoid")
@@ -208,10 +210,19 @@ class StarTrekDefinitionTests(unittest.TestCase):
 		for address in range(18, 22):
 			self.assertEqual([manual, script, neo, enterprise], inputs[address]["spatial"]["placements"][0]["provenance"]["source_refs"])
 		self.assertEqual([manual, script, neo], inputs[22]["spatial"]["placements"][0]["provenance"]["source_refs"])
-		self.assertEqual((0.849790, 0.906658), tuple(inputs[22]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual({18: (0.703727, 0.946296), 19: (0.749432, 0.933741), 20: (0.796670, 0.921846), 21: (0.849790, 0.906658), 22: (0.895000, 0.908000)}, {address: tuple(inputs[address]["spatial"]["placements"][0][axis] for axis in ("x", "y")) for address in range(18, 23)})
+		self.assertIn("switch 18 is its drain and is rejected", inputs[18]["physical"]["notes"])
+		self.assertIn("approximate regional marker", inputs[22]["physical"]["notes"])
 		solenoids = bindings(self.premium, "outputs", "pinmame.output.solenoid")
 		self.assertEqual([manual], solenoids[22]["spatial"]["placements"][0]["provenance"]["source_refs"])
+		self.assertIn("not a calibrated point", solenoids[22]["physical"]["notes"])
 		self.assertEqual([manual, script, neo], solenoids[31]["spatial"]["placements"][0]["provenance"]["source_refs"])
+		knowledge = (ROOT / "knowledge" / "stern" / "star-trek-premium-limited-edition-2013.md").read_text(encoding="utf-8")
+		self.assertIn("four balls occupy 18-21", knowledge)
+		self.assertIn("approximate region rather than a calibrated point", knowledge)
+		self.assertIn("For the trough alone, the exact Neo table governs initialization and ejection sensing", knowledge)
+		self.assertNotIn("callbacks, initial state, mechanism causality", knowledge)
+		self.assertNotIn("Initialize four trough balls exactly as the working script does: 19-22 active and 18 clear", knowledge)
 		lamps = [item for item in self.premium["outputs"] if item["binding"]["group"] == "pinmame.output.lamp"]
 		by_number: dict[int, list[dict[str, object]]] = {}
 		for lamp in lamps:
@@ -310,6 +321,8 @@ class StarTrekDefinitionTests(unittest.TestCase):
 		self.assertEqual("f7edee3cbcebff1a078496b7ef7dcef7368158a61b48934f2241792a70bc233c", sources["vpx-table.star-trek-le-neo-real-1.0.2-geometry"]["sha256"])
 		self.assertEqual("46e4642ebcfcbedc59c3cf950b92ccc0dcc68818752110004c4164cb1d54cc8e", sources["vpx-table.star-trek-enterprise-le-geometry"]["sha256"])
 		self.assertIn("exact st_161h table", sources["vpx-table.star-trek-le-neo-real-1.0.2-geometry"]["locator"])
+		self.assertIn("manual-matching 18-21 trough initialization", sources["vpx-table.star-trek-le-neo-real-1.0.2-geometry"]["locator"])
+		self.assertNotIn("alternate trough initialization", sources["vpx-table.star-trek-le-neo-real-1.0.2-geometry"]["locator"])
 		self.assertIn("exact st_161hc table", sources["vpx-table.star-trek-enterprise-le-geometry"]["locator"])
 
 	def test_bindings_are_unique_within_each_controller_group(self) -> None:

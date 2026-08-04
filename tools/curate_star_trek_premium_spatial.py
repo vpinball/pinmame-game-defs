@@ -26,7 +26,7 @@ NEO_TABLE_SOURCE_RECORD = {
 	"kind": "vpx_table",
 	"known_working": True,
 	"license": "NOASSERTION",
-	"locator": "Star Trek LE Neo real Mod 1.0.2.vpx (191,655,936 bytes), exact st_161h table extracted with vpxtool git:v0.33.3. Its 952 by 2300 playfield bounds are the sole normalized coordinate frame. Object geometry is accepted only after reconciliation with the official manual and proven v1.10 script; its alternate trough initialization, upper-flipper coupling, and Vengeance simplifications are explicitly rejected.",
+	"locator": "Star Trek LE Neo real Mod 1.0.2.vpx (191,655,936 bytes), exact st_161h table extracted with vpxtool git:v0.33.3. Its 952 by 2300 playfield bounds are the sole normalized coordinate frame. Object geometry is accepted only after reconciliation with the official manual and proven v1.10 script. Neo's manual-matching 18-21 trough initialization and switch-22 ejection pulse are accepted; its upper-flipper coupling and Vengeance simplifications are explicitly rejected.",
 	"original_filename": "Star Trek LE Neo real Mod 1.0.2.vpx",
 	"rights": "NOASSERTION",
 	"sha256": "f7edee3cbcebff1a078496b7ef7dcef7368158a61b48934f2241792a70bc233c",
@@ -40,7 +40,7 @@ ENTERPRISE_TABLE_SOURCE_RECORD = {
 	"kind": "vpx_table",
 	"known_working": True,
 	"license": "NOASSERTION",
-	"locator": "Star Trek Enterprise Limited Edition (Stern 2012).vpx (66,732,032 bytes), exact st_161hc table extracted with vpxtool git:v0.33.3. Only geometry absent from the canonical Neo table is used: trough switches 18-21 are locally registered by the shared switch-22 trough-out kicker, lamp 51 by the shared upper-right flipper, and Vengeance bulb mesh points by the shared ship parent. Switch 22 itself is the direct shared Neo anchor; no Enterprise-normalized coordinate is copied directly.",
+	"locator": "Star Trek Enterprise Limited Edition (Stern 2012).vpx (66,732,032 bytes), exact st_161hc table extracted with vpxtool git:v0.33.3. Only geometry absent from the canonical Neo table is used: its switch 18 is a drain and is rejected, while its four ball positions 19-22 are translated and mapped in order to physical Premium/LE trough switches 18-21 by aligning the table's switch-22 trough-out with Neo BallRelease. Lamp 51 and Vengeance bulb meshes use separate local registrations; no coordinate from this table's normalized frame is copied directly.",
 	"original_filename": "Star Trek Enterprise Limited Edition (Stern 2012).vpx",
 	"rights": "NOASSERTION",
 	"sha256": "46e4642ebcfcbedc59c3cf950b92ccc0dcc68818752110004c4164cb1d54cc8e",
@@ -52,8 +52,8 @@ INPUT_POSITIONS = {
 	7: [(0.794118, 0.605543)], 8: [(0.804622, 0.630978)], 9: [(0.814076, 0.657283)],
 	10: [(0.102416, 0.482826)], 11: [(0.516282, 0.312283)], 12: [(0.229517, 0.531196)],
 	13: [(0.134454, 0.305924)], 14: [(0.319853, 0.235272)],
-	18: [(0.504117, 0.997872)], 19: [(0.703727, 0.946296)], 20: [(0.749432, 0.933741)],
-	21: [(0.796670, 0.921846)], 22: [(0.849790, 0.906658)], 23: [(0.939863, 0.909891)],
+	18: [(0.703727, 0.946296)], 19: [(0.749432, 0.933741)], 20: [(0.796670, 0.921846)],
+	21: [(0.849790, 0.906658)], 22: [(0.895000, 0.908000)], 23: [(0.939863, 0.909891)],
 	24: [(0.077731, 0.834990)], 25: [(0.149160, 0.790435)],
 	26: [(0.242986, 0.774518)], 27: [(0.682742, 0.775298)],
 	28: [(0.775998, 0.790978)], 29: [(0.851891, 0.809348)],
@@ -268,9 +268,9 @@ def apply_spatial(definition: dict[str, object]) -> None:
 			sources = REGISTERED_ENTERPRISE_SOURCES if address in REGISTERED_ENTERPRISE_INPUTS else DIRECT_NEO_SOURCES
 			_located(device, "sensor", INPUT_POSITIONS[address], sources)
 			if address in {18, 19, 20, 21}:
-				_append_note(device, "The official manual proves the physical trough order. Neo exposes only the trough-out kicker, so the older table's five-position chain is translated into the canonical Neo frame by aligning its switch-22 kicker with Neo BallRelease at (0.849790, 0.906658). Preserve the proven v1.10 initial controller state of 19-22 occupied and 18 clear.")
+				_append_note(device, "The official manual and exact Neo table prove the physical four-position trough order and initial 18-21 occupancy. The older table's switch 18 is its drain and is rejected; its four ball positions 19-22 are translated into the canonical Neo frame and mapped in order to physical switches 18-21 by aligning its switch-22 trough-out with Neo BallRelease at (0.849790, 0.906658). Do not reproduce v1.10's virtual switch-18 drain and 19-22 ball chain.")
 			elif address == 22:
-				_append_note(device, "The official manual proves the trough-jam switch and Neo's direct BallRelease center supplies its canonical coordinate. This shared switch-22 anchor is also used to register the otherwise absent trough switches 18-21. Preserve the proven v1.10 initial controller state of 19-22 occupied and 18 clear.")
+				_append_note(device, "The official manual requires the downstream trough-jam opto and the exact Neo script pulses switch 22 on ejection, but Neo does not model a direct sensor object. This is an approximate regional marker on the short corridor between Neo BallRelease and shooter-lane switch 23, not an exact sensor center; practical uncertainty is about plus or minus 0.045 normalized x and 0.02 normalized y.")
 			elif address == 11:
 				_append_note(device, "The manual establishes the single memory target. This is the canonical Neo visible sw11p target center; its overlapping DropTrigger is the controller sensor and the adjacent center-lock magnet remains a separate assembly.")
 			elif address in {26, 27}:
@@ -311,7 +311,7 @@ def apply_spatial(definition: dict[str, object]) -> None:
 			elif address in {13, 14}:
 				_append_note(device, "This is the exact slingshot wall centroid used as the manual-confirmed coil assembly projection, with practical uncertainty of about plus or minus 0.02 normalized x and y.")
 			elif address == 22:
-				_append_note(device, "The service drawing places the physical laser motor beneath the lower-left apron. The coordinate is a calibrated manual projection with practical uncertainty of about plus or minus 0.04 normalized x and 0.03 y; full-table laser render fields are not physical motor locations.")
+				_append_note(device, "The service drawing places the physical laser motor beneath the lower-left apron. It supports only this approximate regional marker in the canonical frame, not a calibrated point; practical uncertainty is about plus or minus 0.08 normalized x and 0.04 normalized y. Full-table laser render fields are not physical motor locations.")
 			elif address in {53, 56}:
 				_append_note(device, "The Vengeance dive/shake actuator and latch belong to one moving ship assembly and intentionally share its canonical Neo rest-state parent anchor. This is a manual-confirmed assembly projection, not a claim that the distinct internal actuators occupy the same point; practical uncertainty is about plus or minus 0.04 normalized x and y.")
 			elif address in {6, 55}:
@@ -368,6 +368,16 @@ SPATIAL_KNOWLEDGE = _replace_once(
 	SPATIAL_KNOWLEDGE,
 	"## Sources\n",
 	"## Spatial coordinate model\n\nEvery physical playfield input, actuator, lamp, and GI socket has a normalized player-view placement: x=0 left, x=1 right, y=0 rear/backglass end, and y=1 apron. The 952 by 2300 Neo table is the sole normalized coordinate frame. Direct Neo object centers are accepted only after reconciliation with the official manual and proven v1.10 script. Geometry absent from Neo is never copied from another normalized table frame: trough switches 18-21 are locally registered by the shared direct-Neo switch-22 trough-out anchor, lamp 51 by the shared upper-right flipper, and Vengeance bulb-mesh points by the shared ship parent. Slingshot sensors/coils, the Vengeance crash opto, EOS contacts, laser motor, composite multi-bulb assemblies, and GI sockets use explicitly disclosed assembly or drawing projections. Cabinet, service, backbox fixtures, virtual, unpopulated, unused, and DIP devices are outside playfield space.\n\nThe lamp audit preserves physical multiplicity that render geometry can both hide and exaggerate. Lamp 51 has two Enterprise emitters but only one defensible composite assembly anchor; lamps 63 and 64 likewise each have two apron emitters represented by one composite Neo assembly center. No false bulb separation is invented. Lamp 57 has two separately recoverable Vengeance nacelle centers. The manual proves one physical lamp for each warp-chaser number 70-77; v1.10's paired beam segments and WarpAmbient object are render helpers, while Neo's direct l70-l77 lamp objects supply one canonical point per output. Cabinet Enterprise and every cabinet phaser output also retain the manual's ×2 physical quantity even though they have no playfield coordinate.\n\nThe moving Vengeance is one spatial assembly with separate causality: output 53 supplies PWM dive/shake motion, output 56 controls the latch/return, switch 53 reports the crash/latch state, output 7 returns the captive ball, output 31 flashes the ship, and lamps 56/57 illuminate the saucer and two nacelles. The v1.10 script proves output 31's Vengeance semantics through F31/F31a, while Neo maps that same output to VengFlashGI and supplies the canonical assembly anchor. Their points are canonical-frame, parent-relative rest-state placements; co-located assembly anchors do not collapse them into one device or claim identical internal actuator locations. The broad F31/F31a bloom geometry is a render helper and is not used as output 31's physical position. The left eject and output-55 rotating VUK likewise belong to one scoop but use separate Neo eject-mouth and rotating-pivot points, with no invented position switch.\n\nThe page-152 GI drawing proves 34 playfield emitters: 31 sockets plus three illuminated pop-bumper assemblies. Its separate backbox inset proves seven additional physical GI lamps. The aggregate output therefore keeps quantity 41, but only the 34 playfield emitters receive playfield-space placements; the backbox row is not misrepresented at y=0. The 31 drawing-derived socket centers preserve validated identity and physical region, but the drawing does not support a quantified per-socket positional tolerance; their six-decimal projected values are not claims of sub-object measurement precision. The official coil-location drawing places the unsensed laser motor beneath the lower-left apron; its coordinate remains a disclosed manual projection and the broad Laser render fields are effects, not motor locations. The auxiliary drawing proves two Q42 speaker-panel flashers, two Q43 backbox flashers, and one each on Q44-Q46. Those quantities remain in the definition while all seven fixtures stay outside normalized playfield space.\n\n## Sources\n",
+)
+SPATIAL_KNOWLEDGE = _replace_once(
+	SPATIAL_KNOWLEDGE,
+	"Geometry absent from Neo is never copied from another normalized table frame: trough switches 18-21 are locally registered by the shared direct-Neo switch-22 trough-out anchor, lamp 51 by the shared upper-right flipper, and Vengeance bulb-mesh points by the shared ship parent.",
+	"Geometry absent from Neo is never copied from another normalized table frame: the donor table's switch 18 drain is rejected, its four ball positions 19-22 are locally registered and mapped in order to physical Premium/LE switches 18-21, lamp 51 is registered by the shared upper-right flipper, and Vengeance bulb-mesh points by the shared ship parent. The manual-required jam opto 22 is absent as a direct Neo sensor and receives a disclosed approximate point on the ejection corridor.",
+)
+SPATIAL_KNOWLEDGE = _replace_once(
+	SPATIAL_KNOWLEDGE,
+	"The official coil-location drawing places the unsensed laser motor beneath the lower-left apron; its coordinate remains a disclosed manual projection and the broad Laser render fields are effects, not motor locations.",
+	"The official coil-location drawing places the unsensed laser motor beneath the lower-left apron; its coordinate is a disclosed approximate region rather than a calibrated point, and the broad Laser render fields are effects, not motor locations.",
 )
 SPATIAL_KNOWLEDGE = _replace_once(
 	SPATIAL_KNOWLEDGE,

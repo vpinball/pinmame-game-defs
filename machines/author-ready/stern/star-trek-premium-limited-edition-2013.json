@@ -1094,7 +1094,7 @@
       "label": "Trough #4 left",
       "normally_closed": false,
       "physical": {
-        "notes": "The official manual proves the physical trough order. Neo exposes only the trough-out kicker, so the older table's five-position chain is translated into the canonical Neo frame by aligning its switch-22 kicker with Neo BallRelease at (0.849790, 0.906658). Preserve the proven v1.10 initial controller state of 19-22 occupied and 18 clear.",
+        "notes": "The official manual and exact Neo table prove the physical four-position trough order and initial 18-21 occupancy. The older table's switch 18 is its drain and is rejected; its four ball positions 19-22 are translated into the canonical Neo frame and mapped in order to physical switches 18-21 by aligning its switch-22 trough-out with Neo BallRelease at (0.849790, 0.906658). Do not reproduce v1.10's virtual switch-18 drain and 19-22 ball chain.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1120,8 +1120,8 @@
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.504117,
-            "y": 0.997872
+            "x": 0.703727,
+            "y": 0.946296
           }
         ],
         "status": "validated"
@@ -1155,7 +1155,7 @@
       "label": "Trough #3",
       "normally_closed": false,
       "physical": {
-        "notes": "The official manual proves the physical trough order. Neo exposes only the trough-out kicker, so the older table's five-position chain is translated into the canonical Neo frame by aligning its switch-22 kicker with Neo BallRelease at (0.849790, 0.906658). Preserve the proven v1.10 initial controller state of 19-22 occupied and 18 clear.",
+        "notes": "The official manual and exact Neo table prove the physical four-position trough order and initial 18-21 occupancy. The older table's switch 18 is its drain and is rejected; its four ball positions 19-22 are translated into the canonical Neo frame and mapped in order to physical switches 18-21 by aligning its switch-22 trough-out with Neo BallRelease at (0.849790, 0.906658). Do not reproduce v1.10's virtual switch-18 drain and 19-22 ball chain.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1181,8 +1181,8 @@
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.703727,
-            "y": 0.946296
+            "x": 0.749432,
+            "y": 0.933741
           }
         ],
         "status": "validated"
@@ -1216,7 +1216,7 @@
       "label": "Trough #2",
       "normally_closed": false,
       "physical": {
-        "notes": "The official manual proves the physical trough order. Neo exposes only the trough-out kicker, so the older table's five-position chain is translated into the canonical Neo frame by aligning its switch-22 kicker with Neo BallRelease at (0.849790, 0.906658). Preserve the proven v1.10 initial controller state of 19-22 occupied and 18 clear.",
+        "notes": "The official manual and exact Neo table prove the physical four-position trough order and initial 18-21 occupancy. The older table's switch 18 is its drain and is rejected; its four ball positions 19-22 are translated into the canonical Neo frame and mapped in order to physical switches 18-21 by aligning its switch-22 trough-out with Neo BallRelease at (0.849790, 0.906658). Do not reproduce v1.10's virtual switch-18 drain and 19-22 ball chain.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1242,8 +1242,8 @@
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.749432,
-            "y": 0.933741
+            "x": 0.79667,
+            "y": 0.921846
           }
         ],
         "status": "validated"
@@ -1277,7 +1277,7 @@
       "label": "Trough #1",
       "normally_closed": false,
       "physical": {
-        "notes": "The official manual proves the physical trough order. Neo exposes only the trough-out kicker, so the older table's five-position chain is translated into the canonical Neo frame by aligning its switch-22 kicker with Neo BallRelease at (0.849790, 0.906658). Preserve the proven v1.10 initial controller state of 19-22 occupied and 18 clear.",
+        "notes": "The official manual and exact Neo table prove the physical four-position trough order and initial 18-21 occupancy. The older table's switch 18 is its drain and is rejected; its four ball positions 19-22 are translated into the canonical Neo frame and mapped in order to physical switches 18-21 by aligning its switch-22 trough-out with Neo BallRelease at (0.849790, 0.906658). Do not reproduce v1.10's virtual switch-18 drain and 19-22 ball chain.",
         "switch_type": "microswitch"
       },
       "provenance": {
@@ -1303,8 +1303,8 @@
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.79667,
-            "y": 0.921846
+            "x": 0.84979,
+            "y": 0.906658
           }
         ],
         "status": "validated"
@@ -1338,7 +1338,7 @@
       "label": "Trough jam",
       "normally_closed": false,
       "physical": {
-        "notes": "The official manual proves the trough-jam switch and Neo's direct BallRelease center supplies its canonical coordinate. This shared switch-22 anchor is also used to register the otherwise absent trough switches 18-21. Preserve the proven v1.10 initial controller state of 19-22 occupied and 18 clear.",
+        "notes": "The official manual requires the downstream trough-jam opto and the exact Neo script pulses switch 22 on ejection, but Neo does not model a direct sensor object. This is an approximate regional marker on the short corridor between Neo BallRelease and shooter-lane switch 23, not an exact sensor center; practical uncertainty is about plus or minus 0.045 normalized x and 0.02 normalized y.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1363,8 +1363,8 @@
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.84979,
-            "y": 0.906658
+            "x": 0.895,
+            "y": 0.908
           }
         ],
         "status": "validated"
@@ -5175,7 +5175,7 @@
       "actuators": [
         "device.trough-up-kicker"
       ],
-      "behavior": "The physical trough uses position switches 18-21 and jam opto 22. The known-working script initializes four balls on switches 19-22, leaving leftmost switch 18 clear, and output 1 ejects from the right end.",
+      "behavior": "The physical trough uses position switches 18-21 and downstream jam opto 22. The official manual and exact Neo table agree that four balls occupy 18-21 and output 1 ejects from switch 21; Neo pulses switch 22 on ejection. The older v1.10 table's 19-22 ball chain and switch-18 drain are a documented virtual-table layout exception, not physical construction evidence.",
       "id": "mechanism.trough",
       "kind": "kicker",
       "label": "Four-ball trough",
@@ -6713,7 +6713,7 @@
       "kind": "motor",
       "label": "Laser projector motor",
       "physical": {
-        "notes": "The service drawing places the physical laser motor beneath the lower-left apron. The coordinate is a calibrated manual projection with practical uncertainty of about plus or minus 0.04 normalized x and 0.03 y; full-table laser render fields are not physical motor locations.",
+        "notes": "The service drawing places the physical laser motor beneath the lower-left apron. It supports only this approximate regional marker in the canonical frame, not a calibrated point; practical uncertainty is about plus or minus 0.08 normalized x and 0.04 normalized y. Full-table laser render fields are not physical motor locations.",
         "quantity": 1
       },
       "provenance": {
@@ -24035,7 +24035,7 @@
       "kind": "vpx_table",
       "known_working": true,
       "license": "NOASSERTION",
-      "locator": "Star Trek LE Neo real Mod 1.0.2.vpx (191,655,936 bytes), exact st_161h table extracted with vpxtool git:v0.33.3. Its 952 by 2300 playfield bounds are the sole normalized coordinate frame. Object geometry is accepted only after reconciliation with the official manual and proven v1.10 script; its alternate trough initialization, upper-flipper coupling, and Vengeance simplifications are explicitly rejected.",
+      "locator": "Star Trek LE Neo real Mod 1.0.2.vpx (191,655,936 bytes), exact st_161h table extracted with vpxtool git:v0.33.3. Its 952 by 2300 playfield bounds are the sole normalized coordinate frame. Object geometry is accepted only after reconciliation with the official manual and proven v1.10 script. Neo's manual-matching 18-21 trough initialization and switch-22 ejection pulse are accepted; its upper-flipper coupling and Vengeance simplifications are explicitly rejected.",
       "original_filename": "Star Trek LE Neo real Mod 1.0.2.vpx",
       "rights": "NOASSERTION",
       "sha256": "f7edee3cbcebff1a078496b7ef7dcef7368158a61b48934f2241792a70bc233c",
@@ -24047,7 +24047,7 @@
       "kind": "vpx_table",
       "known_working": true,
       "license": "NOASSERTION",
-      "locator": "Star Trek Enterprise Limited Edition (Stern 2012).vpx (66,732,032 bytes), exact st_161hc table extracted with vpxtool git:v0.33.3. Only geometry absent from the canonical Neo table is used: trough switches 18-21 are locally registered by the shared switch-22 trough-out kicker, lamp 51 by the shared upper-right flipper, and Vengeance bulb mesh points by the shared ship parent. Switch 22 itself is the direct shared Neo anchor; no Enterprise-normalized coordinate is copied directly.",
+      "locator": "Star Trek Enterprise Limited Edition (Stern 2012).vpx (66,732,032 bytes), exact st_161hc table extracted with vpxtool git:v0.33.3. Only geometry absent from the canonical Neo table is used: its switch 18 is a drain and is rejected, while its four ball positions 19-22 are translated and mapped in order to physical Premium/LE trough switches 18-21 by aligning the table's switch-22 trough-out with Neo BallRelease. Lamp 51 and Vengeance bulb meshes use separate local registrations; no coordinate from this table's normalized frame is copied directly.",
       "original_filename": "Star Trek Enterprise Limited Edition (Stern 2012).vpx",
       "rights": "NOASSERTION",
       "sha256": "46e4642ebcfcbedc59c3cf950b92ccc0dcc68818752110004c4164cb1d54cc8e",
