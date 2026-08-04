@@ -1,7 +1,6 @@
 # Star Trek Pro (Stern, 2013)
 
-Coverage: **partial — normalized spatial placements pending.**
-Previously validated non-spatial scope: **physical inventory, public PinMAME bindings, lamp semantics, mechanisms, and edition differences validated**
+Coverage: **author-ready - physical inventory, public PinMAME bindings, lamp semantics, mechanisms, edition differences, and spatial placements validated**
 
 ## Identity and evidence precedence
 
@@ -13,13 +12,21 @@ The Pro uses main solenoid outputs 1-32, the ordinary lamp matrix at public addr
 
 ## Switch inventory and ball state
 
-The four-ball trough occupies switches 18-21 from left to right and jam opto 22 is downstream. The proven table creates four balls on 18-21; output 1 ejects the ball at switch 21 and briefly drives switch 22. Shooter lane is 23 and output 2 is the auto launcher. Switches 33/34 are bottom/top center-lock optos. Ramp optos are warp entrance/exit 13/36, left entrance/exit 14/35, and right entrance/exit 37/38. Orbits are right 51 and left 52. Pops are left/right/bottom 30/31/32, center bank top/center/bottom 39/40/41, left bank top/bottom 42/43, and the six red targets are 45-50. Switch 53 is unused on Pro.
+The four-ball trough occupies switches 18-21 from left to right and jam opto 22 is downstream on the ejection path. The exact Pro table creates four balls on 18-21 and output 1 ejects the ball at switch 21, but it does not model manual-required switch 22. Shooter lane is 23 and output 2 is the auto launcher. Switches 33/34 are bottom/top center-lock optos. Ramp optos are warp entrance/exit 13/36, left entrance/exit 14/35, and right entrance/exit 37/38. Orbits are right 51 and left 52. Pops are left/right/bottom 30/31/32, center bank top/center/bottom 39/40/41, left bank top/bottom 42/43, and the six red targets are 45-50. Switch 53 is unused on Pro.
 
 The dedicated controls use public PinMAME addresses rather than the manual's D labels: fire is 71/D7; lower-left button/EOS are 84/D9 and 83/D10; lower-right are 82/D11 and 81/D12; upper-right button is 86/D15. EOS contacts 83 and 81 are normally closed. Cabinet tilt/service inputs use PinMAME's negative and zero public values as recorded in the JSON.
 
 ## Lamp matrix
 
-All 80 public lamp callbacks are explicit. Physical unused channels are 1, 2, 6, 31, 39, 47, 58, and 77-79. Lamps 25-30, 33-38, and 41-46 are the red, green, and blue channels for six physical emblems: left orbit, left ramp, right orbit, right ramp, left eject, and center lane. Exact VPX playfield coordinates were observed during curation but have not yet been normalized and promoted into the definition. The remaining inserts are named from the working table and playfield artwork, including the four TREK letters at 4/5/7/8, status ladder 17-24, six red-target inserts at 50/57/59/60/68/69, six Enterprise arrows, the banks, missions, locks, and awards. Address 80 is the right-side blue playfield spotlight represented by table objects `l80`/`f80`. Script-only visual aliases 119, 120, 129, and 131 are driven from solenoids and are not physical/public lamp addresses, so they are intentionally excluded.
+All 80 public lamp callbacks are explicit. Physical unused channels are 1, 2, 6, 31, 39, 47, 58, and 77-79. Lamps 25-30, 33-38, and 41-46 are the red, green, and blue channels for six physical emblems: left orbit, left ramp, right orbit, right ramp, left eject, and center lane. Every used playfield lamp has a normalized placement from the exact Pro table; the six RGB emblems intentionally co-locate their three controller channels at one physical module. The remaining inserts are named from the working table and playfield artwork, including the four TREK letters at 4/5/7/8, status ladder 17-24, six red-target inserts at 50/57/59/60/68/69, six Enterprise arrows, the banks, missions, locks, and awards. Address 80 is the right-side blue playfield spotlight represented by table objects `l80`/`f80`. Script-only visual aliases 119, 120, 129, and 131 are driven from solenoids and are not physical/public lamp addresses, so they are intentionally excluded.
+
+## Spatial coordinate model
+
+Every playfield input, actuator, flasher, lamp, and table-authored GI reference emitter uses player-view normalized coordinates: x=0 left, x=1 right, y=0 rear/backglass end, and y=1 apron. The exact 952 by 2300 working Pro table is the sole coordinate frame. Its script remains controller-causality ground truth, while the official manual establishes physical inventory. Manual pages 67 and 71 are explicitly LE/Premium switch/lamp drawings, pages 68-70 are Premium/LE RGB material, and page 150 is explicitly LE GI; none is used as Pro physical-location evidence. Page 74 is the shared main Q-output map and supplies drawing projections for outputs without defensible physical VPX objects; the below-apron Q22 laser coordinate is explicitly regional rather than calibrated.
+
+The hidden trough switches 18-21 are the only geometry imported from another table. That table's switch 18 is its drain; its four ball positions 19-22 are translated into the Pro frame and mapped in order to Pro 18-21 by aligning its switch-22 trough-out with Pro BallRelease. The manual-required Pro jam opto 22 is absent from the exact Pro table and therefore receives a disclosed approximate marker between BallRelease and shooter-lane switch 23. Slingshot sensors/coils and lower-flipper EOS contacts use disclosed assembly projections. Cabinet, service, DIP, unused, optional cabinet hardware, and virtual devices never receive fake playfield points.
+
+Pro GI is deliberately not the Premium/LE 41-emitter inventory. The known-working Pro table drives exactly 18 objects in its `GILighting` collection, and those centers preserve the table's authoring-light design. They are not a manual-verified count of physical sockets: three `gilight` objects illuminate flipper-pivot regions and may be render abstractions. Aggregate `GI_Light`/`GI_LightOff`, bloom objects, flashers, and the LE-only manual page-150 drawing are excluded. Manual page 74 likewise proves Q25 is one physical pop-bumper flasher point rather than three.
 
 ## Center target, lock, and Vengeance
 
@@ -37,7 +44,7 @@ The legacy Pro table writes public switch 90 and visually couples the upper-righ
 
 ## Recreation checklist
 
-- Create four trough balls on switches 18-21, keep jam opto 22 clear until ejection, and bind shooter lane 23.
+- Create four trough balls on switches 18-21, add the physical jam opto 22 on the ejection path even though the exact Pro table omits it, and bind shooter lane 23.
 - Implement all main outputs 1-32, standard lamps 1-80, GI 0, the native 128x32 DMD, every matrix/dedicated input, and optional shaker/coin-meter hardware.
 - Build the center memory target, center magnet and two lock optos, passive Vengeance bash/kickback, left eject, auto launcher, laser, three physical flippers, pops, slings, spinner, every target bank, and all ramp/orbit paths.
 - Do not add Premium/LE auxiliary outputs, node-board lamps, switch 53, rotating VUK, controlled orbit gates, bottom-drain kickback, or motorized Vengeance hardware.
@@ -46,8 +53,9 @@ The legacy Pro table writes public switch 90 and visually couples the upper-righ
 
 ## Sources
 
-- `manual.star-trek-pro`: official Stern `Star-Trek-Pro-Manual.pdf`, SHA-256 `23cb9e6683d7b357ada48678a8e157a8b64102ea012821c350a3f033fae66b28`; switch matrix on PDF pages 66-67, coil chart 114, GI/wiring 116, LE-only auxiliary declaration 117, and opto boards 151-154.
+- `manual.star-trek-pro`: official Stern `Star-Trek-Pro-Manual.pdf`, SHA-256 `23cb9e6683d7b357ada48678a8e157a8b64102ea012821c350a3f033fae66b28`; shared Pro switch inventory on PDF page 66, main coil chart/location map on pages 73-74, GI/DMD/switch wiring context on page 116, LE-only auxiliary board exclusion on page 117, and opto boards on pages 151-154. Pages 67-71 and 150 are edition-specific Premium/LE location or lighting material and are not Pro physical-location evidence.
 - `vpx.star-trek-pro-fss`: extracted working `Star Trek Pro (Stern 2013)-[D&N][FSS][DMD].vbs`, SHA-256 `abc5dbb6ead12f16886143a50cfd2534c9baf855b070924dd7d82e404b4d69bf`; runs `st_161` and supplies initialization, switch handlers, outputs, lamps, and mechanism behavior.
 - `vpx-table.star-trek-pro-fss`: archived VPX, SHA-256 `2976e3313a6fa1ee6f26709d515661b81ade8f01894a847b907a5e608e5bb9e7`; containing archive SHA-256 `eaa577d4514b4945f6d98195a161c3de59d67c61f2b4d75e4c99169c9b6c1a34`; lamp objects and artwork were inspected read-only.
+- `vpx-table.star-trek-enterprise-le-geometry`: exact `Star Trek Enterprise Limited Edition (Stern 2012).vpx`, SHA-256 `46e4642ebcfcbedc59c3cf950b92ccc0dcc68818752110004c4164cb1d54cc8e`; used only to recover the hidden trough chain by local registration to the shared Pro trough-out anchor.
 - `runtime.star-trek-pro.boot-start`: exact `st_161c` LibPinMAME run, SHA-256 `a8404eca7535f40ade66f652a94b3923d3d46c7c23315a38d554e475170656e7`; ROM archive SHA-256 `f42dc29347fa2d8f9e2abff7b1ec958507d73e4c658a946c2fd5f3d290b557c0` remains external.
 - `pinmame.core.4ec52ff0ac13`: pinned SAM driver, switch serialization, dedicated-input constants, and display implementation.

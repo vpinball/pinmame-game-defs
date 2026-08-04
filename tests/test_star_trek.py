@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PREMIUM_PATH = ROOT / "machines" / "author-ready" / "stern" / "star-trek-premium-limited-edition-2013.json"
-PRO_PATH = ROOT / "machines" / "partial" / "stern" / "star-trek-pro-2013.json"
+PRO_PATH = ROOT / "machines" / "author-ready" / "stern" / "star-trek-pro-2013.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "star-trek-pro-boot-start.json"
 
 
@@ -30,18 +30,20 @@ class StarTrekDefinitionTests(unittest.TestCase):
 		cls.pro = load_json(PRO_PATH)
 		cls.evidence = load_json(EVIDENCE_PATH)
 
-	def test_premium_is_author_ready_while_pro_remains_fail_closed(self) -> None:
+	def test_both_physical_editions_are_author_ready(self) -> None:
 		self.assertEqual(2, self.premium["schema_version"])
 		self.assertEqual("physical_pinball", self.premium["machine"]["kind"])
 		self.assertEqual("author_ready", self.premium["coverage"]["status"])
 		self.assertEqual([], self.premium["coverage"]["missing"])
 		self.assertEqual("validated", self.premium["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual(2, self.pro["schema_version"])
-		self.assertEqual("partial", self.pro["coverage"]["status"])
-		self.assertIn("spatial_placement", self.pro["coverage"]["missing"])
+		self.assertEqual("physical_pinball", self.pro["machine"]["kind"])
+		self.assertEqual("author_ready", self.pro["coverage"]["status"])
+		self.assertEqual([], self.pro["coverage"]["missing"])
+		self.assertEqual("validated", self.pro["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual("complete", self.pro["knowledge"]["status"])
 		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "star-trek-premium-limited-edition-2013.json").exists())
-		self.assertTrue((ROOT / "machines" / "partial" / "stern" / "star-trek-pro-2013.json").exists())
+		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "star-trek-pro-2013.json").exists())
 
 	def test_editions_split_the_complete_driver_family(self) -> None:
 		premium = {driver["id"] for driver in self.premium["drivers"]}
@@ -223,6 +225,85 @@ class StarTrekDefinitionTests(unittest.TestCase):
 			self.assertTrue(all(placement["provenance"]["source_refs"] == [manual, script, neo] for lamp in by_number[physical_number] for placement in lamp["spatial"]["placements"]))
 			self.assertTrue(all(tuple(lamp["spatial"]["placements"][0][axis] for axis in ("x", "y")) == expected for lamp in by_number[physical_number]))
 		self.assertTrue(all(tuple(lamp["spatial"]["placements"][0][axis] for axis in ("x", "y")) == (0.897124, 0.517279) for lamp in by_number[51]))
+
+	def test_pro_spatial_inventory_is_complete_and_nonplayfield_devices_stay_outside_playfield_space(self) -> None:
+		devices = [*self.pro["inputs"], *self.pro["outputs"]]
+		self.assertTrue(all(device["spatial"]["status"] in {"validated", "not_applicable"} for device in devices))
+		inputs = bindings(self.pro, "inputs", "pinmame.input.switch")
+		for address, expected in {1: (0.578782, 0.138478), 11: (0.516468, 0.312082), 26: (0.242986, 0.774518), 27: (0.682742, 0.775298), 51: (0.896534, 0.148261), 52: (0.067227, 0.236522), 81: (0.621586, 0.888587), 83: (0.305935, 0.888587)}.items():
+			self.assertEqual(expected, tuple(inputs[address]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		for address in (15, 16, 65, 66, 67, 68, 71, 82, 84, 86):
+			self.assertEqual(("not_applicable", "cabinet_or_service"), (inputs[address]["spatial"]["status"], inputs[address]["spatial"]["reason"]))
+		for address in (8, 24):
+			device = bindings(self.pro, "outputs", "pinmame.output.solenoid")[address]
+			self.assertEqual(("not_applicable", "cabinet_or_service"), (device["spatial"]["status"], device["spatial"]["reason"]))
+
+	def test_pro_hidden_trough_geometry_is_locally_registered_into_the_pro_frame(self) -> None:
+		inputs = bindings(self.pro, "inputs", "pinmame.input.switch")
+		expected = {18: (0.703727, 0.946296), 19: (0.749432, 0.933741), 20: (0.796670, 0.921846), 21: (0.849790, 0.906658), 22: (0.895000, 0.908000)}
+		for address, coordinate in expected.items():
+			self.assertEqual(coordinate, tuple(inputs[address]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+			refs = inputs[address]["spatial"]["placements"][0]["provenance"]["source_refs"]
+			if address < 22:
+				self.assertEqual(["manual.star-trek-pro", "vpx.star-trek-pro-fss", "vpx-table.star-trek-pro-fss", "vpx-table.star-trek-enterprise-le-geometry"], refs)
+			else:
+				self.assertEqual(["manual.star-trek-pro", "vpx.star-trek-pro-fss", "vpx-table.star-trek-pro-fss"], refs)
+		self.assertIn("does not model switch 22", inputs[22]["physical"]["notes"])
+		self.assertIn("approximate regional marker", inputs[22]["physical"]["notes"])
+
+	def test_pro_solenoid_geometry_separates_direct_objects_from_manual_projections(self) -> None:
+		solenoids = bindings(self.pro, "outputs", "pinmame.output.solenoid")
+		for address, expected in {1: (0.849790, 0.906658), 3: (0.498950, 0.261848), 7: (0.490809, 0.234511), 19: (0.033482, 0.095380), 20: (0.756171, 0.117120), 29: (0.233390, 0.533342), 31: (0.504202, 0.216957), 32: (0.221113, 0.715870)}.items():
+			self.assertEqual(expected, tuple(solenoids[address]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+			self.assertEqual(["manual.star-trek-pro", "vpx.star-trek-pro-fss", "vpx-table.star-trek-pro-fss"], solenoids[address]["spatial"]["placements"][0]["provenance"]["source_refs"])
+		for address in (17, 18, 21, 22, 23, 25, 26, 27, 28, 30):
+			self.assertEqual(["manual.star-trek-pro"], solenoids[address]["spatial"]["placements"][0]["provenance"]["source_refs"])
+		self.assertEqual((1, 1), (solenoids[25]["physical"]["quantity"], len(solenoids[25]["spatial"]["placements"])))
+		self.assertIn("one Q25 pop-bumper flasher point", solenoids[25]["physical"]["notes"])
+		self.assertIn("approximate regional marker", solenoids[22]["physical"]["notes"])
+		self.assertIn("not a calibrated point", solenoids[22]["physical"]["notes"])
+
+	def test_pro_lamps_preserve_rgb_colocation_and_exclude_render_helpers(self) -> None:
+		lamps = bindings(self.pro, "outputs", "pinmame.output.lamp")
+		for channels, coordinate in [((25, 33, 41), (0.210084, 0.653302)), ((26, 34, 42), (0.274947, 0.586128)), ((27, 35, 43), (0.820903, 0.458519)), ((28, 36, 44), (0.683036, 0.449063)), ((29, 37, 45), (0.381828, 0.367106)), ((30, 38, 46), (0.518120, 0.363519))]:
+			for address in channels:
+				self.assertEqual(coordinate, tuple(lamps[address]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+				self.assertEqual(1, lamps[address]["physical"]["quantity"])
+		self.assertEqual(("not_applicable", "cabinet_or_service"), (lamps[3]["spatial"]["status"], lamps[3]["spatial"]["reason"]))
+		self.assertEqual((0.919380, 0.583859), tuple(lamps[80]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertIn("f80 halo is a render helper", lamps[80]["physical"]["notes"])
+
+	def test_pro_gi_uses_only_the_exact_eighteen_item_pro_collection(self) -> None:
+		gi = bindings(self.pro, "outputs", "pinmame.output.gi")[0]
+		placements = gi["spatial"]["placements"]
+		self.assertEqual(18, len(placements))
+		self.assertNotIn("quantity", gi.get("physical", {}))
+		self.assertEqual((0.767069, 0.841522), tuple(placements[0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.622111, 0.888207), tuple(placements[-1][axis] for axis in ("x", "y")))
+		self.assertTrue(all(placement["provenance"]["source_refs"] == ["vpx.star-trek-pro-fss", "vpx-table.star-trek-pro-fss"] for placement in placements))
+		self.assertFalse(any(token in placement["id"].casefold() for placement in placements for token in ("gi_lightoff", "bloom", "flasher")))
+		self.assertIn("not a manual-verified physical socket inventory", gi["physical"]["notes"])
+		self.assertIn("Do not infer 18 physical bulbs", gi["physical"]["notes"])
+		self.assertIn("LE-only page-150 41-emitter GI drawing", gi["physical"]["notes"])
+
+	def test_pro_spatial_sources_and_edition_exclusions_are_explicit(self) -> None:
+		sources = {source["id"]: source for source in self.pro["sources"]}
+		self.assertEqual("46e4642ebcfcbedc59c3cf950b92ccc0dcc68818752110004c4164cb1d54cc8e", sources["vpx-table.star-trek-enterprise-le-geometry"]["sha256"])
+		self.assertTrue(sources["vpx.star-trek-pro-fss"]["known_working"])
+		self.assertTrue(sources["vpx-table.star-trek-pro-fss"]["known_working"])
+		self.assertIn("pages 73-74", sources["manual.star-trek-pro"]["locator"])
+		self.assertIn("page 116 retained", sources["manual.star-trek-pro"]["locator"])
+		self.assertIn("page 117", sources["manual.star-trek-pro"]["locator"])
+		knowledge = (ROOT / "knowledge" / "stern" / "star-trek-pro-2013.md").read_text(encoding="utf-8")
+		self.assertIn("page 150 is explicitly LE GI", knowledge)
+		self.assertIn("exactly 18 objects", knowledge)
+		self.assertIn("does not model manual-required switch 22", knowledge)
+
+	def test_pro_cabinet_flipper_roles_are_side_specific(self) -> None:
+		inputs = bindings(self.pro, "inputs", "pinmame.input.switch")
+		self.assertEqual(["flipper.lower-right.button"], inputs[82]["roles"])
+		self.assertEqual(["flipper.lower-left.button"], inputs[84]["roles"])
+		self.assertEqual(["flipper.upper-right.button"], inputs[86]["roles"])
 
 	def test_premium_exact_geometry_sources_are_hash_locked(self) -> None:
 		sources = {source["id"]: source for source in self.premium["sources"]}
