@@ -1,7 +1,6 @@
 # Star Trek Premium / Limited Edition (Stern, 2013)
 
-Coverage: **partial — normalized spatial placements pending.**
-Previously validated non-spatial scope: **physical inventory, PinMAME bindings, custom mechanisms, and recreation behavior validated**
+Coverage: **author-ready - physical inventory, PinMAME bindings, custom mechanisms, recreation behavior, and spatial placements validated**
 
 ## Identity and evidence precedence
 
@@ -44,8 +43,20 @@ Outputs 51/52 control the left/right orbit gates. Output 54 is the bottom right-
 - Use public JSON callback bindings for node LEDs and auxiliary outputs; use manual numbers only in service/diagnostic UI.
 - Treat VPX force, angle, animation, and capture values as proven authoring baselines and refine only the physical geometry without changing controller causality.
 
+## Spatial coordinate model
+
+Every physical playfield input, actuator, lamp, and GI socket has a normalized player-view placement: x=0 left, x=1 right, y=0 rear/backglass end, and y=1 apron. The 952 by 2300 Neo table is the sole normalized coordinate frame. Direct Neo object centers are accepted only after reconciliation with the official manual and proven v1.10 script. Geometry absent from Neo is never copied from another normalized table frame: trough switches 18-21 are locally registered by the shared direct-Neo switch-22 trough-out anchor, lamp 51 by the shared upper-right flipper, and Vengeance bulb-mesh points by the shared ship parent. Slingshot sensors/coils, the Vengeance crash opto, EOS contacts, laser motor, composite multi-bulb assemblies, and GI sockets use explicitly disclosed assembly or drawing projections. Cabinet, service, backbox fixtures, virtual, unpopulated, unused, and DIP devices are outside playfield space.
+
+The lamp audit preserves physical multiplicity that render geometry can both hide and exaggerate. Lamp 51 has two Enterprise emitters but only one defensible composite assembly anchor; lamps 63 and 64 likewise each have two apron emitters represented by one composite Neo assembly center. No false bulb separation is invented. Lamp 57 has two separately recoverable Vengeance nacelle centers. The manual proves one physical lamp for each warp-chaser number 70-77; v1.10's paired beam segments and WarpAmbient object are render helpers, while Neo's direct l70-l77 lamp objects supply one canonical point per output. Cabinet Enterprise and every cabinet phaser output also retain the manual's ×2 physical quantity even though they have no playfield coordinate.
+
+The moving Vengeance is one spatial assembly with separate causality: output 53 supplies PWM dive/shake motion, output 56 controls the latch/return, switch 53 reports the crash/latch state, output 7 returns the captive ball, output 31 flashes the ship, and lamps 56/57 illuminate the saucer and two nacelles. The v1.10 script proves output 31's Vengeance semantics through F31/F31a, while Neo maps that same output to VengFlashGI and supplies the canonical assembly anchor. Their points are canonical-frame, parent-relative rest-state placements; co-located assembly anchors do not collapse them into one device or claim identical internal actuator locations. The broad F31/F31a bloom geometry is a render helper and is not used as output 31's physical position. The left eject and output-55 rotating VUK likewise belong to one scoop but use separate Neo eject-mouth and rotating-pivot points, with no invented position switch.
+
+The page-152 GI drawing proves 34 playfield emitters: 31 sockets plus three illuminated pop-bumper assemblies. Its separate backbox inset proves seven additional physical GI lamps. The aggregate output therefore keeps quantity 41, but only the 34 playfield emitters receive playfield-space placements; the backbox row is not misrepresented at y=0. The 31 drawing-derived socket centers preserve validated identity and physical region, but the drawing does not support a quantified per-socket positional tolerance; their six-decimal projected values are not claims of sub-object measurement precision. The official coil-location drawing places the unsensed laser motor beneath the lower-left apron; its coordinate remains a disclosed manual projection and the broad Laser render fields are effects, not motor locations. The auxiliary drawing proves two Q42 speaker-panel flashers, two Q43 backbox flashers, and one each on Q44-Q46. Those quantities remain in the definition while all seven fixtures stay outside normalized playfield space.
+
 ## Sources
 
-- `manual.star-trek-premium-le`: official Stern `Star-Trek-LE-Manual.pdf`, SHA-256 `ca2007093bb4c1425d728a46e548d3af5a3d8fdd844c41dab48cd4ddbacb985d`; I/O and wiring tables on PDF pages 68-77, 114-119, and 153-155.
+- `manual.star-trek-premium-le`: official Stern `Star-Trek-LE-Manual.pdf`, SHA-256 `ca2007093bb4c1425d728a46e548d3af5a3d8fdd844c41dab48cd4ddbacb985d`; I/O and physical location drawings on PDF pages 68-77, wiring on 114-119 and 153-155, and the physical GI/socket drawing on PDF page 152.
+- `vpx-table.star-trek-le-neo-real-1.0.2-geometry`: exact `Star Trek LE Neo real Mod 1.0.2.vpx`, 191,655,936 bytes, SHA-256 `f7edee3cbcebff1a078496b7ef7dcef7368158a61b48934f2241792a70bc233c`; retained externally under `pinmame-vpx-sources/stern/star-trek-premium-limited-edition-2013/source` and used as the sole normalized geometry frame after semantic reconciliation.
+- `vpx-table.star-trek-enterprise-le-geometry`: exact `Star Trek Enterprise Limited Edition (Stern 2012).vpx`, 66,732,032 bytes, SHA-256 `46e4642ebcfcbedc59c3cf950b92ccc0dcc68818752110004c4164cb1d54cc8e`; retained beside the Neo table and used only for missing geometry that is locally registered into the Neo frame by a shared physical anchor.
 - `vpx.star-trek-le-1.10`: known-working script at vpxtable_scripts revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`, SHA-256 `3337481b28144a67f1df3c3650355be91699104930d8b3cc8503e14225a9d4ff`.
 - `pinmame.core.4ec52ff0ac13`: pinned SAM implementation, four node boards, custom outputs, display, and driver configuration.

@@ -14,7 +14,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 8 | 2014 | The Walking Dead Pro | Stern | author_ready |
 | 9 | 2013 | Metallica Premium / Limited Edition | Stern | partial |
 | 10 | 2013 | Metallica Pro | Stern | partial |
-| 11 | 2013 | Star Trek Premium / Limited Edition | Stern | partial |
+| 11 | 2013 | Star Trek Premium / Limited Edition | Stern | author_ready |
 | 12 | 2013 | Star Trek Pro | Stern | partial |
 | 13 | 2012 | AC/DC Premium / Limited Edition / LUCI Premium | Stern | partial |
 | 14 | 2012 | AC/DC Pro (original) | Stern | partial |

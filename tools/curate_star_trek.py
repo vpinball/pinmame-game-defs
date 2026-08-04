@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json, write_text
-from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+from pinmame_game_defs.spatial import SPATIAL_RETROFIT_PENDING_MACHINE_IDS, fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
@@ -555,17 +555,26 @@ def write(path: Path, value: dict[str, object]) -> None:
 	write_json(path, value)
 
 
-old = ROOT / "machines/partial/stern/star-trek-enterprise-limited-edition-2013.json"
-if old.exists():
-	old.unlink()
-old_knowledge = ROOT / "knowledge/stubs/st_162h.md"
-if old_knowledge.exists():
-	old_knowledge.unlink()
-stale_pro = ROOT / "machines/partial/stern/star-trek-pro-2013.json"
-if stale_pro.exists():
-	stale_pro.unlink()
-write(ROOT / "machines/partial/stern/star-trek-premium-limited-edition-2013.json", build_premium())
-write(ROOT / "machines/partial/stern/star-trek-pro-2013.json", build_pro())
-write(ROOT / "evidence/runtime/sam/star-trek-pro-boot-start.json", pro_runtime_evidence())
-write_text(ROOT / "knowledge/stern/star-trek-premium-limited-edition-2013.md", fail_closed_spatial_knowledge("stern.star-trek-premium-limited-edition.2013", PREMIUM_KNOWLEDGE))
-write_text(ROOT / "knowledge/stern/star-trek-pro-2013.md", fail_closed_spatial_knowledge("stern.star-trek-pro.2013", PRO_KNOWLEDGE))
+def main() -> None:
+	old = ROOT / "machines/partial/stern/star-trek-enterprise-limited-edition-2013.json"
+	if old.exists():
+		old.unlink()
+	old_knowledge = ROOT / "knowledge/stubs/st_162h.md"
+	if old_knowledge.exists():
+		old_knowledge.unlink()
+	premium_machine_id = "stern.star-trek-premium-limited-edition.2013"
+	if premium_machine_id in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
+		write(ROOT / "machines/partial/stern/star-trek-premium-limited-edition-2013.json", build_premium())
+		write_text(ROOT / "knowledge/stern/star-trek-premium-limited-edition-2013.md", fail_closed_spatial_knowledge(premium_machine_id, PREMIUM_KNOWLEDGE))
+	pro_machine_id = "stern.star-trek-pro.2013"
+	if pro_machine_id in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
+		stale_pro = ROOT / "machines/partial/stern/star-trek-pro-2013.json"
+		if stale_pro.exists():
+			stale_pro.unlink()
+		write(stale_pro, build_pro())
+		write_text(ROOT / "knowledge/stern/star-trek-pro-2013.md", fail_closed_spatial_knowledge(pro_machine_id, PRO_KNOWLEDGE))
+	write(ROOT / "evidence/runtime/sam/star-trek-pro-boot-start.json", pro_runtime_evidence())
+
+
+if __name__ == "__main__":
+	main()
