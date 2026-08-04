@@ -1,5 +1,26 @@
 {
-  "conflicts": [],
+  "conflicts": [
+    {
+      "description": "The selected exact 1.0.3 VPX is explicitly a UK model with All-Skill extra posts. The canonical record covers the shared 2004 physical product plus optional UK hardware, so common named playfield objects are promoted while Q33-Q35 and any UK-only geometry remain unresolved; no standard-machine coordinates are projected from the UK table.",
+      "id": "conflict.ripleys.uk-table-scope",
+      "path": "outputs[pinmame.output.solenoid:33|34|35]",
+      "source_refs": [
+        "vpx-table.ripleys-jpsalas-1.0.3-uk",
+        "manual.stern-ripleys.2004",
+        "pinmame.core.4ec52ff0ac13"
+      ]
+    },
+    {
+      "description": "The exact archived table's Q24 callback invokes a sound-only vpmsolsound routine, while the retained VPW v1.3 script comments out its Q24 SolKnocker callback. The Stern manual calls Q24 an optional unassigned 5 V output. The physical disposition is therefore no stock Q24 device, but the two table scripts are not behavior-identical for an optional external installation.",
+      "id": "conflict.ripleys-q24-script-revision",
+      "path": "outputs[pinmame.output.solenoid:24]",
+      "source_refs": [
+        "vpx-table.ripleys-jpsalas-1.0.3-uk",
+        "vpx.ripleys-vpwmod-1.3",
+        "manual.stern-ripleys.2004"
+      ]
+    }
+  ],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.whitestar"
@@ -374,6 +395,16 @@
       "roles": [
         "cabinet.uk-button-left"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P1",
@@ -418,6 +449,16 @@
       "roles": [
         "cabinet.coin.fourth"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P1",
@@ -462,6 +503,16 @@
       "roles": [
         "cabinet.coin.sixth"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P1",
@@ -506,6 +557,16 @@
       "roles": [
         "cabinet.coin.right"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P1",
@@ -550,6 +611,16 @@
       "roles": [
         "cabinet.coin.center"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P1",
@@ -594,6 +665,16 @@
       "roles": [
         "cabinet.coin.left"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P1",
@@ -638,6 +719,16 @@
       "roles": [
         "cabinet.coin.fifth"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P1",
@@ -682,6 +773,16 @@
       "roles": [
         "cabinet.uk-button-right"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P1",
@@ -723,6 +824,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.9-head-stand-up.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.302486,
+            "y": 0.205636
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P3",
@@ -764,6 +883,16 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P3",
@@ -794,6 +923,8 @@
       "label": "Four-ball trough 1 (left)",
       "normally_closed": false,
       "physical": {
+        "location": "Under-playfield or lock assembly; the exact retained table does not expose a named per-address sensor center.",
+        "notes": "Spatial placement is intentionally withheld until the manual drawing and the exact table's shared ball-stack/lock objects can be reconciled per switch address.",
         "part_number": "180-5119-02",
         "switch_type": "microswitch"
       },
@@ -839,6 +970,8 @@
       "label": "Four-ball trough 2",
       "normally_closed": false,
       "physical": {
+        "location": "Under-playfield or lock assembly; the exact retained table does not expose a named per-address sensor center.",
+        "notes": "Spatial placement is intentionally withheld until the manual drawing and the exact table's shared ball-stack/lock objects can be reconciled per switch address.",
         "part_number": "180-5119-02",
         "switch_type": "microswitch"
       },
@@ -884,6 +1017,8 @@
       "label": "Four-ball trough 3",
       "normally_closed": false,
       "physical": {
+        "location": "Under-playfield or lock assembly; the exact retained table does not expose a named per-address sensor center.",
+        "notes": "Spatial placement is intentionally withheld until the manual drawing and the exact table's shared ball-stack/lock objects can be reconciled per switch address.",
         "part_number": "180-5119-02",
         "switch_type": "microswitch"
       },
@@ -930,6 +1065,8 @@
       "normally_closed": false,
       "physical": {
         "assembly_part_number": "515-0173-00 transmitter + 515-0174-00 receiver",
+        "location": "Under-playfield or lock assembly; the exact retained table does not expose a named per-address sensor center.",
+        "notes": "Spatial placement is intentionally withheld until the manual drawing and the exact table's shared ball-stack/lock objects can be reconciled per switch address.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -974,6 +1111,8 @@
       "normally_closed": false,
       "physical": {
         "assembly_part_number": "515-0173-00 transmitter + 515-0174-00 receiver",
+        "location": "Under-playfield or lock assembly; the exact retained table does not expose a named per-address sensor center.",
+        "notes": "Spatial placement is intentionally withheld until the manual drawing and the exact table's shared ball-stack/lock objects can be reconciled per switch address.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1032,6 +1171,24 @@
       "roles": [
         "ball.position"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.16-shooter-lane.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.948693,
+            "y": 0.894464
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P3",
@@ -1073,6 +1230,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.17-tombstone-1.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.188811,
+            "y": 0.536191
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P4",
@@ -1117,6 +1292,24 @@
       "roles": [
         "ball.path"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.18-super-jackpot-opto.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.131382,
+            "y": 0.056658
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P4",
@@ -1158,6 +1351,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.19-tombstone-5.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.82053,
+            "y": 0.543103
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P4",
@@ -1199,6 +1410,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.20-left-spinner.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.252353,
+            "y": 0.30269
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P4",
@@ -1240,6 +1469,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.21-right-spinner.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.836794,
+            "y": 0.355135
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P4",
@@ -1281,6 +1528,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.22-tombstone-4.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.444765,
+            "y": 0.186064
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P4",
@@ -1325,6 +1590,24 @@
       "roles": [
         "ball.position"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.23-shrunken-head-opto.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.371736,
+            "y": 0.156804
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P4",
@@ -1369,6 +1652,24 @@
       "roles": [
         "ball.position"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.24-idol-eye-opto.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.107415,
+            "y": 0.581115
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P4",
@@ -1410,6 +1711,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.25-lower-left-pop-bumper.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.080275,
+            "y": 0.412991
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P5",
@@ -1451,6 +1770,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.26-lower-right-pop-bumper.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.146563,
+            "y": 0.495044
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P5",
@@ -1492,6 +1829,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.27-lower-bottom-pop-bumper.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.27211,
+            "y": 0.406435
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P5",
@@ -1536,6 +1891,24 @@
       "roles": [
         "ball.path"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.28-side-scoop-entry.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.332317,
+            "y": 0.467598
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P5",
@@ -1580,6 +1953,24 @@
       "roles": [
         "ball.position"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.29-scoop-vuk.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.333661,
+            "y": 0.493734
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P5",
@@ -1624,6 +2015,24 @@
       "roles": [
         "ball.path"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.30-behind-head.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.501584,
+            "y": 0.084721
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P5",
@@ -1668,6 +2077,24 @@
       "roles": [
         "ball.path"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.31-left-ramp-make.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.301081,
+            "y": 0.025208
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P5",
@@ -1697,7 +2124,9 @@
       "label": "Tombstones 2 and 3",
       "normally_closed": false,
       "physical": {
+        "notes": "Two named VPX hit targets share controller switch 32; retain both physical target assemblies and one public input.",
         "part_number": "515-5162-08",
+        "quantity": 2,
         "switch_type": "leaf"
       },
       "provenance": {
@@ -1709,6 +2138,37 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.32-tombstones-2-and-3.sensor.a",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.360405,
+            "y": 0.412921
+          },
+          {
+            "id": "switch.32-tombstones-2-and-3.sensor.b",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.354271,
+            "y": 0.390526
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P5",
@@ -1750,6 +2210,24 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.33-bonus-x-inlane-left.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.623837,
+            "y": 0.060879
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P6",
@@ -1791,6 +2269,24 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.34-bonus-x-inlane-middle.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.709047,
+            "y": 0.05814
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P6",
@@ -1832,6 +2328,24 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.35-bonus-x-inlane-right.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.79481,
+            "y": 0.053158
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P6",
@@ -1876,6 +2390,24 @@
       "roles": [
         "ball.path"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.36-right-orbit.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.937563,
+            "y": 0.075822
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P6",
@@ -1917,6 +2449,16 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P6",
@@ -1961,6 +2503,24 @@
       "roles": [
         "ball.path"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.38-mini-playfield-left.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.049452,
+            "y": 0.226834
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P6",
@@ -2005,6 +2565,24 @@
       "roles": [
         "ball.path"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.39-mini-playfield-center.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.138505,
+            "y": 0.226834
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P6",
@@ -2049,6 +2627,24 @@
       "roles": [
         "ball.path"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.40-mini-playfield-right.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.224074,
+            "y": 0.226834
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P6",
@@ -2079,6 +2675,7 @@
       "normally_closed": false,
       "physical": {
         "assembly_part_number": "520-5234-00",
+        "notes": "The three exact table trigger objects intentionally overlap on the shared vari-target opto board; do not fan them out into guessed positions.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -2093,6 +2690,24 @@
       "roles": [
         "position.deep"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.41-vari-target-opto-1.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.622044,
+            "y": 0.247893
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P7",
@@ -2124,6 +2739,7 @@
       "normally_closed": false,
       "physical": {
         "assembly_part_number": "520-5234-00",
+        "notes": "The three exact table trigger objects intentionally overlap on the shared vari-target opto board; do not fan them out into guessed positions.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -2138,6 +2754,24 @@
       "roles": [
         "position.shallow"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.42-vari-target-opto-2.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.622044,
+            "y": 0.248008
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P7",
@@ -2169,6 +2803,7 @@
       "normally_closed": false,
       "physical": {
         "assembly_part_number": "520-5234-00",
+        "notes": "The three exact table trigger objects intentionally overlap on the shared vari-target opto board; do not fan them out into guessed positions.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -2183,6 +2818,24 @@
       "roles": [
         "position.middle"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.43-vari-target-opto-3.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.622044,
+            "y": 0.247893
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P7",
@@ -2212,6 +2865,8 @@
       "label": "Lock 1 top",
       "normally_closed": false,
       "physical": {
+        "location": "Under-playfield or lock assembly; the exact retained table does not expose a named per-address sensor center.",
+        "notes": "Spatial placement is intentionally withheld until the manual drawing and the exact table's shared ball-stack/lock objects can be reconciled per switch address.",
         "part_number": "180-5180-00",
         "switch_type": "microswitch"
       },
@@ -2256,6 +2911,8 @@
       "label": "Lock 1 middle",
       "normally_closed": false,
       "physical": {
+        "location": "Under-playfield or lock assembly; the exact retained table does not expose a named per-address sensor center.",
+        "notes": "Spatial placement is intentionally withheld until the manual drawing and the exact table's shared ball-stack/lock objects can be reconciled per switch address.",
         "part_number": "180-5179-00",
         "switch_type": "microswitch"
       },
@@ -2300,6 +2957,8 @@
       "label": "Lock 1 bottom",
       "normally_closed": false,
       "physical": {
+        "location": "Under-playfield or lock assembly; the exact retained table does not expose a named per-address sensor center.",
+        "notes": "Spatial placement is intentionally withheld until the manual drawing and the exact table's shared ball-stack/lock objects can be reconciled per switch address.",
         "part_number": "180-5178-00",
         "switch_type": "microswitch"
       },
@@ -2359,6 +3018,24 @@
       "roles": [
         "ball.path"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.47-left-jackpot-loop.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.0992,
+            "y": 0.16103
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P7",
@@ -2403,6 +3080,24 @@
       "roles": [
         "ball.path"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.48-left-orbit.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.139645,
+            "y": 0.056291
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P7",
@@ -2444,6 +3139,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.49-upper-left-pop-bumper.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.655061,
+            "y": 0.146793
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P8",
@@ -2485,6 +3198,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.50-upper-right-pop-bumper.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.809825,
+            "y": 0.210591
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P8",
@@ -2526,6 +3257,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.51-upper-bottom-pop-bumper.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.844994,
+            "y": 0.120569
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P8",
@@ -2570,6 +3319,24 @@
       "roles": [
         "ball.position"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.52-vari-target-vuk.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.710784,
+            "y": 0.238377
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P8",
@@ -2614,6 +3381,24 @@
       "roles": [
         "ball.path"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.53-right-ramp.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.955255,
+            "y": 0.253975
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P8",
@@ -2658,6 +3443,16 @@
       "roles": [
         "cabinet.start"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P8",
@@ -2702,6 +3497,16 @@
       "roles": [
         "cabinet.tournament-start"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P8",
@@ -2746,6 +3551,16 @@
       "roles": [
         "cabinet.tilt"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P8",
@@ -2787,6 +3602,24 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.57-left-outlane.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.050057,
+            "y": 0.755973
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P9",
@@ -2828,6 +3661,24 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.58-left-return-lane.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.116454,
+            "y": 0.715253
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P9",
@@ -2857,7 +3708,7 @@
       "label": "Left slingshot",
       "normally_closed": false,
       "physical": {
-        "notes": "The manual specifies two parallel playfield contacts for this slingshot address.",
+        "notes": "The exact table exposes one named slingshot collision assembly for the controller address; the manual specifies two parallel physical contacts.",
         "part_number": "180-5054-00",
         "quantity": 2,
         "switch_type": "leaf"
@@ -2871,6 +3722,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.59-left-slingshot.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.200825,
+            "y": 0.719714
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P9",
@@ -2912,6 +3781,24 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.60-right-outlane.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.813068,
+            "y": 0.767445
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P9",
@@ -2953,6 +3840,24 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.61-right-return-lane.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.748331,
+            "y": 0.722366
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P9",
@@ -2982,7 +3887,7 @@
       "label": "Right slingshot",
       "normally_closed": false,
       "physical": {
-        "notes": "The manual specifies two parallel playfield contacts for this slingshot address.",
+        "notes": "The exact table exposes one named slingshot collision assembly for the controller address; the manual specifies two parallel physical contacts.",
         "part_number": "180-5054-00",
         "quantity": 2,
         "switch_type": "leaf"
@@ -2996,6 +3901,24 @@
         "status": "validated"
       },
       "pulse": true,
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.62-right-slingshot.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.665007,
+            "y": 0.719714
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P9",
@@ -3037,6 +3960,16 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P9",
@@ -3078,6 +4011,16 @@
         "status": "validated"
       },
       "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board switch matrix",
         "drive_connection": "CN5-P9",
@@ -3125,6 +4068,16 @@
       "roles": [
         "cabinet.memory-protect"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar CPU/Sound board memory-protect input",
         "drive_connection": "CN6-P12"
@@ -3166,6 +4119,16 @@
       "roles": [
         "service.left"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar dedicated-switch input",
         "drive_connection": "CN6-P8",
@@ -3210,6 +4173,16 @@
       "roles": [
         "service.right"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar dedicated-switch input",
         "drive_connection": "CN6-P9",
@@ -3254,6 +4227,16 @@
       "roles": [
         "service.enter"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar dedicated-switch input",
         "drive_connection": "CN6-P10",
@@ -3299,6 +4282,24 @@
       "roles": [
         "flipper.lower.right.eos"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.81-right-flipper-end-of-stroke.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.592778,
+            "y": 0.835934
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar dedicated-switch input",
         "drive_connection": "CN6-P6",
@@ -3343,6 +4344,16 @@
       "roles": [
         "flipper.lower.right.button"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar dedicated-switch input",
         "drive_connection": "CN6-P4",
@@ -3388,6 +4399,24 @@
       "roles": [
         "flipper.lower.left.eos"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.83-left-flipper-end-of-stroke.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.27365,
+            "y": 0.835934
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar dedicated-switch input",
         "drive_connection": "CN6-P3",
@@ -3432,6 +4461,16 @@
       "roles": [
         "flipper.lower.left.button"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar dedicated-switch input",
         "drive_connection": "CN6-P2",
@@ -3467,7 +4506,17 @@
         ],
         "status": "validated"
       },
-      "pulse": false
+      "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3496,7 +4545,17 @@
         ],
         "status": "validated"
       },
-      "pulse": false
+      "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3525,7 +4584,17 @@
         ],
         "status": "validated"
       },
-      "pulse": false
+      "pulse": false,
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
     },
     {
       "aliases": [
@@ -3563,6 +4632,16 @@
       "roles": [
         "flipper.upper.right.button"
       ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar dedicated-switch input",
         "drive_connection": "CN6-P7",
@@ -3601,6 +4680,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3633,6 +4722,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3665,6 +4764,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3697,6 +4806,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3729,6 +4848,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3761,6 +4890,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3793,6 +4932,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     },
     {
@@ -3825,6 +4974,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
       }
     }
   ],
@@ -4326,6 +5485,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q1-trough-up-kicker.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.87395,
+            "y": 0.86085
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar I/O Power Driver board",
         "control_connection": "J8-P1",
@@ -4365,6 +5542,24 @@
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q2-auto-launch.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.949538,
+            "y": 0.977563
+          }
         ],
         "status": "validated"
       },
@@ -4410,6 +5605,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q3-vari-target-vuk.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.710784,
+            "y": 0.238377
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar I/O Power Driver board",
         "control_connection": "J8-P4",
@@ -4449,6 +5662,24 @@
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q4-left-ramp-diverter.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.008792,
+            "y": 0.089845
+          }
         ],
         "status": "validated"
       },
@@ -4494,6 +5725,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q5-right-ramp-diverter.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.921954,
+            "y": 0.55297
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar I/O Power Driver board",
         "control_connection": "J8-P6",
@@ -4533,6 +5782,24 @@
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q6-lower-left-pop-bumper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.080275,
+            "y": 0.412991
+          }
         ],
         "status": "validated"
       },
@@ -4578,6 +5845,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q7-lower-right-pop-bumper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.146563,
+            "y": 0.495044
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar I/O Power Driver board",
         "control_connection": "J8-P8",
@@ -4617,6 +5902,24 @@
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q8-lower-bottom-pop-bumper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.27211,
+            "y": 0.406435
+          }
         ],
         "status": "validated"
       },
@@ -4662,6 +5965,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q9-upper-left-pop-bumper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.655061,
+            "y": 0.146793
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar I/O Power Driver board",
         "control_connection": "J9-P1",
@@ -4701,6 +6022,24 @@
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q10-upper-right-pop-bumper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.809825,
+            "y": 0.210591
+          }
         ],
         "status": "validated"
       },
@@ -4746,6 +6085,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q11-upper-bottom-pop-bumper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.844994,
+            "y": 0.120569
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar I/O Power Driver board",
         "control_connection": "J9-P4",
@@ -4785,6 +6142,24 @@
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q12-scoop-vuk.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.333661,
+            "y": 0.493734
+          }
         ],
         "status": "validated"
       },
@@ -4830,6 +6205,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q13-lock-kicker.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.878983,
+            "y": 0.750087
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar I/O Power Driver board",
         "control_connection": "J9-P6",
@@ -4872,6 +6265,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q14-upper-right-flipper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.884987,
+            "y": 0.40262
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar I/O Power Driver board",
         "control_connection": "J9-P7",
@@ -4907,6 +6318,16 @@
           "runtime.ripleys.boot-start"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -4932,6 +6353,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -4962,6 +6393,24 @@
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q17-left-slingshot.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.200825,
+            "y": 0.719714
+          }
         ],
         "status": "validated"
       },
@@ -5007,6 +6456,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q18-right-slingshot.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.665007,
+            "y": 0.719714
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar I/O Power Driver board",
         "control_connection": "J7-P3",
@@ -5046,6 +6513,24 @@
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q19-idol-magnet.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.107415,
+            "y": 0.581115
+          }
         ],
         "status": "validated"
       },
@@ -5091,6 +6576,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q20-shrunken-head-magnet.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.371736,
+            "y": 0.156804
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar I/O Power Driver board",
         "control_connection": "J7-P6",
@@ -5123,6 +6626,7 @@
       "label": "Vari-target reset",
       "physical": {
         "location": "Vari-target reset",
+        "notes": "The exact table exposes the visible vari-target assembly and Q21 callback semantics, but no named reset-coil actuator center. The visible target point is not promoted as a coil location.",
         "part_number": "090-5031-00-ND"
       },
       "provenance": {
@@ -5165,13 +6669,31 @@
       "label": "Idol opto LED",
       "physical": {
         "location": "Idol opto LED",
-        "notes": "Switched-ground emitter for the Idol Eye opto path; this is not a decorative playfield lamp."
+        "notes": "Switched-ground emitter for the Idol Eye opto path; this is not a decorative playfield lamp. Exact Light.f22 is the switched-ground opto emitter position."
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q22-idol-opto-led.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.108212,
+            "y": 0.58503
+          }
         ],
         "status": "validated"
       },
@@ -5217,6 +6739,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q23-top-post.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.853639,
+            "y": 0.023479
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "Whitestar I/O Power Driver board",
         "control_connection": "J7-P9",
@@ -5249,7 +6789,7 @@
       "label": "Optional 5 V output (unassigned)",
       "physical": {
         "location": "Optional 5 V output (unassigned)",
-        "notes": "The factory table marks this as an optional 5 V output with no assigned stock device. The exact proven VPX script deliberately comments out its SolKnocker callback while retaining a dormant handler; preserve the controller address, but do not construct a stock knocker."
+        "notes": "The official manual identifies Q24 as optional unassigned 5 V. The exact archived table's Q24 routine is sound-only; the retained VPW v1.3 script deliberately comments out its callback. Neither establishes a stock physical knocker."
       },
       "provenance": {
         "source_refs": [
@@ -5259,6 +6799,17 @@
           "runtime.ripleys.gameplay"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004",
+            "vpx-table.ripleys-jpsalas-1.0.3-uk"
+          ],
+          "status": "validated"
+        },
+        "reason": "no_physical_device",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "Whitestar I/O Power Driver board",
@@ -5292,7 +6843,7 @@
       "label": "Lower pops / lower-left flashers",
       "physical": {
         "location": "Lower pops / lower-left flashers",
-        "notes": "Two #89 flashers share Q25: the lower-pop and lower-left positions printed as X2 in the manual.",
+        "notes": "Two #89 flashers share Q25: the lower-pop and lower-left positions printed as X2 in the manual. The selected exact callback object has no meaningful in-playfield point under its retained extraction property (Flasher.f25b:pos_x/pos_y); its placement is intentionally withheld. Each retained position is a direct named Light object used by the exact table's callback; graphical Flasher/Flashm/flare objects are render helpers and are not counted as physical sockets without physical/manual corroboration.",
         "part_number": "165-5000-89",
         "quantity": 2
       },
@@ -5301,6 +6852,24 @@
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q25-lower-pops-lower-left-flashers.emitter.a",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.193871,
+            "y": 0.443975
+          }
         ],
         "status": "validated"
       },
@@ -5336,6 +6905,7 @@
       "label": "Left spinner flasher",
       "physical": {
         "location": "Left spinner flasher",
+        "notes": "The selected exact callback object has no meaningful in-playfield point under its retained extraction property (Flasher.f26:pos_x/pos_y); its placement is intentionally withheld. Each retained position is a direct named Light object used by the exact table's callback; graphical Flasher/Flashm/flare objects are render helpers and are not counted as physical sockets without physical/manual corroboration.",
         "part_number": "165-5000-89"
       },
       "provenance": {
@@ -5378,6 +6948,7 @@
       "label": "Upper-left flasher",
       "physical": {
         "location": "Upper-left flasher",
+        "notes": "The selected exact callback object has no meaningful in-playfield point under its retained extraction property (Flasher.f27:pos_x/pos_y); its placement is intentionally withheld. Each retained position is a direct named Light object used by the exact table's callback; graphical Flasher/Flashm/flare objects are render helpers and are not counted as physical sockets without physical/manual corroboration.",
         "part_number": "165-5004-00"
       },
       "provenance": {
@@ -5420,6 +6991,7 @@
       "label": "Shrunken Head flasher",
       "physical": {
         "location": "Shrunken Head flasher",
+        "notes": "The selected exact callback object has no meaningful in-playfield point under its retained extraction property (Flasher.f28:pos_x/pos_y); its placement is intentionally withheld. Each retained position is a direct named Light object used by the exact table's callback; graphical Flasher/Flashm/flare objects are render helpers and are not counted as physical sockets without physical/manual corroboration.",
         "part_number": "165-5004-02"
       },
       "provenance": {
@@ -5427,6 +6999,24 @@
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q28-shrunken-head-flasher.emitter.a",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.371927,
+            "y": 0.160119
+          }
         ],
         "status": "validated"
       },
@@ -5462,6 +7052,7 @@
       "label": "Vari-target flasher",
       "physical": {
         "location": "Vari-target flasher",
+        "notes": "The selected exact callback object has no meaningful in-playfield point under its retained extraction property (Flasher.f29:pos_x/pos_y); its placement is intentionally withheld. Each retained position is a direct named Light object used by the exact table's callback; graphical Flasher/Flashm/flare objects are render helpers and are not counted as physical sockets without physical/manual corroboration.",
         "part_number": "165-5000-89"
       },
       "provenance": {
@@ -5504,7 +7095,7 @@
       "label": "Upper pops / right-ramp flashers",
       "physical": {
         "location": "Upper pops / right-ramp flashers",
-        "notes": "Two flashers share Q30 as printed by the manual's X2 suffix: one #89 under the upper playfield and one #906 on the right ramp.",
+        "notes": "Two flashers share Q30 as printed by the manual's X2 suffix: one #89 under the upper playfield and one #906 on the right ramp. The selected exact callback object has no meaningful in-playfield point under its retained extraction property (Flasher.f30b:pos_x/pos_y); its placement is intentionally withheld. Each retained position is a direct named Light object used by the exact table's callback; graphical Flasher/Flashm/flare objects are render helpers and are not counted as physical sockets without physical/manual corroboration.",
         "quantity": 2
       },
       "provenance": {
@@ -5512,6 +7103,24 @@
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q30-upper-pops-right-ramp-flashers.emitter.a",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.765534,
+            "y": 0.164089
+          }
         ],
         "status": "validated"
       },
@@ -5547,6 +7156,7 @@
       "label": "Right spinner flasher",
       "physical": {
         "location": "Right spinner flasher",
+        "notes": "The selected exact callback object has no meaningful in-playfield point under its retained extraction property (Flasher.f31:pos_x/pos_y); its placement is intentionally withheld. Each retained position is a direct named Light object used by the exact table's callback; graphical Flasher/Flashm/flare objects are render helpers and are not counted as physical sockets without physical/manual corroboration.",
         "part_number": "165-5000-89"
       },
       "provenance": {
@@ -5589,6 +7199,7 @@
       "label": "Right-ramp lower flasher",
       "physical": {
         "location": "Right-ramp lower flasher",
+        "notes": "The selected exact callback object has no meaningful in-playfield point under its retained extraction property (Flasher.f32:pos_x/pos_y); its placement is intentionally withheld. Each retained position is a direct named Light object used by the exact table's callback; graphical Flasher/Flashm/flare objects are render helpers and are not counted as physical sockets without physical/manual corroboration.",
         "part_number": "165-5004-00"
       },
       "provenance": {
@@ -5631,7 +7242,7 @@
       "label": "Optional UK left up/down post",
       "physical": {
         "location": "Optional UK left up/down post",
-        "notes": "Installed only for the manual's UK/special application; absence is a valid standard-machine configuration.",
+        "notes": "Optional UK 520-5068 three-post output. The selected exact table is a UK model, but it exposes no named Q33-Q35 actuator geometry; standard-machine projection is forbidden, so spatial placement remains unresolved.",
         "part_number": "090-5044-00T"
       },
       "provenance": {
@@ -5673,7 +7284,7 @@
       "label": "Optional UK center up/down post",
       "physical": {
         "location": "Optional UK center up/down post",
-        "notes": "Installed only for the manual's UK/special application; absence is a valid standard-machine configuration.",
+        "notes": "Optional UK 520-5068 three-post output. The selected exact table is a UK model, but it exposes no named Q33-Q35 actuator geometry; standard-machine projection is forbidden, so spatial placement remains unresolved.",
         "part_number": "090-5030-00T"
       },
       "provenance": {
@@ -5715,7 +7326,7 @@
       "label": "Optional UK right up/down post",
       "physical": {
         "location": "Optional UK right up/down post",
-        "notes": "Installed only for the manual's UK/special application; absence is a valid standard-machine configuration.",
+        "notes": "Optional UK 520-5068 three-post output. The selected exact table is a UK model, but it exposes no named Q33-Q35 actuator geometry; standard-machine projection is forbidden, so spatial placement remains unresolved.",
         "part_number": "090-5044-00T"
       },
       "provenance": {
@@ -5759,6 +7370,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -5784,6 +7405,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -5809,6 +7440,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -5834,6 +7475,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -5859,6 +7510,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -5884,6 +7545,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -5909,6 +7580,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -5934,6 +7615,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -5959,6 +7650,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -5985,6 +7686,16 @@
           "vpx.ripleys-vpwmod-1.3"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -6016,6 +7727,24 @@
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q16-right-flipper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.592778,
+            "y": 0.835934
+          }
         ],
         "status": "validated"
       },
@@ -6054,6 +7783,16 @@
           "vpx.ripleys-vpwmod-1.3"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -6085,6 +7824,24 @@
           "manual.stern-ripleys.2004",
           "vpx.ripleys-vpwmod-1.3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.q15-left-flipper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.27365,
+            "y": 0.835934
+          }
         ],
         "status": "validated"
       },
@@ -6122,6 +7879,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -6147,6 +7914,16 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
       }
     },
     {
@@ -6171,13 +7948,32 @@
       "physical": {
         "location": "Super Jackpot 2 Million",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.1-super-jackpot-2-million.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.308241,
+            "y": 0.772291
+          }
         ],
         "status": "validated"
       },
@@ -6211,13 +8007,32 @@
       "physical": {
         "location": "Super Jackpot 3 Million",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.2-super-jackpot-3-million.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.370949,
+            "y": 0.784246
+          }
         ],
         "status": "validated"
       },
@@ -6251,13 +8066,32 @@
       "physical": {
         "location": "Super Jackpot 1 Million",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.3-super-jackpot-1-million.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.430211,
+            "y": 0.761482
+          }
         ],
         "status": "validated"
       },
@@ -6291,13 +8125,32 @@
       "physical": {
         "location": "Super Jackpot 4 Million",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.4-super-jackpot-4-million.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.430707,
+            "y": 0.795869
+          }
         ],
         "status": "validated"
       },
@@ -6331,13 +8184,32 @@
       "physical": {
         "location": "Shoot Again",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.5-shoot-again.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.432473,
+            "y": 0.839846
+          }
         ],
         "status": "validated"
       },
@@ -6371,13 +8243,32 @@
       "physical": {
         "location": "Super Jackpot 5 Million",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.6-super-jackpot-5-million.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.49096,
+            "y": 0.784291
+          }
         ],
         "status": "validated"
       },
@@ -6411,13 +8302,32 @@
       "physical": {
         "location": "Super Jackpot 6 Million",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.7-super-jackpot-6-million.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.555512,
+            "y": 0.773333
+          }
         ],
         "status": "validated"
       },
@@ -6451,13 +8361,32 @@
       "physical": {
         "location": "Right Special",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.8-right-special.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.816751,
+            "y": 0.717216
+          }
         ],
         "status": "validated"
       },
@@ -6491,13 +8420,32 @@
       "physical": {
         "location": "Left Special",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.9-left-special.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.047526,
+            "y": 0.713089
+          }
         ],
         "status": "validated"
       },
@@ -6531,13 +8479,32 @@
       "physical": {
         "location": "Idol Counter 1",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.10-idol-counter-1.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.195142,
+            "y": 0.656088
+          }
         ],
         "status": "validated"
       },
@@ -6571,13 +8538,32 @@
       "physical": {
         "location": "Idol Counter 2",
         "notes": "Factory #44 clear bulb and socket from the official matrix.",
-        "part_number": "165-5000-44"
+        "part_number": "165-5000-44",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.11-idol-counter-2.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.219791,
+            "y": 0.636634
+          }
         ],
         "status": "validated"
       },
@@ -6611,13 +8597,32 @@
       "physical": {
         "location": "Idol Counter 3",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.12-idol-counter-3.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.248302,
+            "y": 0.619352
+          }
         ],
         "status": "validated"
       },
@@ -6651,13 +8656,32 @@
       "physical": {
         "location": "Idol Counter 4",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.13-idol-counter-4.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.246598,
+            "y": 0.657598
+          }
         ],
         "status": "validated"
       },
@@ -6691,13 +8715,32 @@
       "physical": {
         "location": "Idol Counter 5",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.14-idol-counter-5.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.269885,
+            "y": 0.638679
+          }
         ],
         "status": "validated"
       },
@@ -6731,13 +8774,32 @@
       "physical": {
         "location": "Tombstone 1",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.15-tombstone-1.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.223459,
+            "y": 0.563373
+          }
         ],
         "status": "validated"
       },
@@ -6771,7 +8833,8 @@
       "physical": {
         "location": "Scoop Arrow",
         "notes": "Factory #44 clear bulb and socket from the official matrix.",
-        "part_number": "165-5000-44"
+        "part_number": "165-5000-44",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -6811,13 +8874,32 @@
       "physical": {
         "location": "RIPLEY'S R",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.17-ripley-s-r.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.398636,
+            "y": 0.581583
+          }
         ],
         "status": "validated"
       },
@@ -6851,13 +8933,32 @@
       "physical": {
         "location": "RIPLEY'S I",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.18-ripley-s-i.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.448516,
+            "y": 0.582856
+          }
         ],
         "status": "validated"
       },
@@ -6891,13 +8992,32 @@
       "physical": {
         "location": "RIPLEY'S P",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.19-ripley-s-p.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.497788,
+            "y": 0.585856
+          }
         ],
         "status": "validated"
       },
@@ -6931,13 +9051,32 @@
       "physical": {
         "location": "RIPLEY'S L",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.20-ripley-s-l.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.545043,
+            "y": 0.590128
+          }
         ],
         "status": "validated"
       },
@@ -6971,13 +9110,32 @@
       "physical": {
         "location": "RIPLEY'S E",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.21-ripley-s-e.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.595528,
+            "y": 0.596673
+          }
         ],
         "status": "validated"
       },
@@ -7011,13 +9169,32 @@
       "physical": {
         "location": "RIPLEY'S Y",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.22-ripley-s-y.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.639978,
+            "y": 0.605035
+          }
         ],
         "status": "validated"
       },
@@ -7051,13 +9228,32 @@
       "physical": {
         "location": "RIPLEY'S S",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.23-ripley-s-s.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.682162,
+            "y": 0.615458
+          }
         ],
         "status": "validated"
       },
@@ -7091,13 +9287,32 @@
       "physical": {
         "location": "Grid A1 (upper left)",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.24-grid-a1-upper-left.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.42045,
+            "y": 0.63677
+          }
         ],
         "status": "validated"
       },
@@ -7131,13 +9346,32 @@
       "physical": {
         "location": "Grid B1",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.25-grid-b1.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.482031,
+            "y": 0.63676
+          }
         ],
         "status": "validated"
       },
@@ -7171,13 +9405,32 @@
       "physical": {
         "location": "Grid C1",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.26-grid-c1.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.544555,
+            "y": 0.636843
+          }
         ],
         "status": "validated"
       },
@@ -7211,13 +9464,32 @@
       "physical": {
         "location": "Grid A2",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.27-grid-a2.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.420601,
+            "y": 0.665023
+          }
         ],
         "status": "validated"
       },
@@ -7251,13 +9523,32 @@
       "physical": {
         "location": "Grid B2",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.28-grid-b2.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.482571,
+            "y": 0.664764
+          }
         ],
         "status": "validated"
       },
@@ -7291,13 +9582,32 @@
       "physical": {
         "location": "Grid C2",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.29-grid-c2.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.545648,
+            "y": 0.665179
+          }
         ],
         "status": "validated"
       },
@@ -7331,13 +9641,32 @@
       "physical": {
         "location": "Grid A3",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.30-grid-a3.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.420833,
+            "y": 0.691867
+          }
         ],
         "status": "validated"
       },
@@ -7371,13 +9700,32 @@
       "physical": {
         "location": "Grid B3",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.31-grid-b3.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.482783,
+            "y": 0.691609
+          }
         ],
         "status": "validated"
       },
@@ -7411,13 +9759,32 @@
       "physical": {
         "location": "Grid C3",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.32-grid-c3.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.545675,
+            "y": 0.691775
+          }
         ],
         "status": "validated"
       },
@@ -7450,8 +9817,9 @@
       "label": "Lower left pop bumper",
       "physical": {
         "location": "Lower left pop bumper",
-        "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "notes": "The exact retained table either omits this named lamp object or collapses the back-panel lamps into a shared render anchor; no speculative playfield placement is asserted.",
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -7490,8 +9858,9 @@
       "label": "Lower right pop bumper",
       "physical": {
         "location": "Lower right pop bumper",
-        "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "notes": "The exact retained table either omits this named lamp object or collapses the back-panel lamps into a shared render anchor; no speculative playfield placement is asserted.",
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -7530,8 +9899,9 @@
       "label": "Lower bottom pop bumper",
       "physical": {
         "location": "Lower bottom pop bumper",
-        "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "notes": "The exact retained table either omits this named lamp object or collapses the back-panel lamps into a shared render anchor; no speculative playfield placement is asserted.",
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -7571,13 +9941,32 @@
       "physical": {
         "location": "Skill Shot",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.36-skill-shot.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.467099,
+            "y": 0.435986
+          }
         ],
         "status": "validated"
       },
@@ -7611,13 +10000,32 @@
       "physical": {
         "location": "Tombstone 2",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.37-tombstone-2.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.433848,
+            "y": 0.415134
+          }
         ],
         "status": "validated"
       },
@@ -7651,13 +10059,32 @@
       "physical": {
         "location": "Tombstone 3",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.38-tombstone-3.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.429704,
+            "y": 0.386646
+          }
         ],
         "status": "validated"
       },
@@ -7691,13 +10118,32 @@
       "physical": {
         "location": "Million Plus",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.39-million-plus.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.393093,
+            "y": 0.343294
+          }
         ],
         "status": "validated"
       },
@@ -7731,13 +10177,32 @@
       "physical": {
         "location": "Loop Jackpot",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.40-loop-jackpot.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.485849,
+            "y": 0.36651
+          }
         ],
         "status": "validated"
       },
@@ -7771,13 +10236,32 @@
       "physical": {
         "location": "Vari-target Special",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.41-vari-target-special.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.488835,
+            "y": 0.537973
+          }
         ],
         "status": "validated"
       },
@@ -7811,13 +10295,32 @@
       "physical": {
         "location": "Vari-target Extra Ball",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.42-vari-target-extra-ball.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.499127,
+            "y": 0.515821
+          }
         ],
         "status": "validated"
       },
@@ -7851,13 +10354,32 @@
       "physical": {
         "location": "Vari-target Mystery",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.43-vari-target-mystery.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.510137,
+            "y": 0.493305
+          }
         ],
         "status": "validated"
       },
@@ -7891,13 +10413,32 @@
       "physical": {
         "location": "Vari-target South America",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.44-vari-target-south-america.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.521385,
+            "y": 0.47219
+          }
         ],
         "status": "validated"
       },
@@ -7931,13 +10472,32 @@
       "physical": {
         "location": "Vari-target North America",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.45-vari-target-north-america.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.531438,
+            "y": 0.451075
+          }
         ],
         "status": "validated"
       },
@@ -7971,13 +10531,32 @@
       "physical": {
         "location": "Vari-target Europe",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.46-vari-target-europe.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.54149,
+            "y": 0.428882
+          }
         ],
         "status": "validated"
       },
@@ -8011,13 +10590,32 @@
       "physical": {
         "location": "Vari-target Australia",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.47-vari-target-australia.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.553936,
+            "y": 0.40712
+          }
         ],
         "status": "validated"
       },
@@ -8051,13 +10649,32 @@
       "physical": {
         "location": "Vari-target Asia",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.48-vari-target-asia.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.564227,
+            "y": 0.386652
+          }
         ],
         "status": "validated"
       },
@@ -8091,13 +10708,32 @@
       "physical": {
         "location": "Tombstone 5",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.49-tombstone-5.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.755559,
+            "y": 0.561003
+          }
         ],
         "status": "validated"
       },
@@ -8131,13 +10767,32 @@
       "physical": {
         "location": "Penguin",
         "notes": "Factory #44 clear bulb and socket from the official matrix.",
-        "part_number": "165-5000-44"
+        "part_number": "165-5000-44",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.50-penguin.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.721216,
+            "y": 0.4693
+          }
         ],
         "status": "validated"
       },
@@ -8171,13 +10826,32 @@
       "physical": {
         "location": "Advance Tombstone",
         "notes": "Factory #44 clear bulb and socket from the official matrix.",
-        "part_number": "165-5000-44"
+        "part_number": "165-5000-44",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.51-advance-tombstone.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.776862,
+            "y": 0.410584
+          }
         ],
         "status": "validated"
       },
@@ -8211,13 +10885,32 @@
       "physical": {
         "location": "Right Spinner",
         "notes": "Factory #44 clear bulb and socket from the official matrix.",
-        "part_number": "165-5000-44"
+        "part_number": "165-5000-44",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.52-right-spinner.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.823777,
+            "y": 0.353613
+          }
         ],
         "status": "validated"
       },
@@ -8251,13 +10944,32 @@
       "physical": {
         "location": "Right Jackpot",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.53-right-jackpot.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.622108,
+            "y": 0.450917
+          }
         ],
         "status": "validated"
       },
@@ -8291,13 +11003,32 @@
       "physical": {
         "location": "Lock",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.54-lock.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.652207,
+            "y": 0.405298
+          }
         ],
         "status": "validated"
       },
@@ -8331,13 +11062,32 @@
       "physical": {
         "location": "Ripoff",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.55-ripoff.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.679214,
+            "y": 0.365733
+          }
         ],
         "status": "validated"
       },
@@ -8371,13 +11121,32 @@
       "physical": {
         "location": "Vari-target Antarctica",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.56-vari-target-antarctica.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.574758,
+            "y": 0.364351
+          }
         ],
         "status": "validated"
       },
@@ -8411,13 +11180,32 @@
       "physical": {
         "location": "Center Jackpot",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.57-center-jackpot.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.485871,
+            "y": 0.326192
+          }
         ],
         "status": "validated"
       },
@@ -8451,13 +11239,32 @@
       "physical": {
         "location": "Lite Head",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.58-lite-head.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.502129,
+            "y": 0.277637
+          }
         ],
         "status": "validated"
       },
@@ -8491,13 +11298,32 @@
       "physical": {
         "location": "Gate Open",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.59-gate-open.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.516031,
+            "y": 0.238278
+          }
         ],
         "status": "validated"
       },
@@ -8530,8 +11356,9 @@
       "label": "Upper left pop bumper",
       "physical": {
         "location": "Upper left pop bumper",
-        "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "notes": "The exact retained table either omits this named lamp object or collapses the back-panel lamps into a shared render anchor; no speculative playfield placement is asserted.",
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -8570,8 +11397,9 @@
       "label": "Upper right pop bumper",
       "physical": {
         "location": "Upper right pop bumper",
-        "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "notes": "The exact retained table either omits this named lamp object or collapses the back-panel lamps into a shared render anchor; no speculative playfield placement is asserted.",
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -8610,8 +11438,9 @@
       "label": "Upper bottom pop bumper",
       "physical": {
         "location": "Upper bottom pop bumper",
-        "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "notes": "The exact retained table either omits this named lamp object or collapses the back-panel lamps into a shared render anchor; no speculative playfield placement is asserted.",
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -8651,13 +11480,32 @@
       "physical": {
         "location": "Tombstone 4",
         "notes": "Factory #44 clear bulb and socket from the official matrix.",
-        "part_number": "165-5000-44"
+        "part_number": "165-5000-44",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.63-tombstone-4.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.455936,
+            "y": 0.220661
+          }
         ],
         "status": "validated"
       },
@@ -8691,13 +11539,32 @@
       "physical": {
         "location": "Vari-target Africa",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.64-vari-target-africa.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.586725,
+            "y": 0.343128
+          }
         ],
         "status": "validated"
       },
@@ -8731,13 +11598,32 @@
       "physical": {
         "location": "Left Spinner",
         "notes": "Factory #44 clear bulb and socket from the official matrix.",
-        "part_number": "165-5000-44"
+        "part_number": "165-5000-44",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.65-left-spinner.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.294653,
+            "y": 0.321484
+          }
         ],
         "status": "validated"
       },
@@ -8771,13 +11657,32 @@
       "physical": {
         "location": "Multiball",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.66-multiball.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.401322,
+            "y": 0.31165
+          }
         ],
         "status": "validated"
       },
@@ -8811,13 +11716,32 @@
       "physical": {
         "location": "Light Locks",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.67-light-locks.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.394806,
+            "y": 0.289108
+          }
         ],
         "status": "validated"
       },
@@ -8851,13 +11775,32 @@
       "physical": {
         "location": "Collect Bigfoot Bonus",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.68-collect-bigfoot-bonus.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.389221,
+            "y": 0.266565
+          }
         ],
         "status": "validated"
       },
@@ -8891,13 +11834,32 @@
       "physical": {
         "location": "Super Jackpot",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.69-super-jackpot.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.290223,
+            "y": 0.243913
+          }
         ],
         "status": "validated"
       },
@@ -8931,13 +11893,32 @@
       "physical": {
         "location": "Odditorium",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.70-odditorium.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.383822,
+            "y": 0.244526
+          }
         ],
         "status": "validated"
       },
@@ -8971,13 +11952,32 @@
       "physical": {
         "location": "The Head Knows",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.71-the-head-knows.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.37954,
+            "y": 0.223073
+          }
         ],
         "status": "validated"
       },
@@ -9011,13 +12011,32 @@
       "physical": {
         "location": "Bozo",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.72-bozo.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.457124,
+            "y": 0.459865
+          }
         ],
         "status": "validated"
       },
@@ -9051,13 +12070,32 @@
       "physical": {
         "location": "Bonus X inlane left",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.73-bonus-x-inlane-left.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.616722,
+            "y": 0.024169
+          }
         ],
         "status": "validated"
       },
@@ -9091,13 +12129,32 @@
       "physical": {
         "location": "Bonus X inlane center",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.74-bonus-x-inlane-center.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.706272,
+            "y": 0.021084
+          }
         ],
         "status": "validated"
       },
@@ -9131,13 +12188,32 @@
       "physical": {
         "location": "Bonus X inlane right",
         "notes": "Factory #555 clear bulb and socket from the official matrix.",
-        "part_number": "165-5002-00"
+        "part_number": "165-5002-00",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.stern-ripleys.2004",
           "pinmame.core.4ec52ff0ac13",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.75-bonus-x-inlane-right.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.78651,
+            "y": 0.017136
+          }
         ],
         "status": "validated"
       },
@@ -9170,8 +12246,9 @@
       "label": "Back Panel A",
       "physical": {
         "location": "Back Panel A",
-        "notes": "Factory #44 clear bulb and socket from the official matrix.",
-        "part_number": "165-5000-44"
+        "notes": "The exact retained table either omits this named lamp object or collapses the back-panel lamps into a shared render anchor; no speculative playfield placement is asserted.",
+        "part_number": "165-5000-44",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -9210,8 +12287,9 @@
       "label": "Back Panel B",
       "physical": {
         "location": "Back Panel B",
-        "notes": "Factory #44 clear bulb and socket from the official matrix.",
-        "part_number": "165-5000-44"
+        "notes": "The exact retained table either omits this named lamp object or collapses the back-panel lamps into a shared render anchor; no speculative playfield placement is asserted.",
+        "part_number": "165-5000-44",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -9250,8 +12328,9 @@
       "label": "Back Panel C",
       "physical": {
         "location": "Back Panel C",
-        "notes": "Factory #44 clear bulb and socket from the official matrix.",
-        "part_number": "165-5000-44"
+        "notes": "The exact retained table either omits this named lamp object or collapses the back-panel lamps into a shared render anchor; no speculative playfield placement is asserted.",
+        "part_number": "165-5000-44",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -9301,6 +12380,19 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.tournament"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P3",
@@ -9341,6 +12433,19 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.start"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.stern-ripleys.2004"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      },
       "wiring": {
         "board": "Whitestar I/O Power Driver board lamp matrix",
         "drive_connection": "J13-P1",
@@ -9370,7 +12475,7 @@
       "label": "General illumination relay",
       "physical": {
         "location": "Backbox, playfield, and coin-door general illumination",
-        "notes": "One PinMAME relay channel controls four separately fused physical strings: F24 back panel; F25 upper/mid-right playfield; F26 upper-left/back panel/coin door; and F27 upper-right/mid-left/lower playfield. Recreate all four circuits but bind their common control to GI 0.",
+        "notes": "The exact table's 39 named GI Light objects are retained as rendered emitter positions. They map to the manual's four separately fused physical strings; duplicate centers are preserved as separate named emitters, not collapsed or reinterpreted as extra controller channels.",
         "quantity": 4
       },
       "provenance": {
@@ -9379,6 +12484,518 @@
           "pinmame.core.4ec52ff0ac13",
           "runtime.ripleys.boot",
           "vpx.ripleys-vpwmod-1.3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "gi.master.emitter.gi.01",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.132212,
+            "y": 0.791272
+          },
+          {
+            "id": "gi.master.emitter.gi.02",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.734023,
+            "y": 0.791641
+          },
+          {
+            "id": "gi.master.emitter.gi.03",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.306279,
+            "y": 0.372217
+          },
+          {
+            "id": "gi.master.emitter.gi.04",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.771098,
+            "y": 0.290176
+          },
+          {
+            "id": "gi.master.emitter.gi.05",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.689879,
+            "y": 0.804958
+          },
+          {
+            "id": "gi.master.emitter.gi.06",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.175557,
+            "y": 0.804958
+          },
+          {
+            "id": "gi.master.emitter.gi.07",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.837495,
+            "y": 0.532589
+          },
+          {
+            "id": "gi.master.emitter.gi.08",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.880284,
+            "y": 0.559819
+          },
+          {
+            "id": "gi.master.emitter.gi.09",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.20201,
+            "y": 0.327355
+          },
+          {
+            "id": "gi.master.emitter.gi.10",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.306933,
+            "y": 0.371189
+          },
+          {
+            "id": "gi.master.emitter.gi.11",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.830117,
+            "y": 0.245015
+          },
+          {
+            "id": "gi.master.emitter.gi.12",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.282712,
+            "y": 0.181921
+          },
+          {
+            "id": "gi.master.emitter.gi.13",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.515839,
+            "y": 0.115507
+          },
+          {
+            "id": "gi.master.emitter.gi.14",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.192707,
+            "y": 0.749099
+          },
+          {
+            "id": "gi.master.emitter.gi.15",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.054625,
+            "y": 0.0524
+          },
+          {
+            "id": "gi.master.emitter.gi.16",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.152007,
+            "y": 0.019857
+          },
+          {
+            "id": "gi.master.emitter.gi.17",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.938442,
+            "y": 0.013215
+          },
+          {
+            "id": "gi.master.emitter.gi.18",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.513502,
+            "y": 0.053728
+          },
+          {
+            "id": "gi.master.emitter.gi.19",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.667444,
+            "y": 0.065018
+          },
+          {
+            "id": "gi.master.emitter.gi.20",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.577931,
+            "y": 0.061476
+          },
+          {
+            "id": "gi.master.emitter.gi.21",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.667444,
+            "y": 0.065018
+          },
+          {
+            "id": "gi.master.emitter.gi.22",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.577931,
+            "y": 0.061476
+          },
+          {
+            "id": "gi.master.emitter.gi.23",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.75499,
+            "y": 0.062362
+          },
+          {
+            "id": "gi.master.emitter.gi.24",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.75499,
+            "y": 0.062362
+          },
+          {
+            "id": "gi.master.emitter.gi.25",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.844503,
+            "y": 0.061033
+          },
+          {
+            "id": "gi.master.emitter.gi.26",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.844503,
+            "y": 0.061033
+          },
+          {
+            "id": "gi.master.emitter.gi.27",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.961927,
+            "y": 0.27158
+          },
+          {
+            "id": "gi.master.emitter.gi.28",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.027574,
+            "y": 0.324699
+          },
+          {
+            "id": "gi.master.emitter.gi.29",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.1916,
+            "y": 0.753085
+          },
+          {
+            "id": "gi.master.emitter.gi.30",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.670232,
+            "y": 0.754173
+          },
+          {
+            "id": "gi.master.emitter.gi.31",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.176108,
+            "y": 0.807877
+          },
+          {
+            "id": "gi.master.emitter.gi.32",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.134057,
+            "y": 0.79642
+          },
+          {
+            "id": "gi.master.emitter.gi.33",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.737162,
+            "y": 0.797417
+          },
+          {
+            "id": "gi.master.emitter.gi.34",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.690042,
+            "y": 0.806248
+          },
+          {
+            "id": "gi.master.emitter.gi.35",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.673024,
+            "y": 0.749799
+          },
+          {
+            "id": "gi.master.emitter.gi.36",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.837142,
+            "y": 0.536498
+          },
+          {
+            "id": "gi.master.emitter.gi.37",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.201355,
+            "y": 0.327646
+          },
+          {
+            "id": "gi.master.emitter.gi.38",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.037412,
+            "y": 0.340338
+          },
+          {
+            "id": "gi.master.emitter.gi.39",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.ripleys-jpsalas-1.0.3-uk"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.437765,
+            "y": 0.694904
+          }
         ],
         "status": "validated"
       },
@@ -9412,6 +13029,18 @@
       "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
       "sha256": "3ba739ba81a3f1cad3b1a2b3a7cf7ea8db76eaf1baf4998c920f5a3d361c5ef7",
       "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Ripley%27s%20Believe%20It%20or%20Not%21%20%28Stern%202004%29%20VPWmod%20v1.3.vbs"
+    },
+    {
+      "attribution": "JPSalas table authors and local user-authorized source",
+      "id": "vpx-table.ripleys-jpsalas-1.0.3-uk",
+      "kind": "vpx_table",
+      "known_working": true,
+      "license": "NOASSERTION",
+      "locator": "Exact physical Ripley's Believe It or Not! (Stern 2004) table selected from the second requested local archive search location and retained byte-for-byte under external:pinmame-vpx-sources/stern/ripley-s-believe-it-or-not-2004. vpxtool git:v0.33.3 extraction is retained at external:pinmame-vpx-sources/stern/ripley-s-believe-it-or-not-2004/extracted-vpxtool. The source declares a UK model and All-Skill extra-post configuration; its 952 x 2115 playfield is therefore exact geometry evidence for the named common playfield objects and an edition-qualified reference for UK-only hardware, never a standard-machine projection. Embedded script SHA-256 is 717696937a92b076620c2564982a7b514786e72fdab01d761b3b2a301346e014. Deterministic retained-extraction manifest SHA-256 is 79cdb19cd01d46d795b32b7638a0f75c19bf824256de89a879d9d5328ce6b61d over the 1,152-file snapshot.",
+      "original_filename": "Ripley_s Believe It or Not (Stern 2004)1.0.3.vpx",
+      "rights": "NOASSERTION",
+      "sha256": "6c66b8cc355039ae9a4d615608802a92cd087782b16429569c87123894aadc48",
+      "uri": "external:pinmame-vpx-sources/stern/ripley-s-believe-it-or-not-2004/Ripley_s Believe It or Not (Stern 2004)1.0.3.vpx"
     },
     {
       "attribution": "PinMAME contributors",

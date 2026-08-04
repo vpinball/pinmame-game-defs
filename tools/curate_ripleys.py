@@ -6,7 +6,7 @@ import json
 import re
 from pathlib import Path
 
-from pinmame_game_defs.jsonio import write_json, write_text
+from pinmame_game_defs.jsonio import load_json, write_json, write_text
 from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
 
@@ -19,6 +19,8 @@ CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
 MANUAL_SOURCE = "manual.stern-ripleys.2004"
 VPX_SOURCE = "vpx.ripleys-vpwmod-1.3"
+TABLE_SOURCE = "vpx-table.ripleys-jpsalas-1.0.3-uk"
+TABLE_EXTRACTION_MANIFEST_SHA256 = "79cdb19cd01d46d795b32b7638a0f75c19bf824256de89a879d9d5328ce6b61d"
 ROM_SOURCE = "rom.stern-ripleys.3.20"
 IPDB_SOURCE = "ipdb.stern-ripleys.4917"
 RUNTIME_BOOT_SOURCE = "runtime.ripleys.boot"
@@ -417,6 +419,7 @@ def sources() -> list[dict[str, object]]:
 	return [
 		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/Ripleys_Manual.pdf", "sha256": "94a94aef7437fa5f78cadddd66801e96224cfe6a5b8ff643c4c6b09d979fad9e", "locator": "Official 191-page operation and parts manual, with drawing sheets split by the publisher's PDF assembly order and verified visually. The front-inserted PDF page 8 is printed DR. 6 and contains the complete Q1-Q32 plus UK AUX1-AUX3 coil chart. The appended PDF page 190 is printed DR. 4 and contains the complete switch and lamp chart. PDF pages 25, 82, and 148 document the memory-protect assembly, part, and CN6-P12 input; PDF pages 120-123 (printed 103-106) document GI and flipper wiring; PDF pages 162-166 document the X3 magnet interface, three 5x7 display board, vari-target optos, and UK 3X auxiliary board.", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "Ripleys_Manual.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-03T07:31:10.006812Z"},
 		{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Ripley%27s%20Believe%20It%20or%20Not%21%20%28Stern%202004%29%20VPWmod%20v1.3.vbs", "revision": VPX_REVISION, "sha256": "3ba739ba81a3f1cad3b1a2b3a7cf7ea8db76eaf1baf4998c920f5a3d361c5ef7", "locator": "Known-working exact ripleys script. Lines 132-201 establish boot state, four trough balls, both magnets, and the shooter; 332-412 establish callbacks, including TempleDiv/LockDiverter identities, trough causality, and a deliberately commented Q24 SolKnocker hook; 1895-2126 implement the seven-stop vari-target and three threshold optos; 2160-2267 implement Shrunken Head/Idol magnets; 2512-2543 implement Vari-VUK, lock, and scoop; 2613-2644 retain a legacy 15x7 segment view of the three mini-DMDs; 3219-3234 bind the modulated GICallback2 function to the single reported GI address.", "license": "NOASSERTION", "attribution": "Table authors credited in the script; vpxtable_scripts contributors"},
+		{"id": TABLE_SOURCE, "kind": "vpx_table", "known_working": True, "uri": "external:pinmame-vpx-sources/stern/ripley-s-believe-it-or-not-2004/Ripley_s Believe It or Not (Stern 2004)1.0.3.vpx", "original_filename": "Ripley_s Believe It or Not (Stern 2004)1.0.3.vpx", "sha256": "6c66b8cc355039ae9a4d615608802a92cd087782b16429569c87123894aadc48", "locator": "Exact physical Ripley's Believe It or Not! (Stern 2004) table selected from the second requested local archive search location and retained byte-for-byte under external:pinmame-vpx-sources/stern/ripley-s-believe-it-or-not-2004. vpxtool git:v0.33.3 extraction is retained at external:pinmame-vpx-sources/stern/ripley-s-believe-it-or-not-2004/extracted-vpxtool. The source declares a UK model and All-Skill extra-post configuration; its 952 x 2115 playfield is therefore exact geometry evidence for the named common playfield objects and an edition-qualified reference for UK-only hardware, never a standard-machine projection. Embedded script SHA-256 is 717696937a92b076620c2564982a7b514786e72fdab01d761b3b2a301346e014. Deterministic retained-extraction manifest SHA-256 is 79cdb19cd01d46d795b32b7638a0f75c19bf824256de89a879d9d5328ce6b61d over the 1,152-file snapshot.", "license": "NOASSERTION", "attribution": "JPSalas table authors and local user-authorized source", "rights": "NOASSERTION"},
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/segames.c ripleys GEN_WS/dispBION declares controller indices 0-3 in main, left, center, right layout order and registers the 25-driver family; src/wpc/se.c provides sequential I/O, Q15/Q16 remap, fast-flip 15, 520-5068 outputs 33-35, GI 0, and 520-5236 three-display rasterization; src/wpc/core.c synthesizes lower-flipper canonical hold callbacks and indexes display layouts.", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 		{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames exact ripleys/rip300/rip301/rip302/rip310 language-driver records and clone graph.", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 		{"id": ROM_SOURCE, "kind": "rom_static_analysis", "uri": "external:vpinmame-roms/ripleys.zip", "revision": "3.20", "sha256": "092aab171d90eda62411496b387a90de5ca4a3273997ffb64de10c322cf366d3", "locator": "Read-only user-authorized archive. ripcpu.320 SHA-256 b04de0c19b356649422dbb2730fd28bc93b993dedab424fad6df31a32cc3d83d; display ROM ripdispa.300 is shared by the cataloged family. ROM bytes remain external and this source is used for exact runtime identity, not semantic reverse engineering.", "license": "NOASSERTION", "attribution": "Stern Pinball game code; ROM bytes remain external"},
@@ -491,6 +494,7 @@ The machine has a main native 128x32 DMD and three independent physical 5x7 mini
 
 - `manual.stern-ripleys.2004`: official 191-page manual SHA-256 `94a94aef7437fa5f78cadddd66801e96224cfe6a5b8ff643c4c6b09d979fad9e`, organized under the external manual cache with searchable text, table extraction, and rendered visual review.
 - `vpx.ripleys-vpwmod-1.3`: exact known-working script SHA-256 `3ba739ba81a3f1cad3b1a2b3a7cf7ea8db76eaf1baf4998c920f5a3d361c5ef7`.
+	- `vpx-table.ripleys-jpsalas-1.0.3-uk`: retained exact local VPX SHA-256 `6c66b8cc355039ae9a4d615608802a92cd087782b16429569c87123894aadc48`; the embedded script SHA-256 is `717696937a92b076620c2564982a7b514786e72fdab01d761b3b2a301346e014`, the retained extraction manifest SHA-256 is `79cdb19cd01d46d795b32b7638a0f75c19bf824256de89a879d9d5328ce6b61d`, and the table is explicitly UK/All-Skill.
 - `rom.stern-ripleys.3.20`: exact external archive SHA-256 `092aab171d90eda62411496b387a90de5ca4a3273997ffb64de10c322cf366d3`; ROM bytes remain external.
 - `runtime.ripleys.boot`, `runtime.ripleys.boot-start`, and `runtime.ripleys.gameplay`: separately hashed LibPinMAME traces with their evidence limits stated in JSON.
 """
@@ -519,7 +523,12 @@ def runtime_evidence() -> dict[str, object]:
 
 
 def main() -> None:
-	write_json(spatial_partial_path(ROOT / "machines/partial/stern/ripley-s-believe-it-or-not-2004.json"), fail_closed_spatial_partial(build()))
+	partial_path = spatial_partial_path(ROOT / "machines/partial/stern/ripley-s-believe-it-or-not-2004.json")
+	if partial_path.exists():
+		existing = load_json(partial_path)
+		if any("spatial" in device for device in [*existing.get("inputs", []), *existing.get("outputs", [])]):
+			raise RuntimeError("Refusing to clobber reviewed Ripley's spatial placements; run tools/curate_ripleys_spatial.py for the spatial overlay")
+	write_json(partial_path, fail_closed_spatial_partial(build()))
 	write_json(ROOT / "evidence/runtime/whitestar/ripleys-boot-start-and-gameplay.json", runtime_evidence())
 	write_text(ROOT / "knowledge/stern/ripley-s-believe-it-or-not-2004.md", fail_closed_spatial_knowledge("stern.ripley-s-believe-it-or-not.2004", KNOWLEDGE))
 

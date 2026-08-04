@@ -1,15 +1,28 @@
 from __future__ import annotations
 
+import importlib.util
 import json
+import os
+import shutil
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFINITION_PATH = ROOT / "machines" / "partial" / "stern" / "ripley-s-believe-it-or-not-2004.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "whitestar" / "ripleys-boot-start-and-gameplay.json"
+SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "stern" / "ripley-s-believe-it-or-not-2004.json"
 PROFILE_PATH = ROOT / "controllers" / "pinmame" / "whitestar.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "stern" / "ripley-s-believe-it-or-not-2004.md"
+VPX_EVIDENCE_PATH = ROOT / "evidence" / "vpx" / "ripleys-exact-table-1.0.3.json"
+SPATIAL_GENERATOR_PATH = ROOT / "tools" / "curate_ripleys_spatial.py"
+
+_generator_spec = importlib.util.spec_from_file_location("curate_ripleys_spatial_test", SPATIAL_GENERATOR_PATH)
+assert _generator_spec is not None and _generator_spec.loader is not None
+SPATIAL_GENERATOR = importlib.util.module_from_spec(_generator_spec)
+_generator_spec.loader.exec_module(SPATIAL_GENERATOR)
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -19,6 +32,49 @@ def load_json(path: Path) -> dict[str, object]:
 
 def bindings(definition: dict[str, object], collection: str, group: str) -> dict[int, dict[str, object]]:
 	return {item["binding"]["device"]: item for item in definition[collection] if item["binding"]["group"] == group}
+
+
+def external_script_path() -> Path:
+	root_value = os.environ.get(SPATIAL_GENERATOR.SCRIPT_ENV_VAR)
+	if not root_value:
+		raise unittest.SkipTest(f"{SPATIAL_GENERATOR.SCRIPT_ENV_VAR} is unset; retained-script integration tests skipped")
+	path = Path(root_value).expanduser() / SPATIAL_GENERATOR.SCRIPT_RELATIVE_PATH
+	if not path.is_file():
+		raise unittest.SkipTest(f"retained Ripley's script unavailable at {path}; integration tests skipped")
+	return path
+
+
+def external_extraction_path() -> Path:
+	root_value = os.environ.get(SPATIAL_GENERATOR.SCRIPT_ENV_VAR)
+	if not root_value:
+		raise unittest.SkipTest(f"{SPATIAL_GENERATOR.SCRIPT_ENV_VAR} is unset; retained-extraction integration tests skipped")
+	path = Path(root_value).expanduser() / SPATIAL_GENERATOR.EXTRACTION_RELATIVE_PATH
+	if not path.is_dir():
+		raise unittest.SkipTest(f"retained Ripley's extraction unavailable at {path}; integration tests skipped")
+	return path
+
+
+class RipleyScriptResolverTests(unittest.TestCase):
+	def test_resolver_requires_environment_fallback_when_path_is_omitted(self) -> None:
+		with patch.dict(os.environ, {}, clear=False):
+			os.environ.pop(SPATIAL_GENERATOR.SCRIPT_ENV_VAR, None)
+			with self.assertRaisesRegex(RuntimeError, f"{SPATIAL_GENERATOR.SCRIPT_ENV_VAR} is unset"):
+				SPATIAL_GENERATOR._resolve_script_path()
+
+	def test_explicit_path_takes_precedence_over_environment_fallback(self) -> None:
+		with tempfile.TemporaryDirectory() as temporary_directory:
+			explicit_path = Path(temporary_directory) / "script.vbs"
+			explicit_path.write_bytes(b"unit-test placeholder")
+			with patch.dict(os.environ, {SPATIAL_GENERATOR.SCRIPT_ENV_VAR: str(Path(temporary_directory) / "missing")}, clear=False):
+				self.assertEqual(explicit_path.resolve(), SPATIAL_GENERATOR._resolve_script_path(explicit_path))
+
+	def test_resolver_reports_missing_and_wrong_type_paths(self) -> None:
+		with tempfile.TemporaryDirectory() as temporary_directory:
+			missing_path = Path(temporary_directory) / "missing-script.vbs"
+			with self.assertRaisesRegex(FileNotFoundError, "does not exist"):
+				SPATIAL_GENERATOR._resolve_script_path(missing_path)
+			with self.assertRaisesRegex(ValueError, "regular file"):
+				SPATIAL_GENERATOR._resolve_script_path(Path(temporary_directory))
 
 
 class RipleysDefinitionTests(unittest.TestCase):
@@ -39,7 +95,7 @@ class RipleysDefinitionTests(unittest.TestCase):
 		self.assertIn("spatial_placement", self.definition["coverage"]["missing"])
 		self.assertEqual("unknown", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
-		self.assertEqual([], self.definition["conflicts"])
+		self.assertEqual({"conflict.ripleys.uk-table-scope", "conflict.ripleys-q24-script-revision"}, {conflict["id"] for conflict in self.definition["conflicts"]})
 		expected = {f"rip{version}{language}" for version in ("300", "301", "302", "310") for language in ("", "f", "g", "i", "l")} | {f"ripleys{language}" for language in ("", "f", "g", "i", "l")}
 		self.assertEqual(expected, {driver["id"] for driver in self.definition["drivers"]})
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
@@ -98,6 +154,56 @@ class RipleysDefinitionTests(unittest.TestCase):
 		self.assertEqual(set(range(36, 45)) | {49, 50}, {address for address, output in outputs.items() if address >= 33 and output["availability"] == "unused"})
 		self.assertEqual("optional", outputs[24]["availability"])
 		self.assertIn("deliberately comments out", outputs[24]["physical"]["notes"])
+
+	def test_exact_uk_table_spatial_overlay_is_partial_and_multiplicity_safe(self) -> None:
+		switches = bindings(self.definition, "inputs", "pinmame.input.switch")
+		outputs = bindings(self.definition, "outputs", "pinmame.output.solenoid")
+		lamps = bindings(self.definition, "outputs", "pinmame.output.lamp")
+		gi = bindings(self.definition, "outputs", "pinmame.output.gi")
+		self.assertEqual("vpx-table.ripleys-jpsalas-1.0.3-uk", self.definition["sources"][2]["id"])
+		self.assertEqual("6c66b8cc355039ae9a4d615608802a92cd087782b16429569c87123894aadc48", self.definition["sources"][2]["sha256"])
+		self.assertEqual(2, len(switches[32]["spatial"]["placements"]))
+		self.assertEqual([(0.622044, 0.247893), (0.622044, 0.248008), (0.622044, 0.247893)], [(switches[address]["spatial"]["placements"][0]["x"], switches[address]["spatial"]["placements"][0]["y"]) for address in (41, 42, 43)])
+		self.assertEqual(1, len(outputs[25]["spatial"]["placements"]))
+		self.assertEqual(1, len(outputs[28]["spatial"]["placements"]))
+		self.assertEqual(1, len(outputs[30]["spatial"]["placements"]))
+		self.assertEqual(39, len(gi[0]["spatial"]["placements"]))
+		self.assertNotIn("spatial", switches[11])
+		self.assertNotIn("spatial", switches[44])
+		self.assertNotIn("spatial", outputs[21])
+		self.assertNotIn("spatial", outputs[33])
+		self.assertNotIn("spatial", lamps[76])
+		self.assertEqual("no_physical_device", outputs[24]["spatial"]["reason"])
+		self.assertEqual("cabinet_or_service", lamps[80]["spatial"]["reason"])
+		report = load_json(SPATIAL_REPORT_PATH)
+		self.assertEqual("UK model / All-Skill extra-post configuration", report["selected_source"]["edition"])
+		self.assertGreaterEqual(len(report["unresolved_blockers"]), 7)
+		self.assertEqual(self.definition["conflicts"], report["conflicts"])
+
+	def test_spatial_placements_emit_exact_canonical_coordinates_without_generator_metadata(self) -> None:
+		outputs = bindings(self.definition, "outputs", "pinmame.output.solenoid")
+		switches = bindings(self.definition, "inputs", "pinmame.input.switch")
+		lamps = bindings(self.definition, "outputs", "pinmame.output.lamp")
+		for device in [*self.definition["inputs"], *self.definition["outputs"]]:
+			for placement in device.get("spatial", {}).get("placements", []):
+				self.assertNotIn("source_object", placement)
+		self.assertEqual((0.371736, 0.156804), (switches[23]["spatial"]["placements"][0]["x"], switches[23]["spatial"]["placements"][0]["y"]))
+		self.assertEqual((0.107415, 0.581115), (switches[24]["spatial"]["placements"][0]["x"], switches[24]["spatial"]["placements"][0]["y"]))
+		self.assertEqual((0.193871, 0.443975), (outputs[25]["spatial"]["placements"][0]["x"], outputs[25]["spatial"]["placements"][0]["y"]))
+		self.assertEqual((0.371927, 0.160119), (outputs[28]["spatial"]["placements"][0]["x"], outputs[28]["spatial"]["placements"][0]["y"]))
+		self.assertEqual((0.765534, 0.164089), (outputs[30]["spatial"]["placements"][0]["x"], outputs[30]["spatial"]["placements"][0]["y"]))
+		report = load_json(SPATIAL_REPORT_PATH)
+		self.assertEqual(SPATIAL_GENERATOR.EXTRACTION_MANIFEST_SHA256, report["selected_source"]["extraction_manifest_sha256"])
+		audit = {(record.get("device_id"), record["name"]): record for record in report["object_audit"]}
+		self.assertEqual("validated", audit[(switches[23]["id"], "SMagnet")]["status"])
+		self.assertEqual("validated", audit[(switches[24]["id"], "IMagnet")]["status"])
+		self.assertEqual("Light", audit[(outputs[28]["id"], "f28a")]["kind"])
+		self.assertIn("graphical render helper", audit[(outputs[26]["id"], "f26")]["reason"])
+		self.assertIn("graphical render helper", audit[(lamps[16]["id"], "l16")]["reason"])
+		self.assertEqual({"f25b", "f26", "f27", "f28", "f29", "f30b", "f31", "f32", "l16"}, {record["name"] for record in report["object_audit"] if record["status"] == "unresolved" and record["kind"] == "Flasher"})
+		for address in (26, 27, 29, 31, 32):
+			self.assertNotIn("spatial", outputs[address])
+		self.assertNotIn("spatial", lamps[16])
 
 	def test_lamps_flashers_gi_and_native_displays_are_complete(self) -> None:
 		lamps = bindings(self.definition, "outputs", "pinmame.output.lamp")
@@ -158,6 +264,7 @@ class RipleysDefinitionTests(unittest.TestCase):
 		sources = {source["id"]: source for source in self.definition["sources"]}
 		self.assertEqual("94a94aef7437fa5f78cadddd66801e96224cfe6a5b8ff643c4c6b09d979fad9e", sources["manual.stern-ripleys.2004"]["sha256"])
 		self.assertEqual("3ba739ba81a3f1cad3b1a2b3a7cf7ea8db76eaf1baf4998c920f5a3d361c5ef7", sources["vpx.ripleys-vpwmod-1.3"]["sha256"])
+		self.assertEqual("6c66b8cc355039ae9a4d615608802a92cd087782b16429569c87123894aadc48", sources["vpx-table.ripleys-jpsalas-1.0.3-uk"]["sha256"])
 		self.assertEqual("092aab171d90eda62411496b387a90de5ca4a3273997ffb64de10c322cf366d3", sources["rom.stern-ripleys.3.20"]["sha256"])
 		self.assertEqual(
 			["1ef3c8baa88ace776fdf3ddbc59137afca0e7e9a6803339627985378a818270e", "e98f6058ba3d4cbd4e772606f1bc8f03039d334cde8d6045ec18d15444bf8ecc", "d389ced56f57bccd2704758cdac167b56d0a6f1621f306033adcc74d22fd57c7"],
@@ -170,6 +277,95 @@ class RipleysDefinitionTests(unittest.TestCase):
 		self.assertIn("appended PDF page 190", sources["manual.stern-ripleys.2004"]["locator"])
 		self.assertIn("pixel-frame callbacks only for the main DMD", self.knowledge)
 		self.assertIn("must not invent either a physical or audible knocker", self.knowledge)
+
+	def test_vpx_evidence_uses_exact_callbacks_and_source_lines(self) -> None:
+		script_path = external_script_path()
+		evidence = load_json(VPX_EVIDENCE_PATH)
+		script_lines = script_path.read_bytes().decode(SPATIAL_GENERATOR.SCRIPT_ENCODING).splitlines()
+		self.assertEqual(SPATIAL_GENERATOR.SCRIPT_SHA256, evidence["source"]["sha256"])
+		self.assertEqual(3, evidence["extractor"]["version"])
+
+		def assert_locations(value: object) -> None:
+			if isinstance(value, dict):
+				if "line" in value and ("source_text" in value or "raw" in value):
+					self.assertEqual(value.get("source_text", value.get("raw")), script_lines[value["line"] - 1])
+				if "line_start" in value:
+					self.assertEqual(value["line_start"], value["line_end"])
+					self.assertEqual(value["text"], script_lines[value["line_start"] - 1])
+				for child in value.values():
+					assert_locations(child)
+			elif isinstance(value, list):
+				for child in value:
+					assert_locations(child)
+
+		assert_locations(evidence)
+		switches = evidence["switches"]
+		switch9 = next(switch for switch in switches if switch["address"] == 9)
+		switch25 = next(switch for switch in switches if switch["address"] == 25)
+		self.assertEqual(("sw9_Hit", 291), (switch9["symbol"], switch9["line"]))
+		self.assertEqual(("Bumper4_Hit", 304), (switch25["symbol"], switch25["line"]))
+		self.assertEqual({("SMagnet_Hit", 263), ("Controller.Switch(23)", 264)}, {(switch["symbol"], switch["line"]) for switch in switches if switch["address"] == 23})
+		self.assertEqual({("IMagnet_Hit", 300)}, {(switch["symbol"], switch["line"]) for switch in switches if switch["address"] == 24})
+		self.assertNotIn("sw25", {switch["symbol"] for switch in switches if switch["address"] == 25})
+		self.assertNotIn(320, {switch["line"] for switch in switches})
+
+		outputs = evidence["outputs"]
+		q24 = next(output for output in outputs if output["group"] == "pinmame.output.solenoid" and output["address"] == 24)
+		self.assertEqual("SolCallBack(24)", q24["symbol"])
+		self.assertEqual(181, q24["line"])
+		lamp_addresses = {output["address"] for output in outputs if output["group"] == "pinmame.output.lamp"}
+		self.assertEqual(set(range(1, 79)), lamp_addresses)
+		self.assertNotIn(79, lamp_addresses)
+		self.assertNotIn(80, lamp_addresses)
+		self.assertEqual(540, next(output for output in outputs if output["group"] == "pinmame.output.lamp" and output["address"] == 1)["line"])
+		gi_lines = [output["line"] for output in outputs if output["group"] == "pinmame.output.gi"]
+		self.assertEqual([1004, 1006, 1007, 1008], gi_lines)
+		self.assertNotIn("spatial_audit", evidence)
+		self.assertIn(SPATIAL_GENERATOR.EXTRACTION_MANIFEST_SHA256, evidence["source"]["attribution"])
+
+	def test_vpx_evidence_refuses_script_tamper_and_line_drift(self) -> None:
+		definition = {"machine": {"id": "stern.ripley-s-believe-it-or-not.2004"}}
+		original = external_script_path().read_bytes()
+		with tempfile.TemporaryDirectory() as temporary_directory:
+			tampered_path = Path(temporary_directory) / "tampered-script.vbs"
+			tampered_path.write_bytes(original.replace(b"Sub sw9_Hit:", b"Sub sw9_Hit: ' tampered", 1))
+			with self.assertRaisesRegex(ValueError, "hash mismatch"):
+				SPATIAL_GENERATOR._vpx_script_evidence(definition, tampered_path)
+
+		with tempfile.TemporaryDirectory() as temporary_directory:
+			drifted_path = Path(temporary_directory) / "line-drifted-script.vbs"
+			drifted_path.write_bytes(original.replace(b"Sub sw9_Hit:", b"' inserted line\r\nSub sw9_Hit:", 1))
+			with self.assertRaisesRegex(ValueError, "hash mismatch"):
+				SPATIAL_GENERATOR._vpx_script_evidence(definition, drifted_path)
+
+	def test_extraction_manifest_refuses_tampered_selected_physical_object_and_snapshot_drift(self) -> None:
+		source = external_extraction_path()
+		with tempfile.TemporaryDirectory() as temporary_directory:
+			copy = Path(temporary_directory) / "extracted-vpxtool"
+			shutil.copytree(source, copy)
+			physical_object = copy / "gameitems" / "Light.f28a.json"
+			original_physical = physical_object.read_bytes()
+			physical_object.write_bytes(original_physical.replace(b"354.07407", b"354.07408", 1))
+			with self.assertRaisesRegex(ValueError, "manifest mismatch"):
+				SPATIAL_GENERATOR._VPXExtraction(copy)
+			physical_object.write_bytes(original_physical)
+
+			missing_object = copy / "gameitems" / "Light.f28a.json"
+			missing_object.unlink()
+			with self.assertRaisesRegex(ValueError, "manifest mismatch"):
+				SPATIAL_GENERATOR._VPXExtraction(copy)
+			missing_object.write_bytes(original_physical)
+
+			(copy / "gameitems" / "Added.unreviewed.json").write_bytes(b"{}\n")
+			with self.assertRaisesRegex(ValueError, "manifest mismatch"):
+				SPATIAL_GENERATOR._VPXExtraction(copy)
+			(copy / "gameitems" / "Added.unreviewed.json").unlink()
+
+			gamedata = copy / "gamedata.json"
+			original_gamedata = gamedata.read_bytes()
+			gamedata.write_bytes(original_gamedata.replace(b'"right": 952.0', b'"right": 953.0', 1))
+			with self.assertRaisesRegex(ValueError, "manifest mismatch"):
+				SPATIAL_GENERATOR._VPXExtraction(copy)
 
 
 if __name__ == "__main__":

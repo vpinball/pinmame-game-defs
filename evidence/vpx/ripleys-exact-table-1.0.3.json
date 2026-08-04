@@ -1,0 +1,1832 @@
+{
+  "driver_ids": [
+    "ripleys"
+  ],
+  "extractor": {
+    "id": "ripleys-vpx-spatial-review",
+    "version": 3
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.ripley-s-believe-it-or-not.2004"
+  ],
+  "mechanisms": [
+    {
+      "kind": "trough_and_shooter",
+      "line": 87,
+      "raw": "    Set bsTrough = New cvpmBallStack",
+      "status": "candidate"
+    },
+    {
+      "kind": "trough_and_shooter",
+      "line": 89,
+      "raw": "        .InitSw 0, 14, 13, 12, 11, 0, 0, 0",
+      "status": "candidate"
+    },
+    {
+      "kind": "trough_and_shooter",
+      "line": 90,
+      "raw": "        .InitKick BallRelease, 100, 3",
+      "status": "candidate"
+    },
+    {
+      "kind": "trough_and_shooter",
+      "line": 123,
+      "raw": "    Set bsVUK = new cvpmBallStack",
+      "status": "candidate"
+    },
+    {
+      "kind": "trough_and_shooter",
+      "line": 125,
+      "raw": "        .InitSw 0, 52, 0, 0, 0, 0, 0, 0",
+      "status": "candidate"
+    },
+    {
+      "kind": "trough_and_shooter",
+      "line": 126,
+      "raw": "        .InitKick sw52, 0, 36",
+      "status": "candidate"
+    },
+    {
+      "kind": "trough_and_shooter",
+      "line": 134,
+      "raw": "    Set plungerIM = New cvpmImpulseP",
+      "status": "candidate"
+    },
+    {
+      "kind": "trough_and_shooter",
+      "line": 136,
+      "raw": "        .InitImpulseP swPlunger, IMPowerSetting, IMTime",
+      "status": "candidate"
+    },
+    {
+      "kind": "trough_and_shooter",
+      "line": 140,
+      "raw": "        .CreateEvents \"plungerIM\"",
+      "status": "candidate"
+    },
+    {
+      "kind": "trough_and_shooter",
+      "line": 169,
+      "raw": "SolCallBack(1) = \"SolTrough\"",
+      "status": "candidate"
+    },
+    {
+      "kind": "trough_and_shooter",
+      "line": 236,
+      "raw": "Sub Auto_Plunger(Enabled)",
+      "status": "candidate"
+    },
+    {
+      "kind": "trough_and_shooter",
+      "line": 252,
+      "raw": "Sub SolTrough(Enabled)",
+      "status": "candidate"
+    },
+    {
+      "kind": "trough_and_shooter",
+      "line": 255,
+      "raw": "        vpmTimer.PulseSw 15",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 178,
+      "raw": "SolCallBack(21) = \"SolVReset\"",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 242,
+      "raw": "Sub SolVReset(Enabled)",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 244,
+      "raw": "        VariTimerDown.Enabled = 1",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 365,
+      "raw": "Sub aVariPos_Hit(idx)",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 367,
+      "raw": "        VariTarget.RotY = 14 - idx",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 371,
+      "raw": "Sub sw42_Hit",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 373,
+      "raw": "        Controller.Switch(42) = 1",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 378,
+      "raw": "Sub sw43_Hit",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 380,
+      "raw": "        Controller.Switch(43) = 1",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 385,
+      "raw": "Sub sw41_Hit",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 387,
+      "raw": "        Controller.Switch(41) = 1",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 392,
+      "raw": "Sub VariTimerDown_Timer",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 394,
+      "raw": "    If VariTarget.RotY = -5 Then Controller.Switch(41) = 0",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 395,
+      "raw": "    If VariTarget.RotY = 5 Then Controller.Switch(43) = 0",
+      "status": "candidate"
+    },
+    {
+      "kind": "vari_target",
+      "line": 398,
+      "raw": "        Controller.Switch(42) = 0",
+      "status": "candidate"
+    },
+    {
+      "kind": "magnets",
+      "line": 95,
+      "raw": "    Set mIdolMag = New cvpmMagnet",
+      "status": "candidate"
+    },
+    {
+      "kind": "magnets",
+      "line": 97,
+      "raw": "        .InitMagnet IMagnet, 50",
+      "status": "candidate"
+    },
+    {
+      "kind": "magnets",
+      "line": 102,
+      "raw": "    Set mShrunkenMag = New cvpmMagnet",
+      "status": "candidate"
+    },
+    {
+      "kind": "magnets",
+      "line": 104,
+      "raw": "        .InitMagnet SMagnet, 70",
+      "status": "candidate"
+    },
+    {
+      "kind": "magnets",
+      "line": 263,
+      "raw": "Sub SMagnet_Hit",
+      "status": "candidate"
+    },
+    {
+      "kind": "magnets",
+      "line": 264,
+      "raw": "    Controller.Switch(23) = 1",
+      "status": "candidate"
+    },
+    {
+      "kind": "magnets",
+      "line": 268,
+      "raw": "Sub SMagnet_unHit",
+      "status": "candidate"
+    },
+    {
+      "kind": "magnets",
+      "line": 269,
+      "raw": "    Controller.Switch(23) = 0",
+      "status": "candidate"
+    },
+    {
+      "kind": "magnets",
+      "line": 273,
+      "raw": "Sub SolUpperMagnet(Enabled)",
+      "status": "candidate"
+    },
+    {
+      "kind": "magnets",
+      "line": 276,
+      "raw": "        mShrunkenMag.MagnetOn = 1",
+      "status": "candidate"
+    },
+    {
+      "kind": "magnets",
+      "line": 278,
+      "raw": "        mShrunkenMag.MagnetOn = 0",
+      "status": "candidate"
+    },
+    {
+      "kind": "magnets",
+      "line": 300,
+      "raw": "Sub IMagnet_Hit:mIdolMag.AddBall ActiveBall:Controller.Switch(24) = 1:End Sub",
+      "status": "candidate"
+    },
+    {
+      "kind": "magnets",
+      "line": 301,
+      "raw": "Sub IMagnet_unHit:mIdolMag.RemoveBall ActiveBall:Controller.Switch(24) = 0:End Sub",
+      "status": "candidate"
+    },
+    {
+      "kind": "diverters_and_lock",
+      "line": 108,
+      "raw": "    Set bsLock = New cvpmBallStack",
+      "status": "candidate"
+    },
+    {
+      "kind": "diverters_and_lock",
+      "line": 110,
+      "raw": "        .InitSw 0, 46, 45, 44, 0, 0, 0, 0",
+      "status": "candidate"
+    },
+    {
+      "kind": "diverters_and_lock",
+      "line": 111,
+      "raw": "        .InitKick Lock, 0, 36",
+      "status": "candidate"
+    },
+    {
+      "kind": "diverters_and_lock",
+      "line": 172,
+      "raw": "SolCallBack(4) = \"vpmSolDiverter TempleDiv,1,\"",
+      "status": "candidate"
+    },
+    {
+      "kind": "diverters_and_lock",
+      "line": 173,
+      "raw": "SolCallBack(5) = \"vpmSolDiverter LockDiverter,1,\"",
+      "status": "candidate"
+    },
+    {
+      "kind": "diverters_and_lock",
+      "line": 176,
+      "raw": "SolCallback(13) = \"bsLock.SolOut\"",
+      "status": "candidate"
+    },
+    {
+      "kind": "diverters_and_lock",
+      "line": 351,
+      "raw": "Sub Lock_Hit:bsLock.AddBall Me:PlaySound \"fx_kicker_enter\", 0, 1, 0.01:End Sub",
+      "status": "candidate"
+    },
+    {
+      "kind": "render_helper_exclusion",
+      "line": 651,
+      "raw": "    NFadeLm 125, f25",
+      "status": "candidate"
+    },
+    {
+      "kind": "render_helper_exclusion",
+      "line": 652,
+      "raw": "    Flashm 125, f25a",
+      "status": "candidate"
+    },
+    {
+      "kind": "render_helper_exclusion",
+      "line": 653,
+      "raw": "    Flash 125, f25b",
+      "status": "candidate"
+    },
+    {
+      "kind": "render_helper_exclusion",
+      "line": 659,
+      "raw": "    NFadeLm 130, f30",
+      "status": "candidate"
+    },
+    {
+      "kind": "render_helper_exclusion",
+      "line": 660,
+      "raw": "    Flashm 130, f30a",
+      "status": "candidate"
+    },
+    {
+      "kind": "render_helper_exclusion",
+      "line": 661,
+      "raw": "    Flashm 130, f30c",
+      "status": "candidate"
+    },
+    {
+      "kind": "render_helper_exclusion",
+      "line": 662,
+      "raw": "    Flash 130, f30b",
+      "status": "candidate"
+    },
+    {
+      "kind": "render_helper_exclusion",
+      "line": 771,
+      "raw": "Sub Flashm(nr, object) 'multiple flashers, it doesn't change anything, it just follows the main flasher",
+      "status": "candidate"
+    }
+  ],
+  "outputs": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q1",
+      "line": 169,
+      "status": "candidate",
+      "symbol": "SolCallBack(1)"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q2",
+      "line": 170,
+      "status": "candidate",
+      "symbol": "SolCallBack(2)"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q3",
+      "line": 171,
+      "status": "candidate",
+      "symbol": "SolCallBack(3)"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q4",
+      "line": 172,
+      "status": "candidate",
+      "symbol": "SolCallBack(4)"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q5",
+      "line": 173,
+      "status": "candidate",
+      "symbol": "SolCallBack(5)"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q12",
+      "line": 175,
+      "status": "candidate",
+      "symbol": "SolCallBack(12)"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q13",
+      "line": 176,
+      "status": "candidate",
+      "symbol": "SolCallback(13)"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q20",
+      "line": 177,
+      "status": "candidate",
+      "symbol": "SolCallback(20)"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q21",
+      "line": 178,
+      "status": "candidate",
+      "symbol": "SolCallBack(21)"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q22",
+      "line": 179,
+      "status": "candidate",
+      "symbol": "SolCallBack(22)"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q23",
+      "line": 180,
+      "status": "candidate",
+      "symbol": "SolCallBack(23)"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q24",
+      "line": 181,
+      "status": "candidate",
+      "symbol": "SolCallBack(24)"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q25",
+      "line": 182,
+      "status": "candidate",
+      "symbol": "SolCallBack(25)"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q26",
+      "line": 183,
+      "status": "candidate",
+      "symbol": "SolCallBack(26)"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q27",
+      "line": 184,
+      "status": "candidate",
+      "symbol": "SolCallBack(27)"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q28",
+      "line": 185,
+      "status": "candidate",
+      "symbol": "SolCallBack(28)"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q29",
+      "line": 186,
+      "status": "candidate",
+      "symbol": "SolCallBack(29)"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q30",
+      "line": 187,
+      "status": "candidate",
+      "symbol": "SolCallBack(30)"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q31",
+      "line": 188,
+      "status": "candidate",
+      "symbol": "SolCallBack(31)"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q32",
+      "line": 189,
+      "status": "candidate",
+      "symbol": "SolCallBack(32)"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "label": "Embedded-table Q19",
+      "line": 98,
+      "status": "candidate",
+      "symbol": "mIdolMag.Solenoid"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 1",
+      "line": 540,
+      "status": "candidate",
+      "symbol": "l1"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 2",
+      "line": 541,
+      "status": "candidate",
+      "symbol": "l2"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 3",
+      "line": 542,
+      "status": "candidate",
+      "symbol": "l3"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 4",
+      "line": 543,
+      "status": "candidate",
+      "symbol": "l4"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 5",
+      "line": 544,
+      "status": "candidate",
+      "symbol": "l5"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 6",
+      "line": 545,
+      "status": "candidate",
+      "symbol": "l6"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 7",
+      "line": 546,
+      "status": "candidate",
+      "symbol": "l7"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 8",
+      "line": 547,
+      "status": "candidate",
+      "symbol": "l8"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 8",
+      "line": 548,
+      "status": "candidate",
+      "symbol": "l8a"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 9",
+      "line": 549,
+      "status": "candidate",
+      "symbol": "l9"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 9",
+      "line": 550,
+      "status": "candidate",
+      "symbol": "l9a"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 10",
+      "line": 551,
+      "status": "candidate",
+      "symbol": "l10"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 11",
+      "line": 552,
+      "status": "candidate",
+      "symbol": "l11"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 12",
+      "line": 553,
+      "status": "candidate",
+      "symbol": "l12"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 13",
+      "line": 554,
+      "status": "candidate",
+      "symbol": "l13"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 14",
+      "line": 555,
+      "status": "candidate",
+      "symbol": "l14"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 15",
+      "line": 556,
+      "status": "candidate",
+      "symbol": "l15"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 15",
+      "line": 557,
+      "status": "candidate",
+      "symbol": "l15a"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 16",
+      "line": 558,
+      "status": "candidate",
+      "symbol": "l16"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 17",
+      "line": 559,
+      "status": "candidate",
+      "symbol": "l17"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 18",
+      "line": 560,
+      "status": "candidate",
+      "symbol": "l18"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 19",
+      "line": 561,
+      "status": "candidate",
+      "symbol": "l19"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 20",
+      "line": 562,
+      "status": "candidate",
+      "symbol": "l20"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 21",
+      "line": 563,
+      "status": "candidate",
+      "symbol": "l21"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 22",
+      "line": 564,
+      "status": "candidate",
+      "symbol": "l22"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 23",
+      "line": 565,
+      "status": "candidate",
+      "symbol": "l23"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 24",
+      "line": 566,
+      "status": "candidate",
+      "symbol": "l24"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 25",
+      "line": 567,
+      "status": "candidate",
+      "symbol": "l25"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 26",
+      "line": 568,
+      "status": "candidate",
+      "symbol": "l26"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 27",
+      "line": 569,
+      "status": "candidate",
+      "symbol": "l27"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 28",
+      "line": 570,
+      "status": "candidate",
+      "symbol": "l28"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 29",
+      "line": 571,
+      "status": "candidate",
+      "symbol": "l29"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 30",
+      "line": 572,
+      "status": "candidate",
+      "symbol": "l30"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 31",
+      "line": 573,
+      "status": "candidate",
+      "symbol": "l31"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 32",
+      "line": 574,
+      "status": "candidate",
+      "symbol": "l32"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 33",
+      "line": 575,
+      "status": "candidate",
+      "symbol": "BumperLight4a"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 33",
+      "line": 576,
+      "status": "candidate",
+      "symbol": "BumperLight4"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 34",
+      "line": 577,
+      "status": "candidate",
+      "symbol": "BumperLight5a"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 34",
+      "line": 578,
+      "status": "candidate",
+      "symbol": "BumperLight5"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 35",
+      "line": 579,
+      "status": "candidate",
+      "symbol": "BumperLight6a"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 35",
+      "line": 580,
+      "status": "candidate",
+      "symbol": "BumperLight6"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 36",
+      "line": 581,
+      "status": "candidate",
+      "symbol": "l36"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 37",
+      "line": 582,
+      "status": "candidate",
+      "symbol": "l37"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 38",
+      "line": 583,
+      "status": "candidate",
+      "symbol": "l38"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 39",
+      "line": 584,
+      "status": "candidate",
+      "symbol": "l39"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 40",
+      "line": 585,
+      "status": "candidate",
+      "symbol": "l40"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 41",
+      "line": 586,
+      "status": "candidate",
+      "symbol": "l41"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 41",
+      "line": 587,
+      "status": "candidate",
+      "symbol": "l41a"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 42",
+      "line": 588,
+      "status": "candidate",
+      "symbol": "l42"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 42",
+      "line": 589,
+      "status": "candidate",
+      "symbol": "l42a"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 43",
+      "line": 590,
+      "status": "candidate",
+      "symbol": "l43"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 43",
+      "line": 591,
+      "status": "candidate",
+      "symbol": "l43a"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 44",
+      "line": 592,
+      "status": "candidate",
+      "symbol": "l44"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 44",
+      "line": 593,
+      "status": "candidate",
+      "symbol": "l44a"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 45",
+      "line": 594,
+      "status": "candidate",
+      "symbol": "l45"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 45",
+      "line": 595,
+      "status": "candidate",
+      "symbol": "l45a"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 46",
+      "line": 596,
+      "status": "candidate",
+      "symbol": "l46"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 46",
+      "line": 597,
+      "status": "candidate",
+      "symbol": "l46a"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 47",
+      "line": 598,
+      "status": "candidate",
+      "symbol": "l47"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 47",
+      "line": 599,
+      "status": "candidate",
+      "symbol": "l47a"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 48",
+      "line": 600,
+      "status": "candidate",
+      "symbol": "l48"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 48",
+      "line": 601,
+      "status": "candidate",
+      "symbol": "l48a"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 49",
+      "line": 602,
+      "status": "candidate",
+      "symbol": "l49"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 49",
+      "line": 603,
+      "status": "candidate",
+      "symbol": "l49a"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 50",
+      "line": 604,
+      "status": "candidate",
+      "symbol": "l50"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 51",
+      "line": 605,
+      "status": "candidate",
+      "symbol": "l51"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 52",
+      "line": 606,
+      "status": "candidate",
+      "symbol": "l52"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 52",
+      "line": 607,
+      "status": "candidate",
+      "symbol": "l52a"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 53",
+      "line": 608,
+      "status": "candidate",
+      "symbol": "l53"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 54",
+      "line": 609,
+      "status": "candidate",
+      "symbol": "l54"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 55",
+      "line": 611,
+      "status": "candidate",
+      "symbol": "l55"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 56",
+      "line": 612,
+      "status": "candidate",
+      "symbol": "l56"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 56",
+      "line": 613,
+      "status": "candidate",
+      "symbol": "l56a"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 57",
+      "line": 614,
+      "status": "candidate",
+      "symbol": "l57"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 58",
+      "line": 615,
+      "status": "candidate",
+      "symbol": "l58"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 59",
+      "line": 616,
+      "status": "candidate",
+      "symbol": "l59"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 60",
+      "line": 617,
+      "status": "candidate",
+      "symbol": "BumperLight1a"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 60",
+      "line": 618,
+      "status": "candidate",
+      "symbol": "BumperLight1"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 61",
+      "line": 619,
+      "status": "candidate",
+      "symbol": "BumperLight2a"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 61",
+      "line": 620,
+      "status": "candidate",
+      "symbol": "BumperLight2"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 62",
+      "line": 621,
+      "status": "candidate",
+      "symbol": "BumperLight3a"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 62",
+      "line": 622,
+      "status": "candidate",
+      "symbol": "BumperLight3"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 63",
+      "line": 623,
+      "status": "candidate",
+      "symbol": "l63"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 63",
+      "line": 624,
+      "status": "candidate",
+      "symbol": "l63a"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 64",
+      "line": 625,
+      "status": "candidate",
+      "symbol": "l64"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 64",
+      "line": 626,
+      "status": "candidate",
+      "symbol": "l64a"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 65",
+      "line": 627,
+      "status": "candidate",
+      "symbol": "l65"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 66",
+      "line": 628,
+      "status": "candidate",
+      "symbol": "l66"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 67",
+      "line": 629,
+      "status": "candidate",
+      "symbol": "l67"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 68",
+      "line": 630,
+      "status": "candidate",
+      "symbol": "l68"
+    },
+    {
+      "address": 69,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 69",
+      "line": 631,
+      "status": "candidate",
+      "symbol": "l69"
+    },
+    {
+      "address": 69,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 69",
+      "line": 632,
+      "status": "candidate",
+      "symbol": "l69a"
+    },
+    {
+      "address": 70,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 70",
+      "line": 633,
+      "status": "candidate",
+      "symbol": "l70"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 71",
+      "line": 634,
+      "status": "candidate",
+      "symbol": "l71"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 72",
+      "line": 635,
+      "status": "candidate",
+      "symbol": "l72"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 73",
+      "line": 636,
+      "status": "candidate",
+      "symbol": "l73"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 73",
+      "line": 637,
+      "status": "candidate",
+      "symbol": "l73a"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 74",
+      "line": 638,
+      "status": "candidate",
+      "symbol": "l74"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 74",
+      "line": 639,
+      "status": "candidate",
+      "symbol": "l74a"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 75",
+      "line": 640,
+      "status": "candidate",
+      "symbol": "l75"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 75",
+      "line": 641,
+      "status": "candidate",
+      "symbol": "l75a"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 76",
+      "line": 642,
+      "status": "candidate",
+      "symbol": "l76"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 76",
+      "line": 643,
+      "status": "candidate",
+      "symbol": "l76"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 77",
+      "line": 644,
+      "status": "candidate",
+      "symbol": "l77"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp",
+      "label": "Embedded-table lamp 78",
+      "line": 645,
+      "status": "candidate",
+      "symbol": "l78"
+    },
+    {
+      "address": 0,
+      "group": "pinmame.output.gi",
+      "label": "Embedded-table general illumination",
+      "line": 1004,
+      "status": "candidate",
+      "symbol": "GIUpdate"
+    },
+    {
+      "address": 0,
+      "group": "pinmame.output.gi",
+      "label": "Embedded-table general illumination",
+      "line": 1006,
+      "status": "candidate",
+      "symbol": "GIUpdate"
+    },
+    {
+      "address": 0,
+      "group": "pinmame.output.gi",
+      "label": "Embedded-table general illumination",
+      "line": 1007,
+      "status": "candidate",
+      "symbol": "GIUpdate"
+    },
+    {
+      "address": 0,
+      "group": "pinmame.output.gi",
+      "label": "Embedded-table general illumination",
+      "line": 1008,
+      "status": "candidate",
+      "symbol": "GIUpdate"
+    }
+  ],
+  "recreation_notes": [
+    {
+      "line_end": 181,
+      "line_start": 181,
+      "status": "candidate",
+      "text": "SolCallBack(24) = \"vpmsolsound SoundFX(\"\"fx_knocker\"\",DOFKnocker),\""
+    },
+    {
+      "line_end": 652,
+      "line_start": 652,
+      "status": "candidate",
+      "text": "    Flashm 125, f25a"
+    },
+    {
+      "line_end": 660,
+      "line_start": 660,
+      "status": "candidate",
+      "text": "    Flashm 130, f30a"
+    },
+    {
+      "line_end": 661,
+      "line_start": 661,
+      "status": "candidate",
+      "text": "    Flashm 130, f30c"
+    },
+    {
+      "line_end": 771,
+      "line_start": 771,
+      "status": "candidate",
+      "text": "Sub Flashm(nr, object) 'multiple flashers, it doesn't change anything, it just follows the main flasher"
+    }
+  ],
+  "source": {
+    "attribution": "JPSalas table authors and local user-authorized source; exact VPX SHA-256 is 6c66b8cc355039ae9a4d615608802a92cd087782b16429569c87123894aadc48; retained extraction manifest SHA-256 is 79cdb19cd01d46d795b32b7638a0f75c19bf824256de89a879d9d5328ce6b61d",
+    "encoding": "windows-1252",
+    "kind": "vpx_script",
+    "license": "NOASSERTION",
+    "path": "extracted-vpxtool/script.vbs",
+    "quality": "validated",
+    "repository": "external:pinmame-vpx-sources/stern/ripley-s-believe-it-or-not-2004",
+    "revision": "6c66b8cc355039ae9a4d615608802a92cd087782",
+    "sha256": "717696937a92b076620c2564982a7b514786e72fdab01d761b3b2a301346e014"
+  },
+  "states": [
+    {
+      "label": "vari-target boot switch initialization",
+      "line": 70,
+      "raw": "        .Switch(42) = 1"
+    },
+    {
+      "label": "vari-target boot switch initialization",
+      "line": 71,
+      "raw": "        .Switch(43) = 1"
+    },
+    {
+      "label": "four-ball trough stack initialization",
+      "line": 89,
+      "raw": "        .InitSw 0, 14, 13, 12, 11, 0, 0, 0"
+    }
+  ],
+  "switches": [
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 9",
+      "line": 291,
+      "status": "candidate",
+      "symbol": "sw9_Hit"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 17",
+      "line": 292,
+      "status": "candidate",
+      "symbol": "sw17_Hit"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 18",
+      "line": 293,
+      "status": "candidate",
+      "symbol": "sw18_Hit"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 19",
+      "line": 295,
+      "status": "candidate",
+      "symbol": "sw19_Hit"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 20",
+      "line": 296,
+      "status": "candidate",
+      "symbol": "sw20_Spin"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 21",
+      "line": 297,
+      "status": "candidate",
+      "symbol": "sw21_Spin"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 22",
+      "line": 298,
+      "status": "candidate",
+      "symbol": "sw22_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 23",
+      "line": 263,
+      "status": "candidate",
+      "symbol": "SMagnet_Hit"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 23",
+      "line": 264,
+      "status": "candidate",
+      "symbol": "Controller.Switch(23)"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 24",
+      "line": 300,
+      "status": "candidate",
+      "symbol": "IMagnet_Hit"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 25",
+      "line": 304,
+      "status": "candidate",
+      "symbol": "Bumper4_Hit"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 26",
+      "line": 306,
+      "status": "candidate",
+      "symbol": "Bumper6_Hit"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 27",
+      "line": 305,
+      "status": "candidate",
+      "symbol": "Bumper5_Hit"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 28",
+      "line": 308,
+      "status": "candidate",
+      "symbol": "sw28_Hit"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 29",
+      "line": 313,
+      "status": "candidate",
+      "symbol": "sw29_Hit"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 30",
+      "line": 331,
+      "status": "candidate",
+      "symbol": "sw30_Hit"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 31",
+      "line": 333,
+      "status": "candidate",
+      "symbol": "sw31_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 32",
+      "line": 335,
+      "status": "candidate",
+      "symbol": "sw32_Hit"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 32",
+      "line": 336,
+      "status": "candidate",
+      "symbol": "sw32b_Hit"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 33",
+      "line": 337,
+      "status": "candidate",
+      "symbol": "sw33_Hit"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 34",
+      "line": 339,
+      "status": "candidate",
+      "symbol": "sw34_Hit"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 35",
+      "line": 341,
+      "status": "candidate",
+      "symbol": "sw35_Hit"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 36",
+      "line": 343,
+      "status": "candidate",
+      "symbol": "sw36_Hit"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 38",
+      "line": 345,
+      "status": "candidate",
+      "symbol": "sw38_Hit"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 39",
+      "line": 347,
+      "status": "candidate",
+      "symbol": "sw39_Hit"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 40",
+      "line": 349,
+      "status": "candidate",
+      "symbol": "sw40_Hit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 41",
+      "line": 385,
+      "status": "candidate",
+      "symbol": "sw41_Hit"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 41",
+      "line": 387,
+      "status": "candidate",
+      "symbol": "Controller.Switch(41)"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 42",
+      "line": 371,
+      "status": "candidate",
+      "symbol": "sw42_Hit"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 42",
+      "line": 373,
+      "status": "candidate",
+      "symbol": "Controller.Switch(42)"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 43",
+      "line": 378,
+      "status": "candidate",
+      "symbol": "sw43_Hit"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 43",
+      "line": 380,
+      "status": "candidate",
+      "symbol": "Controller.Switch(43)"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 47",
+      "line": 352,
+      "status": "candidate",
+      "symbol": "sw47_Hit"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 48",
+      "line": 354,
+      "status": "candidate",
+      "symbol": "sw48_Hit"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 49",
+      "line": 357,
+      "status": "candidate",
+      "symbol": "Bumper1_Hit"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 50",
+      "line": 359,
+      "status": "candidate",
+      "symbol": "Bumper3_Hit"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 51",
+      "line": 358,
+      "status": "candidate",
+      "symbol": "Bumper2_Hit"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 52",
+      "line": 407,
+      "status": "candidate",
+      "symbol": "sw52_Hit"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 53",
+      "line": 413,
+      "status": "candidate",
+      "symbol": "sw53_Hit"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 57",
+      "line": 416,
+      "status": "candidate",
+      "symbol": "sw57_Hit"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 58",
+      "line": 419,
+      "status": "candidate",
+      "symbol": "sw58_Hit"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 59",
+      "line": 434,
+      "status": "candidate",
+      "symbol": "LeftSlingShot_Slingshot"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 59",
+      "line": 439,
+      "status": "candidate",
+      "symbol": "vpmTimer.PulseSw(59)"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 60",
+      "line": 425,
+      "status": "candidate",
+      "symbol": "sw60_Hit"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 61",
+      "line": 422,
+      "status": "candidate",
+      "symbol": "sw61_Hit"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 62",
+      "line": 452,
+      "status": "candidate",
+      "symbol": "RightSlingShot_Slingshot"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "label": "Embedded-table switch 62",
+      "line": 457,
+      "status": "candidate",
+      "symbol": "vpmTimer.PulseSw(62)"
+    }
+  ],
+  "version": 1
+}
