@@ -1,14 +1,16 @@
 from __future__ import annotations
 
 import ast
+import importlib.util
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 PREMIUM_PATH = REPOSITORY_ROOT / "machines" / "author-ready" / "stern" / "mustang-premium-limited-edition-boss-2014.json"
-PRO_PATH = REPOSITORY_ROOT / "machines" / "partial" / "stern" / "mustang-pro-2014.json"
+PRO_PATH = REPOSITORY_ROOT / "machines" / "author-ready" / "stern" / "mustang-pro-2014.json"
 
 
 def load_definition(path: Path) -> dict[str, object]:
@@ -33,16 +35,15 @@ class MustangDefinitionTests(unittest.TestCase):
 		self.assertEqual({"mt_120", "mt_130", "mt_140", "mt_145", "mt_145c"}, pro_drivers)
 		self.assertFalse(premium_drivers & pro_drivers)
 
-	def test_premium_is_author_ready_while_pro_remains_fail_closed_for_spatial_retrofit(self) -> None:
-		self.assertEqual(2, self.premium["schema_version"])
-		self.assertEqual("physical_pinball", self.premium["machine"]["kind"])
-		self.assertEqual("author_ready", self.premium["coverage"]["status"])
-		self.assertEqual([], self.premium["coverage"]["missing"])
-		self.assertEqual("validated", self.premium["coverage"]["dimensions"]["spatial_placement"])
-		self.assertEqual(2, self.pro["schema_version"])
-		self.assertEqual("partial", self.pro["coverage"]["status"])
-		self.assertIn("spatial_placement", self.pro["coverage"]["missing"])
+	def test_both_physical_editions_are_author_ready(self) -> None:
+		for definition in (self.premium, self.pro):
+			self.assertEqual(2, definition["schema_version"])
+			self.assertEqual("physical_pinball", definition["machine"]["kind"])
+			self.assertEqual("author_ready", definition["coverage"]["status"])
+			self.assertEqual([], definition["coverage"]["missing"])
+			self.assertEqual("validated", definition["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual(6098, self.pro["machine"]["ipdb_id"])
+		self.assertFalse((REPOSITORY_ROOT / "machines" / "partial" / "stern" / "mustang-pro-2014.json").exists())
 
 	def test_physical_trough_inventory_keeps_six_positions_and_jam(self) -> None:
 		by_address = {
@@ -131,7 +132,37 @@ class MustangDefinitionTests(unittest.TestCase):
 		self.assertEqual(104, by_manual["100"]["binding"]["device"])
 		self.assertEqual(112, by_manual["108"]["binding"]["device"])
 		lamps = {item["binding"]["device"]: item for item in self.pro["outputs"] if item["binding"]["group"] == "pinmame.output.lamp"}
-		self.assertTrue(all(lamps[address]["availability"] == "unused" for address in (80, 98, 99, 100, 101)))
+		self.assertTrue(all(lamps[address]["availability"] == "unused" for address in (3, 43, 44, 98, 99, 100, 101)))
+		self.assertEqual("Shot arrow #5", lamps[45]["label"])
+		self.assertEqual("Right 3-bank bottom", lamps[49]["label"])
+		self.assertEqual("Right pop bumper", lamps[80]["label"])
+
+	def test_pro_spatial_inventory_preserves_conflicts_and_physical_multiplicity(self) -> None:
+		devices = [*self.pro["inputs"], *self.pro["outputs"]]
+		self.assertTrue(all(device["spatial"]["status"] in {"validated", "not_applicable"} for device in devices))
+		inputs = {item["binding"]["device"]: item for item in self.pro["inputs"] if item["binding"]["group"] == "pinmame.input.switch"}
+		self.assertEqual((0.836685, 0.552217), tuple(inputs[1]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		for address in (49, 50):
+			self.assertEqual(("unused", "not_applicable"), (inputs[address]["availability"], inputs[address]["spatial"]["status"]))
+			self.assertIn("electrical matrix table", inputs[address]["physical"]["notes"])
+		self.assertEqual(7, len({tuple(inputs[number]["spatial"]["placements"][0][axis] for axis in ("x", "y")) for number in range(17, 24)}))
+		outputs = {(item["binding"]["group"], item["binding"]["device"]): item for item in self.pro["outputs"]}
+		orbit_post = outputs[("pinmame.output.solenoid", 31)]
+		self.assertEqual((1, 1), (orbit_post["physical"]["quantity"], len(orbit_post["spatial"]["placements"])))
+		self.assertIn("tangent UpPost2 collision wall", orbit_post["physical"]["notes"])
+		self.assertEqual((0.069490, 0.082959), tuple(outputs[("pinmame.output.solenoid", 21)]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.920713, 0.070765), tuple(outputs[("pinmame.output.solenoid", 23)]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual(outputs[("pinmame.output.lamp", 20)]["spatial"]["placements"][0]["x"], outputs[("pinmame.output.lamp", 26)]["spatial"]["placements"][0]["x"])
+		self.assertEqual(outputs[("pinmame.output.lamp", 34)]["spatial"]["placements"][0]["x"], outputs[("pinmame.output.lamp", 42)]["spatial"]["placements"][0]["x"])
+
+	def test_pro_gi_has_thirty_two_physical_emitters_on_one_transport_channel(self) -> None:
+		gi = next(item for item in self.pro["outputs"] if item["binding"]["group"] == "pinmame.output.gi")
+		self.assertEqual((0, 32, 32), (gi["binding"]["device"], gi["physical"]["quantity"], len(gi["spatial"]["placements"])))
+		self.assertEqual(7, sum("rear-red.gi2" in point["id"] for point in gi["spatial"]["placements"]))
+		self.assertEqual(7, sum("wedge.gi3" in point["id"] for point in gi["spatial"]["placements"]))
+		self.assertEqual(8, sum("wedge.gi1" in point["id"] for point in gi["spatial"]["placements"]))
+		self.assertEqual(2, sum("spot-gi1" in point["id"] for point in gi["spatial"]["placements"]))
+		self.assertEqual(8, sum("bayonet.gi0" in point["id"] for point in gi["spatial"]["placements"]))
 
 	def test_pro_gi_and_display_are_runtime_validated(self) -> None:
 		gi = next(item for item in self.pro["outputs"] if item["binding"]["group"] == "pinmame.output.gi")
@@ -145,7 +176,7 @@ class MustangDefinitionTests(unittest.TestCase):
 		self.assertEqual({"mechanism.trough", "mechanism.auto-launcher", "mechanism.right-scoop", "mechanism.captive-ball", "mechanism.center-drop-bank", "mechanism.mid-ramp", "mechanism.upper-ramp", "mechanism.orbit-post", "mechanism.bowl", "mechanism.pop-bumpers", "mechanism.slingshots", "mechanism.flippers", "mechanism.spinner"}, set(mechanisms))
 		self.assertIn("23,22,21,20,19,18", mechanisms["mechanism.trough"]["behavior"])
 		self.assertIn("185 degrees", mechanisms["mechanism.right-scoop"]["behavior"])
-		self.assertIn("asserted both posts rise", mechanisms["mechanism.orbit-post"]["behavior"])
+		self.assertIn("one physical UP POST assembly", mechanisms["mechanism.orbit-post"]["behavior"])
 		self.assertTrue(all(item["provenance"]["status"] == "validated" for item in mechanisms.values()))
 
 	def test_bindings_are_unique_within_each_controller_group(self) -> None:
@@ -165,6 +196,8 @@ class MustangDefinitionTests(unittest.TestCase):
 		pro_runtime = next(source for source in self.pro["sources"] if source["id"] == "runtime.mustang-pro.boot-start")
 		self.assertEqual("4ddf63df5b96e20da501ae336948e877473d21a4eeaf118a58bb7fcba9105a00", pro_script["sha256"])
 		self.assertEqual("3ff72f7f2c58064f96991f8284a16ac2da90c369c217e878cb8603660ffc1b3c", pro_table["sha256"])
+		self.assertTrue(pro_table["known_working"])
+		self.assertIn("All 5,311 GameItem streams and the embedded script are byte-identical", pro_table["locator"])
 		self.assertEqual("c5002a38d3a392aec6e0160e1cd7988917e38e6118e375ef8e7f03e8d9b7bfe2", pro_runtime["sha256"])
 		self.assertTrue((REPOSITORY_ROOT / "evidence" / "runtime" / "sam" / "mustang-pro-boot-start.json").is_file())
 
@@ -184,6 +217,21 @@ class MustangDefinitionTests(unittest.TestCase):
 				if name in {"write", "write_json", "write_text", "unlink"}:
 					mutating_calls.append(name)
 		self.assertEqual([], mutating_calls)
+
+	def test_base_generator_does_not_clobber_promoted_pro_artifacts(self) -> None:
+		spec = importlib.util.spec_from_file_location("curate_mustang_no_clobber_test", REPOSITORY_ROOT / "tools" / "curate_mustang.py")
+		self.assertIsNotNone(spec)
+		self.assertIsNotNone(spec.loader)
+		module = importlib.util.module_from_spec(spec)
+		spec.loader.exec_module(module)
+		with tempfile.TemporaryDirectory() as temporary:
+			module.ROOT = Path(temporary)
+			knowledge_path = module.ROOT / "knowledge" / "stern" / "mustang-pro-2014.md"
+			knowledge_path.parent.mkdir(parents=True)
+			knowledge_path.write_text("promoted spatial knowledge\n", encoding="utf-8")
+			module.main()
+			self.assertEqual("promoted spatial knowledge\n", knowledge_path.read_text(encoding="utf-8"))
+			self.assertFalse((module.ROOT / "machines" / "partial" / "stern" / "mustang-pro-2014.json").exists())
 
 
 if __name__ == "__main__":

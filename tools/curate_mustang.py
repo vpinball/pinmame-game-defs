@@ -506,7 +506,8 @@ PRO_LAMP_NAMES = [
 	"1969 Mustang", "2000 Mustang", "2nd gear", "4th gear", "1st gear", "3rd gear", "5th gear", "Tech upgrade",
 	"Handling upgrade", "4th gear green", "Tire upgrade", "Engine upgrade", "Drive-train upgrade", "Body mods", "N2O upgrade", "Shot arrow #1",
 	"Shot arrow #2", "6th gear red", "Jackpot left", "N2O left", "Extra ball", "Start N2O", "Left orbit green", "Left orbit yellow",
-	"Left orbit red", "6th gear green", "Unused matrix lamp #43", "Shot arrow #5", "Jackpot center", "Right 3-bank top", "Right 3-bank center", "Right 3-bank bottom",
+	"Left orbit red", "6th gear green", "Unused matrix lamp #43", "Unused matrix lamp #44", "Shot arrow #5", "Jackpot center", "Right 3-bank top", "Right 3-bank center",
+	"Right 3-bank bottom",
 	"Multiball", "Shot arrow #8 red", "Shot arrow #7", "Jackpot right", "N2O right", "Right orbit green", "Right orbit yellow", "Right orbit red",
 	"Shot arrow #3", "Shot arrow #6", "Shot arrow #4", "N2O center", "Pony top lane #1 (L)", "Pony top lane #2", "Pony top lane #3", "Pony top lane #4",
 	"(M)USTANG", "M(U)STANG", "MU(S)TANG", "MUS(T)ANG", "MUST(A)NG", "MUSTA(N)G", "MUSTAN(G)", "Ford top lane #1 (L)",
@@ -546,7 +547,7 @@ def pro_lamps() -> list[dict[str, object]]:
 	for manual_number, label in PRO_EXTENDED_LAMP_NAMES.items():
 		public_address = PRO_EXTENDED_PUBLIC_BY_MANUAL[manual_number]
 		items.append(output_device(public_address, label, "lamp", "used", (PRO_MANUAL, PRO_VPX_SOURCE, PRO_RUNTIME_SOURCE, CORE_SOURCE), "validated", "pinmame.output.lamp", str(manual_number), {"location": "Board 5 or playfield sign", "notes": f"Physical diagnostic lamp #{manual_number}; PinMAME exposes it as public ChangedLamps channel {public_address}."}, output_id=f"lamp.extended-{manual_number}-{slug(label)}"))
-	for public_address in (80, 98, 99, 100, 101):
+	for public_address in (98, 99, 100, 101):
 		items.append(output_device(public_address, f"Unpopulated public lamp channel {public_address}", "lamp", "unused", (PRO_MANUAL, PRO_RUNTIME_SOURCE, CORE_SOURCE), "validated", "pinmame.output.lamp", physical={"notes": "The isolated ROM run emitted this compatibility channel, but the Pro manual and Board-5 remap define no physical lamp at this public address."}, output_id=f"lamp.unpopulated-public-{public_address}"))
 	items.append(output_device(0, "General illumination", "gi", "used", (PRO_MANUAL, PRO_RUNTIME_SOURCE), "validated", "pinmame.output.gi", "GI-0", {"location": "Playfield and backbox", "notes": "The isolated mt_145 ROM run observes public GI address 0."}, output_id="gi.general-illumination"))
 	return items
@@ -592,7 +593,7 @@ def pro_mechanisms() -> list[dict[str, object]]:
 		mechanism("mechanism.center-drop-bank", "Center five-bank GEARS drop targets", "drop_target_bank", ["device.center-5-bank-drop-reset"], ["switch.g-ears-drop-target", "switch.g-e-ars-drop-target", "switch.ge-a-rs-drop-target", "switch.gea-r-s-drop-target", "switch.gear-s-drop-target"], "Switches 34-38 latch while their targets are down. Output 7 raises the complete bank through cvpmDropTarget.", s, "validated", [{"id": "position.up", "label": "All raised", "sensors": []}, {"id": "position.down", "label": "Individual target down", "sensors": ["switch.g-ears-drop-target", "switch.g-e-ars-drop-target", "switch.ge-a-rs-drop-target", "switch.gea-r-s-drop-target", "switch.gear-s-drop-target"]}]),
 		mechanism("mechanism.mid-ramp", "Mid raising ramp", "motorized", ["device.mid-ramp-power", "device.mid-ramp-hold"], ["switch.mid-ramp-exit"], "The physical assembly has separate power output 3 and hold output 4. The proven table keys route geometry from output 4: asserted opens its gate and makes the bottom/mid ramp surface visible and collidable; de-asserted closes the gate and removes that surface. Switch 39 pulses when a ball exits the route and is not a position sensor.", s, "validated", [{"id": "position.route-enabled", "label": "Ramp route enabled", "sensors": []}, {"id": "position.route-disabled", "label": "Ramp route disabled", "sensors": []}]),
 		mechanism("mechanism.upper-ramp", "Upper raising ramp", "motorized", ["device.upper-ramp-power", "device.upper-ramp-hold"], ["switch.upper-ramp-exit"], "The physical assembly has separate power output 5 and hold output 6. The proven table keys route geometry from output 6: asserted opens its gate and makes the upper-ramp surface visible and collidable; de-asserted closes the gate and removes that surface. Switch 40 pulses when a ball exits the route and is not a position sensor.", s, "validated", [{"id": "position.route-enabled", "label": "Ramp route enabled", "sensors": []}, {"id": "position.route-disabled", "label": "Ramp route disabled", "sensors": []}]),
-		mechanism("mechanism.orbit-post", "Dual orbit posts", "gate", ["device.orbit-post"], ["switch.right-orbit", "switch.left-orbit"], "Output 31 drives two posts as one logical mechanism. The posts initialize dropped. While output 31 is asserted both posts rise; when de-asserted both drop. Right and left orbit passage switches are 44 and 45 and do not report post position.", s, "validated", [{"id": "position.down", "label": "Posts dropped", "sensors": []}, {"id": "position.up", "label": "Posts raised", "sensors": []}]),
+		mechanism("mechanism.orbit-post", "Orbit post assembly", "gate", ["device.orbit-post"], ["switch.right-orbit", "switch.left-orbit"], "The service manual identifies one physical UP POST assembly at output 31. The working VPT represents its blocking geometry with two tangent collision walls, UpPost and UpPost2, and toggles both together: assertion raises the assembly and de-assertion drops it. Right and left orbit passage switches 44 and 45 do not report post position.", s, "validated", [{"id": "position.down", "label": "Post dropped", "sensors": []}, {"id": "position.up", "label": "Post raised", "sensors": []}]),
 		mechanism("mechanism.bowl", "Whirlpool bowl", "other", [], ["switch.bowl-switch"], "The passive whirlpool/bowl has no dedicated controller output. The proven table holds switch 46 active while a ball occupies its scoring trigger and clears it on exit; reproduce the physical bowl geometry so traversal and dwell drive that switch naturally.", s, "validated"),
 		mechanism("mechanism.pop-bumpers", "Four pop bumpers", "kicker", ["device.left-pop-bumper", "device.right-pop-bumper", "device.bottom-pop-bumper", "device.top-pop-bumper"], ["switch.left-pop-bumper", "switch.right-pop-bumper", "switch.bottom-pop-bumper", "switch.top-pop-bumper"], "Switches 30-33 pulse the corresponding pop-bumper assemblies driven by outputs 9-12. The proven table maps its visual bumper objects to switches 31, 30, 32, and 33 respectively, while the service-manual labels in the JSON remain authoritative for physical placement.", s, "validated"),
 		mechanism("mechanism.slingshots", "Left and right slingshots", "kicker", ["device.left-slingshot", "device.right-slingshot"], ["switch.left-slingshot", "switch.right-slingshot"], "Switches 26 and 27 pulse the left and right slingshot assemblies driven by outputs 13 and 14.", s, "validated"),
@@ -753,7 +754,7 @@ The recovered working Mustang Pro PhysMod5 table by 85vett with gtxjoe's 1.0 fun
 
 ## Physical differences from Premium/LE
 
-The Pro lacks the Premium/LE turntable and its index/home switches, both single drop targets, auxiliary orbit gates, ramp diverter, lockbar action button, RGB arrow/action lighting, and 12-transistor auxiliary output board. Matrix positions 49-53 and 56-64 are therefore unused. The Pro instead has a dual orbit-post mechanism at output 31 and right-scoop eject at output 32 through step-up drivers. N2O center/right are switches 4/5, spinner is 48, the standard lamp matrix uses Pro-specific labels, and its white/grid/sign Board-5 inventory ends at printed diagnostic 108.
+The Pro lacks the Premium/LE turntable and its index/home switches, both single drop targets, auxiliary orbit gates, ramp diverter, lockbar action button, RGB arrow/action lighting, and 12-transistor auxiliary output board. Matrix positions 49-53 and 56-64 are therefore unused. The Pro instead has one orbit-post assembly at output 31 and right-scoop eject at output 32 through step-up drivers. N2O center/right are switches 4/5, spinner is 48, the standard lamp matrix uses Pro-specific labels, and its white/grid/sign Board-5 inventory ends at printed diagnostic 108.
 
 ## Switch topology
 
@@ -773,7 +774,7 @@ The mid and upper ramp assemblies each have distinct power/hold windings: output
 
 ## Orbit posts
 
-Output 31 controls two physical posts as one mechanism. Both initialize dropped. Assertion raises both posts; de-assertion drops both. Switches 44 right orbit and 45 left orbit report ball passage and do not sense post position. A recreation should therefore animate both posts atomically from the output and let table geometry determine the resulting route.
+The service manual prints one physical `31 UP POST` assembly. It initializes dropped; assertion raises it and de-assertion drops it. The working VPT implements that one assembly's blocking geometry with two tangent walls named `UpPost` and `UpPost2`, toggled atomically from output 31. Those are collision elements, not proof of two physical posts. Switches 44 right orbit and 45 left orbit report ball passage and do not sense post position.
 
 ## Scoop and captive ball
 
@@ -785,8 +786,8 @@ GEARS switches 34-38 latch individually while down; output 7 raises the complete
 
 ## Recreation checklist
 
-- Construct every listed physical input and output, including explicit unused controller positions, seven trough/jam sensors, two orbit posts on one output, the two dual-winding ramps, standard lamp matrix, Board-5 grid/sign lighting, GI, and native DMD.
-- Initialize both orbit posts dropped, the captive ball at front/rest switch 9, five-bank targets raised, six trough balls with the script-compatible 18-23 ordering, and ramp collision routes according to their hold-output state.
+- Construct every listed physical input and output, including explicit unused controller positions, seven trough/jam sensors, the single orbit-post assembly, the two dual-winding ramps, standard lamp matrix, Board-5 grid/sign lighting, GI, and native DMD.
+- Initialize the orbit post dropped, the captive ball at front/rest switch 9, five-bank targets raised, six trough balls with the script-compatible 18-23 ordering, and ramp collision routes according to their hold-output state. If reproducing the proven VPT route geometry, animate both tangent collision elements from the one post output.
 - Bind extended lamps to JSON public addresses and use the printed diagnostics only as physical aliases.
 - Keep route-exit switches 39/40 distinct from ramp position; neither ramp has a dedicated position switch on the Pro.
 - Treat the recovered table's force, direction, Z, timing, and captive-ball constants as proven authoring starting points; refine geometry against measurements without changing controller causality.
@@ -820,11 +821,13 @@ def main() -> None:
 	if premium_machine_id in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
 		write(ROOT / "machines/partial/stern/mustang-premium-limited-edition-boss-2014.json", build_premium())
 		write_text(ROOT / "knowledge/stern/mustang-premium-limited-edition-boss-2014.md", fail_closed_spatial_knowledge(premium_machine_id, PREMIUM_KNOWLEDGE))
-	old_pro = ROOT / "machines/partial/stern/mustang-pro-2014.json"
-	if old_pro.exists():
-		old_pro.unlink()
-	write(old_pro, build_pro())
-	write_text(ROOT / "knowledge/stern/mustang-pro-2014.md", fail_closed_spatial_knowledge("stern.mustang-pro.2014", PRO_KNOWLEDGE))
+	pro_machine_id = "stern.mustang-pro.2014"
+	if pro_machine_id in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
+		old_pro = ROOT / "machines/partial/stern/mustang-pro-2014.json"
+		if old_pro.exists():
+			old_pro.unlink()
+		write(old_pro, build_pro())
+		write_text(ROOT / "knowledge/stern/mustang-pro-2014.md", fail_closed_spatial_knowledge(pro_machine_id, PRO_KNOWLEDGE))
 
 
 if __name__ == "__main__":

@@ -1,7 +1,6 @@
 # Mustang Pro (Stern, 2014)
 
-Coverage: **partial — normalized spatial placements pending.**
-Previously validated non-spatial scope: **physical inventory, PinMAME bindings, mechanisms, and recreation behavior validated**
+Coverage: **author-ready - physical inventory, PinMAME bindings, mechanisms, recreation behavior, and spatial placements validated**
 
 ## Identity and variants
 
@@ -13,7 +12,7 @@ The recovered working Mustang Pro PhysMod5 table by 85vett with gtxjoe's 1.0 fun
 
 ## Physical differences from Premium/LE
 
-The Pro lacks the Premium/LE turntable and its index/home switches, both single drop targets, auxiliary orbit gates, ramp diverter, lockbar action button, RGB arrow/action lighting, and 12-transistor auxiliary output board. Matrix positions 49-53 and 56-64 are therefore unused. The Pro instead has a dual orbit-post mechanism at output 31 and right-scoop eject at output 32 through step-up drivers. N2O center/right are switches 4/5, spinner is 48, the standard lamp matrix uses Pro-specific labels, and its white/grid/sign Board-5 inventory ends at printed diagnostic 108.
+The Pro lacks the Premium/LE turntable and its index/home switches, both single drop targets, auxiliary orbit gates, ramp diverter, lockbar action button, RGB arrow/action lighting, and 12-transistor auxiliary output board. Matrix positions 49-53 and 56-64 are therefore unused. The Pro instead has one orbit-post assembly at output 31 and right-scoop eject at output 32 through step-up drivers. N2O center/right are switches 4/5, spinner is 48, the standard lamp matrix uses Pro-specific labels, and its white/grid/sign Board-5 inventory ends at printed diagnostic 108.
 
 ## Switch topology
 
@@ -33,7 +32,7 @@ The mid and upper ramp assemblies each have distinct power/hold windings: output
 
 ## Orbit posts
 
-Output 31 controls two physical posts as one mechanism. Both initialize dropped. Assertion raises both posts; de-assertion drops both. Switches 44 right orbit and 45 left orbit report ball passage and do not sense post position. A recreation should therefore animate both posts atomically from the output and let table geometry determine the resulting route.
+The service manual prints one physical `31 UP POST` assembly. It initializes dropped; assertion raises it and de-assertion drops it. The working VPT implements that one assembly's blocking geometry with two tangent walls named `UpPost` and `UpPost2`, toggled atomically from output 31. Those are collision elements, not proof of two physical posts. Switches 44 right orbit and 45 left orbit report ball passage and do not sense post position.
 
 ## Scoop and captive ball
 
@@ -45,16 +44,26 @@ GEARS switches 34-38 latch individually while down; output 7 raises the complete
 
 ## Recreation checklist
 
-- Construct every listed physical input and output, including explicit unused controller positions, seven trough/jam sensors, two orbit posts on one output, the two dual-winding ramps, standard lamp matrix, Board-5 grid/sign lighting, GI, and native DMD.
-- Initialize both orbit posts dropped, the captive ball at front/rest switch 9, five-bank targets raised, six trough balls with the script-compatible 18-23 ordering, and ramp collision routes according to their hold-output state.
+- Construct every listed physical input and output, including explicit unused controller positions, seven trough/jam sensors, the single orbit-post assembly, the two dual-winding ramps, standard lamp matrix, Board-5 grid/sign lighting, GI, and native DMD.
+- Initialize the orbit post dropped, the captive ball at front/rest switch 9, five-bank targets raised, six trough balls with the script-compatible 18-23 ordering, and ramp collision routes according to their hold-output state. If reproducing the proven VPT route geometry, animate both tangent collision elements from the one post output.
 - Bind extended lamps to JSON public addresses and use the printed diagnostics only as physical aliases.
 - Keep route-exit switches 39/40 distinct from ramp position; neither ramp has a dedicated position switch on the Pro.
 - Treat the recovered table's force, direction, Z, timing, and captive-ball constants as proven authoring starting points; refine geometry against measurements without changing controller causality.
 
+## Spatial coordinate model
+
+Every physical playfield input, actuator, lamp, and GI socket has a normalized player-view placement: x=0 left, x=1 right, y=0 rear/backglass end, and y=1 apron. Exact object centers come from the known-working VPT only after script/manual reconciliation. Trough contacts, captive-ball switch 9, implicit EOS contacts, sign lamps, back-panel flashers, and GI sockets use explicitly disclosed assembly or drawing projections with practical uncertainty; cabinet, service, virtual, unpopulated, unused, and DIP devices are explicitly outside playfield space.
+
+The Pro manual's lighting drawing proves 32 physical GI emitters behind one public transport channel: 15 wedge-base playfield lamps, eight bayonet-base playfield lamps, two separately called-out spot assemblies, and seven red rear bayonet lamps. Calibrated drawing projections preserve the four physical GI-0 through GI-3 regions; VPT light pools, broad fields, and reflections are excluded.
+
+The switch-location drawing plots callouts 49 and 50 even though the electrical matrix table leaves 49-53 blank and the working Pro script binds neither 49 nor 50. The definition follows the proven controller behavior and electrical table, keeps both channels explicitly unused, and records the drawing conflict instead of inventing two live switches. The drawing is still valuable as evidence that the page was shared or revised inconsistently.
+
+The standard lamp audit corrects a prior one-address shift: both 43 and 44 are blank, 45 is Shot Arrow #5, 49 is the bottom right 3-bank lamp, and 80 is the physical right-pop lamp. Addresses 20/26 and 34/42 are paired color channels at shared fourth-gear and sixth-gear insert centers.
+
 ## Sources
 
-- `manual.mustang-pro`: official Stern `Mustang-Manual.pdf`, SHA-256 `63d0b8d44dadb22e8e878586805f805b71aa65038a77e00f5b973ece3b118235`; scanned I/O tables on PDF pages 12, 15, 18, and 20.
-- `vpx-table.mustang-pro-85vett-gtxjoe-1.0`: working VPT SHA-256 `3ff72f7f2c58064f96991f8284a16ac2da90c369c217e878cb8603660ffc1b3c`, retained externally under `pinmame-game-code/mt_145/vpx-table`; source archive SHA-256 `d73e2e2edd7dcfef64f2396f4d09fe169f273dfb0ba86abee59b2af5a45c3615`.
+- `manual.mustang-pro`: official Stern `Mustang-Manual.pdf`, SHA-256 `63d0b8d44dadb22e8e878586805f805b71aa65038a77e00f5b973ece3b118235`; scanned I/O tables on PDF pages 12, 15, 18, and 20, physical location drawings on PDF pages 13, 16, 19, and 21, and GI map on PDF page 40.
+- `vpx-table.mustang-pro-85vett-gtxjoe-1.0`: working `Mustang Pro_85vett_mod_gtxjoe_1.0.vpt`, 32,862,208 bytes, SHA-256 `3ff72f7f2c58064f96991f8284a16ac2da90c369c217e878cb8603660ffc1b3c`, retained externally under `pinmame-vpx-sources/stern/mustang-pro-2014`; source archive SHA-256 `d73e2e2edd7dcfef64f2396f4d09fe169f273dfb0ba86abee59b2af5a45c3615`. Because one embedded image stream is one byte short, the vpxtool analysis derivative sets the GameData `SIMG` and `SSND` counts to zero; the OLE rewrite also zeroes 58 residual bytes after the GameData `ENDB` marker. All 5,311 GameItem streams and the embedded script remain byte-identical. The derivative SHA-256 is `b859cc86dd69978411eeaabb135e270c950e01498b2f986b034c6b49f5b9e7ed` and it is not distributed as the source table.
 - `vpx.mustang-pro-85vett-gtxjoe-1.0`: exact embedded script SHA-256 `4ddf63df5b96e20da501ae336948e877473d21a4eeaf118a58bb7fcba9105a00`, extracted mechanically from the retained VPT.
 - `runtime.mustang-pro.boot-start`: exact `mt_145.zip` isolated run; raw evidence SHA-256 `c5002a38d3a392aec6e0160e1cd7988917e38e6118e375ef8e7f03e8d9b7bfe2`, ROM archive SHA-256 `4240f7e311dfc571d8d1149e703d5f251d45b4dbccd3dfe157f781e750de7409`; ROM bytes remain external.
 - `pinmame.core.4ec52ff0ac13`: pinned SAM platform and driver configuration.
