@@ -1,12 +1,15 @@
 from __future__ import annotations
 
+import ast
+import importlib.util
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PREMIUM_PATH = ROOT / "machines" / "partial" / "stern" / "metallica-premium-limited-edition-2013.json"
+PREMIUM_PATH = ROOT / "machines" / "author-ready" / "stern" / "metallica-premium-limited-edition-2013.json"
 PRO_PATH = ROOT / "machines" / "partial" / "stern" / "metallica-pro-2013.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "metallica-premium-boot-start.json"
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "metallica-pro-boot-start.json"
@@ -29,13 +32,63 @@ class MetallicaDefinitionTests(unittest.TestCase):
 		cls.evidence = load_json(EVIDENCE_PATH)
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
 
-	def test_both_physical_editions_are_fail_closed_for_spatial_retrofit(self) -> None:
-		for definition in (self.premium, self.pro):
-			self.assertEqual(2, definition["schema_version"])
-			self.assertEqual("partial", definition["coverage"]["status"])
-			self.assertIn("spatial_placement", definition["coverage"]["missing"])
-			self.assertEqual("complete", definition["knowledge"]["status"])
+	def test_premium_is_author_ready_while_pro_remains_fail_closed(self) -> None:
+		self.assertEqual(2, self.premium["schema_version"])
+		self.assertEqual("physical_pinball", self.premium["machine"]["kind"])
+		self.assertEqual("author_ready", self.premium["coverage"]["status"])
+		self.assertEqual([], self.premium["coverage"]["missing"])
+		self.assertEqual("validated", self.premium["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual("complete", self.premium["knowledge"]["status"])
+		self.assertEqual(2, self.pro["schema_version"])
+		self.assertEqual("partial", self.pro["coverage"]["status"])
+		self.assertIn("spatial_placement", self.pro["coverage"]["missing"])
+		self.assertEqual("complete", self.pro["knowledge"]["status"])
 		self.assertTrue((ROOT / "machines" / "partial" / "stern" / "metallica-pro-2013.json").exists())
+		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "metallica-premium-limited-edition-2013.json").exists())
+
+	def test_premium_spatial_inventory_disposes_every_device(self) -> None:
+		devices = [*self.premium["inputs"], *self.premium["outputs"]]
+		self.assertTrue(all(device["spatial"]["status"] in {"validated", "not_applicable"} for device in devices))
+		for device in devices:
+			for placement in device["spatial"].get("placements", []):
+				self.assertGreaterEqual(placement["x"], 0)
+				self.assertLessEqual(placement["x"], 1)
+				self.assertGreaterEqual(placement["y"], 0)
+				self.assertLessEqual(placement["y"], 1)
+		inputs = bindings(self.premium, "inputs", "pinmame.input.switch")
+		self.assertEqual((0.282798, 0.720336), tuple(inputs[26]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.701945, 0.719894), tuple(inputs[27]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.551829, 0.309179), tuple(bindings(self.premium, "outputs", "pinmame.output.solenoid")[53]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		for address in (15, 16, 65, 66, 67, 68, 69, 82, 84):
+			self.assertEqual(("not_applicable", "cabinet_or_service"), (inputs[address]["spatial"]["status"], inputs[address]["spatial"]["reason"]))
+		self.assertEqual(["flipper.lower.left.eos"], inputs[83]["roles"])
+		self.assertEqual(["flipper.lower.right.eos"], inputs[81]["roles"])
+
+	def test_premium_spatial_lighting_preserves_physical_multiplicity(self) -> None:
+		lamps = bindings(self.premium, "outputs", "pinmame.output.lamp")
+		self.assertEqual((0.810352, 0.448962), tuple(lamps[17]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		self.assertEqual((0.143356, 0.571677), tuple(lamps[87]["spatial"]["placements"][0][axis] for axis in ("x", "y")))
+		for address in (25, 53):
+			self.assertEqual((2, 1), (lamps[address]["physical"]["quantity"], len(lamps[address]["spatial"]["placements"])))
+			self.assertIn("one composite light anchor", lamps[address]["physical"]["notes"])
+		self.assertEqual((11, 10), (lamps[130]["physical"]["quantity"], len(lamps[130]["spatial"]["placements"])))
+		self.assertEqual((11, 11), (lamps[132]["physical"]["quantity"], len(lamps[132]["spatial"]["placements"])))
+		self.assertEqual((11, 5), (lamps[134]["physical"]["quantity"], len(lamps[134]["spatial"]["placements"])))
+		self.assertEqual((28, 22), (lamps[136]["physical"]["quantity"], len(lamps[136]["spatial"]["placements"])))
+		self.assertTrue(all(lamps[address]["spatial"]["reason"] == "cabinet_or_service" for address in (72, 76)))
+		aggregate = bindings(self.premium, "outputs", "pinmame.output.gi")[0]
+		self.assertEqual(("not_applicable", "internal_nonvisual"), (aggregate["spatial"]["status"], aggregate["spatial"]["reason"]))
+		self.assertIn("not another physical GI circuit", aggregate["physical"]["notes"])
+
+	def test_premium_spatial_flashers_keep_manual_quantities(self) -> None:
+		solenoids = bindings(self.premium, "outputs", "pinmame.output.solenoid")
+		self.assertEqual((2, 2), (solenoids[26]["physical"]["quantity"], len(solenoids[26]["spatial"]["placements"])))
+		self.assertEqual((2, 2), (solenoids[27]["physical"]["quantity"], len(solenoids[27]["spatial"]["placements"])))
+		self.assertEqual((2, 2), (solenoids[28]["physical"]["quantity"], len(solenoids[28]["spatial"]["placements"])))
+		self.assertEqual((2, 1), (solenoids[31]["physical"]["quantity"], len(solenoids[31]["spatial"]["placements"])))
+		for address in (21, 22):
+			self.assertEqual(3, solenoids[address]["physical"]["quantity"])
+			self.assertEqual(("not_applicable", "cabinet_or_service"), (solenoids[address]["spatial"]["status"], solenoids[address]["spatial"]["reason"]))
 
 	def test_driver_family_is_split_without_overlap_or_omission(self) -> None:
 		expected_premium = {"mtl_113h", "mtl_116h", "mtl_120h", "mtl_122h", "mtl_150h", "mtl_151h", "mtl_160h", "mtl_163h", "mtl_164h", "mtl_164hc", "mtl_170h", "mtl_170hc", "mtl_180h", "mtl_180hc"}
@@ -178,6 +231,56 @@ class MetallicaDefinitionTests(unittest.TestCase):
 		sources = {source["id"]: source for source in self.pro["sources"]}
 		self.assertEqual("d5ea2810308e05daee22c2a75b3d80a4b19fbd3f89e67144a38f9c20bdb33307", sources["vpx.metallica-pro-jps-6.0.0"]["sha256"])
 		self.assertEqual("837ee8d05e0f61e51136d397737d85e4ec14d41859abfb6e789785b82a60a118", sources["vpx-table.metallica-pro-jps-6.0.0"]["sha256"])
+
+	def test_premium_spatial_sources_are_content_locked_and_known_working(self) -> None:
+		sources = {source["id"]: source for source in self.premium["sources"]}
+		table = sources["vpx-table.metallica-premium-monsters-vpw-2.0"]
+		self.assertTrue(table["known_working"])
+		self.assertEqual("afc1f1b300b2b2226db6edc5986007c05ac714db5ce69a582730e2a346ecb17f", table["sha256"])
+		self.assertIn("952.941 by 2117.647", table["locator"])
+		self.assertIn("PDF pages 45-50", sources["manual.metallica-pro-premium"]["locator"])
+		inputs = bindings(self.premium, "inputs", "pinmame.input.switch")
+		self.assertEqual(["manual.metallica-pro-premium"], inputs[22]["spatial"]["placements"][0]["provenance"]["source_refs"])
+		self.assertEqual(
+			["manual.metallica-pro-premium", "vpx.metallica-premium-monsters-vpw-2.0.2", "vpx-table.metallica-premium-monsters-vpw-2.0"],
+			inputs[23]["spatial"]["placements"][0]["provenance"]["source_refs"],
+		)
+
+	def test_base_generator_has_no_import_time_writes(self) -> None:
+		source = (ROOT / "tools" / "curate_metallica.py").read_text(encoding="utf-8")
+		tree = ast.parse(source)
+		mutating_calls = []
+		for statement in tree.body:
+			if isinstance(statement, (ast.FunctionDef, ast.ClassDef, ast.Import, ast.ImportFrom, ast.Assign, ast.AnnAssign)):
+				continue
+			if isinstance(statement, ast.If) and isinstance(statement.test, ast.Compare) and isinstance(statement.test.left, ast.Name) and statement.test.left.id == "__name__":
+				continue
+			for node in ast.walk(statement):
+				if not isinstance(node, ast.Call):
+					continue
+				name = node.func.id if isinstance(node.func, ast.Name) else node.func.attr if isinstance(node.func, ast.Attribute) else ""
+				if name in {"write", "write_json", "write_text", "unlink"}:
+					mutating_calls.append(name)
+		self.assertEqual([], mutating_calls)
+
+	def test_base_generator_does_not_clobber_promoted_premium_artifacts(self) -> None:
+		spec = importlib.util.spec_from_file_location("curate_metallica_no_clobber_test", ROOT / "tools" / "curate_metallica.py")
+		self.assertIsNotNone(spec)
+		self.assertIsNotNone(spec.loader)
+		module = importlib.util.module_from_spec(spec)
+		spec.loader.exec_module(module)
+		with tempfile.TemporaryDirectory() as temporary:
+			module.ROOT = Path(temporary)
+			definition_path = module.ROOT / "machines" / "author-ready" / "stern" / "metallica-premium-limited-edition-2013.json"
+			definition_path.parent.mkdir(parents=True)
+			definition_path.write_text('{"promoted": true}\n', encoding="utf-8")
+			knowledge_path = module.ROOT / "knowledge" / "stern" / "metallica-premium-limited-edition-2013.md"
+			knowledge_path.parent.mkdir(parents=True)
+			knowledge_path.write_text("promoted spatial knowledge\n", encoding="utf-8")
+			module.main()
+			self.assertEqual('{"promoted": true}\n', definition_path.read_text(encoding="utf-8"))
+			self.assertEqual("promoted spatial knowledge\n", knowledge_path.read_text(encoding="utf-8"))
+			self.assertFalse((module.ROOT / "machines" / "partial" / "stern" / "metallica-premium-limited-edition-2013.json").exists())
 
 
 if __name__ == "__main__":

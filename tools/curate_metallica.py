@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import write_json as write_json_file, write_text
-from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+from pinmame_game_defs.spatial import SPATIAL_RETROFIT_PENDING_MACHINE_IDS, fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -657,16 +657,25 @@ def write_json(path: Path, value: dict[str, object]) -> None:
 	write_json_file(path, value)
 
 
-for stale in (
-	ROOT / "machines/partial/stern/metallica-premium-2013.json",
-	ROOT / "machines/partial/stern/metallica-pro-2013.json",
-	ROOT / "knowledge/stern/metallica-premium-2013.md",
-):
-	if stale.exists():
-		stale.unlink()
-write_json(ROOT / "machines/partial/stern/metallica-premium-limited-edition-2013.json", build_premium())
-write_json(ROOT / "machines/partial/stern/metallica-pro-2013.json", build_pro())
-write_json(ROOT / "evidence/runtime/sam/metallica-premium-boot-start.json", runtime_evidence())
-write_json(ROOT / "evidence/runtime/sam/metallica-pro-boot-start.json", pro_runtime_evidence())
-write_text(ROOT / "knowledge/stern/metallica-premium-limited-edition-2013.md", fail_closed_spatial_knowledge("stern.metallica-premium-limited-edition.2013", PREMIUM_KNOWLEDGE))
-write_text(ROOT / "knowledge/stern/metallica-pro-2013.md", fail_closed_spatial_knowledge("stern.metallica-pro.2013", PRO_KNOWLEDGE))
+def main() -> None:
+	for stale in (
+		ROOT / "machines/partial/stern/metallica-premium-2013.json",
+		ROOT / "machines/partial/stern/metallica-pro-2013.json",
+		ROOT / "knowledge/stern/metallica-premium-2013.md",
+	):
+		if stale.exists():
+			stale.unlink()
+	premium_machine_id = "stern.metallica-premium-limited-edition.2013"
+	if premium_machine_id in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
+		write_json(ROOT / "machines/partial/stern/metallica-premium-limited-edition-2013.json", build_premium())
+		write_text(ROOT / "knowledge/stern/metallica-premium-limited-edition-2013.md", fail_closed_spatial_knowledge(premium_machine_id, PREMIUM_KNOWLEDGE))
+	pro_machine_id = "stern.metallica-pro.2013"
+	if pro_machine_id in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
+		write_json(ROOT / "machines/partial/stern/metallica-pro-2013.json", build_pro())
+		write_text(ROOT / "knowledge/stern/metallica-pro-2013.md", fail_closed_spatial_knowledge(pro_machine_id, PRO_KNOWLEDGE))
+	write_json(ROOT / "evidence/runtime/sam/metallica-premium-boot-start.json", runtime_evidence())
+	write_json(ROOT / "evidence/runtime/sam/metallica-pro-boot-start.json", pro_runtime_evidence())
+
+
+if __name__ == "__main__":
+	main()

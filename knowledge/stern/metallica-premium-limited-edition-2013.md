@@ -1,7 +1,6 @@
 # Metallica Premium / Limited Edition (Stern, 2013)
 
-Coverage: **partial — normalized spatial placements pending.**
-Previously validated non-spatial scope: **complete physical inventory, public PinMAME bindings, custom mechanisms, and recreation behavior validated**
+Coverage: **author-ready - complete physical inventory, public PinMAME bindings, custom mechanisms, recreation behavior, and spatial placements validated**
 
 ## Identity and evidence precedence
 
@@ -17,7 +16,7 @@ All matrix positions 1-64, dedicated D1-D24, and DIP inputs are explicit. The ma
 
 ## Lamps, RGB connectors, and GI
 
-Standard lamps 1-80 follow the Premium service table; unused matrix addresses are explicit. The RGB/GI board's public addresses are not sequential by physical connector. Exact table timer bindings prove CN4 blue/green/red at 87/88/89, CN5 at 90/91/92, CN9 at 99/100/101, CN11 at 102/103/104, CN13 at 108/109/110, and CN19 at 126/127/128. Every other address from 81 through 128 is an unused controller channel for this playfield. GI uses public lamp addresses 130 red, 132 blue, 134 white upper, and 136 white playfield; group `pinmame.output.gi/0` remains the aggregate compatibility state. Physical RGB-object coordinates were recovered from the exact working table during curation but have not yet been normalized and promoted into the definition.
+Standard lamps 1-80 follow the Premium service table; unused matrix addresses are explicit. The RGB/GI board's public addresses are not sequential by physical connector. Exact table timer bindings prove CN4 blue/green/red at 87/88/89, CN5 at 90/91/92, CN9 at 99/100/101, CN11 at 102/103/104, CN13 at 108/109/110, and CN19 at 126/127/128. Every other address from 81 through 128 is an unused controller channel for this playfield. GI uses public lamp addresses 130 red, 132 blue, 134 white upper, and 136 white playfield; group `pinmame.output.gi/0` remains the aggregate compatibility state. All physical tri-color module centers are normalized from the exact working table and reconciled with the manual wiring map. Each RGB channel record shares its physical module point; never create one lamp per color channel.
 
 ## Grave marker, electric chair, hammer, and drop bank
 
@@ -40,10 +39,18 @@ The snake holds a ball at switch 54 and ejects it with output 5. Output 12 relea
 - Bind node LEDs and processor bits to the public JSON addresses; retain connector and service numbers only as physical aliases.
 - Use the VPX force, angle, timing, and state transitions as proven authoring baselines, then align geometry to the official assemblies without changing controller causality.
 
+## Spatial coordinate model
+
+Every physical playfield sensor, actuator, controlled lamp, and GI authoring anchor uses one normalized player-view frame from the exact 952.941 by 2117.647 VPW table: x=0 left, x=1 right, y=0 rear/backglass end, and y=1 apron. Exact object centers are accepted only after the proven script establishes controller semantics and the official manual confirms the physical assembly. Cabinet, service, back-panel, virtual, DIP, unused, and compatibility-only records never receive fake playfield points. The trough-jam opto, moving-assembly contacts, slingshot contacts/coils, EOS contacts, and bank reset are explicitly identified as regional or assembly projections rather than fabricated internal component centers.
+
+The grave marker is one moving assembly with separate magnet output 3, motor output 20, down/up switches 33/34, ball opto 52, and flasher 19. The electric-chair/Sparky area keeps magnet 4, standup 35, ball opto 53, step-up 18, and its flashers separate. The coffin mechanism likewise separates three lock optos 57-59 and lock release 51 from magnet position/detection switches 64/63, lowering output 52, and virtual processor bits 57/58. Snake eject 5, latch release 12, jaw close 56, ball switch 54, jaw-open 55, and latch 56 remain distinct controller devices even where only one defensible rest-state assembly pivot exists.
+
+Physical lighting multiplicity follows the manual, not the render-object count. Standard lamps 25 (Mystery) and 53 (Shoot Again) each drive two physical bulbs while the exact table supplies one composite anchor, so their quantities remain two without invented bulb separation. Red GI is nine wedge plus two bayonet fixtures; the table supplies ten calibrated GIR anchors and the manual retains the eleventh without invented precision. Blue GI is nine wedge plus two bayonet and matches 11 GIB anchors. CN22 drives five exact front spot-lamp anchors plus six back-panel fixtures outside playfield space. CN23 drives 22 wedge and two bayonet playfield fixtures plus four bottom-arch fixtures; the exact table supplies 22 GIW anchors, while the remaining six are retained in physical quantity and located by the cited manual map rather than guessed. Public `pinmame.output.gi/0` is only an aggregate compatibility callback and creates no additional bulbs. Back-panel flashers 21/22 each have three physical bulbs outside playfield space. Coffin flasher 31 has two physical bulbs but one defensible composite F31 anchor.
+
 ## Sources
 
-- `manual.metallica-pro-premium`: official Stern `MTLAB1-compressed.pdf`, SHA-256 `f82ecc04bded7117d4c5e3b724dc85e60b5057768bbf7bf5e46c0d1e71a91090`; wiring PDF pages 42-50 and Premium service tables pages 103-110.
+- `manual.metallica-pro-premium`: official Stern `MTLAB1-compressed.pdf`, SHA-256 `f82ecc04bded7117d4c5e3b724dc85e60b5057768bbf7bf5e46c0d1e71a91090`; RGB/GI driver and physical lighting maps on PDF pages 45-50 (pages 47-50 are LE-titled sheets applied to this combined Premium/LE record because the editions share the playfield), Premium switch/lamp/coil location maps on pages 104, 106, and 108, and auxiliary output map on page 110.
 - `vpx.metallica-premium-monsters-vpw-2.0.2`: pinned known-working script, SHA-256 `3be5af3f6b05c4f1445c391aab42713bf9e76af87d563bfb061e7bc5daedfd64`.
-- `vpx-table.metallica-premium-monsters-vpw-2.0`: exact local table, SHA-256 `afc1f1b300b2b2226db6edc5986007c05ac714db5ce69a582730e2a346ecb17f`; used read-only to resolve RGB timer addresses and physical object positions.
+- `vpx-table.metallica-premium-monsters-vpw-2.0`: exact known-working `Metallica Premium Monsters (Stern 2013) VPW 2.0.vpx`, 424,071,168 bytes, SHA-256 `afc1f1b300b2b2226db6edc5986007c05ac714db5ce69a582730e2a346ecb17f`; retained externally under `pinmame-vpx-sources/stern/metallica-premium-limited-edition-2013/source` and extracted read-only with vpxtool git:v0.33.3 for the sole normalized geometry frame.
 - `runtime.metallica-premium.boot-start`: exact `mtl_180h` ROM run, raw SHA-256 `a9a266a66859c8c4374a2e798f90100bb15c229275ea2b58cc9f653bd48d6510`, ROM archive SHA-256 `141018225cdf51421b579b319b925b6dfd6a2fda98471e16998bd648abd86488`.
 - `pinmame.core.4ec52ff0ac13`: pinned SAM implementation, custom-board routing, DMD, and driver configuration.

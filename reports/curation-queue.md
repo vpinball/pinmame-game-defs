@@ -12,7 +12,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 6 | 2014 | Mustang Pro | Stern | author_ready |
 | 7 | 2014 | The Walking Dead Premium / Limited Edition | Stern | author_ready |
 | 8 | 2014 | The Walking Dead Pro | Stern | author_ready |
-| 9 | 2013 | Metallica Premium / Limited Edition | Stern | partial |
+| 9 | 2013 | Metallica Premium / Limited Edition | Stern | author_ready |
 | 10 | 2013 | Metallica Pro | Stern | partial |
 | 11 | 2013 | Star Trek Premium / Limited Edition | Stern | author_ready |
 | 12 | 2013 | Star Trek Pro | Stern | author_ready |
