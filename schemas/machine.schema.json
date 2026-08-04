@@ -481,8 +481,28 @@
         "location": { "type": "string", "minLength": 1 },
         "quantity": { "type": "integer", "minimum": 1 },
         "switch_type": { "enum": ["leaf", "microswitch", "opto", "reed", "button", "dip", "tilt", "other", "unknown"] },
+        "shared_emitter_group": { "type": "string", "minLength": 1 },
+        "emitter_channel": { "enum": ["blue", "green", "red"] },
+        "co_located_addresses": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 0 } },
+        "shared_physical_quantity": { "type": "integer", "minimum": 1 },
         "notes": { "type": "string", "minLength": 1 }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              { "required": ["shared_emitter_group"] },
+              { "required": ["emitter_channel"] },
+              { "required": ["co_located_addresses"] },
+              { "required": ["shared_physical_quantity"] }
+            ]
+          },
+          "then": {
+            "description": "Shared RGB emitter metadata is atomic; quantity is the physical shared quantity.",
+            "required": ["quantity", "shared_emitter_group", "emitter_channel", "co_located_addresses", "shared_physical_quantity"]
+          }
+        }
+      ]
     },
     "wiring": {
       "type": "object",

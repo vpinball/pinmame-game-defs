@@ -24,6 +24,41 @@ class RepositoryValidationTests(unittest.TestCase):
 		definition["coverage"]["dimensions"]["spatial_placement"] = "validated"
 		return definition
 
+	def shared_rgb_fixture(self) -> dict[str, object]:
+		definition = copy.deepcopy(self.transformers)
+		definition["coverage"]["status"] = "partial"
+		definition["coverage"]["missing"] = ["spatial_placement"]
+		template = next(output for output in definition["outputs"] if output["kind"] == "lamp")
+		for address, channel in ((900, "blue"), (901, "green"), (902, "red")):
+			output = copy.deepcopy(template)
+			output["id"] = f"lamp.test-rgb-{address}"
+			output["label"] = f"Test RGB {channel}"
+			output["availability"] = "used"
+			output["binding"] = {"group": "test.rgb", "device": address}
+			output["physical"] = {
+				"quantity": 2,
+				"shared_emitter_group": "rgb.test",
+				"emitter_channel": channel,
+				"co_located_addresses": [900, 901, 902],
+				"shared_physical_quantity": 2,
+				"notes": "Three independently controlled channels on one physical RGB emitter group.",
+			}
+			output["spatial"] = {
+				"status": "observed",
+				"placements": [
+					{
+						"id": f"lamp.test-rgb-{address}.emitter",
+						"role": "emitter",
+						"space": "playfield",
+						"x": 0.5,
+						"y": 0.5,
+						"provenance": copy.deepcopy(template["provenance"]),
+					}
+				],
+			}
+			definition["outputs"].append(output)
+		return definition
+
 	def test_repository_is_valid(self) -> None:
 		self.assertEqual([], validate_repository(ROOT))
 
@@ -146,6 +181,33 @@ class RepositoryValidationTests(unittest.TestCase):
 		physical_outputs[1]["wiring"]["control_connection"] = physical_outputs[0]["wiring"]["control_connection"]
 		errors = validate_machine(definition)
 		self.assertTrue(any("duplicates physical output connection" in error for error in errors))
+
+	def test_shared_rgb_emitter_metadata_is_atomic_and_cross_checked(self) -> None:
+		definition = self.shared_rgb_fixture()
+		self.assertEqual([], validate_against_schema(definition, ROOT / "schemas" / "machine.schema.json", "shared-rgb"))
+		self.assertFalse(any("shared RGB emitter" in error for error in validate_machine(definition)))
+
+		cases = (
+			("missing field", lambda value: value["outputs"][-1]["physical"].pop("shared_physical_quantity"), "metadata fields must appear together"),
+			("missing sibling", lambda value: value["outputs"][-1]["physical"].update({"co_located_addresses": [900, 901, 999]}), "not present in the same output group"),
+			("own address omitted", lambda value: value["outputs"][-3]["physical"].update({"co_located_addresses": [901, 902]}), "own address must be included"),
+			("address disagreement", lambda value: value["outputs"][-2]["physical"].update({"co_located_addresses": [900, 901]}), "agree on the complete address set"),
+			("group disagreement", lambda value: value["outputs"][-2]["physical"].update({"shared_emitter_group": "rgb.other"}), "agree on shared emitter group identity"),
+			("quantity disagreement", lambda value: value["outputs"][-2]["physical"].update({"quantity": 3, "shared_physical_quantity": 3}), "agree on the shared physical quantity"),
+			("quantity mismatch", lambda value: value["outputs"][-2]["physical"].update({"quantity": 3}), "must equal shared_physical_quantity"),
+			("channel set", lambda value: value["outputs"][-2]["physical"].update({"emitter_channel": "blue"}), "unique exact blue/green/red set"),
+			("coordinate mismatch", lambda value: value["outputs"][-2]["spatial"]["placements"][0].update({"x": 0.6}), "equivalent coordinates, roles, and coordinate space"),
+			("role mismatch", lambda value: value["outputs"][-2]["spatial"]["placements"][0].update({"role": "effect"}), "equivalent coordinates, roles, and coordinate space"),
+			("space mismatch", lambda value: value["outputs"][-2]["spatial"]["placements"][0].update({"space": "backglass"}), "equivalent coordinates, roles, and coordinate space"),
+		)
+		for name, mutate, expected in cases:
+			with self.subTest(name=name):
+				invalid = self.shared_rgb_fixture()
+				mutate(invalid)
+				self.assertTrue(any(expected in error for error in validate_machine(invalid)), name)
+		missing = self.shared_rgb_fixture()
+		missing["outputs"][-1]["physical"].pop("shared_physical_quantity")
+		self.assertTrue(validate_against_schema(missing, ROOT / "schemas" / "machine.schema.json", "shared-rgb-missing-field"))
 
 	def test_author_ready_sam_requires_one_unwired_virtual_game_on_output(self) -> None:
 		definition = self.author_ready_fixture()

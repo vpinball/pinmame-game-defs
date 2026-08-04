@@ -2,10 +2,13 @@ from __future__ import annotations
 
 import copy
 import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
+from pinmame_game_defs.cli import main as cli_main
 from pinmame_game_defs.schema_validation import validate_against_schema
 from pinmame_game_defs.spatial import (
 	SPATIAL_RETROFIT_PENDING_MACHINE_IDS,
@@ -179,14 +182,19 @@ class SpatialSchemaAndValidationTests(unittest.TestCase):
 
 
 class SpatialToolTests(unittest.TestCase):
-	def _write_extraction_fixture(self, root: Path) -> Path:
-		extracted = root / "table-extracted"
+	def _populate_extraction_fixture(self, extracted: Path) -> None:
 		(extracted / "gameitems").mkdir(parents=True)
 		(extracted / "gamedata.json").write_text(json.dumps({"left": 100, "top": 200, "right": 1100, "bottom": 2200}), encoding="utf-8")
 		(extracted / "gameitems" / "Trigger.Zeta.json").write_text(json.dumps({"Trigger": {"center": {"x": 600, "y": 1200}, "name": "Zeta"}}), encoding="utf-8")
 		(extracted / "gameitems" / "Bumper.Alpha.json").write_text(json.dumps({"Bumper": {"center": {"x": 350, "y": 700}, "name": "Alpha"}}), encoding="utf-8")
 		(extracted / "gameitems" / "Flasher.Beta.json").write_text(json.dumps({"Flasher": {"pos_x": 850, "pos_y": 1700, "name": "Beta"}}), encoding="utf-8")
 		(extracted / "gameitems" / "HitTarget.Gamma.json").write_text(json.dumps({"HitTarget": {"position": {"x": 1100, "y": 2200}, "name": "Gamma"}}), encoding="utf-8")
+		(extracted / "gameitems" / "Primitive.Delta.json").write_text(json.dumps({"Primitive": {"position": {"x": 400, "y": 800}, "name": "Delta"}}), encoding="utf-8")
+		(extracted / "gameitems" / "Wall.Sling.json").write_text(json.dumps({"Wall": {"drag_points": [{"x": 300, "y": 600}, {"x": 500, "y": 600}, {"x": 500, "y": 1000}, {"x": 300, "y": 1000}], "name": "Sling"}}), encoding="utf-8")
+
+	def _write_extraction_fixture(self, root: Path) -> Path:
+		extracted = root / "table-extracted"
+		self._populate_extraction_fixture(extracted)
 		(extracted / "gameitems" / "Light.Backglass.json").write_text(json.dumps({"Light": {"center": {"x": 500, "y": 500}, "name": "Backglass", "is_backglass": True}}), encoding="utf-8")
 		(extracted / "gameitems" / "Light.Outside.json").write_text(json.dumps({"Light": {"center": {"x": 1200, "y": 500}, "name": "Outside"}}), encoding="utf-8")
 		(extracted / "gameitems" / "Primitive.Ignore.json").write_text(json.dumps({"data": {"x": 999, "y": 999}}), encoding="utf-8")
@@ -203,15 +211,48 @@ class SpatialToolTests(unittest.TestCase):
 			first_report = extract_spatial_candidates(self._write_extraction_fixture(first), first_vpx)
 			second_report = extract_spatial_candidates(self._write_extraction_fixture(second), second_vpx)
 			self.assertEqual(first_report, second_report)
+			self.assertEqual(2, first_report["version"])
 			self.assertEqual(
 				[
 					{"type": "Bumper", "name": "Alpha", "x": 0.25, "y": 0.25},
 					{"type": "Flasher", "name": "Beta", "x": 0.75, "y": 0.75},
 					{"type": "HitTarget", "name": "Gamma", "x": 1.0, "y": 1.0},
+					{"type": "Primitive", "name": "Delta", "x": 0.3, "y": 0.3, "center_method": "position", "source_path": "gameitems/Primitive.Delta.json"},
 					{"type": "Trigger", "name": "Zeta", "x": 0.5, "y": 0.5},
+					{"type": "Wall", "name": "Sling", "x": 0.3, "y": 0.3, "center_method": "drag_point_centroid", "source_path": "gameitems/Wall.Sling.json"},
 				],
 				first_report["objects"],
 			)
+			self.assertEqual([], validate_against_schema(first_report, ROOT / "schemas" / "vpx-spatial-candidates.schema.json", "fixture"))
+			invalid_report = copy.deepcopy(first_report)
+			del invalid_report["objects"][3]["source_path"]
+			self.assertTrue(validate_against_schema(invalid_report, ROOT / "schemas" / "vpx-spatial-candidates.schema.json", "fixture"))
+
+	def test_cli_vpx_route_uses_fresh_extraction_root_and_schema_contract(self) -> None:
+		with tempfile.TemporaryDirectory() as temporary_directory:
+			root = Path(temporary_directory)
+			source_vpx = root / "source.vpx"
+			vpxtool = root / "vpxtool"
+			output = root / "fresh-report.json"
+			source_vpx.write_bytes(b"fresh source bytes")
+			vpxtool.write_text("fake vpxtool", encoding="utf-8")
+
+			def fake_run(command: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
+				if "extract" in command:
+					destination = Path(command[command.index("--output-dir") + 1])
+					self._populate_extraction_fixture(destination)
+					return subprocess.CompletedProcess(command, 0, "", "")
+				return subprocess.CompletedProcess(command, 0, "vpxtool test 1.0\n", "")
+
+			with patch("pinmame_game_defs.spatial.subprocess.run", side_effect=fake_run):
+				with self.assertRaises(SystemExit) as exit_result:
+					cli_main(["--repository-root", str(ROOT), "extract-spatial", "--vpx", str(source_vpx), "--vpxtool", str(vpxtool), "--output", str(output)])
+				self.assertEqual(0, exit_result.exception.code)
+
+			report = load_json(output)
+			self.assertEqual("vpxtool test 1.0", report["source"]["vpxtool_version"])
+			self.assertEqual([], validate_against_schema(report, ROOT / "schemas" / "vpx-spatial-candidates.schema.json", "fresh-vpx-route"))
+			self.assertTrue(all(item["source_path"].startswith("gameitems/") for item in report["objects"] if item["type"] in {"Primitive", "Wall"}))
 
 	def test_overlay_is_deterministic_and_includes_markers_and_na_counts(self) -> None:
 		definition = author_ready_definition()
@@ -250,7 +291,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		definitions = [load_json(path) for path in sorted((ROOT / "machines" / "partial").rglob("*.json"))]
 		migrated = {definition["machine"]["id"]: definition for definition in definitions if definition["machine"]["id"] in SPATIAL_RETROFIT_PENDING_MACHINE_IDS}
 		self.assertEqual(set(SPATIAL_RETROFIT_PENDING_MACHINE_IDS), set(migrated))
-		self.assertEqual(16, len(migrated))
+		self.assertEqual(15, len(migrated))
 		for definition in migrated.values():
 			self.assertEqual(2, definition["schema_version"])
 			self.assertEqual("partial", definition["coverage"]["status"])
@@ -262,28 +303,28 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual(["spatial_placement"], definition["coverage"]["missing"])
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
-		self.assertEqual(17, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
+		self.assertEqual(18, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		report = build_coverage_report(ROOT)
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
 		self.assertEqual(catalog["summary"]["game_count"], report["machine_count"])
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
 		self.assertEqual(785, report["machine_count"])
-		self.assertEqual(17, report["author_ready_count"])
-		self.assertEqual(85, report["partial_count"])
+		self.assertEqual(18, report["author_ready_count"])
+		self.assertEqual(84, report["partial_count"])
 		self.assertEqual(683, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
 		self.assertEqual(786, report["catalog_record_count"])
-		self.assertEqual(16, report["missing_requirement_counts"]["spatial_placement"])
+		self.assertEqual(15, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(786, len(catalog["machines"]))
 		self.assertEqual(785, catalog["summary"]["game_count"])
 		self.assertEqual(786, catalog["summary"]["machine_count"])
-		self.assertEqual(17, catalog["summary"]["author_ready_count"])
+		self.assertEqual(18, catalog["summary"]["author_ready_count"])
 		self.assertEqual(683, catalog["summary"]["stub_count"])
-		self.assertEqual(86, catalog["summary"]["partial_count"])
+		self.assertEqual(85, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
-		self.assertEqual(16, len(note_paths))
+		self.assertEqual(15, len(note_paths))
 		for relative_path in note_paths:
 			note = (ROOT / relative_path).read_text(encoding="utf-8")
 			if relative_path == "knowledge/stern/twenty-four-2009.md":

@@ -44,6 +44,8 @@ SPATIAL_NA_REASONS = {
 SPATIAL_ROLES = {"sensor", "effect", "emitter"}
 EMITTER_OUTPUT_KINDS = {"lamp", "rgb_lamp", "flasher", "gi"}
 EFFECT_OUTPUT_KINDS = {"coil", "motor", "servo", "magnet", "relay"}
+SHARED_RGB_FIELDS = ("quantity", "shared_emitter_group", "emitter_channel", "co_located_addresses", "shared_physical_quantity")
+SHARED_RGB_CHANNELS = {"blue", "green", "red"}
 LOCAL_L_DRIVE_PATTERN = re.compile(r"(?:^|[^a-z0-9])l:[\\/]", re.IGNORECASE)
 
 
@@ -233,6 +235,127 @@ def _validate_spatial(
 			errors.append(f"{path}.spatial: author-ready output requires a controlled not_applicable record")
 
 
+def _spatial_emitter_signature(device: dict[str, Any]) -> tuple[tuple[Any, Any, Any, Any], ...] | None:
+	spatial = device.get("spatial")
+	if not isinstance(spatial, dict):
+		return None
+	placements = spatial.get("placements")
+	if not isinstance(placements, list) or not placements:
+		return None
+	signatures: list[tuple[Any, Any, Any, Any]] = []
+	for placement in placements:
+		if not isinstance(placement, dict):
+			return None
+		signatures.append((placement.get("space"), placement.get("role"), placement.get("x"), placement.get("y")))
+	return tuple(sorted(signatures, key=lambda signature: tuple(repr(value) for value in signature)))
+
+
+def _validate_shared_rgb_emitters(outputs: Any, errors: list[str]) -> None:
+	"""Validate shared physical RGB emitter groups without machine-specific assumptions."""
+	if not isinstance(outputs, list):
+		return
+	output_by_group: dict[str, dict[int, tuple[str, dict[str, Any]]]] = {}
+	records_by_shared_group: dict[str, list[dict[str, Any]]] = {}
+	for index, device in enumerate(outputs):
+		if not isinstance(device, dict):
+			continue
+		path = f"$.outputs[{index}]"
+		binding = device.get("binding")
+		if isinstance(binding, dict) and isinstance(binding.get("group"), str) and isinstance(binding.get("device"), int) and not isinstance(binding.get("device"), bool):
+			output_by_group.setdefault(binding["group"], {})[binding["device"]] = (path, device)
+		physical = device.get("physical")
+		if not isinstance(physical, dict):
+			continue
+		if not any(field in physical for field in SHARED_RGB_FIELDS[1:]):
+			continue
+		missing = [field for field in SHARED_RGB_FIELDS if field not in physical]
+		for field in missing:
+			errors.append(f"{path}.physical.{field}: shared RGB emitter metadata fields must appear together")
+		if missing:
+			continue
+		shared_group = physical.get("shared_emitter_group")
+		_validate_identifier(shared_group, f"{path}.physical.shared_emitter_group", errors)
+		channel = physical.get("emitter_channel")
+		_expect(channel in SHARED_RGB_CHANNELS, f"{path}.physical.emitter_channel", "shared RGB emitter channels must be blue, green, or red", errors)
+		addresses = physical.get("co_located_addresses")
+		valid_addresses = isinstance(addresses, list) and bool(addresses) and all(isinstance(address, int) and not isinstance(address, bool) for address in addresses)
+		_expect(valid_addresses, f"{path}.physical.co_located_addresses", "must be a non-empty list of integer sibling addresses", errors)
+		if valid_addresses:
+			_unique(addresses, f"{path}.physical.co_located_addresses", errors)
+		shared_quantity = physical.get("shared_physical_quantity")
+		valid_shared_quantity = isinstance(shared_quantity, int) and not isinstance(shared_quantity, bool) and shared_quantity >= 1
+		_expect(valid_shared_quantity, f"{path}.physical.shared_physical_quantity", "must be a positive integer", errors)
+		quantity = physical.get("quantity")
+		valid_quantity = isinstance(quantity, int) and not isinstance(quantity, bool) and quantity >= 1
+		_expect(valid_quantity, f"{path}.physical.quantity", "must be a positive integer for a shared RGB emitter", errors)
+		_expect(device.get("kind") in EMITTER_OUTPUT_KINDS, f"{path}.kind", "shared RGB emitter metadata requires an emitter output kind", errors)
+		binding_group = binding.get("group") if isinstance(binding, dict) else None
+		address = binding.get("device") if isinstance(binding, dict) else None
+		if not isinstance(shared_group, str) or not isinstance(addresses, list) or not valid_addresses or not isinstance(binding_group, str) or not isinstance(address, int) or isinstance(address, bool):
+			continue
+		if valid_quantity and valid_shared_quantity:
+			_expect(quantity == shared_quantity, f"{path}.physical.quantity", "must equal shared_physical_quantity for a shared RGB emitter", errors)
+		records_by_shared_group.setdefault(shared_group, []).append(
+			{
+				"path": path,
+				"device": device,
+				"physical": physical,
+				"binding_group": binding_group,
+				"address": address,
+				"addresses": set(addresses),
+				"channel": channel,
+				"shared_quantity": shared_quantity,
+				"signature": _spatial_emitter_signature(device),
+			}
+		)
+
+	for shared_group, records in records_by_shared_group.items():
+		paths = [record["path"] for record in records]
+		binding_groups = {record["binding_group"] for record in records}
+		if len(binding_groups) != 1:
+			errors.append(f"{paths[0]}.physical.shared_emitter_group: siblings must use the same output binding group")
+		output_group = next(iter(binding_groups), None)
+		actual_addresses = {record["address"] for record in records if record["binding_group"] == output_group}
+		channels = [record["channel"] for record in records]
+		valid_channels = all(isinstance(channel, str) for channel in channels)
+		if not valid_channels or len(channels) != 3 or len(set(channels)) != 3 or set(channels) != SHARED_RGB_CHANNELS:
+			errors.append(f"{paths[0]}.physical.emitter_channel: shared RGB emitter channels must be the unique exact blue/green/red set")
+		if len({frozenset(record["addresses"]) for record in records}) != 1:
+			errors.append(f"{paths[0]}.physical.co_located_addresses: siblings must agree on the complete address set")
+		if any(record["shared_quantity"] != records[0]["shared_quantity"] for record in records[1:]):
+			errors.append(f"{paths[0]}.physical.shared_physical_quantity: siblings must agree on the shared physical quantity")
+		baseline_signature = records[0]["signature"]
+		if baseline_signature is None:
+			errors.append(f"{records[0]['path']}.spatial: shared RGB emitter siblings require placements")
+		for record in records:
+			path = record["path"]
+			addresses = record["addresses"]
+			address = record["address"]
+			if address not in addresses:
+				errors.append(f"{path}.physical.co_located_addresses: device's own address must be included")
+			if addresses != actual_addresses:
+				errors.append(f"{path}.physical.co_located_addresses: every sibling must be present in the same output group and the address set must match the group")
+			for sibling_address in sorted(addresses):
+				if output_group is None or sibling_address not in output_by_group.get(output_group, {}):
+					errors.append(f"{path}.physical.co_located_addresses: sibling address {sibling_address} is not present in the same output group")
+					continue
+				sibling_path, sibling = output_by_group[output_group][sibling_address]
+				sibling_physical = sibling.get("physical")
+				if not isinstance(sibling_physical, dict) or any(field not in sibling_physical for field in SHARED_RGB_FIELDS):
+					errors.append(f"{path}.physical.co_located_addresses: sibling {sibling_path} must declare complete shared RGB emitter metadata")
+					continue
+				if sibling_physical.get("shared_emitter_group") != shared_group:
+					errors.append(f"{path}.physical.shared_emitter_group: siblings must agree on shared emitter group identity")
+				sibling_addresses = sibling_physical.get("co_located_addresses")
+				if isinstance(sibling_addresses, list) and all(isinstance(sibling_address, int) and not isinstance(sibling_address, bool) for sibling_address in sibling_addresses) and set(sibling_addresses) != addresses:
+					errors.append(f"{path}.physical.co_located_addresses: siblings must agree on the complete address set")
+				if sibling_physical.get("shared_physical_quantity") != record["shared_quantity"]:
+					errors.append(f"{path}.physical.shared_physical_quantity: siblings must agree on the shared physical quantity")
+				sibling_signature = _spatial_emitter_signature(sibling)
+				if sibling_signature != record["signature"]:
+					errors.append(f"{path}.spatial: sibling placements must have equivalent coordinates, roles, and coordinate space")
+
+
 def validate_machine(definition: dict[str, Any], repository_root: Path | None = None) -> list[str]:
 	errors: list[str] = []
 	_walk_forbidden(definition, "$", errors)
@@ -360,6 +483,7 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 				if status == "author_ready":
 					_expect(provenance.get("status") == "validated", f"{path}.provenance.status", "author-ready device assertions must be validated", errors)
 			_validate_spatial(device, collection_name, path, status, source_ids, spatial_placement_ids, errors)
+	_validate_shared_rgb_emitters(definition.get("outputs"), errors)
 	if status == "author_ready" and definition.get("controller", {}).get("platform") == "pinmame.sam":
 		_expect(len(sam_game_on_outputs) == 1, "$.outputs", "author-ready SAM definition must declare public solenoid 33 exactly once as PinMAME's synthetic game-on state", errors)
 		for path, output in sam_game_on_outputs:
@@ -745,7 +869,12 @@ def validate_repository(repository_root: Path) -> list[str]:
 	for path in sorted((repository_root / "evidence").glob("**/*.json")):
 		relative_path = path.relative_to(repository_root).as_posix()
 		evidence = load_json(path)
-		errors.extend(validate_against_schema(evidence, repository_root / "schemas" / "evidence.schema.json", relative_path))
+		evidence_schema = (
+			repository_root / "schemas" / "vpx-spatial-candidates.schema.json"
+			if evidence.get("format") == "pinmame-vpx-spatial-candidates"
+			else repository_root / "schemas" / "evidence.schema.json"
+		)
+		errors.extend(validate_against_schema(evidence, evidence_schema, relative_path))
 		evidence_driver_ids = evidence.get("driver_ids")
 		if isinstance(evidence_driver_ids, list):
 			for driver_id in sorted(OUT_OF_SCOPE_DRIVER_IDS & {driver_id for driver_id in evidence_driver_ids if isinstance(driver_id, str)}):

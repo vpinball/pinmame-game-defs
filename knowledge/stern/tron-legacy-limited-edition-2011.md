@@ -1,7 +1,6 @@
 # TRON: Legacy Limited Edition (Stern, 2011)
 
-Coverage: **partial — normalized spatial placements pending.**
-Previously validated non-spatial scope: **complete physical inventory, PinMAME bindings, custom mechanisms, wiring, initial state, and recreation behavior validated**
+Coverage: **author-ready - complete physical inventory, PinMAME bindings, custom mechanisms, wiring, initial state, and recreation behavior validated**
 
 ## Identity and evidence precedence
 
@@ -13,7 +12,7 @@ Four balls initialize on trough switches 18-21. Output 1 ejects through jam opto
 
 ## Four-drop bank and motorized Recognizer systems
 
-TRON switches 1-4 are a resettable four-bank on LE and output 3 raises all four. Separately, output 6 toggles the three-target Recognizer bank on switches 49-51 between down switch 52 and up switch 53. The proven 29-step model initializes down, removes collisions near Z -76, and restores targets at Z -20. Output 23 runs the moving Recognizer toy: switch 54 activates near +18 degrees, 55 near center, and 56 near -18 while the toy oscillates between about ±20. Initialize the toy centered on 55 and the target bank down on 52.
+TRON switches 1-4 are a resettable four-bank on LE and output 3 raises all four. Separately, output 6 toggles the three-target Recognizer bank on switches 49-51 between down switch 52 and up switch 53. The exact V11 MotorBank primitive is x=448.69107 in the 952-wide frame, giving the canonical x=0.471314 assembly anchor used for switches 52/53 and output 6; its reviewed y remains 0.208014. The proven 29-step model initializes down, removes collisions near Z -76, and restores targets at Z -20. Output 23 runs the moving Recognizer toy: switch 54 activates near +18 degrees, 55 near center, and 56 near -18 while the toy oscillates between about ±20. Initialize the toy centered on 55 and the target bank down on 52.
 
 ## Spinning disc and orbit post
 
@@ -25,7 +24,7 @@ Outputs 15/16 drive lower left/right and output 12 drives upper-left. Lower butt
 
 ## Lighting
 
-LE ordinary lamps are factory LEDs with its own map: 1-40, 42-43, and 45-66 are populated; 41, 44, and 67-80 are unused. The tricolor board adds right ramp public B/G/R 101/102/103 and left ramp B/G/R 104/105/106. The script proves channel order by passing each triplet in reverse to an RGB helper; PinMAME source proves which C/D strobe belongs to each side. A resolved source disagreement remains explicit: the official coil chart on PDF page 57 says 19 right domes and 25 left, while the proven VPX callbacks say 19 left and 25 right. Per the project-wide ground-truth policy the working script wins for controller-facing semantics, so this definition uses 19 left and 25 right while retaining both locators for physical orientation.
+LE ordinary lamps are factory LEDs with its own map: 1-40, 42-43, and 45-66 are populated; 41, 44, and 67-80 are unused. The tricolor board adds right ramp public B/G/R 101/102/103 and left ramp B/G/R 104/105/106. The script proves independent color-channel control by passing each BGR triplet in reverse to an RGB helper; PinMAME source proves which C/D strobe belongs to each side. Source conflict: the official Stern manual (`manual.tron-legacy-pro-le.2011`, PDF page 57) maps Q19 to `FLASH: RIGHT DOMES (X2)` and Q25 to `FLASH: LEFT DOMES (X2)`, the opposite left/right mapping from the selected known-working V11 embedded script. V11 maps Q19 to setlampmod 125, whose LampMod 125 drives Flasher5/Flasher6 left-dome anchors, and Q25 to setlampMod 119, whose LampMod 119 drives Flasher1/Flasher2 right-dome anchors. The comparison VPW Mod 0.24 revision (`candidate-scripts/vpw-0.24.vbs`, script SHA-256 `ecea74df1775bd39cfd8838955adfefb544b5907d345223847369710fc4dac7d`; candidate VPX SHA-256 `ce3a843e5747c1163fb9478ac65addc8b3dc89e44471d527768823b6d63b7ec4`) maps Q19 to its right-blue Flasher5/Flasher6 pair and Q25 to its left-yellow Flasher3/Flasher4 pair. The retained V11 embedded script remains the controller/behavior tie-breaker; the disagreement is preserved rather than reported as concordant.
 
 ## Routes and remaining devices
 
@@ -43,3 +42,15 @@ Ramps use 34/35/37/38, right inner loop 39, left/right orbits 43/46, and spinner
 - `vpx.tron-legacy-le-vpm-1.1.4`: exact known-working LE script at revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`, SHA-256 `d257913fb05fa054bbf15a8605d4b9b3af2887514355784cbfbc5c92a36adfcc`.
 - `runtime.tron-legacy-limited-edition.boot-start`: exact `trn_174h` harness, SHA-256 `92dee327b8700943e258f6ac6c0b7a2b8716b0070698069125cb2be5ed4b306f`.
 - `pinmame.core.4ec52ff0ac13`: pinned SAM transport, custom lamp column, driver family, DMD, GI, and game-on output.
+
+## Spatial coordinate model
+
+Every normalized playfield placement uses the exact selected LE VPX's 952 by 2115 playfield frame: x=0 is left, x=1 is right, y=0 is the rear/backglass end, and y=1 is the front/apron end. Direct object centers come from the retained `vpxtool git:v0.33.3` extraction and candidate report. The working LE script establishes controller semantics before any object is promoted. The official Stern manual remains physical truth for installed quantities, cabinet/back-panel locations, and assembly identity.
+
+The exact LE table exposes direct points for all ordinary lamps 1-40, 42, 43, and 45-64, 35 GI authoring lights, both 23/29-point ramp RGB paths, direct flasher objects, switches, bumpers, flippers, kickers, and visible target faces. Render-only helpers (`lNa` overlays, reflective/material objects, `GIWhite`, `gibleed`, and similar) are not promoted. Lamp addresses 65/66 are cabinet button lamps; unused matrix lamps and absent LE dedicated contacts are explicit non-applicable records.
+
+The official LE switch map proves four individual trough contacts and a jam opto, while this exact VPX models the trough as one BallRelease/kicker assembly. Switches 18-20 and 22 therefore retain manual-map regional projections with disclosure; switch 21 uses the exact BallRelease anchor. Slingshot contacts/coils, recognizer target-bank contacts, motorized Recognizer endpoints, the three internal Recognizer-toy contacts, EOS leaves, and target-bank reset are likewise distinct controller devices with assembly anchors where the VPX does not expose an internal component center. No helper/render object is used as a physical switch or coil.
+
+Source conflict: the official Stern manual (`manual.tron-legacy-pro-le.2011`, PDF page 57) maps Q19 to `FLASH: RIGHT DOMES (X2)` and Q25 to `FLASH: LEFT DOMES (X2)`, the opposite left/right mapping from the selected known-working V11 embedded script. V11 maps Q19 to setlampmod 125, whose LampMod 125 drives Flasher5/Flasher6 left-dome anchors, and Q25 to setlampMod 119, whose LampMod 119 drives Flasher1/Flasher2 right-dome anchors. The comparison VPW Mod 0.24 revision (`candidate-scripts/vpw-0.24.vbs`, script SHA-256 `ecea74df1775bd39cfd8838955adfefb544b5907d345223847369710fc4dac7d`; candidate VPX SHA-256 `ce3a843e5747c1163fb9478ac65addc8b3dc89e44471d527768823b6d63b7ec4`) maps Q19 to its right-blue Flasher5/Flasher6 pair and Q25 to its left-yellow Flasher3/Flasher4 pair. The retained V11 embedded script remains the controller/behavior tie-breaker; the disagreement is preserved rather than reported as concordant. Outputs 20/21 retain their distinct left/right bottom-arch semantics; 20 is manual-only because `Linkerflasher` is outside the table frame, while 21 keeps exact in-bounds `Lanelight` and documents the outside-bounds companion. GI output 0 is the aggregate physical GI circuit and has 35 exact direct emitters, not a second compatibility lamp. RGB outputs 101-103 and 104-106 are independent blue/green/red controller channels that co-locate on one physical 29-module right-ramp or 23-module left-ramp RGB emitter string respectively; each channel repeats the shared coordinate set for channel addressability and is not a separate physical string.
+
+The selected exact table is retained at `external:pinmame-vpx-sources/stern/tron-legacy-limited-edition-2011/VR Room Tron Legacy (Limited Edition) (Stern 2011) V11.vpx` with VPX SHA-256 `56ad2f5318c33dbc12f3aa2515a41d819eb8b95b2ffcd94ebe1044cec4281ae5`. The deterministic candidate report is `evidence/vpx/tron-legacy-limited-edition-2011-v11-spatial-candidates.json` with SHA-256 `318297fb178098929d62078075f891ee301067cff58ad778f683b577f83b8ff4`. Rejected local alternatives include the explicitly re-themed `TRON Classic (Original 2018) Mod v1.02.vpx`; Pro/non-LE candidates were not promoted.

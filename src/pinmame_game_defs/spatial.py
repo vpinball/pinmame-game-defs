@@ -30,7 +30,6 @@ SPATIAL_RETROFIT_PENDING_MACHINE_IDS = (
 	"stern.spider-man.2007",
 	"stern.transformers-limited-edition.2011",
 	"stern.transformers-pro.2011",
-	"stern.tron-legacy-limited-edition.2011",
 	"stern.tron-legacy-pro.2011",
 	"stern.twenty-four.2009",
 	"stern.x-men-limited-edition.2012",
@@ -49,6 +48,8 @@ DIRECT_CENTER_TYPES = {
 	"spinner",
 	"trigger",
 }
+
+EXTRACTED_CENTER_TYPES = DIRECT_CENTER_TYPES | {"primitive", "wall"}
 
 
 _SPATIAL_KNOWLEDGE_BANNER = "Coverage: **partial — normalized spatial placements pending.**"
@@ -200,11 +201,16 @@ def _gamedata(documents: Iterable[tuple[Path, Any]]) -> dict[str, Any]:
 
 
 def _item_record(path: Path, document: Any) -> tuple[str | None, str | None, dict[str, Any] | None]:
+	stem_parts = path.stem.split(".", 1)
+	filename_type = stem_parts[0] if len(stem_parts) == 2 else None
+	if filename_type is not None and filename_type.casefold() in {"primitive", "wall"}:
+		if not (isinstance(document, dict) and len(document) == 1 and next(iter(document)).casefold() == filename_type.casefold()):
+			return (None, None, None)
 	value = document
 	wrapper_type: str | None = None
 	if isinstance(value, dict) and len(value) == 1:
 		key, nested = next(iter(value.items()))
-		if isinstance(nested, dict) and key.casefold() in DIRECT_CENTER_TYPES:
+		if isinstance(nested, dict) and key.casefold() in EXTRACTED_CENTER_TYPES:
 			wrapper_type = key
 			value = nested
 		else:
@@ -215,7 +221,6 @@ def _item_record(path: Path, document: Any) -> tuple[str | None, str | None, dic
 		return (None, None, None)
 	item_type = wrapper_type or _text(value, "type", "item_type", "game_item_type", "kind")
 	name = _text(value, "name", "item_name")
-	stem_parts = path.stem.split(".", 1)
 	if item_type is None and len(stem_parts) == 2:
 		item_type = stem_parts[0]
 	if name is None and len(stem_parts) == 2:
@@ -230,11 +235,26 @@ def _item_record(path: Path, document: Any) -> tuple[str | None, str | None, dic
 	return (item_type, name, value)
 
 
-def _item_point(value: dict[str, Any]) -> tuple[float | None, float | None]:
+def _item_point(item_type: str, value: dict[str, Any]) -> tuple[float | None, float | None, str | None]:
+	if item_type.casefold() == "wall":
+		points = value.get("drag_points")
+		if isinstance(points, list) and points:
+			coordinates = [
+				(_number(point, "x"), _number(point, "y"))
+				for point in points
+				if isinstance(point, dict)
+			]
+			if coordinates and all(x is not None and y is not None for x, y in coordinates):
+				return (
+					sum(float(x) for x, _y in coordinates) / len(coordinates),
+					sum(float(y) for _x, y in coordinates) / len(coordinates),
+					"drag_point_centroid",
+				)
+			return (None, None, None)
 	x = _number(value, "x", "center_x", "centerx", "pos_x", "posx")
 	y = _number(value, "y", "center_y", "centery", "pos_y", "posy")
 	if x is not None and y is not None:
-		return (x, y)
+		return (x, y, "fields")
 	fields = _casefold_mapping(value)
 	for field_name in ("center", "position"):
 		nested = fields.get(field_name)
@@ -243,8 +263,8 @@ def _item_point(value: dict[str, Any]) -> tuple[float | None, float | None]:
 		x = _number(nested, "x")
 		y = _number(nested, "y")
 		if x is not None and y is not None:
-			return (x, y)
-	return (None, None)
+			return (x, y, field_name)
+	return (None, None, None)
 
 
 def _round_point(value: float) -> float:
@@ -265,31 +285,34 @@ def extract_spatial_candidates(extracted_directory: Path, source_vpx: Path, vpxt
 		raise DefinitionError(f"VPX source file does not exist: {source_vpx}")
 	objects: list[dict[str, Any]] = []
 	for path, document in documents:
-		item_type, name, value = _item_record(path.relative_to(extracted_directory), document)
-		if item_type is None or item_type.casefold() not in DIRECT_CENTER_TYPES or value is None:
+		relative_path = path.relative_to(extracted_directory)
+		item_type, name, value = _item_record(relative_path, document)
+		if item_type is None or item_type.casefold() not in EXTRACTED_CENTER_TYPES or value is None:
 			continue
 		fields = _casefold_mapping(value)
 		if fields.get("is_backglass") is True or fields.get("backglass") is True:
 			continue
-		x, y = _item_point(value)
+		x, y, center_method = _item_point(item_type, value)
 		if x is None or y is None:
 			continue
 		normalized_x = (x - left) / (right - left)
 		normalized_y = (y - top) / (bottom - top)
 		if not math.isfinite(normalized_x) or not math.isfinite(normalized_y) or not 0 <= normalized_x <= 1 or not 0 <= normalized_y <= 1:
 			continue
-		objects.append(
-			{
-				"type": item_type,
-				"name": name or path.stem,
-				"x": _round_point(normalized_x),
-				"y": _round_point(normalized_y),
-			}
-		)
+		object_record = {
+			"type": item_type,
+			"name": name or path.stem,
+			"x": _round_point(normalized_x),
+			"y": _round_point(normalized_y),
+		}
+		if item_type.casefold() in {"primitive", "wall"}:
+			object_record["center_method"] = center_method
+			object_record["source_path"] = relative_path.as_posix()
+		objects.append(object_record)
 	objects.sort(key=lambda item: (item["type"].casefold(), item["name"].casefold(), item["x"], item["y"]))
 	result: dict[str, Any] = {
 		"format": "pinmame-vpx-spatial-candidates",
-		"version": 1,
+		"version": 2,
 		"coordinate_space": "playfield",
 		"source": {
 			"vpx_sha256": file_sha256(source_vpx),
@@ -363,7 +386,7 @@ def extract_from_vpx(vpx: Path, vpxtool: Path) -> dict[str, Any]:
 		if result.returncode != 0:
 			detail = (result.stderr or result.stdout).strip()
 			raise DefinitionError(f"vpxtool extraction failed with exit code {result.returncode}: {detail}")
-		return extract_spatial_candidates(workspace, vpx, _vpxtool_version(vpxtool))
+		return extract_spatial_candidates(destination, vpx, _vpxtool_version(vpxtool))
 
 
 def _marker_svg(role: str, x: float, y: float, label: str) -> str:

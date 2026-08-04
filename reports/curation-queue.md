@@ -26,7 +26,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 20 | 2011 | The Rolling Stones Limited Edition | Stern | author_ready |
 | 21 | 2011 | Transformers Limited Edition | Stern | partial |
 | 22 | 2011 | Transformers Pro | Stern | partial |
-| 23 | 2011 | TRON: Legacy Limited Edition | Stern | partial |
+| 23 | 2011 | TRON: Legacy Limited Edition | Stern | author_ready |
 | 24 | 2011 | TRON: Legacy Pro | Stern | partial |
 | 25 | 2010 | Avatar Limited Edition | Stern | partial |
 | 26 | 2010 | Avatar Pro | Stern | partial |

@@ -1,4 +1,4 @@
-"""Build reviewed, author-ready TRON: Legacy Pro and Limited Edition definitions."""
+"""Build the TRON Pro partial and delegate exact LE spatial promotion."""
 
 from __future__ import annotations
 
@@ -224,8 +224,6 @@ def main_outputs(limited_edition: bool) -> list[dict[str, object]]:
 		physical: dict[str, object] | None = None
 		if address == 24:
 			physical = {"notes": "Optional 5 VDC coin meter circuit."}
-		elif limited_edition and address in {19, 25}:
-			physical = {"notes": "Resolved source disagreement: the official LE coil chart on PDF page 57 labels output 19 as right domes x2 and output 25 as left domes x2, while the proven VPX callbacks label 19 left and 25 right. The project-wide source policy gives the known-working VPX script precedence for controller-facing semantics, so this definition uses 19 left and 25 right; authors should preserve both source locators when orienting the physical assemblies."}
 		elif address == 30:
 			physical = {"notes": "Physical disc-motor relay. The proven VPX table simplifies disc motion under output 5 and routes output 30 only to a visual effect; a physical recreation must retain this relay."}
 		source_refs = (MANUAL_SOURCE, VPX_SOURCE, CORE_SOURCE) if limited_edition else (MANUAL_SOURCE, CORE_SOURCE)
@@ -275,10 +273,22 @@ def lamps(limited_edition: bool) -> list[dict[str, object]]:
 		items.append(output(address, label, "lamp", availability, used_sources if availability == "used" else (MANUAL_SOURCE,), "pinmame.output.lamp", str(address), physical, output_id=f"lamp.{slug(label)}-{address}"))
 	for address, label in RGB_LAMPS.items():
 		availability = "used" if limited_edition else "unused"
-		notes = "PinMAME serializes the tricolor board as two B/G/R public triples. The proven table reverses each BGR triplet when calling its RGB helper; PinMAME source identifies 101-103 as right and 104-106 as left."
+		notes = "PinMAME serializes the tricolor board as two B/G/R public triples. The proven table independently controls each color channel by reversing each BGR triplet when calling its RGB helper; PinMAME source identifies 101-103 as right and 104-106 as left."
 		if not limited_edition:
 			notes += " Pro firmware shares the public compatibility channels, but the factory Pro lacks the LE tricolor ramp assembly."
-		items.append(output(address, label if limited_edition else f"Unpopulated Pro channel {address} ({label})", "lamp", availability, (MANUAL_SOURCE, VPX_SOURCE, CORE_SOURCE, runtime_source) if limited_edition else (MANUAL_SOURCE, CORE_SOURCE), "pinmame.output.lamp", physical={"notes": notes}, output_id=f"lamp.rgb-{address}-{slug(label)}"))
+		physical = {"notes": notes}
+		if limited_edition:
+			ramp = "right" if address in {101, 102, 103} else "left"
+			physical.update(
+				{
+					"shared_emitter_group": f"rgb.{ramp}-ramp",
+					"emitter_channel": label.rsplit(" ", 1)[-1].lower(),
+					"co_located_addresses": [101, 102, 103] if ramp == "right" else [104, 105, 106],
+					"shared_physical_quantity": 29 if ramp == "right" else 23,
+					"notes": notes + f" This is the independently controlled {label.rsplit(' ', 1)[-1].lower()} channel of one physical {ramp}-ramp RGB emitter string: the three addresses co-locate on one {29 if ramp == 'right' else 23}-module string and must not be recreated as three separate strings.",
+				}
+			)
+		items.append(output(address, label if limited_edition else f"Unpopulated Pro channel {address} ({label})", "lamp", availability, (MANUAL_SOURCE, VPX_SOURCE, CORE_SOURCE, runtime_source) if limited_edition else (MANUAL_SOURCE, CORE_SOURCE), "pinmame.output.lamp", physical=physical, output_id=f"lamp.rgb-{address}-{slug(label)}"))
 	items.append(output(0, "General illumination master", "gi", "used", (MANUAL_SOURCE, VPX_SOURCE, runtime_source), "pinmame.output.gi", "GI-0", output_id="gi.master"))
 	return items
 
@@ -344,7 +354,7 @@ def sources(limited_edition: bool) -> list[dict[str, object]]:
 	ipdb_source = LE_IPDB_SOURCE if limited_edition else PRO_IPDB_SOURCE
 	return [
 		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/Tron-Manual.pdf", "sha256": "1212d9f1f5bdb33e9b248299d0e1693ad1103f82129234a1348f0aa8edd47e84", "locator": "Official 111-page scanned Stern manual: Pro switches/coils/lamps PDF pages 49/51/53, LE pages 55/57/59, location maps on following pages, major assemblies 1-30, and wiring 93-111", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "Tron-Manual.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T23:21:40.923848Z"},
-		{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Tron%20Legacy%20LE%20(Stern%202011)%20VPMmod%20v1.1.4.vbs", "revision": VPX_REVISION, "sha256": "d257913fb05fa054bbf15a8605d4b9b3af2887514355784cbfbc5c92a36adfcc", "locator": "Known-working trn_174h script: four-ball initialization, eject and launcher constants, drop bank, target-bank travel, Recognizer positions, disc and post callbacks, staged upper flipper, and BGR ramp-light consumption", "license": "NOASSERTION", "attribution": "Table authors credited in the script; vpxtable_scripts contributors"},
+		{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Tron%20Legacy%20LE%20(Stern%202011)%20VPMmod%20v1.1.4.vbs", "revision": VPX_REVISION, "sha256": "d257913fb05fa054bbf15a8605d4b9b3af2887514355784cbfbc5c92a36adfcc", "known_working": True, "locator": "Known-working trn_174h script: four-ball initialization, eject and launcher constants, drop bank, target-bank travel, Recognizer positions, disc and post callbacks, staged upper flipper, and BGR ramp-light consumption", "license": "NOASSERTION", "attribution": "Table authors credited in the script; vpxtable_scripts contributors"},
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c TRON driver family, SAM_5COL+1 custom lamp column, tricolor board C/D strobes, fast-flip addresses, GI 0, game-on 33, and 128x32 DMD", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 		{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames trn_ records and clone graph", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 		{"id": STERN_SOURCE, "kind": "human_review", "uri": "https://sternpinball.com/game/tron/", "locator": "Manufacturer product identity and common feature inventory: two ramps, motorized Recognizer target bank, spinning identity disc, three flippers, and licensed presentation", "license": "NOASSERTION", "attribution": "Stern Pinball", "acquired_at": "2026-08-02T23:00:00Z"},
@@ -412,7 +422,22 @@ The Pro lamp map is physically different from LE: 1-35, 37-45, 48-53, 55-64, and
 """
 
 
-LE_KNOWLEDGE = """# TRON: Legacy Limited Edition (Stern, 2011)
+LE_Q19_Q25_CONFLICT = (
+	"Source conflict: the official Stern manual (`manual.tron-legacy-pro-le.2011`, PDF page 57) "
+	"maps Q19 to `FLASH: RIGHT DOMES (X2)` and Q25 to `FLASH: LEFT DOMES (X2)`, the opposite "
+	"left/right mapping from the selected known-working V11 embedded script. V11 maps Q19 to "
+	"setlampmod 125, whose LampMod 125 drives Flasher5/Flasher6 left-dome anchors, and Q25 to "
+	"setlampMod 119, whose LampMod 119 drives Flasher1/Flasher2 right-dome anchors. The "
+	"comparison VPW Mod 0.24 revision (`candidate-scripts/vpw-0.24.vbs`, script SHA-256 "
+	"`ecea74df1775bd39cfd8838955adfefb544b5907d345223847369710fc4dac7d`; candidate VPX "
+	"SHA-256 `ce3a843e5747c1163fb9478ac65addc8b3dc89e44471d527768823b6d63b7ec4`) maps Q19 "
+	"to its right-blue Flasher5/Flasher6 pair and Q25 to its left-yellow Flasher3/Flasher4 pair. "
+	"The retained V11 embedded script remains the controller/behavior tie-breaker; the "
+	"disagreement is preserved rather than reported as concordant."
+)
+
+
+LE_KNOWLEDGE = f"""# TRON: Legacy Limited Edition (Stern, 2011)
 
 Coverage: **author-ready - complete physical inventory, PinMAME bindings, custom mechanisms, wiring, initial state, and recreation behavior validated**
 
@@ -426,7 +451,7 @@ Four balls initialize on trough switches 18-21. Output 1 ejects through jam opto
 
 ## Four-drop bank and motorized Recognizer systems
 
-TRON switches 1-4 are a resettable four-bank on LE and output 3 raises all four. Separately, output 6 toggles the three-target Recognizer bank on switches 49-51 between down switch 52 and up switch 53. The proven 29-step model initializes down, removes collisions near Z -76, and restores targets at Z -20. Output 23 runs the moving Recognizer toy: switch 54 activates near +18 degrees, 55 near center, and 56 near -18 while the toy oscillates between about ±20. Initialize the toy centered on 55 and the target bank down on 52.
+TRON switches 1-4 are a resettable four-bank on LE and output 3 raises all four. Separately, output 6 toggles the three-target Recognizer bank on switches 49-51 between down switch 52 and up switch 53. The exact V11 MotorBank primitive is x=448.69107 in the 952-wide frame, giving the canonical x=0.471314 assembly anchor used for switches 52/53 and output 6; its reviewed y remains 0.208014. The proven 29-step model initializes down, removes collisions near Z -76, and restores targets at Z -20. Output 23 runs the moving Recognizer toy: switch 54 activates near +18 degrees, 55 near center, and 56 near -18 while the toy oscillates between about ±20. Initialize the toy centered on 55 and the target bank down on 52.
 
 ## Spinning disc and orbit post
 
@@ -438,7 +463,7 @@ Outputs 15/16 drive lower left/right and output 12 drives upper-left. Lower butt
 
 ## Lighting
 
-LE ordinary lamps are factory LEDs with its own map: 1-40, 42-43, and 45-66 are populated; 41, 44, and 67-80 are unused. The tricolor board adds right ramp public B/G/R 101/102/103 and left ramp B/G/R 104/105/106. The script proves channel order by passing each triplet in reverse to an RGB helper; PinMAME source proves which C/D strobe belongs to each side. A resolved source disagreement remains explicit: the official coil chart on PDF page 57 says 19 right domes and 25 left, while the proven VPX callbacks say 19 left and 25 right. Per the project-wide ground-truth policy the working script wins for controller-facing semantics, so this definition uses 19 left and 25 right while retaining both locators for physical orientation.
+LE ordinary lamps are factory LEDs with its own map: 1-40, 42-43, and 45-66 are populated; 41, 44, and 67-80 are unused. The tricolor board adds right ramp public B/G/R 101/102/103 and left ramp B/G/R 104/105/106. The script proves independent color-channel control by passing each BGR triplet in reverse to an RGB helper; PinMAME source proves which C/D strobe belongs to each side. {LE_Q19_Q25_CONFLICT}
 
 ## Routes and remaining devices
 
@@ -479,11 +504,11 @@ def runtime_evidence(limited_edition: bool) -> dict[str, object]:
 
 def main() -> None:
 	write_json(spatial_partial_path(ROOT / "machines/partial/stern/tron-legacy-pro-2011.json"), fail_closed_spatial_partial(build(False)))
-	write_json(spatial_partial_path(ROOT / "machines/partial/stern/tron-legacy-limited-edition-2011.json"), fail_closed_spatial_partial(build(True)))
 	write_json(ROOT / "evidence/runtime/sam/tron-legacy-pro-boot-start.json", runtime_evidence(False))
 	write_json(ROOT / "evidence/runtime/sam/tron-legacy-limited-edition-boot-start.json", runtime_evidence(True))
 	write_text(ROOT / "knowledge/stern/tron-legacy-pro-2011.md", fail_closed_spatial_knowledge("stern.tron-legacy-pro.2011", PRO_KNOWLEDGE))
-	write_text(ROOT / "knowledge/stern/tron-legacy-limited-edition-2011.md", fail_closed_spatial_knowledge("stern.tron-legacy-limited-edition.2011", LE_KNOWLEDGE))
+	from curate_tron_le_spatial import promote as promote_limited_edition
+	promote_limited_edition()
 
 
 if __name__ == "__main__":
