@@ -15,7 +15,18 @@ repository and opens the pull request for you — no local checkout needed.
 
 **Describing a machine nobody has covered yet.** Hundreds of machines are still generated stubs. If
 you own one, have its manual, or have already built a working table for it, you can move it from
-`stub` to `partial` and eventually to `author_ready`.
+`stub` to `partial` and eventually to `author_ready`. If you have AI inference to spare, point your agent
+to [`docs/INSTRUCTIONS.md`](docs/INSTRUCTIONS.md) and get it to work.
+
+If you're using agents to do the work, there are a few prerequisites.
+
+- The [pinmame source code](https://github.com/vpinball/pinmame) should be cloned locally.
+- [vpxtable_scripts](https://github.com/sverrewl/vpxtable_scripts) and [vpx-standalone-scripts](https://github.com/jsm174/vpx-standalone-scripts) should be cloned locally.
+- VisualPinMAME should be installed, with an accessible `./roms` folder.
+- The tooling needs [Python](https://www.python.org/downloads/) installed.
+
+Tell the folder locations to the agent in your prompt, or set them as env variables as documented [here](docs/INSTRUCTIONS.md#existing-read-only-inputs). 
+Also tell it your VPX table collection folders to avoid having to download the tables it's working on another time.   
 
 ## The rules that matter most
 
@@ -146,6 +157,7 @@ not, or every table mapping breaks.
 
 ## Where to read more
 
+- [`docs/INSTRUCTIONS.md`](docs/INSTRUCTIONS.md) — Instructions for agents.
 - [`schemas/`](schemas/) — JSON Schema for machines, controllers, the catalog and evidence.
 - [Reading a definition](https://games.visualpinball.org/guide) — the same vocabulary,
   explained for readers rather than authors.
