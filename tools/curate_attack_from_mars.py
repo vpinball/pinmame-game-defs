@@ -2038,7 +2038,17 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 					"or confirm either reading. The definition therefore asserts no physical quantity for string "
 					"03 and states that its fourteen placements are the emitters the string is observed to drive "
 					"rather than a complete socket inventory. An author gets fourteen correct emitter positions "
-					"plus an explicit note; nothing authoring-critical is presented as settled."
+					"plus an explicit note; nothing authoring-critical is presented as settled. The same class of "
+					"unknown is already accepted in the promoted Williams Medieval Madness definition, whose "
+					"insert-panel strings assert no bulb count at all."
+				),
+				"independent_review_dissent": (
+					"The independent gpt-5.6-sol review of contribution HEAD 7faacbb held that this unknown "
+					"should block promotion and that the machine ought to stay partial until the three bulbs are "
+					"resolved. The maintainer decided to promote, on the grounds that every other dimension is "
+					"complete and validated and that the identical class of unknown was already accepted for "
+					"Medieval Madness. The dissent is recorded here rather than dropped so a later reviewer can "
+					"revisit the call."
 				),
 			}
 		],
