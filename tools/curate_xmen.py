@@ -28,6 +28,27 @@ PRO_VPX_SOURCE = "vpx.x-men-pro-icpjuggla"
 PRO_VPX_TABLE_SOURCE = "vpx-table.x-men-pro-physmod5"
 LE_RUNTIME_SOURCE = "runtime.x-men-le.boot-start"
 
+# The raw Pro object coordinates below are candidate evidence only.  The
+# retained inventory was emitted by an unidentified, unavailable .NET helper,
+# so its complete content set is hash-pinned here rather than presented as a
+# reproducible vpxtool extraction.
+PRO_RAW_ANALYSIS_MANIFEST_ENTRIES = [
+	{"path": "inventory.json", "size": 250396, "sha256": "d197a15cccc29b18be6d5b9128b110b83fd2aa3b109a9c0df8d2ffff174303e8"},
+	{"path": "table-script.vbs", "size": 42442, "sha256": "90cd88f121798f7c91ba738713c2aae99784751637380beb864ee3e2bcde25cb"},
+	{"path": "textures/PF A.jpg", "size": 448926, "sha256": "5dc652f161f4494b8072fc08cb74a89e5bb6253a45fd16255e4383e6b0576ea6"},
+	{"path": "textures/PF B.jpg", "size": 442470, "sha256": "641a89ec4ec81ac47de490af1e6644594dd94e4f907a82d501941af9cd0ecffa"},
+	{"path": "textures/dr.png", "size": 1513262, "sha256": "9660c877ac7efe34f715fe28ba2e006c0ce11d5bc2090b4b76e7e0f2c7b263ff"},
+	{"path": "textures/lamp-overlay.svg", "size": 11810, "sha256": "9c27c454a59ec13a4d4957c4d5e429874dbf52fc7fd001538fb331b9568e92eb"},
+	{"path": "textures/pf.jpg", "size": 704381, "sha256": "bc62ed5d55b1c3394beae1c78b1f72544bcdcf3d3008cf51b1cfefea8be01cc1"},
+	{"path": "textures/pfON.jpg", "size": 741131, "sha256": "f441912023dc07e88ef9603ebc4ff024e51b2dfd8fc38a6f4fa178c536f28580"},
+	{"path": "textures/whitewood.jpg", "size": 1135456, "sha256": "baf7773ed804a04b5eeb3eaa93335ccf4b34fca12a5f2b520576780f006386e1"},
+]
+PRO_RAW_ANALYSIS_MANIFEST_SHA256 = "9b2db553d6e2e76a32e05f9df47c782367fb9fedfa98d153d60cd15b53fffa30"
+PRO_RAW_ANALYSIS_TOTAL_BYTES = 5290274
+PRO_AD_HOC_LOADER_UNKNOWN_TAGS = [
+	"AAMP", "AAMX", "AAMY", "AANG", "ACEL", "ACRY", "ADDB", "ALPH", "AMAM", "AORD", "AXSX", "AXSY", "AXSZ", "BCOL", "BINT", "BLIB", "BPAT", "BRST", "COLR", "COMP", "CSHD", "DISP", "DSHD", "ELIT", "ENLI", "ENOL", "ERLI", "EVMP", "FAEO", "FCLR", "FCOI", "FGRD", "FOCR", "FPWL", "FSCT", "FSIX", "FSIY", "GRSZ", "HOFF", "IMAG", "IMG2", "IMGB", "IMGF", "JLTA", "JLTT", "KHOT", "LOAM", "LODI", "LODX", "LODY", "LODZ", "LOPX", "LOPY", "LOPZ", "LOSP", "LOTY", "LZDX", "LZDY", "LZDZ", "LZPX", "LZPY", "LZPZ", "LZSP", "LZTY", "MSTE", "NONO", "ONLM", "OVRH", "PBOV", "SCLR", "SDIX", "SDIY", "SECB", "STAT", "TCLR", "TCOL", "TLTA", "TLTT", "TRNS",
+]
+
 
 def slug(value: str) -> str:
 	return re.sub(r"[^a-z0-9]+", "-", value.casefold()).strip("-") or "unnamed"
@@ -208,25 +229,29 @@ def le_coils() -> list[dict[str, object]]:
 PRO_USED_MAIN = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 21, 22, 24, 25, 26, 27, 28, 29, 31, 32}
 PRO_UNUSED_MAIN = {19, 20, 23, 30}
 PRO_COIL_OVERRIDES = {
+	17: ("Pro output 17 flasher render group", "flasher"),
+	18: ("Pro output 18 flasher render group", "flasher"),
 	19: ("Unused Pro output 19 (no Magneto disc clear flasher)", "flasher"),
 	20: ("Unused Pro output 20 (no Magneto disc blue flasher)", "flasher"),
-	22: ("Magneto feature double flasher", "flasher"),
+	22: ("Pro output 22 flasher render group", "flasher"),
 	23: ("Unused Pro output 23 (no Magneto disc motor)", "relay"),
 	27: ("Center-left red feature flasher", "flasher"),
+	28: ("Pro output 28 backpanel render group", "flasher"),
+	29: ("Pro output 29 backpanel render group", "flasher"),
 	30: ("Unused Pro output 30", "flasher"),
-	31: ("Magneto center red feature flasher", "flasher"),
+	31: ("Unresolved Pro output 31 flasher candidate", "flasher"),
 	32: ("Wolverine magnet", "magnet"),
 }
 PRO_COIL_PHYSICAL = {
-	17: {"location": "Left-side pair at VPX positions x=79.5, y=1336.0 and x=75.5, y=662.0", "notes": "Two table flasher objects are driven together by active-high callback 17."},
-	18: {"location": "Right-side pair at VPX positions x=805.5, y=1438.0 and x=917.5, y=594.0", "notes": "Two table flasher objects are driven together by active-high callback 18."},
-	21: {"location": "Wolverine area at VPX position x=309.5, y=962.0", "notes": "Active-high flasher callback 21."},
-	22: {"location": "Magneto area at VPX position x=503.5, y=288.0", "notes": "Active-high Magneto flasher callback 22."},
-	25: {"location": "Pop-bumper area at VPX position x=199.5, y=810.0", "notes": "Active-high pop-bumper flasher callback 25."},
-	27: {"location": "Center-left red feature at VPX position x=379.5, y=502.0", "notes": "The authenticated Pro table proves this is a flasher; the LE manual's output-27 Iceman motor label does not apply."},
-	28: {"location": "Left backpanel group at VPX positions x=133.5, y=88.0, x=241.5, y=90.0, and x=455.5, y=90.0", "notes": "Three table flasher objects are driven together by active-high callback 28."},
-	29: {"location": "Right backpanel group at VPX positions x=843.5, y=94.0 and x=639.5, y=90.0", "notes": "The proven table contains two physical objects driven together by active-high callback 29."},
-	31: {"location": "Magneto center red feature at VPX position x=527.5, y=472.0", "notes": "The authenticated Pro table proves this is a flasher; the LE manual's bottom-arch label does not apply."},
+	17: {"location": "Raw VPX candidates x=79.5, y=1336.0 and x=75.5, y=662.0", "notes": "The exact Pro table drives two render objects together through active-high callback 17, but render-object count does not establish physical socket count. The manual's Q17 X2 chart and drawing are explicitly LE-only and are not transferred to the Pro. Identity and multiplicity remain unresolved; these raw coordinates are not canonical spatial placements."},
+	18: {"location": "Raw VPX candidates f118 at x=805.5, y=1438.0 and f118b at x=917.5, y=594.0", "notes": "The exact Pro table drives two render objects together through active-high callback 18, but render-object count does not establish physical socket count. The LE-only manual is internally inconsistent: page 60 gives Q18 no X2 marker while page 61 shows two 18 callouts aligned with the two render candidates. Neither page is transferred to the Pro, so identity and multiplicity remain unresolved and these raw coordinates are not canonical spatial placements."},
+	21: {"location": "Raw VPX candidate x=309.5, y=962.0 in the Wolverine area", "notes": "Active-high flasher callback 21; this raw coordinate is not a canonical spatial placement."},
+	22: {"location": "Raw VPX candidate f122 at x=503.5, y=288.0 (non-canonical; no physical socket is asserted)", "notes": "The active-high Pro callback drives render object f122. This raw candidate comes from retained analysis/physmod5/inventory.json, whose unidentified, lossy ad-hoc .NET extractor is documented in the spatial audit; it is not a canonical spatial placement. The manual's Q22 X2 Magneto row is explicitly LE-only and is not transferred to the Pro, so physical identity and multiplicity remain unresolved."},
+	25: {"location": "Raw VPX candidate x=199.5, y=810.0 in the pop-bumper area", "notes": "Active-high pop-bumper flasher callback 25; this raw coordinate is not a canonical spatial placement."},
+	27: {"location": "Raw VPX candidate x=379.5, y=502.0 for the center-left red feature", "notes": "The authenticated Pro table proves this is a flasher; the LE manual's output-27 Iceman motor label does not apply. This raw coordinate is not a canonical spatial placement."},
+	28: {"location": "Raw VPX candidates x=133.5, y=88.0, x=241.5, y=90.0, and x=455.5, y=90.0 for a backpanel render group", "notes": "The exact Pro table drives three render objects together through active-high callback 28, but render-object count does not establish physical socket count. The manual's Q28 X3 backpanel row is explicitly LE-only and is not transferred to the Pro. Identity and multiplicity remain unresolved; these raw coordinates are not canonical spatial placements."},
+	29: {"location": "Raw VPX candidates f129 at x=843.5, y=94.0 and f129a at x=639.5, y=90.0 for a backpanel render group", "notes": "The exact Pro script drives two differently positioned render objects together through Flashm/Flash callback 29, but render-object count does not establish physical socket count. The manual's Q29 X3 backpanel row is explicitly LE-only and is not transferred to the Pro. Identity and multiplicity remain unresolved; neither coordinate is promoted to a canonical spatial placement."},
+	31: {"location": "Raw VPX candidate f131 at x=527.5, y=472.0 (non-canonical; no physical socket is asserted)", "notes": "The active-high Pro callback drives f131, but its raw coordinate comes from the retained, lossy ad-hoc inventory and is not a canonical spatial placement. The combined manual's Q31 bottom-arch (X2) row is LE-specific and does not establish either Pro physical identity or multiplicity. No second Pro Q31 socket is established."},
 	32: {"location": "Under the Wolverine bash-toy area", "notes": "The table's cvpmMagnet binds public solenoid 32 to the Wolverine playfield magnet with GrabCenter disabled."},
 }
 
@@ -285,6 +310,7 @@ PRO_LAMPS = {
 	60: "Left pop bumper", 61: "Right pop bumper", 62: "Bottom pop bumper",
 	65: "Sabretooth", 66: "Shadow King", 67: "Hellfire Club", 68: "Juggernaut", 69: "Brotherhood", 70: "Sentinels", 71: "Omega Red",
 }
+PRO_SCRIPT_ONLY_LAMPS = {59: "Wolverine feature reflection (script-only)"}
 PRO_LAMP_POSITIONS = {
 	3: (410.4, 1835.4), 4: (40.6, 1465.1), 5: (112.5, 1405.3), 6: (691.3, 1376.2), 7: (757.0, 1358.6), 8: (826.6, 1454.1),
 	9: (144.7, 1232.4), 10: (158.4, 1169.5), 11: (418.2, 672.6), 12: (300.8, 1117.5), 13: (306.3, 1166.7), 14: (310.8, 1214.5),
@@ -306,8 +332,12 @@ def pro_lamps() -> list[dict[str, object]]:
 		if address in PRO_LAMPS:
 			label = PRO_LAMPS[address]
 			x, y = PRO_LAMP_POSITIONS[address]
-			physical = {"location": f"Playfield VPX position x={x:.1f}, y={y:.1f}", "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."}
+			physical = {"location": f"Raw VPX candidate position x={x:.1f}, y={y:.1f}", "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."}
 			items.append(output(address, label, "lamp", "used", "validated", (PRO_VPX_SOURCE, PRO_VPX_TABLE_SOURCE), "pinmame.output.lamp", str(address), physical, {"board": "I/O Power Driver board lamp matrix", "control_connection": f"matrix-{address}"}, f"lamp.{slug(label)}-{address}"))
+		elif address in PRO_SCRIPT_ONLY_LAMPS:
+			label = PRO_SCRIPT_ONLY_LAMPS[address]
+			physical = {"notes": "The ground-truth script drives render object f59b from public lamp state 59 through FlashAR, but no FadeL insert or physical socket is identified. Physical population and semantics remain unresolved."}
+			items.append(output(address, label, "lamp", "unknown", "observed", (PRO_VPX_SOURCE, PRO_VPX_TABLE_SOURCE), "pinmame.output.lamp", str(address), physical, {"board": "I/O Power Driver board lamp matrix", "control_connection": f"matrix-{address}"}, f"lamp.script-only-reflection-{address}"))
 		else:
 			items.append(output(address, f"Unused Pro lamp channel {address}", "lamp", "unused", "validated", (PRO_VPX_SOURCE, PRO_VPX_TABLE_SOURCE), "pinmame.output.lamp", str(address), wiring={"board": "I/O Power Driver board lamp matrix", "control_connection": f"matrix-{address}"}, output_id=f"lamp.unused-{address}"))
 	items.append(output(0, "General illumination master", "gi", "used", "validated", (PRO_VPX_SOURCE, PRO_VPX_TABLE_SOURCE), "pinmame.output.gi", "GI-0", physical={"notes": "The proven Pro table treats GI callback 0 as active-high master illumination."}, output_id="gi.master"))
@@ -392,8 +422,8 @@ def driver_records(le: bool) -> list[dict[str, object]]:
 def sources(le: bool) -> list[dict[str, object]]:
 	vpx_source = {"id": LE_VPX_SOURCE if le else PRO_VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/X-Men%20LE%20(Stern%202012)%20VPW%20v1.0.6.vbs" if le else "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/X-Men(ICPjuggla)6-27c.vbs", "revision": VPX_REVISION, "sha256": "6d445e52398640bd35a498553bb0ba32f1b9ce23e2964d0694c18ff2e9225650" if le else "2441d88ab8aef581fcdef3dd5c0b9523a36feb3ce4afb6133811f1f01b381afb", "locator": "X-Men LE (Stern 2012) VPW v1.0.6.vbs: initialization, solenoid callbacks, GI callbacks, Iceman movement, Nightcrawler state machines, Magneto disc, lock, kickers, trough, and switches" if le else "X-Men(ICPjuggla)6-27c.vbs: Pro ROM xmn_151, solenoid callbacks, lamp callback addresses, Wolverine and Magneto magnets, trough, lock, kickers, ramps, and switches", "license": "NOASSERTION", "attribution": "Table authors credited in the script and vpxtable_scripts contributors"}
 	result = [
-		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/XMenManual_042214.pdf", "sha256": "0812b91d0950ff8c1b15c5bc17afc827029ca8aaaa0bbb78cc11ea606b629bf8", "locator": "XMenManual_042214.pdf: PDF pages 56-62 and 97-117; official low-resolution manufacturer copy; page 60 was visually verified at the root for the F17/F18 flasher quantities", "license": "NOASSERTION", "attribution": "Stern Pinball", "source_id": "stern", "original_filename": "XMenManual_042214.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T00:00:00Z"},
-		{"id": MANUAL_HIRES_SOURCE, "kind": "manual", "uri": "https://primetimeamusements.com/wp-content/uploads/2015/05/XMenManual_042214.pdf", "sha256": "d793836fefab6c0de53463943e36245c7ed800d5ca86675e3c2b2f46df693643", "locator": "Higher-resolution scan of the same Stern manual; switch table page 56, lamp table page 58, coil table page 60, eight-transistor board page 101, LE LED boards pages 103-104, GI maps pages 109-111", "license": "NOASSERTION", "attribution": "Stern Pinball manual mirrored by PrimeTime Amusements", "original_filename": "XMenManual_042214-high-resolution.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T00:00:00Z"},
+		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/XMenManual_042214.pdf", "sha256": "0812b91d0950ff8c1b15c5bc17afc827029ca8aaaa0bbb78cc11ea606b629bf8", "locator": "XMenManual_042214.pdf: PDF pages 56-62 and 97-117; official low-resolution manufacturer copy. Edition-specific low-current and GI evidence is treated as LE-only and is not transferred to Pro quantities or positions.", "license": "NOASSERTION", "attribution": "Stern Pinball", "source_id": "stern", "original_filename": "XMenManual_042214.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T00:00:00Z"},
+		{"id": MANUAL_HIRES_SOURCE, "kind": "manual", "uri": "https://primetimeamusements.com/wp-content/uploads/2015/05/XMenManual_042214.pdf", "sha256": "d793836fefab6c0de53463943e36245c7ed800d5ca86675e3c2b2f46df693643", "locator": "Higher-resolution scan of the same Stern manual; switch pages 56-57, lamp pages 58-59, low-current pages 60-61, and GI maps pages 109-111. Selected pages are retained as hash-locked renders under external:pinmame-manuals/by-machine/stern.x-men-pro-limited-edition.2012/primetime-amusements/extracted/rendered-pages; page 60 lacks a Q18 X2 marker while page 61 draws two Q18 callouts, and both are LE-only.", "license": "NOASSERTION", "attribution": "Stern Pinball manual mirrored by PrimeTime Amusements", "original_filename": "XMenManual_042214-high-resolution.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T00:00:00Z"},
 		vpx_source,
 		{"id": PRODUCT_SOURCE, "kind": "human_review", "uri": "https://sternpinball.com/game/x-men-pro/", "locator": "Manufacturer Pro and Limited Edition feature inventories, including edition-only Ice Slide, Nightcrawler, spinning disc, and color GI mechanisms", "license": "NOASSERTION", "attribution": "Stern Pinball", "acquired_at": "2026-08-02T00:00:00Z"},
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c X-Men INITGAME and full driver family; src/wpc/sam_original.c historical ROM identity; public custom outputs 51-58 for the eight-transistor board", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
@@ -402,7 +432,19 @@ def sources(le: bool) -> list[dict[str, object]]:
 	if le:
 		result.append({"id": LE_RUNTIME_SOURCE, "kind": "runtime_scenario", "uri": "external:pinmame-game-code/xmn_151h/harness/boot-start-le.json", "revision": PINMAME_REVISION, "sha256": "72730b25d7cec239eac1d8df6039f0c465e2c729070d49acebec8d22aa5cb61c", "locator": "Exact xmn_151h boot/start scenario with switches 18-21 initialized, four coin pulses, and start; ROM archive SHA-256 cc8069743e6a0f45c3b310c0804230241739b5cf8c51f0481d96810f9edab5be", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"})
 	else:
-		result.append({"id": PRO_VPX_TABLE_SOURCE, "kind": "vpx_table", "uri": "https://vpuniverse.com/files/file/2679-x-men-pro-stern-2012-85vett/", "sha256": "00784b76eb35991d4bb4b13939862f67506f06cb017426668d57a66ded8829d8", "locator": "XMen FS (physmod5).vpt from XMen FS (physmod5).zip; archive SHA-256 6f5eae417c894af5947a819448f45616cb2348a1cfdca5cff544e6bdcda439fb; embedded script SHA-256 90cd88f121798f7c91ba738713c2aae99784751637380beb864ee3e2bcde25cb; read-only inventory SHA-256 ff52f1deaee9182f1b6e33785887dab774d15aa6b963f1ca627a835198ce1020; playfield artwork PF A.jpg SHA-256 bc62ed5d55b1c3394beae1c78b1f72544bcdcf3d3008cf51b1cfefea8be01cc1. The embedded xmen_150 script, physical lamp/flasher objects, coordinates, playfield labels, switches, and mechanisms were inspected.", "license": "NOASSERTION", "attribution": "85vett and table authors credited by the archived table", "original_filename": "XMen FS (physmod5).vpt", "rights": "NOASSERTION", "acquired_at": "2026-08-02T00:00:00Z"})
+		result.append({
+			"id": PRO_VPX_TABLE_SOURCE,
+			"kind": "vpx_table",
+			"known_working": True,
+			"uri": "https://vpuniverse.com/files/file/2679-x-men-pro-stern-2012-85vett/",
+			"sha256": "00784b76eb35991d4bb4b13939862f67506f06cb017426668d57a66ded8829d8",
+			"locator": "Exact retained source: external:pinmame-vpx-sources/stern/x-men-pro-2012/source/XMen FS (physmod5).zip -> XMen FS (physmod5)/XMen FS  (physmod5).vpt; archive SHA-256 6f5eae417c894af5947a819448f45616cb2348a1cfdca5cff544e6bdcda439fb; embedded script SHA-256 90cd88f121798f7c91ba738713c2aae99784751637380beb864ee3e2bcde25cb. Raw coordinate candidates come from external:pinmame-vpx-sources/stern/x-men-pro-2012/analysis/physmod5/inventory.json SHA-256 d197a15cccc29b18be6d5b9128b110b83fd2aa3b109a9c0df8d2ffff174303e8, an unidentified and lossy ad-hoc .NET extraction with no retained helper source/version; it is not reproducible geometry. Pinned vpxtool git:v0.33.3 gamedata proves bounds left=0, top=0, right=959, bottom=2162. A full coordinate extraction was attempted through the repository's exact-byte .vpx copy shim and reproducibly failed with exit 101 in vpin-0.26.4 before writing any extracted files; the portable failure record is retained at external:pinmame-vpx-sources/stern/x-men-pro-2012/extraction/vpxtool-0.33.3-full/failure.json, SHA-256 1d66232147c795bcddac0b57cf8bd78f03554cf039f0e5d195773f0df513878d. The spatial audit records every artifact hash and keeps all raw positions non-canonical.",
+			"license": "NOASSERTION",
+			"attribution": "85vett and table authors credited by the archived table",
+			"original_filename": "XMen FS (physmod5).vpt",
+			"rights": "NOASSERTION",
+			"acquired_at": "2026-08-02T00:00:00Z",
+		})
 	return result
 
 
@@ -423,13 +465,18 @@ def build_pro() -> dict[str, object]:
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
 		"machine": {"id": "stern.x-men-pro.2012", "name": "X-Men Pro", "manufacturer": "Stern", "year": 2012, "kind": "physical_pinball", "model_number": "I-00D1", "ipdb_id": 5822},
-		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
+		# Partial is asserted here rather than left to fail_closed_spatial_partial(): this definition
+		# lists missing requirements and carries an unresolved lamp-59 conflict, so author_ready would
+		# be self-contradictory on its own terms. Removing this machine from
+		# SPATIAL_RETROFIT_PENDING_MACHINE_IDS is the intended step once spatial placement is
+		# reconciled, and it must not silently promote a record that still has open blockers.
+		"coverage": {"status": "partial", "missing": ["spatial_placement", "unresolved_conflicts"], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(False), "inputs": inputs(False), "outputs": pro_coils() + pro_lamps(),
 		"displays": [{"id": "display.dmd", "label": "Dot-matrix display", "kind": "dmd", "width": 128, "height": 32, "provenance": provenance("validated", CORE_SOURCE, PRO_VPX_SOURCE, PRO_VPX_TABLE_SOURCE)}],
 		"mechanisms": pro_mechanisms(), "relationships": [], "sources": sources(False),
 		"knowledge": {"path": "knowledge/stern/x-men-pro-2012.md", "status": "complete"},
-		"conflicts": [],
+		"conflicts": [{"id": "conflict.pro-lamp-59-script-versus-physical-inventory", "path": "outputs[pinmame.output.lamp:59]", "description": "The ground-truth Pro script drives reflection object f59b from public lamp state 59 through FlashAR, while no FadeL insert or physical socket is identified; physical population and semantics remain unresolved.", "source_refs": [PRO_VPX_SOURCE, PRO_VPX_TABLE_SOURCE]}],
 	}
 
 
@@ -491,11 +538,11 @@ The SAM switch matrix is public 1-64; dedicated cabinet inputs occupy 65-72, 81-
 
 ## Lamps and physical placement
 
-All public lamp addresses 1-80 are explicit in the JSON. The authenticated table consumes exactly 3-25, 28-31, 33-38, 43-57, 60-62, and 65-71; every other address is explicitly unused. Each used lamp was correlated with an extracted VPX coordinate during curation, but those coordinates have not yet been normalized and promoted into this definition. Semantic labels come from the table's playfield art. Descriptive location labels are retained for otherwise unlabeled red route arrows and the two Magneto completion medallions so an author can identify them without inventing rule terminology. Lamps 11 and 38 carry left/right Nightcrawler feature artwork but are ordinary static inserts on the Pro, not moving toys. Lamp callbacks and GI 0 are active-high in the proven scripts.
+All public lamp addresses 1-80 are explicit in the JSON. The authenticated table proves physical inserts at 3-25, 28-31, 33-38, 43-57, 60-62, and 65-71; the script also drives reflection object `f59b` from public lamp state 59 through `FlashAR`, but no `FadeL` insert or physical socket is identified, so address 59 remains an explicit unresolved conflict rather than being called unused. Every otherwise used lamp is one physical insert: the table's `lN` and `lNa` objects are duplicate render layers at the same socket, not two bulbs. The primary `lN` coordinates are retained only as raw VPX candidate locations for review; they have not been promoted to schema-v2 `spatial` placements. Pinned `vpxtool git:v0.33.3` gamedata proves exact bounds 959 by 2162. A full `vpxtool extract` was also attempted through the repository's exact-byte `.vpx` copy shim, but vpin-0.26.4 panicked with exit 101 before writing any item JSON; its hash-locked failure record and logs are retained and referenced by `reports/spatial/stern/x-men-pro-2012-gamedata.json`. Consequently the raw lamp positions still come only from the lossy ad-hoc inventory, not a reproducible VPXTool coordinate export. The eventual canonical player view is `x=0` left, `x=1` right, `y=0` rear/backglass, `y=1` apron. Semantic labels come from the table's playfield art. Descriptive location labels are retained for otherwise unlabeled red route arrows and the two Magneto completion medallions so an author can identify them without inventing rule terminology. Lamps 11 and 38 carry left/right Nightcrawler feature artwork but are ordinary static inserts on the Pro, not moving toys. Lamp callbacks and GI 0 are active-high in the proven scripts.
 
 ## Coils, flashers, and the upper flipper exception
 
-Outputs 1-18 are the common trough, launcher, eject, magnets, lock, optional shaker, pops, three physical flippers, slings, and left/right flashers. Outputs 19, 20, 23, and 30 are unused on the Pro; in particular there is no spinning Magneto disc motor. Output 21 flashes Wolverine, 22 Magneto, 25 the pop area, 26 moves the orbit diverter, 27 is a center-left red flasher, 28/29 drive left/right backpanel groups, 31 is the Magneto center red flasher, and 32 is the Wolverine playfield magnet. The JSON records every observed flasher object's coordinates, including multi-object groups.
+Outputs 1-18 cover the common trough, launcher, eject, magnets, lock, optional shaker, pops, three physical flippers, slings, and the Pro table's output-17/18 flasher render groups. Outputs 19, 20, 23, and 30 are unused on the Pro; in particular there is no spinning Magneto disc motor. Output 21 flashes Wolverine, 25 the pop area, 26 moves the orbit diverter, 27 is a center-left red flasher, 28/29 drive backpanel render groups, 31 is an unresolved Pro flasher candidate, and 32 is the Wolverine playfield magnet. The combined manual's low-current chart and drawing are explicitly LE-only and are not used to assert Pro labels or quantities for outputs 17, 18, 22, 28, 29, or 31. The LE evidence is itself inconsistent for Q18: page 60 has no X2 marker, while page 61 draws two 18 callouts. The exact Pro table supplies render candidates for these addresses, but render-object count does not prove physical socket identity or multiplicity. Those raw coordinates remain review candidates from a lossy, unavailable ad-hoc extractor, not reproducible physical socket evidence. Separately, reflection object `f59b` is driven by public lamp address 59, creating the explicit script-versus-physical-inventory conflict documented in the JSON.
 
 The physical upper-right flipper is output 12 with staged dedicated button 86/D15. The legacy table comments out callback 12 and rotates its upper flipper object together with lower-right output 16. That is a table shortcut, not machine wiring; authors must implement the physical 12/86 channel pair. Lower flippers are outputs 15/16 with buttons 84/82 and normally-closed EOS inputs 83/81.
 
@@ -503,17 +550,32 @@ The physical upper-right flipper is output 12 with staged dedicated button 86/D1
 
 PWM output 4 controls the Magneto playfield magnet. Output 26 routes the orbit shot into the four-position vertical Magneto lock. Occupancy switches are 53 at the bottom, followed by 38, 39, and 40 at the top; outputs 6 and 7 operate the linked up-post and latch mechanism. Wolverine is a passive wobbling bash toy on switch 36 plus a separate output-32 playfield magnet. The proven table disables center-grab so the magnet deflects the ball rather than pinning it rigidly.
 
-The Power Scoop holds a ball at switch 4 and ejects with output 3. The left vertical up-kicker holds at switch 55 and output 5 sends the ball onto the left ramp. Output 2 auto-launches from shooter switch 23 while the cabinet also retains a manual plunger. Pops use output/switch pairs 9/30, 10/31, and 11/32; slings use 13/26 and 14/27. The passive Cyclops spinner pulses switch 47.
+The Power Scoop holds a ball at switch 4 and ejects with output 3. The left vertical up-kicker holds at switch 55 and output 5 sends the ball onto the left ramp. Output 2 auto-launches from the shooter-lane trigger at switch 23 while the cabinet also retains a manual plunger. Pops use output/switch pairs 9/30, 10/31, and 11/32; slings use 13/26 and 14/27. The passive Cyclops spinner pulses switch 47. The exact table represents switches 18-22 through `bsTrough.InitSw 0, 21, 20, 19, 18, 0, 0, 0` rather than separate VPX switch objects. Its `BallRelease` kicker is an assembly/eject anchor, not five socket positions, and the `Drain` object is not evidence for any one trough switch. Manual page 56 supplies the matrix labels and wiring; the page-57 switch-location drawing groups 18-22 into one trough assembly without individual socket centers. The four-ball inventory and 18-21 order are known, but the exact physical positions for 18, 19, 20, 21, and jam 22 remain unresolved.
 
 ## Important Pro differences
 
 The Pro omits the LE motorized Iceman Ice Slide, both latched Nightcrawler pop-up mechanisms, the spinning Magneto disc, red/blue/white subtractive color-GI channels, and auxiliary driver board. It retains two printed Nightcrawler lamp features and ordinary Iceman inserts, which must not be mistaken for the missing LE mechanisms. The Wolverine magnet moves from LE public 51/physical Q41 to Pro main output 32. Output 27 is a flasher instead of the LE Iceman motor, and output 31 is a different red feature flasher. Never apply the combined manual's LE lamp table or these LE output labels to a Pro recreation.
 
+## Spatial retrofit: fail-closed evidence gates
+
+The exact Pro VPT and pinned `vpxtool git:v0.33.3` gamedata establish the coordinate convention. The generated, hash-pinned audit at `reports/spatial/stern/x-men-pro-2012-gamedata.json` proves left=0, top=0, right=959, bottom=2162, with normalized player-view coordinates x=0 left/x=1 right and y=0 rear/backglass/y=1 apron. Its full VPXTool item extraction attempt failed reproducibly with exit 101 before writing any files, so the raw candidate positions below remain sourced only from the lossy ad-hoc inventory and are not promoted. Render-only `lN`/`lNa` pairs are collapsed semantically to one physical insert. That evidence is not sufficient to promote this definition because required physical inventories do not reconcile:
+
+- GI output 0: the Pro extraction has no visual GI `LightData` objects or individual GI socket objects; its GI collections are controller/render structures. The manual pages 109-111 are explicitly `X-MEN LE` GI maps and cannot provide Pro geometry. GI 0 therefore remains a semantic controller output with no spatial record; `internal_nonvisual` is not asserted.
+- Flasher outputs 17 and 28: the exact Pro table drives two output-17 render objects and three output-28 render objects, but render-object count is not physical socket count. The LE-only page-60 chart and page-61 drawing happen to show Q17 X2 and Q28 X3, but that edition-mismatched evidence is retained only for comparison and is not transferred. Pro physical identities, multiplicities, and canonical positions remain unresolved.
+- Flasher output 18: the exact Pro table drives raw candidates `f118` and `f118b` together at different coordinates. The LE-only manual contradicts itself: page 60 gives Q18 no X2 marker, while page 61 shows two 18 callouts. Neither LE page establishes Pro identity or multiplicity, and the render candidates remain non-canonical.
+- Flasher output 22: the exact Pro table has only raw candidate `f122` at x=503.5, y=288.0. The LE-only page-60 Q22 X2 Magneto row is not transferred; Pro physical identity, multiplicity, and canonical geometry remain unresolved.
+- Flasher output 29: the exact Pro table has distinct candidates `f129` at x=843.5, y=94.0 and `f129a` at x=639.5, y=90.0. The LE-only page-60 Q29 X3 backpanel row is not transferred; Pro physical identity, multiplicity, and canonical geometry remain unresolved.
+- Flasher output 31: the combined manual's Q31 bottom-arch `(X2)` row is LE-specific and rejected for the Pro. The exact Pro table has only raw candidate `f131` at x=527.5, y=472.0, so Q31 Pro physical identity and multiplicity are both unresolved; no second Q31 socket is established.
+- Trough switches 18-22: the known-working Pro script uses `bsTrough.InitSw 0, 21, 20, 19, 18, 0, 0, 0` and pulses jam switch 22; the exact table exposes `BallRelease` at x=814, y=1862.0625 and `Drain` at x=462.03125, y=2095.5, not five switch sockets. Manual page 56 supplies matrix labels and wiring, while page 57 groups `18-22` as one trough assembly without individual centers.
+
+The missing evidence is exact edition-matched Pro physical identity, multiplicity, and geometry for outputs 17, 18, 22, 28, 29, and 31; exact Pro GI socket geometry; and each of trough switches 18, 19, 20, 21, and jam 22. Those records and the lamp-59 script-versus-physical-inventory conflict keep the Pro definition `partial` with both `spatial_placement` and `unresolved_conflicts` missing. No shared BallRelease anchor, duplicated flasher point, LE chart count, LE GI map, render-only layer, or unverified socket is promoted as a physical socket. The spatial audit retains truthful hashes for the failed VPXTool extraction, rendered/OCR-selected manual pages, and the raw extractor's reproducibility limitations for the next evidence pass.
+
+The semantic definition remains useful for controller bindings, physical inventory, causality, variant boundaries, and recreation notes. An author may construct the known mechanisms, but must supply the missing socket evidence before enabling spatial placement and changing coverage to `author_ready`.
+
 ## Author construction checklist
 
 - Build the four-ball trough, shooter/manual plunger, auto launcher, Power Scoop eject, left VUK, four-level Magneto lock and diverter, two playfield magnets, passive Wolverine bash toy, three flippers, three pops, two slings, Cyclops spinner, seven standup/bash targets, two molded ramps, inner loop, and both outer orbits.
-- Bind every public input and output from the JSON, including explicit unused lamp and coil channels, GI 0, the 128x32 DMD, and the upper-right physical flipper exception.
-- Recover and normalize the 58 standard-lamp and flasher-group placements from the authenticated table and pinned playfield art before authoring; these coordinates are not yet stored in the definition. Do not invent LE hardware where the Pro art retains only a themed insert.
+- Bind every public input and output from the JSON, including explicit unused lamp and coil channels, unresolved lamp 59, GI 0, the 128x32 DMD, and the upper-right physical flipper exception.
 - Treat working-table kick force, angle, animation, capture, and magnet values as proven authoring baselines, while preserving controller causality and physical channel assignments.
 """
 
@@ -524,6 +586,122 @@ def runtime_evidence() -> dict[str, object]:
 		"extractor": {"id": "libpinmame-gameplay-harness", "version": 1}, "switches": [], "outputs": [], "mechanisms": [], "states": [], "recreation_notes": [],
 		"runtime": {"game": "xmn_151h", "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game xmn_151h --rom-path <vpinmame-roms> --work-dir <isolated-state> --initial-switch 18 --initial-switch 19 --initial-switch 20 --initial-switch 21 --pulse 65 --pulse 65 --pulse 65 --pulse 65 --pulse 16 --output <external-json>", "rom_archive_sha256": "cc8069743e6a0f45c3b310c0804230241739b5cf8c51f0481d96810f9edab5be", "raw_runs": [{"name": "boot-start", "sha256": "72730b25d7cec239eac1d8df6039f0c465e2c729070d49acebec8d22aa5cb61c", "self_test_pulses": 0}], "observations": {"display_layouts_seen": [{"type": 14, "width": 128, "height": 32, "depth": 4}], "lamp_addresses_seen": [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 41, 42, 43, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80], "solenoid_addresses_seen": [27, 30, 33], "gi_addresses_seen": [0]}},
 		"source": {"kind": "runtime_scenario", "repository": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "path": "external:pinmame-game-code/xmn_151h/harness", "sha256": "72730b25d7cec239eac1d8df6039f0c465e2c729070d49acebec8d22aa5cb61c", "license": "NOASSERTION", "quality": "validated", "attribution": "Generated locally from PinMAME and the user-authorized ROM corpus; ROM bytes remain external"},
+	}
+
+
+def pro_gamedata_evidence() -> dict[str, object]:
+	"""Return the machine-specific, fail-closed X-Men Pro spatial audit."""
+	return {
+		"format": "pinmame-spatial-audit",
+		"version": 1,
+		"machine_id": "stern.x-men-pro.2012",
+		"coordinate_convention": {
+			"applies_to": "the normalized form a promoted placement would take; nothing in this report has been normalized",
+			"candidate_coordinate_units": "every candidate_coordinates x and y below is in raw source-table units inside the source_bounds box, never a normalized 0..1 value",
+			"space": "playfield",
+			"source_bounds": {"left": 0.0, "top": 0.0, "right": 959.0, "bottom": 2162.0},
+			"x": "x/959; 0=left, 1=right",
+			"y": "y/2162; 0=rear/backglass, 1=apron/player",
+		},
+		"evidence_artifacts": {
+			"source_archive": {"uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/source/XMen FS (physmod5).zip", "size": 21499804, "sha256": "6f5eae417c894af5947a819448f45616cb2348a1cfdca5cff544e6bdcda439fb"},
+			"source_vpt": {"uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/source/XMen FS (physmod5)/XMen FS  (physmod5).vpt", "size": 25464832, "sha256": "00784b76eb35991d4bb4b13939862f67506f06cb017426668d57a66ded8829d8"},
+			"vpxtool_gamedata": {"uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/extraction/vpxtool-0.33.3/gamedata.json", "size": 5267, "sha256": "da89862afc2d9433fbc730d3aa453af85c3c894fc5381c8bd5b99c26b40fc43f"},
+			"vpxtool_extraction_failure": {"uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/extraction/vpxtool-0.33.3-full/failure.json", "size": 1682, "sha256": "1d66232147c795bcddac0b57cf8bd78f03554cf039f0e5d195773f0df513878d"},
+			"vpxtool_extraction_stdout": {"uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/extraction/vpxtool-0.33.3-full/extract.stdout.log", "size": 107, "sha256": "917c7ddf161ee611178a5376c23ecd8c8fdbd9762d7c7af260daf8c8e97e1b22"},
+			"vpxtool_extraction_stderr": {"uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/extraction/vpxtool-0.33.3-full/extract.stderr.log", "size": 1154164, "sha256": "101ea8bcfdfe4c6d5e0076bb5527121a53bfcbf54fbf3b49ab9a5ed403e91090"},
+			"raw_candidate_inventory": {"uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/analysis/physmod5/inventory.json", "size": 250396, "sha256": "d197a15cccc29b18be6d5b9128b110b83fd2aa3b109a9c0df8d2ffff174303e8"},
+			"raw_candidate_loader_log": {"uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/extraction/physmod5-vpt/loader.log", "size": 718448, "sha256": "da276598d764d4605698975ee66d6bf20e2063eaf5a4aa631c00d802716a92ac", "encoding": "UTF-16"},
+			"manual_page_renders": {
+				"root_uri": "external:pinmame-manuals/by-machine/stern.x-men-pro-limited-edition.2012/primetime-amusements/extracted/rendered-pages",
+				"source_manual_sha256": "d793836fefab6c0de53463943e36245c7ed800d5ca86675e3c2b2f46df693643",
+				"files": [
+					{"page": 56, "name": "page-056.png", "size": 493289, "sha256": "4570d89f3d7fd35ab9957336e92270fc3888e55a12669d265233f633f5b7323c"},
+					{"page": 57, "name": "page-057.png", "size": 539057, "sha256": "f7f970c003b56e048d3ea744b7a2b75fe7feeaea6aa655bd72586c503359a30f"},
+					{"page": 58, "name": "page-058.png", "size": 342231, "sha256": "cf70a3b5455f6bf8f0eba84749ed000cf532e80d4b5a3219231a7cad6c2b49b5"},
+					{"page": 59, "name": "page-059.png", "size": 365760, "sha256": "ecc488adf364b9447f9ef43fa9140c0e5def1de8d15db410b558217e3166f9b7"},
+					{"page": 60, "name": "page-060.png", "size": 290727, "sha256": "15bb165e604bc9839a4cee9c6a66f0cb7b3a8c265311d4f40334bef98bc44f73"},
+					{"page": 61, "name": "page-061.png", "size": 481891, "sha256": "45b714f85813592f5599da964f74421539106c2cd684cbec3365f2ec972c0580"},
+					{"page": 62, "name": "page-062.png", "size": 79570, "sha256": "9a399dd617d684313adcb50786fb970d2509b496bbed9a757bed3e7e0857f3df"},
+					{"page": 109, "name": "page-109.png", "size": 278677, "sha256": "1e086f5c459a3f0f10b3063aa132eb8ea1894f3003c328268dc13481dca12b38"},
+					{"page": 110, "name": "page-110.png", "size": 286150, "sha256": "c58b6c0cb5ad52cffb13355f631688087c59cc4bb4eaeff8f9a73368f3b4a805"},
+					{"page": 111, "name": "page-111.png", "size": 273435, "sha256": "38081cfe6492152210d0f7c0995843a900378de322ea7ce44cc0f3c8f4d9842e"},
+				],
+			},
+			"manual_selected_page_ocr": {"uri": "external:pinmame-manuals/by-machine/stern.x-men-pro-limited-edition.2012/primetime-amusements/extracted/ocr-selected/pages-056-062-109-111.md", "size": 3180, "sha256": "1b194820180e5a7a90b573cebff45de2c48b8354d298557b8aa210c76d1ac755"},
+		},
+		"manual_review": {
+			"low_current_scope": "Pages 60-61 describe the X-Men Limited Edition low-current playfield and are not transferred to Pro labels, quantities, or geometry.",
+			"q18_internal_conflict": "Page 60 lists Q18 RIGHT SIDE without an X2 marker, while page 61 visibly contains two 18 callouts aligned with the two table render candidates.",
+			"gi_scope": "Pages 109-111 are titled X-MEN L.E. RED GI MAP, X-MEN L.E. WHT GI MAP, and X-MEN L.E. BLU GI MAP; none establishes Pro GI sockets.",
+			"retained_review_evidence": ["manual_page_renders", "manual_selected_page_ocr"],
+			"transfer_decision": "reject_edition_mismatched_counts_and_positions",
+		},
+		"extraction": {
+			"vpxtool": {
+				"version": "git:v0.33.3",
+				"bounds_command": "vpxtool gamedata show <retained-vpt>",
+				"item_name_command": "vpxtool gameitems list <retained-vpt>",
+				"coordinate_export_command": "copy exact retained VPT bytes to <workspace>/source.vpx; vpxtool extract --force --output-dir <output> <workspace>/source.vpx",
+				"coordinate_export_status": "attempted_failed_no_output",
+				"failure": {"exit_code": 101, "kind": "rust_panic", "crate": "vpin-0.26.4", "message": "range end index 39403 out of range for slice of length 39402", "record_ref": "vpxtool_extraction_failure"},
+				"limitation": "The exact-byte .vpx copy reaches the legacy table parser, but vpin-0.26.4 panics before VPXTool writes any extracted item files. Bounds and item names remain reproducible; coordinate export is not available from this failed run.",
+			},
+			"raw_candidate_inventory": {
+				"extractor_identity": "unidentified_ad_hoc_dotnet_extractor_using_visualpinball_engine_vpt_records",
+				"command_project_clue": "Retained UTF-16 loader.log contains the truncated command fragment: dotnet run --project tools/_xmen_vpt_extract.csproj --no- ...",
+				"source_and_version": "Inventory type names identify VisualPinball.Engine.VPT records, but the helper project source and exact reader version are absent from the retained evidence and this worktree.",
+				"lossiness": {
+					"status": "lossy",
+					"unknown_tag_occurrences": 10556,
+					"unique_unknown_tag_count": 79,
+					"unique_unknown_tags": PRO_AD_HOC_LOADER_UNKNOWN_TAGS,
+					"effect": "The inventory may omit or misrepresent properties carried by skipped VPT tags; it supplies only unpromoted candidate coordinates.",
+				},
+			},
+			"retained_analysis_manifest": {
+				"root_uri": "external:pinmame-vpx-sources/stern/x-men-pro-2012/analysis/physmod5",
+				"algorithm": "UTF-8 json.dumps of the sorted relative-POSIX entry array with ensure_ascii=false, sort_keys=true, and separators=(',', ':'); each entry contains path, size, and SHA-256.",
+				"sha256": PRO_RAW_ANALYSIS_MANIFEST_SHA256,
+				"file_count": len(PRO_RAW_ANALYSIS_MANIFEST_ENTRIES),
+				"total_bytes": PRO_RAW_ANALYSIS_TOTAL_BYTES,
+				"entries": PRO_RAW_ANALYSIS_MANIFEST_ENTRIES,
+			},
+		},
+		"transformations": [
+			{"class": "observed_table_bounds", "detail": "vpxtool gamedata establishes the 0,0,959,2162 raw table bounds."},
+			{"class": "normalization_withheld", "detail": "No raw inventory coordinate is normalized into schema spatial placements because VPXTool coordinate extraction failed and required physical socket identities are not reconciled."},
+		],
+		"projection_classes": [
+			{"class": "raw_candidate_only", "detail": "f59b, f118/f118b, f122, f129/f129a, and f131 are retained as non-canonical candidate evidence only."},
+			{"class": "assembly_anchor_rejected", "detail": "BallRelease and Drain identify the trough assembly, not individual switch centers."},
+			{"class": "edition_transfer_rejected", "detail": "LE low-current labels/counts for Q17, Q18, Q22, Q28, Q29, and Q31 plus LE GI maps are not projected onto the Pro."},
+		],
+		"candidate_coordinates": [
+			{"binding": {"group": "pinmame.output.solenoid", "address": 17}, "objects": [{"name": "f117", "x": 79.5, "y": 1336.0}, {"name": "f117b", "x": 75.5, "y": 662.0}], "disposition": "render candidates only; Pro physical identity and multiplicity unresolved; LE X2 evidence rejected"},
+			{"binding": {"group": "pinmame.output.solenoid", "address": 18}, "objects": [{"name": "f118", "x": 805.5, "y": 1438.0}, {"name": "f118b", "x": 917.5, "y": 594.0}], "disposition": "render candidates only; Pro physical identity and multiplicity unresolved; LE pages 60-61 conflict"},
+			{"binding": {"group": "pinmame.output.solenoid", "address": 22}, "objects": [{"name": "f122", "x": 503.5, "y": 288.0}], "disposition": "non-canonical render candidate; Pro physical identity and multiplicity unresolved; LE X2 evidence rejected"},
+			{"binding": {"group": "pinmame.output.solenoid", "address": 28}, "objects": [{"name": "f128", "x": 133.5, "y": 88.0}, {"name": "f128a", "x": 241.5, "y": 90.0}, {"name": "f128b", "x": 455.5, "y": 90.0}], "disposition": "render candidates only; Pro physical identity and multiplicity unresolved; LE X3 evidence rejected"},
+			{"binding": {"group": "pinmame.output.solenoid", "address": 29}, "objects": [{"name": "f129", "x": 843.5, "y": 94.0}, {"name": "f129a", "x": 639.5, "y": 90.0}], "disposition": "render candidates only; Pro physical identity and multiplicity unresolved; LE X3 evidence rejected"},
+			{"binding": {"group": "pinmame.output.solenoid", "address": 31}, "objects": [{"name": "f131", "x": 527.5, "y": 472.0}], "disposition": "non-canonical candidate; Pro physical identity and multiplicity unresolved"},
+			{"binding": {"group": "pinmame.output.lamp", "address": 59}, "objects": [{"name": "f59b", "x": 201.5, "y": 1094.0}], "disposition": "script-bound reflection candidate; physical socket population and semantics unresolved"},
+		],
+		"unresolved_blockers": [
+			{"id": "gi-0-pro-socket-geometry", "devices": {"outputs": [{"group": "pinmame.output.gi", "address": 0}]}, "blocker": "No individual Pro GI sockets are represented; LE GI maps are edition-mismatched and are not transferred."},
+			{"id": "solenoid-17-pro-identity-and-multiplicity", "devices": {"outputs": [{"group": "pinmame.output.solenoid", "address": 17}]}, "blocker": "Raw render candidates f117 and f117b do not establish Pro physical identity or multiplicity; the LE-specific X2 evidence is rejected."},
+			{"id": "solenoid-18-pro-socket-identity", "devices": {"outputs": [{"group": "pinmame.output.solenoid", "address": 18}]}, "blocker": "Raw render candidates f118 and f118b do not establish Pro physical identity or multiplicity; the LE pages conflict and are edition-mismatched."},
+			{"id": "solenoid-22-pro-socket-geometry", "devices": {"outputs": [{"group": "pinmame.output.solenoid", "address": 22}]}, "blocker": "Only non-canonical render candidate f122 is available; Pro physical identity and multiplicity remain unresolved and the LE-specific X2 evidence is rejected."},
+			{"id": "solenoid-28-pro-identity-and-multiplicity", "devices": {"outputs": [{"group": "pinmame.output.solenoid", "address": 28}]}, "blocker": "Raw render candidates f128, f128a, and f128b do not establish Pro physical identity or multiplicity; the LE-specific X3 evidence is rejected."},
+			{"id": "solenoid-29-pro-socket-geometry", "devices": {"outputs": [{"group": "pinmame.output.solenoid", "address": 29}]}, "blocker": "Raw render candidates f129 and f129a do not establish Pro physical identity or multiplicity; the LE-specific X3 evidence is rejected."},
+			{"id": "solenoid-31-pro-identity-and-multiplicity", "devices": {"outputs": [{"group": "pinmame.output.solenoid", "address": 31}]}, "blocker": "Raw candidate f131 does not establish a physical Pro identity or multiplicity; the LE-specific Q31 (X2) manual row is rejected and no second socket is established."},
+			{"id": "lamp-59-script-versus-physical-inventory", "devices": {"outputs": [{"group": "pinmame.output.lamp", "address": 59}]}, "blocker": "The ground-truth script drives reflection helper f59b through FlashAR 59, but no FadeL insert or physical lamp socket is identified; population and semantics remain unresolved."},
+			{"id": "switches-18-through-22-trough-centers", "devices": {"inputs": [18, 19, 20, 21, 22]}, "blocker": "The table exposes BallRelease and Drain assembly anchors, while the manual groups the five switches; no individual switch centers are available."},
+		],
+		"promotion_decision": {
+			"decision": "remain_partial",
+			"coverage_missing": ["spatial_placement", "unresolved_conflicts"],
+			"reason": "Candidate geometry, physical socket inventory, and the lamp-59 conflict are not reconciled. No raw candidate, assembly anchor, or LE evidence is promoted to a canonical Pro spatial placement.",
+		},
 	}
 
 
@@ -552,8 +730,12 @@ def main() -> None:
 	from curate_xmen_le_spatial import generate as generate_le_spatial
 
 	generate_le_spatial(root=ROOT)
+	# Guard the Pro output the same way the LE output is guarded, so a future promotion cannot be
+	# silently shadowed by a regenerated partial.
+	refuse_if_canonical_definition_exists(ROOT / "machines/author-ready/stern/x-men-pro-2012.json")
 	write(ROOT / "machines/partial/stern/x-men-pro-2012.json", build_pro())
 	write(ROOT / "evidence/runtime/sam/x-men-limited-edition-boot-start.json", runtime_evidence())
+	write_json(ROOT / "reports/spatial/stern/x-men-pro-2012-gamedata.json", pro_gamedata_evidence())
 	write_text(ROOT / "knowledge/stern/x-men-pro-2012.md", fail_closed_spatial_knowledge("stern.x-men-pro.2012", PRO_KNOWLEDGE))
 
 

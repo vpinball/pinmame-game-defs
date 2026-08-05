@@ -328,6 +328,10 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual({"input_semantics", "output_semantics", "mechanism_behavior", "recreation_notes", "spatial_placement", "unresolved_conflicts"}, set(definition["coverage"]["missing"]))
 				self.assertEqual("observed", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertEqual("conflicted", definition["coverage"]["dimensions"]["physical_wiring"])
+			elif definition["machine"]["id"] == "stern.x-men-pro.2012":
+				self.assertEqual(["spatial_placement", "unresolved_conflicts"], definition["coverage"]["missing"])
+				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
+				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
 			else:
 				self.assertEqual(["spatial_placement"], definition["coverage"]["missing"])
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])

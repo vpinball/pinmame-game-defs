@@ -1,5 +1,15 @@
 {
-  "conflicts": [],
+  "conflicts": [
+    {
+      "description": "The ground-truth Pro script drives reflection object f59b from public lamp state 59 through FlashAR, while no FadeL insert or physical socket is identified; physical population and semantics remain unresolved.",
+      "id": "conflict.pro-lamp-59-script-versus-physical-inventory",
+      "path": "outputs[pinmame.output.lamp:59]",
+      "source_refs": [
+        "vpx.x-men-pro-icpjuggla",
+        "vpx-table.x-men-pro-physmod5"
+      ]
+    }
+  ],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.sam"
@@ -16,7 +26,8 @@
       "variant_coverage": "validated"
     },
     "missing": [
-      "spatial_placement"
+      "spatial_placement",
+      "unresolved_conflicts"
     ],
     "status": "partial"
   },
@@ -4798,12 +4809,12 @@
         "device": 17,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.left-side-double-flasher",
+      "id": "device.pro-output-17-flasher-render-group",
       "kind": "flasher",
-      "label": "Left-side double flasher",
+      "label": "Pro output 17 flasher render group",
       "physical": {
-        "location": "Left-side pair at VPX positions x=79.5, y=1336.0 and x=75.5, y=662.0",
-        "notes": "Two table flasher objects are driven together by active-high callback 17."
+        "location": "Raw VPX candidates x=79.5, y=1336.0 and x=75.5, y=662.0",
+        "notes": "The exact Pro table drives two render objects together through active-high callback 17, but render-object count does not establish physical socket count. The manual's Q17 X2 chart and drawing are explicitly LE-only and are not transferred to the Pro. Identity and multiplicity remain unresolved; these raw coordinates are not canonical spatial placements."
       },
       "provenance": {
         "source_refs": [
@@ -4842,12 +4853,12 @@
         "device": 18,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.right-side-flasher",
+      "id": "device.pro-output-18-flasher-render-group",
       "kind": "flasher",
-      "label": "Right-side flasher",
+      "label": "Pro output 18 flasher render group",
       "physical": {
-        "location": "Right-side pair at VPX positions x=805.5, y=1438.0 and x=917.5, y=594.0",
-        "notes": "Two table flasher objects are driven together by active-high callback 18."
+        "location": "Raw VPX candidates f118 at x=805.5, y=1438.0 and f118b at x=917.5, y=594.0",
+        "notes": "The exact Pro table drives two render objects together through active-high callback 18, but render-object count does not establish physical socket count. The LE-only manual is internally inconsistent: page 60 gives Q18 no X2 marker while page 61 shows two 18 callouts aligned with the two render candidates. Neither page is transferred to the Pro, so identity and multiplicity remain unresolved and these raw coordinates are not canonical spatial placements."
       },
       "provenance": {
         "source_refs": [
@@ -4970,8 +4981,8 @@
       "kind": "flasher",
       "label": "Wolverine flasher",
       "physical": {
-        "location": "Wolverine area at VPX position x=309.5, y=962.0",
-        "notes": "Active-high flasher callback 21."
+        "location": "Raw VPX candidate x=309.5, y=962.0 in the Wolverine area",
+        "notes": "Active-high flasher callback 21; this raw coordinate is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5010,12 +5021,12 @@
         "device": 22,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.magneto-feature-double-flasher",
+      "id": "device.pro-output-22-flasher-render-group",
       "kind": "flasher",
-      "label": "Magneto feature double flasher",
+      "label": "Pro output 22 flasher render group",
       "physical": {
-        "location": "Magneto area at VPX position x=503.5, y=288.0",
-        "notes": "Active-high Magneto flasher callback 22."
+        "location": "Raw VPX candidate f122 at x=503.5, y=288.0 (non-canonical; no physical socket is asserted)",
+        "notes": "The active-high Pro callback drives render object f122. This raw candidate comes from retained analysis/physmod5/inventory.json, whose unidentified, lossy ad-hoc .NET extractor is documented in the spatial audit; it is not a canonical spatial placement. The manual's Q22 X2 Magneto row is explicitly LE-only and is not transferred to the Pro, so physical identity and multiplicity remain unresolved."
       },
       "provenance": {
         "source_refs": [
@@ -5138,8 +5149,8 @@
       "kind": "flasher",
       "label": "Pop bumper flasher",
       "physical": {
-        "location": "Pop-bumper area at VPX position x=199.5, y=810.0",
-        "notes": "Active-high pop-bumper flasher callback 25."
+        "location": "Raw VPX candidate x=199.5, y=810.0 in the pop-bumper area",
+        "notes": "Active-high pop-bumper flasher callback 25; this raw coordinate is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5222,8 +5233,8 @@
       "kind": "flasher",
       "label": "Center-left red feature flasher",
       "physical": {
-        "location": "Center-left red feature at VPX position x=379.5, y=502.0",
-        "notes": "The authenticated Pro table proves this is a flasher; the LE manual's output-27 Iceman motor label does not apply."
+        "location": "Raw VPX candidate x=379.5, y=502.0 for the center-left red feature",
+        "notes": "The authenticated Pro table proves this is a flasher; the LE manual's output-27 Iceman motor label does not apply. This raw coordinate is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5262,12 +5273,12 @@
         "device": 28,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.backpanel-left-triple-flasher",
+      "id": "device.pro-output-28-backpanel-render-group",
       "kind": "flasher",
-      "label": "Backpanel left triple flasher",
+      "label": "Pro output 28 backpanel render group",
       "physical": {
-        "location": "Left backpanel group at VPX positions x=133.5, y=88.0, x=241.5, y=90.0, and x=455.5, y=90.0",
-        "notes": "Three table flasher objects are driven together by active-high callback 28."
+        "location": "Raw VPX candidates x=133.5, y=88.0, x=241.5, y=90.0, and x=455.5, y=90.0 for a backpanel render group",
+        "notes": "The exact Pro table drives three render objects together through active-high callback 28, but render-object count does not establish physical socket count. The manual's Q28 X3 backpanel row is explicitly LE-only and is not transferred to the Pro. Identity and multiplicity remain unresolved; these raw coordinates are not canonical spatial placements."
       },
       "provenance": {
         "source_refs": [
@@ -5306,12 +5317,12 @@
         "device": 29,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.backpanel-right-triple-flasher",
+      "id": "device.pro-output-29-backpanel-render-group",
       "kind": "flasher",
-      "label": "Backpanel right triple flasher",
+      "label": "Pro output 29 backpanel render group",
       "physical": {
-        "location": "Right backpanel group at VPX positions x=843.5, y=94.0 and x=639.5, y=90.0",
-        "notes": "The proven table contains two physical objects driven together by active-high callback 29."
+        "location": "Raw VPX candidates f129 at x=843.5, y=94.0 and f129a at x=639.5, y=90.0 for a backpanel render group",
+        "notes": "The exact Pro script drives two differently positioned render objects together through Flashm/Flash callback 29, but render-object count does not establish physical socket count. The manual's Q29 X3 backpanel row is explicitly LE-only and is not transferred to the Pro. Identity and multiplicity remain unresolved; neither coordinate is promoted to a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5390,12 +5401,12 @@
         "device": 31,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.magneto-center-red-feature-flasher",
+      "id": "device.unresolved-pro-output-31-flasher-candidate",
       "kind": "flasher",
-      "label": "Magneto center red feature flasher",
+      "label": "Unresolved Pro output 31 flasher candidate",
       "physical": {
-        "location": "Magneto center red feature at VPX position x=527.5, y=472.0",
-        "notes": "The authenticated Pro table proves this is a flasher; the LE manual's bottom-arch label does not apply."
+        "location": "Raw VPX candidate f131 at x=527.5, y=472.0 (non-canonical; no physical socket is asserted)",
+        "notes": "The active-high Pro callback drives f131, but its raw coordinate comes from the retained, lossy ad-hoc inventory and is not a canonical spatial placement. The combined manual's Q31 bottom-arch (X2) row is LE-specific and does not establish either Pro physical identity or multiplicity. No second Pro Q31 socket is established."
       },
       "provenance": {
         "source_refs": [
@@ -5569,8 +5580,8 @@
       "kind": "lamp",
       "label": "Shoot Again",
       "physical": {
-        "location": "Playfield VPX position x=410.4, y=1835.4",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=410.4, y=1835.4",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5604,8 +5615,8 @@
       "kind": "lamp",
       "label": "Left Special",
       "physical": {
-        "location": "Playfield VPX position x=40.6, y=1465.1",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=40.6, y=1465.1",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5639,8 +5650,8 @@
       "kind": "lamp",
       "label": "Left return lane",
       "physical": {
-        "location": "Playfield VPX position x=112.5, y=1405.3",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=112.5, y=1405.3",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5674,8 +5685,8 @@
       "kind": "lamp",
       "label": "Blackbird launch left",
       "physical": {
-        "location": "Playfield VPX position x=691.3, y=1376.2",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=691.3, y=1376.2",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5709,8 +5720,8 @@
       "kind": "lamp",
       "label": "Blackbird launch right",
       "physical": {
-        "location": "Playfield VPX position x=757.0, y=1358.6",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=757.0, y=1358.6",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5744,8 +5755,8 @@
       "kind": "lamp",
       "label": "Right Special",
       "physical": {
-        "location": "Playfield VPX position x=826.6, y=1454.1",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=826.6, y=1454.1",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5779,8 +5790,8 @@
       "kind": "lamp",
       "label": "Left two-bank bottom",
       "physical": {
-        "location": "Playfield VPX position x=144.7, y=1232.4",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=144.7, y=1232.4",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5814,8 +5825,8 @@
       "kind": "lamp",
       "label": "Left two-bank top",
       "physical": {
-        "location": "Playfield VPX position x=158.4, y=1169.5",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=158.4, y=1169.5",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5849,8 +5860,8 @@
       "kind": "lamp",
       "label": "Left Nightcrawler feature insert",
       "physical": {
-        "location": "Playfield VPX position x=418.2, y=672.6",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=418.2, y=672.6",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5884,8 +5895,8 @@
       "kind": "lamp",
       "label": "Dark Phoenix",
       "physical": {
-        "location": "Playfield VPX position x=300.8, y=1117.5",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=300.8, y=1117.5",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5919,8 +5930,8 @@
       "kind": "lamp",
       "label": "Extra Ball",
       "physical": {
-        "location": "Playfield VPX position x=306.3, y=1166.7",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=306.3, y=1166.7",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5954,8 +5965,8 @@
       "kind": "lamp",
       "label": "Danger Room",
       "physical": {
-        "location": "Playfield VPX position x=310.8, y=1214.5",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=310.8, y=1214.5",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -5989,8 +6000,8 @@
       "kind": "lamp",
       "label": "Villain",
       "physical": {
-        "location": "Playfield VPX position x=315.5, y=1262.6",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=315.5, y=1262.6",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6024,8 +6035,8 @@
       "kind": "lamp",
       "label": "Gambit",
       "physical": {
-        "location": "Playfield VPX position x=188.9, y=810.1",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=188.9, y=810.1",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6059,8 +6070,8 @@
       "kind": "lamp",
       "label": "Beast",
       "physical": {
-        "location": "Playfield VPX position x=163.1, y=671.9",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=163.1, y=671.9",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6094,8 +6105,8 @@
       "kind": "lamp",
       "label": "Far-left upper lane red arrow",
       "physical": {
-        "location": "Playfield VPX position x=138.2, y=599.0",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=138.2, y=599.0",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6129,8 +6140,8 @@
       "kind": "lamp",
       "label": "Storm",
       "physical": {
-        "location": "Playfield VPX position x=248.1, y=556.3",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=248.1, y=556.3",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6164,8 +6175,8 @@
       "kind": "lamp",
       "label": "Left ramp red arrow",
       "physical": {
-        "location": "Playfield VPX position x=206.0, y=496.8",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=206.0, y=496.8",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6199,8 +6210,8 @@
       "kind": "lamp",
       "label": "Upper-left orbit red arrow",
       "physical": {
-        "location": "Playfield VPX position x=235.4, y=391.2",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=235.4, y=391.2",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6234,8 +6245,8 @@
       "kind": "lamp",
       "label": "Rogue",
       "physical": {
-        "location": "Playfield VPX position x=289.1, y=446.3",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=289.1, y=446.3",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6269,8 +6280,8 @@
       "kind": "lamp",
       "label": "Left Lock",
       "physical": {
-        "location": "Playfield VPX position x=334.8, y=495.0",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=334.8, y=495.0",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6304,8 +6315,8 @@
       "kind": "lamp",
       "label": "Upper-center lane red arrow",
       "physical": {
-        "location": "Playfield VPX position x=373.8, y=379.9",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=373.8, y=379.9",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6339,8 +6350,8 @@
       "kind": "lamp",
       "label": "Xavier",
       "physical": {
-        "location": "Playfield VPX position x=393.7, y=472.9",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=393.7, y=472.9",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6436,8 +6447,8 @@
       "kind": "lamp",
       "label": "Left Light Lock",
       "physical": {
-        "location": "Playfield VPX position x=444.5, y=590.5",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=444.5, y=590.5",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6471,8 +6482,8 @@
       "kind": "lamp",
       "label": "Right Light Lock",
       "physical": {
-        "location": "Playfield VPX position x=573.6, y=590.5",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=573.6, y=590.5",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6506,8 +6517,8 @@
       "kind": "lamp",
       "label": "Wolverine feature insert",
       "physical": {
-        "location": "Playfield VPX position x=420.6, y=1161.2",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=420.6, y=1161.2",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6541,8 +6552,8 @@
       "kind": "lamp",
       "label": "Wolverine red arrow",
       "physical": {
-        "location": "Playfield VPX position x=443.1, y=1234.2",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=443.1, y=1234.2",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6607,8 +6618,8 @@
       "kind": "lamp",
       "label": "Magneto feature insert",
       "physical": {
-        "location": "Playfield VPX position x=507.9, y=547.5",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=507.9, y=547.5",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6642,8 +6653,8 @@
       "kind": "lamp",
       "label": "Center Lock",
       "physical": {
-        "location": "Playfield VPX position x=506.6, y=621.7",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=506.6, y=621.7",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6677,8 +6688,8 @@
       "kind": "lamp",
       "label": "Magneto red arrow",
       "physical": {
-        "location": "Playfield VPX position x=506.6, y=695.5",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=506.6, y=695.5",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6712,8 +6723,8 @@
       "kind": "lamp",
       "label": "Cyclops red arrow",
       "physical": {
-        "location": "Playfield VPX position x=647.9, y=444.8",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=647.9, y=444.8",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6747,8 +6758,8 @@
       "kind": "lamp",
       "label": "Cyclops",
       "physical": {
-        "location": "Playfield VPX position x=625.5, y=522.5",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=625.5, y=522.5",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6782,8 +6793,8 @@
       "kind": "lamp",
       "label": "Right Nightcrawler feature insert",
       "physical": {
-        "location": "Playfield VPX position x=687.8, y=735.6",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=687.8, y=735.6",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6941,8 +6952,8 @@
       "kind": "lamp",
       "label": "Iceman red arrow",
       "physical": {
-        "location": "Playfield VPX position x=775.2, y=486.8",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=775.2, y=486.8",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -6976,8 +6987,8 @@
       "kind": "lamp",
       "label": "Iceman",
       "physical": {
-        "location": "Playfield VPX position x=746.5, y=562.0",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=746.5, y=562.0",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7011,8 +7022,8 @@
       "kind": "lamp",
       "label": "Phoenix red arrow",
       "physical": {
-        "location": "Playfield VPX position x=866.0, y=557.3",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=866.0, y=557.3",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7046,8 +7057,8 @@
       "kind": "lamp",
       "label": "Phoenix",
       "physical": {
-        "location": "Playfield VPX position x=840.8, y=630.2",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=840.8, y=630.2",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7081,8 +7092,8 @@
       "kind": "lamp",
       "label": "Right Lock",
       "physical": {
-        "location": "Playfield VPX position x=814.3, y=703.9",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=814.3, y=703.9",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7116,8 +7127,8 @@
       "kind": "lamp",
       "label": "Magneto completion medallion left",
       "physical": {
-        "location": "Playfield VPX position x=742.9, y=1059.2",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=742.9, y=1059.2",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7151,8 +7162,8 @@
       "kind": "lamp",
       "label": "Magneto completion medallion right",
       "physical": {
-        "location": "Playfield VPX position x=742.9, y=1130.5",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=742.9, y=1130.5",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7186,8 +7197,8 @@
       "kind": "lamp",
       "label": "Iceman character ring",
       "physical": {
-        "location": "Playfield VPX position x=305.6, y=1481.2",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=305.6, y=1481.2",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7221,8 +7232,8 @@
       "kind": "lamp",
       "label": "Wolverine character ring",
       "physical": {
-        "location": "Playfield VPX position x=331.6, y=1406.7",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=331.6, y=1406.7",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7256,8 +7267,8 @@
       "kind": "lamp",
       "label": "Xavier character ring",
       "physical": {
-        "location": "Playfield VPX position x=406.1, y=1373.7",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=406.1, y=1373.7",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7291,8 +7302,8 @@
       "kind": "lamp",
       "label": "Storm character ring",
       "physical": {
-        "location": "Playfield VPX position x=480.6, y=1404.2",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=480.6, y=1404.2",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7326,8 +7337,8 @@
       "kind": "lamp",
       "label": "Phoenix character ring",
       "physical": {
-        "location": "Playfield VPX position x=509.1, y=1480.4",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=509.1, y=1480.4",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7361,8 +7372,8 @@
       "kind": "lamp",
       "label": "Cyclops character ring",
       "physical": {
-        "location": "Playfield VPX position x=481.6, y=1545.2",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=481.6, y=1545.2",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7396,8 +7407,8 @@
       "kind": "lamp",
       "label": "Beast character ring",
       "physical": {
-        "location": "Playfield VPX position x=405.6, y=1579.7",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=405.6, y=1579.7",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7431,8 +7442,8 @@
       "kind": "lamp",
       "label": "Rogue character ring",
       "physical": {
-        "location": "Playfield VPX position x=337.6, y=1555.2",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=337.6, y=1555.2",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7488,20 +7499,23 @@
           "value": "59"
         }
       ],
-      "availability": "unused",
+      "availability": "unknown",
       "binding": {
         "device": 59,
         "group": "pinmame.output.lamp"
       },
-      "id": "lamp.unused-59",
+      "id": "lamp.script-only-reflection-59",
       "kind": "lamp",
-      "label": "Unused Pro lamp channel 59",
+      "label": "Wolverine feature reflection (script-only)",
+      "physical": {
+        "notes": "The ground-truth script drives render object f59b from public lamp state 59 through FlashAR, but no FadeL insert or physical socket is identified. Physical population and semantics remain unresolved."
+      },
       "provenance": {
         "source_refs": [
           "vpx.x-men-pro-icpjuggla",
           "vpx-table.x-men-pro-physmod5"
         ],
-        "status": "validated"
+        "status": "observed"
       },
       "wiring": {
         "board": "I/O Power Driver board lamp matrix",
@@ -7528,8 +7542,8 @@
       "kind": "lamp",
       "label": "Left pop bumper",
       "physical": {
-        "location": "Playfield VPX position x=92.2, y=769.0",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=92.2, y=769.0",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7563,8 +7577,8 @@
       "kind": "lamp",
       "label": "Right pop bumper",
       "physical": {
-        "location": "Playfield VPX position x=307.8, y=829.1",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=307.8, y=829.1",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7598,8 +7612,8 @@
       "kind": "lamp",
       "label": "Bottom pop bumper",
       "physical": {
-        "location": "Playfield VPX position x=149.2, y=949.1",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=149.2, y=949.1",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7695,8 +7709,8 @@
       "kind": "lamp",
       "label": "Sabretooth",
       "physical": {
-        "location": "Playfield VPX position x=269.5, y=1637.9",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=269.5, y=1637.9",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7730,8 +7744,8 @@
       "kind": "lamp",
       "label": "Shadow King",
       "physical": {
-        "location": "Playfield VPX position x=313.8, y=1680.5",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=313.8, y=1680.5",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7765,8 +7779,8 @@
       "kind": "lamp",
       "label": "Hellfire Club",
       "physical": {
-        "location": "Playfield VPX position x=361.0, y=1718.7",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=361.0, y=1718.7",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7800,8 +7814,8 @@
       "kind": "lamp",
       "label": "Juggernaut",
       "physical": {
-        "location": "Playfield VPX position x=408.6, y=1755.6",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=408.6, y=1755.6",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7835,8 +7849,8 @@
       "kind": "lamp",
       "label": "Brotherhood",
       "physical": {
-        "location": "Playfield VPX position x=452.6, y=1716.2",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=452.6, y=1716.2",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7870,8 +7884,8 @@
       "kind": "lamp",
       "label": "Sentinels",
       "physical": {
-        "location": "Playfield VPX position x=498.3, y=1677.4",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=498.3, y=1677.4",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -7905,8 +7919,8 @@
       "kind": "lamp",
       "label": "Omega Red",
       "physical": {
-        "location": "Playfield VPX position x=540.7, y=1636.2",
-        "notes": "Active-high standard-lamp callback; identity and placement follow the authenticated working Pro table and its playfield artwork."
+        "location": "Raw VPX candidate position x=540.7, y=1636.2",
+        "notes": "Active-high standard-lamp callback; identity follows the authenticated working Pro table and its playfield artwork. This raw table coordinate is retained for review and is not a canonical spatial placement."
       },
       "provenance": {
         "source_refs": [
@@ -8239,7 +8253,7 @@
       "id": "manual.x-men-pro-le.2012",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "XMenManual_042214.pdf: PDF pages 56-62 and 97-117; official low-resolution manufacturer copy; page 60 was visually verified at the root for the F17/F18 flasher quantities",
+      "locator": "XMenManual_042214.pdf: PDF pages 56-62 and 97-117; official low-resolution manufacturer copy. Edition-specific low-current and GI evidence is treated as LE-only and is not transferred to Pro quantities or positions.",
       "original_filename": "XMenManual_042214.pdf",
       "rights": "NOASSERTION",
       "sha256": "0812b91d0950ff8c1b15c5bc17afc827029ca8aaaa0bbb78cc11ea606b629bf8",
@@ -8252,7 +8266,7 @@
       "id": "manual.x-men-pro-le.2012.high-resolution",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "Higher-resolution scan of the same Stern manual; switch table page 56, lamp table page 58, coil table page 60, eight-transistor board page 101, LE LED boards pages 103-104, GI maps pages 109-111",
+      "locator": "Higher-resolution scan of the same Stern manual; switch pages 56-57, lamp pages 58-59, low-current pages 60-61, and GI maps pages 109-111. Selected pages are retained as hash-locked renders under external:pinmame-manuals/by-machine/stern.x-men-pro-limited-edition.2012/primetime-amusements/extracted/rendered-pages; page 60 lacks a Q18 X2 marker while page 61 draws two Q18 callouts, and both are LE-only.",
       "original_filename": "XMenManual_042214-high-resolution.pdf",
       "rights": "NOASSERTION",
       "sha256": "d793836fefab6c0de53463943e36245c7ed800d5ca86675e3c2b2f46df693643",
@@ -8300,8 +8314,9 @@
       "attribution": "85vett and table authors credited by the archived table",
       "id": "vpx-table.x-men-pro-physmod5",
       "kind": "vpx_table",
+      "known_working": true,
       "license": "NOASSERTION",
-      "locator": "XMen FS (physmod5).vpt from XMen FS (physmod5).zip; archive SHA-256 6f5eae417c894af5947a819448f45616cb2348a1cfdca5cff544e6bdcda439fb; embedded script SHA-256 90cd88f121798f7c91ba738713c2aae99784751637380beb864ee3e2bcde25cb; read-only inventory SHA-256 ff52f1deaee9182f1b6e33785887dab774d15aa6b963f1ca627a835198ce1020; playfield artwork PF A.jpg SHA-256 bc62ed5d55b1c3394beae1c78b1f72544bcdcf3d3008cf51b1cfefea8be01cc1. The embedded xmen_150 script, physical lamp/flasher objects, coordinates, playfield labels, switches, and mechanisms were inspected.",
+      "locator": "Exact retained source: external:pinmame-vpx-sources/stern/x-men-pro-2012/source/XMen FS (physmod5).zip -> XMen FS (physmod5)/XMen FS  (physmod5).vpt; archive SHA-256 6f5eae417c894af5947a819448f45616cb2348a1cfdca5cff544e6bdcda439fb; embedded script SHA-256 90cd88f121798f7c91ba738713c2aae99784751637380beb864ee3e2bcde25cb. Raw coordinate candidates come from external:pinmame-vpx-sources/stern/x-men-pro-2012/analysis/physmod5/inventory.json SHA-256 d197a15cccc29b18be6d5b9128b110b83fd2aa3b109a9c0df8d2ffff174303e8, an unidentified and lossy ad-hoc .NET extraction with no retained helper source/version; it is not reproducible geometry. Pinned vpxtool git:v0.33.3 gamedata proves bounds left=0, top=0, right=959, bottom=2162. A full coordinate extraction was attempted through the repository's exact-byte .vpx copy shim and reproducibly failed with exit 101 in vpin-0.26.4 before writing any extracted files; the portable failure record is retained at external:pinmame-vpx-sources/stern/x-men-pro-2012/extraction/vpxtool-0.33.3-full/failure.json, SHA-256 1d66232147c795bcddac0b57cf8bd78f03554cf039f0e5d195773f0df513878d. The spatial audit records every artifact hash and keeps all raw positions non-canonical.",
       "original_filename": "XMen FS (physmod5).vpt",
       "rights": "NOASSERTION",
       "sha256": "00784b76eb35991d4bb4b13939862f67506f06cb017426668d57a66ded8829d8",
