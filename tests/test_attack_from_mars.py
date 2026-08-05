@@ -419,9 +419,30 @@ class AttackFromMarsDefinitionTests(unittest.TestCase):
 	def test_render_helpers_are_declared_excluded(self) -> None:
 		report = load_json(SPATIAL_REPORT_PATH)
 		excluded = " ".join(report["excluded_object_classes"])
-		self.assertIn("flare_red", excluded)
 		self.assertIn("flw", excluded)
 		self.assertIn("DivF", excluded)
+		self.assertIn("BallShadow", excluded)
+		# The raised flare quads are the only coordinate the table offers for six flashers, so they
+		# are the documented placement anchor. Claiming them as excluded while using their position
+		# would be self-contradictory, so the exclusion list must not name them.
+		self.assertNotIn("flare_red", excluded)
+		for address in (17, 18, 19, 25, 26, 27):
+			reasons = [
+				entry["reason"]
+				for entry in report["projections"]
+				if entry["group"] == "pinmame.output.solenoid" and entry["address"] == address
+			]
+			self.assertEqual(1, len(reasons), address)
+			self.assertIn("f", reasons[0], address)
+
+	def test_only_solenoid_19_uses_a_drag_point_centroid(self) -> None:
+		report = load_json(SPATIAL_REPORT_PATH)
+		centroid_users = [
+			entry["address"]
+			for entry in report["projections"]
+			if entry["group"] == "pinmame.output.solenoid" and "centroid" in entry["reason"]
+		]
+		self.assertEqual([19], centroid_users)
 
 	# --- runtime evidence ------------------------------------------------------
 

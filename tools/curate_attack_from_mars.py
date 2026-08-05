@@ -501,8 +501,8 @@ SOLENOID_POSITIONS = {
 	14: [(0.826357, 0.541471)],
 	15: [(0.494813, 0.209528)],
 	16: [(0.490405, 0.163434)],
-	17: [(0.897303, 0.086610)],
-	18: [(0.779046, 0.188367)],
+	17: [(0.897303, 0.089732)],
+	18: [(0.779046, 0.191489)],
 	19: [(0.904798, 0.462754)],
 	20: [(0.857884, 0.537003)],
 	21: [(0.490664, 0.347826)],
@@ -510,7 +510,7 @@ SOLENOID_POSITIONS = {
 	23: [(0.495851, 0.210715)],
 	24: [(0.490145, 0.254403)],
 	25: [(0.089014, 0.054028)],
-	26: [(0.349066, 0.052266)],
+	26: [(0.341286, 0.052266)],
 	27: [(0.098482, 0.286742)],
 	28: [(0.056017, 0.531452)],
 	33: [(0.770325, 0.020942)],
@@ -530,7 +530,12 @@ SOLENOID_POSITIONS = {
 # table object for that device.
 SOLENOID_PROJECTIONS = {
 	1: "Projected onto the retained shooter-lane trigger swPlunger. The retained table drives the auto plunger through cvpmImpulseP bound to that trigger and models no separate kicker object; the manual solenoid-location map places kicker bracket A-14525 at the back of the same shooter lane.",
-	19: "Taken from the flasher quad's drag-point centroid rather than its stored pos_x/pos_y, which the table author left at a stale (71, 800). The centroid, the matching f19b right-wall glow at the same y, and the manual solenoid-location map all place Right Side High on the right side of the playfield.",
+	17: "Taken from the origin of the retained flasher object f17a. Solenoids 17, 18, 19, 25, 26 and 27 have no separate emitter object in the retained table: the author draws each as a raised flare quad at the bulb position plus one or two wall-glow quads projected onto the cabinet walls. The flare origin is the bulb position and is used as the anchor; the wall glows are excluded because they are light spill, not sockets.",
+	18: "Taken from the origin of the retained flasher object f18a; see solenoid 17.",
+	19: "Taken from the drag-point centroid of the retained flasher object f19a rather than its stored pos_x/pos_y, which the table author left at a stale (71, 800) on the left. This is the one flasher whose stored origin is wrong. The centroid, the matching f19b right-wall glow at the same y, the manual solenoid-location map, and the printed assembly A-20549 Right Wire Ramp all place Right Side High on the right of the playfield.",
+	25: "Taken from the origin of the retained flasher object f25a; see solenoid 17.",
+	26: "Taken from the origin of the retained flasher object f26a; see solenoid 17.",
+	27: "Taken from the origin of the retained flasher object f27a; see solenoid 17.",
 	35: "Projected onto the retained diverter blade primitive DivP. The retained table actuates the diverter through an invisible flipper object parked off the playfield at (0.843508, 0.984320), which is a physics helper and not the physical blade location.",
 	36: "Projected onto the retained diverter blade primitive DivP; see solenoid 35. The hold winding acts on the same blade as the power winding.",
 	37: "Projected onto the retained saucer primitive ufo1. The clock output drives shift-register board A-20670 inside saucer assembly A-20608 and has no separate emitter of its own.",
@@ -1988,8 +1993,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"pages": [{"path": path, "sha256": digest, "note": note} for path, digest, note in VISUAL_REVIEW_CACHE],
 		},
 		"excluded_object_classes": [
-			"flare_red glare quads f17a-f27a raised 210-245 units above the playfield",
-			"flw wall-glow quads on the left rail at pos_x -2.5, the right rail at pos_x 947.5, and the rear wall at pos_y 10",
+			"flw wall-glow quads on the left rail at pos_x -2.5, the right rail at pos_x 947.5, and the rear wall at pos_y 10, which are light spill projected onto the cabinet rather than bulb sockets",
 			"BallShadow* render helpers stacked at one apron coordinate",
 			"gi31, gi32 and gi33 decorative jet-bumper cap lights outside the GI collections",
 			"DivF invisible diverter actuator parked off the playfield",
@@ -2022,10 +2026,13 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"pages and transcribed into "
 		"`external:pinmame-review-artifacts/attack-from-mars-1995/manual-transcription.md`; no OCR text was "
 		"treated as authority.",
-		"- The retained table draws three objects for most flashers: the emitter itself, a `flare_red` glare quad "
-		"raised over 200 units above the playfield, and one or two `flw` wall-glow quads pinned to the left rail "
-		"at `pos_x -2.5`, the right rail at `pos_x 947.5` or the rear wall at `pos_y 10`. Only the emitter is a "
-		"physical socket; the glare and wall glows are render helpers and are excluded.",
+		"- Flasher representation in the retained table needs care. Solenoids 20, 21, 22, 23 and 28 have an "
+		"ordinary `Light` object at the bulb. Solenoids 17, 18, 19, 25, 26 and 27 do not: the author draws each "
+		"as a raised `flare_red` glare quad sitting at the bulb position plus one or two `flw` wall-glow quads "
+		"pinned to the left rail at `pos_x -2.5`, the right rail at `pos_x 947.5` or the rear wall at "
+		"`pos_y 10`. For those six the flare origin is the only coordinate the table offers for the bulb and is "
+		"used as the anchor, which the projection list records device by device. The wall glows are light spill "
+		"projected onto the cabinet, never sockets, and are excluded from both placement and multiplicity.",
 		"- Solenoid 19 Right Side High is the one flasher whose stored `pos_x`/`pos_y` is stale in the retained "
 		"table, pointing at (71, 800) on the left. Its drag-point centroid, its own right-rail wall glow at the "
 		"same y, the manual solenoid-location map and the fact that its printed assembly A-20549 is the right wire "

@@ -11,8 +11,7 @@
     "y": "y/2162; 0=rear/backglass, 1=apron/player"
   },
   "excluded_object_classes": [
-    "flare_red glare quads f17a-f27a raised 210-245 units above the playfield",
-    "flw wall-glow quads on the left rail at pos_x -2.5, the right rail at pos_x 947.5, and the rear wall at pos_y 10",
+    "flw wall-glow quads on the left rail at pos_x -2.5, the right rail at pos_x 947.5, and the rear wall at pos_y 10, which are light spill projected onto the cabinet rather than bulb sockets",
     "BallShadow* render helpers stacked at one apron coordinate",
     "gi31, gi32 and gi33 decorative jet-bumper cap lights outside the GI collections",
     "DivF invisible diverter actuator parked off the playfield",
@@ -218,9 +217,34 @@
       "reason": "Projected onto the retained shooter-lane trigger swPlunger. The retained table drives the auto plunger through cvpmImpulseP bound to that trigger and models no separate kicker object; the manual solenoid-location map places kicker bracket A-14525 at the back of the same shooter lane."
     },
     {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "reason": "Taken from the origin of the retained flasher object f17a. Solenoids 17, 18, 19, 25, 26 and 27 have no separate emitter object in the retained table: the author draws each as a raised flare quad at the bulb position plus one or two wall-glow quads projected onto the cabinet walls. The flare origin is the bulb position and is used as the anchor; the wall glows are excluded because they are light spill, not sockets."
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "reason": "Taken from the origin of the retained flasher object f18a; see solenoid 17."
+    },
+    {
       "address": 19,
       "group": "pinmame.output.solenoid",
-      "reason": "Taken from the flasher quad's drag-point centroid rather than its stored pos_x/pos_y, which the table author left at a stale (71, 800). The centroid, the matching f19b right-wall glow at the same y, and the manual solenoid-location map all place Right Side High on the right side of the playfield."
+      "reason": "Taken from the drag-point centroid of the retained flasher object f19a rather than its stored pos_x/pos_y, which the table author left at a stale (71, 800) on the left. This is the one flasher whose stored origin is wrong. The centroid, the matching f19b right-wall glow at the same y, the manual solenoid-location map, and the printed assembly A-20549 Right Wire Ramp all place Right Side High on the right of the playfield."
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid",
+      "reason": "Taken from the origin of the retained flasher object f25a; see solenoid 17."
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid",
+      "reason": "Taken from the origin of the retained flasher object f26a; see solenoid 17."
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid",
+      "reason": "Taken from the origin of the retained flasher object f27a; see solenoid 17."
     },
     {
       "address": 35,
