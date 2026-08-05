@@ -2250,7 +2250,7 @@
         "device.right-gate",
         "device.left-gate"
       ],
-      "behavior": "One-way loop control gates (assemblies A-14406): solenoid 33 'Right Gate' on a high-power circuit, solenoid 34 'Left Gate' on a low-power circuit; loop travel is sensed by the high/low loop switch pairs 71/72 and 73/74.",
+      "behavior": "One-way loop control gates (coil A-14406, gate assembly A-17796): solenoid 33 'Right Gate' on a high-power circuit, solenoid 34 'Left Gate' on a low-power circuit; loop travel is sensed by the high/low loop switch pairs 71/72 and 73/74.",
       "id": "mechanism.loop-gates",
       "kind": "gate",
       "label": "Loop gates",
@@ -5159,7 +5159,7 @@
       "kind": "coil",
       "label": "Right Gate",
       "physical": {
-        "notes": "Address assignment follows the retained known-working g5k script, which binds SolCallback(33) to the right gate and SolCallback(34) to the left gate. Pinned PinMAME names them the other way round: src/wpc/sims/wpc/full/afm.c maps sLGate to WPC_FLIPPERCOIL95 bit 0x10 (public solenoid 33) and sRGate to bit 0x20 (public solenoid 34). PinMAME's own naming is also internally inconsistent with its custom-solenoid aliases, so the left/right labels here rest on the manual and the proven script, and the disagreement is recorded rather than averaged."
+        "notes": "Address assignment follows the retained known-working g5k script, which binds SolCallback(33) to the right gate and SolCallback(34) to the left gate. Pinned PinMAME names them the other way round: src/wpc/sims/wpc/full/afm.c maps sLGate to WPC_FLIPPERCOIL95 bit 0x10 (public solenoid 33) and sRGate to bit 0x20 (public solenoid 34). PinMAME's own naming is also internally inconsistent with its custom-solenoid aliases, so the left/right labels here rest on the manual and the proven script, and the disagreement is recorded rather than averaged. The retained manual settles the naming: solenoid/flasher table page 2-46 (PDF 140) lists '33 RIGHT GATE, High Power, Q84, J120-6, Yel-Vio, A-14406' and '34 LEFT GATE, Low Power, Q86, J120-4, Org-Vio, A-14406', and the same page's flipper-circuit block assigns the identical transistor/connector/wire (Q84/J120-6/Yel-Vio power, Q86/J120-4/Org-Vio hold) to the unused upper-right flipper circuit these gates ride. Manual and known-working script agree; the pinned-PinMAME sLGate/sRGate names are swapped relative to both. The Solenoid/Flasher Locations continuation on page 2-47 (PDF 141) independently lists item 33 (coil A-14406, assembly A-17796) as 'Right Gate' and item 34 as 'Left Gate'."
       },
       "provenance": {
         "source_refs": [
@@ -5168,7 +5168,7 @@
           "pinmame.core.4ec52ff0ac13",
           "vpx.attack-from-mars-g5k-1.3.11"
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -5194,7 +5194,7 @@
       "kind": "coil",
       "label": "Left Gate",
       "physical": {
-        "notes": "Address assignment follows the retained known-working g5k script, which binds SolCallback(33) to the right gate and SolCallback(34) to the left gate. Pinned PinMAME names them the other way round: src/wpc/sims/wpc/full/afm.c maps sLGate to WPC_FLIPPERCOIL95 bit 0x10 (public solenoid 33) and sRGate to bit 0x20 (public solenoid 34). PinMAME's own naming is also internally inconsistent with its custom-solenoid aliases, so the left/right labels here rest on the manual and the proven script, and the disagreement is recorded rather than averaged."
+        "notes": "Address assignment follows the retained known-working g5k script, which binds SolCallback(33) to the right gate and SolCallback(34) to the left gate. Pinned PinMAME names them the other way round: src/wpc/sims/wpc/full/afm.c maps sLGate to WPC_FLIPPERCOIL95 bit 0x10 (public solenoid 33) and sRGate to bit 0x20 (public solenoid 34). PinMAME's own naming is also internally inconsistent with its custom-solenoid aliases, so the left/right labels here rest on the manual and the proven script, and the disagreement is recorded rather than averaged. The retained manual settles the naming: solenoid/flasher table page 2-46 (PDF 140) lists '33 RIGHT GATE, High Power, Q84, J120-6, Yel-Vio, A-14406' and '34 LEFT GATE, Low Power, Q86, J120-4, Org-Vio, A-14406', and the same page's flipper-circuit block assigns the identical transistor/connector/wire (Q84/J120-6/Yel-Vio power, Q86/J120-4/Org-Vio hold) to the unused upper-right flipper circuit these gates ride. Manual and known-working script agree; the pinned-PinMAME sLGate/sRGate names are swapped relative to both. The Solenoid/Flasher Locations continuation on page 2-47 (PDF 141) independently lists item 33 (coil A-14406, assembly A-17796) as 'Right Gate' and item 34 as 'Left Gate'."
       },
       "provenance": {
         "source_refs": [
@@ -5203,7 +5203,7 @@
           "pinmame.core.4ec52ff0ac13",
           "vpx.attack-from-mars-g5k-1.3.11"
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
