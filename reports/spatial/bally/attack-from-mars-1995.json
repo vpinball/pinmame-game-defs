@@ -1,0 +1,955 @@
+{
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162.0,
+      "left": 0.0,
+      "right": 964.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/964; 0=left, 1=right",
+    "y": "y/2162; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "flare_red glare quads f17a-f27a raised 210-245 units above the playfield",
+    "flw wall-glow quads on the left rail at pos_x -2.5, the right rail at pos_x 947.5, and the rear wall at pos_y 10",
+    "BallShadow* render helpers stacked at one apron coordinate",
+    "gi31, gi32 and gi33 decorative jet-bumper cap lights outside the GI collections",
+    "DivF invisible diverter actuator parked off the playfield",
+    "sw36a, sw37a and swp45-swp47 popper-exit and target render primitives",
+    "peg*, rpeg*, screw*, metal* and Primitive* decorative playfield hardware"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 745,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "f2d555ebcf2b9dc563178400d741350006f8627f197eea47e2f2379045dbeb5e",
+    "manifest_uri": "external:pinmame-vpx-sources/bally/attack-from-mars-1995/extraction-manifest.json",
+    "source_ref": "vpx-extraction.afm-jpsalas-3-0-2",
+    "total_bytes": 17831547,
+    "vpxtool_version": "vpxtool 0.33.3"
+  },
+  "format": "pinmame-spatial-audit",
+  "machine_id": "bally.attack-from-mars.1995",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      13,
+      14,
+      21,
+      22,
+      112,
+      114
+    ],
+    "constant": [
+      24
+    ],
+    "dip_switch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "internal_nonvisual": [
+      111,
+      113
+    ],
+    "unused": [
+      12,
+      15,
+      23,
+      25,
+      28,
+      68,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      115,
+      116,
+      117,
+      118
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 3,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 4,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 86,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 88,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 87,
+        "group": "pinmame.output.lamp"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 51,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 52,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 53,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 189,
+  "projections": [
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained trough-exit kicker BallRelease. The retained table models the trough as an abstract four-ball cvpmTrough with no per-position objects, so no per-ball coordinate is observable from it; the manual switch-location map places the whole trough under the apron with the eject opto outboard of Trough Ball 1."
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained trough-exit kicker BallRelease; see switch 31. Trough Ball 1 is the position nearest the eject."
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained trough-exit kicker BallRelease; see switch 31."
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained trough-exit kicker BallRelease; see switch 31."
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained trough-exit kicker BallRelease; see switch 31. Trough Ball 4 is the position furthest from the eject."
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained backbank moving-target assembly. The position switch is under the playfield inside 3-bank motor assembly A-20572 and has no separate table object."
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained backbank moving-target assembly. The position switch is under the playfield inside 3-bank motor assembly A-20572 and has no separate table object."
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained shooter-lane trigger swPlunger. The retained table drives the auto plunger through cvpmImpulseP bound to that trigger and models no separate kicker object; the manual solenoid-location map places kicker bracket A-14525 at the back of the same shooter lane."
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "reason": "Taken from the flasher quad's drag-point centroid rather than its stored pos_x/pos_y, which the table author left at a stale (71, 800). The centroid, the matching f19b right-wall glow at the same y, and the manual solenoid-location map all place Right Side High on the right side of the playfield."
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained diverter blade primitive DivP. The retained table actuates the diverter through an invisible flipper object parked off the playfield at (0.843508, 0.984320), which is a physics helper and not the physical blade location."
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained diverter blade primitive DivP; see solenoid 35. The hold winding acts on the same blade as the power winding."
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained saucer primitive ufo1. The clock output drives shift-register board A-20670 inside saucer assembly A-20608 and has no separate emitter of its own."
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained saucer primitive ufo1; see solenoid 37."
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained RightFlipper object; the power and hold windings are the two windings of the same FL-11629 coil on assembly A-15849-R-2."
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained RightFlipper object; see solenoid 45."
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained LeftFlipper object; the power and hold windings are the two windings of the same FL-11629 coil on assembly A-15849-L-2."
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained LeftFlipper object; see solenoid 47."
+    },
+    {
+      "address": 91,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 92,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 93,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 94,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 95,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 96,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 97,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 98,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 101,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 102,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 103,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 104,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 105,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 106,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 107,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    },
+    {
+      "address": 108,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained saucer primitive ufo1. The sixteen L.E.D.s of board A-20670 share one assembly and the retained table models no individual L.E.D. objects, so every address takes the saucer assembly anchor."
+    }
+  ],
+  "resolved_input_addresses": [
+    16,
+    17,
+    18,
+    26,
+    27,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 0,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 91,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 92,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 93,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 94,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 95,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 96,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 97,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 98,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 101,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 102,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 103,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 104,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 105,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 106,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 107,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 108,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "46992cf7854853bac592ab9b2b5f65d641727accec8405b7aff84fbc8e2aa139",
+    "manual_sha256": "5900c779f3bfb14251ada18d25a4dde84dd608b6ddd988ece8c92ea20fd0114b",
+    "manual_transcription_sha256": "eecef9b72e309e581c07fd5ecc8c5b4f9d3808f5bf4a4a3fdf53891e10296733",
+    "rom_sha256": "378102edfd80d650bf6810d5e521fd08cfd972f8732f3c2204f5929d2266358d",
+    "table_sha256": "f4bd2ae0e456030d14ea2f6f8fcd45e0e4f72ff22235a908d17424f1e9441cbd"
+  },
+  "status": "validated",
+  "unresolved": [],
+  "version": 1,
+  "visual_review_cache": {
+    "pages": [
+      {
+        "note": "Printed page 1: menu operation and the T.1-T.20 test list, including the four game-specific tests T.16 Loop/Gate, T.17 Saucer LED, T.18 Drop Target and T.19 Motor Bank",
+        "path": "p-03.png",
+        "sha256": "2c8a09af5708d06158d0530fce2454e7c75adfd27406d827a97af19ef563e46d"
+      },
+      {
+        "note": "Printed page 2: complete lamp matrix with column/row wiring, plus lamp locations 11-58",
+        "path": "p-04.png",
+        "sha256": "d09f4ac1d5cf34bc7d021dd842beeb37cd88aa218d49f061c044db5e5c0b64ed"
+      },
+      {
+        "note": "Printed page 3: lamp-locations playfield map and lamp locations 61-88",
+        "path": "p-05.png",
+        "sha256": "61cf5eeed7da2476e35e3672f702f08ac7b82080c146dda7b3fe895b861b9f3b"
+      },
+      {
+        "note": "Printed page 4: complete switch matrix with dedicated, row, column and Fliptronic wiring, plus switch locations F1-F8 and 11-48",
+        "path": "p-06.png",
+        "sha256": "24c01a1f467f7d3e3100cff7e87b190ae167892db5d250e445eebb2c5a7b4f14"
+      },
+      {
+        "note": "Printed page 5: switch-locations playfield map and switch locations 51-78",
+        "path": "p-07.png",
+        "sha256": "12b0fb9c4f5894361160744a38076c2a9752f31d351298a4ee42f5b8b9080736"
+      },
+      {
+        "note": "Printed page 6: solenoid/flasher table and solenoid locations 01-16",
+        "path": "p-08.png",
+        "sha256": "d8d4dbb5d9581ad13822be36aa9e4d151fe64846db7cd9ecc40c4bc0626767fe"
+      },
+      {
+        "note": "Printed page 7: solenoid-locations playfield map, solenoid locations 17-39, the five general-illumination circuits and the flipper coils",
+        "path": "p-09.png",
+        "sha256": "36f4dd0fa71f0aabf007111486a27ab9a1e038337410add0d72a8e94a097679b"
+      },
+      {
+        "note": "Printed page 8: upper playfield parts list naming the four alien mech assemblies, the ball-gate assemblies, the ramp diverter, the 3-bank motor and the ramp assemblies",
+        "path": "p-10.png",
+        "sha256": "bd358939faa738fcb45c3ca4bdeb53d5a8218585326ebcbd913e786d689b2d10"
+      },
+      {
+        "note": "Printed page 9: upper playfield parts map",
+        "path": "p-11.png",
+        "sha256": "24ddfebc9bf1d457ee248df326f361fb10b32708f7eec5f3cfe5432d510ae794"
+      },
+      {
+        "note": "400 dpi crop of printed page 4 switch locations re-read to fix a transcription error in the 5647-12693 part-number groupings and to confirm F5-F8 print no part number",
+        "path": "swparts-06.png",
+        "sha256": "2165d7ff0fd927e5f1134fb29b6ab848df899799cc99848718dc536596de70ea"
+      },
+      {
+        "note": "400 dpi crop of the solenoid/flasher table used to read every wire colour, connector, driver transistor and part number, including 33 RIGHT GATE High Power and 34 LEFT GATE Low Power on J119-6,7",
+        "path": "solhi-08.png",
+        "sha256": "bb837326cab0c27a307d11dd1cb648c2e87156ec4ed0f2277f6f1384e18b9004"
+      },
+      {
+        "note": "300 dpi crop of the switch-locations playfield map; F6 and F8 are drawn outside the playfield with no leader line, matching their Not Used parts entries",
+        "path": "swmap-07.png",
+        "sha256": "4a9b4ae57d8fa255fcf34e4ec33e970eefcdde0c69af79bfc0dfa0875c997e93"
+      },
+      {
+        "note": "300 dpi crop of the solenoid-locations playfield map used to reconcile every flasher against the retained table, in particular placing solenoid 19 on the right side and solenoid 27 on the left",
+        "path": "solmap-09.png",
+        "sha256": "b210941d97fb9dcde79c1261ea7919fdefe4786a9e579c12053a10c5c7e55a8c"
+      },
+      {
+        "note": "300 dpi crop of the upper playfield parts list showing four A-20579/A-20479 alien mech assemblies with distinct figurine support brackets, A-17797-2 Right Ball Gate with A-17797-1 Left Ball Gate, and the wire/plastic ramp assemblies that carry the ramp flashers",
+        "path": "upperpf-10.png",
+        "sha256": "29bce9dbf1f0f4ab5ccc27c7e3f6bc787ba02e95a41b01ff3a86ce3001ddefe0"
+      }
+    ],
+    "root": "external:pinmame-manuals/rendered/bally.attack-from-mars.1995/",
+    "transcription": {
+      "path": "external:pinmame-review-artifacts/attack-from-mars-1995/manual-transcription.md",
+      "sha256": "eecef9b72e309e581c07fd5ecc8c5b4f9d3808f5bf4a4a3fdf53891e10296733"
+    }
+  }
+}

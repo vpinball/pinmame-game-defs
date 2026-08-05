@@ -1,6 +1,6 @@
 # Attack From Mars (Bally, 1995)
 
-Coverage: **partial - manual-verified semantic I/O, mechanism inventory and behavior, ball paths, and instrumented runtime observations; spatial placement and full wiring transcription outstanding**
+Coverage: **author_ready - manual-verified semantic I/O with full connector, wire-colour and driver-transistor wiring, mechanism inventory and behaviour, ball paths, normalized spatial placement for every playfield device, and pinned-harness runtime observation**
 
 ## Identity and evidence precedence
 
@@ -22,10 +22,10 @@ The legacy VPE-derived definition carried several verifiable errors, all correct
 
 Attack From Mars publishes the same physical outputs on more than one PinMAME address, so a recreation must bind each device once and accept either address:
 
-- Public solenoid 43 mirrors LPDC output 39 (WPC-95 duplicates 37-40 at 41-44).
+- Public solenoid 43 mirrors LPDC output 39 (WPC-95 duplicates 37-40 at 41-44). Output 39 is the printed **Strobe Light**, assembly A-20718 on J110-4, cabled through H-20705 - not a second saucer-dome circuit. The retained JPSalas script settles it by binding the strobe on the mirror address with `SolCallback(43) = "SetLamp 130,"` where lamp 130 is the table's `Strobe` object, so a recreation must accept the strobe on either 39 or 43. Outputs 37 and 38 are mirrored the same way at 41 and 42.
 - `afmGameData` declares `custSol=3`, so PinMAME also publishes game-specific solenoids 51-53. `afm_getSol` returns WPC_FLIPPERCOIL95 bit 0x20 for 51, bit 0x10 for 52, and bits 0xc0 for 53 - the same bits `core_getSol` reports on public solenoids 34, 33, and 35/36 respectively.
 - The two ball-gate addresses carry a naming disagreement worth resolving against the manual page before this machine is promoted. The retained g5k script binds 33 to the right gate and 34 to the left gate; pinned PinMAME names them the opposite way (`sLGate` on bit 0x10 = public 33, `sRGate` on bit 0x20 = public 34), and PinMAME's own custom-solenoid aliases are internally inconsistent with that naming. The definition keeps the script's mapping, marks both entries `observed` rather than `validated`, and records the disagreement.
-- `afmGameData` also declares `lampCol=2`, so PinMAME exposes two auxiliary lamp columns above the standard 8x8 matrix for the 16-LED chase board. Those addresses are not yet enumerated here.
+- `afmGameData` also declares `lampCol=2`, so PinMAME exposes two auxiliary lamp columns above the standard 8x8 matrix for the 16-LED saucer board. They are now enumerated: the sixteen L.E.D.s appear at public lamp addresses **91-98 and 101-108**. `afm_wpc_w` shifts a sixteen-bit word into `tmpLampMatrix[8]` and `[9]` using `WPC_SOLENOID1` bit 4 as the clock and bit 5 as the data, and `wpc.c` documents that register's bits 4-7 as the J122/J123/J124 GPIO that "appear as LPDC outputs 37..40 in manuals", so the clock is public solenoid 37 and the data public solenoid 38 - exactly the printed L.E.D. Clock and L.E.D. Data entries on saucer board A-20670. The pinned harness confirmed it: in attract mode exactly eight of the sixteen addresses are lit at a time and the set rotates through four phases that between them cover all sixteen, while solenoids 37, 38 and their LPDC mirrors 41 and 42 are active; at ball start the ring and all four solenoids go quiet together.
 
 ## Displays
 
@@ -35,7 +35,7 @@ One dot-matrix display, 128x32, WPC-95 standard. No segment or alphanumeric disp
 
 - **UFO saucer with subway return.** Every saucer entry closes switch 78 'Center Trough' - attack-wave hits and the final destruction alike. The ball exits through a subway to the left popper (switch 36) and is ejected up a vertical tube by solenoid 3. The saucer-shake motor (solenoid 15) wobbles the UFO in short pulse bursts on hits; the destruction sequence runs roughly 5-7 pulses about 0.25 s apart, and the ROM raises the 3-bank wall at roughly pulse 5 - before the burst ends - so a recreation ejecting the left popper during this window must mind the moving bank geometry.
 - **Three-target motor bank.** Standups 45-47 ride a motorized wall (output 24) between limit switches 66 (down) and 67 (up).
-- **Pop-up aliens.** Four alien figures cover the seven MARTIAN standups: solenoid 5 covers M-A-R (switches 56-58), solenoid 6 covers the second A (43), solenoid 8 covers N (44), solenoid 14 covers T-I (41-42).
+- **Pop-up aliens.** Four alien mech assemblies cover the seven MARTIAN standups, one per target group, each an A-20579 (item 15 is printed A-20479-2, see below) with figurine 23-6768 on its own support bracket. Reading the printed switch names letter by letter, MARTIAN is spelt 56 "M", 57 M"A", 58 MA"R", 43 MAR"T", 44 MART"I", 41 MARTI"A", 42 MARTIA"N". Solenoid 5 (Left Alien Low) covers the left bank M-A-R on switches 56-58, solenoid 6 (Left Alien High) covers the T on switch 43, solenoid 8 (Right Alien High) covers the I on switch 44, and solenoid 14 (Right Alien Low) covers the right bank A-N on switches 41-42. The retained table corroborates the grouping geometrically: alien primitives sit at (0.137, 0.535), (0.369, 0.271), (0.622, 0.270) and (0.826, 0.541), each beside its target group, and each group's lamp inserts sit directly below its targets.
 - **Right popper scoop (Stroke of Luck)**: capture switch 37, eject solenoid 4.
 - **Single center drop target**: switch 77, reset solenoid 16.
 - **Loop gates** (33 right, high power; 34 left, low power) and the **center-ramp diverter** on a power/hold pair (35/36), opened when a lock is lit.
@@ -72,7 +72,7 @@ Availability indicators blink in roughly 200-300 ms phases; solid versus flashin
 
 ## General illumination
 
-Five GI strings per the manual solenoid/flasher table: 01 Bottom Playfield, 02 Middle Playfield, 03 Top Playfield (#44/#555 bulbs, dimmable) plus 04 Top Insert and 05 Bottom Insert (#555 bulbs; these two strings do not brighten or dim - they are always on). GI strings are not yet modeled as machine outputs pending a platform-level GI binding convention.
+Five GI strings per the manual solenoid/flasher table: 01 Bottom Playfield, 02 Middle Playfield, 03 Top Playfield (#44/#555 bulbs, dimmable) plus 04 Top Insert and 05 Bottom Insert (#555 bulbs; these two strings do not brighten or dim - they are always on). All five strings are modelled as machine outputs on `pinmame.output.gi` addresses 0-4. Strings 01-03 carry playfield placements taken from the retained table's `aGiLLights`, `aGiMLights` and `aGiTLights` arrays, deduplicated from 50 light objects to 29 physical sockets because the table pairs every bulb with a co-located halo. The manual publishes no per-string bulb count, so the quantity comes from those arrays and is not presented as a printed figure. Strings 04 and 05 are backbox insert-panel circuits and take a controlled `cabinet_or_service` spatial record with no asserted count. String 01 is the one string that spans both: the printed table gives it a playfield harness on J105-1/J105-7 with #44 bulbs and a separate backbox harness on J106-1/J106-7 with #555 bulbs, and only the playfield sockets are placed.
 
 ## Dedicated and flipper switches
 
@@ -692,14 +692,72 @@ Sample names are from the retained community altsound package for `afm_113b` (`a
 
 The retained operations manual is the 'Bally Attack From Mars Full Operations Manual (Final)' scan, 176 pages, SHA-256 `12c36ce8e1e0997a03016d76589df4fe2a6ad66cd5592d2a6f8dd75e49f6b1e5` (image-only scan; matrix pages were rendered and read visually, not OCR-trusted). Game adjustments, error codes, and unit disassembly (flying saucer mechanism 1-57, back panel 1-63) are in Section 1; parts and assemblies in Section 2; wiring diagrams and schematics in Section 3.
 
-## Unresolved questions
+## Resolved since the partial state
 
-- Normalized spatial placement for every switch, coil, flasher, lamp, and GI emitter (retained g5k VPX available for extraction).
-- Full wiring transcription (connector pins, drive transistors, wire colors) from the solenoid/flasher table and Section 3 schematics.
-- GI string modeling once a platform-level binding convention exists.
-- Semantic identity of solenoid 43 (candidate: second saucer-dome flasher circuit).
-- Manual F1-F8 dedicated-switch mapping onto emulator addresses 111-118, and marking the upper-flipper addresses unused.
-- Variant differences among `afm_113`/`afm_113b`/earlier revisions and the FreeWPC firmware.
+Every question this note previously left open has been answered, and the definition is now
+`author_ready`:
+
+- **Spatial placement.** All 189 placements are normalized against the retained JPSalas 3.0.2 table
+  at bounds `left=0 top=0 right=964 bottom=2162`. See
+  `reports/spatial/bally/attack-from-mars-1995.md` for the projection list and the excluded
+  render-helper classes.
+- **Wiring.** Every switch, solenoid, lamp and GI address now carries its printed connector, wire
+  colour and driver transistor from the handbook's switch matrix, lamp matrix and solenoid/flasher
+  table.
+- **GI strings.** All five are modelled. Strings 01-03 are playfield circuits with placements taken
+  from the table's deduplicated emitter arrays; strings 04 and 05 are backbox insert-panel circuits
+  and take a controlled `cabinet_or_service` record with no asserted bulb count, because the manual
+  publishes none.
+- **Solenoid 43.** Resolved as the LPDC mirror of the Strobe Light on output 39, not a second
+  saucer-dome circuit.
+- **F1-F8.** Mapped to public addresses 111-118. F1-F4 are the two lower flippers' EOS leaves and
+  cabinet button optos; F5-F8 are printed "Not Used" in both the switch matrix and the parts list and
+  are marked unused, because Attack From Mars has no upper flippers. The matching upper Fliptronic
+  *outputs* are still in use - they drive the two loop gates and the ramp diverter.
+- **Variants.** All ten drivers now carry a `physical_compatibility` and `variant_notes` entry. The
+  five factory revisions are `identical`; the Zen Studios and Global VR re-releases and the three
+  FreeWPC builds are `compatible` and run on the unmodified physical machine.
+
+## The motor bank gates the shots behind it
+
+The three-bank moving target is the machine's central geometric mechanism and a recreation gets it
+wrong without this: the bank does not merely present targets, it physically blocks the shots behind
+it. Pinned PinMAME encodes the causality in its keyboard conditions - the three moving targets
+45-47 are only reachable while switch 67 Motor Bank Up is closed, and the left and right saucer
+targets 75/76, the drop target 77 and the centre trough 78 are only reachable while switch 66 Motor
+Bank Down is closed. `afm_keyCond` says it plainly in a comment: "The drop target and hole behind can
+only be reached if the bank is down."
+
+The two retained models number the travel differently and neither is a physical measurement. The
+JPSalas script's `cvpmMech` is linear, reversed and single-solenoid over 55 steps with switch 67 at
+one end and 66 at the other; PinMAME's `afm_handleMech` steps an internal `bankPos` counter while
+solenoid 24 is energized and asserts 66 near the start of the cycle and 67 near its midpoint. Both
+agree the two leaf switches mark opposite ends of one continuous motor travel, which is the fact an
+author needs. Solenoid 24 is wired through the flasher driver group on transistor Q29, but its load
+is motor 14-8023 in assembly A-20572, not a flashlamp.
+
+## The ramp diverter chooses the centre-ramp destination
+
+Ramp diverter A-17241 with shaft and blade A-20556 rides the Fliptronic upper-left flipper circuit,
+solenoid 35 power and 36 hold, which PinMAME reads together as its `sDiverter` custom solenoid from
+`WPC_FLIPPERCOIL95` bits `0xc0`. With the blade at rest a centre-ramp shot entering at switch 62
+continues to the right ramp exit at switch 65; with the diverter energized the same shot is delivered
+into the left popper at opto 36. The retained script drives the blade with `SolDiv`, which rotates
+the actuator and swaps which of the two ramp walls is dropped.
+
+## One printed part number disagrees with itself
+
+The upper-playfield parts list prints item 15's alien mech assembly as **A-20479-2** while the
+solenoid-locations list prints the same mech as **A-20579-2**. The two differ by one digit and the
+other three alien mechs are all A-20579-1, so A-20579-2 is the more likely reading, but the
+disagreement is recorded rather than silently corrected. It has no behavioural consequence.
+
+Two further printed details are worth carrying into a recreation. The flasher "assembly" numbers are
+ramp assemblies, not flasher brackets: A-20621 is the middle plastic ramp (solenoids 17 and 18),
+A-20549 the right wire ramp (19), A-20553 the left plastic ramp (25 and 26) and A-20546 the left wire
+ramp (27). That is what puts solenoid 19 on the right side of the playfield and 27 on the left. And
+solenoid 23 Saucer Dome shares assembly A-20670 with solenoids 37 and 38 - all three are on the one
+saucer L.E.D. board inside saucer assembly A-20608.
 
 ## Sources
 
@@ -709,3 +767,17 @@ The retained operations manual is the 'Bally Attack From Mars Full Operations Ma
 - `altsound.afm-113b.community-package`: retained community altsound.csv for `afm_113b`, SHA-256 `bc139099b58ed94240d86f4fcc8e06ba37dafa5a14d9d5417917b5f225eac830`; sample-name authority for the opcode table.
 - `legacy.game.afm` / `legacy.platform.wpc`: legacy VPE-derived import, corrected as documented above.
 - `pinmame.catalog.4ec52ff0ac13`: pinned driver family and display topology.
+- `manual.bally.attack-from-mars.1995`: retained Bally/Midway Operators Handbook 16-10206, SHA-256
+  `5900c779f3bfb14251ada18d25a4dde84dd608b6ddd988ece8c92ea20fd0114b`; 16 image-only pages carrying the
+  lamp matrix, switch matrix, solenoid/flasher table, all three location maps, the five
+  general-illumination circuits, the flipper coils and the upper-playfield parts list.
+- `manual-support.bally.attack-from-mars.1995`: human transcription of every printed table read from
+  the rendered pages, SHA-256 `eecef9b72e309e581c07fd5ecc8c5b4f9d3808f5bf4a4a3fdf53891e10296733`.
+- `vpx-table.afm-jpsalas-3-0-2` / `vpx-script.afm-jpsalas-3-0-2`: retained known-working JPSalas 3.0.2
+  table, SHA-256 `f4bd2ae0e456030d14ea2f6f8fcd45e0e4f72ff22235a908d17424f1e9441cbd`, and its embedded
+  script, SHA-256 `46992cf7854853bac592ab9b2b5f65d641727accec8405b7aff84fbc8e2aa139`; geometry for all
+  189 placements and the runtime binding authority. It binds `afm_113b`.
+- `runtime.attack-from-mars.boot-attract-and-ball-start`: pinned LibPinMAME harness runs that boot
+  `afm_113b` from empty NVRAM, reach attract and start a ball; they observe all five GI strings, sixty
+  matrix lamps, every one of the sixteen saucer-L.E.D. addresses, and solenoids 29, 31, 37, 38, 41
+  and 42.

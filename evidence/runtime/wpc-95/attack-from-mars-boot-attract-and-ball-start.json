@@ -1,0 +1,223 @@
+{
+  "driver_ids": [
+    "afm_113b"
+  ],
+  "extractor": {
+    "id": "libpinmame-gameplay-harness",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.attack-from-mars.1995"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game afm_113b --rom-path <vpinmame-roms> --work-dir <isolated-state> --initial-switch 22:1 --initial-switch 24:1 --initial-switch 32:1 --initial-switch 33:1 --initial-switch 34:1 --initial-switch 35:1 --boot-wait <seconds> --pulse <switch>:<hold-ms>:<settle-s> --observe <seconds> --snapshot-while-held --dmd-dir <external-dmd-dir> --output <external-json>",
+    "game": "afm_113b",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "FACTORY SETTINGS RESTORED",
+          "label": "first boot from empty NVRAM",
+          "nonzero_pixels": 346,
+          "pixel_sha256": "aeaad52e883d5848b0855588495d7a7cb932f443b526af3de1a30b9dcc243308"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ATTACK FROM MARS SY. 3.77 06/03/99",
+          "label": "attract identification frame confirming the afm_113b system revision",
+          "nonzero_pixels": 384,
+          "pixel_sha256": "3de3445f40313a3071686d40d52d9265fa30aa520d5222aa8d6b644f8b1ca2ae"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "attract mode with the saucer LED ring lit",
+          "label": "attract mode: auxiliary lamp column 8/9 addresses 91-98 and 101-108 carry exactly eight lit LEDs while public solenoids 37 and 38 and their LPDC mirrors 41 and 42 are active",
+          "nonzero_pixels": 836,
+          "pixel_sha256": "8739c7de1a31f057ff4e305b52d22be9d4a3e90178f30e17d5028fb49e344251"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "attract mode, saucer LED ring one step further around",
+          "label": "the complementary eight saucer LEDs are lit one attract step later, proving the 16-bit shift register behind lamp columns 8 and 9",
+          "nonzero_pixels": 836,
+          "pixel_sha256": "8739c7de1a31f057ff4e305b52d22be9d4a3e90178f30e17d5028fb49e344251"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            41
+          ],
+          "display_index": 0,
+          "interpreted_text": "attract mode, saucer LED ring at a third phase",
+          "label": "a third distinct eight-LED phase of the same rotating saucer pattern",
+          "nonzero_pixels": 882,
+          "pixel_sha256": "69ac9c5e6dfafad3f3820a564400557fbfd430e0c4f4671243df198fc73dd42a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            37,
+            38,
+            41,
+            42
+          ],
+          "display_index": 0,
+          "interpreted_text": "attract mode, saucer LED ring at a fourth phase",
+          "label": "a fourth distinct eight-LED phase; across the four phases every one of the sixteen auxiliary addresses 91-98 and 101-108 is observed lit",
+          "nonzero_pixels": 778,
+          "pixel_sha256": "e44e0a6ce45b32e2471e21fbaefbf70c2f1f73515c806e15ceb428c45eceb814"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ball one in play after two coin pulses and the start button",
+          "label": "ball start: the saucer LED ring goes dark and public solenoids 37, 38, 41 and 42 stop together with it, while the fast-flip game-on channel 31 becomes active",
+          "nonzero_pixels": 129,
+          "pixel_sha256": "aaff1c85a84f20c969ca2500521c4c7a22f41d406282195fac17736809f39e44"
+        }
+      ],
+      "display_indices_seen": [
+        0
+      ],
+      "display_layouts_seen": [
+        {
+          "depth": 2,
+          "height": 32,
+          "type": 14,
+          "width": 128
+        }
+      ],
+      "gi_addresses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "lamp_addresses_seen": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        21,
+        24,
+        28,
+        31,
+        34,
+        36,
+        37,
+        38,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        51,
+        53,
+        54,
+        55,
+        56,
+        57,
+        61,
+        62,
+        63,
+        66,
+        67,
+        68,
+        71,
+        72,
+        74,
+        76,
+        77,
+        78,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108
+      ],
+      "solenoid_addresses_seen": [
+        29,
+        31,
+        37,
+        38,
+        41,
+        42
+      ]
+    },
+    "raw_runs": [
+      {
+        "name": "attract-and-ball-start-v1",
+        "self_test_pulses": 0,
+        "sha256": "a86d547b44ba84a38052624a959b460c75f3ca2aa746bcebc1e8c7acfb703aeb"
+      },
+      {
+        "name": "boot-and-service-v1",
+        "self_test_pulses": 0,
+        "sha256": "c6d0eefa1e18bc27d8918afc1b89e1f3f92a370cd59a914b914e36cca4a503d3"
+      }
+    ],
+    "rom_archive_sha256": "378102edfd80d650bf6810d5e521fd08cfd972f8732f3c2204f5929d2266358d"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/attack-from-mars-1995/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "a86d547b44ba84a38052624a959b460c75f3ca2aa746bcebc1e8c7acfb703aeb"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}
