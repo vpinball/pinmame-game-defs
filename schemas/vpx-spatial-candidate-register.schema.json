@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/vpinball/pinmame-game-defs/schemas/vpx-spatial-candidate-register.schema.json",
+  "title": "Fail-closed VPX spatial candidate review register",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "version", "machine_id", "source", "bounds_coordinate_space", "bounds", "review"],
+  "properties": {
+    "format": { "const": "pinmame-vpx-spatial-candidate-register" },
+    "version": { "const": 1 },
+    "machine_id": { "type": "string", "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["table", "extraction"],
+      "properties": {
+        "table": { "$ref": "#/$defs/table" },
+        "extraction": { "$ref": "#/$defs/extraction" },
+        "manual": { "$ref": "#/$defs/manual" }
+      }
+    },
+    "bounds_coordinate_space": { "const": "vpx_table_units" },
+    "bounds": { "$ref": "#/$defs/bounds" },
+    "review": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+      "additionalProperties": { "$ref": "#/$defs/reviewEntry" }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "coordinateSpace": { "enum": ["vpx_table_units", "normalized_playfield_0_1"] },
+    "portablePath": { "type": "string", "pattern": "^(?![A-Za-z]:[\\\\/])(?![\\\\/]).+$" },
+    "bounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["left", "top", "right", "bottom"],
+      "properties": {
+        "left": { "type": "number" },
+        "top": { "type": "number" },
+        "right": { "type": "number", "exclusiveMinimum": 0 },
+        "bottom": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "table": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "relative_path", "original_filename", "bytes", "sha256", "vpxtool_romname", "known_working"],
+      "properties": {
+        "source_id": { "type": "string", "minLength": 1 },
+        "relative_path": { "$ref": "#/$defs/portablePath" },
+        "original_filename": { "type": "string", "minLength": 1 },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "vpxtool_romname": { "type": "string", "minLength": 1 },
+        "known_working": { "type": "boolean" },
+        "derivative": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["base_table_name", "base_author_name", "base_table_version", "mod_filename_marker", "table_save_rev", "table_save_date"],
+          "properties": {
+            "base_table_name": { "type": "string", "minLength": 1 },
+            "base_author_name": { "type": "string", "minLength": 1 },
+            "base_table_version": { "type": "string", "minLength": 1 },
+            "mod_filename_marker": { "type": "string", "minLength": 1 },
+            "table_save_rev": { "type": "string", "minLength": 1 },
+            "table_save_date": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "extraction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relative_path", "vpxtool_version", "manifest_algorithm", "file_count", "total_bytes", "manifest_sha256"],
+      "properties": {
+        "relative_path": { "$ref": "#/$defs/portablePath" },
+        "vpxtool_version": { "type": "string", "minLength": 1 },
+        "manifest_algorithm": { "type": "string", "minLength": 1 },
+        "file_count": { "type": "integer", "minimum": 1 },
+        "total_bytes": { "type": "integer", "minimum": 1 },
+        "manifest_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "manual": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "sha256"],
+      "properties": {
+        "source_id": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "reviewEntry": {
+      "type": "object",
+      "required": ["canonical_placement", "disposition", "reason"],
+      "properties": {
+        "canonical_placement": { "type": "null" },
+        "coordinate_space": { "$ref": "#/$defs/coordinateSpace" },
+        "disposition": { "const": "unresolved" },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

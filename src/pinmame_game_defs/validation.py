@@ -869,12 +869,14 @@ def validate_repository(repository_root: Path) -> list[str]:
 		evidence = load_json(path)
 		if evidence.get("format") == "pinmame-vpx-candidate-register":
 			evidence_schema = repository_root / "schemas" / "vpx-candidate-register.schema.json"
+		elif evidence.get("format") == "pinmame-vpx-spatial-candidate-register":
+			evidence_schema = repository_root / "schemas" / "vpx-spatial-candidate-register.schema.json"
 		elif evidence.get("format") == "pinmame-vpx-spatial-candidates":
 			evidence_schema = repository_root / "schemas" / "vpx-spatial-candidates.schema.json"
 		else:
 			evidence_schema = repository_root / "schemas" / "evidence.schema.json"
 		errors.extend(validate_against_schema(evidence, evidence_schema, relative_path))
-		if evidence.get("format") == "pinmame-vpx-candidate-register":
+		if evidence.get("format") in {"pinmame-vpx-candidate-register", "pinmame-vpx-spatial-candidate-register"}:
 			continue
 		evidence_driver_ids = evidence.get("driver_ids")
 		if isinstance(evidence_driver_ids, list):

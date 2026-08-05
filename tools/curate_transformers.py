@@ -9,11 +9,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_ROOT = ROOT / "src"
-if str(SOURCE_ROOT) not in sys.path:
-	sys.path.insert(0, str(SOURCE_ROOT))
+TOOLS = Path(__file__).resolve().parent
+for import_root in (SOURCE_ROOT, TOOLS):
+	if str(import_root) not in sys.path:
+		sys.path.insert(0, str(import_root))
 
-from pinmame_game_defs.jsonio import write_json, write_text
+from pinmame_game_defs.jsonio import file_sha256, write_json, write_text
 from pinmame_game_defs.spatial import SPATIAL_RETROFIT_PENDING_MACHINE_IDS, fail_closed_spatial_knowledge, fail_closed_spatial_partial, spatial_partial_path
+from transformers_pro_spatial_evidence import CANDIDATE_REGISTER_RELATIVE_PATH, load_candidate_register, spatial_review_markdown
 
 
 CATALOG = json.loads((ROOT / "catalog/pinmame.json").read_text(encoding="utf-8"))
@@ -29,6 +32,11 @@ CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
 MANUAL_SOURCE = "manual.transformers-pro-le.2011"
 PRO_VPX_SOURCE = "vpx.transformers-pro-vpw-2.3.1"
+PRO_VPX_TABLE_SOURCE = "vpx-table.transformers-pro-sg1bson-mod-of-jpsalas-1.0.0"
+PRO_SPATIAL_REGISTER_SOURCE = "evidence.transformers-pro-spatial-candidate-register"
+PRO_VPX_TABLE_SHA256 = "c4615c93a4cb16b794308d65867015805a58b332b4f93fb995209c05107242cc"
+PRO_VPX_TABLE_URI = "external:pinmame-vpx-sources/stern/transformers-pro-2011/source/Transformers (Stern 2011) SG1bsoN Mod.vpx"
+PRO_MANUAL_LOCATOR = "Combined official 134-page Stern manual: Pro switch chart PDF page 129 and switch locations 130, coil/flasher chart 131 and coil/flasher locations 132, lamp matrix chart 133 and physical lamp locations 134; physical inventory and multiplicity authority"
 REVIEW_SOURCE = "review.pinball-news.transformers.2011"
 PRODUCT_SOURCE = "stern.transformers-product-page"
 PRO_RUNTIME_SOURCE = "runtime.transformers-pro.boot-start"
@@ -373,8 +381,9 @@ def driver_records(limited_edition: bool) -> list[dict[str, object]]:
 def sources(limited_edition: bool) -> list[dict[str, object]]:
 	manual_uri = "https://wp.sternpinball.com/wp-content/uploads/2018/11/Transformers-Manual-LE.pdf" if limited_edition else "https://wp.sternpinball.com/wp-content/uploads/2018/11/Transformers-Manual.pdf"
 	manual_name = "Transformers-Manual-LE.pdf" if limited_edition else "Transformers-Manual.pdf"
+	manual_locator = "Combined 134-page official Stern manual: Limited Edition switches PDF page 60, coils 62-63, lamps 65, and custom assemblies 36-39; Pro supplement switches 129, coils 131, and lamps 133" if limited_edition else PRO_MANUAL_LOCATOR
 	result = [
-		{"id": MANUAL_SOURCE, "kind": "manual", "uri": manual_uri, "sha256": "9a4ff4cc3f5391bf730d226eb969c855c7c8c0f429c33e66d846d4069c7898b8", "locator": "Combined 134-page official Stern manual: Limited Edition switches PDF page 60, coils 62-63, lamps 65, and custom assemblies 36-39; Pro supplement switches 129, coils 131, and lamps 133", "license": "NOASSERTION", "attribution": "Stern Pinball", "source_id": "stern", "original_filename": manual_name, "rights": "NOASSERTION", "acquired_at": "2026-08-02T21:00:42Z"},
+		{"id": MANUAL_SOURCE, "kind": "manual", "uri": manual_uri, "sha256": "9a4ff4cc3f5391bf730d226eb969c855c7c8c0f429c33e66d846d4069c7898b8", "locator": manual_locator, "license": "NOASSERTION", "attribution": "Stern Pinball", "source_id": "stern", "original_filename": manual_name, "rights": "NOASSERTION", "acquired_at": "2026-08-02T21:00:42Z"},
 		{"id": REVIEW_SOURCE, "kind": "human_review", "uri": "https://www.pinballnews.com/games/transformers/index6a.html", "locator": "Contemporaneous detailed physical review: Pro/LE playfield differences; Optimus ramp and switches; Megatron trough, target and cannon; Starscream rotation; Ironhide mini-playfield; controlled gates; lamps", "license": "NOASSERTION", "attribution": "Pinball News", "acquired_at": "2026-08-02T22:00:00Z"},
 		{"id": PRODUCT_SOURCE, "kind": "human_review", "uri": "https://www.sternpinball.com/game/transformers/", "locator": "Manufacturer product feature inventory and physical edition overview", "license": "NOASSERTION", "attribution": "Stern Pinball", "acquired_at": "2026-08-02T22:00:00Z"},
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c Transformers INITGAME/driver family, SAM_2COL, 12-output auxiliary-board serialization, PWM lamp declarations, and 128x32 DMD", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
@@ -447,11 +456,52 @@ Switches 4/10 bracket the left ramp. The Pro right ramp uses entrance 35, back-d
 
 ## Sources
 
-- `manual.transformers-pro-le.2011`: official combined Stern manual, SHA-256 `9a4ff4cc3f5391bf730d226eb969c855c7c8c0f429c33e66d846d4069c7898b8`; Pro switch/coil/lamp charts on PDF pages 129/131/133.
+- `manual.transformers-pro-le.2011`: official combined Stern manual, SHA-256 `9a4ff4cc3f5391bf730d226eb969c855c7c8c0f429c33e66d846d4069c7898b8`; Pro switch chart/locations, coil-flasher chart/locations, and lamp chart/locations are PDF pages 129/130, 131/132, and 133/134 respectively.
 - `vpx.transformers-pro-vpw-2.3.1`: known-working Pro script at revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`, SHA-256 `987b8cae80fbe6cb00c652507fba2eaf422afef8a57852a7e4c59d5b3f9e157b`.
+- `vpx-table.transformers-pro-sg1bson-mod-of-jpsalas-1.0.0`: retained SG1bsoN Mod derivative of JP's 1.0.0, SHA-256 `c4615c93a4cb16b794308d65867015805a58b332b4f93fb995209c05107242cc`; a 2022 save revision 156 geometry candidate, not asserted known-working.
 - `review.pinball-news.transformers.2011`: contemporaneous physical mechanism and edition-difference review.
 - `pinmame.core.4ec52ff0ac13`: pinned SAM implementation and driver family.
 """
+
+
+def curated_pro_partial(root: Path = ROOT) -> dict[str, object]:
+	"""Build the single canonical fail-closed Pro output owned by this curator."""
+	load_candidate_register(root)
+	definition = build(False)
+	definition["sources"].append({
+		"id": PRO_VPX_TABLE_SOURCE,
+		"kind": "vpx_table",
+		"uri": PRO_VPX_TABLE_URI,
+		"sha256": PRO_VPX_TABLE_SHA256,
+		"locator": "SG1bsoN Mod derivative of JP's Transformers v1.0.0 by jpsalas: table save revision 156, saved 2022-02-08; embedded tf_180 Pro table; exact 952 by 2164 playfield bounds; extracted read-only with vpxtool git:v0.33.3. The retained derivative is geometry candidate evidence only; no cited observation establishes it as known-working.",
+		"license": "NOASSERTION",
+		"attribution": "JP Salas original v1.0.0; SG1bsoN 2022 lighting-mod derivative and credited table authors",
+		"original_filename": "Transformers (Stern 2011) SG1bsoN Mod.vpx",
+		"rights": "NOASSERTION",
+		"known_working": False,
+	})
+	definition["sources"].append({
+		"id": PRO_SPATIAL_REGISTER_SOURCE,
+		"kind": "human_review",
+		"uri": f"evidence:{CANDIDATE_REGISTER_RELATIVE_PATH.relative_to('evidence').as_posix()}",
+		"sha256": file_sha256(root / CANDIDATE_REGISTER_RELATIVE_PATH),
+		"locator": "Portable fail-closed register for the exact SG1bsoN VPX extraction, including both Q20 render candidates, Q32 raw geometry, GI candidate anchors, coordinate-space labels, manual supplement gaps, and unresolved dispositions.",
+		"license": "NOASSERTION",
+		"attribution": "Generated from the retained user-authorized VPX extraction and official Stern manual",
+	})
+	return fail_closed_spatial_partial(definition)
+
+
+def curated_pro_knowledge(root: Path = ROOT) -> str:
+	"""Build the canonical fail-closed Pro knowledge note."""
+	return fail_closed_spatial_knowledge(
+		"stern.transformers-pro.2011",
+		PRO_KNOWLEDGE.replace(
+			"## Sources\n\n",
+			f"{spatial_review_markdown(root)}## Sources\n\n- `{CANDIDATE_REGISTER_RELATIVE_PATH.as_posix()}`: portable spatial candidate register, SHA-256 `{file_sha256(root / CANDIDATE_REGISTER_RELATIVE_PATH)}`; records exact artifact hashes, coordinate spaces, and unresolved Q20/Q32/GI dispositions.\n",
+			1,
+		),
+	)
 
 
 LE_KNOWLEDGE = """# Transformers Limited Edition (Stern, 2011)
@@ -523,25 +573,30 @@ def runtime_evidence(limited_edition: bool) -> dict[str, object]:
 	}
 
 
-def write_pending_machine(limited_edition: bool) -> None:
+def write_pending_machine(limited_edition: bool, root: Path) -> None:
 	filename = "transformers-limited-edition-2011.json" if limited_edition else "transformers-pro-2011.json"
 	machine_id = "stern.transformers-limited-edition.2011" if limited_edition else "stern.transformers-pro.2011"
 	if machine_id not in SPATIAL_RETROFIT_PENDING_MACHINE_IDS:
 		return
-	if (ROOT / "machines/author-ready/stern" / filename).exists():
+	if (root / "machines/author-ready/stern" / filename).exists():
 		return
-	definition_path = spatial_partial_path(ROOT / "machines/partial/stern" / filename)
-	write_json(definition_path, fail_closed_spatial_partial(build(limited_edition)))
+	definition_path = spatial_partial_path(root / "machines/partial/stern" / filename)
+	definition = fail_closed_spatial_partial(build(True)) if limited_edition else curated_pro_partial(root)
 	knowledge_filename = filename.removesuffix(".json") + ".md"
-	knowledge = LE_KNOWLEDGE if limited_edition else PRO_KNOWLEDGE
-	write_text(ROOT / "knowledge/stern" / knowledge_filename, fail_closed_spatial_knowledge(machine_id, knowledge))
+	knowledge = fail_closed_spatial_knowledge(machine_id, LE_KNOWLEDGE) if limited_edition else curated_pro_knowledge(root)
+	write_json(definition_path, definition)
+	write_text(root / "knowledge/stern" / knowledge_filename, knowledge)
+
+
+def regenerate(root: Path) -> None:
+	write_pending_machine(False, root)
+	write_pending_machine(True, root)
+	write_json(root / "evidence/runtime/sam/transformers-pro-boot-start.json", runtime_evidence(False))
+	write_json(root / "evidence/runtime/sam/transformers-limited-edition-boot-start.json", runtime_evidence(True))
 
 
 def main() -> None:
-	write_pending_machine(False)
-	write_pending_machine(True)
-	write_json(ROOT / "evidence/runtime/sam/transformers-pro-boot-start.json", runtime_evidence(False))
-	write_json(ROOT / "evidence/runtime/sam/transformers-limited-edition-boot-start.json", runtime_evidence(True))
+	regenerate(ROOT)
 
 
 if __name__ == "__main__":

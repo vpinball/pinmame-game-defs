@@ -38,9 +38,17 @@ Switches 4/10 bracket the left ramp. The Pro right ramp uses entrance 35, back-d
 - Preserve ball occupancy and endpoint causality. Do not replace the Megatron stack with a pulse-only toy or the Optimus ramp with a cosmetic animation.
 - Use the proven VPX force, timing, and animation choices as starting values while keeping the service-manual wiring and physical edition boundary.
 
+## Spatial review disposition
+
+Spatial promotion is fail-closed. The portable record is `evidence/vpx/transformers-pro-2011-sg1bson-candidate-register.json`, SHA-256 `5068b5a2b97957b22bc464830d3186cfe87eee189ea9ff9693216c3c96662756`. It retains both table objects driven by Q20: `Lampm 120, f20` and `Flash 120, f20a`; no canonical Q20 placement is asserted because both remain render candidates and the complete physical emitter inventory is not reconciled, and the prior BallRelease anchor is rejected. Q32 maps to f32, and `Flasher.f32.json` retains its complete four-point polygon. No Q32 placement is emitted because f32's declared origin disagrees with that polygon, the flasher is a render surface rather than an observed socket, and official coil/flasher location PDF page 132 remains unreconciled.
+
+The table's `aGiLights` collection has 88 members. Its deterministic candidate register contains 80 `gi*` anchors at 48 distinct positions. Every non-`gi` collection member remains explicitly unresolved: `ApronLight`, `EdgeLeftLighting`, `EdgeLeftLightCast`, `RedApronLight`, `EdgeRightLighting`, `EdgeRightLightCast`, `PurpleApronLight`, `OptimusLight`. The retained Pro supplement is incomplete: footer pages 6-8, 11, 14 are missing. Therefore GI quantity and placements remain unresolved: no physical GI count is asserted and no GI render helper is promoted as a physical emitter. Restore author-ready status only after the exact member list, physical-object classification, manual multiplicity, and every deduplication decision are recorded and tested.
+
 ## Sources
 
-- `manual.transformers-pro-le.2011`: official combined Stern manual, SHA-256 `9a4ff4cc3f5391bf730d226eb969c855c7c8c0f429c33e66d846d4069c7898b8`; Pro switch/coil/lamp charts on PDF pages 129/131/133.
+- `evidence/vpx/transformers-pro-2011-sg1bson-candidate-register.json`: portable spatial candidate register, SHA-256 `5068b5a2b97957b22bc464830d3186cfe87eee189ea9ff9693216c3c96662756`; records exact artifact hashes, coordinate spaces, and unresolved Q20/Q32/GI dispositions.
+- `manual.transformers-pro-le.2011`: official combined Stern manual, SHA-256 `9a4ff4cc3f5391bf730d226eb969c855c7c8c0f429c33e66d846d4069c7898b8`; Pro switch chart/locations, coil-flasher chart/locations, and lamp chart/locations are PDF pages 129/130, 131/132, and 133/134 respectively.
 - `vpx.transformers-pro-vpw-2.3.1`: known-working Pro script at revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`, SHA-256 `987b8cae80fbe6cb00c652507fba2eaf422afef8a57852a7e4c59d5b3f9e157b`.
+- `vpx-table.transformers-pro-sg1bson-mod-of-jpsalas-1.0.0`: retained SG1bsoN Mod derivative of JP's 1.0.0, SHA-256 `c4615c93a4cb16b794308d65867015805a58b332b4f93fb995209c05107242cc`; a 2022 save revision 156 geometry candidate, not asserted known-working.
 - `review.pinball-news.transformers.2011`: contemporaneous physical mechanism and edition-difference review.
 - `pinmame.core.4ec52ff0ac13`: pinned SAM implementation and driver family.
