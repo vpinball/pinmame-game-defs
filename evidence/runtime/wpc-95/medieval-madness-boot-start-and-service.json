@@ -1,0 +1,245 @@
+{
+  "driver_ids": [
+    "mm_10"
+  ],
+  "extractor": {
+    "id": "libpinmame-gameplay-harness",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.medieval-madness.1997"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game mm_10 --rom-path <vpinmame-roms> --work-dir <isolated-state> --initial-switch 22:<coin-door> --initial-switch 24:0 --initial-switch 32:1 --initial-switch 33:1 --initial-switch 34:1 --initial-switch 35:1 --initial-switch 56:1 --boot-wait <seconds> --pulse <switch>:<hold-ms>:<settle-s> --observe <seconds> --snapshot-while-held --dmd-dir <external-dmd-dir> --output <external-json>",
+    "game": "mm_10",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "FACTORY SETTINGS RESTORED",
+          "label": "first boot from empty NVRAM",
+          "nonzero_pixels": 346,
+          "pixel_sha256": "aeaad52e883d5848b0855588495d7a7cb932f443b526af3de1a30b9dcc243308"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "BOOKKEEPING TOTALS CLEARED",
+          "label": "first boot from empty NVRAM, four seconds later",
+          "nonzero_pixels": 371,
+          "pixel_sha256": "79c16b58b2922fb8b8375a88d9ffbb97cbe24de36dec709e6d13f7c8b76f4443"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "TO RESET SCORES- HOLD ENTER----4",
+          "label": "public switch 8 held for 2500 ms in attract mode with the coin door open",
+          "nonzero_pixels": 385,
+          "pixel_sha256": "37be1c9bdabf2da93e8409887e7a97a3a8291a0a34b936b37622336262e30ba1"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "SOUND REV. 1.0 SY. 3.70 07/25/97",
+          "label": "attract cycle four seconds after releasing public switch 8",
+          "nonzero_pixels": 320,
+          "pixel_sha256": "11d1093eda11557c1f4ea387476ae2f4c714367ff23f5ff1903a4e92694f2050"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "COIN DOOR IS OPEN COILS AND FLASHERS ARE DISABLED",
+          "label": "attract warning with the coin door open",
+          "nonzero_pixels": 645,
+          "pixel_sha256": "cc1ac7c1fc972cd180e89b4e88470814871b25c1d3b7fa734fe2d6e4d8a666de"
+        },
+        {
+          "active_solenoid_addresses": [
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ball one in play after three coin pulses and the start button",
+          "label": "ball start with the coin door closed",
+          "nonzero_pixels": 385,
+          "pixel_sha256": "3de6d1a60b1b7b9b3cfd2780a35af762808d6207ac85efe4457484e06435bd96"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "VOLUME (13)",
+          "label": "one pulse of public switch 7 from the default volume 12",
+          "nonzero_pixels": 378,
+          "pixel_sha256": "573bd1cb5ede7f9dcff13ee93e97beaedce8fac4d7667ca203d547cd1f28cf17"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "VOLUME (15)",
+          "label": "three pulses of public switch 7 raise the volume, so switch 7 is Volume Up",
+          "nonzero_pixels": 403,
+          "pixel_sha256": "189e72c16810bbbf540963295d56201fbb5fac9583f34e851c9fc791d1914b1c"
+        },
+        {
+          "active_solenoid_addresses": [
+            29
+          ],
+          "display_index": 0,
+          "interpreted_text": "VOLUME (12)",
+          "label": "three pulses of public switch 6 lower the volume back past the start, so switch 6 is Volume Down",
+          "nonzero_pixels": 368,
+          "pixel_sha256": "03d08b782c9b0452a0434bbb8245b96968dee664f88976204afaf3887cbe89f3"
+        }
+      ],
+      "display_indices_seen": [
+        0
+      ],
+      "display_layouts_seen": [
+        {
+          "depth": 2,
+          "height": 32,
+          "type": 14,
+          "width": 128
+        }
+      ],
+      "gi_addresses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "lamp_addresses_seen": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88
+      ],
+      "solenoid_addresses_seen": [
+        2,
+        29,
+        31
+      ]
+    },
+    "raw_runs": [
+      {
+        "name": "boot-empty-nvram-v1",
+        "self_test_pulses": 0,
+        "sha256": "4b7f4cb2e0a38b8e99294eca21c4a1c23370c2e2402cf46298804fb457316b02"
+      },
+      {
+        "name": "boot-start-v1",
+        "self_test_pulses": 0,
+        "sha256": "1383c4e0f1bf9a0fc7b4d8c9cc88eb065c3acba88c001e1e14e3501fed10f83a"
+      },
+      {
+        "name": "coin-door-service-hold-v1",
+        "self_test_pulses": 2,
+        "sha256": "e347e6f8648913b9d2c75dcc0971325bcbd15eb92ad4915720b9b3fae25160f6"
+      },
+      {
+        "name": "coin-door-service-pulse-v1",
+        "self_test_pulses": 2,
+        "sha256": "abe14c3c0f02accced3b4d08ecabc053eee5a615f3575829e9b34883edb5c35f"
+      },
+      {
+        "name": "coin-door-volume-direction-v1",
+        "self_test_pulses": 6,
+        "sha256": "0c657419c753196772c41c4375b18c385acd993ab87f289e692f52b73bc8da7b"
+      }
+    ],
+    "rom_archive_sha256": "aa949281de6f26b9f6d01313739c5ef061a30ed83d541fcbbe08f1650232bf75"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/medieval-madness-1997/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "1383c4e0f1bf9a0fc7b4d8c9cc88eb065c3acba88c001e1e14e3501fed10f83a"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

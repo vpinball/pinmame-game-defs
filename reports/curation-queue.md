@@ -88,7 +88,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 82 | 1997 | STUB - Space Jam (3.00) | Sega | stub |
 | 83 | 1997 | STUB - Star Wars Trilogy Special Edition, The (4.03) | Sega | stub |
 | 84 | 1997 | STUB - X-Files, The (3.03) | Sega | stub |
-| 85 | 1997 | Medieval Madness | Williams | partial |
+| 85 | 1997 | Medieval Madness | Williams | author_ready |
 | 86 | 1997 | STUB - No Good Gofers (1.3) | Williams | stub |
 | 87 | 1996 | Scared Stiff | Bally | partial |
 | 88 | 1996 | STUB - League Champ (1.1) | Bally | stub |

@@ -1,0 +1,788 @@
+{
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2164.706,
+      "left": 0.0,
+      "right": 952.941,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952.941; 0=left, 1=right",
+    "y": "y/2164.706; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "LM_* lightmap helper primitives",
+    "BM_* baked-mesh render primitives",
+    "VR_* and VRBG* virtual-reality room and backglass objects",
+    "ramptrigger* ball-routing helper triggers",
+    "BlockerWall* and blocker_* physics helpers",
+    "sw*p, sw*o standup-target render primitives"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 2793,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "2f5a08bb9ce459a90934b3999e6ee96b15b4885f5a07dee8681c1f2b3ca50442",
+    "manifest_uri": "external:pinmame-vpx-sources/williams/medieval-madness-1997/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.mm-vpw-1-0",
+    "total_bytes": 1073881024,
+    "vpxtool_version": "vpxtool git:v0.33.3"
+  },
+  "format": "pinmame-spatial-audit",
+  "machine_id": "williams.medieval-madness.1997",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      13,
+      14,
+      21,
+      22,
+      112,
+      114
+    ],
+    "constant": [
+      24
+    ],
+    "dip_switch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "internal_nonvisual": [
+      111,
+      113
+    ],
+    "unused": [
+      23,
+      42,
+      43,
+      76,
+      77,
+      78,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      115,
+      116,
+      117,
+      118
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 3,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 4,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 87,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 88,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 181,
+  "projections": [
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough-exit ball position: the retained script's SolBallRelease pulses switch 31 and kicks the same trough-exit ball, and the manual switch-location map places the trough-eject opto immediately outboard of Trough Ball 1."
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained drawbridge door assembly; the manual marks switch 56 as a hidden (dashed) position inside the drawbridge mechanism."
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained drawbridge door assembly; the manual marks switch 57 as a hidden (dashed) position inside the drawbridge mechanism."
+    },
+    {
+      "address": 74,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the left troll strike surface; the physical position switch is under the playfield inside troll assembly A-22034."
+    },
+    {
+      "address": 75,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the right troll strike surface; the physical position switch is under the playfield inside troll assembly A-22034."
+    }
+  ],
+  "resolved_input_addresses": [
+    12,
+    15,
+    16,
+    17,
+    18,
+    25,
+    26,
+    27,
+    28,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    41,
+    44,
+    45,
+    46,
+    47,
+    48,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    71,
+    72,
+    73,
+    74,
+    75
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 0,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "cdc5590888d810a44b772ec327789362cd27dd7a6c58870bc148b2d87a0f90f8",
+    "manual_section_1_sha256": "57d3b23e0d73e31318fb7054a1dc966db0924cf8f908a5844719ba9f50f0e672",
+    "manual_section_2_archive_sha256": "71d16833c4c5d562830da1310d05214912dd77e90e966111fe5615ec70770319",
+    "manual_section_2_sha256": "9baac8156b1115171c0c5fc1cced2a4bfa2280067c72a49b58678d89c70b6f1d",
+    "manual_section_3_sha256": "1a426136cbc9df6297e8ea41d4f7b166d2b91aa2b188909b74d15be7b1c3d77d",
+    "rom_sha256": "aa949281de6f26b9f6d01313739c5ef061a30ed83d541fcbbe08f1650232bf75",
+    "table_sha256": "9a05a555d03aca3d48d73b3e6566220b27fde46aa5d2517a08faacdbc58bcab9"
+  },
+  "status": "validated",
+  "unresolved": [],
+  "version": 1,
+  "visual_review_cache": {
+    "pages": [
+      {
+        "note": "Section 1 front matter: DIP-switch chart plus the complete solenoid/flasher, general-illumination, flipper-circuit, and motor-circuit table",
+        "path": "part1/page-02.png",
+        "sha256": "81c456d190eacfad6de6eef0a8af8accac5b1742f88e383f12963010d66896ad"
+      },
+      {
+        "note": "Security-CPU and electronic-ID notice, project number 559",
+        "path": "part1/page-04.png",
+        "sha256": "e88da6a183f7c7558a5e73926a6b034f53114c84fbad0815ae1e5f1b81601909"
+      },
+      {
+        "note": "Coin-door interlock notice, assembly A-18249-3",
+        "path": "part1/page-05.png",
+        "sha256": "2e6981a3357de52bfe2b12dfafcaaffe0968ff265e0de48f2b1ec0c769c732d5"
+      },
+      {
+        "note": "Printed page 2-46 lamp-locations parts list at 300 dpi",
+        "path": "hi/loc-47.png",
+        "sha256": "12c8759eacb7222aa389a1da0837df8d2344be20915aee9e5edda41919dfadac"
+      },
+      {
+        "note": "Printed page 2-47 lamp-locations playfield map at 300 dpi",
+        "path": "hi/loc-48.png",
+        "sha256": "b55eeb162517a6f478daaf0302646f24a55fe9183c98f867f5b55d4097820282"
+      },
+      {
+        "note": "Printed page 2-48 switch-locations parts list at 300 dpi",
+        "path": "hi/loc-49.png",
+        "sha256": "891df6be1d33572b4876d762cfe1861a992dc0fb220e048795f5735b47562b30"
+      },
+      {
+        "note": "Printed page 2-49 switch-locations playfield map at 300 dpi",
+        "path": "hi/loc-50.png",
+        "sha256": "8a84eba215cb465d1ffeabaff605d91e99579b3bf717db5e1a4a20211164b675"
+      },
+      {
+        "note": "Printed page 2-50 solenoid/flashlamp-locations parts list at 300 dpi",
+        "path": "hi/loc-51.png",
+        "sha256": "10ae92361469b0bf447e466fa5c22ac0eb2d6da05ac26f05523086c0fb2d3d93"
+      },
+      {
+        "note": "Printed page 2-52 lamp matrix at 300 dpi",
+        "path": "hi/parts-53.png",
+        "sha256": "f202054700c40c9af7cda3ca4710a4dcf31668ca295de4c8cd010c17a46e0ec7"
+      },
+      {
+        "note": "Printed page 2-53 switch matrix at 300 dpi",
+        "path": "hi/parts-54.png",
+        "sha256": "e22bbe4c20b9704061500606ca008af1e34ba19d830392d28723567a84dd2360"
+      },
+      {
+        "note": "300 dpi crop of the solenoid/flasher table used to re-verify every wire colour, connector, and driver transistor",
+        "path": "hi/soltable-top-02.png",
+        "sha256": "9113448136cb6d94324acc32bbbf629efea6029e8419c66bb924d6d3e73a5c50"
+      },
+      {
+        "note": "300 dpi crop of the lamp-locations map showing lamp 15 as one large circular insert between the triangular 14 and the small rectangular 16",
+        "path": "hi/lamp15crop-48.png",
+        "sha256": "f2b608c58efe4315a14300810530e6411ea152d25e8e76ad5791f3c410cb3850"
+      },
+      {
+        "note": "300 dpi crop of the lamp-locations map showing the called-out lamp 78 arrow insert in the right orbit lane",
+        "path": "hi/lamp78rcrop-48.png",
+        "sha256": "9e1b6f09a1532fee00c85db21d0c71da8c7e283c30e431b14b5223842ec4e492"
+      },
+      {
+        "note": "600 dpi crop of the lamp-locations map showing the matching, uncalled-out arrow insert in the left orbit lane",
+        "path": "hi/lamp78acrop-48.png",
+        "sha256": "d165bc83976665d0b7b72707cedc749dc52b98b1014c2b236f6b7618577b5ce2"
+      },
+      {
+        "note": "Printed page 2-26: A-21719 troll assembly, used in games produced before July 21, 1997, with the same FL-11753 coil and 5647-12693-11 switch as the later A-22034",
+        "path": "hi/troll-27.png",
+        "sha256": "2f6d7fbb5b2016f072ee7eea982b15a0165c8febaadd21ecce80b38a4b19a0e3"
+      },
+      {
+        "note": "Printed page 3-10: general-illumination circuit, five strings from the 6.3 V secondary, three triac-switched and two bridge-rectified, bounded at up to 18 bulbs per string",
+        "path": "part3/page-10.png",
+        "sha256": "c992dd318cb00424713b6b13611f95b1c6c03f526b2f8c7c442740fe05eb3485"
+      },
+      {
+        "note": "Printed page 3-11: flipper circuit diagram, +50 V flipper and troll supply, +12 V drawbridge motor supply on J139-2, the upper-flipper-to-troll footnote, and the reused F5-F8 template labels",
+        "path": "part3/page-11.png",
+        "sha256": "a9641bc1c4af60d1b051fc09c6ac7679af2ce654dd2067866a96c0d84638e534"
+      },
+      {
+        "note": "Printed page 1-19: T.13 states the matrix notation (left digit is the column, right digit is the row), T.15 places the DIP switches at CPU-board U27, and T.16 begins the loop/gate procedure",
+        "path": "hi/sec1-48.png",
+        "sha256": "5f06d8333f4ee2ea12a41e2b9cdf4e1292501b4d4df8c7f189860cd18d392d3f"
+      },
+      {
+        "note": "Printed page 1-20: T.16 loop/gate causality and the stuck-open versus stuck-closed error split",
+        "path": "hi/sec1-49.png",
+        "sha256": "e80ac67493377e179a075f76cea422acdefe5a3c265db3fadb4612d08fb2c8f3"
+      },
+      {
+        "note": "Printed page 1-21: T.17 tower ramp and tower-lock modes",
+        "path": "hi/sec1-50.png",
+        "sha256": "6b5c6931a3027600db3719782d98340390a22d76c101692ec7e22bd8aafa11b9"
+      },
+      {
+        "note": "Enlarged crop of printed page 1-21 confirming the diverter-down tower path and the two-minute revert",
+        "path": "hi/t17crop-50.png",
+        "sha256": "8e46e866cf3d5c5287a5017faf00da0143c68a31375da0992eb812e32aa35aff"
+      },
+      {
+        "note": "Printed page 1-22: T.18 drawbridge and the start of T.19 castle gate",
+        "path": "hi/sec1-51.png",
+        "sha256": "39b9def69f7b92e579d938f700a4dd7944b63c1fe5221c16f9b5205b7254bb63"
+      },
+      {
+        "note": "Printed page 1-23: T.19 castle mode ball path and exploding castle, plus T.20 trolls",
+        "path": "hi/sec1-52.png",
+        "sha256": "93aaf3942401c2f4e3853d2b67deb068cee07ffccf4838e4e9d8eb55a48aad71"
+      },
+      {
+        "note": "Printed page 1-24: the two-minute troll lower-out and T.21 empty balls",
+        "path": "hi/sec1-53.png",
+        "sha256": "f1edbf1fe772526437bebd1f608630bd567f46b29c7434c2e17a71c550f80c0d"
+      }
+    ],
+    "root": "external:pinmame-manuals/rendered/williams.medieval-madness.1997/",
+    "transcription": {
+      "path": "external:pinmame-review-artifacts/medieval-madness-1997/manual-transcription.md",
+      "sha256": "b0905ec59747532ca146ba4e0a6e66b384f28ad2528617b29bfed64221f9d4d2"
+    }
+  }
+}
