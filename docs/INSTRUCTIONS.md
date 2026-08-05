@@ -4,13 +4,13 @@ This file is the standalone operational runbook for the agent continuing the phy
 
 ## Mandatory prerequisites and discovery
 
-Required capabilities are a hard gate, but a command missing from `PATH` or an unset convenience variable is not itself proof that the capability is unavailable. Start in this repository, derive its root with `git rev-parse --show-toplevel`, and inspect `PATH`, common installed-tool locations, workspace-provided runtimes, sibling repositories, and existing project folders. Record the resolved commands, versions, and external roots. If an applicable tool or read-only input still cannot be resolved, ask the human to provide its executable or folder before declaring that line of work blocked. Abort only after reasonable discovery plus that request shows that a required capability or source is genuinely unavailable; do not silently omit the affected evidence or replace it with a weaker source/model. Do not install software or create substitute read-only source folders without contributor approval.
+Required capabilities are a hard gate, but a command missing from `PATH` or an unset convenience variable is not itself proof that the capability is unavailable. Start in this repository, derive its root with `git rev-parse --show-toplevel`, and inspect `PATH`, common installed-tool locations, workspace-provided runtimes, sibling repositories, and existing project folders. Record the resolved commands, versions, and external roots. If an applicable human-owned tool or read-only input still cannot be resolved, ask the human to provide its executable or folder before declaring that line of work blocked. The three public source repositories managed below are the exception: clone them automatically and report clone/network failures instead of asking the human for checkout paths. Abort only after reasonable discovery plus any applicable human request shows that a required capability or source is genuinely unavailable; do not silently omit the affected evidence or replace it with a weaker source/model. Do not install software or create substitute read-only source folders without contributor approval.
 
 ### Tool capabilities and download sources
 
 | Capability | Used for | Installation or download source |
 | --- | --- | --- |
-| Git (`git`) | branches, worktrees, exact-state review, commits, and PR preparation | [Git downloads](https://git-scm.com/downloads) |
+| Git 2.23 or newer (`git`) | branches, worktrees, pinned filtered clones, exact-state review, commits, and PR preparation | [Git downloads](https://git-scm.com/downloads) |
 | Python 3.11 or newer plus this package's dependencies | deterministic curators, catalog generation, validation, the PinMAME harness, PDF parsing, and tests | [Python downloads](https://www.python.org/downloads/); install this repository with `python -m pip install -e .` in an isolated environment when dependencies are not already available |
 | ripgrep (`rg`) | first-choice source and file discovery | [ripgrep releases](https://github.com/BurntSushi/ripgrep/releases) |
 | `vpxtool` | VPX identity inspection, script/object extraction, and spatial evidence | [vpxtool releases](https://github.com/francisdb/vpxtool/releases); record the exact version in evidence, and use v0.33.3 only when reproducing artifacts explicitly pinned to `vpxtool git:v0.33.3` |
@@ -20,9 +20,9 @@ Required capabilities are a hard gate, but a command missing from `PATH` or an u
 | Claude Code CLI (`claude`), installed, authenticated, and working non-interactively when Anthropic models are used | running `opus`, `sonnet`, or `haiku` workers and reviewers | [Claude Code setup](https://docs.anthropic.com/en/docs/claude-code/getting-started) and [CLI reference](https://docs.anthropic.com/en/docs/claude-code/cli-usage) |
 | Working CLI access to the model tiers required by the allocation policy below | high-judgment curation, economical delegated extraction, and mandatory pre-submission review | At least one high-tier CLI is mandatory; when another provider's high-tier model is available, its CLI must also work so the final review can be cross-provider |
 | An authenticated interactive browser or working browser automation | Cloudflare-gated IPDB/VPU/VPF research and downloads | [Google Chrome](https://www.google.com/chrome/) or [Puppeteer](https://pptr.dev/guides/installation) |
-| Pinned PinMAME source and a compatible built native library | authoritative driver inventory and runtime-harness traces | [vpinball/pinmame](https://github.com/vpinball/pinmame); if no compatible library can be found under the checkout, build one using [CMake](https://cmake.org/download/) and a suitable C/C++ toolchain |
+| Pinned PinMAME source and a compatible built native library | authoritative driver inventory and runtime-harness traces | [vpinball/pinmame](https://github.com/vpinball/pinmame); if no compatible library can be found, use the concrete CMake preparation and out-of-source build recipe below with a suitable C/C++ toolchain |
 
-Tool names above are conventional, not mandatory installation paths. Locate an existing executable first, run a small version/smoke check, and use its fully qualified path when it is not on `PATH`. For the native library, search the agent-managed PinMAME checkout and `<working-root>/builds/pinmame` for `pinmame64.dll`, `libpinmame.dll`, `libpinmame.so`, or `libpinmame.dylib`; use `PINMAME_LIBRARY_PATH` only as an optional disambiguation override. If multiple plausible libraries exist, identify the one built from the pinned revision instead of choosing by filename alone.
+Tool names above are conventional, not mandatory installation paths. Locate an existing executable first, run a small version/smoke check, and use its fully qualified path when it is not on `PATH`. For the native library, search the final agent-managed PinMAME checkout and `<working-root>/builds/pinmame` for `pinmame64.dll`, `libpinmame.dll`, `libpinmame.so`, or `libpinmame.dylib`, explicitly excluding every `.incoming-*` tree; use `PINMAME_LIBRARY_PATH` only as an optional disambiguation override. If multiple plausible libraries exist, identify the one built from the pinned revision instead of choosing by filename alone.
 
 ### Agent CLI operation
 
@@ -97,6 +97,7 @@ The human must not have to declare environment variables for writable locations.
 | `review-artifacts` | Retained spatial-analysis and model-review artifacts that do not belong in Git |
 | `roms` | Newly downloaded ROM archives used for authorized local research |
 | `source-checkouts` | Agent-managed pinned upstream Git checkouts |
+| `source-checkouts/.incoming-*` | Incomplete diagnostic clone directories only; enumerate and report them, but never reuse, promote, or search them as source evidence |
 | `builds` | Out-of-source build trees, including the pinned PinMAME native library |
 
 Resolve and create the layout automatically:
@@ -130,9 +131,15 @@ foreach ($path in @($workingRoot) + $workingFolders.Values) {
 }
 ```
 
-Clone the three public source repositories when missing and detach each checkout at its required pinned revision. Existing agent-managed checkout directories must have the expected origin, be completely clean, and contain the pinned commit before reuse. Never reset, clean, overwrite, or delete an unexpected or dirty checkout; stop and ask the human to inspect it. A network failure is a tooling/network blocker, not a reason to ask the human to supply these repositories manually.
+Clone the three public source repositories when missing and detach each checkout at its required pinned revision. Clone into a unique incoming sibling first, validate and pin it there, and move it to the final path only after success. At every preflight, enumerate existing `.incoming-*` directories under `source-checkouts`, report their count and exact paths to the human as abandoned diagnostic leftovers that are safe to delete after investigation, and exclude them from every source, evidence, and native-library search. Never reuse or promote one. If cloning or checkout is interrupted, leave that incoming directory for diagnosis; a later run uses a new incoming path and is not blocked by the incomplete clone. Existing final checkout directories must have the expected origin, be completely clean, and contain the pinned commit before reuse. Never reset, clean, overwrite, or delete an unexpected or dirty final checkout; stop and ask the human to inspect it. Configure all managed checkouts with `core.autocrlf=false` and `core.eol=lf` before materializing files so evidence hashes are independent of the contributor's global Git settings; the `vpx-standalone-scripts` repository's own `*.vbs text eol=crlf` attribute still takes precedence. Spot-check any reused checkout that supplies hashed evidence against a known recorded hash instead of trusting a clean Git status. A network failure is a tooling/network blocker, not a reason to ask the human to supply these repositories manually.
 
 ```powershell
+$abandonedIncoming = @(Get-ChildItem -LiteralPath $workingFolders.SourceCheckouts -Directory -Force -ErrorAction Stop | Where-Object { $_.Name -like '.incoming-*' })
+if ($abandonedIncoming.Count -gt 0) {
+	Write-Warning "Found $($abandonedIncoming.Count) abandoned incoming checkout(s); never reuse or search these paths:"
+	$abandonedIncoming.FullName | ForEach-Object { Write-Warning $_ }
+}
+
 $checkouts = @(
 	@{ Name = 'pinmame'; Url = 'https://github.com/vpinball/pinmame.git'; Revision = '4ec52ff0ac133ac251681518aed2249e19fe26eb' },
 	@{ Name = 'vpxtable_scripts'; Url = 'https://github.com/sverrewl/vpxtable_scripts.git'; Revision = '0c036bb61b4b4e8c778c37559f6795df8cd1521e' },
@@ -141,30 +148,71 @@ $checkouts = @(
 
 foreach ($checkout in $checkouts) {
 	$path = Join-Path $workingFolders.SourceCheckouts $checkout.Name
-	if (-not (Test-Path -LiteralPath $path)) {
-		git clone --filter=blob:none --no-checkout $checkout.Url $path
+	$newClone = -not (Test-Path -LiteralPath $path)
+	if ($newClone) {
+		$incomingName = ".incoming-$($checkout.Name)-$([System.Guid]::NewGuid().ToString('N'))"
+		$candidatePath = Join-Path $workingFolders.SourceCheckouts $incomingName
+		if (Test-Path -LiteralPath $candidatePath) { throw "Incoming checkout path already exists: $candidatePath" }
+		git clone --filter=blob:none --no-checkout $checkout.Url $candidatePath
 		if ($LASTEXITCODE -ne 0) { throw "Failed to clone $($checkout.Name)." }
 	} else {
-		$item = Get-Item -LiteralPath $path -Force
-		if (-not $item.PSIsContainer -or ($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint)) { throw "Unsafe checkout path: $path" }
-		$origin = (git -C $path remote get-url origin).Trim()
-		if ($LASTEXITCODE -ne 0 -or $origin -ne $checkout.Url) { throw "Unexpected origin for $($checkout.Name): $origin" }
-		if (git -C $path status --porcelain) { throw "Dirty agent-managed checkout: $path" }
+		$candidatePath = $path
 	}
 
-	git -C $path config --local core.longpaths true
+	$item = Get-Item -LiteralPath $candidatePath -Force
+	if (-not $item.PSIsContainer -or ($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint)) { throw "Unsafe checkout path: $candidatePath" }
+	$origin = "$(git -C $candidatePath remote get-url origin)".Trim()
+	if ($LASTEXITCODE -ne 0 -or $origin -ne $checkout.Url) { throw "Unexpected origin for $($checkout.Name): $origin" }
+	if (-not $newClone -and (git -C $candidatePath status --porcelain)) { throw "Dirty agent-managed checkout: $candidatePath" }
+
+	git -C $candidatePath config --local core.longpaths true
 	if ($LASTEXITCODE -ne 0) { throw "Failed to enable long-path support for $($checkout.Name)." }
-	git -C $path cat-file -e "$($checkout.Revision)^{commit}" 2>$null
+	git -C $candidatePath config --local core.autocrlf false
+	if ($LASTEXITCODE -ne 0) { throw "Failed to disable automatic line-ending conversion for $($checkout.Name)." }
+	git -C $candidatePath config --local core.eol lf
+	if ($LASTEXITCODE -ne 0) { throw "Failed to pin checkout line endings for $($checkout.Name)." }
+	git -C $candidatePath cat-file -e "$($checkout.Revision)^{commit}" 2>$null
 	if ($LASTEXITCODE -ne 0) {
-		git -C $path fetch --no-tags origin $checkout.Revision
+		git -C $candidatePath fetch --no-tags origin $checkout.Revision
 		if ($LASTEXITCODE -ne 0) { throw "Failed to fetch pinned revision for $($checkout.Name)." }
 	}
-	git -C $path switch --detach $checkout.Revision
-	if ($LASTEXITCODE -ne 0 -or (git -C $path rev-parse HEAD).Trim() -ne $checkout.Revision) { throw "Failed to pin $($checkout.Name)." }
+	git -C $candidatePath switch --detach $checkout.Revision
+	$head = "$(git -C $candidatePath rev-parse HEAD)".Trim()
+	if ($LASTEXITCODE -ne 0 -or $head -ne $checkout.Revision -or (git -C $candidatePath status --porcelain)) { throw "Failed to pin $($checkout.Name) cleanly." }
+	if ($checkout.Name -eq 'vpxtable_scripts') {
+		$knownEvidencePath = Join-Path $candidatePath 'Aaron Spinlling (Data East 1992) v1.02.vbs'
+		$knownEvidenceSha256 = '92abfcb92e97fad7abf0658ac5168af54ee6d19be8a7fe58ffc76de420270f40'
+		if (-not (Test-Path -LiteralPath $knownEvidencePath -PathType Leaf) -or (Get-FileHash -LiteralPath $knownEvidencePath -Algorithm SHA256).Hash.ToLowerInvariant() -ne $knownEvidenceSha256) { throw "The vpxtable_scripts working-tree bytes do not match the recorded LF-normalized evidence hash: $knownEvidencePath" }
+	}
+
+	if ($newClone) {
+		if (Test-Path -LiteralPath $path) { throw "Final checkout path appeared while cloning: $path" }
+		Move-Item -LiteralPath $candidatePath -Destination $path -ErrorAction Stop
+	}
 }
 ```
 
-Build PinMAME out of source under `<working-root>/builds/pinmame` when a compatible native library is not already present; do not place build output in the clean source checkout. These local variables are the canonical writable paths for the task. Do not require the human to persist or export them. When an existing test or tool requires a legacy environment variable such as `PINMAME_VPX_SOURCES_ROOT`, set it from the derived path immediately before invoking that process. Never create replacement copies of the user's missing read-only inputs in the working directory.
+Build PinMAME under `<working-root>/builds/pinmame` when a compatible native library is not already present. The pinned revision keeps the libpinmame project at `cmake/libpinmame/CMakeLists.txt` and its official workflow copies that file to the checkout root before configuration because its source paths are root-relative. Make the same copy; `/CMakeLists.txt` is gitignored at the pinned revision, so this preparation keeps `git status --porcelain` clean while all generated build output remains outside the checkout. For Windows x64, use the following concrete invocation and adjust `PLATFORM`, `ARCH`, generator, and configuration for the contributor's target platform:
+
+```powershell
+$pinmameCheckout = Join-Path $workingFolders.SourceCheckouts 'pinmame'
+$pinmameBuild = Join-Path $workingFolders.Builds 'pinmame'
+$libPinmameProject = Join-Path $pinmameCheckout 'cmake\libpinmame\CMakeLists.txt'
+$rootProject = Join-Path $pinmameCheckout 'CMakeLists.txt'
+if (-not (Test-Path -LiteralPath $libPinmameProject -PathType Leaf)) { throw "Missing pinned libpinmame CMake project: $libPinmameProject" }
+if (Test-Path -LiteralPath $rootProject) {
+	if (-not (Test-Path -LiteralPath $rootProject -PathType Leaf) -or (Get-FileHash -LiteralPath $rootProject -Algorithm SHA256).Hash -ne (Get-FileHash -LiteralPath $libPinmameProject -Algorithm SHA256).Hash) { throw "Unexpected existing PinMAME root CMakeLists.txt: $rootProject" }
+} else {
+	Copy-Item -LiteralPath $libPinmameProject -Destination $rootProject -ErrorAction Stop
+}
+cmake -S $pinmameCheckout -B $pinmameBuild -DPLATFORM=win -DARCH=x64
+if ($LASTEXITCODE -ne 0) { throw 'PinMAME CMake configuration failed.' }
+cmake --build $pinmameBuild --config Release
+if ($LASTEXITCODE -ne 0) { throw 'PinMAME native-library build failed.' }
+if (git -C $pinmameCheckout status --porcelain) { throw 'PinMAME checkout became dirty during build preparation.' }
+```
+
+These local variables are the canonical writable paths for the task. Do not require the human to persist or export them. When an existing test or tool requires a legacy environment variable such as `PINMAME_VPX_SOURCES_ROOT`, set it from the derived path immediately before invoking that process. Never create replacement copies of the user's missing read-only inputs in the working directory.
 
 Before beginning a game, confirm the current repository, applicable read-only inputs, writable evidence roots, model tiers, browser access, and the pinned native library needed by that game's gates. Report only genuine unresolved prerequisites; do not fail merely because a tool was installed outside a conventional path.
 
@@ -399,6 +447,7 @@ $repoRoot = [System.IO.Path]::GetFullPath((& git rev-parse --show-toplevel).Trim
 $workingRoot = Join-Path ([System.IO.DirectoryInfo]::new($repoRoot).Parent.FullName) 'pinmame-game-defs-working-dir'
 $env:PINMAME_VPX_SOURCES_ROOT = Join-Path $workingRoot 'vpx-sources'
 $env:PINMAME_MANUALS_ROOT = Join-Path $workingRoot 'manuals'
+$env:PINMAME_REVIEW_ARTIFACTS_ROOT = Join-Path $workingRoot 'review-artifacts'
 python -B -m unittest discover -s tests -p 'test_*.py'
 ```
 

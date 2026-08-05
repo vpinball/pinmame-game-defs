@@ -146,10 +146,13 @@ class XMenDefinitionTests(unittest.TestCase):
 
 	def test_changed_xmen_files_contain_no_developer_absolute_paths(self) -> None:
 		for path in (
+			ROOT / "knowledge" / "stern" / "x-men-limited-edition-2012.md",
 			ROOT / "knowledge" / "stern" / "x-men-pro-2012.md",
+			ROOT / "machines" / "partial" / "stern" / "x-men-limited-edition-2012.json",
 			ROOT / "machines" / "partial" / "stern" / "x-men-pro-2012.json",
 			ROOT / "tests" / "test_xmen.py",
 			ROOT / "tools" / "curate_xmen.py",
+			ROOT / "tools" / "curate_xmen_le_spatial.py",
 		):
 			self.assertNotRegex(path.read_text(encoding="utf-8"), re.compile(r"(?i)\b[a-z]:[\\/]"), path)
 
