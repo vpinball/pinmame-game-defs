@@ -379,13 +379,176 @@ def build(limited_edition: bool) -> dict[str, object]:
 	}
 
 
-PRO_KNOWLEDGE = """# TRON: Legacy Pro (Stern, 2011)
+def pro_extraction_report() -> dict[str, object]:
+	return {'acquisition': {'exact_pro_extraction_performed': False,
+	                 'exact_source_copied': False,
+	                 'exact_source_target': 'external:pinmame-vpx-sources/stern/tron-legacy-pro-2011/source',
+	                 'exact_source_target_exists': True,
+	                 'extraction_block_reason': 'No exact physical Pro VPX/VPT passed identity checks. The retained artifact was extracted for '
+	                                            'negative identity analysis only and is excluded from Pro geometry and provenance.',
+	                 'rejected_candidate_extraction_performed': True,
+	                 'rejected_candidate_retained': True,
+	                 'search': [{'location': 'local-table-library[0]', 'ordinal': 1, 'result': 'no_qualifying_exact_pro'},
+	                            {'location': 'local-table-library[1]', 'ordinal': 2, 'result': 'no_qualifying_exact_pro'},
+	                            {'location': 'authenticated-community-downloads',
+	                             'ordinal': 3,
+	                             'result': 'no_qualifying_exact_pro; rejected_le_candidate_acquired'}],
+	                 'search_order': ['local-table-library[0]', 'local-table-library[1]', 'authenticated-community-downloads'],
+	                 'source_tree_note': 'The accepted source tree remains empty. The explicitly rejected LE candidate and its extraction are '
+	                                     'retained under the sibling rejected tree and do not satisfy exact physical Pro acquisition.',
+	                 'tool': 'vpxtool',
+	                 'tool_version': 'git:v0.33.3'},
+	 'author_ready': False,
+	 'candidates': [{'accepted': False,
+	                 'bytes': 102346752,
+	                 'classification': 'limited_edition',
+	                 'path': 'local-table-library[0]/Tron Legacy (Stern 2011) (G5K 2.2).vpx',
+	                 'rejection': 'Explicit LE table name, LE IPDB identity, and trn_174h ROM.',
+	                 'sha256': 'bb82ab027d4c75211a91df1ae0051580dba5c44b07512e469f7e1379e22eeee0',
+	                 'vpxtool': {'ipdb_id': 5707,
+	                             'rom': 'trn_174h',
+	                             'table_name': 'Tron Legacy  LE',
+	                             'table_version': '2.1',
+	                             'vp_version': '10.4'}},
+	                {'accepted': False,
+	                 'bytes': 165707776,
+	                 'classification': 'limited_edition_mod',
+	                 'path': 'local-table-library[0]/Tron Legacy (Stern 2011) VPW Mod 0.24.vpx',
+	                 'rejection': 'VPW mod explicitly identifies the LE physical edition and trn_174h ROM.',
+	                 'sha256': 'ce3a843e5747c1163fb9478ac65addc8b3dc89e44471d527768823b6d63b7ec4',
+	                 'vpxtool': {'ipdb_id': 5707,
+	                             'rom': 'trn_174h',
+	                             'table_name': 'Tron Legacy  LE',
+	                             'table_version': '1.0',
+	                             'vp_version': '10.6'}},
+	                {'accepted': False,
+	                 'bytes': 133521408,
+	                 'classification': 'limited_edition_vr_retheme',
+	                 'path': 'local-table-library[0]/VR Room Tron Legacy (Limited Edition) (Stern 2011) V11.vpx',
+	                 'rejection': 'Explicit Limited Edition identity and VR-room retheme.',
+	                 'sha256': '56ad2f5318c33dbc12f3aa2515a41d819eb8b95b2ffcd94ebe1044cec4281ae5',
+	                 'vpxtool': {'ipdb_id': 5707,
+	                             'rom': 'trn_174h',
+	                             'table_name': 'Tron Legacy  LE',
+	                             'table_version': '2.1',
+	                             'vp_version': '10.6'}},
+	                {'accepted': False,
+	                 'bytes': 102346752,
+	                 'classification': 'limited_edition_mod_archive',
+	                 'path': 'local-table-library[1]/Tron Legacy (Stern 2011) (1.6, SSF, Lightmod 1.2, NPC).vpx',
+	                 'rejection': 'Archive copy has the same LE identity and hash as the G5K candidate.',
+	                 'sha256': 'bb82ab027d4c75211a91df1ae0051580dba5c44b07512e469f7e1379e22eeee0',
+	                 'vpxtool': {'ipdb_id': 5707,
+	                             'rom': 'trn_174h',
+	                             'table_name': 'Tron Legacy  LE',
+	                             'table_version': '2.1',
+	                             'vp_version': '10.4'}},
+	                {'accepted': False,
+	                 'bytes': 64176128,
+	                 'classification': 'limited_edition_rejected_negative_identity',
+	                 'download_archive': {'bytes': 50938819,
+	                                      'note': 'The downloaded ZIP was moved out of Downloads to this archive because direct deletion was '
+	                                              'policy-blocked.',
+	                                      'path': 'external:pinmame-vpx-sources/stern/tron-legacy-pro-2011/rejected/vpforums-showfile-15427/download-archive/Tron '
+	                                              'Legacy (Stern 2011)_Bigus(MOD)4.0.vpx.zip',
+	                                      'sha256': '6d40356884812cf5a35f70fa78051f43697129b16ad86cf997354f29776fd42a'},
+	                 'download_url': 'https://www.vpforums.org/index.php?app=downloads&showfile=15427',
+	                 'identity_evidence': {'four_drop_bank': 'Working output 3 resets the four-drop bank through DTBank4.SolDropUp; sw01-sw04 '
+	                                                         'call DTBank4.Hit.',
+	                                       'rom': 'The extracted script declares cGameName trn_174h.',
+	                                       'upper_left_flipper': 'The upper-left flipper is staged from SolLFlipper through LeftFlipper1, the '
+	                                                             'dedicated SolCallback(12) hook is commented out, and the script has no '
+	                                                             'D13/D14 (public 88/87) inputs: the LE control topology, not the Pro one.'},
+	                 'path': 'external:pinmame-vpx-sources/stern/tron-legacy-pro-2011/rejected/vpforums-showfile-15427/source/Tron Legacy '
+	                         '(Stern 2011)_Bigus(MOD)4.0.vpx',
+	                 'pro_coordinates_eligible': False,
+	                 'provenance_eligible': False,
+	                 'rejection': 'Conclusive LE identity from trn_174h, the working output-3 four-drop-bank reset via DTBank4.SolDropUp, and '
+	                              'the upper-left flipper staged from SolLFlipper through LeftFlipper1 with the dedicated SolCallback(12) hook '
+	                              'commented out and no D13/D14 (public 88/87) inputs. Retained only as negative identity evidence; it must '
+	                              'not supply Pro coordinates or provenance.',
+	                 'retained_only_as_negative_identity_evidence': True,
+	                 'sha256': '876b833bde197cabf2a37aa4b6f1bd4bcfeca4e6dfe5552a8316f0a60b2aacfb',
+	                 'vpxtool': {'analysis_script': 'external:pinmame-vpx-sources/stern/tron-legacy-pro-2011/rejected/vpforums-showfile-15427/analysis/script.vbs',
+	                             'analysis_script_sha256': '0950fed8a3171cca70d2f1e00cf10df4e10dbb75255087508ba48ed0bc719929',
+	                             'extracted_script_sha256': '0950fed8a3171cca70d2f1e00cf10df4e10dbb75255087508ba48ed0bc719929',
+	                             'extraction_directory': 'external:pinmame-vpx-sources/stern/tron-legacy-pro-2011/rejected/vpforums-showfile-15427/extraction',
+	                             'rom': 'trn_174h',
+	                             'table_name': 'Tron Legacy',
+	                             'table_version': '1.0',
+	                             'tool': 'vpxtool',
+	                             'tool_version': 'git:v0.33.3'}}],
+	 'external_evidence': {'manual': {'id': 'manual.tron-legacy-pro-le.2011',
+	                                  'path': 'external:pinmame-manuals/by-machine/stern.tron-legacy-pro-limited-edition.2011/official-stern/Tron-Manual.pdf',
+	                                  'role': 'physical truth; Pro service charts and location maps',
+	                                  'sha256': '1212d9f1f5bdb33e9b248299d0e1693ad1103f82129234a1348f0aa8edd47e84'},
+	                       'pinmame': {'revision': '4ec52ff0ac133ac251681518aed2249e19fe26eb',
+	                                   'role': 'driver catalog, SAM routing, display, GI, and public address semantics'},
+	                       'pro_runtime': {'driver': 'trn_174',
+	                                       'id': 'runtime.tron-legacy-pro.boot-start',
+	                                       'path': 'external:pinmame-game-code/tron-legacy-pro/harness/boot-start.raw.json',
+	                                       'role': 'PinMAME transport and observed Pro boot/start addresses',
+	                                       'sha256': '51af7aa06cbdd8286101a9dba0b8d2376f957d14a9ae6b0172ed6806683be490'},
+	                       'working_script': {'id': 'vpx.tron-legacy-le-vpm-1.1.4',
+	                                          'path': 'external:vpxtable_scripts/Tron Legacy LE (Stern 2011) VPMmod v1.1.4.vbs',
+	                                          'revision': '0c036bb61b4b4e8c778c37559f6795df8cd1521e',
+	                                          'role': 'shared semantic/runtime reference only; not Pro geometry',
+	                                          'sha256': 'd257913fb05fa054bbf15a8605d4b9b3af2887514355784cbfbc5c92a36adfcc'}},
+	 'fail_closed_gates': {'canonical_definition': 'machines/partial/stern/tron-legacy-pro-2011.json',
+	                       'canonical_promotion': 'not_performed',
+	                       'canonical_status': 'partial',
+	                       'exact_pro_vpx_geometry': 'blocked',
+	                       'exact_pro_vpx_identity': 'blocked',
+	                       'normalized_spatial_placements': 'blocked'},
+	 'format': 'tron-legacy-pro-extraction-inventory',
+	 'machine': {'id': 'stern.tron-legacy-pro.2011',
+	             'ipdb_id': 5682,
+	             'manufacturer': 'Stern',
+	             'model_number': 'I-00B9',
+	             'name': 'TRON: Legacy Pro',
+	             'required_edition': 'physical Pro',
+	             'year': 2011},
+	 'next_actions': ['Acquire an exact physical Pro VPX or VPT from an authorized source and record its path, size, and SHA-256 before '
+	                  'extraction.',
+	                  'Copy and hash that exact source under the target path without replacing or deleting any existing source.',
+	                  'Run vpxtool extraction into the same retained source tree; hash the extracted script and metadata.',
+	                  'Confirm Pro identity from table metadata, script ROM, and physical edition boundary before using geometry.',
+	                  'Recover only evidenced individual switches, coils, lamps, flashers, GI, mechanisms, multiplicities, and ball paths; '
+	                  'normalize x left-right and y rear-apron.',
+	                  'Promote spatial evidence and author-ready coverage only after deterministic regeneration and all validations pass.'],
+	 'qualification_policy': {'geometry_truth': 'the exact physical Pro VPX/VPT after identity',
+	                          'physical_truth': 'official Stern manual and Pro service charts',
+	                          'rejection_rules': ['Reject Limited Edition tables, LE-only ROM identities, VR-room/rethemes, and mods when '
+	                                              'exact Pro geometry is required.',
+	                                              'Do not promote a shared LE script or an LE table as Pro geometry.',
+	                                              'Do not infer missing individual devices, placements, mechanisms, or ball paths.'],
+	                          'semantic_truth': 'a known-working VPX script, after exact edition identity'},
+	 'recorded_on': '2026-08-04',
+	 'schema_version': 1,
+	 'status': 'blocked_partial',
+	 'web_candidates': [{'accepted': False,
+	                     'rejection': 'A user list mentions a Pro filename but does not provide an acquired exact Pro VPX/VPT source.',
+	                     'result': 'mention_only',
+	                     'url': 'https://www.vpforums.org/index.php?showtopic=41100'},
+	                    {'accepted': False,
+	                     'rejection': 'LE Hanibals 4K table.',
+	                     'result': 'limited_edition',
+	                     'url': 'https://www.vpforums.org/index.php?app=downloads&showfile=13373'},
+	                    {'accepted': False,
+	                     'candidate_sha256': '876b833bde197cabf2a37aa4b6f1bd4bcfeca4e6dfe5552a8316f0a60b2aacfb',
+	                     'result': 'acquired_rejected_limited_edition',
+	                     'url': 'https://www.vpforums.org/index.php?app=downloads&showfile=15427'}]}
+
+
+PRO_KNOWLEDGE = r"""# TRON: Legacy Pro (Stern, 2011)
 
 Coverage: **author-ready - complete physical inventory, PinMAME bindings, wiring, mechanisms, initial state, and edition boundary validated**
 
 ## Identity and evidence precedence
 
 This definition covers non-`h` drivers `trn_110`, `trn_120`, `trn_140`, `trn_150`, `trn_160`, `trn_170`, `trn_174`, and `trn_17402`. PinMAME roots them under LE firmware for software lineage, but they run the physically different Pro playfield. The official Pro service charts govern installed hardware and wiring. The known-working LE script is ground truth only for shared callbacks, motion, ball routing, and controller behavior; no LE-only device is projected onto Pro. IPDB 5682 identifies this first-edition Pro product as model I-00B9.
+
+The exact physical Pro VPX/VPT acquisition gate remains blocked. The VPForums showfile 15427 candidate `Tron Legacy (Stern 2011)_Bigus(MOD)4.0.vpx` is retained under `external:pinmame-vpx-sources/stern/tron-legacy-pro-2011/rejected/vpforums-showfile-15427/source` and was extracted with vpxtool `git:v0.33.3` under the corresponding rejected `analysis` and `extraction` folders. It is conclusively Limited Edition, not Pro: the script declares `cGameName = "trn_174h"`, working output 3 resets a four-drop bank through `DTBank4.SolDropUp`, and the upper-left flipper is staged from `SolLFlipper` through `LeftFlipper1` with the dedicated `SolCallback(12)` hook commented out and no D13/D14 (public 88/87) inputs—the LE control topology, not the Pro one. This candidate is explicitly rejected and retained only as negative identity evidence; it must not supply Pro coordinates or provenance. The downloaded ZIP is retained beside it under `download-archive`. The deterministic acquisition record is `reports/spatial/stern/tron-legacy-pro-2011-extraction.json`. Therefore no VPX geometry is treated as Pro evidence, and normalized spatial placements remain fail-closed until an exact Pro source is acquired and identity-checked.
 
 ## Initial balls, launcher, and eject
 
@@ -504,6 +667,7 @@ def runtime_evidence(limited_edition: bool) -> dict[str, object]:
 
 def main() -> None:
 	write_json(spatial_partial_path(ROOT / "machines/partial/stern/tron-legacy-pro-2011.json"), fail_closed_spatial_partial(build(False)))
+	write_json(ROOT / "reports/spatial/stern/tron-legacy-pro-2011-extraction.json", pro_extraction_report())
 	write_json(ROOT / "evidence/runtime/sam/tron-legacy-pro-boot-start.json", runtime_evidence(False))
 	write_json(ROOT / "evidence/runtime/sam/tron-legacy-limited-edition-boot-start.json", runtime_evidence(True))
 	write_text(ROOT / "knowledge/stern/tron-legacy-pro-2011.md", fail_closed_spatial_knowledge("stern.tron-legacy-pro.2011", PRO_KNOWLEDGE))

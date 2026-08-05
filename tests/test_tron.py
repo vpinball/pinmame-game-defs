@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 import json
+import os
+import re
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from pinmame_game_defs.jsonio import file_sha256
+from pinmame_game_defs.jsonio import canonical_bytes, file_sha256
+from pinmame_game_defs.spatial import fail_closed_spatial_partial
 
 ROOT = Path(__file__).resolve().parents[1]
 PRO_PATH = ROOT / "machines" / "partial" / "stern" / "tron-legacy-pro-2011.json"
@@ -15,6 +18,9 @@ LE_PATH = ROOT / "machines" / "author-ready" / "stern" / "tron-legacy-limited-ed
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "tron-legacy-pro-boot-start.json"
 LE_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "tron-legacy-limited-edition-boot-start.json"
 LE_SPATIAL_PATH = ROOT / "evidence" / "vpx" / "tron-legacy-limited-edition-2011-v11-spatial-candidates.json"
+PRO_EXTRACTION_PATH = ROOT / "reports" / "spatial" / "stern" / "tron-legacy-pro-2011-extraction.json"
+PRO_KNOWLEDGE_PATH = ROOT / "knowledge" / "stern" / "tron-legacy-pro-2011.md"
+TRON_CURATOR_PATH = ROOT / "tools" / "curate_tron.py"
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -26,6 +32,13 @@ def bindings(definition: dict[str, object], collection: str, group: str) -> dict
 	return {item["binding"]["device"]: item for item in definition[collection] if item["binding"]["group"] == group}
 
 
+def external_root(variable: str) -> Path:
+	value = os.environ.get(variable)
+	if not value:
+		raise unittest.SkipTest(f"{variable} is not configured; external evidence verification skipped")
+	return Path(value).expanduser()
+
+
 class TronDefinitionTests(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls) -> None:
@@ -33,6 +46,9 @@ class TronDefinitionTests(unittest.TestCase):
 		cls.le = load_json(LE_PATH)
 		cls.pro_evidence = load_json(PRO_EVIDENCE_PATH)
 		cls.le_evidence = load_json(LE_EVIDENCE_PATH)
+		cls.pro_extraction = load_json(PRO_EXTRACTION_PATH)
+		cls.pro_knowledge = PRO_KNOWLEDGE_PATH.read_text(encoding="utf-8")
+		cls.tron_curator = TRON_CURATOR_PATH.read_text(encoding="utf-8")
 
 	def test_pro_remains_fail_closed_and_le_is_spatially_author_ready(self) -> None:
 		self.assertEqual(2, self.pro["schema_version"])
@@ -129,6 +145,89 @@ class TronDefinitionTests(unittest.TestCase):
 				self.assertEqual(quantity, len(lamp["spatial"]["placements"]))
 				coordinate_sets.append([(point["x"], point["y"]) for point in lamp["spatial"]["placements"]])
 			self.assertEqual([coordinate_sets[0]] * 3, coordinate_sets)
+
+	def test_pro_extraction_gate_records_rejected_le_sources(self) -> None:
+		inventory = self.pro_extraction
+		self.assertEqual("blocked_partial", inventory["status"])
+		self.assertFalse(inventory["author_ready"])
+		self.assertTrue(inventory["acquisition"]["exact_source_target_exists"])
+		self.assertFalse(inventory["acquisition"]["exact_source_copied"])
+		self.assertTrue(inventory["acquisition"]["rejected_candidate_retained"])
+		self.assertTrue(inventory["acquisition"]["rejected_candidate_extraction_performed"])
+		self.assertFalse(inventory["acquisition"]["exact_pro_extraction_performed"])
+		self.assertEqual("partial", inventory["fail_closed_gates"]["canonical_status"])
+		self.assertEqual(["local-table-library[0]", "local-table-library[1]", "authenticated-community-downloads"], inventory["acquisition"]["search_order"])
+		self.assertEqual(5, len(inventory["candidates"]))
+		self.assertTrue(all(not candidate["accepted"] for candidate in inventory["candidates"]))
+		self.assertTrue(all(candidate["vpxtool"]["rom"] == "trn_174h" for candidate in inventory["candidates"]))
+
+		candidate = next(candidate for candidate in inventory["candidates"] if candidate["sha256"] == "876b833bde197cabf2a37aa4b6f1bd4bcfeca4e6dfe5552a8316f0a60b2aacfb")
+		self.assertEqual(64176128, candidate["bytes"])
+		self.assertEqual("https://www.vpforums.org/index.php?app=downloads&showfile=15427", candidate["download_url"])
+		self.assertEqual("limited_edition_rejected_negative_identity", candidate["classification"])
+		self.assertTrue(candidate["retained_only_as_negative_identity_evidence"])
+		self.assertFalse(candidate["pro_coordinates_eligible"])
+		self.assertFalse(candidate["provenance_eligible"])
+		self.assertIn("DTBank4.SolDropUp", candidate["rejection"])
+		self.assertIn("D13/D14", candidate["rejection"])
+		self.assertEqual("6d40356884812cf5a35f70fa78051f43697129b16ad86cf997354f29776fd42a", candidate["download_archive"]["sha256"])
+		web_record = next(item for item in inventory["web_candidates"] if item["url"].endswith("showfile=15427"))
+		self.assertEqual({"url", "result", "accepted", "candidate_sha256"}, set(web_record))
+		self.assertEqual(candidate["sha256"], web_record["candidate_sha256"])
+
+	def test_rejected_candidate_never_enters_pro_definition_or_provenance(self) -> None:
+		self.assertIn("retained only as negative identity evidence", self.pro_knowledge)
+		self.assertIn("must not supply Pro coordinates or provenance", self.pro_knowledge)
+		self.assertIn("retained only as negative identity evidence", self.tron_curator)
+		self.assertIn("must not supply Pro coordinates or provenance", self.tron_curator)
+		self.assertIn("staged from `SolLFlipper` through `LeftFlipper1`", self.pro_knowledge)
+		self.assertIn("dedicated `SolCallback(12)` hook commented out", self.pro_knowledge)
+		self.assertFalse(any(source["kind"] == "vpx_table" for source in self.pro["sources"]))
+		pro_json = json.dumps(self.pro, sort_keys=True)
+		for forbidden in ("876b833bde197", "Bigus", "showfile=15427", "vpforums-showfile-15427"):
+			self.assertNotIn(forbidden, pro_json)
+		self.assertTrue(all("spatial" not in item for item in self.pro["inputs"] + self.pro["outputs"]))
+
+	def test_changed_tron_pro_files_contain_no_developer_absolute_paths(self) -> None:
+		for path in (
+			ROOT / "machines" / "partial" / "stern" / "tron-legacy-pro-2011.json",
+			PRO_KNOWLEDGE_PATH,
+			PRO_EXTRACTION_PATH,
+			TRON_CURATOR_PATH,
+			ROOT / "tests" / "test_tron.py",
+		):
+			self.assertNotRegex(path.read_text(encoding="utf-8"), re.compile(r"(?i)\b[a-z]:[\\/]"), path)
+
+	def test_rejected_candidate_cache_is_byte_identical_and_proves_le_identity(self) -> None:
+		candidate = next(candidate for candidate in self.pro_extraction["candidates"] if candidate["sha256"] == "876b833bde197cabf2a37aa4b6f1bd4bcfeca4e6dfe5552a8316f0a60b2aacfb")
+		candidate_root = external_root("PINMAME_VPX_SOURCES_ROOT") / "stern" / "tron-legacy-pro-2011" / "rejected" / "vpforums-showfile-15427"
+		artifacts = (
+			(candidate_root / "source" / "Tron Legacy (Stern 2011)_Bigus(MOD)4.0.vpx", candidate["sha256"]),
+			(candidate_root / "download-archive" / "Tron Legacy (Stern 2011)_Bigus(MOD)4.0.vpx.zip", candidate["download_archive"]["sha256"]),
+			(candidate_root / "analysis" / "script.vbs", candidate["vpxtool"]["analysis_script_sha256"]),
+			(candidate_root / "extraction" / "script.vbs", candidate["vpxtool"]["extracted_script_sha256"]),
+		)
+		for path, expected_sha256 in artifacts:
+			self.assertTrue(path.is_file(), path)
+			self.assertEqual(expected_sha256, file_sha256(path))
+		script = artifacts[3][0].read_text(encoding="utf-8", errors="replace")
+		self.assertRegex(script, re.compile(r'cGameName\s*=\s*"trn_174h"', re.IGNORECASE))
+		self.assertRegex(script, re.compile(r'SolCallback\(3\)\s*=\s*"DTBank4\.SolDropUp"', re.IGNORECASE))
+		self.assertIn("LeftFlipper1.RotateToEnd", script)
+
+	def test_pro_extraction_report_is_canonical_and_generated(self) -> None:
+		tools_path = str(ROOT / "tools")
+		if tools_path not in sys.path:
+			sys.path.insert(0, tools_path)
+		import curate_tron as curator
+
+		self.assertEqual(curator.pro_extraction_report(), self.pro_extraction)
+		self.assertEqual(canonical_bytes(self.pro_extraction), PRO_EXTRACTION_PATH.read_bytes())
+		self.assertEqual(canonical_bytes(fail_closed_spatial_partial(curator.build(False))), PRO_PATH.read_bytes())
+		runtime_source = next(source for source in self.pro["sources"] if source["id"] == "runtime.tron-legacy-pro.boot-start")
+		report_runtime = self.pro_extraction["external_evidence"]["pro_runtime"]
+		self.assertEqual(runtime_source["uri"], report_runtime["path"])
+		self.assertEqual(runtime_source["sha256"], report_runtime["sha256"])
 
 	def test_supported_driver_family_is_exhaustively_split_by_physical_model(self) -> None:
 		pro = {driver["id"] for driver in self.pro["drivers"]}
