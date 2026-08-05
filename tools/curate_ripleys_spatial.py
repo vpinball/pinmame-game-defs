@@ -445,7 +445,8 @@ def _report(definition: dict[str, object], extraction: _VPXExtraction) -> dict[s
 	located_inputs = [device["id"] for device in definition["inputs"] if device.get("spatial", {}).get("status") == "validated"]
 	located_outputs = [device["id"] for device in definition["outputs"] if device.get("spatial", {}).get("status") == "validated"]
 	return {
-		"format": "pinmame-spatial-review",
+		"format": "pinmame-spatial-blockers",
+		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"coordinate_space": "playfield",
 		"coordinate_convention": {"x": "left_to_right", "y": "rear_to_apron"},

@@ -839,6 +839,56 @@ def validate_catalog(catalog: dict[str, Any], repository_root: Path) -> list[str
 	return errors
 
 
+SPATIAL_AUDIT_FORMAT = "pinmame-spatial-audit"
+SPATIAL_BLOCKERS_FORMAT = "pinmame-spatial-blockers"
+
+
+def _validate_spatial_reports(
+	repository_root: Path,
+	definitions_by_machine: dict[str, dict[str, Any]],
+	errors: list[str],
+) -> None:
+	"""Check the envelope of every report under reports/spatial and its agreement with the machine.
+
+	Two report purposes exist and each has its own format identifier. An audit justifies a promotion
+	and may only describe an author-ready machine; a blocker report explains why a machine cannot be
+	promoted and may only describe one that is not author-ready. Without this a report can claim a
+	promotion its own definition contradicts, which is exactly the kind of drift the reports exist to
+	prevent.
+	"""
+	spatial_root = repository_root / "reports" / "spatial"
+	if not spatial_root.is_dir():
+		return
+	schema_path = repository_root / "schemas" / "spatial-report.schema.json"
+	for path in sorted(spatial_root.glob("**/*.json")):
+		relative_path = path.relative_to(repository_root).as_posix()
+		report = load_json(path)
+		errors.extend(validate_against_schema(report, schema_path, relative_path))
+		machine_id = report.get("machine_id")
+		if not isinstance(machine_id, str):
+			continue
+		definition = definitions_by_machine.get(machine_id)
+		if definition is None:
+			errors.append(f"{relative_path} $.machine_id: does not resolve to a machine definition")
+			continue
+		status = definition.get("coverage", {}).get("status")
+		report_format = report.get("format")
+		if report_format == SPATIAL_AUDIT_FORMAT:
+			_expect(
+				status == "author_ready",
+				f"{relative_path} $.format",
+				f"a spatial audit describes a promotion, but {machine_id} is {status!r}; use {SPATIAL_BLOCKERS_FORMAT}",
+				errors,
+			)
+		elif report_format == SPATIAL_BLOCKERS_FORMAT:
+			_expect(
+				status != "author_ready",
+				f"{relative_path} $.format",
+				f"a blocker report describes an unpromotable machine, but {machine_id} is author_ready; use {SPATIAL_AUDIT_FORMAT}",
+				errors,
+			)
+
+
 def validate_repository(repository_root: Path) -> list[str]:
 	errors: list[str] = check_schema_documents(repository_root)
 	controller_profiles = _load_controller_profiles(repository_root, errors)
@@ -886,6 +936,7 @@ def validate_repository(repository_root: Path) -> list[str]:
 			for driver_id in sorted(OUT_OF_SCOPE_DRIVER_IDS & {driver_id for driver_id in evidence_driver_ids if isinstance(driver_id, str)}):
 				errors.append(f"{relative_path} $.driver_ids: custom-ROM-only virtual driver {driver_id!r} is outside the physical-machine scope")
 		_validate_runtime_observations(evidence, relative_path, definitions_by_machine, errors)
+	_validate_spatial_reports(repository_root, definitions_by_machine, errors)
 	return errors
 
 

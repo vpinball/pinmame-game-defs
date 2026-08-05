@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/vpinball/pinmame-game-defs/master/schemas/spatial-report.schema.json",
+  "title": "PinMAME spatial report envelope",
+  "description": "Common envelope for every report under reports/spatial. Two report purposes exist and each has its own format identifier: an audit justifies a promotion and belongs to an author-ready machine, while a blocker report explains why a machine cannot yet be promoted and belongs to a partial or stub machine. Report bodies stay game-specific, so additional properties are deliberately permitted; only the envelope and the report's relationship to its machine are constrained here.",
+  "type": "object",
+  "required": ["format", "version", "machine_id"],
+  "properties": {
+    "format": {
+      "description": "The report's purpose. An audit may only describe an author-ready machine; a blocker report may only describe a machine that is not author-ready.",
+      "enum": ["pinmame-spatial-audit", "pinmame-spatial-blockers"]
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "machine_id": {
+      "description": "The machine this report describes. It must resolve to a definition under machines/.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[-.][a-z0-9]+)*$",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": true
+}

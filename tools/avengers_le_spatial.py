@@ -305,7 +305,7 @@ def spatial_audit(definition: dict) -> dict:
         if "spatial" not in device
     )
     return {
-        "format": "pinmame-spatial-review",
+        "format": "pinmame-spatial-blockers",
         "version": 1,
         "machine_id": definition["machine"]["id"],
         "coordinate_space": "playfield",

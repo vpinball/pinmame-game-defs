@@ -592,7 +592,7 @@ def runtime_evidence() -> dict[str, object]:
 def pro_gamedata_evidence() -> dict[str, object]:
 	"""Return the machine-specific, fail-closed X-Men Pro spatial audit."""
 	return {
-		"format": "pinmame-spatial-audit",
+		"format": "pinmame-spatial-blockers",
 		"version": 1,
 		"machine_id": "stern.x-men-pro.2012",
 		"coordinate_convention": {

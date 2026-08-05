@@ -108,7 +108,7 @@ class Terminator2DefinitionTests(unittest.TestCase):
 				self.assertLessEqual(len(str(item["x"]).split(".")[-1]), 6)
 
 	def test_audit_is_separate_fail_closed_evidence(self) -> None:
-		self.assertEqual("pinmame-spatial-audit", self.audit["format"])
+		self.assertEqual("pinmame-spatial-blockers", self.audit["format"])
 		self.assertTrue(self.audit["extraction"]["fail_closed"])
 		self.assertEqual("f56ab9a0b6287c71b984c42d97c88cbf98345a0614a8a920e93374e06ba2fab9", self.audit["extraction"]["manifest_sha256"])
 		self.assertEqual("external:pinmame-vpx-sources/williams/terminator-2-judgment-day-1991/extracted-vpxtool.manifest.json", self.audit["extraction"]["manifest_uri"])

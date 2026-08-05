@@ -329,7 +329,7 @@ class XMenDefinitionTests(unittest.TestCase):
 
 	def test_pro_spatial_audit_is_fail_closed_and_machine_specific(self) -> None:
 		audit = load_json(PRO_SPATIAL_AUDIT_PATH)
-		self.assertEqual("pinmame-spatial-audit", audit["format"])
+		self.assertEqual("pinmame-spatial-blockers", audit["format"])
 		self.assertEqual("stern.x-men-pro.2012", audit["machine_id"])
 		self.assertEqual({"left": 0.0, "top": 0.0, "right": 959.0, "bottom": 2162.0}, audit["coordinate_convention"]["source_bounds"])
 		self.assertEqual("attempted_failed_no_output", audit["extraction"]["vpxtool"]["coordinate_export_status"])

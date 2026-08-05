@@ -202,7 +202,7 @@ def audit_report(definition: dict[str, Any]) -> dict[str, Any]:
 	if unresolved_gi:
 		unresolved.append({"kind": "spatial", "scope": "GI string geometry/routing", "addresses": unresolved_gi, "group": "pinmame.output.gi"})
 	return {
-		"format": "pinmame-spatial-audit", "version": 1, "machine_id": definition["machine"]["id"], "status": "partial",
+		"format": "pinmame-spatial-blockers", "version": 1, "machine_id": definition["machine"]["id"], "status": "partial",
 		"coordinate_convention": {"space": "playfield", "x": "x/964; 0=left, 1=right", "y": "y/2162; 0=rear/backglass, 1=apron/player", "source_bounds": {"left": 0, "top": 0, "right": 964, "bottom": 2162}},
 		"extraction": {"source_ref": semantic.VPX_EXTRACTION_SOURCE, "manifest_uri": "external:pinmame-vpx-sources/williams/terminator-2-judgment-day-1991/extracted-vpxtool.manifest.json", "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.", "manifest_sha256": semantic.EXTRACTION_MANIFEST_SHA256, "file_count": semantic.EXTRACTION_FILE_COUNT, "total_bytes": semantic.EXTRACTION_TOTAL_BYTES, "fail_closed": True},
 		"source_hashes": {"table_sha256": semantic.TABLE_SHA256, "embedded_script_sha256": semantic.SCRIPT_SHA256, "manual_sha256": semantic.MANUAL_SHA256, "rom_sha256": semantic.ROM_SHA256},
