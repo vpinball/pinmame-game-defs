@@ -22,7 +22,7 @@ Required capabilities are a hard gate, but a command missing from `PATH` or an u
 | An authenticated interactive browser or working browser automation | Cloudflare-gated IPDB/VPU/VPF research and downloads | [Google Chrome](https://www.google.com/chrome/) or [Puppeteer](https://pptr.dev/guides/installation) |
 | Pinned PinMAME source and a compatible built native library | authoritative driver inventory and runtime-harness traces | [vpinball/pinmame](https://github.com/vpinball/pinmame); if no compatible library can be found under the checkout, build one using [CMake](https://cmake.org/download/) and a suitable C/C++ toolchain |
 
-Tool names above are conventional, not mandatory installation paths. Locate an existing executable first, run a small version/smoke check, and use its fully qualified path when it is not on `PATH`. For the native library, search the resolved PinMAME checkout for `pinmame64.dll`, `libpinmame.dll`, `libpinmame.so`, or `libpinmame.dylib`; use `PINMAME_LIBRARY_PATH` only as an optional disambiguation override. If multiple plausible libraries exist, identify the one built from the pinned revision instead of choosing by filename alone.
+Tool names above are conventional, not mandatory installation paths. Locate an existing executable first, run a small version/smoke check, and use its fully qualified path when it is not on `PATH`. For the native library, search the agent-managed PinMAME checkout and `<working-root>/builds/pinmame` for `pinmame64.dll`, `libpinmame.dll`, `libpinmame.so`, or `libpinmame.dylib`; use `PINMAME_LIBRARY_PATH` only as an optional disambiguation override. If multiple plausible libraries exist, identify the one built from the pinned revision instead of choosing by filename alone.
 
 ### Agent CLI operation
 
@@ -75,15 +75,15 @@ Resolve these inputs from contributor configuration, already mounted storage, or
 | Location label | Existing input |
 | --- | --- |
 | Current Git root | This `pinmame-game-defs` checkout, derived from the working directory; no separate root variable is needed |
-| `PINMAME_REPO_ROOT` | Pinned `vpinball/pinmame` source checkout; source and existing builds are read-only inputs |
-| `PINMAME_VPX_SCRIPTS_ROOT` | Pinned `vpxtable_scripts` corpus |
-| `PINMAME_VPX_STANDALONE_SCRIPTS_ROOT` | Pinned `vpx-standalone-scripts` corpus |
+| `<working-root>/source-checkouts/pinmame` | Agent-managed pinned `vpinball/pinmame` checkout |
+| `<working-root>/source-checkouts/vpxtable_scripts` | Agent-managed pinned `sverrewl/vpxtable_scripts` corpus |
+| `<working-root>/source-checkouts/vpx-standalone-scripts` | Agent-managed pinned `jsm174/vpx-standalone-scripts` corpus |
 | `PINMAME_EXISTING_VPX_TABLES` | One or more existing VPX table collections as a comma-separated, ordered list; search them from first to last |
 | `PINMAME_ROM_LIBRARY_ROOT` | Existing user-authorized VPinMAME ROM corpus |
 
 For `PINMAME_EXISTING_VPX_TABLES`, split on commas, trim surrounding whitespace, discard empty entries, resolve each path, and preserve the supplied order. If it is unset and local discovery does not find the table collections, ask the human to provide one or more folders in preferred search order. Do not require separate primary/archive variables.
 
-Do not modify, reorganize, rename, or delete anything in these read-only inputs. A source that is irrelevant to the selected game need not block unrelated work. Before treating an applicable source as unavailable, ask the human for its path and allow them to provide it directly even if no environment variable is set. If the human cannot provide a source required to substantiate an authoring-critical claim, keep the game partial or stop only that line of work rather than guessing or refusing unrelated work.
+Do not ask the human to provide PinMAME, `vpxtable_scripts`, or `vpx-standalone-scripts` checkouts. Clone and pin them automatically under the working root as described below, then treat their contents as read-only curation inputs. Do not modify, reorganize, rename, or delete the user's other read-only inputs. A source that is irrelevant to the selected game need not block unrelated work. Before treating another applicable source as unavailable, ask the human for its path and allow them to provide it directly even if no environment variable is set. If the human cannot provide a source required to substantiate an authoring-critical claim, keep the game partial or stop only that line of work rather than guessing or refusing unrelated work.
 
 ### Writable working directories
 
@@ -96,6 +96,8 @@ The human must not have to declare environment variables for writable locations.
 | `manuals` | Downloaded manuals, rendered pages, extracted text, and manual manifest |
 | `review-artifacts` | Retained spatial-analysis and model-review artifacts that do not belong in Git |
 | `roms` | Newly downloaded ROM archives used for authorized local research |
+| `source-checkouts` | Agent-managed pinned upstream Git checkouts |
+| `builds` | Out-of-source build trees, including the pinned PinMAME native library |
 
 Resolve and create the layout automatically:
 
@@ -114,6 +116,8 @@ $workingFolders = [ordered]@{
 	Manuals = Join-Path $workingRoot 'manuals'
 	ReviewArtifacts = Join-Path $workingRoot 'review-artifacts'
 	Roms = Join-Path $workingRoot 'roms'
+	SourceCheckouts = Join-Path $workingRoot 'source-checkouts'
+	Builds = Join-Path $workingRoot 'builds'
 }
 
 foreach ($path in @($workingRoot) + $workingFolders.Values) {
@@ -126,7 +130,41 @@ foreach ($path in @($workingRoot) + $workingFolders.Values) {
 }
 ```
 
-These local variables are the canonical writable paths for the task. Do not require the human to persist or export them. When an existing test or tool requires a legacy environment variable such as `PINMAME_VPX_SOURCES_ROOT`, set it from the derived path immediately before invoking that process. Never create replacement copies of missing read-only inputs in the working directory.
+Clone the three public source repositories when missing and detach each checkout at its required pinned revision. Existing agent-managed checkout directories must have the expected origin, be completely clean, and contain the pinned commit before reuse. Never reset, clean, overwrite, or delete an unexpected or dirty checkout; stop and ask the human to inspect it. A network failure is a tooling/network blocker, not a reason to ask the human to supply these repositories manually.
+
+```powershell
+$checkouts = @(
+	@{ Name = 'pinmame'; Url = 'https://github.com/vpinball/pinmame.git'; Revision = '4ec52ff0ac133ac251681518aed2249e19fe26eb' },
+	@{ Name = 'vpxtable_scripts'; Url = 'https://github.com/sverrewl/vpxtable_scripts.git'; Revision = '0c036bb61b4b4e8c778c37559f6795df8cd1521e' },
+	@{ Name = 'vpx-standalone-scripts'; Url = 'https://github.com/jsm174/vpx-standalone-scripts.git'; Revision = '15d112648a1b94b9f59eb8b3c335d57283653c50' }
+)
+
+foreach ($checkout in $checkouts) {
+	$path = Join-Path $workingFolders.SourceCheckouts $checkout.Name
+	if (-not (Test-Path -LiteralPath $path)) {
+		git clone --filter=blob:none --no-checkout $checkout.Url $path
+		if ($LASTEXITCODE -ne 0) { throw "Failed to clone $($checkout.Name)." }
+	} else {
+		$item = Get-Item -LiteralPath $path -Force
+		if (-not $item.PSIsContainer -or ($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint)) { throw "Unsafe checkout path: $path" }
+		$origin = (git -C $path remote get-url origin).Trim()
+		if ($LASTEXITCODE -ne 0 -or $origin -ne $checkout.Url) { throw "Unexpected origin for $($checkout.Name): $origin" }
+		if (git -C $path status --porcelain) { throw "Dirty agent-managed checkout: $path" }
+	}
+
+	git -C $path config --local core.longpaths true
+	if ($LASTEXITCODE -ne 0) { throw "Failed to enable long-path support for $($checkout.Name)." }
+	git -C $path cat-file -e "$($checkout.Revision)^{commit}" 2>$null
+	if ($LASTEXITCODE -ne 0) {
+		git -C $path fetch --no-tags origin $checkout.Revision
+		if ($LASTEXITCODE -ne 0) { throw "Failed to fetch pinned revision for $($checkout.Name)." }
+	}
+	git -C $path switch --detach $checkout.Revision
+	if ($LASTEXITCODE -ne 0 -or (git -C $path rev-parse HEAD).Trim() -ne $checkout.Revision) { throw "Failed to pin $($checkout.Name)." }
+}
+```
+
+Build PinMAME out of source under `<working-root>/builds/pinmame` when a compatible native library is not already present; do not place build output in the clean source checkout. These local variables are the canonical writable paths for the task. Do not require the human to persist or export them. When an existing test or tool requires a legacy environment variable such as `PINMAME_VPX_SOURCES_ROOT`, set it from the derived path immediately before invoking that process. Never create replacement copies of the user's missing read-only inputs in the working directory.
 
 Before beginning a game, confirm the current repository, applicable read-only inputs, writable evidence roots, model tiers, browser access, and the pinned native library needed by that game's gates. Report only genuine unresolved prerequisites; do not fail merely because a tool was installed outside a conventional path.
 

@@ -144,8 +144,13 @@ class XMenDefinitionTests(unittest.TestCase):
 		self.assertTrue((review_root / "spatial-candidates-vpw-v1.0.json").is_file())
 		self.assertTrue((source_root.parent / "extraction" / "VPW_v1.0").is_dir())
 
-	def test_changed_xmen_prose_contains_no_developer_absolute_paths(self) -> None:
-		for path in (ROOT / "docs" / "MACHINE_DEFINITIONS_PLAN.md", ROOT / "tests" / "test_xmen.py"):
+	def test_changed_xmen_files_contain_no_developer_absolute_paths(self) -> None:
+		for path in (
+			ROOT / "knowledge" / "stern" / "x-men-pro-2012.md",
+			ROOT / "machines" / "partial" / "stern" / "x-men-pro-2012.json",
+			ROOT / "tests" / "test_xmen.py",
+			ROOT / "tools" / "curate_xmen.py",
+		):
 			self.assertNotRegex(path.read_text(encoding="utf-8"), re.compile(r"(?i)\b[a-z]:[\\/]"), path)
 
 	def test_editions_split_every_supported_xmen_driver(self) -> None:

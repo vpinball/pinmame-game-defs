@@ -20,8 +20,6 @@ to [`docs/INSTRUCTIONS.md`](docs/INSTRUCTIONS.md) and get it to work.
 
 If you're using agents to do the work, there are a few prerequisites.
 
-- The [pinmame source code](https://github.com/vpinball/pinmame) should be cloned locally.
-- [vpxtable_scripts](https://github.com/sverrewl/vpxtable_scripts) and [vpx-standalone-scripts](https://github.com/jsm174/vpx-standalone-scripts) should be cloned locally.
 - VisualPinMAME should be installed, with an accessible `./roms` folder.
 - The tooling needs [Python](https://www.python.org/downloads/) installed.
 
