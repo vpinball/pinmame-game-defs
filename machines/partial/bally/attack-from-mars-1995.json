@@ -5158,13 +5158,17 @@
       "id": "device.right-gate",
       "kind": "coil",
       "label": "Right Gate",
+      "physical": {
+        "notes": "Address assignment follows the retained known-working g5k script, which binds SolCallback(33) to the right gate and SolCallback(34) to the left gate. Pinned PinMAME names them the other way round: src/wpc/sims/wpc/full/afm.c maps sLGate to WPC_FLIPPERCOIL95 bit 0x10 (public solenoid 33) and sRGate to bit 0x20 (public solenoid 34). PinMAME's own naming is also internally inconsistent with its custom-solenoid aliases, so the left/right labels here rest on the manual and the proven script, and the disagreement is recorded rather than averaged."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.afm",
           "manual.attack-from-mars.1995",
+          "pinmame.core.4ec52ff0ac13",
           "vpx.attack-from-mars-g5k-1.3.11"
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -5189,13 +5193,17 @@
       "id": "device.left-gate",
       "kind": "coil",
       "label": "Left Gate",
+      "physical": {
+        "notes": "Address assignment follows the retained known-working g5k script, which binds SolCallback(33) to the right gate and SolCallback(34) to the left gate. Pinned PinMAME names them the other way round: src/wpc/sims/wpc/full/afm.c maps sLGate to WPC_FLIPPERCOIL95 bit 0x10 (public solenoid 33) and sRGate to bit 0x20 (public solenoid 34). PinMAME's own naming is also internally inconsistent with its custom-solenoid aliases, so the left/right labels here rest on the manual and the proven script, and the disagreement is recorded rather than averaged."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.afm",
           "manual.attack-from-mars.1995",
+          "pinmame.core.4ec52ff0ac13",
           "vpx.attack-from-mars-g5k-1.3.11"
         ],
-        "status": "validated"
+        "status": "observed"
       }
     },
     {
@@ -5341,10 +5349,14 @@
       "id": "device.strobe-light",
       "kind": "flasher",
       "label": "Strobe Light",
+      "physical": {
+        "notes": "WPC-95 LPDC output; PinMAME mirrors it at public address 43, so 39 and 43 are one physical output."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.afm",
           "manual.attack-from-mars.1995",
+          "pinmame.core.4ec52ff0ac13",
           "vpx.attack-from-mars-g5k-1.3.11"
         ],
         "status": "validated"
@@ -5361,21 +5373,120 @@
         "device": 43,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.solenoid-43",
-      "kind": "flasher",
-      "label": "Saucer Dome (2nd circuit)",
+      "id": "device.lpdc-mirror-43",
+      "kind": "virtual",
+      "label": "LPDC Mirror of Solenoid 39",
+      "physical": {
+        "notes": "PinMAME duplicates the WPC-95 LPDC outputs 37-40 at public addresses 41-44 (src/wpc/core.c core_getSol, GEN_WPC95|GEN_WPC95DCS), so public solenoid 43 reports the same physical output as public solenoid 39. It is not a second saucer-dome circuit. The retained g5k script binds SolModCallback(39) and SolModCallback(43) to two different visual lamps, which is a table convenience rather than two physical circuits, and any runtime observation of 43 is fully explained by the mirror."
+      },
       "provenance": {
         "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
           "vpx.attack-from-mars-g5k-1.3.11",
           "runtime.afm-113b.contributor-logging"
         ],
-        "status": "candidate"
-      }
+        "status": "observed"
+      },
+      "roles": [
+        "internal.duplicate.lpdc-mirror"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "51"
+        }
+      ],
+      "binding": {
+        "device": 51,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.custom-solenoid-51",
+      "kind": "virtual",
+      "label": "Custom Solenoid Alias of Public Solenoid 34",
+      "physical": {
+        "notes": "afmGameData declares custSol=3, so PinMAME publishes game-specific solenoids 51-53 for Attack From Mars in addition to the standard range. afm_getSol returns WPC_FLIPPERCOIL95 bit 0x20 for this address, which is the same bit core_getSol reports on public solenoid 34. This address is therefore a duplicate view of an already-declared circuit, not an extra physical device."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "observed"
+      },
+      "roles": [
+        "internal.duplicate.custom-solenoid"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "52"
+        }
+      ],
+      "binding": {
+        "device": 52,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.custom-solenoid-52",
+      "kind": "virtual",
+      "label": "Custom Solenoid Alias of Public Solenoid 33",
+      "physical": {
+        "notes": "afmGameData declares custSol=3, so PinMAME publishes game-specific solenoids 51-53 for Attack From Mars in addition to the standard range. afm_getSol returns WPC_FLIPPERCOIL95 bit 0x10 for this address, which is the same bit core_getSol reports on public solenoid 33. This address is therefore a duplicate view of an already-declared circuit, not an extra physical device."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "observed"
+      },
+      "roles": [
+        "internal.duplicate.custom-solenoid"
+      ]
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.coil",
+          "value": "53"
+        }
+      ],
+      "binding": {
+        "device": 53,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.custom-solenoid-53",
+      "kind": "virtual",
+      "label": "Custom Solenoid Alias of the Diverter Circuit",
+      "physical": {
+        "notes": "afmGameData declares custSol=3, so PinMAME publishes game-specific solenoids 51-53 for Attack From Mars in addition to the standard range. afm_getSol returns WPC_FLIPPERCOIL95 bits 0xc0 for this address, which is the combined state of public solenoids 35 and 36. This address is therefore a duplicate view of an already-declared circuit, not an extra physical device."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "observed"
+      },
+      "roles": [
+        "internal.duplicate.custom-solenoid"
+      ]
     }
   ],
   "relationships": [],
   "schema_version": 1,
   "sources": [
+    {
+      "acquired_at": "2026-08-05T12:30:00Z",
+      "attribution": "AFM altsound community package authors (unidentified); transcription and runtime annotation by deadmanworking",
+      "id": "altsound.afm-113b.community-package",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Contributor-retained community altsound.csv for afm_113b (586 command ids; header ID,CHANNEL,DUCK,GAIN,LOOP,STOP,NAME,FNAME; uri is the community altsound hosting category - the exact originating upload is unidentified, the retained file is identified by sha256). Sample names in the knowledge-file opcode table come from this file. 0x006A appears on two rows in the package itself, both mapping 0x006a-laser_shot.ogg; no 0x006B row exists.",
+      "original_filename": "altsound.csv",
+      "sha256": "bc139099b58ed94240d86f4fcc8e06ba37dafa5a14d9d5417917b5f225eac830",
+      "uri": "https://vpuniverse.com/files/category/113-altsound/"
+    },
     {
       "attribution": "pinmame-game-defs contributors",
       "id": "legacy.game.afm",
@@ -5393,15 +5504,6 @@
       "uri": "https://github.com/vpinball/pinmame-game-defs"
     },
     {
-      "attribution": "PinMAME contributors",
-      "id": "pinmame.catalog.4ec52ff0ac13",
-      "kind": "pinmame_catalog",
-      "license": "BSD-3-Clause",
-      "locator": "PinmameGetGames",
-      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
-      "uri": "https://github.com/vpinball/pinmame"
-    },
-    {
       "acquired_at": "2026-08-05T12:30:00Z",
       "attribution": "Midway Manufacturing Company (Bally); manual contents (c)1995 Midway Manufacturing Company",
       "id": "manual.attack-from-mars.1995",
@@ -5415,16 +5517,22 @@
       "uri": "https://www.ipdb.org/machine.cgi?id=3781"
     },
     {
-      "acquired_at": "2026-08-05T12:30:00Z",
-      "attribution": "g5k (VPX recreation author); script corpus curated by sverrewl",
-      "id": "vpx.attack-from-mars-g5k-1.3.11",
-      "kind": "vpx_script",
-      "known_working": true,
-      "license": "NOASSERTION",
-      "locator": "Attack from Mars (Bally 1995) g5k 1.3.11.vbs (runs ROM afm_113b via cGameName; solenoid/flasher callbacks at lines 548-577)",
-      "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
-      "sha256": "21fb64898f5a1a564e70ba2d40afed5fb54b8c49b0707530f0e24b7ca6cdf50c",
-      "uri": "https://github.com/sverrewl/vpxtable_scripts"
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.catalog.4ec52ff0ac13",
+      "kind": "pinmame_catalog",
+      "license": "BSD-3-Clause",
+      "locator": "PinmameGetGames",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.4ec52ff0ac13",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/sims/wpc/full/afm.c: afmGameData GEN_WPC95 with wpc_dispDMD, FLIP_SW(FLIP_L|FLIP_U) with FLIP_SOL(FLIP_L), lampCol=2 and custSol=3, the inverted-switch mask 0x7f on column 3, the sJet1/sJet2/sJet3 = 11/12/13 and sBankMotor = 24 defines, and afm_getSol mapping sLGate/sRGate/sDiverter onto WPC_FLIPPERCOIL95 bits 0x10/0x20/0xc0; src/wpc/core.c core_getSol WPC-95 duplication of LPDC outputs 37-40 at 41-44 and the custom-solenoid fall-through above address 50; src/wpc/core.h WPC solenoid numbering, CORE_FIRSTCUSTSOL and the upper/lower flipper solenoid bit masks",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
     },
     {
       "acquired_at": "2026-08-05T12:30:00Z",
@@ -5437,14 +5545,15 @@
     },
     {
       "acquired_at": "2026-08-05T12:30:00Z",
-      "attribution": "AFM altsound community package authors (unidentified); transcription and runtime annotation by deadmanworking",
-      "id": "altsound.afm-113b.community-package",
-      "kind": "human_review",
+      "attribution": "g5k (VPX recreation author); script corpus curated by sverrewl",
+      "id": "vpx.attack-from-mars-g5k-1.3.11",
+      "kind": "vpx_script",
+      "known_working": true,
       "license": "NOASSERTION",
-      "locator": "Contributor-retained community altsound.csv for afm_113b (586 command ids; header ID,CHANNEL,DUCK,GAIN,LOOP,STOP,NAME,FNAME; uri is the community altsound hosting category - the exact originating upload is unidentified, the retained file is identified by sha256). Sample names in the knowledge-file opcode table come from this file. 0x006A appears on two rows in the package itself, both mapping 0x006a-laser_shot.ogg; no 0x006B row exists.",
-      "original_filename": "altsound.csv",
-      "sha256": "bc139099b58ed94240d86f4fcc8e06ba37dafa5a14d9d5417917b5f225eac830",
-      "uri": "https://vpuniverse.com/files/category/113-altsound/"
+      "locator": "Attack from Mars (Bally 1995) g5k 1.3.11.vbs (runs ROM afm_113b via cGameName; solenoid/flasher callbacks at lines 548-577)",
+      "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+      "sha256": "21fb64898f5a1a564e70ba2d40afed5fb54b8c49b0707530f0e24b7ca6cdf50c",
+      "uri": "https://github.com/sverrewl/vpxtable_scripts"
     }
   ]
 }

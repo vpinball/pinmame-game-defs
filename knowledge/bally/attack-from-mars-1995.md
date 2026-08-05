@@ -16,7 +16,16 @@ The legacy VPE-derived definition carried several verifiable errors, all correct
 - **Solenoids 25-28 are flasher circuits** ('Left Ramp Left (2)', 'Left Ramp Right (2)', 'Left Side High (2)', 'Left Side Low'; general-purpose drives into #906/#89 flashlamps), not coils.
 - **Output 24 'Motor Bank' is the bank motor** (part 14-8023) on a flasher-class drive circuit, not a flasher.
 - Switch label fixes: 14 'Plumb Bob Tilt', 16 'Left Outlane', 71/72 'Right Loop High'/'Right Loop Low' (legacy said 'Right Bank').
-- **Solenoid 43** is not in the manual table but is driven by the known-working script (`SolModCallback(43)`). The script proves only that the address is driven (it maps it to a mod-lamp channel no script object consumes); the 'second saucer-dome circuit' identity is a contributor-observed candidate only, so the definition records it under a semantically neutral id.
+- **Solenoid 43 is PinMAME's mirror of LPDC output 39, not a separate circuit.** `core_getSol` duplicates the WPC-95 LPDC outputs 37-40 at public addresses 41-44, so 43 reports the same physical output as 39 (Strobe Light). That is why 43 is absent from the manual table and why the contributor's runtime logging saw it toggle. The known-working script binds `SolModCallback(39)` and `SolModCallback(43)` to two different visual lamps, which is a table convenience rather than two physical circuits. The definition records 43 as a virtual duplicate of 39.
+
+## Addresses that duplicate an already-declared circuit
+
+Attack From Mars publishes the same physical outputs on more than one PinMAME address, so a recreation must bind each device once and accept either address:
+
+- Public solenoid 43 mirrors LPDC output 39 (WPC-95 duplicates 37-40 at 41-44).
+- `afmGameData` declares `custSol=3`, so PinMAME also publishes game-specific solenoids 51-53. `afm_getSol` returns WPC_FLIPPERCOIL95 bit 0x20 for 51, bit 0x10 for 52, and bits 0xc0 for 53 - the same bits `core_getSol` reports on public solenoids 34, 33, and 35/36 respectively.
+- The two ball-gate addresses carry a naming disagreement worth resolving against the manual page before this machine is promoted. The retained g5k script binds 33 to the right gate and 34 to the left gate; pinned PinMAME names them the opposite way (`sLGate` on bit 0x10 = public 33, `sRGate` on bit 0x20 = public 34), and PinMAME's own custom-solenoid aliases are internally inconsistent with that naming. The definition keeps the script's mapping, marks both entries `observed` rather than `validated`, and records the disagreement.
+- `afmGameData` also declares `lampCol=2`, so PinMAME exposes two auxiliary lamp columns above the standard 8x8 matrix for the 16-LED chase board. Those addresses are not yet enumerated here.
 
 ## Displays
 
