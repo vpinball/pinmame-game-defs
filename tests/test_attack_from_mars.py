@@ -337,7 +337,9 @@ class AttackFromMarsDefinitionTests(unittest.TestCase):
 		# L.E.D.s. Giving them emitter placements would invent two physical emitters.
 		for address in (37, 38):
 			device = self.solenoids[address]
-			self.assertEqual("relay", device["kind"], address)
+			# Not "relay" either: no relay exists on this circuit. control_signal is the kind for a
+			# logic-level line that drives another board.
+			self.assertEqual("control_signal", device["kind"], address)
 			self.assertEqual("not_applicable", device["spatial"]["status"], address)
 			self.assertEqual("internal_nonvisual", device["spatial"]["reason"], address)
 			self.assertIn("internal.serial-control", device["roles"], address)
@@ -359,10 +361,13 @@ class AttackFromMarsDefinitionTests(unittest.TestCase):
 			self.assertIn("initial_switches", run, run["name"])
 			self.assertIn("pulses", run, run["name"])
 			self.assertGreater(run["boot_wait_s"], 0, run["name"])
-		# The second run inherits the first run's NVRAM; that dependency must be stated, not implied.
-		inherited = [r for r in runtime["raw_runs"] if "inherited" in r["nvram_initialization"]]
-		self.assertEqual(1, len(inherited))
-		self.assertIn("empty", runtime["raw_runs"][0]["nvram_initialization"] + runtime["raw_runs"][1]["nvram_initialization"])
+		# raw_runs must be in replay order, not alphabetical order: the run that creates the NVRAM
+		# has to come before the run that inherits it, or the recorded replay is impossible.
+		names = [run["name"] for run in runtime["raw_runs"]]
+		self.assertEqual(["boot-and-service-v1", "attract-and-ball-start-v1"], names)
+		self.assertIn("empty", runtime["raw_runs"][0]["nvram_initialization"])
+		self.assertIn("inherited", runtime["raw_runs"][1]["nvram_initialization"])
+		self.assertIn("replay order", runtime["command_template"])
 
 	def test_curator_gate_covers_the_whole_promoted_bundle(self) -> None:
 		import curate_attack_from_mars as curator

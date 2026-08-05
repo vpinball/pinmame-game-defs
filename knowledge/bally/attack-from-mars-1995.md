@@ -103,7 +103,7 @@ Selected stable mappings, each observed dozens of times: `0x01A5` ball saved ('R
 
 ### Opcode reference (586 ids)
 
-Sample names are from the retained community altsound package for `afm_113b` (`altsound.afm-113b.community-package`, SHA-256 `bc139099b58ed94240d86f4fcc8e06ba37dafa5a14d9d5417917b5f225eac830`); annotations are contributor runtime observations. Note: the package itself writes `0x006A` on two rows (`martian_target_mid` and `martian_target_mid2`, both mapping `0x006a-laser_shot.ogg`) and has no `0x006B` row; the table below lists the second row as `0x006B` as a contributor-inferred correction per the even/odd pairing convention, flagged in its annotation.
+Sample names are from the contributor-held community altsound package for `afm_113b`, which is not retained in this repository's evidence roots, (`altsound.afm-113b.community-package`, SHA-256 `bc139099b58ed94240d86f4fcc8e06ba37dafa5a14d9d5417917b5f225eac830`); annotations are contributor runtime observations. Note: the package itself writes `0x006A` on two rows (`martian_target_mid` and `martian_target_mid2`, both mapping `0x006a-laser_shot.ogg`) and has no `0x006B` row; the table below lists the second row as `0x006B` as a contributor-inferred correction per the even/odd pairing convention, flagged in its annotation.
 
 | Opcode | Sample name (altsound transcription) | Runtime annotation | Group |
 |---|---|---|---|
@@ -696,7 +696,7 @@ Sample names are from the retained community altsound package for `afm_113b` (`a
 
 ## Service and setup documentation
 
-The retained operations manual is the 'Bally Attack From Mars Full Operations Manual (Final)' scan, 176 pages, SHA-256 `12c36ce8e1e0997a03016d76589df4fe2a6ad66cd5592d2a6f8dd75e49f6b1e5` (image-only scan; matrix pages were rendered and read visually, not OCR-trusted). Game adjustments, error codes, and unit disassembly (flying saucer mechanism 1-57, back panel 1-63) are in Section 1; parts and assemblies in Section 2; wiring diagrams and schematics in Section 3.
+The contributor-held operations manual, which is not retained in this repository's evidence roots, is the 'Bally Attack From Mars Full Operations Manual (Final)' scan, 176 pages, SHA-256 `12c36ce8e1e0997a03016d76589df4fe2a6ad66cd5592d2a6f8dd75e49f6b1e5` (image-only scan; matrix pages were rendered and read visually, not OCR-trusted). Game adjustments, error codes, and unit disassembly (flying saucer mechanism 1-57, back panel 1-63) are in Section 1; parts and assemblies in Section 2; wiring diagrams and schematics in Section 3.
 
 ## One open question that is deliberately not asserted
 
@@ -718,7 +718,7 @@ note, and nothing uncertain is presented as settled.
 Every question this note previously left open has been answered, and the definition is now
 `author_ready`:
 
-- **Spatial placement.** All 189 placements are normalized against the retained JPSalas 3.0.2 table
+- **Spatial placement.** All 187 placements are normalized against the retained JPSalas 3.0.2 table
   at bounds `left=0 top=0 right=964 bottom=2162`. See
   `reports/spatial/bally/attack-from-mars-1995.md` for the projection list and the excluded
   render-helper classes.
@@ -797,7 +797,7 @@ saucer L.E.D. board inside saucer assembly A-20608.
 - `vpx-table.afm-jpsalas-3-0-2` / `vpx-script.afm-jpsalas-3-0-2`: retained known-working JPSalas 3.0.2
   table, SHA-256 `f4bd2ae0e456030d14ea2f6f8fcd45e0e4f72ff22235a908d17424f1e9441cbd`, and its embedded
   script, SHA-256 `46992cf7854853bac592ab9b2b5f65d641727accec8405b7aff84fbc8e2aa139`; geometry for all
-  189 placements and the runtime binding authority. It binds `afm_113b`.
+  187 placements and the runtime binding authority. It binds `afm_113b`.
 - `runtime.attack-from-mars.boot-attract-and-ball-start`: pinned LibPinMAME harness runs that boot
   `afm_113b` from empty NVRAM, reach attract and start a ball; they observe all five GI strings, sixty
   matrix lamps, every one of the sixteen saucer-L.E.D. addresses, and solenoids 29, 31, 37, 38, 41

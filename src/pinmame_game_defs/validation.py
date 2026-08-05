@@ -43,7 +43,10 @@ SPATIAL_NA_REASONS = {
 }
 SPATIAL_ROLES = {"sensor", "effect", "emitter"}
 EMITTER_OUTPUT_KINDS = {"lamp", "rgb_lamp", "flasher", "gi"}
-EFFECT_OUTPUT_KINDS = {"coil", "motor", "servo", "magnet", "relay"}
+# Non-emitting outputs. ``control_signal`` covers logic-level lines that drive another board rather
+# than a physical actuator, such as the serial clock and data lines into a lamp shift register. Like
+# the other effect kinds they have no light of their own, so they take an internal_nonvisual record.
+EFFECT_OUTPUT_KINDS = {"coil", "motor", "servo", "magnet", "relay", "control_signal"}
 SHARED_RGB_FIELDS = ("quantity", "shared_emitter_group", "emitter_channel", "co_located_addresses", "shared_physical_quantity")
 SHARED_RGB_CHANNELS = {"blue", "green", "red"}
 LOCAL_L_DRIVE_PATTERN = re.compile(r"(?:^|[^a-z0-9])l:[\\/]", re.IGNORECASE)

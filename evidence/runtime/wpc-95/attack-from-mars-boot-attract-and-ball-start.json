@@ -14,7 +14,7 @@
   "outputs": [],
   "recreation_notes": [],
   "runtime": {
-    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game afm_113b --rom-path <vpinmame-roms> --work-dir <isolated-state> --initial-switch 22:1 --initial-switch 24:1 --initial-switch 32:1 --initial-switch 33:1 --initial-switch 34:1 --initial-switch 35:1 --boot-wait <seconds> --pulse <switch>:<hold-ms>:<settle-s> --observe <seconds> --snapshot-while-held --dmd-dir <external-dmd-dir> --output <external-json>. The exact per-run switch, pulse and timing values are recorded under raw_runs; the two runs share one isolated state directory in the order listed there.",
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game afm_113b --rom-path <vpinmame-roms> --work-dir <isolated-state> --initial-switch 22:1 --initial-switch 24:1 --initial-switch 32:1 --initial-switch 33:1 --initial-switch 34:1 --initial-switch 35:1 --boot-wait <seconds> --pulse <switch>:<hold-ms>:<settle-s> --observe <seconds> --snapshot-while-held --dmd-dir <external-dmd-dir> --output <external-json>. The exact per-run switch, pulse and timing values are recorded under raw_runs, which is listed in replay order rather than alphabetically: the two runs share one isolated state directory, so boot-and-service-v1 must be run first into an empty directory and attract-and-ball-start-v1 second against the NVRAM it leaves behind.",
     "emulator": {
       "binary": "pinmame64.dll",
       "built_from_revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
@@ -200,6 +200,41 @@
     },
     "raw_runs": [
       {
+        "boot_wait_s": 12.031,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 22
+          },
+          {
+            "state": 1,
+            "switch": 24
+          }
+        ],
+        "name": "boot-and-service-v1",
+        "nvram_initialization": "empty; this run created the isolated PinMAME state directory from scratch, so the ROM performed its own factory reset and its first captured frame reads FACTORY SETTINGS RESTORED",
+        "pulses": [
+          {
+            "hold_ms": 250,
+            "settle_s": 2.0,
+            "switch": 8
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 2.0,
+            "switch": 7
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 2.0,
+            "switch": 6
+          }
+        ],
+        "self_test_pulses": 0,
+        "sha256": "c6d0eefa1e18bc27d8918afc1b89e1f3f92a370cd59a914b914e36cca4a503d3",
+        "snapshot_count": 8
+      },
+      {
         "boot_wait_s": 20.015,
         "initial_switches": [
           {
@@ -248,41 +283,6 @@
         ],
         "self_test_pulses": 0,
         "sha256": "a86d547b44ba84a38052624a959b460c75f3ca2aa746bcebc1e8c7acfb703aeb",
-        "snapshot_count": 8
-      },
-      {
-        "boot_wait_s": 12.031,
-        "initial_switches": [
-          {
-            "state": 1,
-            "switch": 22
-          },
-          {
-            "state": 1,
-            "switch": 24
-          }
-        ],
-        "name": "boot-and-service-v1",
-        "nvram_initialization": "empty; this run created the isolated PinMAME state directory from scratch, so the ROM performed its own factory reset and its first captured frame reads FACTORY SETTINGS RESTORED",
-        "pulses": [
-          {
-            "hold_ms": 250,
-            "settle_s": 2.0,
-            "switch": 8
-          },
-          {
-            "hold_ms": 250,
-            "settle_s": 2.0,
-            "switch": 7
-          },
-          {
-            "hold_ms": 250,
-            "settle_s": 2.0,
-            "switch": 6
-          }
-        ],
-        "self_test_pulses": 0,
-        "sha256": "c6d0eefa1e18bc27d8918afc1b89e1f3f92a370cd59a914b914e36cca4a503d3",
         "snapshot_count": 8
       }
     ],

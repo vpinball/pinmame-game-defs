@@ -1123,7 +1123,9 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				# Serial clock and data lines into the saucer shift register. The printed table lists
 				# them under the flasher driver group, but they emit no light of their own: the light
 				# they produce is the sixteen saucer L.E.D.s at lamp addresses 91-98 and 101-108.
-				kind = "relay"
+				# They are not relays either - no relay exists on this circuit - so they use the
+				# control_signal kind added for logic-level outputs that drive another board.
+				kind = "control_signal"
 			elif 17 <= address <= 28 or address == 39:
 				kind = "flasher"
 			else:
@@ -1445,11 +1447,18 @@ def gi_outputs() -> list[dict[str, Any]]:
 			# String 03 has an unresolved socket question (see below), so no count is asserted for it.
 			if address != 2:
 				physical["quantity"] = len(positions)
-			notes += (
-				" The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate "
-				"come from the retained table's GI emitter array for this string. The table pairs each bulb with a "
-				"co-located halo light, and only one placement per physical socket is recorded."
-			)
+			if address == 2:
+				notes += (
+					" The manual prints no per-string bulb count. Every emitter coordinate below comes from the "
+					"retained table's GI emitter array for this string, which pairs each bulb with a co-located "
+					"halo light so that only one placement per physical socket is recorded."
+				)
+			else:
+				notes += (
+					" The manual prints no per-string bulb count, so the physical quantity and every emitter "
+					"coordinate come from the retained table's GI emitter array for this string. The table pairs "
+					"each bulb with a co-located halo light, and only one placement per physical socket is recorded."
+				)
 			if address == 0:
 				notes += (
 					" The printed table gives this string a playfield harness on J105-1/J105-7 with #44 bulbs and a "
@@ -2070,10 +2079,13 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"same y, the manual solenoid-location map and the fact that its printed assembly A-20549 is the right wire "
 		"ramp all place it on the right, and the centroid is used.",
 		"- GI strings 0-2 use the table's `aGiLLights`, `aGiMLights` and `aGiTLights` arrays. The table pairs each "
-		"bulb with a co-located halo light, so 50 light objects reduce to 29 physical sockets; the manual prints "
-		"no per-string bulb count, so the physical quantity is taken from those deduplicated arrays. GI strings 3 "
-		"and 4 are backbox insert-panel circuits and take a controlled `cabinet_or_service` record with no "
-		"asserted count.",
+		"bulb with a co-located halo light, so those 50 light objects reduce to 29 distinct emitter positions. The "
+		"manual prints no per-string bulb count, so strings 01 and 02 take their asserted physical quantity from "
+		"those deduplicated arrays. String 03 asserts no quantity at all: three further bulb lights sit at the jet-"
+		"bumper centres outside the modulated collection and the evidence does not settle whether they are "
+		"additional sockets on that string, so its fourteen placements are the emitters the string is observed to "
+		"drive rather than a claimed socket inventory. GI strings 3 and 4 are backbox insert-panel circuits and "
+		"take a controlled `cabinet_or_service` record with no asserted count.",
 		"- The sixteen saucer L.E.D.s at public lamp addresses 91-98 and 101-108 are not in the printed lamp "
 		"matrix. They are shifted into board A-20670 by public solenoids 37 and 38, and the pinned harness "
 		"observed every one of the sixteen lit across four attract phases, eight at a time, with solenoids 37, 38, "
@@ -2130,9 +2142,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 # curator output, so it is pinned by content hash instead of regenerated. That keeps a stale knowledge
 # note or a substituted evidence file an audit failure rather than an unnoticed drift.
 KNOWLEDGE_RELATIVE_PATH = Path("knowledge/bally/attack-from-mars-1995.md")
-KNOWLEDGE_SHA256 = "0c6f5288ee6f09e8ef970da6badb9b59b58c00c3e1deb6ab7d3406c6e1dddf88"
+KNOWLEDGE_SHA256 = "f35a3dee6a266072731f25b8c40ff014476ad7f5a5851160cb2281db4a753291"
 EVIDENCE_RELATIVE_PATH = Path("evidence/runtime/wpc-95/attack-from-mars-boot-attract-and-ball-start.json")
-EVIDENCE_SHA256 = "84a8f3ea6d12acee76994e5909bc9e3fda6369914737854a8e7a8dec1726bb81"
+EVIDENCE_SHA256 = "026ddd92e4eab3d44d76cf933c79d3f87c1c483c01d67af44796dab42047a883"
 
 
 def verify_promoted_bundle(root: Path = ROOT) -> None:
