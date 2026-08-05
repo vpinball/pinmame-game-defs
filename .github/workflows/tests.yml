@@ -1,0 +1,75 @@
+# Runs the curation gates on every push and pull request.
+#
+# The suite is deliberately runnable without the external evidence roots: the
+# checks that need a retained VPX table, manual render or ROM archive skip
+# themselves when PINMAME_VPX_SOURCES_ROOT and friends are unset, which is the
+# case here. Those roots are user-authorized local corpora and are never
+# published, so CI proves the repository-only gates and a curator proves the
+# evidence-backed ones locally before pushing.
+name: Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The floor from pyproject's requires-python, plus the current release.
+        python-version: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install
+        run: python -m pip install --upgrade pip && python -m pip install -e .
+
+      - name: Unit tests
+        env:
+          PYTHONPATH: src:tests
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python -B -m unittest discover -s tests -p 'test_*.py' --verbose
+
+      - name: Validate repository
+        env:
+          PYTHONPATH: src
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python -B -m pinmame_game_defs validate
+
+      - name: Byte-compile
+        run: python -B -m compileall -q src tools tests
+
+      - name: Generated artifacts are up to date
+        env:
+          PYTHONPATH: src
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python -B - <<'PY'
+          from pathlib import Path
+          from pinmame_game_defs.registry import rebuild_catalog
+          from pinmame_game_defs.coverage import write_coverage_report
+          root = Path.cwd()
+          rebuild_catalog(root)
+          write_coverage_report(root)
+          PY
+          # Regenerating the catalog, coverage and queue must be a no-op on a
+          # clean tree. A diff here means someone committed a definition without
+          # rebuilding the generated indexes that reference its content hash.
+          git diff --exit-code
