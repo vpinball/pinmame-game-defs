@@ -517,8 +517,6 @@ SOLENOID_POSITIONS = {
 	34: [(0.564880, 0.019853)],
 	35: [(0.384336, 0.102451)],
 	36: [(0.384336, 0.102451)],
-	37: [(0.494813, 0.209528)],
-	38: [(0.494813, 0.209528)],
 	39: [(0.494813, 0.209066)],
 	45: [(0.614088, 0.847287)],
 	46: [(0.614088, 0.847287)],
@@ -538,8 +536,6 @@ SOLENOID_PROJECTIONS = {
 	27: "Taken from the origin of the retained flasher object f27a; see solenoid 17.",
 	35: "Projected onto the retained diverter blade primitive DivP. The retained table actuates the diverter through an invisible flipper object parked off the playfield at (0.843508, 0.984320), which is a physics helper and not the physical blade location.",
 	36: "Projected onto the retained diverter blade primitive DivP; see solenoid 35. The hold winding acts on the same blade as the power winding.",
-	37: "Projected onto the retained saucer primitive ufo1. The clock output drives shift-register board A-20670 inside saucer assembly A-20608 and has no separate emitter of its own.",
-	38: "Projected onto the retained saucer primitive ufo1; see solenoid 37.",
 	45: "Projected onto the retained RightFlipper object; the power and hold windings are the two windings of the same FL-11629 coil on assembly A-15849-R-2.",
 	46: "Projected onto the retained RightFlipper object; see solenoid 45.",
 	47: "Projected onto the retained LeftFlipper object; the power and hold windings are the two windings of the same FL-11629 coil on assembly A-15849-L-2.",
@@ -1123,7 +1119,12 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			drive_wire, drive_connection, transistor, power_connection, part_number, printed_type = SOLENOID_WIRING[address]
 			if address == 24:
 				kind = "motor"
-			elif 17 <= address <= 28 or address in {37, 38, 39}:
+			elif address in {37, 38}:
+				# Serial clock and data lines into the saucer shift register. The printed table lists
+				# them under the flasher driver group, but they emit no light of their own: the light
+				# they produce is the sixteen saucer L.E.D.s at lamp addresses 91-98 and 101-108.
+				kind = "relay"
+			elif 17 <= address <= 28 or address == 39:
 				kind = "flasher"
 			else:
 				kind = "coil"
@@ -1187,7 +1188,12 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				)
 			if address in {37, 38}:
 				notes += (
-					" WPC-95 auxiliary output on power-driver connector J110 with no drive transistor of its own. "
+					" This output emits no light itself and therefore has no playfield placement; it is one of the "
+					"two serial control lines into shift-register board A-20670, and the light it ultimately "
+					"produces is the sixteen saucer L.E.D.s enumerated at lamp addresses 91-98 and 101-108. The "
+					"printed table lists it under the flasher driver group because of the driver circuit it shares, "
+					"not because it drives a flashlamp. "
+					"WPC-95 auxiliary output on power-driver connector J110 with no drive transistor of its own. "
 					"PinMAME duplicates it at public address "
 					f"{address + 4}, so a recreation must treat {address} and {address + 4} as one physical signal. "
 					"afm_wpc_w shifts a sixteen-bit word into PinMAME's two auxiliary lamp columns using this pair, "
@@ -1228,6 +1234,9 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			if address == 7:
 				extra["roles"] = ["cabinet.knocker"]
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
+			elif address in {37, 38}:
+				extra["roles"] = ["internal.serial-control"]
+				extra["spatial"] = not_applicable("internal_nonvisual", MANUAL_SOURCE, CORE_SOURCE)
 			else:
 				role = "emitter" if kind == "flasher" else "effect"
 				coordinate_refs = (
@@ -1433,7 +1442,9 @@ def gi_outputs() -> list[dict[str, Any]]:
 		}
 		if address in GI_POSITIONS:
 			positions = GI_POSITIONS[address]
-			physical["quantity"] = len(positions)
+			# String 03 has an unresolved socket question (see below), so no count is asserted for it.
+			if address != 2:
+				physical["quantity"] = len(positions)
 			notes += (
 				" The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate "
 				"come from the retained table's GI emitter array for this string. The table pairs each bulb with a "
@@ -1447,9 +1458,15 @@ def gi_outputs() -> list[dict[str, Any]]:
 				)
 			if address == 2:
 				notes += (
-					" The retained script's comment marks this string as also covering the jet bumpers. The table's "
-					"three jet-bumper cap lights are decorative objects outside the GI collection and are excluded "
-					"from the placement set rather than counted as sockets."
+					" No physical socket count is asserted for this string, and unlike strings 01 and 02 the "
+					"placement set is explicitly not claimed to be exhaustive. The retained script's comment marks "
+					"this string as also covering the jet bumpers, and the table carries three further bulb lights "
+					"gi31, gi32 and gi33 sitting exactly at the three jet-bumper centres. They are absent from the "
+					"aGiTLights collection, which proves only that this table does not modulate them through that "
+					"collection; it does not prove the physical sockets are missing. The manual does not itemize "
+					"the string, so whether those three are additional string-03 sockets or pure decoration is "
+					"unresolved, and the fourteen placements below are the emitters this string is observed to "
+					"drive rather than a complete socket inventory."
 				)
 			extra["spatial"] = located(identifier, "emitter", positions, VPX_TABLE_SOURCE)
 		else:
@@ -1995,12 +2012,27 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"excluded_object_classes": [
 			"flw wall-glow quads on the left rail at pos_x -2.5, the right rail at pos_x 947.5, and the rear wall at pos_y 10, which are light spill projected onto the cabinet rather than bulb sockets",
 			"BallShadow* render helpers stacked at one apron coordinate",
-			"gi31, gi32 and gi33 decorative jet-bumper cap lights outside the GI collections",
 			"DivF invisible diverter actuator parked off the playfield",
 			"sw36a, sw37a and swp45-swp47 popper-exit and target render primitives",
 			"peg*, rpeg*, screw*, metal* and Primitive* decorative playfield hardware",
 		],
-		"unresolved": [],
+		"unresolved": [
+			{
+				"scope": "pinmame.output.gi 2",
+				"question": (
+					"Whether the retained table's gi31, gi32 and gi33 bulb lights, which sit exactly at the three "
+					"jet-bumper centres and are absent from the aGiTLights collection, are additional physical "
+					"sockets on general-illumination string 03 or pure decoration."
+				),
+				"why_not_blocking": (
+					"The manual itemizes no general-illumination string, so no printed count exists to contradict "
+					"or confirm either reading. The definition therefore asserts no physical quantity for string "
+					"03 and states that its fourteen placements are the emitters the string is observed to drive "
+					"rather than a complete socket inventory. An author gets fourteen correct emitter positions "
+					"plus an explicit note; nothing authoring-critical is presented as settled."
+				),
+			}
+		],
 	}
 
 
@@ -2094,6 +2126,32 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	return "\n".join(lines)
 
 
+# The rest of the promoted bundle is hand-authored prose and machine-generated evidence rather than
+# curator output, so it is pinned by content hash instead of regenerated. That keeps a stale knowledge
+# note or a substituted evidence file an audit failure rather than an unnoticed drift.
+KNOWLEDGE_RELATIVE_PATH = Path("knowledge/bally/attack-from-mars-1995.md")
+KNOWLEDGE_SHA256 = "0c6f5288ee6f09e8ef970da6badb9b59b58c00c3e1deb6ab7d3406c6e1dddf88"
+EVIDENCE_RELATIVE_PATH = Path("evidence/runtime/wpc-95/attack-from-mars-boot-attract-and-ball-start.json")
+EVIDENCE_SHA256 = "84a8f3ea6d12acee76994e5909bc9e3fda6369914737854a8e7a8dec1726bb81"
+
+
+def verify_promoted_bundle(root: Path = ROOT) -> None:
+	"""Refuse drift in the promoted artifacts the curator does not itself generate."""
+	for relative, expected in (
+		(KNOWLEDGE_RELATIVE_PATH, KNOWLEDGE_SHA256),
+		(EVIDENCE_RELATIVE_PATH, EVIDENCE_SHA256),
+	):
+		path = root / relative
+		if not path.is_file():
+			raise RuntimeError(f"Attack From Mars promoted artifact is missing: {path}")
+		actual = _file_sha256(path)
+		if actual != expected:
+			raise RuntimeError(
+				f"Attack From Mars promoted artifact drifted from its pinned hash: {path} is {actual}, "
+				f"expected {expected}"
+			)
+
+
 def generate(root: Path = ROOT) -> Path:
 	definition = build()
 	write_json(root / DEFINITION_PATH.relative_to(ROOT), definition)
@@ -2130,7 +2188,8 @@ def check(root: Path = ROOT) -> None:
 		raise RuntimeError(f"Attack From Mars spatial audit drifted from its deterministic curator: {report_path}")
 	if not markdown_path.is_file() or markdown_path.read_text(encoding="utf-8") != render_spatial_report(report):
 		raise RuntimeError(f"Attack From Mars spatial review drifted from its deterministic curator: {markdown_path}")
-	print("Attack From Mars definition, seed, and spatial audit match the deterministic curator.")
+	verify_promoted_bundle(root)
+	print("Attack From Mars definition, seed, spatial audit, knowledge note, and evidence match the deterministic curator.")
 
 
 def main() -> None:

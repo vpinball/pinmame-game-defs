@@ -14,7 +14,12 @@
   "outputs": [],
   "recreation_notes": [],
   "runtime": {
-    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game afm_113b --rom-path <vpinmame-roms> --work-dir <isolated-state> --initial-switch 22:1 --initial-switch 24:1 --initial-switch 32:1 --initial-switch 33:1 --initial-switch 34:1 --initial-switch 35:1 --boot-wait <seconds> --pulse <switch>:<hold-ms>:<settle-s> --observe <seconds> --snapshot-while-held --dmd-dir <external-dmd-dir> --output <external-json>",
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game afm_113b --rom-path <vpinmame-roms> --work-dir <isolated-state> --initial-switch 22:1 --initial-switch 24:1 --initial-switch 32:1 --initial-switch 33:1 --initial-switch 34:1 --initial-switch 35:1 --boot-wait <seconds> --pulse <switch>:<hold-ms>:<settle-s> --observe <seconds> --snapshot-while-held --dmd-dir <external-dmd-dir> --output <external-json>. The exact per-run switch, pulse and timing values are recorded under raw_runs; the two runs share one isolated state directory in the order listed there.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "sha256": "ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d"
+    },
     "game": "afm_113b",
     "observations": {
       "diagnostic_snapshots": [
@@ -49,7 +54,7 @@
           ],
           "display_index": 0,
           "interpreted_text": "attract mode with the saucer LED ring lit",
-          "label": "attract mode: auxiliary lamp column 8/9 addresses 91-98 and 101-108 carry exactly eight lit LEDs while public solenoids 37 and 38 and their LPDC mirrors 41 and 42 are active",
+          "label": "attract mode: auxiliary lamp addresses 91, 94, 95, 98, 101, 104, 105 and 108 are lit while public solenoids 37 and 38 and their LPDC mirrors 41 and 42 are active",
           "nonzero_pixels": 836,
           "pixel_sha256": "8739c7de1a31f057ff4e305b52d22be9d4a3e90178f30e17d5028fb49e344251"
         },
@@ -63,7 +68,7 @@
           ],
           "display_index": 0,
           "interpreted_text": "attract mode, saucer LED ring one step further around",
-          "label": "the complementary eight saucer LEDs are lit one attract step later, proving the 16-bit shift register behind lamp columns 8 and 9",
+          "label": "the complementary eight addresses 92, 93, 96, 97, 102, 103, 106 and 107 are lit one attract step later, proving the 16-bit shift register behind lamp columns 8 and 9",
           "nonzero_pixels": 836,
           "pixel_sha256": "8739c7de1a31f057ff4e305b52d22be9d4a3e90178f30e17d5028fb49e344251"
         },
@@ -75,7 +80,7 @@
           ],
           "display_index": 0,
           "interpreted_text": "attract mode, saucer LED ring at a third phase",
-          "label": "a third distinct eight-LED phase of the same rotating saucer pattern",
+          "label": "a third distinct eight-LED phase: 93, 94, 97, 98, 103, 104, 107 and 108",
           "nonzero_pixels": 882,
           "pixel_sha256": "69ac9c5e6dfafad3f3820a564400557fbfd430e0c4f4671243df198fc73dd42a"
         },
@@ -89,7 +94,7 @@
           ],
           "display_index": 0,
           "interpreted_text": "attract mode, saucer LED ring at a fourth phase",
-          "label": "a fourth distinct eight-LED phase; across the four phases every one of the sixteen auxiliary addresses 91-98 and 101-108 is observed lit",
+          "label": "a fourth distinct eight-LED phase: 91, 92, 95, 96, 101, 102, 105 and 106. Across the four phases every one of the sixteen auxiliary addresses is observed lit",
           "nonzero_pixels": 778,
           "pixel_sha256": "e44e0a6ce45b32e2471e21fbaefbf70c2f1f73515c806e15ceb428c45eceb814"
         },
@@ -195,14 +200,90 @@
     },
     "raw_runs": [
       {
+        "boot_wait_s": 20.015,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 22
+          },
+          {
+            "state": 1,
+            "switch": 24
+          },
+          {
+            "state": 1,
+            "switch": 32
+          },
+          {
+            "state": 1,
+            "switch": 33
+          },
+          {
+            "state": 1,
+            "switch": 34
+          },
+          {
+            "state": 1,
+            "switch": 35
+          }
+        ],
         "name": "attract-and-ball-start-v1",
+        "nvram_initialization": "inherited from boot-and-service-v1; the same isolated state directory was reused, so this run started from the NVRAM the factory reset had already written and reached attract mode directly. Reproducing it requires running boot-and-service-v1 first into an empty directory.",
+        "pulses": [
+          {
+            "hold_ms": 250,
+            "settle_s": 3.0,
+            "switch": 1
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 3.0,
+            "switch": 1
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 6.0,
+            "switch": 13
+          }
+        ],
         "self_test_pulses": 0,
-        "sha256": "a86d547b44ba84a38052624a959b460c75f3ca2aa746bcebc1e8c7acfb703aeb"
+        "sha256": "a86d547b44ba84a38052624a959b460c75f3ca2aa746bcebc1e8c7acfb703aeb",
+        "snapshot_count": 8
       },
       {
+        "boot_wait_s": 12.031,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 22
+          },
+          {
+            "state": 1,
+            "switch": 24
+          }
+        ],
         "name": "boot-and-service-v1",
+        "nvram_initialization": "empty; this run created the isolated PinMAME state directory from scratch, so the ROM performed its own factory reset and its first captured frame reads FACTORY SETTINGS RESTORED",
+        "pulses": [
+          {
+            "hold_ms": 250,
+            "settle_s": 2.0,
+            "switch": 8
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 2.0,
+            "switch": 7
+          },
+          {
+            "hold_ms": 250,
+            "settle_s": 2.0,
+            "switch": 6
+          }
+        ],
         "self_test_pulses": 0,
-        "sha256": "c6d0eefa1e18bc27d8918afc1b89e1f3f92a370cd59a914b914e36cca4a503d3"
+        "sha256": "c6d0eefa1e18bc27d8918afc1b89e1f3f92a370cd59a914b914e36cca4a503d3",
+        "snapshot_count": 8
       }
     ],
     "rom_archive_sha256": "378102edfd80d650bf6810d5e521fd08cfd972f8732f3c2204f5929d2266358d"

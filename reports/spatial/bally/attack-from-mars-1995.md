@@ -33,8 +33,6 @@ The matching source is the retained known-working `Attack from Mars 3.02.vpx` by
 - Solenoid 27: Taken from the origin of the retained flasher object f27a; see solenoid 17.
 - Solenoid 35: Projected onto the retained diverter blade primitive DivP. The retained table actuates the diverter through an invisible flipper object parked off the playfield at (0.843508, 0.984320), which is a physics helper and not the physical blade location.
 - Solenoid 36: Projected onto the retained diverter blade primitive DivP; see solenoid 35. The hold winding acts on the same blade as the power winding.
-- Solenoid 37: Projected onto the retained saucer primitive ufo1. The clock output drives shift-register board A-20670 inside saucer assembly A-20608 and has no separate emitter of its own.
-- Solenoid 38: Projected onto the retained saucer primitive ufo1; see solenoid 37.
 - Solenoid 45: Projected onto the retained RightFlipper object; the power and hold windings are the two windings of the same FL-11629 coil on assembly A-15849-R-2.
 - Solenoid 46: Projected onto the retained RightFlipper object; see solenoid 45.
 - Solenoid 47: Projected onto the retained LeftFlipper object; the power and hold windings are the two windings of the same FL-11629 coil on assembly A-15849-L-2.
@@ -58,15 +56,16 @@ The matching source is the retained known-working `Attack from Mars 3.02.vpx` by
 
 ## Counts
 
-- Placements: 189
+- Placements: 187
 - Located input addresses: 44
-- Located output bindings: 118
+- Located output bindings: 116
 - Inputs with a controlled `cabinet_or_service` record: 15
 - Inputs with a controlled `constant` record: 1
 - Inputs with a controlled `dip_switch` record: 8
 - Inputs with a controlled `internal_nonvisual` record: 2
 - Inputs with a controlled `unused` record: 18
 - Outputs with a controlled `cabinet_or_service` record: 5
+- Outputs with a controlled `internal_nonvisual` record: 2
 - Outputs with a controlled `unused` record: 1
 - Outputs with a controlled `virtual` record: 14
 

@@ -13,7 +13,6 @@
   "excluded_object_classes": [
     "flw wall-glow quads on the left rail at pos_x -2.5, the right rail at pos_x 947.5, and the rear wall at pos_y 10, which are light spill projected onto the cabinet rather than bulb sockets",
     "BallShadow* render helpers stacked at one apron coordinate",
-    "gi31, gi32 and gi33 decorative jet-bumper cap lights outside the GI collections",
     "DivF invisible diverter actuator parked off the playfield",
     "sw36a, sw37a and swp45-swp47 popper-exit and target render primitives",
     "peg*, rpeg*, screw*, metal* and Primitive* decorative playfield hardware"
@@ -109,6 +108,16 @@
         "group": "pinmame.output.solenoid"
       }
     ],
+    "internal_nonvisual": [
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
     "unused": [
       {
         "address": 87,
@@ -174,7 +183,7 @@
       }
     ]
   },
-  "placement_count": 189,
+  "placement_count": 187,
   "projections": [
     {
       "address": 31,
@@ -255,16 +264,6 @@
       "address": 36,
       "group": "pinmame.output.solenoid",
       "reason": "Projected onto the retained diverter blade primitive DivP; see solenoid 35. The hold winding acts on the same blade as the power winding."
-    },
-    {
-      "address": 37,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected onto the retained saucer primitive ufo1. The clock output drives shift-register board A-20670 inside saucer assembly A-20608 and has no separate emitter of its own."
-    },
-    {
-      "address": 38,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected onto the retained saucer primitive ufo1; see solenoid 37."
     },
     {
       "address": 45,
@@ -859,14 +858,6 @@
       "group": "pinmame.output.solenoid"
     },
     {
-      "address": 37,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 38,
-      "group": "pinmame.output.solenoid"
-    },
-    {
       "address": 39,
       "group": "pinmame.output.solenoid"
     },
@@ -895,7 +886,13 @@
     "table_sha256": "f4bd2ae0e456030d14ea2f6f8fcd45e0e4f72ff22235a908d17424f1e9441cbd"
   },
   "status": "validated",
-  "unresolved": [],
+  "unresolved": [
+    {
+      "question": "Whether the retained table's gi31, gi32 and gi33 bulb lights, which sit exactly at the three jet-bumper centres and are absent from the aGiTLights collection, are additional physical sockets on general-illumination string 03 or pure decoration.",
+      "scope": "pinmame.output.gi 2",
+      "why_not_blocking": "The manual itemizes no general-illumination string, so no printed count exists to contradict or confirm either reading. The definition therefore asserts no physical quantity for string 03 and states that its fourteen placements are the emitters the string is observed to drive rather than a complete socket inventory. An author gets fourteen correct emitter positions plus an explicit note; nothing authoring-critical is presented as settled."
+    }
+  ],
   "version": 1,
   "visual_review_cache": {
     "pages": [

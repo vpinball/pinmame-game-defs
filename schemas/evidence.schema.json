@@ -93,6 +93,17 @@
       "properties": {
         "game": { "type": "string", "pattern": "^[a-z0-9_]+$" },
         "rom_archive_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "emulator": {
+          "description": "The exact emulator binary that produced these runs, so a trace cannot silently come from an unpinned build.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["binary", "sha256"],
+          "properties": {
+            "binary": { "type": "string", "minLength": 1 },
+            "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "built_from_revision": { "type": "string", "minLength": 1 }
+          }
+        },
         "raw_runs": {
           "type": "array",
           "minItems": 1,
@@ -103,7 +114,39 @@
             "properties": {
               "name": { "type": "string", "minLength": 1 },
               "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-              "self_test_pulses": { "type": "integer", "minimum": 0 }
+              "self_test_pulses": { "type": "integer", "minimum": 0 },
+              "nvram_initialization": {
+                "description": "How this run's NVRAM started, including whether it inherited state from an earlier run in the same isolated directory.",
+                "type": "string",
+                "minLength": 1
+              },
+              "boot_wait_s": { "type": "number", "minimum": 0 },
+              "snapshot_count": { "type": "integer", "minimum": 0 },
+              "initial_switches": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["switch", "state"],
+                  "properties": {
+                    "switch": { "type": "integer" },
+                    "state": { "type": "integer" }
+                  }
+                }
+              },
+              "pulses": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["switch"],
+                  "properties": {
+                    "switch": { "type": "integer" },
+                    "hold_ms": { "type": "number", "minimum": 0 },
+                    "settle_s": { "type": "number", "minimum": 0 }
+                  }
+                }
+              }
             }
           }
         },

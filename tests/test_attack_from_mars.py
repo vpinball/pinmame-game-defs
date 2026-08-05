@@ -296,7 +296,13 @@ class AttackFromMarsDefinitionTests(unittest.TestCase):
 			device = self.gi[address]
 			self.assertEqual("validated", device["spatial"]["status"], address)
 			self.assertEqual(count, len(device["spatial"]["placements"]), address)
-			self.assertEqual(count, device["physical"]["quantity"], address)
+		# Strings 01 and 02 have an unambiguous emitter array, so their table-derived count stands.
+		for address in (0, 1):
+			self.assertEqual(
+				len(self.gi[address]["spatial"]["placements"]),
+				self.gi[address]["physical"]["quantity"],
+				address,
+			)
 		for address in (3, 4):
 			device = self.gi[address]
 			self.assertEqual("not_applicable", device["spatial"]["status"], address)
@@ -304,6 +310,86 @@ class AttackFromMarsDefinitionTests(unittest.TestCase):
 			# The manual publishes no count for the insert-panel strings, so none is asserted.
 			self.assertNotIn("quantity", device["physical"], address)
 			self.assertIn("not asserted", device["physical"]["notes"], address)
+
+	def test_gi_string_three_asserts_no_socket_count(self) -> None:
+		# The three jet-bumper bulb lights in the retained table are not proven decorative, so an
+		# exact physical socket count for this string would be an unsupported assertion.
+		device = self.gi[2]
+		self.assertNotIn("quantity", device["physical"])
+		notes = device["physical"]["notes"]
+		self.assertIn("gi31", notes)
+		self.assertIn("unresolved", notes)
+		self.assertIn("not claimed to be exhaustive", notes)
+
+	def test_open_gi_question_is_disclosed_in_the_spatial_report(self) -> None:
+		report = load_json(SPATIAL_REPORT_PATH)
+		unresolved = report["unresolved"]
+		self.assertEqual(1, len(unresolved))
+		entry = unresolved[0]
+		self.assertEqual("pinmame.output.gi 2", entry["scope"])
+		self.assertIn("jet-bumper", entry["question"])
+		self.assertTrue(entry["why_not_blocking"].strip())
+		# The exclusion list must not claim these are settled decoration.
+		self.assertNotIn("gi31", " ".join(report["excluded_object_classes"]))
+
+	def test_serial_control_outputs_are_not_light_emitters(self) -> None:
+		# Solenoids 37 and 38 clock a shift register; the light they produce is the sixteen saucer
+		# L.E.D.s. Giving them emitter placements would invent two physical emitters.
+		for address in (37, 38):
+			device = self.solenoids[address]
+			self.assertEqual("relay", device["kind"], address)
+			self.assertEqual("not_applicable", device["spatial"]["status"], address)
+			self.assertEqual("internal_nonvisual", device["spatial"]["reason"], address)
+			self.assertIn("internal.serial-control", device["roles"], address)
+			self.assertIn("emits no light itself", device["physical"]["notes"], address)
+		# The strobe on 39 is a genuine emitter and keeps its placement.
+		self.assertEqual("flasher", self.solenoids[39]["kind"])
+		self.assertEqual("validated", self.solenoids[39]["spatial"]["status"])
+
+	def test_runtime_evidence_pins_the_emulator_and_initial_state(self) -> None:
+		evidence = load_json(EVIDENCE_PATH)
+		runtime = evidence["runtime"]
+		emulator = runtime["emulator"]
+		self.assertRegex(emulator["sha256"], r"^[0-9a-f]{64}$")
+		self.assertEqual("4ec52ff0ac133ac251681518aed2249e19fe26eb", emulator["built_from_revision"])
+		self.assertRegex(runtime["rom_archive_sha256"], r"^[0-9a-f]{64}$")
+		self.assertEqual(2, len(runtime["raw_runs"]))
+		for run in runtime["raw_runs"]:
+			self.assertTrue(run["nvram_initialization"].strip(), run["name"])
+			self.assertIn("initial_switches", run, run["name"])
+			self.assertIn("pulses", run, run["name"])
+			self.assertGreater(run["boot_wait_s"], 0, run["name"])
+		# The second run inherits the first run's NVRAM; that dependency must be stated, not implied.
+		inherited = [r for r in runtime["raw_runs"] if "inherited" in r["nvram_initialization"]]
+		self.assertEqual(1, len(inherited))
+		self.assertIn("empty", runtime["raw_runs"][0]["nvram_initialization"] + runtime["raw_runs"][1]["nvram_initialization"])
+
+	def test_curator_gate_covers_the_whole_promoted_bundle(self) -> None:
+		import curate_attack_from_mars as curator
+
+		# The knowledge note and the runtime evidence are not curator output, so they are pinned by
+		# hash; a stale note or a substituted evidence file must fail the gate.
+		curator.verify_promoted_bundle(ROOT)
+		self.assertRegex(curator.KNOWLEDGE_SHA256, r"^[0-9a-f]{64}$")
+		self.assertRegex(curator.EVIDENCE_SHA256, r"^[0-9a-f]{64}$")
+		self.assertNotEqual("0" * 64, curator.KNOWLEDGE_SHA256)
+		self.assertNotEqual("0" * 64, curator.EVIDENCE_SHA256)
+
+	def test_knowledge_note_does_not_assert_unretained_sources_as_authority(self) -> None:
+		text = KNOWLEDGE_PATH.read_text(encoding="utf-8")
+		# No IPDB identity is retained, so the note must not assert one.
+		self.assertNotIn("IPDB 3781", text)
+		self.assertIn("No IPDB identity is asserted", text)
+		# The 176-page manual and the altsound package are contributor-held, not retained here.
+		self.assertIn("contributor-held", text)
+		self.assertNotIn("retained community altsound.csv", text)
+
+	def test_knowledge_note_has_no_stale_partial_conclusions(self) -> None:
+		text = KNOWLEDGE_PATH.read_text(encoding="utf-8")
+		self.assertNotIn("before this machine is promoted", text)
+		self.assertNotIn("marks both entries\n`observed`", text)
+		self.assertNotIn("has not been independently verified here", text)
+		self.assertNotIn("should ultimately be marked unused", text)
 
 	# --- displays and mechanisms ----------------------------------------------
 
@@ -398,14 +484,16 @@ class AttackFromMarsDefinitionTests(unittest.TestCase):
 					self.assertLessEqual(value, 1.0, placement["id"])
 					decimals = str(value).split(".")[1] if "." in str(value) else ""
 					self.assertLessEqual(len(decimals), 6, placement["id"])
-		self.assertEqual(189, len(seen))
+		self.assertEqual(187, len(seen))
 
 	def test_spatial_report_matches_the_definition(self) -> None:
 		report = load_json(SPATIAL_REPORT_PATH)
 		self.assertEqual("bally.attack-from-mars.1995", report["machine_id"])
 		self.assertEqual("validated", report["status"])
-		self.assertEqual(189, report["placement_count"])
-		self.assertEqual([], report["unresolved"])
+		self.assertEqual(187, report["placement_count"])
+		# One disclosed, non-blocking question remains; every entry must say why it does not block.
+		for entry in report["unresolved"]:
+			self.assertTrue(entry["why_not_blocking"].strip(), entry["scope"])
 		self.assertEqual(745, report["extraction"]["file_count"])
 		self.assertEqual(
 			{"left": 0.0, "top": 0.0, "right": 964.0, "bottom": 2162.0},
@@ -517,6 +605,50 @@ class AttackFromMarsRetainedEvidenceTests(unittest.TestCase):
 		if not (root / curator.EXTRACTION_RELATIVE_PATH).is_dir():
 			self.skipTest("the retained Attack From Mars extraction is not present")
 		curator.verify_extraction_manifest(root)
+
+	def test_every_visual_review_page_matches_its_pinned_hash(self) -> None:
+		import curate_attack_from_mars as curator
+
+		manuals_root = os.environ.get("PINMAME_MANUALS_ROOT")
+		if not manuals_root:
+			self.skipTest("PINMAME_MANUALS_ROOT is not configured")
+		rendered = Path(manuals_root) / "rendered" / "bally.attack-from-mars.1995"
+		if not rendered.is_dir():
+			self.skipTest("the rendered Attack From Mars page cache is not present")
+		for name, digest, _note in curator.VISUAL_REVIEW_CACHE:
+			page = rendered / name
+			self.assertTrue(page.is_file(), name)
+			self.assertEqual(digest, curator._file_sha256(page), name)
+
+	def test_retained_transcription_matches_its_pinned_hash(self) -> None:
+		import curate_attack_from_mars as curator
+
+		artifacts_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not artifacts_root:
+			self.skipTest("PINMAME_REVIEW_ARTIFACTS_ROOT is not configured")
+		path = Path(artifacts_root) / "attack-from-mars-1995" / "manual-transcription.md"
+		if not path.is_file():
+			self.skipTest("the retained transcription is not present")
+		self.assertEqual(curator.MANUAL_TRANSCRIPTION_SHA256, curator._file_sha256(path))
+
+	def test_retained_harness_runs_match_the_evidence_record(self) -> None:
+		import curate_attack_from_mars as curator
+
+		artifacts_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not artifacts_root:
+			self.skipTest("PINMAME_REVIEW_ARTIFACTS_ROOT is not configured")
+		harness = Path(artifacts_root) / "attack-from-mars-1995" / "harness"
+		if not harness.is_dir():
+			self.skipTest("the retained harness runs are not present")
+		evidence = load_json(EVIDENCE_PATH)
+		names = {
+			"boot-and-service-v1": "afm-boot-and-service.json",
+			"attract-and-ball-start-v1": "afm-attract-and-ball-start.json",
+		}
+		for run in evidence["runtime"]["raw_runs"]:
+			path = harness / names[run["name"]]
+			self.assertTrue(path.is_file(), run["name"])
+			self.assertEqual(run["sha256"], curator._file_sha256(path), run["name"])
 
 
 if __name__ == "__main__":

@@ -7310,11 +7310,11 @@
         "group": "pinmame.output.solenoid"
       },
       "id": "device.saucer-l-e-d-clock",
-      "kind": "flasher",
+      "kind": "relay",
       "label": "Saucer L.E.D. Clock",
       "physical": {
         "assembly_part_number": "A-20670",
-        "notes": "Printed solenoid/flasher table entry 37 (Flasher). WPC-95 auxiliary output on power-driver connector J110 with no drive transistor of its own. PinMAME duplicates it at public address 41, so a recreation must treat 37 and 41 as one physical signal. afm_wpc_w shifts a sixteen-bit word into PinMAME's two auxiliary lamp columns using this pair, and wpc.c documents WPC_SOLENOID1 bits 4-7 as the J122/J123/J124 GPIO that appear as LPDC outputs 37-40 in manuals. The pinned harness saw 37, 38, 41 and 42 active together with the saucer LED ring in attract mode and all four go quiet together at ball start."
+        "notes": "Printed solenoid/flasher table entry 37 (Flasher). This output emits no light itself and therefore has no playfield placement; it is one of the two serial control lines into shift-register board A-20670, and the light it ultimately produces is the sixteen saucer L.E.D.s enumerated at lamp addresses 91-98 and 101-108. The printed table lists it under the flasher driver group because of the driver circuit it shares, not because it drives a flashlamp. WPC-95 auxiliary output on power-driver connector J110 with no drive transistor of its own. PinMAME duplicates it at public address 41, so a recreation must treat 37 and 41 as one physical signal. afm_wpc_w shifts a sixteen-bit word into PinMAME's two auxiliary lamp columns using this pair, and wpc.c documents WPC_SOLENOID1 bits 4-7 as the J122/J123/J124 GPIO that appear as LPDC outputs 37-40 in manuals. The pinned harness saw 37, 38, 41 and 42 active together with the saucer LED ring in attract mode and all four go quiet together at ball start."
       },
       "provenance": {
         "source_refs": [
@@ -7325,24 +7325,19 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "internal.serial-control"
+      ],
       "spatial": {
-        "placements": [
-          {
-            "id": "device.saucer-l-e-d-clock.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.afm-jpsalas-3-0-2",
-                "manual.bally.attack-from-mars.1995"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.494813,
-            "y": 0.209528
-          }
-        ],
-        "status": "validated"
+        "provenance": {
+          "source_refs": [
+            "manual.bally.attack-from-mars.1995",
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "internal_nonvisual",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "WPC-95 power driver board",
@@ -7368,11 +7363,11 @@
         "group": "pinmame.output.solenoid"
       },
       "id": "device.saucer-l-e-d-data",
-      "kind": "flasher",
+      "kind": "relay",
       "label": "Saucer L.E.D. Data",
       "physical": {
         "assembly_part_number": "A-20670",
-        "notes": "Printed solenoid/flasher table entry 38 (Flasher). WPC-95 auxiliary output on power-driver connector J110 with no drive transistor of its own. PinMAME duplicates it at public address 42, so a recreation must treat 38 and 42 as one physical signal. afm_wpc_w shifts a sixteen-bit word into PinMAME's two auxiliary lamp columns using this pair, and wpc.c documents WPC_SOLENOID1 bits 4-7 as the J122/J123/J124 GPIO that appear as LPDC outputs 37-40 in manuals. The pinned harness saw 37, 38, 41 and 42 active together with the saucer LED ring in attract mode and all four go quiet together at ball start."
+        "notes": "Printed solenoid/flasher table entry 38 (Flasher). This output emits no light itself and therefore has no playfield placement; it is one of the two serial control lines into shift-register board A-20670, and the light it ultimately produces is the sixteen saucer L.E.D.s enumerated at lamp addresses 91-98 and 101-108. The printed table lists it under the flasher driver group because of the driver circuit it shares, not because it drives a flashlamp. WPC-95 auxiliary output on power-driver connector J110 with no drive transistor of its own. PinMAME duplicates it at public address 42, so a recreation must treat 38 and 42 as one physical signal. afm_wpc_w shifts a sixteen-bit word into PinMAME's two auxiliary lamp columns using this pair, and wpc.c documents WPC_SOLENOID1 bits 4-7 as the J122/J123/J124 GPIO that appear as LPDC outputs 37-40 in manuals. The pinned harness saw 37, 38, 41 and 42 active together with the saucer LED ring in attract mode and all four go quiet together at ball start."
       },
       "provenance": {
         "source_refs": [
@@ -7383,24 +7378,19 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "internal.serial-control"
+      ],
       "spatial": {
-        "placements": [
-          {
-            "id": "device.saucer-l-e-d-data.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.afm-jpsalas-3-0-2",
-                "manual.bally.attack-from-mars.1995"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.494813,
-            "y": 0.209528
-          }
-        ],
-        "status": "validated"
+        "provenance": {
+          "source_refs": [
+            "manual.bally.attack-from-mars.1995",
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "internal_nonvisual",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "WPC-95 power driver board",
@@ -13093,8 +13083,7 @@
       "kind": "gi",
       "label": "Top Playfield General Illumination",
       "physical": {
-        "notes": "Printed general-illumination string 03; printed bulb type #44, #555. The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate come from the retained table's GI emitter array for this string. The table pairs each bulb with a co-located halo light, and only one placement per physical socket is recorded. The retained script's comment marks this string as also covering the jet bumpers. The table's three jet-bumper cap lights are decorative objects outside the GI collection and are excluded from the placement set rather than counted as sockets.",
-        "quantity": 14
+        "notes": "Printed general-illumination string 03; printed bulb type #44, #555. The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate come from the retained table's GI emitter array for this string. The table pairs each bulb with a co-located halo light, and only one placement per physical socket is recorded. No physical socket count is asserted for this string, and unlike strings 01 and 02 the placement set is explicitly not claimed to be exhaustive. The retained script's comment marks this string as also covering the jet bumpers, and the table carries three further bulb lights gi31, gi32 and gi33 sitting exactly at the three jet-bumper centres. They are absent from the aGiTLights collection, which proves only that this table does not modulate them through that collection; it does not prove the physical sockets are missing. The manual does not itemize the string, so whether those three are additional string-03 sockets or pure decoration is unresolved, and the fourteen placements below are the emitters this string is observed to drive rather than a complete socket inventory."
       },
       "provenance": {
         "source_refs": [

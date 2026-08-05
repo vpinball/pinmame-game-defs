@@ -4,7 +4,13 @@ Coverage: **author_ready - manual-verified semantic I/O with full connector, wir
 
 ## Identity and evidence precedence
 
-WPC-95 machine, IPDB 3781. The PinMAME family roots at `afm_113` with clones including `afm_113b` (1.13b, the common home-ROM revision), earlier `afm_03`/`afm_10`/`afm_11`, the Pinball FX and Ultrapin derivatives, and three FreeWPC community firmware revisions. The retained Bally/Midway operations manual (176-page scan, SHA-256 `12c36ce8e1e0997a03016d76589df4fe2a6ad66cd5592d2a6f8dd75e49f6b1e5`) governs physical inventory: Lamp Matrix and Lamp Locations on manual pages 2-42/2-43 (PDF pages 136/137), Switch Matrix and Switch Locations on 2-44 (PDF 138), Solenoid/Flasher Table and Locations on 2-46/2-47 (PDF 140/141). The known-working `Attack from Mars (Bally 1995) g5k 1.3.11` script from the pinned corpus (runs `afm_113b`) is ground truth for controller addresses and callback routing. Runtime observations come from contributor switch/solenoid/lamp/sound-command logging on `afm_113b` under VPinMAME 3.6 over roughly three months; no content-addressed traces were retained, so claims backed only by that source stay candidate/observed.
+WPC-95 machine. The PinMAME family roots at `afm_113` with clones including `afm_113b` (1.13b, the common home-ROM revision), earlier `afm_03`/`afm_10`/`afm_11`, the Pinball FX and Ultrapin derivatives, and three FreeWPC community firmware revisions. **No IPDB identity is asserted.** IPDB was Cloudflare-gated throughout curation and no IPDB evidence record was retained, so `machine.ipdb_id` and `machine.model_number` are deliberately absent from the definition rather than carrying an unsourced value.
+
+Physical inventory authority is the **Bally/Midway Operators Handbook 16-10206**, retained in this repository's evidence roots at SHA-256 `5900c779f3bfb14251ada18d25a4dde84dd608b6ddd988ece8c92ea20fd0114b`: lamp matrix and lamp locations on printed pages 2-3, switch matrix and switch locations on 4-5, solenoid/flasher table and locations on 6-7, upper playfield parts on 8-9. Every table was read from rendered pages, not OCR, and transcribed into the retained review artifact.
+
+Two further sources shaped the earlier partial revision of this note but are **not retained in this repository's evidence roots** and are therefore not authority for any promoted claim: a 176-page Bally/Midway operations manual scan (contributor-held; its page numbering 2-42 through 2-47 is cited in the sections below only to show where the contributor read a value) and a community altsound package used for the DCS opcode table. Where a claim rests only on one of those, it is prose reference material rather than a validated assertion in the definition.
+
+Runtime authority is the pinned LibPinMAME harness recorded in `evidence/runtime/wpc-95/attack-from-mars-boot-attract-and-ball-start.json`. The earlier contributor switch/solenoid/lamp/sound-command logging on `afm_113b` under VPinMAME 3.6 retained no content-addressed traces, so claims backed only by that source remain candidate-grade prose here and were not promoted to validated assertions.
 
 ## Corrections to the legacy import
 
@@ -24,7 +30,7 @@ Attack From Mars publishes the same physical outputs on more than one PinMAME ad
 
 - Public solenoid 43 mirrors LPDC output 39 (WPC-95 duplicates 37-40 at 41-44). Output 39 is the printed **Strobe Light**, assembly A-20718 on J110-4, cabled through H-20705 - not a second saucer-dome circuit. The retained JPSalas script settles it by binding the strobe on the mirror address with `SolCallback(43) = "SetLamp 130,"` where lamp 130 is the table's `Strobe` object, so a recreation must accept the strobe on either 39 or 43. Outputs 37 and 38 are mirrored the same way at 41 and 42.
 - `afmGameData` declares `custSol=3`, so PinMAME also publishes game-specific solenoids 51-53. `afm_getSol` returns WPC_FLIPPERCOIL95 bit 0x20 for 51, bit 0x10 for 52, and bits 0xc0 for 53 - the same bits `core_getSol` reports on public solenoids 34, 33, and 35/36 respectively.
-- The two ball-gate addresses carry a naming disagreement worth resolving against the manual page before this machine is promoted. The retained g5k script binds 33 to the right gate and 34 to the left gate; pinned PinMAME names them the opposite way (`sLGate` on bit 0x10 = public 33, `sRGate` on bit 0x20 = public 34), and PinMAME's own custom-solenoid aliases are internally inconsistent with that naming. The definition keeps the script's mapping, marks both entries `observed` rather than `validated`, and records the disagreement.
+- The two ball-gate addresses carry a naming disagreement, now resolved. Every physical source agrees that public solenoid 33 is the **right** gate and 34 the **left**: the printed solenoid/flasher table (33 RIGHT GATE High Power Q84 J120-6, 34 LEFT GATE Low Power Q86 J120-4), the upper-playfield parts list (actuator coil A-17796 with A-17797-2 Right Ball Gate on item 24 and A-17797-1 Left Ball Gate on item 25), and both retained known-working scripts. Pinned PinMAME disagrees and is also internally inconsistent: `wpc.c` writes `WPC_FLIPPERCOIL95` bits 4-7 to public solenoids 33-36, so bit 0x10 is public 33 and bit 0x20 is public 34, yet `afm.c` reads bit 0x10 for `sLGate` and bit 0x20 for `sRGate` while its own comments annotate `sRGate` as `/* 33 */` and `sLGate` as `/* 34 */`. The manual owns physical identity and the known-working script owns runtime binding, so both entries are `validated` on that basis, the emulator defect is recorded in the device notes, and no conflict record is carried because the disagreement is between sources of unequal authority rather than unresolved.
 - `afmGameData` also declares `lampCol=2`, so PinMAME exposes two auxiliary lamp columns above the standard 8x8 matrix for the 16-LED saucer board. They are now enumerated: the sixteen L.E.D.s appear at public lamp addresses **91-98 and 101-108**. `afm_wpc_w` shifts a sixteen-bit word into `tmpLampMatrix[8]` and `[9]` using `WPC_SOLENOID1` bit 4 as the clock and bit 5 as the data, and `wpc.c` documents that register's bits 4-7 as the J122/J123/J124 GPIO that "appear as LPDC outputs 37..40 in manuals", so the clock is public solenoid 37 and the data public solenoid 38 - exactly the printed L.E.D. Clock and L.E.D. Data entries on saucer board A-20670. The pinned harness confirmed it: in attract mode exactly eight of the sixteen addresses are lit at a time and the set rotates through four phases that between them cover all sixteen, while solenoids 37, 38 and their LPDC mirrors 41 and 42 are active; at ball start the ring and all four solenoids go quiet together.
 
 ## Displays
@@ -76,7 +82,7 @@ Five GI strings per the manual solenoid/flasher table: 01 Bottom Playfield, 02 M
 
 ## Dedicated and flipper switches
 
-The manual's dedicated grounded switches include the four coin chutes (D1-D4), service credits/volume/begin-test controls (D5-D8), and the Fliptronic flipper block: F1 Lower Right Flipper EOS, F2 Lower Right Flipper cabinet button (opto), F3 Lower Left Flipper EOS, F4 Lower Left Flipper cabinet button (opto), F5-F8 not used (no upper flippers on this game). The mapping of the manual's F-numbers onto the emulator's dedicated switch addresses 111-118 has not been independently verified here, so the legacy flipper entries are left untouched; the upper-flipper addresses should ultimately be marked unused once that mapping is pinned.
+The manual's dedicated grounded switches include the four coin chutes (D1-D4), service credits/volume/begin-test controls (D5-D8), and the Fliptronic flipper block: F1 Lower Right Flipper EOS, F2 Lower Right Flipper cabinet button (opto), F3 Lower Left Flipper EOS, F4 Lower Left Flipper cabinet button (opto), F5-F8 not used (no upper flippers on this game). The manual's F-numbers map onto the emulator's dedicated switch addresses in order, F1 through F8 to public 111 through 118, which the definition now records with a `manual.address` alias on each. F1-F4 are used; F5-F8 print `---` and "Not Used" in both the switch matrix and the switch-locations parts list, and the switch-locations playfield map draws F6 and F8 floating outside the playfield outline with no leader line, so public switches 115-118 are marked unused. Note that `afmGameData` still declares `FLIP_SW(FLIP_L|FLIP_U)`; that is emulator scaffolding for the generation and is not evidence of upper flippers on this machine. The matching upper Fliptronic *outputs* are genuinely in use - they drive the two loop gates and the ramp diverter.
 
 ## Timing and tuning observations
 
@@ -692,6 +698,21 @@ Sample names are from the retained community altsound package for `afm_113b` (`a
 
 The retained operations manual is the 'Bally Attack From Mars Full Operations Manual (Final)' scan, 176 pages, SHA-256 `12c36ce8e1e0997a03016d76589df4fe2a6ad66cd5592d2a6f8dd75e49f6b1e5` (image-only scan; matrix pages were rendered and read visually, not OCR-trusted). Game adjustments, error codes, and unit disassembly (flying saucer mechanism 1-57, back panel 1-63) are in Section 1; parts and assemblies in Section 2; wiring diagrams and schematics in Section 3.
 
+## One open question that is deliberately not asserted
+
+The retained table carries three bulb lights `gi31`, `gi32` and `gi33` sitting exactly at the three
+jet-bumper centres. They are absent from the `aGiTLights` collection that the script modulates,
+which proves only that this table does not drive them through that collection - it does not prove
+the physical sockets are missing, and the script's own comment says general-illumination string 03
+also covers the bumpers. The manual itemizes no general-illumination string, so no printed count
+exists either way.
+
+The definition therefore asserts **no** physical socket count for string 03, and its fourteen
+placements are documented as the emitters the string is observed to drive rather than a complete
+socket inventory. Strings 01 and 02 keep their table-derived counts because no comparable ambiguity
+exists for them. An author recreating the machine gets fourteen correct emitter positions plus this
+note, and nothing uncertain is presented as settled.
+
 ## Resolved since the partial state
 
 Every question this note previously left open has been answered, and the definition is now
@@ -761,10 +782,10 @@ saucer L.E.D. board inside saucer assembly A-20608.
 
 ## Sources
 
-- `manual.attack-from-mars.1995`: retained Bally/Midway operations manual scan, SHA-256 `12c36ce8e1e0997a03016d76589df4fe2a6ad66cd5592d2a6f8dd75e49f6b1e5`; lamp matrix 2-42/2-43, switch matrix 2-44, solenoid/flasher table 2-46, assemblies Section 2.
+- `manual.attack-from-mars.1995`: contributor-held Bally/Midway operations manual scan, SHA-256 `12c36ce8e1e0997a03016d76589df4fe2a6ad66cd5592d2a6f8dd75e49f6b1e5`; lamp matrix 2-42/2-43, switch matrix 2-44, solenoid/flasher table 2-46, assemblies Section 2. **Not retained in this repository's evidence roots**, so it is corroboration for the retained handbook rather than an independent authority for any promoted assertion.
 - `vpx.attack-from-mars-g5k-1.3.11`: known-working script at corpus revision `0c036bb61b4b4e8c778c37559f6795df8cd1521e`, SHA-256 `21fb64898f5a1a564e70ba2d40afed5fb54b8c49b0707530f0e24b7ca6cdf50c`; runs `afm_113b`; controller-address and callback authority.
 - `runtime.afm-113b.contributor-logging`: contributor instrumentation on VPinMAME 3.6, `afm_113b.zip` SHA-256 `378102edfd80d650bf6810d5e521fd08cfd972f8732f3c2204f5929d2266358d`; no retained traces, candidate/observed authority only.
-- `altsound.afm-113b.community-package`: retained community altsound.csv for `afm_113b`, SHA-256 `bc139099b58ed94240d86f4fcc8e06ba37dafa5a14d9d5417917b5f225eac830`; sample-name authority for the opcode table.
+- `altsound.afm-113b.community-package`: contributor-held community altsound.csv for `afm_113b`, SHA-256 `bc139099b58ed94240d86f4fcc8e06ba37dafa5a14d9d5417917b5f225eac830`; sample-name reference for the DCS opcode table below. **Not retained in this repository's evidence roots**, and the opcode table is reference prose that no promoted assertion depends on.
 - `legacy.game.afm` / `legacy.platform.wpc`: legacy VPE-derived import, corrected as documented above.
 - `pinmame.catalog.4ec52ff0ac13`: pinned driver family and display topology.
 - `manual.bally.attack-from-mars.1995`: retained Bally/Midway Operators Handbook 16-10206, SHA-256
