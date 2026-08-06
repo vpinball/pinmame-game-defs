@@ -620,172 +620,173 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 614 | 1979 | STUB - Road Runner (Prototype) | Atari | stub |
 | 615 | 1979 | STUB - Superman | Atari | stub |
 | 616 | 1979 | Harlem Globetrotters on Tour | Bally | partial |
-| 617 | 1979 | STUB - Dolly Parton | Bally | stub |
-| 618 | 1979 | STUB - Future Spa | Bally | stub |
-| 619 | 1979 | STUB - Kiss | Bally | stub |
-| 620 | 1979 | STUB - Paragon | Bally | stub |
-| 621 | 1979 | STUB - Star Trek | Bally | stub |
-| 622 | 1979 | STUB - Supersonic | Bally | stub |
-| 623 | 1979 | STUB - Circa 1933 | Fascination Int. | stub |
-| 624 | 1979 | STUB - Eros One | Fascination Int. | stub |
-| 625 | 1979 | STUB - Coney Island! | Game Plan | stub |
-| 626 | 1979 | STUB - Family Fun! | Game Plan | stub |
-| 627 | 1979 | STUB - Sharpshooter | Game Plan | stub |
-| 628 | 1979 | STUB - Star Trip | Game Plan | stub |
-| 629 | 1979 | STUB - Vegas (Game Plan) | Game Plan | stub |
-| 630 | 1979 | Count-Down | Gottlieb | partial |
-| 631 | 1979 | STUB - Genie | Gottlieb | stub |
-| 632 | 1979 | STUB - Incredible Hulk, The | Gottlieb | stub |
-| 633 | 1979 | STUB - Pinball Pool | Gottlieb | stub |
-| 634 | 1979 | STUB - Solar Ride | Gottlieb | stub |
-| 635 | 1979 | STUB - Totem | Gottlieb | stub |
-| 636 | 1979 | STUB - Centaur (Inder) | Inder (Spain) | stub |
-| 637 | 1979 | STUB - Topaz (Inder) | Inder (Spain) | stub |
-| 638 | 1979 | STUB - Antar | Playmatic | stub |
-| 639 | 1979 | STUB - Party | Playmatic | stub |
-| 640 | 1979 | STUB - Night Fever | Sonic (Spain) | stub |
-| 641 | 1979 | STUB - Storm | Sonic (Spain) | stub |
-| 642 | 1979 | STUB - Cosmic Princess | Stern | stub |
-| 643 | 1979 | STUB - Dracula | Stern | stub |
-| 644 | 1979 | STUB - Hot Hand | Stern | stub |
-| 645 | 1979 | STUB - Magic | Stern | stub |
-| 646 | 1979 | STUB - Meteor | Stern | stub |
-| 647 | 1979 | STUB - Meteor (Bonus Count Offical Fix) | Stern | stub |
-| 648 | 1979 | STUB - Trident | Stern | stub |
-| 649 | 1979 | STUB - Football | Taito | stub |
-| 650 | 1979 | STUB - Shock | Taito | stub |
-| 651 | 1979 | STUB - Spectra IV | Valley | stub |
-| 652 | 1979 | STUB - Aristocrat (Shuffle) (L-1) | Williams | stub |
-| 653 | 1979 | STUB - Gorgar (L-1) | Williams | stub |
-| 654 | 1979 | STUB - King Tut (Shuffle) (L-1) | Williams | stub |
-| 655 | 1979 | STUB - Laser Ball (L-2) | Williams | stub |
-| 656 | 1979 | STUB - Stellar Wars (L-2) | Williams | stub |
-| 657 | 1979 | STUB - Taurus (Shuffle) (L-1) | Williams | stub |
-| 658 | 1979 | STUB - Time Warp (L-3) | Williams | stub |
-| 659 | 1979 | STUB - Tri Zone (L-1) | Williams | stub |
-| 660 | 1979 | STUB - Hot Wheels | Zaccaria | stub |
-| 661 | 1979 | STUB - Shooting the Rapids | Zaccaria | stub |
-| 662 | 1979 | STUB - Space City | Zaccaria | stub |
-| 663 | 1978 | STUB - Flame of Athens | Allied Leisure | stub |
-| 664 | 1978 | STUB - Hearts Spades | Allied Leisure | stub |
-| 665 | 1978 | STUB - Hoe Down | Allied Leisure | stub |
-| 666 | 1978 | STUB - Take Five | Allied Leisure | stub |
-| 667 | 1978 | STUB - Black Sheep Squadron | Astro | stub |
-| 668 | 1978 | STUB - Middle Earth | Atari | stub |
-| 669 | 1978 | STUB - Space Riders | Atari | stub |
-| 670 | 1978 | STUB - Black Jack | Bally | stub |
-| 671 | 1978 | STUB - Lost World | Bally | stub |
-| 672 | 1978 | STUB - Mata Hari | Bally | stub |
-| 673 | 1978 | STUB - Playboy | Bally | stub |
-| 674 | 1978 | STUB - Power Play | Bally | stub |
-| 675 | 1978 | STUB - Six Million Dollar Man, The | Bally | stub |
-| 676 | 1978 | STUB - Strikes and Spares | Bally | stub |
-| 677 | 1978 | STUB - Voltan Escapes Cosmic Doom | Bally | stub |
-| 678 | 1978 | STUB - Black Velvet | Game Plan | stub |
-| 679 | 1978 | STUB - Camel Lights | Game Plan | stub |
-| 680 | 1978 | STUB - Chuck-A-Luck | Game Plan | stub |
-| 681 | 1978 | STUB - Foxy Lady | Game Plan | stub |
-| 682 | 1978 | STUB - Real | Game Plan | stub |
-| 683 | 1978 | STUB - Rio | Game Plan | stub |
-| 684 | 1978 | STUB - Charlie's Angels | Gottlieb | stub |
-| 685 | 1978 | STUB - Close Encounters of the Third Kind | Gottlieb | stub |
-| 686 | 1978 | STUB - Dragon | Gottlieb | stub |
-| 687 | 1978 | STUB - Joker Poker | Gottlieb | stub |
-| 688 | 1978 | STUB - Sinbad | Gottlieb | stub |
-| 689 | 1978 | STUB - FJ Holden | Hankin | stub |
-| 690 | 1978 | STUB - Orbit 1 | Hankin | stub |
-| 691 | 1978 | STUB - Pentacup (rev. 1) | Micropin | stub |
-| 692 | 1978 | STUB - Rotation VIII (1.17) | Midway | stub |
-| 693 | 1978 | STUB - Lucky Draw | Mirco | stub |
-| 694 | 1978 | STUB - Big Town | Playmatic | stub |
-| 695 | 1978 | STUB - Chance | Playmatic | stub |
-| 696 | 1978 | STUB - Last Lap | Playmatic | stub |
-| 697 | 1978 | STUB - Space Gambler | Playmatic | stub |
-| 698 | 1978 | STUB - Third World | Sonic (Spain) | stub |
-| 699 | 1978 | STUB - Lectronamo | Stern | stub |
-| 700 | 1978 | STUB - Memory Lane | Stern | stub |
-| 701 | 1978 | STUB - Nugent | Stern | stub |
-| 702 | 1978 | STUB - Stars | Stern | stub |
-| 703 | 1978 | STUB - Wild Fyre | Stern | stub |
-| 704 | 1978 | STUB - Contact (L-1) | Williams | stub |
-| 705 | 1978 | STUB - Disco Fever (L-1) | Williams | stub |
-| 706 | 1978 | STUB - Flash (Sys.6 L-1) | Williams | stub |
-| 707 | 1978 | STUB - Phoenix (L-1) | Williams | stub |
-| 708 | 1978 | STUB - Pokerino (L-1) | Williams | stub |
-| 709 | 1978 | STUB - Pompeii (Shuffle) (L-1) | Williams | stub |
-| 710 | 1978 | STUB - Topaz (Shuffle) (L-1) | Williams | stub |
-| 711 | 1978 | STUB - World Cup (L-1) | Williams | stub |
-| 712 | 1978 | STUB - Future World | Zaccaria | stub |
-| 713 | 1978 | STUB - House of Diamonds | Zaccaria | stub |
-| 714 | 1978 | STUB - Ski Jump | Zaccaria | stub |
-| 715 | 1978 | STUB - Strike | Zaccaria | stub |
-| 716 | 1978 | STUB - Winter Sports | Zaccaria | stub |
-| 717 | 1977 | STUB - Roy Clark Super Picker | Allied Leisure | stub |
-| 718 | 1977 | STUB - Thunderbolt | Allied Leisure | stub |
-| 719 | 1977 | STUB - Airborne Avenger | Atari | stub |
-| 720 | 1977 | STUB - Time 2000 | Atari | stub |
-| 721 | 1977 | STUB - Eight Ball | Bally | stub |
-| 722 | 1977 | STUB - Evel Knievel | Bally | stub |
-| 723 | 1977 | STUB - Night Rider (rev. 21) | Bally | stub |
-| 724 | 1977 | STUB - Roy Clark - The Entertainer | Fascination Int. | stub |
-| 725 | 1977 | STUB - Cleopatra | Gottlieb | stub |
-| 726 | 1977 | STUB - Pinball | Stern | stub |
-| 727 | 1977 | STUB - Stingray | Stern | stub |
-| 728 | 1977 | STUB - Hot Tip (L-1) | Williams | stub |
-| 729 | 1977 | STUB - Lucky Seven (L-1) | Williams | stub |
-| 730 | 1976 | STUB - Atarians, The | Atari | stub |
-| 731 | 1976 | STUB - Bow & Arrow (Prototype, rev. 23) | Bally | stub |
-| 732 | 1976 | STUB - Freedom | Bally | stub |
-| 733 | 1975 | STUB - Boomerang (Engineering Prototype, patched patent code) | Bally | stub |
-| 734 | 1975 | STUB - Spirit of 76 | Mirco | stub |
-| 735 | 1974 | STUB - Flicker (Prototype) | Nutting Associates | stub |
-| 736 | unknown | STUB - Rush (1.0) | Astill Entertainment | stub |
-| 737 | unknown | STUB - System 1 'T' Test Fixture | Gottlieb | stub |
-| 738 | unknown | STUB - System 3 game template | Gottlieb | stub |
-| 739 | unknown | STUB - System 80B Test Fixture | Gottlieb | stub |
-| 740 | unknown | STUB - Movie Masters | Jac Van Ham (Royal) | stub |
-| 741 | unknown | STUB - Pin Ball | Joctronic | stub |
-| 742 | unknown | STUB - Pimbal (Pinball 3000) | Juegos Populares | stub |
-| 743 | unknown | STUB - Data East Leon Test Chip (version 4) | Leon | stub |
-| 744 | unknown | STUB - Al Capone | LTD | stub |
-| 745 | unknown | STUB - Alien Warrior | LTD | stub |
-| 746 | unknown | STUB - Arizona | LTD | stub |
-| 747 | unknown | STUB - Atlantis (LTD) | LTD | stub |
-| 748 | unknown | STUB - Black Hole (LTD) | LTD | stub |
-| 749 | unknown | STUB - Columbia | LTD | stub |
-| 750 | unknown | STUB - Cowboy Eight Ball 2 | LTD | stub |
-| 751 | unknown | STUB - Disco Dancing | LTD | stub |
-| 752 | unknown | STUB - Force | LTD | stub |
-| 753 | unknown | STUB - Haunted Hotel | LTD | stub |
-| 754 | unknown | STUB - Hustler | LTD | stub |
-| 755 | unknown | STUB - King Kong (LTD) | LTD | stub |
-| 756 | unknown | STUB - Martian Queen | LTD | stub |
-| 757 | unknown | STUB - Mr. & Mrs. Pec-Men | LTD | stub |
-| 758 | unknown | STUB - Space Poker | LTD | stub |
-| 759 | unknown | STUB - Time Machine (LTD) (4 Players) | LTD | stub |
-| 760 | unknown | STUB - Trick Shooter | LTD | stub |
-| 761 | unknown | STUB - Viking King | LTD | stub |
-| 762 | unknown | STUB - Unknown Game (MAC #1808) | MAC S.A. | stub |
-| 763 | unknown | STUB - Eight Ball Champ (Maibesa) | Maibesa | stub |
-| 764 | unknown | STUB - Stars & Strikes (Bowler) | Monroe Bowling Co. | stub |
-| 765 | unknown | STUB - Mad Race | Playmatic | stub |
-| 766 | unknown | STUB - Miss Disco (Bingo) | Playmatic | stub |
-| 767 | unknown | STUB - Heavy Metal | Rowamet | stub |
-| 768 | unknown | STUB - Brooklyn (set 1) (Bingo) | Seeben (Belgium) | stub |
-| 769 | unknown | STUB - Penalty (Bingo) | Seeben (Belgium) | stub |
-| 770 | unknown | STUB - Continental 3 in 1 (Bingo) | Sirmo (Belgium) | stub |
-| 771 | unknown | STUB - Domino II (Bingo) | Sirmo (Belgium) | stub |
-| 772 | unknown | STUB - Golden Gate (set 1) (Bingo) | Sirmo (Belgium) | stub |
-| 773 | unknown | STUB - New Dixieland (Bingo) | Sirmo (Belgium) | stub |
-| 774 | unknown | STUB - Super Dixieland (Bingo) | Sirmo (Belgium) | stub |
-| 775 | unknown | STUB - Triple Joker (Bingo) | Sirmo (Belgium) | stub |
-| 776 | unknown | STUB - Golden Game (Bingo) | Splin (Belgium) | stub |
-| 777 | unknown | STUB - Michigan (Bingo) | Splin (Belgium) | stub |
-| 778 | unknown | STUB - Montana Bingo Stake 6/10 (Bingo) | Splin (Belgium) | stub |
-| 779 | unknown | STUB - Top Game Laser L10 (Bingo) | Splin (Belgium) | stub |
-| 780 | unknown | STUB - S.A.M. III Board Tester (on-board) | Stern | stub |
-| 781 | unknown | STUB - Fire Action Deluxe | Taito | stub |
-| 782 | unknown | STUB - Polar Explorer | Taito | stub |
-| 783 | unknown | STUB - Taito Test Fixture | Taito | stub |
-| 784 | unknown | STUB - Volley | Taito | stub |
-| 785 | unknown | STUB - Big Ball Bowling (Bowler) | United(?) | stub |
+| 617 | 1979 | Kiss | Bally | author_ready |
+| 618 | 1979 | STUB - Dolly Parton | Bally | stub |
+| 619 | 1979 | STUB - Future Spa | Bally | stub |
+| 620 | 1979 | STUB - Kiss | Bally | stub |
+| 621 | 1979 | STUB - Paragon | Bally | stub |
+| 622 | 1979 | STUB - Star Trek | Bally | stub |
+| 623 | 1979 | STUB - Supersonic | Bally | stub |
+| 624 | 1979 | STUB - Circa 1933 | Fascination Int. | stub |
+| 625 | 1979 | STUB - Eros One | Fascination Int. | stub |
+| 626 | 1979 | STUB - Coney Island! | Game Plan | stub |
+| 627 | 1979 | STUB - Family Fun! | Game Plan | stub |
+| 628 | 1979 | STUB - Sharpshooter | Game Plan | stub |
+| 629 | 1979 | STUB - Star Trip | Game Plan | stub |
+| 630 | 1979 | STUB - Vegas (Game Plan) | Game Plan | stub |
+| 631 | 1979 | Count-Down | Gottlieb | partial |
+| 632 | 1979 | STUB - Genie | Gottlieb | stub |
+| 633 | 1979 | STUB - Incredible Hulk, The | Gottlieb | stub |
+| 634 | 1979 | STUB - Pinball Pool | Gottlieb | stub |
+| 635 | 1979 | STUB - Solar Ride | Gottlieb | stub |
+| 636 | 1979 | STUB - Totem | Gottlieb | stub |
+| 637 | 1979 | STUB - Centaur (Inder) | Inder (Spain) | stub |
+| 638 | 1979 | STUB - Topaz (Inder) | Inder (Spain) | stub |
+| 639 | 1979 | STUB - Antar | Playmatic | stub |
+| 640 | 1979 | STUB - Party | Playmatic | stub |
+| 641 | 1979 | STUB - Night Fever | Sonic (Spain) | stub |
+| 642 | 1979 | STUB - Storm | Sonic (Spain) | stub |
+| 643 | 1979 | STUB - Cosmic Princess | Stern | stub |
+| 644 | 1979 | STUB - Dracula | Stern | stub |
+| 645 | 1979 | STUB - Hot Hand | Stern | stub |
+| 646 | 1979 | STUB - Magic | Stern | stub |
+| 647 | 1979 | STUB - Meteor | Stern | stub |
+| 648 | 1979 | STUB - Meteor (Bonus Count Offical Fix) | Stern | stub |
+| 649 | 1979 | STUB - Trident | Stern | stub |
+| 650 | 1979 | STUB - Football | Taito | stub |
+| 651 | 1979 | STUB - Shock | Taito | stub |
+| 652 | 1979 | STUB - Spectra IV | Valley | stub |
+| 653 | 1979 | STUB - Aristocrat (Shuffle) (L-1) | Williams | stub |
+| 654 | 1979 | STUB - Gorgar (L-1) | Williams | stub |
+| 655 | 1979 | STUB - King Tut (Shuffle) (L-1) | Williams | stub |
+| 656 | 1979 | STUB - Laser Ball (L-2) | Williams | stub |
+| 657 | 1979 | STUB - Stellar Wars (L-2) | Williams | stub |
+| 658 | 1979 | STUB - Taurus (Shuffle) (L-1) | Williams | stub |
+| 659 | 1979 | STUB - Time Warp (L-3) | Williams | stub |
+| 660 | 1979 | STUB - Tri Zone (L-1) | Williams | stub |
+| 661 | 1979 | STUB - Hot Wheels | Zaccaria | stub |
+| 662 | 1979 | STUB - Shooting the Rapids | Zaccaria | stub |
+| 663 | 1979 | STUB - Space City | Zaccaria | stub |
+| 664 | 1978 | STUB - Flame of Athens | Allied Leisure | stub |
+| 665 | 1978 | STUB - Hearts Spades | Allied Leisure | stub |
+| 666 | 1978 | STUB - Hoe Down | Allied Leisure | stub |
+| 667 | 1978 | STUB - Take Five | Allied Leisure | stub |
+| 668 | 1978 | STUB - Black Sheep Squadron | Astro | stub |
+| 669 | 1978 | STUB - Middle Earth | Atari | stub |
+| 670 | 1978 | STUB - Space Riders | Atari | stub |
+| 671 | 1978 | STUB - Black Jack | Bally | stub |
+| 672 | 1978 | STUB - Lost World | Bally | stub |
+| 673 | 1978 | STUB - Mata Hari | Bally | stub |
+| 674 | 1978 | STUB - Playboy | Bally | stub |
+| 675 | 1978 | STUB - Power Play | Bally | stub |
+| 676 | 1978 | STUB - Six Million Dollar Man, The | Bally | stub |
+| 677 | 1978 | STUB - Strikes and Spares | Bally | stub |
+| 678 | 1978 | STUB - Voltan Escapes Cosmic Doom | Bally | stub |
+| 679 | 1978 | STUB - Black Velvet | Game Plan | stub |
+| 680 | 1978 | STUB - Camel Lights | Game Plan | stub |
+| 681 | 1978 | STUB - Chuck-A-Luck | Game Plan | stub |
+| 682 | 1978 | STUB - Foxy Lady | Game Plan | stub |
+| 683 | 1978 | STUB - Real | Game Plan | stub |
+| 684 | 1978 | STUB - Rio | Game Plan | stub |
+| 685 | 1978 | STUB - Charlie's Angels | Gottlieb | stub |
+| 686 | 1978 | STUB - Close Encounters of the Third Kind | Gottlieb | stub |
+| 687 | 1978 | STUB - Dragon | Gottlieb | stub |
+| 688 | 1978 | STUB - Joker Poker | Gottlieb | stub |
+| 689 | 1978 | STUB - Sinbad | Gottlieb | stub |
+| 690 | 1978 | STUB - FJ Holden | Hankin | stub |
+| 691 | 1978 | STUB - Orbit 1 | Hankin | stub |
+| 692 | 1978 | STUB - Pentacup (rev. 1) | Micropin | stub |
+| 693 | 1978 | STUB - Rotation VIII (1.17) | Midway | stub |
+| 694 | 1978 | STUB - Lucky Draw | Mirco | stub |
+| 695 | 1978 | STUB - Big Town | Playmatic | stub |
+| 696 | 1978 | STUB - Chance | Playmatic | stub |
+| 697 | 1978 | STUB - Last Lap | Playmatic | stub |
+| 698 | 1978 | STUB - Space Gambler | Playmatic | stub |
+| 699 | 1978 | STUB - Third World | Sonic (Spain) | stub |
+| 700 | 1978 | STUB - Lectronamo | Stern | stub |
+| 701 | 1978 | STUB - Memory Lane | Stern | stub |
+| 702 | 1978 | STUB - Nugent | Stern | stub |
+| 703 | 1978 | STUB - Stars | Stern | stub |
+| 704 | 1978 | STUB - Wild Fyre | Stern | stub |
+| 705 | 1978 | STUB - Contact (L-1) | Williams | stub |
+| 706 | 1978 | STUB - Disco Fever (L-1) | Williams | stub |
+| 707 | 1978 | STUB - Flash (Sys.6 L-1) | Williams | stub |
+| 708 | 1978 | STUB - Phoenix (L-1) | Williams | stub |
+| 709 | 1978 | STUB - Pokerino (L-1) | Williams | stub |
+| 710 | 1978 | STUB - Pompeii (Shuffle) (L-1) | Williams | stub |
+| 711 | 1978 | STUB - Topaz (Shuffle) (L-1) | Williams | stub |
+| 712 | 1978 | STUB - World Cup (L-1) | Williams | stub |
+| 713 | 1978 | STUB - Future World | Zaccaria | stub |
+| 714 | 1978 | STUB - House of Diamonds | Zaccaria | stub |
+| 715 | 1978 | STUB - Ski Jump | Zaccaria | stub |
+| 716 | 1978 | STUB - Strike | Zaccaria | stub |
+| 717 | 1978 | STUB - Winter Sports | Zaccaria | stub |
+| 718 | 1977 | STUB - Roy Clark Super Picker | Allied Leisure | stub |
+| 719 | 1977 | STUB - Thunderbolt | Allied Leisure | stub |
+| 720 | 1977 | STUB - Airborne Avenger | Atari | stub |
+| 721 | 1977 | STUB - Time 2000 | Atari | stub |
+| 722 | 1977 | STUB - Eight Ball | Bally | stub |
+| 723 | 1977 | STUB - Evel Knievel | Bally | stub |
+| 724 | 1977 | STUB - Night Rider (rev. 21) | Bally | stub |
+| 725 | 1977 | STUB - Roy Clark - The Entertainer | Fascination Int. | stub |
+| 726 | 1977 | STUB - Cleopatra | Gottlieb | stub |
+| 727 | 1977 | STUB - Pinball | Stern | stub |
+| 728 | 1977 | STUB - Stingray | Stern | stub |
+| 729 | 1977 | STUB - Hot Tip (L-1) | Williams | stub |
+| 730 | 1977 | STUB - Lucky Seven (L-1) | Williams | stub |
+| 731 | 1976 | STUB - Atarians, The | Atari | stub |
+| 732 | 1976 | STUB - Bow & Arrow (Prototype, rev. 23) | Bally | stub |
+| 733 | 1976 | STUB - Freedom | Bally | stub |
+| 734 | 1975 | STUB - Boomerang (Engineering Prototype, patched patent code) | Bally | stub |
+| 735 | 1975 | STUB - Spirit of 76 | Mirco | stub |
+| 736 | 1974 | STUB - Flicker (Prototype) | Nutting Associates | stub |
+| 737 | unknown | STUB - Rush (1.0) | Astill Entertainment | stub |
+| 738 | unknown | STUB - System 1 'T' Test Fixture | Gottlieb | stub |
+| 739 | unknown | STUB - System 3 game template | Gottlieb | stub |
+| 740 | unknown | STUB - System 80B Test Fixture | Gottlieb | stub |
+| 741 | unknown | STUB - Movie Masters | Jac Van Ham (Royal) | stub |
+| 742 | unknown | STUB - Pin Ball | Joctronic | stub |
+| 743 | unknown | STUB - Pimbal (Pinball 3000) | Juegos Populares | stub |
+| 744 | unknown | STUB - Data East Leon Test Chip (version 4) | Leon | stub |
+| 745 | unknown | STUB - Al Capone | LTD | stub |
+| 746 | unknown | STUB - Alien Warrior | LTD | stub |
+| 747 | unknown | STUB - Arizona | LTD | stub |
+| 748 | unknown | STUB - Atlantis (LTD) | LTD | stub |
+| 749 | unknown | STUB - Black Hole (LTD) | LTD | stub |
+| 750 | unknown | STUB - Columbia | LTD | stub |
+| 751 | unknown | STUB - Cowboy Eight Ball 2 | LTD | stub |
+| 752 | unknown | STUB - Disco Dancing | LTD | stub |
+| 753 | unknown | STUB - Force | LTD | stub |
+| 754 | unknown | STUB - Haunted Hotel | LTD | stub |
+| 755 | unknown | STUB - Hustler | LTD | stub |
+| 756 | unknown | STUB - King Kong (LTD) | LTD | stub |
+| 757 | unknown | STUB - Martian Queen | LTD | stub |
+| 758 | unknown | STUB - Mr. & Mrs. Pec-Men | LTD | stub |
+| 759 | unknown | STUB - Space Poker | LTD | stub |
+| 760 | unknown | STUB - Time Machine (LTD) (4 Players) | LTD | stub |
+| 761 | unknown | STUB - Trick Shooter | LTD | stub |
+| 762 | unknown | STUB - Viking King | LTD | stub |
+| 763 | unknown | STUB - Unknown Game (MAC #1808) | MAC S.A. | stub |
+| 764 | unknown | STUB - Eight Ball Champ (Maibesa) | Maibesa | stub |
+| 765 | unknown | STUB - Stars & Strikes (Bowler) | Monroe Bowling Co. | stub |
+| 766 | unknown | STUB - Mad Race | Playmatic | stub |
+| 767 | unknown | STUB - Miss Disco (Bingo) | Playmatic | stub |
+| 768 | unknown | STUB - Heavy Metal | Rowamet | stub |
+| 769 | unknown | STUB - Brooklyn (set 1) (Bingo) | Seeben (Belgium) | stub |
+| 770 | unknown | STUB - Penalty (Bingo) | Seeben (Belgium) | stub |
+| 771 | unknown | STUB - Continental 3 in 1 (Bingo) | Sirmo (Belgium) | stub |
+| 772 | unknown | STUB - Domino II (Bingo) | Sirmo (Belgium) | stub |
+| 773 | unknown | STUB - Golden Gate (set 1) (Bingo) | Sirmo (Belgium) | stub |
+| 774 | unknown | STUB - New Dixieland (Bingo) | Sirmo (Belgium) | stub |
+| 775 | unknown | STUB - Super Dixieland (Bingo) | Sirmo (Belgium) | stub |
+| 776 | unknown | STUB - Triple Joker (Bingo) | Sirmo (Belgium) | stub |
+| 777 | unknown | STUB - Golden Game (Bingo) | Splin (Belgium) | stub |
+| 778 | unknown | STUB - Michigan (Bingo) | Splin (Belgium) | stub |
+| 779 | unknown | STUB - Montana Bingo Stake 6/10 (Bingo) | Splin (Belgium) | stub |
+| 780 | unknown | STUB - Top Game Laser L10 (Bingo) | Splin (Belgium) | stub |
+| 781 | unknown | STUB - S.A.M. III Board Tester (on-board) | Stern | stub |
+| 782 | unknown | STUB - Fire Action Deluxe | Taito | stub |
+| 783 | unknown | STUB - Polar Explorer | Taito | stub |
+| 784 | unknown | STUB - Taito Test Fixture | Taito | stub |
+| 785 | unknown | STUB - Volley | Taito | stub |
+| 786 | unknown | STUB - Big Ball Bowling (Bowler) | United(?) | stub |

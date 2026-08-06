@@ -336,18 +336,18 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual(["spatial_placement"], definition["coverage"]["missing"])
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
-		self.assertEqual(22, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
+		self.assertEqual(23, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		report = build_coverage_report(ROOT)
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
 		self.assertEqual(catalog["summary"]["game_count"], report["machine_count"])
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
-		self.assertEqual(785, report["machine_count"])
-		self.assertEqual(22, report["author_ready_count"])
+		self.assertEqual(786, report["machine_count"])
+		self.assertEqual(23, report["author_ready_count"])
 		self.assertEqual(80, report["partial_count"])
 		self.assertEqual(683, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
-		self.assertEqual(786, report["catalog_record_count"])
+		self.assertEqual(787, report["catalog_record_count"])
 		# The thirteen retrofit-pending machines above (which already include X-Men Pro), plus
 		# Terminator 2, plus Centaur, plus Twilight Zone. Centaur is not a retrofit: every one of
 		# its devices carries a spatial record except auxiliary lamp 113, a fitted A9 circuit whose
@@ -357,10 +357,10 @@ class SpatialMigrationTests(unittest.TestCase):
 		# has unresolved spatial gaps (switches 26/31-33/45/46/55 and GI address 2 have no bound
 		# VPX object), so it is counted alongside Centaur/Terminator 2.
 		self.assertEqual(16, report["missing_requirement_counts"]["spatial_placement"])
-		self.assertEqual(786, len(catalog["machines"]))
-		self.assertEqual(785, catalog["summary"]["game_count"])
-		self.assertEqual(786, catalog["summary"]["machine_count"])
-		self.assertEqual(22, catalog["summary"]["author_ready_count"])
+		self.assertEqual(787, len(catalog["machines"]))
+		self.assertEqual(786, catalog["summary"]["game_count"])
+		self.assertEqual(787, catalog["summary"]["machine_count"])
+		self.assertEqual(23, catalog["summary"]["author_ready_count"])
 		self.assertEqual(683, catalog["summary"]["stub_count"])
 		self.assertEqual(81, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])

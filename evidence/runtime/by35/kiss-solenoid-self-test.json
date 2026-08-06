@@ -1,0 +1,211 @@
+{
+  "driver_ids": [
+    "kiss"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.kiss.1979"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game kiss --rom-path <vpinmame-roms> --work-dir <isolated-state> --boot-wait 4 --pulse=-7:250:1.2 (x8) --observe 60 --output <external-json>",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "sha256": "ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d"
+    },
+    "game": "kiss",
+    "observations": {
+      "display_indices_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "display_layouts_seen": [
+        {
+          "depth": 2,
+          "height": 32,
+          "type": 14,
+          "width": 128
+        }
+      ],
+      "lamp_addresses_driven_outside_self_test": [
+        65,
+        66,
+        67,
+        81,
+        82,
+        83,
+        97,
+        98,
+        99,
+        113,
+        114,
+        115
+      ],
+      "lamp_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        65,
+        66,
+        67,
+        68,
+        81,
+        82,
+        83,
+        84,
+        97,
+        98,
+        99,
+        100,
+        113,
+        114,
+        115,
+        116
+      ],
+      "lamp_decoder_holes_not_seen": [
+        16,
+        32,
+        48,
+        64,
+        80,
+        96,
+        112,
+        128
+      ],
+      "physical_service_solenoid_to_public": {
+        "1": 7,
+        "10": 17,
+        "11": 18,
+        "12": 19,
+        "2": 6,
+        "3": 14,
+        "4": 9,
+        "5": 10,
+        "6": 11,
+        "7": 8,
+        "8": 12,
+        "9": 13
+      },
+      "public_solenoid_decoder_holes_not_seen": [
+        16
+      ],
+      "solenoid_addresses_seen": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    "raw_runs": [
+      {
+        "boot_wait_s": 4.0,
+        "name": "solenoid-self-test-full-cycle",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch",
+        "self_test_pulses": 8,
+        "sha256": "b4edea556d2962b5947332dba6a0f8b2ff8cc0dc00c89c27388fab096ea6c09a",
+        "snapshot_count": 10
+      },
+      {
+        "boot_wait_s": 6.0,
+        "name": "boot-coin-up-and-playfield-switches",
+        "nvram_initialization": "empty; the isolated PinMAME state directory was created from scratch",
+        "self_test_pulses": 0,
+        "sha256": "2f4f4107573aaecbf88b2e158666fc0124a97fc8c99b89b36b6a839d1e8cf71f",
+        "snapshot_count": 18
+      }
+    ],
+    "rom_archive_sha256": "282a41bab4fcfae9dc6678f565a8d4ceca8007c7cd1d030e718423b2a400f83c"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is a directory manifest digest, not a file hash: list every file below source.path as {path, size, sha256} with path relative and POSIX-separated, sort by path, serialise as compact canonical JSON (indent=None, separators=(',',':'), sort_keys=True, ensure_ascii=False), encode UTF-8 and take the SHA-256. At capture time the tree held 8 files totalling 641404 bytes. Individual run hashes are in runtime.raw_runs[].sha256.",
+    "path": "external:pinmame-review-artifacts/kiss-1979/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "3437175d919cffd02de2d87a23cab9235d9e3244ce840b0df79a28ac7269cb79"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

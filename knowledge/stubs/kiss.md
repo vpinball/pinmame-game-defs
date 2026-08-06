@@ -9,7 +9,7 @@ This note was generated from PinMAME catalog identity only. It deliberately cont
 - Candidate root driver: `kiss`
 - Candidate manufacturer: Bally
 - Candidate year: 1979
-- Drivers currently grouped by the PinMAME clone chain: `kiss`, `kissb`, `kissc`, `kissd`, `kisse`, `kissf`, `kissp`, `kissp2`
+- Drivers currently grouped by the PinMAME clone chain: `kissp`, `kissp2`
 
 ## Playfield devices
 
