@@ -146,33 +146,38 @@ speech is the reason that flag exists.
 
 ## What is still missing
 
-Two inferred labels, both traceable to one absent document.
+Two inferred labels. Everything else is validated.
 
-**Lamp 113 is the twelfth A9 circuit and its function is inferred, not printed.** The board's
-published specification is twelve discrete circuits driving twenty-four lamps as twelve sets of two,
-which matches the twelve SCRs in its parts list, and its MC14555B decoders are binary one-of-four,
-so it reaches only lamp addresses 0-3 on each of four data lines. That makes public 65-67, 81-83,
-97-99 and 113-115 the fitted circuits and public 68, 84, 100 and 116 bare matrix positions with no
-bulb - now recorded as such, and confirmed by a boot-and-coin-up harness run in which the ROM never
-sets those four outside the self-test lamp sequence. Eleven of the twelve circuits carry printed
-functions. The twelfth is 113, which sits on the same decoder position as the three printed top-lane
-inserts, and the manual describes a Guardian feature completed by "the four (4) guardian rollovers"
-while the printed switch table names only three top lanes. A fourth rollover insert accounts for
-both. It is recorded as `observed` rather than `validated` for that reason.
+**Lamp 113's function.** The AS-2518-43 board schematic - absent from every Centaur manual, and
+found instead in the Kings of Steel schematics, the board being generic Bally hardware - settles the
+board's structure completely. Two MC14555B binary one-of-four decoders are fed by an MC14013 latch;
+each decoder half wires outputs Q0, Q1 and Q2 into SCRs and leaves Q3 marked N/U. Four halves times
+three used outputs is exactly the twelve SCRs the parts list counts. So the fitted circuits are
+public 65-67, 81-83, 97-99 and 113-115, and public 68, 84, 100 and 116 are decoder position 3 with
+nothing connected - now recorded as validated rather than guessed.
 
-**Option switches 17-20 have no documented function.** None of the three retained manuals assigns
-them one, and the credits-per-coin tables cover only chutes 1 and 3.
+Centaur's harness list names eleven of those twelve circuits. The twelfth is 113, and no available
+document prints its function. Its label is inferred: the board's role on Centaur is the top rollover
+inserts and the Queen's Chamber chaser lamps, the chaser is the four Chamber circuits, and 113 sits
+on the same decoder position as the three printed top-lane inserts while the manual describes a
+Guardian feature completed by "the four (4) guardian rollovers" against only three printed top
+lanes. A fourth rollover insert accounts for both, and a boot-and-coin-up harness run shows the ROM
+driving 113 together with those three and never driving the four unconnected positions. It is
+recorded as `observed`, not `validated`.
 
-Both trace to the same gap: the **AS-2518-43 board schematic sheet**, which is in none of the three
-retained Centaur manuals - they carry its parts list and its harness wire list but not the sheet.
-The part is generic rather than Centaur-specific: replacement-board vendors list it as fitted to
-Black Pyramid, Future Spa, Spy Hunter, Centaur, Kings of Steel, X's and O's, Centaur II and Kiss, so
-the original sheet should exist in one of those games' manuals. Note that Centaur is the only BY35
-game pinned PinMAME models with `lampCol > 0`, which is why the board looks Centaur-specific from the
-emulator side and is not.
+**Option switches 17-20.** Undocumented, and not recoverable by cross-reference: Bally chose these
+assignments per game. The Kiss manual, same MPU platform, uses S25-S28 for its second coin chute
+where Centaur uses 25 and 26 for maximum credits and 27 for the credit display.
+
+Both gaps are searched out rather than merely open. Checked and exhausted: all three Centaur
+manuals, the Centaur schematic set, Centaur II's schematics (its A9 harness is the same drawing,
+W-1207-11, with identical wire numbers), the Kiss manual and its schematic-omissions supplement, the
+Kings of Steel schematics, archive.org, and three independently authored VPX recreations spanning
+fifteen years. What would close them is a Centaur machine to look at, or a Bally document that
+assigns those four option switches.
 
 Everything else is complete and validated: identity and the three-driver family with their
 differences, the full 48-position switch matrix with per-switch polarity and construction, all 32
 MPU option switches enumerated, twenty-one solenoid outputs including the resolved sixth
-switch-column strobe, seventy-five of seventy-six lamps named, six displays, ten mechanisms, and a
-spatial record for every one of the 182 devices.
+switch-column strobe, seventy-five of seventy-six lamps validated, six displays, ten mechanisms, and
+a spatial record for every one of the 182 devices.

@@ -4466,7 +4466,7 @@
       "kind": "dip_switch",
       "label": "Undocumented option switch 17",
       "physical": {
-        "notes": "Bank 3 option switch. None of the three retained manuals - the Internet Archive scan, the maintainer-supplied schematic manual, or the German edition - assigns it a function, and the credits-per-coin tables cover only chutes #1 and #3. The switch position exists on the MPU and is readable; what the ROM does with it is not documented in any available source.",
+        "notes": "Bank 3 option switch. None of the three retained Centaur manuals assigns it a function, and the credits-per-coin tables cover only chutes 1 and 3. No cross-game inference is available either: Bally chose these assignments per game, and the Kiss manual for the same MPU platform uses S25-S28 for its second coin chute where Centaur uses 25 and 26 for maximum credits and 27 for the credit display. The switch position exists on the MPU and is readable; what this ROM does with it is undocumented.",
         "switch_type": "dip"
       },
       "provenance": {
@@ -4507,7 +4507,7 @@
       "kind": "dip_switch",
       "label": "Undocumented option switch 18",
       "physical": {
-        "notes": "Bank 3 option switch. None of the three retained manuals - the Internet Archive scan, the maintainer-supplied schematic manual, or the German edition - assigns it a function, and the credits-per-coin tables cover only chutes #1 and #3. The switch position exists on the MPU and is readable; what the ROM does with it is not documented in any available source.",
+        "notes": "Bank 3 option switch. None of the three retained Centaur manuals assigns it a function, and the credits-per-coin tables cover only chutes 1 and 3. No cross-game inference is available either: Bally chose these assignments per game, and the Kiss manual for the same MPU platform uses S25-S28 for its second coin chute where Centaur uses 25 and 26 for maximum credits and 27 for the credit display. The switch position exists on the MPU and is readable; what this ROM does with it is undocumented.",
         "switch_type": "dip"
       },
       "provenance": {
@@ -4548,7 +4548,7 @@
       "kind": "dip_switch",
       "label": "Undocumented option switch 19",
       "physical": {
-        "notes": "Bank 3 option switch. None of the three retained manuals - the Internet Archive scan, the maintainer-supplied schematic manual, or the German edition - assigns it a function, and the credits-per-coin tables cover only chutes #1 and #3. The switch position exists on the MPU and is readable; what the ROM does with it is not documented in any available source.",
+        "notes": "Bank 3 option switch. None of the three retained Centaur manuals assigns it a function, and the credits-per-coin tables cover only chutes 1 and 3. No cross-game inference is available either: Bally chose these assignments per game, and the Kiss manual for the same MPU platform uses S25-S28 for its second coin chute where Centaur uses 25 and 26 for maximum credits and 27 for the credit display. The switch position exists on the MPU and is readable; what this ROM does with it is undocumented.",
         "switch_type": "dip"
       },
       "provenance": {
@@ -4589,7 +4589,7 @@
       "kind": "dip_switch",
       "label": "Undocumented option switch 20",
       "physical": {
-        "notes": "Bank 3 option switch. None of the three retained manuals - the Internet Archive scan, the maintainer-supplied schematic manual, or the German edition - assigns it a function, and the credits-per-coin tables cover only chutes #1 and #3. The switch position exists on the MPU and is readable; what the ROM does with it is not documented in any available source.",
+        "notes": "Bank 3 option switch. None of the three retained Centaur manuals assigns it a function, and the credits-per-coin tables cover only chutes 1 and 3. No cross-game inference is available either: Bally chose these assignments per game, and the Kiss manual for the same MPU platform uses S25-S28 for its second coin chute where Centaur uses 25 and 26 for maximum credits and 27 for the credit display. The switch position exists on the MPU and is readable; what this ROM does with it is undocumented.",
         "switch_type": "dip"
       },
       "provenance": {
@@ -8599,12 +8599,12 @@
       "kind": "lamp",
       "label": "Unpopulated auxiliary matrix position 68",
       "physical": {
-        "notes": "No lamp behind this address. The A9 Auxiliary Lamp Driver carries twelve SCRs, Q1 through Q12, and its published specification is twelve discrete circuits driving twenty-four lamps as twelve sets of two. Its MC14555B decoders are binary one-of-four, so the board reaches only lamp addresses 0 to 3 on each of the four data lines - sixteen matrix positions for twelve circuits. The twelve fitted circuits are public 65-67, 81-83, 97-99 and 113-115; this address is the fourth decoder position, which has no SCR. It appears in a harness trace only during the self-test lamp sequence, when the ROM writes every matrix bit, and a boot-and-coin-up run shows the ROM never setting it otherwise. PinMAME reports lamp-matrix bits rather than bulbs, which is why a bare position still shows activity there."
+        "notes": "No lamp behind this address, and the board schematic says so directly. The AS-2518-43 decodes with two MC14555B binary one-of-four decoders: every decoder half wires outputs Q0, Q1 and Q2 to SCRs and leaves Q3 marked N/U. Four halves times three used outputs is the twelve SCRs its parts list counts, and it means decoder position 3 is not connected on the board at all. This address is decoder position 3. It appears in a harness trace only during the self-test lamp sequence, when the ROM writes every matrix bit, and a boot-and-coin-up run shows the ROM never setting it otherwise; PinMAME reports lamp-matrix bits rather than bulbs, which is why an unconnected position still shows activity there. The sheet is absent from every Centaur manual and was found in the Kings of Steel schematics, the board being generic Bally hardware."
       },
       "provenance": {
         "source_refs": [
+          "schematic.as-2518-43-auxiliary-lamp-driver",
           "manual-schematics.bally.centaur.1981",
-          "human-review.as-2518-43-board-spec",
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "validated"
@@ -8612,8 +8612,7 @@
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual-schematics.bally.centaur.1981",
-            "human-review.as-2518-43-board-spec"
+            "schematic.as-2518-43-auxiliary-lamp-driver"
           ],
           "status": "validated"
         },
@@ -8790,12 +8789,12 @@
       "kind": "lamp",
       "label": "Unpopulated auxiliary matrix position 84",
       "physical": {
-        "notes": "No lamp behind this address. The A9 Auxiliary Lamp Driver carries twelve SCRs, Q1 through Q12, and its published specification is twelve discrete circuits driving twenty-four lamps as twelve sets of two. Its MC14555B decoders are binary one-of-four, so the board reaches only lamp addresses 0 to 3 on each of the four data lines - sixteen matrix positions for twelve circuits. The twelve fitted circuits are public 65-67, 81-83, 97-99 and 113-115; this address is the fourth decoder position, which has no SCR. It appears in a harness trace only during the self-test lamp sequence, when the ROM writes every matrix bit, and a boot-and-coin-up run shows the ROM never setting it otherwise. PinMAME reports lamp-matrix bits rather than bulbs, which is why a bare position still shows activity there."
+        "notes": "No lamp behind this address, and the board schematic says so directly. The AS-2518-43 decodes with two MC14555B binary one-of-four decoders: every decoder half wires outputs Q0, Q1 and Q2 to SCRs and leaves Q3 marked N/U. Four halves times three used outputs is the twelve SCRs its parts list counts, and it means decoder position 3 is not connected on the board at all. This address is decoder position 3. It appears in a harness trace only during the self-test lamp sequence, when the ROM writes every matrix bit, and a boot-and-coin-up run shows the ROM never setting it otherwise; PinMAME reports lamp-matrix bits rather than bulbs, which is why an unconnected position still shows activity there. The sheet is absent from every Centaur manual and was found in the Kings of Steel schematics, the board being generic Bally hardware."
       },
       "provenance": {
         "source_refs": [
+          "schematic.as-2518-43-auxiliary-lamp-driver",
           "manual-schematics.bally.centaur.1981",
-          "human-review.as-2518-43-board-spec",
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "validated"
@@ -8803,8 +8802,7 @@
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual-schematics.bally.centaur.1981",
-            "human-review.as-2518-43-board-spec"
+            "schematic.as-2518-43-auxiliary-lamp-driver"
           ],
           "status": "validated"
         },
@@ -8985,12 +8983,12 @@
       "kind": "lamp",
       "label": "Unpopulated auxiliary matrix position 100",
       "physical": {
-        "notes": "No lamp behind this address. The A9 Auxiliary Lamp Driver carries twelve SCRs, Q1 through Q12, and its published specification is twelve discrete circuits driving twenty-four lamps as twelve sets of two. Its MC14555B decoders are binary one-of-four, so the board reaches only lamp addresses 0 to 3 on each of the four data lines - sixteen matrix positions for twelve circuits. The twelve fitted circuits are public 65-67, 81-83, 97-99 and 113-115; this address is the fourth decoder position, which has no SCR. It appears in a harness trace only during the self-test lamp sequence, when the ROM writes every matrix bit, and a boot-and-coin-up run shows the ROM never setting it otherwise. PinMAME reports lamp-matrix bits rather than bulbs, which is why a bare position still shows activity there."
+        "notes": "No lamp behind this address, and the board schematic says so directly. The AS-2518-43 decodes with two MC14555B binary one-of-four decoders: every decoder half wires outputs Q0, Q1 and Q2 to SCRs and leaves Q3 marked N/U. Four halves times three used outputs is the twelve SCRs its parts list counts, and it means decoder position 3 is not connected on the board at all. This address is decoder position 3. It appears in a harness trace only during the self-test lamp sequence, when the ROM writes every matrix bit, and a boot-and-coin-up run shows the ROM never setting it otherwise; PinMAME reports lamp-matrix bits rather than bulbs, which is why an unconnected position still shows activity there. The sheet is absent from every Centaur manual and was found in the Kings of Steel schematics, the board being generic Bally hardware."
       },
       "provenance": {
         "source_refs": [
+          "schematic.as-2518-43-auxiliary-lamp-driver",
           "manual-schematics.bally.centaur.1981",
-          "human-review.as-2518-43-board-spec",
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "validated"
@@ -8998,8 +8996,7 @@
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual-schematics.bally.centaur.1981",
-            "human-review.as-2518-43-board-spec"
+            "schematic.as-2518-43-auxiliary-lamp-driver"
           ],
           "status": "validated"
         },
@@ -9023,14 +9020,14 @@
       "kind": "lamp",
       "label": "Fourth Guardian Rollover Insert",
       "physical": {
-        "notes": "The twelfth and last A9 circuit, and the only one whose function the harness wire list does not print. Its identity is inferred rather than read, and the inference is this: the A9's published role on Centaur is the top rollover inserts and the Queen's Chamber chaser lamps; the chaser is the four #1-#4 Chamber circuits; the board's remaining group is decoder position 0, whose other three circuits are the printed Top Right, Top Middle and Top Left Lane inserts; and the manual describes a Guardian feature completed by \"the four (4) guardian rollovers\" while the printed switch table names only three top lanes. A fourth rollover insert on the same decoder position as the other three therefore accounts for both the twelfth circuit and the fourth guardian. Supporting this, a boot-and-coin-up harness run shows the ROM driving this address together with the three named top-lane circuits and never driving the four bare positions. Recorded as observed rather than validated because no retained source prints the function; resolving it needs the AS-2518-43 board sheet, which is absent from all three Centaur manuals but should exist in the manual of another game fitted with the same board. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one.",
+        "notes": "The twelfth and last fitted A9 circuit, and the only one whose function no available document prints. The board schematic settles which positions exist - decoder outputs Q0, Q1 and Q2 on each of four MC14555B halves, so public 65-67, 81-83, 97-99 and 113-115 - and Centaur's harness list names eleven of the twelve. This is the twelfth. Its identity is inferred: the board's role on Centaur is the top rollover inserts and the Queen's Chamber chaser lamps, the chaser is the four Chamber circuits, and this address sits on the same decoder position as the three printed Top Right, Top Middle and Top Left Lane inserts, while the manual describes a Guardian feature completed by four guardian rollovers against only three printed top lanes. A fourth rollover insert accounts for both. A boot-and-coin-up harness run shows the ROM driving this address together with those three and never driving the four unconnected positions. Recorded as observed rather than validated because no source prints it; Centaur II's schematics reuse the same harness drawing and add no names, and the Kiss manual's assignments are its own.",
         "quantity": 2
       },
       "provenance": {
         "source_refs": [
+          "schematic.as-2518-43-auxiliary-lamp-driver",
           "manual-schematics.bally.centaur.1981",
           "manual.bally.centaur.1981",
-          "human-review.as-2518-43-board-spec",
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "observed"
@@ -9167,12 +9164,12 @@
       "kind": "lamp",
       "label": "Unpopulated auxiliary matrix position 116",
       "physical": {
-        "notes": "No lamp behind this address. The A9 Auxiliary Lamp Driver carries twelve SCRs, Q1 through Q12, and its published specification is twelve discrete circuits driving twenty-four lamps as twelve sets of two. Its MC14555B decoders are binary one-of-four, so the board reaches only lamp addresses 0 to 3 on each of the four data lines - sixteen matrix positions for twelve circuits. The twelve fitted circuits are public 65-67, 81-83, 97-99 and 113-115; this address is the fourth decoder position, which has no SCR. It appears in a harness trace only during the self-test lamp sequence, when the ROM writes every matrix bit, and a boot-and-coin-up run shows the ROM never setting it otherwise. PinMAME reports lamp-matrix bits rather than bulbs, which is why a bare position still shows activity there."
+        "notes": "No lamp behind this address, and the board schematic says so directly. The AS-2518-43 decodes with two MC14555B binary one-of-four decoders: every decoder half wires outputs Q0, Q1 and Q2 to SCRs and leaves Q3 marked N/U. Four halves times three used outputs is the twelve SCRs its parts list counts, and it means decoder position 3 is not connected on the board at all. This address is decoder position 3. It appears in a harness trace only during the self-test lamp sequence, when the ROM writes every matrix bit, and a boot-and-coin-up run shows the ROM never setting it otherwise; PinMAME reports lamp-matrix bits rather than bulbs, which is why an unconnected position still shows activity there. The sheet is absent from every Centaur manual and was found in the Kings of Steel schematics, the board being generic Bally hardware."
       },
       "provenance": {
         "source_refs": [
+          "schematic.as-2518-43-auxiliary-lamp-driver",
           "manual-schematics.bally.centaur.1981",
-          "human-review.as-2518-43-board-spec",
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "validated"
@@ -9180,8 +9177,7 @@
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual-schematics.bally.centaur.1981",
-            "human-review.as-2518-43-board-spec"
+            "schematic.as-2518-43-auxiliary-lamp-driver"
           ],
           "status": "validated"
         },
@@ -10483,6 +10479,16 @@
       "locator": "Pinned LibPinMAME harness runs that boot centaur from empty NVRAM and step the self-test button into the ROM's solenoid test, which pulses each coil in turn while writing that coil's identification number to the player score displays. Pairing each pulsed public solenoid address with the displayed number yields the printed-to-public mapping for all eighteen coils, repeating identically across four complete cycles. The same runs enumerate 76 lamp addresses, nineteen solenoid addresses and seven display indices.",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "internal:evidence/runtime/by35/centaur-solenoid-self-test.json"
+    },
+    {
+      "attribution": "Bally Manufacturing Corporation; scan from Arcade Archive",
+      "id": "schematic.as-2518-43-auxiliary-lamp-driver",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "Sheet 7, Auxiliary Lamp Driver A9 - the AS-2518-43 board schematic. It is absent from all three Centaur manuals, which carry only the board's parts list and its harness wire list, but the board is generic and this sheet documents it. Two MC14555B binary one-of-four decoders are fed by an MC14013 latch; each decoder half drives outputs Q0, Q1 and Q2 into SCRs through 2K gate resistors and leaves Q3 marked N/U. Four halves times three used outputs is the twelve SCRs the parts list counts.",
+      "revision": "sheet-7",
+      "sha256": "3ede7ad1d39fa0c0189a9a75633360b7c94b14339a0734a058e16d1bf696732b",
+      "uri": "external:pinmame-manuals/by-machine/bally.centaur.1981/cross-reference/Kings of Steel Schematics.pdf"
     },
     {
       "attribution": "Community table authors; retained locally and not redistributed",
