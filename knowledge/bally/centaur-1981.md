@@ -188,7 +188,20 @@ speech is the reason that flag exists.
   lamp at all: it feeds pin 3 of the Aux. Driver (G.I. Flasher) module, which is why the legacy
   corpus never bound it.
 
-  Three addresses stay unresolved: 17, 59 and 62, against the three unassigned printed functions
+  On the auxiliary board, seven of the sixteen lamps are now named from geometry rather than a
+  traced wire: three sit directly above the three top-lane switches in the same left-to-right order,
+  and four form a vertical column up the left edge in exactly the bottom-to-top order the wire list
+  prints for "#1 CHAMBER (2) (FROM BOTTOM)" through "#4 CHAMBER (2) (TOP)". Each chamber address
+  drives two bulbs, which the wire list marks with (2). The A9 board's decoder-output-to-pin wiring
+  has not been traced, so these rest on geometry and group ordering, not on a wire.
+
+  A caution discovered while doing that: the retained table parks the auxiliary lamps its author
+  never mapped in a row of seven at x 0.11-0.24, y 0.950, evenly spaced along the bottom-left
+  corner. That is a modelling placeholder, not a bulb location, and an earlier pass had wrongly
+  promoted those coordinates to validated placements. They have been withdrawn. When mining a
+  community table for geometry, check for rows of equally spaced lamps before trusting them.
+
+  Three main-board addresses stay unresolved: 17, 59 and 62, against the three unassigned printed functions
   Spot 1-4 (A5J2-7), Credit Indicator (A5J3-13) and Release Orb (A5J1-1). Which is which needs
   the last few SCR-to-connector rows traced. Those three keep their unverified legacy labels and
   a `candidate` status, and the sixteen auxiliary lamps are still unnamed, so `output_semantics`

@@ -6628,13 +6628,17 @@
       },
       "id": "lamp.rollover-3-right",
       "kind": "lamp",
-      "label": "Rollover 3 (Right)",
+      "label": "Top Right Lane",
+      "physical": {
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-18. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp sits directly above the top right lane switch at x 0.551, and the group's order matches the printed order. The addresses in this group are the ones the harness observed active.",
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6671,31 +6675,13 @@
       "kind": "lamp",
       "label": "Unnamed lamp 66",
       "physical": {
-        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine. The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
       },
       "provenance": {
         "source_refs": [
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "observed"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "lamp.unnamed-66.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.centaur-2-0-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.189541,
-            "y": 0.949151
-          }
-        ],
-        "status": "validated"
       }
     },
     {
@@ -6712,15 +6698,17 @@
       },
       "id": "lamp.unnamed-67",
       "kind": "lamp",
-      "label": "Unnamed lamp 67",
+      "label": "#1 Chamber (from bottom)",
       "physical": {
-        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-5. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp lowest of the four left-edge chamber lamps, y 0.288, and the group's order matches the printed order. The wire list prints (2) against each chamber entry, so one address drives two bulbs. The addresses in this group are the ones the harness observed active.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6764,30 +6752,15 @@
       "id": "lamp.queen-s-chamber-lower",
       "kind": "lamp",
       "label": "Queen's Chamber Lower",
+      "physical": {
+        "notes": "The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.centaur",
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "candidate"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "lamp.queen-s-chamber-lower.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.centaur-2-0-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.241616,
-            "y": 0.948929
-          }
-        ],
-        "status": "validated"
       }
     },
     {
@@ -6812,13 +6785,17 @@
       },
       "id": "lamp.rollover-2",
       "kind": "lamp",
-      "label": "Rollover 2",
+      "label": "Top Middle Lane",
+      "physical": {
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-1. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp sits directly above the top middle lane switch at x 0.448, and the group's order matches the printed order. The addresses in this group are the ones the harness observed active.",
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6855,31 +6832,13 @@
       "kind": "lamp",
       "label": "Unnamed lamp 82",
       "physical": {
-        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine. The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
       },
       "provenance": {
         "source_refs": [
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "observed"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "lamp.unnamed-82.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.centaur-2-0-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.215361,
-            "y": 0.949342
-          }
-        ],
-        "status": "validated"
       }
     },
     {
@@ -6896,15 +6855,17 @@
       },
       "id": "lamp.unnamed-83",
       "kind": "lamp",
-      "label": "Unnamed lamp 83",
+      "label": "#2 Chamber",
       "physical": {
-        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-3. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp second of the four left-edge chamber lamps, y 0.211, and the group's order matches the printed order. The wire list prints (2) against each chamber entry, so one address drives two bulbs. The addresses in this group are the ones the harness observed active.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6948,30 +6909,15 @@
       "id": "lamp.queen-s-chamber-upper",
       "kind": "lamp",
       "label": "Queen's Chamber Upper",
+      "physical": {
+        "notes": "The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.centaur",
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "candidate"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "lamp.queen-s-chamber-upper.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.centaur-2-0-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.217616,
-            "y": 0.948973
-          }
-        ],
-        "status": "validated"
       }
     },
     {
@@ -6996,13 +6942,17 @@
       },
       "id": "lamp.rollover-1-left",
       "kind": "lamp",
-      "label": "Rollover 1 (Left)",
+      "label": "Top Left Lane",
+      "physical": {
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-7. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp sits directly above the top left lane switch at x 0.342, and the group's order matches the printed order. The addresses in this group are the ones the harness observed active.",
+        "quantity": 1
+      },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7046,30 +6996,15 @@
       "id": "lamp.right-thumper-bumper",
       "kind": "lamp",
       "label": "Right Thumper Bumper",
+      "physical": {
+        "notes": "The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.centaur",
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "candidate"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "lamp.right-thumper-bumper.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.centaur-2-0-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.138433,
-            "y": 0.949976
-          }
-        ],
-        "status": "validated"
       }
     },
     {
@@ -7086,15 +7021,17 @@
       },
       "id": "lamp.unnamed-99",
       "kind": "lamp",
-      "label": "Unnamed lamp 99",
+      "label": "#3 Chamber",
       "physical": {
-        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-20. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp third of the four left-edge chamber lamps, y 0.146, and the group's order matches the printed order. The wire list prints (2) against each chamber entry, so one address drives two bulbs. The addresses in this group are the ones the harness observed active.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7134,30 +7071,15 @@
       "id": "lamp.yellow-round-top-left",
       "kind": "lamp",
       "label": "Yellow Round Top Left",
+      "physical": {
+        "notes": "The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.centaur",
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "candidate"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "lamp.yellow-round-top-left.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.centaur-2-0-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.194159,
-            "y": 0.949099
-          }
-        ],
-        "status": "validated"
       }
     },
     {
@@ -7204,30 +7126,15 @@
       "id": "lamp.left-thumper-bumper",
       "kind": "lamp",
       "label": "Left Thumper Bumper",
+      "physical": {
+        "notes": "The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
+      },
       "provenance": {
         "source_refs": [
           "legacy.game.centaur",
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "candidate"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "lamp.left-thumper-bumper.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.centaur-2-0-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.112087,
-            "y": 0.949991
-          }
-        ],
-        "status": "validated"
       }
     },
     {
@@ -7244,15 +7151,17 @@
       },
       "id": "lamp.unnamed-115",
       "kind": "lamp",
-      "label": "Unnamed lamp 115",
+      "label": "#4 Chamber (top)",
       "physical": {
-        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-17. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp highest of the four left-edge chamber lamps, y 0.071, and the group's order matches the printed order. The wire list prints (2) against each chamber entry, so one address drives two bulbs. The addresses in this group are the ones the harness observed active.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
