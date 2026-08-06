@@ -628,6 +628,44 @@ class CentaurDefinitionTests(unittest.TestCase):
 				address,
 			)
 
+	def test_placement_count_matches_declared_quantity_or_is_explained(self) -> None:
+		"""A render primitive is not a physical contact, and a lamp pair is not one bulb.
+
+		The retained table models a single physical target as a trigger plus a hit target plus
+		several render primitives stacked at one point. An earlier pass promoted each object as its
+		own sensor, which invented contacts: switch 12 carried ten placements for four physical
+		targets. Placements must now equal the declared quantity, and the only permitted shortfalls
+		are the ones the record explains in prose - switch 34, whose five contacts include two the
+		table does not model, and the auxiliary lamp pairs, where only one of two bulbs is located.
+		Those must not claim validated spatial status.
+		"""
+		shortfall_allowed = {34, 65, 66, 67, 81, 82, 83, 97, 98, 99, 114, 115}
+		for item in self.definition["inputs"] + self.definition["outputs"]:
+			spatial = item.get("spatial") or {}
+			placements = spatial.get("placements")
+			if not placements:
+				continue
+			quantity = (item.get("physical") or {}).get("quantity")
+			if quantity is None:
+				continue
+			address = item["binding"]["device"]
+			if len(placements) == quantity:
+				continue
+			self.assertIn(address, shortfall_allowed, f"{item['id']}: {len(placements)} != {quantity}")
+			self.assertLess(len(placements), quantity, item["id"])
+			self.assertNotEqual("validated", spatial["status"], item["id"])
+
+	def test_stacked_render_objects_are_not_separate_contacts(self) -> None:
+		"""No two placements on one device may describe the same point."""
+		for item in self.definition["inputs"] + self.definition["outputs"]:
+			placements = (item.get("spatial") or {}).get("placements") or []
+			for index, one in enumerate(placements):
+				for other in placements[index + 1:]:
+					self.assertFalse(
+						abs(one["x"] - other["x"]) <= 0.01 and abs(one["y"] - other["y"]) <= 0.01,
+						f"{item['id']}: {one['id']} and {other['id']} are the same location",
+					)
+
 	def test_every_auxiliary_circuit_drives_a_pair_of_lamps(self) -> None:
 		"""The AS-2518-43 drives twenty-four lamps as twelve sets of two."""
 		lamps = {

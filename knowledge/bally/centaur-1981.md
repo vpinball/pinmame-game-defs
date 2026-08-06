@@ -61,14 +61,17 @@ Three traps follow:
    devices swap. Ball release is public 15; ball kick to playfield is public 14.
 2. **Public 7 is the outhole kicker.** Both retained community scripts label it a release to the
    shooter lane (`SolBallRelease`, `SRelease`), so the community naming is wrong here.
-3. **Public 17 is driven, but nobody agrees what it does.** The identification table accounts for
-   only three continuous devices, at printed 16, 17 and 18, which are public 18, 19 and 20. The ROM
-   asserts public 17 and never releases it, so it is not an empty slot. PinMAME's LISY bridge
-   special-cases Centaur (`lisy35.c` case 7) and masks continuous bit 0 out of the coil data as a
-   strobe line, while `by35.c` takes the sixth switch-column strobe from PIA1:B bit 7, which is
-   public 20, the magnet. Those cannot both be right, so the address is recorded as an unresolved
-   conflict rather than guessed either way. Do not read the absence of a *pulse* on a continuous
-   output as evidence that it is unused - a held line never pulses.
+3. **Public 17 is the sixth switch-column strobe, not a coil.** The identification table accounts
+   for only three continuous devices, at printed 16, 17 and 18, which are public 18, 19 and 20. The
+   ROM asserts public 17 and never releases it, so it is not an empty slot either. It is resolved as
+   ST5 on converging grounds: 48 switches is six columns while PIA0:A supplies five strobes and the
+   schematic shows ST5 originating at a different MPU connector; PinMAME's LISY bridge special-cases
+   Centaur (`lisy35.c` case 7) and masks that bit out of the coil data as a strobe line; and the
+   trace shows it asserted continuously once scanning starts, which is exactly how a strobe looks
+   through `by35.c`, which OR-accumulates solenoid state within each VBLANK window. Do not read the
+   absence of a *pulse* on a continuous output as evidence that it is unused - a held line never
+   pulses. Kiss corroborates the reading from the other direction: it is a five-column game, does
+   not need a sixth strobe, and uses public 17 for a real playfield coil.
 
 The continuous assignments are independently confirmed by PinMAME's own LISY bridge, which drives
 real Bally hardware from this driver and names continuous bit 1 the coin lockout and bit 2 the
@@ -160,12 +163,12 @@ so this is a binding mistake in the table rather than a fault in the derivation.
 copies the table lights the wrong outer lane.
 
 The legacy corpus bound sixty lamps spread across 2-114, which is neither the main board's sixty
-outputs nor a coherent subset of both boards. The retained harness runs observed seventy-six
-addresses, sixteen of which the legacy corpus never bound: 1, 11, 13, 27, 29, 43, 45 and 61 on the
-main board and 66, 67, 82, 83, 99, 113, 115 and 116 on the auxiliary board. Those are now declared
-with an `observed` provenance and no semantic name, because this manual scan contains no lamp
-identification table. Every declared lamp keeps a `candidate` naming status: the labels are legacy
-carry-over and none of them has been checked against the machine.
+outputs nor a coherent subset of both boards. That inventory is now closed from the schematics
+rather than carried over: the main board's sixty circuits and the auxiliary board's twelve are
+identified through the decoder-to-SCR-to-connector chain, and 68, 84, 100 and 116 are bare matrix
+positions rather than lamps. The retained harness runs observed seventy-six addresses, sixteen of
+which the legacy corpus never bound: 1, 11, 13, 27, 29, 43, 45 and 61 on the main board and 66, 67,
+82, 83, 99, 113, 115 and 116 on the auxiliary board.
 
 The parts list also names a Solenoid Expander (AS-2518-66) and an Aux. Driver (G.I. Flasher)
 (AS-2518-68) that are not yet accounted for in the definition.
