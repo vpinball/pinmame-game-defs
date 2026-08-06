@@ -1,6 +1,7 @@
 # Claude Code instructions
 
 @docs/INSTRUCTIONS.md
+@docs/CURRENT-STATE.md
 
 ## Model roles
 
