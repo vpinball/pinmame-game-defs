@@ -1,211 +1,80 @@
-# Monster Bash
+# Monster Bash (Williams, 1998)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+Coverage: **author-ready - complete physical I/O inventory, WPC-95 bindings, wiring, mechanism causality, driver-variant boundary, normalized spatial placement, and recreation behavior validated**
 
-## Overview
+## Identity and evidence precedence
 
-Legacy evidence identifies this candidate as Williams (1998). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+This is the Williams WPC-95 physical product released 1998, IPDB 4441. It covers the `mb_*` clone tree: `mb_05` (0.5 prototype), `mb_10` (parent, production 1.0), `mb_106`, and `mb_106b`. Every one of these is a game-ROM revision for the same physical machine.
 
-## Playfield devices
+Evidence precedence for this definition: the retained known-working VPW Mod v1.0 script is runtime and mechanism-causality ground truth; the Williams operations manual controls physical construction, part numbers, wiring, polarity, quantities, and device presence; pinned PinMAME controls controller generation, public address topology, mechanism-table position ranges, and display metadata; the retained VPX geometry supplies normalized coordinates. The retained manual PDF is an image-only scan (`pdftotext` yields 158 bytes of form feeds only), so every printed table used here was read from rendered pages and transcribed into `external:pinmame-review-artifacts/monster-bash-1998/manual-transcription.md`; the retained OCR text is a search index only and never an authority.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+## Controller platform and address topology
 
-## Custom mechanisms
+`GEN_WPC95` (`PINMAME_HARDWARE_GEN_WPC95 = 0x80`) with `wpc_dispDMD`. The controller profile is `pinmame.wpc-95`.
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+- Switches: dedicated coin-door 1-8, matrix 11-88 as drive column then return row, Fliptronic 111-118. PinMAME's `mbGameData` inverted-switch mask `{0x00,0x00,0x00,0x3f,0x06,...}` inverts column 3 bits 0-5 (31-36) and column 4 bits 1-2 (42-43), exactly the eight positions the printed matrix page (2-51) shades "OPTO, TYPICALLY CLOSED".
+- Solenoids: physical drivers 1-3, 5-6, 8-16 (2 sockets absent: 4 and 7 are printed but unfitted); flashers 17-26; Fliptronic upper-flipper circuits 33-36 (unfitted, no upper flippers); WPC-95 LPDC outputs 37/38 (Dracula motor forward/backward) with PinMAME's backward-compatibility mirrors at 41/42; Fliptronic lower-flipper circuits 45-48; PinMAME state channels 29-32; simulator-only 49 and reserved 50. `mbGameData` declares no `custSol` and no `lampCol`, so no address above 50 or above lamp column 8 is published.
+- Lamps: 8x8 matrix 11-88, all addresses populated except 78 (Not Used).
+- GI: five strings on public addresses 0-4.
 
-## Ball-state transitions
+Two WPC-95 numbering facts must not be lost. First, the printed solenoid table numbers the lower flipper circuits 29-32, while PinMAME publishes the same circuits at 45-48; the manual numbers are preserved as `manual.address` aliases. Second, LPDC outputs 37/38 and public addresses 41/42 are the *same* Dracula-motor drive lines, because `core_getSol` duplicates 37-40 into 41-44 for WPC-95, and PinMAME's own `mb_mech[2]` mechanism table reads the Dracula figure through 41/42 rather than 37/38. A recreation binds one physical H-bridge motor and accepts either address pair; it must never create two devices.
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+## Ball path, trough, and shooter
 
-## Controller interactions
+Monster Bash has no manual plunger. Four balls rest on trough optos 32-35, with Trough Ball 1 (32) at the eject end nearest the shooter lane and Trough Ball 4 (35) at the drain entrance. Solenoid 9 ejects the ball on 32; the retained script's ball-release handler (`RandomSoundBallRelease sw32`) pulses trough-eject opto 31 in the same event, so switch 31 is a documented projection onto the trough-Ball-1 kicker position rather than a separately placed object. The ejected ball rests on shooter-lane switch 18 and auto-plunger coil 1 launches it when the cabinet Launch Ball button (switch 11) is pressed.
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+Trough optos 31-36 and flipper-button optos 42/43 are printed as optos that rest closed. PinMAME's `mbGameData` inverted-switch mask covers exactly those eight, so the public state is already normalized: assert the public switch when a ball or flipper button is present and never invert again.
 
-## Service and setup information
+## Dracula: rotating figure, coffin, and target ring
 
-Unknown; locate operator/service documentation.
+A DC gearmotor drives the rotating Dracula figure through an H-bridge (A-16120 DC Motor Control Assembly) on public LPDC outputs 37 (forward) and 38 (backward); PinMAME duplicates the same two drive lines a second time at mirror addresses 41/42. PinMAME's own `mb_mech[2]` table (`MECH_TWODIRSOL`) reads the mechanism over a 90-step position counter (`DRACTIME = 90`): switch 78 asserts at steps 0-5, 77 at 18-23, 76 at 36-51, 75 at 64-69, and 74 at 85-89 -- i.e. printed Dracula Position 1 through Position 5 in ascending step order. The five position optos live on the A-21402 Defender Switch Board Assembly mounted inside the mechanism, not as five separate playfield objects, so all five switches are documented projections onto the rotating figure's own table-object center.
 
-## Timing and tuning observations
+Dracula Target switch 25 is a different device: a 47-segment target-wall ring (retained-table collection `DracTargets`) that surrounds the figure. `DracTargets_Hit(idx)` fires the shared handler and only one segment is active at a time, selected by the figure's own rotation (`DracTargets(Int((12 + Drac.RotZ)/2+1.25)).IsDropped = 0`), so switch 25 is likewise a documented projection onto the figure rather than a fixed target position.
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+## Frankenstein: motorized table and hit target; Up/Down target bank
 
-## Recreation guidance
+Motor 27 rotates the Frankenstein figure (`franky`) between a lowered rest position and a raised striking position. PinMAME's own `mb_mech[1]` table reads switches 83 (table down, steps 0-10) and 84 (table up, steps `FRANKTIME`-10..`FRANKTIME`-1, `FRANKTIME = 120`) from the WPC-95 mechanism API's position counter. The retained script instead drives 83/84 directly from the figure's own rotation angle (`franky.rotx`) and raises Frank Hit switch 87 whenever the angle sits in the striking band, toggling a hit-wall collision object (`fhitwall`) in step so a ball can only score the hit while the figure is in range. All three switches (83, 84, 87) are documented projections onto the Frankenstein figure or its hit-wall collision object, because there is no separately named playfield sensor for each.
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+Motor 28 raises and lowers the two-target bank (`frankytargets`) between an up (targets exposed) and down (targets retracted) position. PinMAME's own `mb_mech[0]` table reads switches 81 (bank up, steps 0-10) and 82 (bank down, steps `BANKTIME`-10..`BANKTIME`-1) from the same mechanism API. The retained script drives 81/82 directly from `frankytargets.z` threshold crossings. Left and right standup targets 85/86 sit on the bank and are reachable only while it is up; both have real, directly observed table positions (`HitTarget.sw85`, `HitTarget.sw86`).
 
-## Evidence notes
+## Other toys, kickers, and standard devices
 
-- `platforms/wpc.json#/coils/1`: Unbound legacy outputs record `c_flipper_lower_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/2`: Unbound legacy outputs record `c_flipper_lower_left` was retained as a migration note only.
-- `platforms/wpc.json#/coils/3`: Unbound legacy outputs record `c_flipper_upper_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/4`: Unbound legacy outputs record `c_flipper_upper_left` was retained as a migration note only.
-- `games/mb.json#/switches/0._note`: Directly set via Controller.Switch(11) in KeyDown/KeyUp handlers, not a VPX object hit sub
-- `games/mb.json#/switches/1._inferred_type`: standup_target
-- `games/mb.json#/switches/1._note`: Uses STHit bouncer system (STArray)
-- `games/mb.json#/switches/3._note`: vpmNudge.TiltSwitch = 14
-- `games/mb.json#/switches/4._inferred_type`: standup_target
-- `games/mb.json#/switches/4._note`: Uses STHit bouncer system (STArray)
-- `games/mb.json#/switches/9._note`: Set to 1 in Table1_Init
-- `games/mb.json#/switches/10._inferred_type`: standup_target
-- `games/mb.json#/switches/10._note`: Uses STHit bouncer system (STArray)
-- `games/mb.json#/switches/11._note`: Set to 0 in Table1_Init (Controller.Switch(24) = 0), inverted logic — normally closed opto
-- `games/mb.json#/switches/12._inferred_type`: standup_target
-- `games/mb.json#/switches/12._note`: Fired via vpmTimer.PulseSw 25 in DracTargets_Hit sub — rotating Dracula mechanism target
-- `games/mb.json#/switches/15._inferred_type`: kicker
-- `games/mb.json#/switches/16._note`: Fired via vpmTimer.PulseSw 31 in SolBallRelease
-- `games/mb.json#/switches/21._inferred_type`: kicker
-- `games/mb.json#/switches/24._inferred_type`: standup_target
-- `games/mb.json#/switches/24._note`: Uses STHit2 bouncer system
-- `games/mb.json#/switches/25._inferred_type`: standup_target
-- `games/mb.json#/switches/25._note`: Uses STHit2 bouncer system
-- `games/mb.json#/switches/26._inferred_type`: standup_target
-- `games/mb.json#/switches/26._note`: Uses STHit2 bouncer system
-- `games/mb.json#/switches/29._inferred_type`: slingshot
-- `games/mb.json#/switches/29._note`: Fired via vpmTimer.PulseSw 51 in LeftSlingShot_Slingshot sub
-- `games/mb.json#/switches/30._inferred_type`: slingshot
-- `games/mb.json#/switches/30._note`: Fired via vpmTimer.PulseSw 52 in RightSlingShot_Slingshot sub
-- `games/mb.json#/switches/31._inferred_type`: bumper
-- `games/mb.json#/switches/31._note`: Fired via vpmTimer.PulseSw 53 in Bumper1_Hit
-- `games/mb.json#/switches/32._inferred_type`: bumper
-- `games/mb.json#/switches/32._note`: Fired via vpmTimer.PulseSw 54 in Bumper2_Hit
-- `games/mb.json#/switches/33._inferred_type`: bumper
-- `games/mb.json#/switches/33._note`: Fired via vpmTimer.PulseSw 55 in Bumper3_Hit
-- `games/mb.json#/switches/44._note`: PulseSw — momentary pulse switch
-- `games/mb.json#/switches/45._note`: PulseSw — momentary pulse switch
-- `games/mb.json#/switches/48._note`: Opto — handled by controller.getmech(2), no VPX object
-- `games/mb.json#/switches/49._note`: Opto — handled by controller.getmech(2), no VPX object
-- `games/mb.json#/switches/50._note`: Opto — handled by controller.getmech(2), no VPX object
-- `games/mb.json#/switches/51._note`: Opto — handled by controller.getmech(2), no VPX object
-- `games/mb.json#/switches/52._note`: Opto — handled by controller.getmech(2), no VPX object
-- `games/mb.json#/switches/53._note`: Set directly in TargetsInit and BankMove_timer. Tracks Frank target bank position.
-- `games/mb.json#/switches/54._note`: Set directly in TargetsInit and BankMove_timer. Tracks Frank target bank position.
-- `games/mb.json#/switches/55._note`: Set in FrankMove_timer. Tracks Frankenstein table mechanism.
-- `games/mb.json#/switches/56._note`: Set in FrankInit and FrankMove_timer. Tracks Frankenstein table mechanism.
-- `games/mb.json#/switches/57._inferred_type`: standup_target
-- `games/mb.json#/switches/57._note`: Uses STHit bouncer system (STArray)
-- `games/mb.json#/switches/58._inferred_type`: standup_target
-- `games/mb.json#/switches/58._note`: Uses STHit bouncer system (STArray)
-- `games/mb.json#/switches/59._note`: Set in FrankInit and FrankMove_timer. Indicates Frankenstein is in hittable position.
-- `games/mb.json#/switches/60._note`: PulseSw 117 — WPC virtual switch outside 8x8 matrix, used internally by ROM
-- `games/mb.json#/coils/0._vbscript_callback`: AutoPlunger
-- `games/mb.json#/coils/0._inferred_type`: ball_management
-- `games/mb.json#/coils/1._vbscript_callback`: SolBride
-- `games/mb.json#/coils/1._inferred_type`: mechanism
-- `games/mb.json#/coils/1._note`: Raises/lowers bride post (BrideH object)
-- `games/mb.json#/coils/2._vbscript_callback`: SolMummy
-- `games/mb.json#/coils/2._inferred_type`: mechanism
-- `games/mb.json#/coils/2._note`: Opens/closes mummy coffin animation
-- `games/mb.json#/coils/3._vbscript_callback`: vpmSolGate LGate,false,
-- `games/mb.json#/coils/3._inferred_type`: gate
-- `games/mb.json#/coils/4._vbscript_callback`: vpmSolGate Rgate,false,
-- `games/mb.json#/coils/4._inferred_type`: gate
-- `games/mb.json#/coils/5._vbscript_callback`: solKnocker
-- `games/mb.json#/coils/5._inferred_type`: knocker
-- `games/mb.json#/coils/6._vbscript_callback`: SolLockPost
-- `games/mb.json#/coils/6._inferred_type`: mechanism
-- `games/mb.json#/coils/6._note`: Raises/lowers ramp lock post (lock object)
-- `games/mb.json#/coils/7._vbscript_callback`: SolBallRelease
-- `games/mb.json#/coils/7._inferred_type`: ball_management
-- `games/mb.json#/coils/7._note`: Kicks ball from sw32 (trough ball 1)
-- `games/mb.json#/coils/8._inferred_type`: slingshot
-- `games/mb.json#/coils/8._note`: SolCallback commented out in script but ROM still fires it
-- `games/mb.json#/coils/9._inferred_type`: slingshot
-- `games/mb.json#/coils/9._note`: SolCallback commented out in script but ROM still fires it
-- `games/mb.json#/coils/10._inferred_type`: bumper
-- `games/mb.json#/coils/10._note`: SolCallback commented out in script but ROM still fires it
-- `games/mb.json#/coils/11._inferred_type`: bumper
-- `games/mb.json#/coils/11._note`: SolCallback commented out in script but ROM still fires it
-- `games/mb.json#/coils/12._inferred_type`: bumper
-- `games/mb.json#/coils/12._note`: SolCallback commented out in script but ROM still fires it
-- `games/mb.json#/coils/13._vbscript_callback`: SolSaucer
-- `games/mb.json#/coils/13._inferred_type`: kicker
-- `games/mb.json#/coils/14._vbscript_callback`: SolRightScoop
-- `games/mb.json#/coils/14._inferred_type`: kicker
-- `games/mb.json#/coils/15._vbscript_callback`: SetModLamp 117,
-- `games/mb.json#/coils/15._inferred_type`: flasher
-- `games/mb.json#/coils/16._vbscript_callback`: SetModLamp 118,
-- `games/mb.json#/coils/16._inferred_type`: flasher
-- `games/mb.json#/coils/17._vbscript_callback`: Flashsol19
-- `games/mb.json#/coils/17._inferred_type`: flasher
-- `games/mb.json#/coils/17._note`: Uses custom flupper dome flasher system
-- `games/mb.json#/coils/18._vbscript_callback`: SetModLamp 120,
-- `games/mb.json#/coils/18._inferred_type`: flasher
-- `games/mb.json#/coils/19._vbscript_callback`: SolCreature
-- `games/mb.json#/coils/19._inferred_type`: flasher
-- `games/mb.json#/coils/19._note`: Also controls Creature animation — SetModLamp 121 + creature shake mechanism
-- `games/mb.json#/coils/20._vbscript_callback`: SetModLamp 122,
-- `games/mb.json#/coils/20._inferred_type`: flasher
-- `games/mb.json#/coils/21._vbscript_callback`: FlashSol23
-- `games/mb.json#/coils/21._inferred_type`: flasher
-- `games/mb.json#/coils/21._note`: Uses custom flupper dome flasher system
-- `games/mb.json#/coils/22._vbscript_callback`: SetModLamp 124,
-- `games/mb.json#/coils/22._inferred_type`: flasher
-- `games/mb.json#/coils/23._vbscript_callback`: SetModLamp 125,
-- `games/mb.json#/coils/23._inferred_type`: flasher
-- `games/mb.json#/coils/24._vbscript_callback`: SetLamp 126,
-- `games/mb.json#/coils/24._inferred_type`: flasher
-- `games/mb.json#/coils/25._vbscript_callback`: SolFrank
-- `games/mb.json#/coils/25._inferred_type`: mechanism
-- `games/mb.json#/coils/25._note`: Drives Frankenstein body up/down animation
-- `games/mb.json#/coils/26._vbscript_callback`: SolBank
-- `games/mb.json#/coils/26._inferred_type`: mechanism
-- `games/mb.json#/coils/26._note`: Drives Frank target bank up/down movement
-- `games/mb.json#/coils/27._vbscript_callback`: SolDrac
-- `games/mb.json#/coils/27._inferred_type`: mechanism
-- `games/mb.json#/coils/27._note`: Drives Dracula rotating coffin mechanism. Uses controller.getmech(2) for position.
-- `games/mb.json#/lamps/0._note`: Multiple VPX objects: l11, l11a, l11halo
-- `games/mb.json#/lamps/1._note`: Multiple VPX objects: l12c, l12
-- `games/mb.json#/lamps/2._note`: Multiple VPX objects: l13, l13halo
-- `games/mb.json#/lamps/3._note`: Multiple VPX objects: l14, l14halo
-- `games/mb.json#/lamps/4._note`: Multiple VPX objects: l15, l15halo
-- `games/mb.json#/lamps/5._note`: Multiple VPX objects: l16, l16halo
-- `games/mb.json#/lamps/6._note`: Multiple VPX objects: l17, l17halo
-- `games/mb.json#/lamps/7._note`: Multiple VPX objects: l18, l18halo
-- `games/mb.json#/lamps/8._note`: Multiple VPX objects: l21, l21halo
-- `games/mb.json#/lamps/9._note`: Multiple VPX objects: l22, l22halo
-- `games/mb.json#/lamps/11._note`: Multiple VPX objects: l24c, l24, l24halo, l24chalo
-- `games/mb.json#/lamps/12._note`: Multiple VPX objects: l25, l25halo
-- `games/mb.json#/lamps/13._note`: Multiple VPX objects: l26, l26halo
-- `games/mb.json#/lamps/14._note`: Multiple VPX objects: l27, l27halo
-- `games/mb.json#/lamps/15._note`: Multiple VPX objects: l28, l28halo
-- `games/mb.json#/lamps/16._note`: Multiple VPX objects: l31c, l31
-- `games/mb.json#/lamps/17._note`: Multiple VPX objects: l32, l32halo
-- `games/mb.json#/lamps/19._note`: Multiple VPX objects: l34, l34halo
-- `games/mb.json#/lamps/23._note`: Multiple VPX objects: l38, l38halo
-- `games/mb.json#/lamps/25._note`: Multiple VPX objects: l42, l42halo
-- `games/mb.json#/lamps/26._note`: Multiple VPX objects: l43c, l43
-- `games/mb.json#/lamps/27._note`: Multiple VPX objects: l44, l44halo
-- `games/mb.json#/lamps/28._note`: Multiple VPX objects: l45, l45halo
-- `games/mb.json#/lamps/29._note`: Multiple VPX objects: l46, l46halo
-- `games/mb.json#/lamps/30._note`: Multiple VPX objects: l47, l47halo
-- `games/mb.json#/lamps/31._note`: Multiple VPX objects: l48, l48halo
-- `games/mb.json#/lamps/38._note`: Multiple VPX objects: l57, l57a, l57halo
-- `games/mb.json#/lamps/39._note`: Multiple VPX objects: l58, l58halo
-- `games/mb.json#/lamps/40._note`: Multiple VPX objects: l61, l61a
-- `games/mb.json#/lamps/41._note`: Multiple VPX objects: l62, l62a
-- `games/mb.json#/lamps/42._note`: Multiple VPX objects: l63, l63a
-- `games/mb.json#/lamps/43._note`: Multiple VPX objects: l64, l64a
-- `games/mb.json#/lamps/44._note`: Multiple VPX objects: l65, l65a
-- `games/mb.json#/lamps/45._note`: Multiple VPX objects: l66, l66a
-- `games/mb.json#/lamps/46._note`: Multiple VPX objects: l67, l67halo
-- `games/mb.json#/lamps/47._note`: Multiple VPX objects: l68, l68halo
-- `games/mb.json#/lamps/50._note`: Multiple VPX objects: l73, l73halo
-- `games/mb.json#/lamps/54._note`: Multiple VPX objects: l77, l77halo
-- `games/mb.json#/lamps/55._note`: Monster feature lamp. Multiple VPX objects: l81pp, l81pp2, l81f, l81f2, l81ref
-- `games/mb.json#/lamps/56._note`: Monster feature lamp. Multiple VPX objects: l82pp, l82pp2, l82f, l82f2, l82ref
-- `games/mb.json#/lamps/57._note`: Monster feature lamp. Multiple VPX objects: l83pp, l83pp2, l83f, l83f2
-- `games/mb.json#/lamps/58._note`: Monster feature lamp. Multiple VPX objects: l84pp, l84pp2, l84f, l84f2
-- `games/mb.json#/lamps/59._note`: Multiple VPX objects: l85, l85a, l85halo
-- `games/mb.json#/lamps/60._note`: Multiple VPX objects: l86, l86a, l86halo
-- `games/mb.json#/_source/confidence_notes`: High confidence on switches/coils from VBScript hit/unhit subs and SolCallback assignments. Lamp IDs from UpdateLamps NFadeL/NFadeLm calls. Flasher coils (17-26) use SolModCallback with SetModLamp/flasher routines. Dracula position switches (74-78) are opto-based and handled by controller.getmech(2), not direct VPX objects. Spinner (sw117) fires PulseSw 117 but 117 is outside the 8x8 matrix — this is a WPC virtual switch used internally. Commented-out SolCallbacks for slingshots (10-11) and bumpers (12-14) included as coils since the ROM still fires them.
+Solenoid 2 (`SolBride`) raises and lowers a post (`BrideH`) near the top lanes; solenoid 3 (`SolMummy`) opens and closes the mummy coffin lid (`Mumcoffin`); neither toy has a dedicated printed switch, and both are driven purely as scored callbacks. Solenoid 8 (`SolLockPost`) raises a post (`LockP`) that locks a ball at the right ramp, sensed by right-ramp-lock switch 73. Two solenoid-operated one-way gates (solenoid 5 `LGate`, solenoid 6 `RGate`) admit a ball into a loop or lane while blocking return travel.
 
-## Unresolved questions
+A ball resting on switch 28 (Left Eject) is kicked back by solenoid 15; a ball resting on opto 36 (Right Popper) is kicked back by solenoid 16. Two slingshots (coils 10/11, score switches 51/52) and three A-12030-3 jet bumpers (coils 12/13/14, skirt switches 53/54/55) are standard WPC devices; the retained script's `LeftSlingShot_Slingshot`/`RightSlingShot_Slingshot` and `Bumper1_Hit`/`Bumper2_Hit`/`Bumper3_Hit` handlers pulse the matching matrix addresses and fire the matching coils in the same event.
 
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+## Fliptronic column: flippers, center spinner, and eddy-current sensors
+
+Two FL-11629 flippers on Fliptronic circuits 111-114 (lower right/left, EOS then button-opto). There are no upper flippers: positions 115 (EOS) and 116/118 (button-optos) are printed Not Used on the switch-locations parts list. 116 and 118 are nonetheless shaded as optos on the reused wiring-diagram template (the same Flipper Opto PCB Assembly A-17316 construction as the fitted 112/114), so their printed construction -- including `normally_closed = true` -- is preserved even though `availability` is `unused`; 115's template position is drawn as a plain leaf and carries no such printed opto construction.
+
+Fliptronic F7 (public switch 117) is repurposed as the Center Spinner rather than an upper-left flipper position; the switch-locations parts list names it directly, and the retained script's `Spinner1_spin` handler (`vpmTimer.PulseSw 117`) confirms it independently. Flipper proximity sensors 47/48 are eddy-current sensors on two A-22149-1 Auto Adjust Eddy Sensor PCB assemblies (TDA0161 proximity IC with an auto-adjusting eddy controller and dual digital potentiometer), not mechanical switches; the retained script's own comment separates them from the opto pair 42/43 with `' Opto & proximity switches`.
+
+## Lamps, flashers, and general illumination
+
+All lamp-matrix addresses are populated except 78 (Not Used). Four addresses drive two bulbs each -- 12 "Half Moon", 24 "Full Moon Fever", 31 "Quarter Moon", and 43 "Three-Quarter Moon" -- and the retained table binds both bulbs of each pair (`l12`/`l12c`, `l24`/`l24c`, `l31`/`l31c`, `l43`/`l43c`), so each has two placements. Several single-bulb addresses (11, 57, 61-66, 81-86) have a second co-located Light object stacked purely for brightness at an offset under one bulb diameter; the primary object is used and the duplicate is documented render doubling, matching the manual's single-bulb parts entries. Lamps 87 and 88 are the bulbs inside the illuminated Launch and Start buttons and are cabinet hardware.
+
+The lamp-matrix page (2-52) carries four typographic slips against the authoritative parts list (2-44): "DRAC-ATTTACK" for Drac-Attack (14), "QUARTER MOOM (2)" for Quarter Moon (31), "THREE-QUARTERS MOON (2)" for Three-Quarter Moon (43), and "LEFT GARGOYLE" for Left Gargle (48). The last deserves the explicit note: the paired right-hand insert at 25 reads "RIGHT GARGLE" on both pages, and the Bride of Frankenstein insert trio is PRIMP / WARM UP / GARGLE (46/47/48 left, 27/26/25 right), so "GARGOYLE" is the slip and the parts-list label is canonical here.
+
+Flashers 18-26 (excluding 17) each drive at least one playfield bulb; only the playfield bulb(s) receive a coordinate, and back-panel/insert-panel bulbs stay uncoordinated backbox hardware. Address 17 (Wolfman Flashers) is the one flasher circuit with **zero** playfield bulbs -- both fitted lamps are on the back panel (2) and the insert panel (1) -- so it takes a `cabinet_or_service` spatial record with role `cabinet.insert-panel` rather than a location. The retained table's flasher render-doubling and centroid-helper objects (`f20a`, `f21c`, `f22c`) are excluded from placement, matching the project's established policy of never presenting a render helper as a physical socket.
+
+General illumination splits three ways on the retained script's `UpdateGi` dispatch: GI address 0 drives collection `GIBot` (35 members); GI address 1 drives `GITopRight` (26) plus `GIBumpers` (13); GI address 2 drives `GITopLeft` (15). The manual prints no per-string bulb count, so physical quantity and every emitter coordinate come from these collections. One `GIBot` member, `light11`, sits at normalized x=1.087804 -- outside the retained table's 0..1 playfield bounds -- and is excluded here as a table modeling anomaly rather than a distinct physical bulb, leaving GI address 0 with 34 placements instead of 35. GI addresses 3 and 4 are backbox insert-panel strings with no playfield emitter; address 4 additionally feeds cabinet bulbs through J104, the only cabinet connection on the printed general-illumination wiring page.
+
+## Solenoid 7 and the knocker: recorded disagreement
+
+Printed solenoid-table addresses 04 and 07 both show a populated power-driver transistor (Q67, Q69) with no voltage connection and no drive connection in any playfield, insert, or cabinet column, so neither has a fitted coil, flasher, flipper, or motor. Pinned PinMAME's `*** PRELIMINARY ***` `mb.c` defines `#define sKnocker 7`, consumed only by its preliminary ball simulator; the retained known-working VPW script sets `SolCallback(7) = "solKnocker"` and plays a knocker sound. These are reconcilable rather than contradictory: the WPC-95 operating system uses driver 7 as its standard knocker output and the ROM pulses it, but this physical machine ships with no knocker coil on that circuit. All three sources are cited on the address and no physical knocker device is claimed anywhere in this definition.
+
+## Author construction checklist
+
+- Build the four-ball trough with the drain at Trough Ball 4, the auto-plunger shooter lane, both slingshots, three jet bumpers, both ball gates, the mummy coffin, the bride post, the ramp lock post, the left eject and right popper kickers, the rotating Dracula figure with its target ring, the motorized Frankenstein figure with its hit wall, and the motorized Up/Down target bank.
+- Preserve opto polarity for 31-36 and 42/43; do not invert what PinMAME already normalizes.
+- Treat LPDC outputs 37/38 and their PinMAME mirrors 41/42 as one physical two-direction H-bridge motor, not two or four devices.
+- Bind every dedicated switch 1-8, every matrix position 11-88 including the printed Not Used positions, Fliptronic 111-118 with 115/116/118 explicitly not installed and 117 repurposed as the Center Spinner, the eight CPU DIP bits, solenoids 1-50, lamps 11-88, GI 0-4, and the 128x32 DMD.
+- Do not label public solenoid 7 a knocker; this machine has no fitted knocker coil despite the WPC-95 platform default.
 
 ## Sources
 
-- `legacy.game.mb`: `games/mb.json` at the pinned migration revision.
+- `manual.williams.monster-bash.1998`: Williams Monster Bash operations manual, SHA-256 `8db31b4ac4a116a5a4ca83a456e291ad9bcecdec891ff08e4d3b4eb92df9e7aa`.
+- `manual-support.williams.monster-bash.1998`: retained human transcription, SHA-256 `da4ef6f1ed61e1e1251b132004bb3e38b400bd148260d99bedfbc29364451da7`.
+- `vpx-script.mb-vpw-1-0`: retained known-working VPW Mod v1.0 embedded script, SHA-256 `b043d07c74693ce5c713a9edc1529413f3c2ec4420b63488085cd45e4fe413e8`, binding `mb_106b`.
+- `vpx-table.mb-vpw-1-0`: retained table, SHA-256 `bef48b75b072c3fc8b4803639cc65f54144db6ff7e9476f6ea6b1fc23bc68c8d`, bounds `left=0 top=0 right=952 bottom=2162`.
+- `pinmame.core.4ec52ff0ac13`: `src/wpc/sims/wpc/prelim/mb.c` and the WPC-95 core/solenoid/flipper handling at the pinned revision.
