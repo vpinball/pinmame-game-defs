@@ -156,15 +156,36 @@ speech is the reason that flag exists.
 - **Continuous output 1.** What public 17 drives is an open conflict, recorded in the definition.
   Resolving it needs either the schematic sheet for the solenoid driver and switch-strobe wiring or
   a harness run that watches switch column 6 while that line is toggled.
-- **Lamp semantics and enumeration.** Every lamp label is unverified legacy carry-over, sixteen
-  observed addresses have no name at all, and the auxiliary board is only partly enumerated, so
-  `output_enumeration` and `output_semantics` both remain open. The Internet Archive scan contains
-  no lamp identification table. A maintainer-supplied schematic set now does carry the lamp names,
-  as wire lists of the form wire number, connector pin, function: the A9 auxiliary lamp driver list
-  names all sixteen auxiliary lamps (four chambers of two, plus the thumper bumpers, slingshots and
-  top lanes), and the A5 main lamp driver list names the sixty playfield lamps. What is still
-  missing is the step from connector pin to public lamp address, which needs a per-sheet read of the
-  A5 and A9 board schematics. See `external:pinmame-review-artifacts/centaur-1981/lamp-identity-research.md`.
+- **Lamp semantics, nearly resolved.** The Internet Archive scan contains no lamp identification
+  table, which long made lamp identity the hard blocker. A maintainer-supplied schematic set carries
+  the names as wire lists of the form wire number, connector pin, function: the A9 sheet names all
+  sixteen auxiliary lamps (four chambers of two, plus the thumper bumpers, slingshots and top lanes)
+  and the A5 sheet names the sixty playfield lamps.
+
+  The addressing chain is now closed. `by35_lampStrobe` collapses to
+  `public = 16 * d + lampadr + 1`, and page 52 gives the output-to-SCR table for all four MC14514
+  decoders. Three checks pass: every (output, IC pin) pair matches the MC14514 pinout, all sixty
+  SCRs are used exactly once, and output 15 is unconnected on each decoder - which is precisely the
+  selector the driver skips.
+
+  Grouping the legacy labels by decoder output then shows the board's organisation: each output
+  drives the same class of lamp on all four decoders - the bonus ladder on outputs 1-2, the four
+  rollovers on 5, the drop-target arrows on 6-7, the chambers on 8, the captive orbs on 11, and the
+  backbox indicators on 10 and 12. The legacy corpus and the schematic were produced independently
+  and agree on that structure, which is far stronger evidence than either alone. It also decodes the
+  legacy naming scheme: "Middle N" is the N,000 bonus, "Left Lane N" is the N chamber, "Bottom N" is
+  captive orbs #N, and "5K N" are the four rollover lanes numbered right to left.
+
+  Two legacy labels look wrong: public 15, 31, 47 and 63 are labelled "Bonus 2x/3x/4x/5x" but sit
+  hard against the right edge at x about 0.85, and the schematic's right-hand group is RIGHT LANE
+  2X/3X/5X, while the real bonus multipliers are public 5/21/37/53 - public 5 traces directly to
+  J1-14 "2X BONUS". The two multiplier groups appear to have been swapped in the legacy import.
+
+  What remains is only the SCR-to-connector trace for U2, U3 and U4, which fixes which member of
+  each class sits at each address. Until that is done the labels stay as they are and
+  `output_semantics` stays in `coverage.missing`: the structure is proved, the per-address
+  assignment is not. See
+  `external:pinmame-review-artifacts/centaur-1981/lamp-identity-research.md`.
 - **Variant differences.** Nothing beyond "free play" distinguishes `centaura` and `centaurb` from
   the production ROM in this record.
 - **DIP switches.** The MPU carries four eight-position option banks, S1-S32, and none of them is
