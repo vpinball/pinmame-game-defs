@@ -123,9 +123,41 @@ lamps.
 
 Centaur also carries an **Auxiliary Lamp Driver A9** (AS-2518-43), which `centaurGameData` declares
 as `lampCol = 8`. That reserves a second board's worth of addresses at 65-79, 81-95, 97-111 and
-113-127. Runtime observation shows sixteen auxiliary lamps in use, at 65-68, 81-84, 97-100 and
-113-116, but absence of the rest is not proof that they are unused: the lamp inventory is still open
-and is one reason this record is not author-ready.
+113-127, of which only sixteen are reachable: 65-68, 81-84, 97-100 and 113-116.
+
+The board's schematic is printed in the Centaur manual itself, on page 51 of the *Installation and
+General Game Operation Instructions*, with every J2 pin's function annotated. Tracing it settles the
+auxiliary inventory completely. Each lamp data line enables one MC14555B decoder half - PD0 to U2A,
+PD1 to U2B, PD2 to U3A, PD3 to U3B - and the two latched address bits select Q0, Q1 or Q2 of that
+half. **Q3 is marked N/U on all four halves**, which is why four halves times three used outputs is
+the twelve SCRs the parts list counts, and why latched address 3 reaches no bulb on any data line.
+Public 68, 84, 100 and 116 are therefore bare matrix positions with no socket behind them. The
+retained community table drives playfield star inserts from three of those addresses; that is the
+table author's invention, not something the board can light.
+
+| public | decoder | SCR | A9J2 | printed function |
+| --- | --- | --- | --- | --- |
+| 65 | U2A Q0 | Q6 | 7 | TOP LEFT LANE |
+| 66 | U2A Q1 | Q5 | 6 | RIGHT SLINGSHOT |
+| 67 | U2A Q2 | Q4 | 5 | #1 CHAMBER (2) (FROM BOTTOM) |
+| 81 | U2B Q0 | Q1 | 1 | TOP MIDDLE LANE |
+| 82 | U2B Q1 | Q2 | 2 | LEFT SLINGSHOT |
+| 83 | U2B Q2 | Q3 | 3 | #2 CHAMBER (2) |
+| 97 | U3A Q0 | Q12 | 18 | TOP RIGHT LANE |
+| 98 | U3A Q1 | Q11 | 19 | RIGHT THUMPER BUMPER |
+| 99 | U3A Q2 | Q10 | 20 | #3 CHAMBER (2) |
+| 113 | U3B Q0 | Q7 | 11 | *(blank)* |
+| 114 | U3B Q1 | Q8 | 12 | LEFT THUMPER BUMPER |
+| 115 | U3B Q2 | Q9 | 17 | #4 CHAMBER (2) (TOP) |
+
+Each circuit lights a pair of bulbs, so the twelve drive twenty-four lamps.
+
+**The two outer top lanes are the opposite way round from the community table.** The table binds its
+top right lane insert to public 65 and its top left lane insert to public 97; the factory sheet wires
+A9J2-7 to TOP LEFT LANE and A9J2-18 to TOP RIGHT LANE. The manual is ground truth for physical
+wiring, and the same traced chain reproduces the table's other nine auxiliary assignments exactly,
+so this is a binding mistake in the table rather than a fault in the derivation. A recreation that
+copies the table lights the wrong outer lane.
 
 The legacy corpus bound sixty lamps spread across 2-114, which is neither the main board's sixty
 outputs nor a coherent subset of both boards. The retained harness runs observed seventy-six
@@ -144,22 +176,24 @@ Squawk & Talk (`SNDBRD_BY61B`). PinMAME carries a Centaur-specific `BY35GD_REVER
 in `by35.h` as the speech-reverb flag for this game, alongside `BY35GD_NOSOUNDE`. Centaur's growling
 speech is the reason that flag exists.
 
-## Two things a recreation should know are inferred
+## What still blocks author-ready, and what rests on reasoning
 
-Everything in this record is validated, but two labels rest on reasoning rather than a printed
-statement, and both are worth knowing about.
+**Public lamp 113 has no known function and no known position. This is the blocker.** It is a
+fitted circuit - decoder U3B output Q0 through SCR Q7 and resistor R15 to A9J2-11 - and the board
+can certainly light it. But it is the only one of the twelve whose function the factory schematic
+leaves blank, and the blank is deliberate: the genuinely unused pins printed beside it, A9J2-10 and
+13 through 16, are all marked N/U explicitly, so Bally distinguished "unused" from "unlabelled" on
+this very sheet. Nothing else names it. The switch table gives Centaur three top lanes, printed as
+03 TOP RIGHT LANE, 04 TOP MIDDLE LANE and 05 TOP LEFT LANE, so there is no fourth lane for it to
+complete, and none of the four retained community tables from 2020 to 2025 models the address at
+all. An earlier draft of this record placed it at the arithmetic centroid of the three top-lane
+inserts and called that placement validated; it was neither observed nor defensible - a centroid of
+three lamps in a row lands on top of the middle one - and it has been withdrawn. The circuit is
+enumerated with its wiring recorded and carries no coordinate, which is what keeps this machine
+`partial`.
 
-**Public lamp 113 is labelled for its group, not its function.** The AS-2518-43 board schematic - in
-none of the three Centaur manuals, and found instead in the Kings of Steel schematics, the board
-being generic Bally hardware - wires outputs Q0, Q1 and Q2 of each MC14555B half to SCRs and leaves
-Q3 unconnected. That makes public 65-67, 81-83, 97-99 and 113-115 the twelve fitted circuits and
-public 68, 84, 100 and 116 bare matrix positions with no bulb. Centaur's harness list names eleven
-of the twelve; 113 is the twelfth, and no document names it. Its label states only what is
-established: it is the fourth circuit of the top-rollover group, sharing a decoder position with the
-three printed top-lane inserts, and the ROM drives all four together. The likely answer is the
-fourth guardian rollover, since the manual describes a Guardian feature completed by four guardian
-rollovers while the switch table names only three top lanes, but that stays a hypothesis in the
-note rather than an assertion in the label.
+Resolving it needs either a Centaur playfield insert map that reaches A9J2-11, an unrestored machine
+photographed with the A9 harness visible, or a lamp test on real hardware.
 
 **Option switches 17-20 come from community documentation.** The printed credits-per-coin tables
 cover chutes 1 and 3, on switches 1-5 and 9-13, and omit the centre chute even though the machine
@@ -168,6 +202,9 @@ four retained tables, from 2020 to 2025, assigns 17-20 to it, and that documenta
 printed manual on every one of the 28 switches the manual does document. Note the asymmetry: the
 outer chutes use five selector switches each and the centre chute four.
 
-Searched and exhausted in reaching this state: all three Centaur manuals, the Centaur and Centaur II
-schematic sets, the Kiss manual with its schematic-omissions supplement, the Kings of Steel
-schematics, archive.org, and four independently authored VPX recreations spanning fifteen years.
+Searched in reaching this state: all three Centaur manuals, the Centaur and Centaur II schematic
+sets, the Kiss manual with its schematic-omissions supplement, the Kings of Steel schematics,
+archive.org, and four independently authored VPX recreations spanning fifteen years. The A9
+schematic was found in the Centaur manual itself after an earlier pass had concluded it was absent
+and had fallen back on the Kings of Steel sheet; the boards are identical, but the Centaur print
+carries the per-pin lamp functions that the Kings of Steel print does not.

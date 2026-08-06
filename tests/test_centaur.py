@@ -15,7 +15,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines" / "author-ready" / "bally" / "centaur-1981.json"
+DEFINITION_PATH = ROOT / "machines" / "partial" / "bally" / "centaur-1981.json"
 PROFILE_PATH = ROOT / "controllers" / "pinmame" / "by35.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "by35" / "centaur-solenoid-self-test.json"
 
@@ -172,7 +172,10 @@ class CentaurDefinitionTests(unittest.TestCase):
 		self.assertEqual("control_signal", device["kind"])
 		self.assertEqual("validated", device["provenance"]["status"])
 		self.assertIn("strobe", device["label"].lower())
-		self.assertEqual([], self.definition["conflicts"])
+		# The two recorded conflicts are both auxiliary-lamp matters; nothing disputes this strobe.
+		self.assertTrue(
+			all(conflict["id"].startswith("conflict.aux-lamp-") for conflict in self.definition["conflicts"])
+		)
 		self.assertNotIn("unresolved_conflicts", self.definition["coverage"]["missing"])
 
 	def test_every_mpu_option_switch_is_enumerated(self) -> None:
@@ -508,12 +511,24 @@ class CentaurDefinitionTests(unittest.TestCase):
 		}
 		self.assertEqual("control_signal", lamps[1]["kind"])
 
-	def test_coverage_is_author_ready_with_nothing_missing(self) -> None:
+	def test_coverage_is_partial_and_names_the_one_blocker(self) -> None:
+		"""One unlocated auxiliary circuit is the only thing between this record and author-ready.
+
+		Public lamp 113 is fitted on the A9 board but the factory schematic prints no function for
+		it and nothing locates it, so it carries no placement. Every other dimension is validated.
+		The blocker must stay conspicuous rather than being papered over with a projection.
+		"""
 		coverage = self.definition["coverage"]
-		self.assertEqual("author_ready", coverage["status"])
-		self.assertEqual([], coverage["missing"])
-		self.assertTrue(all(v == "validated" for v in coverage["dimensions"].values()))
-		self.assertEqual([], self.definition["conflicts"])
+		self.assertEqual("partial", coverage["status"])
+		self.assertEqual(["spatial_placement"], coverage["missing"])
+		self.assertEqual("candidate", coverage["dimensions"]["spatial_placement"])
+		self.assertTrue(
+			all(v == "validated" for k, v in coverage["dimensions"].items() if k != "spatial_placement")
+		)
+		self.assertEqual(
+			{"conflict.aux-lamp-65-97-top-lane-binding", "conflict.aux-lamp-113-unidentified"},
+			{conflict["id"] for conflict in self.definition["conflicts"]},
+		)
 
 	def test_centre_coin_chute_selector_is_enumerated(self) -> None:
 		"""The printed credits-per-coin tables cover chutes 1 and 3 only; 17-20 are the centre."""
@@ -522,11 +537,15 @@ class CentaurDefinitionTests(unittest.TestCase):
 			self.assertEqual("used", device["availability"])
 			self.assertIn("centre", device["label"])
 
-	def test_every_device_carries_a_spatial_record(self) -> None:
+	def test_every_device_carries_a_spatial_record_except_the_named_blocker(self) -> None:
+		"""Exactly one device may lack a spatial record, and it must be the one named in coverage."""
+		unlocated = []
 		for item in self.definition["inputs"] + self.definition["outputs"]:
-			self.assertIn("spatial", item, item["id"])
+			if "spatial" not in item:
+				unlocated.append(item["binding"]["device"])
 		for display in self.definition["displays"]:
 			self.assertIn("spatial", display, display["id"])
+		self.assertEqual([113], unlocated)
 
 	def test_bare_auxiliary_matrix_positions_have_no_lamp(self) -> None:
 		"""The A9 has twelve SCRs for sixteen matrix positions; four positions carry no bulb.
@@ -551,11 +570,13 @@ class CentaurDefinitionTests(unittest.TestCase):
 			self.assertIn("N/U", device["physical"]["notes"], address)
 
 	def test_twelfth_auxiliary_circuit_claims_only_what_is_evidenced(self) -> None:
-		"""113's existence and decoder group are printed; what it lights is not.
+		"""113 is fitted and unnamed, and must not acquire a function or a position by inference.
 
-		The AS-2518-43 board schematic establishes that it is the twelfth fitted circuit and that
-		it shares a decoder position with the three named top-lane inserts. No document names it,
-		so the label must not assert the likely "fourth guardian rollover" reading.
+		The Centaur manual's own AS-2518-43 sheet prints a function against all eleven other fitted
+		outputs and leaves A9J2-11 blank, while marking the genuinely unused pins beside it N/U. An
+		earlier draft placed it at the arithmetic centroid of the three top-lane inserts and called
+		that validated; a centroid of three lamps in a row lands on the middle one, and it was
+		neither observed nor defensible. Guard against it coming back.
 		"""
 		lamps = {
 			item["binding"]["device"]: item
@@ -564,9 +585,48 @@ class CentaurDefinitionTests(unittest.TestCase):
 		}
 		device = lamps[113]
 		self.assertEqual("used", device["availability"])
-		self.assertIn("Top Rollover Insert", device["label"])
+		self.assertIn("A9J2-11", device["label"])
 		self.assertNotIn("Guardian", device["label"])
-		self.assertIn("hypothesis", device["physical"]["notes"])
+		self.assertNotIn("Rollover", device["label"])
+		self.assertNotIn("spatial", device)
+
+	def test_outer_top_lane_lamps_follow_the_manual_not_the_table(self) -> None:
+		"""A9J2-7 is TOP LEFT LANE and A9J2-18 is TOP RIGHT LANE.
+
+		The retained community table binds these the other way round. The manual is ground truth for
+		physical wiring and the same traced chain reproduces the table's other nine auxiliary
+		assignments exactly, so the table is wrong here. Left must also sit left of right on the
+		playfield, which is the check that would have caught the original swap.
+		"""
+		lamps = {
+			item["binding"]["device"]: item
+			for item in self.definition["outputs"]
+			if item["binding"]["group"] == "pinmame.output.lamp"
+		}
+		self.assertEqual("Top Left Lane", lamps[65]["label"])
+		self.assertEqual("Top Middle Lane", lamps[81]["label"])
+		self.assertEqual("Top Right Lane", lamps[97]["label"])
+		xs = [lamps[address]["spatial"]["placements"][0]["x"] for address in (65, 81, 97)]
+		self.assertEqual(sorted(xs), xs, "top lanes must run left to right across the playfield")
+
+	def test_auxiliary_board_is_sourced_from_the_centaur_manual(self) -> None:
+		"""The A9 sheet is printed in Centaur's own manual, not borrowed from another game.
+
+		An earlier pass concluded no Centaur manual carried it and fell back on the Kings of Steel
+		schematics. The boards are identical, but only the Centaur print annotates the per-pin lamp
+		functions, and those are what identify the twelve circuits.
+		"""
+		lamps = {
+			item["binding"]["device"]: item
+			for item in self.definition["outputs"]
+			if item["binding"]["group"] == "pinmame.output.lamp"
+		}
+		for address in (65, 66, 67, 68, 81, 82, 83, 84, 97, 98, 99, 100, 113, 114, 115, 116):
+			self.assertIn(
+				"manual-schematics.bally.centaur.1981",
+				lamps[address]["provenance"]["source_refs"],
+				address,
+			)
 
 	def test_every_auxiliary_circuit_drives_a_pair_of_lamps(self) -> None:
 		"""The AS-2518-43 drives twenty-four lamps as twelve sets of two."""
