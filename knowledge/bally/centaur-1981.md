@@ -158,8 +158,13 @@ speech is the reason that flag exists.
   a harness run that watches switch column 6 while that line is toggled.
 - **Lamp semantics and enumeration.** Every lamp label is unverified legacy carry-over, sixteen
   observed addresses have no name at all, and the auxiliary board is only partly enumerated, so
-  `output_enumeration` and `output_semantics` both remain open. This manual scan contains no lamp
-  identification table; Figure II, referenced by the parts list for playfield parts, is not in it.
+  `output_enumeration` and `output_semantics` both remain open. The Internet Archive scan contains
+  no lamp identification table. A maintainer-supplied schematic set now does carry the lamp names,
+  as wire lists of the form wire number, connector pin, function: the A9 auxiliary lamp driver list
+  names all sixteen auxiliary lamps (four chambers of two, plus the thumper bumpers, slingshots and
+  top lanes), and the A5 main lamp driver list names the sixty playfield lamps. What is still
+  missing is the step from connector pin to public lamp address, which needs a per-sheet read of the
+  A5 and A9 board schematics. See `external:pinmame-review-artifacts/centaur-1981/lamp-identity-research.md`.
 - **Variant differences.** Nothing beyond "free play" distinguishes `centaura` and `centaurb` from
   the production ROM in this record.
 - **DIP switches.** The MPU carries four eight-position option banks, S1-S32, and none of them is
