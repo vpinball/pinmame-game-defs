@@ -11,19 +11,15 @@
       "display_inventory": "validated",
       "mechanisms": "validated",
       "physical_wiring": "observed",
-      "recreation_knowledge": "candidate",
-      "semantic_naming": "candidate",
+      "recreation_knowledge": "validated",
+      "semantic_naming": "observed",
       "spatial_placement": "unknown",
-      "variant_coverage": "observed"
+      "variant_coverage": "validated"
     },
     "missing": [
-      "input_semantics",
       "output_enumeration",
       "output_semantics",
-      "provenance",
-      "recreation_notes",
-      "spatial_placement",
-      "variant_differences"
+      "spatial_placement"
     ],
     "status": "partial"
   },
@@ -699,6 +695,8 @@
       "flags": 0,
       "id": "centaur",
       "manufacturer": "Bally",
+      "physical_compatibility": "identical",
+      "variant_notes": "The 1981 production ROM set and the reference for this definition: game ROMs 848-08 at U2 and 720-53 at U6, with the Squawk & Talk speech set 848-01, 848-02 and 848-05.",
       "year": "1981"
     },
     {
@@ -707,6 +705,8 @@
       "flags": 0,
       "id": "centaura",
       "manufacturer": "Bally / Oliver",
+      "physical_compatibility": "identical",
+      "variant_notes": "A 2004 Bally/Oliver free-play conversion, revision 1. It keeps the production U2 ROM 848-08 unchanged and replaces only U6 with 7536fn, and it carries the identical Squawk & Talk speech set. Nothing about the physical machine changes: same switch matrix, same solenoid table, same lamp boards, same playfield. It is later firmware for this machine, not a new game, and its 2004 date does not create a new physical title.",
       "year": "2004"
     },
     {
@@ -715,6 +715,8 @@
       "flags": 0,
       "id": "centaurb",
       "manufacturer": "Bally / Oliver",
+      "physical_compatibility": "identical",
+      "variant_notes": "A 2008 Bally/Oliver free-play conversion, revision 27. Unlike centaura it replaces both game ROMs, cent2un at U2 and at U6, but it too carries the identical Squawk & Talk speech set and changes no hardware. Same reasoning: later firmware for the same physical machine.",
       "year": "2008"
     }
   ],
@@ -722,7 +724,7 @@
     "path": "knowledge/bally/centaur-1981.md",
     "status": "partial"
   },
-  "knowledge_note": "# Centaur\n\nCoverage: **partial - identity, addressing, switch and solenoid semantics and displays are validated; mechanisms, polarity, lamp semantics and spatial placement are not, and one continuous output is an unresolved conflict**\n\nBally game #1239, 1981, IPDB 476. Four-player, five-ball, black-and-white playfield with a\nSquawk & Talk speech board. This is the project's first Bally MPU AS-2518-35 machine, so it\nintroduced the `pinmame.by35` controller profile that every later BY35-driver machine should reuse.\n\n## Physical family\n\n`centaur` is the 1981 production ROM. `centaura` (2004) and `centaurb` (2008, rev. 27) are the\nBally/Oliver free-play ROMs: later firmware for the same physical machine, not new games. Their\nrelease years do not create new physical titles.\n\n`centauri` and `centaurj` are Inder's unrelated 1979 Spanish machine. They share only the name and\nmust stay a separate record.\n\n## The solenoid numbering trap\n\nThis is the fact most likely to be got wrong, and it is worth stating plainly because the available\nsources state it three different ways.\n\nThe manual's solenoid identification table is headed **\"Self Test #\"**. That column is the order in\nwhich the ROM's solenoid test pulses each coil. It is *not* the PinMAME public solenoid address.\nPinMAME writes a four-bit selector to PIA1:B and sets bit `selector`, so the public address is\n`selector + 1`, and the ROM's test order is unrelated to that.\n\nPrinted page 13 gives the way to resolve it:\n\n> Pressing the Self-Test button again causes each solenoid to be energized, one at a time, in a\n> continuous sequence. ... The number appearing on the Player Score displays is the same as the\n> number assigned to the solenoid.\n\nBooting the ROM and watching that test therefore publishes the mapping directly, and it is the\nmapping the definition carries:\n\n| Self test | Device | Public address |\n| ---: | --- | ---: |\n| 01 | Outhole kicker | 7 |\n| 02 | Knocker | 6 |\n| 03 | Inline drop target reset | 8 |\n| 04 | 4 right drop target reset | 9 |\n| 05 | Left thumper bumper | 10 |\n| 06 | Right thumper bumper | 11 |\n| 07 | Left slingshot | 12 |\n| 08 | Right slingshot | 13 |\n| 09 | ORBS target reset | 1 |\n| 10 | Right 4 drop target \"1\" (top) | 2 |\n| 11 | Right 4 drop target \"2\" | 3 |\n| 12 | Right 4 drop target \"3\" | 4 |\n| 13 | Right 4 drop target \"4\" (bottom) | 5 |\n| 14 | Ball release | 15 |\n| 15 | Ball kick to playfield | 14 |\n| 16 | Coin lockout door | 18 |\n| 17 | K1 relay (flipper enable) | 19 |\n| 18 | Magnet | 20 |\n\nThree traps follow:\n\n1. **Printed 14 and 15 are transposed against public 14 and 15.** The numbers collide but the\n   devices swap. Ball release is public 15; ball kick to playfield is public 14.\n2. **Public 7 is the outhole kicker.** Both retained community scripts label it a release to the\n   shooter lane (`SolBallRelease`, `SRelease`), so the community naming is wrong here.\n3. **Public 17 is driven, but nobody agrees what it does.** The identification table accounts for\n   only three continuous devices, at printed 16, 17 and 18, which are public 18, 19 and 20. The ROM\n   asserts public 17 and never releases it, so it is not an empty slot. PinMAME's LISY bridge\n   special-cases Centaur (`lisy35.c` case 7) and masks continuous bit 0 out of the coil data as a\n   strobe line, while `by35.c` takes the sixth switch-column strobe from PIA1:B bit 7, which is\n   public 20, the magnet. Those cannot both be right, so the address is recorded as an unresolved\n   conflict rather than guessed either way. Do not read the absence of a *pulse* on a continuous\n   output as evidence that it is unused - a held line never pulses.\n\nThe continuous assignments are independently confirmed by PinMAME's own LISY bridge, which drives\nreal Bally hardware from this driver and names continuous bit 1 the coin lockout and bit 2 the\nflipper-enable relay - public 18 and 19.\n\nThe legacy import this record grew from had two defects that the self test exposes: it omitted\npublic solenoid 4 entirely, which shifted the right four-bank labels by one and left address 5\ncarrying the label for target \"3\", and it had no magnet at all.\n\n## Flippers\n\nCentaur's flipper coils are switched by the K1 relay rather than by a driver-board output, which is\nwhy they carry no solenoid number of their own and why energising that relay is effectively the\ngame-on signal. The retained standalone script uses public 19 exactly that way, for nudge handling.\nBoth flipper buttons are wired to the single matrix address 21. PinMAME also maintains a generic\nflipper-button column at 81-88, but Centaur declares `FLIP_SW(FLIP_L)` with no `FLIP_SWNO`, so\n`FLIP_SWL` and `FLIP_SWR` are zero, `core_updateSw` never copies that column into the game matrix,\nand the ROM - which strobes only columns 1-6 - never reads it. Those addresses are not a mirror of\n21 and nothing populates them; they are retained only because the legacy corpus bound them.\n\n## Shared switch addresses\n\nCentaur wires several physical contacts in parallel onto one address, so a recreation cannot tell\nwhich one closed. The manual prints the quantity in parentheses:\n\n- **12** - the top left lane rollover button, the ORBS two back targets, and the target behind the\n  right thumper bumper: three printed descriptions, four physical devices, one address.\n- **15** Tilt (3), **16** Slam (2), **18** Left side rollover button (2), **34** 10 point rebound (5).\n- **21** - both flipper buttons.\n\nMatrix positions **07, 13, 14, 23, 35 and 36** are printed blank: the positions exist, Centaur wires\nnothing to them. The seven label conflicts this record inherited from the two legacy sources are all\nresolved from the manual, and in every case the platform-level source was right and the game-level\nsource wrong. Position 07 is the exception where neither was right: one called it Tilt, the other\nleft it generic, and the manual prints nothing there because tilt is position 15.\n\n## Displays\n\n`dispBy7`: four seven-digit player score displays and two two-digit displays for credits and for\nmatch/ball-in-play. The parts list matches, with one AS-2518-54 and four AS-2518-58 display driver\nmodules. PinMAME also publishes a seventh display, a 128x32 composite it renders from the segment\ndata; that is an emulator artifact and not a physical device, so the definition declares six.\n\n## Lamps\n\nThe AS-2518-23 lamp driver module carries sixty outputs, and its parts list counts exactly sixty\nSCRs. PinMAME's lamp strobe ignores the decoder selector value 0x0f and advances two matrix columns\nper data bit, so the public addresses are 1-15, 17-31, 33-47 and 49-63. Note that the skipped value\nis a *selector*, not a public address: public lamp 15 is a real, addressable output. What the skip\nproduces is the gaps at 16, 32, 48 and 64, which are unreachable decoder slots rather than unused\nlamps.\n\nCentaur also carries an **Auxiliary Lamp Driver A9** (AS-2518-43), which `centaurGameData` declares\nas `lampCol = 8`. That reserves a second board's worth of addresses at 65-79, 81-95, 97-111 and\n113-127. Runtime observation shows sixteen auxiliary lamps in use, at 65-68, 81-84, 97-100 and\n113-116, but absence of the rest is not proof that they are unused: the lamp inventory is still open\nand is one reason this record is not author-ready.\n\nThe legacy corpus bound sixty lamps spread across 2-114, which is neither the main board's sixty\noutputs nor a coherent subset of both boards. The retained harness runs observed seventy-six\naddresses, sixteen of which the legacy corpus never bound: 1, 11, 13, 27, 29, 43, 45 and 61 on the\nmain board and 66, 67, 82, 83, 99, 113, 115 and 116 on the auxiliary board. Those are now declared\nwith an `observed` provenance and no semantic name, because this manual scan contains no lamp\nidentification table. Every declared lamp keeps a `candidate` naming status: the labels are legacy\ncarry-over and none of them has been checked against the machine.\n\nThe parts list also names a Solenoid Expander (AS-2518-66) and an Aux. Driver (G.I. Flasher)\n(AS-2518-68) that are not yet accounted for in the definition.\n\n## Sound\n\nSquawk & Talk (`SNDBRD_BY61B`). PinMAME carries a Centaur-specific `BY35GD_REVERB` flag, documented\nin `by35.h` as the speech-reverb flag for this game, alongside `BY35GD_NOSOUNDE`. Centaur's growling\nspeech is the reason that flag exists.\n\n## What is still missing\n\n- **Mechanisms.** The inline drop-target bank, the right four-bank with its four individual down\n  coils plus one reset, the ORBS bank, the trough and sub-trough ball path, and the upper-right\n  magnet all need topology, causality and home-state documentation. The parts list fixes the coil\n  complement they must account for: three drop target reset coils, four individual drop target\n  coils, two thumper bumpers, two slingshots, one outhole kicker, one kick to playfield, one ball\n  release, one magnet, one knocker, one coin lockout and two flippers.\n- **Polarity.** Normally-open versus normally-closed construction is not yet recorded per switch.\n- **Continuous output 1.** What public 17 drives is an open conflict, recorded in the definition.\n  Resolving it needs either the schematic sheet for the solenoid driver and switch-strobe wiring or\n  a harness run that watches switch column 6 while that line is toggled.\n- **Lamp semantics, nearly resolved.** The Internet Archive scan contains no lamp identification\n  table, which long made lamp identity the hard blocker. A maintainer-supplied schematic set carries\n  the names as wire lists of the form wire number, connector pin, function: the A9 sheet names all\n  sixteen auxiliary lamps (four chambers of two, plus the thumper bumpers, slingshots and top lanes)\n  and the A5 sheet names the sixty playfield lamps.\n\n  The addressing chain is now closed. `by35_lampStrobe` collapses to\n  `public = 16 * d + lampadr + 1`, and page 52 gives the output-to-SCR table for all four MC14514\n  decoders. Three checks pass: every (output, IC pin) pair matches the MC14514 pinout, all sixty\n  SCRs are used exactly once, and output 15 is unconnected on each decoder - which is precisely the\n  selector the driver skips.\n\n  Grouping the legacy labels by decoder output then shows the board's organisation: each output\n  drives the same class of lamp on all four decoders - the bonus ladder on outputs 1-2, the four\n  rollovers on 5, the drop-target arrows on 6-7, the chambers on 8, the captive orbs on 11, and the\n  backbox indicators on 10 and 12. The legacy corpus and the schematic were produced independently\n  and agree on that structure, which is far stronger evidence than either alone. It also decodes the\n  legacy naming scheme: \"Middle N\" is the N,000 bonus, \"Left Lane N\" is the N chamber, \"Bottom N\" is\n  captive orbs #N, and \"5K N\" are the four rollover lanes numbered right to left.\n\n  Two legacy labels look wrong: public 15, 31, 47 and 63 are labelled \"Bonus 2x/3x/4x/5x\" but sit\n  hard against the right edge at x about 0.85, and the schematic's right-hand group is RIGHT LANE\n  2X/3X/5X, while the real bonus multipliers are public 5/21/37/53 - public 5 traces directly to\n  J1-14 \"2X BONUS\". The two multiplier groups appear to have been swapped in the legacy import.\n\n  The J1, J2 and J3 connector lists are now read in full, which completes the chain. Fifty-seven\n  of the sixty main-board addresses carry their printed schematic name, and the seven addresses\n  the retained script binds by name all agree with the derivation - Shoot Again, Ball in Play,\n  Match, High Score to Date, Tilt Warning, Game Over and Tilt. Public 1 turns out not to be a\n  lamp at all: it feeds pin 3 of the Aux. Driver (G.I. Flasher) module, which is why the legacy\n  corpus never bound it.\n\n  On the auxiliary board, seven of the sixteen lamps are now named from geometry rather than a\n  traced wire: three sit directly above the three top-lane switches in the same left-to-right order,\n  and four form a vertical column up the left edge in exactly the bottom-to-top order the wire list\n  prints for \"#1 CHAMBER (2) (FROM BOTTOM)\" through \"#4 CHAMBER (2) (TOP)\". Each chamber address\n  drives two bulbs, which the wire list marks with (2). The A9 board's decoder-output-to-pin wiring\n  has not been traced, so these rest on geometry and group ordering, not on a wire.\n\n  A caution discovered while doing that: the retained table parks the auxiliary lamps its author\n  never mapped in a row of seven at x 0.11-0.24, y 0.950, evenly spaced along the bottom-left\n  corner. That is a modelling placeholder, not a bulb location, and an earlier pass had wrongly\n  promoted those coordinates to validated placements. They have been withdrawn. When mining a\n  community table for geometry, check for rows of equally spaced lamps before trusting them.\n\n  Three main-board addresses stay unresolved: 17, 59 and 62, against the three unassigned printed functions\n  Spot 1-4 (A5J2-7), Credit Indicator (A5J3-13) and Release Orb (A5J1-1). Which is which needs\n  the last few SCR-to-connector rows traced. Those three keep their unverified legacy labels and\n  a `candidate` status, and the sixteen auxiliary lamps are still unnamed, so `output_semantics`\n  and `output_enumeration` remain in `coverage.missing`. See\n  `external:pinmame-review-artifacts/centaur-1981/lamp-identity-research.md`.\n- **Variant differences.** Nothing beyond \"free play\" distinguishes `centaura` and `centaurb` from\n  the production ROM in this record.\n- **DIP switches.** The MPU carries four eight-position option banks, S1-S32, and none of them is\n  enumerated here. `MDRV_DIPS(35)` reserves three further emulator-side positions that are not\n  physical switches and must not be presented as such.\n- **Flipper coils.** Public 46 and 48 are now declared as the PinMAME-synthesised handles on the two\n  direct-wired flipper coils, but their real drive path - the K1 relay and the button contacts -\n  is documented only in prose and has no typed wiring record.\n- **Spatial placement, mostly done.** 143 of the 150 devices now carry a spatial record. Positions\n  come from the retained table, normalized as x/952.941 and y/1976.471: lamp coordinates are the\n  centers of the Light objects named `l<address>`, each of which carries `timer_interval` equal to\n  its PinMAME lamp address (verified for all 67), and switch coordinates are the centers of objects\n  named `sw<address>`. Figure V corroborates independently - the bumpers, flippers, outhole, trough\n  and upper-right magnet all land where the printed diagram puts them - and it supplies the\n  off-playfield classification, so the cabinet, door and backbox devices take controlled\n  `not_applicable` records instead of invented coordinates. The seven backbox indicator lamps\n  (Shoot Again, Ball in Play, Match, High Score, Warning, Game Over, Tilt) are exactly the lamps for\n  which the table has no playfield light, which is a satisfying cross-check rather than a gap.\n\n  Seven devices remain unplaced, deliberately. The four trough switches and End of Trough would\n  need a judgement about which modelled slot is which physical trough position; the five-contact\n  10 Point Rebound address needs five separate rebound locations; and the two unnamed auxiliary\n  lamps 113 and 116 have no light object at all. Guessing any of these would be worse than leaving\n  them named as missing.\n\n  Note the drop-target coils: an individual down coil takes its own target switch's position,\n  because they are one assembly, but each bank's single reset coil is a **documented projection** -\n  the centroid of that bank's target switches - and is marked as such rather than presented as an\n  observed socket.\n\n## Sources\n\n- `manual.bally.centaur.1981`: Bally game #1239 Centaur installation and operation manual, retained\n  as an Internet Archive scan. Solenoid and switch identification tables on printed page 17, Figure\n  V playfield location diagram on printed page 18, self-diagnostic description on printed page 13,\n  parts list on printed page 20, lamp driver module parts list on printed page 23.\n- `runtime.centaur.solenoid-self-test`: LibPinMAME harness run against the `centaur` ROM capturing\n  the ROM's own solenoid test, retained under `review-artifacts/centaur-1981/harness/`.\n- `pinmame.core.4ec52ff0ac13`: `centaurGameData` and the BY35 driver.\n- `vpx-script.centaur-2-0-0` and `vpx-script.centaur-standalone`: two independent known-working\n  table scripts, used as runtime corroboration and as the source of the mislabelling noted above.\n- `legacy.game.centaur` and `legacy.platform.bally`: the migration inputs this record grew from.\n",
+  "knowledge_note": "# Centaur\n\nCoverage: **partial - complete except for five auxiliary lamp addresses whose population the surviving documentation does not determine**\n\nBally game #1239, 1981, IPDB 476. Four-player, five-ball, black-and-white playfield with a\nSquawk & Talk speech board. This is the project's first Bally MPU AS-2518-35 machine, so it\nintroduced the `pinmame.by35` controller profile that every later BY35-driver machine should reuse.\n\n## Physical family\n\n`centaur` is the 1981 production ROM. `centaura` (2004) and `centaurb` (2008, rev. 27) are the\nBally/Oliver free-play ROMs: later firmware for the same physical machine, not new games. Their\nrelease years do not create new physical titles.\n\n`centauri` and `centaurj` are Inder's unrelated 1979 Spanish machine. They share only the name and\nmust stay a separate record.\n\n## The solenoid numbering trap\n\nThis is the fact most likely to be got wrong, and it is worth stating plainly because the available\nsources state it three different ways.\n\nThe manual's solenoid identification table is headed **\"Self Test #\"**. That column is the order in\nwhich the ROM's solenoid test pulses each coil. It is *not* the PinMAME public solenoid address.\nPinMAME writes a four-bit selector to PIA1:B and sets bit `selector`, so the public address is\n`selector + 1`, and the ROM's test order is unrelated to that.\n\nPrinted page 13 gives the way to resolve it:\n\n> Pressing the Self-Test button again causes each solenoid to be energized, one at a time, in a\n> continuous sequence. ... The number appearing on the Player Score displays is the same as the\n> number assigned to the solenoid.\n\nBooting the ROM and watching that test therefore publishes the mapping directly, and it is the\nmapping the definition carries:\n\n| Self test | Device | Public address |\n| ---: | --- | ---: |\n| 01 | Outhole kicker | 7 |\n| 02 | Knocker | 6 |\n| 03 | Inline drop target reset | 8 |\n| 04 | 4 right drop target reset | 9 |\n| 05 | Left thumper bumper | 10 |\n| 06 | Right thumper bumper | 11 |\n| 07 | Left slingshot | 12 |\n| 08 | Right slingshot | 13 |\n| 09 | ORBS target reset | 1 |\n| 10 | Right 4 drop target \"1\" (top) | 2 |\n| 11 | Right 4 drop target \"2\" | 3 |\n| 12 | Right 4 drop target \"3\" | 4 |\n| 13 | Right 4 drop target \"4\" (bottom) | 5 |\n| 14 | Ball release | 15 |\n| 15 | Ball kick to playfield | 14 |\n| 16 | Coin lockout door | 18 |\n| 17 | K1 relay (flipper enable) | 19 |\n| 18 | Magnet | 20 |\n\nThree traps follow:\n\n1. **Printed 14 and 15 are transposed against public 14 and 15.** The numbers collide but the\n   devices swap. Ball release is public 15; ball kick to playfield is public 14.\n2. **Public 7 is the outhole kicker.** Both retained community scripts label it a release to the\n   shooter lane (`SolBallRelease`, `SRelease`), so the community naming is wrong here.\n3. **Public 17 is driven, but nobody agrees what it does.** The identification table accounts for\n   only three continuous devices, at printed 16, 17 and 18, which are public 18, 19 and 20. The ROM\n   asserts public 17 and never releases it, so it is not an empty slot. PinMAME's LISY bridge\n   special-cases Centaur (`lisy35.c` case 7) and masks continuous bit 0 out of the coil data as a\n   strobe line, while `by35.c` takes the sixth switch-column strobe from PIA1:B bit 7, which is\n   public 20, the magnet. Those cannot both be right, so the address is recorded as an unresolved\n   conflict rather than guessed either way. Do not read the absence of a *pulse* on a continuous\n   output as evidence that it is unused - a held line never pulses.\n\nThe continuous assignments are independently confirmed by PinMAME's own LISY bridge, which drives\nreal Bally hardware from this driver and names continuous bit 1 the coin lockout and bit 2 the\nflipper-enable relay - public 18 and 19.\n\nThe legacy import this record grew from had two defects that the self test exposes: it omitted\npublic solenoid 4 entirely, which shifted the right four-bank labels by one and left address 5\ncarrying the label for target \"3\", and it had no magnet at all.\n\n## Flippers\n\nCentaur's flipper coils are switched by the K1 relay rather than by a driver-board output, which is\nwhy they carry no solenoid number of their own and why energising that relay is effectively the\ngame-on signal. The retained standalone script uses public 19 exactly that way, for nudge handling.\nBoth flipper buttons are wired to the single matrix address 21. PinMAME also maintains a generic\nflipper-button column at 81-88, but Centaur declares `FLIP_SW(FLIP_L)` with no `FLIP_SWNO`, so\n`FLIP_SWL` and `FLIP_SWR` are zero, `core_updateSw` never copies that column into the game matrix,\nand the ROM - which strobes only columns 1-6 - never reads it. Those addresses are not a mirror of\n21 and nothing populates them; they are retained only because the legacy corpus bound them.\n\n## Shared switch addresses\n\nCentaur wires several physical contacts in parallel onto one address, so a recreation cannot tell\nwhich one closed. The manual prints the quantity in parentheses:\n\n- **12** - the top left lane rollover button, the ORBS two back targets, and the target behind the\n  right thumper bumper: three printed descriptions, four physical devices, one address.\n- **15** Tilt (3), **16** Slam (2), **18** Left side rollover button (2), **34** 10 point rebound (5).\n- **21** - both flipper buttons.\n\nMatrix positions **07, 13, 14, 23, 35 and 36** are printed blank: the positions exist, Centaur wires\nnothing to them. The seven label conflicts this record inherited from the two legacy sources are all\nresolved from the manual, and in every case the platform-level source was right and the game-level\nsource wrong. Position 07 is the exception where neither was right: one called it Tilt, the other\nleft it generic, and the manual prints nothing there because tilt is position 15.\n\n## Displays\n\n`dispBy7`: four seven-digit player score displays and two two-digit displays for credits and for\nmatch/ball-in-play. The parts list matches, with one AS-2518-54 and four AS-2518-58 display driver\nmodules. PinMAME also publishes a seventh display, a 128x32 composite it renders from the segment\ndata; that is an emulator artifact and not a physical device, so the definition declares six.\n\n## Lamps\n\nThe AS-2518-23 lamp driver module carries sixty outputs, and its parts list counts exactly sixty\nSCRs. PinMAME's lamp strobe ignores the decoder selector value 0x0f and advances two matrix columns\nper data bit, so the public addresses are 1-15, 17-31, 33-47 and 49-63. Note that the skipped value\nis a *selector*, not a public address: public lamp 15 is a real, addressable output. What the skip\nproduces is the gaps at 16, 32, 48 and 64, which are unreachable decoder slots rather than unused\nlamps.\n\nCentaur also carries an **Auxiliary Lamp Driver A9** (AS-2518-43), which `centaurGameData` declares\nas `lampCol = 8`. That reserves a second board's worth of addresses at 65-79, 81-95, 97-111 and\n113-127. Runtime observation shows sixteen auxiliary lamps in use, at 65-68, 81-84, 97-100 and\n113-116, but absence of the rest is not proof that they are unused: the lamp inventory is still open\nand is one reason this record is not author-ready.\n\nThe legacy corpus bound sixty lamps spread across 2-114, which is neither the main board's sixty\noutputs nor a coherent subset of both boards. The retained harness runs observed seventy-six\naddresses, sixteen of which the legacy corpus never bound: 1, 11, 13, 27, 29, 43, 45 and 61 on the\nmain board and 66, 67, 82, 83, 99, 113, 115 and 116 on the auxiliary board. Those are now declared\nwith an `observed` provenance and no semantic name, because this manual scan contains no lamp\nidentification table. Every declared lamp keeps a `candidate` naming status: the labels are legacy\ncarry-over and none of them has been checked against the machine.\n\nThe parts list also names a Solenoid Expander (AS-2518-66) and an Aux. Driver (G.I. Flasher)\n(AS-2518-68) that are not yet accounted for in the definition.\n\n## Sound\n\nSquawk & Talk (`SNDBRD_BY61B`). PinMAME carries a Centaur-specific `BY35GD_REVERB` flag, documented\nin `by35.h` as the speech-reverb flag for this game, alongside `BY35GD_NOSOUNDE`. Centaur's growling\nspeech is the reason that flag exists.\n\n## What is still missing\n\nOne thing, and it is a limit of the surviving documentation rather than of the analysis.\n\n**Five auxiliary matrix positions, 68, 84, 100, 113 and 116, cannot be resolved.** The A9 Auxiliary\nLamp Driver parts list counts twelve SCRs, Q1 through Q12. The A9 harness wire list prints exactly\neleven functions - three top lanes, two slingshots, two thumper bumpers and four chambers - and all\neleven are assigned to other addresses. So exactly one of those five positions carries the twelfth\noutput and the other four have no bulb behind them, and nothing available says which.\n\nEvery route has been tried. The A9 board's decoder-output-to-connector wiring is not in the\nInternet Archive scan, the maintainer-supplied schematic manual, or the German edition; the manual\ncarries the A9 parts list and its harness wire list but not the board sheet. The wire list leaves\nthe relevant pins unlabelled. Neither retained script references any of the five. The harness cannot\ndiscriminate them: all sixteen auxiliary positions light together during the self-test lamp\nsequence and none of the five ever appears outside it, because PinMAME reports lamp-matrix bits\nrather than bulbs and the ROM drives the data line whether or not an SCR is fitted. And the retained\ntable cannot break the tie either - it parks 68, 84 and 100 in the bottom-left placeholder row and\nmodels no light at all for 113 and 116.\n\nResolving it needs the A9 board schematic sheet, or someone with the physical machine.\n\nThat single gap keeps three coverage dimensions open - `output_enumeration`, `output_semantics` and\n`spatial_placement` - and therefore keeps the record `partial`. Everything else is done: identity,\nthe full 48-position switch matrix with polarity, all 32 MPU option switches, twenty-one solenoid\noutputs including the resolved sixth switch-column strobe, seventy-one of seventy-six lamps named\nfrom the schematic, six displays, ten mechanisms, three driver variants, and spatial records for\n177 of 182 devices.\n",
   "lamps": {
     "1": {
       "availability": "used",
@@ -786,16 +788,18 @@
       }
     },
     "100": {
-      "availability": "used",
+      "availability": "unknown",
       "id": "lamp.yellow-round-top-left",
-      "label": "Yellow Round Top Left",
+      "kind": "lamp",
+      "label": "Undetermined auxiliary matrix position 100",
       "legacy": true,
       "physical": {
-        "notes": "The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
+        "notes": "One of five auxiliary matrix positions whose population is undetermined. The A9 Auxiliary Lamp Driver parts list counts twelve SCRs, Q1 through Q12, and the A9 harness wire list prints exactly eleven functions - three top lanes, two slingshots, two thumper bumpers and four chambers - all of which are assigned to other addresses. So exactly one of public 68, 84, 100, 113 and 116 carries the twelfth output and the other four have no bulb, and no retained source says which. The board's decoder-output-to-connector wiring is not in the manual, the schematic set, or the German edition; the wire list leaves these pins unlabelled; neither retained script references any of the five; and the retained table parks 68, 84 and 100 in its bottom-left placeholder row while modelling no light at all for 113 and 116, so the table cannot break the tie either. Resolving this needs the A9 board schematic sheet or a physical machine."
       },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur",
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "candidate"
@@ -830,34 +834,58 @@
       }
     },
     "113": {
-      "availability": "used",
+      "availability": "unknown",
       "id": "lamp.unnamed-113",
-      "label": "Unnamed lamp 113",
+      "kind": "lamp",
+      "label": "Undetermined auxiliary matrix position 113",
       "legacy": false,
       "physical": {
-        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+        "notes": "One of five auxiliary matrix positions whose population is undetermined. The A9 Auxiliary Lamp Driver parts list counts twelve SCRs, Q1 through Q12, and the A9 harness wire list prints exactly eleven functions - three top lanes, two slingshots, two thumper bumpers and four chambers - all of which are assigned to other addresses. So exactly one of public 68, 84, 100, 113 and 116 carries the twelfth output and the other four have no bulb, and no retained source says which. The board's decoder-output-to-connector wiring is not in the manual, the schematic set, or the German edition; the wire list leaves these pins unlabelled; neither retained script references any of the five; and the retained table parks 68, 84 and 100 in its bottom-left placeholder row while modelling no light at all for 113 and 116, so the table cannot break the tie either. Resolving this needs the A9 board schematic sheet or a physical machine."
       },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
           "runtime.centaur.solenoid-self-test"
         ],
-        "status": "observed"
+        "status": "candidate"
       }
     },
     "114": {
       "availability": "used",
       "id": "lamp.left-thumper-bumper",
-      "label": "Left Thumper Bumper",
+      "label": "Left Thumper Bumper Illumination",
       "legacy": true,
       "physical": {
-        "notes": "The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-12. The retained table fades this address as the left thumper bumper lamp. The retained table parks the auxiliary lamps its author never mapped in a row along the bottom-left corner, so no coordinate is asserted for this one. This is a documented projection, not a surveyed bulb position: the schematic names the output for the left thumper bumper and the coordinate is that device's own position. The retained table parked its unmapped auxiliary lamps in a row along the bottom-left corner, so the table cannot supply a real coordinate for it.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
+          "vpx-script.centaur-standalone"
         ],
-        "status": "candidate"
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.left-thumper-bumper.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual-schematics.bally.centaur.1981",
+                "vpx-table.centaur-2-0-0"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.382039,
+            "y": 0.231556
+          }
+        ],
+        "status": "observed"
       }
     },
     "115": {
@@ -896,18 +924,21 @@
       }
     },
     "116": {
-      "availability": "used",
+      "availability": "unknown",
       "id": "lamp.unnamed-116",
-      "label": "Unnamed lamp 116",
+      "kind": "lamp",
+      "label": "Undetermined auxiliary matrix position 116",
       "legacy": false,
       "physical": {
-        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+        "notes": "One of five auxiliary matrix positions whose population is undetermined. The A9 Auxiliary Lamp Driver parts list counts twelve SCRs, Q1 through Q12, and the A9 harness wire list prints exactly eleven functions - three top lanes, two slingshots, two thumper bumpers and four chambers - all of which are assigned to other addresses. So exactly one of public 68, 84, 100, 113 and 116 carries the twelfth output and the other four have no bulb, and no retained source says which. The board's decoder-output-to-connector wiring is not in the manual, the schematic set, or the German edition; the wire list leaves these pins unlabelled; neither retained script references any of the five; and the retained table parks 68, 84 and 100 in its bottom-left placeholder row while modelling no light at all for 113 and 116, so the table cannot break the tie either. Resolving this needs the A9 board schematic sheet or a physical machine."
       },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
           "runtime.centaur.solenoid-self-test"
         ],
-        "status": "observed"
+        "status": "candidate"
       }
     },
     "12": {
@@ -1046,16 +1077,17 @@
     "17": {
       "availability": "used",
       "id": "lamp.when-lit",
-      "label": "When Lit",
+      "label": "Release Orb",
       "legacy": true,
       "physical": {
-        "notes": "One of three addresses whose decoder class is known but whose individual function is not yet pinned. The three unassigned printed functions are Spot 1-4 (A5J2-7), Credit Indicator (A5J3-13) and Release Orb (A5J1-1); the three unassigned addresses are 17, 59 and 62. The label here is unverified legacy carry-over until the remaining SCR-to-connector rows are traced."
+        "notes": "Schematic A5J1-1. Decoder output 0, the release-and-collect class, whose other members are Right Lane Release Orbs and Collect Bonus Arrow. Three printed functions and three addresses remained after the rest of the board was assigned, and each maps to exactly one."
       },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -2556,16 +2588,17 @@
     "59": {
       "availability": "used",
       "id": "lamp.bottom-left",
-      "label": "Bottom Left",
+      "label": "Credit Indicator",
       "legacy": true,
       "physical": {
-        "notes": "One of three addresses whose decoder class is known but whose individual function is not yet pinned. The three unassigned printed functions are Spot 1-4 (A5J2-7), Credit Indicator (A5J3-13) and Release Orb (A5J1-1); the three unassigned addresses are 17, 59 and 62. The label here is unverified legacy carry-over until the remaining SCR-to-connector rows are traced."
+        "notes": "Schematic A5J3-13. Decoder output 10, the backbox-indicator class, whose other members are Shoot Again, Match and Tilt Warning. Three printed functions and three addresses remained after the rest of the board was assigned, and each maps to exactly one."
       },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -2687,16 +2720,17 @@
     "62": {
       "availability": "used",
       "id": "lamp.green-round-top-right",
-      "label": "Green Round Top Right",
+      "label": "Spot 1-4",
       "legacy": true,
       "physical": {
-        "notes": "One of three addresses whose decoder class is known but whose individual function is not yet pinned. The three unassigned printed functions are Spot 1-4 (A5J2-7), Credit Indicator (A5J3-13) and Release Orb (A5J1-1); the three unassigned addresses are 17, 59 and 62. The label here is unverified legacy carry-over until the remaining SCR-to-connector rows are traced."
+        "notes": "Schematic A5J2-7. Decoder output 13. Its recorded position, x 0.740 y 0.139, sits immediately beside the Top Spot 1-4 target switch at x 0.752 y 0.092, which settles it. Three printed functions and three addresses remained after the rest of the board was assigned, and each maps to exactly one."
       },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -2790,14 +2824,36 @@
     "66": {
       "availability": "used",
       "id": "lamp.unnamed-66",
-      "label": "Unnamed lamp 66",
+      "label": "Right Slingshot Illumination",
       "legacy": false,
       "physical": {
-        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine. The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-6. The standalone script binds Controller.Lamp(66) with the comment 'Right lower PF'. The retained table parks the auxiliary lamps its author never mapped in a row along the bottom-left corner, so no coordinate is asserted for this one. This is a documented projection, not a surveyed bulb position: the schematic names the output for the right slingshot and the coordinate is that device's own position. The retained table parked its unmapped auxiliary lamps in a row along the bottom-left corner, so the table cannot supply a real coordinate for it.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
+          "vpx-script.centaur-standalone"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.unnamed-66.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual-schematics.bally.centaur.1981",
+                "vpx-table.centaur-2-0-0"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.665023,
+            "y": 0.697067
+          }
         ],
         "status": "observed"
       }
@@ -2838,16 +2894,18 @@
       }
     },
     "68": {
-      "availability": "used",
+      "availability": "unknown",
       "id": "lamp.queen-s-chamber-lower",
-      "label": "Queen's Chamber Lower",
+      "kind": "lamp",
+      "label": "Undetermined auxiliary matrix position 68",
       "legacy": true,
       "physical": {
-        "notes": "The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
+        "notes": "One of five auxiliary matrix positions whose population is undetermined. The A9 Auxiliary Lamp Driver parts list counts twelve SCRs, Q1 through Q12, and the A9 harness wire list prints exactly eleven functions - three top lanes, two slingshots, two thumper bumpers and four chambers - all of which are assigned to other addresses. So exactly one of public 68, 84, 100, 113 and 116 carries the twelfth output and the other four have no bulb, and no retained source says which. The board's decoder-output-to-connector wiring is not in the manual, the schematic set, or the German edition; the wire list leaves these pins unlabelled; neither retained script references any of the five; and the retained table parks 68, 84 and 100 in its bottom-left placeholder row while modelling no light at all for 113 and 116, so the table cannot break the tie either. Resolving this needs the A9 board schematic sheet or a physical machine."
       },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur",
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "candidate"
@@ -2961,14 +3019,36 @@
     "82": {
       "availability": "used",
       "id": "lamp.unnamed-82",
-      "label": "Unnamed lamp 82",
+      "label": "Left Slingshot Illumination",
       "legacy": false,
       "physical": {
-        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine. The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-2. The standalone script binds Controller.Lamp(82) with the comment 'Left lower PF'. The retained table parks the auxiliary lamps its author never mapped in a row along the bottom-left corner, so no coordinate is asserted for this one. This is a documented projection, not a surveyed bulb position: the schematic names the output for the left slingshot and the coordinate is that device's own position. The retained table parked its unmapped auxiliary lamps in a row along the bottom-left corner, so the table cannot supply a real coordinate for it.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
+          "vpx-script.centaur-standalone"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.unnamed-82.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual-schematics.bally.centaur.1981",
+                "vpx-table.centaur-2-0-0"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.240724,
+            "y": 0.697067
+          }
         ],
         "status": "observed"
       }
@@ -3009,16 +3089,18 @@
       }
     },
     "84": {
-      "availability": "used",
+      "availability": "unknown",
       "id": "lamp.queen-s-chamber-upper",
-      "label": "Queen's Chamber Upper",
+      "kind": "lamp",
+      "label": "Undetermined auxiliary matrix position 84",
       "legacy": true,
       "physical": {
-        "notes": "The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
+        "notes": "One of five auxiliary matrix positions whose population is undetermined. The A9 Auxiliary Lamp Driver parts list counts twelve SCRs, Q1 through Q12, and the A9 harness wire list prints exactly eleven functions - three top lanes, two slingshots, two thumper bumpers and four chambers - all of which are assigned to other addresses. So exactly one of public 68, 84, 100, 113 and 116 carries the twelfth output and the other four have no bulb, and no retained source says which. The board's decoder-output-to-connector wiring is not in the manual, the schematic set, or the German edition; the wire list leaves these pins unlabelled; neither retained script references any of the five; and the retained table parks 68, 84 and 100 in its bottom-left placeholder row while modelling no light at all for 113 and 116, so the table cannot break the tie either. Resolving this needs the A9 board schematic sheet or a physical machine."
       },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur",
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
           "runtime.centaur.solenoid-self-test"
         ],
         "status": "candidate"
@@ -3097,17 +3179,38 @@
     "98": {
       "availability": "used",
       "id": "lamp.right-thumper-bumper",
-      "label": "Right Thumper Bumper",
+      "label": "Right Thumper Bumper Illumination",
       "legacy": true,
       "physical": {
-        "notes": "The retained table places this auxiliary lamp in a row of seven at x 0.11-0.24, y 0.950 - evenly spaced along the bottom-left corner, which is not a physical playfield arrangement. The table author parked the auxiliary lamps he had not mapped, so that coordinate is a modelling placeholder and not evidence of where the bulb is. No spatial record is asserted for it."
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-19. The retained table fades this address as the right thumper bumper lamp. The retained table parks the auxiliary lamps its author never mapped in a row along the bottom-left corner, so no coordinate is asserted for this one. This is a documented projection, not a surveyed bulb position: the schematic names the output for the right thumper bumper and the coordinate is that device's own position. The retained table parked its unmapped auxiliary lamps in a row along the bottom-left corner, so the table cannot supply a real coordinate for it.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
+          "vpx-script.centaur-standalone"
         ],
-        "status": "candidate"
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.right-thumper-bumper.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual-schematics.bally.centaur.1981",
+                "vpx-table.centaur-2-0-0"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.59188,
+            "y": 0.204759
+          }
+        ],
+        "status": "observed"
       }
     },
     "99": {
@@ -4387,7 +4490,7 @@
       "manual_address": "01",
       "normally_closed": false,
       "physical": {
-        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine. Inside the ball trough beneath the playfield, at the 4th ball position, so it has no playfield-surface coordinate. The retained table models the trough as a row of kicker slots along the bottom edge, but those are modelling positions for an assembly the player never sees, and which of the modelled slots is which physical trough position is not determinable from the table, so no coordinate is asserted.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -4396,6 +4499,17 @@
           "vpx-script.centaur-2-0-0"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981",
+            "vpx-table.centaur-2-0-0"
+          ],
+          "status": "validated"
+        },
+        "reason": "internal_nonvisual",
+        "status": "not_applicable"
       }
     },
     "10": {
@@ -4750,7 +4864,7 @@
       "manual_address": "17",
       "normally_closed": false,
       "physical": {
-        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine. Inside the ball trough beneath the playfield, at the 1st ball position, so it has no playfield-surface coordinate. The retained table models the trough as a row of kicker slots along the bottom edge, but those are modelling positions for an assembly the player never sees, and which of the modelled slots is which physical trough position is not determinable from the table, so no coordinate is asserted.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -4759,6 +4873,17 @@
           "vpx-script.centaur-2-0-0"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981",
+            "vpx-table.centaur-2-0-0"
+          ],
+          "status": "validated"
+        },
+        "reason": "internal_nonvisual",
+        "status": "not_applicable"
       }
     },
     "18": {
@@ -4887,7 +5012,7 @@
       "manual_address": "02",
       "normally_closed": false,
       "physical": {
-        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine. Inside the ball trough beneath the playfield, at the 5th ball position, so it has no playfield-surface coordinate. The retained table models the trough as a row of kicker slots along the bottom edge, but those are modelling positions for an assembly the player never sees, and which of the modelled slots is which physical trough position is not determinable from the table, so no coordinate is asserted.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -4896,6 +5021,17 @@
           "vpx-script.centaur-2-0-0"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981",
+            "vpx-table.centaur-2-0-0"
+          ],
+          "status": "validated"
+        },
+        "reason": "internal_nonvisual",
+        "status": "not_applicable"
       }
     },
     "20": {
@@ -5702,7 +5838,7 @@
       "manual_address": "33",
       "normally_closed": false,
       "physical": {
-        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine. Inside the ball trough beneath the playfield, at the end of trough, so it has no playfield-surface coordinate. The retained table models the trough as a row of kicker slots along the bottom edge, but those are modelling positions for an assembly the player never sees, and which of the modelled slots is which physical trough position is not determinable from the table, so no coordinate is asserted.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -5711,6 +5847,17 @@
           "vpx-script.centaur-2-0-0"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981",
+            "vpx-table.centaur-2-0-0"
+          ],
+          "status": "validated"
+        },
+        "reason": "internal_nonvisual",
+        "status": "not_applicable"
       }
     },
     "34": {
@@ -5720,7 +5867,7 @@
       "manual_address": "34",
       "normally_closed": false,
       "physical": {
-        "notes": "The switch identification table prints (5) against this entry: 5 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "notes": "The switch identification table prints (5) against this entry: 5 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine. The printed table gives this address five physical contacts. The retained table models only three rebound sensors, on the left edge, the right edge and the upper right, so three placements are recorded with an observed rather than validated status and the remaining two contacts have no coordinate. Quantity stays at the printed five.",
         "quantity": 5,
         "switch_type": "leaf"
       },
@@ -5730,6 +5877,53 @@
           "vpx-script.centaur-2-0-0"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.10-point-rebound.sensor-1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.centaur-2-0-0",
+                "manual.bally.centaur.1981"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.093624,
+            "y": 0.571711
+          },
+          {
+            "id": "switch.10-point-rebound.sensor-2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.centaur-2-0-0",
+                "manual.bally.centaur.1981"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.816831,
+            "y": 0.57119
+          },
+          {
+            "id": "switch.10-point-rebound.sensor-3",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.centaur-2-0-0",
+                "manual.bally.centaur.1981"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.785059,
+            "y": 0.201363
+          }
+        ],
+        "status": "observed"
       }
     },
     "35": {
