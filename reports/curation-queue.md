@@ -520,7 +520,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 514 | 1982 | Warlok | Williams | partial |
 | 515 | 1982 | STUB - Spellbinder (L-0 BETA) | Williams / Jess M. Askey | stub |
 | 516 | 1982 | STUB - Soccer Kings | Zaccaria | stub |
-| 517 | 1981 | Centaur | Bally | partial |
+| 517 | 1981 | Centaur | Bally | author_ready |
 | 518 | 1981 | Spectrum | Bally | partial |
 | 519 | 1981 | STUB - Eight Ball Deluxe (rev. 15) | Bally | stub |
 | 520 | 1981 | STUB - Elektra | Bally | stub |

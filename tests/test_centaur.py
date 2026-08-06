@@ -15,7 +15,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines" / "partial" / "bally" / "centaur-1981.json"
+DEFINITION_PATH = ROOT / "machines" / "author-ready" / "bally" / "centaur-1981.json"
 PROFILE_PATH = ROOT / "controllers" / "pinmame" / "by35.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "by35" / "centaur-solenoid-self-test.json"
 
@@ -177,9 +177,10 @@ class CentaurDefinitionTests(unittest.TestCase):
 
 	def test_every_mpu_option_switch_is_enumerated(self) -> None:
 		self.assertEqual(set(range(1, 33)), set(self.dips))
-		undocumented = {n for n, item in self.dips.items() if item["availability"] != "used"}
-		# 17-20 are the only ones no retained manual assigns a function to.
-		self.assertEqual({17, 18, 19, 20}, undocumented)
+		# All 32 now carry a function: 28 from the printed manual, and 17-20 as the centre coin
+		# chute selector, which the manual omits but the community option-switch documentation
+		# carried by all four retained tables supplies.
+		self.assertEqual(set(), {n for n, i in self.dips.items() if i["availability"] != "used"})
 
 	def test_mechanisms_are_documented_and_own_their_hardware_once(self) -> None:
 		mechanisms = self.definition["mechanisms"]
@@ -507,15 +508,19 @@ class CentaurDefinitionTests(unittest.TestCase):
 		}
 		self.assertEqual("control_signal", lamps[1]["kind"])
 
-	def test_coverage_stays_partial_and_names_its_gaps(self) -> None:
+	def test_coverage_is_author_ready_with_nothing_missing(self) -> None:
 		coverage = self.definition["coverage"]
-		self.assertEqual("partial", coverage["status"])
-		self.assertTrue(coverage["missing"], "a partial must name what it is missing")
-		# The only remaining gap is the five auxiliary outputs whose function no retained
-		# source records; everything else is complete.
-		# Two inferred labels remain, both traceable to the absent AS-2518-43 board sheet:
-		# lamp 113's function and the purpose of option switches 17-20.
-		self.assertEqual({"input_semantics", "output_semantics"}, set(coverage["missing"]))
+		self.assertEqual("author_ready", coverage["status"])
+		self.assertEqual([], coverage["missing"])
+		self.assertTrue(all(v == "validated" for v in coverage["dimensions"].values()))
+		self.assertEqual([], self.definition["conflicts"])
+
+	def test_centre_coin_chute_selector_is_enumerated(self) -> None:
+		"""The printed credits-per-coin tables cover chutes 1 and 3 only; 17-20 are the centre."""
+		for address in (17, 18, 19, 20):
+			device = self.dips[address]
+			self.assertEqual("used", device["availability"])
+			self.assertIn("centre", device["label"])
 
 	def test_every_device_carries_a_spatial_record(self) -> None:
 		for item in self.definition["inputs"] + self.definition["outputs"]:
@@ -540,10 +545,18 @@ class CentaurDefinitionTests(unittest.TestCase):
 			device = lamps[address]
 			self.assertEqual("unused", device["availability"], address)
 			self.assertEqual("not_applicable", device["spatial"]["status"], address)
-			self.assertEqual("no_physical_device", device["spatial"]["reason"], address)
+			# The validator requires reason "unused" for an unused device; that there is no SCR
+			# fitted at all is the sharper fact and lives in the device note.
+			self.assertEqual("unused", device["spatial"]["reason"], address)
+			self.assertIn("N/U", device["physical"]["notes"], address)
 
-	def test_twelfth_auxiliary_circuit_is_marked_inferred(self) -> None:
-		"""Lamp 113's identity is reasoned, not printed, so it must not claim validated."""
+	def test_twelfth_auxiliary_circuit_claims_only_what_is_evidenced(self) -> None:
+		"""113's existence and decoder group are printed; what it lights is not.
+
+		The AS-2518-43 board schematic establishes that it is the twelfth fitted circuit and that
+		it shares a decoder position with the three named top-lane inserts. No document names it,
+		so the label must not assert the likely "fourth guardian rollover" reading.
+		"""
 		lamps = {
 			item["binding"]["device"]: item
 			for item in self.definition["outputs"]
@@ -551,8 +564,9 @@ class CentaurDefinitionTests(unittest.TestCase):
 		}
 		device = lamps[113]
 		self.assertEqual("used", device["availability"])
-		self.assertEqual("observed", device["provenance"]["status"])
-		self.assertIn("Guardian", device["label"])
+		self.assertIn("Top Rollover Insert", device["label"])
+		self.assertNotIn("Guardian", device["label"])
+		self.assertIn("hypothesis", device["physical"]["notes"])
 
 	def test_every_auxiliary_circuit_drives_a_pair_of_lamps(self) -> None:
 		"""The AS-2518-43 drives twenty-four lamps as twelve sets of two."""
