@@ -106,7 +106,19 @@
         "year": { "type": ["integer", "null"], "minimum": 1900, "maximum": 2100 },
         "kind": { "enum": ["physical_pinball", "physical_conversion", "redemption_game", "diagnostic_software", "system_software", "unknown"] },
         "model_number": { "type": "string", "minLength": 1 },
-        "ipdb_id": { "type": "integer", "minimum": 1 }
+        "ipdb_id": { "type": "integer", "minimum": 1 },
+        "playfield": {
+          "description": "Optional extent that normalized playfield coordinates map onto, so a consumer can render placements at the correct aspect ratio. Purely presentational: the normalized positions stay authoritative and nothing is required to read this.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["width", "height", "units"],
+          "properties": {
+            "width": { "description": "Extent along x, the left-to-right axis that normalized x = 0..1 spans.", "type": "number", "exclusiveMinimum": 0 },
+            "height": { "description": "Extent along y, the rear-to-front axis that normalized y = 0..1 spans.", "type": "number", "exclusiveMinimum": 0 },
+            "units": { "description": "vpx records the retained table's own bounds, which are the basis the normalized coordinates were computed from. mm and inch record measured physical dimensions.", "enum": ["vpx", "mm", "inch"] },
+            "provenance": { "$ref": "#/$defs/provenance" }
+          }
+        }
       }
     },
     "coverage": {

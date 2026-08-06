@@ -259,6 +259,29 @@ class RepositoryValidationTests(unittest.TestCase):
 			self.assertEqual("virtual", matches[0]["kind"], path.as_posix())
 			self.assertNotIn("wiring", matches[0], path.as_posix())
 
+	def test_optional_playfield_extent_is_accepted_constrained_and_never_required(self) -> None:
+		# The playfield block exists only so a consumer can render normalized placements at the
+		# right aspect ratio. It must stay optional, so every already-published definition that
+		# omits it keeps validating, and it must reject nonsense rather than silently carry it.
+		definition = load_json(ROOT / "machines" / "partial" / "williams" / "monster-bash-1998.json")
+		self.assertNotIn("playfield", definition["machine"])
+		self.assertEqual([], validate_against_schema(definition, ROOT / "schemas" / "machine.schema.json", "no-playfield"))
+
+		accepted = copy.deepcopy(definition)
+		accepted["machine"]["playfield"] = {"width": 952.0, "height": 2162.0, "units": "vpx"}
+		self.assertEqual([], validate_against_schema(accepted, ROOT / "schemas" / "machine.schema.json", "playfield"))
+
+		for label, block in (
+			("zero width", {"width": 0, "height": 2162.0, "units": "vpx"}),
+			("negative height", {"width": 952.0, "height": -1, "units": "vpx"}),
+			("unknown units", {"width": 952.0, "height": 2162.0, "units": "furlong"}),
+			("missing height", {"width": 952.0, "units": "vpx"}),
+			("extra key", {"width": 952.0, "height": 2162.0, "units": "vpx", "depth": 5}),
+		):
+			rejected = copy.deepcopy(definition)
+			rejected["machine"]["playfield"] = block
+			self.assertNotEqual([], validate_against_schema(rejected, ROOT / "schemas" / "machine.schema.json", label), label)
+
 	def test_controller_plugin_routes_match_pinmame_contract(self) -> None:
 		for filename in ("sam.json", "stern-mpu200.json", "wpc-alpha.json"):
 			profile = load_json(ROOT / "controllers" / "pinmame" / filename)
