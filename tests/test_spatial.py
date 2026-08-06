@@ -348,7 +348,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(683, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
 		self.assertEqual(786, report["catalog_record_count"])
-		self.assertEqual(14, report["missing_requirement_counts"]["spatial_placement"])
+		# The thirteen retrofit-pending machines above, plus X-Men Pro, whose table geometry is
+		# unobtainable, plus Centaur, which now declares the gap instead of omitting the dimension.
+		self.assertEqual(15, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(786, len(catalog["machines"]))
 		self.assertEqual(785, catalog["summary"]["game_count"])
 		self.assertEqual(786, catalog["summary"]["machine_count"])

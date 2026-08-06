@@ -1,0 +1,84 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.by35",
+  "authority": "pinmame",
+  "hardware_family": "Bally MPU AS-2518-35",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Diagnostic buttons, switch matrix, and synthetic flipper-button positions",
+      "address_rules": [
+        { "minimum": -7, "maximum": -5 },
+        { "minimum": 1, "maximum": 48 },
+        { "minimum": 81, "maximum": 88 }
+      ],
+      "transports": {
+        "libpinmame": { "channel": "switch" },
+        "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "Public switches are sequential matrix positions, not column-times-ten notation: address = (column - 1) * 8 + row, so column 1 is 1-8 and column 6 is 41-48. by35.c strobes five columns from PIA0:A bits 0-4 and a sixth from PIA1:B bit 7, giving at most 48 matrix positions; a game that wires only five columns uses 1-40. Self test, CPU diagnostic, and sound diagnostic are the direct addresses -7, -6, and -5, which live in switch column 0 and are not matrix positions. Games declaring FLIP_SW keep their real flipper buttons in the matrix, but PinMAME still maintains its generic flipper column at internal column 11, which VPinMAME publishes at 81-88. A definition declares only the columns and positions its own machine wires."
+    },
+    {
+      "id": "pinmame.input.dip",
+      "direction": "configuration",
+      "kind": "dip_switch",
+      "label": "MPU option-switch banks S1-S32",
+      "address_rules": [{ "minimum": 1, "maximum": 32 }],
+      "transports": { "libpinmame": { "channel": "dip" } },
+      "notes": "The MPU carries four eight-position option banks, S1-S8, S9-S16, S17-S24, and S25-S32; the fourth bank exists only on hardware variants flagged BY35HW_DIP4. Individual drivers may declare a larger MDRV_DIPS count than 32 to reserve room for emulator-side options, which does not add physical option switches."
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Decoded momentary outputs, continuous outputs, and synthetic flipper outputs",
+      "address_rules": [
+        { "minimum": 1, "maximum": 15 },
+        { "minimum": 17, "maximum": 20 },
+        { "values": [46, 48] }
+      ],
+      "transports": {
+        "libpinmame": { "channel": "solenoid" },
+        "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "The CPU writes a four-bit selector to PIA1:B bits 0-3 and by35.c sets bit (value) of the solenoid word, so public momentary address = selector + 1 and the public range is 1-15. Selector 15 is the idle state and is masked off, which is why there is no public address 16. PIA1:B bits 4-7 are the four continuous outputs, inverted in hardware and published at 17-20; src/lisy/lisy35.c, which drives real Bally hardware from this driver, identifies continuous bit 1 as the coin lockout and bit 2 as the flipper-enable relay, that is public 18 and 19. Flipper coils are switched by that relay rather than by a driver-board output, so they have no momentary address; VPinMAME's generic flipper callbacks expose lower-right at 46 and lower-left at 48. A machine's printed Self Test number is the order in which the ROM's solenoid test pulses each coil and is not the public address; the two must be reconciled per game, and the self test publishes the mapping directly because it flashes each coil's identification number on the player displays as it fires it."
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "Lamp driver module outputs and optional auxiliary lamp driver outputs",
+      "address_rules": [
+        { "minimum": 1, "maximum": 15 },
+        { "minimum": 17, "maximum": 31 },
+        { "minimum": 33, "maximum": 47 },
+        { "minimum": 49, "maximum": 63 },
+        { "minimum": 65, "maximum": 79 },
+        { "minimum": 81, "maximum": 95 },
+        { "minimum": 97, "maximum": 111 },
+        { "minimum": 113, "maximum": 127 }
+      ],
+      "transports": {
+        "libpinmame": { "channel": "lamp" },
+        "controller_plugin": { "group_id": 512, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "by35_lampStrobe skips lamp address 15 and advances two matrix columns per data bit, so each board contributes four runs of fifteen usable outputs and the addresses 16, 32, 48, and 64 on the main board, and 80, 96, 112, and 128 on the auxiliary board, are unaddressable decoder slots rather than unused lamps. The AS-2518-23 lamp driver module therefore has sixty outputs at 1-15, 17-31, 33-47, and 49-63. A game whose core_tGameData declares a non-zero lampCol also strobes an auxiliary lamp driver board, published at 65-79, 81-95, 97-111, and 113-127; PinMAME sizes the public lamp count as (8 + lampCol) * 8, so lampCol = 8 yields 128 addresses. Declaring auxiliary columns reserves addresses and does not assert that a machine populates them. A definition declares only the outputs its own machine wires."
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "locator": "src/wpc/by35.c pia1b_w solenoid selector and continuous nibble, by35_lampStrobe column stride and skipped address, pia0b_r column strobe assembly; src/wpc/by35.h BY35_SWSELFTEST/BY35_SWCPUDIAG/BY35_SWSOUNDDIAG and BY35HW_DIP4; src/wpc/core.h CORE_SOLBIT, CORE_FLIPPERSWCOL, CORE_STDLAMPCOLS/CORE_CUSTLAMPCOL; src/wpc/core.c nLamps sizing from hw.lampCol; src/lisy/lisy35.c lisy35_solenoid_handler momentary and continuous coil identification"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "a6f6d7266d301249ed09c1b0123f8476513a2228",
+      "locator": "src/libpinmame/libpinmame.cpp SetupMsgApi group definitions"
+    }
+  ]
+}
