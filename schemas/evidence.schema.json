@@ -4,54 +4,182 @@
   "title": "Machine-definition source evidence",
   "type": "object",
   "additionalProperties": false,
-  "required": ["format", "version", "extractor", "source", "driver_ids", "machine_ids", "switches", "outputs", "states", "mechanisms", "recreation_notes"],
+  "required": [
+    "format",
+    "version",
+    "extractor",
+    "source",
+    "driver_ids",
+    "machine_ids",
+    "switches",
+    "outputs",
+    "states",
+    "mechanisms",
+    "recreation_notes"
+  ],
   "properties": {
-    "format": { "const": "pinmame-machine-evidence" },
-    "version": { "const": 1 },
+    "format": {
+      "const": "pinmame-machine-evidence"
+    },
+    "version": {
+      "const": 1
+    },
     "extractor": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "version"],
+      "required": [
+        "id",
+        "version"
+      ],
       "properties": {
-        "id": { "type": "string", "minLength": 1 },
-        "version": { "type": "integer", "minimum": 1 }
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        }
       }
     },
     "source": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["kind", "repository", "revision", "path", "sha256", "license", "quality"],
+      "required": [
+        "kind",
+        "repository",
+        "revision",
+        "path",
+        "sha256",
+        "license",
+        "quality"
+      ],
       "properties": {
-        "kind": { "enum": ["pinmame_sim", "vpx_script", "pinmame_core", "runtime_scenario", "service_diagnostic"] },
-        "repository": { "type": "string", "minLength": 1 },
-        "revision": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
-        "path": { "type": "string", "minLength": 1 },
-        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-        "license": { "type": "string", "minLength": 1 },
-        "attribution": { "type": "string", "minLength": 1 },
-        "quality": { "enum": ["full", "preliminary", "candidate", "core", "observed", "validated"] },
-        "encoding": { "enum": ["utf-8", "windows-1252"] }
+        "kind": {
+          "enum": [
+            "pinmame_sim",
+            "vpx_script",
+            "pinmame_core",
+            "runtime_scenario",
+            "service_diagnostic"
+          ]
+        },
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attribution": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quality": {
+          "enum": [
+            "full",
+            "preliminary",
+            "candidate",
+            "core",
+            "observed",
+            "validated"
+          ]
+        },
+        "encoding": {
+          "enum": [
+            "utf-8",
+            "windows-1252"
+          ]
+        },
+        "manifest_algorithm": {
+          "description": "Required when sha256 digests a directory rather than a single file: the exact, reproducible algorithm used to derive the manifest digest.",
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
-    "driver_ids": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9_]+$" } },
-    "machine_ids": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
-    "switches": { "type": "array", "items": { "$ref": "#/$defs/addressCandidate" } },
-    "outputs": { "type": "array", "items": { "$ref": "#/$defs/addressCandidate" } },
+    "driver_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_]+$"
+      }
+    },
+    "machine_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "switches": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/addressCandidate"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/addressCandidate"
+      }
+    },
     "states": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["label", "line", "raw"],
+        "required": [
+          "label",
+          "line",
+          "raw"
+        ],
         "properties": {
-          "label": { "type": "string", "minLength": 1 },
-          "switch_symbol": { "type": "string", "minLength": 1 },
-          "switch_address": { "type": "integer" },
-          "exit_output_symbol": { "type": "string", "minLength": 1 },
-          "exit_output_address": { "type": "integer" },
-          "next_state": { "type": "string", "minLength": 1 },
-          "line": { "type": "integer", "minimum": 1 },
-          "raw": { "type": "string", "minLength": 1 }
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "switch_symbol": {
+            "type": "string",
+            "minLength": 1
+          },
+          "switch_address": {
+            "type": "integer"
+          },
+          "exit_output_symbol": {
+            "type": "string",
+            "minLength": 1
+          },
+          "exit_output_address": {
+            "type": "integer"
+          },
+          "next_state": {
+            "type": "string",
+            "minLength": 1
+          },
+          "line": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "raw": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       }
     },
@@ -60,12 +188,28 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["kind", "line", "raw", "status"],
+        "required": [
+          "kind",
+          "line",
+          "raw",
+          "status"
+        ],
         "properties": {
-          "kind": { "type": "string", "minLength": 1 },
-          "line": { "type": "integer", "minimum": 1 },
-          "raw": { "type": "string", "minLength": 1 },
-          "status": { "const": "candidate" }
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "line": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "raw": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "const": "candidate"
+          }
         }
       }
     },
@@ -74,34 +218,76 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["text", "line_start", "line_end", "status"],
+        "required": [
+          "text",
+          "line_start",
+          "line_end",
+          "status"
+        ],
         "properties": {
-          "text": { "type": "string", "minLength": 1 },
-          "line_start": { "type": "integer", "minimum": 1 },
-          "line_end": { "type": "integer", "minimum": 1 },
-          "status": { "const": "candidate" }
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "line_start": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "line_end": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "status": {
+            "const": "candidate"
+          }
         }
       }
     },
-    "runtime": { "$ref": "#/$defs/runtime" }
+    "runtime": {
+      "$ref": "#/$defs/runtime"
+    }
   },
   "$defs": {
     "runtime": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["game", "rom_archive_sha256", "raw_runs", "command_template", "observations"],
+      "required": [
+        "game",
+        "rom_archive_sha256",
+        "raw_runs",
+        "command_template",
+        "observations"
+      ],
       "properties": {
-        "game": { "type": "string", "pattern": "^[a-z0-9_]+$" },
-        "rom_archive_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "game": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$"
+        },
+        "rom_archive_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
         "emulator": {
           "description": "The exact emulator binary that produced these runs, so a trace cannot silently come from an unpinned build.",
           "type": "object",
           "additionalProperties": false,
-          "required": ["binary", "sha256"],
+          "required": [
+            "binary",
+            "sha256"
+          ],
           "properties": {
-            "binary": { "type": "string", "minLength": 1 },
-            "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-            "built_from_revision": { "type": "string", "minLength": 1 }
+            "binary": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "built_from_revision": {
+              "type": "string",
+              "minLength": 1
+            }
           }
         },
         "raw_runs": {
@@ -110,27 +296,53 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["name", "sha256", "self_test_pulses"],
+            "required": [
+              "name",
+              "sha256",
+              "self_test_pulses"
+            ],
             "properties": {
-              "name": { "type": "string", "minLength": 1 },
-              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-              "self_test_pulses": { "type": "integer", "minimum": 0 },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "self_test_pulses": {
+                "type": "integer",
+                "minimum": 0
+              },
               "nvram_initialization": {
                 "description": "How this run's NVRAM started, including whether it inherited state from an earlier run in the same isolated directory.",
                 "type": "string",
                 "minLength": 1
               },
-              "boot_wait_s": { "type": "number", "minimum": 0 },
-              "snapshot_count": { "type": "integer", "minimum": 0 },
+              "boot_wait_s": {
+                "type": "number",
+                "minimum": 0
+              },
+              "snapshot_count": {
+                "type": "integer",
+                "minimum": 0
+              },
               "initial_switches": {
                 "type": "array",
                 "items": {
                   "type": "object",
                   "additionalProperties": false,
-                  "required": ["switch", "state"],
+                  "required": [
+                    "switch",
+                    "state"
+                  ],
                   "properties": {
-                    "switch": { "type": "integer" },
-                    "state": { "type": "integer" }
+                    "switch": {
+                      "type": "integer"
+                    },
+                    "state": {
+                      "type": "integer"
+                    }
                   }
                 }
               },
@@ -139,40 +351,108 @@
                 "items": {
                   "type": "object",
                   "additionalProperties": false,
-                  "required": ["switch"],
+                  "required": [
+                    "switch"
+                  ],
                   "properties": {
-                    "switch": { "type": "integer" },
-                    "hold_ms": { "type": "number", "minimum": 0 },
-                    "settle_s": { "type": "number", "minimum": 0 }
+                    "switch": {
+                      "type": "integer"
+                    },
+                    "hold_ms": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "settle_s": {
+                      "type": "number",
+                      "minimum": 0
+                    }
                   }
                 }
               }
             }
           }
         },
-        "command_template": { "type": "string", "minLength": 1 },
+        "command_template": {
+          "type": "string",
+          "minLength": 1
+        },
         "observations": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "lamp_addresses_seen": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } },
-            "lamp_decoder_holes_not_seen": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } },
-            "switch_to_lamp": { "type": "object", "propertyNames": { "pattern": "^[0-9]+$" }, "additionalProperties": { "type": "integer" } },
-            "gi_addresses_seen": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } },
-            "solenoid_addresses_seen": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } },
-            "display_indices_seen": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 0 } },
+            "lamp_addresses_seen": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "integer"
+              }
+            },
+            "lamp_decoder_holes_not_seen": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "integer"
+              }
+            },
+            "switch_to_lamp": {
+              "type": "object",
+              "propertyNames": {
+                "pattern": "^[0-9]+$"
+              },
+              "additionalProperties": {
+                "type": "integer"
+              }
+            },
+            "gi_addresses_seen": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "integer"
+              }
+            },
+            "solenoid_addresses_seen": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "integer"
+              }
+            },
+            "display_indices_seen": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
             "display_layouts_seen": {
               "type": "array",
               "uniqueItems": true,
               "items": {
                 "type": "object",
                 "additionalProperties": false,
-                "required": ["type", "width", "height", "depth"],
+                "required": [
+                  "type",
+                  "width",
+                  "height",
+                  "depth"
+                ],
                 "properties": {
-                  "type": { "type": "integer" },
-                  "width": { "type": "integer", "minimum": 1 },
-                  "height": { "type": "integer", "minimum": 1 },
-                  "depth": { "type": "integer", "minimum": 1 }
+                  "type": {
+                    "type": "integer"
+                  },
+                  "width": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "height": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "depth": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
                 }
               }
             },
@@ -181,21 +461,76 @@
               "items": {
                 "type": "object",
                 "additionalProperties": false,
-                "required": ["label", "display_index", "pixel_sha256", "interpreted_text", "active_solenoid_addresses"],
+                "required": [
+                  "label",
+                  "display_index",
+                  "pixel_sha256",
+                  "interpreted_text",
+                  "active_solenoid_addresses"
+                ],
                 "properties": {
-                  "label": { "type": "string", "minLength": 1 },
-                  "display_index": { "type": "integer", "minimum": 0 },
-                  "pixel_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-                  "nonzero_pixels": { "type": "integer", "minimum": 0 },
-                  "interpreted_text": { "type": "string", "minLength": 1 },
-                  "active_solenoid_addresses": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } }
+                  "label": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "display_index": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "pixel_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "nonzero_pixels": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "interpreted_text": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "active_solenoid_addresses": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "integer"
+                    }
+                  }
                 }
               }
             },
-            "initial_lamp_addresses": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } },
-            "named_output_addresses": { "type": "object", "propertyNames": { "pattern": "^[a-z0-9][a-z0-9_-]*$" }, "additionalProperties": { "type": "integer" } },
-            "physical_service_solenoid_to_public": { "type": "object", "propertyNames": { "pattern": "^[0-9]+$" }, "additionalProperties": { "type": "integer" } },
-            "public_solenoid_decoder_holes_not_seen": { "type": "array", "uniqueItems": true, "items": { "type": "integer" } }
+            "initial_lamp_addresses": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "integer"
+              }
+            },
+            "named_output_addresses": {
+              "type": "object",
+              "propertyNames": {
+                "pattern": "^[a-z0-9][a-z0-9_-]*$"
+              },
+              "additionalProperties": {
+                "type": "integer"
+              }
+            },
+            "physical_service_solenoid_to_public": {
+              "type": "object",
+              "propertyNames": {
+                "pattern": "^[0-9]+$"
+              },
+              "additionalProperties": {
+                "type": "integer"
+              }
+            },
+            "public_solenoid_decoder_holes_not_seen": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "integer"
+              }
+            }
           }
         }
       }
@@ -203,15 +538,49 @@
     "addressCandidate": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["symbol", "address", "label", "group", "line", "status"],
+      "required": [
+        "symbol",
+        "address",
+        "label",
+        "group",
+        "line",
+        "status"
+      ],
       "properties": {
-        "symbol": { "type": "string", "minLength": 1 },
-        "address": { "type": "integer" },
-        "label": { "type": "string", "minLength": 1 },
-        "group": { "enum": ["pinmame.input.switch", "pinmame.output.solenoid", "pinmame.output.lamp", "pinmame.output.gi"] },
-        "state_labels": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
-        "line": { "type": "integer", "minimum": 1 },
-        "status": { "const": "candidate" }
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "address": {
+          "type": "integer"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "group": {
+          "enum": [
+            "pinmame.input.switch",
+            "pinmame.output.solenoid",
+            "pinmame.output.lamp",
+            "pinmame.output.gi"
+          ]
+        },
+        "state_labels": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "const": "candidate"
+        }
       }
     }
   }

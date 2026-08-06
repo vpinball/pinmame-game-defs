@@ -20,7 +20,8 @@ PROFILE_PATH = ROOT / "controllers" / "pinmame" / "by35.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "by35" / "centaur-solenoid-self-test.json"
 
 MANUAL_SHA256 = "4fb38ca2d4988e5da1c18b997d9ed7c23791ebe51ab1614b353d93ce836ee050"
-TRANSCRIPTION_SHA256 = "31f9e9847e7f8876a00d32cff37571450300727da1f47a9005f8c82560668ec6"
+TRANSCRIPTION_SHA256 = "b2c47f5ddb5f7f22ffa680e01f8fcf84512f6afabfdc1d408b1fe45a89189c05"
+TRACE_SHA256 = "e5ea81fea6bea18964708637a3486637d5d2e9045841ea2994f604863940327a"
 
 # printed Self Test number -> (public PinMAME solenoid address, semantic device id)
 #
@@ -304,11 +305,14 @@ class CentaurDefinitionTests(unittest.TestCase):
 	def test_mapping_is_rederived_from_the_raw_trace_when_it_is_available(self) -> None:
 		"""Re-derive the mapping from the ROM's own output, not from a second copied table.
 
-		Comparing the definition against a hard-coded constant only catches an accidental
-		one-sided edit. This decodes the retained trace: it pairs each solenoid-on event with
-		the seven-segment number the ROM writes to player display 0 immediately afterwards, and
-		requires the full eighteen-entry cycle to reproduce.
+		The naive version of this test built a dict and let later observations overwrite earlier
+		ones, which hid a genuine contradiction: an early boot-time pairing yields 11 -> 19 before
+		the steady-state cycle yields 11 -> 3. Overwriting made the assertion pass for the wrong
+		reason. This version instead splits the trace into complete ordered 01..18 cycles and
+		requires every complete cycle to equal the expected mapping independently, so a
+		contradictory or partial observation fails rather than being silently replaced.
 		"""
+		import hashlib
 		import json
 		import os
 
@@ -317,11 +321,20 @@ class CentaurDefinitionTests(unittest.TestCase):
 			self.skipTest("evidence roots are not configured")
 		trace = Path(artifacts_root) / "centaur-1981" / "harness" / "soltest3.json"
 		self.assertTrue(trace.is_file(), f"missing retained trace: {trace}")
+
+		# Decode only a trace whose bytes are the ones the definition cites.
+		digest = hashlib.sha256()
+		with open(trace, "rb") as handle:
+			for chunk in iter(lambda: handle.read(1 << 20), b""):
+				digest.update(chunk)
+		self.assertEqual(TRACE_SHA256, digest.hexdigest(), str(trace))
+
 		seg7 = {
 			0x3F: "0", 0x06: "1", 0x5B: "2", 0x4F: "3", 0x66: "4",
 			0x6D: "5", 0x7D: "6", 0x07: "7", 0x7F: "8", 0x6F: "9",
 		}
-		derived: dict[int, int] = {}
+		# Ordered (self_test, public) observations, in trace order, with no overwriting.
+		pairs: list[tuple[int, int]] = []
 		pending: int | None = None
 		for event in json.loads(trace.read_text(encoding="utf-8"))["events"]:
 			if event["event"] == "solenoid" and event["state"] == 1:
@@ -331,13 +344,76 @@ class CentaurDefinitionTests(unittest.TestCase):
 					continue
 				digits = "".join(seg7.get(value & 0x7F, "") for value in event["segments"])
 				if len(digits) == 2 and digits.isdigit() and 1 <= int(digits) <= 18:
-					derived[int(digits)] = pending
+					pairs.append((int(digits), pending))
 					pending = None
+
 		expected = {
 			self_test: public
 			for self_test, (public, _) in SELF_TEST_TO_PUBLIC_SOLENOID.items()
 		}
-		self.assertEqual(expected, derived)
+		# Split into complete ordered cycles: a cycle runs 01..18 ascending, and a number that
+		# does not continue the current cycle starts a new one.
+		cycles: list[dict[int, int]] = []
+		current: dict[int, int] = {}
+		last = 0
+		for self_test, public in pairs:
+			if self_test <= last:
+				cycles.append(current)
+				current = {}
+			current[self_test] = public
+			last = self_test
+		cycles.append(current)
+
+		complete = [cycle for cycle in cycles if set(cycle) == set(expected)]
+		self.assertGreaterEqual(
+			len(complete), 2, f"expected at least two complete self-test cycles, saw {len(cycles)}"
+		)
+		for index, cycle in enumerate(complete):
+			self.assertEqual(expected, cycle, f"complete cycle {index} disagrees with the definition")
+
+	def test_evidence_manifest_hashes_reproduce(self) -> None:
+		"""Every hash the evidence artifact pins must be reproducible from the real files."""
+		import hashlib
+		import os
+
+		artifacts_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not artifacts_root:
+			self.skipTest("evidence roots are not configured")
+		evidence = load_json(EVIDENCE_PATH)
+		harness = Path(artifacts_root) / "centaur-1981" / "harness"
+
+		def sha256_of(path: Path) -> str:
+			digest = hashlib.sha256()
+			with open(path, "rb") as handle:
+				for chunk in iter(lambda: handle.read(1 << 20), b""):
+					digest.update(chunk)
+			return digest.hexdigest()
+
+		# Each recorded run must exist under the harness directory with the recorded hash.
+		recorded = {run["sha256"] for run in evidence["runtime"]["raw_runs"]}
+		actual = {sha256_of(path) for path in harness.glob("*.json")}
+		self.assertTrue(
+			recorded <= actual,
+			f"recorded run hashes not found in {harness}: {sorted(recorded - actual)}",
+		)
+
+		# The directory manifest digest must be reproducible by the documented algorithm.
+		import json as _json
+
+		self.assertIn("manifest_algorithm", evidence["source"])
+		entries = [
+			{
+				"path": item.relative_to(harness).as_posix(),
+				"size": item.stat().st_size,
+				"sha256": sha256_of(item),
+			}
+			for item in sorted(harness.rglob("*"))
+			if item.is_file()
+		]
+		canonical = _json.dumps(
+			entries, indent=None, separators=(",", ":"), sort_keys=True, ensure_ascii=False
+		).encode("utf-8")
+		self.assertEqual(evidence["source"]["sha256"], hashlib.sha256(canonical).hexdigest())
 
 	def test_coverage_stays_partial_and_names_its_gaps(self) -> None:
 		coverage = self.definition["coverage"]

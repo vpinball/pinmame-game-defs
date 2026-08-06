@@ -131,6 +131,11 @@ def build_definition() -> dict:
 	}
 
 
+def build_knowledge() -> str:
+	"""The knowledge note is curated prose, so it is stored verbatim and drift-checked."""
+	return DATA["knowledge_note"]
+
+
 def canonical(value: object) -> str:
 	return json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
 
@@ -150,24 +155,29 @@ def main() -> int:
 		return 1
 
 	expected = canonical(build_definition())
+	expected_note = build_knowledge()
 
 	if args.check:
-		if not DEFINITION_PATH.exists():
-			print(f"missing definition: {DEFINITION_PATH}", file=sys.stderr)
+		drifted = False
+		for path, want in ((DEFINITION_PATH, expected), (KNOWLEDGE_PATH, expected_note)):
+			if not path.exists():
+				print(f"missing artifact: {path}", file=sys.stderr)
+				drifted = True
+				continue
+			if path.read_text(encoding="utf-8") != want:
+				print(f"canonical content mismatch: {path}", file=sys.stderr)
+				drifted = True
+		if drifted:
 			return 1
-		actual = DEFINITION_PATH.read_text(encoding="utf-8")
-		if actual != expected:
-			print(f"canonical content mismatch: {DEFINITION_PATH}", file=sys.stderr)
-			return 1
-		if not KNOWLEDGE_PATH.exists():
-			print(f"missing knowledge note: {KNOWLEDGE_PATH}", file=sys.stderr)
-			return 1
-		print("Centaur definition matches the deterministic curator.")
+		print("Centaur definition and knowledge note match the deterministic curator.")
 		return 0
 
 	DEFINITION_PATH.parent.mkdir(parents=True, exist_ok=True)
 	DEFINITION_PATH.write_text(expected, encoding="utf-8", newline="\n")
-	print(f"wrote {DEFINITION_PATH.relative_to(ROOT).as_posix()}")
+	KNOWLEDGE_PATH.parent.mkdir(parents=True, exist_ok=True)
+	KNOWLEDGE_PATH.write_text(expected_note, encoding="utf-8", newline="\n")
+	for path in (DEFINITION_PATH, KNOWLEDGE_PATH):
+		print(f"wrote {path.relative_to(ROOT).as_posix()}")
 	return 0
 
 
