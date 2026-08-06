@@ -20,8 +20,12 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines/author-ready/williams/monster-bash-1998.json"
+# Demoted 2026-08-06: switches 74-78 are physically normally-closed optos that pinned PinMAME does
+# not normalize (conflict.dracula-position-opto-not-normalized, unresolved), so the record lives
+# under machines/partial until a harness trace settles their idle public state.
+AUTHOR_READY_PATH = ROOT / "machines/author-ready/williams/monster-bash-1998.json"
 PARTIAL_PATH = ROOT / "machines/partial/williams/monster-bash-1998.json"
+DEFINITION_PATH = PARTIAL_PATH
 SEED_PATH = ROOT / "tools/seeds/williams/monster-bash-1998.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/monster-bash-1998.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/monster-bash-1998.md"
@@ -39,7 +43,7 @@ VPX_EXTRACTION_SOURCE = "vpx-extraction.mb-vpw-1-0"
 TABLE_SHA256 = "bef48b75b072c3fc8b4803639cc65f54144db6ff7e9476f6ea6b1fc23bc68c8d"
 SCRIPT_SHA256 = "b043d07c74693ce5c713a9edc1529413f3c2ec4420b63488085cd45e4fe413e8"
 MANUAL_SHA256 = "8db31b4ac4a116a5a4ca83a456e291ad9bcecdec891ff08e4d3b4eb92df9e7aa"
-MANUAL_TRANSCRIPTION_SHA256 = "da4ef6f1ed61e1e1251b132004bb3e38b400bd148260d99bedfbc29364451da7"
+MANUAL_TRANSCRIPTION_SHA256 = "a5d8d4a1936fe379ed855227a1d73d3a26d95438f75e0c60f3b11e1080d84bfc"
 
 EXTRACTION_RELATIVE_PATH = Path("williams/monster-bash-1998/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("williams/monster-bash-1998/extracted-vpxtool.manifest.json")
@@ -96,9 +100,14 @@ SWITCH_LABELS = {
 # Printed matrix positions marked "NOT USED" on both the parts list (2-48/49) and the shaded
 # wiring page (2-51).
 UNUSED_MATRIX_ADDRESSES = {37, 38, 41, 88}
-# Optos shaded "OPTO, TYPICALLY CLOSED" on the printed matrix page (2-51). PinMAME's mbGameData
-# inverted-switch mask covers exactly these eight (column 3 = 0x3f, column 4 = 0x06).
-OPTO_SWITCHES = {31, 32, 33, 34, 35, 36, 42, 43}
+# Every switch shaded "OPTO, TYPICALLY CLOSED" on the printed matrix page (2-51): trough/popper
+# optos, flipper optos, and Dracula position optos 74-78 (printed on the A-21402 Defender Switch
+# Board Assembly with a blank switch part number). All thirteen are physically normally-closed.
+OPTO_SWITCHES = {31, 32, 33, 34, 35, 36, 42, 43, 74, 75, 76, 77, 78}
+# PinMAME's mbGameData inverted-switch mask covers only these eight (column 3 = 0x3f bits 0-5,
+# column 4 = 0x06 bits 1-2); column 7, which carries 74-78, is 0x00. Those five optos are printed
+# normally-closed but PinMAME does not normalize them -- see conflict.dracula-position-opto-not-normalized.
+PINMAME_NORMALIZED_OPTO_SWITCHES = {31, 32, 33, 34, 35, 36, 42, 43}
 # vpmTimer.PulseSw / momentary-target callers in the retained VPW script.
 PULSED_SWITCHES = {25, 31, 51, 52, 53, 54, 55, 68, 71, 117}
 
@@ -111,8 +120,8 @@ SWITCH_TYPES = {
 	56: "microswitch", 57: "microswitch", 58: "microswitch", 61: "microswitch",
 	62: "microswitch", 63: "microswitch", 64: "microswitch", 65: "microswitch",
 	66: "microswitch", 67: "microswitch", 68: "microswitch", 71: "microswitch",
-	72: "microswitch", 73: "microswitch", 74: "microswitch", 75: "microswitch",
-	76: "microswitch", 77: "microswitch", 78: "microswitch", 81: "microswitch",
+	72: "microswitch", 73: "microswitch", 74: "opto", 75: "opto",
+	76: "opto", 77: "opto", 78: "opto", 81: "microswitch",
 	82: "microswitch", 83: "microswitch", 84: "microswitch", 85: "microswitch",
 	86: "microswitch", 87: "microswitch",
 }
@@ -773,11 +782,21 @@ def input_devices() -> list[dict[str, Any]]:
 			notes = f"Printed switch-matrix drive column {column}, return row {row}."
 			if unused:
 				notes += " The printed matrix and the switch-locations parts list both mark this position Not Used."
-			if address in OPTO_SWITCHES:
+			if address in PINMAME_NORMALIZED_OPTO_SWITCHES:
 				notes += (
 					" Printed as an opto that is typically closed; PinMAME's mbGameData inverted-switch mask "
 					"({0x00,0x00,0x00,0x3f,0x06,...}, column 3 bits 0-5 and column 4 bits 1-2) covers it, so the "
 					"public switch state is already normalized and must not be inverted again."
+				)
+			elif address in OPTO_SWITCHES:
+				notes += (
+					" Printed on the A-21402 Defender Switch Board Assembly (page 2-11/2-12, \"IC Opto Inter w/Switch "
+					"10mA\") as an opto interrupter that rests closed: it is listed under the manual's Opto Assembly "
+					"Part Number column with no switch part number, and shaded \"OPTO, TYPICALLY CLOSED\" on the "
+					"printed switch matrix (2-51), the same halftone used for 31-36 and 42/43. Unlike those eight, "
+					"column 7 of PinMAME's mbGameData inverted-switch mask is 0x00, so the public switch state is "
+					"not normalized by the emulator even though the hardware is physically normally closed; see "
+					"conflict.dracula-position-opto-not-normalized."
 				)
 			if address == 24:
 				notes += (
@@ -1597,6 +1616,37 @@ def relationships() -> list[dict[str, Any]]:
 	]
 
 
+def conflicts() -> list[dict[str, Any]]:
+	return [
+		{
+			"id": "conflict.dracula-position-opto-not-normalized",
+			"path": "inputs[binding.device=74,75,76,77,78]",
+			"description": (
+				"The manual documents public switches 74-78 (Dracula Position 5 through 1) as opto interrupters "
+				"that rest closed: printed switch-locations page 2-48/49 lists assembly A-21402 under the "
+				"\"Switch Assembly Part Number OR Opto Assembly Part Number\" column with the Switch Part Number "
+				"column blank -- the same signature as the trough optos (31-35) and the right-popper opto (36) -- "
+				"printed 2-11/2-12 names A-21402 the \"Defender Switch Board Assembly\" with \"IC Opto Inter "
+				"w/Switch 10mA\", and the printed switch matrix (2-51) shades all five cells \"OPTO, TYPICALLY "
+				"CLOSED\", the identical halftone used for 31-36 and 42/43. Pinned PinMAME's mbGameData does not "
+				"treat them the same way: its inverted-switch mask "
+				"({0x00,0x00,0x00,0x3f,0x06,0x00,0x00,0x00,0x00,0x00,0x00,0x00}) covers only columns 3 and 4 "
+				"(31-36 and 42/43); column 7, which carries 74-78, is 0x00, so unlike those eight addresses the "
+				"public state of 74-78 is not emulator-normalized. Compounding this, PinMAME's own mb_mech[2] "
+				"table (MECH_TWODIRSOL, switches 78/77/76/75/74 asserted at ascending 90-step motor-position "
+				"ranges) asserts each of these switches ON while the figure occupies its position, which is the "
+				"sense a normally-open sensor would report, i.e. the opposite of a printed normally-closed opto. "
+				"The manual is physical-construction ground truth and pinned PinMAME is public-address and "
+				"emulator-normalization ground truth, and the two disagree on whether a recreation must invert "
+				"these five addresses. Resolution path: run the implemented LibPinMAME gameplay harness against a "
+				"legal mb_10 or mb_106b ROM, drive the Dracula motor through its 90-step range, and observe the "
+				"idle public state of 74-78 and their transitions at the mb_mech[2] boundaries. Unresolved."
+			),
+			"source_refs": [MANUAL_SOURCE, CORE_SOURCE],
+		},
+	]
+
+
 def drivers() -> list[dict[str, Any]]:
 	catalog = load_json(ROOT / "catalog/pinmame.json")
 	by_id = {record["id"]: record for record in catalog["drivers"]}
@@ -1626,13 +1676,13 @@ def build() -> dict[str, Any]:
 			"ipdb_id": 4441,
 		},
 		"coverage": {
-			"status": "author_ready",
-			"missing": [],
+			"status": "partial",
+			"missing": ["polarity", "unresolved_conflicts"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
 				"semantic_naming": "validated",
-				"physical_wiring": "validated",
+				"physical_wiring": "conflicted",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
@@ -1652,7 +1702,7 @@ def build() -> dict[str, Any]:
 		"relationships": relationships(),
 		"sources": source_records(),
 		"knowledge": {"path": "knowledge/williams/monster-bash-1998.md", "status": "complete"},
-		"conflicts": [],
+		"conflicts": conflicts(),
 	}
 	identifiers = [device["id"] for device in definition["inputs"] + definition["outputs"]]
 	duplicates = sorted({identifier for identifier in identifiers if identifiers.count(identifier) > 1})
@@ -1687,10 +1737,20 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		if device["spatial"]["status"] != "not_applicable":
 			placement_count += len(device["spatial"]["placements"])
 	return {
-		"format": "pinmame-spatial-audit",
+		"format": "pinmame-spatial-blockers",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"status": "validated",
+		"blockers": [
+			"Public switches 74-78 (Dracula Position 5-1) are printed normally-closed opto interrupters "
+			"that pinned PinMAME's mbGameData inverted-switch mask does not normalize (column 7 is 0x00, "
+			"unlike columns 3 and 4), while PinMAME's own mb_mech[2] table asserts them at their step "
+			"ranges in what reads as the opposite sense. This is a polarity conflict, not a spatial gap "
+			"-- every dimension this report audits is complete and validated -- but it is recorded as "
+			"conflict.dracula-position-opto-not-normalized and keeps the machine record partial until a "
+			"LibPinMAME harness trace against a legal mb_10 or mb_106b ROM observes the true idle public "
+			"state of 74-78.",
+		],
 		"coordinate_convention": {
 			"space": "playfield",
 			"source_bounds": {"left": 0.0, "top": 0.0, "right": 952.0, "bottom": 2162.0},
@@ -1744,7 +1804,10 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	lines = [
 		"# Monster Bash (Williams, 1998) spatial review",
 		"",
-		f"Status: {report['status']} and promoted to `machines/author-ready/williams/monster-bash-1998.json`.",
+		f"Status: {report['status']}. Every spatial dimension audited here is complete, but the physical "
+		"machine record itself remains `partial` at `machines/partial/williams/monster-bash-1998.json` "
+		"because of an unresolved switch-polarity conflict outside this audit's scope; see the promotion "
+		"decision below.",
 		"",
 		"The matching source is the retained known-working `Monster Bash (Williams 1998) VPWmod v1.0.vpx` at "
 		f"SHA-256 `{TABLE_SHA256}`. The retained `vpxtool git:v0.33.3` extraction produced the embedded script at "
@@ -1800,9 +1863,17 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"No authoring-critical placement, polarity, quantity, or semantic question remains unresolved, the "
-		"definition carries no conflict records, and the deterministic curator reproduces the canonical artifact "
-		"and its pinned seed byte-for-byte. Promotion to `author_ready` is therefore justified.",
+		"No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses "
+		"this audit covers, and the deterministic curator reproduces the canonical artifact and its pinned seed "
+		"byte-for-byte. However, public switches 74-78 (Dracula Position 5 through 1) are printed normally-closed "
+		"opto interrupters on the A-21402 Defender Switch Board Assembly that pinned PinMAME's mbGameData "
+		"inverted-switch mask does not normalize (column 7 is 0x00, unlike columns 3 and 4), while PinMAME's own "
+		"mb_mech[2] table asserts them at their step ranges in what reads as the opposite sense -- an unresolved "
+		"polarity conflict recorded as `conflict.dracula-position-opto-not-normalized`. The definition therefore "
+		"carries a non-empty `conflicts` array and `coverage.dimensions.physical_wiring = \"conflicted\"`, so "
+		"promotion to `author_ready` is refused; the record stays `partial` with "
+		"`coverage.missing = [\"polarity\", \"unresolved_conflicts\"]` until a LibPinMAME harness trace against a "
+		"legal mb_10 or mb_106b ROM observes the true idle public state of 74-78.",
 		"",
 		"## Retained evidence",
 		"",
@@ -1822,18 +1893,18 @@ def generate(root: Path = ROOT) -> Path:
 	report = build_spatial_report(definition)
 	write_json(root / SPATIAL_REPORT_PATH.relative_to(ROOT), report)
 	write_text(root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT), render_spatial_report(report))
-	partial = root / PARTIAL_PATH.relative_to(ROOT)
-	if partial.exists():
-		partial.unlink()
+	stale_author_ready = root / AUTHOR_READY_PATH.relative_to(ROOT)
+	if stale_author_ready.exists():
+		stale_author_ready.unlink()
 	return root / DEFINITION_PATH.relative_to(ROOT)
 
 
 def check(root: Path = ROOT) -> None:
 	definition_path = root / DEFINITION_PATH.relative_to(ROOT)
 	seed_path = root / SEED_PATH.relative_to(ROOT)
-	partial_path = root / PARTIAL_PATH.relative_to(ROOT)
-	if partial_path.exists():
-		raise RuntimeError(f"Stale Monster Bash partial definition is still present: {partial_path}")
+	stale_author_ready_path = root / AUTHOR_READY_PATH.relative_to(ROOT)
+	if stale_author_ready_path.exists():
+		raise RuntimeError(f"Stale Monster Bash author-ready definition is still present: {stale_author_ready_path}")
 	if not definition_path.is_file():
 		raise RuntimeError(f"Monster Bash definition is missing: {definition_path}")
 	if not seed_path.is_file():

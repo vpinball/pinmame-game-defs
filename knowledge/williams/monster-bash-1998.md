@@ -1,6 +1,6 @@
 # Monster Bash (Williams, 1998)
 
-Coverage: **author-ready - complete physical I/O inventory, WPC-95 bindings, wiring, mechanism causality, driver-variant boundary, normalized spatial placement, and recreation behavior validated**
+Coverage: **partial - complete physical I/O inventory, WPC-95 bindings, mechanism causality, driver-variant boundary, normalized spatial placement, and recreation behavior validated; wiring conflicted pending resolution of the Dracula-position opto polarity conflict (switches 74-78) below**
 
 ## Identity and evidence precedence
 
@@ -12,7 +12,7 @@ Evidence precedence for this definition: the retained known-working VPW Mod v1.0
 
 `GEN_WPC95` (`PINMAME_HARDWARE_GEN_WPC95 = 0x80`) with `wpc_dispDMD`. The controller profile is `pinmame.wpc-95`.
 
-- Switches: dedicated coin-door 1-8, matrix 11-88 as drive column then return row, Fliptronic 111-118. PinMAME's `mbGameData` inverted-switch mask `{0x00,0x00,0x00,0x3f,0x06,...}` inverts column 3 bits 0-5 (31-36) and column 4 bits 1-2 (42-43), exactly the eight positions the printed matrix page (2-51) shades "OPTO, TYPICALLY CLOSED".
+- Switches: dedicated coin-door 1-8, matrix 11-88 as drive column then return row, Fliptronic 111-118. PinMAME's `mbGameData` inverted-switch mask `{0x00,0x00,0x00,0x3f,0x06,0x00,0x00,0x00,0x00,0x00,0x00,0x00}` inverts column 3 bits 0-5 (31-36) and column 4 bits 1-2 (42-43); the printed matrix page (2-51) shades those eight "OPTO, TYPICALLY CLOSED" *and also* shades column 7 (74-78, the Dracula position optos) the same way, which the mask leaves at `0x00` -- see the unresolved polarity conflict below.
 - Solenoids: physical drivers 1-3, 5-6, 8-16 (2 sockets absent: 4 and 7 are printed but unfitted); flashers 17-26; Fliptronic upper-flipper circuits 33-36 (unfitted, no upper flippers); WPC-95 LPDC outputs 37/38 (Dracula motor forward/backward) with PinMAME's backward-compatibility mirrors at 41/42; Fliptronic lower-flipper circuits 45-48; PinMAME state channels 29-32; simulator-only 49 and reserved 50. `mbGameData` declares no `custSol` and no `lampCol`, so no address above 50 or above lamp column 8 is published.
 - Lamps: 8x8 matrix 11-88, all addresses populated except 78 (Not Used).
 - GI: five strings on public addresses 0-4.
@@ -27,7 +27,9 @@ Trough optos 31-36 and flipper-button optos 42/43 are printed as optos that rest
 
 ## Dracula: rotating figure, coffin, and target ring
 
-A DC gearmotor drives the rotating Dracula figure through an H-bridge (A-16120 DC Motor Control Assembly) on public LPDC outputs 37 (forward) and 38 (backward); PinMAME duplicates the same two drive lines a second time at mirror addresses 41/42. PinMAME's own `mb_mech[2]` table (`MECH_TWODIRSOL`) reads the mechanism over a 90-step position counter (`DRACTIME = 90`): switch 78 asserts at steps 0-5, 77 at 18-23, 76 at 36-51, 75 at 64-69, and 74 at 85-89 -- i.e. printed Dracula Position 1 through Position 5 in ascending step order. The five position optos live on the A-21402 Defender Switch Board Assembly mounted inside the mechanism, not as five separate playfield objects, so all five switches are documented projections onto the rotating figure's own table-object center.
+A DC gearmotor drives the rotating Dracula figure through an H-bridge (A-16120 DC Motor Control Assembly) on public LPDC outputs 37 (forward) and 38 (backward); PinMAME duplicates the same two drive lines a second time at mirror addresses 41/42. PinMAME's own `mb_mech[2]` table (`MECH_TWODIRSOL`) reads the mechanism over a 90-step position counter (`DRACTIME = 90`): switch 78 asserts at steps 0-5, 77 at 18-23, 76 at 36-51, 75 at 64-69, and 74 at 85-89 -- i.e. printed Dracula Position 1 through Position 5 in ascending step order. The five position optos live on the A-21402 Defender Switch Board Assembly mounted inside the mechanism, not as five separate playfield objects, so all five switches are documented projections onto the rotating figure's own table-object center. The figure rotates roughly 90 degrees about the vertical axis (the retained script sets `Drac.rotz = 77 - 1.125*(MechPos-5)`), not a vertical travel; the five position optos share one normalized `x`/`y` because they sense the figure's angular position, not its height.
+
+**Unresolved polarity conflict (`conflict.dracula-position-opto-not-normalized`):** the manual documents 74-78 as opto interrupters that rest closed (A-21402 Defender Switch Board Assembly, blank switch part number, "OPTO, TYPICALLY CLOSED" shading on 2-51), but PinMAME's inverted-switch mask leaves column 7 at `0x00` -- unlike columns 3 and 4 (31-36, 42/43) it does not normalize these five addresses -- and `mb_mech[2]` itself asserts each switch ON over its step range, the sense a normally-open sensor would report. This keeps `physical_wiring` conflicted and the record `partial`; resolving it needs a LibPinMAME harness trace of a legal `mb_10`/`mb_106b` ROM observing the idle public state of 74-78 and their transitions as the Dracula motor steps.
 
 Dracula Target switch 25 is a different device: a 47-segment target-wall ring (retained-table collection `DracTargets`) that surrounds the figure. `DracTargets_Hit(idx)` fires the shared handler and only one segment is active at a time, selected by the figure's own rotation (`DracTargets(Int((12 + Drac.RotZ)/2+1.25)).IsDropped = 0`), so switch 25 is likewise a documented projection onto the figure rather than a fixed target position.
 
@@ -66,7 +68,7 @@ Printed solenoid-table addresses 04 and 07 both show a populated power-driver tr
 ## Author construction checklist
 
 - Build the four-ball trough with the drain at Trough Ball 4, the auto-plunger shooter lane, both slingshots, three jet bumpers, both ball gates, the mummy coffin, the bride post, the ramp lock post, the left eject and right popper kickers, the rotating Dracula figure with its target ring, the motorized Frankenstein figure with its hit wall, and the motorized Up/Down target bank.
-- Preserve opto polarity for 31-36 and 42/43; do not invert what PinMAME already normalizes.
+- Preserve opto polarity for 31-36 and 42/43; do not invert what PinMAME already normalizes. Switches 74-78 are also printed normally-closed optos, but PinMAME does not normalize them and its own mechanism table implies the opposite sense -- treat their polarity as unresolved (`conflict.dracula-position-opto-not-normalized`) rather than assuming either convention.
 - Treat LPDC outputs 37/38 and their PinMAME mirrors 41/42 as one physical two-direction H-bridge motor, not two or four devices.
 - Bind every dedicated switch 1-8, every matrix position 11-88 including the printed Not Used positions, Fliptronic 111-118 with 115/116/118 explicitly not installed and 117 repurposed as the Center Spinner, the eight CPU DIP bits, solenoids 1-50, lamps 11-88, GI 0-4, and the 128x32 DMD.
 - Do not label public solenoid 7 a knocker; this machine has no fitted knocker coil despite the WPC-95 platform default.
@@ -74,7 +76,7 @@ Printed solenoid-table addresses 04 and 07 both show a populated power-driver tr
 ## Sources
 
 - `manual.williams.monster-bash.1998`: Williams Monster Bash operations manual, SHA-256 `8db31b4ac4a116a5a4ca83a456e291ad9bcecdec891ff08e4d3b4eb92df9e7aa`.
-- `manual-support.williams.monster-bash.1998`: retained human transcription, SHA-256 `da4ef6f1ed61e1e1251b132004bb3e38b400bd148260d99bedfbc29364451da7`.
+- `manual-support.williams.monster-bash.1998`: retained human transcription, SHA-256 `a5d8d4a1936fe379ed855227a1d73d3a26d95438f75e0c60f3b11e1080d84bfc`.
 - `vpx-script.mb-vpw-1-0`: retained known-working VPW Mod v1.0 embedded script, SHA-256 `b043d07c74693ce5c713a9edc1529413f3c2ec4420b63488085cd45e4fe413e8`, binding `mb_106b`.
 - `vpx-table.mb-vpw-1-0`: retained table, SHA-256 `bef48b75b072c3fc8b4803639cc65f54144db6ff7e9476f6ea6b1fc23bc68c8d`, bounds `left=0 top=0 right=952 bottom=2162`.
 - `pinmame.core.4ec52ff0ac13`: `src/wpc/sims/wpc/prelim/mb.c` and the WPC-95 core/solenoid/flipper handling at the pinned revision.

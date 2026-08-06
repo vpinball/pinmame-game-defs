@@ -1,4 +1,7 @@
 {
+  "blockers": [
+    "Public switches 74-78 (Dracula Position 5-1) are printed normally-closed opto interrupters that pinned PinMAME's mbGameData inverted-switch mask does not normalize (column 7 is 0x00, unlike columns 3 and 4), while PinMAME's own mb_mech[2] table asserts them at their step ranges in what reads as the opposite sense. This is a polarity conflict, not a spatial gap -- every dimension this report audits is complete and validated -- but it is recorded as conflict.dracula-position-opto-not-normalized and keeps the machine record partial until a LibPinMAME harness trace against a legal mb_10 or mb_106b ROM observes the true idle public state of 74-78."
+  ],
   "coordinate_convention": {
     "source_bounds": {
       "bottom": 2162.0,
@@ -25,7 +28,7 @@
     "total_bytes": 199010658,
     "vpxtool_version": "vpxtool git:v0.33.3"
   },
-  "format": "pinmame-spatial-audit",
+  "format": "pinmame-spatial-blockers",
   "machine_id": "williams.monster-bash.1998",
   "not_applicable_inputs": {
     "cabinet_or_service": [
@@ -690,7 +693,7 @@
     "root": "external:pinmame-manuals/rendered/williams.monster-bash.1998/",
     "transcription": {
       "path": "external:pinmame-review-artifacts/monster-bash-1998/manual-transcription.md",
-      "sha256": "da4ef6f1ed61e1e1251b132004bb3e38b400bd148260d99bedfbc29364451da7"
+      "sha256": "a5d8d4a1936fe379ed855227a1d73d3a26d95438f75e0c60f3b11e1080d84bfc"
     }
   }
 }

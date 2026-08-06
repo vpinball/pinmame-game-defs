@@ -10,9 +10,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "author-ready" / "williams" / "monster-bash-1998.json"
+DEFINITION_PATH = ROOT / "machines" / "partial" / "williams" / "monster-bash-1998.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "monster-bash-1998.json"
-PARTIAL_PATH = ROOT / "machines" / "partial" / "williams" / "monster-bash-1998.json"
+AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "williams" / "monster-bash-1998.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "williams" / "monster-bash-1998.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-95.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "monster-bash-1998.json"
@@ -20,7 +20,8 @@ SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "monster-bash-
 DRIVER_IDS = {"mb_05", "mb_10", "mb_106", "mb_106b"}
 MATRIX_ADDRESSES = {column * 10 + row for column in range(1, 9) for row in range(1, 9)}
 UNUSED_MATRIX_ADDRESSES = {37, 38, 41, 88}
-OPTO_ADDRESSES = {31, 32, 33, 34, 35, 36, 42, 43}
+OPTO_ADDRESSES = {31, 32, 33, 34, 35, 36, 42, 43, 74, 75, 76, 77, 78}
+PINMAME_NORMALIZED_OPTO_ADDRESSES = {31, 32, 33, 34, 35, 36, 42, 43}
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -58,12 +59,14 @@ class MonsterBashDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_promoted_identity_and_coverage(self) -> None:
+	def test_partial_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
-		self.assertEqual("author_ready", self.definition["coverage"]["status"])
-		self.assertEqual([], self.definition["coverage"]["missing"])
-		self.assertEqual([], self.definition["conflicts"])
+		self.assertEqual("partial", self.definition["coverage"]["status"])
+		self.assertEqual(["polarity", "unresolved_conflicts"], self.definition["coverage"]["missing"])
+		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
+			if dimension == "physical_wiring":
+				continue
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("williams.monster-bash.1998", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
@@ -74,8 +77,19 @@ class MonsterBashDefinitionTests(unittest.TestCase):
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
 
-	def test_the_stale_partial_is_gone(self) -> None:
-		self.assertFalse(PARTIAL_PATH.exists())
+	def test_the_dracula_position_opto_conflict_is_recorded_and_unresolved(self) -> None:
+		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
+		self.assertEqual({"conflict.dracula-position-opto-not-normalized"}, set(conflicts))
+		conflict = conflicts["conflict.dracula-position-opto-not-normalized"]
+		self.assertGreaterEqual(len(conflict["source_refs"]), 2)
+		description = conflict["description"].lower()
+		self.assertIn("unresolved", description)
+		self.assertIn("harness", description)
+		for address in (74, 75, 76, 77, 78):
+			self.assertIn(str(address), conflict["path"])
+
+	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
+		self.assertFalse(AUTHOR_READY_PATH.exists())
 		self.assertTrue(DEFINITION_PATH.is_file())
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 
@@ -99,7 +113,7 @@ class MonsterBashDefinitionTests(unittest.TestCase):
 		for address in sorted(MATRIX_ADDRESSES - UNUSED_MATRIX_ADDRESSES):
 			self.assertEqual("used", self.switches[address]["availability"], address)
 
-	def test_printed_opto_polarity_matches_the_pinmame_inversion_mask(self) -> None:
+	def test_printed_opto_polarity_is_recorded_even_where_pinmame_does_not_normalize_it(self) -> None:
 		for address in sorted(MATRIX_ADDRESSES - UNUSED_MATRIX_ADDRESSES - {24}):
 			switch = self.switches[address]
 			self.assertEqual(address in OPTO_ADDRESSES, switch["normally_closed"], address)
@@ -109,6 +123,24 @@ class MonsterBashDefinitionTests(unittest.TestCase):
 		self.assertTrue(self.switches[24]["constant_active"])
 		self.assertTrue(self.switches[24]["initial_active"])
 		self.assertEqual("constant", self.switches[24]["spatial"]["reason"])
+
+	def test_dracula_position_optos_are_not_normalized_by_pinmame(self) -> None:
+		import curate_monster_bash as curator
+
+		# Column index 7 (0-based) is 0x00: unlike columns 3 (0x3f) and 4 (0x06), PinMAME's
+		# mbGameData inverted-switch mask does not cover the Dracula position optos in column 7,
+		# even though the manual documents them as normally-closed hardware. This asymmetry is the
+		# entire basis of conflict.dracula-position-opto-not-normalized and must not be silently
+		# "fixed" by treating 74-78 the same as the other opto columns.
+		mask = (0x00, 0x00, 0x00, 0x3f, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
+		self.assertEqual(0x3f, mask[3])
+		self.assertEqual(0x06, mask[4])
+		self.assertEqual(0x00, mask[7])
+		for address in (74, 75, 76, 77, 78):
+			self.assertIn(address, curator.OPTO_SWITCHES)
+			self.assertNotIn(address, curator.PINMAME_NORMALIZED_OPTO_SWITCHES)
+		for address in (31, 32, 33, 34, 35, 36, 42, 43):
+			self.assertIn(address, curator.PINMAME_NORMALIZED_OPTO_SWITCHES)
 
 	def test_flipper_positions_and_center_spinner(self) -> None:
 		for address in (111, 112, 113, 114):

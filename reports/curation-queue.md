@@ -80,7 +80,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 74 | 1998 | STUB - Titanic (Coin Dropper) | Sega | stub |
 | 75 | 1998 | STUB - Viper Night Drivin' (2.01) | Sega | stub |
 | 76 | 1998 | STUB - Wack-A-Doodle-Doo (Redemption) | Sega | stub |
-| 77 | 1998 | Monster Bash | Williams | author_ready |
+| 77 | 1998 | Monster Bash | Williams | partial |
 | 78 | 1997 | Cirqus Voltaire | Bally | partial |
 | 79 | 1997 | NBA Fastbreak | Bally | partial |
 | 80 | 1997 | Starship Troopers | Sega | partial |

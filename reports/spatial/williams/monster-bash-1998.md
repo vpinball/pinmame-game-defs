@@ -1,6 +1,6 @@
 # Monster Bash (Williams, 1998) spatial review
 
-Status: validated and promoted to `machines/author-ready/williams/monster-bash-1998.json`.
+Status: validated. Every spatial dimension audited here is complete, but the physical machine record itself remains `partial` at `machines/partial/williams/monster-bash-1998.json` because of an unresolved switch-polarity conflict outside this audit's scope; see the promotion decision below.
 
 The matching source is the retained known-working `Monster Bash (Williams 1998) VPWmod v1.0.vpx` at SHA-256 `bef48b75b072c3fc8b4803639cc65f54144db6ff7e9476f6ea6b1fc23bc68c8d`. The retained `vpxtool git:v0.33.3` extraction produced the embedded script at SHA-256 `b043d07c74693ce5c713a9edc1529413f3c2ec4420b63488085cd45e4fe413e8`; that embedded stream is the runtime and causality authority. Exact playfield bounds are `left=0 top=0 right=952 bottom=2162`, and every canonical coordinate is x/952 and y/2162 rounded to at most six fractional places.
 
@@ -46,9 +46,9 @@ The matching source is the retained known-working `Monster Bash (Williams 1998) 
 
 ## Promotion decision
 
-No authoring-critical placement, polarity, quantity, or semantic question remains unresolved, the definition carries no conflict records, and the deterministic curator reproduces the canonical artifact and its pinned seed byte-for-byte. Promotion to `author_ready` is therefore justified.
+No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses this audit covers, and the deterministic curator reproduces the canonical artifact and its pinned seed byte-for-byte. However, public switches 74-78 (Dracula Position 5 through 1) are printed normally-closed opto interrupters on the A-21402 Defender Switch Board Assembly that pinned PinMAME's mbGameData inverted-switch mask does not normalize (column 7 is 0x00, unlike columns 3 and 4), while PinMAME's own mb_mech[2] table asserts them at their step ranges in what reads as the opposite sense -- an unresolved polarity conflict recorded as `conflict.dracula-position-opto-not-normalized`. The definition therefore carries a non-empty `conflicts` array and `coverage.dimensions.physical_wiring = "conflicted"`, so promotion to `author_ready` is refused; the record stays `partial` with `coverage.missing = ["polarity", "unresolved_conflicts"]` until a LibPinMAME harness trace against a legal mb_10 or mb_106b ROM observes the true idle public state of 74-78.
 
 ## Retained evidence
 
 - Extraction manifest `external:pinmame-vpx-sources/williams/monster-bash-1998/extracted-vpxtool.manifest.json`, SHA-256 `1361d166539823e12aedc983e95c0d1b0789dab291de4fd9a23f9aa830ec57ea`, 2153 files, 199010658 bytes.
-- Human transcription of every printed table read from the rendered manual pages, SHA-256 `da4ef6f1ed61e1e1251b132004bb3e38b400bd148260d99bedfbc29364451da7`.
+- Human transcription of every printed table read from the rendered manual pages, SHA-256 `a5d8d4a1936fe379ed855227a1d73d3a26d95438f75e0c60f3b11e1080d84bfc`.
