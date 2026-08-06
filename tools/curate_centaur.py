@@ -24,9 +24,17 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines" / "partial" / "bally" / "centaur-1981.json"
-KNOWLEDGE_PATH = ROOT / "knowledge" / "bally" / "centaur-1981.md"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "bally" / "centaur-1981.json"
 AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "bally" / "centaur-1981.json"
+KNOWLEDGE_PATH = ROOT / "knowledge" / "bally" / "centaur-1981.md"
+
+# The record lives under the directory its own coverage status names, so a promotion or a
+# demotion is a data change rather than a manual file move.
+DEFINITION_PATH = (
+	AUTHOR_READY_PATH
+	if json.loads((Path(__file__).with_suffix(".json")).read_text(encoding="utf-8"))["coverage"]["status"] == "author_ready"
+	else PARTIAL_PATH
+)
 
 DATA = json.loads((Path(__file__).with_suffix(".json")).read_text(encoding="utf-8"))
 
@@ -174,12 +182,13 @@ def main() -> int:
 	mode.add_argument("--regenerate", action="store_true", help="rewrite the artifact")
 	args = parser.parse_args()
 
-	if AUTHOR_READY_PATH.exists():
-		print(
-			f"refusing to curate while an author-ready artifact exists (preserved): {AUTHOR_READY_PATH}",
-			file=sys.stderr,
-		)
-		return 1
+	stale = PARTIAL_PATH if DEFINITION_PATH == AUTHOR_READY_PATH else AUTHOR_READY_PATH
+	if stale.exists():
+		if args.check:
+			print(f"stale artifact for the other coverage status: {stale}", file=sys.stderr)
+			return 1
+		stale.unlink()
+		print(f"removed {stale.relative_to(ROOT).as_posix()}")
 
 	expected = canonical(build_definition())
 	expected_note = build_knowledge()

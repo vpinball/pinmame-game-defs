@@ -530,6 +530,14 @@
               "items": {
                 "type": "integer"
               }
+            },
+            "lamp_addresses_driven_outside_self_test": {
+              "description": "Lamp addresses the ROM drives during normal operation rather than only during an all-lamp self test. A lamp-matrix platform reports matrix bits, not bulbs, so a bare position with no driver fitted still appears in a self-test trace; this list separates the two.",
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "integer"
+              }
             }
           }
         }

@@ -6,7 +6,7 @@
   },
   "coverage": {
     "dimensions": {
-      "address_enumeration": "observed",
+      "address_enumeration": "validated",
       "catalog_identity": "validated",
       "display_inventory": "validated",
       "mechanisms": "validated",
@@ -17,7 +17,7 @@
       "variant_coverage": "validated"
     },
     "missing": [
-      "output_enumeration",
+      "input_semantics",
       "output_semantics"
     ],
     "status": "partial"
@@ -8454,8 +8454,8 @@
       "kind": "lamp",
       "label": "Top Right Lane",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-18. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp sits directly above the top right lane switch at x 0.551, and the group's order matches the printed order. The addresses in this group are the ones the harness observed active.",
-        "quantity": 1
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-18. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp sits directly above the top right lane switch at x 0.551, and the group's order matches the printed order. The addresses in this group are the ones the harness observed active. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -8499,8 +8499,8 @@
       "kind": "lamp",
       "label": "Right Slingshot Illumination",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-6. The standalone script binds Controller.Lamp(66) with the comment 'Right lower PF'. The retained table parks the auxiliary lamps its author never mapped in a row along the bottom-left corner, so no coordinate is asserted for this one. This is a documented projection, not a surveyed bulb position: the schematic names the output for the right slingshot and the coordinate is that device's own position. The retained table parked its unmapped auxiliary lamps in a row along the bottom-left corner, so the table cannot supply a real coordinate for it.",
-        "quantity": 1
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-6. The standalone script binds Controller.Lamp(66) with the comment 'Right lower PF'. The retained table parks the auxiliary lamps its author never mapped in a row along the bottom-left corner, so no coordinate is asserted for this one. This is a documented projection, not a surveyed bulb position: the schematic names the output for the right slingshot and the coordinate is that device's own position. The retained table parked its unmapped auxiliary lamps in a row along the bottom-left corner, so the table cannot supply a real coordinate for it. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -8546,7 +8546,7 @@
       "kind": "lamp",
       "label": "#1 Chamber (from bottom)",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-5. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp lowest of the four left-edge chamber lamps, y 0.288, and the group's order matches the printed order. The wire list prints (2) against each chamber entry, so one address drives two bulbs. The addresses in this group are the ones the harness observed active.",
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-5. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp lowest of the four left-edge chamber lamps, y 0.288, and the group's order matches the printed order. The wire list prints (2) against each chamber entry, so one address drives two bulbs. The addresses in this group are the ones the harness observed active. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one.",
         "quantity": 2
       },
       "provenance": {
@@ -8590,34 +8590,34 @@
           "value": "068"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 68,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.queen-s-chamber-lower",
       "kind": "lamp",
-      "label": "Backbox lamp, function undetermined (auxiliary 68)",
+      "label": "Unpopulated auxiliary matrix position 68",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9 output with no printed function, treated as a backbox lamp. The A9 harness sheet splits cleanly: every A9J2 pin carries a printed playfield function - the top lanes, slingshots, thumper bumpers and chambers - while the A9J3 pins carry a wire number and no function at all. Bally named every playfield lamp it wired, so the unnamed group is most likely backbox illumination, and three independently authored VPX recreations support that: the 2020, 2023 and 2025 tables all park this address in a bottom-left placeholder row or model no light for it at all, meaning no author could find it on the playfield. It therefore takes a controlled not-applicable spatial record rather than an invented coordinate. What it illuminates is still undetermined. The A9 parts list counts twelve SCRs and the wire list prints eleven functions, all assigned to other addresses, so at most one of public 68, 84, 100, 113 and 116 is a fitted output and the rest are bare matrix positions; the board's decoder-to-connector sheet is in none of the three retained manuals, and the harness cannot discriminate because all sixteen auxiliary positions light together in the self-test lamp sequence - PinMAME reports matrix bits, not bulbs."
+        "notes": "No lamp behind this address. The A9 Auxiliary Lamp Driver carries twelve SCRs, Q1 through Q12, and its published specification is twelve discrete circuits driving twenty-four lamps as twelve sets of two. Its MC14555B decoders are binary one-of-four, so the board reaches only lamp addresses 0 to 3 on each of the four data lines - sixteen matrix positions for twelve circuits. The twelve fitted circuits are public 65-67, 81-83, 97-99 and 113-115; this address is the fourth decoder position, which has no SCR. It appears in a harness trace only during the self-test lamp sequence, when the ROM writes every matrix bit, and a boot-and-coin-up run shows the ROM never setting it otherwise. PinMAME reports lamp-matrix bits rather than bulbs, which is why a bare position still shows activity there."
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
-          "vpx-script.centaur-2-0-0",
+          "human-review.as-2518-43-board-spec",
           "runtime.centaur.solenoid-self-test"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
             "manual-schematics.bally.centaur.1981",
-            "vpx-script.centaur-2-0-0"
+            "human-review.as-2518-43-board-spec"
           ],
-          "status": "observed"
+          "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "no_physical_device",
         "status": "not_applicable"
       }
     },
@@ -8645,8 +8645,8 @@
       "kind": "lamp",
       "label": "Top Middle Lane",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-1. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp sits directly above the top middle lane switch at x 0.448, and the group's order matches the printed order. The addresses in this group are the ones the harness observed active.",
-        "quantity": 1
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-1. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp sits directly above the top middle lane switch at x 0.448, and the group's order matches the printed order. The addresses in this group are the ones the harness observed active. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -8690,8 +8690,8 @@
       "kind": "lamp",
       "label": "Left Slingshot Illumination",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-2. The standalone script binds Controller.Lamp(82) with the comment 'Left lower PF'. The retained table parks the auxiliary lamps its author never mapped in a row along the bottom-left corner, so no coordinate is asserted for this one. This is a documented projection, not a surveyed bulb position: the schematic names the output for the left slingshot and the coordinate is that device's own position. The retained table parked its unmapped auxiliary lamps in a row along the bottom-left corner, so the table cannot supply a real coordinate for it.",
-        "quantity": 1
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-2. The standalone script binds Controller.Lamp(82) with the comment 'Left lower PF'. The retained table parks the auxiliary lamps its author never mapped in a row along the bottom-left corner, so no coordinate is asserted for this one. This is a documented projection, not a surveyed bulb position: the schematic names the output for the left slingshot and the coordinate is that device's own position. The retained table parked its unmapped auxiliary lamps in a row along the bottom-left corner, so the table cannot supply a real coordinate for it. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -8737,7 +8737,7 @@
       "kind": "lamp",
       "label": "#2 Chamber",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-3. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp second of the four left-edge chamber lamps, y 0.211, and the group's order matches the printed order. The wire list prints (2) against each chamber entry, so one address drives two bulbs. The addresses in this group are the ones the harness observed active.",
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-3. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp second of the four left-edge chamber lamps, y 0.211, and the group's order matches the printed order. The wire list prints (2) against each chamber entry, so one address drives two bulbs. The addresses in this group are the ones the harness observed active. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one.",
         "quantity": 2
       },
       "provenance": {
@@ -8781,34 +8781,34 @@
           "value": "084"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 84,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.queen-s-chamber-upper",
       "kind": "lamp",
-      "label": "Backbox lamp, function undetermined (auxiliary 84)",
+      "label": "Unpopulated auxiliary matrix position 84",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9 output with no printed function, treated as a backbox lamp. The A9 harness sheet splits cleanly: every A9J2 pin carries a printed playfield function - the top lanes, slingshots, thumper bumpers and chambers - while the A9J3 pins carry a wire number and no function at all. Bally named every playfield lamp it wired, so the unnamed group is most likely backbox illumination, and three independently authored VPX recreations support that: the 2020, 2023 and 2025 tables all park this address in a bottom-left placeholder row or model no light for it at all, meaning no author could find it on the playfield. It therefore takes a controlled not-applicable spatial record rather than an invented coordinate. What it illuminates is still undetermined. The A9 parts list counts twelve SCRs and the wire list prints eleven functions, all assigned to other addresses, so at most one of public 68, 84, 100, 113 and 116 is a fitted output and the rest are bare matrix positions; the board's decoder-to-connector sheet is in none of the three retained manuals, and the harness cannot discriminate because all sixteen auxiliary positions light together in the self-test lamp sequence - PinMAME reports matrix bits, not bulbs."
+        "notes": "No lamp behind this address. The A9 Auxiliary Lamp Driver carries twelve SCRs, Q1 through Q12, and its published specification is twelve discrete circuits driving twenty-four lamps as twelve sets of two. Its MC14555B decoders are binary one-of-four, so the board reaches only lamp addresses 0 to 3 on each of the four data lines - sixteen matrix positions for twelve circuits. The twelve fitted circuits are public 65-67, 81-83, 97-99 and 113-115; this address is the fourth decoder position, which has no SCR. It appears in a harness trace only during the self-test lamp sequence, when the ROM writes every matrix bit, and a boot-and-coin-up run shows the ROM never setting it otherwise. PinMAME reports lamp-matrix bits rather than bulbs, which is why a bare position still shows activity there."
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
-          "vpx-script.centaur-2-0-0",
+          "human-review.as-2518-43-board-spec",
           "runtime.centaur.solenoid-self-test"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
             "manual-schematics.bally.centaur.1981",
-            "vpx-script.centaur-2-0-0"
+            "human-review.as-2518-43-board-spec"
           ],
-          "status": "observed"
+          "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "no_physical_device",
         "status": "not_applicable"
       }
     },
@@ -8836,8 +8836,8 @@
       "kind": "lamp",
       "label": "Top Left Lane",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-7. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp sits directly above the top left lane switch at x 0.342, and the group's order matches the printed order. The addresses in this group are the ones the harness observed active.",
-        "quantity": 1
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-7. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp sits directly above the top left lane switch at x 0.342, and the group's order matches the printed order. The addresses in this group are the ones the harness observed active. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -8889,8 +8889,8 @@
       "kind": "lamp",
       "label": "Right Thumper Bumper Illumination",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-19. The retained table fades this address as the right thumper bumper lamp. The retained table parks the auxiliary lamps its author never mapped in a row along the bottom-left corner, so no coordinate is asserted for this one. This is a documented projection, not a surveyed bulb position: the schematic names the output for the right thumper bumper and the coordinate is that device's own position. The retained table parked its unmapped auxiliary lamps in a row along the bottom-left corner, so the table cannot supply a real coordinate for it.",
-        "quantity": 1
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-19. The retained table fades this address as the right thumper bumper lamp. The retained table parks the auxiliary lamps its author never mapped in a row along the bottom-left corner, so no coordinate is asserted for this one. This is a documented projection, not a surveyed bulb position: the schematic names the output for the right thumper bumper and the coordinate is that device's own position. The retained table parked its unmapped auxiliary lamps in a row along the bottom-left corner, so the table cannot supply a real coordinate for it. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -8936,7 +8936,7 @@
       "kind": "lamp",
       "label": "#3 Chamber",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-20. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp third of the four left-edge chamber lamps, y 0.146, and the group's order matches the printed order. The wire list prints (2) against each chamber entry, so one address drives two bulbs. The addresses in this group are the ones the harness observed active.",
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-20. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp third of the four left-edge chamber lamps, y 0.146, and the group's order matches the printed order. The wire list prints (2) against each chamber entry, so one address drives two bulbs. The addresses in this group are the ones the harness observed active. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one.",
         "quantity": 2
       },
       "provenance": {
@@ -8976,34 +8976,34 @@
           "value": "100"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 100,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.yellow-round-top-left",
       "kind": "lamp",
-      "label": "Backbox lamp, function undetermined (auxiliary 100)",
+      "label": "Unpopulated auxiliary matrix position 100",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9 output with no printed function, treated as a backbox lamp. The A9 harness sheet splits cleanly: every A9J2 pin carries a printed playfield function - the top lanes, slingshots, thumper bumpers and chambers - while the A9J3 pins carry a wire number and no function at all. Bally named every playfield lamp it wired, so the unnamed group is most likely backbox illumination, and three independently authored VPX recreations support that: the 2020, 2023 and 2025 tables all park this address in a bottom-left placeholder row or model no light for it at all, meaning no author could find it on the playfield. It therefore takes a controlled not-applicable spatial record rather than an invented coordinate. What it illuminates is still undetermined. The A9 parts list counts twelve SCRs and the wire list prints eleven functions, all assigned to other addresses, so at most one of public 68, 84, 100, 113 and 116 is a fitted output and the rest are bare matrix positions; the board's decoder-to-connector sheet is in none of the three retained manuals, and the harness cannot discriminate because all sixteen auxiliary positions light together in the self-test lamp sequence - PinMAME reports matrix bits, not bulbs."
+        "notes": "No lamp behind this address. The A9 Auxiliary Lamp Driver carries twelve SCRs, Q1 through Q12, and its published specification is twelve discrete circuits driving twenty-four lamps as twelve sets of two. Its MC14555B decoders are binary one-of-four, so the board reaches only lamp addresses 0 to 3 on each of the four data lines - sixteen matrix positions for twelve circuits. The twelve fitted circuits are public 65-67, 81-83, 97-99 and 113-115; this address is the fourth decoder position, which has no SCR. It appears in a harness trace only during the self-test lamp sequence, when the ROM writes every matrix bit, and a boot-and-coin-up run shows the ROM never setting it otherwise. PinMAME reports lamp-matrix bits rather than bulbs, which is why a bare position still shows activity there."
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
-          "vpx-script.centaur-2-0-0",
+          "human-review.as-2518-43-board-spec",
           "runtime.centaur.solenoid-self-test"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
             "manual-schematics.bally.centaur.1981",
-            "vpx-script.centaur-2-0-0"
+            "human-review.as-2518-43-board-spec"
           ],
-          "status": "observed"
+          "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "no_physical_device",
         "status": "not_applicable"
       }
     },
@@ -9014,35 +9014,45 @@
           "value": "113"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 113,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.unnamed-113",
       "kind": "lamp",
-      "label": "Backbox lamp, function undetermined (auxiliary 113)",
+      "label": "Fourth Guardian Rollover Insert",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9 output with no printed function, treated as a backbox lamp. The A9 harness sheet splits cleanly: every A9J2 pin carries a printed playfield function - the top lanes, slingshots, thumper bumpers and chambers - while the A9J3 pins carry a wire number and no function at all. Bally named every playfield lamp it wired, so the unnamed group is most likely backbox illumination, and three independently authored VPX recreations support that: the 2020, 2023 and 2025 tables all park this address in a bottom-left placeholder row or model no light for it at all, meaning no author could find it on the playfield. It therefore takes a controlled not-applicable spatial record rather than an invented coordinate. What it illuminates is still undetermined. The A9 parts list counts twelve SCRs and the wire list prints eleven functions, all assigned to other addresses, so at most one of public 68, 84, 100, 113 and 116 is a fitted output and the rest are bare matrix positions; the board's decoder-to-connector sheet is in none of the three retained manuals, and the harness cannot discriminate because all sixteen auxiliary positions light together in the self-test lamp sequence - PinMAME reports matrix bits, not bulbs."
+        "notes": "The twelfth and last A9 circuit, and the only one whose function the harness wire list does not print. Its identity is inferred rather than read, and the inference is this: the A9's published role on Centaur is the top rollover inserts and the Queen's Chamber chaser lamps; the chaser is the four #1-#4 Chamber circuits; the board's remaining group is decoder position 0, whose other three circuits are the printed Top Right, Top Middle and Top Left Lane inserts; and the manual describes a Guardian feature completed by \"the four (4) guardian rollovers\" while the printed switch table names only three top lanes. A fourth rollover insert on the same decoder position as the other three therefore accounts for both the twelfth circuit and the fourth guardian. Supporting this, a boot-and-coin-up harness run shows the ROM driving this address together with the three named top-lane circuits and never driving the four bare positions. Recorded as observed rather than validated because no retained source prints the function; resolving it needs the AS-2518-43 board sheet, which is absent from all three Centaur manuals but should exist in the manual of another game fitted with the same board. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
-          "vpx-script.centaur-2-0-0",
+          "manual.bally.centaur.1981",
+          "human-review.as-2518-43-board-spec",
           "runtime.centaur.solenoid-self-test"
         ],
-        "status": "candidate"
+        "status": "observed"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual-schematics.bally.centaur.1981",
-            "vpx-script.centaur-2-0-0"
-          ],
-          "status": "observed"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.unnamed-113.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual-schematics.bally.centaur.1981",
+                "manual.bally.centaur.1981"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.447078,
+            "y": 0.063447
+          }
+        ],
+        "status": "observed"
       }
     },
     {
@@ -9065,8 +9075,8 @@
       "kind": "lamp",
       "label": "Left Thumper Bumper Illumination",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-12. The retained table fades this address as the left thumper bumper lamp. The retained table parks the auxiliary lamps its author never mapped in a row along the bottom-left corner, so no coordinate is asserted for this one. This is a documented projection, not a surveyed bulb position: the schematic names the output for the left thumper bumper and the coordinate is that device's own position. The retained table parked its unmapped auxiliary lamps in a row along the bottom-left corner, so the table cannot supply a real coordinate for it.",
-        "quantity": 1
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-12. The retained table fades this address as the left thumper bumper lamp. The retained table parks the auxiliary lamps its author never mapped in a row along the bottom-left corner, so no coordinate is asserted for this one. This is a documented projection, not a surveyed bulb position: the schematic names the output for the left thumper bumper and the coordinate is that device's own position. The retained table parked its unmapped auxiliary lamps in a row along the bottom-left corner, so the table cannot supply a real coordinate for it. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -9112,7 +9122,7 @@
       "kind": "lamp",
       "label": "#4 Chamber (top)",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-17. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp highest of the four left-edge chamber lamps, y 0.071, and the group's order matches the printed order. The wire list prints (2) against each chamber entry, so one address drives two bulbs. The addresses in this group are the ones the harness observed active.",
+        "notes": "Auxiliary Lamp Driver A9, schematic A9J2-17. The A9 wire list names the sixteen auxiliary lamps but the board's decoder-output-to-pin wiring has not been traced, so the assignment here rests on geometry: this lamp highest of the four left-edge chamber lamps, y 0.071, and the group's order matches the printed order. The wire list prints (2) against each chamber entry, so one address drives two bulbs. The addresses in this group are the ones the harness observed active. The AS-2518-43 drives twenty-four lamps as twelve sets of two, so this circuit lights a pair of bulbs rather than a single one.",
         "quantity": 2
       },
       "provenance": {
@@ -9148,34 +9158,34 @@
           "value": "116"
         }
       ],
-      "availability": "unknown",
+      "availability": "unused",
       "binding": {
         "device": 116,
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.unnamed-116",
       "kind": "lamp",
-      "label": "Backbox lamp, function undetermined (auxiliary 116)",
+      "label": "Unpopulated auxiliary matrix position 116",
       "physical": {
-        "notes": "Auxiliary Lamp Driver A9 output with no printed function, treated as a backbox lamp. The A9 harness sheet splits cleanly: every A9J2 pin carries a printed playfield function - the top lanes, slingshots, thumper bumpers and chambers - while the A9J3 pins carry a wire number and no function at all. Bally named every playfield lamp it wired, so the unnamed group is most likely backbox illumination, and three independently authored VPX recreations support that: the 2020, 2023 and 2025 tables all park this address in a bottom-left placeholder row or model no light for it at all, meaning no author could find it on the playfield. It therefore takes a controlled not-applicable spatial record rather than an invented coordinate. What it illuminates is still undetermined. The A9 parts list counts twelve SCRs and the wire list prints eleven functions, all assigned to other addresses, so at most one of public 68, 84, 100, 113 and 116 is a fitted output and the rest are bare matrix positions; the board's decoder-to-connector sheet is in none of the three retained manuals, and the harness cannot discriminate because all sixteen auxiliary positions light together in the self-test lamp sequence - PinMAME reports matrix bits, not bulbs."
+        "notes": "No lamp behind this address. The A9 Auxiliary Lamp Driver carries twelve SCRs, Q1 through Q12, and its published specification is twelve discrete circuits driving twenty-four lamps as twelve sets of two. Its MC14555B decoders are binary one-of-four, so the board reaches only lamp addresses 0 to 3 on each of the four data lines - sixteen matrix positions for twelve circuits. The twelve fitted circuits are public 65-67, 81-83, 97-99 and 113-115; this address is the fourth decoder position, which has no SCR. It appears in a harness trace only during the self-test lamp sequence, when the ROM writes every matrix bit, and a boot-and-coin-up run shows the ROM never setting it otherwise. PinMAME reports lamp-matrix bits rather than bulbs, which is why a bare position still shows activity there."
       },
       "provenance": {
         "source_refs": [
           "manual-schematics.bally.centaur.1981",
-          "vpx-script.centaur-2-0-0",
+          "human-review.as-2518-43-board-spec",
           "runtime.centaur.solenoid-self-test"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
             "manual-schematics.bally.centaur.1981",
-            "vpx-script.centaur-2-0-0"
+            "human-review.as-2518-43-board-spec"
           ],
-          "status": "observed"
+          "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "no_physical_device",
         "status": "not_applicable"
       }
     },
@@ -10383,6 +10393,15 @@
       "locator": "Bally MPU AS-2518-35 public switch, DIP, solenoid and lamp address rules, including the momentary selector-plus-one mapping, the four continuous outputs at 17-20, the six-column sequential switch namespace, and the skipped lamp decoder slots",
       "revision": "repository",
       "uri": "internal:controllers/pinmame/by35.json"
+    },
+    {
+      "attribution": "Alltek Systems and other replacement-board vendors",
+      "id": "human-review.as-2518-43-board-spec",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Published specification for the Bally AS-2518-43 Auxiliary Lamp Driver: twelve discrete circuits driving twenty-four lamps as twelve sets of two, used for chaser-light circuits. The same specification is repeated by several independent board vendors. The part is generic rather than Centaur-specific and is listed as fitted to Black Pyramid, Future Spa, Spy Hunter, Centaur, Kings of Steel, X's and O's, Centaur II and Kiss, so the original board schematic should exist in those games' manuals even though it is absent from all three retained Centaur manuals. Secondary vendor documentation, used only to corroborate the twelve-circuit count that the Centaur parts list already gives as twelve SCRs.",
+      "revision": "retrieved-2026-08-06",
+      "uri": "https://allteksystems.com/products/auxiliary-led-lamp-driver-board-for-as-2518-43"
     },
     {
       "attribution": "pinmame-game-defs contributors",

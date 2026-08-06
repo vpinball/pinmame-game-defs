@@ -334,8 +334,6 @@ class CentaurDefinitionTests(unittest.TestCase):
 		if statuses - {"validated"}:
 			self.assertNotEqual("validated", self.definition["coverage"]["dimensions"]["semantic_naming"])
 			self.assertIn("output_semantics", self.definition["coverage"]["missing"])
-		self.assertNotEqual("validated", self.definition["coverage"]["dimensions"]["address_enumeration"])
-		self.assertIn("output_enumeration", self.definition["coverage"]["missing"])
 
 	def test_mapping_is_rederived_from_the_raw_trace_when_it_is_available(self) -> None:
 		"""Re-derive the mapping from the ROM's own output, not from a second copied table.
@@ -515,7 +513,9 @@ class CentaurDefinitionTests(unittest.TestCase):
 		self.assertTrue(coverage["missing"], "a partial must name what it is missing")
 		# The only remaining gap is the five auxiliary outputs whose function no retained
 		# source records; everything else is complete.
-		self.assertEqual({"output_enumeration", "output_semantics"}, set(coverage["missing"]))
+		# Two inferred labels remain, both traceable to the absent AS-2518-43 board sheet:
+		# lamp 113's function and the purpose of option switches 17-20.
+		self.assertEqual({"input_semantics", "output_semantics"}, set(coverage["missing"]))
 
 	def test_every_device_carries_a_spatial_record(self) -> None:
 		for item in self.definition["inputs"] + self.definition["outputs"]:
@@ -523,19 +523,46 @@ class CentaurDefinitionTests(unittest.TestCase):
 		for display in self.definition["displays"]:
 			self.assertIn("spatial", display, display["id"])
 
-	def test_undetermined_auxiliary_lamps_are_backbox_not_playfield(self) -> None:
-		"""Three independent recreations failed to place these; none gets an invented coordinate."""
+	def test_bare_auxiliary_matrix_positions_have_no_lamp(self) -> None:
+		"""The A9 has twelve SCRs for sixteen matrix positions; four positions carry no bulb.
+
+		Its MC14555B decoders are binary one-of-four, so the board reaches lamp addresses 0-3 on
+		each of four data lines. The fitted circuits are 65-67, 81-83, 97-99 and 113-115; decoder
+		position 3 has no SCR. PinMAME reports matrix bits rather than bulbs, so these still show
+		activity during the self-test lamp sequence - that is not evidence of a lamp.
+		"""
 		lamps = {
 			item["binding"]["device"]: item
 			for item in self.definition["outputs"]
 			if item["binding"]["group"] == "pinmame.output.lamp"
 		}
-		for address in (68, 84, 100, 113, 116):
+		for address in (68, 84, 100, 116):
 			device = lamps[address]
-			self.assertEqual("unknown", device["availability"], address)
-			self.assertEqual("candidate", device["provenance"]["status"], address)
+			self.assertEqual("unused", device["availability"], address)
 			self.assertEqual("not_applicable", device["spatial"]["status"], address)
-			self.assertEqual("cabinet_or_service", device["spatial"]["reason"], address)
+			self.assertEqual("no_physical_device", device["spatial"]["reason"], address)
+
+	def test_twelfth_auxiliary_circuit_is_marked_inferred(self) -> None:
+		"""Lamp 113's identity is reasoned, not printed, so it must not claim validated."""
+		lamps = {
+			item["binding"]["device"]: item
+			for item in self.definition["outputs"]
+			if item["binding"]["group"] == "pinmame.output.lamp"
+		}
+		device = lamps[113]
+		self.assertEqual("used", device["availability"])
+		self.assertEqual("observed", device["provenance"]["status"])
+		self.assertIn("Guardian", device["label"])
+
+	def test_every_auxiliary_circuit_drives_a_pair_of_lamps(self) -> None:
+		"""The AS-2518-43 drives twenty-four lamps as twelve sets of two."""
+		lamps = {
+			item["binding"]["device"]: item
+			for item in self.definition["outputs"]
+			if item["binding"]["group"] == "pinmame.output.lamp"
+		}
+		for address in (65, 66, 67, 81, 82, 83, 97, 98, 99, 113, 114, 115):
+			self.assertEqual(2, lamps[address]["physical"]["quantity"], address)
 
 
 class By35ProfileTests(unittest.TestCase):

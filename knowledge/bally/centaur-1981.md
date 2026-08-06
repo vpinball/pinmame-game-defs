@@ -146,34 +146,33 @@ speech is the reason that flag exists.
 
 ## What is still missing
 
-One thing, and it is a limit of the surviving documentation rather than of the analysis.
+Two inferred labels, both traceable to one absent document.
 
-**Five auxiliary outputs - public 68, 84, 100, 113 and 116 - are backbox lamps whose function is
-undetermined.** The A9 Auxiliary Lamp Driver parts list counts twelve SCRs while its harness wire
-list prints eleven functions, all of which belong to other addresses, so at most one of the five is
-a fitted output and the rest are bare matrix positions.
+**Lamp 113 is the twelfth A9 circuit and its function is inferred, not printed.** The board's
+published specification is twelve discrete circuits driving twenty-four lamps as twelve sets of two,
+which matches the twelve SCRs in its parts list, and its MC14555B decoders are binary one-of-four,
+so it reaches only lamp addresses 0-3 on each of four data lines. That makes public 65-67, 81-83,
+97-99 and 113-115 the fitted circuits and public 68, 84, 100 and 116 bare matrix positions with no
+bulb - now recorded as such, and confirmed by a boot-and-coin-up harness run in which the ROM never
+sets those four outside the self-test lamp sequence. Eleven of the twelve circuits carry printed
+functions. The twelfth is 113, which sits on the same decoder position as the three printed top-lane
+inserts, and the manual describes a Guardian feature completed by "the four (4) guardian rollovers"
+while the printed switch table names only three top lanes. A fourth rollover insert accounts for
+both. It is recorded as `observed` rather than `validated` for that reason.
 
-They are treated as backbox rather than playfield on converging evidence. The A9 harness sheet
-splits cleanly: every A9J2 pin carries a printed playfield function - the top lanes, slingshots,
-thumper bumpers and chambers - while every A9J3 pin carries a wire number and no function at all.
-Bally named every playfield lamp it wired, so the unnamed group is most likely backbox
-illumination. Three independently authored recreations agree by omission: the 2020, 2023 and 2025
-VPX tables all either park these addresses in a bottom-left placeholder row or model no light for
-them, meaning no author could find them on the playfield. They therefore take controlled
-not-applicable spatial records rather than invented coordinates.
+**Option switches 17-20 have no documented function.** None of the three retained manuals assigns
+them one, and the credits-per-coin tables cover only chutes 1 and 3.
 
-Every route to naming them has been tried. The A9 board's decoder-output-to-connector sheet is in
-none of the three retained manuals - they carry its parts list and harness list but not the sheet.
-The wire list leaves those pins unlabelled. Neither retained script references them. And the harness
-cannot discriminate: all sixteen auxiliary positions light together during the self-test lamp
-sequence and none appears outside it, because PinMAME reports lamp-matrix bits rather than bulbs and
-the ROM drives the data line whether or not an SCR is fitted.
+Both trace to the same gap: the **AS-2518-43 board schematic sheet**, which is in none of the three
+retained Centaur manuals - they carry its parts list and its harness wire list but not the sheet.
+The part is generic rather than Centaur-specific: replacement-board vendors list it as fitted to
+Black Pyramid, Future Spa, Spy Hunter, Centaur, Kings of Steel, X's and O's, Centaur II and Kiss, so
+the original sheet should exist in one of those games' manuals. Note that Centaur is the only BY35
+game pinned PinMAME models with `lampCol > 0`, which is why the board looks Centaur-specific from the
+emulator side and is not.
 
-Resolving it needs the A9 board schematic sheet, or someone with the physical machine.
-
-That single gap holds `output_enumeration` and `output_semantics` open and therefore keeps the
-record `partial`. Everything else is complete: identity and the three-driver family with their
+Everything else is complete and validated: identity and the three-driver family with their
 differences, the full 48-position switch matrix with per-switch polarity and construction, all 32
-MPU option switches, twenty-one solenoid outputs including the resolved sixth switch-column strobe,
-seventy-one of seventy-six lamps named from the schematic, six displays, ten mechanisms, and spatial
-records for every one of the 182 devices.
+MPU option switches enumerated, twenty-one solenoid outputs including the resolved sixth
+switch-column strobe, seventy-five of seventy-six lamps named, six displays, ten mechanisms, and a
+spatial record for every one of the 182 devices.
