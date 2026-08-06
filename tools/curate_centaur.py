@@ -62,6 +62,8 @@ def build_definition() -> dict:
 			item["physical"] = spec["physical"]
 		if "roles" in spec:
 			item["roles"] = spec["roles"]
+		if "spatial" in spec:
+			item["spatial"] = spec["spatial"]
 		inputs.append(item)
 
 	outputs = []
@@ -88,6 +90,8 @@ def build_definition() -> dict:
 		}
 		if "roles" in spec:
 			coil["roles"] = spec["roles"]
+		if "spatial" in spec:
+			coil["spatial"] = spec["spatial"]
 		outputs.append(coil)
 
 	for key, spec in sorted(DATA["lamps"].items(), key=lambda item: int(item[0])):
@@ -109,6 +113,8 @@ def build_definition() -> dict:
 			item["physical"] = spec["physical"]
 		if "roles" in spec:
 			item["roles"] = spec["roles"]
+		if "spatial" in spec:
+			item["spatial"] = spec["spatial"]
 		outputs.append(item)
 
 	outputs.sort(key=lambda item: (item["binding"]["group"], item["binding"]["device"]))

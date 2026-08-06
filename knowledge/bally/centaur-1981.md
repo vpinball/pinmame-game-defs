@@ -173,11 +173,27 @@ speech is the reason that flag exists.
 - **Flipper coils.** Public 46 and 48 are now declared as the PinMAME-synthesised handles on the two
   direct-wired flipper coils, but their real drive path - the K1 relay and the button contacts -
   is documented only in prose and has no typed wiring record.
-- **Spatial placement.** No normalized coordinates yet. Figure V on printed page 18 places every
-  switch and solenoid on the playfield and states which are off it - switches 15, 16 and 21 in the
-  cabinet, 06, 09, 10, 11 and 16 on the door, solenoid 16 on the door, 17 in the backbox and 02 in
-  the cabinet - so the retained table geometry can be reconciled against it when the placements are
-  authored.
+- **Spatial placement, mostly done.** 143 of the 150 devices now carry a spatial record. Positions
+  come from the retained table, normalized as x/952.941 and y/1976.471: lamp coordinates are the
+  centers of the Light objects named `l<address>`, each of which carries `timer_interval` equal to
+  its PinMAME lamp address (verified for all 67), and switch coordinates are the centers of objects
+  named `sw<address>`. Figure V corroborates independently - the bumpers, flippers, outhole, trough
+  and upper-right magnet all land where the printed diagram puts them - and it supplies the
+  off-playfield classification, so the cabinet, door and backbox devices take controlled
+  `not_applicable` records instead of invented coordinates. The seven backbox indicator lamps
+  (Shoot Again, Ball in Play, Match, High Score, Warning, Game Over, Tilt) are exactly the lamps for
+  which the table has no playfield light, which is a satisfying cross-check rather than a gap.
+
+  Seven devices remain unplaced, deliberately. The four trough switches and End of Trough would
+  need a judgement about which modelled slot is which physical trough position; the five-contact
+  10 Point Rebound address needs five separate rebound locations; and the two unnamed auxiliary
+  lamps 113 and 116 have no light object at all. Guessing any of these would be worse than leaving
+  them named as missing.
+
+  Note the drop-target coils: an individual down coil takes its own target switch's position,
+  because they are one assembly, but each bank's single reset coil is a **documented projection** -
+  the centroid of that bank's target switches - and is marked as such rather than presented as an
+  observed socket.
 
 ## Sources
 
