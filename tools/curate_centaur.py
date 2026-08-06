@@ -105,7 +105,7 @@ def build_definition() -> dict:
 			"availability": spec["availability"],
 			"binding": {"device": address, "group": "pinmame.output.lamp"},
 			"id": spec["id"],
-			"kind": "lamp",
+			"kind": spec.get("kind", "lamp"),
 			"label": spec["label"],
 			"provenance": spec["provenance"],
 		}

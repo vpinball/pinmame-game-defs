@@ -415,6 +415,65 @@ class CentaurDefinitionTests(unittest.TestCase):
 		).encode("utf-8")
 		self.assertEqual(evidence["source"]["sha256"], hashlib.sha256(canonical).hexdigest())
 
+	def test_schematic_lamp_names_match_the_script_bound_addresses(self) -> None:
+		"""The seven lamps the retained script binds by name are the only independent check.
+
+		Everything else in the lamp table is derived: public = 16*d + lampadr + 1 puts an address
+		on an MC14514 output, the schematic gives that output's SCR and connector pin, and the pin
+		carries a printed function. If the derivation were wrong these seven would disagree.
+		"""
+		expected = {
+			11: "Shoot Again",
+			13: "Ball in Play",
+			27: "Match",
+			29: "High Score to Date",
+			43: "Tilt Warning",
+			45: "Game Over",
+			61: "Tilt",
+		}
+		lamps = {
+			item["binding"]["device"]: item
+			for item in self.definition["outputs"]
+			if item["binding"]["group"] == "pinmame.output.lamp"
+		}
+		for address, label in expected.items():
+			self.assertEqual(label, lamps[address]["label"], f"lamp {address}")
+			self.assertEqual("validated", lamps[address]["provenance"]["status"], f"lamp {address}")
+
+	def test_lamp_classes_are_consistent_across_decoders(self) -> None:
+		"""Each MC14514 output drives the same class of lamp on all four decoders.
+
+		That structure is what makes the derivation trustworthy, so it is worth pinning: if a
+		future edit puts a chamber lamp where a bonus lamp belongs, the class breaks.
+		"""
+		lamps = {
+			item["binding"]["device"]: item["label"]
+			for item in self.definition["outputs"]
+			if item["binding"]["group"] == "pinmame.output.lamp"
+		}
+		classes = {
+			1: "Bonus", 2: "Bonus", 4: "Bonus", 5: "Rollover",
+			6: "Drop Target", 7: "Drop Target Arrow", 8: "Chamber", 11: "Captive Orbs",
+		}
+		for output, token in classes.items():
+			members = [
+				lamps[16 * d + output + 1]
+				for d in range(4)
+				if (16 * d + output + 1) in lamps
+			]
+			self.assertEqual(4, len(members), f"decoder output {output}")
+			for label in members:
+				self.assertIn(token.split()[-1], label, f"output {output}: {label}")
+
+	def test_public_lamp_one_is_not_a_lamp(self) -> None:
+		"""It feeds the G.I. flasher module, which is why the legacy corpus never bound it."""
+		lamps = {
+			item["binding"]["device"]: item
+			for item in self.definition["outputs"]
+			if item["binding"]["group"] == "pinmame.output.lamp"
+		}
+		self.assertEqual("control_signal", lamps[1]["kind"])
+
 	def test_coverage_stays_partial_and_names_its_gaps(self) -> None:
 		coverage = self.definition["coverage"]
 		self.assertEqual("partial", coverage["status"])

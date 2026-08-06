@@ -3536,34 +3536,26 @@
         "group": "pinmame.output.lamp"
       },
       "id": "lamp.unnamed-1",
-      "kind": "lamp",
-      "label": "Unnamed lamp 1",
+      "kind": "control_signal",
+      "label": "G.I. Flash Driver Feed",
       "physical": {
-        "notes": "Driven output on the AS-2518-23 lamp driver module. The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+        "notes": "Schematic A5J1-18. This address is not a lamp: the lamp driver output feeds pin 3 of the Aux. Driver (G.I. Flasher) module AS-2518-68. That is why the legacy corpus never bound it. The retained table models it as a playfield light because lighting it does make the general illumination flash, but the driver output itself terminates on a board input, not a bulb, so it carries no playfield coordinate of its own."
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
-        ],
-        "status": "observed"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "lamp.unnamed-1.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.centaur-2-0-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.164516,
-            "y": 0.949534
-          }
+          "manual-schematics.bally.centaur.1981"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual-schematics.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "internal_nonvisual",
+        "status": "not_applicable"
       }
     },
     {
@@ -3592,13 +3584,17 @@
       },
       "id": "lamp.middle-1",
       "kind": "lamp",
-      "label": "Middle 1",
+      "label": "1K Bonus",
+      "physical": {
+        "notes": "Schematic A5J1-19. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -3645,13 +3641,17 @@
       },
       "id": "lamp.middle-5",
       "kind": "lamp",
-      "label": "Middle 5",
+      "label": "5K Bonus",
+      "physical": {
+        "notes": "Schematic A5J1-17. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -3698,13 +3698,17 @@
       },
       "id": "lamp.middle-9",
       "kind": "lamp",
-      "label": "Middle 9",
+      "label": "9K Bonus",
+      "physical": {
+        "notes": "Schematic A5J1-23. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -3751,13 +3755,17 @@
       },
       "id": "lamp.middle-2x",
       "kind": "lamp",
-      "label": "Middle 2x",
+      "label": "2X Bonus",
+      "physical": {
+        "notes": "Schematic A5J1-14. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -3804,13 +3812,17 @@
       },
       "id": "lamp.5k-4-right",
       "kind": "lamp",
-      "label": "5K 4 (right)",
+      "label": "Right Out Rollover",
+      "physical": {
+        "notes": "Schematic A5J1-15. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -3857,13 +3869,17 @@
       },
       "id": "lamp.right-drop-80",
       "kind": "lamp",
-      "label": "Right Drop 80",
+      "label": "Right Drop Target 80 Arrow",
+      "physical": {
+        "notes": "Schematic A5J1-16. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -3910,13 +3926,17 @@
       },
       "id": "lamp.center-drop-s",
       "kind": "lamp",
-      "label": "Center Drop \"S\"",
+      "label": "\"S\" Drop Target Arrow",
+      "physical": {
+        "notes": "Schematic A5J1-28. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -3963,13 +3983,17 @@
       },
       "id": "lamp.left-lane-10",
       "kind": "lamp",
-      "label": "Left Lane 10",
+      "label": "10 Chamber",
+      "physical": {
+        "notes": "Schematic A5J1-24. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4012,13 +4036,17 @@
       },
       "id": "lamp.left-lane-50",
       "kind": "lamp",
-      "label": "Left Lane 50",
+      "label": "50 Chamber",
+      "physical": {
+        "notes": "Schematic A5J1-25. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4053,15 +4081,17 @@
       },
       "id": "lamp.unnamed-11",
       "kind": "lamp",
-      "label": "Unnamed lamp 11",
+      "label": "Shoot Again",
       "physical": {
-        "notes": "Backbox indicator lamp (Shoot Again). The retained table has no playfield light object for this address and drives it through a backglass reel instead, so it has no playfield coordinate."
+        "notes": "Schematic A5J2-21. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "legacy.game.centaur",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -4097,13 +4127,17 @@
       },
       "id": "lamp.bottom-1",
       "kind": "lamp",
-      "label": "Bottom 1",
+      "label": "#1 Captive Orbs",
+      "physical": {
+        "notes": "Schematic A5J1-27. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4138,15 +4172,17 @@
       },
       "id": "lamp.unnamed-13",
       "kind": "lamp",
-      "label": "Unnamed lamp 13",
+      "label": "Ball in Play",
       "physical": {
-        "notes": "Backbox indicator lamp (Ball in Play). The retained table has no playfield light object for this address and drives it through a backglass reel instead, so it has no playfield coordinate."
+        "notes": "Schematic A5J2-22. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "legacy.game.centaur",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -4182,13 +4218,17 @@
       },
       "id": "lamp.center-spl",
       "kind": "lamp",
-      "label": "Center SPL",
+      "label": "Orbs Special",
+      "physical": {
+        "notes": "Schematic A5J2-16. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4231,13 +4271,17 @@
       },
       "id": "lamp.bonus-2x",
       "kind": "lamp",
-      "label": "Bonus 2x",
+      "label": "Right Lane 2X",
+      "physical": {
+        "notes": "Schematic A5J2-14. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4281,10 +4325,12 @@
       "id": "lamp.when-lit",
       "kind": "lamp",
       "label": "When Lit",
+      "physical": {
+        "notes": "One of three addresses whose decoder class is known but whose individual function is not yet pinned. The three unassigned printed functions are Spot 1-4 (A5J2-7), Credit Indicator (A5J3-13) and Release Orb (A5J1-1); the three unassigned addresses are 17, 59 and 62. The label here is unverified legacy carry-over until the remaining SCR-to-connector rows are traced."
+      },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "legacy.game.centaur"
         ],
         "status": "candidate"
       },
@@ -4329,13 +4375,17 @@
       },
       "id": "lamp.middle-2",
       "kind": "lamp",
-      "label": "Middle 2",
+      "label": "2K Bonus",
+      "physical": {
+        "notes": "Schematic A5J1-9. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4378,13 +4428,17 @@
       },
       "id": "lamp.middle-6",
       "kind": "lamp",
-      "label": "Middle 6",
+      "label": "6K Bonus",
+      "physical": {
+        "notes": "Schematic A5J1-8. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4427,13 +4481,17 @@
       },
       "id": "lamp.middle-10",
       "kind": "lamp",
-      "label": "Middle 10",
+      "label": "10K Bonus",
+      "physical": {
+        "notes": "Schematic A5J1-3. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4476,13 +4534,17 @@
       },
       "id": "lamp.middle-3x",
       "kind": "lamp",
-      "label": "Middle 3x",
+      "label": "3X Bonus",
+      "physical": {
+        "notes": "Schematic A5J1-2. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4525,13 +4587,17 @@
       },
       "id": "lamp.5k-3",
       "kind": "lamp",
-      "label": "5K 3",
+      "label": "Right Return Rollover",
+      "physical": {
+        "notes": "Schematic A5J1-10. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4574,13 +4640,17 @@
       },
       "id": "lamp.right-drop-40",
       "kind": "lamp",
-      "label": "Right Drop 40",
+      "label": "Right Drop Target 40 Arrow",
+      "physical": {
+        "notes": "Schematic A5J1-7. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4623,13 +4693,17 @@
       },
       "id": "lamp.center-drop-b",
       "kind": "lamp",
-      "label": "Center Drop \"B\"",
+      "label": "\"B\" Drop Target Arrow",
+      "physical": {
+        "notes": "Schematic A5J1-6. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4672,13 +4746,17 @@
       },
       "id": "lamp.left-lane-20",
       "kind": "lamp",
-      "label": "Left Lane 20",
+      "label": "20 Chamber",
+      "physical": {
+        "notes": "Schematic A5J1-5. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4721,13 +4799,17 @@
       },
       "id": "lamp.middle-20",
       "kind": "lamp",
-      "label": "Middle 20",
+      "label": "20K Bonus",
+      "physical": {
+        "notes": "Schematic A5J1-11. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4762,15 +4844,17 @@
       },
       "id": "lamp.unnamed-27",
       "kind": "lamp",
-      "label": "Unnamed lamp 27",
+      "label": "Match",
       "physical": {
-        "notes": "Backbox indicator lamp (Match). The retained table has no playfield light object for this address and drives it through a backglass reel instead, so it has no playfield coordinate."
+        "notes": "Schematic A5J2-8. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "legacy.game.centaur",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -4806,13 +4890,17 @@
       },
       "id": "lamp.bottom-2",
       "kind": "lamp",
-      "label": "Bottom 2",
+      "label": "#2 Captive Orbs",
+      "physical": {
+        "notes": "Schematic A5J1-12. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4847,15 +4935,17 @@
       },
       "id": "lamp.unnamed-29",
       "kind": "lamp",
-      "label": "Unnamed lamp 29",
+      "label": "High Score to Date",
       "physical": {
-        "notes": "Backbox indicator lamp (High Score). The retained table has no playfield light object for this address and drives it through a backglass reel instead, so it has no playfield coordinate."
+        "notes": "Schematic A5J2-23. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "legacy.game.centaur",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -4891,13 +4981,17 @@
       },
       "id": "lamp.center-50",
       "kind": "lamp",
-      "label": "Center 50",
+      "label": "Orbs 50,000",
+      "physical": {
+        "notes": "Schematic A5J2-20. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4940,13 +5034,17 @@
       },
       "id": "lamp.bonus-3x",
       "kind": "lamp",
-      "label": "Bonus 3x",
+      "label": "Right Lane 3X",
+      "physical": {
+        "notes": "Schematic A5J2-15. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -4989,13 +5087,17 @@
       },
       "id": "lamp.release-right-lane",
       "kind": "lamp",
-      "label": "Release (Right Lane)",
+      "label": "Right Lane Release Orbs",
+      "physical": {
+        "notes": "Schematic A5J3-26. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5038,13 +5140,17 @@
       },
       "id": "lamp.middle-3",
       "kind": "lamp",
-      "label": "Middle 3",
+      "label": "3K Bonus",
+      "physical": {
+        "notes": "Schematic A5J3-25. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5087,13 +5193,17 @@
       },
       "id": "lamp.middle-7",
       "kind": "lamp",
-      "label": "Middle 7",
+      "label": "7K Bonus",
+      "physical": {
+        "notes": "Schematic A5J3-19. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5136,13 +5246,17 @@
       },
       "id": "lamp.release-top-left",
       "kind": "lamp",
-      "label": "Release (Top Left)",
+      "label": "Chambers Release",
+      "physical": {
+        "notes": "Schematic A5J3-17. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5185,13 +5299,17 @@
       },
       "id": "lamp.middle-4x",
       "kind": "lamp",
-      "label": "Middle 4x",
+      "label": "4X Bonus",
+      "physical": {
+        "notes": "Schematic A5J3-16. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5234,13 +5352,17 @@
       },
       "id": "lamp.5k-2",
       "kind": "lamp",
-      "label": "5K 2",
+      "label": "Left Return Rollover",
+      "physical": {
+        "notes": "Schematic A5J3-23. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5283,13 +5405,17 @@
       },
       "id": "lamp.right-drop-20",
       "kind": "lamp",
-      "label": "Right Drop 20",
+      "label": "Right Drop Target 20 Arrow",
+      "physical": {
+        "notes": "Schematic A5J3-27. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5332,13 +5458,17 @@
       },
       "id": "lamp.center-drop-r",
       "kind": "lamp",
-      "label": "Center Drop \"R\"",
+      "label": "\"R\" Drop Target Arrow",
+      "physical": {
+        "notes": "Schematic A5J1-13. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5381,13 +5511,17 @@
       },
       "id": "lamp.left-lane-30",
       "kind": "lamp",
-      "label": "Left Lane 30",
+      "label": "30 Chamber",
+      "physical": {
+        "notes": "Schematic A5J3-21. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5430,13 +5564,17 @@
       },
       "id": "lamp.middle-40",
       "kind": "lamp",
-      "label": "Middle 40",
+      "label": "40K Bonus",
+      "physical": {
+        "notes": "Schematic A5J3-20. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5471,15 +5609,17 @@
       },
       "id": "lamp.unnamed-43",
       "kind": "lamp",
-      "label": "Unnamed lamp 43",
+      "label": "Tilt Warning",
       "physical": {
-        "notes": "Backbox indicator lamp (Warning). The retained table has no playfield light object for this address and drives it through a backglass reel instead, so it has no playfield coordinate."
+        "notes": "Schematic A5J2-9. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "legacy.game.centaur",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -5515,13 +5655,17 @@
       },
       "id": "lamp.bottom-3",
       "kind": "lamp",
-      "label": "Bottom 3",
+      "label": "#3 Captive Orbs",
+      "physical": {
+        "notes": "Schematic A5J3-24. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5556,15 +5700,17 @@
       },
       "id": "lamp.unnamed-45",
       "kind": "lamp",
-      "label": "Unnamed lamp 45",
+      "label": "Game Over",
       "physical": {
-        "notes": "Backbox indicator lamp (Game Over). The retained table has no playfield light object for this address and drives it through a backglass reel instead, so it has no playfield coordinate."
+        "notes": "Schematic A5J2-11. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "legacy.game.centaur",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -5600,13 +5746,17 @@
       },
       "id": "lamp.left-resets-1-4-targets-arrow",
       "kind": "lamp",
-      "label": "Left Resets 1-4 Targets Arrow",
+      "label": "Reset 1-4 Arrow",
+      "physical": {
+        "notes": "Schematic A5J2-6. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5649,13 +5799,17 @@
       },
       "id": "lamp.bonus-4x",
       "kind": "lamp",
-      "label": "Bonus 4x",
+      "label": "Right Lane 4X",
+      "physical": {
+        "notes": "Schematic A5J2-2. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5699,12 +5853,16 @@
       "id": "lamp.collect-bonus-arrow",
       "kind": "lamp",
       "label": "Collect Bonus Arrow",
+      "physical": {
+        "notes": "Schematic A5J3-1. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5747,13 +5905,17 @@
       },
       "id": "lamp.middle-4",
       "kind": "lamp",
-      "label": "Middle 4",
+      "label": "4K Bonus",
+      "physical": {
+        "notes": "Schematic A5J3-12. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5796,13 +5958,17 @@
       },
       "id": "lamp.middle-8",
       "kind": "lamp",
-      "label": "Middle 8",
+      "label": "8K Bonus",
+      "physical": {
+        "notes": "Schematic A5J3-15. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5845,13 +6011,17 @@
       },
       "id": "lamp.spl-top-left",
       "kind": "lamp",
-      "label": "SPL (Top Left)",
+      "label": "Chambers Special",
+      "physical": {
+        "notes": "Schematic A5J3-11. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5894,13 +6064,17 @@
       },
       "id": "lamp.middle-5x",
       "kind": "lamp",
-      "label": "Middle 5x",
+      "label": "5X Bonus",
+      "physical": {
+        "notes": "Schematic A5J3-9. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5943,13 +6117,17 @@
       },
       "id": "lamp.5k-1-left",
       "kind": "lamp",
-      "label": "5K 1 (left)",
+      "label": "Left Out Rollover",
+      "physical": {
+        "notes": "Schematic A5J3-3. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -5992,13 +6170,17 @@
       },
       "id": "lamp.right-drop-10",
       "kind": "lamp",
-      "label": "Right Drop 10",
+      "label": "Right Drop Target 10 Arrow",
+      "physical": {
+        "notes": "Schematic A5J3-4. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6041,13 +6223,17 @@
       },
       "id": "lamp.center-drop-o",
       "kind": "lamp",
-      "label": "Center Drop \"O\"",
+      "label": "\"O\" Drop Target Arrow",
+      "physical": {
+        "notes": "Schematic A5J3-2. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6090,13 +6276,17 @@
       },
       "id": "lamp.left-lane-40",
       "kind": "lamp",
-      "label": "Left Lane 40",
+      "label": "40 Chamber",
+      "physical": {
+        "notes": "Schematic A5J3-10. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6139,13 +6329,17 @@
       },
       "id": "lamp.middle-60",
       "kind": "lamp",
-      "label": "Middle 60",
+      "label": "60K Bonus",
+      "physical": {
+        "notes": "Schematic A5J3-18. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6189,10 +6383,12 @@
       "id": "lamp.bottom-left",
       "kind": "lamp",
       "label": "Bottom Left",
+      "physical": {
+        "notes": "One of three addresses whose decoder class is known but whose individual function is not yet pinned. The three unassigned printed functions are Spot 1-4 (A5J2-7), Credit Indicator (A5J3-13) and Release Orb (A5J1-1); the three unassigned addresses are 17, 59 and 62. The label here is unverified legacy carry-over until the remaining SCR-to-connector rows are traced."
+      },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "legacy.game.centaur"
         ],
         "status": "candidate"
       },
@@ -6237,13 +6433,17 @@
       },
       "id": "lamp.bottom-4",
       "kind": "lamp",
-      "label": "Bottom 4",
+      "label": "#4 Captive Orbs",
+      "physical": {
+        "notes": "Schematic A5J3-14. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6278,15 +6478,17 @@
       },
       "id": "lamp.unnamed-61",
       "kind": "lamp",
-      "label": "Unnamed lamp 61",
+      "label": "Tilt",
       "physical": {
-        "notes": "Backbox indicator lamp (Tilt). The retained table has no playfield light object for this address and drives it through a backglass reel instead, so it has no playfield coordinate."
+        "notes": "Schematic A5J2-10. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
       },
       "provenance": {
         "source_refs": [
-          "runtime.centaur.solenoid-self-test"
+          "manual-schematics.bally.centaur.1981",
+          "legacy.game.centaur",
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
@@ -6323,10 +6525,12 @@
       "id": "lamp.green-round-top-right",
       "kind": "lamp",
       "label": "Green Round Top Right",
+      "physical": {
+        "notes": "One of three addresses whose decoder class is known but whose individual function is not yet pinned. The three unassigned printed functions are Spot 1-4 (A5J2-7), Credit Indicator (A5J3-13) and Release Orb (A5J1-1); the three unassigned addresses are 17, 59 and 62. The label here is unverified legacy carry-over until the remaining SCR-to-connector rows are traced."
+      },
       "provenance": {
         "source_refs": [
-          "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "legacy.game.centaur"
         ],
         "status": "candidate"
       },
@@ -6371,13 +6575,17 @@
       },
       "id": "lamp.bonus-5x",
       "kind": "lamp",
-      "label": "Bonus 5x",
+      "label": "Right Lane 5X",
+      "physical": {
+        "notes": "Schematic A5J2-1. Derived through the full addressing chain: public = 16*d + lampadr + 1 places this address on a specific MC14514 output, page 52 gives that output's SCR and the SCR's connector pin, and the pin carries this printed function. The independently authored legacy corpus agrees."
+      },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "legacy.game.centaur",
-          "runtime.centaur.solenoid-self-test"
+          "vpx-table.centaur-2-0-0"
         ],
-        "status": "candidate"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8310,6 +8518,19 @@
       "locator": "platforms/bally.json",
       "revision": "4ea106d080728648a693af3b4dcabb091eee0a02",
       "uri": "https://github.com/vpinball/pinmame-game-defs"
+    },
+    {
+      "acquired_at": "2026-08-06T00:00:00.000000Z",
+      "attribution": "Bally Manufacturing Corporation; copy supplied by the repository maintainer",
+      "id": "manual-schematics.bally.centaur.1981",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "61-page Bally #1239 Centaur manual including the complete schematic set. Page 52 is the AS-2518-23 lamp driver sheet: it gives the MC14514 output-to-SCR table for all four decoders U1-U4 and the SCR-to-connector wiring for J1, J2 and J3, with each pin's playfield or backbox function printed beside it. Page 54 is the A9 auxiliary lamp driver wire list.",
+      "original_filename": "Bally_1981_Centaur_Installation_and_General_Game_Operation_Instructions_with_schematics_OCR_searchable.pdf",
+      "revision": "sha256:0197aeef8f5198270dfdfea2557088f7578cd12f2d7a3eee650f261ef2daa616",
+      "rights": "NOASSERTION",
+      "sha256": "0197aeef8f5198270dfdfea2557088f7578cd12f2d7a3eee650f261ef2daa616",
+      "uri": "external:pinmame-manuals/by-machine/bally.centaur.1981/projects-centaur/Bally_1981_Centaur_Installation_and_General_Game_Operation_Instructions_with_schematics_OCR_searchable.pdf"
     },
     {
       "attribution": "pinmame-game-defs curation",

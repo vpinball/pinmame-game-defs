@@ -181,10 +181,18 @@ speech is the reason that flag exists.
   2X/3X/5X, while the real bonus multipliers are public 5/21/37/53 - public 5 traces directly to
   J1-14 "2X BONUS". The two multiplier groups appear to have been swapped in the legacy import.
 
-  What remains is only the SCR-to-connector trace for U2, U3 and U4, which fixes which member of
-  each class sits at each address. Until that is done the labels stay as they are and
-  `output_semantics` stays in `coverage.missing`: the structure is proved, the per-address
-  assignment is not. See
+  The J1, J2 and J3 connector lists are now read in full, which completes the chain. Fifty-seven
+  of the sixty main-board addresses carry their printed schematic name, and the seven addresses
+  the retained script binds by name all agree with the derivation - Shoot Again, Ball in Play,
+  Match, High Score to Date, Tilt Warning, Game Over and Tilt. Public 1 turns out not to be a
+  lamp at all: it feeds pin 3 of the Aux. Driver (G.I. Flasher) module, which is why the legacy
+  corpus never bound it.
+
+  Three addresses stay unresolved: 17, 59 and 62, against the three unassigned printed functions
+  Spot 1-4 (A5J2-7), Credit Indicator (A5J3-13) and Release Orb (A5J1-1). Which is which needs
+  the last few SCR-to-connector rows traced. Those three keep their unverified legacy labels and
+  a `candidate` status, and the sixteen auxiliary lamps are still unnamed, so `output_semantics`
+  and `output_enumeration` remain in `coverage.missing`. See
   `external:pinmame-review-artifacts/centaur-1981/lamp-identity-research.md`.
 - **Variant differences.** Nothing beyond "free play" distinguishes `centaura` and `centaurb` from
   the production ROM in this record.
