@@ -58,6 +58,8 @@ def build_definition() -> dict:
 			"label": spec["label"],
 			"provenance": spec["provenance"],
 		}
+		if "normally_closed" in spec:
+			item["normally_closed"] = spec["normally_closed"]
 		if "physical" in spec:
 			item["physical"] = spec["physical"]
 		if "roles" in spec:
@@ -65,6 +67,25 @@ def build_definition() -> dict:
 		if "spatial" in spec:
 			item["spatial"] = spec["spatial"]
 		inputs.append(item)
+
+	for key, spec in sorted(DATA.get("dips", {}).items(), key=lambda item: int(item[0])):
+		address = int(key)
+		inputs.append({
+			"aliases": [{"namespace": "pinmame.dip", "value": str(address)},
+				{"namespace": "manual.address", "value": "S%d" % address}],
+			"availability": spec["availability"],
+			"binding": {"device": address, "group": "pinmame.input.dip"},
+			"id": spec["id"],
+			"kind": "dip_switch",
+			"label": spec["label"],
+			"physical": spec["physical"],
+			"provenance": spec["provenance"],
+			"spatial": {
+				"provenance": {"source_refs": ["manual.bally.centaur.1981"], "status": "validated"},
+				"reason": "dip_switch",
+				"status": "not_applicable",
+			},
+		})
 
 	outputs = []
 	for key, spec in sorted(DATA["solenoids"].items(), key=lambda item: int(item[0])):

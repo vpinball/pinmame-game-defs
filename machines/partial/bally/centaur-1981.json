@@ -1,16 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "Public solenoid 17, the first continuous output, is asserted continuously by the ROM but is not one of the three continuous devices the solenoid identification table lists. PinMAME's LISY bridge treats Centaur's continuous bit 0 as a strobe line and masks it out of the coil data, while by35.c takes the sixth switch-column strobe from PIA1:B bit 7 (public 20) instead. The two readings cannot both be right and the address stays unresolved.",
-      "id": "conflict.pinmame-output-solenoid-17-function",
-      "path": "binding:pinmame.output.solenoid/17",
-      "source_refs": [
-        "runtime.centaur.solenoid-self-test",
-        "manual.bally.centaur.1981",
-        "controller-profile.pinmame-by35"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.by35"
@@ -20,25 +9,20 @@
       "address_enumeration": "observed",
       "catalog_identity": "validated",
       "display_inventory": "validated",
-      "mechanisms": "unknown",
-      "physical_wiring": "conflicted",
+      "mechanisms": "validated",
+      "physical_wiring": "observed",
       "recreation_knowledge": "candidate",
       "semantic_naming": "candidate",
       "spatial_placement": "unknown",
       "variant_coverage": "observed"
     },
     "missing": [
-      "input_enumeration",
       "input_semantics",
-      "mechanism_behavior",
-      "mechanism_inventory",
       "output_enumeration",
       "output_semantics",
-      "polarity",
       "provenance",
       "recreation_notes",
       "spatial_placement",
-      "unresolved_conflicts",
       "variant_differences"
     ],
     "status": "partial"
@@ -245,9 +229,11 @@
       "id": "switch.self-test",
       "kind": "switch",
       "label": "Self Test",
+      "normally_closed": false,
       "physical": {
         "location": "door",
-        "notes": "Direct diagnostic contact in switch column 0, not a matrix position."
+        "notes": "Direct diagnostic contact in switch column 0, not a matrix position. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -290,9 +276,11 @@
       "id": "switch.cpu-diagnose",
       "kind": "switch",
       "label": "CPU Diagnose",
+      "normally_closed": false,
       "physical": {
         "location": "door",
-        "notes": "Direct diagnostic contact in switch column 0, not a matrix position."
+        "notes": "Direct diagnostic contact in switch column 0, not a matrix position. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -335,9 +323,11 @@
       "id": "switch.sound-diagnose",
       "kind": "switch",
       "label": "Sound Diagnose",
+      "normally_closed": false,
       "physical": {
         "location": "door",
-        "notes": "Direct diagnostic contact in switch column 0, not a matrix position."
+        "notes": "Direct diagnostic contact in switch column 0, not a matrix position. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -388,6 +378,11 @@
       "id": "switch.4th-ball-trough",
       "kind": "switch",
       "label": "4th Ball Trough",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -431,6 +426,11 @@
       "id": "switch.5th-ball-trough",
       "kind": "switch",
       "label": "5th Ball Trough",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -470,6 +470,11 @@
       "id": "switch.top-right-lane",
       "kind": "switch",
       "label": "Top Right Lane",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -528,6 +533,11 @@
       "id": "switch.top-middle-lane",
       "kind": "switch",
       "label": "Top Middle Lane",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -586,6 +596,11 @@
       "id": "switch.top-left-lane",
       "kind": "switch",
       "label": "Top Left Lane",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -648,8 +663,11 @@
       "id": "switch.credit-button",
       "kind": "switch",
       "label": "Credit Button",
+      "normally_closed": false,
       "physical": {
-        "location": "door"
+        "location": "door",
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -702,8 +720,10 @@
       "id": "switch.unused-7",
       "kind": "switch",
       "label": "Unused matrix position 7",
+      "normally_closed": false,
       "physical": {
-        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it."
+        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
       },
       "provenance": {
         "source_refs": [
@@ -753,6 +773,11 @@
       "id": "switch.outhole",
       "kind": "switch",
       "label": "Outhole",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -815,8 +840,11 @@
       "id": "switch.coin-3-right",
       "kind": "switch",
       "label": "Coin III (Right)",
+      "normally_closed": false,
       "physical": {
-        "location": "door"
+        "location": "door",
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -869,8 +897,11 @@
       "id": "switch.coin-1-left",
       "kind": "switch",
       "label": "Coin I (Left)",
+      "normally_closed": false,
       "physical": {
-        "location": "door"
+        "location": "door",
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -923,8 +954,11 @@
       "id": "switch.coin-2-middle",
       "kind": "switch",
       "label": "Coin II (Middle)",
+      "normally_closed": false,
       "physical": {
-        "location": "door"
+        "location": "door",
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -973,9 +1007,11 @@
       "id": "switch.shared-top-left-lane-orbs-back-thumper-target",
       "kind": "switch",
       "label": "Top Left Lane R.O. Button, ORBS 2 Back Targets and Target Behind Right Thumper Bumper",
+      "normally_closed": false,
       "physical": {
-        "notes": "The switch identification table prints three separate descriptions against address 12 - the top left lane rollover button, the ORBS two back targets, and the target behind the right thumper bumper - so four physical devices share one address.",
-        "quantity": 4
+        "notes": "The switch identification table prints three separate descriptions against address 12 - the top left lane rollover button, the ORBS two back targets, and the target behind the right thumper bumper - so four physical devices share one address. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "quantity": 4,
+        "switch_type": "leaf"
       },
       "provenance": {
         "source_refs": [
@@ -1153,8 +1189,10 @@
       "id": "switch.unused-13",
       "kind": "switch",
       "label": "Unused matrix position 13",
+      "normally_closed": false,
       "physical": {
-        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it."
+        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
       },
       "provenance": {
         "source_refs": [
@@ -1196,8 +1234,10 @@
       "id": "switch.unused-14",
       "kind": "switch",
       "label": "Unused matrix position 14",
+      "normally_closed": false,
       "physical": {
-        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it."
+        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
       },
       "provenance": {
         "source_refs": [
@@ -1243,10 +1283,12 @@
       "id": "switch.tilt",
       "kind": "switch",
       "label": "Tilt",
+      "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "The switch identification table prints (3) against this entry: 3 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed.",
-        "quantity": 3
+        "notes": "The switch identification table prints (3) against this entry: 3 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "quantity": 3,
+        "switch_type": "tilt"
       },
       "provenance": {
         "source_refs": [
@@ -1296,10 +1338,12 @@
       "id": "switch.slam",
       "kind": "switch",
       "label": "Slam",
+      "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "The switch identification table prints (2) against this entry: 2 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed.",
-        "quantity": 2
+        "notes": "The switch identification table prints (2) against this entry: 2 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "quantity": 2,
+        "switch_type": "tilt"
       },
       "provenance": {
         "source_refs": [
@@ -1345,6 +1389,11 @@
       "id": "switch.1st-ball-trough",
       "kind": "switch",
       "label": "1st Ball Trough",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -1380,9 +1429,11 @@
       "id": "switch.left-side-r-o-button",
       "kind": "switch",
       "label": "Left Side R.O. Button",
+      "normally_closed": false,
       "physical": {
-        "notes": "The switch identification table prints (2) against this entry: 2 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed.",
-        "quantity": 2
+        "notes": "The switch identification table prints (2) against this entry: 2 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "quantity": 2,
+        "switch_type": "leaf"
       },
       "provenance": {
         "source_refs": [
@@ -1452,6 +1503,11 @@
       "id": "switch.orbs-right-lane-target",
       "kind": "switch",
       "label": "ORBS Right Lane Target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -1533,6 +1589,11 @@
       "id": "switch.inline-back-target",
       "kind": "switch",
       "label": "Inline Back Target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -1614,10 +1675,12 @@
       "id": "switch.flipper-buttons",
       "kind": "switch",
       "label": "Left & Right Flipper Button",
+      "normally_closed": false,
       "physical": {
         "location": "cabinet",
-        "notes": "The switch identification table prints (2) against this entry: 2 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed.",
-        "quantity": 2
+        "notes": "The switch identification table prints (2) against this entry: 2 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "quantity": 2,
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -1664,6 +1727,11 @@
       "id": "switch.reset-1-4-targets-target",
       "kind": "switch",
       "label": "Reset 1-4 Targets, Target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -1741,8 +1809,10 @@
       "id": "switch.unused-23",
       "kind": "switch",
       "label": "Unused matrix position 23",
+      "normally_closed": false,
       "physical": {
-        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it."
+        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
       },
       "provenance": {
         "source_refs": [
@@ -1788,6 +1858,11 @@
       "id": "switch.top-spot-1-4-target",
       "kind": "switch",
       "label": "Top Spot 1-4 Target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -1869,6 +1944,11 @@
       "id": "switch.right-4-drop-target-4-bottom",
       "kind": "switch",
       "label": "Right 4 Drop Target \"4\" (Bottom)",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -1950,6 +2030,11 @@
       "id": "switch.right-4-drop-target-3",
       "kind": "switch",
       "label": "Right 4 Drop Target \"3\"",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -2031,6 +2116,11 @@
       "id": "switch.right-4-drop-target-2",
       "kind": "switch",
       "label": "Right 4 Drop Target \"2\"",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -2112,6 +2202,11 @@
       "id": "switch.right-4-drop-target-1-top",
       "kind": "switch",
       "label": "Right 4 Drop Target \"1\" (Top)",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -2193,6 +2288,11 @@
       "id": "switch.s-drop-target",
       "kind": "switch",
       "label": "\"S\" Drop Target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -2274,6 +2374,11 @@
       "id": "switch.b-drop-target",
       "kind": "switch",
       "label": "\"B\" Drop Target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -2355,6 +2460,11 @@
       "id": "switch.r-drop-target",
       "kind": "switch",
       "label": "\"R\" Drop Target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -2436,6 +2546,11 @@
       "id": "switch.o-drop-target",
       "kind": "switch",
       "label": "\"O\" Drop Target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -2517,6 +2632,11 @@
       "id": "switch.end-of-trough",
       "kind": "switch",
       "label": "End of Trough",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -2552,9 +2672,11 @@
       "id": "switch.10-point-rebound",
       "kind": "switch",
       "label": "10 Point Rebound",
+      "normally_closed": false,
       "physical": {
-        "notes": "The switch identification table prints (5) against this entry: 5 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed.",
-        "quantity": 5
+        "notes": "The switch identification table prints (5) against this entry: 5 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "quantity": 5,
+        "switch_type": "leaf"
       },
       "provenance": {
         "source_refs": [
@@ -2587,8 +2709,10 @@
       "id": "switch.unused-35",
       "kind": "switch",
       "label": "Unused matrix position 35",
+      "normally_closed": false,
       "physical": {
-        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it."
+        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
       },
       "provenance": {
         "source_refs": [
@@ -2630,8 +2754,10 @@
       "id": "switch.unused-36",
       "kind": "switch",
       "label": "Unused matrix position 36",
+      "normally_closed": false,
       "physical": {
-        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it."
+        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
       },
       "provenance": {
         "source_refs": [
@@ -2677,6 +2803,11 @@
       "id": "switch.right-slingshot",
       "kind": "switch",
       "label": "Right Slingshot",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -2731,6 +2862,11 @@
       "id": "switch.left-slingshot",
       "kind": "switch",
       "label": "Left Slingshot",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -2785,6 +2921,11 @@
       "id": "switch.right-thumper-bumper",
       "kind": "switch",
       "label": "Right Thumper Bumper",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -2839,6 +2980,11 @@
       "id": "switch.left-thumper-bumper",
       "kind": "switch",
       "label": "Left Thumper Bumper",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -2893,6 +3039,11 @@
       "id": "switch.1st-inline-drop-target",
       "kind": "switch",
       "label": "1st Inline Drop Target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -2974,6 +3125,11 @@
       "id": "switch.2nd-inline-drop-target",
       "kind": "switch",
       "label": "2nd Inline Drop Target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -3055,6 +3211,11 @@
       "id": "switch.3rd-inline-drop-target",
       "kind": "switch",
       "label": "3rd Inline Drop Target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -3136,6 +3297,11 @@
       "id": "switch.4th-inline-drop-target",
       "kind": "switch",
       "label": "4th Inline Drop Target",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981"
@@ -3217,6 +3383,11 @@
       "id": "switch.right-outlane",
       "kind": "switch",
       "label": "Right Outlane",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -3271,6 +3442,11 @@
       "id": "switch.right-return-lane",
       "kind": "switch",
       "label": "Right Return Lane",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -3325,6 +3501,11 @@
       "id": "switch.left-return-lane",
       "kind": "switch",
       "label": "Left Return Lane",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -3379,6 +3560,11 @@
       "id": "switch.left-outlane",
       "kind": "switch",
       "label": "Left Outlane",
+      "normally_closed": false,
+      "physical": {
+        "notes": "Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "leaf"
+      },
       "provenance": {
         "source_refs": [
           "manual.bally.centaur.1981",
@@ -3433,8 +3619,10 @@
       "id": "switch.flipper-lower-right",
       "kind": "switch",
       "label": "Lower Right Flipper",
+      "normally_closed": false,
       "physical": {
-        "notes": "PinMAME keeps a generic flipper-button column at internal column 11, which VPinMAME publishes at 81-88; this is the lower right button position. Centaur declares FLIP_SW(FLIP_L) with no FLIP_SWNO, so FLIP_SWL and FLIP_SWR are both zero and core_updateSw never copies this column into the game switch matrix. The ROM strobes only columns 1-6 and never reads this address. The machine's real flipper buttons are the single matrix address 21, which both retained scripts drive. This entry is retained because the legacy corpus bound it and consumers may still resolve the alias, not because it is a physical contact."
+        "notes": "PinMAME keeps a generic flipper-button column at internal column 11, which VPinMAME publishes at 81-88; this is the lower right button position. Centaur declares FLIP_SW(FLIP_L) with no FLIP_SWNO, so FLIP_SWL and FLIP_SWR are both zero and core_updateSw never copies this column into the game switch matrix. The ROM strobes only columns 1-6 and never reads this address. The machine's real flipper buttons are the single matrix address 21, which both retained scripts drive. This entry is retained because the legacy corpus bound it and consumers may still resolve the alias, not because it is a physical contact. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -3484,8 +3672,10 @@
       "id": "switch.flipper-lower-left",
       "kind": "switch",
       "label": "Lower Left Flipper",
+      "normally_closed": false,
       "physical": {
-        "notes": "PinMAME keeps a generic flipper-button column at internal column 11, which VPinMAME publishes at 81-88; this is the lower left button position. Centaur declares FLIP_SW(FLIP_L) with no FLIP_SWNO, so FLIP_SWL and FLIP_SWR are both zero and core_updateSw never copies this column into the game switch matrix. The ROM strobes only columns 1-6 and never reads this address. The machine's real flipper buttons are the single matrix address 21, which both retained scripts drive. This entry is retained because the legacy corpus bound it and consumers may still resolve the alias, not because it is a physical contact."
+        "notes": "PinMAME keeps a generic flipper-button column at internal column 11, which VPinMAME publishes at 81-88; this is the lower left button position. Centaur declares FLIP_SW(FLIP_L) with no FLIP_SWNO, so FLIP_SWL and FLIP_SWR are both zero and core_updateSw never copies this column into the game switch matrix. The ROM strobes only columns 1-6 and never reads this address. The machine's real flipper buttons are the single matrix address 21, which both retained scripts drive. This entry is retained because the legacy corpus bound it and consumers may still resolve the alias, not because it is a physical contact. Normally open. The manual's assembly-adjustment section states that all switch assemblies are leaf springs and that \"all leaf springs are adjusted for a 1/16\\\" gap in the open position and .010\\\" overtravel or wipe in the closed position\", and the tilt entry is called out explicitly as \"three (normally open) tilt switches\". No retained source names a normally-closed exception on this machine.",
+        "switch_type": "button"
       },
       "provenance": {
         "source_refs": [
@@ -3507,6 +3697,1318 @@
         "reason": "cabinet_or_service",
         "status": "not_applicable"
       }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "1"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S1"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 1,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-1",
+      "kind": "dip_switch",
+      "label": "Coin chute #1 (hinge side) credits-per-coin selector bit 5",
+      "physical": {
+        "notes": "One of the five option switches that select the credits awarded per coin on this chute. The manual gives the settings as a combination table rather than a per-switch meaning, so the bit position is the switch's identity and the award is read from the table.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "2"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S2"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 2,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-2",
+      "kind": "dip_switch",
+      "label": "Coin chute #1 (hinge side) credits-per-coin selector bit 4",
+      "physical": {
+        "notes": "One of the five option switches that select the credits awarded per coin on this chute. The manual gives the settings as a combination table rather than a per-switch meaning, so the bit position is the switch's identity and the award is read from the table.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "3"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S3"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 3,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-3",
+      "kind": "dip_switch",
+      "label": "Coin chute #1 (hinge side) credits-per-coin selector bit 3",
+      "physical": {
+        "notes": "One of the five option switches that select the credits awarded per coin on this chute. The manual gives the settings as a combination table rather than a per-switch meaning, so the bit position is the switch's identity and the award is read from the table.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "4"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S4"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 4,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-4",
+      "kind": "dip_switch",
+      "label": "Coin chute #1 (hinge side) credits-per-coin selector bit 2",
+      "physical": {
+        "notes": "One of the five option switches that select the credits awarded per coin on this chute. The manual gives the settings as a combination table rather than a per-switch meaning, so the bit position is the switch's identity and the award is read from the table.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "5"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S5"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 5,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-5",
+      "kind": "dip_switch",
+      "label": "Coin chute #1 (hinge side) credits-per-coin selector bit 1",
+      "physical": {
+        "notes": "One of the five option switches that select the credits awarded per coin on this chute. The manual gives the settings as a combination table rather than a per-switch meaning, so the bit position is the switch's identity and the award is read from the table.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "6"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S6"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 6,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-6",
+      "kind": "dip_switch",
+      "label": "2X/3X/4X/5X bonus lite carry-over",
+      "physical": {
+        "notes": "ON is liberal: any lit bonus multiplier lamp carries to the next ball. OFF is conservative: it does not.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "7"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S7"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 7,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-7",
+      "kind": "dip_switch",
+      "label": "All bonus lites carry-over",
+      "physical": {
+        "notes": "ON is liberal: any lit bonus lamps carry to the next ball. OFF restricts the carry-over to the 20, 40 and 60 lamps.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "8"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S8"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 8,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-8",
+      "kind": "dip_switch",
+      "label": "Right 4 drop targets reset",
+      "physical": {
+        "notes": "ON is liberal: any targets down reset for the next ball. OFF resets only targets dropped in sequence 1-3.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "9"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S9"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 9,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-9",
+      "kind": "dip_switch",
+      "label": "Coin chute #3 (right side) credits-per-coin selector bit 5",
+      "physical": {
+        "notes": "One of the five option switches that select the credits awarded per coin on the right chute, read from the manual's credits-per-coin combination table.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "10"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S10"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 10,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-10",
+      "kind": "dip_switch",
+      "label": "Coin chute #3 (right side) credits-per-coin selector bit 4",
+      "physical": {
+        "notes": "One of the five option switches that select the credits awarded per coin on the right chute, read from the manual's credits-per-coin combination table.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "11"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S11"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 11,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-11",
+      "kind": "dip_switch",
+      "label": "Coin chute #3 (right side) credits-per-coin selector bit 3",
+      "physical": {
+        "notes": "One of the five option switches that select the credits awarded per coin on the right chute, read from the manual's credits-per-coin combination table.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "12"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S12"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 12,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-12",
+      "kind": "dip_switch",
+      "label": "Coin chute #3 (right side) credits-per-coin selector bit 2",
+      "physical": {
+        "notes": "One of the five option switches that select the credits awarded per coin on the right chute, read from the manual's credits-per-coin combination table.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "13"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S13"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 13,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-13",
+      "kind": "dip_switch",
+      "label": "Coin chute #3 (right side) credits-per-coin selector bit 1",
+      "physical": {
+        "notes": "One of the five option switches that select the credits awarded per coin on the right chute, read from the manual's credits-per-coin combination table.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "14"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S14"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 14,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-14",
+      "kind": "dip_switch",
+      "label": "In-line drop target feature lite",
+      "physical": {
+        "notes": "ON is liberal: any feature lamp on carries to the next ball. OFF resets the feature to 10 for the next ball.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "15"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S15"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 15,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-15",
+      "kind": "dip_switch",
+      "label": "Captive 1-4 Orbs lite carry-over",
+      "physical": {
+        "notes": "ON is liberal: any lit orb lamps carry to the next ball. OFF does not carry them.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "16"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S16"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 16,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-16",
+      "kind": "dip_switch",
+      "label": "Guardian Orb liberal/conservative",
+      "physical": {
+        "notes": "Liberal when ON, conservative when OFF.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "17"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S17"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 17,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-17",
+      "kind": "dip_switch",
+      "label": "Undocumented option switch 17",
+      "physical": {
+        "notes": "Bank 3 option switch. None of the three retained manuals - the Internet Archive scan, the maintainer-supplied schematic manual, or the German edition - assigns it a function, and the credits-per-coin tables cover only chutes #1 and #3. The switch position exists on the MPU and is readable; what the ROM does with it is not documented in any available source.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "candidate"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "18"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S18"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 18,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-18",
+      "kind": "dip_switch",
+      "label": "Undocumented option switch 18",
+      "physical": {
+        "notes": "Bank 3 option switch. None of the three retained manuals - the Internet Archive scan, the maintainer-supplied schematic manual, or the German edition - assigns it a function, and the credits-per-coin tables cover only chutes #1 and #3. The switch position exists on the MPU and is readable; what the ROM does with it is not documented in any available source.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "candidate"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "19"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S19"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 19,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-19",
+      "kind": "dip_switch",
+      "label": "Undocumented option switch 19",
+      "physical": {
+        "notes": "Bank 3 option switch. None of the three retained manuals - the Internet Archive scan, the maintainer-supplied schematic manual, or the German edition - assigns it a function, and the credits-per-coin tables cover only chutes #1 and #3. The switch position exists on the MPU and is readable; what the ROM does with it is not documented in any available source.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "candidate"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "20"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S20"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 20,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-20",
+      "kind": "dip_switch",
+      "label": "Undocumented option switch 20",
+      "physical": {
+        "notes": "Bank 3 option switch. None of the three retained manuals - the Internet Archive scan, the maintainer-supplied schematic manual, or the German edition - assigns it a function, and the credits-per-coin tables cover only chutes #1 and #3. The switch position exists on the MPU and is readable; what the ROM does with it is not documented in any available source.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "candidate"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "21"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S21"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 21,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-21",
+      "kind": "dip_switch",
+      "label": "Last ball release liberal/conservative",
+      "physical": {
+        "notes": "ON: lighting all four lamps releases a ball every time and the release lamp stays on. OFF: one ball per ball, and the lamp cycles on and off.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "22"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S22"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 22,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-22",
+      "kind": "dip_switch",
+      "label": "Orbs initialization",
+      "physical": {
+        "notes": "ON: the #1 Orbs lamp is lit at the start of a game. OFF: it is not.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "23"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S23"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 23,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-23",
+      "kind": "dip_switch",
+      "label": "Game Over tilt",
+      "physical": {
+        "notes": "ON is the regular player tilt. OFF lets a player tilt once and keep playing; a second tilt ends their game.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "24"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S24"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 24,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-24",
+      "kind": "dip_switch",
+      "label": "Right target release lite carry-over",
+      "physical": {
+        "notes": "ON: a lit release lamp carries to the next ball. OFF: it does not.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "25"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S25"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 25,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-25",
+      "kind": "dip_switch",
+      "label": "Maximum credits selector bit 1",
+      "physical": {
+        "notes": "With switch 26 selects a credit ceiling of 10, 15, 25 or 40.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "26"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S26"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 26,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-26",
+      "kind": "dip_switch",
+      "label": "Maximum credits selector bit 2",
+      "physical": {
+        "notes": "With switch 25 selects a credit ceiling of 10, 15, 25 or 40.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "27"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S27"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 27,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-27",
+      "kind": "dip_switch",
+      "label": "Credit display",
+      "physical": {
+        "notes": "ON displays credits, OFF hides them.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "28"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S28"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 28,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-28",
+      "kind": "dip_switch",
+      "label": "Match feature",
+      "physical": {
+        "notes": "ON enables the match award, OFF disables it.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "29"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S29"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 29,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-29",
+      "kind": "dip_switch",
+      "label": "Replays collected per game",
+      "physical": {
+        "notes": "ON: all replays earned are collected. OFF: one replay per player per game.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "30"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S30"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 30,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-30",
+      "kind": "dip_switch",
+      "label": "Game Over animation",
+      "physical": {
+        "notes": "ON: five balls kick to the playfield every fifteen minutes during game over. OFF: no kickout.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "31"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S31"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-31",
+      "kind": "dip_switch",
+      "label": "Balls per game selector bit 1",
+      "physical": {
+        "notes": "With switch 32 selects 2, 3, 4 or 5 balls per game.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.dip",
+          "value": "32"
+        },
+        {
+          "namespace": "manual.address",
+          "value": "S32"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.dip"
+      },
+      "id": "dip.option-switch-32",
+      "kind": "dip_switch",
+      "label": "Balls per game selector bit 2",
+      "physical": {
+        "notes": "With switch 31 selects 2, 3, 4 or 5 balls per game.",
+        "switch_type": "dip"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "dip_switch",
+        "status": "not_applicable"
+      }
     }
   ],
   "knowledge": {
@@ -3521,7 +5023,234 @@
     "name": "Centaur",
     "year": 1981
   },
-  "mechanisms": [],
+  "mechanisms": [
+    {
+      "actuators": [
+        "device.right-4-drop-target-1-top",
+        "device.right-4-drop-target-2",
+        "device.right-4-drop-target-3",
+        "device.right-4-drop-target-4-bottom",
+        "device.right-4-drop-target-reset"
+      ],
+      "assembly_part_number": "ASE-2795-90",
+      "behavior": "Four drop targets in a column on the right, numbered 1 at the top to 4 at the bottom. Unusually for a drop-target bank each target has its own down coil as well as sharing one bank reset coil, so the ROM can drop a single target rather than only reset the whole bank; the parts list counts four Individual Drop Target coils (CJ-31-2000) plus one of the three Drop Target Reset coils (NO-26-1900). Home state is all four up, and a target's switch closes as it falls. The Sequence feature scores these 500 and one bonus advance when unlit, but hitting them in order 1-2-3-4 scores 10,000, 20,000, 40,000 and 80,000 with 1, 2, 4 and 8 advances and lights the right release target; hitting them in any order lights the right lane target for collect bonus. Option switch 8 selects whether any targets down reset for the next ball, or only targets dropped in sequence 1-3.",
+      "id": "mech.right-four-drop-target-bank",
+      "kind": "drop_target_bank",
+      "label": "Right four-bank drop targets (Sequence feature)",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.right-4-drop-target-1-top",
+        "switch.right-4-drop-target-2",
+        "switch.right-4-drop-target-3",
+        "switch.right-4-drop-target-4-bottom"
+      ]
+    },
+    {
+      "actuators": [
+        "device.orbs-target-reset"
+      ],
+      "assembly_part_number": "ASE-2795-90",
+      "behavior": "Four drop targets spelling O-R-B-S, laid out left to right as O, R, B, S across the middle of the playfield. One shared reset coil and no individual down coils, so the bank resets only as a whole and its home state is all four up. Knocking all four down adds a ball to the captive-orb store and releases another ball into play; completing them in order releases one captive ball. The two back targets behind the bank share switch address 12 with two other devices.",
+      "id": "mech.orbs-drop-target-bank",
+      "kind": "drop_target_bank",
+      "label": "ORBS drop target bank",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.s-drop-target",
+        "switch.b-drop-target",
+        "switch.r-drop-target",
+        "switch.o-drop-target"
+      ]
+    },
+    {
+      "actuators": [
+        "device.inline-drop-target-reset"
+      ],
+      "assembly_part_number": "ASE-2993-19",
+      "behavior": "Four drop targets in line along the left side, the first at the bottom and the fourth at the top, with a back target behind them. One shared reset coil, no individual down coils, home state all four up. This is the Chamber feature, and it is the mechanism most likely to be recreated wrongly: the player does not hit these targets directly. A ball captured in the chamber, when struck by the player's ball, runs down the lane and knocks the in-line targets over in sequence. The targets score 10,000 to 50,000 when lit, starting at 10,000 at the beginning of a game and increasing as they are hit, and entering by way of the left side rollover button doubles the lit value. Option switch 14 selects whether a lit value carries to the next ball or resets to 10,000.",
+      "id": "mech.inline-drop-target-bank",
+      "kind": "drop_target_bank",
+      "label": "In-line drop target bank (Chamber feature)",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.1st-inline-drop-target",
+        "switch.2nd-inline-drop-target",
+        "switch.3rd-inline-drop-target",
+        "switch.4th-inline-drop-target",
+        "switch.inline-back-target"
+      ]
+    },
+    {
+      "actuators": [],
+      "behavior": "Centaur's multiball, and the mechanism a recreation is most likely to model as physical when it is not. The manual is explicit that captured balls are not held anywhere the player can see: balls are not physically held in storage on the playfield, but instead they are represented by lights. Between one and four balls may be captive at once, shown on the four Captive Orbs lamps, and the balls themselves wait below the playfield and reach the playfield again through a ramp and kicker arrangement. Three routes release a ball: striking either of the two release targets frees every captive ball at once, completing the four guardian rollovers releases one, and completing the O-R-B-S targets in order releases one. Option switch 15 selects whether lit orbs survive the end of a ball, 22 whether each ball starts with at least one orb lit, 24 whether a lit release target stays lit, and 21 the last-ball release behaviour. Model the captive count as game state, not as balls resting in a visible saucer. This mechanism deliberately declares no actuators or sensors of its own: it owns no hardware. The balls it tracks are the ones in the trough, and releasing one is the trough firing its ball release and ball kick to playfield coils, so those belong to mech.ball-trough. What is specific to the Power Orb feature is the captive count and the release rules, not a separate physical device.",
+      "id": "mech.captive-orb-store",
+      "kind": "kicker",
+      "label": "Power Orb captive-ball store",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      },
+      "sensors": []
+    },
+    {
+      "actuators": [
+        "device.outhole-kicker",
+        "device.ball-release",
+        "device.ball-kick-to-playfield"
+      ],
+      "behavior": "A drained ball closes the outhole switch. The outhole kicker lifts it into the trough, where the trough switches count the balls held. The ball release coil frees one ball and the ball kick to playfield coil puts it into play. Note the numbering trap the ROM's self test settles: printed solenoid 14 Ball Release is public 15, and printed 15 Ball Kick to Playfield is public 14, so the two are transposed against their public addresses. The printed switch table gives trough positions 1, 4 and 5 plus End of Trough, so model the trough as a queue rather than a single ball store.",
+      "id": "mech.ball-trough",
+      "kind": "kicker",
+      "label": "Ball trough and outhole",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.outhole",
+        "switch.1st-ball-trough",
+        "switch.4th-ball-trough",
+        "switch.5th-ball-trough",
+        "switch.end-of-trough"
+      ]
+    },
+    {
+      "actuators": [
+        "device.magnet"
+      ],
+      "assembly_part_number": "E-184-284",
+      "behavior": "A single magnet at the upper right of the playfield, shown in Figure V as solenoid 18 near the ORBS right lane target. It has no sensor of its own: the ROM energises it to hold or divert a ball passing the upper right and nothing reports the ball back. Both retained scripts bind it, and the retained table models it with a dedicated trigger volume, which is where its recorded coordinate comes from.",
+      "id": "mech.upper-right-magnet",
+      "kind": "other",
+      "label": "Upper right magnet",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "sensors": []
+    },
+    {
+      "actuators": [
+        "device.flipper-lower-left",
+        "device.flipper-lower-right",
+        "device.k1-relay-flipper-enable"
+      ],
+      "assembly_part_number": "A-3994-8",
+      "behavior": "Two lower flippers and no upper flipper. Both flipper buttons are wired to the single matrix address 21, so the definition cannot tell left from right at the controller: a recreation reads its own buttons and uses the address only to know that a button is down. The coils are not driver-board outputs; they are switched by the K1 relay, which the ROM energises through continuous output public 19, together with the button contacts. That is why they carry no Self Test number, and why energising K1 is effectively the game-on signal. PinMAME synthesises public 46 and 48 so a consumer has something to bind, and both retained scripts use them.",
+      "id": "mech.flippers",
+      "kind": "other",
+      "label": "Lower flippers and K1 enable relay",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.flipper-buttons"
+      ]
+    },
+    {
+      "actuators": [
+        "device.left-thumper-bumper",
+        "device.right-thumper-bumper"
+      ],
+      "assembly_part_number": "ASE-2836-2",
+      "behavior": "Two thumper bumpers in the upper middle of the playfield, the left one lower and further left than the right. Each is a self-contained skirt switch and coil pair: the skirt switch closes when a ball strikes it and the ROM pulses the matching coil. Each also carries its own lamp on the auxiliary lamp driver.",
+      "id": "mech.thumper-bumpers",
+      "kind": "other",
+      "label": "Thumper bumpers",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.left-thumper-bumper",
+        "switch.right-thumper-bumper"
+      ]
+    },
+    {
+      "actuators": [
+        "device.left-slingshot",
+        "device.right-slingshot"
+      ],
+      "assembly_part_number": "ASE-2593-6",
+      "behavior": "Two slingshots above the flippers. Each has a switch that closes when a ball strikes the rubber and a coil the ROM pulses in response, and each carries its own lamp on the auxiliary lamp driver. Both retained scripts drive them as pulse switches rather than holding them closed.",
+      "id": "mech.slingshots",
+      "kind": "other",
+      "label": "Slingshots",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "manual-schematics.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "sensors": [
+        "switch.left-slingshot",
+        "switch.right-slingshot"
+      ]
+    },
+    {
+      "actuators": [
+        "device.knocker"
+      ],
+      "assembly_part_number": "AR-26-1200",
+      "behavior": "A single coil that strikes the cabinet to announce a replay. Figure V places it in the cabinet rather than on the playfield, so it carries a controlled not-applicable spatial record, and it has no sensor.",
+      "id": "mech.knocker",
+      "kind": "other",
+      "label": "Knocker",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "sensors": []
+    }
+  ],
   "outputs": [
     {
       "aliases": [
@@ -8115,28 +9844,30 @@
           "value": "17"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 17,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.continuous-output-1-unresolved",
+      "id": "device.sixth-switch-column-strobe",
       "kind": "control_signal",
-      "label": "Continuous output 1, function unresolved",
+      "label": "Sixth switch-column strobe (ST5)",
       "physical": {
-        "notes": "PIA1:B bit 4, the first of the four continuous outputs, and the one continuous output the solenoid identification table does not account for: the printed table lists exactly three continuous devices, at 16, 17 and 18, which are public 18, 19 and 20. The address is certainly driven - in the retained self-test trace it goes high once and is still high in the final snapshot, the only continuous output permanently asserted - so it is not an empty slot, but what it drives is unresolved and the two available sources disagree. PinMAME's LISY bridge special-cases Centaur at src/lisy/lisy35.c case 7, calling lisy35_switch_pic_init(1) for J4 pin 5 and setting lisy35_J4PIN5_is_strobe, after which lisy35_solenoid_handler masks continuous bit 0 out of the coil data with cont_data &= 0x0e; that is this address, and LISY filters it precisely because it is not a coil. Against that, by35.c assembles the sixth switch column for non-Vector games from PIA1:B bit 7, which is public 20, the magnet, not bit 4. The J4-pin to PIA-bit correspondence is inferred from LISY's mask constants rather than from a Bally schematic, so the address stays unresolved rather than being asserted either as unused or as the column strobe. Resolving it needs the solenoid-driver and switch-strobe schematic sheet, or a harness run that watches switch column 6 while this line is toggled. Two independent reviews split on whether this should read as used: the address is demonstrably driven, but if it is the column strobe it is not an output device at all, so the record stays unknown until the by35.c/lisy35.c discrepancy is resolved."
+        "notes": "PIA1:B bit 4, the first of the four continuous outputs. It is not a coil: it is the sixth switch-column strobe, ST5. Five independent lines of evidence agree. (1) The solenoid identification table lists exactly three continuous devices - printed 16, 17 and 18, which the ROM's self test shows are public 18, 19 and 20 - so the fourth continuous line drives no listed coil. (2) Centaur wires 48 switches, which is six columns of eight, but PIA0:A supplies only five strobes; the schematic shows ST0-ST4 originating at connector A4J2 and ST5 at A4J4-8, a different MPU connector. (3) PinMAME's LISY bridge, which drives real Bally hardware, special-cases Centaur at src/lisy/lisy35.c case 7, sets lisy35_J4PIN5_is_strobe, and masks continuous bit 0 out of coil handling with cont_data &= 0x0e - that is this address, filtered precisely because it is a strobe. (4) In the retained trace this address goes high once scanning starts and never returns low, which is what a strobe looks like through PinMAME's reporting: by35.c accumulates with locals.solenoids |= within each VBLANK window, so a line toggling faster than VBLANK reads as permanently asserted, while public 18, 19 and 20 pulse discretely like the coils they are. (5) Public 20, the magnet, pulses only when the self test fires it, so bit 7 is not behaving as a scanning strobe either. Note why by35.c still reads Centaur's column 6 correctly despite deriving it from PIA1:B bit 7: that bit idles high whenever the magnet is off, so the emulator effectively selects column 6 almost always. It gets the right answer by a different route than the hardware takes."
       },
       "provenance": {
         "source_refs": [
+          "manual-schematics.bally.centaur.1981",
           "manual.bally.centaur.1981",
           "runtime.centaur.solenoid-self-test",
           "controller-profile.pinmame-by35"
         ],
-        "status": "conflicted"
+        "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
+            "manual-schematics.bally.centaur.1981",
             "manual.bally.centaur.1981"
           ],
           "status": "validated"

@@ -64,7 +64,16 @@ class CentaurDefinitionTests(unittest.TestCase):
 	def setUpClass(cls) -> None:
 		cls.definition = load_json(DEFINITION_PATH)
 		cls.profile = load_json(PROFILE_PATH)
-		cls.inputs = {item["binding"]["device"]: item for item in cls.definition["inputs"]}
+		cls.inputs = {
+			item["binding"]["device"]: item
+			for item in cls.definition["inputs"]
+			if item["binding"]["group"] == "pinmame.input.switch"
+		}
+		cls.dips = {
+			item["binding"]["device"]: item
+			for item in cls.definition["inputs"]
+			if item["binding"]["group"] == "pinmame.input.dip"
+		}
 		cls.solenoids = {
 			item["binding"]["device"]: item
 			for item in cls.definition["outputs"]
@@ -150,22 +159,48 @@ class CentaurDefinitionTests(unittest.TestCase):
 		self.assertEqual("device.k1-relay-flipper-enable", self.solenoids[19]["id"])
 		self.assertEqual("relay", self.solenoids[19]["kind"])
 
-	def test_continuous_output_one_stays_an_unresolved_conflict(self) -> None:
-		"""It is asserted and never released, so it is neither used-and-named nor unused.
+	def test_continuous_output_one_is_the_sixth_switch_column_strobe(self) -> None:
+		"""Public 17 is a strobe, not a coil, which is why it never pulses and never releases.
 
-		A continuous output that is held never appears as a pulse, so absence of a pulse in the
-		self-test trace is not evidence that the address is unused. Two sources disagree about what
-		it drives, and the record must stay fail-closed until that is settled.
+		A continuous output that is held never appears as a pulse, so the absence of a pulse in the
+		self-test trace was never evidence that the address is unused - an inference an earlier pass
+		got wrong. It reads as permanently asserted because by35.c OR-accumulates solenoid state
+		within each VBLANK window, so a line toggling faster than VBLANK looks continuously on.
 		"""
 		device = self.solenoids[17]
-		# It is demonstrably driven, so "unused" would be a false claim. But if it is the sixth
-		# switch-column strobe it is not an output device at all, so "used" overclaims too. Both
-		# independent reviews agreed the function is unresolved; fail closed until it is settled.
-		self.assertEqual("unknown", device["availability"])
-		self.assertEqual("conflicted", device["provenance"]["status"])
-		paths = [conflict["path"] for conflict in self.definition["conflicts"]]
-		self.assertIn("binding:pinmame.output.solenoid/17", paths)
-		self.assertIn("unresolved_conflicts", self.definition["coverage"]["missing"])
+		self.assertEqual("used", device["availability"])
+		self.assertEqual("control_signal", device["kind"])
+		self.assertEqual("validated", device["provenance"]["status"])
+		self.assertIn("strobe", device["label"].lower())
+		self.assertEqual([], self.definition["conflicts"])
+		self.assertNotIn("unresolved_conflicts", self.definition["coverage"]["missing"])
+
+	def test_every_mpu_option_switch_is_enumerated(self) -> None:
+		self.assertEqual(set(range(1, 33)), set(self.dips))
+		undocumented = {n for n, item in self.dips.items() if item["availability"] != "used"}
+		# 17-20 are the only ones no retained manual assigns a function to.
+		self.assertEqual({17, 18, 19, 20}, undocumented)
+
+	def test_mechanisms_are_documented_and_own_their_hardware_once(self) -> None:
+		mechanisms = self.definition["mechanisms"]
+		self.assertGreaterEqual(len(mechanisms), 10)
+		owned: dict[str, str] = {}
+		for mechanism in mechanisms:
+			self.assertTrue(mechanism["behavior"].strip())
+			for actuator in mechanism["actuators"]:
+				self.assertNotIn(actuator, owned, f"{actuator} claimed twice")
+				owned[actuator] = mechanism["id"]
+		names = {mechanism["id"] for mechanism in mechanisms}
+		self.assertIn("mech.captive-orb-store", names)
+		self.assertIn("mech.inline-drop-target-bank", names)
+		# The orb store is game state, not hardware: the trough owns the coils.
+		orb = next(m for m in mechanisms if m["id"] == "mech.captive-orb-store")
+		self.assertEqual([], orb["actuators"])
+
+	def test_switch_polarity_is_declared(self) -> None:
+		for address, item in self.inputs.items():
+			if item["availability"] in {"used", "optional"}:
+				self.assertIsInstance(item.get("normally_closed"), bool, f"switch {address}")
 
 	def test_every_declared_solenoid_is_legal_for_the_profile(self) -> None:
 		group = next(g for g in self.profile["groups"] if g["id"] == "pinmame.output.solenoid")
@@ -478,7 +513,6 @@ class CentaurDefinitionTests(unittest.TestCase):
 		coverage = self.definition["coverage"]
 		self.assertEqual("partial", coverage["status"])
 		self.assertIn("spatial_placement", coverage["missing"])
-		self.assertIn("mechanism_inventory", coverage["missing"])
 		self.assertTrue(coverage["missing"], "a partial must name what it is missing")
 
 
