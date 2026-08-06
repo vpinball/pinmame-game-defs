@@ -19,7 +19,7 @@ DEFINITION_PATH = ROOT / "machines" / "partial" / "bally" / "centaur-1981.json"
 PROFILE_PATH = ROOT / "controllers" / "pinmame" / "by35.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "by35" / "centaur-solenoid-self-test.json"
 
-MANUAL_SHA256 = "4fb38ca2d4988e5da1c18b997d9ed7c23791ebe51ab1614b353d93ce836ee050"
+MANUAL_SHA256 = "9893d29ee871fd8c0a2afea35e931f107fb97a8156739035e005b15fd879e7ea"
 TRANSCRIPTION_SHA256 = "b2c47f5ddb5f7f22ffa680e01f8fcf84512f6afabfdc1d408b1fe45a89189c05"
 TRACE_SHA256 = "e5ea81fea6bea18964708637a3486637d5d2e9045841ea2994f604863940327a"
 
