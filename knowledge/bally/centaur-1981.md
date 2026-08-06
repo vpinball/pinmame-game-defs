@@ -83,8 +83,11 @@ carrying the label for target "3", and it had no magnet at all.
 Centaur's flipper coils are switched by the K1 relay rather than by a driver-board output, which is
 why they carry no solenoid number of their own and why energising that relay is effectively the
 game-on signal. The retained standalone script uses public 19 exactly that way, for nudge handling.
-Both flipper buttons are wired to the single matrix address 21; the emulator's generic flipper
-column at 81-88 is a mirror, not a second pair of contacts.
+Both flipper buttons are wired to the single matrix address 21. PinMAME also maintains a generic
+flipper-button column at 81-88, but Centaur declares `FLIP_SW(FLIP_L)` with no `FLIP_SWNO`, so
+`FLIP_SWL` and `FLIP_SWR` are zero, `core_updateSw` never copies that column into the game matrix,
+and the ROM - which strobes only columns 1-6 - never reads it. Those addresses are not a mirror of
+21 and nothing populates them; they are retained only because the legacy corpus bound them.
 
 ## Shared switch addresses
 
@@ -112,15 +115,25 @@ data; that is an emulator artifact and not a physical device, so the definition 
 ## Lamps
 
 The AS-2518-23 lamp driver module carries sixty outputs, and its parts list counts exactly sixty
-SCRs. PinMAME's lamp strobe skips address 15 and advances two matrix columns per data bit, so the
-public addresses are 1-15, 17-31, 33-47 and 49-63; the gaps at 16, 32, 48 and 64 are skipped decoder
-slots, not unused lamps.
+SCRs. PinMAME's lamp strobe ignores the decoder selector value 0x0f and advances two matrix columns
+per data bit, so the public addresses are 1-15, 17-31, 33-47 and 49-63. Note that the skipped value
+is a *selector*, not a public address: public lamp 15 is a real, addressable output. What the skip
+produces is the gaps at 16, 32, 48 and 64, which are unreachable decoder slots rather than unused
+lamps.
 
 Centaur also carries an **Auxiliary Lamp Driver A9** (AS-2518-43), which `centaurGameData` declares
 as `lampCol = 8`. That reserves a second board's worth of addresses at 65-79, 81-95, 97-111 and
-113-127. Runtime observation so far shows sixteen auxiliary lamps in use, at 65-68, 81-84, 97-100
-and 113-116, but absence of the rest is not proof that they are unused: the lamp inventory is still
-open and is one reason this record is not author-ready.
+113-127. Runtime observation shows sixteen auxiliary lamps in use, at 65-68, 81-84, 97-100 and
+113-116, but absence of the rest is not proof that they are unused: the lamp inventory is still open
+and is one reason this record is not author-ready.
+
+The legacy corpus bound sixty lamps spread across 2-114, which is neither the main board's sixty
+outputs nor a coherent subset of both boards. The retained harness runs observed seventy-six
+addresses, sixteen of which the legacy corpus never bound: 1, 11, 13, 27, 29, 43, 45 and 61 on the
+main board and 66, 67, 82, 83, 99, 113, 115 and 116 on the auxiliary board. Those are now declared
+with an `observed` provenance and no semantic name, because this manual scan contains no lamp
+identification table. Every declared lamp keeps a `candidate` naming status: the labels are legacy
+carry-over and none of them has been checked against the machine.
 
 The parts list also names a Solenoid Expander (AS-2518-66) and an Aux. Driver (G.I. Flasher)
 (AS-2518-68) that are not yet accounted for in the definition.
@@ -143,8 +156,18 @@ speech is the reason that flag exists.
 - **Continuous output 1.** What public 17 drives is an open conflict, recorded in the definition.
   Resolving it needs either the schematic sheet for the solenoid driver and switch-strobe wiring or
   a harness run that watches switch column 6 while that line is toggled.
-- **Lamp semantics.** The main sixty lamps still carry legacy labels, and the auxiliary board is
-  only partly enumerated. This manual scan contains no lamp identification table.
+- **Lamp semantics and enumeration.** Every lamp label is unverified legacy carry-over, sixteen
+  observed addresses have no name at all, and the auxiliary board is only partly enumerated, so
+  `output_enumeration` and `output_semantics` both remain open. This manual scan contains no lamp
+  identification table; Figure II, referenced by the parts list for playfield parts, is not in it.
+- **Variant differences.** Nothing beyond "free play" distinguishes `centaura` and `centaurb` from
+  the production ROM in this record.
+- **DIP switches.** The MPU carries four eight-position option banks, S1-S32, and none of them is
+  enumerated here. `MDRV_DIPS(35)` reserves three further emulator-side positions that are not
+  physical switches and must not be presented as such.
+- **Flipper coils.** Public 46 and 48 are now declared as the PinMAME-synthesised handles on the two
+  direct-wired flipper coils, but their real drive path - the K1 relay and the button contacts -
+  is documented only in prose and has no typed wiring record.
 - **Spatial placement.** No normalized coordinates yet. Figure V on printed page 18 places every
   switch and solenoid on the playfield and states which are off it - switches 15, 16 and 21 in the
   cabinet, 06, 09, 10, 11 and 16 on the door, solenoid 16 on the door, 17 in the backbox and 02 in

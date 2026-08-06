@@ -1,0 +1,2555 @@
+{
+  "conflicts": [
+    {
+      "description": "Public solenoid 17, the first continuous output, is asserted continuously by the ROM but is not one of the three continuous devices the solenoid identification table lists. PinMAME's LISY bridge treats Centaur's continuous bit 0 as a strobe line and masks it out of the coil data, while by35.c takes the sixth switch-column strobe from PIA1:B bit 7 (public 20) instead. The two readings cannot both be right and the address stays unresolved.",
+      "id": "conflict.pinmame-output-solenoid-17-function",
+      "path": "binding:pinmame.output.solenoid/17",
+      "source_refs": [
+        "runtime.centaur.solenoid-self-test",
+        "manual.bally.centaur.1981",
+        "controller-profile.pinmame-by35"
+      ]
+    }
+  ],
+  "controller": {
+    "inversion_applied_by_emulator": true,
+    "platform": "pinmame.by35"
+  },
+  "coverage": {
+    "dimensions": {
+      "address_enumeration": "observed",
+      "catalog_identity": "validated",
+      "display_inventory": "validated",
+      "mechanisms": "unknown",
+      "physical_wiring": "conflicted",
+      "recreation_knowledge": "candidate",
+      "semantic_naming": "candidate",
+      "spatial_placement": "unknown",
+      "variant_coverage": "observed"
+    },
+    "missing": [
+      "input_enumeration",
+      "input_semantics",
+      "mechanism_behavior",
+      "mechanism_inventory",
+      "output_enumeration",
+      "output_semantics",
+      "polarity",
+      "provenance",
+      "recreation_notes",
+      "spatial_placement",
+      "unresolved_conflicts",
+      "variant_differences"
+    ],
+    "status": "partial"
+  },
+  "displays": [
+    {
+      "controller_index": 0,
+      "id": "display.player-1-score",
+      "kind": "segment",
+      "label": "Player 1 score, seven digits",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "controller_index": 1,
+      "id": "display.player-2-score",
+      "kind": "segment",
+      "label": "Player 2 score, seven digits",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "controller_index": 2,
+      "id": "display.player-3-score",
+      "kind": "segment",
+      "label": "Player 3 score, seven digits",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "controller_index": 3,
+      "id": "display.player-4-score",
+      "kind": "segment",
+      "label": "Player 4 score, seven digits",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "controller_index": 4,
+      "id": "display.credits",
+      "kind": "segment",
+      "label": "Credits, two digits",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "controller_index": 5,
+      "id": "display.ball-in-play",
+      "kind": "segment",
+      "label": "Match and ball in play, two digits",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manual.bally.centaur.1981"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    }
+  ],
+  "drivers": [
+    {
+      "description": "Centaur",
+      "flags": 0,
+      "id": "centaur",
+      "manufacturer": "Bally",
+      "year": "1981"
+    },
+    {
+      "clone_of": "centaur",
+      "description": "Centaur (Free Play)",
+      "flags": 0,
+      "id": "centaura",
+      "manufacturer": "Bally / Oliver",
+      "year": "2004"
+    },
+    {
+      "clone_of": "centaur",
+      "description": "Centaur (Free Play rev. 27)",
+      "flags": 0,
+      "id": "centaurb",
+      "manufacturer": "Bally / Oliver",
+      "year": "2008"
+    }
+  ],
+  "knowledge": {
+    "path": "knowledge/bally/centaur-1981.md",
+    "status": "partial"
+  },
+  "lamps": {
+    "1": {
+      "availability": "used",
+      "id": "lamp.unnamed-1",
+      "label": "Unnamed lamp 1",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the AS-2518-23 lamp driver module. The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "10": {
+      "availability": "used",
+      "id": "lamp.left-lane-50",
+      "label": "Left Lane 50",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "100": {
+      "availability": "used",
+      "id": "lamp.yellow-round-top-left",
+      "label": "Yellow Round Top Left",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "11": {
+      "availability": "used",
+      "id": "lamp.unnamed-11",
+      "label": "Unnamed lamp 11",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the AS-2518-23 lamp driver module. The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "113": {
+      "availability": "used",
+      "id": "lamp.unnamed-113",
+      "label": "Unnamed lamp 113",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "114": {
+      "availability": "used",
+      "id": "lamp.left-thumper-bumper",
+      "label": "Left Thumper Bumper",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "115": {
+      "availability": "used",
+      "id": "lamp.unnamed-115",
+      "label": "Unnamed lamp 115",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "116": {
+      "availability": "used",
+      "id": "lamp.unnamed-116",
+      "label": "Unnamed lamp 116",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "12": {
+      "availability": "used",
+      "id": "lamp.bottom-1",
+      "label": "Bottom 1",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "13": {
+      "availability": "used",
+      "id": "lamp.unnamed-13",
+      "label": "Unnamed lamp 13",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the AS-2518-23 lamp driver module. The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "14": {
+      "availability": "used",
+      "id": "lamp.center-spl",
+      "label": "Center SPL",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "15": {
+      "availability": "used",
+      "id": "lamp.bonus-2x",
+      "label": "Bonus 2x",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "17": {
+      "availability": "used",
+      "id": "lamp.when-lit",
+      "label": "When Lit",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "18": {
+      "availability": "used",
+      "id": "lamp.middle-2",
+      "label": "Middle 2",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "19": {
+      "availability": "used",
+      "id": "lamp.middle-6",
+      "label": "Middle 6",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "2": {
+      "availability": "used",
+      "id": "lamp.middle-1",
+      "label": "Middle 1",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "20": {
+      "availability": "used",
+      "id": "lamp.middle-10",
+      "label": "Middle 10",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "21": {
+      "availability": "used",
+      "id": "lamp.middle-3x",
+      "label": "Middle 3x",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "22": {
+      "availability": "used",
+      "id": "lamp.5k-3",
+      "label": "5K 3",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "23": {
+      "availability": "used",
+      "id": "lamp.right-drop-40",
+      "label": "Right Drop 40",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "24": {
+      "availability": "used",
+      "id": "lamp.center-drop-b",
+      "label": "Center Drop \"B\"",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "25": {
+      "availability": "used",
+      "id": "lamp.left-lane-20",
+      "label": "Left Lane 20",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "26": {
+      "availability": "used",
+      "id": "lamp.middle-20",
+      "label": "Middle 20",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "27": {
+      "availability": "used",
+      "id": "lamp.unnamed-27",
+      "label": "Unnamed lamp 27",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the AS-2518-23 lamp driver module. The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "28": {
+      "availability": "used",
+      "id": "lamp.bottom-2",
+      "label": "Bottom 2",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "29": {
+      "availability": "used",
+      "id": "lamp.unnamed-29",
+      "label": "Unnamed lamp 29",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the AS-2518-23 lamp driver module. The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "3": {
+      "availability": "used",
+      "id": "lamp.middle-5",
+      "label": "Middle 5",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "30": {
+      "availability": "used",
+      "id": "lamp.center-50",
+      "label": "Center 50",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "31": {
+      "availability": "used",
+      "id": "lamp.bonus-3x",
+      "label": "Bonus 3x",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "33": {
+      "availability": "used",
+      "id": "lamp.release-right-lane",
+      "label": "Release (Right Lane)",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "34": {
+      "availability": "used",
+      "id": "lamp.middle-3",
+      "label": "Middle 3",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "35": {
+      "availability": "used",
+      "id": "lamp.middle-7",
+      "label": "Middle 7",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "36": {
+      "availability": "used",
+      "id": "lamp.release-top-left",
+      "label": "Release (Top Left)",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "37": {
+      "availability": "used",
+      "id": "lamp.middle-4x",
+      "label": "Middle 4x",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "38": {
+      "availability": "used",
+      "id": "lamp.5k-2",
+      "label": "5K 2",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "39": {
+      "availability": "used",
+      "id": "lamp.right-drop-20",
+      "label": "Right Drop 20",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "4": {
+      "availability": "used",
+      "id": "lamp.middle-9",
+      "label": "Middle 9",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "40": {
+      "availability": "used",
+      "id": "lamp.center-drop-r",
+      "label": "Center Drop \"R\"",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "41": {
+      "availability": "used",
+      "id": "lamp.left-lane-30",
+      "label": "Left Lane 30",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "42": {
+      "availability": "used",
+      "id": "lamp.middle-40",
+      "label": "Middle 40",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "43": {
+      "availability": "used",
+      "id": "lamp.unnamed-43",
+      "label": "Unnamed lamp 43",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the AS-2518-23 lamp driver module. The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "44": {
+      "availability": "used",
+      "id": "lamp.bottom-3",
+      "label": "Bottom 3",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "45": {
+      "availability": "used",
+      "id": "lamp.unnamed-45",
+      "label": "Unnamed lamp 45",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the AS-2518-23 lamp driver module. The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "46": {
+      "availability": "used",
+      "id": "lamp.left-resets-1-4-targets-arrow",
+      "label": "Left Resets 1-4 Targets Arrow",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "47": {
+      "availability": "used",
+      "id": "lamp.bonus-4x",
+      "label": "Bonus 4x",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "49": {
+      "availability": "used",
+      "id": "lamp.collect-bonus-arrow",
+      "label": "Collect Bonus Arrow",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "5": {
+      "availability": "used",
+      "id": "lamp.middle-2x",
+      "label": "Middle 2x",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "50": {
+      "availability": "used",
+      "id": "lamp.middle-4",
+      "label": "Middle 4",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "51": {
+      "availability": "used",
+      "id": "lamp.middle-8",
+      "label": "Middle 8",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "52": {
+      "availability": "used",
+      "id": "lamp.spl-top-left",
+      "label": "SPL (Top Left)",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "53": {
+      "availability": "used",
+      "id": "lamp.middle-5x",
+      "label": "Middle 5x",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "54": {
+      "availability": "used",
+      "id": "lamp.5k-1-left",
+      "label": "5K 1 (left)",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "55": {
+      "availability": "used",
+      "id": "lamp.right-drop-10",
+      "label": "Right Drop 10",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "56": {
+      "availability": "used",
+      "id": "lamp.center-drop-o",
+      "label": "Center Drop \"O\"",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "57": {
+      "availability": "used",
+      "id": "lamp.left-lane-40",
+      "label": "Left Lane 40",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "58": {
+      "availability": "used",
+      "id": "lamp.middle-60",
+      "label": "Middle 60",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "59": {
+      "availability": "used",
+      "id": "lamp.bottom-left",
+      "label": "Bottom Left",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "6": {
+      "availability": "used",
+      "id": "lamp.5k-4-right",
+      "label": "5K 4 (right)",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "60": {
+      "availability": "used",
+      "id": "lamp.bottom-4",
+      "label": "Bottom 4",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "61": {
+      "availability": "used",
+      "id": "lamp.unnamed-61",
+      "label": "Unnamed lamp 61",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the AS-2518-23 lamp driver module. The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "62": {
+      "availability": "used",
+      "id": "lamp.green-round-top-right",
+      "label": "Green Round Top Right",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "63": {
+      "availability": "used",
+      "id": "lamp.bonus-5x",
+      "label": "Bonus 5x",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "65": {
+      "availability": "used",
+      "id": "lamp.rollover-3-right",
+      "label": "Rollover 3 (Right)",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "66": {
+      "availability": "used",
+      "id": "lamp.unnamed-66",
+      "label": "Unnamed lamp 66",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "67": {
+      "availability": "used",
+      "id": "lamp.unnamed-67",
+      "label": "Unnamed lamp 67",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "68": {
+      "availability": "used",
+      "id": "lamp.queen-s-chamber-lower",
+      "label": "Queen's Chamber Lower",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "7": {
+      "availability": "used",
+      "id": "lamp.right-drop-80",
+      "label": "Right Drop 80",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "8": {
+      "availability": "used",
+      "id": "lamp.center-drop-s",
+      "label": "Center Drop \"S\"",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "81": {
+      "availability": "used",
+      "id": "lamp.rollover-2",
+      "label": "Rollover 2",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "82": {
+      "availability": "used",
+      "id": "lamp.unnamed-82",
+      "label": "Unnamed lamp 82",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "83": {
+      "availability": "used",
+      "id": "lamp.unnamed-83",
+      "label": "Unnamed lamp 83",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    },
+    "84": {
+      "availability": "used",
+      "id": "lamp.queen-s-chamber-upper",
+      "label": "Queen's Chamber Upper",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "9": {
+      "availability": "used",
+      "id": "lamp.left-lane-10",
+      "label": "Left Lane 10",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "97": {
+      "availability": "used",
+      "id": "lamp.rollover-1-left",
+      "label": "Rollover 1 (Left)",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "98": {
+      "availability": "used",
+      "id": "lamp.right-thumper-bumper",
+      "label": "Right Thumper Bumper",
+      "legacy": true,
+      "provenance": {
+        "source_refs": [
+          "legacy.game.centaur",
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "candidate"
+      }
+    },
+    "99": {
+      "availability": "used",
+      "id": "lamp.unnamed-99",
+      "label": "Unnamed lamp 99",
+      "legacy": false,
+      "physical": {
+        "notes": "Driven output on the Auxiliary Lamp Driver A9 (AS-2518-43). The retained harness runs observed this address active, but the legacy corpus did not bind it and the retained manual scan contains no lamp identification table, so the lamp exists and its playfield identity is unknown. It is declared rather than omitted so the enumeration does not silently under-report the machine."
+      },
+      "provenance": {
+        "source_refs": [
+          "runtime.centaur.solenoid-self-test"
+        ],
+        "status": "observed"
+      }
+    }
+  },
+  "machine": {
+    "id": "bally.centaur.1981",
+    "ipdb_id": 476,
+    "kind": "physical_pinball",
+    "manufacturer": "Bally",
+    "name": "Centaur",
+    "year": 1981
+  },
+  "mechanisms": [],
+  "relationships": [],
+  "solenoids": {
+    "1": {
+      "availability": "used",
+      "id": "device.orbs-target-reset",
+      "kind": "coil",
+      "label": "ORBS Target Reset",
+      "physical": {
+        "notes": "Solenoid identification table entry 09. The ROM's own solenoid self test pulses this coil while displaying 09, which printed page 13 states is the number assigned to the solenoid, so public address 1 and printed number 09 are the same device.",
+        "part_number": "NO-26-1900"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "09"
+    },
+    "10": {
+      "availability": "used",
+      "id": "device.left-thumper-bumper",
+      "kind": "coil",
+      "label": "Left Thumper Bumper",
+      "physical": {
+        "notes": "Solenoid identification table entry 05. The ROM's own solenoid self test pulses this coil while displaying 05, which printed page 13 states is the number assigned to the solenoid, so public address 10 and printed number 05 are the same device.",
+        "part_number": "AO-26-1200"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "05"
+    },
+    "11": {
+      "availability": "used",
+      "id": "device.right-thumper-bumper",
+      "kind": "coil",
+      "label": "Right Thumper Bumper",
+      "physical": {
+        "notes": "Solenoid identification table entry 06. The ROM's own solenoid self test pulses this coil while displaying 06, which printed page 13 states is the number assigned to the solenoid, so public address 11 and printed number 06 are the same device.",
+        "part_number": "AO-26-1200"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "06"
+    },
+    "12": {
+      "availability": "used",
+      "id": "device.left-slingshot",
+      "kind": "coil",
+      "label": "Left Slingshot",
+      "physical": {
+        "notes": "Solenoid identification table entry 07. The ROM's own solenoid self test pulses this coil while displaying 07, which printed page 13 states is the number assigned to the solenoid, so public address 12 and printed number 07 are the same device.",
+        "part_number": "AQ-26-1200"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "07"
+    },
+    "13": {
+      "availability": "used",
+      "id": "device.right-slingshot",
+      "kind": "coil",
+      "label": "Right Slingshot",
+      "physical": {
+        "notes": "Solenoid identification table entry 08. The ROM's own solenoid self test pulses this coil while displaying 08, which printed page 13 states is the number assigned to the solenoid, so public address 13 and printed number 08 are the same device.",
+        "part_number": "AQ-26-1200"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "08"
+    },
+    "14": {
+      "availability": "used",
+      "id": "device.ball-kick-to-playfield",
+      "kind": "coil",
+      "label": "Ball Kick to Playfield",
+      "physical": {
+        "notes": "Solenoid identification table entry 15. The ROM's own solenoid self test pulses this coil while displaying 15, which printed page 13 states is the number assigned to the solenoid, so public address 14 and printed number 15 are the same device. Printed numbers 14 and 15 are transposed relative to public addresses 14 and 15: printed 14 Ball Release is public 15 and printed 15 Ball Kick to Playfield is public 14.",
+        "part_number": "AQ-25-950"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "15"
+    },
+    "15": {
+      "availability": "used",
+      "id": "device.ball-release",
+      "kind": "coil",
+      "label": "Ball Release",
+      "physical": {
+        "notes": "Solenoid identification table entry 14. The ROM's own solenoid self test pulses this coil while displaying 14, which printed page 13 states is the number assigned to the solenoid, so public address 15 and printed number 14 are the same device. Printed numbers 14 and 15 are transposed relative to public addresses 14 and 15: printed 14 Ball Release is public 15 and printed 15 Ball Kick to Playfield is public 14.",
+        "part_number": "AO-27-1300"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "14"
+    },
+    "17": {
+      "availability": "unknown",
+      "id": "device.continuous-output-1-unresolved",
+      "kind": "control_signal",
+      "label": "Continuous output 1, function unresolved",
+      "legacy_numeric": [],
+      "physical": {
+        "notes": "PIA1:B bit 4, the first of the four continuous outputs, and the one continuous output the solenoid identification table does not account for: the printed table lists exactly three continuous devices, at 16, 17 and 18, which are public 18, 19 and 20. The address is certainly driven - in the retained self-test trace it goes high once and is still high in the final snapshot, the only continuous output permanently asserted - so it is not an empty slot, but what it drives is unresolved and the two available sources disagree. PinMAME's LISY bridge special-cases Centaur at src/lisy/lisy35.c case 7, calling lisy35_switch_pic_init(1) for J4 pin 5 and setting lisy35_J4PIN5_is_strobe, after which lisy35_solenoid_handler masks continuous bit 0 out of the coil data with cont_data &= 0x0e; that is this address, and LISY filters it precisely because it is not a coil. Against that, by35.c assembles the sixth switch column for non-Vector games from PIA1:B bit 7, which is public 20, the magnet, not bit 4. The J4-pin to PIA-bit correspondence is inferred from LISY's mask constants rather than from a Bally schematic, so the address stays unresolved rather than being asserted either as unused or as the column strobe. Resolving it needs the solenoid-driver and switch-strobe schematic sheet, or a harness run that watches switch column 6 while this line is toggled. Two independent reviews split on whether this should read as used: the address is demonstrably driven, but if it is the column strobe it is not an output device at all, so the record stays unknown until the by35.c/lisy35.c discrepancy is resolved."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "conflicted"
+      }
+    },
+    "18": {
+      "availability": "used",
+      "id": "device.coin-lockout-door",
+      "kind": "coil",
+      "label": "Coin Lockout Door",
+      "physical": {
+        "location": "door",
+        "notes": "Solenoid identification table entry 16. The ROM's own solenoid self test pulses this coil while displaying 16, which printed page 13 states is the number assigned to the solenoid, so public address 18 and printed number 16 are the same device. The retained v2.0.0 script repurposes this address to drive desktop and VR backglass illumination; that is a table convenience, not the physical device.",
+        "part_number": "FO-36-7000"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "16"
+    },
+    "19": {
+      "availability": "used",
+      "id": "device.k1-relay-flipper-enable",
+      "kind": "relay",
+      "label": "K1 Relay (Flipper Enable)",
+      "legacy_names": [
+        "c_game_on"
+      ],
+      "physical": {
+        "location": "backbox",
+        "notes": "Solenoid identification table entry 17. The ROM's own solenoid self test pulses this coil while displaying 17, which printed page 13 states is the number assigned to the solenoid, so public address 19 and printed number 17 are the same device. Energising this relay enables the two flipper coils, which are wired through it rather than to a driver-board output and therefore have no solenoid number of their own. The retained standalone script uses it as the game-on signal for nudge handling."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "17"
+    },
+    "2": {
+      "availability": "used",
+      "id": "device.right-4-drop-target-1-top",
+      "kind": "coil",
+      "label": "Right 4 Drop Target \"1\" (Top)",
+      "physical": {
+        "notes": "Solenoid identification table entry 10. The ROM's own solenoid self test pulses this coil while displaying 10, which printed page 13 states is the number assigned to the solenoid, so public address 2 and printed number 10 are the same device.",
+        "part_number": "CJ-31-2000"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "10"
+    },
+    "20": {
+      "availability": "used",
+      "id": "device.magnet",
+      "kind": "magnet",
+      "label": "Magnet",
+      "legacy_numeric": [],
+      "physical": {
+        "notes": "Solenoid identification table entry 18. The ROM's own solenoid self test pulses this coil while displaying 18, which printed page 13 states is the number assigned to the solenoid, so public address 20 and printed number 18 are the same device.",
+        "part_number": "E-184-284"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "18"
+    },
+    "3": {
+      "availability": "used",
+      "id": "device.right-4-drop-target-2",
+      "kind": "coil",
+      "label": "Right 4 Drop Target \"2\"",
+      "physical": {
+        "notes": "Solenoid identification table entry 11. The ROM's own solenoid self test pulses this coil while displaying 11, which printed page 13 states is the number assigned to the solenoid, so public address 3 and printed number 11 are the same device.",
+        "part_number": "CJ-31-2000"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "11"
+    },
+    "4": {
+      "availability": "used",
+      "id": "device.right-4-drop-target-3",
+      "kind": "coil",
+      "label": "Right 4 Drop Target \"3\"",
+      "legacy_numeric": [],
+      "physical": {
+        "notes": "Solenoid identification table entry 12. The ROM's own solenoid self test pulses this coil while displaying 12, which printed page 13 states is the number assigned to the solenoid, so public address 4 and printed number 12 are the same device.",
+        "part_number": "CJ-31-2000"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "12"
+    },
+    "46": {
+      "availability": "used",
+      "id": "device.flipper-lower-right",
+      "kind": "coil",
+      "label": "Lower right flipper",
+      "legacy_numeric": [],
+      "physical": {
+        "notes": "The right-hand lower flipper coil. Centaur's flipper coils are switched by the K1 relay and the flipper button contacts directly rather than by a solenoid-driver output, so they carry no Self Test number and appear nowhere in the solenoid identification table; the parts list counts them as Flipper (2). PinMAME synthesises public addresses for them anyway - core.h defines sLRFlip as 46 and sLLFlip as 48 - and both retained scripts bind those callbacks. The address is an emulator-side handle on a real coil, not an extra device.",
+        "part_number": "AQ-25-500/34-4500"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-by35",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "48": {
+      "availability": "used",
+      "id": "device.flipper-lower-left",
+      "kind": "coil",
+      "label": "Lower left flipper",
+      "legacy_numeric": [],
+      "physical": {
+        "notes": "The left-hand lower flipper coil. Centaur's flipper coils are switched by the K1 relay and the flipper button contacts directly rather than by a solenoid-driver output, so they carry no Self Test number and appear nowhere in the solenoid identification table; the parts list counts them as Flipper (2). PinMAME synthesises public addresses for them anyway - core.h defines sLRFlip as 46 and sLLFlip as 48 - and both retained scripts bind those callbacks. The address is an emulator-side handle on a real coil, not an extra device.",
+        "part_number": "AQ-25-500/34-4500"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-by35",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "5": {
+      "availability": "used",
+      "id": "device.right-4-drop-target-4-bottom",
+      "kind": "coil",
+      "label": "Right 4 Drop Target \"4\" (Bottom)",
+      "physical": {
+        "notes": "Solenoid identification table entry 13. The ROM's own solenoid self test pulses this coil while displaying 13, which printed page 13 states is the number assigned to the solenoid, so public address 5 and printed number 13 are the same device.",
+        "part_number": "CJ-31-2000"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "13"
+    },
+    "6": {
+      "availability": "used",
+      "id": "device.knocker",
+      "kind": "coil",
+      "label": "Knocker",
+      "physical": {
+        "location": "cabinet",
+        "notes": "Solenoid identification table entry 02. The ROM's own solenoid self test pulses this coil while displaying 02, which printed page 13 states is the number assigned to the solenoid, so public address 6 and printed number 02 are the same device.",
+        "part_number": "AR-26-1200"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "02"
+    },
+    "7": {
+      "availability": "used",
+      "id": "device.outhole-kicker",
+      "kind": "coil",
+      "label": "Outhole Kicker",
+      "physical": {
+        "notes": "Solenoid identification table entry 01. The ROM's own solenoid self test pulses this coil while displaying 01, which printed page 13 states is the number assigned to the solenoid, so public address 7 and printed number 01 are the same device. Both retained scripts label this a release to the shooter lane; the self test shows it is the outhole kicker.",
+        "part_number": "AN-26-1200"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "01"
+    },
+    "8": {
+      "availability": "used",
+      "id": "device.inline-drop-target-reset",
+      "kind": "coil",
+      "label": "Inline Drop Target Reset",
+      "physical": {
+        "notes": "Solenoid identification table entry 03. The ROM's own solenoid self test pulses this coil while displaying 03, which printed page 13 states is the number assigned to the solenoid, so public address 8 and printed number 03 are the same device.",
+        "part_number": "NO-26-1900"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "03"
+    },
+    "9": {
+      "availability": "used",
+      "id": "device.right-4-drop-target-reset",
+      "kind": "coil",
+      "label": "4 Right Drop Target Reset",
+      "physical": {
+        "notes": "Solenoid identification table entry 04. The ROM's own solenoid self test pulses this coil while displaying 04, which printed page 13 states is the number assigned to the solenoid, so public address 9 and printed number 04 are the same device.",
+        "part_number": "NO-26-1900"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "runtime.centaur.solenoid-self-test",
+          "controller-profile.pinmame-by35"
+        ],
+        "status": "validated"
+      },
+      "self_test": "04"
+    }
+  },
+  "sources": [
+    {
+      "attribution": "pinmame-game-defs contributors",
+      "id": "controller-profile.pinmame-by35",
+      "kind": "human_review",
+      "license": "MIT",
+      "locator": "Bally MPU AS-2518-35 public switch, DIP, solenoid and lamp address rules, including the momentary selector-plus-one mapping, the four continuous outputs at 17-20, the six-column sequential switch namespace, and the skipped lamp decoder slots",
+      "revision": "repository",
+      "uri": "internal:controllers/pinmame/by35.json"
+    },
+    {
+      "attribution": "pinmame-game-defs contributors",
+      "id": "legacy.game.centaur",
+      "kind": "vpe_csharp",
+      "license": "MIT",
+      "locator": "games/centaur.json; origin=vpe-csharp",
+      "revision": "4ea106d080728648a693af3b4dcabb091eee0a02",
+      "uri": "https://github.com/vpinball/pinmame-game-defs"
+    },
+    {
+      "attribution": "pinmame-game-defs contributors",
+      "id": "legacy.platform.bally",
+      "kind": "legacy_json",
+      "license": "MIT",
+      "locator": "platforms/bally.json",
+      "revision": "4ea106d080728648a693af3b4dcabb091eee0a02",
+      "uri": "https://github.com/vpinball/pinmame-game-defs"
+    },
+    {
+      "attribution": "pinmame-game-defs curation",
+      "id": "manual-support.bally.centaur.1981",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Retained human transcription of every printed table this definition depends on - the solenoid and switch identification tables, the Figure V off-playfield classification, the parts list assembly coils, the self-test to public solenoid reconciliation, and the retained-script callback comparison - together with the rendered PNG page cache under external:pinmame-manuals/rendered/bally.centaur.1981/. The retained PDF is image-only, so every table was read from rendered pages rather than OCR.",
+      "revision": "2026-08-06",
+      "sha256": "31f9e9847e7f8876a00d32cff37571450300727da1f47a9005f8c82560668ec6",
+      "uri": "external:pinmame-review-artifacts/centaur-1981/manual-transcription.md"
+    },
+    {
+      "acquired_at": "2026-08-06",
+      "attribution": "Bally Manufacturing Corporation; scan hosted by the Internet Archive as item bally-1981-english-manual",
+      "id": "manual.bally.centaur.1981",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "Manifest ID archive.bally-1981-english-manual.bally.centaur.1981; 44-page image-only scan of the Bally game #1239 Centaur installation and general game operation instructions. Printed page 13 (PDF 19) describes the self-diagnostic sequence and states that the number shown during the solenoid test is the number assigned to the solenoid; printed page 17 (PDF 23) carries the solenoid and switch identification tables; printed page 18 (PDF 24) is the Figure V playfield location diagram; printed page 20 (PDF 26) is the parts list with assembly coils and modules; printed page 23 (PDF 29) is the AS-2518-23 lamp driver module parts list. The embedded text layer is 44 bytes, so every table was read from rendered pages rather than OCR.",
+      "original_filename": "Bally 1981 English Manual.pdf",
+      "revision": "sha256:4fb38ca2d4988e5da1c18b997d9ed7c23791ebe51ab1614b353d93ce836ee050",
+      "rights": "Rights not asserted by the Internet Archive item; retained locally for curation and not redistributed",
+      "sha256": "4fb38ca2d4988e5da1c18b997d9ed7c23791ebe51ab1614b353d93ce836ee050",
+      "uri": "external:pinmame-manuals/by-machine/bally.centaur.1981/archive-bally-1981-english-manual/Bally 1981 English Manual.pdf"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.catalog.4ec52ff0ac13",
+      "kind": "pinmame_catalog",
+      "license": "BSD-3-Clause",
+      "locator": "PinmameGetGames",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.4ec52ff0ac13",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/by35games.c centaurGameData GEN_BY35 with dispBy7, FLIP_SW(FLIP_L), lampCol=8, SNDBRD_BY61B and BY35GD_NOSOUNDE|BY35GD_REVERB; src/wpc/by35.h BY35GD_REVERB speech-reverb flag; src/wpc/by35.c pia1b_w solenoid selector and by35_lampStrobe column stride",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.centaur.solenoid-self-test",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Pinned LibPinMAME harness runs that boot centaur from empty NVRAM and step the self-test button into the ROM's solenoid test, which pulses each coil in turn while writing that coil's identification number to the player score displays. Pairing each pulsed public solenoid address with the displayed number yields the printed-to-public mapping for all eighteen coils, repeating identically across four complete cycles. The same runs enumerate 76 lamp addresses, nineteen solenoid addresses and seven display indices.",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "uri": "internal:evidence/runtime/by35/centaur-solenoid-self-test.json"
+    },
+    {
+      "attribution": "Community table authors; retained locally and not redistributed",
+      "id": "vpx-script.centaur-2-0-0",
+      "kind": "vpx_script",
+      "license": "NOASSERTION",
+      "locator": "Embedded table script SolCallback bindings; table sha256:2689607de4e6c9b267c56aa0d090ff340bf3a9220277dc8730a51dca5172a5bc",
+      "revision": "2.0.0",
+      "uri": "external:pinmame-vpx-sources/bally/centaur-1981/source/Centaur (Bally 1981) v2.0.0.vpx"
+    },
+    {
+      "attribution": "vpx-standalone-scripts contributors",
+      "id": "vpx-script.centaur-standalone",
+      "kind": "vpx_script",
+      "license": "NOASSERTION",
+      "locator": "Centaur (Bally 1981)/Centaur (Bally 1981).vbs SolCallback bindings",
+      "revision": "15d112648a1b94b9f59eb8b3c335d57283653c50",
+      "uri": "https://github.com/jsm174/vpx-standalone-scripts"
+    }
+  ],
+  "switches": {
+    "-5": {
+      "availability": "used",
+      "id": "switch.sound-diagnose",
+      "label": "Sound Diagnose",
+      "legacy_names": [
+        "s_sound_diagnose"
+      ],
+      "legacy_numeric": [
+        "-5"
+      ],
+      "physical": {
+        "location": "door",
+        "notes": "Direct diagnostic contact in switch column 0, not a matrix position."
+      },
+      "provenance": {
+        "source_refs": [
+          "controller-profile.pinmame-by35",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    "-6": {
+      "availability": "used",
+      "id": "switch.cpu-diagnose",
+      "label": "CPU Diagnose",
+      "legacy_names": [
+        "s_cpu_diagnose"
+      ],
+      "legacy_numeric": [
+        "-6"
+      ],
+      "physical": {
+        "location": "door",
+        "notes": "Direct diagnostic contact in switch column 0, not a matrix position."
+      },
+      "provenance": {
+        "source_refs": [
+          "controller-profile.pinmame-by35",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    "-7": {
+      "availability": "used",
+      "id": "switch.self-test",
+      "label": "Self Test",
+      "legacy_names": [
+        "s_self_test"
+      ],
+      "legacy_numeric": [
+        "-7"
+      ],
+      "physical": {
+        "location": "door",
+        "notes": "Direct diagnostic contact in switch column 0, not a matrix position."
+      },
+      "provenance": {
+        "source_refs": [
+          "controller-profile.pinmame-by35",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      }
+    },
+    "1": {
+      "availability": "used",
+      "id": "switch.4th-ball-trough",
+      "label": "4th Ball Trough",
+      "manual_address": "01",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "10": {
+      "availability": "used",
+      "id": "switch.coin-1-left",
+      "label": "Coin I (Left)",
+      "legacy_names": [
+        "s_coin_2"
+      ],
+      "manual_address": "10",
+      "physical": {
+        "location": "door"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "cabinet.coin.2"
+      ]
+    },
+    "11": {
+      "availability": "used",
+      "id": "switch.coin-2-middle",
+      "label": "Coin II (Middle)",
+      "legacy_names": [
+        "s_coin_1"
+      ],
+      "manual_address": "11",
+      "physical": {
+        "location": "door"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "cabinet.coin.1"
+      ]
+    },
+    "12": {
+      "availability": "used",
+      "id": "switch.shared-top-left-lane-orbs-back-thumper-target",
+      "label": "Top Left Lane R.O. Button, ORBS 2 Back Targets and Target Behind Right Thumper Bumper",
+      "manual_address": "12",
+      "physical": {
+        "notes": "The switch identification table prints three separate descriptions against address 12 - the top left lane rollover button, the ORBS two back targets, and the target behind the right thumper bumper - so four physical devices share one address.",
+        "quantity": 4
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "13": {
+      "availability": "unused",
+      "id": "switch.unused-13",
+      "label": "Unused matrix position 13",
+      "physical": {
+        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "14": {
+      "availability": "unused",
+      "id": "switch.unused-14",
+      "label": "Unused matrix position 14",
+      "physical": {
+        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "15": {
+      "availability": "used",
+      "id": "switch.tilt",
+      "label": "Tilt",
+      "manual_address": "15",
+      "physical": {
+        "location": "cabinet",
+        "notes": "The switch identification table prints (3) against this entry: 3 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed.",
+        "quantity": 3
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "16": {
+      "availability": "used",
+      "id": "switch.slam",
+      "label": "Slam",
+      "legacy_names": [
+        "s_slam_tilt"
+      ],
+      "manual_address": "16",
+      "physical": {
+        "location": "cabinet",
+        "notes": "The switch identification table prints (2) against this entry: 2 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed.",
+        "quantity": 2
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "17": {
+      "availability": "used",
+      "id": "switch.1st-ball-trough",
+      "label": "1st Ball Trough",
+      "manual_address": "17",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "18": {
+      "availability": "used",
+      "id": "switch.left-side-r-o-button",
+      "label": "Left Side R.O. Button",
+      "manual_address": "18",
+      "physical": {
+        "notes": "The switch identification table prints (2) against this entry: 2 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed.",
+        "quantity": 2
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "19": {
+      "availability": "used",
+      "id": "switch.orbs-right-lane-target",
+      "label": "ORBS Right Lane Target",
+      "manual_address": "19",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "2": {
+      "availability": "used",
+      "id": "switch.5th-ball-trough",
+      "label": "5th Ball Trough",
+      "legacy_names": [
+        "s_ball_roll_tilt"
+      ],
+      "manual_address": "02",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "20": {
+      "availability": "used",
+      "id": "switch.inline-back-target",
+      "label": "Inline Back Target",
+      "manual_address": "20",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "21": {
+      "availability": "used",
+      "id": "switch.flipper-buttons",
+      "label": "Left & Right Flipper Button",
+      "manual_address": "21",
+      "physical": {
+        "location": "cabinet",
+        "notes": "The switch identification table prints (2) against this entry: 2 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed.",
+        "quantity": 2
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "22": {
+      "availability": "used",
+      "id": "switch.reset-1-4-targets-target",
+      "label": "Reset 1-4 Targets, Target",
+      "manual_address": "22",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "23": {
+      "availability": "unused",
+      "id": "switch.unused-23",
+      "label": "Unused matrix position 23",
+      "physical": {
+        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "24": {
+      "availability": "used",
+      "id": "switch.top-spot-1-4-target",
+      "label": "Top Spot 1-4 Target",
+      "manual_address": "24",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "25": {
+      "availability": "used",
+      "id": "switch.right-4-drop-target-4-bottom",
+      "label": "Right 4 Drop Target \"4\" (Bottom)",
+      "manual_address": "25",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "26": {
+      "availability": "used",
+      "id": "switch.right-4-drop-target-3",
+      "label": "Right 4 Drop Target \"3\"",
+      "manual_address": "26",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "27": {
+      "availability": "used",
+      "id": "switch.right-4-drop-target-2",
+      "label": "Right 4 Drop Target \"2\"",
+      "manual_address": "27",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "28": {
+      "availability": "used",
+      "id": "switch.right-4-drop-target-1-top",
+      "label": "Right 4 Drop Target \"1\" (Top)",
+      "manual_address": "28",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "29": {
+      "availability": "used",
+      "id": "switch.s-drop-target",
+      "label": "\"S\" Drop Target",
+      "manual_address": "29",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "3": {
+      "availability": "used",
+      "id": "switch.top-right-lane",
+      "label": "Top Right Lane",
+      "manual_address": "03",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "30": {
+      "availability": "used",
+      "id": "switch.b-drop-target",
+      "label": "\"B\" Drop Target",
+      "manual_address": "30",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "31": {
+      "availability": "used",
+      "id": "switch.r-drop-target",
+      "label": "\"R\" Drop Target",
+      "manual_address": "31",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "32": {
+      "availability": "used",
+      "id": "switch.o-drop-target",
+      "label": "\"O\" Drop Target",
+      "manual_address": "32",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "33": {
+      "availability": "used",
+      "id": "switch.end-of-trough",
+      "label": "End of Trough",
+      "manual_address": "33",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "34": {
+      "availability": "used",
+      "id": "switch.10-point-rebound",
+      "label": "10 Point Rebound",
+      "manual_address": "34",
+      "physical": {
+        "notes": "The switch identification table prints (5) against this entry: 5 physical contacts are wired in parallel onto one controller address, so the definition cannot distinguish which one closed.",
+        "quantity": 5
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "35": {
+      "availability": "unused",
+      "id": "switch.unused-35",
+      "label": "Unused matrix position 35",
+      "physical": {
+        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "36": {
+      "availability": "unused",
+      "id": "switch.unused-36",
+      "label": "Unused matrix position 36",
+      "physical": {
+        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "37": {
+      "availability": "used",
+      "id": "switch.right-slingshot",
+      "label": "Right Slingshot",
+      "manual_address": "37",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "38": {
+      "availability": "used",
+      "id": "switch.left-slingshot",
+      "label": "Left Slingshot",
+      "manual_address": "38",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "39": {
+      "availability": "used",
+      "id": "switch.right-thumper-bumper",
+      "label": "Right Thumper Bumper",
+      "manual_address": "39",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "4": {
+      "availability": "used",
+      "id": "switch.top-middle-lane",
+      "label": "Top Middle Lane",
+      "manual_address": "04",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "40": {
+      "availability": "used",
+      "id": "switch.left-thumper-bumper",
+      "label": "Left Thumper Bumper",
+      "manual_address": "40",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "41": {
+      "availability": "used",
+      "id": "switch.1st-inline-drop-target",
+      "label": "1st Inline Drop Target",
+      "manual_address": "41",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "42": {
+      "availability": "used",
+      "id": "switch.2nd-inline-drop-target",
+      "label": "2nd Inline Drop Target",
+      "manual_address": "42",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "43": {
+      "availability": "used",
+      "id": "switch.3rd-inline-drop-target",
+      "label": "3rd Inline Drop Target",
+      "manual_address": "43",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "44": {
+      "availability": "used",
+      "id": "switch.4th-inline-drop-target",
+      "label": "4th Inline Drop Target",
+      "manual_address": "44",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "45": {
+      "availability": "used",
+      "id": "switch.right-outlane",
+      "label": "Right Outlane",
+      "manual_address": "45",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "46": {
+      "availability": "used",
+      "id": "switch.right-return-lane",
+      "label": "Right Return Lane",
+      "manual_address": "46",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "47": {
+      "availability": "used",
+      "id": "switch.left-return-lane",
+      "label": "Left Return Lane",
+      "manual_address": "47",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "48": {
+      "availability": "used",
+      "id": "switch.left-outlane",
+      "label": "Left Outlane",
+      "manual_address": "48",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "5": {
+      "availability": "used",
+      "id": "switch.top-left-lane",
+      "label": "Top Left Lane",
+      "manual_address": "05",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "6": {
+      "availability": "used",
+      "id": "switch.credit-button",
+      "label": "Credit Button",
+      "legacy_names": [
+        "s_start_button"
+      ],
+      "manual_address": "06",
+      "physical": {
+        "location": "door"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "cabinet.start"
+      ]
+    },
+    "7": {
+      "availability": "unused",
+      "id": "switch.unused-7",
+      "label": "Unused matrix position 7",
+      "legacy_names": [
+        "s_tilt"
+      ],
+      "physical": {
+        "notes": "The switch identification table prints this position with no description, so the matrix position exists but Centaur wires no switch to it."
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      }
+    },
+    "8": {
+      "availability": "used",
+      "id": "switch.outhole",
+      "label": "Outhole",
+      "manual_address": "08",
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981",
+          "vpx-script.centaur-2-0-0"
+        ],
+        "status": "validated"
+      }
+    },
+    "82": {
+      "availability": "unknown",
+      "id": "switch.flipper-lower-right",
+      "label": "Lower Right Flipper",
+      "legacy_names": [
+        "s_flipper_lower_right"
+      ],
+      "physical": {
+        "notes": "PinMAME keeps a generic flipper-button column at internal column 11, which VPinMAME publishes at 81-88; this is the lower right button position. Centaur declares FLIP_SW(FLIP_L) with no FLIP_SWNO, so FLIP_SWL and FLIP_SWR are both zero and core_updateSw never copies this column into the game switch matrix. The ROM strobes only columns 1-6 and never reads this address. The machine's real flipper buttons are the single matrix address 21, which both retained scripts drive. This entry is retained because the legacy corpus bound it and consumers may still resolve the alias, not because it is a physical contact."
+      },
+      "provenance": {
+        "source_refs": [
+          "controller-profile.pinmame-by35",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "flipper.lower.right"
+      ]
+    },
+    "84": {
+      "availability": "unknown",
+      "id": "switch.flipper-lower-left",
+      "label": "Lower Left Flipper",
+      "legacy_names": [
+        "s_flipper_lower_left"
+      ],
+      "physical": {
+        "notes": "PinMAME keeps a generic flipper-button column at internal column 11, which VPinMAME publishes at 81-88; this is the lower left button position. Centaur declares FLIP_SW(FLIP_L) with no FLIP_SWNO, so FLIP_SWL and FLIP_SWR are both zero and core_updateSw never copies this column into the game switch matrix. The ROM strobes only columns 1-6 and never reads this address. The machine's real flipper buttons are the single matrix address 21, which both retained scripts drive. This entry is retained because the legacy corpus bound it and consumers may still resolve the alias, not because it is a physical contact."
+      },
+      "provenance": {
+        "source_refs": [
+          "controller-profile.pinmame-by35",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "candidate"
+      },
+      "roles": [
+        "flipper.lower.left"
+      ]
+    },
+    "9": {
+      "availability": "used",
+      "id": "switch.coin-3-right",
+      "label": "Coin III (Right)",
+      "legacy_names": [
+        "s_coin_3"
+      ],
+      "manual_address": "09",
+      "physical": {
+        "location": "door"
+      },
+      "provenance": {
+        "source_refs": [
+          "manual.bally.centaur.1981"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "cabinet.coin.3"
+      ]
+    }
+  }
+}

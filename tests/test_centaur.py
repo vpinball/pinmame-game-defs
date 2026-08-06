@@ -17,27 +17,35 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DEFINITION_PATH = ROOT / "machines" / "partial" / "bally" / "centaur-1981.json"
 PROFILE_PATH = ROOT / "controllers" / "pinmame" / "by35.json"
+EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "by35" / "centaur-solenoid-self-test.json"
 
-# printed Self Test number -> public PinMAME solenoid address
+MANUAL_SHA256 = "4fb38ca2d4988e5da1c18b997d9ed7c23791ebe51ab1614b353d93ce836ee050"
+TRANSCRIPTION_SHA256 = "31f9e9847e7f8876a00d32cff37571450300727da1f47a9005f8c82560668ec6"
+
+# printed Self Test number -> (public PinMAME solenoid address, semantic device id)
+#
+# Asserting the device id as well as the address is the point: comparing only alias values lets a
+# swap of two labels - exactly the off-by-one the legacy import already contained on the right
+# four-bank - pass silently.
 SELF_TEST_TO_PUBLIC_SOLENOID = {
-	1: 7,
-	2: 6,
-	3: 8,
-	4: 9,
-	5: 10,
-	6: 11,
-	7: 12,
-	8: 13,
-	9: 1,
-	10: 2,
-	11: 3,
-	12: 4,
-	13: 5,
-	14: 15,
-	15: 14,
-	16: 18,
-	17: 19,
-	18: 20,
+	1: (7, "device.outhole-kicker"),
+	2: (6, "device.knocker"),
+	3: (8, "device.inline-drop-target-reset"),
+	4: (9, "device.right-4-drop-target-reset"),
+	5: (10, "device.left-thumper-bumper"),
+	6: (11, "device.right-thumper-bumper"),
+	7: (12, "device.left-slingshot"),
+	8: (13, "device.right-slingshot"),
+	9: (1, "device.orbs-target-reset"),
+	10: (2, "device.right-4-drop-target-1-top"),
+	11: (3, "device.right-4-drop-target-2"),
+	12: (4, "device.right-4-drop-target-3"),
+	13: (5, "device.right-4-drop-target-4-bottom"),
+	14: (15, "device.ball-release"),
+	15: (14, "device.ball-kick-to-playfield"),
+	16: (18, "device.coin-lockout-door"),
+	17: (19, "device.k1-relay-flipper-enable"),
+	18: (20, "device.magnet"),
 }
 
 UNUSED_SWITCH_ADDRESSES = (7, 13, 14, 23, 35, 36)
@@ -82,7 +90,7 @@ class CentaurDefinitionTests(unittest.TestCase):
 		self.assertNotIn("centaurj", drivers)
 
 	def test_solenoid_self_test_numbers_map_to_the_observed_public_addresses(self) -> None:
-		for self_test, public in SELF_TEST_TO_PUBLIC_SOLENOID.items():
+		for self_test, (public, device_id) in SELF_TEST_TO_PUBLIC_SOLENOID.items():
 			device = self.solenoids.get(public)
 			self.assertIsNotNone(device, f"public solenoid {public} is missing")
 			aliases = {
@@ -91,6 +99,40 @@ class CentaurDefinitionTests(unittest.TestCase):
 				if alias["namespace"] == "manual.self-test"
 			}
 			self.assertEqual({f"{self_test:02d}"}, aliases, f"public solenoid {public}")
+			self.assertEqual(device_id, device["id"], f"public solenoid {public}")
+
+	def test_committed_runtime_evidence_carries_the_same_mapping(self) -> None:
+		"""The definition and the evidence artifact must not be able to drift apart."""
+		evidence = load_json(EVIDENCE_PATH)
+		observed = evidence["runtime"]["observations"]["physical_service_solenoid_to_public"]
+		expected = {
+			str(self_test): public
+			for self_test, (public, _) in SELF_TEST_TO_PUBLIC_SOLENOID.items()
+		}
+		self.assertEqual(expected, observed)
+		self.assertEqual(["centaur"], evidence["driver_ids"])
+		self.assertEqual(["bally.centaur.1981"], evidence["machine_ids"])
+
+	def test_every_observed_lamp_address_is_declared(self) -> None:
+		"""Observing an address and not declaring it is silent under-reporting."""
+		evidence = load_json(EVIDENCE_PATH)
+		observed = set(evidence["runtime"]["observations"]["lamp_addresses_seen"])
+		declared = {
+			item["binding"]["device"]
+			for item in self.definition["outputs"]
+			if item["binding"]["group"] == "pinmame.output.lamp"
+		}
+		self.assertEqual(set(), observed - declared, "observed lamp addresses are undeclared")
+
+	def test_solenoid_alias_namespace_is_consistent(self) -> None:
+		"""A consumer enumerating one namespace must not silently drop devices."""
+		namespaces = {
+			alias["namespace"]
+			for device in self.solenoids.values()
+			for alias in device["aliases"]
+			if alias["namespace"].startswith("pinmame.")
+		}
+		self.assertEqual({"pinmame.coil"}, namespaces)
 
 	def test_printed_fourteen_and_fifteen_are_transposed(self) -> None:
 		"""The single easiest thing to get wrong: the numbers collide but the devices swap."""
@@ -115,6 +157,9 @@ class CentaurDefinitionTests(unittest.TestCase):
 		it drives, and the record must stay fail-closed until that is settled.
 		"""
 		device = self.solenoids[17]
+		# It is demonstrably driven, so "unused" would be a false claim. But if it is the sixth
+		# switch-column strobe it is not an output device at all, so "used" overclaims too. Both
+		# independent reviews agreed the function is unresolved; fail closed until it is settled.
 		self.assertEqual("unknown", device["availability"])
 		self.assertEqual("conflicted", device["provenance"]["status"])
 		paths = [conflict["path"] for conflict in self.definition["conflicts"]]
@@ -187,9 +232,112 @@ class CentaurDefinitionTests(unittest.TestCase):
 		self.assertIn("runtime.centaur.solenoid-self-test", sources)
 		self.assertEqual("runtime_scenario", sources["runtime.centaur.solenoid-self-test"]["kind"])
 		manual = sources["manual.bally.centaur.1981"]
-		self.assertTrue(manual["revision"].startswith("sha256:"))
-		self.assertIn("license", manual)
-		self.assertIn("attribution", manual)
+		# The hash belongs in the typed field, not smuggled into free-text prose.
+		self.assertEqual(MANUAL_SHA256, manual["sha256"])
+		self.assertTrue(manual["uri"].startswith("external:pinmame-manuals/"))
+		for field in ("license", "attribution", "original_filename", "rights", "acquired_at"):
+			self.assertIn(field, manual)
+		runtime = sources["runtime.centaur.solenoid-self-test"]
+		self.assertEqual(
+			"internal:evidence/runtime/by35/centaur-solenoid-self-test.json", runtime["uri"]
+		)
+		self.assertEqual("NOASSERTION", runtime["license"])
+		self.assertIn("manual-support.bally.centaur.1981", sources)
+		self.assertEqual(TRANSCRIPTION_SHA256, sources["manual-support.bally.centaur.1981"]["sha256"])
+
+	def test_retained_evidence_hashes_match_when_the_roots_are_available(self) -> None:
+		"""With the evidence roots set, prove the asserted hashes against the real files."""
+		import hashlib
+		import os
+
+		manuals_root = os.environ.get("PINMAME_MANUALS_ROOT")
+		artifacts_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not manuals_root or not artifacts_root:
+			self.skipTest("evidence roots are not configured")
+		pdf = (
+			Path(manuals_root)
+			/ "by-machine"
+			/ "bally.centaur.1981"
+			/ "archive-bally-1981-english-manual"
+			/ "Bally 1981 English Manual.pdf"
+		)
+		transcription = Path(artifacts_root) / "centaur-1981" / "manual-transcription.md"
+		for path, expected in ((pdf, MANUAL_SHA256), (transcription, TRANSCRIPTION_SHA256)):
+			self.assertTrue(path.is_file(), f"missing retained evidence: {path}")
+			digest = hashlib.sha256()
+			with open(path, "rb") as handle:
+				for chunk in iter(lambda: handle.read(1 << 20), b""):
+					digest.update(chunk)
+			self.assertEqual(expected, digest.hexdigest(), str(path))
+
+	def test_synthetic_flipper_coils_are_declared(self) -> None:
+		"""The flippers are real coils; PinMAME just addresses them synthetically."""
+		self.assertEqual("device.flipper-lower-right", self.solenoids[46]["id"])
+		self.assertEqual("device.flipper-lower-left", self.solenoids[48]["id"])
+		for address in (46, 48):
+			self.assertEqual("coil", self.solenoids[address]["kind"])
+			self.assertEqual("used", self.solenoids[address]["availability"])
+
+	def test_unenumerated_dips_are_admitted_rather_than_implied_complete(self) -> None:
+		"""The MPU has 32 physical option switches and this record enumerates none."""
+		dips = [
+			item for item in self.definition["inputs"]
+			if item["binding"]["group"] == "pinmame.input.dip"
+		]
+		if not dips:
+			self.assertIn("input_enumeration", self.definition["coverage"]["missing"])
+			self.assertIn("input_semantics", self.definition["coverage"]["missing"])
+
+	def test_coverage_does_not_claim_more_than_the_devices_support(self) -> None:
+		"""Naming cannot be validated while the largest device class is legacy carry-over."""
+		lamps = [
+			item for item in self.definition["outputs"]
+			if item["binding"]["group"] == "pinmame.output.lamp"
+		]
+		statuses = {item["provenance"]["status"] for item in lamps}
+		if statuses - {"validated"}:
+			self.assertNotEqual("validated", self.definition["coverage"]["dimensions"]["semantic_naming"])
+			self.assertIn("output_semantics", self.definition["coverage"]["missing"])
+		self.assertNotEqual("validated", self.definition["coverage"]["dimensions"]["address_enumeration"])
+		self.assertIn("output_enumeration", self.definition["coverage"]["missing"])
+
+	def test_mapping_is_rederived_from_the_raw_trace_when_it_is_available(self) -> None:
+		"""Re-derive the mapping from the ROM's own output, not from a second copied table.
+
+		Comparing the definition against a hard-coded constant only catches an accidental
+		one-sided edit. This decodes the retained trace: it pairs each solenoid-on event with
+		the seven-segment number the ROM writes to player display 0 immediately afterwards, and
+		requires the full eighteen-entry cycle to reproduce.
+		"""
+		import json
+		import os
+
+		artifacts_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not artifacts_root:
+			self.skipTest("evidence roots are not configured")
+		trace = Path(artifacts_root) / "centaur-1981" / "harness" / "soltest3.json"
+		self.assertTrue(trace.is_file(), f"missing retained trace: {trace}")
+		seg7 = {
+			0x3F: "0", 0x06: "1", 0x5B: "2", 0x4F: "3", 0x66: "4",
+			0x6D: "5", 0x7D: "6", 0x07: "7", 0x7F: "8", 0x6F: "9",
+		}
+		derived: dict[int, int] = {}
+		pending: int | None = None
+		for event in json.loads(trace.read_text(encoding="utf-8"))["events"]:
+			if event["event"] == "solenoid" and event["state"] == 1:
+				pending = event["number"]
+			elif event["event"] == "display" and event.get("segments") and event["index"] == 0:
+				if pending is None:
+					continue
+				digits = "".join(seg7.get(value & 0x7F, "") for value in event["segments"])
+				if len(digits) == 2 and digits.isdigit() and 1 <= int(digits) <= 18:
+					derived[int(digits)] = pending
+					pending = None
+		expected = {
+			self_test: public
+			for self_test, (public, _) in SELF_TEST_TO_PUBLIC_SOLENOID.items()
+		}
+		self.assertEqual(expected, derived)
 
 	def test_coverage_stays_partial_and_names_its_gaps(self) -> None:
 		coverage = self.definition["coverage"]
