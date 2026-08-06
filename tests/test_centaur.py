@@ -512,8 +512,30 @@ class CentaurDefinitionTests(unittest.TestCase):
 	def test_coverage_stays_partial_and_names_its_gaps(self) -> None:
 		coverage = self.definition["coverage"]
 		self.assertEqual("partial", coverage["status"])
-		self.assertIn("spatial_placement", coverage["missing"])
 		self.assertTrue(coverage["missing"], "a partial must name what it is missing")
+		# The only remaining gap is the five auxiliary outputs whose function no retained
+		# source records; everything else is complete.
+		self.assertEqual({"output_enumeration", "output_semantics"}, set(coverage["missing"]))
+
+	def test_every_device_carries_a_spatial_record(self) -> None:
+		for item in self.definition["inputs"] + self.definition["outputs"]:
+			self.assertIn("spatial", item, item["id"])
+		for display in self.definition["displays"]:
+			self.assertIn("spatial", display, display["id"])
+
+	def test_undetermined_auxiliary_lamps_are_backbox_not_playfield(self) -> None:
+		"""Three independent recreations failed to place these; none gets an invented coordinate."""
+		lamps = {
+			item["binding"]["device"]: item
+			for item in self.definition["outputs"]
+			if item["binding"]["group"] == "pinmame.output.lamp"
+		}
+		for address in (68, 84, 100, 113, 116):
+			device = lamps[address]
+			self.assertEqual("unknown", device["availability"], address)
+			self.assertEqual("candidate", device["provenance"]["status"], address)
+			self.assertEqual("not_applicable", device["spatial"]["status"], address)
+			self.assertEqual("cabinet_or_service", device["spatial"]["reason"], address)
 
 
 class By35ProfileTests(unittest.TestCase):

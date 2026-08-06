@@ -148,27 +148,32 @@ speech is the reason that flag exists.
 
 One thing, and it is a limit of the surviving documentation rather than of the analysis.
 
-**Five auxiliary matrix positions, 68, 84, 100, 113 and 116, cannot be resolved.** The A9 Auxiliary
-Lamp Driver parts list counts twelve SCRs, Q1 through Q12. The A9 harness wire list prints exactly
-eleven functions - three top lanes, two slingshots, two thumper bumpers and four chambers - and all
-eleven are assigned to other addresses. So exactly one of those five positions carries the twelfth
-output and the other four have no bulb behind them, and nothing available says which.
+**Five auxiliary outputs - public 68, 84, 100, 113 and 116 - are backbox lamps whose function is
+undetermined.** The A9 Auxiliary Lamp Driver parts list counts twelve SCRs while its harness wire
+list prints eleven functions, all of which belong to other addresses, so at most one of the five is
+a fitted output and the rest are bare matrix positions.
 
-Every route has been tried. The A9 board's decoder-output-to-connector wiring is not in the
-Internet Archive scan, the maintainer-supplied schematic manual, or the German edition; the manual
-carries the A9 parts list and its harness wire list but not the board sheet. The wire list leaves
-the relevant pins unlabelled. Neither retained script references any of the five. The harness cannot
-discriminate them: all sixteen auxiliary positions light together during the self-test lamp
-sequence and none of the five ever appears outside it, because PinMAME reports lamp-matrix bits
-rather than bulbs and the ROM drives the data line whether or not an SCR is fitted. And the retained
-table cannot break the tie either - it parks 68, 84 and 100 in the bottom-left placeholder row and
-models no light at all for 113 and 116.
+They are treated as backbox rather than playfield on converging evidence. The A9 harness sheet
+splits cleanly: every A9J2 pin carries a printed playfield function - the top lanes, slingshots,
+thumper bumpers and chambers - while every A9J3 pin carries a wire number and no function at all.
+Bally named every playfield lamp it wired, so the unnamed group is most likely backbox
+illumination. Three independently authored recreations agree by omission: the 2020, 2023 and 2025
+VPX tables all either park these addresses in a bottom-left placeholder row or model no light for
+them, meaning no author could find them on the playfield. They therefore take controlled
+not-applicable spatial records rather than invented coordinates.
+
+Every route to naming them has been tried. The A9 board's decoder-output-to-connector sheet is in
+none of the three retained manuals - they carry its parts list and harness list but not the sheet.
+The wire list leaves those pins unlabelled. Neither retained script references them. And the harness
+cannot discriminate: all sixteen auxiliary positions light together during the self-test lamp
+sequence and none appears outside it, because PinMAME reports lamp-matrix bits rather than bulbs and
+the ROM drives the data line whether or not an SCR is fitted.
 
 Resolving it needs the A9 board schematic sheet, or someone with the physical machine.
 
-That single gap keeps three coverage dimensions open - `output_enumeration`, `output_semantics` and
-`spatial_placement` - and therefore keeps the record `partial`. Everything else is done: identity,
-the full 48-position switch matrix with polarity, all 32 MPU option switches, twenty-one solenoid
-outputs including the resolved sixth switch-column strobe, seventy-one of seventy-six lamps named
-from the schematic, six displays, ten mechanisms, three driver variants, and spatial records for
-177 of 182 devices.
+That single gap holds `output_enumeration` and `output_semantics` open and therefore keeps the
+record `partial`. Everything else is complete: identity and the three-driver family with their
+differences, the full 48-position switch matrix with per-switch polarity and construction, all 32
+MPU option switches, twenty-one solenoid outputs including the resolved sixth switch-column strobe,
+seventy-one of seventy-six lamps named from the schematic, six displays, ten mechanisms, and spatial
+records for every one of the 182 devices.
