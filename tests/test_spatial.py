@@ -349,12 +349,14 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(1, report["non_game_record_count"])
 		self.assertEqual(786, report["catalog_record_count"])
 		# The thirteen retrofit-pending machines above (which already include X-Men Pro), plus
-		# Terminator 2, plus Centaur. Centaur is not a retrofit: every one of its devices carries a
-		# spatial record except auxiliary lamp 113, a fitted A9 circuit whose function the factory
-		# schematic leaves blank and which nothing locates. Monster Bash is also not a retrofit: it
-		# was demoted for an unresolved switch-polarity conflict (74-78), not a missing spatial
-		# record, so it is not counted here either.
-		self.assertEqual(15, report["missing_requirement_counts"]["spatial_placement"])
+		# Terminator 2, plus Centaur, plus Twilight Zone. Centaur is not a retrofit: every one of
+		# its devices carries a spatial record except auxiliary lamp 113, a fitted A9 circuit whose
+		# function the factory schematic leaves blank and which nothing locates. Monster Bash is
+		# also not a retrofit: it was demoted for an unresolved switch-polarity conflict (74-78),
+		# not a missing spatial record, so it is not counted here either. Twilight Zone genuinely
+		# has unresolved spatial gaps (switches 26/31-33/45/46/55 and GI address 2 have no bound
+		# VPX object), so it is counted alongside Centaur/Terminator 2.
+		self.assertEqual(16, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(786, len(catalog["machines"]))
 		self.assertEqual(785, catalog["summary"]["game_count"])
 		self.assertEqual(786, catalog["summary"]["machine_count"])
