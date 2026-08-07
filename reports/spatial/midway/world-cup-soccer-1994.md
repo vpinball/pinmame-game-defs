@@ -1,6 +1,6 @@
 # World Cup Soccer (Bally/Midway, 1994) spatial review
 
-Status: validated. Every switch and lamp address in this audit is fully placed or carries a controlled `not_applicable` record; the one gap is a single solenoid (34, Loop Gate) with no evidence of any kind for its playfield location, which keeps the machine record `partial` at `machines/partial/bally/world-cup-soccer-1994.json` alongside the unresolved Fliptronic opto-polarity conflict recorded separately below.
+Status: validated. Every switch and lamp address in this audit is fully placed or carries a controlled `not_applicable` record; the one gap is a single solenoid (34, Loop Gate) with no evidence of any kind for its playfield location, which keeps the machine record `partial` at `machines/partial/midway/world-cup-soccer-1994.json` alongside the unresolved Fliptronic opto-polarity conflict recorded separately below.
 
 The matching source is the retained known-working `World Cup Soccer (Bally 1994) VPW v1.5.vpx` at SHA-256 `ab7e07fce7b589f9732f458a7a09ad08b87237852d97d7b5bf9a74f6b0f6d23d`. The retained `vpxtool` extraction produced the embedded script at SHA-256 `c18cfbaa4e8c3b67259ac5d6c7b6842dfdaaf308b0fd71a64071118b57ac73c5`; that embedded stream is the runtime and causality authority. Exact playfield bounds are `left=0 top=0 right=952.941 bottom=2152.941`, and every canonical coordinate is x/952.941 and y/2152.941 rounded to at most six fractional places.
 

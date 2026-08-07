@@ -22,12 +22,12 @@ ROOT = Path(__file__).resolve().parents[1]
 # PinMAME's wcsGameData inverted-switch mask does not normalize (column 11 is 0x00), and solenoid
 # 34 (Loop Gate) has no VPX object or script reference of any kind, so its spatial key is omitted
 # entirely rather than fabricated -- see conflict.flipper-cabinet-opto-not-normalized below.
-PARTIAL_PATH = ROOT / "machines/partial/bally/world-cup-soccer-1994.json"
-AUTHOR_READY_PATH = ROOT / "machines/author-ready/bally/world-cup-soccer-1994.json"
+PARTIAL_PATH = ROOT / "machines/partial/midway/world-cup-soccer-1994.json"
+AUTHOR_READY_PATH = ROOT / "machines/author-ready/midway/world-cup-soccer-1994.json"
 DEFINITION_PATH = PARTIAL_PATH
-SEED_PATH = ROOT / "tools/seeds/bally/world-cup-soccer.json"
-SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/world-cup-soccer.json"
-SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/world-cup-soccer.md"
+SEED_PATH = ROOT / "tools/seeds/midway/world-cup-soccer-1994.json"
+SPATIAL_REPORT_PATH = ROOT / "reports/spatial/midway/world-cup-soccer-1994.json"
+SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/midway/world-cup-soccer-1994.md"
 
 PINMAME_REVISION = "4ec52ff0ac133ac251681518aed2249e19fe26eb"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
@@ -1699,7 +1699,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"Status: {report['status']}. Every switch and lamp address in this audit is fully placed or carries a "
 		"controlled `not_applicable` record; the one gap is a single solenoid (34, Loop Gate) with no evidence "
 		"of any kind for its playfield location, which keeps the machine record `partial` at "
-		"`machines/partial/bally/world-cup-soccer-1994.json` alongside the unresolved Fliptronic opto-polarity "
+		"`machines/partial/midway/world-cup-soccer-1994.json` alongside the unresolved Fliptronic opto-polarity "
 		"conflict recorded separately below.",
 		"",
 		"The matching source is the retained known-working `World Cup Soccer (Bally 1994) VPW v1.5.vpx` at "

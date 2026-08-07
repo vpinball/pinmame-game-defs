@@ -10,12 +10,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "bally" / "world-cup-soccer-1994.json"
-SEED_PATH = ROOT / "tools" / "seeds" / "bally" / "world-cup-soccer.json"
-AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "bally" / "world-cup-soccer-1994.json"
-KNOWLEDGE_PATH = ROOT / "knowledge" / "williams" / "world-cup-soccer.md"
+DEFINITION_PATH = ROOT / "machines" / "partial" / "midway" / "world-cup-soccer-1994.json"
+SEED_PATH = ROOT / "tools" / "seeds" / "midway" / "world-cup-soccer-1994.json"
+AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "midway" / "world-cup-soccer-1994.json"
+KNOWLEDGE_PATH = ROOT / "knowledge" / "midway" / "world-cup-soccer-1994.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-security.json"
-SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "world-cup-soccer.json"
+SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "midway" / "world-cup-soccer-1994.json"
 
 DRIVER_IDS = {
 	"wcs_l2", "wcs_l3c", "wcs_la2", "wcs_l1", "wcs_la1", "wcs_d2",

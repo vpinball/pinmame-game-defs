@@ -139,14 +139,14 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 133 | 1994 | STUB - Corvette (2.1) | Bally | stub |
 | 134 | 1994 | STUB - Popeye Saves The Earth (LX-5) | Bally | stub |
 | 135 | 1994 | STUB - WPC Test Fixture: Security (1.2) | Bally | stub |
-| 136 | 1994 | Guns N' Roses | Data East | partial |
-| 137 | 1994 | Maverick | Data East | partial |
-| 138 | 1994 | STUB - WWF Royal Rumble (1.06) | Data East | stub |
-| 139 | 1994 | The Who's Tommy Pinball Wizard | Data East | partial |
-| 140 | 1994 | STUB - Freddy: A Nightmare on Elm Street (rev. 3) | Gottlieb | stub |
-| 141 | 1994 | STUB - Rescue 911 (rev. 1) | Gottlieb | stub |
-| 142 | 1994 | STUB - World Challenge Soccer (rev. 1) | Gottlieb | stub |
-| 143 | 1994 | World Cup Soccer | Midway | partial |
+| 136 | 1994 | World Cup Soccer | Bally | partial |
+| 137 | 1994 | Guns N' Roses | Data East | partial |
+| 138 | 1994 | Maverick | Data East | partial |
+| 139 | 1994 | STUB - WWF Royal Rumble (1.06) | Data East | stub |
+| 140 | 1994 | The Who's Tommy Pinball Wizard | Data East | partial |
+| 141 | 1994 | STUB - Freddy: A Nightmare on Elm Street (rev. 3) | Gottlieb | stub |
+| 142 | 1994 | STUB - Rescue 911 (rev. 1) | Gottlieb | stub |
+| 143 | 1994 | STUB - World Challenge Soccer (rev. 1) | Gottlieb | stub |
 | 144 | 1994 | STUB - Sir Lancelot | Peyper (Spain) | stub |
 | 145 | 1994 | STUB - Goofy Hoops (Redemption) | Romstar | stub |
 | 146 | 1994 | STUB - Frankenstein, Mary Shelley's | Sega | stub |
