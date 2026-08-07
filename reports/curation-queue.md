@@ -198,8 +198,8 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 192 | 1992 | STUB - Hot Shot Basketball (P-8 Prototype) | Midway | stub |
 | 193 | 1992 | STUB - Bike Race | Sleic (Spain) | stub |
 | 194 | 1992 | Fish Tales | Williams | partial |
-| 195 | 1992 | STUB - Getaway: High Speed II, The (L-5) | Williams | stub |
-| 196 | 1992 | STUB - Strike Master (L-4) | Williams | stub |
+| 195 | 1992 | STUB - Strike Master (L-4) | Williams | stub |
+| 196 | 1992 | The Getaway: High Speed II | Williams | partial |
 | 197 | 1991 | STUB - Harley-Davidson (L-3) | Bally | stub |
 | 198 | 1991 | STUB - Party Zone, The (F-4 Fliptronic) | Bally | stub |
 | 199 | 1991 | STUB - Pool Sharks (LA-7) | Bally | stub |
