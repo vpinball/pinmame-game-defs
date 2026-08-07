@@ -344,8 +344,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
 		self.assertEqual(786, report["machine_count"])
 		self.assertEqual(23, report["author_ready_count"])
-		self.assertEqual(84, report["partial_count"])
-		self.assertEqual(679, report["stub_count"])
+		self.assertEqual(86, report["partial_count"])
+		self.assertEqual(677, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
 		self.assertEqual(787, report["catalog_record_count"])
 		# The thirteen retrofit-pending machines above (which already include X-Men Pro), plus
@@ -386,17 +386,17 @@ class SpatialMigrationTests(unittest.TestCase):
 		# project at 856 files, so GI address 3, the Sequential G.I. chase lamps 91-98 and six fitted
 		# flasher solenoids have no bound object, and it is counted as a 23rd machine with a genuine
 		# spatial gap.
-		# Data East Batman raises it to 25. It replaces a legacy candidate-only partial record in
-		# place, so the partial/stub/author-ready totals above are unchanged by it. Exactly one
-		# known-working recreation was retained, so nine lamp addresses have no bound object and
-		# take no spatial key at all.
-		self.assertEqual(25, report["missing_requirement_counts"]["spatial_placement"])
+		# Data East Batman raises it to 28. It replaces a legacy candidate-only partial record
+		# in place, so the partial/stub/author-ready totals above are unchanged by it. Exactly
+		# one known-working recreation was retained, so nine lamp addresses have no bound
+		# object and take no spatial key at all.
+		self.assertEqual(28, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(787, len(catalog["machines"]))
 		self.assertEqual(786, catalog["summary"]["game_count"])
 		self.assertEqual(787, catalog["summary"]["machine_count"])
 		self.assertEqual(23, catalog["summary"]["author_ready_count"])
-		self.assertEqual(679, catalog["summary"]["stub_count"])
-		self.assertEqual(85, catalog["summary"]["partial_count"])
+		self.assertEqual(677, catalog["summary"]["stub_count"])
+		self.assertEqual(87, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(13, len(note_paths))
