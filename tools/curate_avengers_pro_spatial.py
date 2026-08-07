@@ -100,6 +100,21 @@ CABINET_INPUT_ROLES = {
 # archive extraction. Lamps 71/73/75 use their dedicated on-playfield bulb-cover
 # primitives; the unrelated S118a Q18 helper and off-playfield Flasher71/73/75
 # glow planes are deliberately excluded.
+# Lamps 37 and 38 are re-associated relative to the retained table, which places its own l37
+# object at the lower position and l38 at the upper one. Three sources agree that 37 is the upper
+# lamp: the manual's LAMP MATRIX GRID row 05 (RT. 2 BANK TARGET-TOP at #37, -BOT at #38), its Lamp
+# Locations drawing, and switches 35/36 on the same physical 2-bank assembly, whose own top/bottom
+# labels are undisputed and which sit at y = 0.523974 and 0.559789 respectively. The table's switch
+# objects for that bank are correctly ordered while its lamp objects are crosswise, the same
+# internal inconsistency Ripley's pop bumpers and Flash Gordon's outlane inserts showed.
+#
+# This is re-associated rather than left as a conflict, unlike Flash Gordon's outlane Special
+# inserts, and the difference is the strength of the positional coupling. Lamps 37/38 are the two
+# inserts of one two-target bank whose own switches fix both y values independently, so assigning
+# each address to the observed position its evidence points at is a re-association, not an
+# invention. Flash Gordon's two Specials are outlane inserts whose position is not necessarily
+# co-located with the outlane switch of the same name, so nothing there fixes which of the two
+# observed coordinates belongs to which insert, and that record keeps its conflict.
 LAMP_POSITIONS = {
 	3: (0.448982, 0.869953), 4: (0.041343, 0.718277), 5: (0.102902, 0.684418), 6: (0.787327, 0.688207), 7: (0.862619, 0.722056),
 	8: (0.459021, 0.672538), 9: (0.523214, 0.694577), 10: (0.536752, 0.733216), 11: (0.449334, 0.757750), 12: (0.378431, 0.734661),
@@ -107,8 +122,8 @@ LAMP_POSITIONS = {
 	18: (0.158719, 0.423933), 19: (0.140941, 0.393540), 20: (0.115172, 0.358659), 21: (0.097649, 0.329581), 22: (0.068840, 0.269989),
 	23: (0.146981, 0.318566), 24: (0.260823, 0.417813), 25: (0.244782, 0.386170), 26: (0.226309, 0.354972), 27: (0.203975, 0.324292),
 	28: (0.181066, 0.280911), 29: (0.256124, 0.179963), 30: (0.242459, 0.144390), 31: (0.599872, 0.575723), 32: (0.615315, 0.549568),
-	33: (0.631677, 0.522870), 34: (0.646394, 0.496295), 35: (0.668395, 0.463435), 36: (0.694420, 0.421050), 37: (0.793707, 0.559691),
-	38: (0.793970, 0.522811), 39: (0.330451, 0.337752), 41: (0.436612, 0.404443), 42: (0.466854, 0.419810), 43: (0.506465, 0.430349),
+	33: (0.631677, 0.522870), 34: (0.646394, 0.496295), 35: (0.668395, 0.463435), 36: (0.694420, 0.421050), 37: (0.793970, 0.522811),
+	38: (0.793707, 0.559691), 39: (0.330451, 0.337752), 41: (0.436612, 0.404443), 42: (0.466854, 0.419810), 43: (0.506465, 0.430349),
 	44: (0.552037, 0.431525), 45: (0.593635, 0.426097), 46: (0.624849, 0.411064), 47: (0.513765, 0.318160), 48: (0.351206, 0.291225),
 	49: (0.408212, 0.300670), 50: (0.461527, 0.309884), 51: (0.594237, 0.343509), 52: (0.623753, 0.360062), 53: (0.913885, 0.283463),
 	54: (0.887157, 0.316193), 55: (0.866374, 0.346498), 57: (0.817829, 0.405617), 58: (0.877640, 0.432393), 60: (0.670839, 0.215243),

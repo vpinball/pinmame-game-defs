@@ -370,8 +370,14 @@ LE_LAMPS = {
 }
 
 PRO_LAMPS = {
-	1: "Start button", 2: "Tournament start", 3: "Shoot again", 4: "Right outlane", 5: "Right return lane", 6: "Left return lane",
-	7: "Left outlane", 8: "Captain America", 9: "Thor", 10: "Hawkeye", 11: "Hulk", 12: "Black Widow", 13: "Iron Man",
+	# Addresses 4-7 were transcribed backwards against the manual's own LAMP MATRIX GRID row 01
+	# (Avengers-Pro-Manual.pdf, PDF page 19), which reads LEFT OUTLANE / LEFT RETURN LANE /
+	# RIGHT RETURN LANE / RIGHT OUTLANE. The coordinates in curate_avengers_pro_spatial.py were
+	# always correct (4 far-left through 7 far-right) and are pairwise co-located with switches
+	# 24/25/28/29, whose own left/right labels are undisputed - lamp 4 sits at x=0.041343 and
+	# switch 24 "Left outlane" at x=0.041434. Only the four labels were wrong.
+	1: "Start button", 2: "Tournament start", 3: "Shoot again", 4: "Left outlane", 5: "Left return lane", 6: "Right return lane",
+	7: "Right outlane", 8: "Captain America", 9: "Thor", 10: "Hawkeye", 11: "Hulk", 12: "Black Widow", 13: "Iron Man",
 	14: "(T)HOR", 15: "T(H)OR", 16: "TH(O)R", 17: "THO(R)", 18: "Hawkeye #1 bottom", 19: "Hawkeye #2",
 	20: "Hawkeye #3", 21: "Hawkeye #4", 22: "Left orbit purple", 23: "Tesseract standup", 24: "Captain America #1 bottom",
 	25: "Captain America #2", 26: "Captain America #3", 27: "Captain America #4", 28: "Left inner loop red", 29: "Special",
