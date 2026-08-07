@@ -1,485 +1,87 @@
-# Indiana Jones: The Pinball Adventure
+# Indiana Jones: The Pinball Adventure (Williams, 1993)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+Coverage: **partial - complete physical I/O inventory, WPC-DCS bindings, mechanism causality, driver-variant boundary, normalized spatial placement, and recreation behavior validated; wiring conflicted pending resolution of two switch-polarity conflicts below**
 
-## Overview
+## Identity and evidence precedence
 
-Legacy evidence identifies this candidate as Williams (1993). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+This is the Williams WPC-DCS physical widebody ("Superpin" line) product released July 1993, part number 16-50017-101, IPDB 1267. It covers the `ij_*` clone tree: `ij_l7` (parent, production L-7), `ij_d7`/`ij_h1`/`ij_i1`/`ij_lg7`/`ij_dg7`/`ij_l6`/`ij_d6`/`ij_l5`/`ij_d5`/`ij_l4`/`ij_d4`/`ij_l3`/`ij_d3` (localization and display-fix revisions), and `ij_p2` (prototype). Every one of these is a game-ROM revision for the same physical machine. This definition explicitly excludes the unrelated `ij4_*` driver family (`src/wpc/sam.c`, `CORE_GAMEDEF(ij4, 210, "Indiana Jones (V2.1)", 2009, "Stern", sam1, 0)`), the completely different 2008 Stern SAM-hardware "Indiana Jones" machine that happens to share a PinMAME short-name prefix.
 
-## Playfield devices
+Evidence precedence for this definition: the retained known-working VPW Mod v1.0 script is runtime and mechanism-causality ground truth; the Williams operations manual controls physical construction, part numbers, wiring, polarity, quantities, and device presence; pinned PinMAME controls controller generation, public address topology, and emulator normalization; the retained VPX geometry supplies normalized coordinates. The retained manual's Paper Capture OCR text layer scrambles and duplicates table cells under `pdftotext -layout`, so every printed table used here was read from rendered pages and transcribed into `external:pinmame-review-artifacts/indiana-jones-the-pinball-adventure-1993/manual-transcription.md`; the retained OCR text is a search index only and never an authority.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+## Controller platform and address topology
 
-## Custom mechanisms
+`GEN_WPCDCS` (`PINMAME_HARDWARE_GEN_WPCDCS = 0x10`, "DCS Sound system, Indiana Jones 10/93 - Popeye 3/94") with `wpc_dispDMD`. This is a **new** controller profile, `pinmame.wpc-dcs`, not a reuse of `pinmame.wpc-fliptronic`: `GENWPC_HASFLIPTRON = GEN_ALLWPC & ~(GEN_WPCALPHA_1|GEN_WPCALPHA_2|GEN_WPCDMD)` does include `GEN_WPCDCS`, so the Fliptronic flipper-column behavior is identical, but WPC-DCS is a distinct hardware-generation bit from `GEN_WPCFLIPTRON` and deserves its own profile citing pinned source directly rather than reuse-by-analogy.
 
-- `mechanism.path-of-adventure`: Path of Adventure Mini-Playfield Tilting mini-playfield mechanism. Ball rolls across guided by tilting. Positions 0-8, center at 4. Related switches on playfield: 65-68 (left row), 75-78 (right row), 72/73 (holes). Related lamps: 71-75 (left inserts), 81-85 (right inserts). vpmMechTwoDirSol + vpmMechStopEnd + vpmMechLinear [source: legacy.game.ij]
-- `mechanism.idol`: Rotating Idol Mechanism Rotating idol toy with 6 positions. 3 optos encode position via Gray-code pattern. Sol 6 (Idol Release) ejects balls. bsIdol trough holds up to 3 balls. Lock doors open/close with solenoid 6. [source: legacy.game.ij]
+- Switches: dedicated coin-door 1-8, matrix 11-88 as drive column then return row (all 64 positions populated -- no unused matrix cell on this machine), Fliptronic 111-118, and a driver-declared custom switch column (`ijGameData.hw.swCol = 1`) publishing **121-128**, not 91-98. `ijGameData`'s inverted-switch mask `{0x00,0x00,0x00,0x00,0x5F,0x00,0x00,0x06,0x7F,0x00,0x00,0x70,0x18}` normalizes columns 4 (41-45,47), 7 (only 72,73 -- **not** 71), 8 (81-87), the Fliptronic column (only 115-117, the repurposed Center Drop Bank), and the custom column (only 124,125 -- **not** 121-123).
+- Solenoids: physical drivers 1-16, 33-36 (repurposed upper-flipper circuits), 45-48 (lower flippers); flashers 17-21; motors 22-23 (Path of Adventure tilt); 25-28 general purpose; a driver-declared custom-solenoid range (`ijGameData.hw.custSol = 7`) publishing **51-57** through the 8-Driver Board's `WPC_EXTBOARD1` register, of which 51-56 are populated and 57-58 are not. `ijGameData` declares no `lampCol`, so lamps stay the plain 11-88 matrix.
+- Lamps: 8x8 matrix 11-88, every address populated (no "Not Used" lamp on this machine).
+- GI: five strings on public addresses 0-4.
 
-## Ball-state transitions
+Three WPC-DCS numbering facts must not be lost. First, the printed solenoid table numbers the lower flipper circuits 29-32 while PinMAME publishes the same circuits at 45-48; the manual numbers are preserved as `manual.address` aliases. Second, the custom switch column's printed silkscreen number ("switch column 9", printed 91-95 on the 3-sw Opto and Motor Opto Switch PCB schematics) is **not** the PinMAME public address: `CORE_CUSTSWCOL = CORE_STDSWCOLS = 12` places the driver's first declared custom column two columns past the Fliptronic column, reporting publicly at 121-128 via the same `col*10+row+1` formula that gives the Fliptronic column 111-118. Third, the custom-solenoid board's own printed item numbers 37-42 are the 8-Driver Board's own silkscreen, not the public address; the true public range is 51-56, derived from `ijGameData.hw.custSol = 7` (`CORE_FIRSTCUSTSOL = 51`) and confirmed exactly by the retained script's own `SolCallback`/`SolModCallback` comments.
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+## Ball path, trough, and shooter
 
-## Controller interactions
+Indiana Jones has no manual plunger; the player instead pulls a spring-loaded **Gun Handle** trigger mounted on the front of the cabinet (A-16113 Gun Handle Assembly) -- the "powered ball-launching cannon" this machine is known for. `ijGameData`'s `comSw` declares `swGunTrigger` (34) as the shooter switch; pulling the trigger closes it, and the retained script's `AutoPlunger` handler fires the physical Plunger object (solenoid 2, Ball Launch) to auto-plunge the ball. Six balls rest on trough optos 86 (nearest the drain) through 81 (nearest the Ball Release coil); `cvpmTrough.InitSwitches Array(86,85,84,83,82,81)` and `.InitExit BallRelease,70,15`. Solenoid 4 (Ball Release) ejects the ball on 81; the retained script's `SolBallRelease` handler pulses Top Trough opto 87 in the same event whenever `bsTrough.Balls` is nonzero (`relationship.ball-release-top-trough-pulse`), so switch 87 is a documented projection onto the shared trough-exit kicker rather than a separately placed object -- all seven trough positions are, since `cvpmTrough` has no per-ball playfield object of its own.
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+Trough optos 81-87, ramp/idol/subway optos 41-45/47, and Mini Hole optos 72-73 are printed as optos that rest closed. PinMAME's `ijGameData` inverted-switch mask covers exactly those thirteen (columns 4, 7 partial, and 8), so the public state is already normalized: assert the public switch when a ball is present and never invert again.
 
-## Service and setup information
+## Idol: rotating figure and ball lock
 
-Unknown; locate operator/service documentation.
+A ball reaching the Center hole (switch 45, opto) rolls down a subway to Subway Lockup opto 47; solenoid 28 (Subway Release) ejects it onto Right Popper opto 44; solenoid 1 (Ball Popper) pops it up past Top Idol Enter opto 43 into the rotating idol lock. A DC gearmotor (solenoid 56, Wheel Motor, controlled from the 8-Driver Board) rotates the idol figure (`Primitive totem`) continuously; the retained script's `UpdateIdol_timer` advances a 0-359 degree counter in `IJ_IDOLTICK = 2`-degree ticks and bucket-decodes it into six 60-degree sextants, toggling `Controller.Switch(121/122/123)` at each boundary (`case 0/60/120/180/240/300`) so three opto sensors (A-13901-2 "3-sw. Opto PCB Assembly (for idol)") report which of six lock pockets faces the entry/exit point. Pinned PinMAME's own `ij_handleMech` mech-bit-`0x08` branch implements the identical six-case toggle table independently, and `ij_getSol`/`ij_handleBallState` gate lock-pocket transitions on the wheel motor's own bucket parity (`!(locals.idolPos/60%2)`). Solenoid 6 (Idol Release) opens the lock doors and ejects a held ball, sensed leaving on Exit Idol (switch 32). The lock itself (`cvpmTrough bsIdol`, size 3, `.InitExit IdolExit,180,0`) has no per-position playfield sensor of its own -- switches 121-123 sense the figure's *angular position*, not ball presence, matching the same "position-encoder projected onto the rotating figure" pattern documented for Williams Monster Bash's Dracula mechanism.
 
-## Timing and tuning observations
+**Unresolved polarity conflict (`conflict.wheel-position-opto-not-normalized`):** the manual documents 121-123 (printed switch-column-9 positions 91-93) as opto interrupters on the A-13901-2 board (three onboard LED/phototransistor pairs), but `ijGameData`'s inverted-switch mask leaves the custom column's bits 0-2 clear (`0x18` = binary `00011000`) -- unlike bits 3-4 (124/125, Mini Playfield Left/Right Limit, opto per the A-16657 board on the very same physical harness), it does not normalize 121-123. This keeps `physical_wiring` conflicted and the record `partial`; resolving it needs a LibPinMAME harness trace of a legal `ij_l7` ROM driving the idol motor through a full rotation and observing the idle/transition public state of 121-123.
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+## Path of Adventure: tilting mini-playfield
 
-## Recreation guidance
+A small secondary playfield (`Primitive minipf`) is mounted on a motorized tilt mechanism driven by solenoids 22/23 (Mini Motor Left/Right, an H-bridge pair). A ball enters through the **Top Lockup post** (solenoids 35/36, sensed by Top Post switch 46 -- printed circuit position repurposing the upper-left-flipper Fliptronic slot) after the **right-ramp Diverter** (solenoids 33/34, repurposing the upper-right-flipper slot) routes it across the Rope Bridge rather than up the right ramp proper. The retained script's `POAMech` (`vpmMechTwoDirSol + vpmMechStopEnd + vpmMechLinear`, `Sol1=23`, `Sol2=22`, `Length=9`, `Steps=9`) advances a 0-8 linear position counter; pinned PinMAME's own `ij_handleMech` mech-bit-`0x04` branch independently implements the same idea with a 0-359 `PoAPos` counter and 176/184-degree thresholds around a 180-degree center (`IJ_POA_LLIMIT`/`IJ_POA_MIDPOS`/`IJ_POA_RLIMIT`). The ball rolls down whichever of two forked lanes the tilt favors, passing four switches per lane (top, middle-top, middle-bottom, bottom: 65/66/67/68 left, 75/76/77/78 right) before reaching a Pit Hole (72) or Extra Ball Hole (73) at the bottom center. Mini Playfield Left/Right Limit optos (124/125, A-16657 "Motor Opto Switch PCB Assembly (for mini playfield)") mark the two tilt extremes and are the two custom-column addresses PinMAME *does* normalize.
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+The five mini-playfield insert lamps per side (71-75 left-area, 81-85 right-area) have no distinct retained-table `Light` object -- the script drives every one of them through `DisableLighting Li<n>on, 600,` against `Primitive` objects that all share one raw local coordinate because they are children of the tilting mini-playfield group. Each is a documented projection onto the playfield-fixed switch/trigger object at the same lane position (71/73 onto 65/66, 72/74 onto 75/76, 81/83 onto 67/68, 82/84 onto 77/78) or onto the `EnterPoA`/`ExitPoA` triggers for the two "arrow" indicator lamps (75, 85).
 
-## Evidence notes
+## Center Drop Bank, Totem, and captive ball
 
-- `platforms/wpc.json#/coils/1`: Unbound legacy outputs record `c_flipper_lower_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/2`: Unbound legacy outputs record `c_flipper_lower_left` was retained as a migration note only.
-- `platforms/wpc.json#/coils/3`: Unbound legacy outputs record `c_flipper_upper_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/4`: Unbound legacy outputs record `c_flipper_upper_left` was retained as a migration note only.
-- `games/ij.json#/switches/0._vbscript_name`: sw11a
-- `games/ij.json#/switches/0._inferred_type`: drop_target
-- `games/ij.json#/switches/0._note`: Single totem drop target, raised/lowered by solenoids 3/16
-- `games/ij.json#/switches/1._vbscript_name`: keyFront
-- `games/ij.json#/switches/1._inferred_type`: cabinet_button
-- `games/ij.json#/switches/2._vbscript_name`: vpmNudge.TiltSwitch
-- `games/ij.json#/switches/2._inferred_type`: tilt
-- `games/ij.json#/switches/3._vbscript_name`: Sw15
-- `games/ij.json#/switches/3._inferred_type`: rollover
-- `games/ij.json#/switches/4._vbscript_name`: Sw16
-- `games/ij.json#/switches/4._inferred_type`: rollover
-- `games/ij.json#/switches/5._vbscript_name`: Sw17
-- `games/ij.json#/switches/5._inferred_type`: rollover
-- `games/ij.json#/switches/6._vbscript_name`: Sw18
-- `games/ij.json#/switches/6._inferred_type`: rollover
-- `games/ij.json#/switches/7._inferred_type`: coin_door
-- `games/ij.json#/switches/7._note`: Set to 1 at init (coin door closed)
-- `games/ij.json#/switches/8._inferred_type`: opto
-- `games/ij.json#/switches/8._note`: Set to 0 at init, comment says 'always closed'
-- `games/ij.json#/switches/9._vbscript_name`: Sw25
-- `games/ij.json#/switches/9._inferred_type`: rollover
-- `games/ij.json#/switches/10._vbscript_name`: Sw26
-- `games/ij.json#/switches/10._inferred_type`: rollover
-- `games/ij.json#/switches/11._vbscript_name`: Sw27
-- `games/ij.json#/switches/11._inferred_type`: rollover
-- `games/ij.json#/switches/12._vbscript_name`: Sw28
-- `games/ij.json#/switches/12._inferred_type`: rollover
-- `games/ij.json#/switches/13._vbscript_name`: Sw31
-- `games/ij.json#/switches/13._inferred_type`: saucer
-- `games/ij.json#/switches/13._note`: cvpmSaucer bsLEject, kicks at angle 160
-- `games/ij.json#/switches/14._vbscript_name`: Sw32
-- `games/ij.json#/switches/14._inferred_type`: rollover
-- `games/ij.json#/switches/14._note`: Ball VelY set to 1 on hit
-- `games/ij.json#/switches/15._vbscript_name`: LeftSlingShot
-- `games/ij.json#/switches/15._inferred_type`: slingshot
-- `games/ij.json#/switches/15._note`: vpmTimer.PulseSw 33
-- `games/ij.json#/switches/16._vbscript_name`: PlungerKey
-- `games/ij.json#/switches/16._inferred_type`: plunger_lane
-- `games/ij.json#/switches/17._vbscript_name`: Bumper1
-- `games/ij.json#/switches/17._inferred_type`: bumper
-- `games/ij.json#/switches/17._note`: vpmTimer.PulseSw 35
-- `games/ij.json#/switches/18._vbscript_name`: Bumper2
-- `games/ij.json#/switches/18._inferred_type`: bumper
-- `games/ij.json#/switches/18._note`: vpmTimer.PulseSw 36
-- `games/ij.json#/switches/19._vbscript_name`: Bumper3
-- `games/ij.json#/switches/19._inferred_type`: bumper
-- `games/ij.json#/switches/19._note`: vpmTimer.PulseSw 37
-- `games/ij.json#/switches/20._vbscript_name`: Sw38
-- `games/ij.json#/switches/20._inferred_type`: standup_target
-- `games/ij.json#/switches/20._note`: vpmTimer.PulseSw 38
-- `games/ij.json#/switches/21._vbscript_name`: Sw41
-- `games/ij.json#/switches/21._inferred_type`: ramp_entry
-- `games/ij.json#/switches/21._note`: vpmTimer.PulseSw 41
-- `games/ij.json#/switches/22._vbscript_name`: Sw42
-- `games/ij.json#/switches/22._inferred_type`: ramp_entry
-- `games/ij.json#/switches/22._note`: vpmTimer.PulseSw 42
-- `games/ij.json#/switches/23._vbscript_name`: sw43
-- `games/ij.json#/switches/23._inferred_type`: kicker
-- `games/ij.json#/switches/23._note`: vpmTimer.PulseSw 43, ball enters idol mechanism
-- `games/ij.json#/switches/24._vbscript_name`: Sw44
-- `games/ij.json#/switches/24._inferred_type`: saucer
-- `games/ij.json#/switches/24._note`: cvpmSaucer bsPopper, ejects ball from subway
-- `games/ij.json#/switches/25._vbscript_name`: sw45
-- `games/ij.json#/switches/25._inferred_type`: opto
-- `games/ij.json#/switches/25._note`: vpmTimer.PulseSw 45, ball enters subway
-- `games/ij.json#/switches/26._vbscript_name`: sw46
-- `games/ij.json#/switches/26._inferred_type`: kicker
-- `games/ij.json#/switches/26._note`: Ball enters Path of Adventure mini-playfield, sets Controller.Switch(46)=1 on hit
-- `games/ij.json#/switches/27._vbscript_name`: sw47
-- `games/ij.json#/switches/27._inferred_type`: saucer
-- `games/ij.json#/switches/27._note`: cvpmSaucer bsSubway
-- `games/ij.json#/switches/28._vbscript_name`: RightSlingShot
-- `games/ij.json#/switches/28._inferred_type`: slingshot
-- `games/ij.json#/switches/28._note`: vpmTimer.PulseSw 48
-- `games/ij.json#/switches/29._vbscript_name`: Sw51
-- `games/ij.json#/switches/29._inferred_type`: standup_target
-- `games/ij.json#/switches/29._note`: ADVENTURE letter targets (U)
-- `games/ij.json#/switches/30._vbscript_name`: Sw52
-- `games/ij.json#/switches/30._inferred_type`: standup_target
-- `games/ij.json#/switches/30._note`: ADVENTURE letter targets (R)
-- `games/ij.json#/switches/31._vbscript_name`: Sw53
-- `games/ij.json#/switches/31._inferred_type`: standup_target
-- `games/ij.json#/switches/31._note`: ADVENTURE letter targets (E)
-- `games/ij.json#/switches/32._vbscript_name`: Sw54
-- `games/ij.json#/switches/32._inferred_type`: rollover
-- `games/ij.json#/switches/33._vbscript_name`: Sw55
-- `games/ij.json#/switches/33._inferred_type`: rollover
-- `games/ij.json#/switches/34._vbscript_name`: Sw56
-- `games/ij.json#/switches/34._inferred_type`: rollover
-- `games/ij.json#/switches/35._vbscript_name`: Sw57
-- `games/ij.json#/switches/35._inferred_type`: rollover
-- `games/ij.json#/switches/36._vbscript_name`: Sw58
-- `games/ij.json#/switches/36._inferred_type`: rollover
-- `games/ij.json#/switches/37._vbscript_name`: Sw61
-- `games/ij.json#/switches/37._inferred_type`: standup_target
-- `games/ij.json#/switches/37._note`: ADVENTURE letter targets (A)
-- `games/ij.json#/switches/38._vbscript_name`: Sw62
-- `games/ij.json#/switches/38._inferred_type`: standup_target
-- `games/ij.json#/switches/38._note`: ADVENTURE letter targets (D)
-- `games/ij.json#/switches/39._vbscript_name`: Sw63
-- `games/ij.json#/switches/39._inferred_type`: standup_target
-- `games/ij.json#/switches/39._note`: ADVENTURE letter targets (V)
-- `games/ij.json#/switches/40._vbscript_name`: Sw64
-- `games/ij.json#/switches/40._inferred_type`: standup_target
-- `games/ij.json#/switches/40._note`: vpmTimer.PulseSw 64
-- `games/ij.json#/switches/41._vbscript_name`: Sw65
-- `games/ij.json#/switches/41._inferred_type`: rollover
-- `games/ij.json#/switches/41._note`: PoA mini-playfield, left row top
-- `games/ij.json#/switches/42._vbscript_name`: Sw66
-- `games/ij.json#/switches/42._inferred_type`: rollover
-- `games/ij.json#/switches/42._note`: PoA mini-playfield, left row
-- `games/ij.json#/switches/43._vbscript_name`: Sw67
-- `games/ij.json#/switches/43._inferred_type`: rollover
-- `games/ij.json#/switches/43._note`: PoA mini-playfield, left row
-- `games/ij.json#/switches/44._vbscript_name`: Sw68
-- `games/ij.json#/switches/44._inferred_type`: rollover
-- `games/ij.json#/switches/44._note`: PoA mini-playfield, left row bottom
-- `games/ij.json#/switches/45._vbscript_name`: Sw71
-- `games/ij.json#/switches/45._inferred_type`: opto
-- `games/ij.json#/switches/45._note`: Captive ball rollover opto, direct switch set
-- `games/ij.json#/switches/46._vbscript_name`: sw72
-- `games/ij.json#/switches/46._inferred_type`: kicker
-- `games/ij.json#/switches/46._note`: PoA mini-playfield hole, ball drops through
-- `games/ij.json#/switches/47._vbscript_name`: sw73
-- `games/ij.json#/switches/47._inferred_type`: kicker
-- `games/ij.json#/switches/47._note`: PoA mini-playfield hole, ball drops through
-- `games/ij.json#/switches/48._vbscript_name`: Sw74
-- `games/ij.json#/switches/48._inferred_type`: ramp_exit
-- `games/ij.json#/switches/48._note`: vpmTimer.PulseSw 74
-- `games/ij.json#/switches/49._vbscript_name`: Sw75
-- `games/ij.json#/switches/49._inferred_type`: rollover
-- `games/ij.json#/switches/49._note`: PoA mini-playfield, right row top
-- `games/ij.json#/switches/50._vbscript_name`: Sw76
-- `games/ij.json#/switches/50._inferred_type`: rollover
-- `games/ij.json#/switches/50._note`: PoA mini-playfield, right row
-- `games/ij.json#/switches/51._vbscript_name`: Sw77
-- `games/ij.json#/switches/51._inferred_type`: rollover
-- `games/ij.json#/switches/51._note`: PoA mini-playfield, right row
-- `games/ij.json#/switches/52._vbscript_name`: Sw78
-- `games/ij.json#/switches/52._inferred_type`: rollover
-- `games/ij.json#/switches/52._note`: PoA mini-playfield, right row bottom
-- `games/ij.json#/switches/53._inferred_type`: trough
-- `games/ij.json#/switches/53._note`: bsTrough.InitSwitches Array(86,85,84,83,82,81)
-- `games/ij.json#/switches/54._inferred_type`: trough
-- `games/ij.json#/switches/55._inferred_type`: trough
-- `games/ij.json#/switches/56._inferred_type`: trough
-- `games/ij.json#/switches/57._inferred_type`: trough
-- `games/ij.json#/switches/58._inferred_type`: trough
-- `games/ij.json#/switches/59._inferred_type`: trough
-- `games/ij.json#/switches/59._note`: Pulsed after ExitSol_On if balls remain: vpmTimer.PulseSw 87
-- `games/ij.json#/switches/60._vbscript_name`: Sw88
-- `games/ij.json#/switches/60._inferred_type`: rollover
-- `games/ij.json#/switches/61._vbscript_name`: sw115a
-- `games/ij.json#/switches/61._inferred_type`: drop_target
-- `games/ij.json#/switches/61._note`: Center bank of 3 drop targets (left)
-- `games/ij.json#/switches/62._vbscript_name`: sw116a
-- `games/ij.json#/switches/62._inferred_type`: drop_target
-- `games/ij.json#/switches/62._note`: Center bank of 3 drop targets (center)
-- `games/ij.json#/switches/63._vbscript_name`: sw117a
-- `games/ij.json#/switches/63._inferred_type`: drop_target
-- `games/ij.json#/switches/63._note`: Center bank of 3 drop targets (right)
-- `games/ij.json#/switches/64._vbscript_name`: Sw118
-- `games/ij.json#/switches/64._inferred_type`: ramp_exit
-- `games/ij.json#/switches/64._note`: vpmTimer.PulseSw 118, triggers propeller animation if PropellerMod=1
-- `games/ij.json#/switches/65._inferred_type`: opto
-- `games/ij.json#/switches/65._note`: Idol rotating mechanism position encoder, set by UpdateIdol_timer
-- `games/ij.json#/switches/66._inferred_type`: opto
-- `games/ij.json#/switches/66._note`: Idol rotating mechanism position encoder
-- `games/ij.json#/switches/67._inferred_type`: opto
-- `games/ij.json#/switches/67._note`: Idol rotating mechanism position encoder
-- `games/ij.json#/switches/68._inferred_type`: opto
-- `games/ij.json#/switches/68._note`: cvpmMech PoAMech.AddSw 124,0,0 (position 0)
-- `games/ij.json#/switches/69._inferred_type`: opto
-- `games/ij.json#/switches/69._note`: cvpmMech PoAMech.AddSw 125,8,8 (position 8)
-- `games/ij.json#/coils/0._vbscript_callback`: bsPopper.SolOut
-- `games/ij.json#/coils/0._inferred_type`: kicker
-- `games/ij.json#/coils/1._vbscript_callback`: AutoPlunger
-- `games/ij.json#/coils/1._inferred_type`: plunger
-- `games/ij.json#/coils/2._vbscript_callback`: TotemDropUP
-- `games/ij.json#/coils/2._inferred_type`: drop_target_reset
-- `games/ij.json#/coils/3._vbscript_callback`: SolBallRelease
-- `games/ij.json#/coils/3._inferred_type`: trough_eject
-- `games/ij.json#/coils/4._vbscript_callback`: ResetDrops
-- `games/ij.json#/coils/4._inferred_type`: drop_target_reset
-- `games/ij.json#/coils/4._note`: Resets switches 115, 116, 117
-- `games/ij.json#/coils/5._vbscript_callback`: SolIdol
-- `games/ij.json#/coils/5._inferred_type`: kicker
-- `games/ij.json#/coils/5._note`: Opens lock doors, releases ball from idol
-- `games/ij.json#/coils/6._vbscript_callback`: vpmSolSound SoundFX("fx_Knocker",DOFKnocker),
-- `games/ij.json#/coils/6._inferred_type`: knocker
-- `games/ij.json#/coils/7._vbscript_callback`: bsLEject.SolOut
-- `games/ij.json#/coils/7._inferred_type`: kicker
-- `games/ij.json#/coils/8._inferred_type`: bumper
-- `games/ij.json#/coils/8._note`: Commented out in VBS - bumper solenoids handled natively by VPX
-- `games/ij.json#/coils/8._commented_out`: true
-- `games/ij.json#/coils/9._inferred_type`: bumper
-- `games/ij.json#/coils/9._note`: Commented out in VBS - bumper solenoids handled natively by VPX
-- `games/ij.json#/coils/9._commented_out`: true
-- `games/ij.json#/coils/10._inferred_type`: bumper
-- `games/ij.json#/coils/10._note`: Commented out in VBS - bumper solenoids handled natively by VPX
-- `games/ij.json#/coils/10._commented_out`: true
-- `games/ij.json#/coils/11._inferred_type`: slingshot
-- `games/ij.json#/coils/11._note`: Commented out in VBS - slingshot handled natively by VPX
-- `games/ij.json#/coils/11._commented_out`: true
-- `games/ij.json#/coils/12._inferred_type`: slingshot
-- `games/ij.json#/coils/12._note`: Commented out in VBS - slingshot handled natively by VPX
-- `games/ij.json#/coils/12._commented_out`: true
-- `games/ij.json#/coils/13._vbscript_callback`: vpmSolGate LeftGate,SoundFX("DiverterOn",DOFContactors),
-- `games/ij.json#/coils/13._inferred_type`: gate
-- `games/ij.json#/coils/14._vbscript_callback`: vpmSolGate RightGate,SoundFX("DiverterOn",DOFContactors),
-- `games/ij.json#/coils/14._inferred_type`: gate
-- `games/ij.json#/coils/15._vbscript_callback`: TotemDropDOWN
-- `games/ij.json#/coils/15._inferred_type`: drop_target_trip
-- `games/ij.json#/coils/16._vbscript_callback`: SolFlash17
-- `games/ij.json#/coils/16._inferred_type`: flasher
-- `games/ij.json#/coils/16._note`: Controls lamp 117 insert and BG center backglass flashers
-- `games/ij.json#/coils/17._vbscript_callback`: SolFlash18
-- `games/ij.json#/coils/17._inferred_type`: flasher_pwm
-- `games/ij.json#/coils/17._note`: SolModCallback (PWM), FL_LJackpot flasher objects
-- `games/ij.json#/coils/18._vbscript_callback`: SetLamp 119,
-- `games/ij.json#/coils/18._inferred_type`: controlled_lamp
-- `games/ij.json#/coils/18._note`: Routes to lamp 119 via SetLamp
-- `games/ij.json#/coils/19._vbscript_callback`: SetModLamp 20,
-- `games/ij.json#/coils/19._inferred_type`: flasher_pwm
-- `games/ij.json#/coils/19._note`: SolModCallback, FL_Jackpot, BG Ark backglass flasher
-- `games/ij.json#/coils/20._vbscript_callback`: SetModLamp 21,
-- `games/ij.json#/coils/20._inferred_type`: flasher_pwm
-- `games/ij.json#/coils/20._note`: SolModCallback, FL_POA, BG Letters backglass flasher
-- `games/ij.json#/coils/21._vbscript_callback`: PoAMoveLeft
-- `games/ij.json#/coils/21._inferred_type`: motor
-- `games/ij.json#/coils/21._note`: cvpmMech Sol2=22, tilts PoA mini-playfield left
-- `games/ij.json#/coils/22._vbscript_callback`: PoAMoveRight
-- `games/ij.json#/coils/22._inferred_type`: motor
-- `games/ij.json#/coils/22._note`: cvpmMech Sol1=23, tilts PoA mini-playfield right
-- `games/ij.json#/coils/23._vbscript_callback`: SetModLamp 24,
-- `games/ij.json#/coils/23._inferred_type`: flasher_pwm
-- `games/ij.json#/coils/23._note`: SolModCallback, FL_PlaneGunsA and FL_PlaneGunsB
-- `games/ij.json#/coils/24._vbscript_callback`: SetLamp 125,
-- `games/ij.json#/coils/24._inferred_type`: controlled_lamp
-- `games/ij.json#/coils/24._note`: Routes to lamp 125 via SetLamp
-- `games/ij.json#/coils/25._vbscript_callback`: SolFlash26
-- `games/ij.json#/coils/25._inferred_type`: flasher_pwm
-- `games/ij.json#/coils/25._note`: SolModCallback, green flupper dome #2, BG Right Fire backglass flasher
-- `games/ij.json#/coils/26._vbscript_callback`: SolFlash27
-- `games/ij.json#/coils/26._inferred_type`: flasher_pwm
-- `games/ij.json#/coils/26._note`: SolModCallback, green flupper dome #3, BG Left Sky backglass flasher
-- `games/ij.json#/coils/27._vbscript_callback`: bsSubway.SolOut
-- `games/ij.json#/coils/27._inferred_type`: kicker
-- `games/ij.json#/coils/28._vbscript_callback`: SolDivPower
-- `games/ij.json#/coils/28._inferred_type`: diverter
-- `games/ij.json#/coils/28._note`: Powers the diverter on
-- `games/ij.json#/coils/29._vbscript_callback`: SolDivHold
-- `games/ij.json#/coils/29._inferred_type`: diverter
-- `games/ij.json#/coils/29._note`: Holds the diverter, releases when disabled
-- `games/ij.json#/coils/30._vbscript_callback`: SolTopPostPower
-- `games/ij.json#/coils/30._inferred_type`: post
-- `games/ij.json#/coils/30._note`: Controls PoA entry post, interacts with DropPoA
-- `games/ij.json#/coils/31._vbscript_callback`: SolTopPostHold
-- `games/ij.json#/coils/31._inferred_type`: post
-- `games/ij.json#/coils/31._note`: Holds top post down for PoA ball divert
-- `games/ij.json#/coils/32._vbscript_callback`: SolRFlipper
-- `games/ij.json#/coils/32._inferred_type`: flipper
-- `games/ij.json#/coils/32._note`: sLRFlipper from WPC.VBS core framework (constant = 46)
-- `games/ij.json#/coils/33._vbscript_callback`: SolLFlipper
-- `games/ij.json#/coils/33._inferred_type`: flipper
-- `games/ij.json#/coils/33._note`: sLLFlipper from WPC.VBS core framework (constant = 48)
-- `games/ij.json#/coils/34._vbscript_callback`: solflash51
-- `games/ij.json#/coils/34._inferred_type`: flasher_pwm
-- `games/ij.json#/coils/34._note`: SolModCallback, PLAYFIELD_leftside, LeftSideFlashA/B, BG Left Horse backglass
-- `games/ij.json#/coils/35._vbscript_callback`: SolFlash52
-- `games/ij.json#/coils/35._inferred_type`: flasher_pwm
-- `games/ij.json#/coils/35._note`: SolModCallback, yellow flupper dome #1, RightSideFlasher, PLAYFIELD_ruins, BG Right Cave backglass
-- `games/ij.json#/coils/36._vbscript_callback`: SetLamp 116,
-- `games/ij.json#/coils/36._inferred_type`: controlled_lamp
-- `games/ij.json#/coils/36._note`: Routes to lamp 116 -> L153L, L153R
-- `games/ij.json#/coils/37._vbscript_callback`: SetLamp 115,
-- `games/ij.json#/coils/37._inferred_type`: controlled_lamp
-- `games/ij.json#/coils/37._note`: Routes to lamp 115 -> f54
-- `games/ij.json#/coils/38._vbscript_callback`: solflash55
-- `games/ij.json#/coils/38._inferred_type`: flasher_pwm
-- `games/ij.json#/coils/38._note`: SolModCallback, FL_JackpotMultia/b flashers
-- `games/ij.json#/coils/39._vbscript_callback`: SolMoveIdol
-- `games/ij.json#/coils/39._inferred_type`: motor
-- `games/ij.json#/coils/39._note`: Rotates the idol mechanism through 6 positions (60 deg each)
-- `games/ij.json#/lamps/0._vpx_name`: Light11, Light11a
-- `games/ij.json#/lamps/0._note`: With primitive p11, p11bulb
-- `games/ij.json#/lamps/1._vpx_name`: Light12, Light12a
-- `games/ij.json#/lamps/1._note`: With primitive p12, p12bulb
-- `games/ij.json#/lamps/2._vpx_name`: Light13, Light13a
-- `games/ij.json#/lamps/2._note`: With primitive p13, p13bulb
-- `games/ij.json#/lamps/3._vpx_name`: Light14, Light14a, Light14b
-- `games/ij.json#/lamps/3._note`: With primitive p14, p14bulb
-- `games/ij.json#/lamps/4._vpx_name`: Light15, Light15a, Light15b
-- `games/ij.json#/lamps/4._note`: With primitive p15, p15bulb
-- `games/ij.json#/lamps/5._vpx_name`: Light16, Light16a, Light16b
-- `games/ij.json#/lamps/5._note`: With primitive p16, p16bulb
-- `games/ij.json#/lamps/6._vpx_name`: Light17, Light17a
-- `games/ij.json#/lamps/6._note`: With primitive p17, p17bulb
-- `games/ij.json#/lamps/7._vpx_name`: Light18, Light18a, Light18b
-- `games/ij.json#/lamps/7._note`: With primitive p18
-- `games/ij.json#/lamps/8._vpx_name`: Light21, Light21a, Light21b
-- `games/ij.json#/lamps/8._note`: With primitive p21
-- `games/ij.json#/lamps/9._vpx_name`: Light22, Light22a, Light22b, Light22f
-- `games/ij.json#/lamps/9._note`: With primitive p22, p22bulb. Light22f tied to drop target sw117
-- `games/ij.json#/lamps/10._vpx_name`: Light23, Light23a, Light23b, Light23f
-- `games/ij.json#/lamps/10._note`: With primitive p23, p23bulb. Light23f tied to drop target sw115
-- `games/ij.json#/lamps/11._vpx_name`: Light24, Light24a, Light24b, Light24f
-- `games/ij.json#/lamps/11._note`: With primitive p24, p24bulb. Light24f tied to drop target sw116
-- `games/ij.json#/lamps/12._vpx_name`: Light25, Light25a, Light25b
-- `games/ij.json#/lamps/12._note`: With primitive p25
-- `games/ij.json#/lamps/13._vpx_name`: Light26, Light26a, Light26b
-- `games/ij.json#/lamps/13._note`: With primitive p26, plus BGFLGrail in VR
-- `games/ij.json#/lamps/14._vpx_name`: Light27, Light27a, Light27b
-- `games/ij.json#/lamps/14._note`: With primitive p27
-- `games/ij.json#/lamps/15._vpx_name`: Light28, Light28a, Light28b
-- `games/ij.json#/lamps/15._note`: With primitive p28, plus BGFLStones in VR
-- `games/ij.json#/lamps/16._vpx_name`: Light31, Light31a
-- `games/ij.json#/lamps/16._note`: With primitive p31, p31bulb
-- `games/ij.json#/lamps/17._vpx_name`: Light32, Light32a, Light32b
-- `games/ij.json#/lamps/17._note`: With primitive p32
-- `games/ij.json#/lamps/18._vpx_name`: Light33, Light33a
-- `games/ij.json#/lamps/18._note`: With primitive p33, p33bulb
-- `games/ij.json#/lamps/19._vpx_name`: Light34, Light34a, Light34b
-- `games/ij.json#/lamps/19._note`: With primitive p34
-- `games/ij.json#/lamps/20._vpx_name`: Light35, Light35a
-- `games/ij.json#/lamps/20._note`: With primitive p35, p35bulb
-- `games/ij.json#/lamps/21._vpx_name`: Light36, Light36a, Light36b
-- `games/ij.json#/lamps/21._note`: With primitive p36
-- `games/ij.json#/lamps/22._vpx_name`: Light37, Light37a
-- `games/ij.json#/lamps/22._note`: With primitive p37, p37bulb
-- `games/ij.json#/lamps/23._vpx_name`: Light38, Light38a
-- `games/ij.json#/lamps/23._note`: With primitive p38, p38bulb
-- `games/ij.json#/lamps/24._vpx_name`: Light41, Light41a, Light41b
-- `games/ij.json#/lamps/24._note`: With primitive p41
-- `games/ij.json#/lamps/25._vpx_name`: Light42, Light42a, Light42b
-- `games/ij.json#/lamps/25._note`: With primitive p42, plus BGFLArk in VR
-- `games/ij.json#/lamps/26._vpx_name`: Light43, Light43a, Light43b
-- `games/ij.json#/lamps/26._note`: With primitive p43
-- `games/ij.json#/lamps/27._vpx_name`: Light44, Light44a
-- `games/ij.json#/lamps/27._note`: With primitive p44, p44bulb
-- `games/ij.json#/lamps/28._vpx_name`: Light45, Light45a
-- `games/ij.json#/lamps/28._note`: With primitive p45, p45bulb
-- `games/ij.json#/lamps/29._vpx_name`: Light46, Light46a
-- `games/ij.json#/lamps/29._note`: With primitive p46, p46bulb
-- `games/ij.json#/lamps/30._vpx_name`: Light47, Light47a, Light47b
-- `games/ij.json#/lamps/30._note`: With primitive p47
-- `games/ij.json#/lamps/31._vpx_name`: Light48, Light48a
-- `games/ij.json#/lamps/31._note`: With primitive p48, p48bulb
-- `games/ij.json#/lamps/32._vpx_name`: Light51, Light51a
-- `games/ij.json#/lamps/32._note`: With primitive p51
-- `games/ij.json#/lamps/33._vpx_name`: Light52, Light52a
-- `games/ij.json#/lamps/33._note`: With primitive p52, p52bulb
-- `games/ij.json#/lamps/34._vpx_name`: Light53, Light53a, Light53b
-- `games/ij.json#/lamps/34._note`: With primitive p53
-- `games/ij.json#/lamps/35._vpx_name`: Light54, Light54a, Light54b
-- `games/ij.json#/lamps/35._note`: With primitive p54, p54bulb
-- `games/ij.json#/lamps/36._vpx_name`: Light55, Light55a, Light55b
-- `games/ij.json#/lamps/36._note`: With primitive p55, p55bulb
-- `games/ij.json#/lamps/37._vpx_name`: Light56, Light56a, Light56b
-- `games/ij.json#/lamps/37._note`: With primitive p56, p56bulb
-- `games/ij.json#/lamps/38._vpx_name`: Light57, Light57a, Light57b
-- `games/ij.json#/lamps/38._note`: With primitive p57
-- `games/ij.json#/lamps/39._vpx_name`: Light58, Light58a
-- `games/ij.json#/lamps/39._note`: With primitive p58, p58bulb
-- `games/ij.json#/lamps/40._vpx_name`: Light61, Light61a, Light61b, l61r, l61r2
-- `games/ij.json#/lamps/40._note`: With primitive p61, p61bulb
-- `games/ij.json#/lamps/41._vpx_name`: Light62, Light62a, Light62b, l62r, l62r2
-- `games/ij.json#/lamps/41._note`: With primitive p62, p62bulb
-- `games/ij.json#/lamps/42._vpx_name`: Light63, Light63a, Light63b, l63r, l63r2
-- `games/ij.json#/lamps/42._note`: With primitive p63, p63bulb
-- `games/ij.json#/lamps/43._vpx_name`: Light64, Light64a, Light64b, l64r, l64r2
-- `games/ij.json#/lamps/43._note`: With primitive p64, p64bulb
-- `games/ij.json#/lamps/44._vpx_name`: Light65, Light65a, Light65b
-- `games/ij.json#/lamps/44._note`: With primitive p65
-- `games/ij.json#/lamps/45._vpx_name`: Light66, Light66a
-- `games/ij.json#/lamps/45._note`: With primitive p66, p66bulb
-- `games/ij.json#/lamps/46._vpx_name`: Light67, Light67a, Light67b
-- `games/ij.json#/lamps/46._note`: With primitive p67
-- `games/ij.json#/lamps/47._vpx_name`: Light68, Light68a
-- `games/ij.json#/lamps/47._note`: With primitive p68, p68bulb
-- `games/ij.json#/lamps/48._note`: Callback only: DisableLighting Li71on, 600. PoA mini-playfield insert
-- `games/ij.json#/lamps/49._note`: Callback only: DisableLighting Li72on, 600
-- `games/ij.json#/lamps/50._note`: Callback only: DisableLighting Li73on, 600
-- `games/ij.json#/lamps/51._note`: Callback only: DisableLighting Li74on, 600
-- `games/ij.json#/lamps/52._note`: Callback only: DisableLighting Li75on, 600
-- `games/ij.json#/lamps/53._vpx_name`: Light76, Light76a, Light76b
-- `games/ij.json#/lamps/53._note`: With primitive p76
-- `games/ij.json#/lamps/54._vpx_name`: Light77, Light77a
-- `games/ij.json#/lamps/54._note`: With primitive p77, p77bulb
-- `games/ij.json#/lamps/55._vpx_name`: Light78, Light78a, Light78b
-- `games/ij.json#/lamps/55._note`: With primitive p78
-- `games/ij.json#/lamps/56._note`: Callback only: DisableLighting Li81on, 600. PoA mini-playfield insert
-- `games/ij.json#/lamps/57._note`: Callback only: DisableLighting Li82on, 600
-- `games/ij.json#/lamps/58._note`: Callback only: DisableLighting Li83on, 600
-- `games/ij.json#/lamps/59._note`: Callback only: DisableLighting Li84on, 600
-- `games/ij.json#/lamps/60._note`: Callback only: DisableLighting Li85on, 600
-- `games/ij.json#/lamps/61._vpx_name`: Light86, Light86a
-- `games/ij.json#/lamps/61._note`: With primitive p86, p86bulb
-- `games/ij.json#/lamps/62._vpx_name`: Light87, Light87a
-- `games/ij.json#/lamps/62._note`: With primitive p87, p87bulb
-- `games/ij.json#/lamps/63._vpx_name`: f54, f54a
-- `games/ij.json#/lamps/63._note`: Controlled by solenoid 54 -> SetLamp 115. With primitive pf54, pf54bulb
-- `games/ij.json#/lamps/64._vpx_name`: L153L, L153La, L153R, L153Ra
-- `games/ij.json#/lamps/64._note`: Controlled by solenoid 53 -> SetLamp 116. With primitives p153l, p153lBulb, p153r, p153rBulb
-- `games/ij.json#/lamps/65._vpx_name`: Light117, Light117a
-- `games/ij.json#/lamps/65._note`: Controlled by solenoid 17 via SolFlash17. With primitive p117, p117bulb
-- `games/ij.json#/lamps/66._vpx_name`: FL_SJackpot, FL_SJackpota, FL_SJackpotb
-- `games/ij.json#/lamps/66._note`: Controlled by solenoid 19 -> SetLamp 119. With primitives pSJackpotOn, pSJackpotBulb
-- `games/ij.json#/lamps/67._vpx_name`: l25, l25a
-- `games/ij.json#/lamps/67._note`: Controlled by solenoid 25 -> SetLamp 125. With primitive p125, p125bulb
-- `games/ij.json#/gi/0._vpx_collections`: GiTop, GiBumpers
-- `games/ij.json#/gi/0._note`: ModLampz index 0, includes GI top and bumper area lights
-- `games/ij.json#/gi/1._vpx_collections`: GIBot
-- `games/ij.json#/gi/1._note`: ModLampz index 1, includes VR backglass GI in VR mode. Controls ON/OFF prim visibility
-- `games/ij.json#/gi/2._vpx_collections`: GIRLaneCoin
-- `games/ij.json#/gi/2._note`: ModLampz index 4, includes LiteHOF_La, LiteHOF_Ra and their primitives
-- `games/ij.json#/mechanisms/0._mech_type`: vpmMechTwoDirSol + vpmMechStopEnd + vpmMechLinear
-- `games/ij.json#/mechanisms/0._sol1`: 23
-- `games/ij.json#/mechanisms/0._sol2`: 22
-- `games/ij.json#/mechanisms/0._sol1_desc`: Right motor
-- `games/ij.json#/mechanisms/0._sol2_desc`: Left motor
-- `games/ij.json#/mechanisms/0._length`: 9
-- `games/ij.json#/mechanisms/0._steps`: 9
-- `games/ij.json#/mechanisms/0._switches`: [{"description": "Left end position", "id": 124, "position_max": 0, "position_min": 0}, {"description": "Right end position", "id": 125, "position_max": 8, "position_min": 8}]
-- `games/ij.json#/mechanisms/0._callback`: UpdatePoA
-- `games/ij.json#/mechanisms/0._note`: Tilting mini-playfield mechanism. Ball rolls across guided by tilting. Positions 0-8, center at 4. Related switches on playfield: 65-68 (left row), 75-78 (right row), 72/73 (holes). Related lamps: 71-75 (left inserts), 81-85 (right inserts).
-- `games/ij.json#/mechanisms/1._sol`: 56
-- `games/ij.json#/mechanisms/1._sol_desc`: Idol Motor
-- `games/ij.json#/mechanisms/1._switches`: [{"description": "Idol Position Opto 1", "id": 121}, {"description": "Idol Position Opto 2", "id": 122}, {"description": "Idol Position Opto 3", "id": 123}]
-- `games/ij.json#/mechanisms/1._positions`: 6
-- `games/ij.json#/mechanisms/1._degrees_per_position`: 60
-- `games/ij.json#/mechanisms/1._note`: Rotating idol toy with 6 positions. 3 optos encode position via Gray-code pattern. Sol 6 (Idol Release) ejects balls. bsIdol trough holds up to 3 balls. Lock doors open/close with solenoid 6.
+A three-target opto drop bank (A-16032-2, A-13609 opto sensors) spells three letters of the "ADVENTURE" chase and occupies the printed upper-flipper-adjacent Fliptronic positions F5-F7 (public 115-117), footnoted "*Used as switches other than flipper switches in this game." Solenoid 5 (Center Drop Bank) resets all three targets in one pulse (`ResetDrops`, `DTRaise 115/116/117`); pinned PinMAME's `ij_handleMech` mech-bit-`0x01` branch clears all three switches together on the same coil, confirming one shared reset coil with no per-target coil. F8 (public 118) is the Left Ramp Made sensor, also repurposed rather than an upper-left-flipper button.
 
-## Unresolved questions
+A single reciprocating drop target ("Totem", switch 11, "Single Drop Target") is raised by solenoid 3 (Totem Drop Up) and knocked back down by solenoid 16 (Totem Drop Down); `ij_handleMech`'s mech-bit-`0x02` branch sets/clears the switch directly from whichever coil fires. A captive ball rolls between Captive Ball Back (switch 64) and Captive Ball Front (switch 71) behind the Totem target; `ij_handleBallState` marks the first simulated ball `IJ_CAPTUREDBALL` and routes it through `stCapturedIdle`/`stCapturedF`/`stCapturedB` states -- hitting the Totem target sets a `hitCaptiveBall` flag that drives the captive ball forward rather than letting it drain, and there is no dedicated actuator (the ball is pushed by momentum).
 
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+**Unresolved polarity conflict (`conflict.captive-ball-front-opto-not-normalized`):** the manual documents switch 71 as an opto interrupter (A-14231/A-14232, the same part pair used by normalized addresses 42-45/47), but `ijGameData`'s inverted-switch mask covers column 7 with only `0x06` (binary `00000110`): bits 1-2 (72/73, Mini Top/Bottom Hole, also opto) are normalized, but bit 0 (71) is not. This keeps `physical_wiring` conflicted; resolving it needs a LibPinMAME harness trace striking the captive ball and observing switch 71's idle/transition public state.
+
+## Fliptronic column: flippers and repurposed positions
+
+Two Fliptronic flippers on circuits 111-114 (lower right/left, EOS then button-opto). There are no upper flippers at all: unlike Williams Monster Bash (one repurposed position) or Twilight Zone (no repurposing), **every** would-be upper-flipper Fliptronic position on this machine is repurposed -- F5-F7 (115-117) are the Center Drop Bank opto sensors and F8 (118) is the Left Ramp Made sensor, all footnoted on the printed switch matrix. `ijGameData` declares `FLIP_SW(FLIP_L)|FLIP_SOL(FLIP_L)` with no `FLIP_U` bit at all, and the printed solenoid circuits 33-36 (nominally the upper-flipper power/hold pairs) drive the right-ramp Diverter and Top Lockup post instead -- pinned PinMAME's `core_getSol` falls back to the generic `solenoids2` bit path for 33-36 precisely because this driver never sets `FLIP_SOL(FLIP_UR)`/`FLIP_SOL(FLIP_UL)`.
+
+## Slingshots: printed vs. runtime identity (resolved)
+
+Printed row 12 reads "Left Slingshot" and row 13 "Right Slingshot" on the Solenoid/Flasher Table. The retained known-working script disagrees and is internally self-consistent the other way (`SolCallback(12)="RandomSoundSlingshotRight"`, `SolCallback(13)="RandomSoundSlingshotLeft"`), and pinned PinMAME's own `ij.c` agrees with the script (`#define sRSling 12`, `#define sLSling 13`). The switch side of the same pair is undisputed across all three sources (switch 33 = Left Slingshot = `swLSling`, switch 48 = Right Slingshot = `swRSling`), and the retained table's own `LeftSlingShot`/`RightSlingShot` wall objects sit on the geometrically correct side for their matching switch. Two independent, higher-evidence-priority sources agree against the manual's one row; resolved as public 12 = Right Slingshot, 13 = Left Slingshot, with the manual's transposed row disclosed rather than silently corrected.
+
+## Switch 23 ("Ticket Opto"): printed but unfitted
+
+The printed switch matrix (2-46) labels public switch 23 "Ticket Opto", and pinned PinMAME's `ij.c` independently defines `#define swTicketOpto 23`. The printed Switch Locations parts list (2-47), however, prints item 23 blank with no switch or opto part number, and the `swTicketOpto` constant is never referenced anywhere else in the driver (no state, mechanism, or inport-table entry uses it). The blank parts-list entry is the physical-fitment authority: no device is installed at this position on this machine, and "Ticket Opto" is a vestigial template label carried over from a shared WPC switch-matrix layout. Recorded `availability: "unused"`, citing all three sources; not a blocking conflict.
+
+## Mini Playfield Left/Right Limit: printed reversal (resolved)
+
+The printed Switch Locations parts list (2-47) reads item 94 "Mini Pfd **Right** Limit" and item 95 "Mini Pfd **Left** Limit" -- the opposite of both the printed Switch Matrix page (94 Left, 95 Right) and `ij.c`'s own naming (`swLL_PoA = CORE_CUSTSWNO(1,4) = 124`, `swRL_PoA = CORE_CUSTSWNO(1,5) = 125`; "LL"/"RL" = Left Limit/Right Limit). Two sources agree against one; resolved as 124 = Mini Playfield Left Limit, 125 = Mini Playfield Right Limit, with the Locations page's reversed row disclosed here rather than silently corrected.
+
+## Lamps, flashers, and general illumination
+
+All 64 lamp-matrix addresses are populated; no printed `(2)` bulb-quantity marker appears anywhere on the Lamp Matrix or Lamp Locations pages, and every retained-table `LightNN`/`LightNNa` pair is a co-located brightness double (offset under one bulb diameter), so every address is a single physical bulb. The lamp-matrix page (2-48) carries one typographic slip against the authoritative Lamp Locations parts list (2-49): address 23 prints "Adv(e)ture Light" (missing the "n") on the matrix page but "Adv(e)nture Light" on the parts list; the parts-list spelling is canonical.
+
+Flashers 18-21, 24-27, and 51-55 each drive at least one playfield bulb; the "Plane Gun LEDs" (24) address drives two distinct playfield objects on the two separate biplane toys despite no printed `(2)` marker, matching the Section 3 TOC's separate "Bi-Plane Assembly" and "Fighter Plane Assembly" entries. Flasher address 52 (Right Side Flasher) prints a `(2)` playfield quantity but only one distinct retained-table object was confidently identified; the definition records quantity 1 and discloses the shortfall rather than fabricating a second coordinate. Solenoid 17 (Eternal Life) and lamp 117 (Center Lock) share the *same* physical bulb (`Light117`/`p117`): the retained script's `SolFlash17` handler calls `SetLamp 117,1` directly, confirmed by concrete script evidence rather than assumed from proximity.
+
+General illumination splits three ways on the retained script's `ModLampz`/`UpdateGi` dispatch: GI address 0 drives collections `GITop` (28 members) plus `GIBumpers` (6 jet-bumper-cap members) for 34 total playfield placements; GI address 1 drives collection `GiBot` (32 members); GI address 4 drives collection `GiRLaneCoin` (`LiteHOF_L`/`LiteHOF_R`, 2 placements, plus a cabinet feed through J119, the only cabinet connection on the printed general-illumination wiring page). Two further Light objects, `gi060` and `gi061`, exist in the retained table but belong to no active GI collection (`GiTopSides`/`GiBotSides` are both declared empty in `collections.json`) and are excluded as orphaned table-modeling objects. GI addresses 2 and 3 (Insert Top/Bottom) are backbox-only circuits with no playfield collection assigned.
+
+## Author construction checklist
+
+- Build the six-ball trough with the drain at the "Trough Ball" nearest 86, the Gun Handle auto-launcher, both slingshots, three jet bumpers, both control gates, the Totem single drop target with its captive ball, the Center Drop Bank three-target opto bank, the left eject and subway/popper kickers, the rotating idol figure with its six-pocket lock, the motorized right-ramp diverter, the motorized Top Lockup post, and the motorized tilting Path of Adventure mini-playfield with its two forked lanes.
+- Preserve opto polarity for 41-45, 47, 72-73, 81-87, 115-117, 124-125; do not invert what PinMAME already normalizes. Switches 71 and 121-123 are also printed normally-closed optos, but PinMAME does not normalize them despite normalizing their column neighbors -- treat their polarity as unresolved (`conflict.captive-ball-front-opto-not-normalized`, `conflict.wheel-position-opto-not-normalized`) rather than assuming either convention.
+- Bind solenoid 12 to the Right Slingshot and 13 to the Left Slingshot, matching the retained script and driver rather than the manual's transposed printed row.
+- Treat solenoids 33/34 as the right-ramp Diverter and 35/36 as the Top Lockup post, not upper-flipper circuits; treat Fliptronic positions 115-117 as the Center Drop Bank and 118 as Left Ramp Made, not upper-flipper switches.
+- Bind every dedicated switch 1-8, every matrix position 11-88, Fliptronic 111-118, the five custom-column switches 121-125 (with 126-128 unpopulated), the eight CPU DIP bits, solenoids 1-16/22-28/33-36/45-48/51-56 (with 57-58 unpopulated), lamps 11-88, GI 0-4, and the 128x32 DMD.
+- Do not treat public switch 23 as a live "Ticket Opto" input; this machine has no device fitted at that position despite the printed matrix label and the driver's own vestigial `#define`.
 
 ## Sources
 
-- `legacy.game.ij`: `games/ij.json` at the pinned migration revision.
+- `manual.williams.indiana-jones-the-pinball-adventure.1993`: Williams Indiana Jones: The Pinball Adventure operations manual, SHA-256 `97a8202c5d95de743db7acf36567342cb71b2334188225d9b107787b5691ad43`.
+- `manual-support.williams.indiana-jones-the-pinball-adventure.1993`: retained human transcription, SHA-256 `5a083e87ffc8aa0237d72b98848fa58d4450f848e25535e5ae4a945d6015c8f3`.
+- `vpx-script.ij-vpw-1-0`: retained known-working VPW Mod v1.0 embedded script, SHA-256 `926e7a90d89602b003ac93757ee23c6ae916bb382112be28f82388381490bb7a`, binding `ij_l7`.
+- `vpx-table.ij-vpw-1-0`: retained table, SHA-256 `03451b7951242d204f9f79ab91f108d3c8aa203039f2ca867b24f4f47668c250`, bounds `left=0 top=0 right=1093 bottom=2162` (wide-body).
+- `pinmame.core.4ec52ff0ac13`: `src/wpc/sims/wpc/full/ij.c` and the WPC-DCS core/solenoid/flipper handling at the pinned revision.

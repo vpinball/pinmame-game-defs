@@ -1,0 +1,793 @@
+{
+  "blockers": [
+    "Public switch 71 (Captive Ball Front) is a printed normally-closed opto interrupter that pinned PinMAME's ijGameData inverted-switch mask does not normalize, unlike its two column neighbors 72/73 -- recorded conflict.captive-ball-front-opto-not-normalized, unresolved. This is a polarity conflict, not a spatial gap; every dimension this report audits is complete and validated.",
+    "Public switches 121-123 (Wheel Position 1-3) are printed normally-closed opto interrupters on the same physical switch column as normalized addresses 124/125, but pinned PinMAME's inverted-switch mask does not cover them -- recorded conflict.wheel-position-opto-not-normalized, unresolved. Also a polarity conflict, not a spatial gap."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162.0,
+      "left": 0.0,
+      "right": 1093.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/1093; 0=left, 1=right (wide-body table)",
+    "y": "y/2162; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "LightNNa co-located brightness-doubling Light objects (every matrix lamp)",
+    "gi060, gi061 Light objects that are members of no active GI collection (GiTopSides/GiBotSides both declared empty)",
+    "LiteHOF_La, LiteHOF_Ra co-located brightness-doubling duplicates of GI address 4's LiteHOF_L/LiteHOF_R",
+    "Flasher.FL_LJackpotb, Light.FL_SJackpota/FL_SJackpotb, Light.f54a, Light.FL_JackpotMultib -- secondary render-duplicate objects for flasher addresses the manual prints at quantity 1",
+    "PLAYFIELD_GI, PLAYFIELD_LRamp, PLAYFIELD_RRamp, PLAYFIELD_leftside, PLAYFIELD_ruins Flasher objects at the exact table center (0.5, 0.5) -- table-modeling visibility-toggle utility objects, not physical emitters"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 2027,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "438995cdc586b0ba83f6e683b9e0576530517f6e0a5afa86f2dd1236d5bbfb40",
+    "manifest_uri": "external:pinmame-vpx-sources/williams/indiana-jones-the-pinball-adventure-1993/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.ij-vpw-1-0",
+    "total_bytes": 362116168,
+    "vpxtool_version": "vpxtool git:v0.33.3"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "williams.indiana-jones-the-pinball-adventure.1993",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      12,
+      13,
+      14,
+      21,
+      22,
+      34,
+      112,
+      114
+    ],
+    "constant": [
+      24
+    ],
+    "dip_switch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "internal_nonvisual": [
+      111,
+      113
+    ],
+    "unused": [
+      23,
+      126,
+      127,
+      128
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 2,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 3,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 88,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 57,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 58,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 240,
+  "projections": [
+    {
+      "address": 81,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained \"Ballrelease\" kicker (trough exit / Ball Release coil position): cvpmTrough's own construction (.InitSwitches Array(86,85,84,83,82,81), .InitExit BallRelease,70,15) has no individual playfield object per ball position, only the shared exit kicker."
+    },
+    {
+      "address": 82,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained \"Ballrelease\" kicker; see switch 81."
+    },
+    {
+      "address": 83,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained \"Ballrelease\" kicker; see switch 81."
+    },
+    {
+      "address": 84,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained \"Ballrelease\" kicker; see switch 81."
+    },
+    {
+      "address": 85,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained \"Ballrelease\" kicker; see switch 81."
+    },
+    {
+      "address": 86,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained \"Ballrelease\" kicker; see switch 81."
+    },
+    {
+      "address": 87,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained \"Ballrelease\" kicker (trough exit): the retained script pulses this switch from SolBallRelease whenever bsTrough.Balls is nonzero (relationship.ball-release-top-trough-pulse), not from a distinct Top Trough playfield object."
+    },
+    {
+      "address": 121,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the rotating idol figure (Primitive totem, table object center): the retained script's UpdateIdol_timer sets Controller.Switch(121/122/123) directly from a 360-degree motor-position counter (60-degree sextants), not from three separate playfield objects."
+    },
+    {
+      "address": 122,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the rotating idol figure (Primitive totem, table object center); see switch 121."
+    },
+    {
+      "address": 123,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the rotating idol figure (Primitive totem, table object center); see switch 121."
+    },
+    {
+      "address": 124,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the tilting mini-playfield assembly (Primitive minipf, table object center): the retained script's POAMech (vpmMechTwoDirSol + vpmMechStopEnd + vpmMechLinear, .AddSw 124,0,0) sets this switch from the mechanism's own 9-step linear position counter, not from a separate playfield sensor object."
+    },
+    {
+      "address": 125,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the tilting mini-playfield assembly (Primitive minipf, table object center); see switch 124."
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the Mini Top Left switch/trigger object (table object center): the mini-playfield insert lamp has no distinct retained-table object -- the script drives it through `DisableLighting Li71on, 600,` against a Primitive that shares a single raw local coordinate with every other mini-playfield insert lamp because it is a child of the tilting mini-playfield group."
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the Mini Top Right switch/trigger object (table object center); see lamp 71."
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the Mini Middle Top Left switch/trigger object (table object center); see lamp 71."
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the Mini Middle Top Right switch/trigger object (table object center); see lamp 71."
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained \"EnterPoA\" trigger, the Path of Adventure entrance sensor immediately behind the Top Post; the \"Mini Top Arrow\" insert marks the entrance and has no distinct lamp object of its own; see lamp 71."
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the Mini Middle Bottom Left switch/trigger object (table object center); see lamp 71."
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the Mini Middle Bottom Right switch/trigger object (table object center); see lamp 71."
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the Mini Bottom Left switch/trigger object (table object center); see lamp 71."
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the Mini Bottom Right switch/trigger object (table object center); see lamp 71."
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained \"ExitPoA\" trigger, the Path of Adventure exit sensor; the \"Mini Bottom Arrow\" insert marks the exit and has no distinct lamp object of its own; see lamp 71."
+    }
+  ],
+  "resolved_input_addresses": [
+    11,
+    15,
+    16,
+    17,
+    18,
+    25,
+    26,
+    27,
+    28,
+    31,
+    32,
+    33,
+    35,
+    36,
+    37,
+    38,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    115,
+    116,
+    117,
+    118,
+    121,
+    122,
+    123,
+    124,
+    125
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 0,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 87,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "926e7a90d89602b003ac93757ee23c6ae916bb382112be28f82388381490bb7a",
+    "manual_sha256": "97a8202c5d95de743db7acf36567342cb71b2334188225d9b107787b5691ad43",
+    "table_sha256": "03451b7951242d204f9f79ab91f108d3c8aa203039f2ca867b24f4f47668c250"
+  },
+  "status": "validated",
+  "unresolved": [
+    "conflict.captive-ball-front-opto-not-normalized",
+    "conflict.wheel-position-opto-not-normalized"
+  ],
+  "version": 1,
+  "visual_review_cache": {
+    "root": "external:pinmame-manuals/rendered/williams.indiana-jones-the-pinball-adventure.1993/",
+    "transcription": {
+      "path": "external:pinmame-review-artifacts/indiana-jones-the-pinball-adventure-1993/manual-transcription.md",
+      "sha256": "5a083e87ffc8aa0237d72b98848fa58d4450f848e25535e5ae4a945d6015c8f3"
+    }
+  }
+}
