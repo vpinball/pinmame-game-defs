@@ -60,13 +60,41 @@ class BatmanDefinitionTests(unittest.TestCase):
         because s11.c installs no MDRV_SWITCH_CONV of its own. This is emphatically not the
         col*10+row that WPC games use, and both printed charts confirm it cell by cell.
         """
-        self.assertEqual(set(range(1, 65)), set(self.switches))
+        # The two negative addresses are coin-door diagnostic buttons in switch column 0, not
+        # matrix positions; everything from 1 to 64 is the matrix itself.
+        self.assertEqual(set(range(1, 65)) | {-7, -6}, set(self.switches))
         self.assertEqual(set(range(1, 65)), set(self.lamps))
         for address in range(1, 65):
             column, row = (address - 1) // 8 + 1, (address - 1) % 8 + 1
             for device in (self.switches[address], self.lamps[address]):
                 notes = device["physical"]["notes"]
                 self.assertIn(f"column {column}, row {row}", notes, f"address {address}")
+
+    def test_data_east_publishes_only_two_diagnostic_buttons(self) -> None:
+        """s11.h defines DE_SWADVANCE -7 and DE_SWUPDN -6 and stops.
+
+        The -5 and -4 addresses beside them are S11_SWCPUDIAG and S11_SWSOUNDDIAG, which belong
+        to Williams System 11 and not to Data East. Batman runs on the shared System 11 core
+        source, which is exactly why the difference is worth a gate rather than an assumption.
+        """
+        negatives = {a for a in self.switches if a < 1}
+        self.assertEqual({-7, -6}, negatives)
+        for address in negatives:
+            self.assertEqual("cabinet_or_service", self.switches[address]["spatial"]["reason"])
+
+    def test_general_illumination_uses_the_gi_output_kind(self) -> None:
+        """This platform has no GI channel, so a GI device is an ordinary solenoid address typed
+        `gi` - the convention the System 11 profile states and the Whirlwind record follows."""
+        self.assertEqual("gi", self.solenoids[11]["kind"])
+
+    def test_synthetic_flipper_addresses_are_virtual_and_unused(self) -> None:
+        """45-48 have no driver-board output behind them on this platform: real hardware fires
+        the coils straight from the cabinet button. The coil itself is real and its part number
+        and wiring are recorded, but the ADDRESS is synthetic."""
+        for address in (45, 46, 47, 48):
+            self.assertEqual("virtual", self.solenoids[address]["kind"], address)
+            self.assertEqual("unused", self.solenoids[address]["availability"], address)
+            self.assertIn("Synthetic", self.solenoids[address]["label"], address)
 
     def test_every_lamp_address_is_populated(self) -> None:
         """Unusual, and worth a gate: the printed lamp matrix has no 'Not Used' cell at all."""
@@ -138,7 +166,7 @@ class BatmanDefinitionTests(unittest.TestCase):
         assert together and must not be modelled as independent coils."""
         for address in (45, 46, 47, 48):
             notes = self.solenoids[address]["physical"]["notes"]
-            self.assertIn("synthesise", notes.lower(), address)
+            self.assertIn("synthesis", notes.lower(), address)
             self.assertIn("not independently controllable", notes, address)
 
     def test_no_custom_solenoids_are_published(self) -> None:

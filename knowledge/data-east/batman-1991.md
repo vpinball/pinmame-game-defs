@@ -17,6 +17,38 @@ sets, plus a ROM-layout macro on 1.01. Sound ROMs are byte-identical across all 
 **`batmanf` is Batman Forever, Sega 1995, `GEN_DEDMD64`.** It lives in the same game-table file
 and shares a name prefix, and it is a completely different physical machine. Do not group them.
 
+## Relationship to `pinmame.system-11`, and why this record does not claim it
+
+Batman is **Data East hardware**, `GEN_DEDMD16`. It is not a Williams System 11 machine. What is
+true is narrower and is a fact about PinMAME rather than about the cabinet: there is no `de.c`,
+`degames.c` includes `s11.h`, and Data East games are driven by the same emulator source file as
+Williams System 11 because the Data East CPU board was closely derived from it.
+
+That makes `controllers/pinmame/system-11.json` the closest existing profile, and the two agree on
+the load-bearing parts: column-major sequential switch numbering, a single DIP-style jumper bit at
+public address 0, 64 lamps, the mux-relay pairing of an A-side address with A+24, address 23 as a
+flipper/switched-solenoid enable with no device behind it, and no GI channel anywhere on the
+platform. Those conclusions were reached here independently from source before that profile
+existed, and they match.
+
+They are not the same profile, and this record therefore keeps the `pinmame.dataeast` platform
+string that nine already-committed definitions use rather than claiming a Williams one. Four
+differences are established from pinned source:
+
+- **Diagnostic buttons.** `s11.h` gives Data East only `DE_SWADVANCE` (-7) and `DE_SWUPDN` (-6).
+  The -5 and -4 addresses beside them are `S11_SWCPUDIAG` and `S11_SWSOUNDDIAG`, Williams only.
+- **Special-solenoid permutation.** `setSSSol` selects `ssSolNo[1] = (3, 4, 5, 1, 0, 2)` for Data East
+  against `ssSolNo[0] = (5, 4, 1, 2, 0, 3)` for Williams, so the PIA-line-to-public-address map for
+  17-22 differs between them.
+- **Cabinet column.** Column 1 is loaded from `DE_COMPORTS`, not `S11_COMPORTS`.
+- **Advance polarity.** `s11.c` reads Data East's Advance button inverted, as
+  `!core_getSw(DE_SWADVANCE)`.
+
+Authoring a Data East profile would set the address contract for all nine of those records at
+once, and whether one profile should span every Data East generation - or whether Sega-era games
+belong under a profile named "Data East" - are scope and naming calls for a maintainer. This
+record documents the model instead of pre-empting that decision.
+
 ## The address model, and where it differs from WPC and Whitestar
 
 Data East runs on the shared Williams System 11 core (`s11.c`); there is no `de.c`. `s11.c`
@@ -72,7 +104,7 @@ pages, zero characters, `ocr_required`), so every table here was read from 400 d
 transcribed by hand. Nothing came from `pdftotext`.
 
 Spatial placement rests on **one** retained recreation, the VPW v1.1 build, whose playfield is
-**952 x 1974** - not the 2162 most WPC-era tables use. 27 of the 42
+**952 x 1974** - not the 2162 most WPC-era tables use. 27 of the 44
 fitted switches and 54 of the 64 lamps resolved to an object; nothing resolved to an
 address the manual prints "Not Used", which is the check that would have caught an invented
 binding. 14 coordinates are centroids of an extended object's drag points rather

@@ -3507,13 +3507,83 @@
     {
       "aliases": [
         {
+          "namespace": "pinmame.switch",
+          "value": "-7"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": -7,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.diagnostic-7",
+      "kind": "switch",
+      "label": "Advance (Black Button)",
+      "physical": {
+        "notes": "Coin-door diagnostic button, named 'Black Button' by s11.h's DE_COMPORTS, which places it in switch column 0 rather than the playfield matrix. Data East defines only these two (DE_SWADVANCE -7, DE_SWUPDN -6); the -5 and -4 addresses beside them are S11_SWCPUDIAG and S11_SWSOUNDDIAG, which exist on Williams System 11 and not here. s11.c reads Advance inverted on Data East, as !core_getSw(DE_SWADVANCE)."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "-6"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": -6,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.diagnostic-6",
+      "kind": "switch",
+      "label": "Up/Down (Green Button)",
+      "physical": {
+        "notes": "Coin-door diagnostic button, named 'Green Button' by s11.h's DE_COMPORTS, which places it in switch column 0 rather than the playfield matrix. Data East defines only these two (DE_SWADVANCE -7, DE_SWUPDN -6); the -5 and -4 addresses beside them are S11_SWCPUDIAG and S11_SWSOUNDDIAG, which exist on Williams System 11 and not here. s11.c reads Advance inverted on Data East, as !core_getSw(DE_SWADVANCE)."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
           "namespace": "pinmame.dip",
-          "value": "1"
+          "value": "0"
         }
       ],
       "availability": "unknown",
       "binding": {
-        "device": 1,
+        "device": 0,
         "group": "pinmame.input.dip"
       },
       "id": "dip.jumper-w7",
@@ -4204,7 +4274,7 @@
         "group": "pinmame.output.solenoid"
       },
       "id": "coil.driver-11",
-      "kind": "relay",
+      "kind": "gi",
       "label": "General Illumination Relay",
       "physical": {
         "notes": "Direct CPU driver on CN-12; not affected by the Left/Right relay. Printed 'GENERAL ILLUM. RELAY', relay K-1 at P.S. board CN7-1/3. Confirms s11.c:1207's own '// GI output' comment. General illumination on this platform is this solenoid, not a GI channel: coreGlobals.nGI is never assigned anywhere in s11.c and gi[] is never written."
@@ -5622,14 +5692,14 @@
           "value": "45"
         }
       ],
-      "availability": "used",
+      "availability": "unused",
       "binding": {
         "device": 45,
         "group": "pinmame.output.solenoid"
       },
       "id": "coil.flipper-45",
-      "kind": "coil",
-      "label": "Lower Right Flipper Power",
+      "kind": "virtual",
+      "label": "Synthetic Lower Right Flipper Power",
       "physical": {
         "notes": "Not a CPU-driven output on this machine. btmnGameData declares no FLIP_SOL, so core.c:1745-1752 synthesises these bits whenever Game On is active and the corresponding flipper button is down. Power and hold therefore assert and release together and are not independently controllable; a recreation must not model them as two separate coils. The physical coils are driven from the Flipper PCB, which the manual documents in its own unnumbered 'Flipper Solenoids' table listing a left and a right flipper only - there is no upper flipper of either hand.",
         "part_number": "23-900"
@@ -5666,14 +5736,14 @@
           "value": "46"
         }
       ],
-      "availability": "used",
+      "availability": "unused",
       "binding": {
         "device": 46,
         "group": "pinmame.output.solenoid"
       },
       "id": "coil.flipper-46",
-      "kind": "coil",
-      "label": "Lower Right Flipper Hold",
+      "kind": "virtual",
+      "label": "Synthetic Lower Right Flipper Hold",
       "physical": {
         "notes": "Not a CPU-driven output on this machine. btmnGameData declares no FLIP_SOL, so core.c:1745-1752 synthesises these bits whenever Game On is active and the corresponding flipper button is down. Power and hold therefore assert and release together and are not independently controllable; a recreation must not model them as two separate coils. The physical coils are driven from the Flipper PCB, which the manual documents in its own unnumbered 'Flipper Solenoids' table listing a left and a right flipper only - there is no upper flipper of either hand.",
         "part_number": "23-900"
@@ -5710,14 +5780,14 @@
           "value": "47"
         }
       ],
-      "availability": "used",
+      "availability": "unused",
       "binding": {
         "device": 47,
         "group": "pinmame.output.solenoid"
       },
       "id": "coil.flipper-47",
-      "kind": "coil",
-      "label": "Lower Left Flipper Power",
+      "kind": "virtual",
+      "label": "Synthetic Lower Left Flipper Power",
       "physical": {
         "notes": "Not a CPU-driven output on this machine. btmnGameData declares no FLIP_SOL, so core.c:1745-1752 synthesises these bits whenever Game On is active and the corresponding flipper button is down. Power and hold therefore assert and release together and are not independently controllable; a recreation must not model them as two separate coils. The physical coils are driven from the Flipper PCB, which the manual documents in its own unnumbered 'Flipper Solenoids' table listing a left and a right flipper only - there is no upper flipper of either hand.",
         "part_number": "23-900"
@@ -5754,14 +5824,14 @@
           "value": "48"
         }
       ],
-      "availability": "used",
+      "availability": "unused",
       "binding": {
         "device": 48,
         "group": "pinmame.output.solenoid"
       },
       "id": "coil.flipper-48",
-      "kind": "coil",
-      "label": "Lower Left Flipper Hold",
+      "kind": "virtual",
+      "label": "Synthetic Lower Left Flipper Hold",
       "physical": {
         "notes": "Not a CPU-driven output on this machine. btmnGameData declares no FLIP_SOL, so core.c:1745-1752 synthesises these bits whenever Game On is active and the corresponding flipper button is down. Power and hold therefore assert and release together and are not independently controllable; a recreation must not model them as two separate coils. The physical coils are driven from the Flipper PCB, which the manual documents in its own unnumbered 'Flipper Solenoids' table listing a left and a right flipper only - there is no upper flipper of either hand.",
         "part_number": "23-900"

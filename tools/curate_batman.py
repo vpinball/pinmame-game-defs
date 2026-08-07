@@ -151,14 +151,41 @@ for address in range(1, 65):
         # extraction simply does not model; the Star Trek: TNG pass set that precedent.
     inputs.append(entry)
 
-# DIP: s11.c declares MDRV_DIPS(1) and reads a single jumper bit (W7) on PIA2 PA7. Only the one
-# bit source supports is enumerated; nothing is padded out to a byte we cannot evidence.
+# The two coin-door diagnostic buttons. s11.h defines DE_SWADVANCE = -7 and DE_SWUPDN = -6 and
+# stops there: the -5 CPU-diagnostic and -4 sound-diagnostic addresses beside them are
+# S11_SWCPUDIAG/S11_SWSOUNDDIAG, Williams System 11 only. Data East publishes two, not four,
+# which is a real platform difference rather than an omission here. DE also inverts Advance
+# relative to Williams (s11.c reads !core_getSw(DE_SWADVANCE)).
+for _address, _label, _port_label in (
+    (-7, "Advance (Black Button)", "Black Button"),
+    (-6, "Up/Down (Green Button)", "Green Button"),
+):
+    inputs.append({
+        "id": f"switch.diagnostic{_address}",
+        "label": _label,
+        "kind": "switch",
+        "binding": {"group": "pinmame.input.switch", "device": _address},
+        "aliases": [{"namespace": "pinmame.switch", "value": str(_address)}],
+        "availability": "used",
+        "provenance": prov("validated", [CORE]),
+        "physical": {"notes": (
+            f"Coin-door diagnostic button, named '{_port_label}' by s11.h's DE_COMPORTS, which "
+            "places it in switch column 0 rather than the playfield matrix. Data East defines "
+            "only these two (DE_SWADVANCE -7, DE_SWUPDN -6); the -5 and -4 addresses beside them "
+            "are S11_SWCPUDIAG and S11_SWSOUNDDIAG, which exist on Williams System 11 and not "
+            "here. s11.c reads Advance inverted on Data East, as !core_getSw(DE_SWADVANCE)."
+        )},
+        "spatial": not_applicable("cabinet_or_service", [CORE]),
+    })
+
+# DIP: s11.c declares MDRV_DIPS(1) and reads a single jumper bit on PIA2 PA7. The public address
+# is 0, matching the platform profile's own {"values": [0]} rule and the Whirlwind record.
 inputs.append({
     "id": "dip.jumper-w7",
     "label": "Jumper W7",
     "kind": "dip_switch",
-    "binding": {"group": "pinmame.input.dip", "device": 1},
-    "aliases": [{"namespace": "pinmame.dip", "value": "1"}],
+    "binding": {"group": "pinmame.input.dip", "device": 0},
+    "aliases": [{"namespace": "pinmame.dip", "value": "0"}],
     "availability": "unknown",
     "provenance": prov("observed", [CORE]),
     "physical": {"notes": (
@@ -222,8 +249,10 @@ for address in range(1, 9):
     outputs.append(record)
 
 # --- Public 9-16: direct drivers on CN-12, not muxed ---------------------------------------
+# Kind "gi" on an ordinary solenoid address: this platform has no separate GI channel, so a
+# general-illumination device binds to pinmame.output.solenoid and is typed gi.
 DIRECT_KIND = {
-    "9": "flasher", "10": "relay", "11": "relay", "12": "flasher",
+    "9": "flasher", "10": "relay", "11": "gi", "12": "flasher",
     "13": "flasher", "14": "flasher", "15": "control_signal", "16": "motor",
 }
 for address in range(9, 17):
@@ -361,17 +390,17 @@ for address in range(33, 45):
     })
 
 # --- Public 45-48: synthesised lower flipper coils -------------------------------------------
-FLIPPERS = {45: ("Lower Right Flipper Power", "right"), 46: ("Lower Right Flipper Hold", "right"),
-            47: ("Lower Left Flipper Power", "left"), 48: ("Lower Left Flipper Hold", "left")}
+FLIPPERS = {45: ("Synthetic Lower Right Flipper Power", "right"), 46: ("Synthetic Lower Right Flipper Hold", "right"),
+            47: ("Synthetic Lower Left Flipper Power", "left"), 48: ("Synthetic Lower Left Flipper Hold", "left")}
 for address, (label, side) in FLIPPERS.items():
     flip = TRANSCRIPTION["flipper_solenoids"][side]
     outputs.append({
         "id": f"coil.flipper-{address}",
         "label": label,
-        "kind": "coil",
+        "kind": "virtual",
         "binding": {"group": "pinmame.output.solenoid", "device": address},
         "aliases": [{"namespace": "pinmame.solenoid", "value": str(address)}],
-        "availability": "used",
+        "availability": "unused",
         "provenance": prov("validated", [MANUAL, CORE]),
         "physical": {
             "part_number": flip["coil_type"],
@@ -840,6 +869,38 @@ sets, plus a ROM-layout macro on 1.01. Sound ROMs are byte-identical across all 
 
 **`batmanf` is Batman Forever, Sega 1995, `GEN_DEDMD64`.** It lives in the same game-table file
 and shares a name prefix, and it is a completely different physical machine. Do not group them.
+
+## Relationship to `pinmame.system-11`, and why this record does not claim it
+
+Batman is **Data East hardware**, `GEN_DEDMD16`. It is not a Williams System 11 machine. What is
+true is narrower and is a fact about PinMAME rather than about the cabinet: there is no `de.c`,
+`degames.c` includes `s11.h`, and Data East games are driven by the same emulator source file as
+Williams System 11 because the Data East CPU board was closely derived from it.
+
+That makes `controllers/pinmame/system-11.json` the closest existing profile, and the two agree on
+the load-bearing parts: column-major sequential switch numbering, a single DIP-style jumper bit at
+public address 0, 64 lamps, the mux-relay pairing of an A-side address with A+24, address 23 as a
+flipper/switched-solenoid enable with no device behind it, and no GI channel anywhere on the
+platform. Those conclusions were reached here independently from source before that profile
+existed, and they match.
+
+They are not the same profile, and this record therefore keeps the `pinmame.dataeast` platform
+string that nine already-committed definitions use rather than claiming a Williams one. Four
+differences are established from pinned source:
+
+- **Diagnostic buttons.** `s11.h` gives Data East only `DE_SWADVANCE` (-7) and `DE_SWUPDN` (-6).
+  The -5 and -4 addresses beside them are `S11_SWCPUDIAG` and `S11_SWSOUNDDIAG`, Williams only.
+- **Special-solenoid permutation.** `setSSSol` selects `ssSolNo[1] = {3,4,5,1,0,2}` for Data East
+  against `ssSolNo[0] = {5,4,1,2,0,3}` for Williams, so the PIA-line-to-public-address map for
+  17-22 differs between them.
+- **Cabinet column.** Column 1 is loaded from `DE_COMPORTS`, not `S11_COMPORTS`.
+- **Advance polarity.** `s11.c` reads Data East's Advance button inverted, as
+  `!core_getSw(DE_SWADVANCE)`.
+
+Authoring a Data East profile would set the address contract for all nine of those records at
+once, and whether one profile should span every Data East generation - or whether Sega-era games
+belong under a profile named "Data East" - are scope and naming calls for a maintainer. This
+record documents the model instead of pre-empting that decision.
 
 ## The address model, and where it differs from WPC and Whitestar
 
