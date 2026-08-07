@@ -522,11 +522,11 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 516 | 1982 | STUB - Soccer Kings | Zaccaria | stub |
 | 517 | 1981 | Centaur | Bally | partial |
 | 518 | 1981 | Eight Ball Deluxe | Bally | partial |
-| 519 | 1981 | Spectrum | Bally | partial |
-| 520 | 1981 | STUB - Eight Ball Deluxe (rev. 15) | Bally | stub |
-| 521 | 1981 | STUB - Elektra | Bally | stub |
-| 522 | 1981 | STUB - Embryon | Bally | stub |
-| 523 | 1981 | STUB - Fathom | Bally | stub |
+| 519 | 1981 | Fathom | Bally | partial |
+| 520 | 1981 | Spectrum | Bally | partial |
+| 521 | 1981 | STUB - Eight Ball Deluxe (rev. 15) | Bally | stub |
+| 522 | 1981 | STUB - Elektra | Bally | stub |
+| 523 | 1981 | STUB - Embryon | Bally | stub |
 | 524 | 1981 | STUB - Fireball II | Bally | stub |
 | 525 | 1981 | STUB - Medusa | Bally | stub |
 | 526 | 1981 | STUB - Global Warfare | Game Plan | stub |
