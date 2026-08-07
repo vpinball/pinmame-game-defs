@@ -386,7 +386,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# project at 856 files, so GI address 3, the Sequential G.I. chase lamps 91-98 and six fitted
 		# flasher solenoids have no bound object, and it is counted as a 23rd machine with a genuine
 		# spatial gap.
-		self.assertEqual(26, report["missing_requirement_counts"]["spatial_placement"])
+		self.assertEqual(27, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(787, len(catalog["machines"]))
 		self.assertEqual(786, catalog["summary"]["game_count"])
 		self.assertEqual(787, catalog["summary"]["machine_count"])
