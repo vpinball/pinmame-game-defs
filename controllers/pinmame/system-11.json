@@ -1,0 +1,127 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.system-11",
+  "authority": "pinmame",
+  "hardware_family": "Williams System 11 / System 9 / System 11A / System 11B / System 11B2 / System 11C CPU boards",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Diagnostic buttons and the 8x8 switch matrix",
+      "address_rules": [
+        {
+          "minimum": -7,
+          "maximum": -4
+        },
+        {
+          "minimum": 1,
+          "maximum": 64
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "switch"
+        },
+        "controller_plugin": {
+          "group_id": 1,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "Public switches are sequential matrix positions addressed column-major across the whole 1-64 range, not column-times-ten notation: the base PinMAME driver registers core_swSeq2m/core_m2swSeq for every generation that does not override MDRV_SWITCH_CONV (src/wpc/core.c MACHINE_DRIVER_START(PinMAME) MDRV_SWITCH_CONV(core_swSeq2m,core_m2swSeq); src/wpc/s11.c MACHINE_DRIVER_START(s11) imports PinMAME and never overrides it, unlike src/wpc/wpc.c which does). core_swSeq2m(n) = n+7, so internal matrix index m = n+7, column = m/8, row = m%8 (src/wpc/core.c core_swSeq2m/core_m2swSeq/core_getSw/core_setSw/core_updInvSw). Equivalently, for public address n: column = ((n-1)/8)+1, row = ((n-1)%8)+1 (1-indexed) - column 1 is public 1-8, column 8 is public 57-64. src/wpc/s11.c itself documents this at the top of its switch-handling code: 'S11 is 1-64, convert to 0-64 (+8), i.e. 1=8, 2=9...'. Column 1 (public 1-8) is not a separate 'dedicated switch' namespace the way WPC has one: SWITCH_UPDATE(s11) (src/wpc/s11.c) loads coreGlobals.swMatrix[0] and [1] directly from the shared S11_COMINPORT/S11_COMPORTS keyboard ports (src/wpc/s11.h), giving tilt=1, ball-tilt/mux-feedback=2 (see below), start=3, coin1-3=4-6, slam tilt=7, high-score-reset=8 - but these still occupy ordinary matrix column 1 and read through the same core_getSw/core_setSw path as every other address; there is no separate binding group for them. The four negative diagnostic addresses -7 (S11_SWADVANCE), -6 (S11_SWUPDN), -5 (S11_SWCPUDIAG) and -4 (S11_SWSOUNDDIAG) are the upper nibble of the same S11_COMINPORT port (src/wpc/s11.h), landing in matrix column 0 (m=0..3) through the identical n+7 formula; they are cabinet/service diagnostic buttons, not matrix positions a player-facing definition should place on the playfield. A single hardware quirk worth checking per game: when hw.gameSpecific1 has S11_MUXSW2 set, SWITCH_UPDATE(s11) unconditionally overwrites public switch 2 with the live state of the mux relay solenoid (core_setSw(2, core_getSol(core_gameData->sxx.muxSol))) rather than leaving it as whatever S11_COMPORTS nominally labels that bit; confirm the real identity of switch 2 from the game's own manual rather than assuming a generic 'ball tilt' label when this flag is set. A driver that declares a non-zero hw.swCol adds custom switch columns beyond public 64 (CORE_CUSTSWCOL numbering, the same convention WPC-generation games use); this profile only asserts the base 1-64 range actually exercised by Whirlwind (hw.swCol=0) and a game with custom columns must extend its own address space with cited evidence rather than this profile silently widening to cover an unobserved case."
+    },
+    {
+      "id": "pinmame.input.dip",
+      "direction": "configuration",
+      "kind": "dip_switch",
+      "label": "Country jumper",
+      "address_rules": [
+        {
+          "values": [
+            0
+          ]
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "dip"
+        }
+      },
+      "notes": "System 11 exposes exactly one DIP-style configuration bit: a single Country jumper (USA/Germany), read via core_getDip(0)<<7 on PIA2 PA7 (src/wpc/s11.c pia2a_r; src/wpc/s11.h COREPORT_DIPNAME(0x0001,0x0000,\"Country\"), MDRV_DIPS(1) 'actually a jumper'). This is a physical jumper block, not a multi-bank operator DIP the way Bally MPU AS-2518-35 or WPC games have."
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Switched/controlled/special solenoids, the A/C-relay-multiplexed flasher alias, general illumination, the sound-overlay board, and synthetic flipper/ball-shooter outputs",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 22
+        },
+        {
+          "minimum": 23,
+          "maximum": 24
+        },
+        {
+          "minimum": 25,
+          "maximum": 32
+        },
+        {
+          "minimum": 33,
+          "maximum": 44
+        },
+        {
+          "minimum": 45,
+          "maximum": 64
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "solenoid"
+        },
+        "controller_plugin": {
+          "group_id": 256,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "System 11 has no separate WPC/Whitestar-style coreGlobals.gi[] string abstraction at all - that array is documented in src/wpc/core.h as WPC/Whitestar/SAM-only and s11.c never touches it. General illumination on System 11 is simply an ordinary solenoid address whose per-game bulb-driver metadata happens to be a continuous AC GI type rather than a momentary DC coil type; MACHINE_INIT(s11) in src/wpc/s11.c contains one strncasecmp(gn,...) block per game short name that calls core_set_pwm_output_type(CORE_MODOUT_SOL0+addr-1, count, CORE_MODOUT_BULB_44_6_3V_AC_REV) naming that game's own GI address(es) - there is no fixed GI address or count across the platform, and a definition must bind its GI devices to this same pinmame.output.solenoid group at the address its own game's block (or manual) names, with output kind 'gi', not to a separate GI group/channel. Addresses 1-8 are the 'A'-side of eight switched/momentary solenoids (src/wpc/core.h doc comment '1-8 Standard A-side'; PIA0:B drives them through a memory-mapped latch at 0x2200, src/wpc/s11.c latch2200/s11_writemem). Addresses 9-16 are eight 'controlled' (continuously-driven) solenoids from PIA0:B (src/wpc/s11.c pia0b_w; PIA0:B comment 'Solenoid 9-16, 12 is usually for multiplexing'). Addresses 17-22 are six 'special' solenoids, each driven by one PIA CA2/CB2 line and gated by a software enable (PIA0 CB2, locals.ssEn); the PIA-output-to-public-address map is scrambled by silkscreen order and must go through setSSSol's ssSolNo[0]={5,4,1,2,0,3} table for Williams hardware (src/wpc/s11.c setSSSol, pia1ca2_w/pia1cb2_w/pia3ca2_w/pia3cb2_w/pia4ca2_w/pia4cb2_w) rather than being assumed sequential from the PIA read order; once resolved it is sequential (silkscreen SS1/A to SS6/F maps onto public 17-22 in order). Address 23 (CORE_SSFLIPENSOL / S11_GAMEONSOL) is an emulator/ROM-internal 'flipper and switched-solenoid enable' pulse with no physical driver-board output of its own; do not bind a playfield device to it. Address 24 is an unassigned gap between the special-solenoid enable and the 'C'-side alias below; the platform reserves it but no known driver populates it. Addresses 25-32 are not eight independent driver transistors: updsol() in src/wpc/s11.c copies the live low byte of the momentary solenoid word (public 1-8) into bits 24-31 whenever the mux relay solenoid (sxx.muxSol, commonly but not always 12) is energized, so public 25-32 fire the *same* eight transistors as 1-8, routed by relay contacts to a second, usually higher-voltage, circuit (commonly #89 25V flasher bulbs in place of the low-power devices normally wired to 1-8: src/wpc/s11.c core_set_pwm_output_type(...,CORE_MODOUT_BULB_89_25V_DC_S11) comments naming this 'Mux relay' pattern per game). This is real System 11 hardware multiplexing (documented on many original driver-board silkscreens as paired 'nnA'/'nnC' circuits switched by an A/C select relay), not an emulator artifact, and a definition should record the 'C'-side device at address (manual A-side number + 24). Addresses 33-36 are the platform's generic upper-flipper-coil range (CORE_FIRSTUFLIPSOL=33); core_getSol only serves this range for GEN_ALLWPC/GEN_SAM, so it reads as always-zero for any System 11 game and is only meaningful if a specific game's own custom getSol hook or hardware repurposes it - verify per game rather than assuming flipper hardware. Addresses 37-44 are 'Sound overlay board' outputs per src/wpc/core.h's own doc comment ('37-41 Sound overlay board') when a game sets hw.gameSpecific1 & S11_SNDOVERLAY: pia5cb2_w diverts the sound-command byte away from the sound board and writes it as an up-to-8-bit pulse pattern starting at PWM index 40 (src/wpc/s11.c pia5cb2_w, core_write_pwm_output_8b(CORE_MODOUT_SOL0+40,...)), while core_getSol's own GEN_ALLS11 branch for public 37-44 reads coreGlobals.solenoids2 bit (solNo-37+8) (src/wpc/core.c core_getSol) - these two internal numbering views do not fully agree with each other in the pinned revision, and the exact populated subset (which of 37-44 correspond to real board outputs) is game-specific and must be settled from that game's own manual/schematic and known-working script rather than assumed uniform across the whole 37-44 span; treat 37-44 as the outer bound, not as eight uniformly-populated addresses. Addresses 45-48 are the platform's synthetic lower-flipper outputs (CORE_FIRSTLFLIPSOL=45; sLRFlipPow=45,sLRFlip=46,sLLFlipPow=47,sLLFlip=48 per src/wpc/core.h): core_updateSw fabricates these from live flipper-button switch state whenever a game's hw.flippers omits the corresponding FLIP_SOL bit (src/wpc/core.c core_updateSw 'fake solenoids if not CPU controlled'), which is normal for System 11 - real System 11 hardware fires flipper coils directly from the cabinet button through a relay/fuse circuit with no CPU involvement at all, and the CPU only ever observes button state through whichever ordinary matrix switches the game's FLIP_SWNO names. A definition should record 45-48 as virtual/synthetic outputs with no physical driver-board device behind them whenever hw.flippers uses FLIP_SWNO without a matching FLIP_SOL bit, which is the common System 11 case. Address 49 is the shared cross-generation 'fake solenoid for ball shooter' used by the simulator (CORE_FIRSTSIMSOL=49, src/wpc/core.h; sim_getSol, src/wpc/core.c), not System-11-specific. Address 50 is an unassigned gap between the simulator slot and the custom-solenoid base. Addresses 51-64 are the platform's custom-solenoid space (CORE_FIRSTCUSTSOL=51) for a driver that declares hw.custSol, bounded by the hard platform cap CORE_MAXSOL=64 (src/wpc/core.h); coreGlobals.nSolenoids is sized as CORE_FIRSTCUSTSOL-1+hw.custSol (src/wpc/s11.c MACHINE_INIT(s11)), so a game with custSol=0 models no valid addresses at or above 51 at all and this profile's 51-64 rule bounds only the platform's outer limit, not any specific game's populated range."
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "8x8 lamp matrix and optional auxiliary lamp columns",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 64
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "lamp"
+        },
+        "controller_plugin": {
+          "group_id": 512,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "coreGlobals.nLamps = 64 + hw.lampCol*8 (src/wpc/s11.c MACHINE_INIT(s11)); a driver declaring hw.lampCol=0 (the common case, and Whirlwind's own value) models exactly the standard 64-lamp matrix with no auxiliary columns. The public numbering convention is the identical column-major sequential scheme documented on the switch group above (column=((n-1)/8)+1, row=((n-1)%8)+1), registered via the same core_swSeq2m/core_m2swSeq pair reused for MDRV_LAMP_CONV (src/wpc/core.c MACHINE_DRIVER_START(PinMAME)); unlike the switch case this conversion is exercised only for the custom-lamp-column uniqueness assertion at game-init time (src/wpc/core.c CORE_CUSTLAMPCOL-style check), not by any runtime strobe path, since the raw hardware strobe (PIA1:A rows / PIA1:B columns, src/wpc/s11.c pia1a_w/pia1b_w) writes directly by column/row and never consults a public lamp number at all. A driver declaring hw.lampCol > 0 adds one additional 8-lamp column per unit at public 65 upward; this profile only asserts the base 1-64 range Whirlwind actually uses."
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "locator": "src/wpc/s11.c (SWITCH_UPDATE(s11), core_swSeq2m/core_m2swSeq registration path via MACHINE_DRIVER_START(PinMAME), setSSSol, updsol, pia0b_w/pia1a_w/pia1b_w/pia2a_r/pia4a_r/pia4b_w/pia5cb2_w, s11_readmem/s11_writemem, MACHINE_INIT(s11) per-game strncasecmp GI/output-type blocks); src/wpc/s11.h (S11_SWADVANCE/S11_SWUPDN/S11_SWCPUDIAG/S11_SWSOUNDDIAG, S11_COMINPORT/S11_COMPORTS, S11_MUXSW2/S11_SNDOVERLAY gameSpecific1 flags, COREPORT_DIPNAME Country jumper); src/wpc/core.h (core_tGameData sxx.muxSol/sxx.ssSw, CORE_FIRSTSSSOL=17, CORE_SSFLIPENSOL=23, CORE_FIRSTEXTSOL=37, CORE_FIRSTUFLIPSOL=33, CORE_FIRSTLFLIPSOL=45, CORE_FIRSTSIMSOL=49, CORE_FIRSTCUSTSOL=51, CORE_MAXSOL=64, '1-8 Standard A-side / 9-16 Standard / 17-22 Special / 23 Flipper & Switched Sol. Enable / 25-32 Standard C-side / 37-41 Sound overlay board' doc comment); src/wpc/core.c (core_swSeq2m/core_m2swSeq/core_getSw/core_setSw/core_updInvSw, core_getSol GEN_ALLS11 branch, core_updateSw synthetic-flipper-solenoid fallback, MACHINE_DRIVER_START(PinMAME) MDRV_SWITCH_CONV/MDRV_LAMP_CONV); src/wpc/gen.h (GEN_S11/GEN_S11X/GEN_S11A/GEN_S11B/GEN_S11B2/GEN_S11C/GEN_S9/GEN_ALLS11); src/libpinmame/libpinmame.h (PINMAME_HARDWARE_GEN_S11* constants, byte-identical to gen.h)"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "a6f6d7266d301249ed09c1b0123f8476513a2228",
+      "locator": "src/libpinmame/libpinmame.cpp SetupMsgApi group definitions"
+    }
+  ]
+}

@@ -198,51 +198,51 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 192 | 1992 | STUB - Hot Shot Basketball (P-8 Prototype) | Midway | stub |
 | 193 | 1992 | STUB - Bike Race | Sleic (Spain) | stub |
 | 194 | 1992 | Fish Tales | Williams | partial |
-| 195 | 1992 | STUB - Funhouse (L-9, SL-3) | Williams | stub |
-| 196 | 1992 | STUB - Getaway: High Speed II, The (L-5) | Williams | stub |
-| 197 | 1992 | STUB - Strike Master (L-4) | Williams | stub |
-| 198 | 1991 | STUB - Harley-Davidson (L-3) | Bally | stub |
-| 199 | 1991 | STUB - Party Zone, The (F-4 Fliptronic) | Bally | stub |
-| 200 | 1991 | STUB - Pool Sharks (LA-7) | Bally | stub |
-| 201 | 1991 | STUB - WPC Test Fixture: DMD (L-3) | Bally | stub |
-| 202 | 1991 | Batman | Data East | partial |
-| 203 | 1991 | STUB - Checkpoint (1.7) | Data East | stub |
-| 204 | 1991 | STUB - Teenage Mutant Ninja Turtles (1.04) | Data East | stub |
-| 205 | 1991 | STUB - Amazon Hunt III (French) | Gottlieb | stub |
-| 206 | 1991 | STUB - Cactus Jack's | Gottlieb | stub |
-| 207 | 1991 | STUB - Car Hop | Gottlieb | stub |
-| 208 | 1991 | STUB - Class of 1812 | Gottlieb | stub |
-| 209 | 1991 | STUB - Hoops | Gottlieb | stub |
-| 210 | 1991 | STUB - Surf 'n Safari | Gottlieb | stub |
-| 211 | 1991 | STUB - Atleta | Inder (Spain) | stub |
-| 212 | 1991 | STUB - Hurricane (L-2) | Williams | stub |
-| 213 | 1991 | STUB - Slugfest (L-1) | Williams | stub |
-| 214 | 1991 | Terminator 2: Judgment Day | Williams | partial |
-| 215 | 1991 | The Machine: Bride of Pinbot | Williams | partial |
-| 216 | 1990 | Radical! | Bally | partial |
-| 217 | 1990 | STUB - Bugs Bunny's Birthday Ball (L-2) | Bally | stub |
-| 218 | 1990 | STUB - Dr. Dude (LA-2) | Bally | stub |
-| 219 | 1990 | STUB - Game Show (LU-4 Europe) | Bally | stub |
-| 220 | 1990 | STUB - WPC Test Fixture: Alphanumeric (L-3) | Bally | stub |
-| 221 | 1990 | STUB - Back to the Future (2.8) | Data East | stub |
-| 222 | 1990 | STUB - King Kong (1.0) | Data East | stub |
-| 223 | 1990 | STUB - Phantom of the Opera, The (3.2) | Data East | stub |
-| 224 | 1990 | STUB - Simpsons, The (2.7) | Data East | stub |
-| 225 | 1990 | STUB - Bell Ringer | Gottlieb | stub |
-| 226 | 1990 | STUB - Deadly Weapon | Gottlieb | stub |
-| 227 | 1990 | STUB - Nudge It | Gottlieb | stub |
-| 228 | 1990 | STUB - Silver Slugger | Gottlieb | stub |
-| 229 | 1990 | STUB - Title Fight | Gottlieb | stub |
-| 230 | 1990 | STUB - Vegas | Gottlieb | stub |
-| 231 | 1990 | STUB - La Rana | Inder (Spain) | stub |
-| 232 | 1990 | STUB - Mundial 90 | Inder (Spain) | stub |
-| 233 | 1990 | STUB - Mac Attack | Mr. Game (Italy) | stub |
-| 234 | 1990 | STUB - World Cup '90 | Mr. Game (Italy) | stub |
-| 235 | 1990 | Diner | Williams | partial |
+| 195 | 1992 | STUB - Getaway: High Speed II, The (L-5) | Williams | stub |
+| 196 | 1992 | STUB - Strike Master (L-4) | Williams | stub |
+| 197 | 1991 | STUB - Harley-Davidson (L-3) | Bally | stub |
+| 198 | 1991 | STUB - Party Zone, The (F-4 Fliptronic) | Bally | stub |
+| 199 | 1991 | STUB - Pool Sharks (LA-7) | Bally | stub |
+| 200 | 1991 | STUB - WPC Test Fixture: DMD (L-3) | Bally | stub |
+| 201 | 1991 | Batman | Data East | partial |
+| 202 | 1991 | STUB - Checkpoint (1.7) | Data East | stub |
+| 203 | 1991 | STUB - Teenage Mutant Ninja Turtles (1.04) | Data East | stub |
+| 204 | 1991 | STUB - Amazon Hunt III (French) | Gottlieb | stub |
+| 205 | 1991 | STUB - Cactus Jack's | Gottlieb | stub |
+| 206 | 1991 | STUB - Car Hop | Gottlieb | stub |
+| 207 | 1991 | STUB - Class of 1812 | Gottlieb | stub |
+| 208 | 1991 | STUB - Hoops | Gottlieb | stub |
+| 209 | 1991 | STUB - Surf 'n Safari | Gottlieb | stub |
+| 210 | 1991 | STUB - Atleta | Inder (Spain) | stub |
+| 211 | 1991 | STUB - Hurricane (L-2) | Williams | stub |
+| 212 | 1991 | STUB - Slugfest (L-1) | Williams | stub |
+| 213 | 1991 | Terminator 2: Judgment Day | Williams | partial |
+| 214 | 1991 | The Machine: Bride of Pinbot | Williams | partial |
+| 215 | 1990 | Radical! | Bally | partial |
+| 216 | 1990 | STUB - Bugs Bunny's Birthday Ball (L-2) | Bally | stub |
+| 217 | 1990 | STUB - Dr. Dude (LA-2) | Bally | stub |
+| 218 | 1990 | STUB - Game Show (LU-4 Europe) | Bally | stub |
+| 219 | 1990 | STUB - WPC Test Fixture: Alphanumeric (L-3) | Bally | stub |
+| 220 | 1990 | STUB - Back to the Future (2.8) | Data East | stub |
+| 221 | 1990 | STUB - King Kong (1.0) | Data East | stub |
+| 222 | 1990 | STUB - Phantom of the Opera, The (3.2) | Data East | stub |
+| 223 | 1990 | STUB - Simpsons, The (2.7) | Data East | stub |
+| 224 | 1990 | STUB - Bell Ringer | Gottlieb | stub |
+| 225 | 1990 | STUB - Deadly Weapon | Gottlieb | stub |
+| 226 | 1990 | STUB - Nudge It | Gottlieb | stub |
+| 227 | 1990 | STUB - Silver Slugger | Gottlieb | stub |
+| 228 | 1990 | STUB - Title Fight | Gottlieb | stub |
+| 229 | 1990 | STUB - Vegas | Gottlieb | stub |
+| 230 | 1990 | STUB - La Rana | Inder (Spain) | stub |
+| 231 | 1990 | STUB - Mundial 90 | Inder (Spain) | stub |
+| 232 | 1990 | STUB - Mac Attack | Mr. Game (Italy) | stub |
+| 233 | 1990 | STUB - World Cup '90 | Mr. Game (Italy) | stub |
+| 234 | 1990 | Diner | Williams | partial |
+| 235 | 1990 | FunHouse | Williams | partial |
 | 236 | 1990 | STUB - Riverboat Gambler (L-3) | Williams | stub |
 | 237 | 1990 | STUB - Rollergames (LA-2) | Williams | stub |
 | 238 | 1990 | STUB - Star Trax (Domestic Prototype) | Williams | stub |
-| 239 | 1990 | STUB - Whirlwind (LA-3) | Williams | stub |
+| 239 | 1990 | Whirlwind | Williams | partial |
 | 240 | 1989 | STUB - Atlantis (rev. 3) | Bally | stub |
 | 241 | 1989 | STUB - Elvira and the Party Monsters (LA-4) | Bally | stub |
 | 242 | 1989 | STUB - Mousin' Around! (LA-4) | Bally | stub |
