@@ -115,8 +115,8 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 109 | 1995 | Attack From Mars | Bally | author_ready |
 | 110 | 1995 | STUB - Indianapolis 500 (1.1R) | Bally | stub |
 | 111 | 1995 | STUB - Shadow, The (LX-5) | Bally | stub |
-| 112 | 1995 | STUB - Theatre of Magic (1.3X) | Bally | stub |
-| 113 | 1995 | STUB - WHO Dunnit (1.2) | Bally | stub |
+| 112 | 1995 | STUB - WHO Dunnit (1.2) | Bally | stub |
+| 113 | 1995 | Theatre of Magic | Bally | partial |
 | 114 | 1995 | STUB - Pinball Magic (1.0.12) | Capcom | stub |
 | 115 | 1995 | Stargate | Gottlieb | partial |
 | 116 | 1995 | STUB - Big Hurt (rev. 3) | Gottlieb | stub |
