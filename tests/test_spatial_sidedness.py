@@ -71,17 +71,15 @@ KNOWN_INVERSIONS: dict[str, dict[tuple[str, str], str]] = {
 			"itself about which of the two right-rail targets is upper, and the lamps show the "
 			"same inversion against their switches.",
 	},
-	# --- Unverified as of 2026-08-08. These are suspected defects, not accepted ones. ---
-	"capcom.big-bang-bar.1996": {
-		("device.star-bumper-left", "device.star-bumper-right"):
-			"UNVERIFIED suspected inversion (x 0.5854 > 0.5262). Needs the manual's playfield "
-			"drawing and the retained table's own objects checked before it is either fixed or "
-			"accepted. See TO_BE_FIXED.md section 2.1.",
-	},
 	"midway.world-cup-soccer.1994": {
 		("device.upper-jet-bumper", "device.lower-jet-bumper"):
-			"UNVERIFIED suspected inversion (y 0.2141 > 0.1598). Needs the manual's Solenoid "
-			"Locations drawing checked. See TO_BE_FIXED.md section 2.1.",
+			"conflict.jet-bumper-script-binding-vs-physical-position - DISPUTED, not settled. An "
+			"earlier pass read the printed Left/Upper/Lower names as cluster-relative and took the "
+			"coordinates from the retained script's per-object switch bindings. A 2026-08-08 review "
+			"read the two location diagrams as putting 81/9 leftmost, which would rotate all six "
+			"placements; an independent 400 dpi re-render of printed 2-49 could not confirm that "
+			"reading, so the earlier values stand rather than being overwritten. Needs a legible "
+			"second read of both diagrams or a harness run.",
 	},
 	# --- Verified CORRECT on 2026-08-08. Real geometry, not defects. Do not "fix" these. ---
 	"stern.the-walking-dead-pro.2014": {
@@ -248,25 +246,18 @@ class DeviceAssemblyCoLocationTests(unittest.TestCase):
 
 	# record id -> {(switch_id, partner_id): why}. Same ratchet contract as KNOWN_INVERSIONS.
 	KNOWN_ASSEMBLY_GAPS: dict[str, dict[tuple[str, str], str]] = {
-		"stern.avengers-limited-edition.2012": {
-			("switch.bottom-pop-bumper", "device.bottom-pop-bumper"):
-				"UNVERIFIED suspected defect. Solenoid 11 ('Bottom pop bumper') is placed at "
-				"(0.670839, 0.215243), which is the LEFT bumper's position - switch 30 and "
-				"solenoid 9 both sit at (0.678933, 0.213986) - while switch 32 puts the bottom "
-				"bumper at (0.803850, 0.297933). Either solenoid 11 was mapped onto the wrong "
-				"table object or the three bumper solenoids are mis-ordered. Note the Pro "
-				"edition's curator already documents a reversed bumper switch callback in the "
-				"retained script, so this family is known to be error-prone here. See "
-				"TO_BE_FIXED.md section 2.1.",
-		},
 		"stern.metallica-pro.2013": {
 			("switch.right-eject-scoop", "device.right-eject-scoop"):
-				"UNVERIFIED, and quite possibly legitimate. The switch sits at (0.819515, "
-				"0.566214) and the kicker coil at (0.861799, 0.532281), 0.042 apart in x. A scoop "
-				"switch sits inside the hole while its kicker coil sits behind and below it, so a "
-				"small genuine offset is expected; this may simply exceed a tolerance chosen for "
-				"bumpers. Resolve by deciding the right tolerance for scoop assemblies rather than "
-				"by moving a coordinate. See TO_BE_FIXED.md section 2.1.",
+				"CORRECT: verified 2026-08-08. The switch is Kicker.sw51 at (0.819515, 0.566214), "
+				"the ball-catching scoop; the coil coordinate is Kicker.sw51a at (0.861799, "
+				"0.532281), which the retained script uses only as a disabled relocate-and-launch "
+				"anchor (.InitKick sw51a, 220, 25) - a VPX physics workaround, not a coil. The "
+				"0.042 offset is up-playfield of the hole, the correct sense for a scoop coil "
+				"mounted under and behind it, and ~42 mm is physically normal. The real lesson is "
+				"that one flat tolerance is the wrong tool: coaxial assemblies (pop bumpers, "
+				"slingshots) want ~0.02, while scoop/VUK/popper/eject-hole assemblies genuinely "
+				"want ~0.05. The Premium sibling collapses both onto one object, so the editions "
+				"legitimately differ here.",
 		},
 	}
 

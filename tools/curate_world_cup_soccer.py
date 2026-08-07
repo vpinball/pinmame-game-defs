@@ -206,6 +206,17 @@ SWITCH_POSITIONS = {
 	71: [(0.063638, 0.132172)], 72: [(0.270678, 0.338593)],
 	74: [(0.934231, 0.195316)], 75: [(0.80764, 0.425492)],
 	76: [(0.090145, 0.608522)], 77: [(0.089815, 0.584659)], 78: [(0.063323, 0.427613)],
+	# Jet bumper geometry is DISPUTED and is deliberately left as the earlier pass had it.
+	# Two readings of this manual disagree. An earlier curation pass concluded the printed
+	# Left/Upper/Lower names are relative to the cluster rather than absolute cabinet sides, and
+	# recorded that as a named fact in tests/test_world_cup_soccer.py precisely so it would not be
+	# "corrected" later. A 2026-08-08 review read the Switch Locations (printed 2-47) and
+	# Solenoid/Flasher Locations (printed 2-49) diagrams as putting 81/9 leftmost, 82/10
+	# upper-right and 83/11 lower, which would make all six placements rotated. An independent
+	# re-render of printed 2-49 at 400 dpi could NOT confirm that reading: leaders 9, 10 and 11
+	# resolve to scattered features rather than a clean three-bumper triangle. Rather than
+	# overwrite shipped coordinates on an unconfirmed reading, the original values stand and the
+	# disagreement is recorded as conflict.jet-bumper-script-binding-vs-physical-position.
 	81: [(0.835502, 0.119845)], 82: [(0.819085, 0.214142)], 83: [(0.63906, 0.159845)],
 	84: [(0.24397, 0.729801)], 85: [(0.695279, 0.730838)],
 	86: [(0.057698, 0.776961)], 87: [(0.656175, 0.075897)], 88: [(0.746263, 0.076408)],
@@ -1502,6 +1513,34 @@ def relationships() -> list[dict[str, Any]]:
 
 def conflicts() -> list[dict[str, Any]]:
 	return [
+		{
+			"id": "conflict.jet-bumper-script-binding-vs-physical-position",
+			"path": "inputs[binding.device=81,82,83]",
+			"description": (
+				"Which physical jet bumper carries each of the three addresses is unresolved, and two "
+				"readings of this manual disagree. The retained known-working table's own switch bindings are "
+				"rotated one step relative to the objects they fire from -- Bumper1_Hit pulses public 82, "
+				"Bumper2_Hit pulses 81, Bumper3_Hit pulses 83 -- and the table is internally inconsistent "
+				"about it, since its own sound handler calls the bottom-most object 'Top'. An earlier curation "
+				"pass concluded the printed Left/Upper/Lower names are relative to the cluster rather than to "
+				"absolute cabinet sides, took the coordinates from the script's per-object bindings, and "
+				"recorded that conclusion as a named assertion in the test module so a later pass would not "
+				"reverse it. A 2026-08-08 review read the Switch Locations (printed 2-47) and Solenoid/Flasher "
+				"Locations (printed 2-49) diagrams the other way, as placing 81/9 leftmost, 82/10 upper-right "
+				"and 83/11 lower, which would make all six placements rotated. An independent re-render of "
+				"printed 2-49 at 400 dpi could not confirm that: leaders 9, 10 and 11 resolve to scattered "
+				"features rather than a clean three-bumper triangle. The earlier pass's coordinates therefore "
+				"stand unchanged rather than being overwritten on an unconfirmed reading, and this entry "
+				"records that the geometry is disputed. Note the separate question of whether a runtime switch "
+				"binding may be used to assign a physical position at all: this project's evidence-authority "
+				"split gives the script runtime semantics and the manual physical construction, so if the "
+				"review's reading is ever confirmed, the bindings stay and only the geometry moves. Resolution "
+				"path: a legible high-dpi read of both location diagrams by a second party, or a LibPinMAME "
+				"harness run against a legal wcs_l2 ROM closing each jet-bumper switch in turn while observing "
+				"which public address reports. Unresolved."
+			),
+			"source_refs": [MANUAL_SOURCE, VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE],
+		},
 		{
 			"id": "conflict.flipper-cabinet-opto-not-normalized",
 			"path": "inputs[binding.device=112,114]",

@@ -173,7 +173,13 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 
 	def test_the_flipper_cabinet_opto_conflict_is_recorded_and_unresolved(self) -> None:
 		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertEqual({"conflict.flipper-cabinet-opto-not-normalized"}, set(conflicts))
+		self.assertEqual(
+			{
+				"conflict.flipper-cabinet-opto-not-normalized",
+				"conflict.jet-bumper-script-binding-vs-physical-position",
+			},
+			set(conflicts),
+		)
 		conflict = conflicts["conflict.flipper-cabinet-opto-not-normalized"]
 		self.assertGreaterEqual(len(conflict["source_refs"]), 2)
 		description = conflict["description"].lower()
@@ -308,9 +314,15 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 		lamp_y = {addr: pos[1] for addr, pos in _emitter_positions(self.lamps).items()}
 
 		# Jet bumpers: Bumper2 (switch 81, printed "Left") sits to the right of Bumper3 (switch 83,
-		# printed "Lower"), confirming the manual's naming is relative to the cluster, not absolute
-		# cabinet left/right -- re-asserted here as a named fact so it is never "corrected" by a
-		# later pass that assumes cabinet-absolute naming.
+		# printed "Lower"), on the reading that the manual's naming is relative to the cluster, not
+		# absolute cabinet left/right -- asserted here so it is never "corrected" silently.
+		#
+		# That reading is DISPUTED as of 2026-08-08 and the disagreement is recorded as
+		# conflict.jet-bumper-script-binding-vs-physical-position. A review read the two location
+		# diagrams as putting 81 leftmost, which would rotate all six placements; an independent
+		# 400 dpi re-render of printed 2-49 could not confirm it. These assertions therefore pin the
+		# CURRENT values, not a settled fact. If the conflict is resolved in favour of the review,
+		# both the assertions below and the curator's coordinates change together.
 		self.assertGreater(switch_x[81], switch_x[83])
 		self.assertGreater(switch_x[82], switch_x[83])
 

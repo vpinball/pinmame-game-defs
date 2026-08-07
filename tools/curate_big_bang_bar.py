@@ -174,7 +174,15 @@ SWITCH_POSITIONS: dict[int, list[tuple[float, float]]] = {
 	46: [(0.210707, 0.705074)], 47: [(0.210707, 0.728646)], 48: [(0.209462, 0.751396)],
 	49: [(0.444456, 0.336556)], 50: [(0.497771, 0.327576)], 51: [(0.550396, 0.318153)],
 	52: [(0.460986, 0.31988)], 53: [(0.515982, 0.31053)],
-	54: [(0.585404, 0.178991)], 55: [(0.526188, 0.267465)], 56: [(0.380918, 0.20046)],
+	# Star bumpers: 54 Left / 55 Right / 56 Middle. An earlier revision inferred these from the
+	# retained script's bumper DECLARATION order, which is y-order (Bumper1 top, Bumper2, Bumper3
+	# bottom), and read it as a left-to-right physical order. The manual's own numbered
+	# "SOLENOIDS, MOTORS, & FLASHERS" playfield diagram marks 18 leftmost, 20 upper-right and 19
+	# lower-centre, and this definition's OWN lamp records agree: lamps 122/123/124 come from
+	# per-address-named Light objects (l122/l123/l124) rather than an inferred order, and place
+	# Left at x=0.3808, Middle at 0.5251 and Right at 0.5860. The switch and solenoid coordinates
+	# below are corrected to match.
+	54: [(0.380918, 0.20046)], 55: [(0.585404, 0.178991)], 56: [(0.526188, 0.267465)],
 	57: [(0.71318, 0.067239)],
 	58: [(0.708865, 0.130149)],
 	59: [(0.855848, 0.159649)], 60: [(0.870128, 0.0691)], 61: [(0.808287, 0.030843)],
@@ -262,7 +270,7 @@ SOLENOID_POSITIONS: dict[int, list[tuple[float, float]]] = {
 	12: [(0.844337, 0.521704)], 13: [(0.947213, 0.371481)],
 	16: [(0.862307, 0.018598)],
 	17: [(0.444456, 0.336556), (0.497771, 0.327576), (0.550396, 0.318153)],
-	18: [(0.585404, 0.178991)], 19: [(0.380918, 0.20046)], 20: [(0.526188, 0.267465)],
+	18: [(0.380918, 0.20046)], 19: [(0.526188, 0.267465)], 20: [(0.585404, 0.178991)],
 	21: [(0.062763, 0.088922)], 22: [(0.252177, 0.13264)], 23: [(0.495536, 0.215657)],
 	24: [(0.873687, 0.493178)], 25: [(0.942772, 0.058572)], 26: [(0.150773, 0.80503)],
 	27: [(0.289968, 0.047017)], 28: [(0.671092, 0.034329)],

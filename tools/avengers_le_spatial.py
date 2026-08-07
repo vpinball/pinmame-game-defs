@@ -166,9 +166,16 @@ OUTPUT_POSITIONS: dict[int, tuple[float, float, str, str | None, int | None]] = 
     5: (0.267477, 0.279984, "effect", "Hulk eject assembly", 1),
     6: (0.116636, 0.518069, "effect", "Thor drop-target bank reset assembly", 1),
     7: (0.097262, 0.058970, "effect", "Left orbit gate assembly", 1),
-    9: (0.678933, 0.213986, "effect", "Lower pop bumper assembly", 1),
-    10: (0.861731, 0.191085, "effect", "Right pop bumper assembly", 1),
-    11: (0.670839, 0.215243, "effect", "Left pop bumper assembly", 1),
+    # A pop bumper's skirt switch and its coil are coaxial in one assembly, so each coil must sit
+    # on its own switch. Solenoid 11 ("Bottom") previously carried (0.670839, 0.215243), which is
+    # inside the LEFT bumper body - 0.008 from solenoid 9 and 0.16 from its own switch 32 - and
+    # solenoid 10 carried the right bumper's LAMP centre rather than the bumper centre. Both were
+    # copied from the Pro curator's LAMP_POSITIONS rows 60 and 61. The notes were permuted the same
+    # way, which is the second symptom of one copy error. The LE manual's numbered coil-location
+    # diagram and its coil chart both confirm 9 Left / 10 Right / 11 Bottom.
+    9: (0.678933, 0.213986, "effect", "Left pop bumper assembly", 1),
+    10: (0.880455, 0.192900, "effect", "Right pop bumper assembly", 1),
+    11: (0.803850, 0.297933, "effect", "Bottom pop bumper assembly", 1),
     12: (0.867122, 0.583493, "effect", "Loki lock mechanism assembly", 1),
     13: (0.223175, 0.714054, "effect", "Left slingshot assembly", 1),
     14: (0.682767, 0.718596, "effect", "Right slingshot assembly", 1),
