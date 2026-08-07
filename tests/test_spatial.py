@@ -386,13 +386,18 @@ class SpatialMigrationTests(unittest.TestCase):
 		# project at 856 files, so GI address 3, the Sequential G.I. chase lamps 91-98 and six fitted
 		# flasher solenoids have no bound object, and it is counted as a 23rd machine with a genuine
 		# spatial gap.
+		# Bally Flash Gordon and Bally Judge Dredd each added one genuine spatial gap (33 from 31):
+		# Flash Gordon's two outlane Special inserts sit on the wrong sides in the retained table and
+		# are recorded as an unresolved conflict rather than swapped, and Judge Dredd's remaining
+		# unplaced devices are named in its own spatial report. Neither replaced a stub, so the
+		# partial/stub totals below are unchanged by those two passes.
 		# Every catalog count above is one higher than before Bally Eight Ball Deluxe was curated,
 		# and none of that increase is a newly covered machine. Curating it claimed the production
 		# eballdlx tree and left the four Motorola-68701 hardware prototypes (eballdp1-eballdp4,
 		# declared clones by PinMAME but living in by68701.c on different boards) holding the
 		# leftover stub, exactly as Kiss's Intel-8035 prototypes did. So the physical-game count
 		# went 786 -> 787 by splitting one record into two, not by adding coverage.
-		self.assertEqual(31, report["missing_requirement_counts"]["spatial_placement"])
+		self.assertEqual(33, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(787, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])
