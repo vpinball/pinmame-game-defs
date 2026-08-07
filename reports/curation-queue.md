@@ -242,7 +242,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 236 | 1990 | STUB - Riverboat Gambler (L-3) | Williams | stub |
 | 237 | 1990 | STUB - Rollergames (LA-2) | Williams | stub |
 | 238 | 1990 | STUB - Star Trax (Domestic Prototype) | Williams | stub |
-| 239 | 1990 | STUB - Whirlwind (LA-3) | Williams | stub |
+| 239 | 1990 | Whirlwind | Williams | partial |
 | 240 | 1989 | STUB - Atlantis (rev. 3) | Bally | stub |
 | 241 | 1989 | STUB - Elvira and the Party Monsters (LA-4) | Bally | stub |
 | 242 | 1989 | STUB - Mousin' Around! (LA-4) | Bally | stub |
