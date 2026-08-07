@@ -1,0 +1,721 @@
+{
+  "blockers": [
+    "Lamp 83 (Drain Shield) is printed with a quantity of two and drawn twice in the manual's own lamp-location diagram, once each side of the drain. The retained table models a single Light object for the address, sitting almost exactly midway between the two printed positions, so it is the arithmetic midpoint of the two real bulbs rather than either of them. Neither bulb has a usable coordinate and the address carries no placement.",
+    "Public GI address 4 has no playfield emitter coordinate: the retained table's collection for that address contains backglass objects only, while the manual gives its printed string a playfield drive connection. This is entangled with conflict.gi-string-order-script-vs-manual, which is unresolved.",
+    "Matrix positions 28, 32 and 65 carry no spatial record at all because whether anything is fitted at those addresses is itself unresolved; see conflict.l1-era-switch-fitment."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162.0,
+      "left": 0.0,
+      "right": 1093.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/1093; 0=left, 1=right",
+    "y": "y/2162; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "L<nn>g / l<nn>g co-located glow doubles and L<nn>f / l<nn>f co-located flare Flashers stacked on each matrix lamp",
+    "l48r, l61r, l61ar, l68r, L71r-L75r reflection Flashers offset from their own lamp",
+    "f17g-f20g, F18g-F24a-style flasher glow doubles",
+    "f21bloom, f22bloom, f25bloom, f26bloom, f27bloom screen-space bloom Flashers, all five sharing one centre-of-playfield coordinate",
+    "F25Bulb, F25aBulb, F27Bulb, F27aBulb bulb-mesh Primitives at raw coordinates outside the playfield bounds",
+    "bg_b_*, bg_o_*, bg_y_*, bg_g_*, bg_s* backglass Flashers at negative raw y",
+    "GI_Bulbs Bulb1-Bulb15 bulb-mesh Primitives",
+    "sw<nn>o / sw<nn>p / sw<nn>p_off / sw<nn>prim / sw<nn>prim_off target-visual Primitives",
+    "L83, the single retained Light for lamp 83, which is the arithmetic midpoint of the two printed Drain Shield bulbs"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1840,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "8eaa44e94e08384f9fd0f77b1d237539d73f2c79bb716fa51eb78197268d81d2",
+    "manifest_uri": "external:pinmame-vpx-sources/bally/judge-dredd-1993/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.jd-vpw-1-1",
+    "total_bytes": 419225172,
+    "vpxtool_version": "vpxtool git:v0.33.3"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "bally.judge-dredd.1993",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      12,
+      13,
+      14,
+      21,
+      22,
+      23,
+      31,
+      44,
+      112,
+      114,
+      116,
+      118
+    ],
+    "constant": [
+      24
+    ],
+    "internal_nonvisual": [
+      111,
+      113,
+      115,
+      117
+    ],
+    "unused": [
+      45,
+      46,
+      47,
+      48,
+      78,
+      88
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 38,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 87,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 88,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 28,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 12,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 14,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 51,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "omitted_spatial_inputs": [
+    28,
+    32,
+    65
+  ],
+  "omitted_spatial_outputs": [
+    {
+      "address": 4,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    }
+  ],
+  "placement_count": 162,
+  "projections": [
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "reason": "Three physical standup targets share the one matrix address. The manual's own location diagram draws the 18 callout three times against a single `A-14227-15` part number, and the retained script instantiates three separate hit targets (sw18, sw18a, sw18b) that all report the same public switch. Each of the three retained objects supplies one placement rather than one being chosen or the three being averaged."
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the rotating Deadworld disc (Primitive DW_Disc, table object center). The manual marks item 61 `*Not Shown` in the parts list yet draws its callout inside the disc outline at the hub, and pinned PinMAME reads it as the ball-resting-on-the-globe state in jd_stateDef's \"Planet\" step rather than from a fixed playfield sensor."
+    },
+    {
+      "address": 71,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the crane assembly (Primitive Crane, table object center). The manual marks item 71 `†Located Under Playfield`, and the retained script asserts public switch 71 from the crane arm's own rotation angle inside Crane_X_Timer rather than from a playfield trigger."
+    },
+    {
+      "address": 77,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the rotating Deadworld disc (Primitive DW_Disc, table object center). The manual marks item 77 `*Not Shown` and draws its callout at the disc hub beside 61; the retained script asserts public switch 77 when the disc's own rotation angle brings a loaded slot under the crane (FWTimer_Timer), and pinned PinMAME's jd_handleMech does the same from a 0-100 globe-position counter. It is an angular position sensor, not a playfield location."
+    },
+    {
+      "address": 87,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough eject position (Kicker sw86). The retained script's trough handler kicks the ball resting at Trough 6 and pulses public switch 87 in the same event (Sub JDTrough: sw86.kick 37,30 then vpmTimer.PulseSw 87), and the manual's location diagram draws 87 immediately outboard of 86 at the eject end of the trough."
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the crane assembly (Primitive Crane, table object center). The Globe Magnet is carried on the end of the crane arm and has no fixed playfield position; the manual draws its callout on the crane assembly at the left of the globe."
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the crane assembly (Primitive Crane, table object center); the Globe Arm motor drives that assembly and the manual draws its callout on it. Same anchor as solenoid 1, which is mounted on the same arm."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the \"J\" drop target (Primitive sw54prim), the left-hand end of the five-target JUDGE bank that this coil resets. The manual marks item 05 `†Located Under Playfield` and draws its callout at that end of the bank. The coil is part of the bank's own mechanism; it is not placed at a centroid of the five targets."
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the \"D\" drop target (Primitive sw56prim), the single target this coil pulls down. The manual marks item 10 `†Located Under Playfield` and the retained script's TripDrop handler drops exactly that target."
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the trough eject position (Kicker sw86), the ball position this coil ejects from; the manual draws item 13 at the eject end of the trough."
+    }
+  ],
+  "resolved_input_addresses": [
+    15,
+    16,
+    17,
+    18,
+    25,
+    26,
+    27,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    41,
+    42,
+    43,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    61,
+    62,
+    63,
+    64,
+    66,
+    67,
+    68,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 0,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "817427aed72dc68a5e96a6a50614e8ab822d9d6d98c6033757ef245eda5b6d32",
+    "manual_sha256": "0883aa81befaed928d6761e32b937a1c61417ba834d8f47ae6bc5541b2424fec",
+    "table_sha256": "61f6844d947cc788f81a9ed91e108bd800bd3172abd125ad2ecfb51f6d55be06"
+  },
+  "status": "partial",
+  "unresolved": [
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp",
+      "reason": "Two printed bulbs, and the only retained object is their midpoint."
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.gi",
+      "reason": "No playfield emitter in the retained table's collection for this address."
+    },
+    {
+      "address": 28,
+      "group": "pinmame.input.switch",
+      "reason": "Fitment unresolved; see conflict.l1-era-switch-fitment."
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "reason": "Fitment unresolved; see conflict.l1-era-switch-fitment."
+    },
+    {
+      "address": 65,
+      "group": "pinmame.input.switch",
+      "reason": "Fitment unresolved; see conflict.l1-era-switch-fitment."
+    }
+  ],
+  "version": 1,
+  "visual_review_cache": {
+    "root": "external:pinmame-manuals/rendered/bally.judge-dredd.1993/",
+    "transcription": {
+      "path": "external:pinmame-review-artifacts/judge-dredd-1993/manual-transcription.md",
+      "sha256": "78b62d0f8a3a2b1b4a2b1e29bdcbd0aa2e3b6c76eb5a2c19e6a1cd9a4dfd8e01"
+    }
+  }
+}
