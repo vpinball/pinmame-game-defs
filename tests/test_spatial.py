@@ -397,7 +397,11 @@ class SpatialMigrationTests(unittest.TestCase):
 		# declared clones by PinMAME but living in by68701.c on different boards) holding the
 		# leftover stub, exactly as Kiss's Intel-8035 prototypes did. So the physical-game count
 		# went 786 -> 787 by splitting one record into two, not by adding coverage.
-		self.assertEqual(33, report["missing_requirement_counts"]["spatial_placement"])
+		# Stern The Lord of the Rings raises it to 34. It replaces a legacy candidate-only
+		# partial in place, so partial/stub/author-ready totals are unchanged by it; the
+		# nineteen LEDs of board 520-5242-00 at public lamps 81-99 have no spatial key at all,
+		# because the shared Whitestar profile caps pinmame.output.lamp at 1-80.
+		self.assertEqual(34, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(787, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])
