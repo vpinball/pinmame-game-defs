@@ -1730,7 +1730,6 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	for excluded in report["excluded_object_classes"]:
 		lines.append(f"- {excluded}")
 	lines += ["", f"## Placement count: {report['placement_count']}", ""]
-	lines.append("")
 	return "\n".join(lines)
 
 

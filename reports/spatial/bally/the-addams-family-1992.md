@@ -54,4 +54,3 @@ Coverage status: `partial`
 - GILeftPrims / GIRightPrims collection members (shaded plastics that dim with GI, not individual bulb sockets)
 
 ## Placement count: 169
-
