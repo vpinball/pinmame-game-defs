@@ -374,8 +374,8 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 368 | 1986 | STUB - Space Ship | Stargame | stub |
 | 369 | 1986 | STUB - Break | Video Dens | stub |
 | 370 | 1986 | STUB - Papillon | Video Dens | stub |
-| 371 | 1986 | STUB - Grand Lizard (L-4) | Williams | stub |
-| 372 | 1986 | STUB - High Speed (L-4) | Williams | stub |
+| 371 | 1986 | High Speed | Williams | partial |
+| 372 | 1986 | STUB - Grand Lizard (L-4) | Williams | stub |
 | 373 | 1986 | STUB - Pin-Bot (L-5) | Williams | stub |
 | 374 | 1986 | STUB - Road Kings (L-4) | Williams | stub |
 | 375 | 1986 | STUB - Tic-Tac-Strike (Shuffle) (L-2) | Williams | stub |

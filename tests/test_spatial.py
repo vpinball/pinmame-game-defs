@@ -344,8 +344,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
 		self.assertEqual(787, report["machine_count"])
 		self.assertEqual(23, report["author_ready_count"])
-		self.assertEqual(88, report["partial_count"])
-		self.assertEqual(676, report["stub_count"])
+		self.assertEqual(89, report["partial_count"])
+		self.assertEqual(675, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
 		self.assertEqual(788, report["catalog_record_count"])
 		# The thirteen retrofit-pending machines above (which already include X-Men Pro), plus
@@ -397,13 +397,13 @@ class SpatialMigrationTests(unittest.TestCase):
 		# declared clones by PinMAME but living in by68701.c on different boards) holding the
 		# leftover stub, exactly as Kiss's Intel-8035 prototypes did. So the physical-game count
 		# went 786 -> 787 by splitting one record into two, not by adding coverage.
-		self.assertEqual(33, report["missing_requirement_counts"]["spatial_placement"])
+		self.assertEqual(34, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(787, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])
 		self.assertEqual(23, catalog["summary"]["author_ready_count"])
-		self.assertEqual(676, catalog["summary"]["stub_count"])
-		self.assertEqual(89, catalog["summary"]["partial_count"])
+		self.assertEqual(675, catalog["summary"]["stub_count"])
+		self.assertEqual(90, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(13, len(note_paths))
