@@ -377,7 +377,10 @@ for address in range(25, 33):
             ),
         },
         "wiring": coil_wiring(entry),
-        "spatial": not_applicable("internal_nonvisual", [MANUAL]),
+        # No spatial key. These drive visible playfield, insert and ramp bulbs, so
+        # internal_nonvisual would be a false disposition; the retained table binds no object to
+        # the flasher addresses, so there is no coordinate either. The schema offers only located
+        # or not_applicable and neither is honest, so the gap is carried in the blocker report.
     })
 
 # --- Public 33-44: inert on this platform ---------------------------------------------------
@@ -494,65 +497,78 @@ displays = [{
     "width": 128,
     "height": 16,
     "provenance": prov("validated", [CORE, MANUAL]),
-    "spatial": not_applicable("cabinet_or_service", [CORE]),
+    "spatial": not_applicable("cabinet_or_service", [CORE, MANUAL]),
 }]
 
 mechanisms = [
     {
-        "id": "mechanism.museum-motor",
-        "label": "Museum Motor",
-        "kind": "motorized",
-        "actuators": ["coil.driver-22"],
-        "sensors": ["switch.matrix-50", "switch.matrix-51"],
-        "behavior": (
-            "Printed drive 22 is the 'Motor Circuit (See Schematic)' with no coil type, and the "
-            "switch matrix carries Museum Motor Up at 50 and Museum Motor Down at 51. The "
-            "retained script drives the pair through a cvpmMech position model rather than "
-            "discrete playfield sensors, so neither address has a bound object."
-        ),
-        "provenance": prov("observed", [MANUAL, SCRIPT_REF]),
-    },
-    {
-        "id": "mechanism.bat-bar",
-        "label": "Bat Bar",
+        "id": "mechanism.bar-motor",
+        "label": "Bar Motor",
         "kind": "motorized",
         "actuators": ["coil.driver-16"],
-        "sensors": ["switch.matrix-49"],
+        "sensors": ["switch.matrix-50", "switch.matrix-51"],
         "behavior": (
-            "Printed drive 16 feeds a relay board which switches the 28 VAC Batbar Motor Assy "
-            "515-5256-00-11; the matrix carries Bat Bar Standup at 49. The motor is mains-side "
-            "AC behind a relay rather than a CPU-pulsed coil."
+            "A motorised bar driven by public solenoid 16 through a relay board that switches the "
+            "28 VAC Batbar Motor Assy 515-5256-00-11. The retained known-working script models it "
+            "as a cvpmMech with Sol1 = 16 and two position switches, addsw 50 at rest position 0 "
+            "and addsw 51 across positions 47-49, so 50 and 51 are the travel limits of this one "
+            "mechanism rather than sensors of anything else. The script also drives the Bat Bar "
+            "Standup target object at switch 49 from the same position variable, dropping it out "
+            "of reach as the bar advances; that is an occlusion relationship rather than the bar "
+            "actuating the target, so 49 is not listed as a sensor of this mechanism."
         ),
         "assembly_part_number": "515-5256-00-11",
-        "provenance": prov("validated", [MANUAL]),
+        "provenance": prov("validated", [MANUAL, SCRIPT_REF]),
+    },
+    {
+        "id": "mechanism.ramp-diverter",
+        "label": "Ramp Diverter",
+        "kind": "diverter",
+        "actuators": ["coil.driver-22"],
+        "sensors": [],
+        "behavior": (
+            "Public solenoid 22 diverts the ramp. The manual prints this drive only as 'Motor "
+            "Circuit (See Schematic)' with no coil type, so its identity comes from the retained "
+            "known-working script, whose own callback is named SolDiv and commented 'Ramp "
+            "Diverter (22)' and which raises and lowers two ramp diverter objects from it."
+        ),
+        "provenance": prov("validated", [SCRIPT_REF]),
     },
     {
         "id": "mechanism.left-three-bank",
         "label": "Left 3 Bank Targets",
-        "kind": "drop_target_bank",
+        "kind": "other",
         "actuators": [],
         "sensors": ["switch.matrix-33", "switch.matrix-34", "switch.matrix-35"],
-        "behavior": "Three-target bank printed Left 3 Bank Top/Middle/Bottom at addresses 33-35.",
+        "behavior": (
+            "Three standup targets printed Left 3 Bank Top/Middle/Bottom at 33-35. They are "
+            "standups, not drop targets: no solenoid resets them, and the retained script's "
+            "handlers pulse the switch and nudge the target object a few units before returning "
+            "it, rather than dropping and raising it."
+        ),
         "positions": [
             {"id": "mechanism.left-three-bank.top", "label": "Left 3 Bank Top", "sensors": ["switch.matrix-33"]},
             {"id": "mechanism.left-three-bank.middle", "label": "Left 3 Bank Middle", "sensors": ["switch.matrix-34"]},
             {"id": "mechanism.left-three-bank.bottom", "label": "Left 3 Bank Bottom", "sensors": ["switch.matrix-35"]},
         ],
-        "provenance": prov("validated", [MANUAL]),
+        "provenance": prov("validated", [MANUAL, SCRIPT_REF]),
     },
     {
         "id": "mechanism.right-three-bank",
         "label": "Right 3 Bank Targets",
-        "kind": "drop_target_bank",
+        "kind": "other",
         "actuators": [],
         "sensors": ["switch.matrix-41", "switch.matrix-42", "switch.matrix-43"],
-        "behavior": "Three-target bank printed Right 3 Bank Top/Middle/Bottom at addresses 41-43.",
+        "behavior": (
+            "Three standup targets printed Right 3 Bank Top/Middle/Bottom at 41-43, handled the "
+            "same way as the left bank and likewise not drop targets."
+        ),
         "positions": [
             {"id": "mechanism.right-three-bank.top", "label": "Right 3 Bank Top", "sensors": ["switch.matrix-41"]},
             {"id": "mechanism.right-three-bank.middle", "label": "Right 3 Bank Middle", "sensors": ["switch.matrix-42"]},
             {"id": "mechanism.right-three-bank.bottom", "label": "Right 3 Bank Bottom", "sensors": ["switch.matrix-43"]},
         ],
-        "provenance": prov("validated", [MANUAL]),
+        "provenance": prov("validated", [MANUAL, SCRIPT_REF]),
     },
     {
         "id": "mechanism.joker-face",
@@ -582,9 +598,6 @@ mechanisms = [
     },
 ]
 
-# The Left/Right relay gates all eight right-side outputs, so all eight are stated. An earlier
-# draft named only drive 1 while the prose claimed the whole block, and paired it with a
-# coil.driver-11 -> coil.driver-11 self-loop that asserted nothing at all.
 relationships = [
     {
         "id": f"relationship.left-right-relay-{drive}",
@@ -597,6 +610,30 @@ relationships = [
 ]
 
 conflicts = [
+    {
+        "id": "conflict.motor-circuit-identity",
+        "path": "mechanisms[id=mechanism.bar-motor]; mechanisms[id=mechanism.ramp-diverter]; inputs[binding.device=50,51]",
+        "description": (
+            "The manual and the retained known-working script name this hardware differently. The "
+            "printed Switch Matrix Chart calls switches 50 and 51 'Museum Motor Up' and 'Museum "
+            "Motor Down', and the Special Coil Wiring Diagram prints drive 22 only as 'Motor "
+            "Circuit (See Schematic)' with no coil type. The script instead binds 50 and 51 as the "
+            "two travel limits of a cvpmMech whose Sol1 is public solenoid 16 - the drive the same "
+            "diagram wires to the 28 VAC Batbar Motor Assy - and binds public solenoid 22 to a "
+            "callback named SolDiv, commented 'Ramp Diverter', which moves ramp diverter objects "
+            "and no motor at all. This project's evidence order makes the known-working script "
+            "authoritative for runtime causality, so the topology recorded here follows it: the "
+            "50/51 pair belongs to the solenoid-16 bar mechanism and 22 is a diverter. What is NOT "
+            "settled is the printed name: whether the physical machine's marketing or service "
+            "vocabulary calls that assembly the Museum Motor, the Bat Bar, or both, and whether "
+            "the manual's 'Motor Circuit' row for drive 22 is simply a generic label for an "
+            "unlisted device. An earlier draft of this definition asserted a Museum Motor "
+            "mechanism actuated by drive 22 and sensed by 50/51, which no source supports. "
+            "Resolution path: the printed playfield parts pages, or a photograph of the assembly. "
+            "Unresolved."
+        ),
+        "source_refs": [MANUAL, SCRIPT_REF],
+    },
     {
         "id": "conflict.solenoid-9-bulb-type",
         "path": "outputs[binding.device=9]",
@@ -810,12 +847,12 @@ definition = {
             "address_enumeration": "validated",
             "semantic_naming": "validated",
             "physical_wiring": "validated",
-            "mechanisms": "observed",
+            "mechanisms": "conflicted",
             "variant_coverage": "validated",
             "recreation_knowledge": "observed",
             "spatial_placement": "observed",
         },
-        "missing": ["spatial_placement", "unresolved_conflicts"],
+        "missing": ["mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"],
     },
     "drivers": drivers,
     "inputs": inputs,

@@ -363,15 +363,58 @@ class BatmanDefinitionTests(unittest.TestCase):
         sound = {tuple(entry["roms"][3:]) for entry in curator.ROM_SETS.values()}
         self.assertEqual(1, len(sound), "the definition claims the sound ROMs never differ")
 
+    def test_mechanism_topology_follows_the_known_working_script(self) -> None:
+        """The script is authoritative for runtime causality, and an earlier draft ignored it.
+
+        That draft asserted a "Museum Motor" actuated by solenoid 22 and sensed by switches 50/51.
+        The retained script binds 50 and 51 as the two travel limits of a cvpmMech whose Sol1 is
+        solenoid 16, and binds 22 to a callback named SolDiv commented "Ramp Diverter". No source
+        supported the original topology. The banks were likewise called drop targets when nothing
+        resets them and the script only nudges the target object.
+        """
+        by_id = {m["id"]: m for m in self.definition["mechanisms"]}
+
+        bar = by_id["mechanism.bar-motor"]
+        self.assertEqual(["coil.driver-16"], bar["actuators"])
+        self.assertEqual(["switch.matrix-50", "switch.matrix-51"], sorted(bar["sensors"]))
+        self.assertNotIn("switch.matrix-49", bar["sensors"], "49 is occluded by the bar, not a sensor of it")
+
+        diverter = by_id["mechanism.ramp-diverter"]
+        self.assertEqual("diverter", diverter["kind"])
+        self.assertEqual(["coil.driver-22"], diverter["actuators"])
+
+        for mechanism_id in ("mechanism.left-three-bank", "mechanism.right-three-bank"):
+            self.assertNotEqual("drop_target_bank", by_id[mechanism_id]["kind"], mechanism_id)
+
+        self.assertNotIn("mechanism.museum-motor", by_id)
+        ids = {d["id"] for collection in ("inputs", "outputs") for d in self.definition[collection]}
+        for mechanism in self.definition["mechanisms"]:
+            for reference in mechanism["actuators"] + mechanism["sensors"]:
+                self.assertIn(reference, ids, mechanism["id"])
+
+    def test_flashers_do_not_claim_a_false_spatial_disposition(self) -> None:
+        """They drive visible playfield, insert and ramp bulbs, so internal_nonvisual is wrong.
+
+        The retained table binds no object to them, so there is no coordinate either. The schema
+        offers only located or not_applicable and neither is honest, so the key is omitted and the
+        gap is carried in the blocker report instead.
+        """
+        for address in range(25, 33):
+            flasher = self.solenoids[address]
+            self.assertEqual("flasher", flasher["kind"], address)
+            self.assertNotIn("spatial", flasher, f"address {address} must not claim a disposition")
+
     def test_conflicts_are_declared_and_counted(self) -> None:
         ids = {c["id"] for c in self.definition["conflicts"]}
-        self.assertEqual({"conflict.solenoid-9-bulb-type", "conflict.matrix-position-2-naming"}, ids)
+        self.assertEqual({"conflict.solenoid-9-bulb-type", "conflict.matrix-position-2-naming",
+                          "conflict.motor-circuit-identity"}, ids)
         self.assertIn("unresolved_conflicts", self.definition["coverage"]["missing"])
 
     def test_promotion_state_is_partial(self) -> None:
         coverage = self.definition["coverage"]
         self.assertEqual("partial", coverage["status"])
-        self.assertEqual(["spatial_placement", "unresolved_conflicts"], coverage["missing"])
+        self.assertEqual(["mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"],
+                         coverage["missing"])
 
 
 class BatmanSpatialTests(unittest.TestCase):
