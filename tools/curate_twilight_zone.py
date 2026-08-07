@@ -39,7 +39,7 @@ VPX_EXTRACTION_SOURCE = "vpx-extraction.tz-2-4-5"
 
 TABLE_SHA256 = "4fcca01a076591384caec5b06d4f58547299cbeae9fac2a67faa29cc5af0d814"
 SCRIPT_SHA256 = "122ef6811ff2e6912593a28a75078a467e6d58dd208c98e313c82712aee2bc4e"
-MANUAL_SHA256 = "a1df4b4aac2c14ced066adde3d743d06f1a95220b32747fcae6754a6834ebba5"
+MANUAL_SHA256 = "66b657fda3803ac65dbf0ca89f31825a1a3f95b989b96b99ecea02f42e32be34"
 MANUAL_TRANSCRIPTION_SHA256 = "022e91ceaedb44fdaf410cca90bfa534aa11c89fcd832dd2a0f94166c24de39a"
 VPX_GEOMETRY_SHA256 = "dc8a49f6b1d1568ba9027af7453157039da05a08d6ffd2ac0a60c54940cb2f3a"
 
@@ -557,6 +557,44 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "Midway Manufacturing Company; scan hosted by the Internet Archive",
 			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.twilight-zone.switch-locations-continued",
+					"locator": "PDF page 61, printed 2-51, Switch Locations (Continued), items 34-98",
+					"path": "evidence/excerpts/bally.twilight-zone.1993/switch-locations-continued.md",
+					"sha256": "efabefdc70c7dbac727ccff4a7f4b7a48c4fa42cceef79d402a1afd3b2d0b80d",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.twilight-zone.solenoid-flasher-locations",
+					"locator": "PDF page 62, printed 2-53, Solenoid/Flasher Locations and Flipper Coils",
+					"path": "evidence/excerpts/bally.twilight-zone.1993/solenoid-flasher-locations.md",
+					"sha256": "89f8394694ad868e8f7c6807525ea36eddc821791240ff112d95d7ee3ecdd817",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.twilight-zone.general-illumination",
+					"locator": "PDF page 62, printed 2-53, General Illumination Circuits",
+					"path": "evidence/excerpts/bally.twilight-zone.1993/general-illumination.md",
+					"sha256": "b0c1ce13a73927da9a1af17af19100ddf9da409cae3e209febe2731d6059020d",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.twilight-zone.lamp-locations",
+					"locator": "PDF page 63, printed 2-55, Lamp Locations, full 64-position matrix",
+					"path": "evidence/excerpts/bally.twilight-zone.1993/lamp-locations.md",
+					"sha256": "9e925d39687cbaf85483d062f4a6f468ad049b944e6c62e581485c56e15ba2eb",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+			],
 		},
 		{
 			"id": MANUAL_SUPPORT_SOURCE,

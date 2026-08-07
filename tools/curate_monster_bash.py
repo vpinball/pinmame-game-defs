@@ -42,7 +42,7 @@ VPX_EXTRACTION_SOURCE = "vpx-extraction.mb-vpw-1-0"
 
 TABLE_SHA256 = "bef48b75b072c3fc8b4803639cc65f54144db6ff7e9476f6ea6b1fc23bc68c8d"
 SCRIPT_SHA256 = "b043d07c74693ce5c713a9edc1529413f3c2ec4420b63488085cd45e4fe413e8"
-MANUAL_SHA256 = "8db31b4ac4a116a5a4ca83a456e291ad9bcecdec891ff08e4d3b4eb92df9e7aa"
+MANUAL_SHA256 = "b0c1027e557c7f5a1b3efa7954a88c6b7aa5d993a172c28a08f9445f2a111fc3"
 MANUAL_TRANSCRIPTION_SHA256 = "a5d8d4a1936fe379ed855227a1d73d3a26d95438f75e0c60f3b11e1080d84bfc"
 
 EXTRACTION_RELATIVE_PATH = Path("williams/monster-bash-1998/extracted-vpxtool")
@@ -643,6 +643,83 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "Williams Electronics Games, Inc.; scan hosted by the Internet Archive",
 			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.monster-bash.switch-locations",
+					"locator": "PDF pages 116-117, printed 2-48/2-49, switch-locations parts list",
+					"path": "evidence/excerpts/williams.monster-bash.1998/switch-locations.md",
+					"sha256": "4dd414f43ae88a2d3e64f40ad85ec3cb1c9767aa59eafbc837370d47a9f6a8f2",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.monster-bash.switch-matrix",
+					"locator": "PDF page 119, printed page 2-51, SWITCH MATRIX table",
+					"path": "evidence/excerpts/williams.monster-bash.1998/switch-matrix.md",
+					"sha256": "3095812b39f76d1ab1d26a7232e0f8581ed4b83f11260391dcadd25e628fa294",
+					"image": "evidence/excerpts/williams.monster-bash.1998/switch-matrix.webp",
+					"image_sha256": "5054d0ad3d70ca17e24dbdeb861f54ffc26235a5c8e0ed94cb33bb05551776ca",
+					"image_derivation": "Williams_1998_Monster_Bash_English_Manual.pdf page 119, crop box 0.08,0.06,0.98,0.58 of the page, rendered at 300 dpi with pdftoppm, reduced to 750px wide grayscale, quality 75 WebP",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.monster-bash.lamp-locations",
+					"locator": "PDF page 112, printed 2-44, lamp-locations parts list",
+					"path": "evidence/excerpts/williams.monster-bash.1998/lamp-locations.md",
+					"sha256": "bd375fb9ec32550387cd1d7ebe69779d8ccd28240129d8a08ad0e9a299c2712c",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.monster-bash.lamp-matrix",
+					"locator": "PDF page 120, printed 2-52, lamp matrix wiring table",
+					"path": "evidence/excerpts/williams.monster-bash.1998/lamp-matrix.md",
+					"sha256": "69fd8340c0324e0ca991e14652fdaca5a9aa1b67cf449a91d748bdb10f689205",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.monster-bash.solenoid-flasher-locations",
+					"locator": "PDF page 114, printed 2-46, solenoid/flasher locations parts list",
+					"path": "evidence/excerpts/williams.monster-bash.1998/solenoid-flasher-locations.md",
+					"sha256": "335515d2c806ed3e14fd04cdf77845872af0fc79958f514ac6d4606ff6c214f1",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.monster-bash.solenoid-flasher-wiring",
+					"locator": "PDF page 121, printed 2-53, solenoid/flasher wiring table",
+					"path": "evidence/excerpts/williams.monster-bash.1998/solenoid-flasher-wiring.md",
+					"sha256": "66b0b99fbede03f85298dabddae8f8354d133edae3a5d53addaf1ff6ebd7d14c",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.monster-bash.general-illumination",
+					"locator": "PDF pages 114 and 121, printed 2-46 and 2-53, general illumination location and wiring",
+					"path": "evidence/excerpts/williams.monster-bash.1998/general-illumination.md",
+					"sha256": "745bae316909842d9b7853c2f2672e1da49532177dd349bb460ed0d64b322970",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.monster-bash.boards-and-assemblies",
+					"locator": "PDF pages 78-84, printed 2-10 through 2-16, board/assembly pages fixing device construction",
+					"path": "evidence/excerpts/williams.monster-bash.1998/boards-and-assemblies.md",
+					"sha256": "9f7836b0ffb632401f0985286e6d439051243ff8a992d62f3e06bbc4137314f6",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+			],
 		},
 		{
 			"id": MANUAL_SUPPORT_SOURCE,
