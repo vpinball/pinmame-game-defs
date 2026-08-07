@@ -30,8 +30,8 @@ PARTIAL_PATH = ROOT / "machines/partial/williams/funhouse-1990.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/williams/funhouse-1990.json"
 DEFINITION_PATH = PARTIAL_PATH
 SEED_PATH = ROOT / "tools/seeds/williams/funhouse-1990.json"
-SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/funhouse.json"
-SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/funhouse.md"
+SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/funhouse-1990.json"
+SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/funhouse-1990.md"
 
 PINMAME_REVISION = "4ec52ff0ac133ac251681518aed2249e19fe26eb"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"

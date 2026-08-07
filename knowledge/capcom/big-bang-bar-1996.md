@@ -1,492 +1,92 @@
-# Big Bang Bar
+# Big Bang Bar (Capcom, 1996)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+Coverage: **partial - complete physical I/O inventory, Capcom platform bindings, driver-variant boundary, and normalized spatial placement for all but a handful of addresses; four unresolved conflicts and several output-semantics gaps keep the record partial**
 
-## Overview
+## Identity and evidence precedence
 
-Legacy evidence identifies this candidate as Capcom (1996). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+This is the Capcom widebody physical product from 1996, one of the last three games Capcom Coin-Op released before exiting pinball. It covers the two-driver `bbb_*` clone tree: `bbb109` (Beta 1.9 US, the pinned catalog's parent, built with Fast Flips support) and `bbb108` (Beta 1.8 US, an earlier firmware revision without Fast Flips). Both are game-ROM revisions for the same physical machine and share identical switch/lamp/solenoid boards (`u2l`/`u2h` ROMs and CAPCOMS sound ROMs are byte-identical across both drivers; only the `u1l`/`u1h` program ROMs differ).
 
-## Playfield devices
+Evidence precedence for this definition: the retained known-working VPW v1.0 script is runtime and mechanism-causality ground truth; the Capcom operators manual and its companion schematic set control physical construction, part numbers, wiring, polarity, quantities, and device presence -- the schematic's own sheet 7 "DEVICE # & DESCRIPTION" table is the single most authoritative solenoid source found for this machine; pinned PinMAME controls controller generation, public address topology, and per-game hardware metadata; the retained VPX geometry supplies normalized coordinates. The retained manual PDF is an Adobe Paper Capture OCR'd scan whose text layer is unreliable on dense multi-column tables, so every printed table used here was read from rendered pages and transcribed into `external:pinmame-review-artifacts/big-bang-bar/manual-transcription.md` and its companion solenoid/schematic document; the OCR text is a search index only and never an authority.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+## Controller platform and address topology
 
-## Custom mechanisms
+Capcom hardware has **no PINMAME_HARDWARE_GEN bit at all** -- `core_tGameData.gen` is the literal `0` in every `cc`-family `INITGAME`/`INITGAMEFF` macro expansion (`src/wpc/capgames.c`), confirmed by the constant's total absence from `src/libpinmame/libpinmame.h`'s `PINMAME_HARDWARE_GEN` enum. This is the first Capcom-platform game curated in this project; it introduces `controllers/pinmame/capcom.json`, derived entirely from `src/wpc/capcom.c`/`capcom.h`/`capgames.c` rather than by analogy with any WPC/System-11/Whitestar profile already in this repository. None of those platforms' rules (printed-flipper translation, LPDC 37-40/41-44 duplication, Fliptronic columns, `CORE_FIRSTCUSTSOL`-relative custom-solenoid counting from a WPC-style base, or column-times-ten switch/lamp notation) carry over -- Capcom's own `cc_sw2m`/`cc_m2sw` conversion functions and fixed two-matrix lamp scheme are a completely independent addressing scheme documented in the controller profile with exact source citations.
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+- **Switches**: 16 dedicated cabinet positions (1-8 from `CC_COMPORTS` "switch column 9" -- Coin 1-4, Start, Coin Door; 9-16 from "switch column 0" -- Slam Tilt, Tilt, and five generically-labeled "Unused" positions this game repurposes for a Token/Ticket dispenser at 15/16), an 8x8 playfield switch board at 17-80, PinMAME's synthetic flipper button/EOS column at 81-88 (real content depends entirely on `hw.flippers`), and an always-unused platform column at 89-96 (`CORE_STDSWCOLS` fixes every generation at 12 columns regardless of what a driver uses).
+- **Solenoids**: 32 physical driver-board outputs (1-32); four Fliptronic-shaped synthetic mirror addresses (33, 35, 45, 47) that duplicate physical 11/12/9/10 respectively for legacy DOF compatibility, per the driver's own source comment admitting the mapping "does not correspond to manuals or any other reference"; a completely unused WPC-style LPDC range (37-44, never written by the Capcom driver at all); and one custom diagnostic address (51) published only by the Fast-Flips-capable `bbb109` driver.
+- **Lamps**: two full 8x8 CPU-strobed matrices (1-64 "A", 65-128 "B") -- **there is no general-illumination channel anywhere on this platform**; every playfield bulb, including ones the manual labels "G.I.", is an individually addressed lamp-matrix position, not a continuously-driven GI circuit. A ninth diagnostic column (129-136) carries two PWM-integrated status LEDs and six permanently unused positions.
 
-## Ball-state transitions
+Two platform facts are easy to get backwards. First, PinMAME's `capInvSw10` mask (shared by both `bbb108` and `bbb109`, since both pass `gameno=10` to their `INITGAME`/`INITGAMEFF` macro call) normalizes exactly six switch addresses -- 25, 36, 37, 38, 39, and 57 -- and this curation's exhaustive re-derivation of the mask in code (never by hand) found **zero disagreement** with the manual's own construction evidence: all six are either a positively-documented opto (36-39, matching the Opto Boards page's receiver/transmitter part-number pair) or a blank-switch-part-number row consistent with opto construction whose specific opto part number the scan cannot resolve (25 Spinner, 57 Alien Motor). Second, the four Fliptronic-shaped mirror addresses are **not** WPC-style real public addresses the way they are on every WPC generation curated in this project; only two of the four (45, 47) ever receive live data from the emulator at all, and even those two carry a genuine, sourced left/right naming defect -- see the conflict below.
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+## Trough, drain, and shooter
 
-## Controller interactions
+A drained ball settles on switch 35 (Outhole, SW00113, mechanical, the largest normalized y of the five trough-area switches -- closest to the apron). `Sub SolTrough` (solenoid 1) kicks it into the four-position ball trough at switch 39 (Trough 4 Balls, nearest the drain entry), sensed onward by opto switches 36-39 (Trough 1-4 Balls). `UpdateTroughTimer` cascades balls toward the exit one position at a time (`sw37.kick` into 36 if 36 is empty, `sw38.kick` into 37, `sw39.kick` into 38), so switch 36 (the smallest normalized y of the four, closest to the release mechanism) is the front of the queue. Solenoid 2 (`SolRelease`, labeled "Trough" on both the manual and schematic device table) kicks the ball resting on switch 36 out to the shooter lane (switch 43, Shooter Lane), and the cabinet Plunger key fires it into play. There is no cabinet Launch Button switch address on this machine's cabinet-switch table.
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+## Alien Mechanism: one motor, two figures, twin lock posts
 
-## Service and setup information
+The Alien Mech Assembly parts page (printed page 104) draws **one** DC gearmotor driving two gears on two independent shafts, each carrying one alien figure. PinMAME's public solenoids 31/32 ("Aliens Forward"/"Aliens Reverse") are this single motor's two drive-direction outputs, not two independent motors -- independently corroborated by the manual's own dedicated "C2-02: ALIEN MOTOR" diagnostic calibration test (printed page 41), which describes calibrating one motor at two power levels and names a "Can't Find Home Position" failure mode tied to a dirty or misaligned double-notch encoder-wheel opto.
 
-Unknown; locate operator/service documentation.
+That opto is switch 57 (Alien Motor): the retained script's `ALockTimer_timer` drives a 32-step position counter (`OldPos`/`NewPos`, 0-31) and toggles switch 57 through a repeating home/quarter-turn/half-turn/three-quarter-turn notch pattern as the counter advances, animating both alien figures' rotation angles together from the same counter. There is no fixed playfield sensor object behind this switch; it is a documented projection onto the mechanism's own rotating-figure anchor, the same pattern already established in this project for Monster Bash's Dracula-position optos.
 
-## Timing and tuning observations
+Solenoid 16 (Alien Lock Post) is a separate mechanism: it raises and lowers a ball-lock post, sensed independently by switches 61/62 (Alien Lock Left/Right, opto part `SW00146`... actually mechanical per the manual's blank opto columns for this row). The retained script's `sw61_Hit`/`sw62_Hit` handlers set independent `AlienLBall`/`AlienRBall` lock-state flags with no dependency on the rotating figures' own position counter.
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+## Tube Dancer: an unresolved shared address
 
-## Recreation guidance
+The Tube Lady Assembly parts page (printed page 108; the manual calls this mechanism "Tube Lady" on its parts pages but "Tube Dancer" everywhere else -- solenoid table, schematic, diagnostics) shows **one coil** (item 1A) and a **separate DC gearmotor** (item 1F) driving the dancing figure inside a clear backbox tube via a rack/pinion or belt. The retained script models only the motor half: solenoid 30 (`solDancer`) enables a continuous wobble-rotation timer with no discrete position and no switch.
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+The coil half is where the evidence genuinely runs out. Schematic sheet 7 shows solenoid address 22 driving **two** device symbols in parallel from one connector pin, labeled "TUBE DANCER & B.B. R." -- resolving the manual's page-82 location table, which prints an unnumbered "BACKBOX RIGHT (FLASHER)" row immediately below the numbered "22 TUBE DANCER" row (they share one address, not a numbering gap). But **both** of the two S22 symbols on the schematic are drawn as the circular bulb shape used for lamps/flashers elsewhere on the same sheet, not the coil-plus-flyback-diode symbol every other real solenoid uses -- directly at odds with the Tube Lady Assembly parts page's own genuine coil (item 1A). Whether the Tube Dancer's mechanical pop/bounce action is actually solenoid-driven through address 22 despite the bulb-shaped schematic symbol, or is purely spring/gravity return with address 22 driving lamp effects only, is not resolved by any source available to this curation (`conflict.solenoid-22-shared-device-construction`).
 
-## Evidence notes
+## Drop-target banks
 
-- `games/bbb.json#/switches/0._inferred_type`: tilt
-- `games/bbb.json#/switches/0._note`: vpmNudge.TiltSwitch=10
-- `games/bbb.json#/switches/1._vbscript_name`: sw17
-- `games/bbb.json#/switches/1._inferred_type`: drop_target
-- `games/bbb.json#/switches/1._note`: 4-bank drop target, reset by coil 7
-- `games/bbb.json#/switches/2._vbscript_name`: sw18
-- `games/bbb.json#/switches/2._inferred_type`: drop_target
-- `games/bbb.json#/switches/2._note`: 4-bank drop target, reset by coil 7
-- `games/bbb.json#/switches/3._vbscript_name`: sw19
-- `games/bbb.json#/switches/3._inferred_type`: drop_target
-- `games/bbb.json#/switches/3._note`: 4-bank drop target, reset by coil 7
-- `games/bbb.json#/switches/4._vbscript_name`: sw20
-- `games/bbb.json#/switches/4._inferred_type`: drop_target
-- `games/bbb.json#/switches/4._note`: 4-bank drop target, reset by coil 7
-- `games/bbb.json#/switches/5._vbscript_name`: sw21
-- `games/bbb.json#/switches/5._vbscript_callback`: STHit 21
-- `games/bbb.json#/switches/5._inferred_type`: standup_target
-- `games/bbb.json#/switches/6._vbscript_name`: sw22
-- `games/bbb.json#/switches/6._vbscript_callback`: STHit 22
-- `games/bbb.json#/switches/6._inferred_type`: standup_target
-- `games/bbb.json#/switches/7._vbscript_name`: sw23
-- `games/bbb.json#/switches/7._vbscript_callback`: STHit 23
-- `games/bbb.json#/switches/7._inferred_type`: standup_target
-- `games/bbb.json#/switches/8._vbscript_name`: sw24
-- `games/bbb.json#/switches/8._inferred_type`: rollover
-- `games/bbb.json#/switches/9._vbscript_name`: sw25
-- `games/bbb.json#/switches/9._vbscript_callback`: vpmTimer.PulseSw 25
-- `games/bbb.json#/switches/9._inferred_type`: spinner
-- `games/bbb.json#/switches/10._vbscript_name`: sw26
-- `games/bbb.json#/switches/10._inferred_type`: rollover
-- `games/bbb.json#/switches/11._vbscript_name`: sw27
-- `games/bbb.json#/switches/11._inferred_type`: rollover
-- `games/bbb.json#/switches/12._vbscript_name`: sw28
-- `games/bbb.json#/switches/12._inferred_type`: rollover
-- `games/bbb.json#/switches/13._vbscript_name`: sw29
-- `games/bbb.json#/switches/13._inferred_type`: rollover
-- `games/bbb.json#/switches/14._vbscript_name`: sw30
-- `games/bbb.json#/switches/14._inferred_type`: rollover
-- `games/bbb.json#/switches/15._vbscript_name`: sw31
-- `games/bbb.json#/switches/15._inferred_type`: rollover
-- `games/bbb.json#/switches/16._vbscript_name`: sw32
-- `games/bbb.json#/switches/16._inferred_type`: rollover
-- `games/bbb.json#/switches/17._inferred_type`: flipper_eos
-- `games/bbb.json#/switches/17._note`: Set by SolLFlipper callback: Controller.Switch(33)=1 when enabled
-- `games/bbb.json#/switches/18._inferred_type`: flipper_eos
-- `games/bbb.json#/switches/18._note`: Set by SolRFlipper callback: Controller.Switch(34)=1 when enabled
-- `games/bbb.json#/switches/19._vbscript_name`: sw35
-- `games/bbb.json#/switches/19._inferred_type`: trough
-- `games/bbb.json#/switches/20._vbscript_name`: sw36
-- `games/bbb.json#/switches/20._inferred_type`: trough
-- `games/bbb.json#/switches/21._vbscript_name`: sw37
-- `games/bbb.json#/switches/21._inferred_type`: trough
-- `games/bbb.json#/switches/22._vbscript_name`: sw38
-- `games/bbb.json#/switches/22._inferred_type`: trough
-- `games/bbb.json#/switches/23._vbscript_name`: sw39
-- `games/bbb.json#/switches/23._inferred_type`: trough
-- `games/bbb.json#/switches/24._vbscript_callback`: vpmTimer.PulseSw 41
-- `games/bbb.json#/switches/24._inferred_type`: slingshot
-- `games/bbb.json#/switches/24._note`: Fired from LeftSlingShot_Slingshot event
-- `games/bbb.json#/switches/25._vbscript_callback`: vpmTimer.PulseSw 42
-- `games/bbb.json#/switches/25._inferred_type`: slingshot
-- `games/bbb.json#/switches/25._note`: Fired from RightSlingShot_Slingshot event
-- `games/bbb.json#/switches/26._vbscript_name`: sw43
-- `games/bbb.json#/switches/26._inferred_type`: shooter_lane
-- `games/bbb.json#/switches/27._vbscript_name`: sw44
-- `games/bbb.json#/switches/27._inferred_type`: rollover
-- `games/bbb.json#/switches/28._vbscript_name`: sw45
-- `games/bbb.json#/switches/28._inferred_type`: rollover
-- `games/bbb.json#/switches/29._vbscript_name`: sw46
-- `games/bbb.json#/switches/29._inferred_type`: rollover
-- `games/bbb.json#/switches/30._vbscript_name`: sw47
-- `games/bbb.json#/switches/30._inferred_type`: rollover
-- `games/bbb.json#/switches/31._vbscript_name`: sw48
-- `games/bbb.json#/switches/31._inferred_type`: rollover
-- `games/bbb.json#/switches/32._vbscript_name`: sw49
-- `games/bbb.json#/switches/32._inferred_type`: drop_target
-- `games/bbb.json#/switches/32._note`: 3-bank drop target, reset by coil 17
-- `games/bbb.json#/switches/33._vbscript_name`: sw50
-- `games/bbb.json#/switches/33._inferred_type`: drop_target
-- `games/bbb.json#/switches/33._note`: 3-bank drop target, reset by coil 17
-- `games/bbb.json#/switches/34._vbscript_name`: sw51
-- `games/bbb.json#/switches/34._inferred_type`: drop_target
-- `games/bbb.json#/switches/34._note`: 3-bank drop target, reset by coil 17
-- `games/bbb.json#/switches/35._vbscript_name`: sw52
-- `games/bbb.json#/switches/35._vbscript_callback`: STHit 52
-- `games/bbb.json#/switches/35._inferred_type`: standup_target
-- `games/bbb.json#/switches/36._vbscript_name`: sw53
-- `games/bbb.json#/switches/36._vbscript_callback`: STHit 53
-- `games/bbb.json#/switches/36._inferred_type`: standup_target
-- `games/bbb.json#/switches/37._vbscript_callback`: vpmTimer.PulseSw 54
-- `games/bbb.json#/switches/37._inferred_type`: bumper
-- `games/bbb.json#/switches/38._vbscript_callback`: vpmTimer.PulseSw 55
-- `games/bbb.json#/switches/38._inferred_type`: bumper
-- `games/bbb.json#/switches/39._vbscript_callback`: vpmTimer.PulseSw 56
-- `games/bbb.json#/switches/39._inferred_type`: bumper
-- `games/bbb.json#/switches/40._vbscript_name`: sw58
-- `games/bbb.json#/switches/40._inferred_type`: drop_target
-- `games/bbb.json#/switches/40._note`: Single drop target, reset by coil 29
-- `games/bbb.json#/switches/41._vbscript_name`: sw59
-- `games/bbb.json#/switches/41._inferred_type`: rollover
-- `games/bbb.json#/switches/42._vbscript_name`: sw60
-- `games/bbb.json#/switches/42._inferred_type`: rollover
-- `games/bbb.json#/switches/43._vbscript_name`: sw61
-- `games/bbb.json#/switches/43._inferred_type`: kicker
-- `games/bbb.json#/switches/43._note`: Alien lock left kicker — sets AlienLBall flag, disables wire ramp
-- `games/bbb.json#/switches/44._vbscript_name`: sw62
-- `games/bbb.json#/switches/44._inferred_type`: kicker
-- `games/bbb.json#/switches/44._note`: Alien lock right kicker — sets AlienRBall flag, disables wire ramp
-- `games/bbb.json#/switches/45._vbscript_name`: sw65
-- `games/bbb.json#/switches/45._inferred_type`: rollover
-- `games/bbb.json#/switches/46._vbscript_name`: sw66
-- `games/bbb.json#/switches/46._inferred_type`: rollover
-- `games/bbb.json#/switches/47._vbscript_name`: sw67
-- `games/bbb.json#/switches/47._inferred_type`: kicker
-- `games/bbb.json#/switches/47._note`: cvpmBallStack (bsRHole) — InitSaucer sw67, 67, 222, 25
-- `games/bbb.json#/switches/48._inferred_type`: flipper_eos
-- `games/bbb.json#/switches/48._note`: Set by SolRFlipper callback alongside switch 34
-- `games/bbb.json#/switches/49._vbscript_name`: sw69
-- `games/bbb.json#/switches/49._inferred_type`: rollover
-- `games/bbb.json#/switches/50._vbscript_name`: sw70
-- `games/bbb.json#/switches/50._inferred_type`: rollover
-- `games/bbb.json#/switches/51._vbscript_name`: sw71
-- `games/bbb.json#/switches/51._inferred_type`: rollover
-- `games/bbb.json#/switches/52._vbscript_name`: sw77
-- `games/bbb.json#/switches/52._inferred_type`: rollover
-- `games/bbb.json#/switches/53._vbscript_name`: sw78
-- `games/bbb.json#/switches/53._inferred_type`: rollover
-- `games/bbb.json#/switches/54._vbscript_name`: sw79
-- `games/bbb.json#/switches/54._inferred_type`: rollover
-- `games/bbb.json#/switches/55._vbscript_name`: sw80
-- `games/bbb.json#/switches/55._inferred_type`: rollover
-- `games/bbb.json#/coils/0._vbscript_callback`: SolTrough
-- `games/bbb.json#/coils/0._inferred_type`: ball_management
-- `games/bbb.json#/coils/0._note`: Kicks ball from sw35 drain toward trough stack
-- `games/bbb.json#/coils/1._vbscript_callback`: SolRelease
-- `games/bbb.json#/coils/1._inferred_type`: ball_management
-- `games/bbb.json#/coils/1._note`: Kicks ball from sw36 trough to plunger lane
-- `games/bbb.json#/coils/2._vbscript_callback`: vpmSolSound SoundFX("knocker",DOFContactors),
-- `games/bbb.json#/coils/2._inferred_type`: knocker
-- `games/bbb.json#/coils/3._vbscript_callback`: commented out
-- `games/bbb.json#/coils/3._inferred_type`: slingshot
-- `games/bbb.json#/coils/3._note`: SolCallback commented out — handled by VPX natively
-- `games/bbb.json#/coils/4._vbscript_callback`: commented out
-- `games/bbb.json#/coils/4._inferred_type`: slingshot
-- `games/bbb.json#/coils/4._note`: SolCallback commented out — handled by VPX natively
-- `games/bbb.json#/coils/5._vbscript_callback`: SolKickBack
-- `games/bbb.json#/coils/5._inferred_type`: kickback
-- `games/bbb.json#/coils/6._vbscript_callback`: sol4Bank
-- `games/bbb.json#/coils/6._inferred_type`: drop_target_reset
-- `games/bbb.json#/coils/6._note`: Resets drop targets sw17, sw18, sw19, sw20
-- `games/bbb.json#/coils/7._vbscript_callback`: SolLowerLockPin
-- `games/bbb.json#/coils/7._inferred_type`: post
-- `games/bbb.json#/coils/8._vbscript_callback`: commented out
-- `games/bbb.json#/coils/8._inferred_type`: flipper
-- `games/bbb.json#/coils/8._note`: SolCallback commented out — uses sLLFlipper framework constant instead
-- `games/bbb.json#/coils/9._vbscript_callback`: commented out
-- `games/bbb.json#/coils/9._inferred_type`: flipper
-- `games/bbb.json#/coils/9._note`: SolCallback commented out — uses sLRFlipper framework constant instead
-- `games/bbb.json#/coils/10._vbscript_callback`: commented out
-- `games/bbb.json#/coils/10._inferred_type`: flipper
-- `games/bbb.json#/coils/10._note`: SolCallback commented out
-- `games/bbb.json#/coils/11._vbscript_callback`: bsRHole.SolOut
-- `games/bbb.json#/coils/11._inferred_type`: kicker
-- `games/bbb.json#/coils/11._note`: cvpmBallStack eject from sw67 saucer
-- `games/bbb.json#/coils/12._vbscript_callback`: SolLRDIvert
-- `games/bbb.json#/coils/12._inferred_type`: diverter
-- `games/bbb.json#/coils/13._vbscript_callback`: SolRDivert1
-- `games/bbb.json#/coils/13._inferred_type`: diverter
-- `games/bbb.json#/coils/13._note`: Controls tube ramp diverter
-- `games/bbb.json#/coils/14._vbscript_callback`: SolRDivert2
-- `games/bbb.json#/coils/14._inferred_type`: diverter
-- `games/bbb.json#/coils/14._note`: Controls second tube ramp diverter
-- `games/bbb.json#/coils/15._vbscript_callback`: SolRDivert3
-- `games/bbb.json#/coils/15._inferred_type`: post
-- `games/bbb.json#/coils/16._vbscript_callback`: sol3Bank
-- `games/bbb.json#/coils/16._inferred_type`: drop_target_reset
-- `games/bbb.json#/coils/16._note`: Resets drop targets sw49, sw50, sw51
-- `games/bbb.json#/coils/17._vbscript_callback`: commented out
-- `games/bbb.json#/coils/17._inferred_type`: bumper
-- `games/bbb.json#/coils/17._note`: SolCallback commented out — handled by VPX natively
-- `games/bbb.json#/coils/18._vbscript_callback`: commented out
-- `games/bbb.json#/coils/18._inferred_type`: bumper
-- `games/bbb.json#/coils/18._note`: SolCallback commented out — handled by VPX natively
-- `games/bbb.json#/coils/19._vbscript_callback`: commented out
-- `games/bbb.json#/coils/19._inferred_type`: bumper
-- `games/bbb.json#/coils/19._note`: SolCallback commented out — handled by VPX natively
-- `games/bbb.json#/coils/20._vbscript_callback`: Flash1
-- `games/bbb.json#/coils/20._inferred_type`: flasher
-- `games/bbb.json#/coils/20._note`: SolModCallback — sets F21.state = level
-- `games/bbb.json#/coils/21._vbscript_callback`: Flash2
-- `games/bbb.json#/coils/21._inferred_type`: flasher
-- `games/bbb.json#/coils/21._note`: SolModCallback — sets F22.state = level
-- `games/bbb.json#/coils/22._vbscript_callback`: Flash3
-- `games/bbb.json#/coils/22._inferred_type`: flasher
-- `games/bbb.json#/coils/22._note`: SolModCallback — sets F23.state = level
-- `games/bbb.json#/coils/23._vbscript_callback`: Flash4
-- `games/bbb.json#/coils/23._inferred_type`: flasher
-- `games/bbb.json#/coils/23._note`: SolModCallback — sets F24.state = level
-- `games/bbb.json#/coils/24._vbscript_callback`: Flash5
-- `games/bbb.json#/coils/24._inferred_type`: flasher
-- `games/bbb.json#/coils/24._note`: SolModCallback — sets F25.state = level
-- `games/bbb.json#/coils/25._vbscript_callback`: Flash6
-- `games/bbb.json#/coils/25._inferred_type`: flasher
-- `games/bbb.json#/coils/25._note`: SolModCallback — sets F26.state = level
-- `games/bbb.json#/coils/26._vbscript_callback`: GateLeft
-- `games/bbb.json#/coils/26._inferred_type`: gate
-- `games/bbb.json#/coils/27._vbscript_callback`: GateRight
-- `games/bbb.json#/coils/27._inferred_type`: gate
-- `games/bbb.json#/coils/28._vbscript_callback`: sol1Bank
-- `games/bbb.json#/coils/28._inferred_type`: drop_target_reset
-- `games/bbb.json#/coils/28._note`: Resets drop target sw58
-- `games/bbb.json#/coils/29._vbscript_callback`: solDancer
-- `games/bbb.json#/coils/29._inferred_type`: mechanism
-- `games/bbb.json#/coils/29._note`: Enables/disables dancerT timer for tube dancer animation
-- `games/bbb.json#/coils/30._vbscript_callback`: SolAlienForward
-- `games/bbb.json#/coils/30._inferred_type`: mechanism
-- `games/bbb.json#/coils/30._note`: Drives alien lock mechanism forward
-- `games/bbb.json#/coils/31._vbscript_callback`: SolAlienReverse
-- `games/bbb.json#/coils/31._inferred_type`: mechanism
-- `games/bbb.json#/coils/31._note`: Drives alien lock mechanism in reverse
-- `games/bbb.json#/coils/32._vbscript_name`: sLRFlipper
-- `games/bbb.json#/coils/32._vbscript_callback`: SolRFlipper
-- `games/bbb.json#/coils/32._inferred_type`: flipper
-- `games/bbb.json#/coils/32._note`: Framework-defined constant (Capcom.VBS: sLRFlipper=46). Also fires RightFlipper1 (upper)
-- `games/bbb.json#/coils/33._vbscript_name`: sLLFlipper
-- `games/bbb.json#/coils/33._vbscript_callback`: SolLFlipper
-- `games/bbb.json#/coils/33._inferred_type`: flipper
-- `games/bbb.json#/coils/33._note`: Framework-defined constant (Capcom.VBS: sLLFlipper=48)
-- `games/bbb.json#/coils/34._vbscript_callback`: SolGameOn
-- `games/bbb.json#/coils/34._inferred_type`: mechanism
-- `games/bbb.json#/coils/34._note`: Sets GameStateOn flag — flippers only respond when game is active
-- `games/bbb.json#/lamps/0._vbscript_name`: BL_Flashers_L01
-- `games/bbb.json#/lamps/0._inferred_type`: flasher
-- `games/bbb.json#/lamps/1._vbscript_name`: BL_Gi_L9
-- `games/bbb.json#/lamps/1._inferred_type`: gi
-- `games/bbb.json#/lamps/2._vbscript_name`: BL_Gi_L10
-- `games/bbb.json#/lamps/2._inferred_type`: gi
-- `games/bbb.json#/lamps/3._vbscript_name`: BL_Gi_L11
-- `games/bbb.json#/lamps/3._inferred_type`: gi
-- `games/bbb.json#/lamps/4._vbscript_name`: BL_Gi_L12
-- `games/bbb.json#/lamps/4._inferred_type`: gi
-- `games/bbb.json#/lamps/5._vbscript_name`: BL_Gi_L14
-- `games/bbb.json#/lamps/5._inferred_type`: gi
-- `games/bbb.json#/lamps/6._vbscript_name`: BL_Gi_L17
-- `games/bbb.json#/lamps/6._inferred_type`: gi
-- `games/bbb.json#/lamps/7._vbscript_name`: BL_Gi_L18
-- `games/bbb.json#/lamps/7._inferred_type`: gi
-- `games/bbb.json#/lamps/8._vbscript_name`: BL_Inserts_L19
-- `games/bbb.json#/lamps/8._inferred_type`: insert
-- `games/bbb.json#/lamps/9._vbscript_name`: BL_Inserts_L20
-- `games/bbb.json#/lamps/9._inferred_type`: insert
-- `games/bbb.json#/lamps/10._vbscript_name`: BL_Gi_L21
-- `games/bbb.json#/lamps/10._inferred_type`: gi
-- `games/bbb.json#/lamps/11._vbscript_name`: BL_Gi_L22
-- `games/bbb.json#/lamps/11._inferred_type`: gi
-- `games/bbb.json#/lamps/12._vbscript_name`: BL_Gi_L23
-- `games/bbb.json#/lamps/12._inferred_type`: gi
-- `games/bbb.json#/lamps/13._vbscript_name`: BL_Gi_L24
-- `games/bbb.json#/lamps/13._inferred_type`: gi
-- `games/bbb.json#/lamps/14._vbscript_name`: BL_Gi_L25
-- `games/bbb.json#/lamps/14._inferred_type`: gi
-- `games/bbb.json#/lamps/15._vbscript_name`: BL_Gi_L26
-- `games/bbb.json#/lamps/15._inferred_type`: gi
-- `games/bbb.json#/lamps/16._vbscript_name`: BL_Gi_L27
-- `games/bbb.json#/lamps/16._inferred_type`: gi
-- `games/bbb.json#/lamps/17._vbscript_name`: BL_Gi_L28
-- `games/bbb.json#/lamps/17._inferred_type`: gi
-- `games/bbb.json#/lamps/18._vbscript_name`: BL_Gi_L29
-- `games/bbb.json#/lamps/18._inferred_type`: gi
-- `games/bbb.json#/lamps/19._vbscript_name`: BL_Inserts_L30
-- `games/bbb.json#/lamps/19._inferred_type`: insert
-- `games/bbb.json#/lamps/20._vbscript_name`: BL_Inserts_L31
-- `games/bbb.json#/lamps/20._inferred_type`: insert
-- `games/bbb.json#/lamps/21._vbscript_name`: BL_Inserts_L32
-- `games/bbb.json#/lamps/21._inferred_type`: insert
-- `games/bbb.json#/lamps/22._vbscript_name`: BL_Gi_L33
-- `games/bbb.json#/lamps/22._inferred_type`: gi
-- `games/bbb.json#/lamps/23._vbscript_name`: BL_Gi_L34
-- `games/bbb.json#/lamps/23._inferred_type`: gi
-- `games/bbb.json#/lamps/24._vbscript_name`: BL_Gi_L35
-- `games/bbb.json#/lamps/24._inferred_type`: gi
-- `games/bbb.json#/lamps/25._vbscript_name`: BL_Gi_L36
-- `games/bbb.json#/lamps/25._inferred_type`: gi
-- `games/bbb.json#/lamps/26._vbscript_name`: BL_Gi_L37
-- `games/bbb.json#/lamps/26._inferred_type`: gi
-- `games/bbb.json#/lamps/27._vbscript_name`: BL_Gi_L39
-- `games/bbb.json#/lamps/27._inferred_type`: gi
-- `games/bbb.json#/lamps/28._vbscript_name`: BL_Gi_L40
-- `games/bbb.json#/lamps/28._inferred_type`: gi
-- `games/bbb.json#/lamps/29._vbscript_name`: BL_Inserts_L41
-- `games/bbb.json#/lamps/29._inferred_type`: insert
-- `games/bbb.json#/lamps/30._vbscript_name`: BL_Inserts_L42
-- `games/bbb.json#/lamps/30._inferred_type`: insert
-- `games/bbb.json#/lamps/31._vbscript_name`: BL_Inserts_L43
-- `games/bbb.json#/lamps/31._inferred_type`: insert
-- `games/bbb.json#/lamps/32._vbscript_name`: BL_Flashers_L44
-- `games/bbb.json#/lamps/32._inferred_type`: flasher
-- `games/bbb.json#/lamps/33._vbscript_name`: BL_Flashers_L45
-- `games/bbb.json#/lamps/33._inferred_type`: flasher
-- `games/bbb.json#/lamps/34._vbscript_name`: BL_Inserts_L49
-- `games/bbb.json#/lamps/34._inferred_type`: insert
-- `games/bbb.json#/lamps/35._vbscript_name`: BL_Inserts_L50
-- `games/bbb.json#/lamps/35._inferred_type`: insert
-- `games/bbb.json#/lamps/36._vbscript_name`: BL_Inserts_L51
-- `games/bbb.json#/lamps/36._inferred_type`: insert
-- `games/bbb.json#/lamps/37._vbscript_name`: BL_Flashers_L52
-- `games/bbb.json#/lamps/37._inferred_type`: flasher
-- `games/bbb.json#/lamps/38._vbscript_name`: BL_Flashers_L53
-- `games/bbb.json#/lamps/38._inferred_type`: flasher
-- `games/bbb.json#/lamps/39._vbscript_name`: BL_Flashers_L54
-- `games/bbb.json#/lamps/39._inferred_type`: flasher
-- `games/bbb.json#/lamps/40._vbscript_name`: BL_Inserts_l57
-- `games/bbb.json#/lamps/40._inferred_type`: insert
-- `games/bbb.json#/lamps/41._vbscript_name`: BL_Inserts_l58
-- `games/bbb.json#/lamps/41._inferred_type`: insert
-- `games/bbb.json#/lamps/42._vbscript_name`: BL_Inserts_l59
-- `games/bbb.json#/lamps/42._inferred_type`: insert
-- `games/bbb.json#/lamps/43._vbscript_name`: BL_Flashers_L62
-- `games/bbb.json#/lamps/43._inferred_type`: flasher
-- `games/bbb.json#/lamps/44._vbscript_name`: BL_Inserts_L65
-- `games/bbb.json#/lamps/44._inferred_type`: insert
-- `games/bbb.json#/lamps/45._vbscript_name`: BL_Inserts_L66
-- `games/bbb.json#/lamps/45._inferred_type`: insert
-- `games/bbb.json#/lamps/46._vbscript_name`: BL_Inserts_L67
-- `games/bbb.json#/lamps/46._inferred_type`: insert
-- `games/bbb.json#/lamps/47._vbscript_name`: BL_Inserts_L68
-- `games/bbb.json#/lamps/47._inferred_type`: insert
-- `games/bbb.json#/lamps/48._vbscript_name`: BL_Inserts_L69
-- `games/bbb.json#/lamps/48._inferred_type`: insert
-- `games/bbb.json#/lamps/49._vbscript_name`: BL_Inserts_L70
-- `games/bbb.json#/lamps/49._inferred_type`: insert
-- `games/bbb.json#/lamps/50._vbscript_name`: BL_Inserts_L71
-- `games/bbb.json#/lamps/50._inferred_type`: insert
-- `games/bbb.json#/lamps/51._vbscript_name`: BL_Inserts_L72
-- `games/bbb.json#/lamps/51._inferred_type`: insert
-- `games/bbb.json#/lamps/52._vbscript_name`: BL_Inserts_L73
-- `games/bbb.json#/lamps/52._inferred_type`: insert
-- `games/bbb.json#/lamps/53._vbscript_name`: BL_Inserts_L74
-- `games/bbb.json#/lamps/53._inferred_type`: insert
-- `games/bbb.json#/lamps/54._vbscript_name`: BL_Inserts_L75
-- `games/bbb.json#/lamps/54._inferred_type`: insert
-- `games/bbb.json#/lamps/55._vbscript_name`: BL_Inserts_L76
-- `games/bbb.json#/lamps/55._inferred_type`: insert
-- `games/bbb.json#/lamps/56._vbscript_name`: BL_Inserts_L77
-- `games/bbb.json#/lamps/56._inferred_type`: insert
-- `games/bbb.json#/lamps/57._vbscript_name`: BL_Inserts_L78
-- `games/bbb.json#/lamps/57._inferred_type`: insert
-- `games/bbb.json#/lamps/58._vbscript_name`: BL_Inserts_L79
-- `games/bbb.json#/lamps/58._inferred_type`: insert
-- `games/bbb.json#/lamps/59._vbscript_name`: BL_Inserts_L80
-- `games/bbb.json#/lamps/59._inferred_type`: insert
-- `games/bbb.json#/lamps/60._vbscript_name`: BL_Inserts_L81
-- `games/bbb.json#/lamps/60._inferred_type`: insert
-- `games/bbb.json#/lamps/61._vbscript_name`: BL_Inserts_L82
-- `games/bbb.json#/lamps/61._inferred_type`: insert
-- `games/bbb.json#/lamps/62._vbscript_name`: BL_Inserts_L83
-- `games/bbb.json#/lamps/62._inferred_type`: insert
-- `games/bbb.json#/lamps/63._vbscript_name`: BL_Inserts_L84
-- `games/bbb.json#/lamps/63._inferred_type`: insert
-- `games/bbb.json#/lamps/64._vbscript_name`: BL_Inserts_L85
-- `games/bbb.json#/lamps/64._inferred_type`: insert
-- `games/bbb.json#/lamps/65._vbscript_name`: BL_Inserts_L86
-- `games/bbb.json#/lamps/65._inferred_type`: insert
-- `games/bbb.json#/lamps/66._vbscript_name`: BL_Inserts_L87
-- `games/bbb.json#/lamps/66._inferred_type`: insert
-- `games/bbb.json#/lamps/67._vbscript_name`: BL_Inserts_L88
-- `games/bbb.json#/lamps/67._inferred_type`: insert
-- `games/bbb.json#/lamps/68._vbscript_name`: BL_Inserts_L89
-- `games/bbb.json#/lamps/68._inferred_type`: insert
-- `games/bbb.json#/lamps/69._vbscript_name`: BL_Inserts_L90
-- `games/bbb.json#/lamps/69._inferred_type`: insert
-- `games/bbb.json#/lamps/70._vbscript_name`: BL_Inserts_L91
-- `games/bbb.json#/lamps/70._inferred_type`: insert
-- `games/bbb.json#/lamps/71._vbscript_name`: BL_Inserts_L92
-- `games/bbb.json#/lamps/71._inferred_type`: insert
-- `games/bbb.json#/lamps/72._vbscript_name`: BL_Inserts_L93
-- `games/bbb.json#/lamps/72._inferred_type`: insert
-- `games/bbb.json#/lamps/73._vbscript_name`: BL_Inserts_L94
-- `games/bbb.json#/lamps/73._inferred_type`: insert
-- `games/bbb.json#/lamps/74._vbscript_name`: BL_Inserts_L95
-- `games/bbb.json#/lamps/74._inferred_type`: insert
-- `games/bbb.json#/lamps/75._vbscript_name`: BL_Inserts_L97
-- `games/bbb.json#/lamps/75._inferred_type`: insert
-- `games/bbb.json#/lamps/76._vbscript_name`: BL_Inserts_L98
-- `games/bbb.json#/lamps/76._inferred_type`: insert
-- `games/bbb.json#/lamps/77._vbscript_name`: BL_Inserts_L99
-- `games/bbb.json#/lamps/77._inferred_type`: insert
-- `games/bbb.json#/lamps/78._vbscript_name`: BL_Inserts_L100
-- `games/bbb.json#/lamps/78._inferred_type`: insert
-- `games/bbb.json#/lamps/79._vbscript_name`: BL_Inserts_L101
-- `games/bbb.json#/lamps/79._inferred_type`: insert
-- `games/bbb.json#/lamps/80._vbscript_name`: BL_Inserts_L102
-- `games/bbb.json#/lamps/80._inferred_type`: insert
-- `games/bbb.json#/lamps/81._vbscript_name`: BL_Inserts_L103
-- `games/bbb.json#/lamps/81._inferred_type`: insert
-- `games/bbb.json#/lamps/82._vbscript_name`: BL_Flashers_L104
-- `games/bbb.json#/lamps/82._inferred_type`: flasher
-- `games/bbb.json#/lamps/83._vbscript_name`: BL_Inserts_L105
-- `games/bbb.json#/lamps/83._inferred_type`: insert
-- `games/bbb.json#/lamps/84._vbscript_name`: BL_Inserts_L106
-- `games/bbb.json#/lamps/84._inferred_type`: insert
-- `games/bbb.json#/lamps/85._vbscript_name`: BL_Inserts_L107
-- `games/bbb.json#/lamps/85._inferred_type`: insert
-- `games/bbb.json#/lamps/86._vbscript_name`: BL_Inserts_L108
-- `games/bbb.json#/lamps/86._inferred_type`: insert
-- `games/bbb.json#/lamps/87._vbscript_name`: BL_Inserts_L109
-- `games/bbb.json#/lamps/87._inferred_type`: insert
-- `games/bbb.json#/lamps/88._vbscript_name`: BL_Inserts_L110
-- `games/bbb.json#/lamps/88._inferred_type`: insert
-- `games/bbb.json#/lamps/89._vbscript_name`: BL_Inserts_L111
-- `games/bbb.json#/lamps/89._inferred_type`: insert
-- `games/bbb.json#/lamps/90._vbscript_name`: BL_Inserts_L112
-- `games/bbb.json#/lamps/90._inferred_type`: insert
-- `games/bbb.json#/lamps/91._vbscript_name`: BL_Inserts_L113
-- `games/bbb.json#/lamps/91._inferred_type`: insert
-- `games/bbb.json#/lamps/92._vbscript_name`: BL_Inserts_L114
-- `games/bbb.json#/lamps/92._inferred_type`: insert
-- `games/bbb.json#/lamps/93._vbscript_name`: BL_Inserts_L115
-- `games/bbb.json#/lamps/93._inferred_type`: insert
-- `games/bbb.json#/lamps/94._vbscript_name`: BL_Inserts_L116
-- `games/bbb.json#/lamps/94._inferred_type`: insert
-- `games/bbb.json#/lamps/95._vbscript_name`: BL_Inserts_L117
-- `games/bbb.json#/lamps/95._inferred_type`: insert
-- `games/bbb.json#/lamps/96._vbscript_name`: BL_Inserts_L118
-- `games/bbb.json#/lamps/96._inferred_type`: insert
-- `games/bbb.json#/lamps/97._vbscript_name`: BL_Flashers_L119
-- `games/bbb.json#/lamps/97._inferred_type`: flasher
-- `games/bbb.json#/lamps/98._vbscript_name`: BL_Flashers_L120
-- `games/bbb.json#/lamps/98._inferred_type`: flasher
-- `games/bbb.json#/lamps/99._vbscript_name`: BL_Inserts_L121
-- `games/bbb.json#/lamps/99._inferred_type`: insert
-- `games/bbb.json#/lamps/100._vbscript_name`: BL_Gi_L122
-- `games/bbb.json#/lamps/100._inferred_type`: gi
-- `games/bbb.json#/lamps/101._vbscript_name`: BL_Gi_L123
-- `games/bbb.json#/lamps/101._inferred_type`: gi
-- `games/bbb.json#/lamps/102._vbscript_name`: BL_Gi_L124
-- `games/bbb.json#/lamps/102._inferred_type`: gi
-- `games/bbb.json#/lamps/103._vbscript_name`: BL_Inserts_L126
-- `games/bbb.json#/lamps/103._inferred_type`: insert
-- `games/bbb.json#/lamps/104._vbscript_name`: BL_Inserts_L127
-- `games/bbb.json#/lamps/104._inferred_type`: insert
-- `games/bbb.json#/lamps/105._vbscript_name`: BL_Gi_L128
-- `games/bbb.json#/lamps/105._inferred_type`: gi
-- `games/bbb.json#/_source/confidence_notes`: High confidence on switches/coils. Capcom platform via Capcom.VBS. Manual trough implementation (no cvpmTrough): sw35=drain, sw36-39=trough stack with custom UpdateTrough cascading kicks. UseLamps=1 with vpmMapLights AllLamps. UseVPMModSol=2 for flashers (SolModCallback 21-26). Flipper solenoids use framework constants sLRFlipper/sLLFlipper from Capcom.VBS (46/48). SolRFlipper sets both switch 34 and 68 (upper right flipper EOS). Coils 4/5 (slingshots), 9/10/11 (flippers), 18/19/20 (bumpers) are commented out in VBS — ROM controls them directly or VPX handles natively. Lamp IDs derived from BL_ VLM array naming convention (BL_Flashers_L##, BL_Inserts_L##, BL_Gi_L##). Drop targets (sw17-20, sw49-51, sw58) use VPW TargetBouncer framework. Standup targets sw52/53 also use TargetBouncer. Game has captive balls (4), alien lock mechanism (motor forward/reverse coils 31/32), tube dancer motor (coil 30), and outpost difficulty mod.
+Three independent banks, each resetting off one shared coil per the mechanism parts pages' own "TYPICAL (N REQUIRED)" callouts for the target sub-assemblies:
 
-## Unresolved questions
+- **4-Bank** (Mercury/Venus/Pythos/Mars, switches 17-20): solenoid 7, `sol4Bank` (`DTRaise 17,18,19,20` in one pulse).
+- **3-Bank** (Uranus/Neptune/Pluto, switches 49-51): solenoid 17, `sol3Bank`.
+- **1-Bank** (switch 58): solenoid 29, `sol1Bank`.
 
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+Note the printed switch Ref. numbers 17/18 for the first two 4-Bank targets appear on the manual's *cabinet*-switch page layout (Ref. 1-18 share one page block) purely as a column-split artifact of the page's typesetting, not a hardware distinction -- both are genuine playfield switch-matrix positions in `cc_m2sw`'s column-1 range (public 17-24), confirmed by the retained script's own `sol4Bank` handler resetting all four targets (17-20) as one bank.
+
+## Ramp and Island diverters: an unresolved geometry gap
+
+Three independent diverter solenoids (13 Island Diverter, 14 Ramp Diverter 1, 15 Ramp Diverter 2) each raise/lower a wall or rotate a gate arm to route a ball between the tube/island area and the ramp system; the Left and Right Diverter Assembly parts page (printed page 102) documents one coil per diverter. For solenoids 14 and 15, the retained table's rotating gate-arm object (a `Flipper`-type primitive reused for rotation animation, `DivTubef`/`DivTube2f`) and its associated drop-wall panel object(s) (`DivTube`/`DivTube1`, `DivTube2`) report raw positions on opposite ends of the playfield -- the gate arms near the front apron, the drop-wall panels near the rear/top -- even though the retained script's own `SolRDivert1`/`SolRDivert2` handlers manipulate both halves together in one `Sub` as if they were one mechanism. Neither half is promoted to a validated placement (`conflict.ramp-diverter-geometry-inconsistent`).
+
+## Flippers: three positions, one unresolved naming defect, and one unmodeled circuit
+
+Big Bang Bar is a widebody "Superpin" with **three** flipper positions: Left, Right, and Upper Right (`S9`/`S10`/`S11` on the schematic's device table; there is no upper-left flipper anywhere in the S1-S32 space). `hw.flippers` (`FLIP_SWNO(5,6)+FLIP_SOL(FLIP_LL|FLIP_LR|FLIP_UR|FLIP_UL)`, `src/wpc/capgames.c`) declares all four Fliptronic-style flipper-solenoid bits even though only three physical flipper coils and two physical flipper buttons exist -- normal for this platform's shared `FLIP` macro, not a Big Bang Bar peculiarity.
+
+Two things about the retained table's flipper handling are worth recording precisely.
+
+First, **the physical Upper Right Flipper solenoid (address 11) is entirely unmodeled**. `SolCallback(11)="SolURFlipper"` is commented out in the retained script, and its Fliptronic-shaped mirror (address 33, `sURFlipPow`) has no active `SolCallback` binding either -- neither the real address nor its mirror ever drives anything. Instead, the visual upper-flipper motion is faked: a second `Flipper`-type table object (`RightFlipper1`, positioned mid-playfield, nowhere near the two lower flippers) is rotated directly inside the *lower*-right flipper's own `SolRFlipper` handler, alongside setting switch 68 (Upper Right Flipper EOS) in the same call. A recreation that wants a genuinely independent Upper Right Flipper circuit needs to build it from the manual/schematic evidence (`S11`, switch 68) rather than this retained table's script, which does not exercise that circuit at all.
+
+Second, **the two mirror addresses that are live (45, 47) carry a real, sourced left/right naming defect**. `src/wpc/capcom.c`'s `io_w` mirrors physical solenoid 9 (S9, "L. Flipper") into PinMAME's `sLRFlipPow=45` address and physical solenoid 10 (S10, "R. Flipper") into `sLLFlipPow=47` -- the *opposite* left/right sense from PinMAME's own constant names. The driver's own source comment admits this outright: "This should be removed as this push the legacy PinMAME specific mapping forward while it does not correspond to manuals or any other reference." The retained script's active bindings, `SolCallback(sLRFlipper)="SolRFlipper"` and `SolCallback(sLLFlipper)="SolLFlipper"`, use symbolic VPX/VPinMAME automation constants whose exact numeric value this curation could not verify from any pinned source (neither `src/wpc/core.h` nor either pinned VPX script corpus defines `sLRFlipper` locally). This definition binds addresses 45/47 to their physical correspondence (45 mirrors S9/Left; 47 mirrors S10/Right) per the source-code mirror logic, not per PinMAME's "Lower Right/Lower Left" names -- but whether the retained table's own visual flipper handlers are internally consistent with that mapping remains open (`conflict.flipper-mirror-address-left-right-naming`).
+
+A related, purely mechanical finding: PinMAME's mirror code unconditionally treats physical addresses 9/10/11/12 as "the four flipper circuits" and mirrors address 12 into `sULFlipPow=35` under the generic name "Upper Left Flip Power" -- but Big Bang Bar wires physical address 12 to Eject Hole (confirmed identically by the manual and the schematic), not a flipper. Address 35 is therefore a meaningless mirror of the Eject Hole coil's own state on this specific game, not a flipper address in any real sense (`conflict.solenoid-35-eject-hole-mirror-mislabeled`).
+
+## Star Bumpers: an inferred solenoid mapping
+
+Three Star Bumpers (Left/Middle/Right, switches 54/56/55 -- note the manual's own switch numbering is not left-to-right sequential) are wired to solenoids 18/19/20, but `SolCallback(18/19/20)` are all commented out in the retained script ("Left Bumper"/"Middle Bumper"/"Right Bumper"). The Bumper1/Bumper2/Bumper3 VPX-object correspondence used in this definition is inferred only from the order those comments and the `Bumper1_Hit`/`Bumper2_Hit`/`Bumper3_Hit` subs appear in the script, not confirmed against a dedicated per-bumper wiring page; treat this mapping as provisional.
+
+## Cabinet switches: a platform-generic label overridden by this game
+
+PinMAME's shared `CC_COMPORTS` keyboard-simulation macro (`src/wpc/capcoms.h`, used identically by every `cc`-family game) generically labels address 11 "Buy In" and addresses 12-16 "Unused #1-5". Big Bang Bar's own manual proves otherwise for this specific machine: Ref. 11-14 print "UNUSED" (no Buy In switch fitted at all), while Ref. 15/16 -- two of the platform's generically-labeled "Unused" positions -- are wired to real Token Dispense and Ticket Dispense sensors, consistent with this being a title Capcom also sold in a redemption configuration. Treat every `CC_COMPORTS` label as a generic keyboard-simulation placeholder that a specific game's own manual can override, never as a confirmed physical device by itself.
+
+## Author construction checklist
+
+- Build the four-ball trough with the drain at the Outhole, the Plunger-fired shooter lane, the 4-Bank/3-Bank/1-Bank drop-target banks, three Star Bumpers, two slingshots (solenoids 4/5, passive rubber walls with no coil object in the retained table), the Kickback ball-saver, the Lower Lock post and its three-position lock (switches 46-48), the Eject Hole kicker, the Island/Ramp diverters, the two Orbit one-way gates, the rotating twin-Alien mechanism with its own lock post, and the Tube Dancer figure.
+- Build three flippers (Left, Right, Upper Right); the physical Upper Right Flipper circuit (solenoid 11) has no working reference implementation in the retained table and must be built from the manual/schematic evidence directly.
+- Preserve opto polarity for switches 25, 36-39, and 57 (PinMAME's `capInvSw10` mask normalizes all six; do not invert what the emulator already normalizes).
+- Do not model a general-illumination channel; every "G.I."-labeled bulb in the lamp-locations table is an ordinary CPU-strobed lamp-matrix address.
+- Treat solenoid 22 as an unresolved shared address (Tube Dancer plus Backbox Right flasher) rather than assuming either a pure coil or a pure lamp function.
+- Bind cabinet switches 1-16 (with 11-14 genuinely unfitted, and 15/16 wired to Token/Ticket Dispense on this game specifically), matrix 17-80, the eight-bit synthetic flipper column 81-88, solenoids 1-32 plus the two live mirror addresses 45/47 and the diagnostic-only 51 (present only on `bbb109`), and both 64-position lamp matrices plus the two populated diagnostic LEDs at 129/130.
+- A backbox fluorescent tube ("Fluorescent In Backbox", lamp-locations table row 111) is direct-wired (`WHT`/`WHT/BLK`, bulb type T8) outside the CPU-multiplexed lamp matrix entirely; it has no PinMAME address and is cabinet/backbox hardware only, not an addressable device.
 
 ## Sources
 
-- `legacy.game.bbb`: `games/bbb.json` at the pinned migration revision.
+- `manual.capcom.big-bang-bar.1996`: Capcom Big Bang Bar operators manual (PM00131), SHA-256 `5fc11391e3092298e31775fdff5944554fc78db2bdb9240aa39fa9eab5dabca5`.
+- `manual-schematic.capcom.big-bang-bar.1996`: companion 12-sheet schematic set, SHA-256 `fab546ea34874af8d721e8a9bc514a6ab64fa6835001dc4401d3c741b948d603`.
+- `manual-support.capcom.big-bang-bar.1996`: retained human transcription (switches/lamps), SHA-256 `3e503420d32c307f409edaa57c80d6f4bfa9f01d90cd0e47dbc6ddc755188994`, and its companion solenoid/schematic transcription, SHA-256 `b996714bd9cd3811481ab0eb0ccce071c3d019819844eaffffaf5318e28c4bd5`.
+- `vpx-script.bbb-vpw-1-0`: retained known-working VPW v1.0 embedded script, SHA-256 `db632ce7611ad625053c1bfcc6f035b95338c49449b5e78fa5fe2a4f38cfabf7`, binding `bbb109`.
+- `vpx-table.bbb-vpw-1-0`: retained table, SHA-256 `7fd6c3a4ada4ae9c8b253a2123e64c8b546ced4e9c4211edff29f01e6647f3d5`, bounds `left=0 top=0 right=952 bottom=2162`.
+- `pinmame.core.4ec52ff0ac13`: `src/wpc/capcom.c`, `src/wpc/capcom.h`, `src/wpc/capgames.c` at the pinned revision.
+
+This curation pass was run without the mandatory independent high-tier cross-provider review described in `docs/INSTRUCTIONS.md`; the record is deliberately kept `partial` with `recreation_notes` in `coverage.missing` until that review runs against the exact proposed tree.

@@ -1,0 +1,973 @@
+{
+  "blockers": [
+    "Three used lamp addresses (3, 38, 125) have no Lampz.MassAssign object in the retained table at all, so no coordinate can be reported; their `spatial` key is omitted rather than invented.",
+    "Solenoids 14 (Ramp Diverter 1) and 15 (Ramp Diverter 2) each resolve to two table objects whose raw positions are inconsistent by most of the playfield's length; neither is promoted to a validated placement (conflict.ramp-diverter-geometry-inconsistent).",
+    "Lamps 2 and 62 resolve to retained-table objects whose raw positions fall outside the table's own 0..1 normalized playfield bounds; excluded as a table-modeling anomaly rather than clamped.",
+    "Four unresolved conflicts (flipper mirror address left/right naming, the address-35 Eject Hole mirror mislabeled as an upper-left flipper, solenoid 22's shared bulb-vs-coil device construction, and the ramp-diverter geometry inconsistency above) keep coverage.dimensions.physical_wiring conflicted and the record partial."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/2162; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "Light objects L02/L62 -- raw position far outside the retained table's 0..1 playfield bounds (table-modeling anomaly, not a distinct physical bulb position)",
+    "F21-F26 flasher Light objects reported under their owning solenoid address (21-26), never as a separate lamp address",
+    "DivTubeF/DivTube/DivTube1 and DivTube2f/DivTube2 (solenoids 14/15) -- internally inconsistent raw positions for what the script treats as one mechanism each; excluded pending human review"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 2874,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "8b1b7c6f35b98b0fecf1d88ac0746d81599fd8006189d58998c255de62fc2e90",
+    "manifest_uri": "external:pinmame-vpx-sources/capcom/big-bang-bar-1996/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.bbb-vpw-1-0",
+    "total_bytes": 1091052346,
+    "vpxtool_version": "vpxtool"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "capcom.big-bang-bar.1996",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "unused": [
+      40,
+      63,
+      64,
+      72,
+      73,
+      74,
+      75,
+      76
+    ],
+    "virtual": [
+      81,
+      89
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 129,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 130,
+        "group": "pinmame.output.lamp"
+      }
+    ],
+    "no_physical_device": [
+      {
+        "address": 3,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 4,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 5,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 4,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 5,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 6,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 8,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 13,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 15,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 16,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 46,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 47,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 55,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 56,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 60,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 61,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 63,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 64,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 96,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 131,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 132,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 133,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 134,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 135,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 136,
+        "group": "pinmame.output.lamp"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 33,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 34,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 35,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 36,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 51,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 194,
+  "projections": [
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Spinner table object's own center (Spinner.sw25); a physical spinner has no separate fixed sensor position."
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the LeftFlipper table object's own center; the retained script sets this synthetic EOS switch directly inside Sub SolLFlipper with no separate sensor object."
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the RightFlipper table object's own center; the retained script sets this synthetic EOS switch directly inside Sub SolRFlipper with no separate sensor object."
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the same Kicker object as the Outhole coil (solenoid 1): the manual's Switch Locations table names Ref.35 \"Outhole\" and the retained script kicks the ball resting on this object from Sub SolTrough."
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Wall.LeftSlingShot object's own drag-point centroid; resolved via the retained script's LeftSlingShot_Slingshot event sub rather than a differently-named sw41 object."
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Wall.RightSlingShot object's own drag-point centroid; resolved via the retained script's RightSlingShot_Slingshot event sub rather than a differently-named sw42 object."
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Bumper2 table object's own center; resolved via the retained script's Bumper2_Hit event sub, which pulses this switch."
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Bumper3 table object's own center; resolved via the retained script's Bumper3_Hit event sub."
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Bumper1 table object's own center; resolved via the retained script's Bumper1_Hit event sub."
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the rotating Alien mechanism's own anchor (Primitive Alien1_BM_Lit_Room): the retained script's ALockTimer_timer reads a single 0-31 motor-position counter and toggles this one opto through a repeating home/quarter/half/three-quarter-turn notch pattern, not a fixed playfield sensor object -- the same pattern established for Monster Bash's Dracula-position optos."
+    },
+    {
+      "address": 68,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the RightFlipper table object's own center, the same object switch 34 projects onto: the retained script sets both switches together inside Sub SolRFlipper with no separate Upper Right Flipper EOS sensor object modeled."
+    }
+  ],
+  "resolved_input_addresses": [
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    77,
+    78,
+    79,
+    80
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 1,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 69,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 70,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 79,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 80,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 87,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 88,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 89,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 90,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 91,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 92,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 93,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 94,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 95,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 97,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 98,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 99,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 100,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 101,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 102,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 103,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 104,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 105,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 106,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 107,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 108,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 109,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 110,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 111,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 112,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 113,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 114,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 115,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 116,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 117,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 118,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 119,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 120,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 121,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 122,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 123,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 124,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 126,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 127,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 128,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "db632ce7611ad625053c1bfcc6f035b95338c49449b5e78fa5fe2a4f38cfabf7",
+    "manual_sha256": "5fc11391e3092298e31775fdff5944554fc78db2bdb9240aa39fa9eab5dabca5",
+    "schematic_sha256": "fab546ea34874af8d721e8a9bc514a6ab64fa6835001dc4401d3c741b948d603",
+    "table_sha256": "7fd6c3a4ada4ae9c8b253a2123e64c8b546ced4e9c4211edff29f01e6647f3d5"
+  },
+  "status": "validated",
+  "unresolved": [],
+  "unresolved_inputs": [],
+  "unresolved_outputs": [
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 125,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "version": 1,
+  "visual_review_cache": {
+    "geometry_notes": {
+      "path": "external:pinmame-review-artifacts/big-bang-bar/vpx-geometry.txt",
+      "sha256": "e1339971328d98e365b6574733b08f8dc1849814806bb2973019482c93468ac5"
+    },
+    "root": "external:pinmame-manuals/rendered/capcom.big-bang-bar.1996/",
+    "solenoid_transcription": {
+      "path": "external:pinmame-review-artifacts/big-bang-bar/manual-transcription-solenoids.md",
+      "sha256": "b996714bd9cd3811481ab0eb0ccce071c3d019819844eaffffaf5318e28c4bd5"
+    },
+    "transcription": {
+      "path": "external:pinmame-review-artifacts/big-bang-bar/manual-transcription.md",
+      "sha256": "3e503420d32c307f409edaa57c80d6f4bfa9f01d90cd0e47dbc6ddc755188994"
+    }
+  }
+}

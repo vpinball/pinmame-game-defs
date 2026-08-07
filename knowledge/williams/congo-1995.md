@@ -1,179 +1,251 @@
-# Congo
+# Congo (Williams, 1995)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+## Identity and evidence precedence
 
-## Overview
+Congo is a Williams WPC-95 machine (manual 16-50050-101, November 1995,
+FINAL). Pinned PinMAME's own `libpinmame.h` names the `GEN_WPC95` constant
+"Integrated boards, Congo 3/96 - Cactus Canyon 2/99" — Congo is the game
+PinMAME's own catalog anchors that hardware generation to. The retained
+known-working table (original VP9 by JPSalas, VP10 conversion by nFozzy,
+spotlight primitive by Dark, flasher images by LoadedWeapon) binds driver
+`congo_21`, the production 2.1 ROM (DCS95 sound ROM S1.1).
 
-Legacy evidence identifies this candidate as Williams (1995). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+This curation follows the project's standard evidence-authority order: the
+retained script is runtime/causality ground truth, the Williams manual is
+physical-construction/wiring/quantity ground truth, pinned PinMAME source is
+controller-topology ground truth, and the retained table supplies geometry.
+The retained manual has a usable but imperfect OCR text layer; every printed
+table cited here was still read from 300-1200 dpi renders and transcribed by
+hand into `evidence/excerpts/williams.congo.1995/`, not trusted from
+`pdftotext`.
 
-## Playfield devices
+**This is a thin retained table** — 925 extracted files, far fewer than
+richer WPC-95 recreations already curated in this project (Monster Bash: 2153
+files). Several mechanism-internal ball sensors have no dedicated playfield
+trigger object at all; those addresses are documented projections onto the
+real kicker object that carries the mechanism's exit/entry point, not
+invented coordinates.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+## Controller platform and address topology
 
-## Custom mechanisms
+Reuses `controllers/pinmame/wpc-95.json` unchanged, confirmed directly from
+`congoGameData`'s own `GEN_WPC95` field (not assumed from the task brief,
+which suggested WPC-DCS or WPC-Security — both wrong; `congo.c` line 320
+settles it). The switch matrix, Fliptronic column, LPDC duplication (37-40
+mirrored at 41-44), and five-string GI layout all follow the standard WPC-95
+rules already documented on that profile.
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+Congo declares no custom switch column, no auxiliary lamp column, and no
+custom solenoid board (`congoGameData`'s trailing `hw` fields are all zero),
+so this is a clean WPC-95 baseline with no address-remapping surprises beyond
+the flipper circuits below. The switch matrix's eighth column (81-88) is
+entirely unpopulated — Congo uses only seven of eight matrix columns.
 
-## Ball-state transitions
+**Flipper circuits.** Printed circuits 29/30 (Lwr Rt Power/Hold) and 31/32
+(Lwr Lt Power/Hold) map to public addresses 45-48 (`CORE_FIRSTLFLIPSOL=45`).
+Printed circuits 33-36 (the "Upr. Rt."/"Upr. Lt." driver-board slot,
+`CORE_FIRSTUFLIPSOL=33`) already equal their own public addresses with no
+translation. Congo fits exactly **one** upper flipper (left, at 35/36);
+`congoGameData` declares `FLIP_SOL(FLIP_L | FLIP_UL)`, omitting `FLIP_UR`
+entirely. Three independent sources agree there is no upper-right flipper:
+the Switch Locations page marks F5/F6 (Upper Right Flipper E.O.S./Cabinet)
+"Not Used"; the manual's own Solenoid/Flasher Table has no "Upper Right
+Flipper" row at all in the printed Upr. Rt. slot (its two rows there are
+instead labeled "Upper Left Post" and "Mystery Eject", ordinary non-flipper
+coils); and the driver's own `FLIP_SOL` bitmask omits `FLIP_UR`. This is the
+same "printed upper-flipper circuits repurposed for unrelated devices"
+pattern already documented for other WPC-Fliptronic-generation machines in
+this project, but simpler here: only two of the four printed Upr. Rt./Upr.
+Lt. positions are repurposed (33/34), and the other two (35/36) are a
+genuine, single upper flipper rather than a second flipper of any kind.
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+**Opto sweep: zero disagreement.** The Switch Matrix page shades exactly nine
+addresses "OPTO, TYPICALLY CLOSED" (31-36, 41-43), and the Switch Locations
+page independently identifies the same nine by their LED/photo-transistor
+part numbers (A-18617-1/A-18618-1 for 31-35, A-16909 for 36 and 41-43) with
+no separate switch part number. PinMAME's `congoGameData` inverted-switch
+mask (`{0x00,0x00,0x00,0x3f,0x07,...}`, column 3 bits 0-5 = 31-36, column 4
+bits 0-2 = 41-43) normalizes precisely the same nine addresses. This matches
+the clean-sweep precedent already established by several other WPC-95/
+Fliptronic-generation games in this project.
 
-## Controller interactions
+**A manual can disagree with itself four ways on one fact, and a script's
+actual behavior can be the tiebreaker.** Congo prints its Solenoid/Flasher
+Table three separate times (Section 2 at printed 2-42, an unnumbered
+front-matter quick-reference copy, and a Section 3 copy beside the
+schematics) plus once more as the Solenoid/Flashlamp Locations page. Two of
+the four disagree with the other two on which of solenoids 15/16 is "Gorilla
+Left" versus "Gorilla Right". The retained script's own `SolCallBack` sub
+*names* (`"GorillaRight"` bound to solenoid 15) follow one pair of printed
+tables, but the sub *bodies* physically rotate the opposite-side
+`GoFlipperLeft`/`GoFlipperRight` primitive, agreeing with the other pair.
+Taking the script's actual object manipulation — not its own sub-naming — as
+runtime-semantics ground truth resolves the contradiction: solenoid 15 is
+"Gorilla Left", solenoid 16 is "Gorilla Right". See
+`evidence/excerpts/williams.congo.1995/solenoid-flasher-table.md` for the
+full citation trail.
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+**A driver-board circuit-class label is not a device-kind classification.**
+The printed Solenoid/Flasher Table's "Solenoid Type" column names the power-
+driver-board wiring section (High Power / Low Power / Flasher / Gen.
+Purpose), not the device's function. Solenoids 22-24 (Map Eject, Left Gate,
+Right Gate) are wired through the same "Flasher" bank as the five genuine
+light flashers (17-21) but are ordinary kicker/gate coils; the "Gen.
+Purpose" bank (25-28) conversely drives four genuine flasher bulbs. Do not
+infer `output.kind` from this column.
 
-## Service and setup information
+## Ball path, trough, and shooter
 
-Unknown; locate operator/service documentation.
+A four-ball trough (switches 32-35, drain-to-eject order) feeds the shooter
+lane (switch 18) through the auto plunger (solenoid 1) — Congo has no manual
+plunger. The retained script's `cvpmTrough` helper (`bsTrough`) reads
+32-35 as a plain switch array with no dedicated playfield object per ball
+position; the trough-eject opto (switch 31) is pulsed by the same
+`SolRelease` handler (solenoid 9) that fires the physical release kicker
+(`BallRelease`). Switches 31-35 are therefore documented projections onto
+`BallRelease`'s own coordinate, not five distinct playfield sensor positions.
 
-## Timing and tuning observations
+A ball draining down the left outlane (switch 16) is returned to play by the
+Kickback coil (solenoid 2); the manual's own instruction card states the
+feature is re-lit by completing the Left Bank three-target bank (switches
+46/47/48, "Left Bank Top/Center/Bottom").
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+## The two-way popper and the Amy ramp
 
-## Recreation guidance
+A single saucer at switch 53 (the retained script's `bsAmyVuk`, a
+`cvpmSaucer`) can eject a captured ball in either of two directions: solenoid
+3 fires the primary (up) kick, solenoid 4 the alternate (down) kick. The
+manual's adjustment A.2 20 ("Amy Feed Disabled") is described as a
+workaround "for use when the Amy ramp or Two-way popper are broken", which
+independently confirms the popper feeds the same physical complex as the Amy
+ramp (the ramp whose shots light lamps 16-18, spelling AMY). This machine
+has **no magnet of any kind** — an earlier task brief that seeded this
+curation pass described a magnet, but neither the manual, the driver source,
+nor the retained script mentions one anywhere; that framing was wrong and is
+corrected here.
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+## The Volcano: three-ball lock and popper
 
-## Evidence notes
+A ball entering the Volcano crosses the entrance opto (switch 36, "Volcano
+Stack") and is fed into the retained script's second `cvpmTrough` helper
+(`bsVolcano`), which reads three lock optos (41-43) as a plain switch array
+with no dedicated playfield object. Solenoid 6 (Volcano Popper) ejects a
+locked ball back to the playfield through the same kicker object (`sw36a`)
+that models the entrance. Switches 41-43 are documented projections onto
+`sw36a`'s own coordinate.
 
-- `platforms/wpc.json#/coils/1`: Unbound legacy outputs record `c_flipper_lower_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/2`: Unbound legacy outputs record `c_flipper_lower_left` was retained as a migration note only.
-- `platforms/wpc.json#/coils/3`: Unbound legacy outputs record `c_flipper_upper_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/4`: Unbound legacy outputs record `c_flipper_upper_left` was retained as a migration note only.
-- `games/congo.json#/switches/0._note`: Controller.Switch(11) on/off via sw11_Hit/UnHit
-- `games/congo.json#/switches/1._note`: Controller.Switch(12) on/off via sw12_Hit/UnHit. Comment says 'Volcano Switch'
-- `games/congo.json#/switches/2._note`: vpmNudge.TiltSwitch = 14
-- `games/congo.json#/switches/3._note`: Controller.Switch(15) on/off via sw15_Hit/UnHit
-- `games/congo.json#/switches/4._note`: Controller.Switch(16) on/off. Comment: 'Kickback'
-- `games/congo.json#/switches/5._note`: Controller.Switch(17) on/off
-- `games/congo.json#/switches/6._note`: Controller.Switch(18) on/off. Comment: 'Shooter Lane'
-- `games/congo.json#/switches/7._note`: Controller.Switch(22) = 1 set in Table1_Init. Not a VPX object.
-- `games/congo.json#/switches/8._note`: Controller.Switch(24) = 1 set in Table1_Init. Not a VPX object.
-- `games/congo.json#/switches/9._note`: PulseSw 25. Comment: 'Right Eject Rubber'
-- `games/congo.json#/switches/10._note`: Controller.Switch(26) on/off
-- `games/congo.json#/switches/11._note`: Controller.Switch(27) on/off
-- `games/congo.json#/switches/12._note`: PulseSw 28 with TargetBouncer. Part of 'We Are Watching You' targets.
-- `games/congo.json#/switches/13._note`: PulseSw 31 fired in SolRelease callback when trough ejects. Not a VPX object — virtual switch.
-- `games/congo.json#/switches/14._note`: bsTrough.initSwitches Array(32, 33, 34, 35). First in array = closest to drain.
-- `games/congo.json#/switches/15._note`: bsTrough.initSwitches Array(32, 33, 34, 35)
-- `games/congo.json#/switches/16._note`: bsTrough.initSwitches Array(32, 33, 34, 35)
-- `games/congo.json#/switches/17._note`: bsTrough.initSwitches Array(32, 33, 34, 35). Last in array = closest to eject.
-- `games/congo.json#/switches/18._note`: PulseSw 36 via Sw36_Hit. Ball added to bsVolcano.
-- `games/congo.json#/switches/19._note`: Controller.Switch(37) = 1. Ball added to bsMystery.
-- `games/congo.json#/switches/20._note`: Controller.Switch(38) = 1. Ball added to bsMap.
-- `games/congo.json#/switches/21._note`: bsVolcano.initSwitches Array(41, 42, 43). Volcano is a separate cvpmTrough with 3 switches.
-- `games/congo.json#/switches/22._note`: bsVolcano.initSwitches Array(41, 42, 43)
-- `games/congo.json#/switches/23._note`: bsVolcano.initSwitches Array(41, 42, 43)
-- `games/congo.json#/switches/24._note`: Controller.Switch(44) on/off via sw44_Hit/UnHit
-- `games/congo.json#/switches/25._note`: Controller.Switch(45) on/off via sw45_Hit/UnHit
-- `games/congo.json#/switches/26._note`: PulseSw 46 with TargetBouncer
-- `games/congo.json#/switches/27._note`: PulseSw 47 with TargetBouncer
-- `games/congo.json#/switches/28._note`: PulseSw 48 with TargetBouncer
-- `games/congo.json#/switches/29._note`: PulseSw 51 with TargetBouncer
-- `games/congo.json#/switches/30._note`: PulseSw 52 with TargetBouncer
-- `games/congo.json#/switches/31._note`: Controller.Switch(53) = 1 in sw53_hit. Ball added to bsAmyVuk (cvpmSaucer).
-- `games/congo.json#/switches/32._note`: PulseSw 54 with TargetBouncer. Comment: 'We Are'
-- `games/congo.json#/switches/33._note`: PulseSw 55 with TargetBouncer. Comment: 'Watching'
-- `games/congo.json#/switches/34._note`: PulseSw 56 with TargetBouncer. Comment: 'Laser Perimeter'
-- `games/congo.json#/switches/35._note`: Controller.Switch(57) on/off
-- `games/congo.json#/switches/36._note`: Controller.Switch(58) on/off
-- `games/congo.json#/switches/37._note`: PulseSw 61 in LeftSlingShot_Slingshot sub
-- `games/congo.json#/switches/38._note`: PulseSw 62 in RightSlingShot_Slingshot sub
-- `games/congo.json#/switches/39._note`: PulseSw 63 in Bumper1_Hit
-- `games/congo.json#/switches/40._note`: PulseSw 64 in Bumper2_Hit
-- `games/congo.json#/switches/41._note`: PulseSw 65 in Bumper3_Hit
-- `games/congo.json#/switches/42._note`: Controller.Switch(67) on/off
-- `games/congo.json#/switches/43._note`: Controller.Switch(68) on/off
-- `games/congo.json#/switches/44._note`: Controller.Switch(71) on/off. Comment: 'AMY Rollovers'
-- `games/congo.json#/switches/45._note`: Controller.Switch(72) on/off. Comment: 'AMY Rollovers'
-- `games/congo.json#/switches/46._note`: Controller.Switch(73) on/off. Comment: 'AMY Rollovers'
-- `games/congo.json#/switches/47._note`: PulseSw 74
-- `games/congo.json#/switches/48._note`: PulseSw 75
-- `games/congo.json#/switches/49._note`: PulseSw 76
-- `games/congo.json#/switches/50._note`: PulseSw 77
-- `games/congo.json#/switches/51._note`: PulseSw 78
-- `games/congo.json#/coils/0._vbscript_callback`: Auto_Plunger
-- `games/congo.json#/coils/0._inferred_type`: ball_management
-- `games/congo.json#/coils/0._note`: Fires AutoPlunger kicker. Plays release sound.
-- `games/congo.json#/coils/1._vbscript_callback`: Kick_back
-- `games/congo.json#/coils/1._inferred_type`: ball_management
-- `games/congo.json#/coils/1._note`: Fires KickBack kicker from left outlane.
-- `games/congo.json#/coils/2._vbscript_callback`: SolPopUp
-- `games/congo.json#/coils/2._inferred_type`: ball_management
-- `games/congo.json#/coils/2._note`: Ejects ball from bsAmyVuk (cvpmSaucer at sw53) upward via SolOutAlt 0.
-- `games/congo.json#/coils/3._vbscript_callback`: SolPopDown
-- `games/congo.json#/coils/3._inferred_type`: ball_management
-- `games/congo.json#/coils/3._note`: Ejects ball from bsAmyVuk downward via SolOutAlt 1.
-- `games/congo.json#/coils/4._vbscript_callback`: RampDiverter
-- `games/congo.json#/coils/4._inferred_type`: diverter
-- `games/congo.json#/coils/4._note`: Rotates Diverter object, drops/raises DiverterSwoop.
-- `games/congo.json#/coils/5._vbscript_callback`: VolcanoKickOut
-- `games/congo.json#/coils/5._inferred_type`: ball_management
-- `games/congo.json#/coils/5._note`: Ejects from bsVolcano (cvpmTrough, exit via sw36a kicker).
-- `games/congo.json#/coils/6._vbscript_callback`: vpmSolSound SoundFX("Knocker",DOFKnocker),
-- `games/congo.json#/coils/6._inferred_type`: knocker
-- `games/congo.json#/coils/7._vbscript_callback`: SolTopPost
-- `games/congo.json#/coils/7._inferred_type`: mechanism
-- `games/congo.json#/coils/7._note`: Drops/raises TopPost. Used for ball lock mechanism.
-- `games/congo.json#/coils/8._vbscript_callback`: SolRelease
-- `games/congo.json#/coils/8._inferred_type`: ball_management
-- `games/congo.json#/coils/8._note`: Ejects from bsTrough via BallRelease kicker. Also fires PulseSw 31.
-- `games/congo.json#/coils/9._vbscript_callback`: GorillaRight
-- `games/congo.json#/coils/9._inferred_type`: mechanism
-- `games/congo.json#/coils/9._note`: Rotates gorilla animatronic right. Drives GorDest/GorDirection for physics animation.
-- `games/congo.json#/coils/10._vbscript_callback`: GorillaLeft
-- `games/congo.json#/coils/10._inferred_type`: mechanism
-- `games/congo.json#/coils/10._note`: Rotates gorilla animatronic left. Drives GorDest/GorDirection for physics animation.
-- `games/congo.json#/coils/11._vbscript_callback`: SolFlash17
-- `games/congo.json#/coils/11._inferred_type`: flasher
-- `games/congo.json#/coils/11._note`: SolModCallback with custom SolFlash17 handler. Uses f17/f17b light objects. Lamp 117.
-- `games/congo.json#/coils/12._vbscript_callback`: SetModLampm 118, 138,
-- `games/congo.json#/coils/12._inferred_type`: flasher
-- `games/congo.json#/coils/12._note`: SolModCallback. Drives lamp IDs 118 and 138.
-- `games/congo.json#/coils/13._vbscript_callback`: SetModLampm 119, 129,
-- `games/congo.json#/coils/13._inferred_type`: flasher
-- `games/congo.json#/coils/13._note`: SolModCallback. Drives lamp IDs 119 and 129.
-- `games/congo.json#/coils/14._vbscript_callback`: SetModLampm 120, 130,
-- `games/congo.json#/coils/14._inferred_type`: flasher
-- `games/congo.json#/coils/14._note`: SolModCallback. Drives lamp IDs 120 and 130.
-- `games/congo.json#/coils/15._vbscript_callback`: SetModLamp 121,
-- `games/congo.json#/coils/15._inferred_type`: flasher
-- `games/congo.json#/coils/15._note`: SolModCallback. Drives lamp ID 121.
-- `games/congo.json#/coils/16._vbscript_callback`: MapKick
-- `games/congo.json#/coils/16._inferred_type`: ball_management
-- `games/congo.json#/coils/16._note`: Ejects from bsMap (cvpmSaucer at sw38).
-- `games/congo.json#/coils/17._vbscript_callback`: LeftGateOn
-- `games/congo.json#/coils/17._inferred_type`: gate
-- `games/congo.json#/coils/17._note`: Opens/closes gate2 object.
-- `games/congo.json#/coils/18._vbscript_callback`: RightGateOn
-- `games/congo.json#/coils/18._inferred_type`: gate
-- `games/congo.json#/coils/18._note`: Opens/closes gate4 object.
-- `games/congo.json#/coils/19._vbscript_callback`: SetModLampm 125, 135,
-- `games/congo.json#/coils/19._inferred_type`: flasher
-- `games/congo.json#/coils/19._note`: SolModCallback. Drives lamp IDs 125 and 135.
-- `games/congo.json#/coils/20._vbscript_callback`: SetModLampm 126, 136,
-- `games/congo.json#/coils/20._inferred_type`: flasher
-- `games/congo.json#/coils/20._note`: SolModCallback. Drives lamp IDs 126 and 136.
-- `games/congo.json#/coils/21._vbscript_callback`: SetModLampM 127, 137,
-- `games/congo.json#/coils/21._inferred_type`: flasher
-- `games/congo.json#/coils/21._note`: SolModCallback. Drives lamp IDs 127 and 137.
-- `games/congo.json#/coils/22._vbscript_callback`: Sol28
-- `games/congo.json#/coils/22._inferred_type`: flasher
-- `games/congo.json#/coils/22._note`: SolModCallback with custom Sol28 handler. Drives f28/F28B light objects. Uses lamp 128 GI scale. Comment: 'old style'.
-- `games/congo.json#/coils/23._vbscript_callback`: SolLeftpost
-- `games/congo.json#/coils/23._inferred_type`: mechanism
-- `games/congo.json#/coils/23._note`: Drops/raises LeftPost and LeftPost_invis. Plays buzz sound when energized.
-- `games/congo.json#/coils/24._vbscript_callback`: MysteryKick
-- `games/congo.json#/coils/24._inferred_type`: ball_management
-- `games/congo.json#/coils/24._note`: Ejects from bsMystery (cvpmSaucer at sw37).
-- `games/congo.json#/_source/confidence_notes`: High confidence on switches/coils from Controller.Switch() calls, PulseSw calls, and SolCallback/SolModCallback assignments. No Const sw* declarations in table script — all switches referenced by raw number. Lamp IDs from NFadeL/NFadeLm/NFadeLwF calls in UpdateLamps. Flashers (coils 17-21, 25-28) use SolModCallback with SetModLamp/SetModLampm routines or custom Sol28 callback. Trough is a 4-ball cvpmTrough with switches 32-35 and eject via BallRelease kicker (solenoid 9, fires PulseSw 31). Volcano is a separate cvpmTrough (switches 41-43, sol 6). Two-way popper (bsAmyVuk) is cvpmSaucer on switch 53 with two kick directions (sol 3 up, sol 4 down). Mystery saucer (sw37, sol 34) and Map saucer (sw38, sol 22). Upper left flipper present (sULFlipper=34), no upper right flipper. Grey Gorilla mechanism driven by solenoids 15/16. Header comment says Williams 1988 but game is actually Williams 1995.
+## The underground Gray Gorilla mini-playfield
 
-## Unresolved questions
+This is Congo's headline mechanism, and the physical machine has no magnet —
+the ball is captured and flung purely by two small mechanical flipper-arm
+primitives. Completing the G-R-A-Y lamp sequence (lamps 62-65) opens a
+hidden lower-level compartment; the manual's own instruction cards read
+"COMPLETE G-R-A-Y SEQUENCE TO ACTIVATE LOWER LEVEL GRAY GORILLA FEATURE" and
+"USE FLIPPER BUTTONS TO SWING GORILLA LEFT AND RIGHT AND HIT PINBALL INTO
+C-O-N-G-O TARGETS. COMPLETE CONGO TO DEFEAT GRAY GORILLA AND AWARD BONUS."
+The manual's own Gorilla Mechanism Test (T.16) confirms the physical
+construction: "the operator [can] enable the underground mini-playfield and
+test its operation... the left and right flipper buttons will operate the
+gorilla mechanism and [display] the state of the gorilla stand-up switches"
+— the five CONGO standup targets (switches 74-78).
 
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+Solenoids 15 (Gorilla Left) and 16 (Gorilla Right) each swing one of two
+small captive flipper-arm primitives (`GoFlipperLeft`, `GoFlipperRight`)
+inside the compartment; a separate timer gently rocks the gorilla figure
+itself (`Gorilla.objRotZ`) between three fixed angles independent of which
+arm just fired. A dedicated persistent "lower playfield" ball prop (created
+by `CreateLPFball`/`kickerLPF` at power-on) represents the ball visually
+while it is in the hidden compartment — a common VPX technique for a
+genuinely hidden play area. The five CONGO standup targets (switches 74-78)
+have real, dedicated `HitTarget`/`Wall` objects in the retained extraction
+(unlike the trough/Volcano optos above), so their playfield placements are
+directly validated rather than projected.
+
+## Other kickers, gates, and posts
+
+- **Mystery saucer** (switch 37, solenoid 34 "Mystery Eject"): a captured
+  ball is held and kicked back through the same saucer object
+  (`bsMystery`).
+- **Map saucer** (switch 38 "Right Eject", solenoid 22 "Map Eject"): a
+  captured ball is held and kicked back through the same saucer object
+  (`bsMap`).
+- **Ramp diverter** (solenoid 5): rotates a diverter flap (`Diverter`)
+  between two ramp paths and toggles a companion guide (`DiverterSwoop`) in
+  the same motion; no dedicated switch.
+- **Left/right gates** (solenoids 23/24, `gate2`/`gate4`): simple one-way
+  gates with no dedicated switch.
+- **Top Loop Post** (solenoid 8): raises/lowers a post blocking the Upper
+  Loop shot (switch 12); initialized raised (blocking) at power-on.
+- **Upper Left Post** (solenoid 33): sits in the printed Fliptronic
+  "Upr. Rt." driver-board slot but is an ordinary post, not flipper
+  hardware — see the flipper-circuit note above.
+- **Slingshots** (switches 61/62, solenoids 10/11) and **jet bumpers**
+  (switches 63-65, solenoids 12-14): standard construction, no surprises.
+
+## Lamps, flashers, and general illumination
+
+The lamp matrix spells five words/names across its eight columns: CONGO
+(11-15), AMY (16-18), ZINJ (split across 21/22 and 56/57 — the lost city
+from the 1995 Congo film, spread across two non-adjacent matrix addresses
+because they sit at different physical playfield insert locations), GRAY
+(62-65, the sequence that unlocks the Gray Gorilla feature), and HIPPO
+(81-85). Lamps 71/72 ("Travi"/"Com") together spell TRAVICOM, the name of
+Karen Ross's company in the 1995 Congo film — the resolution evidence for
+the "Corn" vs "COM" manual disagreement on lamp 72 (see below).
+
+General illumination is the standard WPC-95 five-string layout: three
+playfield strings (0 Playfield Gorilla, 1 Playfield Top, 2 Playfield Bottom)
+and two backbox strings (3, 4; string 4 also feeds one cabinet bulb through
+J104). GI address 1's retained emitter collection (`GiTop`) contains one
+member, `GI10_Deactivated`, excluded as a table modeling anomaly (its own
+name marks it disabled) rather than a fitted bulb, leaving 13 of 14
+placements. Flasher solenoid 27 (Volcano Flasher) models four bulbs per the
+manual (two playfield `#89`, one playfield `#906`, one backbox `#906`); the
+backbox bulb's VPX stand-in (`F8L3`) sits at normalized x=1.022303, outside
+the playfield's 0..1 bounds, and is excluded rather than placed. Flasher
+solenoid 20 (Skill Shot Flasher) documents two bulbs per the manual (one
+playfield, one backbox) but only one VPX Light object exists; the backbox
+bulb has no playfield coordinate, matching the pattern already established
+for other WPC-95 games in this project.
+
+**Manual self-disagreement: lamp 72 "Corn" vs "COM".** The Lamp Locations
+page (2-39) prints "Corn"; the Lamp Matrix page (2-38) prints "COM", and the
+co-located switch at address 52 prints "Com" on both of its own pages
+(Switch Matrix and Switch Locations). Three of four printed mentions agree,
+and — decisively — lamps 71/72 spell "TRAVICOM" together with lamp 71
+("Travi"), the name of the film company. "COM" is used; "Corn" is the
+typographic slip.
+
+**Manual self-disagreement: GI address 2 bulb code.** The Solenoid/Flashlamp
+Locations page prints "24-8549" for "Playfield Bottom", matching none of
+that page's own four legend codes. The Solenoid/Flasher Table page states
+the bulb type directly as "#44" for the same string. "#44" (`24-6549`) is
+used; "24-8549" is treated as a printing error.
+
+## Author construction checklist
+
+- WPC-95 hardware, one CPU/power-driver board pair, standard five-string GI,
+  seven-column (not eight) switch matrix, no auxiliary lamp/switch/solenoid
+  boards.
+- Exactly one upper flipper (left); the "Upr. Rt." Fliptronic slot drives an
+  ordinary post (33) and a saucer eject (34) instead.
+- Headline feature: a hidden lower-level compartment with a gently rocking
+  gorilla figure and two small flipper arms that fling the ball at five
+  CONGO standup targets, entered after completing G-R-A-Y. No magnet.
+- Volcano: entrance opto plus a three-ball lock, ejecting through one shared
+  kicker.
+- Two-way popper (Amy VUK) feeding the Amy ramp / Gray Gorilla complex, with
+  independent up/down eject directions.
 
 ## Sources
 
-- `legacy.game.congo`: `games/congo.json` at the pinned migration revision.
+- `pinmame.catalog.4ec52ff0ac13`: pinned catalog driver records for the
+  `congo_*` clone tree.
+- `pinmame.core.4ec52ff0ac13`: `src/wpc/sims/wpc/prelim/congo.c` and shared
+  WPC-95 core source (`core.h`, `core.c`, `wpc.c`, `libpinmame.h`).
+- `controller-profile.pinmame-wpc-95`: the shared WPC-95 controller profile.
+- `manual.williams.congo.1995`: the retained Williams Congo operations
+  manual (16-50050-101), transcribed into
+  `evidence/excerpts/williams.congo.1995/`.
+- `vpx-table.congo-jpsalas-nfozzy` / `vpx-script.congo-jpsalas-nfozzy`: the
+  retained known-working recreation and its embedded script.

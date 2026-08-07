@@ -215,17 +215,55 @@ def not_applicable(device: dict[str, object], reason: str, *source_refs: str) ->
 	device["spatial"] = {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
 
 
+# Which retained table Bumper body carries each pop-bumper address, for all three device types
+# (switch, coil, lamp) that sit on one physical bumper.
+#
+# The retained known-working table is internally inconsistent here and only one half of it can be
+# right. Its switch handlers bind Bumper5 -> switch 27 ("lower bottom") and Bumper6 -> switch 26
+# ("lower right"), with the same inversion upstairs (Bumper2 -> 51, Bumper3 -> 50). Its lamp
+# handling in the same file binds the opposite way: BumperLight5 -> lamp 34 ("lower right"),
+# BumperLight6 -> lamp 35 ("lower bottom"), BumperLight2 -> lamp 61 ("upper right"),
+# BumperLight3 -> lamp 62 ("upper bottom"). BumperLightN sits on top of BumperN, so the
+# light-to-body association is not in doubt; the two halves genuinely disagree.
+#
+# The manual settles it against the switch half, on two independent drawings:
+#
+#   * Coil & Flash Lamp Locations (PDF page 35, printed Sec. 3 Chp. 2 Page 19) places #7 LOWER
+#     RIGHT POP at normalized x ~0.266 and #8 LOWER BOTTOM POP at ~0.156, and #10 UPPER RIGHT POP
+#     at ~0.831 with #11 UPPER BOTTOM POP at ~0.790.
+#   * Switch Matrix Grid Locations (PDF page 33, printed Sec. 3 Chp. 2 Page 17) labels the same
+#     three bodies in the same order.
+#
+# In both drawings "right" is the greatest x and "bottom" is the body nearest the player (greatest
+# y). Reading "bottom" as "the body drawn lowest in the cluster" is what produces the reversal,
+# because the rightmost body is drawn higher up than the bottom one. An earlier revision of this
+# curator followed the script's switch half and shipped eight reversed `validated` placements.
+# Keyed per device type on purpose: the switch, solenoid and lamp namespaces overlap numerically
+# (switch 9 is the head stand-up, solenoid 9 is the upper-left pop, lamp 33 is a pop-bumper lamp
+# while switch 33 is a playfield trigger), so a single flat table keyed by bare address would let a
+# lookup silently mean the wrong device.
+POP_BUMPER_BODIES: dict[str, dict[int, str]] = {
+	#                     lower left  lower right  lower bottom  upper left  upper right  upper bottom
+	"switch": {25: "Bumper4", 26: "Bumper5", 27: "Bumper6", 49: "Bumper1", 50: "Bumper2", 51: "Bumper3"},
+	"solenoid": {6: "Bumper4", 7: "Bumper5", 8: "Bumper6", 9: "Bumper1", 10: "Bumper2", 11: "Bumper3"},
+	"lamp": {33: "Bumper4", 34: "Bumper5", 35: "Bumper6", 60: "Bumper1", 61: "Bumper2", 62: "Bumper3"},
+}
+
 INPUT_OBJECTS: dict[int, list[_ObjectSpec]] = {
 	9: [_spec("HitTarget", "sw9", "position")], 16: [_spec("Trigger", "swPlunger", "center")],
 	17: [_spec("HitTarget", "sw17", "position")], 18: [_spec("Trigger", "sw18", "center")],
 	19: [_spec("HitTarget", "sw19", "position")], 20: [_spec("Spinner", "sw20", "center")],
 	21: [_spec("Spinner", "sw21", "center")], 22: [_spec("HitTarget", "sw22", "position")],
 	23: [_spec("Trigger", "SMagnet", "center")], 24: [_spec("Trigger", "IMagnet", "center")],
-	25: [_spec("Bumper", "Bumper4", "center")], 26: [_spec("Bumper", "Bumper6", "center")],
-	27: [_spec("Bumper", "Bumper5", "center")], 28: [_spec("Kicker", "sw28", "center")],
+	# Pop bumpers come from POP_BUMPER_BODIES, not from the retained script's own *_Hit switch
+	# bindings. See the comment on that table: the script's switch half and lamp half disagree
+	# about which body is "right" and which is "bottom", and the manual settles it against the
+	# switch half.
+	25: [_spec("Bumper", POP_BUMPER_BODIES["switch"][25], "center")], 26: [_spec("Bumper", POP_BUMPER_BODIES["switch"][26], "center")],
+	27: [_spec("Bumper", POP_BUMPER_BODIES["switch"][27], "center")], 28: [_spec("Kicker", "sw28", "center")],
 	29: [_spec("Kicker", "sw29", "center")], 52: [_spec("Kicker", "sw52", "center")],
-	49: [_spec("Bumper", "Bumper1", "center")], 50: [_spec("Bumper", "Bumper3", "center")],
-	51: [_spec("Bumper", "Bumper2", "center")], 30: [_spec("Trigger", "sw30", "center")],
+	49: [_spec("Bumper", POP_BUMPER_BODIES["switch"][49], "center")], 50: [_spec("Bumper", POP_BUMPER_BODIES["switch"][50], "center")],
+	51: [_spec("Bumper", POP_BUMPER_BODIES["switch"][51], "center")], 30: [_spec("Trigger", "sw30", "center")],
 	31: [_spec("Trigger", "sw31", "center")],
 	32: [_spec("HitTarget", "sw32", "position", "a"), _spec("HitTarget", "sw32a", "position", "b")],
 	33: [_spec("Trigger", "sw33", "center")], 34: [_spec("Trigger", "sw34", "center")],
@@ -249,7 +287,21 @@ LAMP_OBJECTS: dict[int, list[_ObjectSpec]] = {
 	address: [_spec("Flasher", f"l{address}", "pos_x/pos_y")] if address == 16 else [_spec("Light", f"l{address}", "center")]
 	for address in (set(range(1, 33)) | set(range(36, 60)) | set(range(63, 76)))
 }
-UNRESOLVED_LAMPS = {33, 34, 35, 60, 61, 62, 76, 77, 78}
+# The six pop-bumper lamps sit inside their bumper body, so each is placed on the body its own
+# BumperLight object sits on -- which is also the body the manual's drawings put that lamp's
+# printed name on, and the body this file now places that bumper's switch and coil on. All three
+# device types on one physical bumper therefore agree.
+LAMP_OBJECTS.update({
+	address: [_spec("Light", f"BumperLight{POP_BUMPER_BODIES['lamp'][address][len('Bumper'):]}", "center")]
+	for address in POP_BUMPER_BODIES["lamp"]
+})
+
+# 76/77/78 (Back Panel A/B/C) stay unresolved. Unlike the six above they have no Light object at
+# all: the table models them only as three Flasher sprites sharing one (x, y) = 0.567396/0.492008,
+# differing solely in stacked height (220/175/130 with rot_x = -90). That is a single vertical
+# panel rather than three distinct bulb positions, the same shape The Simpsons Pinball Party's
+# Mini-DMD sign panel took, so no coordinate is asserted.
+UNRESOLVED_LAMPS = {76, 77, 78}
 
 
 GI_OBJECTS: list[_ObjectSpec] = [_spec("Light", f"gi{number}", "center", f"gi.{number:02d}") for number in range(1, 40)]
@@ -258,10 +310,10 @@ GI_OBJECTS: list[_ObjectSpec] = [_spec("Light", f"gi{number}", "center", f"gi.{n
 SOLENOID_OBJECTS: dict[int, list[_ObjectSpec]] = {
 	1: [_spec("Kicker", "BallRelease", "center")], 2: [_spec("Plunger", "Plunger", "center")],
 	3: [_spec("Kicker", "sw52", "center")], 4: [_spec("Flipper", "TempleDiv", "center")],
-	5: [_spec("Flipper", "LockDiverter", "center")], 6: [_spec("Bumper", "Bumper4", "center")],
-	7: [_spec("Bumper", "Bumper6", "center")], 8: [_spec("Bumper", "Bumper5", "center")],
-	9: [_spec("Bumper", "Bumper1", "center")], 10: [_spec("Bumper", "Bumper3", "center")],
-	11: [_spec("Bumper", "Bumper2", "center")], 12: [_spec("Kicker", "sw29", "center")],
+	5: [_spec("Flipper", "LockDiverter", "center")], 6: [_spec("Bumper", POP_BUMPER_BODIES["solenoid"][6], "center")],
+	7: [_spec("Bumper", POP_BUMPER_BODIES["solenoid"][7], "center")], 8: [_spec("Bumper", POP_BUMPER_BODIES["solenoid"][8], "center")],
+	9: [_spec("Bumper", POP_BUMPER_BODIES["solenoid"][9], "center")], 10: [_spec("Bumper", POP_BUMPER_BODIES["solenoid"][10], "center")],
+	11: [_spec("Bumper", POP_BUMPER_BODIES["solenoid"][11], "center")], 12: [_spec("Kicker", "sw29", "center")],
 	13: [_spec("Kicker", "Lock", "center")], 14: [_spec("Flipper", "RightFlipper1", "center")],
 	15: [_spec("Flipper", "LeftFlipper", "center")], 16: [_spec("Flipper", "RightFlipper", "center")],
 	17: [_spec("Wall", "Leftslingshot", "drag_points.centroid")], 18: [_spec("Wall", "Rightslingshot", "drag_points.centroid")],
@@ -337,7 +389,7 @@ def apply_spatial(definition: dict[str, object], extraction: _VPXExtraction) -> 
 			device.setdefault("physical", {})["quantity"] = 1
 		elif group == "pinmame.output.lamp" and address in UNRESOLVED_LAMPS:
 			device.setdefault("physical", {})["quantity"] = 1
-			device.setdefault("physical", {})["notes"] = "The exact retained table either omits this named lamp object or collapses the back-panel lamps into a shared render anchor; no speculative playfield placement is asserted."
+			device.setdefault("physical", {})["notes"] = "The exact retained table models the three back-panel lamps only as Flasher sprites sharing one position, differing solely in stacked height on a vertical panel, so no per-bulb playfield coordinate is asserted."
 		elif group == "pinmame.output.gi" and address == 0:
 			_located_from_objects(device, "emitter", GI_OBJECTS, extraction, (TABLE_SOURCE,))
 			device.setdefault("physical", {})["notes"] = "The exact table's 39 named GI Light objects are retained as rendered emitter positions. They map to the manual's four separately fused physical strings; duplicate centers are preserved as separate named emitters, not collapsed or reinterpreted as extra controller channels."
@@ -372,6 +424,16 @@ def apply_spatial(definition: dict[str, object], extraction: _VPXExtraction) -> 
 	# Q22 is a switched opto emitter, not a decorative lamp, but it is still an
 	# exact physical emitter in the playfield spatial model.
 	q_outputs[22].setdefault("physical", {})["notes"] += " Exact Light.f22 is the switched-ground opto emitter position."
+
+	# The DMD and the three Mini-DMD sign panels are backbox/cabinet devices. The schema restricts
+	# a display's spatial record to `not_applicable` (see $defs/displaySpatial), which is a
+	# controlled record to be written rather than a reason to omit the key: leaving it absent makes
+	# a positively-known cabinet device indistinguishable from one nobody has looked at. Provenance
+	# names both the emulator source that declares the display layout and the manual that places
+	# the boards physically.
+	for display in definition["displays"]:
+		display.pop("spatial", None)
+		not_applicable(display, "cabinet_or_service", CORE_SOURCE, MANUAL_SOURCE)
 
 
 def _assert_contract(definition: dict[str, object]) -> None:
@@ -417,7 +479,7 @@ The exact byte-preserved source for this pass is `Ripley_s Believe It or Not (St
 
 The spatial overlay promotes named direct objects for the head/tombstones, spinners, ramps, mini-playfield, magnet optos, scoop/VUK, vari-target optos, shooter, EOS/flipper assemblies, slingshot collision assemblies, six pop bumpers, Q1-Q20/Q22-Q23, direct Q25-Q32 callback objects only where a retained Light or other physical object provides socket evidence, the directly exposed matrix-lamp objects that pass the same rule, and all 39 named GI Light objects. Coordinates are derived from the selected object's exact property: `center` for direct center-bearing objects, `position` for hit targets, and `drag_points.centroid` only for the named slingshot/TopPost collision assemblies. Q25 retains only physical `Light.f25`; its graphical `Flasher.f25b` point is withheld. Q28 uses physical `Light.f28a`, not graphical `Flasher.f28`; Q30 retains its in-bounds `Light.f30` while `Flasher.f30b` is an explicit blocker. Q26, Q31, and lamp 16 remain unlocated pending physical/manual corroboration. All selected `Flasher` objects, including the out-of-bounds f27/f29/f30b/f32 callbacks, are render helpers and are not counted as sockets. Switch 32 retains two named physical target positions under one controller address; switches 41-43 intentionally share the exact overlapping vari-target opto-board anchor; switch 59 and 62 each retain one exact slingshot assembly anchor while their manual quantity remains two parallel contacts.
 
-The definition remains schema-v2 partial. Individual trough/stacking contacts 11-15 have no per-seat geometry in the exact table's shared `cvpmBallStack`; lock contacts 44-46 have no reconciled per-seat sensor objects; Q21 exposes no named reset-coil actuator; graphical Flasher callbacks f25b, f26, f27, f28, f29, f30b, f31, and f32 are withheld as render-helper blockers even when their points are in bounds, while the out-of-bounds points are also withheld rather than replaced by polygon centroids; lamp 16's graphical Flasher.l16 is withheld pending physical/manual corroboration; optional UK Q33-Q35 have no named actuator geometry; lamps 33-35 and 60-62 are not exposed as named exact table objects; lamps 76-78 are collapsed to one shared back-panel render anchor and are withheld rather than falsely triplicated; and no display spatial record is asserted because schema-v2 controls display spatial records as cabinet/backbox non-playfield records. These are actionable authoring blockers, not plausibility gaps.
+The definition remains schema-v2 partial. Individual trough/stacking contacts 11-15 have no per-seat geometry in the exact table's shared `cvpmBallStack`; lock contacts 44-46 have no reconciled per-seat sensor objects; Q21 exposes no named reset-coil actuator; graphical Flasher callbacks f25b, f26, f27, f28, f29, f30b, f31, and f32 are withheld as render-helper blockers even when their points are in bounds, while the out-of-bounds points are also withheld rather than replaced by polygon centroids; lamp 16's graphical Flasher.l16 is withheld pending physical/manual corroboration; optional UK Q33-Q35 have no named actuator geometry; and lamps 76-78 are modelled only as three Flasher sprites sharing one position on a vertical back panel, differing solely in stacked height, so they are withheld rather than falsely triplicated. The six pop-bumper lamps 33-35 and 60-62 are now placed on their own bumper bodies, and the four displays now carry controlled not_applicable/cabinet_or_service records rather than no record at all. These are actionable authoring blockers, not plausibility gaps.
 
 The exact table's Q24 routine is sound-only, whereas the retained VPW v1.3 script comments out its Q24 callback. The official manual calls Q24 optional unassigned 5 V. The canonical definition therefore marks Q24 `no_physical_device` and records the script conflict without inventing a stock knocker. The exact table's GI callback style also differs from the VPW modulated callback wrapper, but both drive the same public GI 0; the manual's four fused GI strings remain the physical authority.
 """
@@ -478,9 +540,7 @@ def _report(definition: dict[str, object], extraction: _VPXExtraction) -> dict[s
 			{"blocker": "The visible lock path has Kicker.Lock and generic triggers but no exact per-seat public sensor mapping for contacts 44-46.", "devices": {"inputs": [44, 45, 46]}},
 			{"blocker": "Q21's exact table exposes the vari-target assembly but no named reset-coil actuator center.", "devices": {"outputs": ["device.q21-vari-target-reset"]}},
 			{"blocker": "UK-only Q33-Q35 are physical optional posts, but the selected table supplies no named actuator geometry and standard-machine projection is prohibited.", "devices": {"outputs": ["device.aux1-optional-uk-left-up-down-post", "device.aux2-optional-uk-center-up-down-post", "device.aux3-optional-uk-right-up-down-post"]}},
-			{"blocker": "The exact table does not expose named objects for matrix lamps 33-35 and 60-62.", "devices": {"outputs": ["lamp.33-lower-left-pop-bumper", "lamp.34-lower-right-pop-bumper", "lamp.35-lower-bottom-pop-bumper", "lamp.60-upper-left-pop-bumper", "lamp.61-upper-right-pop-bumper", "lamp.62-upper-bottom-pop-bumper"]}},
 			{"blocker": "The exact table collapses lamps 76-78 to one shared back-panel render anchor, so their three physical multiplicity positions are withheld.", "devices": {"outputs": ["lamp.76-back-panel-a", "lamp.77-back-panel-b", "lamp.78-back-panel-c"]}},
-			{"blocker": "Schema-v2 display records do not accept playfield placements; backbox/display surface positions remain documented in the manual and display inventory but are not spatially asserted.", "devices": {"displays": ["display.dmd", "display.mini-dmd-left", "display.mini-dmd-center", "display.mini-dmd-right"]}},
 		] + _geometry_blockers(extraction.audit),
 		"object_audit": extraction.audit,
 		"conflicts": CONFLICTS,

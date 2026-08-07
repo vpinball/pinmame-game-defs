@@ -1,0 +1,685 @@
+{
+  "blockers": [
+    "Switch 25 (Right Eject Rubber) has no reliable playfield coordinate. The retained extraction's only candidate object, a Primitive literally named \"sw25\", sits at local-space (684.0966, 1112.3384) -- the identical coordinate to an unrelated Primitive named \"sw1\" (not a valid Congo switch address) -- indicating both are copies of a reusable decorative mesh whose transform was never updated to the object's real placement. This is the sole reason coverage.status stays partial; every other dimension is validated."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162.0,
+      "left": 0.0,
+      "right": 964.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/964; 0=left, 1=right",
+    "y": "y/2162; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "GiTop member GI10_Deactivated -- its own name marks it disabled; not a distinct active physical bulb",
+    "Flasher F8L3 (Volcano Flasher backbox bulb, normalized x=1.022303, outside the 0..1 playfield bounds) -- table modeling anomaly, backbox bulb parked off-table",
+    "l32l, l33l, l38l, l81l co-located brightness-doubling Light objects",
+    "lNNf-style Flasher companion objects (l11f, l12f, l14f, ... f9l2) -- insert glow-overlay effects layered on the lamp's own Light object, not separate physical bulbs"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 925,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "c9b02744cbb2e1b0659c7032b0ef42d4e7cadf5c36ed33ac171a037b8be82b62",
+    "manifest_uri": "external:pinmame-vpx-sources/williams/congo-1995/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.congo-jpsalas-nfozzy",
+    "total_bytes": 47770557,
+    "vpxtool_version": "vpxtool"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "williams.congo.1995",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      13,
+      14,
+      21,
+      22,
+      112,
+      114,
+      118
+    ],
+    "constant": [
+      24
+    ],
+    "dip_switch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "unused": [
+      23,
+      66,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      115,
+      116
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 3,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 4,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 88,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 87,
+        "group": "pinmame.output.lamp"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 187,
+  "projections": [
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough's own release kicker (Kicker BallRelease, table object center): the retained cvpmTrough helper (bsTrough) models switches 32-35 purely as an internal switch array with no separate playfield trigger object, and the trough-eject opto is pulsed in the same SolRelease handler that fires the BallRelease kicker."
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough's own release kicker (Kicker BallRelease, table object center); see switch 31. The retained cvpmTrough helper has no separate visible object per ball position."
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough's own release kicker (Kicker BallRelease, table object center); see switch 31."
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough's own release kicker (Kicker BallRelease, table object center); see switch 31."
+    },
+    {
+      "address": 35,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough's own release kicker (Kicker BallRelease, table object center); see switch 31."
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Volcano lock's own exit kicker (Kicker sw36a, table object center): the retained cvpmTrough helper (bsVolcano) models switches 41-43 purely as an internal switch array with no separate playfield trigger object, and the volcano ejects a locked ball through the same sw36a kicker (.Initexit sw36a)."
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Volcano lock's own exit kicker (Kicker sw36a, table object center); see switch 41."
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Volcano lock's own exit kicker (Kicker sw36a, table object center); see switch 41."
+    }
+  ],
+  "resolved_input_addresses": [
+    11,
+    12,
+    15,
+    16,
+    17,
+    18,
+    26,
+    27,
+    28,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    61,
+    62,
+    63,
+    64,
+    65,
+    67,
+    68,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    111,
+    113,
+    117
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 0,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "19c19ea64bb120af66ef3ca309a2ec98c08b35ecf08e198bb26b3cd1611cd936",
+    "manual_sha256": "2770692875d10e7cc5bdd11a823ceb9ecfd2f374ed196207ca66631127b77f40",
+    "table_sha256": "45a6448efb586475a6886962c5bace44789be1d7cd3dde2c507169fdf085432c"
+  },
+  "status": "validated",
+  "unresolved": [
+    {
+      "address": 25,
+      "group": "pinmame.input.switch",
+      "reason": "no reliable VPX object; see blockers"
+    }
+  ],
+  "unresolved_input_addresses": [
+    25
+  ],
+  "version": 1,
+  "visual_review_cache": {
+    "root": "external:pinmame-manuals/rendered/williams.congo.1995/",
+    "transcription": {
+      "path": "external:pinmame-review-artifacts/congo/manual-transcription.md"
+    }
+  }
+}
