@@ -381,7 +381,12 @@ class SpatialMigrationTests(unittest.TestCase):
 		# spatial key at all because the retained table's LEDY/LEDG/LEDR light collections are empty
 		# and the l73-l80 Primitive objects that do exist share one (x, y) with only a stacked z
 		# offset, so it is counted as a 22nd machine with a genuine spatial gap.
-		self.assertEqual(22, report["missing_requirement_counts"]["spatial_placement"])
+		# Creature from the Black Lagoon is likewise not a retrofit: it was curated directly from a
+		# legacy candidate-only partial record. Its retained table is the smallest extraction in the
+		# project at 856 files, so GI address 3, the Sequential G.I. chase lamps 91-98 and six fitted
+		# flasher solenoids have no bound object, and it is counted as a 23rd machine with a genuine
+		# spatial gap.
+		self.assertEqual(23, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(787, len(catalog["machines"]))
 		self.assertEqual(786, catalog["summary"]["game_count"])
 		self.assertEqual(787, catalog["summary"]["machine_count"])

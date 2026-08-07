@@ -179,7 +179,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 173 | 1993 | STUB - Addams Family Values (Coin Dropper) (L-4) | Williams | stub |
 | 174 | 1993 | STUB - White Water (L-5) | Williams | stub |
 | 175 | 1992 | Black Rose | Bally | partial |
-| 176 | 1992 | Creature From The Black Lagoon | Bally | partial |
+| 176 | 1992 | Creature from the Black Lagoon | Bally | partial |
 | 177 | 1992 | Doctor Who | Bally | partial |
 | 178 | 1992 | STUB - Gilligan's Island (L-9) | Bally | stub |
 | 179 | 1992 | The Addams Family | Bally | partial |
