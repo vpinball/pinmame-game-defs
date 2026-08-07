@@ -14,8 +14,8 @@ SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "funhouse-1990.json"
 AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "williams" / "funhouse-1990.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "williams" / "funhouse-1990.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-alpha.json"
-SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "funhouse.json"
-SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports" / "spatial" / "williams" / "funhouse.md"
+SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "funhouse-1990.json"
+SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports" / "spatial" / "williams" / "funhouse-1990.md"
 
 DRIVER_IDS = {
 	"fh_l9", "fh_d9", "fh_l9b", "fh_d9b", "fh_905h", "fh_906h", "fh_907h", "fh_pa1",

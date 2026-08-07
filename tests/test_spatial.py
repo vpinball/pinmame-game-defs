@@ -342,12 +342,12 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
 		self.assertEqual(catalog["summary"]["game_count"], report["machine_count"])
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
-		self.assertEqual(786, report["machine_count"])
+		self.assertEqual(787, report["machine_count"])
 		self.assertEqual(23, report["author_ready_count"])
-		self.assertEqual(86, report["partial_count"])
-		self.assertEqual(677, report["stub_count"])
+		self.assertEqual(88, report["partial_count"])
+		self.assertEqual(676, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
-		self.assertEqual(787, report["catalog_record_count"])
+		self.assertEqual(788, report["catalog_record_count"])
 		# The thirteen retrofit-pending machines above (which already include X-Men Pro), plus
 		# Terminator 2, plus Centaur, plus Twilight Zone. Centaur is not a retrofit: every one of
 		# its devices carries a spatial record except auxiliary lamp 113, a fitted A9 circuit whose
@@ -386,17 +386,28 @@ class SpatialMigrationTests(unittest.TestCase):
 		# project at 856 files, so GI address 3, the Sequential G.I. chase lamps 91-98 and six fitted
 		# flasher solenoids have no bound object, and it is counted as a 23rd machine with a genuine
 		# spatial gap.
-		# Data East Batman raises it to 28. It replaces a legacy candidate-only partial record
-		# in place, so the partial/stub/author-ready totals above are unchanged by it. Exactly
-		# one known-working recreation was retained, so nine lamp addresses have no bound
-		# object and take no spatial key at all.
-		self.assertEqual(28, report["missing_requirement_counts"]["spatial_placement"])
-		self.assertEqual(787, len(catalog["machines"]))
-		self.assertEqual(786, catalog["summary"]["game_count"])
-		self.assertEqual(787, catalog["summary"]["machine_count"])
+		# Bally Flash Gordon and Bally Judge Dredd each added one genuine spatial gap (33 from 31):
+		# Flash Gordon's two outlane Special inserts sit on the wrong sides in the retained table and
+		# are recorded as an unresolved conflict rather than swapped, and Judge Dredd's remaining
+		# unplaced devices are named in its own spatial report. Neither replaced a stub, so the
+		# partial/stub totals below are unchanged by those two passes.
+		# Every catalog count above is one higher than before Bally Eight Ball Deluxe was curated,
+		# and none of that increase is a newly covered machine. Curating it claimed the production
+		# eballdlx tree and left the four Motorola-68701 hardware prototypes (eballdp1-eballdp4,
+		# declared clones by PinMAME but living in by68701.c on different boards) holding the
+		# leftover stub, exactly as Kiss's Intel-8035 prototypes did. So the physical-game count
+		# went 786 -> 787 by splitting one record into two, not by adding coverage.
+		# Data East Batman raises it to 34. It replaces a legacy candidate-only partial record
+		# in place, so partial/stub/author-ready totals are unchanged by it. Exactly one
+		# known-working recreation was retained, so nine lamp addresses and the twelve flasher
+		# circuits have no bound object and take no spatial key at all.
+		self.assertEqual(34, report["missing_requirement_counts"]["spatial_placement"])
+		self.assertEqual(788, len(catalog["machines"]))
+		self.assertEqual(787, catalog["summary"]["game_count"])
+		self.assertEqual(788, catalog["summary"]["machine_count"])
 		self.assertEqual(23, catalog["summary"]["author_ready_count"])
-		self.assertEqual(677, catalog["summary"]["stub_count"])
-		self.assertEqual(87, catalog["summary"]["partial_count"])
+		self.assertEqual(676, catalog["summary"]["stub_count"])
+		self.assertEqual(89, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(13, len(note_paths))

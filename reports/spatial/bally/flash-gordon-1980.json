@@ -1,0 +1,578 @@
+{
+  "blockers": [
+    "Public switches 5 (Drop Target 50 Point Rebound) and 29 (10 Point Rebound) are real, fitted two-contact rebound addresses that the retained table implements as collidable Primitives named phys_sw5 and phys_sw29, both of which sit at a zero position with a zero rot_and_tra and no axis-aligned bounds recorded in the extraction. There is no usable coordinate for either, so the spatial key is omitted rather than a position invented.",
+    "Public lamp 100 has no spatial key because the manual marks its circuit N/U in two places while the retained table binds it to the two left-hand rollover buttons of switch 1; see conflict.aux-lamp-100-left-rollover-fitment.",
+    "Switches 12 and 15 are placed on the two right-rail standup targets according to the printed self-test table and Figure V, which means their placements are deliberately the reverse of the retained table's own object names; see conflict.right-side-target-upper-lower-transposition."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 1976.471,
+      "left": 0.0,
+      "right": 952.9412,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952.9412; 0=left, 1=right",
+    "y": "y/1976.471; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "upperbumperlight002, a co-located render double of upperbumperlight001 at the top thumper bumper's own centre (public lamp 14 is one bulb, not two)",
+    "creditlightoff, a co-located off-state double of creditlight (public lamp 59)",
+    "p<n> and bulb<n> Primitive meshes, which are the retained script's DisableLighting2 render helpers for a lamp rather than emitters",
+    "pstar<n> and star<n> Primitive meshes, the rollover-button animation helpers beside the Trigger objects that carry the switch",
+    "GI_001 through GI_029 Light objects: Flash Gordon's general illumination is a plain 5.9 VAC transformer circuit with no driver-board output and no controller address, so it is not a device in this definition"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1447,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "50810dd697738d98061624512a948cec08ca6eaad037d5dd61d3a7d9935fc775",
+    "manifest_uri": "external:pinmame-vpx-sources/bally/flash-gordon-1980/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.flash-gordon-2-0",
+    "total_bytes": 168438120,
+    "vpxtool_version": "unrecorded in the retained extraction"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "bally.flash-gordon.1980",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      6,
+      7,
+      9,
+      10,
+      11,
+      16
+    ],
+    "dip_switch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+    ],
+    "unused": [
+      38
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 11,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 13,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 27,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 29,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 45,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 61,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 66,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 67,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 82,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 83,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 98,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 99,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 116,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 6,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 18,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 19,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 70,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 71,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 86,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 87,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 102,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 103,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 114,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 115,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 118,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 119,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 5,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 17,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 20,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 115,
+  "projections": [
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the left four-bank drop target assembly it resets (the mean of the retained table's own four target objects sw17-sw20). The reset coil is mounted under the bank and has no object of its own in the extraction."
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the upper-left three-bank drop target assembly it resets (the mean of the retained table's own target objects sw21-sw23)."
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the right in-line drop target assembly it resets (the mean of the retained table's own target objects sw25-sw27)."
+    }
+  ],
+  "resolved_input_addresses": [
+    1,
+    2,
+    3,
+    4,
+    8,
+    12,
+    13,
+    14,
+    15,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 1,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 69,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 97,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 101,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 113,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 117,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "unplaced_input_addresses": [
+    5,
+    29
+  ],
+  "unplaced_output_bindings": [
+    {
+      "address": 100,
+      "group": "pinmame.output.lamp"
+    }
+  ],
+  "version": 1
+}

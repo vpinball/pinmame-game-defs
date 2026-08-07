@@ -9,7 +9,7 @@ This note was generated from PinMAME catalog identity only. It deliberately cont
 - Candidate root driver: `eballdlx`
 - Candidate manufacturer: Bally
 - Candidate year: 1981
-- Drivers currently grouped by the PinMAME clone chain: `eballd14`, `eballdla`, `eballdlb`, `eballdlc`, `eballdld`, `eballdlx`, `eballdp1`, `eballdp2`, `eballdp3`, `eballdp4`
+- Drivers currently grouped by the PinMAME clone chain: `eballdp1`, `eballdp2`, `eballdp3`, `eballdp4`
 
 ## Playfield devices
 

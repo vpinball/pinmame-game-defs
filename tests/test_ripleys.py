@@ -368,5 +368,86 @@ class RipleysDefinitionTests(unittest.TestCase):
 				SPATIAL_GENERATOR._VPXExtraction(copy)
 
 
+class RipleysPopBumperGeometryTests(unittest.TestCase):
+	"""Guards the eight reversed placements this record shipped before 2026-08-07.
+
+	The retained known-working table is internally inconsistent about its own pop bumpers: its
+	*_Hit switch handlers and its lamp handling assign "right" and "bottom" to opposite bodies.
+	An earlier revision of the spatial curator followed the switch half and produced eight
+	`validated` placements in which the right and bottom members of both clusters were swapped.
+	The manual's Coil & Flash Lamp Locations and Switch Matrix Grid Locations drawings both settle
+	it the other way, and the script's own lamp half agrees with them.
+
+	Three independent invariants are asserted. Only the co-location and bottom-y checks would each
+	have caught the whole defect on their own: the x-ordering check catches the lower cluster but
+	not the upper one, because the reversed upper pair happened to keep an ascending x (the body
+	wrongly named "right" sat at 0.810 against "left" at 0.655). That is exactly why more than one
+	invariant is asserted here.
+	"""
+
+	@classmethod
+	def setUpClass(cls) -> None:
+		definition = load_json(DEFINITION_PATH)
+		cls.points = {}
+		for group in ("inputs", "outputs"):
+			for device in definition[group]:
+				spatial = device.get("spatial") or {}
+				placements = spatial.get("placements") or []
+				if placements:
+					cls.points[device["id"]] = (placements[0]["x"], placements[0]["y"])
+
+	# switch id, coil id, lamp id for each of the six physical bumpers
+	CLUSTERS = {
+		"lower": [
+			("left", "switch.25-lower-left-pop-bumper", "device.q6-lower-left-pop-bumper", "lamp.33-lower-left-pop-bumper"),
+			("right", "switch.26-lower-right-pop-bumper", "device.q7-lower-right-pop-bumper", "lamp.34-lower-right-pop-bumper"),
+			("bottom", "switch.27-lower-bottom-pop-bumper", "device.q8-lower-bottom-pop-bumper", "lamp.35-lower-bottom-pop-bumper"),
+		],
+		"upper": [
+			("left", "switch.49-upper-left-pop-bumper", "device.q9-upper-left-pop-bumper", "lamp.60-upper-left-pop-bumper"),
+			("right", "switch.50-upper-right-pop-bumper", "device.q10-upper-right-pop-bumper", "lamp.61-upper-right-pop-bumper"),
+			("bottom", "switch.51-upper-bottom-pop-bumper", "device.q11-upper-bottom-pop-bumper", "lamp.62-upper-bottom-pop-bumper"),
+		],
+	}
+
+	def test_switch_coil_and_lamp_of_one_bumper_are_co_located(self) -> None:
+		"""All three devices sit on one physical bumper, so they must share a position.
+
+		The lamp is allowed a small offset because its BumperLight object is nudged off the body
+		centre for the glow, but nothing here may land on a different bumper -- the bumpers are
+		more than 0.06 apart, so a 0.02 tolerance cannot mask a swap.
+		"""
+		for cluster, members in self.CLUSTERS.items():
+			for position, switch_id, coil_id, lamp_id in members:
+				switch = self.points[switch_id]
+				coil = self.points[coil_id]
+				lamp = self.points[lamp_id]
+				self.assertEqual(switch, coil, f"{cluster} {position}: switch and coil must be identical")
+				for axis, index in (("x", 0), ("y", 1)):
+					self.assertAlmostEqual(
+						switch[index], lamp[index], delta=0.02,
+						msg=f"{cluster} {position}: lamp {axis} is on a different bumper than the switch",
+					)
+
+	def test_right_member_is_further_right_than_the_left_member(self) -> None:
+		for cluster, members in self.CLUSTERS.items():
+			by_position = {position: self.points[switch_id] for position, switch_id, _, _ in members}
+			self.assertLess(
+				by_position["left"][0], by_position["right"][0],
+				f"{cluster} cluster: the member named 'right' must have the greater x",
+			)
+
+	def test_bottom_member_is_nearest_the_player(self) -> None:
+		"""y = 1 is the apron end, so "bottom" must carry the greatest y in its cluster."""
+		for cluster, members in self.CLUSTERS.items():
+			by_position = {position: self.points[switch_id] for position, switch_id, _, _ in members}
+			bottom_y = by_position["bottom"][1]
+			for position in ("left", "right"):
+				self.assertGreater(
+					bottom_y, by_position[position][1],
+					f"{cluster} cluster: 'bottom' must be nearer the player than '{position}'",
+				)
+
+
 if __name__ == "__main__":
 	unittest.main()

@@ -1,0 +1,726 @@
+{
+  "blockers": [
+    "Switches 33/34 (Gear Shifter Low/High), 56/57/58 (Left/Center/Right Trough), and solenoids 1 (Diverter High) and 25/26/28 (Enable 1/2/3) have no VPX object anywhere in the retained extraction; this thin table (875 files, 39,497-byte script) does not model a physical position for any of them. Lamps 73/74/75 (the A-15283 Stop Light Assembly) are similarly unplaced.",
+    "conflict.switch-84-85-manual-vs-script-semantics is unresolved: the manual's own printed labels for switches 84/85 disagree with the retained known-working script's runtime grouping and audio design, and the two agreeing 'driver guess' and 'script grouping' sources are not demonstrably independent.",
+    "conflict.solenoid-31-fastflip-address-not-declared is unresolved: gw.c never declares a fast-flip address, so pinned PinMAME publishes public solenoid 31 as a WPC_GILAMPS mirror bit rather than a genuine flipper-enable signal, yet the retained script's cFastFlips binding assumes the latter.",
+    "GI addresses 0 and 1 (both playfield-wired per the manual) share one monolithic 25-member VPX collection with no way to attribute specific bulbs to one address versus the other, so neither carries a validated placement."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162.0,
+      "left": 0.0,
+      "right": 964.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/964; 0=left, 1=right",
+    "y": "y/2162; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "dome118/dome121/dome123, supercharger_p, superramp_p Primitives -- all five sit at raw local-mesh origin (0,0) with a 90/180-degree rotation and ~1000-unit size, the same 'local-origin Primitive mesh is not a coordinate' pattern documented elsewhere in this project; excluded rather than promoted.",
+    "f118a, f121a, f123a, f121c, f123c Flasher objects -- raw pos_x/pos_y values thousands of units outside the 0-964/0-2162 playfield bounds; excluded as unusable rather than clamped or guessed.",
+    "f120a Light object -- co-located brightness-doubling duplicate of f120 (Free Ride Flasher), matching the render-doubling pattern documented on other curated titles."
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 875,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_uri": "external:pinmame-vpx-sources/williams/the-getaway-high-speed-ii-1992/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.gw-v1.2",
+    "vpxtool_version": "vpxtool"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "williams.the-getaway-high-speed-ii.1992",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      13,
+      14,
+      21,
+      22,
+      23,
+      112,
+      114,
+      116
+    ],
+    "constant": [
+      24
+    ],
+    "dip_switch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "internal_nonvisual": [
+      111,
+      113,
+      115
+    ],
+    "unused": [
+      11,
+      12,
+      35,
+      47,
+      48,
+      64,
+      66,
+      68,
+      117,
+      118
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 2,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 3,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 4,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 68,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 27,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "internal_nonvisual": [
+      {
+        "address": 33,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 34,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 45,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 47,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 35,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 36,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 136,
+  "projections": [
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Wall.LeftSlingshot collision wall's centroid: the retained script's LeftSlingShot_Slingshot handler pulses switch 31 on collision with this wall (vpmTimer.pulseSw 31), and no separate switch-31 trigger object exists."
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Wall.RightSlingshot collision wall's centroid; see switch 31."
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the div_ramp Primitive (the ramp-lift flap object the retained script rotates in the same handler): SolRampUp/SolRampDown set Controller.Switch(54) directly in code (RampaMovil.Collidable / div_ramp.ObjRotY are toggled together in the same Sub), matching the manual's own finding that the physical sensor is the B-12576 Ramp Lifting Mechanism's own microswitch (part 5647-12001-00, identical to the part this manual prints for switch 54) rather than a separate playfield object."
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Kicker.Drain object (the retained table's drain/outhole entry kicker): the cvpmBallStack class (bsTrough.InitSw 55,58,57,56) manages switches 55-58 internally with no individually named trigger object per address; Kicker.Drain is the one physically-modeled object at the outhole/drain position."
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the RampaMovil moving-ramp object's centroid: SolRampUp/SolRampDown directly toggle RampaMovil.Collidable and rotate the div_ramp flap in the same handler; there is no separate coil-plunger object modeled."
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the RampaMovil moving-ramp object's centroid; see solenoid 2."
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the postlock Primitive (the retained script's LockPost sub raises/lowers PosteArriba and repositions postlock.z in the same event)."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the Wall.LeftSlingshot collision wall's centroid, the object the retained script's LeftSlingShot_Slingshot handler animates on the same event that pulses switch 31."
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the Wall.RightSlingshot collision wall's centroid; see solenoid 5."
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained table's literal Plunger1 object (near the left outlane, raw x=53.5 next to switch 25's raw x=53.3): the retained script's SolKickback handler calls Plunger1.Fire/Plunger1.PullBack directly, confirming this VPX Plunger-type object -- not the shooter-lane plunger -- is the kickback mechanism."
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the Kicker.sw77 object, the same physical captive-ball saucer switch 77 senses."
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the sc_div Primitive (the visible Supercharger loop diverter flap the retained script's SuperchargerDiverter handler rotates); the companion Wall29 collision wall shares the same mechanism."
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the Trigger.ShooterLane position: the retained script's cvpmImpulseP plunger instance (plungerIM) is initialized against the ShooterLane object at the same physical shooter-lane location as switch 78."
+    }
+  ],
+  "resolved_input_addresses": [
+    15,
+    16,
+    17,
+    18,
+    25,
+    26,
+    27,
+    28,
+    31,
+    32,
+    36,
+    37,
+    38,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    51,
+    52,
+    53,
+    54,
+    55,
+    61,
+    62,
+    63,
+    65,
+    67,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 87,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 88,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "4f91dbf71bf134b1113939a517900c27d87fa1a142109e79ad64306a40aeb78e",
+    "manual_sha256": "9d59b0d38fff9cf8b87cbee5defb205700ae42b79f00cdd509a1137a7ce96558",
+    "table_sha256": "22e7257316dcb3c414f62a0543f6a68063e8f50524ad9559f1ff98bd38184efc"
+  },
+  "status": "partial",
+  "unresolved": [
+    "switch.matrix-33",
+    "switch.matrix-34",
+    "switch.matrix-56",
+    "switch.matrix-57",
+    "switch.matrix-58",
+    "device.diverter-high",
+    "device.enable-1",
+    "device.enable-2",
+    "device.enable-3",
+    "lamp.matrix-73",
+    "lamp.matrix-74",
+    "lamp.matrix-75",
+    "gi.string-1",
+    "gi.string-2"
+  ],
+  "unresolved_input_addresses": [
+    33,
+    34,
+    56,
+    57,
+    58
+  ],
+  "unresolved_output_bindings": [
+    {
+      "address": 0,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "version": 1,
+  "visual_review_cache": {
+    "root": "external:pinmame-manuals/rendered/williams.the-getaway-high-speed-ii.1992/",
+    "transcription": {
+      "path": "external:pinmame-review-artifacts/getaway/manual-transcription.md",
+      "sha256": "a450922126d99280fb9accedbe3c40cf00a70fde102ad541fb322b0521f0743f"
+    }
+  }
+}
