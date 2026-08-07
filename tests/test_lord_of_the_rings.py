@@ -231,13 +231,37 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		self.assertNotIn(("device.trough-up-kicker", "switch.matrix-16"), links)
 
 	def test_every_driver_carries_a_compatibility_verdict_and_notes(self) -> None:
+		"""`physical_compatibility` is a claim about the machine, not about the driver routing.
+
+		An earlier revision asserted `identical` for all 46 drivers on the strength of a shared
+		`init_lotr`. That proves the emulated hardware matches; it says nothing about the cabinet.
+		The 2008 Limited Edition is the one driver where that gap matters - a limited run is
+		exactly where a manufacturer adds hardware such as a shaker motor - and nothing retained
+		here documents that machine, so it is `unknown` rather than asserted either way.
+		"""
 		drivers = self.definition["drivers"]
 		self.assertEqual(46, len(drivers))
 		for driver in drivers:
-			self.assertEqual("identical", driver["physical_compatibility"])
+			expected = "unknown" if driver["id"] == "lotr_le" else "identical"
+			self.assertEqual(expected, driver["physical_compatibility"], driver["id"])
 			self.assertTrue(driver["variant_notes"].strip())
 		limited = next(driver for driver in drivers if driver["id"] == "lotr_le")
 		self.assertIn("Limited Edition", limited["variant_notes"])
+		self.assertIn("not established by anything retained here", limited["variant_notes"])
+
+	def test_no_relationship_claims_the_balrog_limits_are_complementary(self) -> None:
+		"""`inverted` would assert each limit switch is the logical complement of the other.
+
+		Two end-of-travel switches can both be open while the drive is in transit. The retained
+		script does keep exactly one of the pair asserted, but that is the recreation's two-state
+		model rather than an observation of the machine, and nothing retained here watches the
+		mechanism mid-travel.
+		"""
+		for relationship in self.definition["relationships"]:
+			if relationship["kind"] != "inverted":
+				continue
+			self.assertNotIn(relationship["source"], {"switch.matrix-31", "switch.matrix-32"})
+			self.assertNotIn(relationship["destination"], {"switch.matrix-31", "switch.matrix-32"})
 
 	def test_catalog_maps_every_driver_to_this_definition(self) -> None:
 		catalog = load_json(CATALOG_PATH)

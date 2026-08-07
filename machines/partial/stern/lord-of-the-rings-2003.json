@@ -440,8 +440,8 @@
       "flags": 0,
       "id": "lotr_le",
       "manufacturer": "Stern",
-      "physical_compatibility": "identical",
-      "variant_notes": "Stern game ROM revision 10.02 shipped with the 2008 Limited Edition run. PinMAME defines it as a clone of lotr sharing init_lotr, so nothing in the emulated hardware differs. Against the root driver it differs in the CPU game ROM (lotrcpua.a02 against the root's lotrcpua.a00). It shares the root's display ROM and sound ROM set. Any cosmetic or trim differences in that run are outside this evidence and are not asserted here.",
+      "physical_compatibility": "unknown",
+      "variant_notes": "Stern game ROM revision 10.02 shipped with the 2008 Limited Edition run. PinMAME defines it as a clone of lotr sharing init_lotr, so nothing in the EMULATED hardware differs - a statement about driver routing, not about the cabinet. Against the root driver it differs in the CPU game ROM (lotrcpua.a02 against the root's lotrcpua.a00). It shares the root's display ROM and sound ROM set. Whether this limited run differs physically from the 2003 production machine is not established by anything retained here, and a limited run is exactly where a manufacturer adds hardware such as a shaker motor. physical_compatibility is therefore `unknown` for this driver alone, rather than asserting an identity the evidence does not carry.",
       "year": "2008"
     },
     {
@@ -6413,7 +6413,7 @@
       "kind": "coil",
       "label": "Unused Solenoid 12",
       "physical": {
-        "notes": "Printed NOT USED in the coils detailed chart table. Drive transistor Q12 and control line BLU-YEL at J9-P5 exist on the board but no device is fitted."
+        "notes": "Printed NOT USED in the coils detailed chart table of the manual for the 2003 production machine, which is not a claim about every driver in the tree. Drive transistor Q12 and control line BLU-YEL at J9-P5 exist on the board but no device is fitted."
       },
       "provenance": {
         "source_refs": [
@@ -7199,7 +7199,7 @@
       "kind": "coil",
       "label": "Unused Solenoid 28",
       "physical": {
-        "notes": "Printed NOT USED in the coils detailed chart table. Drive transistor Q28 and control line BLK-YEL at J6-P4 exist on the board but no device is fitted."
+        "notes": "Printed NOT USED in the coils detailed chart table of the manual for the 2003 production machine, which is not a claim about every driver in the tree. Drive transistor Q28 and control line BLK-YEL at J6-P4 exist on the board but no device is fitted."
       },
       "provenance": {
         "source_refs": [
@@ -13476,18 +13476,6 @@
         "status": "validated"
       },
       "source": "device.balrog-motor-relay"
-    },
-    {
-      "destination": "switch.matrix-32",
-      "id": "relationship.balrog-open-closed-exclusive",
-      "kind": "inverted",
-      "provenance": {
-        "source_refs": [
-          "vpx-script.lotr-vpw-1-6"
-        ],
-        "status": "validated"
-      },
-      "source": "switch.matrix-31"
     }
   ],
   "schema_version": 2,

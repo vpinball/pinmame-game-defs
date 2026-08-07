@@ -757,7 +757,8 @@ for address in range(1, 33):
             "kind": "coil",
             "label": f"Unused Solenoid {address}",
             "physical": {"notes": (
-                f"Printed NOT USED in the coils detailed chart table. Drive transistor {rec.get('transistor')} and "
+                f"Printed NOT USED in the coils detailed chart table of the manual for the 2003 production "
+                f"machine, which is not a claim about every driver in the tree. Drive transistor {rec.get('transistor')} and "
                 f"control line {rec.get('control_wire')} at {rec.get('control_connector')} exist on the board but no "
                 "device is fitted."
             )},
@@ -1191,12 +1192,15 @@ relationships = [
         "provenance": {"source_refs": [MANUAL, S_VPW], "status": "validated"},
         "source": "device.balrog-motor-relay",
     },
-    {
-        "destination": "switch.matrix-32", "id": "relationship.balrog-open-closed-exclusive", "kind": "inverted",
-        "provenance": {"source_refs": [S_VPW], "status": "validated"},
-        "source": "switch.matrix-31",
-    },
 ]
+# No relationship is declared between the Balrog open and closed limit switches. An earlier
+# revision declared them `inverted`, which asserts each is the logical complement of the other.
+# The only basis was the retained script, which does keep exactly one of the pair asserted - but
+# that is the recreation's two-state model, not evidence about the machine. Two end-of-travel
+# switches can both be open while the drive is in transit, and nothing retained here observes the
+# mechanism mid-travel. The vocabulary has no term for "mutually exclusive but not exhaustive",
+# so the honest record is no relationship; the exclusivity is described in the Balrog mechanism's
+# own behavior prose instead.
 # No relationship is declared between the trough up-kicker and the shooter-lane switch. Coil 1
 # does not actuate switch 16; it launches a ball that later rolls over it. That is a ball path,
 # not causality, and the runbook names inventing it as an anti-pattern.
@@ -1271,8 +1275,12 @@ def variant_notes(record: dict) -> str:
     if record["id"] == "lotr_le":
         return (
             "Stern game ROM revision 10.02 shipped with the 2008 Limited Edition run. PinMAME defines it as a clone of "
-            f"lotr sharing init_lotr, so nothing in the emulated hardware differs. {rom_delta(record['id'])} Any "
-            "cosmetic or trim differences in that run are outside this evidence and are not asserted here."
+            f"lotr sharing init_lotr, so nothing in the EMULATED hardware differs - a statement about driver "
+            f"routing, not about the cabinet. {rom_delta(record['id'])} Whether this limited run differs "
+            "physically from the 2003 production machine is not established by anything retained here, and a "
+            "limited run is exactly where a manufacturer adds hardware such as a shaker motor. "
+            "physical_compatibility is therefore `unknown` for this driver alone, rather than asserting an "
+            "identity the evidence does not carry."
         )
     if language:
         if record["id"] in SPANISH_SOUND_DRIVERS:
@@ -1295,7 +1303,11 @@ def variant_notes(record: dict) -> str:
 drivers = []
 for record in partial["drivers"]:
     entry = dict(record)
-    entry["physical_compatibility"] = "identical"
+    # `identical` is a claim about the PHYSICAL machine, and shared init_lotr proves only that the
+    # emulated hardware matches. For ordinary firmware revisions and language releases those are
+    # the same thing in practice. They are not for a limited run, which is exactly where a
+    # manufacturer adds hardware, and nothing retained here documents that cabinet.
+    entry["physical_compatibility"] = "unknown" if record["id"] == "lotr_le" else "identical"
     entry["variant_notes"] = variant_notes(record)
     drivers.append(entry)
 
