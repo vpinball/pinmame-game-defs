@@ -1,0 +1,671 @@
+{
+  "blockers": [
+    "coverage.missing = [\"recreation_notes\"]: knowledge/bally/the-addams-family-1992.md documents every mechanism this definition references, but as a single unreviewed curation pass it has not had the independent high-tier review this project requires before a knowledge note counts as validated recreation_knowledge. No conflict, unresolved address, or missing spatial placement remains -- this is the sole reason the record stays partial rather than a genuine gap in the electrical or spatial evidence."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2164.76,
+      "left": 0.0,
+      "right": 952.965,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952.965; 0=left, 1=right",
+    "y": "y/2164.76; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "L11b, L12b, ... L87b-style co-located brightness-doubling Light objects at every lamp address (render doubling, not a second physical bulb)",
+    "L45old (superseded art duplicate of L45bold at the same 'The Mamushku' insert)",
+    "GILeftPrims / GIRightPrims collection members (shaded plastics that dim with GI, not individual bulb sockets)"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1277,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "d79a5a3723fbd4041460764ec598a78683963370566033d0701cacc93ad1d4dc",
+    "manifest_uri": "external:pinmame-vpx-sources/bally/the-addams-family-1992/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.taf-g5k-2-3-2",
+    "total_bytes": 415715342,
+    "vpxtool_version": "vpxtool git:v0.33.3"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "bally.the-addams-family.1992",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      13,
+      14,
+      21,
+      22,
+      112,
+      114,
+      116,
+      118
+    ],
+    "constant": [
+      24
+    ],
+    "dip_switch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "internal_nonvisual": [
+      81,
+      82,
+      84,
+      85,
+      111,
+      113,
+      115,
+      117
+    ],
+    "unused": [
+      11,
+      12,
+      23,
+      28,
+      46,
+      52,
+      83,
+      88
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 1,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 2,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 88,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 2,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 3,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 76,
+        "group": "pinmame.output.lamp"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 169,
+  "projections": [
+    {
+      "device": "switch.matrix-81",
+      "projected_onto": "vault_base (Bookcase assembly primitive center)",
+      "reason": "taf_handleMech synthesizes swBookOpen purely from motor position; no discrete playfield sensor."
+    },
+    {
+      "device": "switch.matrix-82",
+      "projected_onto": "vault_base (Bookcase assembly primitive center)",
+      "reason": "taf_handleMech synthesizes swBookClose purely from motor position; no discrete playfield sensor."
+    },
+    {
+      "device": "switch.matrix-84",
+      "projected_onto": "Thing (Thing hand assembly primitive center)",
+      "reason": "taf_handleMech synthesizes swThingDn purely from motor position; no discrete playfield sensor."
+    },
+    {
+      "device": "switch.matrix-85",
+      "projected_onto": "Thing (Thing hand assembly primitive center)",
+      "reason": "taf_handleMech synthesizes swThingUp purely from motor position; no discrete playfield sensor."
+    },
+    {
+      "device": "device.thing-motor",
+      "projected_onto": "Thing (Thing hand assembly primitive center)",
+      "reason": "ThingMotor mechanism callback rotates Thing/handMAGNET/thingBox directly; no separate motor object in the retained table."
+    },
+    {
+      "device": "device.bookcase-motor",
+      "projected_onto": "vault_base (Bookcase assembly primitive center)",
+      "reason": "BookCaseMotor mechanism callback rotates vault_base directly; no separate motor object in the retained table."
+    }
+  ],
+  "resolved_input_addresses": [
+    15,
+    16,
+    17,
+    18,
+    25,
+    26,
+    27,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    41,
+    42,
+    43,
+    44,
+    45,
+    47,
+    48,
+    51,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    86,
+    87
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 0,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 87,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "c5f1aedc5f05c277459d97be18046f07e2617522841545317ebdfad4ec34e2fc",
+    "handbook_sha256": "76c468eb747a61a176874d3b02cb495451eea9b5f9268a69ba58603bc8a9cf8f",
+    "ops_manual_sha256": "3cca7c4adc6280f42515fcc117457e32bf723b3d3a7005123d8094b3c65e2662",
+    "table_sha256": "85af088f0ed6d59c83599102e6245cc2eab5674e69d29882db6f0eaacf05e858",
+    "wpc_schematic_manual_sha256": "074431d774b1410fd6d38191ace4150866023c66e2d3a5185361f114ca4afedd"
+  },
+  "status": "partial",
+  "unresolved": [],
+  "version": 1,
+  "visual_review_cache": {
+    "root": "external:pinmame-manuals/rendered/bally.the-addams-family.1992/",
+    "transcription": {
+      "path": "external:pinmame-review-artifacts/the-addams-family-1992/manual-transcription.md",
+      "sha256": "17e8aed2524e79b671633026c0872cda8c6724d5d2e3b2bf9d6c49018fb5462e"
+    }
+  }
+}

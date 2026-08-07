@@ -344,8 +344,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
 		self.assertEqual(786, report["machine_count"])
 		self.assertEqual(23, report["author_ready_count"])
-		self.assertEqual(80, report["partial_count"])
-		self.assertEqual(683, report["stub_count"])
+		self.assertEqual(81, report["partial_count"])
+		self.assertEqual(682, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
 		self.assertEqual(787, report["catalog_record_count"])
 		# The thirteen retrofit-pending machines above (which already include X-Men Pro), plus
@@ -356,13 +356,16 @@ class SpatialMigrationTests(unittest.TestCase):
 		# not a missing spatial record, so it is not counted here either. Twilight Zone genuinely
 		# has unresolved spatial gaps (switches 26/31-33/45/46/55 and GI address 2 have no bound
 		# VPX object), so it is counted alongside Centaur/Terminator 2.
-		self.assertEqual(16, report["missing_requirement_counts"]["spatial_placement"])
+		# Cactus Canyon is also not a retrofit: every switch/solenoid/lamp/GI address has a resolved
+		# placement or a controlled not_applicable record except flashers 24 and 26, whose second
+		# documented (playfield vs insert-panel) bulb has no independently resolvable VPX coordinate.
+		self.assertEqual(17, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(787, len(catalog["machines"]))
 		self.assertEqual(786, catalog["summary"]["game_count"])
 		self.assertEqual(787, catalog["summary"]["machine_count"])
 		self.assertEqual(23, catalog["summary"]["author_ready_count"])
-		self.assertEqual(683, catalog["summary"]["stub_count"])
-		self.assertEqual(81, catalog["summary"]["partial_count"])
+		self.assertEqual(682, catalog["summary"]["stub_count"])
+		self.assertEqual(82, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(13, len(note_paths))
