@@ -371,7 +371,12 @@ class SpatialMigrationTests(unittest.TestCase):
 		# and GI address 4 (String 5) -- playfield-wired per the manual -- has no UpdateGI case and
 		# therefore no VPX object binding, so it is counted as a 20th machine with a genuine spatial
 		# gap.
-		self.assertEqual(20, report["missing_requirement_counts"]["spatial_placement"])
+		# Scared Stiff is likewise not a retrofit: it was curated directly from a legacy candidate-
+		# only partial record, and sixteen driver-declared auxiliary lamp addresses (91-98, 101-108)
+		# have no spatial key at all because their fitment is a genuine, unresolved two-source
+		# disagreement (conflict.aux-lamp-column-fitment), so it is counted as a 21st machine with a
+		# genuine spatial gap.
+		self.assertEqual(21, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(787, len(catalog["machines"]))
 		self.assertEqual(786, catalog["summary"]["game_count"])
 		self.assertEqual(787, catalog["summary"]["machine_count"])

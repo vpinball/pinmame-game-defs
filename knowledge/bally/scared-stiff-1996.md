@@ -1,197 +1,81 @@
-# Scared Stiff
+# Scared Stiff (Bally, 1996)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+Coverage: **partial - complete physical I/O inventory, WPC-95 bindings, mechanism causality, driver-variant boundary, and normalized spatial placement validated for every address this evidence set can resolve; naming conflicted and sixteen driver-declared auxiliary lamp addresses unresolved, see below**
 
-## Overview
+## Identity and evidence precedence
 
-Legacy evidence identifies this candidate as Bally (1996). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+This is the Bally/Midway WPC-95 physical product released 1996, part number 16-50048-101 (September 1996 FINAL manual). It covers the eight-driver `ss_*` clone tree: `ss_15` (parent, production 1.5), `ss_14`, `ss_12`, `ss_11`, `ss_11s10`, `ss_03` (0.3 prototype), `ss_01` and `ss_01b` (D.01R prototypes). Every one of these is a game/sound-ROM revision for the same physical machine; `ssGameData` is one shared static struct referenced by `init_ss` regardless of which ROM loads, so no driver changes a controller address or playfield device.
 
-## Playfield devices
+Evidence precedence for this definition: the retained known-working VPW v1.0 script is runtime and mechanism-causality ground truth; the Bally/Midway operations manual controls physical construction, part numbers, wiring, polarity, quantities, and device presence; pinned PinMAME controls controller generation, public address topology, mechanism-table position ranges, and display metadata; the retained VPX geometry supplies normalized coordinates. The retained manual PDF carries a real but badly garbled multi-column OCR text layer for its Section 2/3 tables (unlike Monster Bash's fully image-only scan); every printed table used here was still read from rendered 300-600 dpi pages and transcribed into `external:pinmame-review-artifacts/scared-stiff-1996/manual-transcription.md`, never trusted from `pdftotext` alone.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+## Controller platform and address topology
 
-## Custom mechanisms
+`GEN_WPC95` (`PINMAME_HARDWARE_GEN_WPC95 = 0x80`) with `wpc_dispDMD`, confirmed directly from `ss.c` line 464 rather than assumed. The controller profile is `pinmame.wpc-95`, reused unchanged.
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+- Switches: dedicated coin-door 1-8, matrix 11-88 as drive column then return row, Fliptronic 111-118. `ssGameData`'s inverted-switch mask `{0x00,0x02,0x00,0xff,0xff,0x00,0x00,0x00,0x00,0x00,0x00,0x00}` (index = column, bit = row-1) normalizes address 12 (Wheel Index) and the entire column-3 (31-38) and column-4 (41-48) ranges -- 17 addresses -- and the manual's own `(LED)`+`(Trans.)` two-row opto construction disclosure swept the identical 17-address set. **Zero disagreement.**
+- Solenoids: physical drivers 1-6, 8-16 (solenoid 7 populates a driver transistor but drives only the cabinet knocker, no playfield device); flashers 17-28; Fliptronic upper-flipper circuits 33-36 repurposed for a lock diverter (33/34) and two plain flashers (35/36, no upper flippers fitted); WPC-95 LPDC outputs 37/38 (aux-lamp shift-register clock/data) and 39/40 (Spider Wheel motor phases) with PinMAME's backward-compatibility mirrors at 41-44; Fliptronic lower-flipper circuits 45-48; PinMAME state channels 29-32; simulator-only 49 and reserved 50. `ssGameData` declares no `custSol`, so no address above 50 is published -- but it *does* declare `hw.lampCol = 2`, publishing sixteen driver-side auxiliary lamp addresses (91-98, 101-108) whose fitment is unresolved (see below).
+- Lamps: 8x8 matrix 11-88, all 64 addresses populated, plus the sixteen unresolved auxiliary addresses.
+- GI: five strings on public addresses 0-4.
 
-## Ball-state transitions
+Two WPC-95 numbering facts must not be lost. First, the generic Flipper Circuits legend printed at the foot of the Solenoid/Flasher Table numbers printed circuits 33-36 "Upr. Rt./Lt. Power/Hold" regardless of whether upper flippers are fitted, but the game-specific table overrides that caption: 33/34 are the Left Diverter (confirmed by `ss.c`'s own `#define sLDiverterPower 33`/`#define sLDiverterHold 34`) and 35/36 are plain flashers. `ssGameData` declares `FLIP_SOL(FLIP_L)` only, so `core_getSol` never routes 33-36 through a flipper-coil path -- they pass straight through untranslated, the same pattern Tales of the Arabian Nights already established for its own repurposed upper circuits. Second, LPDC outputs 37-40 and public addresses 41-44 are the *same* four physical drive lines (two aux-lamp shift-register signals, two Spider Wheel motor phases), because `core_getSol` duplicates 37-40 into 41-44 for WPC-95; a recreation binds four physical lines and accepts either address, never creating eight devices.
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+## Ball path, trough, and shooter
 
-## Controller interactions
+Four balls rest on trough optos 32-35, with Trough Ball 1 (32) at the eject end nearest the shooter lane and Trough Ball 4 (35) at the drain entrance. Solenoid 9 ejects the ball on 32; the retained script's `SolRelease` handler (`vpmTimer.PulseSw 31; sw32.kick 60,9`) pulses trough-eject opto 31 in the same event, so switch 31 is a documented projection onto the trough-Ball-1 kicker position rather than a separately placed object. The ejected ball rests on shooter-lane switch 18; auto-plunger coil 1 launches it (`ss.c`'s own `ss_handleBallState` comment: "SS has both, manual and auto plunger"), and the retained script's `AutoPlunge` handler also opens `Gate008`, a one-way shooter-lane gate, immediately before firing.
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+All seventeen opto addresses (12, 31-38, 41-48) are printed optos that rest closed and PinMAME's mask covers exactly that set: assert the public switch when a ball, the Spider Wheel index, or a coffin/crate/ramp ball is present, and never invert again.
 
-## Service and setup information
+## Spider Wheel: the machine's motorized, spinning mechanism (backbox)
 
-Unknown; locate operator/service documentation.
+A two-phase stepper motor rotates a Spider figure behind a backbox window. `ss.c`'s own `mech_add(0,&ss_wheelMech)` declares it directly: solenoids 39/40, `MECH_LINEAR|MECH_CIRCLE|MECH_TWOSTEPSOL|MECH_FAST`, a 200-count range, and home switch `swWheelIndex` (12) asserting across steps 25-199. The retained script independently registers the identical mechanism through its own `cvpmMech` helper (`mSpider`: `.Sol1 = 39`, `.Sol2 = 40`, `.Addsw 12, 0, 0`, 48 visual steps) and rotates the `pSpider` primitive, which sits at a strongly negative normalized y -- behind the playfield's own rear edge -- consistent with the sixteen backbox-mounted "Web Award" lamps (64-68, 71-78, 81-83) this wheel selects among when a player chooses a bonus item (`ss.c`'s `spiderWheelText` array: Collect Deadhead, Jackpot Is Lit, Double Trouble, Collect Eyeball, Beat The Crate, Coffin Multiball, Telepathetic Power x2, Laboratory, Boogie Man Boogie, Crate Multiball, Collect Eyeball, Leaper Mania, Beast Hurry Up, Collect Deadhead x2). This is the machine's **only** motorized, continuously rotating mechanism, and it lives in the backbox, not on the playfield.
 
-## Timing and tuning observations
+## Crate: ball lock and kickout (not motorized, not spinning)
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+A ball diverted into the Crate subway trips the entrance opto (switch 38, `swCrateEntrance`) and comes to rest against a solenoid-held post (solenoids 8/16, `CratePostPower`/`CratePostHold`; the retained script's `CratePostHold` toggles `Crate_Pin.Collidable`). Hitting the crate door trips the door sensor (switch 57, `swDoorSensor` -- named "Crate Sensor" on the manual's Switch Locations page and "Crate Magnetic Sensor" only in the retained script's own inline comment, which this definition records as the switch's construction is otherwise undisclosed), and `ss.c`'s ball-state table routes the hit through `sCratePostHold` into the crate interior; the ball is kicked back out through solenoid 6 (Crate Kickout, `scoop_topleft`), sensed leaving on switch 37 (Left Kickout). The retained script's `crate_pin_Hit` handler rotates a door primitive (`BP_crate_door`) a few degrees and back on contact -- a wobble reaction, not a continuous rotation. **Neither `ss.c` nor the retained script implements any motor or ongoing spin for this mechanism.** The task brief that seeded this curation pass described "the motorised spinning Crate with a ball lock"; that does not match any primary source examined here, and the description is not reproduced as fact in this definition. The motorized, spinning mechanism on this machine is the Spider Wheel above.
 
-## Recreation guidance
+## Coffin: three-ball lock, door, and popper
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+A ball enters through the Coffin Entrance opto (switch 48) and travels to a three-position trough sensed by switches 41 (Left/nearest), 42 (Center), and 43 (Right/deepest) -- `ss.c`'s ball-state table chains Coffin Right -> Coffin Center -> Coffin Left, with Coffin Left releasing the ball through solenoid 4 (Coffin Popper, `sCoffinPopper`) into the left inlane. Solenoid 5 (Coffin Door) opens and closes a door at the entrance; the retained script's `CoffinDoor` handler rotates an off-playfield helper object (`CoffinFlipper`, a `Flipper`-typed object placed at negative x purely for its convenient rotate-to-end/start behavior) whose angle drives the visible door primitives (`BP_cDoorClose`/`BP_cDoorOpen`). Locking three balls here starts Coffin Multiball, one of the eight Tales of Terror. Solenoids 33/34 (Left Diverter) raise and hold a gate that diverts a ball from the Left Loop toward this subway instead of continuing around the loop; the retained script's `DiverterPower`/`DiverterHold` handlers rotate a second off-playfield helper (`LockFlipper`) that drives the visible diverter primitive (`BP_CoffinDiverter`).
 
-## Evidence notes
+## "Boogie Monsters" are cosmetic wobble figures, not a drop-target bank
 
-- `platforms/wpc.json#/coils/1`: Unbound legacy outputs record `c_flipper_lower_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/2`: Unbound legacy outputs record `c_flipper_lower_left` was retained as a migration note only.
-- `platforms/wpc.json#/coils/3`: Unbound legacy outputs record `c_flipper_upper_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/4`: Unbound legacy outputs record `c_flipper_upper_left` was retained as a migration note only.
-- `games/scared-stiff.json#/switches/0._note`: cvpmMech.AddSw 12, 0, 0 — Spider mechanism position switch at step 0. Used by mSpider cvpmMech to track wheel home position.
-- `games/scared-stiff.json#/switches/1._note`: vpmNudge.TiltSwitch = 14.
-- `games/scared-stiff.json#/switches/2._note`: Controller.Switch(16)=1 on sw16_Hit, =0 on sw16_UnHit. Also Controller.Switch(16)=0 on StartGameKey release. Dual-purpose: shooter lane rollover AND start button (common WPC pattern where start button press is handled by vpmKeyDown).
-- `games/scared-stiff.json#/switches/3._note`: Controller.Switch(17) on/off. Rollover switch with rightInlaneSpeedLimit ball speed correction.
-- `games/scared-stiff.json#/switches/4._note`: Controller.Switch(18) on/off. Rollover switch. plungerIM.InitImpulseP swplunger uses this area. BP_sw18 z-positioned at -23.5 on init.
-- `games/scared-stiff.json#/switches/5._note`: Controller.Switch(25) on/off. Rollover switch.
-- `games/scared-stiff.json#/switches/6._note`: Controller.Switch(26) on/off. Rollover switch with leftInlaneSpeedLimit ball speed correction.
-- `games/scared-stiff.json#/switches/7._note`: Controller.Switch(27) on/off. Rollover switch.
-- `games/scared-stiff.json#/switches/8._note`: STHit 28. Stand-up target with VPW TargetBouncer animation. vpmTimer.PulseSw(28) via STAnimate.
-- `games/scared-stiff.json#/switches/9._note`: vpmTimer.PulseSw 31 fired by SolRelease (sol 9). This is the trough eject opto — pulsed when ball is kicked out of trough. Acts as drain/outhole equivalent in WPC trough design.
-- `games/scared-stiff.json#/switches/10._note`: Controller.Switch(32) on/off. First trough position (nearest eject). Ball created here on init. sw32.kick called by SolRelease. UpdateTrough cascades balls forward.
-- `games/scared-stiff.json#/switches/11._note`: Controller.Switch(33) on/off. Second trough position. Ball created here on init.
-- `games/scared-stiff.json#/switches/12._note`: Controller.Switch(34) on/off. Third trough position. Ball created here on init.
-- `games/scared-stiff.json#/switches/13._note`: Controller.Switch(35) on/off. Fourth trough position (nearest drain). Ball created here on init. 4-ball trough.
-- `games/scared-stiff.json#/switches/14._note`: Controller.Switch(36)=1 on hit, cleared by scoop_right (sol 3). KickBall launches ball vertically (kvelz=30, kzlift=105). Has rampFlap animation and Subway_UpVukTrap collidable toggle. Sound debounce via sw36sfx flag.
-- `games/scared-stiff.json#/switches/15._note`: Controller.Switch(37)=1 on hit, cleared by scoop_topleft (sol 6). KickBall launches ball (angle 0, vel 3, kvelz random 35-45, kzlift 50). ScoopHit sound.
-- `games/scared-stiff.json#/switches/16._note`: Controller.Switch(38) on/off. Opto switch in subway/crate area.
-- `games/scared-stiff.json#/switches/17._note`: Controller.Switch(41)=1 on hit, cleared by CoffinPopper (sol 4). KickBall launches ball (angle 168, vel 1, kvelz 30, kzlift 100). NOTE: Simple sw41_Hit/UnHit is commented out — replaced by VUK implementation in ZVUK section.
-- `games/scared-stiff.json#/switches/18._note`: Controller.Switch(42) on/off. Centre position in coffin ball lock area.
-- `games/scared-stiff.json#/switches/19._note`: Controller.Switch(43) on/off. Right position in coffin ball lock area.
-- `games/scared-stiff.json#/switches/20._note`: Controller.Switch(44) on/off. Left ramp entrance switch.
-- `games/scared-stiff.json#/switches/21._note`: Controller.Switch(45) on/off. Right ramp entrance switch.
-- `games/scared-stiff.json#/switches/22._note`: Controller.Switch(46) on/off. Left ramp completion switch.
-- `games/scared-stiff.json#/switches/23._note`: Controller.Switch(47) on/off. Right ramp completion switch.
-- `games/scared-stiff.json#/switches/24._note`: Controller.Switch(48) on/off. Coffin entrance opto. sw48_Hit calls ScoopHit for sound.
-- `games/scared-stiff.json#/switches/25._note`: vpmTimer.PulseSw(51). Fired from LeftSlingShot_Slingshot event. LS.VelocityCorrect applied.
-- `games/scared-stiff.json#/switches/26._note`: vpmTimer.PulseSw(52). Fired from RightSlingShot_Slingshot event. RS.VelocityCorrect applied.
-- `games/scared-stiff.json#/switches/27._note`: vpmTimer.PulseSw 53. Bumper1_Hit. BSocket1 skirt animation.
-- `games/scared-stiff.json#/switches/28._note`: vpmTimer.PulseSw 54. Bumper2_Hit. BSocket2 skirt animation.
-- `games/scared-stiff.json#/switches/29._note`: vpmTimer.PulseSw 55. Bumper3_Hit. BSocket3 skirt animation.
-- `games/scared-stiff.json#/switches/30._note`: vpmTimer.PulseSw(56). Fired from TopSlingShot_Slingshot event. TS.VelocityCorrect applied. Uses LSlingArmU animation primitives.
-- `games/scared-stiff.json#/switches/31._note`: Controller.Switch(57) on/off. Magnetic sensor in crate mechanism area.
-- `games/scared-stiff.json#/switches/32._note`: Controller.Switch(58) on/off. Rollover switch with wire animation.
-- `games/scared-stiff.json#/switches/33._note`: STHit 61. Stand-up target with VPW TargetBouncer animation. vpmTimer.PulseSw(61) via STAnimate.
-- `games/scared-stiff.json#/switches/34._note`: STHit 62. Stand-up target with VPW TargetBouncer animation. vpmTimer.PulseSw(62) via STAnimate.
-- `games/scared-stiff.json#/switches/35._note`: STHit 63. Stand-up target with VPW TargetBouncer animation. vpmTimer.PulseSw(63) via STAnimate.
-- `games/scared-stiff.json#/switches/36._note`: STHit 64. Left frog leaper target — both a stand-up target AND animated frog (PrLeaper1). Frog bounces on hit with velocity-dependent height. vpmTimer.PulseSw(64) via STAnimate.
-- `games/scared-stiff.json#/switches/37._note`: STHit 65. Center frog leaper target — both a stand-up target AND animated frog (PrLeaper2). Frog bounces on hit. vpmTimer.PulseSw(65) via STAnimate.
-- `games/scared-stiff.json#/switches/38._note`: STHit 66. Right frog leaper target — both a stand-up target AND animated frog (PrLeaper3). Frog bounces on hit. vpmTimer.PulseSw(66) via STAnimate.
-- `games/scared-stiff.json#/switches/39._note`: Controller.Switch(67) on/off. Rubber switch in upper right playfield area.
-- `games/scared-stiff.json#/switches/40._note`: Controller.Switch(68) on/off. Rollover switch with wire animation.
-- `games/scared-stiff.json#/switches/41._note`: Controller.Switch(71) on/off. Top rollover lane.
-- `games/scared-stiff.json#/switches/42._note`: Controller.Switch(72) on/off. Top rollover lane.
-- `games/scared-stiff.json#/switches/43._note`: Controller.Switch(73) on/off. Top rollover lane.
-- `games/scared-stiff.json#/switches/44._note`: Controller.Switch(74) on/off. Rollover switch with wire animation.
-- `games/scared-stiff.json#/coils/0._vbscript_callback`: AutoPlunge
-- `games/scared-stiff.json#/coils/0._inferred_type`: ball_management
-- `games/scared-stiff.json#/coils/0._note`: Impulse plunger auto-fire. plungerIM.AutoFire. Also enables Gate008.collidable during fire. cvpmImpulseP with power 45, time 0.6.
-- `games/scared-stiff.json#/coils/1._vbscript_callback`: LoopGate
-- `games/scared-stiff.json#/coils/1._inferred_type`: mechanism
-- `games/scared-stiff.json#/coils/1._note`: Controls GateLoop one-way gate. GateLoop.Open = Enabled.
-- `games/scared-stiff.json#/coils/2._vbscript_callback`: scoop_right
-- `games/scared-stiff.json#/coils/2._inferred_type`: ball_management
-- `games/scared-stiff.json#/coils/2._note`: Kicks ball out of right scoop (sw36). KickBall with angle 0, vel 0, kvelz 30, kzlift 105. Clears Controller.Switch(36). Also animates rampFlap and toggles Subway_UpVukTrap collidable.
-- `games/scared-stiff.json#/coils/3._vbscript_callback`: CoffinPopper
-- `games/scared-stiff.json#/coils/3._inferred_type`: ball_management
-- `games/scared-stiff.json#/coils/3._note`: Kicks ball out of coffin scoop (sw41). KickBall with angle 168, vel 1, kvelz 30, kzlift 100. Clears Controller.Switch(41).
-- `games/scared-stiff.json#/coils/4._vbscript_callback`: CoffinDoor
-- `games/scared-stiff.json#/coils/4._inferred_type`: mechanism
-- `games/scared-stiff.json#/coils/4._note`: Controls CoffinFlipper VPX flipper object. RotateToEnd on enable, RotateToStart on disable. Animated coffin door with open/closed baked map swap at angle -45.
-- `games/scared-stiff.json#/coils/5._vbscript_callback`: scoop_topleft
-- `games/scared-stiff.json#/coils/5._inferred_type`: ball_management
-- `games/scared-stiff.json#/coils/5._note`: Kicks ball out of left scoop (sw37). KickBall with angle 0, vel 3, kvelz random 35-45, kzlift 50. Clears Controller.Switch(37).
-- `games/scared-stiff.json#/coils/6._vbscript_callback`: vpmSolSound SoundFX("Knocker_1",DOFKnocker),
-- `games/scared-stiff.json#/coils/6._inferred_type`: knocker
-- `games/scared-stiff.json#/coils/6._note`: Cabinet knocker solenoid. Sound-only callback.
-- `games/scared-stiff.json#/coils/7._vbscript_callback`: CratePostPower
-- `games/scared-stiff.json#/coils/7._inferred_type`: mechanism
-- `games/scared-stiff.json#/coils/7._note`: COMMENTED OUT in VBS: 'SolCallback(8) = "CratePostPower" — Not Required, just for initial power surge. See sol 16 CratePostHold for the active crate post solenoid.
-- `games/scared-stiff.json#/coils/8._vbscript_callback`: SolRelease
-- `games/scared-stiff.json#/coils/8._inferred_type`: ball_management
-- `games/scared-stiff.json#/coils/8._note`: Ejects ball from trough. PulseSw 31 then sw32.kick 60,9. Main trough release solenoid.
-- `games/scared-stiff.json#/coils/9._vbscript_callback`: SolLeftSling
-- `games/scared-stiff.json#/coils/9._inferred_type`: slingshot
-- `games/scared-stiff.json#/coils/9._note`: Left slingshot solenoid. Drives LeftSlingShot animation and Boogie Monster nudge (BoogLSlingNudge).
-- `games/scared-stiff.json#/coils/10._vbscript_callback`: SolRightSling
-- `games/scared-stiff.json#/coils/10._inferred_type`: slingshot
-- `games/scared-stiff.json#/coils/10._note`: Right slingshot solenoid. Drives RightSlingShot animation and Boogie Monster nudge (BoogRSlingNudge).
-- `games/scared-stiff.json#/coils/11._inferred_type`: bumper
-- `games/scared-stiff.json#/coils/11._note`: COMMENTED OUT: 'SolCallBack(12) = "Centre Jet" — Not Required. Bumper coil handled by VPX physics.
-- `games/scared-stiff.json#/coils/12._inferred_type`: bumper
-- `games/scared-stiff.json#/coils/12._note`: COMMENTED OUT: 'SolCallBack(13) = "Upper Jet" — Not Required. Bumper coil handled by VPX physics.
-- `games/scared-stiff.json#/coils/13._inferred_type`: bumper
-- `games/scared-stiff.json#/coils/13._note`: COMMENTED OUT: 'SolCallBack(14) = "Lower Jet" — Not Required. Bumper coil handled by VPX physics.
-- `games/scared-stiff.json#/coils/14._inferred_type`: slingshot
-- `games/scared-stiff.json#/coils/14._note`: COMMENTED OUT: 'SolCallBack(15) = "Upper Sling" — Not Required. Slingshot handled by VPX physics.
-- `games/scared-stiff.json#/coils/15._vbscript_callback`: CratePostHold
-- `games/scared-stiff.json#/coils/15._inferred_type`: mechanism
-- `games/scared-stiff.json#/coils/15._note`: Crate post hold solenoid. Crate_Pin.Collidable = Not Enabled. When energized, crate pin drops (not collidable), allowing ball passage. Sol 8 (CratePostPower) is commented out — this hold coil does all the work.
-- `games/scared-stiff.json#/coils/16._vbscript_callback`: SolFlash17
-- `games/scared-stiff.json#/coils/16._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/16._note`: SolModCallback PWM flasher. f17.state = level.
-- `games/scared-stiff.json#/coils/17._vbscript_callback`: SolFlash18
-- `games/scared-stiff.json#/coils/17._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/17._note`: SolModCallback PWM flasher. f18.state = level.
-- `games/scared-stiff.json#/coils/18._vbscript_callback`: SolFlash19
-- `games/scared-stiff.json#/coils/18._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/18._note`: SolModCallback PWM flasher. f19.state = level.
-- `games/scared-stiff.json#/coils/19._vbscript_callback`: SolFlash20
-- `games/scared-stiff.json#/coils/19._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/19._note`: SolModCallback PWM flasher. Drives f20.state AND f20a.state (two flasher objects).
-- `games/scared-stiff.json#/coils/20._vbscript_callback`: SolFlash21
-- `games/scared-stiff.json#/coils/20._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/20._note`: SolModCallback PWM flasher. f21.state = level.
-- `games/scared-stiff.json#/coils/21._vbscript_callback`: SolFlash22
-- `games/scared-stiff.json#/coils/21._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/21._note`: SolModCallback PWM flasher. f22.state = level.
-- `games/scared-stiff.json#/coils/22._vbscript_callback`: SolFlash23
-- `games/scared-stiff.json#/coils/22._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/22._note`: SolModCallback PWM flasher. Drives f23.state AND f23a.state (two flasher objects — inside boney skull).
-- `games/scared-stiff.json#/coils/23._vbscript_callback`: SolFlash24
-- `games/scared-stiff.json#/coils/23._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/23._note`: SolModCallback PWM flasher. f24.state = level.
-- `games/scared-stiff.json#/coils/24._vbscript_callback`: SolFlash25
-- `games/scared-stiff.json#/coils/24._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/24._note`: SolModCallback PWM flasher. f25.state = level.
-- `games/scared-stiff.json#/coils/25._vbscript_callback`: SolFlash26
-- `games/scared-stiff.json#/coils/25._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/25._note`: SolModCallback PWM flasher. f26.state = level.
-- `games/scared-stiff.json#/coils/26._vbscript_callback`: SolFlash27
-- `games/scared-stiff.json#/coils/26._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/26._note`: SolModCallback PWM flasher. f27.state = level.
-- `games/scared-stiff.json#/coils/27._vbscript_callback`: SolFlash28
-- `games/scared-stiff.json#/coils/27._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/27._note`: SolModCallback PWM flasher. f28.state = level.
-- `games/scared-stiff.json#/coils/28._vbscript_callback`: DiverterPower
-- `games/scared-stiff.json#/coils/28._inferred_type`: diverter
-- `games/scared-stiff.json#/coils/28._note`: Lock diverter power solenoid. LockFlipper.RotateToEnd on enable. Controls DiverterWall/DiverterWall001 drop states. Dual-solenoid design with sol 34 (DiverterHold). Both must be off for diverter to retract.
-- `games/scared-stiff.json#/coils/29._vbscript_callback`: DiverterHold
-- `games/scared-stiff.json#/coils/29._inferred_type`: diverter
-- `games/scared-stiff.json#/coils/29._note`: Lock diverter hold solenoid. Keeps diverter in position without full power. When disabled AND DiverterPower is off, LockFlipper.RotateToStart and walls reset. Dual-solenoid power/hold design.
-- `games/scared-stiff.json#/coils/30._vbscript_callback`: SolFlash35
-- `games/scared-stiff.json#/coils/30._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/30._note`: SolModCallback PWM flasher. f35.state = level.
-- `games/scared-stiff.json#/coils/31._vbscript_callback`: SolFlash36
-- `games/scared-stiff.json#/coils/31._inferred_type`: flasher
-- `games/scared-stiff.json#/coils/31._note`: SolModCallback PWM flasher. f36.state = level.
-- `games/scared-stiff.json#/coils/32._vbscript_callback`: cvpmMech (mSpider.Sol1 = 39)
-- `games/scared-stiff.json#/coils/32._inferred_type`: mechanism
-- `games/scared-stiff.json#/coils/32._note`: Spider wheel mechanism first solenoid. cvpmMech with vpmMechStepSol + vpmMechCircle + vpmMechLinear + vpmMechFast. 48 steps, length 200. Drives pSpider/pSpider2 rotation via UpdateSpider callback. Not in SolCallback — consumed by framework.
-- `games/scared-stiff.json#/coils/33._vbscript_callback`: cvpmMech (mSpider.Sol2 = 40)
-- `games/scared-stiff.json#/coils/33._inferred_type`: mechanism
-- `games/scared-stiff.json#/coils/33._note`: Spider wheel mechanism second solenoid. Part of dual-solenoid step motor (vpmMechStepSol). Works with sol 39 to control spider wheel position and direction.
-- `games/scared-stiff.json#/lamps/37._note`: Also has secondary VPX light l56a (separate lightmap group LM_L_l56a, secondary illumination zone for same lamp circuit).
-- `games/scared-stiff.json#/_source/confidence_notes`: High confidence extraction from VPW v1.1.1 VBScript. Platform detected as WPC from LoadVPM call ('WPC.VBS'). ROM name 'SS_15' from Const cGameName. Trough is a 4-ball manual implementation (not cvpmTrough) using kicker objects sw32-sw35 with Controller.Switch on/off and an UpdateTrough timer that cascades balls forward (sw32.BallCntOver check). Ball release via SolRelease (sol 9) which PulseSw 31 and kicks from sw32. Drain_Hit kicks ball back into trough with 500ms delay. No Lampz.MassAssign — uses UseLamps=1 with vpmMapLights AllLamps (VPX light timer interval maps lamp IDs). Lamp IDs extracted from VLM baked lightmap arrays (LM_L_l## references in commented BL_L_l## definitions). Flashers use SolModCallback with UseVPMModSol=2 for PWM control. Spider wheel mechanism uses cvpmMech (vpmMechStepSol + vpmMechCircle + vpmMechLinear + vpmMechFast, sol1=39, sol2=40, AddSw 12 at position 0, 48 steps, length 200). Coffin diverter is a dual-solenoid power/hold design (sol 33 DiverterPower, sol 34 DiverterHold) controlling LockFlipper VPX object and DiverterWall drop states. Coffin door (sol 5) controls CoffinFlipper. VUKs for sw36 (right scoop), sw37 (left scoop), sw41 (coffin popper) use manual KickBall with Controller.Switch tracking — no cvpmBallStack. Crate post hold (sol 16) controls Crate_Pin collidable state. Stand-up targets (sw28, sw61-66) use STHit which calls vpmTimer.PulseSw(switch mod 100). Slingshots use PulseSw (51 left, 52 right, 56 upper). Bumpers use PulseSw (53 upper, 54 centre, 55 lower). Flipper solenoids use WPC framework constants sLRFlipper/sLLFlipper. NoUpperRightFlipper and NoUpperLeftFlipper called. SolCallback(8) for CratePostPower is commented out. SolCallbacks 12-15 commented out (Centre Jet, Upper Jet, Lower Jet, Upper Sling — handled by VPX physics). Coffin trough sw41 has both a commented-out simple switch version AND a VUK implementation (sw41_Hit in ZVUK section). GI handled via UseVPMModSol=2 with VLM lightmap system (GIC and GIU arrays for GI strings).
+The retained script's own `ZBOO: Boogie Monsters` section names four small figures (`BM_LBoogie01`, `BM_LBoogie02`, `BM_RBoggie01`, `BM_RBoggie02`, near the lower inlanes) that wobble when the cabinet is nudged or a slingshot fires (`BoogUpdate`/`BoogNudge`/`BoogRandNudge`/`BoogLSlingNudge`/`BoogRSlingNudge`, driven from `NudgeAnim` and the slingshot-hit handlers). **There is no `Controller.Switch` or `SolCallback` binding anywhere in the file for any of the four Boogie figures** -- they are pure nudge-reactive physics props, not drop targets, and they have no reset solenoid because nothing about them is ever "down". The three standup targets actually wired to switches 61-63 are a separate, unrelated feature: printed "Three Bank Upper/Middle/Lower" on every manual page (locations, matrix, and wiring) and handled by the retained script's generic `STHit` standup routine, the same routine used for the leaper targets. The "Boogie Man Boogie" rules mode named in `ss.c`'s `spiderWheelText` array is a Spider Wheel bonus-item name, not evidence that either feature is a drop-target bank. The task brief that seeded this curation pass described "the Boogie Men drop targets"; that framing does not match any primary source and is not reproduced as fact here.
 
-## Unresolved questions
+## Other toys, kickers, and standard devices
 
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+Solenoid 2 (`LoopGate`) opens a one-way gate (`GateLoop.Open`) admitting a ball into the right loop while blocking return travel; there is no printed switch dedicated to it. Solenoid 3 (Right Popper, `scoop_right`) and solenoid 6 (Crate Kickout, `scoop_topleft`) each kick the ball resting on their own opto (36 and 37 respectively) with distinct launch parameters. Three standard SW-11A-37 jet bumpers (coils 12/13/14, skirt switches 53/54/55, `Bumper1_Hit`/`Bumper2_Hit`/`Bumper3_Hit`) and three slingshots -- left/right (coils 10/11, dual-switch SW-1A-114 kicker + SW-1A-120 score positions 51/52) plus an upper slingshot (coil 15, switch 56) -- are standard WPC devices; the retained script's `LeftSlingShot_Slingshot`/`RightSlingShot_Slingshot`/`TopSlingShot_Slingshot` handlers pulse the matching matrix addresses and fire the matching coils in the same event, and the left/right slingshot hits additionally nudge the Boogie figures.
+
+## Fliptronic column: flippers only, no repurposing
+
+Two FL-11629 flippers on Fliptronic circuits 111-114 (lower right/left, EOS then button). Unlike Monster Bash (one repurposed position) or Indiana Jones (four repurposed positions), **all four upper-flipper-adjacent positions (115-118) are genuinely blank** on Scared Stiff: the Switch Locations parts list prints a dash for both assembly and switch part number on every one of F5-F8, correcting the legacy-migrated record, which incorrectly modeled switches 116 and 118 as used "Upper Right/Left Flipper" positions.
+
+Switch 67 ("Left Ramp 10 Point" on the manual's Switch Locations page) carries a minor, disclosed naming disagreement: the retained script's own `sw67_Hit` inline comment calls it "Top Right Rubber Switch", and the object's own table geometry places it on the right half of the playfield (normalized x=0.629), both independently disagreeing with "Left". The manual's printed label is used as the primary label here (it is this project's naming authority for physical parts), with the disagreement disclosed in the device's own notes rather than silently dropped or promoted to a first-class conflict, since it does not affect address, polarity, or wiring.
+
+## Lamps, flashers, and general illumination
+
+All 64 lamp-matrix addresses are populated -- no "Not Used" position, unlike Monster Bash's 78. Sixteen "Web Award" lamps (64-68, 71-78, 81-83) are printed `*Located in backbox` on the Lamp Locations (continued) page; the retained table's own Light objects for those sixteen addresses sit at strongly negative normalized x (roughly -0.41 to -0.52 of the playfield width), independently corroborating the backbox placement from the geometry alone. Lamps 87 and 88 are the bulbs inside the illuminated Buy-In and Start buttons and are cabinet hardware. Four "Crate" eye lamps (31-34) sit on the A-21379 Crate LED PCB Assembly with no separate bulb-type entry on the Lamp Locations page.
+
+Flashers 17-28, 35, and 36 are all fitted; 17-19 print both a Playfield and a Backbox flashlamp part sharing one address, while every other flasher address prints Playfield-only. Two addresses drive two physical bulbs each and the retained script confirms it directly: solenoid 20 (Playfield Bolts) sets both `f20.state` and `f20a.state`, matching the manual's printed `(2)` quantity; solenoid 23 (Left Ramp Flasher) sets both `f23.state` and `f23a.state`. Four flasher addresses (21, 22, 25, 27 -- the "Skull"/"Orb" flashers) sit at normalized y between 0.0014 and 0.0015, within the near-zero band this project treats as a required manual check before trusting a placement; each is confirmed as the sole non-suffixed Light object at its address, printed Playfield-only (no Backbox pairing) on the manual, and physically plausible as a flasher dome mounted at the very top of the playfield near the Skull Lane switches/lamps, which independently cluster at a similarly low y. Kept as validated placements with this reasoning disclosed rather than excluded as a render-proxy artifact of the kind Monster Bash and Theatre of Magic both found at exactly y=0.000.
+
+General illumination is five strings, three dimmable (GI 0-2, Upper/Center/Lower Playfield, triac-driven per the manual's own Figure #1) and two always-on (GI 3-4, backbox Illum Strings 4/5, diode-bridge only per Figure #2) -- the manual's printed footnote and its General Illumination Circuit page agree with each other, and the retained script's `GIUpdates2` independently comments GI 3/4 "(Backbox)". **Zero conflict** on GI classification, unlike Tales of the Arabian Nights or Theatre of Magic. GI 0-2 emitter positions and quantities (17/8/12 bulbs) come directly from the retained table's own `GI_Upper`/`GI_Mid`/`GI_Lower` collections, matching `GIUpdates2`'s dispatch exactly.
+
+## Unresolved: sixteen auxiliary lamp addresses (`conflict.aux-lamp-column-fitment`)
+
+`ssGameData` declares `hw.lampCol = 2`, publishing public lamp addresses 91-98 and 101-108 through a pair of HC4094 shift registers that `ss.c`'s own `ss_wpc_w` handler clocks from solenoids 37/38. The driver's own source comment calls the matching board "a 16 LED Skull driver board assembly A-20781" belonging only to a "Prototype 0.1" that "was not kept in production build" -- but the retained **production** manual (16-50048-101, September 1996, 1.5 ROM) still prints solenoids 37/38 wired with real connectors and wire colors, not "NOT USED", and its Lower Playfield Parts page still lists an `A-21287-1 16-LED Skull Driver PCB Assy.` with no not-shown or deleted annotation. Neither source wins by fiat: the driver comment is not self-verifying (the same lesson Star Trek: The Next Generation's stale `CORE_CUSTSWNO`/`CORE_CUSTSOLNO` comments already established), but the retained known-working VPX table implements **no** Light object at any of the sixteen addresses (confirmed by an exhaustive name sweep), and the sixteen-lamp "Web Award" ring the board's own name suggests is already fully and exactly accounted for on the ordinary matrix. This keeps the record `partial`; resolving it needs a LibPinMAME harness trace against a legal `ss_15` ROM or an unrestored machine's own J110 harness inspection.
+
+## Author construction checklist
+
+- Build the four-ball trough with the drain at Trough Ball 4, the auto-plunger shooter lane, three slingshots, three jet bumpers, the Loop Gate, the Crate ball-lock/kickout (door wobble + post + kickout, **not** a motor), the Coffin three-ball lock with its door and Left Diverter, and the backbox Spider Wheel with its sixteen Web Award lamps.
+- Do not build a "Boogie Men drop-target bank" -- the four Boogie figures are cosmetic nudge props with no switch or solenoid of their own, and the real standup-target bank (61-63) is unrelated and already named "Three Bank" on every source.
+- Preserve opto polarity for the seventeen addresses PinMAME's mask normalizes (12, 31-38, 41-48); do not invert what is already normalized, and do not assume any other address is an opto absent the manual's `(LED)`/`(Trans.)` construction disclosure.
+- Treat LPDC outputs 37-40 and their PinMAME mirrors 41-44 as four physical drive lines (two aux-lamp shift-register signals, two Spider Wheel motor phases), not eight devices.
+- Bind every dedicated switch 1-8, every matrix position 11-88 (fitted except the printed Not Used positions 11, 15, 21, 75-78, and 81-88), Fliptronic 111-118 with 115-118 explicitly not installed, the eight CPU DIP bits, solenoids 1-50, lamps 11-88, GI 0-4, and the 128x32 DMD.
+- Leave lamp addresses 91-98 and 101-108 unresolved rather than inventing sixteen fitted or sixteen unfitted bulbs; this is the one open authoring-critical question left by this evidence set.
 
 ## Sources
 
-- `legacy.game.scared-stiff`: `games/scared-stiff.json` at the pinned migration revision.
+- `manual.bally.scared-stiff.1996`: Bally/Midway Scared Stiff operations manual, SHA-256 `f96109c68c7e0cc008f72e9be9f18405a216d5c40165aed130f1e87b65c44b09`.
+- `manual-support.bally.scared-stiff.1996`: retained human transcription, SHA-256 `493e070b4244cefd99acf907103a758d70bc9e55d5605fea412f9e7ed0696537`.
+- `vpx-script.ss-vpw-1-0`: retained known-working VPW v1.0 embedded script, SHA-256 `4c9a63e77e10ea65d1146e33f81197bb41b719d70027d8fa0c2d258f823211b4`, binding `SS_15`.
+- `vpx-table.ss-vpw-1-0`: retained table, SHA-256 `bede6f6c5b7592c4610af444a196c42432949468f708e79b4b112a73692cdc1e`, bounds `left=0 top=0 right=952.941 bottom=2164.706`.
+- `pinmame.core.4ec52ff0ac13`: `src/wpc/sims/wpc/full/ss.c` and the WPC-95 core/solenoid/flipper handling at the pinned revision.
