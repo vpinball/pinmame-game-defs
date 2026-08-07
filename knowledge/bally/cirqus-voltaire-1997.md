@@ -1,285 +1,90 @@
-# Cirqus Voltaire
+# Cirqus Voltaire (Bally, 1997)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+Coverage: **partial - complete physical I/O inventory, WPC-95 bindings, mechanism causality, driver-variant boundary, normalized spatial placement, and recreation behavior validated; wiring conflicted pending resolution of the "WOW"/Top target opto polarity conflict (switches 37/38) below, plus an unresolved internal manual disagreement about the two backbox GI strings' own numbering**
 
-## Overview
+## Identity and evidence precedence
 
-Legacy evidence identifies this candidate as Bally (1997). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+This is the Bally WPC-95 physical product released 1997. It covers the `cv_*` clone tree: `cv_14` (catalog parent, 1.4), `cv_10`, `cv_11`, `cv_13` (earlier firmware), `cv_20h`/`cv_20hc` (later "Home"/"Home, Coin Play" firmware), and `cv_d52` (prototype, undumped sound ROMs). Every one of these is a game-ROM revision for the same physical machine; `cvGameData` is the one static struct all seven share.
 
-## Playfield devices
+Evidence precedence for this definition: the retained known-working VPW Mod v1.0 script is runtime and mechanism-causality ground truth; the Bally operations manual controls physical construction, part numbers, wiring, polarity, quantities, and device presence; pinned PinMAME controls controller generation, public address topology, and mechanism-table hints; the retained VPX geometry supplies normalized coordinates. Unlike several other WPC-95 games curated in this project, Cirqus Voltaire's driver source (`src/wpc/sims/wpc/prelim/cv.c`) is explicitly a **preliminary** simulator whose own `cv_ringMech` mechanism table models the Ringmaster over a different position range and a different solenoid alias than the retained script and manual agree on; see "The Ringmaster mechanism" below for how that disagreement is resolved by evidence priority rather than silently averaged.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+## Controller platform and address topology
 
-## Custom mechanisms
+`GEN_WPC95` (`PINMAME_HARDWARE_GEN_WPC95 = 0x80`) with `wpc_dispDMD`. The controller profile is `pinmame.wpc-95`, reused unchanged (confirmed directly from `cvGameData`'s own field, not assumed from the machine's release year).
 
-- `mechanism.ringmaster-pop-up-head`: Ringmaster Pop-Up Head Linear motor raises/lowers Ringmaster head. Sol 22 enables motor, Sol 39 controls direction. Callback UpdateRM moves ringmaster.z and collision walls based on position. [source: legacy.game.cv]
-- `mechanism.left-loop-magnet`: Left Loop Magnet [source: legacy.game.cv]
-- `mechanism.ramp-lock-magnet`: Ramp Lock Magnet [source: legacy.game.cv]
-- `mechanism.ringmaster-magnet`: Ringmaster Magnet Grabs ball at Ringmaster head; custom kick logic on release via SolRingmasterMagnet sub [source: legacy.game.cv]
-- `mechanism.spin-magnet`: Spin Magnet No solenoid assigned; used for wobble/shake physics on ringmaster head [source: legacy.game.cv]
-- `mechanism.ramp-ball-lock-3-ball`: Ramp Ball Lock (3 ball) 3-ball virtual lock on upper ramp; released by Lock Post solenoid (16) [source: legacy.game.cv]
-- `mechanism.ball-trough-4-ball`: Ball Trough (4 ball) [source: legacy.game.cv]
-- `mechanism.popper-subway-eject`: Popper (Subway Eject) [source: legacy.game.cv]
-- `mechanism.backbox-prize-wheel-bell-spinner`: Backbox Prize Wheel / Bell Spinner Custom physics simulation; ball launched by Backbox Kicker (sol 2) interacts with spinning disc. Disc has 5 spinner balls for collision detection. Bell at sw11. [source: legacy.game.cv]
+- Switches: dedicated coin-door 1-8, matrix 11-88 as drive column then return row, Fliptronic 111-118. `cvGameData`'s inverted-switch mask `{0x00,0x00,0x00,0x3f,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}` inverts only column 3 bits 0-5 (31-36), but the printed switch matrix (2-49) shades the **entire** column 3 -- all eight rows, 31 through 38 -- "OPTO, TYPICALLY CLOSED". The mask's bits 6-7 (37, 38) are clear; see the unresolved polarity conflict below.
+- Solenoids: physical drivers 1-16; flashers 17-21, 23-28 (22 shares the flasher address block but is a motor-enable line, not a flashlamp); Fliptronic upper-flipper-slot circuits 33-36 (all four repurposed to non-flipper devices -- Popper, Diverter Hold, Ringmaster Magnet, Upper Post -- since this machine has no upper flippers); WPC-95 LPDC motor-circuit output 37 (Neon) and 39 (Motor Direction), with PinMAME's backward-compatibility mirror of 39 at 43; 38 is unfitted and 40 (Eddy Board) is a Low Power motor-circuit entry, not itself an LPDC output; Fliptronic lower-flipper circuits 45-48; PinMAME state channels 29-32; two driver-declared custom solenoids 51/52 (`hw.custSol = 2`); simulator-only 49 and reserved 50.
+- Lamps: 8x8 matrix 11-88, all addresses populated (88, Start Button, is a real bulb the retained table simply does not render -- see "Lamps, flashers, and general illumination").
+- GI: five strings on public addresses 0-4, only 0-2 driven by the retained script.
 
-## Ball-state transitions
+Two WPC-95 numbering facts must not be lost. First, the printed solenoid table numbers the lower-flipper circuits 29-32, while PinMAME publishes the same circuits at 45-48 (a +16 offset, `CORE_FIRSTLFLIPSOL = 45`); the manual numbers are preserved as `manual.address` aliases. Second, the printed upper-flipper-slot circuits 33-36 equal their public address unchanged (`CORE_FIRSTUFLIPSOL = 33`) but are all four repurposed -- Cirqus Voltaire has no upper flippers, matching `cvGameData`'s `FLIP_SOL(FLIP_L)` (lower flippers only; `FLIP_SW(FLIP_L|FLIP_U)` still tells WPC-95 to read the whole eight-position Fliptronic switch column, which is a separate fact from whether upper *coils* exist).
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+## The Ringmaster mechanism
 
-## Controller interactions
+A DC gearmotor (A-21953 Ring Master Assembly, drive part A-15680) raises and lowers the Ringmaster figure. The retained script's `cvpmMech` class (`mechRM`) configures it with `Sol1 = 22` (motor pulse), `Sol2 = 39` (direction), a 0-118 position counter (`Length = 960`, `Steps = 118`), and three switch bands: `AddSw 44, 0, 1` (Ringmaster Down, retracted, `Ringmaster.z = -310`), `AddSw 43, 88, 89` (Ringmaster Middle), and `AddSw 42, 117, 118` (Ringmaster Up, near the playfield surface, `Ringmaster.z = -56`). `Sub UpdateRM` steps a chain of 22 collision-wall objects (`RMWall0`..`RMWall255`) as the head rises, so a ball can only strike it while it protrudes, and enables switch 16 (Top Eddy, the A-20036 "Magic Eddy Coil PCB") only while the head is out of its home position (`RMCurrPos > 4 and RMCurrPos < 100`). A separate collision object, `RMHitWallSMall`, becomes collidable once `RMCurrPos > 17` and its `RMHit_Hit` handler pulses switch 38 (Top Targets) -- so switch 38 registers hits on the raised Ringmaster figure as well as its own two printed standup targets (see "'WOW' and Top target banks" below).
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+Pinned PinMAME's own preliminary `cv_ringMech` table (`src/wpc/sims/wpc/prelim/cv.c`) models the same three switches differently: a shorter 0-127 range, a different position-to-switch ordering (`{42,0,4},{43,33,38},{44,123,127}`), and `sol2 = 43` rather than 39. That last difference is not a real disagreement: PinMAME's `core_getSol` duplicates WPC-95 LPDC outputs 37-40 at mirror addresses 41-44 (`solNo` 41-44 read back at `solNo - 4`), so public address 43 mirrors public address 39 -- both name the identical physical drive line, and this manual's own "MOTOR DIRECTION" label for solenoid 39 confirms it directly. The retained known-working script and this manual are treated as authoritative for the mechanism's runtime position-to-switch mapping over the preliminary driver's own scaffolding, consistent with the project's evidence-priority policy (known-working script for runtime semantics; pinned PinMAME source is a supporting reference, not an override, when its own file header reads `*** PRELIMINARY ***`).
 
-## Service and setup information
+Solenoid 35 (Ringmaster Magnet) energizes a magnet at the head that catches a ball in flight; on release the retained script computes a randomized kick angle and velocity and fires the ball off the magnet after a scripted delay, rather than a plain drop. Service Bulletin 102 (1997-12-09) documents a factory lubrication procedure for "the Ringmaster Cam & Switch Assembly on the back of the Ringmaster bracket", independently confirming the mechanism is cam-and-switch driven.
 
-Unknown; locate operator/service documentation.
+## Ball path, trough, and popper
 
-## Timing and tuning observations
+Cirqus Voltaire has an auto-plunger, not a manual plunger: solenoid 1 launches a ball resting on shooter-lane switch 18. Four balls rest on trough optos 32-35, tracked by the retained script's `cvpmBallStack` class (`bsTrough`); solenoid 9 ejects the ball at the head of the trough and pulses trough-eject opto 31 in the same event (`SolRelease`: `vpmTimer.PulseSw 31`), so switch 31 is a documented projection onto the trough's own exit kicker (`BallRelease`) rather than a separately placed object, matching switches 32-35. A ball resting on opto 36 (Popper Opto) is kicked back to the playfield by solenoid 33 (Popper), printed on the upper-flipper Fliptronic slot rather than the standard 1-16 solenoid range.
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+Trough optos 31-36 are printed optos that rest closed and PinMAME's `cvGameData` inverted-switch mask covers exactly those six: assert the public switch when a ball is present and never invert again.
 
-## Recreation guidance
+## "WOW" and Top target banks: recorded opto polarity conflict
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+Two target banks share one electrical address each: three standup targets (assembly A-21960-6, retained table objects `T37a`/`T37b`/`T37c`) on switch 37 ("WOW" Targets), and two standup targets (assembly A-18530-6, `T38a`/`T38b`) on switch 38 (Top Targets, which additionally registers Ringmaster hits -- see above). Both are printed with no separate switch part number, the same signature pattern as the trough optos, and both are shaded "OPTO, TYPICALLY CLOSED" on the printed switch matrix -- the shading covers the whole column 3, all eight rows, not just 31-36.
 
-## Evidence notes
+**Unresolved polarity conflict (`conflict.wow-top-targets-opto-not-normalized`):** `cvGameData`'s inverted-switch mask (`{0x00,0x00,0x00,0x3f,0x00,...}`) covers only bits 0-5 of column 3 (31-36); bits 6-7 (37, 38) are clear. Unlike Williams Monster Bash's Dracula-position conflict, there is no mechanism table on the PinMAME side asserting an opposite sense for these two addresses -- the mask is simply silent on them -- so this conflict is narrower in scope but no less unresolved. Resolving it needs a LibPinMAME harness trace of a legal `cv_20h` or `cv_14` ROM observing the idle public state of 37/38 and their transitions when a target is hit.
 
-- `platforms/wpc.json#/coils/1`: Unbound legacy outputs record `c_flipper_lower_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/2`: Unbound legacy outputs record `c_flipper_lower_left` was retained as a migration note only.
-- `platforms/wpc.json#/coils/3`: Unbound legacy outputs record `c_flipper_upper_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/4`: Unbound legacy outputs record `c_flipper_upper_left` was retained as a migration note only.
-- `games/cv.json#/switches/0._vbscript_name`: sw11
-- `games/cv.json#/switches/0._note`: Rollover switch; also pulsed via vpmTimer from EndCannon sub for bell ring
-- `games/cv.json#/switches/1._vbscript_name`: sw12
-- `games/cv.json#/switches/2._vbscript_name`: keyFront
-- `games/cv.json#/switches/3._note`: vpmNudge.TiltSwitch = 14
-- `games/cv.json#/switches/4._vbscript_name`: sw15
-- `games/cv.json#/switches/5._vbscript_name`: sw16
-- `games/cv.json#/switches/5._note`: Timed switch with Eddy_timer to auto-release; enabled when RMCurrPos > 4 and < 100
-- `games/cv.json#/switches/6._vbscript_name`: sw17
-- `games/cv.json#/switches/7._vbscript_name`: sw18
-- `games/cv.json#/switches/7._note`: Sets BIPL (Ball In Plunger Lane) flag
-- `games/cv.json#/switches/9._note`: Initialized to 1 at start; toggled for motor bug fix
-- `games/cv.json#/switches/10._vbscript_name`: sw23
-- `games/cv.json#/switches/11._note`: Set to 0 at init (.Switch(24) = 0)
-- `games/cv.json#/switches/12._vbscript_name`: sw25
-- `games/cv.json#/switches/13._vbscript_name`: sw26
-- `games/cv.json#/switches/14._vbscript_name`: sw27
-- `games/cv.json#/switches/15._vbscript_name`: sw28
-- `games/cv.json#/switches/16._note`: Pulsed by SolRelease sub via vpmTimer.PulseSw 31
-- `games/cv.json#/switches/17._note`: bsTrough.InitSw 0, 32, 33, 34, 35, 0, 0, 0
-- `games/cv.json#/switches/21._vbscript_name`: sw36
-- `games/cv.json#/switches/21._note`: Popper.InitSw 0, 36, 0, 0, 0, 0, 0, 0; subway entrance
-- `games/cv.json#/switches/22._vbscript_name`: T37a, T37b, T37c
-- `games/cv.json#/switches/22._note`: Three physical targets all pulse switch 37
-- `games/cv.json#/switches/23._vbscript_name`: T38a, T38b
-- `games/cv.json#/switches/23._note`: Two physical targets pulse switch 38; also RMHit_Hit pulses 38
-- `games/cv.json#/switches/24._vbscript_name`: T41
-- `games/cv.json#/switches/25._note`: mechRM.AddSw 42, 117, 118 (top position opto)
-- `games/cv.json#/switches/26._note`: mechRM.AddSw 43, 88, 89 (middle position opto)
-- `games/cv.json#/switches/27._note`: mechRM.AddSw 44, 0, 1 (bottom/home position opto)
-- `games/cv.json#/switches/28._vbscript_name`: sw45
-- `games/cv.json#/switches/29._vbscript_name`: sw46
-- `games/cv.json#/switches/29._note`: Pulsed via vpmTimer.PulseSw 46
-- `games/cv.json#/switches/30._vbscript_name`: sw47
-- `games/cv.json#/switches/30._note`: Pulsed via vpmTimer.PulseSw 47
-- `games/cv.json#/switches/31._vbscript_name`: sw48
-- `games/cv.json#/switches/32._note`: LeftSlingShot_Slingshot pulses sw 51
-- `games/cv.json#/switches/33._note`: RightSlingShot_Slingshot pulses sw 52
-- `games/cv.json#/switches/34._vbscript_name`: UpperJetBumper
-- `games/cv.json#/switches/35._vbscript_name`: MiddleJetBumper
-- `games/cv.json#/switches/35._note`: Disappearing jet bumper; raised/lowered by sol 7/8
-- `games/cv.json#/switches/36._vbscript_name`: LowerJetBumper
-- `games/cv.json#/switches/37._vbscript_name`: T56
-- `games/cv.json#/switches/38._vbscript_name`: sw57
-- `games/cv.json#/switches/39._vbscript_name`: T58
-- `games/cv.json#/switches/40._vbscript_name`: T61
-- `games/cv.json#/switches/41._vbscript_name`: T62
-- `games/cv.json#/switches/42._vbscript_name`: sw63
-- `games/cv.json#/switches/43._vbscript_name`: sw64
-- `games/cv.json#/switches/44._vbscript_name`: sw65
-- `games/cv.json#/switches/45._vbscript_name`: sw66
-- `games/cv.json#/switches/45._note`: vlLock.InitVLock Array(sw66, sw67, sw68)
-- `games/cv.json#/switches/46._vbscript_name`: sw67
-- `games/cv.json#/switches/47._vbscript_name`: sw68
-- `games/cv.json#/switches/48._vbscript_name`: sw71
-- `games/cv.json#/switches/48._note`: LeftSaucer.InitSaucer sw71, 71, 45, 10
-- `games/cv.json#/switches/49._vbscript_name`: sw72
-- `games/cv.json#/switches/49._note`: RightSaucer.InitSaucer sw72, 72, 140, 6
-- `games/cv.json#/switches/50._vbscript_name`: sw74
-- `games/cv.json#/switches/50._note`: Pulsed via vpmTimer.PulseSw 74
-- `games/cv.json#/switches/51._vbscript_name`: sw75
-- `games/cv.json#/switches/52._vbscript_name`: sw76
-- `games/cv.json#/switches/53._vbscript_name`: sw115spinner
-- `games/cv.json#/switches/53._note`: Dedicated opto; pulses on each spin
-- `games/cv.json#/switches/54._vbscript_name`: sw117spinner
-- `games/cv.json#/switches/54._note`: Dedicated opto; pulses on each spin
-- `games/cv.json#/coils/0._vbscript_callback`: SolCallback(1) = "AutoPlunger"
-- `games/cv.json#/coils/1._vbscript_callback`: SolCallback(2) = "BackBoxKick"
-- `games/cv.json#/coils/1._note`: Fires plunger2 to send ball to backbox spinner/bell mechanism
-- `games/cv.json#/coils/2._vbscript_callback`: Commented out in script; handled by cvpmMagnet LoopMagnet.Solenoid = 3
-- `games/cv.json#/coils/2._note`: cvpmMagnet with GrabCenter=True, Size=200
-- `games/cv.json#/coils/3._note`: Not wired in VPX script (handled by VPX bumper object); listed in manual
-- `games/cv.json#/coils/4._vbscript_callback`: Commented out in script; handled by cvpmMagnet LockMagnet.Solenoid = 5
-- `games/cv.json#/coils/4._note`: cvpmMagnet with GrabCenter=True, Size=200
-- `games/cv.json#/coils/5._note`: Listed in manual; not directly wired in VPX script (see sol 34 for DiverterHold)
-- `games/cv.json#/coils/6._vbscript_callback`: SolCallback(7) = "JetUp"
-- `games/cv.json#/coils/6._note`: Raises disappearing middle jet bumper
-- `games/cv.json#/coils/7._vbscript_callback`: SolCallBack(8) = "JetRelease"
-- `games/cv.json#/coils/7._note`: Lowers disappearing middle jet bumper
-- `games/cv.json#/coils/8._vbscript_callback`: SolCallBack(9) = "SolRelease"
-- `games/cv.json#/coils/8._note`: Pulses sw 31 and calls bsTrough.ExitSol_On
-- `games/cv.json#/coils/9._note`: Physical slingshot coil; not explicitly wired in VPX (handled by VPX slingshot object)
-- `games/cv.json#/coils/10._note`: Physical slingshot coil; not explicitly wired in VPX (handled by VPX slingshot object)
-- `games/cv.json#/coils/11._note`: Physical bumper coil; not explicitly wired in VPX (handled by VPX bumper object)
-- `games/cv.json#/coils/12._note`: Physical bumper coil; not explicitly wired in VPX (handled by VPX bumper object)
-- `games/cv.json#/coils/13._vbscript_callback`: SolCallBack(14) = "LeftSaucer.SolOut"
-- `games/cv.json#/coils/13._note`: Kicks ball from left saucer at angle 45, force 10
-- `games/cv.json#/coils/14._vbscript_callback`: SolCallBack(15) = "RightSaucer.SolOut"
-- `games/cv.json#/coils/14._note`: Kicks ball from right saucer at angle 140, force 6
-- `games/cv.json#/coils/15._vbscript_callback`: SolCallBack(16) = "LockPost"
-- `games/cv.json#/coils/15._note`: Controls ball lock post for multiball; releases vlLock
-- `games/cv.json#/coils/16._vbscript_callback`: SolModCallBack(17) = "Flash117"
-- `games/cv.json#/coils/16._note`: PWM flasher; drives f117, f117b
-- `games/cv.json#/coils/17._vbscript_callback`: SolModCallBack(18) = "Flash118"
-- `games/cv.json#/coils/17._note`: PWM flasher; drives l118
-- `games/cv.json#/coils/18._vbscript_callback`: SolModCallBack(19) = "Flash119"
-- `games/cv.json#/coils/18._note`: PWM flasher; drives l119
-- `games/cv.json#/coils/19._vbscript_callback`: SolModCallBack(20) = "Flash120"
-- `games/cv.json#/coils/19._note`: PWM flasher; drives l120
-- `games/cv.json#/coils/20._vbscript_callback`: SolModCallBack(21) = "Flash121"
-- `games/cv.json#/coils/20._note`: PWM flasher; drives l121 and Flupper dome FlasherFlash1
-- `games/cv.json#/coils/21._vbscript_callback`: SolCallBack(22) = "MotorEnable"
-- `games/cv.json#/coils/21._note`: Enables ringmaster motor; plays motor sound. Also mechRM.Sol1 = 22
-- `games/cv.json#/coils/22._vbscript_callback`: SolModCallBack(23) = "Flash123"
-- `games/cv.json#/coils/22._note`: PWM flasher; drives f123
-- `games/cv.json#/coils/23._vbscript_callback`: SolModCallBack(24) = "Flash124"
-- `games/cv.json#/coils/23._note`: PWM flasher; drives l124 and Flupper dome FlasherFlash2
-- `games/cv.json#/coils/24._vbscript_callback`: SolModCallBack(25) = "Flash125"
-- `games/cv.json#/coils/24._note`: PWM flasher; drives Flupper dome FlasherFlash3
-- `games/cv.json#/coils/25._vbscript_callback`: SolModCallBack(26) = "Flash126"
-- `games/cv.json#/coils/25._note`: PWM flasher; drives l126 and Flupper dome FlasherFlash4
-- `games/cv.json#/coils/26._vbscript_callback`: SolModCallBack(27) = "Flash127"
-- `games/cv.json#/coils/26._note`: PWM flasher; drives l127, f127, f127a; changes Ringmaster texture based on state
-- `games/cv.json#/coils/27._vbscript_callback`: SolModCallBack(28) = "Flash128"
-- `games/cv.json#/coils/27._note`: PWM flasher; drives f128, f128b
-- `games/cv.json#/coils/28._vbscript_callback`: SolCallBack(33) = "SolPopper"
-- `games/cv.json#/coils/28._note`: Kicks ball from popper (subway) at angle 284, force 26
-- `games/cv.json#/coils/29._vbscript_callback`: SolCallback(34) = "DiverterHold"
-- `games/cv.json#/coils/29._note`: Holds diverter open to direct ball to right orbit
-- `games/cv.json#/coils/30._vbscript_callback`: SolCallBack(35) = "SolRingmasterMagnet"
-- `games/cv.json#/coils/30._note`: Grabs/releases ball at ringmaster head; cvpmMagnet with GrabCenter=0, Size=100
-- `games/cv.json#/coils/31._vbscript_callback`: SolCallback(36) = "UpperPost"
-- `games/cv.json#/coils/31._note`: Raises/lowers upper post wall
-- `games/cv.json#/coils/32._vbscript_callback`: SolModCallBack(37) = "Flash137"
-- `games/cv.json#/coils/32._note`: PWM; controls UV/neon lighting that changes playfield textures to blue
-- `games/cv.json#/coils/33._note`: mechRM.Sol2 = 39; controls direction of ringmaster motor
-- `games/cv.json#/coils/34._vbscript_callback`: SolCallback(sLRFlipper) = "SolRFlipper"
-- `games/cv.json#/coils/34._note`: WPC framework constant sLRFlipper = 46
-- `games/cv.json#/coils/35._vbscript_callback`: SolCallback(sLLFlipper) = "SolLFlipper"
-- `games/cv.json#/coils/35._note`: WPC framework constant sLLFlipper = 48
-- `games/cv.json#/lamps/0._vbscript_name`: l11, l11b
-- `games/cv.json#/lamps/1._vbscript_name`: l12, l12b
-- `games/cv.json#/lamps/2._vbscript_name`: l13, l13b
-- `games/cv.json#/lamps/3._vbscript_name`: l14, l14b
-- `games/cv.json#/lamps/4._vbscript_name`: l15, l15b
-- `games/cv.json#/lamps/5._vbscript_name`: l16, l16b
-- `games/cv.json#/lamps/6._vbscript_name`: l17, l17b
-- `games/cv.json#/lamps/7._vbscript_name`: l18, l18b
-- `games/cv.json#/lamps/8._vbscript_name`: l21, l21b
-- `games/cv.json#/lamps/9._vbscript_name`: l22, l22b
-- `games/cv.json#/lamps/10._vbscript_name`: l23, l23b
-- `games/cv.json#/lamps/11._vbscript_name`: l24, l24b
-- `games/cv.json#/lamps/12._vbscript_name`: l25, l25b
-- `games/cv.json#/lamps/13._vbscript_name`: l26, l26b
-- `games/cv.json#/lamps/14._vbscript_name`: l27, l27b
-- `games/cv.json#/lamps/15._vbscript_name`: l28, l28b
-- `games/cv.json#/lamps/16._vbscript_name`: l31, l31b
-- `games/cv.json#/lamps/17._vbscript_name`: l32, l32b
-- `games/cv.json#/lamps/18._vbscript_name`: l33, l33b
-- `games/cv.json#/lamps/19._vbscript_name`: l34, l34b
-- `games/cv.json#/lamps/20._vbscript_name`: l35, l35b
-- `games/cv.json#/lamps/21._vbscript_name`: l36, l36b
-- `games/cv.json#/lamps/22._vbscript_name`: l37, l37b
-- `games/cv.json#/lamps/23._vbscript_name`: l38, l38b
-- `games/cv.json#/lamps/24._vbscript_name`: l41, l41b
-- `games/cv.json#/lamps/25._vbscript_name`: l42, l42b
-- `games/cv.json#/lamps/26._vbscript_name`: l43, l43b
-- `games/cv.json#/lamps/27._vbscript_name`: l44, l44b
-- `games/cv.json#/lamps/28._vbscript_name`: l45, l45b
-- `games/cv.json#/lamps/29._vbscript_name`: l46, l46b
-- `games/cv.json#/lamps/30._vbscript_name`: l47, l47b
-- `games/cv.json#/lamps/31._vbscript_name`: l48, l48b
-- `games/cv.json#/lamps/32._vbscript_name`: l51, l51b
-- `games/cv.json#/lamps/33._vbscript_name`: l52, l52b
-- `games/cv.json#/lamps/34._vbscript_name`: l53, l53b
-- `games/cv.json#/lamps/35._vbscript_name`: l54, l54b
-- `games/cv.json#/lamps/36._vbscript_name`: l55, l55b
-- `games/cv.json#/lamps/37._vbscript_name`: l56, l56b
-- `games/cv.json#/lamps/38._vbscript_name`: l57, l57b
-- `games/cv.json#/lamps/39._vbscript_name`: l58, l58b
-- `games/cv.json#/lamps/40._vbscript_name`: l61, l61b
-- `games/cv.json#/lamps/41._vbscript_name`: l62, l62b
-- `games/cv.json#/lamps/42._vbscript_name`: l63, l63b
-- `games/cv.json#/lamps/43._vbscript_name`: l64, l64b
-- `games/cv.json#/lamps/44._vbscript_name`: l65, l65b
-- `games/cv.json#/lamps/45._vbscript_name`: l66, l66b
-- `games/cv.json#/lamps/46._vbscript_name`: l67, l67b
-- `games/cv.json#/lamps/47._vbscript_name`: l68, l68b
-- `games/cv.json#/lamps/48._vbscript_name`: l71, l71b
-- `games/cv.json#/lamps/49._vbscript_name`: l72, l72b
-- `games/cv.json#/lamps/50._vbscript_name`: l73, l73b
-- `games/cv.json#/lamps/51._vbscript_name`: l74, l74b
-- `games/cv.json#/lamps/52._vbscript_name`: l75, l75b
-- `games/cv.json#/lamps/53._vbscript_name`: l76, l76b
-- `games/cv.json#/lamps/54._vbscript_name`: l77, l77b
-- `games/cv.json#/lamps/54._note`: Also controls Volt4 primitive via DisableLightingm and imgswapm
-- `games/cv.json#/lamps/55._vbscript_name`: l78, l78b
-- `games/cv.json#/lamps/56._vbscript_name`: l81, l81b
-- `games/cv.json#/lamps/57._vbscript_name`: l82, l82b
-- `games/cv.json#/lamps/58._vbscript_name`: l83
-- `games/cv.json#/lamps/58._note`: Also swaps plastic_boombumper image via NFadeObjm
-- `games/cv.json#/lamps/59._vbscript_name`: l84, l84b
-- `games/cv.json#/lamps/60._vbscript_name`: l85, l85b
-- `games/cv.json#/lamps/60._note`: Also controls Volt3 primitive via DisableLightingm and imgswapm
-- `games/cv.json#/lamps/61._vbscript_name`: l86, l86b
-- `games/cv.json#/lamps/61._note`: Also controls Volt1 primitive via DisableLightingm and imgswapm
-- `games/cv.json#/lamps/62._vbscript_name`: l87, l87b
-- `games/cv.json#/lamps/62._note`: Also controls Volt2 primitive via DisableLightingm and imgswapm
-- `games/cv.json#/gi/0._vbscript_callback`: UpdateGI case 0
-- `games/cv.json#/gi/0._note`: Controls Gi_Pf_Right_01 lights and Gi_Pf_Right_Plastics materials
-- `games/cv.json#/gi/1._vbscript_callback`: UpdateGI case 1
-- `games/cv.json#/gi/1._note`: Controls Gi_Pf_Middle_02 lights, Gi_Pf_Center_Plastics, MetalGroup_Center; toggles Ringmaster on/off texture
-- `games/cv.json#/gi/2._vbscript_callback`: UpdateGI case 2
-- `games/cv.json#/gi/2._note`: Controls Gi_Pf_Left_03 lights and Gi_Pf_Left_Plastics materials
-- `games/cv.json#/mechanisms/0._vbscript_class`: cvpmMech
-- `games/cv.json#/mechanisms/0._config`: {"length": 960, "mtype": "vpmMechLinear + vpmMechFast + vpmMechReverse + vpmMechOneDirSol", "sol1": 22, "sol2": 39, "steps": 118, "switches": [{"description": "Ringmaster Down (home)", "end": 1, "start": 0, "sw": 44}, {"description": "Ringmaster Middle", "end": 89, "start": 88, "sw": 43}, {"description": "Ringmaster Up (fully raised)", "end": 118, "start": 117, "sw": 42}]}
-- `games/cv.json#/mechanisms/0._note`: Linear motor raises/lowers Ringmaster head. Sol 22 enables motor, Sol 39 controls direction. Callback UpdateRM moves ringmaster.z and collision walls based on position.
-- `games/cv.json#/mechanisms/1._vbscript_class`: cvpmMagnet
-- `games/cv.json#/mechanisms/1._config`: {"grab_center": true, "size": 200, "solenoid": 3}
-- `games/cv.json#/mechanisms/2._vbscript_class`: cvpmMagnet
-- `games/cv.json#/mechanisms/2._config`: {"grab_center": true, "size": 200, "solenoid": 5}
-- `games/cv.json#/mechanisms/3._vbscript_class`: cvpmMagnet
-- `games/cv.json#/mechanisms/3._config`: {"grab_center": false, "size": 100, "solenoid": 35}
-- `games/cv.json#/mechanisms/3._note`: Grabs ball at Ringmaster head; custom kick logic on release via SolRingmasterMagnet sub
-- `games/cv.json#/mechanisms/4._vbscript_class`: cvpmMagnet
-- `games/cv.json#/mechanisms/4._config`: {"grab_center": true}
-- `games/cv.json#/mechanisms/4._note`: No solenoid assigned; used for wobble/shake physics on ringmaster head
-- `games/cv.json#/mechanisms/5._vbscript_class`: cvpmVLock
-- `games/cv.json#/mechanisms/5._config`: {"kick_objects": ["sw66k", "sw67k", "sw68k"], "switches": [66, 67, 68]}
-- `games/cv.json#/mechanisms/5._note`: 3-ball virtual lock on upper ramp; released by Lock Post solenoid (16)
-- `games/cv.json#/mechanisms/6._vbscript_class`: cvpmBallStack
-- `games/cv.json#/mechanisms/6._config`: {"balls": 4, "eject_coil": 9, "switches": [0, 32, 33, 34, 35, 0, 0, 0]}
-- `games/cv.json#/mechanisms/7._vbscript_class`: cvpmBallStack
-- `games/cv.json#/mechanisms/7._config`: {"eject_coil": 33, "kick_angle": 284, "kick_force": 26, "switches": [0, 36, 0, 0, 0, 0, 0, 0]}
-- `games/cv.json#/mechanisms/8._note`: Custom physics simulation; ball launched by Backbox Kicker (sol 2) interacts with spinning disc. Disc has 5 spinner balls for collision detection. Bell at sw11.
+## Left/right magnets, diverter, upper post, and lock
 
-## Unresolved questions
+Solenoid 3 (Left Loop Magnet) and solenoid 5 (Ramp Magnet) are two independent grab-and-release magnets, each configured through the retained script's `cvpmMagnet` class via its own `.Solenoid` property rather than an explicit `SolCallback` line -- two commented-out `SolCallback(3)`/`SolCallback(5)` lines earlier in the script are vestigial from an older authoring approach the class-based binding superseded. Switch 64 (Ramp Magnet) senses a ball at the same location solenoid 5 catches it.
 
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+Solenoid 6 (Diverter Power) and solenoid 34 (Diverter Hold) drive one right-orbit diverter flap; the retained script registers no callback for solenoid 6 alone, consistent with 6 being the brief power pulse that moves the flap and 34 the continuous hold that keeps it there. Solenoid 36 (Upper Post) raises and lowers a single post near the top of the playfield with no dedicated switch. A vertical three-position lock on the Center Wire ramp (A-21851) holds up to three balls at switches 66/67/68 (Ramp Lock Low/Middle/High), released by solenoid 16 (Lock Post); Service Bulletin 104 (1998-04-02) independently documents an adjustment for these same three switches by part number (5647-12693-66), confirming both the construction and the three-switch topology transcribed from the switch-locations list.
+
+## Disappearing jet bumper
+
+Assembly A-21564 ("Disappear Jet Bump Assembly") raises the middle jet bumper into play (solenoid 7, Jet Up) and releases/lowers it (solenoid 8, Jet Release); solenoid 4 (Middle Jet Bumper) is the same assembly's own thump coil, and switch 54 senses a hit. This is distinct from the two fixed jet bumpers at switches 53/55 (solenoids 12/13). Service Bulletin 101 (1997-12-09) documents a factory quality-assurance fix for the first 200 production samples: a brass release latch installed backwards and a release-coil frame that could bend, both correctable with an added bracket (p/n 01-14803) -- concrete, dated confirmation that this "disappearing" mechanism is real hardware, not merely a scripted visual effect.
+
+## Backbox prize wheel and bell
+
+Solenoid 2 (Backbox Kick) launches a ball into a backbox spinning-wheel/bell toy; the retained script randomly selects one of four wheel-spin cases, each ending with a timer that pulses switch 11 (Backbox Luck) and plays a bell sound. Both the trigger switch and the kicker sit in the retained table's separate backbox visual coordinate space (large negative x), not on the physical playfield, and are recorded with a controlled `cabinet_or_service` spatial record rather than a fabricated playfield position.
+
+## Fliptronic column: flippers, spinners, and eddy-current sensors
+
+Two Fliptronic flippers on circuits 111-114 (lower right/left, EOS then button-opto, A-14876-R right and A-15849-L left). There are no upper flippers, but unlike a simple "unfitted" pattern, positions 115 and 117 (the upper EOS slots) are repurposed for a pair of free-spinning targets: F5 (public 115) is the Right Spinner and F7 (public 117) is the Left Spinner, both confirmed by the retained script's own `sw115spinner_Spin`/`sw117spinner_Spin` handlers and by the retained table's own geometry (`sw115spinner` at normalized x=0.824, right side; `sw117spinner` at x=0.090, left side). **A prior legacy-migrated record had these two switches' left/right labels reversed** ("Left Spinner" at 115, "Right Spinner" at 117); this manual's own printed F5/F7 labels and the table geometry both independently agree and correct it, the same class of correction already established for other WPC games in this project (e.g. Twilight Zone's slingshot labels).
+
+Positions 116 and 118 (the upper button-opto slots) are genuinely unfitted -- the switch-locations parts list marks both assembly and switch part "NOT USED" -- but the switch-matrix wiring page nonetheless shades them as opto positions with real printed wire colors and `J212` connector pins, matching the fitted lower-flipper button-opto template. This is the WPC-95 CPU board's own generic Fliptronic circuit, present on the board hardware whether or not a given machine populates it, the same resolution already established for Williams Monster Bash's own unfitted F6/F8 positions.
+
+Four A-18008-1 eddy-current proximity sensors (part A-16443) at switches 17 (Right Inlane), 26 (Left Inlane), 75 ("Volt" Right), and 76 ("Volt" Left) detect a ball without a mechanical contact switch. The retained script ties each of the four switches to one of four `volt1`..`volt4` table objects (`sw17_Hit` sets `Volt3.Z`, `sw26_Hit` sets `Volt4.Z`, `sw75_Hit` sets `Volt2.Z`, `sw76_Hit` sets `Volt1.Z`), and `UpdateLamps` ties the *same four objects* to lamps 85, 77, 87, and 86 respectively (`imgswapm`/`DisableLightingm`) -- so each eddy sensor and its matching insert lamp illuminate one shared physical "Volt" location, independently confirmed on both the switch and lamp sides of the retained script.
+
+## Lamps, flashers, and general illumination
+
+All 64 lamp-matrix addresses are populated. Lamp 88 (Start Button) shares its assembly part number (20-9663-16) with switch 13's own Start Button assembly, confirming it is a real cabinet bulb, but the retained VPX table's `UpdateLamps` routine has both of its `Lampm 88, l88`/`l88b` calls commented out, so no `Light` object models it in this extraction; it is still recorded `used` with a controlled `cabinet_or_service` spatial record and the gap is disclosed in `physical.notes`. Every other address has a co-located `l##`/`l##b` render-doubling pair; only the primary object's coordinate is used.
+
+General illumination splits three ways on the retained script's `UpdateGI` dispatch, which handles only `Case 0`/`1`/`2`: GI address 0 (Playfield Right) drives 11 `Light` objects, address 1 (Playfield Middle) drives 9, and address 2 (Playfield Left) drives 11 -- each collection's own large overlay-shape helper (`GIRight`/`GiCenter`/`GILeft`, a `Flasher`-type object with no discrete center) is excluded as a table-modeling render helper, not a distinct physical bulb. GI addresses 3 and 4 are backbox insert-panel strings the printed manual marks "always on" (do not brighten/dim); `UpdateGI` never dispatches them, so they take a controlled `cabinet_or_service` record. **The manual disagrees with itself** about which of the two is "Backbox 1" and which is "Backbox 2": the primary combined wiring table (printed 2-50, which carries the `J106`/`J104` connector numbers) prints item 04 as "Backbox 2" and item 05 as "Backbox 1", while the separate Solenoid/Flashlamp Locations list (printed 2-46, no connector data) prints the same two items the other way round. This definition uses the connector-carrying wiring table's labels and records the disagreement itself as `conflict.gi-backbox-string-numbering`; it does not affect either string's spatial disposition, since neither has a playfield coordinate regardless.
+
+Solenoid 27 (Ringmaster Flashers) is the one flasher circuit the manual explicitly quantifies at two bulbs, but the retained table models both with a single large polygon `Flasher` shape (`f127`, light-mapped to `l127`) draped over the Ringmaster area rather than as two separately placed bulb objects. The recorded placement is that shape's own drag-point centroid, not two distinct bulbs; the shape's own light-map object (`l127`) sits at an anomalous stray coordinate far from the shape and is excluded as a table-modeling anomaly. Two solenoid-driven mechanisms (Diverter Power/Hold at raw normalized x=1.06-1.07, Neon's `NeonBase` object at x=1.08) sit just past the retained table's own declared right edge (bounds `left=0 top=0 right=964 bottom=2162`); each is clamped to x=1.000000 with the raw offset disclosed rather than fabricating a different coordinate, the same precedent established by Williams Monster Bash's GIbot exclusion and by other curated games' clamped header lamps. Solenoid 22 (Motor Enable) is printed inside the flasher address block (17-28) and wired through a driver transistor the same way a flasher is, but its part number (A-15680) is a DC gearmotor part shared with solenoid 39 (Motor Direction), and the retained script's `MotorEnable` sub only starts/stops a motor sound -- it is the Ringmaster motor's continuous enable line, not a flashlamp.
+
+## Custom solenoids 51/52: a driver-declared decaying state, not a device
+
+`cvGameData` declares `hw.custSol = 2`, publishing two addresses at `CORE_CUSTSOLNO(1) = 51` and `CORE_CUSTSOLNO(2) = 52`. The driver's own preliminary `cv_getSol` handler answers them from `locals.sol35`/`locals.sol36`, a pair of counters that jump to 10 whenever the *real* public solenoids 35 (Ringmaster Magnet) and 36 (Upper Post) fire and decay by one each VBLANK otherwise -- a synthetic afterglow for the `*** PRELIMINARY ***` ball simulator's own attract-mode animation, not a distinct physical device. Both are recorded `virtual` with a `virtual` spatial record; solenoids 35 and 36 are the real control lines.
+
+## Author construction checklist
+
+- Build the four-ball trough with the auto-plunger shooter lane, the rising/rotating Ringmaster with its magnet catcher and raised-position hit wall, the left loop and ramp ball-catch magnets, the right-orbit diverter, the upper post, the three-position ramp lock, both saucers, the popper, the disappearing middle jet bumper plus the two fixed jet bumpers, both slingshots, the "WOW" and Top target banks, the left/right spinners, the backbox prize wheel and bell, and the neon ramp.
+- Preserve opto polarity for 31-36; do not invert what PinMAME already normalizes. Switches 37 and 38 are also printed normally-closed optos on the same shaded matrix column, but PinMAME does not normalize them -- treat their polarity as unresolved (`conflict.wow-top-targets-opto-not-normalized`) rather than assuming either convention.
+- Treat WPC-95 LPDC output 39 and its PinMAME mirror 43 as one physical Ringmaster-direction drive line, not two devices.
+- Bind every dedicated switch 1-8, every matrix position 11-88 including the printed Not Used positions, Fliptronic 111-118 with 116/118 explicitly not installed and 115/117 repurposed as the right/left spinners (not the reverse), the eight CPU DIP bits, solenoids 1-52 including the two driver-declared decaying-state custom addresses, lamps 11-88, GI 0-4, and the 128x32 DMD.
+- Do not label public solenoid 22 a flashlamp; it is the Ringmaster motor's continuous enable line despite sitting in the printed flasher address block.
 
 ## Sources
 
-- `legacy.game.cv`: `games/cv.json` at the pinned migration revision.
+- `manual.bally.cirqus-voltaire.1997`: Bally Cirqus Voltaire operations manual, SHA-256 `14cb9a4a225a7f5e6b9ea8b3f81b8626f3307cf299c4420d34612d42367a0eec`.
+- Service Bulletins 101, 102, and 104 (separate retained PDFs): disappearing-jet-bumper fix, upgrade kit, and adjustment sheet.
+- `vpx-script.cv-vpw-1-0`: retained known-working VPW Mod v1.0 embedded script, SHA-256 `2abdca0fb8870c995314c52d5e3931530f6c850b1c8ac5f11176aca58b87bfa4`, binding `cv_20h`.
+- `vpx-table.cv-vpw-1-0`: retained VPW Mod v1.0 table, SHA-256 `7aab0f175816f7bdee4114d5859cbfc70760aead8ef39ebf6481609b649207e5`.
+- `pinmame.core.4ec52ff0ac13`: `src/wpc/sims/wpc/prelim/cv.c`, pinned revision `4ec52ff0ac133ac251681518aed2249e19fe26eb`.

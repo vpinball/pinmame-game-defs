@@ -177,7 +177,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 171 | 1993 | Indiana Jones: The Pinball Adventure | Williams | partial |
 | 172 | 1993 | Star Trek: The Next Generation | Williams | partial |
 | 173 | 1993 | STUB - Addams Family Values (Coin Dropper) (L-4) | Williams | stub |
-| 174 | 1993 | STUB - White Water (L-5) | Williams | stub |
+| 174 | 1993 | White Water | Williams | partial |
 | 175 | 1992 | Black Rose | Bally | partial |
 | 176 | 1992 | Creature from the Black Lagoon | Bally | partial |
 | 177 | 1992 | Doctor Who | Bally | partial |
