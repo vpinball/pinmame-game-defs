@@ -9534,7 +9534,7 @@
   "relationships": [
     {
       "destination": "flasher.driver-1-right",
-      "id": "relationship.left-right-relay",
+      "id": "relationship.left-right-relay-1",
       "kind": "relay_gated",
       "provenance": {
         "source_refs": [
@@ -9546,8 +9546,8 @@
       "source": "coil.driver-10"
     },
     {
-      "destination": "coil.driver-11",
-      "id": "relationship.gi-relay",
+      "destination": "flasher.driver-2-right",
+      "id": "relationship.left-right-relay-2",
       "kind": "relay_gated",
       "provenance": {
         "source_refs": [
@@ -9556,7 +9556,85 @@
         ],
         "status": "validated"
       },
-      "source": "coil.driver-11"
+      "source": "coil.driver-10"
+    },
+    {
+      "destination": "flasher.driver-3-right",
+      "id": "relationship.left-right-relay-3",
+      "kind": "relay_gated",
+      "provenance": {
+        "source_refs": [
+          "manual.data-east.batman.1991",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "source": "coil.driver-10"
+    },
+    {
+      "destination": "flasher.driver-4-right",
+      "id": "relationship.left-right-relay-4",
+      "kind": "relay_gated",
+      "provenance": {
+        "source_refs": [
+          "manual.data-east.batman.1991",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "source": "coil.driver-10"
+    },
+    {
+      "destination": "flasher.driver-5-right",
+      "id": "relationship.left-right-relay-5",
+      "kind": "relay_gated",
+      "provenance": {
+        "source_refs": [
+          "manual.data-east.batman.1991",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "source": "coil.driver-10"
+    },
+    {
+      "destination": "flasher.driver-6-right",
+      "id": "relationship.left-right-relay-6",
+      "kind": "relay_gated",
+      "provenance": {
+        "source_refs": [
+          "manual.data-east.batman.1991",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "source": "coil.driver-10"
+    },
+    {
+      "destination": "flasher.driver-7-right",
+      "id": "relationship.left-right-relay-7",
+      "kind": "relay_gated",
+      "provenance": {
+        "source_refs": [
+          "manual.data-east.batman.1991",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "source": "coil.driver-10"
+    },
+    {
+      "destination": "flasher.driver-8-right",
+      "id": "relationship.left-right-relay-8",
+      "kind": "relay_gated",
+      "provenance": {
+        "source_refs": [
+          "manual.data-east.batman.1991",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "source": "coil.driver-10"
     }
   ],
   "schema_version": 2,
@@ -9581,6 +9659,35 @@
     },
     {
       "attribution": "Data East Pinball, Inc.",
+      "excerpts": [
+        {
+          "id": "excerpt.batman.switch-matrix",
+          "locator": "printed page 24 (PDF 28), Switch Matrix Chart",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.batman.1991/switch-matrix.md",
+          "reviewed": true,
+          "sha256": "ea6aceaa185b972488654f994821429bb20e542170dc3446534eeb3e61504a75",
+          "transcribed_by": "curator, read from a 400 dpi render; this document has no text layer"
+        },
+        {
+          "id": "excerpt.batman.lamp-matrix",
+          "locator": "printed page 26 (PDF 30), Lamp Matrix Chart",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.batman.1991/lamp-matrix.md",
+          "reviewed": true,
+          "sha256": "b2af7c8577ba2aa81dc42325bf4e98a25621b01118d93abef1bbb8cf153d5e1c",
+          "transcribed_by": "curator, read from a 400 dpi render; this document has no text layer"
+        },
+        {
+          "id": "excerpt.batman.coil-drivers",
+          "locator": "printed pages 28-29 (PDF 32-33), Flash Lamp Coil Tests, CPU Controlled Auxiliary Solenoids, Flipper Solenoids and the Special Coil Wiring Diagram",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.batman.1991/coil-drivers.md",
+          "reviewed": true,
+          "sha256": "bf1b99ccb4f23758e309bfa37d7f52309d643d4de4162a0ff6f39587bfb18be9",
+          "transcribed_by": "curator, read from 400 dpi renders; this document has no text layer"
+        }
+      ],
       "id": "manual.data-east.batman.1991",
       "kind": "manual",
       "license": "NOASSERTION",
@@ -9599,6 +9706,7 @@
       "license": "NOASSERTION",
       "locator": "retained known-working recreation; playfield 952 x 1974",
       "rights": "NOASSERTION",
+      "sha256": "e3af88daaf88439d6cb1406b1f55889724b1a7da7acd786a8fd63f6cd633d25f",
       "uri": "external:pinmame-vpx-sources/data-east/batman-1991/Batman%20%28Data%20East%201991%29%20VPW%20v1.1.vpx"
     },
     {
@@ -9609,7 +9717,18 @@
       "license": "NOASSERTION",
       "locator": "table script; Lampz.MassAssign bindings and Controller.Switch/PulseSw handlers",
       "rights": "NOASSERTION",
+      "sha256": "f78f6b40b92c6acef4febe659fd891620773aa6a18715d2ace0cfa6565c1c53b",
       "uri": "external:pinmame-vpx-sources/data-east/batman-1991/Batman%20%28Data%20East%201991%29%20VPW%20v1.1.vbs"
+    },
+    {
+      "attribution": "VPW; table metadata credits Javier, Dark and Ben Logan",
+      "id": "vpx-extraction.batman-vpw-1-1",
+      "kind": "vpx_table",
+      "license": "NOASSERTION",
+      "locator": "vpxtool extraction of the retained table, 1882 files, 220713571 bytes; the manifest's own manifest_sha256 field is fae5103cd7feaa1e9461c1fb00db9c1bbccf550cd55c402b0c3c941fc1648c19 and is recomputable by the algorithm the file states",
+      "rights": "NOASSERTION",
+      "sha256": "2e714193aa4d49694f7a4261a9f0ad72893d1dac5230c353eee3584bb6dd1d21",
+      "uri": "external:pinmame-vpx-sources/data-east/batman-1991/extraction-manifest.json"
     },
     {
       "attribution": "pinmame-game-defs contributors",

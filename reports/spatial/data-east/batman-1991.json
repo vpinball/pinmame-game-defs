@@ -3,27 +3,27 @@
 		{
 			"detail": "These addresses are printed, fitted playfield or in-mechanism devices that the retained recreation does not model as an individual object, so they have no coordinate. They are recorded not_applicable/internal_nonvisual where the device genuinely sits inside a mechanism, and the spatial key is omitted entirely where the device is on the playfield surface but unmodelled - the schema offers only located or not_applicable, and neither is honest for the latter.",
 			"id": "devices-without-a-retained-object",
-			"internal_nonvisual_addresses": [
-				10,
-				11,
-				12,
-				13,
-				15,
-				16,
-				50,
-				51,
-				53
+			"internal_nonvisual_devices": [
+				"switch.matrix-10",
+				"switch.matrix-11",
+				"switch.matrix-12",
+				"switch.matrix-13",
+				"switch.matrix-15",
+				"switch.matrix-16",
+				"switch.matrix-50",
+				"switch.matrix-51",
+				"switch.matrix-53"
 			],
-			"omitted_spatial_key_addresses": [
-				25,
-				26,
-				27,
-				28,
-				29,
-				50,
-				51,
-				52,
-				53
+			"omitted_spatial_key_devices": [
+				"lamp.matrix-25",
+				"lamp.matrix-26",
+				"lamp.matrix-27",
+				"lamp.matrix-28",
+				"lamp.matrix-29",
+				"lamp.matrix-50",
+				"lamp.matrix-51",
+				"lamp.matrix-52",
+				"lamp.matrix-53"
 			],
 			"severity": "major"
 		},
@@ -35,23 +35,23 @@
 	],
 	"coordinate_convention": "Normalized against the retained table's own playfield bounds, 952 x 1974. This machine is NOT the 2162-tall playfield most WPC-era tables use; normalizing y by 2162 would compress every coordinate by about nine percent. The resolver refuses to run if it ever sees different bounds.",
 	"coordinate_origins": {
-		"computed_addresses": [
-			17,
-			18,
-			19,
-			23,
-			33,
-			34,
-			35,
-			41,
-			42,
-			43,
-			47,
-			48,
-			49,
-			55
-		],
 		"computed_centroid": 14,
+		"computed_devices": [
+			"lamp.matrix-17",
+			"lamp.matrix-18",
+			"lamp.matrix-19",
+			"lamp.matrix-23",
+			"lamp.matrix-55",
+			"switch.matrix-33",
+			"switch.matrix-34",
+			"switch.matrix-35",
+			"switch.matrix-41",
+			"switch.matrix-42",
+			"switch.matrix-43",
+			"switch.matrix-47",
+			"switch.matrix-48",
+			"switch.matrix-49"
+		],
 		"measured_center": 67,
 		"note": "Point-like table objects (Light, Trigger, Kicker, Bumper, Flasher, Primitive) carry their own center. Extended objects (Wall, Ramp, Rubber) are defined by drag points and have none, so those are the centroid of the object's drag points. A centroid is a derivation, not an observation, and is reported separately for that reason."
 	},
@@ -59,7 +59,9 @@
 	"machine_id": "data-east.batman.1991",
 	"placement_count": 81,
 	"source": {
-		"extraction_file_count": null,
+		"extraction": "vpx-extraction.batman-vpw-1-1",
+		"extraction_file_count": 1882,
+		"extraction_manifest_sha256": "fae5103cd7feaa1e9461c1fb00db9c1bbccf550cd55c402b0c3c941fc1648c19",
 		"table": "vpx-table.batman-vpw-1-1"
 	},
 	"status": "partial",

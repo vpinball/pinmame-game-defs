@@ -22,6 +22,33 @@ SPATIAL_REPORT_PATH = ROOT / "reports/spatial/data-east/batman-1991.json"
 KNOWLEDGE_PATH = ROOT / "knowledge/data-east/batman-1991.md"
 
 
+# An independently maintained fixture, keyed by address, transcribed from the printed Switch
+# Matrix Chart on manual page 24. This is deliberately NOT read from the curator or its embedded
+# transcription: a test that checks the generator against its own output only proves the generator
+# is self-consistent. Every address the manual prints NOT USED is listed here explicitly, so a
+# definition that quietly promoted one to `used` and gave it an invented coordinate fails.
+MANUAL_SWITCHES = {
+    1: "Plumb Tilt", 2: None, 3: "Credit Button", 4: "Right Coin", 5: "Center Coin",
+    6: "Left Coin", 7: "Slam Tilt", 8: None,
+    9: None, 10: "Outhole", 11: "Trough #1 Left", 12: "Trough #2 Center", 13: "Trough #3 Right",
+    14: "Shooter Lane", 15: "Left EOS", 16: "Right EOS",
+    17: "Left Top Lane", 18: "Center Top Lane", 19: "Right Top Lane", 20: None,
+    21: "Left Return", 22: "Right Return", 23: "Left Outlane", 24: "Right Outlane",
+    25: None, 26: None, 27: None, 28: "Ramp Entrance", 29: "Ramp Exit", 30: None, 31: None, 32: None,
+    33: "Left 3 Bank Top", 34: "Left 3 Bank Middle", 35: "Left 3 Bank Bottom",
+    36: "Joker Left Eye", 37: "Joker Right Eye", 38: "Joker Mouth", 39: "Left VUK", 40: None,
+    41: "Right 3 Bank Top", 42: "Right 3 Bank Middle", 43: "Right 3 Bank Bottom",
+    44: None, 45: None, 46: None, 47: "Left Slingshot", 48: "Right Slingshot",
+    49: "Bat Bar Standup", 50: "Museum Motor Up", 51: "Museum Motor Down",
+    52: "Right VUK Top", 53: "Right VUK Bottom", 54: "Left Turbo Bumper",
+    55: "Center Turbo Bumper", 56: "Right Turbo Bumper",
+    57: None, 58: None, 59: None, 60: None, 61: None, 62: None, 63: None, 64: None,
+}
+# The printed Special Coil Wiring Diagram, page 29: the left half of these two drives reads
+# "NO COIL AT THIS LOCATION (NOT USED)" while their right halves still drive flash lamps.
+MANUAL_UNFITTED_LEFT_DRIVES = {5, 7}
+
+
 def bindings(definition: dict, collection: str, group: str) -> dict[int, dict]:
     return {int(d["binding"]["device"]): d for d in definition[collection]
             if d["binding"]["group"] == group}
@@ -131,6 +158,51 @@ class BatmanDefinitionTests(unittest.TestCase):
         self.assertNotIn("pinmame.output.gi", groups,
                          "Data East publishes no GI channel; nGI is never assigned in s11.c")
 
+    def test_the_relay_gates_all_eight_right_side_outputs(self) -> None:
+        """The prose says solenoid 10 gates the whole 25-32 block, so all eight are stated.
+
+        An earlier draft declared the relationship for drive 1 only while claiming the block, and
+        paired it with a coil.driver-11 to coil.driver-11 self-loop that asserted nothing.
+        """
+        gated = {r["destination"] for r in self.definition["relationships"]
+                 if r["kind"] == "relay_gated" and r["source"] == "coil.driver-10"}
+        self.assertEqual({"flasher.driver-%d-right" % d for d in range(1, 9)}, gated)
+        ids = {d["id"] for collection in ("inputs", "outputs") for d in self.definition[collection]}
+        for relationship in self.definition["relationships"]:
+            self.assertIn(relationship["source"], ids, relationship["id"])
+            self.assertIn(relationship["destination"], ids, relationship["id"])
+            self.assertNotEqual(relationship["source"], relationship["destination"], relationship["id"])
+
+    def test_manual_page_count_comes_from_recorded_metadata(self) -> None:
+        """A draft interpolated the switch-matrix PDF page NUMBER where the page COUNT belonged and
+        published "28 pages" for a 70-page document, in prose the ledger then contradicted."""
+        import curate_batman as curator
+
+        self.assertEqual(70, curator.TRANSCRIPTION["document"]["page_count"])
+        self.assertEqual(0, curator.TRANSCRIPTION["document"]["character_count"])
+        self.assertIn("70 pages", KNOWLEDGE_PATH.read_text(encoding="utf-8"))
+
+    def test_evidence_excerpts_exist_and_match_their_recorded_digests(self) -> None:
+        """A hash proves the local copy has not changed; it says nothing about what the document
+        said. This manual is a 70-page image-only scan, so the regions actually read are committed
+        beside the definition and digest-checked here."""
+        import hashlib
+
+        manual = next(s for s in self.definition["sources"] if s["id"].startswith("manual."))
+        self.assertGreaterEqual(len(manual["excerpts"]), 3)
+        for excerpt in manual["excerpts"]:
+            path = ROOT / excerpt["path"]
+            self.assertTrue(path.is_file(), excerpt["path"])
+            self.assertEqual(excerpt["sha256"], hashlib.sha256(path.read_bytes()).hexdigest(), excerpt["id"])
+
+    def test_retained_table_and_extraction_are_hash_pinned(self) -> None:
+        """A coordinate is only reproducible if the extraction it came from is pinned."""
+        by_id = {s["id"]: s for s in self.definition["sources"]}
+        for source_id in ("vpx-table.batman-vpw-1-1", "vpx-script.batman-vpw-1-1",
+                          "vpx-extraction.batman-vpw-1-1"):
+            self.assertIn(source_id, by_id, source_id)
+            self.assertRegex(by_id[source_id]["sha256"], r"^[0-9a-f]{64}$", source_id)
+
     def test_left_right_relay_pairs_drives_1_to_8_with_25_to_32(self) -> None:
         """The relay switches +32 V between a coil and a flash-lamp group on the same drive.
 
@@ -180,16 +252,40 @@ class BatmanDefinitionTests(unittest.TestCase):
             self.assertEqual("not_applicable", spatial["status"], address)
             self.assertEqual("cabinet_or_service", spatial["reason"], address)
 
+    def test_switch_labels_and_availability_match_the_printed_chart(self) -> None:
+        """Checked against the independent fixture, not the curator's own transcription.
+
+        This is what stops a wrong definition from regenerating cleanly: the address set, every
+        label, and every NOT USED position have to agree with the manual as transcribed here
+        separately from the generator.
+        """
+        for address, expected in MANUAL_SWITCHES.items():
+            switch = self.switches[address]
+            if expected is None:
+                self.assertEqual("unused", switch["availability"], f"switch {address} is printed NOT USED")
+            else:
+                self.assertEqual("used", switch["availability"], address)
+                self.assertEqual(expected, switch["label"], address)
+
     def test_no_placement_exists_for_an_address_the_manual_prints_not_used(self) -> None:
         """The check that would catch an invented binding.
 
-        A resolver that matched objects too loosely would place a coordinate on an address that
-        carries no device at all, which is worse than leaving it unplaced.
+        Driven by the independent fixture rather than by the definition's own `availability`,
+        because a wrong definition that flipped an address to `used` would otherwise be skipped by
+        this guard entirely - which is exactly how it could smuggle in a fabricated coordinate.
         """
-        for address, switch in self.switches.items():
-            if switch["availability"] != "unused":
+        for address, expected in MANUAL_SWITCHES.items():
+            if expected is not None:
                 continue
+            switch = self.switches[address]
             self.assertNotIn("placements", switch.get("spatial", {}), address)
+            self.assertEqual("not_applicable", switch["spatial"]["status"], address)
+
+    def test_unfitted_left_halves_match_the_printed_wiring_diagram(self) -> None:
+        for drive in range(1, 9):
+            expected = "unused" if drive in MANUAL_UNFITTED_LEFT_DRIVES else "used"
+            self.assertEqual(expected, self.solenoids[drive]["availability"], drive)
+            self.assertEqual("used", self.solenoids[drive + 24]["availability"], drive)
 
     def test_every_driver_note_names_every_rom_that_differs(self) -> None:
         """The ROM-composition rule checked as data, not trusted to the builder's guard."""
@@ -263,6 +359,15 @@ class BatmanSpatialTests(unittest.TestCase):
         self.assertGreater(origins["computed_centroid"], 0)
         self.assertEqual(self.report["placement_count"],
                          origins["measured_center"] + origins["computed_centroid"])
+        # Devices are named by canonical id, never by bare address: switch 17 and lamp 17 are
+        # different devices and a numeric-only audit cannot tell them apart.
+        devices = origins["computed_devices"]
+        self.assertEqual(origins["computed_centroid"], len(devices))
+        self.assertEqual(sorted(set(devices)), sorted(devices), "duplicate device in the centroid audit")
+        ids = {d["id"] for collection in ("inputs", "outputs") for d in self.definition[collection]}
+        for device_id in devices:
+            self.assertRegex(device_id, r"^(switch|lamp)[.]matrix-[0-9]+$", device_id)
+            self.assertIn(device_id, ids, device_id + " is audited but absent from the definition")
 
     def test_every_placement_is_observed_because_only_one_table_was_retained(self) -> None:
         for collection in ("inputs", "outputs"):

@@ -99,8 +99,8 @@ consistent with the driver setting no upper-flipper bit.
 
 ## Evidence and its limits
 
-The retained manual has **no text layer whatsoever** (28
-pages, zero characters, `ocr_required`), so every table here was read from 400 dpi renders and
+The retained manual has **no text layer whatsoever** (70 pages,
+0 characters, `ocr_required`), so every table here was read from 400 dpi renders and
 transcribed by hand. Nothing came from `pdftotext`.
 
 Spatial placement rests on **one** retained recreation, the VPW v1.1 build, whose playfield is
