@@ -1,0 +1,777 @@
+{
+  "blockers": [
+    "Lamps 53 (Advance in Rank), 85 (Borg Lock), and 86 (Borg Jackpot) have no world-space Light object in the retained extraction -- only a colored Primitive mesh at local origin (0,0,0), parented to a transform this curator does not resolve. No coordinate is asserted for these three positions rather than inventing one from an unrelated anchor."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162.0,
+      "left": 0.0,
+      "right": 1093.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/1093; 0=left, 1=right",
+    "y": "y/2162; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "ShieldGiFlasherS1-6 (co-located Flasher render doubles of ShieldGiBig1-6, GI address 0)",
+    "Flasher1-5 and GiBig within St4PFGI/St5ReLa (already-counted flasher devices and a synthetic ambient-wash helper swept into the GI dimming collection)",
+    "l1, l2, l1b, l2b within St4PFGI (unidentified cosmetic lights matching no lamp-matrix or GI parts-list entry)",
+    "ShieldGiFlasherS/f123a-style co-located Flasher duplicates of already-placed solenoid-driven flashers",
+    "VRBGGI*/VRBGGIarea* VR-backglass-room helper objects (GI addresses 1/2; confirm those circuits are backbox-only)"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1585,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "c913342c6421558eead345703d08105db5b2779e936f898e56ec1fd177249542",
+    "manifest_uri": "external:pinmame-vpx-sources/williams/star-trek-the-next-generation-1993/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.sttng-vpw-mod-1-0",
+    "total_bytes": 247600334,
+    "vpxtool_version": "vpxtool git:v0.33.3"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "williams.star-trek-the-next-generation.1993",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      12,
+      13,
+      14,
+      21,
+      22,
+      112,
+      114,
+      116
+    ],
+    "constant": [
+      24
+    ],
+    "dip_switch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "internal_nonvisual": [
+      111,
+      113,
+      115
+    ],
+    "unused": [
+      118,
+      121,
+      123,
+      124,
+      128
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 1,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 2,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 87,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 88,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 19,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 35,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 36,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 51,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 52,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 53,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 54,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 55,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 56,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 193,
+  "projections": [
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Borg Lock kicker (Kicker BorgKicker, table object center): the retained script's BorgLock ball-stack class (cvpmBallStack.InitSw 0,31,0,0,0,0,0,0) has no separate playfield trigger object for this position; the single lock ball rests directly at the kicker used to eject it."
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the right gun kicker (Kicker Kicker2, table object center): the retained script's Kicker2_Hit handler sets Controller.Switch(34)=1 when a ball reaches the right gun barrel and RightCannonKicker clears it on launch (Controller.Switch(34)=0) -- there is no separate playfield sensor object beyond the kicker itself."
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the left gun kicker (Kicker Kicker1, table object center); see switch 34's right-side counterpart -- Kicker1_Hit sets Controller.Switch(38)=1 and LeftCannonKicker clears it."
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough ball-release kicker (Kicker BallRelease, table object center): the retained script models the six-position trough purely as a cvpmBallStack ball counter (bsTrough.InitSw 0,66,65,64,63,62,61,0) with no discrete playfield trigger per position."
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough ball-release kicker (Kicker BallRelease, table object center); see switch 61."
+    },
+    {
+      "address": 63,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough ball-release kicker (Kicker BallRelease, table object center); see switch 61."
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough ball-release kicker (Kicker BallRelease, table object center); see switch 61."
+    },
+    {
+      "address": 65,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough ball-release kicker (Kicker BallRelease, table object center); see switch 61."
+    },
+    {
+      "address": 66,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough ball-release kicker (Kicker BallRelease, table object center); see switch 61."
+    },
+    {
+      "address": 67,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough ball-release kicker (Kicker BallRelease, table object center): the retained script's SolRelease handler pulses this switch (vpmTimer.PulseSw 67) in the same event that fires bsTrough.ExitSol_On, with no separate playfield sensor object."
+    },
+    {
+      "address": 68,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the auto plunger (Kicker AutoPlunger, table object center): the retained script's AutoPlunger_Hit handler sets Controller.Switch(68)=1 directly on the plunger kicker object, with no separate playfield sensor."
+    },
+    {
+      "address": 122,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the left gun's own rotating base (Primitive CannonBaseL, table object center): the retained script's CannonLTimer_Timer sets Controller.Switch(122)=1 while CannonBaseL.ObjRotZ sits in -20..9 degrees, directly from the gun's continuous rotation angle, not from a discrete cam-actuated sensor object. The motor (solenoid 17) drives the rotation continuously; it does not itself actuate this switch -- the switch senses the resulting mechanical position."
+    },
+    {
+      "address": 125,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the right gun's own rotating base (Primitive CannonBaseR, table object center); see switch 122's left-side counterpart -- CannonRTimer_Timer sets Controller.Switch(125)=1 for -20..-17 degrees (Right Gun Home)."
+    },
+    {
+      "address": 126,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the right gun's own rotating base (Primitive CannonBaseR, table object center); see switch 125 -- CannonRTimer_Timer sets Controller.Switch(126)=1 for -20..9 degrees (Right Gun Mark)."
+    },
+    {
+      "address": 127,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the left gun's own rotating base (Primitive CannonBaseL, table object center); see switch 122 -- CannonLTimer_Timer sets Controller.Switch(127)=1 for -20..-17 degrees (Left Gun Home)."
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "reason": "Y clamped from -0.008688 (raw local coordinate -18.784, essentially at the rear playfield edge) to the schema-valid boundary 0.0; the retained table's Flipper-typed \"Diverter\" primitive sits fractionally above y=0, matching the manual's Top Divertor location near the very top of the playfield."
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp",
+      "reason": "Centroid of the five l78a-e \"Borg Ship\" flight-path animation waypoints (same single physical bulb's own multi-primitive render effect, not a centroid of other devices)."
+    }
+  ],
+  "resolved_input_addresses": [
+    15,
+    16,
+    17,
+    18,
+    23,
+    25,
+    26,
+    27,
+    28,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    117,
+    122,
+    125,
+    126,
+    127
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 0,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "073d9971157e822a246b2baf1e8f8033304d1b5272ffb2e9bd9581caf448cd24",
+    "manual_sha256": "7f626bce89556b2af4c80bf9eb1a5f74c72cbffe83a85b5142f17140bc820d86",
+    "table_sha256": "bd00efe46f3ab2392f8c471e65177b348da8e9fcb5829e9f073ab23f69714d8c"
+  },
+  "status": "validated",
+  "unresolved": [
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp",
+      "reason": "No world-space Light object; only a local-origin Primitive with an unresolved parent transform."
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp",
+      "reason": "No world-space Light object; only a local-origin Primitive with an unresolved parent transform."
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp",
+      "reason": "No world-space Light object; only a local-origin Primitive with an unresolved parent transform."
+    }
+  ],
+  "unresolved_input_addresses": [],
+  "unresolved_output_bindings": [
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp"
+    }
+  ],
+  "version": 1,
+  "visual_review_cache": {
+    "root": "external:pinmame-manuals/rendered/williams.star-trek-the-next-generation.1993/",
+    "transcription": {
+      "path": "external:pinmame-review-artifacts/star-trek-the-next-generation-1993/manual-transcription.md",
+      "sha256": "07f57792c7f405a5e59607a73ac73bb00f9b7daa91ede63477337d4a9ce8f948"
+    }
+  }
+}

@@ -359,7 +359,11 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Cactus Canyon is also not a retrofit: every switch/solenoid/lamp/GI address has a resolved
 		# placement or a controlled not_applicable record except flashers 24 and 26, whose second
 		# documented (playfield vs insert-panel) bulb has no independently resolvable VPX coordinate.
-		self.assertEqual(17, report["missing_requirement_counts"]["spatial_placement"])
+		# Star Trek: The Next Generation is likewise not a retrofit: it was curated directly from a
+		# legacy candidate-only stub, and three lamps (53, 85, 86) have no world-space Light object
+		# in the retained extraction (only a local-origin Primitive with an unresolved parent
+		# transform), so it is counted as an 18th machine with a genuine spatial gap.
+		self.assertEqual(18, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(787, len(catalog["machines"]))
 		self.assertEqual(786, catalog["summary"]["game_count"])
 		self.assertEqual(787, catalog["summary"]["machine_count"])

@@ -1,258 +1,107 @@
-# Star Trek: The Next Generation
+# Star Trek: The Next Generation (Williams, 1993)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+Coverage: **partial - complete physical I/O inventory, WPC-DCS bindings, mechanism causality, driver-variant boundary, and recreation behavior validated with zero polarity conflicts; three playfield lamp positions (53 Advance in Rank, 85 Borg Lock, 86 Borg Jackpot) remain spatially unresolved below**
 
-## Overview
+## Identity and evidence precedence
 
-Legacy evidence identifies this candidate as Williams (1993). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+This is the Williams WPC-DCS physical product released 1993, IPDB 2357. It covers the `sttng_*` clone tree: `sttng_l7` (parent, LX-7 Sound L-1) plus eighteen localization, LED-ghost-fix, prototype, and community-mod clones. Every one of these is a firmware revision or modification for the same physical machine; none changes the switch, solenoid, lamp, or GI inventory.
 
-## Playfield devices
+The title collides heavily on Internet Archive and in this project's own history: `arcademanual_Star_Trek_OPS` is the unrelated Bally 1979 pinball machine, `arcademanual_Star_Trek_25th_Anniversary_OPS` is the unrelated Data East 1991 machine, and there is a Sega Star Trek video-game manual besides. This definition's manual was verified visually (not from OCR text alone): the rendered title page reads "STAR TREK / THE NEXT GENERATION™", the ROM summary lists Williams part `A-5343-50023-1` on the WPC CPU board, and printed pages 1-41/2-21/3-23 describe the two gun/cannon assemblies unique to this title, none of which the Bally, Data East, or video-game manuals share.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+Evidence precedence for this definition: the retained known-working VPW Mod v1.0 script is runtime and mechanism-causality ground truth; the Williams operations manual controls physical construction, part numbers, wiring, polarity, quantities, and device presence; pinned PinMAME controls controller generation, public address topology, and mechanism step ranges; the retained VPX geometry supplies normalized coordinates. The retained manual PDF carries an OCR text layer, but every printed table used here was visually confirmed against the rendered page and transcribed into `external:pinmame-review-artifacts/star-trek-the-next-generation-1993/manual-transcription.md`; OCR text was never trusted as sole authority.
 
-## Custom mechanisms
+## Controller platform and address topology
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+`GEN_WPCDCS` (`PINMAME_HARDWARE_GEN_WPCDCS = 0x10`) with `wpc_dispDMD`. The controller profile is `pinmame.wpc-dcs`, reused unchanged from Williams Indiana Jones: The Pinball Adventure -- the immediately preceding WPC-DCS curation in this project.
 
-## Ball-state transitions
+This is a **wide-body "Superpin" table**, like Indiana Jones: the retained VPWmod v1.0 table's own playfield bounds are `left=0 top=0 right=1093 bottom=2162`, so `machine.playfield` and every normalized coordinate use `x/1093`/`y/2162` rather than the `x/952`/`y/2162` divisor most other curated WPC games use.
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+- Switches: dedicated coin-door 1-8, matrix 11-88 as drive column then return row (all 64 positions populated -- unusually, this manual marks none of them "Not Used"), Fliptronic 111-118, and one declared custom switch column (`hw.swCol = 1`) at public 121-128.
+- Solenoids: physical drivers 1-18 (19 not used); flashers 20-28; Fliptronic upper-right circuits 33/34 (fitted) and upper-left 35/36 (not fitted, no upper-left flipper); lower-flipper circuits 45-48; PinMAME state channels 29-32; WPC-DCS's unused 37-44 range (no LPDC board on this generation); simulator-only 49 and reserved 50; six declared custom solenoids (`hw.custSol = 6`) at public 51-56.
+- Lamps: 8x8 matrix 11-88, all 64 addresses populated.
+- GI: five circuits on public addresses 0-4; only three (0, 3, 4) drive playfield bulbs.
 
-## Controller interactions
+### The custom switch column and custom solenoids are not the printed silkscreen numbers
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+Two facts here generalize the lesson Indiana Jones already established for its own custom column and Twilight Zone established for its own custom solenoid board, and both are worth restating precisely because this manual's *own* silkscreen numbering and the driver's *own* source comments both happen to agree with each other while still being wrong about the runtime public address.
 
-## Service and setup information
+1. **The switch matrix's own printed "column 9" (public 91-98) is not PinMAME's public address.** `sttngGameData` declares `hw.swCol = 1`. PinMAME's `CORE_CUSTSWCOL = CORE_STDSWCOLS = 12` places a driver's first declared custom switch column two columns past the Fliptronic column (internal column 11), so `CORE_CUSTSWNO(1, r) = (12-1+1)*10+r = 120+r` publishes at public **121-128**. `sttng.c`'s own macro definitions carry a stale comment reflecting an older core.h numbering (`#define swLGunMark CORE_CUSTSWNO(1,2) //92`), and the Gun Circuit Diagram (printed 3-23) independently calls the same physical harness "sw. col. 9" on its own schematic -- so *three* sources (manual silkscreen, driver comment, and board schematic prose) all say "9"/"9x", and all three are describing the physical wiring harness, not the PinMAME public address. The retained known-working script settles it directly at runtime: `CannonLTimer_Timer`/`CannonRTimer_Timer` assign `Controller.Switch(127)`, `Controller.Switch(122)`, `Controller.Switch(125)`, `Controller.Switch(126)` -- the true public addresses.
+2. **The custom-solenoid board's own printed items 37-42 are not PinMAME's public address either.** `sttngGameData` declares `hw.custSol = 6`, publishing at `CORE_CUSTSOLNO(n) = CORE_FIRSTCUSTSOL - 1 + n = 50 + n`, i.e. public **51-56**. This is structurally provable independent of the retained script: `core_getSol`'s `solNo <= 44` branch returns constant 0 for `GEN_WPCDCS` before it ever reaches `hw.getSol`, so `sttng_getSol` (which implements these six outputs by reading `WPC_EXTBOARD1` bits 0-5) could only ever be invoked above public address 50 in the first place. The retained script's own `SolCallBack(51..54)` and `SolModCallBack(55/56)` registrations confirm the arithmetic directly.
 
-Unknown; locate operator/service documentation.
+Keep every printed "9N" and "3N" (37-42) number as a `manual.address` alias only; the public `binding.device` is always the PinMAME-computed value.
 
-## Timing and tuning observations
+### Zero polarity conflicts
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+Unlike Monster Bash (Dracula-position optos) or Indiana Jones (captive-ball and wheel-position optos), this machine's printed switch-matrix opto shading and PinMAME's inverted-switch mask agree on **every single address**. `sttngGameData`'s inverted-switch mask is `{0x00,0x00,0x00,0xff,0xff,0x00,0x7f,0x00,0x00,0x00,0x00,0x00}`: column 3 (0xff, switches 31-38) and column 4 (0xff, 41-48) are fully inverted, matching the printed "OPTO, TYPICALLY CLOSED" shading and the dual LED/photo-transistor part pairs on both columns exactly; column 6 (0x7f, rows 1-7 = switches 61-67) is inverted while row 8 (switch 68, Shooter) is not, matching the printed matrix's own shading of 61-67 but not 68, and the switch-locations parts list's single-part (non-opto) entry for 68. The custom column (internal index 12, public 121-128) is left at the array's zero-filled default (not inverted), which agrees with its construction: the switch-locations parts list prints a single leaf part number (no LED/phototransistor pair) for 122/125/126/127, and the Gun Circuit Diagram (3-23) draws plain switch-contact symbols with no opto component. `conflicts` is therefore empty and `coverage.dimensions.physical_wiring = "validated"`.
 
-## Recreation guidance
+Switches 16/17 (Left/Right Return Lane) are a related but distinct case: they are eddy-current proximity sensors (A-16922 Proximity Sensor II PCB, TDA0161 IC, with A-17064 Eddy Sensor coils), not optos, confirmed by the Section 3 schematic (3-20/3-21) and by the absence of any LED/phototransistor part pair on the switch-locations list. Column 1 (which carries 16/17) is left uninverted by PinMAME, which is exactly correct for this construction -- there is no polarity question here at all, only a construction detail (sensing technology) worth recording accurately in `physical.switch_type`.
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+## The two guns/cannons: powered rotation with position feedback
 
-## Evidence notes
+Star Trek: The Next Generation's signature feature is a pair of independently rotating, motorized gun/cannon assemblies (left and right), each combining a ball kicker, a ball popper, and a drive motor with two-switch position feedback, mounted as a single removable unit (manual page 1-41, "Removing the Gun Assembly": the plastic cover, kicker bracket, motor bracket, and its two switches plus motor all come off together, and the whole assembly "should point toward the wire loading ramp" when correctly reattached).
 
-- `platforms/wpc.json#/coils/1`: Unbound legacy outputs record `c_flipper_lower_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/2`: Unbound legacy outputs record `c_flipper_lower_left` was retained as a migration note only.
-- `platforms/wpc.json#/coils/3`: Unbound legacy outputs record `c_flipper_upper_right` was retained as a migration note only.
-- `platforms/wpc.json#/coils/4`: Unbound legacy outputs record `c_flipper_upper_left` was retained as a migration note only.
-- `games/sttng.json#/switches/0._note`: Directly set via keyFront in KeyDown/KeyUp handlers
-- `games/sttng.json#/switches/1._note`: Set via PlungerKey and LockBarKey in KeyDown/KeyUp handlers
-- `games/sttng.json#/switches/3._note`: vpmNudge.TiltSwitch = 14
-- `games/sttng.json#/switches/9._note`: Controller.Switch(22) = 1 in table init
-- `games/sttng.json#/switches/11._note`: Controller.Switch(24) = 0 set in init, but PinMAME defines this as always closed
-- `games/sttng.json#/switches/13._note`: Standup target; PulseSw in T26_Hit
-- `games/sttng.json#/switches/14._note`: Neutral zone hole entry; PulseSw 27 in sw27_Hit. Also triggers T27 target animation
-- `games/sttng.json#/switches/15._note`: Standup target; PulseSw in T28_Hit
-- `games/sttng.json#/switches/16._note`: Opto switch. Used in BorgLock ball stack InitSw
-- `games/sttng.json#/switches/17._note`: Opto. Set in sw32_Hit, cleared when sw36 (Under L Gun 1) is hit
-- `games/sttng.json#/switches/18._note`: Opto. Set in sw33_Hit, cleared when sw37 (Under R Gun 1) is hit
-- `games/sttng.json#/switches/19._note`: Opto. Set by Kicker2_Hit when ball enters right cannon
-- `games/sttng.json#/switches/21._note`: Opto. Kicker trigger for left gun loading
-- `games/sttng.json#/switches/22._note`: Opto. Kicker trigger for right gun loading
-- `games/sttng.json#/switches/23._note`: Opto. Set by Kicker1_Hit when ball enters left cannon
-- `games/sttng.json#/switches/24._note`: Opto. Primary lock kicker position
-- `games/sttng.json#/switches/25._note`: Opto
-- `games/sttng.json#/switches/26._note`: Opto
-- `games/sttng.json#/switches/28._note`: PulseSw in sw45_Hit
-- `games/sttng.json#/switches/29._note`: Set via sw46t_Hit trigger, not a kicker
-- `games/sttng.json#/switches/30._note`: Start Mission scope; trigger with sw47dr drop mechanism
-- `games/sttng.json#/switches/32._note`: Drop target; PulseSw in T51_Hit
-- `games/sttng.json#/switches/33._note`: Drop target; PulseSw in T52_Hit
-- `games/sttng.json#/switches/34._note`: Drop target; PulseSw in T53_Hit
-- `games/sttng.json#/switches/35._note`: Drop target; PulseSw in T54_Hit
-- `games/sttng.json#/switches/36._note`: Drop target; PulseSw in T55_Hit
-- `games/sttng.json#/switches/37._note`: Drop target; PulseSw in T56_Hit
-- `games/sttng.json#/switches/38._note`: Single drop target; handled via TopDrop cvpmDropTarget object
-- `games/sttng.json#/switches/40._note`: Opto. bsTrough.InitSw position 6 (sw61)
-- `games/sttng.json#/switches/41._note`: Opto. bsTrough.InitSw position 5 (sw62)
-- `games/sttng.json#/switches/42._note`: Opto. bsTrough.InitSw position 4 (sw63)
-- `games/sttng.json#/switches/43._note`: Opto. bsTrough.InitSw position 3 (sw64)
-- `games/sttng.json#/switches/44._note`: Opto. bsTrough.InitSw position 2 (sw65)
-- `games/sttng.json#/switches/45._note`: Opto. bsTrough.InitSw position 1 (sw66)
-- `games/sttng.json#/switches/46._note`: PulseSw 67 in SolRelease callback
-- `games/sttng.json#/switches/47._note`: Auto-plunger switch; set in AutoPlunger_Hit
-- `games/sttng.json#/switches/48._note`: PulseSw 71 in LeftJetBumper_hit
-- `games/sttng.json#/switches/49._note`: PulseSw 72 in RightJetBumper_hit
-- `games/sttng.json#/switches/50._note`: PulseSw 73 in BottomJetBumper_hit
-- `games/sttng.json#/switches/51._note`: PulseSw 74 in SlingShotRight_Slingshot
-- `games/sttng.json#/switches/52._note`: PulseSw 75 in SlingShotLeft_Slingshot
-- `games/sttng.json#/switches/56._note`: PulseSw in T81_Hit
-- `games/sttng.json#/switches/57._note`: PulseSw in T82_Hit
-- `games/sttng.json#/switches/59._note`: PulseSw in T84_Hit
-- `games/sttng.json#/switches/60._note`: PulseSw in T85_Hit
-- `games/sttng.json#/switches/61._note`: PulseSw in T86_Hit
-- `games/sttng.json#/switches/64._note`: WPC F7 switch. PulseSw 117 in sw117spinner_Spin
-- `games/sttng.json#/switches/65._note`: Custom switch column 9. Set dynamically by CannonLTimer based on cannon position
-- `games/sttng.json#/switches/66._note`: Custom switch column 9. Set dynamically by CannonRTimer based on cannon position
-- `games/sttng.json#/switches/67._note`: Custom switch column 9. Set dynamically by CannonRTimer based on cannon position
-- `games/sttng.json#/switches/68._note`: Custom switch column 9. Set dynamically by CannonLTimer based on cannon position
-- `games/sttng.json#/coils/0._vbscript_callback`: LeftCannonKicker
-- `games/sttng.json#/coils/0._inferred_type`: kicker
-- `games/sttng.json#/coils/0._note`: Fires ball from left cannon
-- `games/sttng.json#/coils/1._vbscript_callback`: RightCannonKicker
-- `games/sttng.json#/coils/1._inferred_type`: kicker
-- `games/sttng.json#/coils/1._note`: Fires ball from right cannon
-- `games/sttng.json#/coils/2._vbscript_callback`: UnderLeftGun
-- `games/sttng.json#/coils/2._inferred_type`: kicker
-- `games/sttng.json#/coils/2._note`: Kicks ball from under-left-gun to left cannon
-- `games/sttng.json#/coils/3._vbscript_callback`: UnderRightGun
-- `games/sttng.json#/coils/3._inferred_type`: kicker
-- `games/sttng.json#/coils/3._note`: Kicks ball from under-right-gun to right cannon
-- `games/sttng.json#/coils/4._vbscript_callback`: LeftLock
-- `games/sttng.json#/coils/4._inferred_type`: kicker
-- `games/sttng.json#/coils/4._note`: Ejects ball from left lock (under-left-lock sw1)
-- `games/sttng.json#/coils/5._vbscript_callback`: AutoPlunge
-- `games/sttng.json#/coils/5._inferred_type`: ball_management
-- `games/sttng.json#/coils/5._note`: Auto-launches ball from shooter lane
-- `games/sttng.json#/coils/6._vbscript_callback`: vpmSolSound SoundFX("Knocker",DOFKnocker),
-- `games/sttng.json#/coils/6._inferred_type`: knocker
-- `games/sttng.json#/coils/7._vbscript_callback`: Kickback
-- `games/sttng.json#/coils/7._inferred_type`: kicker
-- `games/sttng.json#/coils/7._note`: Left outlane kickback
-- `games/sttng.json#/coils/8._inferred_type`: slingshot
-- `games/sttng.json#/coils/8._note`: PinMAME defines sLSling=9. No explicit SolCallback in VBS — handled by VPM framework
-- `games/sttng.json#/coils/9._inferred_type`: slingshot
-- `games/sttng.json#/coils/9._note`: PinMAME defines sRSling=10. No explicit SolCallback in VBS — handled by VPM framework
-- `games/sttng.json#/coils/10._vbscript_callback`: SolRelease
-- `games/sttng.json#/coils/10._inferred_type`: ball_management
-- `games/sttng.json#/coils/10._note`: bsTrough.ExitSol_On — ejects ball from trough. PinMAME: sTrough=11
-- `games/sttng.json#/coils/11._inferred_type`: bumper
-- `games/sttng.json#/coils/11._note`: PinMAME defines sJet1=12. No explicit SolCallback in VBS — handled by VPM framework
-- `games/sttng.json#/coils/12._inferred_type`: bumper
-- `games/sttng.json#/coils/12._note`: PinMAME defines sJet2=13. No explicit SolCallback in VBS — handled by VPM framework
-- `games/sttng.json#/coils/13._inferred_type`: bumper
-- `games/sttng.json#/coils/13._note`: PinMAME defines sJet3=14. No explicit SolCallback in VBS — handled by VPM framework
-- `games/sttng.json#/coils/14._vbscript_callback`: TopDiverter
-- `games/sttng.json#/coils/14._inferred_type`: diverter
-- `games/sttng.json#/coils/15._vbscript_callback`: BorgLock.SolOut
-- `games/sttng.json#/coils/15._inferred_type`: kicker
-- `games/sttng.json#/coils/15._note`: Ejects ball from Borg lock
-- `games/sttng.json#/coils/16._vbscript_callback`: LeftCannonMotor
-- `games/sttng.json#/coils/16._inferred_type`: mechanism
-- `games/sttng.json#/coils/16._note`: Rotates left cannon. Position tracked by switches 122 (mark) and 127 (home)
-- `games/sttng.json#/coils/17._vbscript_callback`: RightCannonMotor
-- `games/sttng.json#/coils/17._inferred_type`: mechanism
-- `games/sttng.json#/coils/17._note`: Rotates right cannon. Position tracked by switches 125 (home) and 126 (mark)
-- `games/sttng.json#/coils/18._vbscript_callback`: Flash120
-- `games/sttng.json#/coils/18._inferred_type`: flasher
-- `games/sttng.json#/coils/18._note`: SolModCallBack; also drives l83
-- `games/sttng.json#/coils/19._vbscript_callback`: Flash121
-- `games/sttng.json#/coils/19._inferred_type`: flasher
-- `games/sttng.json#/coils/19._note`: SolModCallBack; also drives l121
-- `games/sttng.json#/coils/20._vbscript_callback`: Flash122
-- `games/sttng.json#/coils/20._inferred_type`: flasher
-- `games/sttng.json#/coils/20._note`: SolModCallBack; also drives f122b, f122s
-- `games/sttng.json#/coils/21._vbscript_callback`: Flash123
-- `games/sttng.json#/coils/21._inferred_type`: flasher
-- `games/sttng.json#/coils/21._note`: SolModCallBack; also drives f123a, ShieldGiBig7/8/10
-- `games/sttng.json#/coils/22._vbscript_callback`: SetLamp 124,
-- `games/sttng.json#/coils/22._inferred_type`: flasher
-- `games/sttng.json#/coils/22._note`: Uses SetLamp to lamp 124 rather than SolModCallBack
-- `games/sttng.json#/coils/23._vbscript_callback`: Flash125
-- `games/sttng.json#/coils/23._inferred_type`: flasher
-- `games/sttng.json#/coils/23._note`: SolModCallBack; left popper area. Also drives l125
-- `games/sttng.json#/coils/24._vbscript_callback`: Flash126
-- `games/sttng.json#/coils/24._inferred_type`: flasher
-- `games/sttng.json#/coils/24._note`: SolModCallBack; also drives f126s, l78borgb1, l78borga1, l78d1, l78e1
-- `games/sttng.json#/coils/25._vbscript_callback`: Flash127
-- `games/sttng.json#/coils/25._inferred_type`: flasher
-- `games/sttng.json#/coils/25._note`: SolModCallBack; also drives f127s, l78b1, l78c1, l78borgd1, l78borge1
-- `games/sttng.json#/coils/26._vbscript_callback`: Flash128
-- `games/sttng.json#/coils/26._inferred_type`: flasher
-- `games/sttng.json#/coils/26._note`: SolModCallBack; also drives f128s, GiBigGreen, l78a1, l78borgc1
-- `games/sttng.json#/coils/27._vbscript_callback`: UnderDiverterTop
-- `games/sttng.json#/coils/27._inferred_type`: diverter
-- `games/sttng.json#/coils/27._note`: WPC extboard solenoid. Controls DiverterFRG and sw37dr1 drop walls
-- `games/sttng.json#/coils/28._vbscript_callback`: UnderDiverterBottom
-- `games/sttng.json#/coils/28._inferred_type`: diverter
-- `games/sttng.json#/coils/28._note`: WPC extboard solenoid. Controls DiverterFLG drop wall
-- `games/sttng.json#/coils/29._vbscript_callback`: TopDrop.SolDropUp
-- `games/sttng.json#/coils/29._inferred_type`: drop_target_reset
-- `games/sttng.json#/coils/29._note`: WPC extboard solenoid. Resets the single top drop target
-- `games/sttng.json#/coils/30._vbscript_callback`: TopDrop.SolDropDown
-- `games/sttng.json#/coils/30._inferred_type`: drop_target_reset
-- `games/sttng.json#/coils/30._note`: WPC extboard solenoid. Drops the top drop target
-- `games/sttng.json#/coils/31._vbscript_callback`: Flash141
-- `games/sttng.json#/coils/31._inferred_type`: flasher
-- `games/sttng.json#/coils/31._note`: SolModCallBack; also drives f141s, f141s1, GiBigGreen, l141, l141a
-- `games/sttng.json#/coils/32._vbscript_callback`: Flash142
-- `games/sttng.json#/coils/32._inferred_type`: flasher
-- `games/sttng.json#/coils/32._note`: SolModCallBack; also drives f142s, f142s1, GiBigRed, GiBigRed1, l142
-- `games/sttng.json#/lamps/0._note`: Also l11b, f11
-- `games/sttng.json#/lamps/1._note`: Also l12b, f12
-- `games/sttng.json#/lamps/2._note`: Also l13b
-- `games/sttng.json#/lamps/3._note`: Also l14b
-- `games/sttng.json#/lamps/4._note`: Also l15b, f15
-- `games/sttng.json#/lamps/5._note`: Also l16b
-- `games/sttng.json#/lamps/6._note`: Also l17b
-- `games/sttng.json#/lamps/7._note`: Also l18b
-- `games/sttng.json#/lamps/8._note`: Also l21b
-- `games/sttng.json#/lamps/9._note`: Also l22b
-- `games/sttng.json#/lamps/10._note`: Also l23b
-- `games/sttng.json#/lamps/11._note`: Also l24b, f24
-- `games/sttng.json#/lamps/12._note`: Also l25b, f25
-- `games/sttng.json#/lamps/13._note`: Also l26b, f26, f26s, f26s1, l26blue
-- `games/sttng.json#/lamps/14._note`: Also l27b
-- `games/sttng.json#/lamps/15._note`: Also l28b, f28
-- `games/sttng.json#/lamps/16._note`: Also l31b
-- `games/sttng.json#/lamps/17._note`: Also l32b
-- `games/sttng.json#/lamps/18._note`: Also l33b
-- `games/sttng.json#/lamps/19._note`: Also l34b, f34
-- `games/sttng.json#/lamps/20._note`: Also l35b
-- `games/sttng.json#/lamps/21._note`: Also l36b
-- `games/sttng.json#/lamps/22._note`: Also l37b
-- `games/sttng.json#/lamps/23._note`: Also l38b, f38
-- `games/sttng.json#/lamps/24._note`: Also l41b, f41
-- `games/sttng.json#/lamps/25._note`: Also l42b
-- `games/sttng.json#/lamps/26._note`: Also l43b
-- `games/sttng.json#/lamps/27._note`: Also l44b
-- `games/sttng.json#/lamps/28._note`: Also l45b, f45
-- `games/sttng.json#/lamps/29._note`: Also l46b
-- `games/sttng.json#/lamps/30._note`: Also l47b
-- `games/sttng.json#/lamps/31._note`: Also l48b, f48
-- `games/sttng.json#/lamps/32._note`: Also l51b
-- `games/sttng.json#/lamps/33._note`: Also f52, f52s, f52s1. l52 position moves with left cannon
-- `games/sttng.json#/lamps/34._note`: Also f53, f53s. Object-based fade (NFadeObjm)
-- `games/sttng.json#/lamps/35._note`: Also l54b
-- `games/sttng.json#/lamps/36._note`: Also l55b
-- `games/sttng.json#/lamps/37._note`: Also l56b
-- `games/sttng.json#/lamps/38._note`: Also l57b
-- `games/sttng.json#/lamps/39._note`: Also l58b
-- `games/sttng.json#/lamps/40._note`: Also l61b
-- `games/sttng.json#/lamps/41._note`: Also l62b
-- `games/sttng.json#/lamps/42._note`: Also l63b
-- `games/sttng.json#/lamps/43._note`: Also l64b
-- `games/sttng.json#/lamps/44._note`: Also l65b
-- `games/sttng.json#/lamps/45._note`: Also l66b
-- `games/sttng.json#/lamps/46._note`: Also l67b, f67
-- `games/sttng.json#/lamps/47._note`: Also l68b, f68
-- `games/sttng.json#/lamps/48._note`: Also l71b
-- `games/sttng.json#/lamps/49._note`: Also l72b
-- `games/sttng.json#/lamps/50._note`: Also l73b
-- `games/sttng.json#/lamps/51._note`: Also l74b
-- `games/sttng.json#/lamps/52._note`: Also l75b
-- `games/sttng.json#/lamps/53._note`: Also l76b
-- `games/sttng.json#/lamps/54._note`: Also l77b
-- `games/sttng.json#/lamps/55._note`: Borg ship lamp. Multiple VPX objects: l78a-e (custom mod), l78borga-e (original). Also l78a1-e1, l78borga1-e1 for flasher intensities
-- `games/sttng.json#/lamps/56._note`: Also l81b
-- `games/sttng.json#/lamps/57._note`: Also f82, f82s, f82s1. l82 position moves with right cannon
-- `games/sttng.json#/lamps/58._note`: Also l84b, f84
-- `games/sttng.json#/lamps/59._note`: Also f85, f85s. Object-based fade (NFadeObjm)
-- `games/sttng.json#/lamps/60._note`: Also f86, f86s, f86s1. Object-based fade (NFadeObjm)
-- `games/sttng.json#/lamps/61._note`: Also l124b. Autofire flasher lamp driven via SetLamp from coil 24
-- `games/sttng.json#/_source/confidence_notes`: High confidence on switches/coils/lamps. No Const sw* declarations — switches referenced by number directly. Solenoid numbers 51-54 are WPC extboard solenoids; flasher solenoids 55-56 are extboard custom. Spinner is WPC F7 (switch 117). Flipper coil IDs (sLRFlipper, sLLFlipper, sURFlipper) are framework constants defined in wpc.VBS, not in the table script. Trough uses 6-ball stack (sw61-sw66). STTNG has dual photon cannon mechanisms with motor solenoids and position-tracking switches. Borg lock is a separate ball stack device. Lamp vpx_names derived from NFadeLm/NFadeL calls in UpdateLamps.
+**Left gun** (mirror on the right with all addresses swapped as noted): a ball entering the left underplayfield subway trips opto 32 (Under Left Gun Sw. 2), advances to opto 36 (Under Left Gun Sw. 1) where solenoid 3 (Left Gun Popper) kicks it up into the barrel, and it comes to rest on opto 38 (Left Gun Shooter, "ball loaded"). Solenoid 17 (Left Gun Motor) continuously rotates the entire kicker/barrel/dome assembly -- the retained script's `CannonBaseL` primitive -- back and forth through roughly -19 to +64 degrees around a pivot. **The motor does not itself actuate a discrete switch; the two position switches sense the assembly's resulting mechanical angle, not a solenoid pulse.** Custom switch 127 (Left Gun Home) asserts only near the home end of the sweep (-20 to -17 degrees); custom switch 122 (Left Gun Mark) asserts over a wider band (-20 to +9 degrees) that the retained script also uses to select a lower launch force (`ForceL = 25` inside the mark band vs. `50` outside it). When solenoid 1 (Left Gun Kicker) fires, the loaded ball launches along the gun's current aim angle and opto 38 clears.
 
-## Unresolved questions
+Pinned PinMAME's own internal ball-tracking simulator (`sttng.c`'s `sttng_stateDef`/`sttng_handleMech` -- a fallback used only for PinMAME's built-in keyboard-driven playfield visualization, not by a VPX table) models the same two-sensor homing scheme with its own step constants: `GUN_HOME = 8*2 = 16`, `GUN_MARK = 8*7 = 56`, out of a `GUN_END = 8*20 = 160`-step full sweep before the simulator reverses direction. This is a different unit system (integer steps vs. the retained table's degrees) describing the same physical homing behavior, and is useful corroborating evidence for the mechanism's real range even though it is not itself runtime-authoritative for a VPX recreation.
 
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+**Right gun**: opto 33 (Under Right Gun Sw. 2) then opto 37 (Under Right Gun Sw. 1, gates solenoid 4's kick into the barrel), ball rests on opto 34 (Right Gun Shooter), solenoid 18 (Right Gun Motor) rotates `CannonBaseR`, custom switches 125 (Right Gun Home) and 126 (Right Gun Mark) sense its rotation exactly as 127/122 do on the left, and solenoid 2 (Right Gun Kicker) launches the ball.
+
+Do not describe either gun motor as "actuating" its Home/Mark switches -- the motor runs continuously while the assembly is in motion, and the switches report the assembly's angular position, which the motor only changes indirectly and gradually. This distinction is the one the curation brief explicitly called out and is worth stating plainly for any future author driving this mechanism from switch and solenoid state.
+
+## Ball routing: left lock queue, Borg lock, and underplayfield diverters
+
+The left side of the playfield has a **second, separate** underplayfield path from the gun subway: a four-position ball queue (opto 43 farthest from the popper, then 42, then 35, then 41 nearest) that solenoid 5 (Left Popper) kicks back out to the right inlane. This is not the Borg ball lock and holds no ball for multiball purposes on its own; it is simply a holding queue printed "Under Left Lock Sw. 1-4". The right side has no equivalent queue -- only the right gun subway exists there.
+
+The **Borg lock** is a separate one-ball feature: a ball entering the Borg hole passes opto 48 (Borg Entry) and rests at opto 31 (Borg Lock), an opto mounted on the Borg Bracket Assembly (A-17219) with no discrete playfield trigger object of its own -- the retained script models it purely as a one-ball `cvpmBallStack` (`BorgLock.InitSw 0,31,0,0,0,0,0,0`). Solenoid 16 (Borg Kicker) ejects the locked ball, typically starting Borg multiball.
+
+Three holes (Top Hole opto 45, Left Hole opto 46, Center/Borg Hole opto 47) feed a shared underplayfield diverter maze. Solenoid 15 (Top Divertor) raises a flap that routes a completed left-ramp shot onward or into the Borg Entry path. Two further diverters live on the custom solenoid board: solenoid 51 (Under Divertor Top, retained script object `DiverterFRG`) and solenoid 52 (Under Divertor Bottom, `DiverterFLG`) route balls from these holes to the right gun subway, the left gun subway, or the left popper queue. None of the three diverters has its own return-position sensor; PinMAME's own `sttng_handleMech` tracks each one's assumed position purely from a debounce counter on the driving solenoid's on/off state (`CHECK_SOL = 50` checks before assuming the coil has released and the flap has fallen back).
+
+## Top drop target, bank standups, trough, and shooter
+
+A single drop target (retained script class `TopDrop`, bound to switch 57) is raised by solenoid 53 (Top Drop Up) and lowered by solenoid 54 (Top Drop Down) -- both on the custom board. When up, a ball striking it scores and it drops; when down, a ball rolls over it into the Top Hole instead. PinMAME's own internal simulator independently confirms the switch asserts only while the target is down.
+
+The printed "Left/Right Bank Top/Middle/Bottom" (switches 51-56) are, despite the name, fixed standup targets with no reset solenoid anywhere in the printed solenoid table or the retained script's `SolCallback` registrations -- there is no dropping mechanism behind them, only score switches, confirmed by the retained table's `HitTarget`-typed objects rather than a drop-target `Wall` with an `isDropped` state.
+
+The trough is modeled purely as a `cvpmBallStack` ball counter (`bsTrough.InitSw 0,66,65,64,63,62,61,0`), with **no discrete playfield trigger object** behind any of switches 61-67 -- the manual's own "7 Ball Trough Photo Transistor/LED PCB Assembly" board name reflects seven physical opto stations (six ball-rest positions plus the eject/up sensor). Solenoid 11 (Trough) ejects the ball at position 1 toward the shooter lane, pulsing opto 67 in the same event. The game carries six balls total: three start pre-placed in the trough and three more start pre-placed directly in the gun subways/lock queue at boot (the retained script's `SubwayStart` routine).
+
+There is no manual plunger: the ball ejected from the trough rests on shooter-lane switch 68 (the sole non-opto position in switch column 6, sensed by the `AutoPlunger` kicker object itself) and solenoid 6 (Plunger, A-16757 Catapult Assembly) auto-launches it.
+
+## Kickback, jets, slingshots, flippers, and the repurposed spinner
+
+A ball draining down the left outlane (switch 15) conditionally fires solenoid 8 (Kickback) to return it to play; PinMAME's own internal simulator independently models the same conditional. There is no separate kickback-position switch.
+
+Three A-9415-2 jet bumpers (switches 71-73, solenoids 12-14) and two A-17418 slingshots (switches 74/75, solenoids 9/10 -- note the crossed naming: solenoid 9 "Left Slingshot" fires from switch 75 "Left Sling" while solenoid 10 "Right Slingshot" fires from switch 74 "Right Sling", confirmed against the retained table's geometrically-sided `SlingShotLeft`/`SlingShotRight` wall objects) are standard WPC devices. Each jet-bumper cap is GI-lit rather than lamp-matrix-lit -- there is no lamp-matrix address for any bumper, and the retained table's GI emitter collections for circuits 3 and 4 each include two of the three bumper-cap light objects (`lbumperr*`).
+
+Three flippers total: two lower (FL-11629, Fliptronic 111-114) plus one **upper right** (FL-11629, Fliptronic 115/116). There is no upper-left flipper: printed solenoid circuits 35/36 have no coil part, Fliptronic position 117 (upper-left EOS) is repurposed as a plain leaf **Spinner** (confirmed by the switch-locations parts list naming it directly and by the retained script's `sw117spinner_Spin` handler pulsing switch 117), and position 118 (upper-left button) is printed blank/Not Used.
+
+## Lamps, flashers, and general illumination
+
+All 64 lamp-matrix positions are populated; unlike Monster Bash, this manual marks none of them "Not Used". Every populated address has a single printed bulb; most are modeled in the retained table as a co-located `l<addr>`/`l<addr>b` render-double pair for brightness, with the primary object placed and the duplicate documented.
+
+Three lamps have no resolvable world-space coordinate at all: 53 (Advance in Rank), 85 (Borg Lock), and 86 (Borg Jackpot) are each modeled as a colored `Primitive` mesh sitting at local origin `(0,0,0)`, parented to a transform this curation does not resolve, rather than as a placeable `Light` object. Inventing a coordinate for them would violate the project's never-invent-a-coordinate rule, so no spatial assertion is made for these three devices and the record stays `partial` for exactly this reason -- `coverage.missing = ["spatial_placement"]`.
+
+Lamp 78 (Borg Ship) is a special case in the other direction: the manual documents one bulb (`A-17158`, `#555`), but the retained table renders it as a five-waypoint animated "Borg ship flying across the top of the playfield" effect using five `Light` objects (`l78a`-`l78e`) plus per-letter "borg" sub-segments. Those five points are the same single physical device's own animation path, not five separate bulbs, so this device carries one placement at their centroid rather than five, documented as an explicit projection.
+
+There is no dedicated "General Illumination Location" diagram anywhere in this 136-page manual (Section 2's own table of contents lists Lamp/Switch/Solenoid location pages but nothing for GI); the only printed GI evidence is the wiring table (five circuits, five wire colors, five connector pairs) plus the Section 3 schematic "General Illumination Circuits" (printed 3-10, a generic Power-Driver-Board triac/latch circuit with no per-string bulb count). Physical bulb quantity and every coordinate therefore come entirely from the retained table's own `UpdateGI` dispatch and its three playfield-facing emitter collections:
+
+- GI address 0 ("Shields G.I.") drives `St1Shields`, 12 raw members: 6 `ShieldGiBig1-6` `Light` objects (the physical bulbs) plus 6 `ShieldGiFlasherS1-6` `Flasher` objects sitting within 0.002 normalized units of their `ShieldGiBig` counterpart -- co-located glow-dome render doubles, excluded, leaving 6 placements.
+- GI addresses 1 and 2 ("Insert G.I.", printed twice) drive only VR-backglass-room helper objects (`VRBGGI*`/`VRBGGIarea*`) in `St2GI1`/`St3GI2` -- never a playfield emitter -- confirming these are backbox-only circuits with no playfield bulb, matching the manual's own "Insert" wording.
+- GI address 3 ("Playfield G.I.") drives `St4PFGI`, 42 raw members. Most physical bulbs are modeled as a co-located `"Gis*"` + `"Gi*"` `Light` pair (nearest-neighbor deduplicated to 17 bulb positions), plus 2 `lbumperr` jet-bumper-cap `Light` objects (18 placements total). Excluded: `Flasher1-5` (Flasher-typed objects at coordinates *identical* to already-counted solenoid-driven flasher devices -- e.g. `Flasher4` exactly matches solenoid 21's `f121` position -- the same physical flasher bulb re-included in the GI dimming collection for visual realism, not a distinct GI bulb), `GiBig` (a large ambient-wash Flasher helper with no corresponding manual bulb), and `l1`/`l2`/`l1b`/`l2b` (unidentified cosmetic lights matching no lamp-matrix or GI parts-list entry).
+- GI address 4 ("Return Lane/Coin") drives `St5ReLa`, 31 raw members, deduplicated the same way to 16 bulb positions (14 Gis/Gi pairs plus 2 more `lbumperr` positions). Two further raw members (`Gi9`, `Gi11`) sit at coordinates identical to two `St4PFGI` members and are excluded here as a shared-object anomaly: their paired `"Gis*"` sibling exists only in `St4PFGI`, so that circuit is recorded as their physical home rather than double-placing the same bulb under both GI addresses.
+
+## Author construction checklist
+
+- Build the six-ball trough (three balls) plus three more balls pre-placed in the gun subways/lock queue at boot, the auto-plunger shooter lane, both slingshots (crossed left/right addressing), three jet bumpers, the left lock four-ball queue, the Borg lock, the top-hole/left-hole/center-hole diverter maze, the top drop target, the two rotating gun/cannon assemblies with position feedback, and three flippers (two lower, one upper right, no upper left).
+- Public custom switches are 121-128 (aliases 91-98), and public custom solenoids are 51-56 (aliases 37-42); never bind the printed silkscreen numbers directly.
+- Preserve opto polarity for 31-38, 41-48, and 61-67 (row 8/switch 68 excepted); PinMAME already normalizes every one of them and there is nothing to invert manually.
+- Switches 16/17 are eddy-current proximity sensors, not optos or leaf switches; do not shade them as opto in a recreation.
+- Never claim a gun motor (solenoid 17/18) directly actuates its Home/Mark switch; the switches report the assembly's continuous rotational position, not a discrete solenoid pulse.
+- Bind every dedicated switch 1-8, every matrix position 11-88 (all fitted), Fliptronic 111-118 with 118 not installed and 117 repurposed as a Spinner, the eight CPU DIP bits, solenoids 1-56 (19 and 35/36 unfitted), lamps 11-88 (all fitted, three spatially unresolved), GI 0-4 (1/2 backbox-only), and the 128x32 DMD.
 
 ## Sources
 
-- `legacy.game.sttng`: `games/sttng.json` at the pinned migration revision.
+- `manual.williams.star-trek-the-next-generation.1993`: Williams Star Trek: The Next Generation operations manual, SHA-256 `7f626bce89556b2af4c80bf9eb1a5f74c72cbffe83a85b5142f17140bc820d86`.
+- `manual-support.williams.star-trek-the-next-generation.1993`: retained human transcription, SHA-256 `07f57792c7f405a5e59607a73ac73bb00f9b7daa91ede63477337d4a9ce8f948`.
+- `vpx-script.sttng-vpw-mod-1-0`: retained known-working VPW Mod v1.0 embedded script, SHA-256 `073d9971157e822a246b2baf1e8f8033304d1b5272ffb2e9bd9581caf448cd24`, binding `sttng_l7`.
+- `vpx-table.sttng-vpw-mod-1-0`: retained table, SHA-256 `bd00efe46f3ab2392f8c471e65177b348da8e9fcb5829e9f073ab23f69714d8c`, bounds `left=0 top=0 right=1093 bottom=2162`.
+- `pinmame.core.4ec52ff0ac13`: `src/wpc/sims/wpc/full/sttng.c` and the WPC-DCS core/solenoid/flipper handling at the pinned revision.
