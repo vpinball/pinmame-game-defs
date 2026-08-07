@@ -1,0 +1,261 @@
+{
+	"blockers": [
+		{
+			"detail": "These addresses are printed, fitted playfield or in-mechanism devices that the retained recreation does not model as an individual object, so they have no coordinate. They are recorded not_applicable/internal_nonvisual where the device genuinely sits inside a mechanism, and the spatial key is omitted entirely where the device is on the playfield surface but unmodelled - the schema offers only located or not_applicable, and neither is honest for the latter.",
+			"id": "devices-without-a-retained-object",
+			"internal_nonvisual_addresses": [
+				10,
+				11,
+				12,
+				13,
+				15,
+				16,
+				50,
+				51,
+				53
+			],
+			"omitted_spatial_key_addresses": [
+				25,
+				26,
+				27,
+				28,
+				29,
+				50,
+				51,
+				52,
+				53
+			],
+			"severity": "major"
+		},
+		{
+			"detail": "Exactly one known-working recreation was retained, so every coordinate is a single measurement with nothing to corroborate it. Placements are therefore `observed` rather than `validated`; promoting this machine would need at least one further independent table to agree, or the printed location drawings on manual pages 25 and 27 transcribed as an independent positional source.",
+			"id": "single-retained-recreation",
+			"severity": "minor"
+		}
+	],
+	"coordinate_convention": "Normalized against the retained table's own playfield bounds, 952 x 1974. This machine is NOT the 2162-tall playfield most WPC-era tables use; normalizing y by 2162 would compress every coordinate by about nine percent. The resolver refuses to run if it ever sees different bounds.",
+	"coordinate_origins": {
+		"computed_addresses": [
+			17,
+			18,
+			19,
+			23,
+			33,
+			34,
+			35,
+			41,
+			42,
+			43,
+			47,
+			48,
+			49,
+			55
+		],
+		"computed_centroid": 14,
+		"measured_center": 67,
+		"note": "Point-like table objects (Light, Trigger, Kicker, Bumper, Flasher, Primitive) carry their own center. Extended objects (Wall, Ramp, Rubber) are defined by drag points and have none, so those are the centroid of the object's drag points. A centroid is a derivation, not an observation, and is reported separately for that reason."
+	},
+	"format": "pinmame-spatial-blockers",
+	"machine_id": "data-east.batman.1991",
+	"placement_count": 81,
+	"source": {
+		"extraction_file_count": null,
+		"table": "vpx-table.batman-vpw-1-1"
+	},
+	"status": "partial",
+	"unresolved": {
+		"lamps": [
+			{
+				"address": 25,
+				"reason": "bound to FlasherLight25a, absent from the extraction"
+			},
+			{
+				"address": 26,
+				"reason": "bound to FlasherLight26a, absent from the extraction"
+			},
+			{
+				"address": 27,
+				"reason": "bound to FlasherLight27a, absent from the extraction"
+			},
+			{
+				"address": 28,
+				"reason": "bound to FlasherLight28a, absent from the extraction"
+			},
+			{
+				"address": 29,
+				"reason": "bound to FlasherLight29a, absent from the extraction"
+			},
+			{
+				"address": 50,
+				"reason": "no Lampz.MassAssign binding"
+			},
+			{
+				"address": 51,
+				"reason": "no Lampz.MassAssign binding"
+			},
+			{
+				"address": 52,
+				"reason": "no Lampz.MassAssign binding"
+			},
+			{
+				"address": 53,
+				"reason": "no Lampz.MassAssign binding"
+			},
+			{
+				"address": 54,
+				"reason": "no Lampz.MassAssign binding"
+			}
+		],
+		"switches": [
+			{
+				"address": 1,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 2,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 3,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 4,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 5,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 6,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 7,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 8,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 9,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 10,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 11,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 12,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 13,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 15,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 16,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 20,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 25,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 26,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 27,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 30,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 31,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 32,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 40,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 44,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 45,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 46,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 50,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 51,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 53,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 57,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 58,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 59,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 60,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 61,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 62,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 63,
+				"reason": "no script handler and no Sw<n> object"
+			},
+			{
+				"address": 64,
+				"reason": "no script handler and no Sw<n> object"
+			}
+		]
+	},
+	"version": 1
+}

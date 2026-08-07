@@ -386,7 +386,11 @@ class SpatialMigrationTests(unittest.TestCase):
 		# project at 856 files, so GI address 3, the Sequential G.I. chase lamps 91-98 and six fitted
 		# flasher solenoids have no bound object, and it is counted as a 23rd machine with a genuine
 		# spatial gap.
-		self.assertEqual(24, report["missing_requirement_counts"]["spatial_placement"])
+		# Data East Batman raises it to 25. It replaces a legacy candidate-only partial record in
+		# place, so the partial/stub/author-ready totals above are unchanged by it. Exactly one
+		# known-working recreation was retained, so nine lamp addresses have no bound object and
+		# take no spatial key at all.
+		self.assertEqual(25, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(787, len(catalog["machines"]))
 		self.assertEqual(786, catalog["summary"]["game_count"])
 		self.assertEqual(787, catalog["summary"]["machine_count"])
