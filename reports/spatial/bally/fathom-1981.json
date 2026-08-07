@@ -1,0 +1,769 @@
+{
+  "blockers": [
+    "Twenty-two auxiliary lamp addresses on the AS-2518-52 board carry no semantic identity. Fathom's own A9 sheet annotates only seven of its twenty-eight SCR outputs with a function, and the harness blocks it draws for the remaining connector pins print wire numbers, N/U and KEY entries but no functions. Five of the unannotated addresses (67, 83, 99, 114, 115) are proven driven by the ROM in the retained harness run and sixteen more are fitted but unobserved, so they are enumerated honestly rather than named or declared unused.",
+    "Three auxiliary addresses that do carry a printed function (66, 82, 98, the combined back-scan and left-lane-scan circuits) have no asserted coordinate. Their printed names imply more than one bulb, the manual prints no quantity, and the retained table models each as a cluster of co-located and out-of-bounds render lights, three of which normalize to a negative x, from which a per-bulb count cannot be derived.",
+    "Public lamp 43 (Same Player Shoot Again, printed A5J3-22) is a genuine playfield insert with no light object bound to it anywhere in the retained extraction and no reference in the retained script, so its spatial key is omitted rather than a coordinate being invented.",
+    "Public lamps 12 and 28 carry an unresolved identity disagreement between the printed wiring and the retained table (conflict.thumper-bumper-lamp-address-swap). Their coordinates are the two bumper assemblies the manual names, so no coordinate is invented, but the disagreement keeps the record partial."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 1974.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/1974; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "Light L12, which normalizes to exactly the same coordinate as Light L1 and is a co-located leftover rather than a second bulb.",
+    "Light L13, a stray object at (0.906, 0.653) for an address the printed wiring puts in the back box and which the retained script's own lamp routine leaves commented out.",
+    "Trigger sw1, an unused object at (0.701, 0.005) with no handler anywhere in the retained script; the outhole switch is modelled by the ball stack instead.",
+    "HitTarget sw42a, sw43a and sw44a, the rear meshes of the three blue in-line targets, which the retained script passes as second elements of the same drop-target array rather than as separate targets.",
+    "Trigger sw20c1, a fourth rollover object with no handler; the printed name gives three rollover buttons and the script drives three.",
+    "Light Light66g, Light81a and Light82g, which normalize to a negative x and are table modelling anomalies rather than bulbs."
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1259,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "c6aceb38d454b8236155caa431268ba32ef59212eb3193de983577f307baaac4",
+    "manifest_uri": "external:pinmame-vpx-sources/bally/fathom-1981/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.fathom-bally-1981",
+    "total_bytes": 87975187,
+    "vpxtool_version": "vpxtool git:v0.33.3"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "bally.fathom.1981",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      -7,
+      -6,
+      -5,
+      6,
+      7,
+      9,
+      10,
+      11,
+      15,
+      16
+    ],
+    "dip_switch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+    ],
+    "unused": [
+      8,
+      41,
+      45
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 11,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 13,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 27,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 29,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 45,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 61,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 6,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 18,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 19,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "internal_nonvisual": [
+      {
+        "address": 47,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 20,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 72,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 88,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 104,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 120,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 5,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 17,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 115,
+  "projections": [
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained Drain kicker object, the point at which a ball leaves the playfield into the outhole. The outhole switch itself sits inside the outhole under the apron and has no playfield-surface object; the retained script models the whole outhole and trough as one cvpmBallStack (bsTrough.Initsw 0,1,2,3) with no per-switch object."
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained BallRelease kicker object, the trough's own eject point. Trough position switches sit inside the ball trough behind the outhole, not on the playfield surface, and the retained script models them only as cvpmBallStack positions."
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained BallRelease kicker object; see switch 2. The printed name covers two ball positions on one matrix contact, which is why one address serves the 2nd-left and 1st-right trough stations."
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained Spinner object sw18: the spinner switch is part of the spinner assembly rather than a separate playfield sensor."
+    },
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained RightSlingShot wall, whose _Slingshot handler pulses this address."
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained LeftSlingShot wall, whose _Slingshot handler pulses this address."
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained Bumper2 object, whose _Hit handler pulses this address."
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained Bumper3 object, whose _Hit handler pulses this address."
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the retained Bumper1 object, whose _Hit handler pulses this address."
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the 1st Blue Inline Drop Target (retained object sw44), the target this address raises when the Solenoid Expander relay is de-energized, since the reset coil sits under the bank rather than on the playfield surface."
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the top target of the left six-bank (retained object sw32); the bank reset coil sits under the bank."
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the #3 Middle Drop Target (retained object sw33); the bank reset coil sits under the bank."
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the 1st Green Inline Drop Target (retained object sw48); the bank reset coil sits under the bank."
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained Drain kicker object, the outhole mouth. The outhole kicker sits inside the outhole under the apron."
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained Bumper1 object; the coil is inside the bumper body."
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained Bumper3 object; the coil is inside the bumper body."
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained Bumper2 object; the coil is inside the bumper body."
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained LeftSlingShot wall; the coil is behind the slingshot rubber."
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained RightSlingShot wall; the coil is behind the slingshot rubber."
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained sw4 kicker (Top Saucer). With the Solenoid Expander relay energized the same driver output drops the 1st Blue Inline Drop Target instead."
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained sw5 kicker (Right Saucer). With the Solenoid Expander relay energized the same driver output drops the 2nd Blue Inline Drop Target instead."
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the 3rd Blue Inline Drop Target (retained object sw42), the target this coil drops."
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained Bumper2 object, the right thumper bumper the manual names for this circuit. The retained table binds its own address-12 light objects to the bottom bumper instead; see conflict.thumper-bumper-lamp-address-swap."
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained Bumper3 object, the bottom thumper bumper the manual names for this circuit. The retained table binds its own address-28 light objects to the right bumper instead; see conflict.thumper-bumper-lamp-address-swap."
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp",
+      "reason": "Projected onto the retained Bumper1 object, the left thumper bumper. The retained table agrees on this one address."
+    }
+  ],
+  "resolved_input_addresses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    12,
+    13,
+    14,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    42,
+    43,
+    44,
+    46,
+    47,
+    48
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 1,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 97,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 113,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "b28721214317659c5469ae1612f7316acb293ae4fdc405f6df2791859c2429ac",
+    "geometry_dump_sha256": "c02d409b92e5ce34e3dc143bc6abd2351a90ac2bf1b0e62146037593cd91bd7d",
+    "harness_sha256": "0c5e23417255f4830587db93f767883ae28ac52b27456975758265b4dee84556",
+    "manual_sha256": "ce44bcc4470f395ed1498350079bb435e5dbced75daa948471eee33cd93d5e07",
+    "schematics_sha256": "badb849dcf110846335967024596d2e3853cfef531eae36a6e88d649aedb47a9",
+    "table_sha256": "131f29d16bb2d311450c5409981ad0ee7c4664a065f40fd1a4617fd1a09b01a7"
+  },
+  "status": "partial",
+  "unresolved": [
+    "lamp.same-player-shoot-again-43",
+    "lamp.aux-66",
+    "lamp.aux-67",
+    "lamp.aux-68",
+    "lamp.aux-69",
+    "lamp.aux-70",
+    "lamp.aux-71",
+    "lamp.aux-82",
+    "lamp.aux-83",
+    "lamp.aux-84",
+    "lamp.aux-85",
+    "lamp.aux-86",
+    "lamp.aux-87",
+    "lamp.aux-98",
+    "lamp.aux-99",
+    "lamp.aux-100",
+    "lamp.aux-101",
+    "lamp.aux-102",
+    "lamp.aux-103",
+    "lamp.aux-114",
+    "lamp.aux-115",
+    "lamp.aux-116",
+    "lamp.aux-117",
+    "lamp.aux-118",
+    "lamp.aux-119"
+  ],
+  "unresolved_inputs": [],
+  "unresolved_outputs": [
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 69,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 70,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 87,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 98,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 99,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 100,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 101,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 102,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 103,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 114,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 115,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 116,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 117,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 118,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 119,
+      "group": "pinmame.output.lamp"
+    }
+  ],
+  "version": 1,
+  "visual_review_cache": {
+    "root": "external:pinmame-manuals/rendered/bally.fathom.1981/",
+    "transcription": {
+      "path": "evidence/excerpts/bally.fathom.1981/",
+      "sha256": "c02d409b92e5ce34e3dc143bc6abd2351a90ac2bf1b0e62146037593cd91bd7d"
+    }
+  }
+}
