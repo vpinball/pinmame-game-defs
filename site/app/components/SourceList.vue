@@ -3,6 +3,15 @@ import type { Source } from '~/types/defs'
 
 defineProps<{ sources: Source[] }>()
 
+// One card can carry several excerpts — a manual is normally cited for its switch table, its
+// lamp table and each schematic sheet separately — so track which are open individually.
+const open = ref(new Set<string>())
+const toggle = (key: string) => {
+	const next = new Set(open.value)
+	next.has(key) ? next.delete(key) : next.add(key)
+	open.value = next
+}
+
 const SOURCE_META: Record<string, { label: string, icon: string, blurb: string }> = {
 	manual: { label: 'Operator manual', icon: 'lucide:book-open', blurb: 'Authoritative for wiring, connectors, switch construction and assembly geometry.' },
 	service_bulletin: { label: 'Service bulletin', icon: 'lucide:file-warning', blurb: 'Factory correction to the manual.' },
@@ -76,6 +85,45 @@ const meta = (kind: string | undefined) =>
 					class="num inline-flex items-center rounded-md border border-line-soft px-1.5 py-1 text-[11px] text-ink-4"
 					title="Referenced lines — this source cannot be linked at line level"
 				>{{ hint }}</span>
+			</div>
+
+			<!-- What the source actually said. A hash is only an identity; the excerpt is the
+			     evidence, so it is readable in place rather than being a file path to go and find. -->
+			<div v-if="source.excerpts?.length" class="mt-3 flex flex-col gap-2">
+				<div v-for="excerpt in source.excerpts" :key="excerpt.id ?? excerpt.path" class="rounded-md border border-line-soft bg-raised/40">
+					<button
+						type="button"
+						class="flex w-full items-center gap-2 px-2.5 py-2 text-left text-[11px] text-ink-3 transition-colors hover:text-amber"
+						@click="toggle(`${source.id}:${excerpt.path}`)"
+					>
+						<Icon
+							:name="open.has(`${source.id}:${excerpt.path}`) ? 'lucide:chevron-down' : 'lucide:chevron-right'"
+							class="size-3 shrink-0 opacity-70"
+						/>
+						<Icon :name="excerpt.imageUrl ? 'lucide:image' : 'lucide:quote'" class="size-3 shrink-0 opacity-70" />
+						<span class="min-w-0 flex-1 truncate">{{ excerpt.locator ?? 'Excerpt' }}</span>
+						<span v-if="excerpt.reviewed" class="shrink-0 rounded border border-line px-1 text-[10px] text-ink-4" title="A curator checked this transcription against the rendered page">checked</span>
+					</button>
+
+					<div v-if="open.has(`${source.id}:${excerpt.path}`)" class="border-t border-line-soft px-2.5 py-3">
+						<a
+							v-if="excerpt.imageUrl"
+							:href="excerpt.imageUrl"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="mb-3 block overflow-hidden rounded border border-line bg-white"
+							:title="excerpt.imageDerivation ?? 'Rendered from the retained document'"
+						>
+							<img :src="excerpt.imageUrl" :alt="excerpt.locator ?? 'Excerpt'" loading="lazy" class="w-full">
+						</a>
+
+						<div class="excerpt text-xs leading-relaxed text-ink-2" v-html="excerpt.html" />
+
+						<p class="num mt-2 text-[10px] text-ink-4">
+							{{ excerpt.path }}<template v-if="excerpt.method"> · transcribed {{ excerpt.method }}</template><template v-if="excerpt.transcribedBy"> · {{ excerpt.transcribedBy }}</template>
+						</p>
+					</div>
+				</div>
 			</div>
 
 			<dl class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-ink-4">

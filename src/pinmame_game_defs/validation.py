@@ -8,7 +8,7 @@ from typing import Any, Iterable
 
 from .errors import ValidationError
 from .evidence_policy import EvidenceAssertion, evidence_priority
-from .jsonio import content_sha256, load_json
+from .jsonio import content_sha256, file_sha256, load_json
 from .schema_validation import check_schema_documents, validate_against_schema
 from .scope import OUT_OF_SCOPE_DRIVER_IDS
 
@@ -103,6 +103,52 @@ def _validate_provenance_refs(provenance: Any, path: str, source_ids: set[str], 
 			_expect(source_ref in source_ids, f"{path}.source_refs", f"unknown source reference {source_ref!r}", errors)
 	if require_validated:
 		_expect(provenance.get("status") == "validated", f"{path}.status", "author-ready spatial assertions must be validated", errors)
+
+
+def _validate_excerpts(
+	source: dict[str, Any],
+	path: str,
+	repository_root: Path | None,
+	errors: list[str],
+) -> None:
+	"""Excerpts must actually be present and match their recorded bytes.
+
+	An excerpt exists so a reader can see what a source said without holding the document. A path
+	that does not resolve, or a digest that no longer matches, silently removes that ability, so
+	both fail closed rather than being advisory.
+	"""
+	excerpts = source.get("excerpts")
+	if excerpts is None:
+		return
+	if not isinstance(excerpts, list):
+		errors.append(f"{path}.excerpts: must be a list")
+		return
+	seen: set[str] = set()
+	for index, excerpt in enumerate(excerpts):
+		item = f"{path}.excerpts[{index}]"
+		if not isinstance(excerpt, dict):
+			errors.append(f"{item}: must be an object")
+			continue
+		excerpt_id = excerpt.get("id")
+		_validate_identifier(excerpt_id, f"{item}.id", errors)
+		if isinstance(excerpt_id, str):
+			_expect(excerpt_id not in seen, f"{item}.id", f"duplicate excerpt ID {excerpt_id}", errors)
+			seen.add(excerpt_id)
+		if repository_root is None:
+			continue
+		for field, digest_field in (("path", "sha256"), ("image", "image_sha256")):
+			relative = excerpt.get(field)
+			if not isinstance(relative, str):
+				continue
+			resolved = repository_root / relative
+			if not resolved.is_file():
+				errors.append(f"{item}.{field}: missing excerpt file {relative}")
+				continue
+			recorded = excerpt.get(digest_field)
+			if isinstance(recorded, str):
+				actual = file_sha256(resolved)
+				_expect(actual == recorded, f"{item}.{digest_field}",
+				        f"{relative} does not match its recorded digest", errors)
 
 
 def _has_cabinet_or_service_role(device: dict[str, Any]) -> bool:
@@ -425,6 +471,7 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 			if source.get("kind") in {"vpx_script", "manual", "service_bulletin"}:
 				_expect(bool(source.get("license")), f"$.sources[{index}].license", "required for community scripts and documents", errors)
 				_expect(bool(source.get("attribution")), f"$.sources[{index}].attribution", "required for community scripts and documents", errors)
+			_validate_excerpts(source, f"$.sources[{index}]", repository_root, errors)
 			for field, value in source.items():
 				_expect(not isinstance(value, str) or not LOCAL_L_DRIVE_PATTERN.search(value), f"$.sources[{index}].{field}", "canonical machine sources cannot store local L: paths", errors)
 	device_ids: set[str] = set()

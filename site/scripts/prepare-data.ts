@@ -11,7 +11,7 @@
  *   3. ../pinmame-game-defs
  *   4. ../.worktrees/pinmame-game-defs-machine-definitions   (local dev)
  */
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { marked } from 'marked'
@@ -41,11 +41,14 @@ function findDefsRoot(): string {
 
 const defsRoot = findDefsRoot()
 const publicDataRoot = join(projectRoot, 'public', 'data')
+const publicEvidenceRoot = join(projectRoot, 'public', 'evidence')
 
 rmSync(outRoot, { recursive: true, force: true })
 rmSync(publicDataRoot, { recursive: true, force: true })
+rmSync(publicEvidenceRoot, { recursive: true, force: true })
 mkdirSync(outRoot, { recursive: true })
 mkdirSync(publicDataRoot, { recursive: true })
+mkdirSync(publicEvidenceRoot, { recursive: true })
 
 // ---------------------------------------------------------------------------
 // helpers
@@ -200,6 +203,56 @@ function renderKnowledge(relPath: string | undefined): Knowledge | null {
 	let index = 0
 	html = html.replace(/<h2>/g, () => `<h2 id="${headings[index++]?.id ?? `section-${index}`}">`)
 	return { html, headings, summary }
+}
+
+// ---------------------------------------------------------------------------
+// source excerpts
+// ---------------------------------------------------------------------------
+
+/**
+ * The transcribed regions a definition was actually read out of.
+ *
+ * A recorded hash tells a reader nothing about what a source said; the excerpt does. It is inlined
+ * as rendered HTML, and any accompanying page crop is copied into `public/evidence/` so the browser
+ * can show it. Excerpts are addressed by repository path, so one shared between machines - the
+ * AS-2518-43 sheet is cited by both Centaur and Kiss - is copied once and linked from both.
+ */
+const EXCERPT_PREFIX = 'evidence/excerpts/'
+
+function readExcerpts(source: any): any[] {
+	if (!Array.isArray(source?.excerpts)) return []
+	const out: any[] = []
+	for (const excerpt of source.excerpts) {
+		if (!excerpt?.path) continue
+		const absolute = join(defsRoot, excerpt.path)
+		if (!existsSync(absolute)) continue
+		// Drop the leading `# Title`: the source card already names the document.
+		const body = readFileSync(absolute, 'utf8').replace(/^#[^\n]*\n+/, '')
+
+		let imageUrl: string | null = null
+		if (excerpt.image && existsSync(join(defsRoot, excerpt.image))) {
+			const suffix = String(excerpt.image).startsWith(EXCERPT_PREFIX)
+				? String(excerpt.image).slice(EXCERPT_PREFIX.length)
+				: String(excerpt.image)
+			const target = join(publicEvidenceRoot, suffix)
+			mkdirSync(dirname(target), { recursive: true })
+			copyFileSync(join(defsRoot, excerpt.image), target)
+			imageUrl = `/evidence/${suffix.split(sep).join('/')}`
+		}
+
+		out.push({
+			id: excerpt.id ?? null,
+			locator: excerpt.locator ?? null,
+			html: marked.parse(body, { async: false }) as string,
+			path: excerpt.path,
+			imageUrl,
+			imageDerivation: excerpt.image_derivation ?? null,
+			method: excerpt.method ?? null,
+			transcribedBy: excerpt.transcribed_by ?? null,
+			reviewed: typeof excerpt.reviewed === 'boolean' ? excerpt.reviewed : null,
+		})
+	}
+	return out
 }
 
 // ---------------------------------------------------------------------------
@@ -397,7 +450,10 @@ for (const [machineId, { path, doc }] of definitions) {
 			mechanisms: doc.mechanisms ?? [],
 			relationships: doc.relationships ?? [],
 			drivers: doc.drivers ?? [],
-			sources: doc.sources ?? [],
+			sources: (doc.sources ?? []).map((source: any) => {
+				const excerpts = readExcerpts(source)
+				return excerpts.length ? { ...source, excerpts } : source
+			}),
 			conflicts: doc.conflicts ?? [],
 			coverage: {
 				status,

@@ -387,6 +387,74 @@ select:focus-visible {
 }
 
 /* ---------------------------------------------------------------------------
+   Source excerpts
+
+   The transcribed region a definition was read out of. Mostly wide connector and
+   switch tables, so it scrolls horizontally rather than wrapping into soup.
+--------------------------------------------------------------------------- */
+
+.excerpt {
+	overflow-x: auto;
+}
+
+.excerpt table {
+	width: 100%;
+	min-width: max-content;
+	font-size: 0.75rem;
+	border-collapse: collapse;
+}
+
+.excerpt th,
+.excerpt td {
+	border-bottom: 1px solid var(--color-line-soft);
+	padding: 0.25rem 0.6rem;
+	text-align: left;
+	white-space: nowrap;
+}
+
+.excerpt th {
+	color: var(--color-ink-3);
+	font-weight: 600;
+	font-size: 0.6875rem;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.excerpt h2 {
+	margin: 1rem 0 0.4rem;
+	color: var(--color-ink-2);
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.excerpt h2:first-child {
+	margin-top: 0;
+}
+
+.excerpt p {
+	margin: 0.5rem 0;
+}
+
+.excerpt blockquote {
+	margin: 0.5rem 0;
+	border-left: 2px solid var(--color-line);
+	padding-left: 0.75rem;
+	color: var(--color-ink-3);
+}
+
+.excerpt ul {
+	margin: 0.5rem 0;
+	padding-left: 1rem;
+	list-style: disc;
+}
+
+.excerpt code {
+	font-size: 0.6875rem;
+}
+
+/* ---------------------------------------------------------------------------
    Motion
 --------------------------------------------------------------------------- */
 

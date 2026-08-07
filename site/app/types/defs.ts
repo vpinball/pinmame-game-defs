@@ -89,6 +89,23 @@ export interface Relationship {
 	provenance?: Provenance
 }
 
+/** A transcribed region of a source, so a reader can see what it actually said. */
+export interface Excerpt {
+	id: string | null
+	/** Where in the source this region is: page, sheet, drawing number, block. */
+	locator: string | null
+	/** The transcription, already rendered. */
+	html: string
+	/** Repository path, for linking back to the file. */
+	path: string
+	/** Rendered page crop, for facts that are drawings rather than tables. */
+	imageUrl: string | null
+	imageDerivation: string | null
+	method: string | null
+	transcribedBy: string | null
+	reviewed: boolean | null
+}
+
 export interface Source {
 	/** Controller-profile citations omit both of these. */
 	id?: string
@@ -97,6 +114,7 @@ export interface Source {
 	locator?: string
 	revision?: string
 	sha256?: string
+	excerpts?: Excerpt[]
 	license?: string
 	attribution?: string
 	rights?: string

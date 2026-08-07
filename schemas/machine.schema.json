@@ -421,8 +421,18 @@
         },
         "uri": { "type": "string", "minLength": 1 },
         "revision": { "type": "string", "minLength": 1 },
-        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "sha256": {
+          "description": "Byte identity of the retained artifact. This detects drift in the local copy; it says nothing about what the source contains. Use excerpts for that.",
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
         "locator": { "type": "string", "minLength": 1 },
+        "excerpts": {
+          "description": "Transcribed regions of this source that a definition was read out of, so the provenance of an assertion is legible without holding the document. Expected on any source a reader cannot simply open: a local-only manual, a community table, a web page.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/excerpt" }
+        },
         "license": { "type": "string", "minLength": 1 },
         "attribution": { "type": "string", "minLength": 1 },
         "source_id": { "type": "string", "minLength": 1 },
@@ -430,6 +440,46 @@
         "rights": { "type": "string", "minLength": 1 },
         "known_working": { "type": "boolean" },
         "acquired_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "excerpt": {
+      "description": "A transcribed region of a source, stored beside the definition. One source normally carries several: a manual is cited separately for its switch table, its lamp table and each schematic sheet. An excerpt is the substrate provenance is read from, not proof of correctness - it is transcribed by the same party making the assertion.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "locator", "path", "sha256"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "locator": {
+          "description": "Where in the source this region is: page, sheet, drawing number, block.",
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "description": "Repository-relative path to the transcription, normally under evidence/excerpts/.",
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "image": {
+          "description": "Optional rendered crop of the same region, for facts that are drawings rather than tables. Lossless WebP, grayscale unless colour carries meaning. Do not threshold to 1-bit: printed shading is itself evidence on some machines, such as the shaded opto rows of a switch matrix.",
+          "type": "string",
+          "minLength": 1
+        },
+        "image_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "image_derivation": {
+          "description": "How the crop was produced, so it can be re-derived from the retained document: page, crop box, dpi, tool and version.",
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "description": "How the transcription was produced. An excerpt is itself an assertion, so a low-tier OCR pass and a curator-verified read must be distinguishable.",
+          "enum": ["manual", "ocr", "model", "mixed"]
+        },
+        "transcribed_by": { "type": "string", "minLength": 1 },
+        "reviewed": {
+          "description": "Whether a curator visually checked the transcription against the rendered page.",
+          "type": "boolean"
+        }
       }
     },
     "spatial": {
