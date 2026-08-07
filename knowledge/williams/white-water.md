@@ -1,0 +1,82 @@
+# White Water (Williams, 1993)
+
+Coverage: **partial - complete physical I/O inventory, WPC-Fliptronic bindings, physical wiring (including a clean switch-matrix opto polarity sweep with zero disagreement), mechanism causality, driver-variant boundary, and recreation behavior validated; spatial placement candidate pending a positioned proxy for lamps 17/55**
+
+## Identity and evidence precedence
+
+This is the Williams WPC-Fliptronic physical product released 1993, IPDB No. 2768. The retained known-working VPX script's own header names the game and IPDB number directly ("Williams White Water / IPD No. 2768 / January, 1993"); manufacturer, year, and every mechanism recovered from the manual (Bigfoot head, river-rafting theme, whirlpool, three-ball lock) independently agree with the pinned `ww_l5` driver family, so the script's own identity claim is accepted rather than treated as unverified table metadata. It covers the nineteen-driver `ww_*` clone tree: `ww_l5` (parent, production L-5), ten further Williams firmware revisions (`ww_d5`, `ww_lh5`, `ww_lh6`, `ww_lh6c`, `ww_l4`, `ww_d4`, `ww_l3`, `ww_d3`, `ww_l2`, `ww_d2`), three prototypes (`ww_p8`, `ww_p9`, `ww_p6`), and five FreeWPC/Bigfoot community firmware revisions (`ww_bfr01` through `ww_bfr01e`). Every one of these is a ROM revision for the same physical machine.
+
+Evidence precedence for this definition: the retained known-working script is runtime and mechanism-causality ground truth; the Williams operations manual controls physical construction, part numbers, wiring, polarity, quantities, and device presence; pinned PinMAME controls controller generation, public address topology, and emulator-side mechanism modeling; the retained VPX geometry supplies normalized coordinates. Unlike some later WPC manuals curated in this project, the retained White Water manual carries a real text layer, but its Section 2/3 tables still scramble under column-aware `pdftotext -layout` extraction, so every printed table used here was read from 200 dpi renders and transcribed into `external:pinmame-review-artifacts/white-water/manual-transcription.md` and the excerpt files it indexes.
+
+## Controller platform and address topology
+
+`GEN_WPCFLIPTRON` (`PINMAME_HARDWARE_GEN_WPCFLIPTRON = 0x8`) with `wpc_dispDMD`. The controller profile is `pinmame.wpc-fliptronic`, reused unchanged from Twilight Zone.
+
+- Switches: dedicated coin-door 1-8, matrix 11-88 as drive column then return row, Fliptronic 111-118. The manual itself states the convention on page 1-13: "the number on the left indicates the column, the number on the right indicates the row." `wwGameData`'s inverted-switch mask is `{0},{0x00,0x00,0x00,0x00,0x00,0x00,0xbf,0x00,0x60,0x00,0x00,0x00}`, indexed directly by column: column 6 = `0xbf` (rows 1-6, 8 = switches 61-66, 68) and column 8 = `0x60` (rows 6, 7 = switches 86, 87). Every one of those nine addresses is printed with opto/proximity construction (A-14315 LED + A-14316 Trans, or 5490-12451-00) and every one is covered by the mask — see the clean opto polarity sweep below.
+- Solenoids: physical drivers 1-28, with every one of the 28 standard positions fitted (unlike some other WPC-Fliptronic games, White Water has no unfitted low-numbered solenoid); Fliptronic upper-flipper circuits 33/34 genuinely fitted (Upper Right Flipper) and 35/36 unfitted (no upper-left flipper); WPC J111 general-purpose relay bits 29-32 (only 31, named `TiltSol` by the retained script, has an observed binding); 37-44 unused address space (this generation has no LPDC board); Fliptronic lower-flipper circuits 45-48; simulator-only 49 and reserved 50. `wwGameData` declares `custSol = 0`, so no address above 50 is published.
+- Lamps: 8x8 matrix 11-88, all addresses populated except 17 and 55 (printed "Not Used" on one page but fitted per two other sources — see below) and the genuinely unused 85-87. A second lamp column (`hw.lampCol = 2`) publishes sixteen further addresses, 91-98 and 101-108, for a backbox chase-lamp board.
+- GI: five strings on public addresses 0-4, matching the retained script's `UpdateGI` handling exactly (cases for 0/1/2 only; no case for 3/4, matching the manual's own backbox-only wiring for those two strings).
+
+## Ball path: trough, drain/outhole, and shooter lane
+
+A drained ball enters a merged Drain/Outhole VPX kicker; the retained script's `Drain_hit` sets switch 15 (Outhole) directly, and solenoid 1's `kisort` callback kicks the ball into the three-position trough. Right Trough (76) is the eject-end position nearest the ball-serve coil; Center Trough (77) and Left Trough (78) queue behind it toward the drain entrance. Solenoid 2 (Ball Serve) ejects the ball at 76 into the shooter lane, sensed at switch 53 (Ball Shooter). White Water has **no auto-plunger solenoid**: `wwGameData` defines no plunger coil and the retained table uses a manual pull-back VPX Plunger object.
+
+Trough switches 76-78 are plain mechanical parts (5647-12693-08, 5647-09957-00) on the switch-locations parts list, not opto construction, matching column 7 of the inverted-switch mask being entirely `0x00` — pinned PinMAME does not normalize any of 71-78, and none of them needs it.
+
+## Whirlpool: hole, underground tunnel, and popper
+
+A ball that falls into the Whirlpool hole (opto 61, "Whirlpool Popper") travels an underground tunnel and re-emerges at a distant location sensed by opto 62 ("Whirlpool Exit"); the retained script's `FallThrough2_Hit` handler pulses switch 62 as the ball reappears, and solenoid 3 kicks it back onto the playfield. This is a real one-way teleport-style mechanism, not two independent devices. Flasher solenoids 22 ("Whirlpool Popper" flasher) and 23 ("Whirlpool Enter" flasher) light the two ends.
+
+## Three-ball lockup lane
+
+The retained script marks this feature explicitly with its own comment, `'*** three ball lock ***'`. A ball enters at Lockup Left (opto 65, outermost), passes Lockup Center (opto 64, which drops a gate toward the popper: `multiballwall65.isDropped = false`), and comes to rest at Lockup Right (opto 63), a physical VPX Kicker held until solenoid 4 (Lockup Popper) releases it. All three switches share the A-14315/A-14316 opto construction with the Whirlpool switches and are normalized by the same column-6 mask bits.
+
+## Bigfoot: rotating head and drive motor
+
+A DC gearmotor rotates the Bigfoot figure on the mini-playfield through solenoid 25 (Bigfoot Drive, a step pulse) and solenoid 26 (Bigfoot Enable, direction). Two head-position optos — switch 86 "Bigfoot Opto 1" and switch 87 "Bigfoot Opto 2" — report a coarse 2-bit position code; both are documented projections onto the figure's own retained table primitive, since neither has a separate playfield trigger object.
+
+The manual's own T.14 Bigfoot Test (page 1-16) independently names the two sensors "Opto 1"/"Opto 2", confirms a single reversible drive motor ("Head Motor Test... the direction CW or CCW shows on the display"), and confirms a small number of named head positions ("Head Position Test... the display shows the position of the head") — all consistent with two binary sensors encoding a handful of named stops rather than a fine-grained numeric position.
+
+Two independent models of the same two-sensor hardware exist and disagree on resolution, not on which switches exist: the retained script's `BigTimer_Timer` runs a 96-step counter and sets `{86, 87}` at four named positions — step 24: `{1, 0}` ("Left"/Diverter), step 45: `{0, 1}` ("Up"), step 72: `{0, 0}` ("Right"/Unknown), step 7: `{1, 1}` ("Down"/Player) — while pinned PinMAME's own `ww_handleMech` instead derives the identical two bits from a 7-bit `locals.bigfootPos` counter as `(bigfootPos/32+1) & {0x02, 0x01}`, a coarser 4-quadrant read of the same physical sensor pair. Both are self-consistent emulations of the same hardware and neither contradicts the manual, so this is recorded as recreation knowledge, not a `conflicts` entry.
+
+## Ramp diverter, kickback, slingshots, and jet bumpers
+
+Solenoid 6 (Ramp Diverter) routes a ball entering the Canyon ramp between two downstream paths; pinned PinMAME's own `ww_handleBallState` checks `core_getSol(sDiverter)` directly to choose between its two simulated ramp-continuation states, confirming the diverter's causal role independently of the retained script. Solenoid 5 (Kickback) can return a ball that drains down the Left Outlane (switch 25) to play. Two slingshots (coils 10/11, switches 51/52) and three jet bumpers (coils 12/13/14, switches 16/17/18) are standard WPC devices with the usual pulse-and-fire script handlers.
+
+## Flippers: three, not four
+
+White Water has three flippers, not the four some other WPC-Fliptronic games have: Lower Right, Lower Left, and a single Upper Right on the mini-playfield near Bigfoot (`wwGameData` declares `FLIP_SW(FLIP_L | FLIP_UR) | FLIP_SOL(FLIP_L | FLIP_UR)`, with no `FLIP_UL` bit). The Switch Locations parts list has rows only for F1-F6 (Lower Right EOS/Button, Lower Left EOS/Button, Upper Right EOS/Button); F7/F8 print no assembly or part at all. The Solenoid/Flasher Locations page lists only three flipper assemblies (Lower Right A-15205-R-2, Upper Right A-15843, Lower Left A-15205-L-2) and the Flipper Circuits table on the wiring page likewise has only three rows. The switch-matrix wiring page nonetheless prints the generic F7/F8 column template (the shared WPC Fliptronic CPU-board silkscreen), so F7/F8 are enumerated as unfitted template wiring, not a physical switch — the same pattern this project has already established for unfitted Fliptronic positions on other machines.
+
+## Chase-lamp board: sixteen backbox lamps
+
+`wwGameData` declares `hw.lampCol = 2`, publishing sixteen further lamp addresses (91-98, 101-108) beyond the standard matrix. The retained script's `ww_wpc_w` handler shifts a 16-bit value in serially from solenoids 27 ("Chase Lamp Clock") and 28 ("Chase Lamp Data") and writes the two resulting bytes to `coreGlobals.tmpLampMatrix[8]`/`[9]`. The Backbox Assembly parts breakdown (manual PDF page 66) lists both the driving A-15761 "Chase Light PC Board" and two A-15765 "8-Lamp Board Assembly" units among the backbox hardware (alongside the WPC CPU board, sound board, and knocker) — neither board appears in either playfield parts list. The Chase Lamp/8-lamp board schematic (PDF page 132) confirms two independent 8-lamp boards, "Left Side" and "Right Side", each wired from one of the Chase Lamp board's two output connectors. The retained VPX table does not model any of the sixteen individual bulbs, and there is no printed evidence for which physical byte feeds which side, so all sixteen addresses are enumerated generically as backbox `cabinet_or_service` devices rather than split into an unsubstantiated Left/Right grouping.
+
+## Lamps 17 and 55: a genuine cross-page manual disagreement, resolved
+
+The Lamp Locations parts list (page 2-40) prints both address 17 and address 55 as "Not Used" with every field blank — the identical blank signature the same page uses for the genuinely unfitted positions 85-87. But the Lamp Matrix wiring page (3-2) prints real feature names at both addresses ("Lights Whirlpool" at 17, "Whirlpool Lit" at 55), and the retained script's `LampTimer_Timer` special-cases both addresses by name: `case 17` drives `upf_yellow_light` (an image-cycling primitive, `Primitive99`), and `case 55` drives `upf_red_light` (`Primitive100`), each stepping through a `simplelightyellow`/`simplelight` image sequence rather than a simple on/off `Light` object. Two independently-agreeing sources (the wiring page and the runtime script) against one blank parts-list row is enough to resolve this as fitted, following the same "two agreeing sources override a transposition" precedent this project has already used for slingshot- and flipper-naming disagreements elsewhere. Both lamps are recorded `used`.
+
+Their *position*, however, is genuinely unresolved: both driving primitives (`Primitive99`, `Primitive100`) sit at a raw local origin `(0, 0)` in the retained extraction, not a playfield coordinate, so neither can be honestly placed. The `spatial` key is omitted entirely for both devices — the same allowance already established for Star Trek: The Next Generation's still-unresolved lamps 53/85/86 — rather than inventing a coordinate or a status the schema does not define. This keeps `coverage.dimensions.spatial_placement` at `candidate` and adds `spatial_placement` to `coverage.missing`.
+
+## Switch-matrix opto polarity sweep: zero disagreement
+
+Every address the manual prints with opto/proximity construction (A-14315 LED + A-14316 Trans, or 5490-12451-00) was checked column by column against `wwGameData`'s inverted-switch mask. Column 6 is `0xbf` = `0b10111111`: bits 0-5 and 7 are set, covering rows 1-6 and 8 (switches 61-66, 68); the one clear bit is bit 6 (row 7, switch 67), which the manual itself prints "Not Used". Column 8 is `0x60` = `0b01100000`, covering rows 6-7 (switches 86, 87). Together these are exactly the nine addresses in `OPTO_SWITCHES` — a clean sweep with no exceptions, matching the same clean result already established for Bally Kiss, Bally The Addams Family, and Williams Star Trek: The Next Generation. An earlier working note during this curation pass concluded switch 66 (Left Ramp Main) was the one exception PinMAME left uncovered; that conclusion came from a hand computation of `0xbf`'s bit pattern and was wrong twice in a row before being checked in code, which is why it is called out explicitly here rather than silently corrected.
+
+## Also worth carrying forward
+
+Two lamp addresses (35 and 45) are both genuinely printed "Hazzard 4" on the lamp-matrix wiring page — confirmed by two independent reads of the rendered page, not a transcription slip. Solenoid 21's ("Insanity Falls" flasher) two dedicated helper objects (`Flasherlight21`, `FlasherFlash21`) both sit outside the retained table's `0..1` playfield bounds; its placement instead uses `Flasher16`, the one positioned VPX object the same `Flasherset21` routine also toggles. One `GImiddle` member (`Light2`, normalized x=-0.041783) is similarly out of bounds and is excluded as a table-modeling anomaly, and five more `GImiddle` members (`l21b2`..`l21b6`) are brightness-doubling copies of lamp 21 rather than distinct GI bulbs, leaving 11 genuine placements for GI address 1.
+
+## Author construction checklist
+
+- Build the three-position trough with a merged drain/outhole kicker, the manual pull-back plunger shooter lane, the Whirlpool hole-and-tunnel pair, the three-ball lockup lane, the rotating Bigfoot head with its 96-step drive, the Canyon ramp diverter, the left-outlane kickback, both slingshots, three jet bumpers, and three flippers (Lower Right, Lower Left, Upper Right — no upper-left flipper).
+- Preserve opto polarity for 61-66, 68, 86, and 87; do not invert what PinMAME already normalizes. The sweep found no exceptions on this machine.
+- Bind every dedicated switch 1-8, every matrix position 11-88 including the printed Not Used positions, Fliptronic 111-118 with 117/118 explicitly not installed, the eight CPU DIP bits, solenoids 1-50, lamps 11-88 (with 17 and 55 fitted despite one blank parts-list row) plus the sixteen backbox chase-lamp addresses 91-98/101-108, GI 0-4, and the 128x32 DMD.
+- Do not fabricate a playfield coordinate for lamps 17/55; both are legitimately unresolved pending a positioned proxy object.
+
+## Sources
+
+- `manual.williams.white-water.1993`: Williams White Water operations manual, SHA-256 `919f057184916e5ba43141eee7ccf3955a4aae9dfb22118033888d39eea888c0`.
+- `manual-support.williams.white-water.1993.handbook`: Williams White Water Operator's Handbook, SHA-256 `e133b899641bfa71b844f8eb42c00b1ac4a2ac6f273ee7153c7569bce5fc7f85`.
+- `manual-support.williams.white-water.1993`: retained human transcription index, SHA-256 `bee3ec48d85bfd4df20bacc6db13898e706781b683751e884e1fbe719beb10f9`.
+- `vpx-script.ww-flupper`: retained known-working Flupper embedded script, SHA-256 `0676acb1e610bda8f42f94a915a70bb1b71b6e48462326dd43083a3ab4fa0096`, binding `ww_lh6`.
+- `vpx-table.ww-flupper`: retained table, SHA-256 `7c59095e9c6a7e100e79f80d7d83497b1c87817bc9daf939721f1a8727a781cd`, bounds `left=0 top=0 right=952 bottom=2092`.
+- `pinmame.core.4ec52ff0ac13`: `src/wpc/sims/wpc/full/ww.c` and the WPC-Fliptronic core/solenoid/flipper handling at the pinned revision.

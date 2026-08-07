@@ -1,0 +1,731 @@
+{
+  "blockers": [
+    "Lamps 17 (Lights Whirlpool) and 55 (Whirlpool Lit) drive dedicated image-cycling Primitive objects rather than positioned Light objects, and both retained primitives sit at a raw local origin (0,0) rather than a playfield coordinate, so no position is asserted for either address; see the unresolved list below. This is the only outstanding gap -- every other dimension this report audits, including the switch-matrix opto polarity sweep, is complete and validated with zero disagreement."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2092.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/2092; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "GImiddle member Light2 (normalized x=-0.041783, outside the 0..1 playfield bounds) -- table modeling anomaly, not a distinct physical bulb",
+    "GImiddle members l21b2..l21b6 -- brightness-doubling copies of lamp 21, not distinct GI bulbs",
+    "Flasherlight21/FlasherFlash21 helper objects (both outside the 0..1 playfield bounds); solenoid 21's placement uses the positioned Flasher16 object the same routine also toggles"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1166,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "0ec3e7f0c856de3767d1f7e3bf285cd14e533501c798fedcf316833962076b59",
+    "manifest_uri": "external:pinmame-vpx-sources/williams/white-water-1993/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.ww-flupper",
+    "total_bytes": 141788903,
+    "vpxtool_version": "vpxtool"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "williams.white-water.1993",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      13,
+      14,
+      21,
+      22,
+      23,
+      112,
+      114,
+      116
+    ],
+    "constant": [
+      24
+    ],
+    "dip_switch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "internal_nonvisual": [
+      111,
+      113,
+      115
+    ],
+    "unused": [
+      11,
+      12,
+      67,
+      72,
+      81,
+      82,
+      83,
+      84,
+      85,
+      88,
+      117,
+      118
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 3,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 4,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 88,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 91,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 92,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 93,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 94,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 95,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 96,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 97,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 98,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 101,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 102,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 103,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 104,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 105,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 106,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 107,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 108,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 8,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 9,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 15,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 16,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 27,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 28,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 32,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 85,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 86,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 87,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 35,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 36,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 194,
+  "projections": [
+    {
+      "address": 86,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the rotating Bigfoot figure (Primitive Primitive_BigFoot, table object center): the two head-position optos 86/87 are printed on a board mounted inside the Bigfoot mechanism, not as separate playfield objects, and PinMAME's ww_handleMech reads them from a single 7-bit motor-position counter (locals.bigfootPos) rather than from any Trigger/Kicker on the retained table."
+    },
+    {
+      "address": 87,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the rotating Bigfoot figure (Primitive Primitive_BigFoot, table object center); see switch 86."
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid",
+      "reason": "Coordinate taken from Flasher16, the one positioned VPX object toggled by the retained script's Flasherset21 routine alongside the off-table Flasherlight21/FlasherFlash21 helper objects (both of which sit outside the 0..1 playfield bounds and are excluded as table-modeling anomalies)."
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the rotating Bigfoot figure (Primitive Primitive_BigFoot, table object center); solenoid 25 is the H-bridge-style drive pulse for the head motor."
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the rotating Bigfoot figure (Primitive Primitive_BigFoot, table object center); solenoid 26 sets the head motor's rotation direction."
+    }
+  ],
+  "resolved_input_addresses": [
+    15,
+    16,
+    17,
+    18,
+    25,
+    26,
+    27,
+    28,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    68,
+    71,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    86,
+    87
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 0,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "0676acb1e610bda8f42f94a915a70bb1b71b6e48462326dd43083a3ab4fa0096",
+    "manual_sha256": "919f057184916e5ba43141eee7ccf3955a4aae9dfb22118033888d39eea888c0",
+    "table_sha256": "7c59095e9c6a7e100e79f80d7d83497b1c87817bc9daf939721f1a8727a781cd"
+  },
+  "status": "candidate",
+  "unresolved": [
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp",
+      "reason": "Drives a dedicated image-cycling Primitive (Primitive99 for lamp 17, Primitive100 for lamp 55) rather than a positioned Light object; both retained primitives sit at raw (0,0), a local origin rather than a playfield coordinate, so no position is asserted."
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp",
+      "reason": "Drives a dedicated image-cycling Primitive (Primitive99 for lamp 17, Primitive100 for lamp 55) rather than a positioned Light object; both retained primitives sit at raw (0,0), a local origin rather than a playfield coordinate, so no position is asserted."
+    }
+  ],
+  "version": 1,
+  "visual_review_cache": {
+    "root": "external:pinmame-manuals/rendered/williams.white-water.1993/",
+    "transcription": {
+      "path": "external:pinmame-review-artifacts/white-water/manual-transcription.md",
+      "sha256": "0c55e5c896738526846d9a04b3b96f5ca61fbfbd5dc85fdd3516c29f1f94a64f"
+    }
+  }
+}
