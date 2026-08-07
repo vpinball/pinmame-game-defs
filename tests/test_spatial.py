@@ -397,7 +397,11 @@ class SpatialMigrationTests(unittest.TestCase):
 		# declared clones by PinMAME but living in by68701.c on different boards) holding the
 		# leftover stub, exactly as Kiss's Intel-8035 prototypes did. So the physical-game count
 		# went 786 -> 787 by splitting one record into two, not by adding coverage.
-		self.assertEqual(33, report["missing_requirement_counts"]["spatial_placement"])
+		# Data East Batman raises it to 34. It replaces a legacy candidate-only partial record
+		# in place, so partial/stub/author-ready totals are unchanged by it. Exactly one
+		# known-working recreation was retained, so nine lamp addresses and the twelve flasher
+		# circuits have no bound object and take no spatial key at all.
+		self.assertEqual(34, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(787, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

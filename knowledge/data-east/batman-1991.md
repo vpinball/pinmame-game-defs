@@ -1,180 +1,118 @@
-# Batman
+# Batman (Data East, 1991)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+Coverage: **partial - manual-verified semantic I/O for the full 8x8 switch and lamp matrices with
+connector, wire-colour and drive-transistor wiring, all 22 printed coil drivers including the
+Left/Right relay pair, and normalized placements from one retained recreation; held below
+author-ready because only a single recreation was retained and two source disagreements are
+unresolved**
 
-## Overview
+## Identity
 
-Legacy evidence identifies this candidate as Data East (1991). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+Data East Batman, 1991, `GEN_DEDMD16` - the 128x16 DMD generation, display board 520-5042-00,
+sound board 520-5050-01. PinMAME roots the family at `btmn_103` with 5 drivers.
+Every one shares `init_btmn` and therefore one `btmnGameData`, so all five are the same physical
+machine; what differs is CPU game ROMs, plus a language display ROM on the French and German
+sets, plus a ROM-layout macro on 1.01. Sound ROMs are byte-identical across all five.
 
-## Playfield devices
+**`batmanf` is Batman Forever, Sega 1995, `GEN_DEDMD64`.** It lives in the same game-table file
+and shares a name prefix, and it is a completely different physical machine. Do not group them.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+## Relationship to `pinmame.system-11`, and why this record does not claim it
 
-## Custom mechanisms
+Batman is **Data East hardware**, `GEN_DEDMD16`. It is not a Williams System 11 machine. What is
+true is narrower and is a fact about PinMAME rather than about the cabinet: there is no `de.c`,
+`degames.c` includes `s11.h`, and Data East games are driven by the same emulator source file as
+Williams System 11 because the Data East CPU board was closely derived from it.
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+That makes `controllers/pinmame/system-11.json` the closest existing profile, and the two agree on
+the load-bearing parts: column-major sequential switch numbering, a single DIP-style jumper bit at
+public address 0, 64 lamps, the mux-relay pairing of an A-side address with A+24, address 23 as a
+flipper/switched-solenoid enable with no device behind it, and no GI channel anywhere on the
+platform. Those conclusions were reached here independently from source before that profile
+existed, and they match.
 
-## Ball-state transitions
+They are not the same profile, and this record therefore keeps the `pinmame.dataeast` platform
+string that nine already-committed definitions use rather than claiming a Williams one. Four
+differences are established from pinned source:
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+- **Diagnostic buttons.** `s11.h` gives Data East only `DE_SWADVANCE` (-7) and `DE_SWUPDN` (-6).
+  The -5 and -4 addresses beside them are `S11_SWCPUDIAG` and `S11_SWSOUNDDIAG`, Williams only.
+- **Special-solenoid permutation.** `setSSSol` selects `ssSolNo[1] = (3, 4, 5, 1, 0, 2)` for Data East
+  against `ssSolNo[0] = (5, 4, 1, 2, 0, 3)` for Williams, so the PIA-line-to-public-address map for
+  17-22 differs between them.
+- **Cabinet column.** Column 1 is loaded from `DE_COMPORTS`, not `S11_COMPORTS`.
+- **Advance polarity.** `s11.c` reads Data East's Advance button inverted, as
+  `!core_getSw(DE_SWADVANCE)`.
 
-## Controller interactions
+Authoring a Data East profile would set the address contract for all nine of those records at
+once, and whether one profile should span every Data East generation - or whether Sega-era games
+belong under a profile named "Data East" - are scope and naming calls for a maintainer. This
+record documents the model instead of pre-empting that decision.
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+## The address model, and where it differs from WPC and Whitestar
 
-## Service and setup information
+Data East runs on the shared Williams System 11 core (`s11.c`); there is no `de.c`. `s11.c`
+installs no switch or lamp conversion of its own, so it inherits PinMAME's sequential defaults,
+`core_m2swSeq(col,row) = col*8+row-7`. **Both printed matrices are column-major**: address =
+(column - 1) x 8 + row. Column 1 of the switch matrix is the cabinet/coin column, exactly as
+`DE_COMPORTS` declares.
 
-Unknown; locate operator/service documentation.
+Four things will surprise anyone carrying WPC or Whitestar assumptions across.
 
-## Timing and tuning observations
+- **There is no GI channel at all.** `coreGlobals.nGI` is never assigned anywhere in `s11.c` and
+  `gi[]` is never written, so `vp_getGI` always reports zero. General illumination is **public
+  solenoid 11**, which the manual prints as the "General Illumination Relay" (K-1) and which
+  `s11.c:1207` comments `// GI output`. The retained script agrees, naming its own callback
+  `'GI Relay`. Three independent sources, one answer.
+- **Public solenoid 10 is the Left/Right relay and it re-routes addresses.** With it energised,
+  outputs 1-8 are re-published at 25-32 and read zero at 1-8. The manual describes the same
+  mechanism in prose: the relay "switch[es] +32 volts between coils or flash lamps; these sets
+  are termed 'left' and 'right'", and it is why 22 drivers yield "29 regular coils". Every right
+  half on this machine is a group of four flash lamps.
+- **PinMAME's flasher typing is uniform and the machine is not.** `s11.c:1209` types the whole
+  25-32 block as No. 89 bulbs, but the printed wiring diagram shows four of the eight right-side
+  groups mixing No. 906 bulbs in. Treat the emulator's output type as a brightness model, not as
+  evidence of what is fitted; the manual's per-drive composition is recorded on each address.
+- **64 lamps, not 80**, and every one of the 64 is populated - the printed chart has no "Not
+  Used" cell anywhere. Any address above 64 is not hardware; the superseded legacy record listed
+  lamps at 109 and 111-132, and the retained script binds 71 `Lampz` slots, both of which are
+  recreation-side fictions.
+- **Solenoids 33-44 are permanently zero here.** `core_getSol` only serves 33-36 for
+  `GEN_ALLWPC`/`GEN_SAM`, and the S11 extra block at 37-44 is written only under
+  `S11_SNDOVERLAY` or `S11_PRINTERLINE`, neither of which this game sets.
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+## Public switches 15 and 16 belong to the emulator
 
-## Recreation guidance
+The printed matrix names them Left EOS and Right EOS. Pinned PinMAME publishes something else
+there. `btmnGameData` declares `FLIP_SWNO(15,16)`, and `core.c:1740-1741` - under its own comment
+"set switches in matrix for non-fliptronic games" - writes the flipper **button** state into those
+two addresses via `core_setSw`. Because this game declares no `FLIP_SOL`, no `FLIP_EOS` bit is
+ever set and the end-of-stroke simulation at `core.c:1756-1775` never runs at all.
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
+**A recreation must not drive public 15 or 16**, because `core_updateSw` overwrites them on every
+frame. The retained known-working script never touches either address, which is the behaviour this
+predicts.
 
-## Evidence notes
+## Flipper coils are synthesised, and fire in pairs
 
-- `games/batman.json#/switches/0._note`: vpmNudge.TiltSwitch = 1
-- `games/batman.json#/switches/1._note`: bsTrough.EntrySw = 10. Drain_Hit triggers sound.
-- `games/batman.json#/switches/2._note`: bsTrough.InitSwitches Array(13,12,11) — sw11 is position 3 (nearest eject). Size=3.
-- `games/batman.json#/switches/3._note`: bsTrough.InitSwitches Array(13,12,11) — sw12 is position 2.
-- `games/batman.json#/switches/4._note`: bsTrough.InitSwitches Array(13,12,11) — sw13 is position 1 (nearest drain).
-- `games/batman.json#/switches/5._note`: Sw14_Hit/UnHit tracks BallInPlungerLane variable. plungerIM.switch 14.
-- `games/batman.json#/switches/6._note`: Controller.Switch(17) on/off. Part of top rollover lanes.
-- `games/batman.json#/switches/7._note`: Controller.Switch(18) on/off. Part of top rollover lanes.
-- `games/batman.json#/switches/8._note`: Controller.Switch(19) on/off. Part of top rollover lanes.
-- `games/batman.json#/switches/9._note`: Controller.Switch(21) on/off.
-- `games/batman.json#/switches/10._note`: Controller.Switch(22) on/off.
-- `games/batman.json#/switches/11._note`: Controller.Switch(23) on/off.
-- `games/batman.json#/switches/12._note`: Controller.Switch(24) on/off.
-- `games/batman.json#/switches/13._note`: Controller.Switch(28) on/off. Comment says 'Center Ramp'.
-- `games/batman.json#/switches/14._note`: Controller.Switch(29) on/off. Comment says 'Center Ramp Exit'.
-- `games/batman.json#/switches/15._note`: PulseSw 33. Left bank of 3 standup targets with animation.
-- `games/batman.json#/switches/16._note`: PulseSw 34. Left bank of 3 standup targets with animation.
-- `games/batman.json#/switches/17._note`: PulseSw 35. Left bank of 3 standup targets with animation.
-- `games/batman.json#/switches/18._note`: Controller.Switch(36) on/off. Joker face target — left eye. Animated gate with psw36 primitive.
-- `games/batman.json#/switches/19._note`: Controller.Switch(37) on/off. Joker face target — right eye. Animated gate with psw37 primitive.
-- `games/batman.json#/switches/20._note`: Controller.Switch(38) on/off. Joker face target — mouth. Animated gate with psw38 primitive.
-- `games/batman.json#/switches/21._note`: Controller.Switch(39)=1 on hit, cleared by ScoopKickL solenoid 3.
-- `games/batman.json#/switches/22._note`: PulseSw 41. Right bank of 3 standup targets with animation.
-- `games/batman.json#/switches/23._note`: PulseSw 42. Right bank of 3 standup targets with animation.
-- `games/batman.json#/switches/24._note`: PulseSw 43. Right bank of 3 standup targets with animation.
-- `games/batman.json#/switches/25._note`: PulseSw 47. Fired from LeftSlingShot_Slingshot event.
-- `games/batman.json#/switches/26._note`: PulseSw 48. Fired from RightSlingShot_Slingshot event.
-- `games/batman.json#/switches/27._note`: PulseSw 49. Target on the bar mechanism.
-- `games/batman.json#/switches/28._note`: cvpmMech.AddSw 50,0,0 — mechanism position switch at home position. Set to 0 on init.
-- `games/batman.json#/switches/29._note`: cvpmMech.AddSw 51,47,49 — mechanism position switch at steps 47-49. Set to 1 on init.
-- `games/batman.json#/switches/30._note`: Controller.Switch(52)=1 on hit, cleared by ScoopKickR solenoid 6.
-- `games/batman.json#/switches/31._note`: Controller.Switch(53)=1 set by ball tracking code when ball is above right scoop (z < -60). Cleared by ScoopKickR solenoid 6.
-- `games/batman.json#/switches/32._note`: PulseSw 54. Bumper1B_Hit.
-- `games/batman.json#/switches/33._note`: PulseSw 55. Bumper3B_Hit.
-- `games/batman.json#/switches/34._note`: PulseSw 56. Bumper2B_Hit.
-- `games/batman.json#/coils/0._vbscript_callback`: bsTrough.SolIn
-- `games/batman.json#/coils/0._inferred_type`: ball_management
-- `games/batman.json#/coils/0._note`: 6-ball lockout. bsTrough.SolIn.
-- `games/batman.json#/coils/1._vbscript_callback`: bsTrough.SolOut
-- `games/batman.json#/coils/1._inferred_type`: ball_management
-- `games/batman.json#/coils/1._note`: Ball eject from trough. bsTrough.SolOut via BallRelease kicker.
-- `games/batman.json#/coils/2._vbscript_callback`: ScoopKickL
-- `games/batman.json#/coils/2._inferred_type`: ball_management
-- `games/batman.json#/coils/2._note`: Kicks ball out of left scoop (sw39). sw39.Kick 0,85,1.56.
-- `games/batman.json#/coils/3._vbscript_callback`: SolAutoPlungerIM
-- `games/batman.json#/coils/3._inferred_type`: ball_management
-- `games/batman.json#/coils/3._note`: Impulse plunger auto-fire. plungerIM.AutoFire.
-- `games/batman.json#/coils/4._vbscript_callback`: ScoopKickR
-- `games/batman.json#/coils/4._inferred_type`: ball_management
-- `games/batman.json#/coils/4._note`: Kicks ball out of right scoop (sw52). sw52.Kick 0,40,1.56. Also clears sw52 and sw53.
-- `games/batman.json#/coils/5._vbscript_callback`: Solknocker
-- `games/batman.json#/coils/5._inferred_type`: knocker
-- `games/batman.json#/coils/5._note`: Cabinet knocker solenoid.
-- `games/batman.json#/coils/6._vbscript_callback`: Sol9
-- `games/batman.json#/coils/6._inferred_type`: flasher
-- `games/batman.json#/coils/6._note`: FlashLamp x4 (2 backbox + 2 pf). Sets lamp 109.
-- `games/batman.json#/coils/7._vbscript_callback`: Sol11
-- `games/batman.json#/coils/7._inferred_type`: mechanism
-- `games/batman.json#/coils/7._note`: GI Relay — INVERTED. When enabled, GI turns OFF (cuts circuit). Sets lamp 111. DE-era inverted GI behavior.
-- `games/batman.json#/coils/8._vbscript_callback`: Sol12
-- `games/batman.json#/coils/8._inferred_type`: flasher
-- `games/batman.json#/coils/8._note`: FlashLamp x4 (1 pf + 3 backbox). Sets lamp 112.
-- `games/batman.json#/coils/9._vbscript_callback`: Sol13
-- `games/batman.json#/coils/9._inferred_type`: flasher
-- `games/batman.json#/coils/9._note`: FlashLamp x4 (2 pf + 2 backbox). Sets lamp 113.
-- `games/batman.json#/coils/10._vbscript_callback`: Sol14
-- `games/batman.json#/coils/10._inferred_type`: flasher
-- `games/batman.json#/coils/10._note`: FlashLamp x4 (1 pf + 3 backbox). Sets lamp 114.
-- `games/batman.json#/coils/11._vbscript_callback`: cvpmMech (mBar.Sol1 = 16)
-- `games/batman.json#/coils/11._inferred_type`: mechanism
-- `games/batman.json#/coils/11._note`: Bar motor driven by cvpmMech framework. vpmMechOneSol + vpmMechReverse + vpmMechNonLinear. 50 steps, length 130. Controls bar toy position and sw49 target availability. Not in SolCallback — consumed by framework.
-- `games/batman.json#/coils/12._vbscript_callback`: SolDiv
-- `games/batman.json#/coils/12._inferred_type`: diverter
-- `games/batman.json#/coils/12._note`: Controls RampDiverter and RampDiverter2 drop state.
-- `games/batman.json#/coils/13._vbscript_callback`: Sol25
-- `games/batman.json#/coils/13._inferred_type`: flasher
-- `games/batman.json#/coils/13._note`: Flashlamp X4 (3 pf + backbox). Sets lamp 125.
-- `games/batman.json#/coils/14._vbscript_callback`: Sol26
-- `games/batman.json#/coils/14._inferred_type`: flasher
-- `games/batman.json#/coils/14._note`: Flashlamp X4 (1 pf + 2 ramp + 1 backbox). Sets lamp 126.
-- `games/batman.json#/coils/15._vbscript_callback`: Sol27
-- `games/batman.json#/coils/15._inferred_type`: flasher
-- `games/batman.json#/coils/15._note`: Flashlamp X4 (2 pf + 2 backbox). Sets lamp 127.
-- `games/batman.json#/coils/16._vbscript_callback`: Sol28
-- `games/batman.json#/coils/16._inferred_type`: flasher
-- `games/batman.json#/coils/16._note`: Flashlamp X4 (2 pf + 2 backbox). Sets lamp 128.
-- `games/batman.json#/coils/17._vbscript_callback`: SetLamp 129,
-- `games/batman.json#/coils/17._inferred_type`: flasher
-- `games/batman.json#/coils/17._note`: Flashlamp X4 (4 pf). Direct SetLamp callback for lamp 129. Flash129 sub drives 4 dome flasher objects.
-- `games/batman.json#/coils/18._vbscript_callback`: Sol30
-- `games/batman.json#/coils/18._inferred_type`: flasher
-- `games/batman.json#/coils/18._note`: Flashlamp X4 (3 pf + 1 backbox). Sets lamp 130. Has bulb filament and clear bulb image/material swaps.
-- `games/batman.json#/coils/19._vbscript_callback`: Sol31
-- `games/batman.json#/coils/19._inferred_type`: flasher
-- `games/batman.json#/coils/19._note`: Flashlamp X4 (3 pf + 1 backbox). Sets lamp 131.
-- `games/batman.json#/coils/20._vbscript_callback`: Flash132
-- `games/batman.json#/coils/20._inferred_type`: flasher
-- `games/batman.json#/coils/20._note`: Flashlamp X4 (2 bat + 2 backbox). Custom Flash132 sub with museumflash fading. Lamp 132 (museum).
-- `games/batman.json#/coils/21._vbscript_callback`: SolRFlipper
-- `games/batman.json#/coils/21._inferred_type`: flipper
-- `games/batman.json#/coils/21._note`: nFozzy flipper implementation. RF.Fire on enable.
-- `games/batman.json#/coils/22._vbscript_callback`: SolLFlipper
-- `games/batman.json#/coils/22._inferred_type`: flipper
-- `games/batman.json#/coils/22._note`: nFozzy flipper implementation. LF.Fire on enable.
-- `games/batman.json#/lamps/16._note`: Also has flasher primitives L17f
-- `games/batman.json#/lamps/17._note`: Also has flasher primitives L18f
-- `games/batman.json#/lamps/18._note`: Also has flasher primitives L19f
-- `games/batman.json#/lamps/22._note`: Also has flasher primitives l23f
-- `games/batman.json#/lamps/24._note`: Flasher lamp for Sol25. Callback Flash25. No MassAssign VPX light objects — uses callback-only Lampz integration.
-- `games/batman.json#/lamps/25._note`: Flasher lamp for Sol26. Callback Flash26. No MassAssign VPX light objects — uses callback-only Lampz integration.
-- `games/batman.json#/lamps/26._note`: Flasher lamp for Sol27. Callback Flash27. No MassAssign VPX light objects — uses callback-only Lampz integration.
-- `games/batman.json#/lamps/27._note`: Flasher lamp for Sol28. Callback Flash28. No MassAssign VPX light objects — uses callback-only Lampz integration.
-- `games/batman.json#/lamps/28._note`: Flasher lamp for Sol29. Callback Flash29. No MassAssign VPX light objects — uses callback-only Lampz integration.
-- `games/batman.json#/lamps/35._note`: Also has l36b, l36Fb, l36Fb2 objects
-- `games/batman.json#/lamps/36._note`: Also has l37b, l37Fb objects
-- `games/batman.json#/lamps/43._note`: ImageSwap on pBumperCap1. Also has BumperL_Flasher_a, Bumberhalolb/Bumberhalol.
-- `games/batman.json#/lamps/44._note`: ImageSwap on pBumperCap3. Also has BumperB_Flasher_a, Bumberhalobb/Bumberhalob.
-- `games/batman.json#/lamps/45._note`: ImageSwap on pBumperCap2. Also has Bumberhalorb/Bumberhalor.
-- `games/batman.json#/lamps/48._note`: Also has l49f flasher primitive
-- `games/batman.json#/lamps/59._note`: Mapped from solenoid 9. Also has Flasher9a.
-- `games/batman.json#/lamps/60._note`: GI controlled via Sol11 relay. Inverted — sol enabled = GI off. aGiLights array.
-- `games/batman.json#/lamps/61._note`: Mapped from solenoid 12.
-- `games/batman.json#/lamps/62._note`: Mapped from solenoid 14.
-- `games/batman.json#/lamps/63._note`: Mapped from solenoid 25. Also has FlasherL2b.
-- `games/batman.json#/lamps/64._note`: Mapped from solenoid 26. Also has FlasherLight2b, FlasherLight2c.
-- `games/batman.json#/lamps/65._note`: Mapped from solenoid 27.
-- `games/batman.json#/lamps/66._note`: Mapped from solenoid 28.
-- `games/batman.json#/lamps/67._note`: Mapped from solenoid 29. Callback Flash129 drives 4 dome flasher fade sequences.
-- `games/batman.json#/lamps/68._note`: Mapped from solenoid 30. Also has Flasher6a, Flasher6c. Bulb filament and material swap effects.
-- `games/batman.json#/lamps/69._note`: Mapped from solenoid 31. Also has FlasherLight7b/c/d/e.
-- `games/batman.json#/lamps/70._note`: Mapped from solenoid 32. Custom Flash132 sub with museum fading. Objects commented out — uses callback only.
-- `games/batman.json#/_source/confidence_notes`: High confidence on switches/coils. No Const sw* definitions — switches identified from _Hit/_UnHit subs, Controller.Switch() calls, and PulseSw calls. Lamp IDs from Lampz.MassAssign() calls. Trough is 3-ball cvpmTrough with switches 11-13 and entry switch 10. Solenoid 16 (Bar Motor) handled via cvpmMech — not in SolCallback but consumed by framework. Solenoids 5, 7, 10 unused. Solenoids 15-21 commented out — handled by VPX physics (bumpers, slingshots). Flasher solenoids use SetLamp with 100+ lamp IDs for Lampz integration. GI Relay (sol 11) is inverted — enabled cuts GI circuit. Sw36/37/38 are Joker face switches (eyes and mouth) using Controller.Switch on/off (not PulseSw). Sw50/51 are bar mechanism position switches set via cvpmMech. Sw53 set by ball tracking code when ball is above right scoop.
+There is no `FLIP_SOL`, so `core.c:1745-1752` fabricates 45-48 from Game On plus button state:
+power and hold assert and release together. They are not independently controllable and must not
+be modelled as separate coils. The manual's own unnumbered "Flipper Solenoids" table lists a left
+and a right flipper and nothing else - there is no upper flipper of either hand, which is
+consistent with the driver setting no upper-flipper bit.
 
-## Unresolved questions
+## Evidence and its limits
 
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
+The retained manual has **no text layer whatsoever** (70 pages,
+0 characters, `ocr_required`), so every table here was read from 400 dpi renders and
+transcribed by hand. Nothing came from `pdftotext`.
 
-## Sources
+Spatial placement rests on **one** retained recreation, the VPW v1.1 build, whose playfield is
+**952 x 1974** - not the 2162 most WPC-era tables use. 27 of the 44
+fitted switches and 54 of the 64 lamps resolved to an object; nothing resolved to an
+address the manual prints "Not Used", which is the check that would have caught an invented
+binding. 14 coordinates are centroids of an extended object's drag points rather
+than a measured center, and are reported as such in the spatial report.
 
-- `legacy.game.batman`: `games/batman.json` at the pinned migration revision.
+Two source disagreements are recorded as unresolved conflicts rather than decided: the bulb type
+PinMAME assigns to solenoid 9, and whether dedicated matrix position 2 was ever fitted.
