@@ -376,7 +376,12 @@ class SpatialMigrationTests(unittest.TestCase):
 		# have no spatial key at all because their fitment is a genuine, unresolved two-source
 		# disagreement (conflict.aux-lamp-column-fitment), so it is counted as a 21st machine with a
 		# genuine spatial gap.
-		self.assertEqual(21, report["missing_requirement_counts"]["spatial_placement"])
+		# The Simpsons Pinball Party is likewise not a retrofit: it was curated directly from a
+		# legacy candidate-only partial record, and eight Mini-DMD sign-panel lamps (73-80) have no
+		# spatial key at all because the retained table's LEDY/LEDG/LEDR light collections are empty
+		# and the l73-l80 Primitive objects that do exist share one (x, y) with only a stacked z
+		# offset, so it is counted as a 22nd machine with a genuine spatial gap.
+		self.assertEqual(22, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(787, len(catalog["machines"]))
 		self.assertEqual(786, catalog["summary"]["game_count"])
 		self.assertEqual(787, catalog["summary"]["machine_count"])
