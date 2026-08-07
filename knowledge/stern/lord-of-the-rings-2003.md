@@ -1,187 +1,72 @@
-# Lord of the Rings
+# The Lord of the Rings (Stern, 2003)
 
-Coverage: **partial - source-derived recreation knowledge requiring validation**
+Coverage: **partial - manual-verified semantic I/O with full connector, wire-colour and driver-transistor wiring, mechanism inventory and behaviour, and normalized placements for the printed 8x10 lamp matrix and the switch matrix; held below author-ready because the nineteen LEDs of board 520-5242-00 at public lamps 81-99 cannot be enumerated while the shared Whitestar profile caps lamps at 1-80, and because switch 15's public opto polarity is unestablished**
 
-## Overview
+## Identity and evidence precedence
 
-Legacy evidence identifies this candidate as Stern (2003). The information below is preserved for recreation work but is not automatically treated as validated physical-machine fact.
+Whitestar machine. PinMAME roots the family at `lotr` with 46 drivers: English revisions, the 10.02 Limited Edition re-run, and Spanish, German, French and Italian releases. Every clone shares `init_lotr` and therefore the same `lotrGameData`, so all of them present identical playfield hardware. What differs between them is read out of pinned `segames.c` per driver rather than summarized, because the summary kept being wrong. There are four shapes:
 
-## Playfield devices
+- **A German, French or Italian release runs its English sibling's CPU game ROM byte for byte** and differs only in the display ROM. `lotr`, `lotr_fr`, `lotr_gr` and `lotr_it` all take `lotrcpua.a00`; only `lotrdsp{a,f,g,i}.a00` differ. The same holds at every revision.
+- **An English revision differs in CPU and display both** - `lotr9` is `lotrcpu.900` with `lotrdspa.900` against the root's `lotrcpua.a00` and `lotrdspa.a00`.
+- **A Spanish release differs in all three.** It has its own CPU family `lotrcpul.*`, its own display `lotrdspl.*`, and the only other sound set in the tree: `LOTR_SND_SP`, five ROMs, against `LOTR_SND` for the other 38 drivers.
+- **The Limited Edition differs in CPU alone** - `lotrcpua.a02`, sharing the root's display and sound.
 
-Switch, lamp/GI, and controlled-device candidates are in the adjacent machine definition. Source-specific implementation notes are retained below.
+Physical inventory authority is the **Stern English service manual**, IPDB machine 4858, an image-only 184-page scan with no text layer, so every printed table was read from pages rendered at 300 dpi. Runtime authority is the retained known-working script set; three recreations were retained and all run `cGameName = "lotr"`.
+
+## The 520-5242-00 LED board: nineteen lamps this definition does not carry
+
+`lotrGameData` declares two board identifiers. The second, `SE_BOARDID_520_5242_00`, is named in `src/wpc/se.h` in plain words: **"Lord of The Rings 19 LED Board"**. `se.c` drives it through `core_set_pwm_output_led_vfd(CORE_MODOUT_LAMP0 + 80, 3 * 8, CORE_MODOUT_LED, 4.f / 2.f)` and writes at `CORE_MODOUT_LAMP0 + 80`, `+ 88` and `+ 96` masked `0x07` - public lamp addresses **81 to 99**, nineteen LEDs. So `lampCol = 5` is not slack: it is 64 base lamps, the two auxiliary matrix columns at 65-80, and room for that board.
+
+Both the retained VPW and JPSalas scripts drive them, and JPSalas places them as a ring in the lower centre of the playfield. They are **not enumerated here** because `controllers/pinmame/whitestar.json` caps `pinmame.output.lamp` at 1-80; widening that shared range is a maintainer decision.
+
+## Addresses that are synthetic, mirrored or reserved
+
+- Public 45 and 47 are the power-phase view of the same physical coils exposed at 46 and 48. Binding both halves creates two flippers where the machine has one.
+- Public 15 is PinMAME's synthetic fast-flip and game-on state; 16 is its unused companion.
+- Whitestar auxiliary board 520-5068-01 exposes three outputs, so 33, 34 and 35 carry the UK-only up/down posts and 36 is unused.
+- General illumination is a **single aggregate channel 0**, although the cabinet has four separately fused 6.3v strings. A recreation must not infer four controllable channels from the fuse chart.
+
+## Opto polarity: PinMAME normalizes nothing here
+
+The controller profile declares `inversion_applied_by_emulator: true` as a platform capability, and for this driver pinned PinMAME exercises none of it. `lotrGameData` (`segames.c:1498`) is a positional aggregate that sets only `GEN_WS`, the display layout and the `hw` struct; the trailing `wpc` member - which is where `invSw` lives - is left at C zero-initialization, and `core.c:2455` memcpy's those zeros into the live `coreGlobals.invSw`. **The four printed optos are therefore published exactly as a recreation asserts them, and the ROM's own firmware accounts for the beam resting made.** An earlier pass of this definition said "PinMAME normalizes the public state", which arrived at the right instruction for a recreation by way of a mechanism that does not exist.
+
+Three of the four are settled by observation rather than by argument. The retained known-working VPW 1.6 script asserts switches 14, 41, 47 when a ball is present, through direct assert/release pairs whose sense is unambiguous - and it is known-working on the ball trough, which is exactly where a reversed opto fails first. Switch 15 is the exception: no retained recreation binds it at all (the VPW table does its stacking bookkeeping without a `Controller.Switch(15)` call, and neither alt table binds 14 or 15), so the public sense the ROM expects there is genuinely unestablished and is carried as `conflict.whitestar-invsw-never-populated` rather than guessed from its sibling.
+
+`normally_closed: true` on these four records describes the physical contact, not the public state. Do not read it as a polarity instruction.
 
 ## Custom mechanisms
 
-No custom mechanism conclusion has been validated. Manuals, schematics, PinMAME source, and gameplay evidence still need to be checked.
+- **Four-ball trough and up-kicker.** Four balls rest in the under-playfield trough on printed switches 11, 12 and 13 with the fourth position read by opto 14, the 4-Ball Trough VUK Opto at the eject end. Solenoid 1, the Trough Up-Kicker, lifts the ball at the eject end into the shooter lane, where switch 16 reads it. Printed switch 15, the 4-Ball Stacking Opto, watches the stack feeding the trough. The manual numbers the positions from the left, so printed Trough #1 is the position furthest from the shooter lane; the retained VPW script numbers its trough objects in the opposite order, which is a labelling difference and not a wiring disagreement. All three retained scripts initialise switches 11-14 closed at start of game because balls rest on them.
+- **Balrog motorized toy.** The Balrog toy is driven by motor 041-5088-01 on printed solenoid 22, gated by the DC relay 520-5066-00 on printed solenoid 20. Printed switches 31 Balrog Open and 32 Balrog Closed read the two end positions and are mutually exclusive; the retained VPW script asserts one and clears the other as the motor runs. Printed switch 28 Balrog Hit is a separate above-playfield switch on the toy that registers a ball strike and is driven in the retained script from a wobble value rather than from the motor position, so a recreation must not derive it from the open or closed state.
+- **Sword ball lock.** Three above-playfield switches read balls held in the sword lock: printed 17 Sword Lock High, 18 Sword Lock Mid and 19 Sword Lock Low, all switch part 180-5119-02. Printed solenoid 21, the Sword Lock Release, frees the stack. The high position is the one furthest from the release coil.
+- **One Ring magnet and back panel.** The One Ring on the back panel is held and released by the magnet on printed solenoid 6, which is the only output with its own fuse, printed F20 4A 250v slow-blow and marked THIS GAME ONLY in the quick reference fuse chart. Printed opto 47 Ring Made, on the back panel, reads a ball completing the ring. Printed solenoid 26 flashes the ring and 27 the back panel behind it.
+- **Loop diverter gate.** Printed solenoid 8, the Loop Diverter, steers a ball out of the loop toward the left Orthanc tower. The manual carries a dedicated Diverter Gate Adjustment Procedure: with power off and the playfield raised, the crank-bar set screw is loosened, the paddle is held against the right flat rail to open the gate to the left tower, the plunger is pushed home, and the screw is retightened so the paddle rests as close to the left flat rail as possible without touching it. Printed switch 42 Inner Loop and the orbit switches 20, 21, 37 and 38 read balls through the loop.
+- **Vertical up-kickers and top saucer.** Three vertical up-kickers and one saucer return balls to play. Printed solenoid 3 with switch 9 is the left VUK, printed solenoid 4 with opto 41 is the top VUK, printed solenoid 5 with switch 30 is the right VUK, and printed solenoid 19 with switch 46 is the top saucer. The retained VPW and JPSalas scripts label solenoid 4 Upper-Left VUK and solenoid 19 Upper-Right Kicker; the manual's Top VUK and Top Saucer are the printed names and control.
+- **Mini playfield.** A separate mini playfield carries four switches printed Mini PF U.L., U.R., L.L. and L.R. at addresses 33 to 36, all switch part 180-5057-00. The printed switch-location drawing shows the mini playfield moved off the main playfield for clarity, so its printed drawing position is not its installed position; the coordinates here come from the retained recreations.
+- **UK-only up/down posts.** UK cabinets add three up and down posts driven from a UK 3X Transformer Driver Board and exposed on Whitestar auxiliary outputs 33, 34 and 35. The printed coil and flash lamp location drawing places Aux 1 at the left inlane area, Aux 2 between the flippers and Aux 3 at the right. These are absent from non-UK cabinets, as are the two cabinet-side buttons at printed switches 1 and 8.
 
-## Ball-state transitions
+## How coordinates were resolved
 
-Ball paths, trough ordering, locks, kickouts, and causal transitions have not yet been normalized. Relevant source notes follow under Evidence notes.
+Three recreations were retained and treated as three measurements. A placement is `validated` only when **all three agree** within 0.025 normalized units; anything supported by fewer is `observed`, and 50 placements are in that state against 96 validated.
 
-## Controller interactions
+That threshold is deliberately conservative because **independence between the three is unestablished and the two available signals disagree**. Measured, the JPSalas and Hanibal tables agree with each other to within 0.0155 on every lamp both model while either differs from VPW by up to 0.187. Documented, VPW credits an "EBIsLit - Baseline playfield scan" and JPSalas records its playfield as "based on Ebislit's playfield", while Hanibal declares only "4k Mod" in its title and names no baseline. The measured clustering pairs JPSalas with Hanibal; the documented ancestry pairs VPW with JPSalas. No lineage model is asserted.
 
-Controller callbacks and bindings are candidate evidence only until reconciled against PinMAME and physical documentation.
+The VPW table identifies itself as **"Lord Of The Rings - Valinor Edition"** with original artwork, so where its insert layout departs from the printed diagrams that is an artwork difference rather than an error. Its Fellowship inserts form a closed ring of runes rather than the printed arc of named characters, which accounts for 10 of the 22 rejected measurements - lamps 6, 9-17, where VPW alone is the outlier. The other 12 are switches and flashers and have nothing to do with the artwork: across all 22 rows the rejected measurement is VPW's 17 times, Hanibal's 8 times and JPSalas's 2 times.
 
-## Service and setup information
+**13 placements are projections**, not measurements: each takes the coordinate of a co-located device the printed DR.7 diagram places beside it. Be precise about why. The resolver searches the three tables for `l<N>`, `sw<N>` and `f<N>` objects only, so no coil search was ever run and this is not a finding that the tables model no coils - it is that the resolver has no coil group and the projection therefore stands on the printed diagram alone. Every one is `observed` and listed with its anchor in the spatial report. **4 coordinates are computed** rather than held by any table - per-axis medians or a centroid of co-located bodies - and each is marked `coordinate_origin: computed` with the tables it was derived from.
 
-Unknown; locate operator/service documentation.
+## Notable printed details
 
-## Timing and tuning observations
+- Optos, which rest closed, are switches 14, 15, 41, 47.
+- Printed NOT USED: matrix switches 26, 27, 63, 64; dedicated switch DS-5; solenoids 12, 28.
+- The ring magnet on coil 6 is the only output with its own fuse, printed F20 and marked THIS GAME ONLY.
+- The lamp matrix axes are transposed between the manual and PinMAME: PinMAME's lamp column strobe corresponds to the printed **row** and its lamp row to the printed **column**. Do not map them by name.
 
-Source timing values may describe a particular VPX implementation rather than physical hardware and require review.
+## Preserved source anomalies
+
+- Lamps 15 and 33 are printed LEGOLES, not LEGOLAS. The spelling is consistent across both cells at 300 dpi, so it is the manual's own error rather than a scan artifact. Transcribed as printed; do not silently normalize.
+- The known-working VPW script names coil 4 SolULVUK and coil 19 SolURKicker, where the manual prints TOP VUK and TOP SAUCER. Same addresses and same devices; the disagreement is label-only and the manual controls physical naming.
 
 ## Recreation guidance
 
-Do not treat this partial definition as a complete authoring specification. Resolve every coverage requirement and conflict before promotion.
-
-## Evidence notes
-
-- `games/lotr.json#/switches/0._note`: Controller.Switch on/off. Ball enters VUK, kicked out by SolLVUK (coil 3).
-- `games/lotr.json#/switches/1._note`: PulseSw 10. Drop target or standup target.
-- `games/lotr.json#/switches/2._note`: Manual trough. sw11 is deepest position (nearest drain). Controller.Switch on/off with UpdateTrough.
-- `games/lotr.json#/switches/5._note`: Manual trough. sw14 is nearest shooter lane — ball ejected from here by SolRelease (coil 1).
-- `games/lotr.json#/switches/6._note`: PulseSw 15 fired in SolRelease after trough eject. Confirms ball reached shooter lane.
-- `games/lotr.json#/switches/7._note`: Controller.Switch on/off. Also plungerIM.switch 16 — impulse plunger lane switch.
-- `games/lotr.json#/switches/8._note`: Controller.Switch on/off. Ball lock position on sword ramp.
-- `games/lotr.json#/switches/9._note`: Controller.Switch on/off. Second ball lock position on sword ramp.
-- `games/lotr.json#/switches/10._note`: Controller.Switch on/off. Top lock position. Triggers sword glow (Lampz 101) when occupied.
-- `games/lotr.json#/switches/11._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/12._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/13._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/14._note`: PulseSw 23. Animated standup target with gate model (g01_sw23).
-- `games/lotr.json#/switches/15._note`: Controller.Switch on/off. Triggers WireRampOff on hit, WireRampOn on unhit.
-- `games/lotr.json#/switches/16._note`: Controller.Switch on/off. Direction-aware — checks activeball.vely for WireRampOn direction.
-- `games/lotr.json#/switches/17._note`: Controller.Switch set on BalrogFlipper_Collide when Balrog is closed and hit force > 3. Cleared after wobble settles. Not a VPX trigger — mechanical collision detection.
-- `games/lotr.json#/switches/18._note`: PulseSw 29. Animated standup target with gate model (g01_sw29).
-- `games/lotr.json#/switches/19._note`: Controller.Switch on/off. Ball enters right VUK, kicked out by SolRVUK (coil 5).
-- `games/lotr.json#/switches/20._note`: Controller.Switch set by SolBalrog when Balrog opens (BalrogDir toggling). Mechanism position switch.
-- `games/lotr.json#/switches/21._note`: Controller.Switch set by SolBalrog when Balrog closes (BalrogDir toggling). Mechanism position switch.
-- `games/lotr.json#/switches/22._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/23._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/24._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/25._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/26._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/27._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/28._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/29._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/30._note`: Controller.Switch on/off. Ball enters VUK, kicked out by SolULVUK (coil 4). Triggers POTD lamp (Lampz 100).
-- `games/lotr.json#/switches/31._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/32._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/33._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/34._note`: Controller.Switch on/off
-- `games/lotr.json#/switches/35._note`: Controller.Switch on/off. Ball caught in saucer, kicked out by SolURKicker (coil 19).
-- `games/lotr.json#/switches/36._note`: Controller.Switch on/off. Ball in ring magnet area. Has stuck-ball timer. Separate VPX magnet object sw47a with cvpmMagnet.
-- `games/lotr.json#/switches/37._note`: Controller.Switch on/off. Triggers WireRampOn on hit. Nudges ball VelX on unhit.
-- `games/lotr.json#/switches/38._note`: PulseSw 49
-- `games/lotr.json#/switches/39._note`: PulseSw 50
-- `games/lotr.json#/switches/40._note`: PulseSw 51
-- `games/lotr.json#/switches/41._note`: PulseSw 52 from sw52_Spin sub.
-- `games/lotr.json#/switches/42._note`: PulseSw 53. Triggers EyeLookAt. Near Palantir eye.
-- `games/lotr.json#/switches/43._note`: vpmNudge.TiltSwitch = 56
-- `games/lotr.json#/switches/44._note`: Controller.Switch on/off. Triggers EyeLookAt.
-- `games/lotr.json#/switches/45._note`: Controller.Switch on/off. Triggers EyeLookAt.
-- `games/lotr.json#/switches/46._note`: PulseSw 59 in LeftSlingShot_Slingshot sub
-- `games/lotr.json#/switches/47._note`: Controller.Switch on/off. Triggers EyeLookAt.
-- `games/lotr.json#/switches/48._note`: Controller.Switch on/off. Triggers EyeLookAt.
-- `games/lotr.json#/switches/49._note`: PulseSw 62 in RightSlingShot_Slingshot sub
-- `games/lotr.json#/coils/0._vbscript_callback`: SolRelease
-- `games/lotr.json#/coils/0._inferred_type`: ball_management
-- `games/lotr.json#/coils/0._note`: Kicks from sw14, PulseSw 15 (shooter lane confirm)
-- `games/lotr.json#/coils/1._vbscript_callback`: AutoPlunger
-- `games/lotr.json#/coils/1._inferred_type`: ball_management
-- `games/lotr.json#/coils/1._note`: Impulse plunger. plungerIM.AutoFire. VPX object: swPlunger.
-- `games/lotr.json#/coils/2._vbscript_callback`: SolLVUK
-- `games/lotr.json#/coils/2._inferred_type`: ball_management
-- `games/lotr.json#/coils/2._note`: Kicks ball from sw9 VUK upward. KickBall with z-lift.
-- `games/lotr.json#/coils/3._vbscript_callback`: SolULVUK
-- `games/lotr.json#/coils/3._inferred_type`: ball_management
-- `games/lotr.json#/coils/3._note`: Kicks ball from sw41 VUK. KickBall with z-lift 230.
-- `games/lotr.json#/coils/4._vbscript_callback`: SolRVUK
-- `games/lotr.json#/coils/4._inferred_type`: ball_management
-- `games/lotr.json#/coils/4._note`: Kicks ball from sw30 right VUK upward.
-- `games/lotr.json#/coils/5._vbscript_callback`: SolRingMag
-- `games/lotr.json#/coils/5._inferred_type`: mechanism
-- `games/lotr.json#/coils/5._note`: cvpmMagnet. GrabCenter=True. Controls ring magnet on/off. Kicks ball out when disabled.
-- `games/lotr.json#/coils/6._vbscript_callback`: SolTower
-- `games/lotr.json#/coils/6._inferred_type`: mechanism
-- `games/lotr.json#/coils/6._note`: Animates Orthanc/Barad-dur tower raising and lowering via TowerAnim timer. 20-step animation.
-- `games/lotr.json#/coils/7._vbscript_callback`: SolDiv
-- `games/lotr.json#/coils/7._inferred_type`: diverter
-- `games/lotr.json#/coils/7._note`: Rotates DiverterFlipper to end/start. Controls ball path on playfield.
-- `games/lotr.json#/coils/8._inferred_type`: mechanism
-- `games/lotr.json#/coils/8._note`: Bumper solenoid. Handled by VPM framework (core.vbs), not table SolCallback. Comment in script: '9 left bumper'.
-- `games/lotr.json#/coils/9._inferred_type`: mechanism
-- `games/lotr.json#/coils/9._note`: Bumper solenoid. Handled by VPM framework (core.vbs). Comment: '10 right bumper'.
-- `games/lotr.json#/coils/10._inferred_type`: mechanism
-- `games/lotr.json#/coils/10._note`: Bumper solenoid. Handled by VPM framework (core.vbs). Comment: '11 bottom bumper'.
-- `games/lotr.json#/coils/11._vbscript_callback`: SolOrbit
-- `games/lotr.json#/coils/11._inferred_type`: gate
-- `games/lotr.json#/coils/11._note`: OrbitPin.IsDropped toggled by Enabled state. Controls orbit one-way gate.
-- `games/lotr.json#/coils/12._vbscript_callback`: Flash14
-- `games/lotr.json#/coils/12._inferred_type`: flasher
-- `games/lotr.json#/coils/12._note`: Non-ModSol: Flash14 sub. ModSol: ModLampz.SetModLamp 14. PWM SolMask(1014).
-- `games/lotr.json#/coils/13._inferred_type`: flipper
-- `games/lotr.json#/coils/13._note`: Flipper solenoid. Handled by VPM framework (core.vbs). Comment: '15 left flipper'. Not same as sLLFlipper constant (which is 48).
-- `games/lotr.json#/coils/14._inferred_type`: flipper
-- `games/lotr.json#/coils/14._note`: Flipper solenoid. Handled by VPM framework (core.vbs). Comment: '16 right flipper'. Not same as sLRFlipper constant (which is 46).
-- `games/lotr.json#/coils/15._inferred_type`: mechanism
-- `games/lotr.json#/coils/15._note`: Slingshot solenoid. Handled by VPM framework (core.vbs). Comment: '17 left slingshot'.
-- `games/lotr.json#/coils/16._inferred_type`: mechanism
-- `games/lotr.json#/coils/16._note`: Slingshot solenoid. Handled by VPM framework (core.vbs). Comment: '18 right slingshot'.
-- `games/lotr.json#/coils/17._vbscript_callback`: SolURKicker
-- `games/lotr.json#/coils/17._inferred_type`: ball_management
-- `games/lotr.json#/coils/17._note`: Kicks ball from sw46 saucer at angle 270.
-- `games/lotr.json#/coils/18._inferred_type`: mechanism
-- `games/lotr.json#/coils/18._note`: Comment: '20 balrog motor relay'. No SolCallback — motor relay likely handled by VPM or used for power relay only.
-- `games/lotr.json#/coils/19._vbscript_callback`: SolLockRelease
-- `games/lotr.json#/coils/19._inferred_type`: mechanism
-- `games/lotr.json#/coils/19._note`: Drops Lockpin to release locked balls from sword ramp. Timed re-raise after 280ms.
-- `games/lotr.json#/coils/20._vbscript_callback`: SolBalrog
-- `games/lotr.json#/coils/20._inferred_type`: mechanism
-- `games/lotr.json#/coils/20._note`: Toggles Balrog figure open/close. Sets switches 31 (opening) and 32 (closed) as position feedback. Animated via BalrogOpen/BalrogClose timers.
-- `games/lotr.json#/coils/21._vbscript_callback`: Flash23
-- `games/lotr.json#/coils/21._inferred_type`: flasher
-- `games/lotr.json#/coils/21._note`: Non-ModSol: Flash23 sub. ModSol: ModLampz.SetModLamp 23. PWM SolMask(1023).
-- `games/lotr.json#/coils/22._vbscript_callback`: SolKnocker
-- `games/lotr.json#/coils/22._inferred_type`: knocker
-- `games/lotr.json#/coils/23._vbscript_callback`: Flash25
-- `games/lotr.json#/coils/23._inferred_type`: flasher
-- `games/lotr.json#/coils/23._note`: Non-ModSol: Flash25 sub. ModSol: ModLampz.SetModLamp 25. PWM SolMask(1025).
-- `games/lotr.json#/coils/24._vbscript_callback`: Flash26
-- `games/lotr.json#/coils/24._inferred_type`: flasher
-- `games/lotr.json#/coils/24._note`: Non-ModSol: Flash26 sub. ModSol: ModLampz.SetModLamp 26. PWM SolMask(1026).
-- `games/lotr.json#/coils/25._vbscript_callback`: Flash27
-- `games/lotr.json#/coils/25._inferred_type`: flasher
-- `games/lotr.json#/coils/25._note`: Non-ModSol: Flash27 sub. ModSol: ModLampz.SetModLamp 27. PWM SolMask(1027).
-- `games/lotr.json#/coils/26._vbscript_callback`: Flash29
-- `games/lotr.json#/coils/26._inferred_type`: flasher
-- `games/lotr.json#/coils/26._note`: Non-ModSol: Flash29 sub. ModSol: ModLampz.SetModLamp 29. PWM SolMask(1029).
-- `games/lotr.json#/coils/27._vbscript_callback`: Lampz.SetLamp 130,
-- `games/lotr.json#/coils/27._inferred_type`: flasher
-- `games/lotr.json#/coils/27._note`: Non-ModSol: Lampz.SetLamp 130. ModSol: ModLampz.SetModLamp 30. PWM SolMask(1030). VPX objects: f130, f130l.
-- `games/lotr.json#/coils/28._vbscript_callback`: Lampz.SetLamp 131,
-- `games/lotr.json#/coils/28._inferred_type`: flasher
-- `games/lotr.json#/coils/28._note`: Non-ModSol: Lampz.SetLamp 131. ModSol: ModLampz.SetModLamp 31. PWM SolMask(1031). ModLampz callback: DisableLighting p19 (DTR insert).
-- `games/lotr.json#/coils/29._vbscript_callback`: Lampz.SetLamp 132,
-- `games/lotr.json#/coils/29._inferred_type`: flasher
-- `games/lotr.json#/coils/29._note`: Non-ModSol: Lampz.SetLamp 132. ModSol: ModLampz.SetModLamp 32. PWM SolMask(1032). ModLampz callback: ModFlash32 (BalrogImageSwap). VPX object: Lbalrogbloom.
-- `games/lotr.json#/lamps/72._note`: MassAssign commented out. Callback DisableLighting p73 still active.
-- `games/lotr.json#/lamps/73._note`: MassAssign commented out. Callback DisableLighting p74 still active.
-- `games/lotr.json#/lamps/74._note`: MassAssign commented out. Callback DisableLighting p75 still active.
-- `games/lotr.json#/lamps/75._note`: MassAssign commented out. Callback DisableLighting p76 still active.
-- `games/lotr.json#/lamps/76._note`: MassAssign commented out. Callback DisableLighting p77 still active.
-- `games/lotr.json#/lamps/77._note`: MassAssign commented out. Callback DisableLighting p78 still active.
-- `games/lotr.json#/lamps/97._note`: Special lamp. 5 VPX objects: l_potd_1 through l_potd_5. Slow fade speed.
-- `games/lotr.json#/lamps/98._note`: Special lamp. Triggered by sw19 (lock 3). VPX objects: swordflash, swordflashs. Slow fade.
-- `games/lotr.json#/lamps/99._note`: Special lamp. VPX objects: Lvial, Lvialhalo. Very slow fade.
-- `games/lotr.json#/_source/confidence_notes`: High confidence on switches and coils. No Const sw* definitions — switches identified from _Hit/_UnHit subs, Controller.Switch() calls, and PulseSw calls. Manual trough (not cvpmTrough) with 4 kicker switches (sw11-sw14) and PulseSw 15 for shooter lane confirm. Lamp IDs from Lampz.MassAssign/Callback (IDs 1-99 matrix lamps, 100-102 special lamps, 130-132 flasher lamps). Flashers (coils 14, 23, 25-27, 29-32) use Flash subs or Lampz.SetLamp with 100+ IDs, plus ModLampz for PWM mode. Balrog mechanism uses switches 28, 31, 32 and solenoid 22. Ring magnet (sol 6) with sw47. Tower mechanism (sol 7). SEGA.VBS = Whitestar platform. Solenoids 9-11 (bumpers), 15-16 (flippers), 17-18 (slingshots) handled by core.vbs framework — not in table script SolCallbacks.
-
-## Unresolved questions
-
-- Is the I/O enumeration complete for every supported physical/controller variant?
-- Which inferred VPX behaviors reflect real hardware, and which are table-script conveniences?
-- Are all mechanism home states, sensors, motion constraints, and ball interactions documented?
-
-## Sources
-
-- `legacy.game.lotr`: `games/lotr.json` at the pinned migration revision.
+Bind the flippers once, at 46 and 48. Enumerate the dedicated switches at their negative and 81-84 addresses rather than folding them into the matrix. Treat GI as one channel. Model the trough with the printed numbering, remembering that printed Trough #1 is furthest from the shooter lane. Drive Balrog Hit from a collision, not from the toy's position. The 8x10 matrix at 1-80 is complete here, but the machine has nineteen more lamps at 81-99 that this definition cannot yet carry; do not read their absence as evidence they do not exist, and do not invent anything at 100-104, which really is empty.

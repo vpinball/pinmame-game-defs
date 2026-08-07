@@ -386,7 +386,12 @@ class SpatialMigrationTests(unittest.TestCase):
 		# project at 856 files, so GI address 3, the Sequential G.I. chase lamps 91-98 and six fitted
 		# flasher solenoids have no bound object, and it is counted as a 23rd machine with a genuine
 		# spatial gap.
-		self.assertEqual(23, report["missing_requirement_counts"]["spatial_placement"])
+		# Stern The Lord of the Rings raises it to 24. It also replaces a legacy candidate-only
+		# partial in place, so the partial/stub/author-ready totals above are unchanged by it; the
+		# nineteen LEDs of board 520-5242-00 at public lamps 81-99 have no spatial key at all,
+		# because the shared Whitestar profile caps pinmame.output.lamp at 1-80 and they cannot be
+		# enumerated in the first place.
+		self.assertEqual(24, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(787, len(catalog["machines"]))
 		self.assertEqual(786, catalog["summary"]["game_count"])
 		self.assertEqual(787, catalog["summary"]["machine_count"])
