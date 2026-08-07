@@ -39,13 +39,13 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 33 | 2009 | STUB - NBA (V8.02) | Stern | stub |
 | 34 | 2008 | Batman: The Dark Knight Pro | Stern | partial |
 | 35 | 2008 | STUB - Family Guy (V12.0 English, German) | Stern | stub |
-| 36 | 2008 | STUB - Pirates of the Caribbean (V6.0 English, French) | Stern | stub |
-| 37 | 2008 | STUB - S.A.M. Boot Flash Update (V3.1) | Stern | stub |
-| 38 | 2008 | STUB - Shrek (V1.41) | Stern | stub |
-| 39 | 2008 | STUB - Simpsons Kooky Carnival, The (Redemption) (V2.0) | Stern | stub |
-| 40 | 2008 | STUB - World Poker Tour (V14.0) | Stern | stub |
-| 41 | 2007 | Spider-Man | Stern | author_ready |
-| 42 | 2007 | STUB - Wheel of Fortune (V5.0) | Stern | stub |
+| 36 | 2008 | STUB - S.A.M. Boot Flash Update (V3.1) | Stern | stub |
+| 37 | 2008 | STUB - Shrek (V1.41) | Stern | stub |
+| 38 | 2008 | STUB - Simpsons Kooky Carnival, The (Redemption) (V2.0) | Stern | stub |
+| 39 | 2008 | STUB - World Poker Tour (V14.0) | Stern | stub |
+| 40 | 2007 | Spider-Man | Stern | author_ready |
+| 41 | 2007 | STUB - Wheel of Fortune (V5.0) | Stern | stub |
+| 42 | 2006 | Pirates of the Caribbean | Stern | partial |
 | 43 | 2006 | STUB - Dale Jr. (5.00) | Stern | stub |
 | 44 | 2006 | STUB - Grand Prix (4.50) | Stern | stub |
 | 45 | 2006 | STUB - NASCAR (4.50) | Stern | stub |

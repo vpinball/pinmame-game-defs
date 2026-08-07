@@ -1,0 +1,827 @@
+{
+  "blockers": [
+    "outputs[binding.device=30] (pinmame.output.solenoid, FLASH: BACK RIGHT [X3]) has no spatial key: the manual disagrees with itself about how its three #89 bulbs split between the playfield and the back panel, so no placement set can match the printed quantity without picking a side. See conflict.flasher-back-panel-bulb-count.",
+    "outputs[binding.device=0] (pinmame.output.gi, General Illumination Relay) has no spatial key: this manual prints no general-illumination bulb table, so neither a bulb quantity nor a placement set can be asserted. The ten back-panel G.I. sockets and the three right-ramp LED modules are the only G.I. inventory it states; the playfield G.I. bulbs are spread across the Section 4 assembly pages and were not exhaustively enumerated in this pass."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2155.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952.0; 0=left, 1=right",
+    "y": "y/2155.0; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "l27D, l27e, l27f -- second Light object at each of the three pop-bumper positions already placed from l27c, l27b and l27a; the manual prints POP BUMPER (X3), so three placements, not six.",
+    "l24B, l32b, l40b, l48b, l56b -- Flasher objects the retained script drives from the matching Light's own state (MiscTimer_Timer sets l24B.visible = L24.state and so on). Render doubles of the 520-5258-00 HEART LED PCB, not additional bulbs.",
+    "GISpot1b, GISpot2b, GISpot3b -- Flasher render doubles the same timer drives from GISpot1-3's own state; general-illumination effects, not matrix lamps.",
+    "GISpot1b3 -- a fourth spot-flasher parked at raw (-1295.169, 3806.534), far outside the playfield bounds; a table modelling leftover, excluded rather than clamped."
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1229,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "b462146e7b641f57fdb08a032c9298ce921675e63798ba245bcca0e3904fe799",
+    "manifest_uri": "external:pinmame-vpx-sources/stern/pirates-of-the-caribbean-2006/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.potc-stern-2006",
+    "total_bytes": 85415058,
+    "vpxtool_version": "vpxtool"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "stern.pirates-of-the-caribbean.2006",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      -7,
+      -6,
+      -5,
+      -3,
+      -2,
+      -1,
+      0,
+      15,
+      16,
+      65,
+      66,
+      67,
+      68,
+      69,
+      71,
+      72,
+      82,
+      84
+    ],
+    "dip_switch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "unused": [
+      -4,
+      5,
+      7,
+      17,
+      33,
+      34,
+      35,
+      36,
+      38,
+      40,
+      41,
+      48,
+      49,
+      59,
+      64,
+      70,
+      85,
+      86,
+      87,
+      88
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 1,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 2,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 33,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 34,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 35,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 36,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 78,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 79,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 80,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 22,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 24,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 8,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 12,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 13,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 14,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 17,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 51,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 52,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 53,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 54,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 55,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 56,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 57,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 58,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 59,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 60,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 61,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 62,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 63,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 64,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 65,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 66,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 33,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 34,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 35,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 36,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 45,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 47,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 144,
+  "projections": [
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "reason": "Trough position #4; the four trough position switches and the trough jam opto have no individual objects in the retained table, which models the whole 4-ball trough through one cvpmBallStack instance. Projected onto the trough's own ball-release kicker (BallRelease), the object bsTROUGH.InitKick names."
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "reason": "Trough position #3; projected onto the trough's own ball-release kicker for the same reason as address 18."
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "reason": "Trough position #2; projected onto the trough's own ball-release kicker for the same reason as address 18."
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "reason": "Trough position #1; projected onto the trough's own ball-release kicker for the same reason as address 18."
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "reason": "Trough jam / stack opto, which sits in the trough's own exit path; the retained script asserts it with vpmTimer.PulseSw 22 from inside SolTrough rather than through an object. Projected onto the trough's own ball-release kicker."
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch",
+      "reason": "Ship Fully Sunk; the retained script derives it from the ship mechanism's own software position counter (ShipTimer_Timer, ShipPos 0-3) with no sensor object anywhere in the table. Projected onto the ship assembly's own Primitive."
+    },
+    {
+      "address": 63,
+      "group": "pinmame.input.switch",
+      "reason": "Ship Home; derived from the same software position counter. Projected onto the ship assembly's own Primitive."
+    },
+    {
+      "address": 81,
+      "group": "pinmame.input.switch",
+      "reason": "Right flipper end-of-stroke switch, part 180-5149-00 on the Flipper Asm.; projected onto the right flipper assembly's own object, which is also where public solenoid 16 is placed."
+    },
+    {
+      "address": 83,
+      "group": "pinmame.input.switch",
+      "reason": "Left flipper end-of-stroke switch, part 180-5149-00 on the Flipper Asm.; projected onto the left flipper assembly's own object, which is also where public solenoid 15 is placed."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Raise Sails; the sails latch has no separate visible object, so this is projected onto the ship's own SailsUp state Wall, which SolSailsUp is the sub that drops."
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid",
+      "reason": "Ship Motor; a motor has no single point of action, so this is projected onto the ship assembly's own Primitive, the object SolShipMotor translates."
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid",
+      "reason": "Ship Motor Relay; a Relay PCB (511-5024-03) with no point of action on the playfield at all. Projected onto the ship assembly it reverses, the mechanism it belongs to. The Coil & Flash Lamp Locations page draws its callout on the playfield beside the ship motor's own callout."
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "reason": "Lower Sails Latch; projected onto the ship's own SailsDown state Wall, which SolSailsDown is the sub that drops."
+    }
+  ],
+  "resolved_input_addresses": [
+    1,
+    2,
+    3,
+    4,
+    6,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    37,
+    39,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    60,
+    61,
+    62,
+    63,
+    81,
+    83
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 69,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 70,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "fb6cec754fc907f1fbb41f1f71273d6585db73365073b3a18cfe2c12d90c39e3",
+    "manual_sha256": "faa493698371d4e6d2d821c9f6489ce780d50cfd92c5a0ed71c50a99df1875be",
+    "table_sha256": "d69fea24ad8d1dd4fc49c84214e71b448d6a602b6ef768a329a55a94f15aad59"
+  },
+  "status": "partial",
+  "unresolved": [
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 0,
+      "group": "pinmame.output.gi"
+    }
+  ],
+  "version": 1,
+  "visual_review_cache": {
+    "geometry": {
+      "path": "external:pinmame-review-artifacts/pirates-of-the-caribbean-2006/vpx-geometry.txt",
+      "sha256": "12f88a9f9a2a76a13a6c71cf3491bf96d4480842663bdf5dc8b388733d6c3dfe"
+    },
+    "root": "external:pinmame-manuals/rendered/stern.pirates-of-the-caribbean.2006/",
+    "transcription": {
+      "path": "external:pinmame-review-artifacts/pirates-of-the-caribbean-2006/manual-transcription.md",
+      "sha256": "e440218cd68c47b1a21a1643f53cb82a7a2f5bb3530b59035045d9a0eb199314"
+    }
+  }
+}
