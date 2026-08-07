@@ -344,8 +344,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
 		self.assertEqual(786, report["machine_count"])
 		self.assertEqual(23, report["author_ready_count"])
-		self.assertEqual(81, report["partial_count"])
-		self.assertEqual(682, report["stub_count"])
+		self.assertEqual(82, report["partial_count"])
+		self.assertEqual(681, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
 		self.assertEqual(787, report["catalog_record_count"])
 		# The thirteen retrofit-pending machines above (which already include X-Men Pro), plus
@@ -363,13 +363,17 @@ class SpatialMigrationTests(unittest.TestCase):
 		# legacy candidate-only stub, and three lamps (53, 85, 86) have no world-space Light object
 		# in the retained extraction (only a local-origin Primitive with an unresolved parent
 		# transform), so it is counted as an 18th machine with a genuine spatial gap.
-		self.assertEqual(18, report["missing_requirement_counts"]["spatial_placement"])
+		# Tales of the Arabian Nights is likewise not a retrofit: it was curated directly from a
+		# legacy stub, and two GI addresses (3, 4) -- the manual's genuine playfield strings -- have
+		# no VPX object bound to them in the retained (non-VPW) extraction, so it is counted as a
+		# 19th machine with a genuine spatial gap.
+		self.assertEqual(19, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(787, len(catalog["machines"]))
 		self.assertEqual(786, catalog["summary"]["game_count"])
 		self.assertEqual(787, catalog["summary"]["machine_count"])
 		self.assertEqual(23, catalog["summary"]["author_ready_count"])
-		self.assertEqual(682, catalog["summary"]["stub_count"])
-		self.assertEqual(82, catalog["summary"]["partial_count"])
+		self.assertEqual(681, catalog["summary"]["stub_count"])
+		self.assertEqual(83, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(13, len(note_paths))

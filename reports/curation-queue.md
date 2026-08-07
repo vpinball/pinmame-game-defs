@@ -110,8 +110,8 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 104 | 1996 | STUB - Verne's World | Spinball (Spain) | stub |
 | 105 | 1996 | STUB - Junk Yard (1.2) | Williams | stub |
 | 106 | 1996 | STUB - Phantom Haus (0.4 Prototype) | Williams | stub |
-| 107 | 1996 | STUB - Tales of the Arabian Nights (1.4 / S1.1) | Williams | stub |
-| 108 | 1996 | STUB - Ticket Tac Toe (1.0) | Williams | stub |
+| 107 | 1996 | STUB - Ticket Tac Toe (1.0) | Williams | stub |
+| 108 | 1996 | Tales of the Arabian Nights | Williams | partial |
 | 109 | 1995 | Attack From Mars | Bally | author_ready |
 | 110 | 1995 | STUB - Indianapolis 500 (1.1R) | Bally | stub |
 | 111 | 1995 | STUB - Shadow, The (LX-5) | Bally | stub |
