@@ -69,6 +69,10 @@ Four things will surprise anyone carrying WPC or Whitestar assumptions across.
   mechanism in prose: the relay "switch[es] +32 volts between coils or flash lamps; these sets
   are termed 'left' and 'right'", and it is why 22 drivers yield "29 regular coils". Every right
   half on this machine is a group of four flash lamps.
+- **PinMAME's flasher typing is uniform and the machine is not.** `s11.c:1209` types the whole
+  25-32 block as No. 89 bulbs, but the printed wiring diagram shows four of the eight right-side
+  groups mixing No. 906 bulbs in. Treat the emulator's output type as a brightness model, not as
+  evidence of what is fitted; the manual's per-drive composition is recorded on each address.
 - **64 lamps, not 80**, and every one of the 64 is populated - the printed chart has no "Not
   Used" cell anywhere. Any address above 64 is not hardware; the superseded legacy record listed
   lamps at 109 and 111-132, and the retained script binds 71 `Lampz` slots, both of which are

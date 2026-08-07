@@ -49,6 +49,30 @@ MANUAL_SWITCHES = {
 MANUAL_UNFITTED_LEFT_DRIVES = {5, 7}
 
 
+# The right-side bulb composition, transcribed from the printed Special Coil Wiring Diagram on
+# manual page 29 and maintained here separately from the curator. PinMAME types the whole 25-32
+# block uniformly as No. 89; the machine does not, and four of these eight carry No. 906 bulbs.
+MANUAL_RIGHT_SIDE_BULBS = {
+    1: "(4) No. 89", 2: "(3) No. 906 + No. 89", 3: "(2) No. 89 + (2) No. 906",
+    4: "(2) No. 906 + (2) No. 89", 5: "(4) No. 89", 6: "(4) No. 89",
+    7: "(4) No. 89", 8: "(2) No. 89 + (2) No. 906",
+}
+
+# Lamp labels for the addresses whose identity a fabricated coordinate would have to survive.
+# Sampled across all eight printed columns rather than exhaustively, because the point is to be an
+# independent check on the generator, not a second copy of it. A review demonstrated that an
+# invented lamp.matrix-1 coordinate passed the whole suite while only switches had a fixture.
+MANUAL_LAMPS = {
+    1: "1 Million", 8: "Spot Fast Money", 9: "Bottom 2X", 15: "Batman's Head",
+    16: "Batman's Chest", 17: "Left Toplane", 24: "Right Outlane", 25: "Backpanel Left",
+    32: "3 Million", 33: "Left 3 Bank Top", 40: "Left 3 Bank Done", 41: "Right 3 Bank Top",
+    48: "Right 3 Bank Done", 49: "Ramp Diverter", 54: "Cab.-Start Button",
+    56: "Jackpot Lit", 57: "BATMAN (B)", 62: "BATMAN (N)", 63: "Lockball #1", 64: "Lockball #2",
+}
+# The one lamp address that is cabinet hardware rather than playfield.
+MANUAL_CABINET_LAMPS = {54}
+
+
 def bindings(definition: dict, collection: str, group: str) -> dict[int, dict]:
     return {int(d["binding"]["device"]): d for d in definition[collection]
             if d["binding"]["group"] == group}
@@ -122,6 +146,38 @@ class BatmanDefinitionTests(unittest.TestCase):
             self.assertEqual("virtual", self.solenoids[address]["kind"], address)
             self.assertEqual("unused", self.solenoids[address]["availability"], address)
             self.assertIn("Synthetic", self.solenoids[address]["label"], address)
+
+    def test_lamp_labels_match_the_printed_chart(self) -> None:
+        """An independent check on lamp identity, not a second copy of the generator.
+
+        A review showed that an invented `lamp.matrix-1` coordinate passed the entire suite,
+        because only switches had a manual-derived fixture. Labels are what a fabricated or
+        misbound lamp cannot fake without also contradicting the printed chart.
+        """
+        for address, expected in MANUAL_LAMPS.items():
+            self.assertEqual(expected, self.lamps[address]["label"], address)
+
+    def test_the_cabinet_lamp_is_not_placed_on_the_playfield(self) -> None:
+        for address in MANUAL_CABINET_LAMPS:
+            spatial = self.lamps[address]["spatial"]
+            self.assertEqual("not_applicable", spatial["status"], address)
+            self.assertEqual("cabinet_or_service", spatial["reason"], address)
+        for address, lamp in self.lamps.items():
+            if address in MANUAL_CABINET_LAMPS:
+                continue
+            self.assertNotEqual("cabinet_or_service", (lamp.get("spatial") or {}).get("reason"), address)
+
+    def test_right_side_bulb_composition_matches_the_printed_diagram(self) -> None:
+        """PinMAME types 25-32 uniformly as No. 89; the machine does not.
+
+        An earlier draft said the printed diagram showed No. 89 "on every one of the eight
+        drives" in the same sentence that listed No. 906 bulbs for that drive - a claim its own
+        committed excerpt contradicted.
+        """
+        for drive, bulbs in MANUAL_RIGHT_SIDE_BULBS.items():
+            notes = self.solenoids[drive + 24]["physical"]["notes"]
+            self.assertIn(bulbs, notes, drive)
+            self.assertNotIn("every one of the eight drives", notes, drive)
 
     def test_every_lamp_address_is_populated(self) -> None:
         """Unusual, and worth a gate: the printed lamp matrix has no 'Not Used' cell at all."""
@@ -457,6 +513,83 @@ class BatmanCuratorTests(unittest.TestCase):
         text = KNOWLEDGE_PATH.read_text(encoding="utf-8")
         for phrase in ("no GI channel", "952 x 1974", "batmanf", "Left/Right relay"):
             self.assertIn(phrase, text, phrase)
+
+
+def _evidence_root() -> Path | None:
+    """The retained VPX sources root, or None when it is not available."""
+    import os
+
+    override = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
+    if override:
+        base = Path(override) / "data-east" / "batman-1991"
+        return base if base.is_dir() else None
+    for parent in ROOT.resolve().parents:
+        candidate = parent / "pinmame-game-defs-working-dir" / "vpx-sources"
+        if candidate.is_dir():
+            base = candidate / "data-east" / "batman-1991"
+            return base if base.is_dir() else None
+    return None
+
+
+class BatmanRetainedEvidenceTests(unittest.TestCase):
+    """Prove the recorded hashes describe the artifacts actually retained.
+
+    These skip cleanly when the external evidence root is absent, so the no-evidence run stays
+    green without weakening the canonical checks. A recorded digest that nothing recomputes is
+    a digest nobody has ever checked.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.definition = load_json(DEFINITION_PATH)
+        cls.sources = {s["id"]: s for s in cls.definition["sources"]}
+        cls.base = _evidence_root()
+
+    @staticmethod
+    def _sha256(path: Path) -> str:
+        import hashlib
+
+        digest = hashlib.sha256()
+        with path.open("rb") as stream:
+            for block in iter(lambda: stream.read(1 << 20), b""):
+                digest.update(block)
+        return digest.hexdigest()
+
+    def test_retained_table_and_script_match_their_recorded_hashes(self) -> None:
+        if self.base is None:
+            self.skipTest("retained VPX sources are not available")
+        for source_id, name in (
+            ("vpx-table.batman-vpw-1-1", "Batman (Data East 1991) VPW v1.1.vpx"),
+            ("vpx-script.batman-vpw-1-1", "Batman (Data East 1991) VPW v1.1.vbs"),
+        ):
+            path = self.base / name
+            self.assertTrue(path.is_file(), str(path))
+            self.assertEqual(self.sources[source_id]["sha256"], self._sha256(path), source_id)
+
+    def test_extraction_manifest_recomputes_over_every_retained_file(self) -> None:
+        """Not just the manifest's own hash: every entry is re-hashed against the extraction."""
+        if self.base is None:
+            self.skipTest("retained VPX sources are not available")
+        import hashlib
+        import json as _json
+
+        manifest_path = self.base / "extraction-manifest.json"
+        self.assertTrue(manifest_path.is_file(), str(manifest_path))
+        self.assertEqual(self.sources["vpx-extraction.batman-vpw-1-1"]["sha256"],
+                         self._sha256(manifest_path))
+        recorded = _json.loads(manifest_path.read_text(encoding="utf-8"))
+        body = {k: v for k, v in recorded.items() if k != "manifest_sha256"}
+        canonical = _json.dumps(body, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+        self.assertEqual(recorded["manifest_sha256"], hashlib.sha256(canonical).hexdigest())
+
+        extraction = self.base / "vpxtool-extract"
+        present = sorted(p.relative_to(extraction).as_posix() for p in extraction.rglob("*") if p.is_file())
+        self.assertEqual(sorted(e["path"] for e in recorded["files"]), present,
+                         "the manifest and the retained extraction disagree about which files exist")
+        for entry in recorded["files"]:
+            path = extraction / entry["path"]
+            self.assertEqual(entry["bytes"], path.stat().st_size, entry["path"])
+            self.assertEqual(entry["sha256"], self._sha256(path), entry["path"])
 
 
 if __name__ == "__main__":
