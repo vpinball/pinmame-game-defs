@@ -47,13 +47,13 @@
       "id": "pinmame.output.lamp",
       "direction": "controlled_device",
       "kind": "lamp",
-      "label": "Eight-column by ten-row controlled-lamp matrix",
-      "address_rules": [{ "minimum": 1, "maximum": 80 }],
+      "label": "Controlled-lamp matrix and game-specific auxiliary lamp columns",
+      "address_rules": [{ "minimum": 1, "maximum": 336 }],
       "transports": {
         "libpinmame": { "channel": "lamp" },
         "controller_plugin": { "group_id": 512, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "Whitestar reports eight drive columns by ten return rows as sequential public addresses 1-80, with addresses ordered across the eight columns before advancing to the next return row. Game-specific LED or mini-display compatibility data can use additional layouts or explicitly documented compatibility channels rather than being mistaken for matrix lamps."
+      "notes": "Whitestar reports the eight-by-ten controlled-lamp matrix as sequential public addresses 1-80, with addresses ordered across the eight columns before advancing to the next return row. PinMAME sizes this shared transport to 64 + (lampCol * 8); src/wpc/bowlgames.c declares lampCol=34 in coinGameData, shared by the titanic and monopred coin-dropper drivers, hence the platform profile ceiling of 336. A machine definition must enumerate only addresses its own hardware declaration and game-specific driver writes establish; the profile ceiling never creates physical devices."
     },
     {
       "id": "pinmame.output.gi",
@@ -72,7 +72,7 @@
     {
       "uri": "https://github.com/vpinball/pinmame",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
-      "locator": "src/wpc/se.h; src/wpc/se.c; src/wpc/segames.c; src/wpc/core.h; src/wpc/core.c; src/libpinmame/libpinmame.cpp"
+      "locator": "src/wpc/se.h; src/wpc/se.c; src/wpc/segames.c; src/wpc/bowlgames.c coinGameData, titanic, monopred; src/wpc/core.h; src/wpc/core.c; src/libpinmame/libpinmame.cpp"
     },
     {
       "uri": "https://github.com/vpinball/pinmame",
