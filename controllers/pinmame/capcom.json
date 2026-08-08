@@ -3,14 +3,14 @@
   "version": 1,
   "id": "pinmame.capcom",
   "authority": "pinmame",
-  "hardware_family": "Capcom CPU/driver board (Motorola 68306, Capcom-custom U16 DMD/interrupt ASIC), the \"cc\"/\"cc1\"/\"cc2\" MACHINE_DRIVER_START family in src/wpc/capcom.c: Pinball Magic, Airborne, Breakshot, Flipper Football, Big Bang Bar, Kingpin. This profile does not cover the unrelated \"romstar\" MACHINE_DRIVER_START in the same file (Goofy Hoops, a QSound-hardware Romstar redemption game with its own 68306 memory map, no switch board, and no shared switch/lamp/solenoid addressing with the cc family) and does not cover Breakshot's single-lamp-matrix \"Classic\" hardware variant, which repurposes the second lamp matrix as a strobed switch matrix instead of a physical switch board (HAS_SWITCH_BOARD = core_gameData->hw.lampCol > 1).",
+  "hardware_family": "Capcom CC",
   "inversion_applied_by_emulator": true,
   "groups": [
     {
       "id": "pinmame.input.switch",
       "direction": "input",
       "kind": "switch",
-      "label": "Two dedicated 8-bit cabinet switch bytes, an 8x8 playfield switch-matrix board, and PinMAME's synthetic flipper switch column",
+      "label": "Cabinet, playfield, and synthetic flipper switch addresses",
       "address_rules": [
         {
           "minimum": 1,
@@ -66,11 +66,11 @@
       "id": "pinmame.output.lamp",
       "direction": "controlled_device",
       "kind": "lamp",
-      "label": "Two 8x8 CPU-controlled lamp matrices (no separate general-illumination channel) plus a fixed diagnostic-LED column",
+      "label": "CPU-controlled lamp outputs and diagnostic LEDs (no separate general-illumination channel)",
       "address_rules": [
         {
           "minimum": 1,
-          "maximum": 200
+          "maximum": 136
         }
       ],
       "transports": {
@@ -78,14 +78,14 @@
           "channel": "lamp"
         }
       },
-      "notes": "The driver-file header comment states the platform convention directly: 'Lamp Matrix = 2 x (8x8 Matrix) = 128 Lamps - NOTE: No GI - every single lamp is cpu controlled' (src/wpc/capcom.c). coreGlobals.nLamps = 64 + hw.lampCol*8 (MACHINE_INIT(cc)), where hw.lampCol is a per-game INITGAME/INITGAMEFF macro parameter counting the second lamp matrix's own column count *plus one* reserved diagnostic column (the comment on the same line: '+1 col for PWM diag LED'); across the cc family (excluding Breakshot's one-matrix 'Classic' hardware, hw.lampCol=1) this parameter is 8 or 9 depending on the game (src/wpc/capgames.c INITGAME/INITGAMEFF calls), so the real populated range is game-specific and this profile's 1-200 bound is only the outer platform ceiling, generous enough to cover the largest declared lampCol in the family. Lamp Matrix 'A' is always the fixed first 64 addresses (io_w case 0x00000c, HAS_SWITCH_BOARD branch, core_write_pwm_output_lamp_matrix(CORE_MODOUT_LAMP0,...)); Lamp Matrix 'B' occupies the next (hw.lampCol-1)*8 addresses starting immediately after Matrix A (io_w case 0x00000d, core_write_pwm_output_lamp_matrix(CORE_MODOUT_LAMP0+(hw.lampCol-1)*8,...)); the final 8-address column (nLamps-8 .. nLamps-1) is reserved diagnostic space, of which only the first two positions are ever populated -- the CPU-board diagnostic LED (CORE_MODOUT_LAMP0+nLamps-8) and the sound-board diagnostic LED (CORE_MODOUT_LAMP0+nLamps-7), both CORE_MODOUT_LED rather than a real player-visible bulb type -- with the remaining six positions in that column set CORE_MODOUT_NONE and never populated by any game. There is no general-illumination output channel anywhere on this platform: every playfield bulb, including any bulb a manual might describe as background/ambient illumination, is an individually CPU-strobed lamp-matrix address, not a continuously-driven GI circuit; a definition must bind such bulbs to this lamp group with an ordinary lamp kind, never invent a pinmame.output.gi binding for Capcom hardware."
+      "notes": "The cc/cc1/cc2 driver family uses coreGlobals.nLamps = 64 + hw.lampCol*8 (src/wpc/capcom.c MACHINE_INIT(cc)), so each game definition must narrow this platform ceiling to its own declared lampCol. Most games fit the external switch board and use two lamp matrices; Breakshot is a supported hardware mode in the same cc family with hw.lampCol=1, no external switch board, one physical lamp matrix, and the other lamp-matrix circuitry reused to strobe switches (HAS_SWITCH_BOARD = core_gameData->hw.lampCol > 1). Matrix A occupies public addresses 1-64 when fitted. Matrix B begins at public address ((hw.lampCol - 1) * 8) + 1: address 65 for hw.lampCol=9, address 57 for Flipper Football 1.03 with hw.lampCol=8, and address 1 for Breakshot with hw.lampCol=1. The final eight published addresses are diagnostic allocation: the first two are the CPU- and sound-board LEDs and the other six are unused. The largest cc-family declaration is hw.lampCol=9, so the exact platform ceiling is 136, not 200. This family has no separate general-illumination channel: every fitted bulb is CPU controlled and belongs to the lamp group."
     }
   ],
   "sources": [
     {
       "uri": "https://github.com/vpinball/pinmame",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
-      "locator": "src/wpc/capcom.c (file header hardware/lamp/switch/solenoid comment; cc_vblank/SWITCH_UPDATE(cc)/cc_zeroCross/io_r/io_w/MACHINE_INIT(cc)/cc_sw2m/cc_m2sw/MACHINE_DRIVER_START(cc/cc1/cc2/romstar)); src/wpc/capcom.h (CC_COMPORTS, CC_INPUT_PORTS_START, CC_ROMSTART_2/4/8/2X macros); src/wpc/capgames.c (capInvSw0-13 per-game inverted-switch masks, #define FLIP FLIP_SWNO(5,6)+FLIP_SOL(FLIP_LL|FLIP_LR|FLIP_UR|FLIP_UL), INITGAME/INITGAMEFF macros and their core_tGameData positional field order, cc_dispDMD128x32/cc_dispDMD256x64, every cc-family CORE_GAMEDEFNV/CORE_CLONEDEFNV entry); src/wpc/core.h (core_tGameData hw struct field order: flippers/swCol/lampCol/custSol/soundBoard/display/gameSpecific1/gameSpecific2/getSol; CORE_FIRSTUFLIPSOL=33, CORE_FIRSTLFLIPSOL=45, CORE_FIRSTCUSTSOL=51, CORE_CUSTSOLNO, CORE_MAXSWCOL=16, CORE_STDSWCOLS=12, CORE_FLIPPERSWCOL=11, CORE_SWLRFLIPEOSBIT/CORE_SWLRFLIPBUTBIT/CORE_SWLLFLIPEOSBIT/CORE_SWLLFLIPBUTBIT/CORE_SWURFLIPEOSBIT/CORE_SWURFLIPBUTBIT/CORE_SWULFLIPEOSBIT/CORE_SWULFLIPBUTBIT bit values, FLIP_LR/FLIP_LL/FLIP_UR/FLIP_UL/FLIP_L/FLIP_U/FLIP_SW/FLIP_SWNO/FLIP_SOL/FLIP_EOS/FLIP_BUT/FLIP_SWL/FLIP_SWR macros, sLRFlip/sLRFlipPow/sLLFlip/sLLFlipPow/sURFlip/sURFlipPow/sULFlip/sULFlipPow); src/wpc/core.c (core_updateSw flipMask construction and synthetic flipper switch/EOS handling at locals.flipMask/CORE_FLIPPERSWCOL, core_getSw/core_setSw generic invSw application via coreGlobals.invSw[swNo/8], core_gameData->wpc.invSw copied into coreGlobals.invSw at game init); src/libpinmame/libpinmame.h (PINMAME_HARDWARE_GEN enum: no Capcom/cc entry exists anywhere in this enum, confirmed by its absence and by core_tGameData's own gen field being the literal 0 in every cc-family INITGAME/INITGAMEFF expansion, so PinmameGetHardwareGen() reports 0 for every Capcom game; this profile's hardware_family is identified by MACHINE_DRIVER_START(cc)/driver short-name prefix, not by a hardware-generation bitmask, unlike every WPC/System-11/Whitestar/SAM profile in this repository)"
+      "locator": "src/wpc/capcom.c (file header hardware/lamp/switch/solenoid comment; cc_vblank/SWITCH_UPDATE(cc)/cc_zeroCross/io_r/io_w/MACHINE_INIT(cc)/cc_sw2m/cc_m2sw/MACHINE_DRIVER_START(cc/cc1/cc2); MACHINE_DRIVER_START(romstar) inspected only to establish that the unrelated Goofy Hoops driver is outside this profile); src/wpc/capcom.h (CC_COMPORTS, CC_INPUT_PORTS_START, CC_ROMSTART_2/4/8/2X macros); src/wpc/capgames.c (capInvSw0-13 per-game inverted-switch masks, #define FLIP FLIP_SWNO(5,6)+FLIP_SOL(FLIP_LL|FLIP_LR|FLIP_UR|FLIP_UL), INITGAME/INITGAMEFF macros and their core_tGameData positional field order, cc_dispDMD128x32/cc_dispDMD256x64, every cc-family CORE_GAMEDEFNV/CORE_CLONEDEFNV entry); src/wpc/core.h (core_tGameData hw struct field order: flippers/swCol/lampCol/custSol/soundBoard/display/gameSpecific1/gameSpecific2/getSol; CORE_FIRSTUFLIPSOL=33, CORE_FIRSTLFLIPSOL=45, CORE_FIRSTCUSTSOL=51, CORE_CUSTSOLNO, CORE_MAXSWCOL=16, CORE_STDSWCOLS=12, CORE_FLIPPERSWCOL=11, CORE_SWLRFLIPEOSBIT/CORE_SWLRFLIPBUTBIT/CORE_SWLLFLIPEOSBIT/CORE_SWLLFLIPBUTBIT/CORE_SWURFLIPEOSBIT/CORE_SWURFLIPBUTBIT/CORE_SWULFLIPEOSBIT/CORE_SWULFLIPBUTBIT bit values, FLIP_LR/FLIP_LL/FLIP_UR/FLIP_UL/FLIP_L/FLIP_U/FLIP_SW/FLIP_SWNO/FLIP_SOL/FLIP_EOS/FLIP_BUT/FLIP_SWL/FLIP_SWR macros, sLRFlip/sLRFlipPow/sLLFlip/sLLFlipPow/sURFlip/sURFlipPow/sULFlip/sULFlipPow); src/wpc/core.c (core_updateSw flipMask construction and synthetic flipper switch/EOS handling at locals.flipMask/CORE_FLIPPERSWCOL, core_getSw/core_setSw generic invSw application via coreGlobals.invSw[swNo/8], core_gameData->wpc.invSw copied into coreGlobals.invSw at game init); src/libpinmame/libpinmame.h (PINMAME_HARDWARE_GEN enum: no Capcom/cc entry exists anywhere in this enum, confirmed by its absence and by core_tGameData's own gen field being the literal 0 in every cc-family INITGAME/INITGAMEFF expansion, so PinmameGetHardwareGen() reports 0 for every Capcom game; this profile's hardware_family is identified by MACHINE_DRIVER_START(cc)/driver short-name prefix, not by a hardware-generation bitmask, unlike every WPC/System-11/Whitestar/SAM profile in this repository)"
     }
   ]
 }

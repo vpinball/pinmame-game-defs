@@ -328,10 +328,14 @@ class BigBangBarDefinitionTests(unittest.TestCase):
 	def test_controller_profile_declares_every_used_binding_group(self) -> None:
 		profile = load_json(CONTROLLER_PATH)
 		self.assertEqual("pinmame.capcom", profile["id"])
+		self.assertEqual("Capcom CC", profile["hardware_family"])
 		self.assertTrue(profile["inversion_applied_by_emulator"])
 		groups = {group["id"]: group for group in profile["groups"]}
 		used = {device["binding"]["group"] for device in list(self.definition["inputs"]) + list(self.definition["outputs"])}
 		self.assertTrue(used <= set(groups))
+		lamp_group = groups["pinmame.output.lamp"]
+		self.assertEqual([{"minimum": 1, "maximum": 136}], lamp_group["address_rules"])
+		self.assertIn("Breakshot is a supported hardware mode", lamp_group["notes"])
 
 		def allowed(group_id: str, address: int) -> bool:
 			for rule in groups[group_id]["address_rules"]:
