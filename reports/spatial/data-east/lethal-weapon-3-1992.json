@@ -1,0 +1,71 @@
+{
+	"blockers": [
+		{
+			"detail": "These fitted or unresolved-fitment devices have no honest coordinate in the retained recreation. Devices that genuinely sit inside a mechanism are recorded not_applicable/internal_nonvisual; a used or unresolved-fitment device with no retained object omits the spatial key rather than fabricating a location.",
+			"id": "devices-without-a-retained-object",
+			"internal_nonvisual_devices": [
+				"coil.driver-10"
+			],
+			"omitted_spatial_key_devices": [
+				"coil.driver-3",
+				"coil.driver-8"
+			],
+			"severity": "major"
+		},
+		{
+			"detail": "The retained script binds visual Light effects, not surveyed physical bulb sockets. Manual quantities exceed the retained effect count for addresses 9, 16, 25-27, 29, 31 and 32; address 30 instead has four effects for three printed bulbs. Address 28 is the only exact count match, which still does not prove one-to-one socket identity.",
+			"devices": [
+				"coil.driver-9",
+				"coil.driver-16",
+				"flasher.driver-1-right",
+				"flasher.driver-2-right",
+				"flasher.driver-3-right",
+				"flasher.driver-4-right",
+				"flasher.driver-5-right",
+				"flasher.driver-6-right",
+				"flasher.driver-7-right",
+				"flasher.driver-8-right"
+			],
+			"id": "flasher-effects-are-not-a-socket-survey",
+			"severity": "major"
+		},
+		{
+			"detail": "Exactly one known-working recreation is admitted as canonical spatial evidence, so every coordinate remains a single-lineage measurement. Three additional local tables were inspected during maintainer review, but their credits establish one Javier to 32Assassin to VPW derivative chain rather than independent geometry. Placements are therefore `observed` rather than `validated`; promotion needs an independent table or a complete transcription of the printed location drawings on manual pages 25, 27 and 28.",
+			"id": "single-retained-recreation",
+			"severity": "minor"
+		}
+	],
+	"coordinate_convention": "Normalized against the retained table's own playfield bounds, 952 x 2162, asserted rather than assumed. That extent happens to be the common WPC-era one, which is exactly why it is pinned: a machine whose bounds match the usual case is where an assumed divisor goes unnoticed. The resolver refuses to run if it ever sees different bounds.",
+	"coordinate_origins": {
+		"computed_centroid": 10,
+		"computed_devices": [
+			"coil.driver-20",
+			"coil.driver-21",
+			"switch.matrix-25",
+			"switch.matrix-26",
+			"switch.matrix-27",
+			"switch.matrix-30",
+			"switch.matrix-33",
+			"switch.matrix-34",
+			"switch.matrix-35",
+			"switch.matrix-38"
+		],
+		"measured_center": 166,
+		"note": "Point-like table objects (Light, Trigger, Kicker, Bumper, Flasher, Primitive, HitTarget) carry their own center. Extended objects (Wall, Ramp, Rubber) are defined by drag points and have none, so those are the centroid of the object's drag points. A centroid is a derivation, not an observation, and is reported separately for that reason."
+	},
+	"format": "pinmame-spatial-blockers",
+	"machine_id": "data-east.lethal-weapon-3.1992",
+	"placement_count": 176,
+	"source": {
+		"extraction": "vpx-extraction.lethal-weapon-3-vpw-2-0",
+		"extraction_file_count": 2135,
+		"extraction_manifest_sha256": "3735e00679d008b8bb7936bae43b11a93b231394f40b8b37a7ebf3f07fe9cb83",
+		"table": "vpx-table.lethal-weapon-3-vpw-2-0"
+	},
+	"status": "partial",
+	"unresolved": {
+		"lamps": [],
+		"switches": []
+	},
+	"version": 1
+}
