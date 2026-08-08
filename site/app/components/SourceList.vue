@@ -31,6 +31,9 @@ const SOURCE_META: Record<string, { label: string, icon: string, blurb: string }
 // Controller profiles cite sources without a `kind`, so fall back gracefully.
 const meta = (kind: string | undefined) =>
 	(kind ? SOURCE_META[kind] : undefined) ?? { label: kind ? titleCase(kind) : 'Reference', icon: 'lucide:file', blurb: '' }
+
+const sourceLabel = (source: Source) => source.id ?? source.uri
+const hasLongLocator = (source: Source) => (source.locator?.length ?? 0) > 240
 </script>
 
 <template>
@@ -47,13 +50,24 @@ const meta = (kind: string | undefined) =>
 						</h4>
 						<span v-if="source.license && source.license !== 'NOASSERTION'" class="num rounded border border-line px-1 text-[10px] text-ink-3">{{ source.license }}</span>
 					</div>
-					<p class="num mt-0.5 text-[11px] break-all text-ink-4">
-						{{ source.id ?? source.locator }}
+					<p v-if="sourceLabel(source)" class="num mt-0.5 text-[11px] break-all text-ink-4">
+						{{ sourceLabel(source) }}
 					</p>
 				</div>
 			</div>
 
-			<p v-if="source.locator" class="mt-3 text-xs leading-relaxed text-ink-2">
+			<details v-if="source.locator && hasLongLocator(source)" class="group mt-3 rounded-md border border-line-soft bg-raised/30">
+				<summary class="flex cursor-pointer list-none items-center gap-2 px-2.5 py-2 text-[11px] text-ink-3 transition-colors hover:text-amber [&::-webkit-details-marker]:hidden">
+					<Icon name="lucide:map-pinned" class="size-3 shrink-0 opacity-70" />
+					<span class="flex-1">Source locations</span>
+					<Icon name="lucide:chevron-down" class="size-3 shrink-0 opacity-70 transition-transform group-open:rotate-180" />
+				</summary>
+				<p class="border-t border-line-soft px-2.5 py-3 text-xs leading-relaxed text-ink-2">
+					{{ source.locator }}
+				</p>
+			</details>
+
+			<p v-else-if="source.locator" class="mt-3 text-xs leading-relaxed text-ink-2">
 				{{ source.locator }}
 			</p>
 

@@ -37,6 +37,8 @@ function ruleSize(rule: { minimum?: number, maximum?: number, values?: number[] 
 	if (rule.values) return rule.values.length
 	return (rule.maximum ?? 0) - (rule.minimum ?? 0) + 1
 }
+
+const hasLongNotes = (notes: string | undefined) => (notes?.length ?? 0) > 240
 </script>
 
 <template>
@@ -209,7 +211,25 @@ function ruleSize(rule: { minimum?: number, maximum?: number, values?: number[] 
 						</div>
 					</div>
 
-					<p v-if="group.notes" class="border-t border-line px-5 py-3 text-[13px] leading-relaxed text-ink-2">
+					<details v-if="group.notes && hasLongNotes(group.notes)" class="group border-t border-line">
+						<summary class="flex cursor-pointer list-none items-center gap-3 px-5 py-3.5 transition-colors hover:bg-raised/50 [&::-webkit-details-marker]:hidden">
+							<span class="grid size-7 shrink-0 place-items-center rounded-md border border-line bg-raised text-ink-3">
+								<Icon name="lucide:braces" class="size-3.5" />
+							</span>
+							<span class="min-w-0 flex-1">
+								<span class="block text-[13px] font-medium text-ink">Technical details<span class="sr-only"> for {{ group.label }}</span></span>
+								<span class="mt-0.5 block text-[11px] text-ink-4">Source-derived address behavior and exceptions</span>
+							</span>
+							<Icon name="lucide:chevron-down" class="size-4 shrink-0 text-ink-4 transition-transform group-open:rotate-180" />
+						</summary>
+						<div class="border-t border-line bg-raised/25 px-5 py-4">
+							<p class="max-w-3xl whitespace-pre-line text-[13px] leading-6 text-ink-2">
+								{{ group.notes }}
+							</p>
+						</div>
+					</details>
+
+					<p v-else-if="group.notes" class="border-t border-line px-5 py-3 text-[13px] leading-relaxed text-ink-2">
 						{{ group.notes }}
 					</p>
 				</article>
