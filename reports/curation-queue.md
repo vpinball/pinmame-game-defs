@@ -298,7 +298,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 292 | 1987 | STUB - Heavy Metal Meltdown | Bally | stub |
 | 293 | 1987 | STUB - Party Animal | Bally | stub |
 | 294 | 1987 | STUB - Galaxy Play 2 | CICPlay | stub |
-| 295 | 1987 | STUB - Laser War (8.3) | Data East | stub |
+| 295 | 1987 | Laser War | Data East | partial |
 | 296 | 1987 | STUB - Amazon Hunt II (French) | Gottlieb | stub |
 | 297 | 1987 | STUB - Arena | Gottlieb | stub |
 | 298 | 1987 | STUB - Monte Carlo | Gottlieb | stub |
