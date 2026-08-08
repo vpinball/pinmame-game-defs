@@ -1,0 +1,104 @@
+{
+	"blockers": [
+		{
+			"detail": "These addresses are printed, fitted playfield or in-mechanism devices that the retained recreation does not model completely enough to assign every required effect coordinate. They are recorded not_applicable/internal_nonvisual only where the device genuinely has no authoring-visible playfield location; otherwise the spatial key is omitted - the schema offers only located or not_applicable, and neither is honest for an unplaced physical effect.",
+			"id": "devices-without-a-retained-object",
+			"internal_nonvisual_devices": [
+				"coil.driver-10",
+				"switch.matrix-10",
+				"switch.matrix-11",
+				"switch.matrix-12",
+				"switch.matrix-13",
+				"switch.matrix-15",
+				"switch.matrix-16",
+				"switch.matrix-50",
+				"switch.matrix-51",
+				"switch.matrix-53"
+			],
+			"omitted_spatial_key_devices": [
+				"coil.driver-11",
+				"coil.driver-12",
+				"coil.driver-13",
+				"coil.driver-14",
+				"coil.driver-16",
+				"coil.driver-9",
+				"flasher.driver-1-right",
+				"flasher.driver-2-right",
+				"flasher.driver-3-right",
+				"flasher.driver-4-right",
+				"flasher.driver-5-right",
+				"flasher.driver-6-right",
+				"flasher.driver-7-right",
+				"flasher.driver-8-right",
+				"lamp.matrix-50",
+				"lamp.matrix-51",
+				"lamp.matrix-52",
+				"lamp.matrix-53"
+			],
+			"severity": "major"
+		},
+		{
+			"detail": "Exactly one known-working recreation was retained, so every coordinate is a single measurement with nothing to corroborate it. Placements are therefore `observed` rather than `validated`; promoting this machine would need at least one further independent table to agree. The retained printed location drawings on manual pages 25 and 27 have not yet been digitized. The page-28 Coil and Flash Lamp Locations drawing is committed as a legible crop and corroborates topology, sidedness, and rough regions, but it is not a normalized coordinate source. Its 1A-8A and 1B-8B callouts also show why the grouped flash-lamp outputs keep their spatial key omitted: one public address spans multiple playfield, insert, ramp, and backbox bulbs, so neither one point nor cabinet_or_service describes it.",
+			"id": "single-retained-recreation",
+			"severity": "minor"
+		}
+	],
+	"coordinate_convention": "Normalized against the retained table's own playfield bounds, 952 x 1974. This machine is NOT the 2162-tall playfield most WPC-era tables use; normalizing y by 2162 would compress every coordinate by about nine percent. The resolver refuses to run if it ever sees different bounds.",
+	"coordinate_origins": {
+		"computed_centroid": 14,
+		"computed_devices": [
+			"lamp.matrix-17",
+			"lamp.matrix-18",
+			"lamp.matrix-19",
+			"lamp.matrix-23",
+			"lamp.matrix-55",
+			"switch.matrix-33",
+			"switch.matrix-34",
+			"switch.matrix-35",
+			"switch.matrix-41",
+			"switch.matrix-42",
+			"switch.matrix-43",
+			"switch.matrix-47",
+			"switch.matrix-48",
+			"switch.matrix-49"
+		],
+		"measured_center": 78,
+		"note": "Point-like table objects (Light, Trigger, Kicker, Bumper, Flasher, Primitive) carry their own center. Extended objects (Wall, Ramp, Rubber) are defined by drag points and have none, so those are the centroid of the object's drag points. A centroid is a derivation, not an observation, and is reported separately for that reason."
+	},
+	"format": "pinmame-spatial-blockers",
+	"machine_id": "data-east.batman.1991",
+	"placement_count": 92,
+	"source": {
+		"extraction": "vpx-extraction.batman-vpw-1-1",
+		"extraction_file_count": 1882,
+		"extraction_manifest_sha256": "ae5e8dae78910d9038ea43dd0c30ab91bb5a9e698a9080404420ba16a85c656a",
+		"table": "vpx-table.batman-vpw-1-1"
+	},
+	"status": "partial",
+	"unresolved": {
+		"lamps": [
+			{
+				"address": 50,
+				"device_id": "lamp.matrix-50",
+				"reason": "fitted playfield lamp has no retained physical coordinate"
+			},
+			{
+				"address": 51,
+				"device_id": "lamp.matrix-51",
+				"reason": "fitted playfield lamp has no retained physical coordinate"
+			},
+			{
+				"address": 52,
+				"device_id": "lamp.matrix-52",
+				"reason": "fitted playfield lamp has no retained physical coordinate"
+			},
+			{
+				"address": 53,
+				"device_id": "lamp.matrix-53",
+				"reason": "fitted playfield lamp has no retained physical coordinate"
+			}
+		],
+		"switches": []
+	},
+	"version": 1
+}
