@@ -400,7 +400,12 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Lord of the Rings and Data East Batman each replace a legacy candidate-only partial
 		# record in place, so the physical coverage totals remain unchanged. Their unresolved
 		# placements stay represented in the generated repository-wide count below.
-		self.assertEqual(38, report["missing_requirement_counts"]["spatial_placement"])
+		# Data East Lethal Weapon 3 replaces a legacy candidate-only partial record in place, so
+		# partial/stub/author-ready totals are unchanged by it. Every one of its 64 lamp addresses
+		# resolved, but exactly one recreation was retained, so the placements are observed rather
+		# than validated and the dimension stays incomplete.
+		self.assertEqual(39, report["missing_requirement_counts"]["spatial_placement"])
+		self.assertEqual(28, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(787, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])
