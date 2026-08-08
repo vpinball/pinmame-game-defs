@@ -298,6 +298,7 @@ VIRTUAL_SOLENOID_LABELS = {
 	50: "Reserved WPC Output 50",
 	51: "PinMAME Claw-Release Diagnostic State",
 }
+USED_VIRTUAL_SOLENOIDS = {29, 30, 31, 51}
 # address -> (printed type, playfield voltage conn., drive transistor, playfield drive conn.,
 #             backbox voltage conn., backbox drive conn., drive wire, part number)
 SOLENOID_WIRING = {
@@ -1335,6 +1336,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			)
 		if address == 32:
 			notes_parts.append("Not a physical driver output; a WPC state channel that stays zero on this generation.")
+			extra["roles"] = ["internal.unused.wpc-output"]
 		if 37 <= address <= 44:
 			notes_parts.append(
 				"Unused address space on this hardware generation. WPC-DCS has no LPDC board, and pinned "
@@ -1374,8 +1376,12 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			extra["spatial"] = not_applicable("unused", MANUAL_SOURCE)
 		else:
 			extra["spatial"] = not_applicable("virtual", CORE_SOURCE)
+			if address in {29, 30, 31}:
+				extra["roles"] = ["internal.wpc-state"]
+			else:
+				extra["roles"] = ["internal.unused.wpc-output"] if address != 51 else ["internal.derived-state"]
 
-		availability = "used" if fitted else ("unused" if not_fitted else "used")
+		availability = "used" if fitted or address in USED_VIRTUAL_SOLENOIDS else "unused"
 		refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE) if fitted else (
 			(MANUAL_SOURCE, CORE_SOURCE) if not_fitted else (CORE_SOURCE, CONTROLLER_SOURCE)
 		)

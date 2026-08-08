@@ -182,7 +182,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 176 | 1992 | Creature from the Black Lagoon | Bally | partial |
 | 177 | 1992 | Doctor Who | Bally | partial |
 | 178 | 1992 | STUB - Gilligan's Island (L-9) | Bally | stub |
-| 179 | 1992 | The Addams Family | Bally | partial |
+| 179 | 1992 | The Addams Family | Bally | author_ready |
 | 180 | 1992 | Hook | Data East | partial |
 | 181 | 1992 | Lethal Weapon 3 | Data East | partial |
 | 182 | 1992 | Star Wars | Data East | partial |

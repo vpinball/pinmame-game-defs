@@ -1007,13 +1007,11 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 
 		label = VIRTUAL_SOLENOID_LABELS[address]
 		identifier = output_id(label)
-		# 31 is deliberately "unused": unlike several other WPC-Security/WPC-95 games in this project,
-		# wcs.c's init_wcs never calls wpc_set_fastflip_addr, so no ROM flag ever populates this channel here.
-		availability = "used" if address in {29, 30, 51} else "unused"
+		availability = "used" if address in {29, 30, 31, 51} else "unused"
 		notes = {
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; not a World Cup Soccer playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; not a World Cup Soccer playfield device.",
-			31: "PinMAME's synthetic fast-flip game-on state. Unlike several other WPC-Security/WPC-95 games in this project, wcs.c's init_wcs never calls wpc_set_fastflip_addr, so this channel is not populated by any ROM flag for this game even though the retained script sets Const UseSolenoids = 2 (fast flips) independently.",
+			31: "PinMAME publishes WPC_GILAMPS bit 7 here as the WPC Game-On / flipper-enable state because wcs.c does not configure a fast-flip address. The retained script's independent Const UseSolenoids = 2 does not make this public state channel unused.",
 			32: "PinMAME reports this WPC state channel as always zero; wcsGameData declares no game-specific use for it.",
 			37: "Unused WPC-Security output; this generation has no integrated LPDC board (unlike WPC-95/WPC-95DCS), so core_getSol returns constant 0 for solenoids 37-44 on GEN_WPCSECURITY.",
 			38: "Unused WPC-Security output; see 37.",
@@ -1035,7 +1033,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				"rather than a decaying counter."
 			),
 		}[address]
-		roles = ["internal.duplicate.mirror"] if address == 51 else ["internal.wpc-state"] if address in {29, 30, 31, 32} else ["internal.unused.wpc-output"]
+		roles = ["internal.duplicate.mirror"] if address == 51 else ["internal.wpc-state"] if address in {29, 30, 31} else ["internal.unused.wpc-output"]
 		items.append(
 			_device(
 				identifier, label, "virtual", "pinmame.output.solenoid", address, availability,

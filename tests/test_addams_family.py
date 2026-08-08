@@ -10,9 +10,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "bally" / "the-addams-family-1992.json"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "bally" / "the-addams-family-1992.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "bally" / "the-addams-family-1992.json"
 AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "bally" / "the-addams-family-1992.json"
+DEFINITION_PATH = AUTHOR_READY_PATH
 KNOWLEDGE_PATH = ROOT / "knowledge" / "bally" / "the-addams-family-1992.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-fliptronic.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "bally" / "the-addams-family-1992.json"
@@ -86,14 +87,12 @@ class AddamsFamilyDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_partial_identity_and_coverage(self) -> None:
+	def test_author_ready_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
-		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["recreation_notes"], self.definition["coverage"]["missing"])
-		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["recreation_knowledge"])
+		self.assertEqual("author_ready", self.definition["coverage"]["status"])
+		self.assertEqual([], self.definition["coverage"]["missing"])
+		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["recreation_knowledge"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension == "recreation_knowledge":
-				continue
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("bally.the-addams-family.1992", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
@@ -103,11 +102,12 @@ class AddamsFamilyDefinitionTests(unittest.TestCase):
 		self.assertEqual("pinmame.wpc-fliptronic", self.definition["controller"]["platform"])
 		self.assertEqual("0x8", self.definition["controller"]["hardware_generation"])
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
-		self.assertEqual("partial", self.definition["knowledge"]["status"])
+		self.assertEqual("complete", self.definition["knowledge"]["status"])
 		self.assertEqual([], self.definition["conflicts"])
 
 	def test_the_stale_stub_is_gone_and_gold_stub_is_untouched(self) -> None:
-		self.assertFalse(AUTHOR_READY_PATH.exists())
+		self.assertTrue(AUTHOR_READY_PATH.exists())
+		self.assertFalse(PARTIAL_PATH.exists())
 		self.assertTrue(DEFINITION_PATH.is_file())
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 		self.assertFalse(STUB_PATH.exists(), "taf_l5 stub must be pruned once the curated definition claims it")
@@ -185,6 +185,12 @@ class AddamsFamilyDefinitionTests(unittest.TestCase):
 		for address in (33, 34, 35, 36, 45, 46, 47, 48):
 			self.assertEqual("used", self.solenoids[address]["availability"], address)
 			self.assertEqual("coil", self.solenoids[address]["kind"], address)
+			self.assertIn("power_connection", self.solenoids[address]["wiring"], address)
+			self.assertIn("control_connection", self.solenoids[address]["wiring"], address)
+		self.assertEqual(
+			{33: "J802-6", 34: "J802-4", 35: "J802-3", 36: "J802-1", 45: "J802-13", 46: "J802-11", 47: "J802-9", 48: "J802-7"},
+			{address: self.solenoids[address]["wiring"]["control_connection"] for address in (33, 34, 35, 36, 45, 46, 47, 48)},
+		)
 		self.assertIn("Thing Flips", self.solenoids[35]["physical"]["notes"])
 		self.assertIn("Thing Flips", self.solenoids[36]["physical"]["notes"])
 
@@ -204,8 +210,13 @@ class AddamsFamilyDefinitionTests(unittest.TestCase):
 			self.assertEqual("magnet", self.solenoids[address]["kind"], address)
 		for address in (29, 30, 31, 32, 37, 38, 39, 40, 41, 42, 43, 44, 49, 50):
 			self.assertEqual("virtual", self.solenoids[address]["kind"], address)
-			self.assertEqual("unused", self.solenoids[address]["availability"], address)
 			self.assertEqual("virtual", self.solenoids[address]["spatial"]["reason"], address)
+		for address in (29, 30, 31):
+			self.assertEqual("used", self.solenoids[address]["availability"], address)
+			self.assertEqual(["internal.wpc-state"], self.solenoids[address]["roles"], address)
+		for address in (32, 37, 38, 39, 40, 41, 42, 43, 44, 49, 50):
+			self.assertEqual("unused", self.solenoids[address]["availability"], address)
+		self.assertEqual(["internal.unused.wpc-output"], self.solenoids[32]["roles"])
 		# Every printed solenoid table row (1-28) is a real, fitted device -- unlike Monster Bash's
 		# unfitted 4 and 7, TAF has no NOT_USED position in its solenoid table.
 		for address in range(1, 29):
@@ -274,11 +285,11 @@ class AddamsFamilyDefinitionTests(unittest.TestCase):
 					self.assertLessEqual(len(str(placement[axis]).partition(".")[2]), 6)
 				self.assertEqual("validated", placement["provenance"]["status"])
 		report = load_json(SPATIAL_REPORT_PATH)
-		self.assertEqual("pinmame-spatial-blockers", report["format"])
-		self.assertEqual("partial", report["status"])
+		self.assertEqual("pinmame-spatial-audit", report["format"])
+		self.assertEqual("author_ready", report["status"])
 		self.assertEqual([], report["unresolved"])
 		self.assertEqual(located, report["placement_count"])
-		self.assertTrue(report["blockers"])
+		self.assertEqual([], report["blockers"])
 
 	def test_geometric_ordering_regression_assertions(self) -> None:
 		switch_x = {addr: pos[0] for addr, pos in _switch_positions(self.switches).items()}

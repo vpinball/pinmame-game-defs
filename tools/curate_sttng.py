@@ -1220,7 +1220,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 	for address in sorted(VIRTUAL_SOLENOID_LABELS.keys()):
 		label = VIRTUAL_SOLENOID_LABELS[address]
 		identifier = output_id(label)
-		availability = "used" if address in {29, 30, 31, 32} else "unused"
+		availability = "used" if address in {29, 30, 31} else "unused"
 		notes = {
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not a Star Trek: The Next Generation playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not a Star Trek: The Next Generation playfield device.",
@@ -1238,7 +1238,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			50: "Reserved PinMAME output position before the first custom-output boundary (CORE_FIRSTCUSTSOL=51).",
 		}[address]
 		roles = ["internal.unused.wpc-output"]
-		if address in {29, 30, 31, 32}:
+		if address in {29, 30, 31}:
 			roles = ["internal.wpc-state"]
 		items.append(
 			_device(

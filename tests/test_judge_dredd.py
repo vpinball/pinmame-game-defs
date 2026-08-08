@@ -111,6 +111,7 @@ class JudgeDreddDefinitionTests(unittest.TestCase):
 		}
 		for address in range(37, 45):
 			device = by_address[address]
+			self.assertEqual("unused", device["availability"], f"solenoid {address}")
 			spatial = device.get("spatial") or {}
 			self.assertEqual("not_applicable", spatial.get("status"), f"solenoid {address}")
 			self.assertEqual("virtual", spatial.get("reason"), f"solenoid {address}")
@@ -119,6 +120,16 @@ class JudgeDreddDefinitionTests(unittest.TestCase):
 				"no LPDC board", (device.get("physical") or {}).get("notes", ""),
 				f"solenoid {address} must say why it is dead space",
 			)
+
+	def test_virtual_solenoid_availability_tracks_runtime_state_not_physical_fitment(self) -> None:
+		by_address = {
+			int(d["binding"]["device"]): d for d in self.definition["outputs"]
+			if d["binding"]["group"] == "pinmame.output.solenoid" and d["kind"] == "virtual"
+		}
+		self.assertEqual({29, 30, 31, 51}, {address for address, device in by_address.items() if device["availability"] == "used"})
+		self.assertEqual({12, 14, 32, *range(37, 45), 49, 50}, {address for address, device in by_address.items() if device["availability"] == "unused"})
+		for address in (29, 30, 31):
+			self.assertEqual(["internal.wpc-state"], by_address[address]["roles"], address)
 
 	def test_five_general_illumination_addresses(self) -> None:
 		self.assertEqual({0, 1, 2, 3, 4}, self.gi)

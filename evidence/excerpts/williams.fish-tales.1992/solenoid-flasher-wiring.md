@@ -80,3 +80,16 @@ with no additional addresses. One detail not visible in the row table: connector
 "Gray-Yellow +12V (playfield)" directly into the Reel(1)/Top Left(2)/Casters Club(1) flasher block
 and separately into the Reel Motor block — i.e. solenoids 25, 26, 27, and 28 share one +12V supply
 tap distinct from the +50V/+20V taps used by the rest of the page.
+
+## Printed 3-34 — Fliptronic II Board Interboard Wiring
+
+PDF page 128. This board-level connector table distinguishes the shared +50 V supply at J907 from each winding's individual drive output at J902.
+
+| Function | Supply wire | Supply connector | Drive wire | Drive connector |
+| --- | --- | --- | --- | --- |
+| Lower Left Flipper Holding | Gray-Yellow | J907-6, 7 | Orange-Blue | J902-7 |
+| Lower Left Flipper Power | Gray-Yellow | J907-6, 7 | Blue-Gray | J902-9 |
+| Lower Right Flipper Holding | Blue-Yellow | J907-8, 9 | Orange-Green | J902-11 |
+| Lower Right Flipper Power | Blue-Yellow | J907-8, 9 | Blue-Violet | J902-13 |
+
+The printed page identifies the board as A-15472 Fliptronic II and labels J902, J907, and every wire above directly; none of these drive endpoints is transferred from another game's connector map.

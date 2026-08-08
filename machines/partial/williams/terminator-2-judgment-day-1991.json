@@ -6471,16 +6471,16 @@
           "value": "29"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 29,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.unused-wpc-state-generic-output-29",
+      "id": "device.wpc-state-channel-29",
       "kind": "virtual",
-      "label": "Unused WPC State/Generic Output 29",
+      "label": "WPC State Channel 29",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME publishes meaningful WPC controller state at this address; it is not a physical playfield device."
       },
       "provenance": {
         "source_refs": [
@@ -6490,7 +6490,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.unused.wpc-output"
+        "internal.wpc-state"
       ],
       "spatial": {
         "provenance": {
@@ -6510,16 +6510,16 @@
           "value": "30"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 30,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.unused-wpc-state-generic-output-30",
+      "id": "device.wpc-state-channel-30",
       "kind": "virtual",
-      "label": "Unused WPC State/Generic Output 30",
+      "label": "WPC State Channel 30",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME publishes meaningful WPC controller state at this address; it is not a physical playfield device."
       },
       "provenance": {
         "source_refs": [
@@ -6529,7 +6529,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.unused.wpc-output"
+        "internal.wpc-state"
       ],
       "spatial": {
         "provenance": {
@@ -6549,16 +6549,16 @@
           "value": "31"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 31,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.unused-wpc-state-generic-output-31",
-      "kind": "virtual",
-      "label": "Unused WPC State/Generic Output 31",
+      "id": "device.game-on-solenoid-relay",
+      "kind": "relay",
+      "label": "Game-On Solenoid Relay",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "On this pre-Fliptronic WPC generation, pinned wpc.c identifies public address 31 as the real Game-On solenoid controlled by WPC_GILAMPS bit 7 through the power-driver relay chain to the cabinet switch and flippers. It is a cabinet/flipper-enable relay, not a playfield device."
       },
       "provenance": {
         "source_refs": [
@@ -6568,7 +6568,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.unused.wpc-output"
+        "internal.wpc-state"
       ],
       "spatial": {
         "provenance": {
@@ -6577,7 +6577,7 @@
           ],
           "status": "validated"
         },
-        "reason": "virtual",
+        "reason": "cabinet_or_service",
         "status": "not_applicable"
       }
     },
@@ -6597,7 +6597,7 @@
       "kind": "virtual",
       "label": "Unused WPC State/Generic Output 32",
       "physical": {
-        "notes": "PinMAME compatibility/state channel; not a physical playfield device."
+        "notes": "PinMAME's WPC remap has no fourth state bit; this public address is constant zero and is not a physical output."
       },
       "provenance": {
         "source_refs": [

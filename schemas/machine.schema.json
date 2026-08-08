@@ -256,7 +256,7 @@
           "description": "Controller-facing active state that a recreation must establish before starting the game controller; omitted means the definition does not declare a startup state.",
           "type": "boolean"
         },
-        "availability": { "enum": ["used", "unused", "optional", "unknown"] },
+        "availability": { "description": "Whether the exact machine/controller contract uses this input address; this is independent of whether the address represents a physical, virtual, or constant input.", "enum": ["used", "unused", "optional", "unknown"] },
         "physical": { "$ref": "#/$defs/physical" },
         "spatial": { "$ref": "#/$defs/spatial" },
         "wiring": { "$ref": "#/$defs/wiring" },
@@ -288,7 +288,7 @@
           "items": { "$ref": "#/$defs/alias" }
         },
         "model": { "$ref": "#/$defs/identifier" },
-        "availability": { "enum": ["used", "unused", "optional", "unknown"] },
+        "availability": { "description": "Whether the exact machine/controller contract publishes meaningful state at this output address. A virtual output may be used when it carries runtime state, or unused when it is dead, reserved, or constant-zero address space.", "enum": ["used", "unused", "optional", "unknown"] },
         "physical": { "$ref": "#/$defs/physical" },
         "spatial": { "$ref": "#/$defs/spatial" },
         "roles": {

@@ -961,7 +961,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 
 		label = VIRTUAL_SOLENOID_LABELS[address]
 		identifier = output_id(label)
-		availability = "used" if address in {29, 30, 31, 32} else "unused"
+		availability = "used" if address in {29, 30, 31} else "unused"
 		notes = {
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; not a Twilight Zone playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; not a Twilight Zone playfield device.",
@@ -975,7 +975,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			"dispatch only serves 37-44 for GEN_WPC95/GEN_WPC95DCS/GEN_ALLS11, and Twilight Zone's own tz_getSol hook "
 			"does not claim this address either, so it is simply unused address space on this machine."
 		))
-		roles = ["internal.wpc-state"] if address in {29, 30, 31, 32} else ["internal.unused.wpc-output"]
+		roles = ["internal.wpc-state"] if address in {29, 30, 31} else ["internal.unused.wpc-output"]
 		virtual_aliases = [{"namespace": "pinmame.solenoid", "value": str(address)}]
 		items.append(
 			_device(

@@ -171,6 +171,9 @@ class MedievalMadnessDefinitionTests(unittest.TestCase):
 		for address in (29, 30, 31, 32, 38, 39, 40, 41, 42, 43, 44, 49, 50):
 			self.assertEqual("virtual", self.solenoids[address]["kind"], address)
 			self.assertEqual("virtual", self.solenoids[address]["spatial"]["reason"], address)
+		for address in (29, 30, 31):
+			self.assertEqual("used", self.solenoids[address]["availability"], address)
+			self.assertEqual(["internal.wpc-state"], self.solenoids[address]["roles"], address)
 
 	def test_the_lpdc_mirror_is_one_motor_not_two(self) -> None:
 		self.assertEqual("Drawbridge Motor", self.solenoids[37]["label"])

@@ -1257,10 +1257,10 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			continue
 		label = VIRTUAL_SOLENOID_LABELS[address]
 		identifier = output_id(label)
-		availability = "used" if address in {29, 31, 41, 42, 43, 51, 52, 53} else "unused"
+		availability = "used" if address in {29, 30, 31, 41, 42, 43, 51, 52, 53} else "unused"
 		notes = {
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here. The pinned harness observed it active throughout attract mode; it is not an Attack From Mars playfield device.",
-			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; the pinned harness never observed it active and it is not an Attack From Mars playfield device.",
+			30: "PinMAME publishes the second meaningful WPC J111 general-purpose state bit here; it is not an Attack From Mars playfield device. Failure to observe a transition in the retained harness trace does not make the public channel unused.",
 			31: "PinMAME's synthetic game-on state. The pinned harness observed it inactive on a cold boot, active from the moment the service Enter button had been used, and active throughout ball play, so it reflects the ROM's fast-flip flag rather than a physical game-on relay.",
 			32: "PinMAME reports this WPC state channel as always zero on this generation.",
 			40: "Unused WPC-95 auxiliary output; Attack From Mars populates LPDC outputs 37, 38 and 39 only.",
@@ -1278,7 +1278,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			roles = ["internal.duplicate.lpdc-mirror"]
 		elif address in {51, 52, 53}:
 			roles = ["internal.duplicate.custom-solenoid"]
-		elif address in {29, 30, 31, 32}:
+		elif address in {29, 30, 31}:
 			roles = ["internal.wpc-state"]
 		else:
 			roles = ["internal.unused.wpc-output"]

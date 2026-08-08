@@ -286,10 +286,10 @@ SOLENOID_WIRING = {
 	26: dict(control_connection="J122-2", driver_transistor="Q24", printed_type="Flasher", wire="Blu-Red"),
 	27: dict(control_connection="J122-3, J124-3", driver_transistor="Q22", printed_type="Flasher", wire="Blu-Org"),
 	28: dict(control_connection="J122-4", driver_transistor="Q20", part_number="14-7967", printed_type="Low Power", wire="Blu-Yel"),
-	45: dict(control_connection="J907-8, 9", driver_transistor="Q4", part_number="FL-11629", printed_type="Fliptronic power", wire="Blu-Yel"),
-	46: dict(control_connection="J907-8, 9", driver_transistor="Q11", part_number="FL-11629", printed_type="Fliptronic hold", wire="Blu-Yel"),
-	47: dict(control_connection="J907-6, 7", driver_transistor="Q3", part_number="FL-11629", printed_type="Fliptronic power", wire="Gry-Yel"),
-	48: dict(control_connection="J907-6, 7", driver_transistor="Q9", part_number="FL-11629", printed_type="Fliptronic hold", wire="Gry-Yel"),
+	45: dict(power_connection="J907-8, 9", control_connection="J902-13", driver_transistor="Q4", part_number="FL-11629", printed_type="Fliptronic power", power_wire="Blu-Yel", control_wire="Blu-Vio"),
+	46: dict(power_connection="J907-8, 9", control_connection="J902-11", driver_transistor="Q11", part_number="FL-11629", printed_type="Fliptronic hold", power_wire="Blu-Yel", control_wire="Org-Grn"),
+	47: dict(power_connection="J907-6, 7", control_connection="J902-9", driver_transistor="Q3", part_number="FL-11629", printed_type="Fliptronic power", power_wire="Gry-Yel", control_wire="Blu-Gry"),
+	48: dict(power_connection="J907-6, 7", control_connection="J902-7", driver_transistor="Q9", part_number="FL-11629", printed_type="Fliptronic hold", power_wire="Gry-Yel", control_wire="Org-Blu"),
 }
 
 SOLENOID_ASSEMBLIES = {
@@ -693,9 +693,9 @@ def source_records() -> list[dict[str, Any]]:
 				},
 				{
 					"id": "excerpt.fish-tales.solenoid-flasher-wiring",
-					"locator": "PDF pages 102-103, printed pages 3-8/3-9, Solenoid Table, General Illumination, Flipper Circuits, and Solenoid Wiring block diagram",
+					"locator": "PDF pages 102-103 and 128, printed pages 3-8/3-9 and 3-34, Solenoid Table, General Illumination, Flipper Circuits, Solenoid Wiring, and Fliptronic II interboard wiring",
 					"path": "evidence/excerpts/williams.fish-tales.1992/solenoid-flasher-wiring.md",
-					"sha256": "b958012db4bf8cc78a9793a1e9b4bb3b916d78c2530945d4363012716102ce04",
+					"sha256": "c47774f19c004ad902766f79ed3d64b659a1cae181a5c7213b5bc6c181a31671",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -1110,12 +1110,18 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 
 			wiring: dict[str, Any] = {}
 			if "driver_transistor" in wiring_data:
-				wiring["board"] = "WPC power driver board"
+				wiring["board"] = "Fliptronic II controller board (J901-J907)" if address in {45, 46, 47, 48} else "WPC power driver board"
 				wiring["driver_transistor"] = wiring_data["driver_transistor"]
 				if "control_connection" in wiring_data:
 					wiring["control_connection"] = wiring_data["control_connection"]
 				if "wire" in wiring_data:
 					wiring["control_wire"] = wiring_data["wire"]
+				if "control_wire" in wiring_data:
+					wiring["control_wire"] = wiring_data["control_wire"]
+				if "power_connection" in wiring_data:
+					wiring["power_connection"] = wiring_data["power_connection"]
+				if "power_wire" in wiring_data:
+					wiring["power_wire"] = wiring_data["power_wire"]
 			aliases = [{"namespace": "pinmame.solenoid", "value": str(address)}]
 			if wiring_data:
 				aliases.append({"namespace": "manual.address", "value": f"{address:02d}"})
@@ -1145,7 +1151,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 
 		label = VIRTUAL_SOLENOID_LABELS[address]
 		identifier = output_id(label)
-		availability = "used" if address in {29, 30, 31, 32} else "unused"
+		availability = "used" if address in {29, 30, 31} else "unused"
 		notes = {
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not a Fish Tales playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not a Fish Tales playfield device.",
@@ -1180,7 +1186,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			),
 		}[address]
 		roles = ["internal.unused.wpc-output"]
-		if address in {29, 30, 31, 32}:
+		if address in {29, 30, 31}:
 			roles = ["internal.wpc-state"]
 		items.append(
 			_device(
@@ -1704,7 +1710,7 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["polarity", "recreation_notes", "unresolved_conflicts"],
+			"missing": ["polarity", "unresolved_conflicts"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
@@ -1728,7 +1734,7 @@ def build() -> dict[str, Any]:
 		"mechanisms": mechanisms(),
 		"relationships": relationships(),
 		"sources": source_records(),
-		"knowledge": {"path": "knowledge/williams/fish-tales-1992.md", "status": "partial"},
+		"knowledge": {"path": "knowledge/williams/fish-tales-1992.md", "status": "complete"},
 		"conflicts": conflicts(),
 	}
 	identifiers = [device["id"] for device in definition["inputs"] + definition["outputs"]]
@@ -1775,10 +1781,8 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"manual documenting both as ordinary microswitches with no opto marking. Neither is a spatial "
 			"gap -- every dimension this report audits is complete and validated -- but both are recorded "
 			"as conflict.reel-opto-switches-not-normalized and "
-			"conflict.ball-popper-drop-target-normalized-non-opto, and this record also withholds "
-			"recreation_notes pending the mandatory independent high-tier cross-provider review described "
-			"in docs/INSTRUCTIONS.md, which this pass did not obtain. The record stays partial for both "
-			"reasons.",
+			"conflict.ball-popper-drop-target-normalized-non-opto. The record stays partial until those "
+			"polarity conflicts are resolved.",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1834,8 +1838,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		f"Status: {report['status']}. Every spatial dimension audited here is complete, but the physical "
 		"machine record itself remains `partial` at `machines/partial/williams/fish-tales-1992.json` "
-		"because of two unresolved switch-polarity conflicts and the withheld mandatory independent "
-		"high-tier review, both outside this audit's scope; see the promotion decision below.",
+		"because of two unresolved switch-polarity conflicts outside this audit's scope; see the "
+		"promotion decision below.",
 		"",
 		"The matching source is the retained known-working `Fish Tales (Williams 1992) VPW 1.1.vpx` at "
 		f"SHA-256 `{TABLE_SHA256}`. The retained extraction produced the embedded script at SHA-256 "
@@ -1893,14 +1897,11 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"addresses this audit covers, and the deterministic curator reproduces the canonical artifact and "
 		"its pinned seed byte-for-byte. However, two switch-polarity conflicts remain unresolved "
 		"(`conflict.reel-opto-switches-not-normalized` and "
-		"`conflict.ball-popper-drop-target-normalized-non-opto`), and this curation pass did not obtain the "
-		"mandatory independent high-tier cross-provider review described in `docs/INSTRUCTIONS.md`. The "
-		"definition therefore carries a non-empty `conflicts` array, "
-		"`coverage.dimensions.physical_wiring = \"conflicted\"`, and `recreation_notes` in "
-		"`coverage.missing`, so promotion to `author_ready` is refused; the record stays `partial` with "
-		"`coverage.missing = [\"polarity\", \"recreation_notes\", \"unresolved_conflicts\"]` until a "
-		"LibPinMAME harness trace against a legal ft_l5 ROM resolves the polarity conflicts and the "
-		"mandatory review runs against the exact proposed tree.",
+		"`conflict.ball-popper-drop-target-normalized-non-opto`). The definition therefore carries a "
+		"non-empty `conflicts` array and `coverage.dimensions.physical_wiring = \"conflicted\"`, so promotion "
+		"to `author_ready` is refused; the record stays `partial` with `coverage.missing = [\"polarity\", "
+		"\"unresolved_conflicts\"]` until a LibPinMAME harness trace against a legal ft_l5 ROM resolves the "
+		"polarity conflicts.",
 		"",
 		"## Retained evidence",
 		"",

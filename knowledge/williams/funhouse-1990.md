@@ -183,5 +183,4 @@ implemented for either), matching their manual descriptions as backbox/insert-pa
   extraction.
 - Lamps 54/55/56 and G.I. strings 2/4's individual bulbs (see above).
 - The two unresolved conflicts above.
-- This note has not yet had the mandatory independent high-tier cross-provider review described in
-  `docs/INSTRUCTIONS.md`; `coverage.missing` includes `recreation_notes` for exactly this reason.
+- The recreation knowledge is source-reconciled and complete; only the spatial gaps and two explicit conflicts above remain in `coverage.missing`.

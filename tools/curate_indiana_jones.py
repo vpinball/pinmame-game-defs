@@ -1304,7 +1304,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 
 		label = VIRTUAL_SOLENOID_LABELS[address]
 		identifier = output_id(label)
-		availability = "used" if address in {29, 30, 31, 32} else "unused"
+		availability = "used" if address in {29, 30, 31} else "unused"
 		notes = {
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not an Indiana Jones playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not an Indiana Jones playfield device.",
@@ -1324,7 +1324,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			58: "Eighth possible custom-solenoid position that ij_getSol's range check (CORE_CUSTSOLNO(8)=58) admits, one beyond the declared custSol=7 count; no printed function and no retained script binding.",
 		}[address]
 		roles = ["internal.unused.wpc-output"]
-		if address in {29, 30, 31, 32}:
+		if address in {29, 30, 31}:
 			roles = ["internal.wpc-state"]
 		virtual_aliases = [{"namespace": "pinmame.solenoid", "value": str(address)}]
 		items.append(

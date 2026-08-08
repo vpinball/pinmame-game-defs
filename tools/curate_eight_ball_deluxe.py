@@ -20,8 +20,8 @@ ROOT = Path(__file__).resolve().parents[1]
 # Kept partial: the auxiliary lamp-board addresses (97-116) are enumerated and spatially placed
 # from the retained known-working script's own NFadeLm bindings, but their per-address SCR/A5Jx
 # connector labels were not individually traced against the playfield wiring schematic the way
-# Centaur's and Kiss's auxiliary lamp boards were, and the mandatory independent cross-provider
-# review has not run against this exact tree. See coverage.missing and the knowledge note.
+# Centaur's and Kiss's auxiliary lamp boards were. Recreation knowledge therefore remains candidate
+# despite the 2026-08-08 independent review. See coverage.missing and the knowledge note.
 PARTIAL_PATH = ROOT / "machines/partial/bally/eight-ball-deluxe-1981.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/bally/eight-ball-deluxe-1981.json"
 DEFINITION_PATH = PARTIAL_PATH
@@ -994,8 +994,8 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"conflict.retained-table-year-vs-driver is recorded for transparency though this "
 		"definition already resolves it (1981, matching pinned driver.c) rather than leaving the "
 		"machine year itself unresolved.",
-		"The mandatory independent high-tier cross-provider review (docs/INSTRUCTIONS.md) has not "
-		"run against this exact tree.",
+		"Recreation knowledge remains candidate until the five unresolved DIP functions and the "
+		"auxiliary lamp-board connector identities above are documented.",
 	]
 
 	return {

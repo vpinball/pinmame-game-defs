@@ -178,7 +178,13 @@ class WalkingDeadDefinitionTests(unittest.TestCase):
 		)
 		self.assertEqual(["manual.walking-dead-pro"], flashers[32]["spatial"]["placements"][0]["provenance"]["source_refs"])
 		self.assertTrue(all(point["provenance"]["source_refs"] == ["manual.walking-dead-pro"] for point in gi["spatial"]["placements"]))
-		self.assertEqual(["vpx-table.walking-dead-jp-salas-6.0.0-geometry"], lamps[58]["spatial"]["placements"][0]["provenance"]["source_refs"])
+		self.assertEqual(["vpx-table.walking-dead-jp-salas-6.0.0-geometry", "manual.walking-dead-pro"], lamps[58]["spatial"]["placements"][0]["provenance"]["source_refs"])
+		premium_overlay_refs = ["vpx-table.walking-dead-premium-le-vpw-day-1.1", "manual.walking-dead-pro"]
+		for address in {3, 4, 18, 19, 20, 21, 22, 26, 27, 38, 44, 45}:
+			self.assertEqual(premium_overlay_refs, switches[address]["spatial"]["placements"][0]["provenance"]["source_refs"], f"switch {address}")
+		solenoids = bindings(self.pro, "outputs", "pinmame.output.solenoid")
+		for address in {1, 3, 4, 13, 14}:
+			self.assertEqual(premium_overlay_refs, solenoids[address]["spatial"]["placements"][0]["provenance"]["source_refs"], f"solenoid {address}")
 		for device in devices:
 			if device["spatial"]["status"] == "validated":
 				for point in device["spatial"]["placements"]:
@@ -199,6 +205,11 @@ class WalkingDeadDefinitionTests(unittest.TestCase):
 		self.assertEqual("859589b1d1ebea3be6e66844c7126d22d42da0877e551c9f7cf90b76e4c30383", geometry["sha256"])
 		self.assertFalse(geometry["known_working"])
 		self.assertIn("rejected for Pro semantics", geometry["locator"])
+		premium_geometry = sources["vpx-table.walking-dead-premium-le-vpw-day-1.1"]
+		self.assertEqual("2aca72eb73ac11cc1f8d5633cd8bb302146ac2dd91bfa5fb8364a314b5179987", premium_geometry["sha256"])
+		self.assertTrue(premium_geometry["known_working"])
+		self.assertIn("explicit edition overlay", premium_geometry["locator"])
+		self.assertIn("supplies no Pro runtime semantics", premium_geometry["locator"])
 		self.assertEqual("complete", self.pro["knowledge"]["status"])
 		self.assertTrue(PRO_PATH.exists())
 		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "the-walking-dead-pro-2014.json").exists())

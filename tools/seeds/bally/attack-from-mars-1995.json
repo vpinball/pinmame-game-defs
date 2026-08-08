@@ -6949,7 +6949,7 @@
           "value": "30"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 30,
         "group": "pinmame.output.solenoid"
@@ -6958,7 +6958,7 @@
       "kind": "virtual",
       "label": "WPC State Channel 30",
       "physical": {
-        "notes": "PinMAME mirrors the second WPC J111 general-purpose register bit here; the pinned harness never observed it active and it is not an Attack From Mars playfield device."
+        "notes": "PinMAME publishes the second meaningful WPC J111 general-purpose state bit here; it is not an Attack From Mars playfield device. Failure to observe a transition in the retained harness trace does not make the public channel unused."
       },
       "provenance": {
         "source_refs": [
@@ -7047,7 +7047,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.unused.wpc-output"
       ],
       "spatial": {
         "provenance": {

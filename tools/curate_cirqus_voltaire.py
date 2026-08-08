@@ -1173,7 +1173,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 
 		label = VIRTUAL_SOLENOID_LABELS[address]
 		identifier = output_id(label)
-		availability = "used" if address in {29, 30, 31, 32, 41, 51, 52} else "unused"
+		availability = "used" if address in {29, 30, 31, 41, 51, 52} else "unused"
 		notes = {
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not a Cirqus Voltaire playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not a Cirqus Voltaire playfield device.",
@@ -1189,7 +1189,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			52: "cvGameData's second custom solenoid (CORE_CUSTSOLNO(2)): the same kind of decaying counter, mirroring recent public-solenoid-36 (Upper Post) activity. Not a distinct physical device; solenoid 36 is the real control line.",
 		}[address]
 		roles = ["internal.duplicate.lpdc-mirror"] if address == 41 else ["internal.unused.wpc-output"]
-		if address in {29, 30, 31, 32}:
+		if address in {29, 30, 31}:
 			roles = ["internal.wpc-state"]
 		if address in {51, 52}:
 			roles = ["internal.duplicate.decaying-fire-state"]
@@ -1805,7 +1805,7 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["polarity", "recreation_notes", "unresolved_conflicts"],
+			"missing": ["polarity", "unresolved_conflicts"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
@@ -1837,7 +1837,7 @@ def build() -> dict[str, Any]:
 			},
 		],
 		"sources": source_records(),
-		"knowledge": {"path": "knowledge/bally/cirqus-voltaire-1997.md", "status": "partial"},
+		"knowledge": {"path": "knowledge/bally/cirqus-voltaire-1997.md", "status": "complete"},
 		"conflicts": conflicts(),
 	}
 	identifiers = [device["id"] for device in definition["inputs"] + definition["outputs"]]

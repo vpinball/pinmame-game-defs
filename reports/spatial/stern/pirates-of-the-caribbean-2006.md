@@ -1,6 +1,6 @@
 # Pirates of the Caribbean (Stern, 2006) spatial review
 
-Status: partial. The physical machine record is `partial` at `machines/partial/stern/pirates-of-the-caribbean-2006.json`. Two output addresses carry no spatial record at all and are named below; four unresolved conflicts and the withheld independent high-tier review are recorded in the definition itself.
+Status: partial. The physical machine record is `partial` at `machines/partial/stern/pirates-of-the-caribbean-2006.json`. Two output addresses carry no spatial record at all and are named below; four unresolved conflicts and incomplete recreation knowledge are recorded in the definition itself.
 
 The matching source is the retained known-working `Pirates of the Caribbean (Stern 2006).vpx` at SHA-256 `d69fea24ad8d1dd4fc49c84214e71b448d6a602b6ef768a329a55a94f15aad59`. The retained extraction produced the embedded script at SHA-256 `fb6cec754fc907f1fbb41f1f71273d6585db73365073b3a18cfe2c12d90c39e3`; that embedded stream is the runtime and causality authority. Exact playfield bounds from the table's own `gamedata.json` are `left=0 top=0 right=952 bottom=2155`, so every canonical coordinate is x/952.0 and y/2155.0 rounded to at most six fractional places. Note the y divisor: this table is 2155 units tall, not the 2162 most WPC-era tables in this project use.
 
@@ -57,7 +57,7 @@ The matching source is the retained known-working `Pirates of the Caribbean (Ste
 
 ## Promotion decision
 
-Promotion to `author_ready` is refused. Two output addresses have no spatial record, four conflicts remain unresolved (`conflict.sam-invsw-never-populated`, `conflict.flasher-back-panel-bulb-count`, `conflict.pop-bumper-position-naming`, `conflict.coin-door-adjust-button-order`), opto polarity is unsettled for all seven manual-identified opto addresses because pinned Stern S.A.M. source normalizes nothing, and this pass did not obtain the mandatory independent high-tier cross-provider review described in `docs/INSTRUCTIONS.md`. The record therefore stays `partial` with `coverage.missing = ["polarity", "spatial_placement", "unresolved_conflicts", "recreation_notes"]` and `coverage.dimensions.physical_wiring = "conflicted"`.
+Promotion to `author_ready` is refused. Two output addresses have no spatial record, four conflicts remain unresolved (`conflict.sam-invsw-never-populated`, `conflict.flasher-back-panel-bulb-count`, `conflict.pop-bumper-position-naming`, `conflict.coin-door-adjust-button-order`), opto polarity is unsettled for all seven manual-identified opto addresses because pinned Stern S.A.M. source normalizes nothing. Recreation knowledge remains observed until the missing placements and polarity conflicts can be reconciled. The record therefore stays `partial` with `coverage.missing = ["polarity", "recreation_notes", "spatial_placement", "unresolved_conflicts"]` and `coverage.dimensions.physical_wiring = "conflicted"`.
 
 ## Retained evidence
 

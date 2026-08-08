@@ -158,6 +158,8 @@ def apply_spatial(definition: dict[str, Any]) -> None:
 			device["roles"] = ["backbox.flasher"]
 			not_applicable(device, "cabinet_or_service", semantic.MANUAL_SOURCE)
 			add_note(device, "The manual locates this flasher in the backglass/backbox, outside normalized playfield space; the working script has no callback for it.")
+		elif group == "pinmame.output.solenoid" and address == 31:
+			not_applicable(device, "cabinet_or_service", semantic.CORE_SOURCE)
 		elif group == "pinmame.output.lamp" and address == 52:
 			located(device, LAMP_POSITIONS[address], "emitter", "observed", (semantic.MANUAL_SOURCE, semantic.VPX_TABLE_SOURCE, semantic.VPX_SCRIPT_SOURCE))
 			add_note(device, "The working script drives the exact Primitive.L52 skull-eye mesh. That primitive has an object-space origin at (0,0), so the exact adjacent skull drop-target center is retained as a disclosed assembly projection rather than treating (0,0) as a lamp position.")

@@ -204,6 +204,9 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 		for address in (49, 50):
 			self.assertEqual("virtual", self.solenoids[address]["kind"], address)
 			self.assertEqual("unused", self.solenoids[address]["availability"], address)
+		for address in (29, 30, 31):
+			self.assertEqual("used", self.solenoids[address]["availability"], address)
+			self.assertEqual(["internal.wpc-state"], self.solenoids[address]["roles"], address)
 
 	def test_the_lower_flipper_solenoids_carry_the_manuals_own_printed_numbers_unchanged(self) -> None:
 		# Unlike WPC-95, WPC-Security has no LPDC board, so the printed circuit numbers already

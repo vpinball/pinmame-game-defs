@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LE_PATH = ROOT / "machines" / "partial" / "stern" / "x-men-limited-edition-2012.json"
 PRO_PATH = ROOT / "machines" / "partial" / "stern" / "x-men-pro-2012.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "x-men-limited-edition-boot-start.json"
-PRO_SPATIAL_AUDIT_PATH = ROOT / "reports" / "spatial" / "stern" / "x-men-pro-2012-gamedata.json"
+PRO_SPATIAL_AUDIT_PATH = ROOT / "reports" / "spatial" / "stern" / "x-men-pro-2012.json"
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -508,7 +508,7 @@ class XMenDefinitionTests(unittest.TestCase):
 			base_module.main()
 			self.assertEqual(spatial_first, [path.read_bytes() for path in paths])
 			self.assertIn(b"F19/F20 per-socket geometry", spatial_first[1])
-			pro_paths = [root / "machines" / "partial" / "stern" / "x-men-pro-2012.json", root / "knowledge" / "stern" / "x-men-pro-2012.md", root / "reports" / "spatial" / "stern" / "x-men-pro-2012-gamedata.json"]
+			pro_paths = [root / "machines" / "partial" / "stern" / "x-men-pro-2012.json", root / "knowledge" / "stern" / "x-men-pro-2012.md", root / "reports" / "spatial" / "stern" / "x-men-pro-2012.json"]
 			pro_first = [path.read_bytes() for path in pro_paths]
 			self.assertEqual([PRO_PATH.read_bytes(), (ROOT / "knowledge" / "stern" / "x-men-pro-2012.md").read_bytes(), PRO_SPATIAL_AUDIT_PATH.read_bytes()], pro_first)
 			base_module.main()

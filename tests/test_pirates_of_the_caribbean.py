@@ -172,10 +172,11 @@ class CoverageTests(unittest.TestCase):
 		coverage = self.definition["coverage"]
 		self.assertEqual("partial", coverage["status"])
 		self.assertEqual(
-			["polarity", "spatial_placement", "unresolved_conflicts", "recreation_notes"],
+			["polarity", "recreation_notes", "spatial_placement", "unresolved_conflicts"],
 			coverage["missing"],
 		)
 		self.assertEqual("conflicted", coverage["dimensions"]["physical_wiring"])
+		self.assertEqual("observed", coverage["dimensions"]["recreation_knowledge"])
 		self.assertEqual(2, self.definition["schema_version"])
 
 	def test_unresolved_conflicts_are_declared_and_non_empty(self) -> None:

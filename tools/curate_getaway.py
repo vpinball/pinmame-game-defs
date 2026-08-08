@@ -1140,11 +1140,11 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			49: "PinMAME's simulator-only ball-shooter channel; it has no WPC-Fliptronic hardware output.",
 			50: "Reserved PinMAME output position before the first custom-output boundary. gwGameData declares no custSol.",
 		}[address]
-		roles = ["internal.wpc-state"] if address in {29, 30, 31, 32} else ["internal.unused.wpc-output"]
+		roles = ["internal.wpc-state"] if address in {29, 30, 31} else ["internal.unused.wpc-output"]
 		items.append(
 			_device(
 				identifier, label, "virtual", "pinmame.output.solenoid", address,
-				"used" if address in {29, 30, 31, 32} else "unused",
+				"used" if address in {29, 30, 31} else "unused",
 				(CONTROLLER_SOURCE, CORE_SOURCE),
 				aliases=[{"namespace": "pinmame.solenoid", "value": str(address)}],
 				roles=roles,
@@ -1811,8 +1811,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"This record stays `partial`. Two first-class conflicts remain unresolved "
 		"(`conflict.switch-84-85-manual-vs-script-semantics`, `conflict.solenoid-31-fastflip-address-not-"
 		"declared`), several authoring-relevant addresses have no spatial placement at all in this thin retained "
-		"table, and `recreation_notes` is withheld from `coverage` because this pass did not obtain the mandatory "
-		"independent high-tier cross-provider review described in `docs/INSTRUCTIONS.md`. "
+		"table, and recreation knowledge remains candidate until those semantic and spatial gaps are documented. "
 		"`coverage.missing = [\"output_semantics\", \"recreation_notes\", \"spatial_placement\", "
 		"\"unresolved_conflicts\"]` names each gap explicitly.",
 		"",

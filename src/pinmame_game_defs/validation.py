@@ -888,6 +888,59 @@ def validate_catalog(catalog: dict[str, Any], repository_root: Path) -> list[str
 
 SPATIAL_AUDIT_FORMAT = "pinmame-spatial-audit"
 SPATIAL_BLOCKERS_FORMAT = "pinmame-spatial-blockers"
+ZERO_SHA256 = "0" * 64
+
+
+def _validate_curator_placeholder_digests(repository_root: Path, errors: list[str]) -> None:
+	placeholder_expression = re.compile(r'''["']0["']\s*\*\s*64''')
+	for path in sorted((repository_root / "tools").glob("**/*.py")):
+		text = path.read_text(encoding="utf-8")
+		if ZERO_SHA256 in text or placeholder_expression.search(text):
+			relative_path = path.relative_to(repository_root).as_posix()
+			errors.append(f"{relative_path}: contains an all-zero SHA-256 placeholder")
+
+	def find_zero_digest(value: Any, location: str = "$") -> list[str]:
+		matches: list[str] = []
+		if isinstance(value, dict):
+			for key, child in value.items():
+				matches.extend(find_zero_digest(child, f"{location}.{key}"))
+		elif isinstance(value, list):
+			for index, child in enumerate(value):
+				matches.extend(find_zero_digest(child, f"{location}[{index}]"))
+		elif value == ZERO_SHA256:
+			matches.append(location)
+		return matches
+
+	json_roots = (
+		repository_root / "catalog",
+		repository_root / "controllers",
+		repository_root / "machines",
+		repository_root / "tools" / "seeds",
+		repository_root / "reports",
+		repository_root / "evidence",
+	)
+	for root in json_roots:
+		if not root.is_dir():
+			continue
+		for path in sorted(root.glob("**/*.json")):
+			relative_path = path.relative_to(repository_root).as_posix()
+			for location in find_zero_digest(load_json(path)):
+				errors.append(f"{relative_path} {location}: contains an all-zero SHA-256 placeholder")
+
+	knowledge_root = repository_root / "knowledge"
+	if knowledge_root.is_dir():
+		for path in sorted(knowledge_root.glob("**/*.md")):
+			if ZERO_SHA256 in path.read_text(encoding="utf-8"):
+				relative_path = path.relative_to(repository_root).as_posix()
+				errors.append(f"{relative_path}: contains an all-zero SHA-256 placeholder")
+
+
+def _validate_python_line_endings(repository_root: Path, errors: list[str]) -> None:
+	for directory in ("src", "tools", "tests"):
+		for path in sorted((repository_root / directory).glob("**/*.py")):
+			if b"\r\n" in path.read_bytes():
+				relative_path = path.relative_to(repository_root).as_posix()
+				errors.append(f"{relative_path}: Python sources must use LF line endings")
 
 
 def _validate_spatial_reports(
@@ -914,6 +967,11 @@ def _validate_spatial_reports(
 		machine_id = report.get("machine_id")
 		if not isinstance(machine_id, str):
 			continue
+		machine_id_parts = machine_id.split(".")
+		if len(machine_id_parts) >= 2:
+			expected_report_path = PurePosixPath(machine_id_parts[0]) / f"{'-'.join(machine_id_parts[1:])}.json"
+			actual_report_path = PurePosixPath(path.relative_to(spatial_root).as_posix())
+			_expect(actual_report_path == expected_report_path, relative_path, f"expected canonical report path reports/spatial/{expected_report_path.as_posix()} for {machine_id}", errors)
 		definition = definitions_by_machine.get(machine_id)
 		if definition is None:
 			errors.append(f"{relative_path} $.machine_id: does not resolve to a machine definition")
@@ -938,6 +996,8 @@ def _validate_spatial_reports(
 
 def validate_repository(repository_root: Path) -> list[str]:
 	errors: list[str] = check_schema_documents(repository_root)
+	_validate_curator_placeholder_digests(repository_root, errors)
+	_validate_python_line_endings(repository_root, errors)
 	controller_profiles = _load_controller_profiles(repository_root, errors)
 	catalog_path = repository_root / "catalog" / "pinmame.json"
 	if not catalog_path.is_file():

@@ -101,8 +101,12 @@ class SpatialReportValidationTests(unittest.TestCase):
 	def tearDown(self) -> None:
 		self._tmp.cleanup()
 
-	def _check(self, report: dict[str, object]) -> list[str]:
-		path = self.root / "reports" / "spatial" / "stern" / "candidate.json"
+	def _check(self, report: dict[str, object], relative_path: str | None = None) -> list[str]:
+		machine_id = str(report.get("machine_id", "unknown.machine.0000"))
+		parts = machine_id.split(".")
+		canonical_path = f"{parts[0]}/{'-'.join(parts[1:])}.json"
+		path = self.root / "reports" / "spatial" / (relative_path or canonical_path)
+		path.parent.mkdir(parents=True, exist_ok=True)
 		path.write_text(json.dumps(report), encoding="utf-8")
 		errors: list[str] = []
 		_validate_spatial_reports(self.root, self.definitions, errors)
@@ -131,6 +135,10 @@ class SpatialReportValidationTests(unittest.TestCase):
 	def test_a_correct_report_passes(self) -> None:
 		errors = self._check({"format": SPATIAL_AUDIT_FORMAT, "version": 1, "machine_id": "bally.attack-from-mars.1995"})
 		self.assertEqual([], errors)
+
+	def test_noncanonical_report_filename_is_rejected(self) -> None:
+		errors = self._check({"format": SPATIAL_AUDIT_FORMAT, "version": 1, "machine_id": "bally.attack-from-mars.1995"}, "bally/attack-from-mars-1995-extraction.json")
+		self.assertTrue(any("expected canonical report path" in error for error in errors), errors)
 
 
 if __name__ == "__main__":

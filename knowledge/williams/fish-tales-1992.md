@@ -2,8 +2,7 @@
 
 Coverage: **partial - complete physical I/O inventory, WPC-Fliptronic bindings, mechanism causality,
 driver-variant boundary, and normalized spatial placement validated; wiring conflicted pending
-resolution of two switch-polarity conflicts below, and `recreation_notes` withheld pending the
-mandatory independent high-tier cross-provider review**
+resolution of the two switch-polarity conflicts below; recreation knowledge is source-reconciled and complete**
 
 ## Identity and evidence precedence
 
@@ -256,6 +255,4 @@ in both cases, per this project's standing convention.
 
 ## Procedural note
 
-This curation pass was run without the mandatory independent high-tier cross-provider review described
-in `docs/INSTRUCTIONS.md`. `coverage.missing` includes `recreation_notes` for exactly that reason; every
-other dimension is complete.
+The recreation knowledge is source-reconciled and complete. The definition remains partial only for the two unresolved switch-polarity conflicts described above.

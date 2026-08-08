@@ -64,7 +64,7 @@ class FishTalesDefinitionTests(unittest.TestCase):
 	def test_partial_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["polarity", "recreation_notes", "unresolved_conflicts"], self.definition["coverage"]["missing"])
+		self.assertEqual(["polarity", "unresolved_conflicts"], self.definition["coverage"]["missing"])
 		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
 			if dimension == "physical_wiring":
@@ -77,7 +77,7 @@ class FishTalesDefinitionTests(unittest.TestCase):
 		self.assertEqual("pinmame.wpc-fliptronic", self.definition["controller"]["platform"])
 		self.assertEqual("0x8", self.definition["controller"]["hardware_generation"])
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
-		self.assertEqual("partial", self.definition["knowledge"]["status"])
+		self.assertEqual("complete", self.definition["knowledge"]["status"])
 
 	def test_the_two_polarity_conflicts_are_recorded_and_unresolved(self) -> None:
 		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
@@ -169,6 +169,17 @@ class FishTalesDefinitionTests(unittest.TestCase):
 		conflict_ids = {conflict["id"] for conflict in self.definition["conflicts"]}
 		self.assertFalse(any("flipper" in identifier for identifier in conflict_ids))
 
+	def test_lower_flipper_supply_and_drive_connections_are_distinct(self) -> None:
+		expected = {
+			45: ("J907-8, 9", "J902-13"),
+			46: ("J907-8, 9", "J902-11"),
+			47: ("J907-6, 7", "J902-9"),
+			48: ("J907-6, 7", "J902-7"),
+		}
+		for address, (power, control) in expected.items():
+			self.assertEqual(power, self.solenoids[address]["wiring"]["power_connection"], address)
+			self.assertEqual(control, self.solenoids[address]["wiring"]["control_connection"], address)
+
 	def test_fake_reel_solenoids_are_virtual_pinmame_only_bookkeeping(self) -> None:
 		for address in sorted(FAKE_REEL_SOLENOIDS):
 			device = self.solenoids[address]
@@ -193,8 +204,10 @@ class FishTalesDefinitionTests(unittest.TestCase):
 		for address in (29, 30, 31, 32, 37, 38, 39, 40, 41, 42, 43, 44, 49, 50, 51, 52, 53):
 			self.assertEqual("virtual", self.solenoids[address]["kind"], address)
 			self.assertEqual("virtual", self.solenoids[address]["spatial"]["reason"], address)
-		for address in (29, 30, 31, 32):
+		for address in (29, 30, 31):
 			self.assertEqual("used", self.solenoids[address]["availability"], address)
+		self.assertEqual("unused", self.solenoids[32]["availability"])
+		self.assertEqual(["internal.unused.wpc-output"], self.solenoids[32]["roles"])
 
 	def test_knocker_and_backbox_fish_are_cabinet_devices_not_playfield(self) -> None:
 		for address, label in ((7, "Knocker"), (8, "Backbox Fish")):

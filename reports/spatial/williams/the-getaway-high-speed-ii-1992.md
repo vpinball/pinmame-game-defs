@@ -48,7 +48,7 @@ The matching source is the retained known-working `Getaway, The - High Speed II 
 
 ## Promotion decision
 
-This record stays `partial`. Two first-class conflicts remain unresolved (`conflict.switch-84-85-manual-vs-script-semantics`, `conflict.solenoid-31-fastflip-address-not-declared`), several authoring-relevant addresses have no spatial placement at all in this thin retained table, and `recreation_notes` is withheld from `coverage` because this pass did not obtain the mandatory independent high-tier cross-provider review described in `docs/INSTRUCTIONS.md`. `coverage.missing = ["output_semantics", "recreation_notes", "spatial_placement", "unresolved_conflicts"]` names each gap explicitly.
+This record stays `partial`. Two first-class conflicts remain unresolved (`conflict.switch-84-85-manual-vs-script-semantics`, `conflict.solenoid-31-fastflip-address-not-declared`), several authoring-relevant addresses have no spatial placement at all in this thin retained table, and recreation knowledge remains candidate until those semantic and spatial gaps are documented. `coverage.missing = ["output_semantics", "recreation_notes", "spatial_placement", "unresolved_conflicts"]` names each gap explicitly.
 
 ## Retained evidence
 

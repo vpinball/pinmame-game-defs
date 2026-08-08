@@ -45,7 +45,7 @@ The matching source is the retained known-working `Funhouse (Williams 1990)_1.3.
 
 ## Promotion decision
 
-This record stays `partial`. Two unresolved conflicts (`conflict.gangway-lamp-12-value`, `conflict.gi-region-naming`), six addresses with no spatial placement (switch 63; lamps 54/55/56; G.I. strings 2 and 4's individual playfield bulbs), and the absence of the mandatory independent high-tier cross-provider review together keep `coverage.status = "partial"` with `coverage.missing = ["spatial_placement", "unresolved_conflicts", "recreation_notes"]`. Every other dimension -- catalog identity, address enumeration, physical wiring, mechanism inventory and behavior, and variant coverage across the fifteen-driver `fh_l9` clone tree -- is validated.
+This record stays `partial`. Two unresolved conflicts (`conflict.gangway-lamp-12-value`, `conflict.gi-region-naming`), and six addresses with no spatial placement (switch 63; lamps 54/55/56; G.I. strings 2 and 4's individual playfield bulbs) keep `coverage.status = "partial"` with `coverage.missing = ["output_enumeration", "spatial_placement", "unresolved_conflicts"]`. The current solenoid inventory stops at the printed 1-28 table and does not yet enumerate WPC's public state and generic-output range. Every other dimension -- catalog identity, physical wiring, mechanism inventory and behavior, and variant coverage across the fifteen-driver `fh_l9` clone tree -- is validated.
 
 ## Retained evidence
 

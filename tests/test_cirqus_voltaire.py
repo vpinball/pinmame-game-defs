@@ -62,7 +62,7 @@ class CirqusVoltaireDefinitionTests(unittest.TestCase):
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual(
-			["polarity", "recreation_notes", "unresolved_conflicts"],
+			["polarity", "unresolved_conflicts"],
 			self.definition["coverage"]["missing"],
 		)
 		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
@@ -80,7 +80,7 @@ class CirqusVoltaireDefinitionTests(unittest.TestCase):
 		self.assertEqual("pinmame.wpc-95", self.definition["controller"]["platform"])
 		self.assertEqual("0x80", self.definition["controller"]["hardware_generation"])
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
-		self.assertEqual("partial", self.definition["knowledge"]["status"])
+		self.assertEqual("complete", self.definition["knowledge"]["status"])
 
 	def test_wpc95_controller_profile_is_reused_unchanged(self) -> None:
 		self.assertTrue(CONTROLLER_PATH.is_file())

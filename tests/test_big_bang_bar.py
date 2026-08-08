@@ -67,7 +67,7 @@ class BigBangBarDefinitionTests(unittest.TestCase):
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual(
-			["polarity", "output_semantics", "mechanism_behavior", "spatial_placement", "unresolved_conflicts", "recreation_notes"],
+			["polarity", "output_semantics", "mechanism_behavior", "recreation_notes", "spatial_placement", "unresolved_conflicts"],
 			self.definition["coverage"]["missing"],
 		)
 		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
@@ -79,6 +79,7 @@ class BigBangBarDefinitionTests(unittest.TestCase):
 		self.assertEqual("0x0", self.definition["controller"]["hardware_generation"])
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
 		self.assertEqual("partial", self.definition["knowledge"]["status"])
+		self.assertEqual("observed", self.definition["coverage"]["dimensions"]["recreation_knowledge"])
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 
 	def test_no_hardware_generation_bit_exists_for_capcom(self) -> None:

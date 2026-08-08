@@ -7149,7 +7149,7 @@
           "value": "31"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 31,
         "group": "pinmame.output.solenoid"
@@ -7158,7 +7158,7 @@
       "kind": "virtual",
       "label": "PinMAME Fast-Flip Game-On State",
       "physical": {
-        "notes": "PinMAME's synthetic fast-flip game-on state. Unlike several other WPC-Security/WPC-95 games in this project, wcs.c's init_wcs never calls wpc_set_fastflip_addr, so this channel is not populated by any ROM flag for this game even though the retained script sets Const UseSolenoids = 2 (fast flips) independently."
+        "notes": "PinMAME publishes WPC_GILAMPS bit 7 here as the WPC Game-On / flipper-enable state because wcs.c does not configure a fast-flip address. The retained script's independent Const UseSolenoids = 2 does not make this public state channel unused."
       },
       "provenance": {
         "source_refs": [
@@ -7207,7 +7207,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.unused.wpc-output"
       ],
       "spatial": {
         "provenance": {

@@ -2009,7 +2009,7 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["polarity", "spatial_placement", "unresolved_conflicts", "recreation_notes"],
+			"missing": ["polarity", "recreation_notes", "spatial_placement", "unresolved_conflicts"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
@@ -2155,8 +2155,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		f"Status: {report['status']}. The physical machine record is `partial` at "
 		"`machines/partial/stern/pirates-of-the-caribbean-2006.json`. Two output addresses carry no "
-		"spatial record at all and are named below; four unresolved conflicts and the withheld "
-		"independent high-tier review are recorded in the definition itself.",
+		"spatial record at all and are named below; four unresolved conflicts and incomplete "
+		"recreation knowledge are recorded in the definition itself.",
 		"",
 		"The matching source is the retained known-working `Pirates of the Caribbean (Stern 2006).vpx` at "
 		f"SHA-256 `{TABLE_SHA256}`. The retained extraction produced the embedded script at SHA-256 "
@@ -2234,11 +2234,10 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"conflicts remain unresolved (`conflict.sam-invsw-never-populated`, "
 		"`conflict.flasher-back-panel-bulb-count`, `conflict.pop-bumper-position-naming`, "
 		"`conflict.coin-door-adjust-button-order`), opto polarity is unsettled for all seven "
-		"manual-identified opto addresses because pinned Stern S.A.M. source normalizes nothing, and this "
-		"pass did not obtain the mandatory independent high-tier cross-provider review described in "
-		"`docs/INSTRUCTIONS.md`. The record therefore stays `partial` with "
-		"`coverage.missing = [\"polarity\", \"spatial_placement\", \"unresolved_conflicts\", "
-		"\"recreation_notes\"]` and `coverage.dimensions.physical_wiring = \"conflicted\"`.",
+		"manual-identified opto addresses because pinned Stern S.A.M. source normalizes nothing. Recreation "
+		"knowledge remains observed until the missing placements and polarity conflicts can be reconciled. The record therefore stays `partial` "
+		"with `coverage.missing = [\"polarity\", \"recreation_notes\", \"spatial_placement\", \"unresolved_conflicts\"]` and "
+		"`coverage.dimensions.physical_wiring = \"conflicted\"`.",
 		"",
 		"## Retained evidence",
 		"",

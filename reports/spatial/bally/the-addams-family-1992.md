@@ -1,10 +1,10 @@
 # Spatial audit -- bally.the-addams-family.1992
 
-Coverage status: `partial`
+Coverage status: `author_ready`
 
 ## Blockers
 
-- coverage.missing = ["recreation_notes"]: knowledge/bally/the-addams-family-1992.md documents every mechanism this definition references, but as a single unreviewed curation pass it has not had the independent high-tier review this project requires before a knowledge note counts as validated recreation_knowledge. No conflict, unresolved address, or missing spatial placement remains -- this is the sole reason the record stays partial rather than a genuine gap in the electrical or spatial evidence.
+- None; every required dimension is source-reconciled and validated, so the definition is author-ready.
 
 ## Evidence
 

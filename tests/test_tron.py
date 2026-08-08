@@ -18,7 +18,7 @@ LE_PATH = ROOT / "machines" / "author-ready" / "stern" / "tron-legacy-limited-ed
 PRO_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "tron-legacy-pro-boot-start.json"
 LE_EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "tron-legacy-limited-edition-boot-start.json"
 LE_SPATIAL_PATH = ROOT / "evidence" / "vpx" / "tron-legacy-limited-edition-2011-v11-spatial-candidates.json"
-PRO_EXTRACTION_PATH = ROOT / "reports" / "spatial" / "stern" / "tron-legacy-pro-2011-extraction.json"
+PRO_EXTRACTION_PATH = ROOT / "reports" / "spatial" / "stern" / "tron-legacy-pro-2011.json"
 PRO_KNOWLEDGE_PATH = ROOT / "knowledge" / "stern" / "tron-legacy-pro-2011.md"
 TRON_CURATOR_PATH = ROOT / "tools" / "curate_tron.py"
 

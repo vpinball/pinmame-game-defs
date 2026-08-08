@@ -33,9 +33,9 @@ The matching source is the retained known-working `Whitewater (Williams 1993).vp
 - Inputs with a controlled `dip_switch` record: 8
 - Inputs with a controlled `internal_nonvisual` record: 3
 - Inputs with a controlled `unused` record: 12
-- Outputs with a controlled `cabinet_or_service` record: 30
+- Outputs with a controlled `cabinet_or_service` record: 26
 - Outputs with a controlled `unused` record: 5
-- Outputs with a controlled `virtual` record: 10
+- Outputs with a controlled `virtual` record: 14
 
 ## Unresolved placements
 

@@ -1028,7 +1028,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 
 		label = VIRTUAL_SOLENOID_LABELS[address]
 		identifier = output_id(label)
-		availability = "used" if address in {29, 30, 31, 32} else "unused"
+		availability = "used" if address in {29, 30, 31} else "unused"
 		notes = {
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not a Dracula playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not a Dracula playfield device.",
@@ -1045,7 +1045,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			49: "PinMAME's simulator-only ball-shooter channel; it has no WPC-Fliptronic hardware output.",
 			50: "Reserved PinMAME output position before the first custom-output boundary. dracGameData declares no custSol.",
 		}[address]
-		roles = ["internal.wpc-state"] if address in {29, 30, 31, 32} else ["internal.unused.wpc-output"]
+		roles = ["internal.wpc-state"] if address in {29, 30, 31} else ["internal.unused.wpc-output"]
 		items.append(
 			_device(
 				identifier,

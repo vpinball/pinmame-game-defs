@@ -1107,7 +1107,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			**{n: f"Unused Custom Solenoid {n}" for n in range(51, 65)},
 		}[address]
 		identifier = output_id(label)
-		availability = "used" if address in {29, 30, 31, 32, 41, 42} else "unused"
+		availability = "used" if address in {29, 30, 31, 41, 42} else "unused"
 		notes = {
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not a Cactus Canyon playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not a Cactus Canyon playfield device.",
@@ -1123,7 +1123,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			50: "Reserved PinMAME output position before the first custom-output boundary. ccGameData declares no custSol.",
 		}.get(address, "Unused above the custom-output boundary; ccGameData declares no custSol.")
 		roles = ["internal.duplicate.lpdc-mirror"] if address in {41, 42} else ["internal.unused.wpc-output"]
-		if address in {29, 30, 31, 32}:
+		if address in {29, 30, 31}:
 			roles = ["internal.wpc-state"]
 		virtual_aliases = [{"namespace": "pinmame.solenoid", "value": str(address)}]
 		if address in MANUAL_SOLENOID_ALIASES:

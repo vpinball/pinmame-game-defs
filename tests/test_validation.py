@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import copy
+import tempfile
 import unittest
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import load_json
 from pinmame_game_defs.schema_validation import validate_against_schema
-from pinmame_game_defs.validation import _validate_runtime_observations, validate_machine, validate_repository
+from pinmame_game_defs.validation import _validate_curator_placeholder_digests, _validate_python_line_endings, _validate_runtime_observations, validate_machine, validate_repository
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -61,6 +62,46 @@ class RepositoryValidationTests(unittest.TestCase):
 
 	def test_repository_is_valid(self) -> None:
 		self.assertEqual([], validate_repository(ROOT))
+
+	def test_curator_placeholder_digest_guard_rejects_literal_and_expression(self) -> None:
+		for placeholder in ('"' + ('0' * 64) + '"', '"0" * 64'):
+			with self.subTest(placeholder=placeholder), tempfile.TemporaryDirectory() as temporary_directory:
+				root = Path(temporary_directory)
+				(root / "tools").mkdir()
+				(root / "tools" / "curate_fixture.py").write_text(f"SHA256 = {placeholder}\n", encoding="utf-8")
+				errors: list[str] = []
+				_validate_curator_placeholder_digests(root, errors)
+				self.assertEqual(["tools/curate_fixture.py: contains an all-zero SHA-256 placeholder"], errors)
+
+	def test_generated_json_placeholder_digest_guard_rejects_zero_values(self) -> None:
+		for relative_path in ("catalog/fixture.json", "controllers/fixture.json", "machines/partial/fixture.json"):
+			with self.subTest(relative_path=relative_path), tempfile.TemporaryDirectory() as temporary_directory:
+				root = Path(temporary_directory)
+				path = root / relative_path
+				path.parent.mkdir(parents=True)
+				path.write_text('{"sources":[{"sha256":"' + ('0' * 64) + '"}]}\n', encoding="utf-8")
+				errors: list[str] = []
+				_validate_curator_placeholder_digests(root, errors)
+				self.assertEqual([f"{relative_path} $.sources[0].sha256: contains an all-zero SHA-256 placeholder"], errors)
+
+	def test_knowledge_placeholder_digest_guard_rejects_zero_values(self) -> None:
+		with tempfile.TemporaryDirectory() as temporary_directory:
+			root = Path(temporary_directory)
+			path = root / "knowledge/fixture.md"
+			path.parent.mkdir(parents=True)
+			path.write_text(f"Retained artifact SHA-256: {('0' * 64)}\n", encoding="utf-8")
+			errors: list[str] = []
+			_validate_curator_placeholder_digests(root, errors)
+			self.assertEqual(["knowledge/fixture.md: contains an all-zero SHA-256 placeholder"], errors)
+
+	def test_python_line_ending_guard_rejects_crlf(self) -> None:
+		with tempfile.TemporaryDirectory() as temporary_directory:
+			root = Path(temporary_directory)
+			(root / "tests").mkdir()
+			(root / "tests" / "test_fixture.py").write_bytes(b"pass\r\n")
+			errors: list[str] = []
+			_validate_python_line_endings(root, errors)
+			self.assertEqual(["tests/test_fixture.py: Python sources must use LF line endings"], errors)
 
 	def test_author_ready_display_na_provenance_has_core_and_physical_manual_evidence(self) -> None:
 		checked = []
@@ -258,6 +299,37 @@ class RepositoryValidationTests(unittest.TestCase):
 			self.assertEqual(1, len(matches), path.as_posix())
 			self.assertEqual("virtual", matches[0]["kind"], path.as_posix())
 			self.assertNotIn("wiring", matches[0], path.as_posix())
+
+	def test_constant_zero_virtual_wpc_state_channels_are_unused(self) -> None:
+		checked: list[str] = []
+		for path in sorted((ROOT / "machines").rglob("*.json")):
+			definition = load_json(path)
+			if not definition.get("controller", {}).get("platform", "").startswith("pinmame.wpc"):
+				continue
+			channels = [output for output in definition["outputs"] if output["binding"] == {"device": 32, "group": "pinmame.output.solenoid"}]
+			if definition["coverage"]["dimensions"].get("address_enumeration") == "validated":
+				self.assertTrue(channels, f"{path.as_posix()}: validated WPC address enumeration omits public channel 32")
+			if not channels:
+				continue
+			self.assertEqual(1, len(channels), path.as_posix())
+			channel = channels[0]
+			self.assertEqual("virtual", channel["kind"], path.as_posix())
+			self.assertEqual("unused", channel["availability"], path.as_posix())
+			self.assertEqual(["internal.unused.wpc-output"], channel["roles"], path.as_posix())
+			self.assertEqual("virtual", channel["spatial"]["reason"], path.as_posix())
+			for address in (29, 30, 31):
+				state = [output for output in definition["outputs"] if output["binding"] == {"device": address, "group": "pinmame.output.solenoid"}]
+				self.assertEqual(1, len(state), f"{path.as_posix()}: missing WPC state channel {address}")
+				self.assertEqual("used", state[0]["availability"], f"{path.as_posix()}:{address}")
+				self.assertEqual(["internal.wpc-state"], state[0]["roles"], f"{path.as_posix()}:{address}")
+				if address == 31 and definition["controller"]["platform"] == "pinmame.wpc-alpha":
+					self.assertEqual("relay", state[0]["kind"], f"{path.as_posix()}:{address}")
+					self.assertEqual("cabinet_or_service", state[0]["spatial"]["reason"], f"{path.as_posix()}:{address}")
+				else:
+					self.assertEqual("virtual", state[0]["kind"], f"{path.as_posix()}:{address}")
+					self.assertEqual("virtual", state[0]["spatial"]["reason"], f"{path.as_posix()}:{address}")
+			checked.append(definition["machine"]["id"])
+		self.assertGreaterEqual(len(checked), 20)
 
 	def test_optional_playfield_extent_is_accepted_constrained_and_never_required(self) -> None:
 		# The playfield block exists only so a consumer can render normalized placements at the

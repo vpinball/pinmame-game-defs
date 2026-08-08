@@ -64,9 +64,10 @@ class FunHouseDefinitionTests(unittest.TestCase):
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual(
-			["spatial_placement", "unresolved_conflicts", "recreation_notes"],
+			["output_enumeration", "spatial_placement", "unresolved_conflicts"],
 			self.definition["coverage"]["missing"],
 		)
+		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["address_enumeration"])
 		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["semantic_naming"])
 		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual("williams.funhouse.1990", self.definition["machine"]["id"])
@@ -76,7 +77,7 @@ class FunHouseDefinitionTests(unittest.TestCase):
 		self.assertEqual("pinmame.wpc-alpha", self.definition["controller"]["platform"])
 		self.assertEqual("0x2", self.definition["controller"]["hardware_generation"])
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
-		self.assertEqual("partial", self.definition["knowledge"]["status"])
+		self.assertEqual("complete", self.definition["knowledge"]["status"])
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 
 	def test_driver_tree_matches_pinned_catalog(self) -> None:

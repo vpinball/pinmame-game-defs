@@ -1,6 +1,6 @@
 # The Addams Family (Bally, 1992)
 
-Coverage: **partial - complete physical I/O inventory, WPC-Fliptronic bindings, mechanism causality, address enumeration, and spatial placement validated; kept partial solely because this knowledge note has not yet had the independent high-tier review this project requires before recreation_knowledge counts as validated. No conflict, unresolved address, or missing spatial placement remains.**
+Coverage: **author ready - complete physical I/O inventory, WPC-Fliptronic bindings, mechanism causality, address enumeration, spatial placement, and recreation knowledge validated. The definition has no unresolved conflict or missing spatial placement.**
 
 ## Identity and evidence precedence
 

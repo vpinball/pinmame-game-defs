@@ -6937,16 +6937,16 @@
           "value": "29"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 29,
         "group": "pinmame.output.solenoid"
       },
       "id": "device.wpc-j111-general-purpose-relay-bit-a",
-      "kind": "relay",
+      "kind": "virtual",
       "label": "WPC J111 General-Purpose Relay Bit A",
       "physical": {
-        "notes": "One of the WPC J111 general-purpose relay register bits; core_getSol's GEN_ALLWPC branch remaps it from coreGlobals.solenoids2, but the retained script has no callback for this address."
+        "notes": "PinMAME publishes the first of the WPC J111 general-purpose state bits here; it is meaningful public state but not a separate physical relay on this machine."
       },
       "provenance": {
         "source_refs": [
@@ -6965,7 +6965,7 @@
           ],
           "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -6980,16 +6980,16 @@
           "value": "30"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 30,
         "group": "pinmame.output.solenoid"
       },
       "id": "device.wpc-j111-general-purpose-relay-bit-b",
-      "kind": "relay",
+      "kind": "virtual",
       "label": "WPC J111 General-Purpose Relay Bit B",
       "physical": {
-        "notes": "One of the WPC J111 general-purpose relay register bits; the retained script has no callback for this address."
+        "notes": "PinMAME publishes the second of the WPC J111 general-purpose state bits here; it is meaningful public state but not a separate physical relay on this machine."
       },
       "provenance": {
         "source_refs": [
@@ -7008,7 +7008,7 @@
           ],
           "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -7028,11 +7028,11 @@
         "device": 31,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.tilt-relay-wpc-j111-gpio",
-      "kind": "relay",
-      "label": "Tilt Relay (WPC J111 GPIO)",
+      "id": "device.wpc-state-channel-31",
+      "kind": "virtual",
+      "label": "WPC State Channel 31",
       "physical": {
-        "notes": "One of the WPC J111 general-purpose relay register bits (core_getSol's GEN_ALLWPC 29-32 remap). The retained script binds it as SolCallback(31)=\"TiltSol\" with the comment '31 for WPC', so this ROM genuinely drives a physical relay/accessory at this address, but the exact accessory is not confirmed by available evidence beyond its script-given name."
+        "notes": "PinMAME mirrors the high WPC_GILAMPS state bit here for Fliptronic machines. Pinned wpc.c explicitly says this generation has no physical Game-On solenoid because the flippers are ROM controlled. The retained script binds SolCallback(31)=\"TiltSol\" with the comment '31 for WPC', which proves the callback is consumed but does not identify a physical relay or other accessory."
       },
       "provenance": {
         "source_refs": [
@@ -7052,7 +7052,7 @@
           ],
           "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -7072,11 +7072,11 @@
         "device": 32,
         "group": "pinmame.output.solenoid"
       },
-      "id": "device.wpc-j111-general-purpose-relay-bit-d",
-      "kind": "relay",
-      "label": "WPC J111 General-Purpose Relay Bit D",
+      "id": "device.unused-wpc-state-channel-32",
+      "kind": "virtual",
+      "label": "Unused WPC State Channel 32",
       "physical": {
-        "notes": "One of the WPC J111 general-purpose relay register bits; the retained script has no callback for this address."
+        "notes": "PinMAME's WPC remap has no fourth J111 state bit; this public address is constant zero and is not a physical relay."
       },
       "provenance": {
         "source_refs": [
@@ -7086,7 +7086,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.unused.wpc-output"
       ],
       "spatial": {
         "provenance": {
@@ -7095,7 +7095,7 @@
           ],
           "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -7325,7 +7325,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.unused.wpc-output"
       ],
       "spatial": {
         "provenance": {
@@ -7368,7 +7368,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.unused.wpc-output"
       ],
       "spatial": {
         "provenance": {
@@ -7411,7 +7411,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.unused.wpc-output"
       ],
       "spatial": {
         "provenance": {
@@ -7454,7 +7454,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.unused.wpc-output"
       ],
       "spatial": {
         "provenance": {
@@ -7497,7 +7497,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.unused.wpc-output"
       ],
       "spatial": {
         "provenance": {
@@ -7540,7 +7540,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.unused.wpc-output"
       ],
       "spatial": {
         "provenance": {
@@ -7583,7 +7583,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.unused.wpc-output"
       ],
       "spatial": {
         "provenance": {
@@ -7626,7 +7626,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.unused.wpc-output"
       ],
       "spatial": {
         "provenance": {
@@ -7895,7 +7895,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.unused.wpc-output"
       ],
       "spatial": {
         "provenance": {
@@ -7938,7 +7938,7 @@
         "status": "validated"
       },
       "roles": [
-        "internal.wpc-state"
+        "internal.unused.wpc-output"
       ],
       "spatial": {
         "provenance": {

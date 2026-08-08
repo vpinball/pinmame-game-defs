@@ -165,11 +165,19 @@ class WhiteWaterDefinitionTests(unittest.TestCase):
 			self.assertEqual("motor", self.solenoids[address]["kind"], address)
 		for address in (27, 28):
 			self.assertEqual("control_signal", self.solenoids[address]["kind"], address)
-		for address in (29, 30, 32):
-			self.assertEqual("relay", self.solenoids[address]["kind"], address)
-			self.assertEqual("unused", self.solenoids[address]["availability"], address)
-		self.assertEqual("relay", self.solenoids[31]["kind"])
+		for address in (29, 30):
+			self.assertEqual("virtual", self.solenoids[address]["kind"], address)
+			self.assertEqual("used", self.solenoids[address]["availability"], address)
+		self.assertEqual("virtual", self.solenoids[31]["kind"])
 		self.assertEqual("used", self.solenoids[31]["availability"])
+		self.assertEqual(["internal.wpc-state"], self.solenoids[31]["roles"])
+		self.assertEqual("virtual", self.solenoids[31]["spatial"]["reason"])
+		self.assertIn("no physical Game-On solenoid", self.solenoids[31]["physical"]["notes"])
+		self.assertIn('SolCallback(31)="TiltSol"', self.solenoids[31]["physical"]["notes"])
+		self.assertEqual("virtual", self.solenoids[32]["kind"])
+		self.assertEqual("unused", self.solenoids[32]["availability"])
+		self.assertEqual(["internal.unused.wpc-output"], self.solenoids[32]["roles"])
+		self.assertEqual("virtual", self.solenoids[32]["spatial"]["reason"])
 		for address in range(37, 45):
 			self.assertEqual("virtual", self.solenoids[address]["kind"], address)
 			self.assertEqual("unused", self.solenoids[address]["availability"], address)

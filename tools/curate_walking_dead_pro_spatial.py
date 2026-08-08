@@ -14,6 +14,7 @@ PARTIAL_PATH = ROOT / "machines/partial/stern/the-walking-dead-pro-2014.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/stern/the-walking-dead-pro-2014.json"
 
 TABLE_SOURCE = "vpx-table.walking-dead-jp-salas-6.0.0-geometry"
+PREMIUM_TABLE_SOURCE = "vpx-table.walking-dead-premium-le-vpw-day-1.1"
 SCRIPT_SOURCE = "vpx.walking-dead-pro.jp-salas-v5.5.0"
 MANUAL_SOURCE = "manual.walking-dead-pro"
 CORE_SOURCE = "pinmame.core.4ec52ff0ac13"
@@ -31,6 +32,25 @@ TABLE_SOURCE_RECORD = {
 	"sha256": "859589b1d1ebea3be6e66844c7126d22d42da0877e551c9f7cf90b76e4c30383",
 	"uri": "https://archive.org/download/Visual-Pinball-Collection-2025-12-29/tables/JP%27s%20The%20Walking%20Dead%20%28Original%202021%29/JP%27s%20The%20Walking%20Dead%20%28Original%202021%29%20JPSalas%206.0.0.vpx",
 }
+
+PREMIUM_TABLE_SOURCE_RECORD = {
+	"attribution": "Flupper1, Robby King Pin, Rothbauerw, VPW contributors, prior table authors, and vpxtable_scripts contributors",
+	"id": PREMIUM_TABLE_SOURCE,
+	"kind": "vpx_table",
+	"known_working": True,
+	"license": "NOASSERTION",
+	"locator": "The Walking Dead LE Premium (Stern 2014) day 1.1.vpx (217,935,872 bytes); ROM twd_160h; extracted with vpxtool git:v0.33.3. This explicit edition overlay contributes only the positions below that were manually confirmed unchanged on the Pro physical maps; it supplies no Pro runtime semantics or edition-specific mechanism geometry.",
+	"original_filename": "The Walking Dead LE Premium (Stern 2014) day 1.1.vpx",
+	"rights": "NOASSERTION",
+	"sha256": "2aca72eb73ac11cc1f8d5633cd8bb302146ac2dd91bfa5fb8364a314b5179987",
+	"uri": "local-evidence://stern/the-walking-dead-premium-limited-edition-2014/The Walking Dead LE Premium (Stern 2014) day 1.1.vpx",
+}
+
+# These coordinates were copied from the Premium/LE extraction during the original Pro curation.
+# The official Pro maps confirm that the named devices retain the same physical location, so this
+# is an explicit edition overlay rather than silently attributing Premium geometry to the Pro table.
+PREMIUM_GEOMETRY_INPUTS = {3, 4, 18, 19, 20, 21, 22, 26, 27, 38, 44, 45}
+PREMIUM_GEOMETRY_SOLENOIDS = {1, 3, 4, 13, 14}
 
 INPUT_POSITIONS = {
 	2: [(0.539910, 0.518354)], 3: [(0.450630, 0.228143)], 4: [(0.450630, 0.242571)],
@@ -179,7 +199,8 @@ def apply_spatial(definition: dict[str, object]) -> None:
 		elif device["availability"] == "unused":
 			_not_applicable(device, "unused", MANUAL_SOURCE)
 		elif address in INPUT_POSITIONS:
-			_located(device, "sensor", INPUT_POSITIONS[address], (TABLE_SOURCE,))
+			coordinate_sources = (PREMIUM_TABLE_SOURCE, MANUAL_SOURCE) if address in PREMIUM_GEOMETRY_INPUTS else (TABLE_SOURCE, MANUAL_SOURCE)
+			_located(device, "sensor", INPUT_POSITIONS[address], coordinate_sources)
 		elif address in CABINET_INPUT_ROLES:
 			device["roles"] = [CABINET_INPUT_ROLES[address]]
 			_not_applicable(device, "cabinet_or_service", MANUAL_SOURCE)
@@ -200,12 +221,17 @@ def apply_spatial(definition: dict[str, object]) -> None:
 			_not_applicable(device, "cabinet_or_service", MANUAL_SOURCE)
 		elif group == "pinmame.output.solenoid" and address in SOLENOID_POSITIONS:
 			role = "emitter" if kind == "flasher" else "effect"
-			coordinate_sources = (MANUAL_SOURCE,) if address == 32 else (TABLE_SOURCE,)
+			if address == 32:
+				coordinate_sources = (MANUAL_SOURCE,)
+			elif address in PREMIUM_GEOMETRY_SOLENOIDS:
+				coordinate_sources = (PREMIUM_TABLE_SOURCE, MANUAL_SOURCE)
+			else:
+				coordinate_sources = (TABLE_SOURCE, MANUAL_SOURCE)
 			_located(device, role, SOLENOID_POSITIONS[address], coordinate_sources)
 			if kind == "flasher":
 				device.setdefault("physical", {})["quantity"] = len(SOLENOID_POSITIONS[address])
 		elif group == "pinmame.output.lamp" and address in LAMP_POSITIONS:
-			_located(device, "emitter", LAMP_POSITIONS[address], (TABLE_SOURCE,))
+			_located(device, "emitter", LAMP_POSITIONS[address], (TABLE_SOURCE, MANUAL_SOURCE))
 			device.setdefault("physical", {})["quantity"] = 1
 		elif group == "pinmame.output.gi" and address == 0:
 			placements = [*GI_PLAYFIELD_POSITIONS, *GI_BACK_PANEL_POSITIONS]
@@ -219,6 +245,8 @@ def promote() -> None:
 	definition = build_pro()
 	if not any(existing["id"] == TABLE_SOURCE for existing in definition["sources"]):
 		definition["sources"].append(TABLE_SOURCE_RECORD)
+	if not any(existing["id"] == PREMIUM_TABLE_SOURCE for existing in definition["sources"]):
+		definition["sources"].append(PREMIUM_TABLE_SOURCE_RECORD)
 	definition["schema_version"] = 2
 	definition["machine"]["kind"] = "physical_pinball"
 	definition["coverage"]["status"] = "author_ready"

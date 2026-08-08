@@ -66,11 +66,12 @@ class CreatureDefinitionTests(unittest.TestCase):
 	def test_partial_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["spatial_placement", "unresolved_conflicts"], self.definition["coverage"]["missing"])
+		self.assertEqual(["output_enumeration", "spatial_placement", "unresolved_conflicts"], self.definition["coverage"]["missing"])
+		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["address_enumeration"])
 		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
 		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension in {"physical_wiring", "spatial_placement"}:
+			if dimension in {"address_enumeration", "physical_wiring", "spatial_placement"}:
 				continue
 			self.assertEqual("validated", state, dimension)
 		self.assertEqual("bally.creature-from-the-black-lagoon.1992", self.definition["machine"]["id"])

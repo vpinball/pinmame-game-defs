@@ -303,11 +303,7 @@ Two output addresses carry no spatial record at all:
   collection has 85 members, but many are co-located render doubles and ten are back-panel
   proxies, so it cannot substitute for the missing table.
 
-Finally, this curation pass ran single-session and did **not** obtain the mandatory
-independent high-tier cross-provider review described in `docs/INSTRUCTIONS.md`.
-`recreation_notes` therefore stays in `coverage.missing` until that review runs against the
-exact proposed tree, matching the precedent Bally Cirqus Voltaire and Williams Fish Tales set
-for the same procedural gap.
+The recreation knowledge remains candidate until the explicit polarity conflicts and unresolved spatial placements above are reconciled.
 
 ## Two things worth carrying to the next Stern S.A.M. game
 

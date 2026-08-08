@@ -215,7 +215,7 @@ NOT_FITTED_SOLENOID_LABELS = {
 }
 VIRTUAL_SOLENOID_LABELS = {
 	29: "WPC J111 General-Purpose Relay Bit A", 30: "WPC J111 General-Purpose Relay Bit B",
-	31: "Tilt Relay (WPC J111 GPIO)", 32: "WPC J111 General-Purpose Relay Bit D",
+	31: "WPC State Channel 31", 32: "Unused WPC State Channel 32",
 	37: "Unused WPC-Fliptronic Address 37", 38: "Unused WPC-Fliptronic Address 38",
 	39: "Unused WPC-Fliptronic Address 39", 40: "Unused WPC-Fliptronic Address 40",
 	41: "Unused WPC-Fliptronic Address 41", 42: "Unused WPC-Fliptronic Address 42",
@@ -1099,12 +1099,12 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 
 		label = VIRTUAL_SOLENOID_LABELS[address]
 		identifier = output_id(label)
-		availability = "used" if address == 31 else "unused"
+		availability = "used" if address in {29, 30, 31} else "unused"
 		notes = {
-			29: "One of the WPC J111 general-purpose relay register bits; core_getSol's GEN_ALLWPC branch remaps it from coreGlobals.solenoids2, but the retained script has no callback for this address.",
-			30: "One of the WPC J111 general-purpose relay register bits; the retained script has no callback for this address.",
-			31: 'One of the WPC J111 general-purpose relay register bits (core_getSol\'s GEN_ALLWPC 29-32 remap). The retained script binds it as SolCallback(31)="TiltSol" with the comment \'31 for WPC\', so this ROM genuinely drives a physical relay/accessory at this address, but the exact accessory is not confirmed by available evidence beyond its script-given name.',
-			32: "One of the WPC J111 general-purpose relay register bits; the retained script has no callback for this address.",
+			29: "PinMAME publishes the first of the WPC J111 general-purpose state bits here; it is meaningful public state but not a separate physical relay on this machine.",
+			30: "PinMAME publishes the second of the WPC J111 general-purpose state bits here; it is meaningful public state but not a separate physical relay on this machine.",
+			31: 'PinMAME mirrors the high WPC_GILAMPS state bit here for Fliptronic machines. Pinned wpc.c explicitly says this generation has no physical Game-On solenoid because the flippers are ROM controlled. The retained script binds SolCallback(31)="TiltSol" with the comment \'31 for WPC\', which proves the callback is consumed but does not identify a physical relay or other accessory.',
+			32: "PinMAME's WPC remap has no fourth J111 state bit; this public address is constant zero and is not a physical relay.",
 			37: "Unused WPC-Fliptronic address; this hardware generation has no LPDC board, so core_getSol's 37-44 branch (gated on GEN_WPC95/GEN_WPC95DCS) never serves this address here.",
 			38: "Unused WPC-Fliptronic address; see 37.",
 			39: "Unused WPC-Fliptronic address; see 37.",
@@ -1116,13 +1116,13 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			49: "PinMAME's simulator-only ball-shooter channel; it has no WPC-Fliptronic hardware output.",
 			50: "Reserved PinMAME output position before the first custom-output boundary. wwGameData declares custSol = 0.",
 		}[address]
-		roles = ["internal.wpc-state"]
+		roles = ["internal.wpc-state"] if address in {29, 30, 31} else ["internal.unused.wpc-output"]
 		virtual_aliases = [{"namespace": "pinmame.solenoid", "value": str(address)}, {"namespace": "manual.address", "value": f"{address:02d}"}]
 		items.append(
 			_device(
 				identifier,
 				label,
-				"relay" if address in {29, 30, 31, 32} else "virtual",
+				"virtual",
 				"pinmame.output.solenoid",
 				address,
 				availability,
@@ -1130,7 +1130,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				aliases=virtual_aliases,
 				roles=roles,
 				physical={"notes": notes},
-				spatial=not_applicable("cabinet_or_service" if address in {29, 30, 31, 32} else "virtual", CORE_SOURCE),
+				spatial=not_applicable("virtual", CORE_SOURCE),
 			)
 		)
 	return items

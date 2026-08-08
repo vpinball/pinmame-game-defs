@@ -46,7 +46,7 @@ The matching source is the retained known-working `Creature From The Black Lagoo
 
 ## Promotion decision
 
-This record cannot be promoted to `author_ready`. Beyond the unresolved spatial gaps this audit itself reports (switch 18, switches 115-118, GI address 3, lamp addresses 91-98, and five unbound flasher solenoids), the record carries a non-empty `conflicts` array (`conflict.upper-flipper-switches-unconfirmed-fitment`) and `coverage.dimensions.physical_wiring = "conflicted"`. The definition stays `partial` with `coverage.missing = ["spatial_placement", "unresolved_conflicts"]` until a clearer photograph or parts listing of an unrestored machine's Fliptronic II board settles the upper-flipper question and a LibPinMAME gameplay-harness trace against a legal cftbl ROM (or a richer retained VPX recreation) resolves the remaining spatial gaps.
+This record cannot be promoted to `author_ready`. Beyond the unresolved spatial gaps this audit itself reports (switch 18, switches 115-118, GI address 3, lamp addresses 91-98, and five unbound flasher solenoids), the record carries a non-empty `conflicts` array (`conflict.upper-flipper-switches-unconfirmed-fitment`) and `coverage.dimensions.physical_wiring = "conflicted"`. The definition stays `partial` with `coverage.missing = ["output_enumeration", "spatial_placement", "unresolved_conflicts"]`: the current solenoid inventory stops at the printed 1-28 table and does not yet enumerate the full WPC state/Fliptronic public range. A clearer photograph or parts listing of an unrestored machine's Fliptronic II board settles the upper-flipper question and a LibPinMAME gameplay-harness trace against a legal cftbl ROM (or a richer retained VPX recreation) resolves the remaining spatial gaps.
 
 ## Retained evidence
 

@@ -1577,10 +1577,10 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["spatial_placement", "unresolved_conflicts"],
+			"missing": ["output_enumeration", "spatial_placement", "unresolved_conflicts"],
 			"dimensions": {
 				"catalog_identity": "validated",
-				"address_enumeration": "validated",
+				"address_enumeration": "candidate",
 				"semantic_naming": "validated",
 				"physical_wiring": "conflicted",
 				"mechanisms": "validated",
@@ -1794,7 +1794,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"unbound flasher solenoids), the record carries a non-empty `conflicts` array "
 		"(`conflict.upper-flipper-switches-unconfirmed-fitment`) and "
 		"`coverage.dimensions.physical_wiring = \"conflicted\"`. The definition stays `partial` with "
-		"`coverage.missing = [\"spatial_placement\", \"unresolved_conflicts\"]` until a clearer photograph "
+		"`coverage.missing = [\"output_enumeration\", \"spatial_placement\", \"unresolved_conflicts\"]`: "
+		"the current solenoid inventory stops at the printed 1-28 table and does not yet enumerate the full "
+		"WPC state/Fliptronic public range. A clearer photograph "
 		"or parts listing of an unrestored machine's Fliptronic II board settles the upper-flipper "
 		"question and a LibPinMAME gameplay-harness trace against a legal cftbl ROM (or a richer retained "
 		"VPX recreation) resolves the remaining spatial gaps.",

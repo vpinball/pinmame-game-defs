@@ -47,7 +47,7 @@
         "libpinmame": { "channel": "solenoid" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "WPC exposes standard drivers 1-28, J111 state outputs 29-31, generic flipper callbacks such as upper-right 34, upper-left 36, lower-right 46, and lower-left 48, plus explicit unused positions through the first custom-output boundary at 50."
+      "notes": "WPC exposes standard drivers 1-28, J111 state outputs 29-30, and public address 31 as the real pre-Fliptronic Game-On solenoid controlled by WPC_GILAMPS bit 7 through the power-driver relay chain to the cabinet switch and flippers. Address 32 is constant zero. Generic flipper callbacks include upper-right 34, upper-left 36, lower-right 46, and lower-left 48, with explicit unused positions through the first custom-output boundary at 50."
     },
     {
       "id": "pinmame.output.lamp",

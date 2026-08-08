@@ -20,8 +20,9 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines/partial/bally/the-addams-family-1992.json"
+PARTIAL_PATH = ROOT / "machines/partial/bally/the-addams-family-1992.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/bally/the-addams-family-1992.json"
+DEFINITION_PATH = AUTHOR_READY_PATH
 SEED_PATH = ROOT / "tools/seeds/bally/the-addams-family-1992.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/bally/the-addams-family-1992.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/bally/the-addams-family-1992.md"
@@ -264,14 +265,14 @@ SOLENOID_WIRING = {
 	26: dict(wire="Blu-Red", connection="J122-2", driver_transistor="Q24", part_number="AE-30-2000", printed_type="Flasher-column kicker"),
 	27: dict(wire="Blu-Org", connection="J122-3", driver_transistor="Q22", part_number="14-7969 12V", printed_type="Flasher-column motor"),
 	28: dict(wire="Blu-Yel", connection="J122-4", driver_transistor="Q20", part_number="AE-30-2000", printed_type="Flasher-column kicker"),
-	33: dict(wire="Blu-Yel", connection="J109-7", part_number="FL-11630", printed_type="Fliptronic power"),
-	34: dict(wire="Blu-Yel", connection="J109-7", part_number="FL-11630", printed_type="Fliptronic hold"),
-	35: dict(wire="Gry-Yel", connection="J109-5", part_number="FL-11753", printed_type="Fliptronic power"),
-	36: dict(wire="Gry-Yel", connection="J109-5", part_number="FL-11753", printed_type="Fliptronic hold"),
-	45: dict(wire="Blu-Yel", connection="J109-7", part_number="FL-15411", printed_type="Fliptronic power"),
-	46: dict(wire="Blu-Yel", connection="J109-7", part_number="FL-15411", printed_type="Fliptronic hold"),
-	47: dict(wire="Gry-Yel", connection="J109-5", part_number="FL-15411", printed_type="Fliptronic power"),
-	48: dict(wire="Gry-Yel", connection="J109-5", part_number="FL-15411", printed_type="Fliptronic hold"),
+	33: dict(wire="Blu-Yel", connection="J109-7", control_wire="Blk-Yel", control_connection="J802-6", part_number="FL-11630", printed_type="Fliptronic power"),
+	34: dict(wire="Blu-Yel", connection="J109-7", control_wire="Org-Vio", control_connection="J802-4", part_number="FL-11630", printed_type="Fliptronic hold"),
+	35: dict(wire="Gry-Yel", connection="J109-5", control_wire="Blk-Blu", control_connection="J802-3", part_number="FL-11753", printed_type="Fliptronic power"),
+	36: dict(wire="Gry-Yel", connection="J109-5", control_wire="Org-Gry", control_connection="J802-1", part_number="FL-11753", printed_type="Fliptronic hold"),
+	45: dict(wire="Blu-Yel", connection="J109-7", control_wire="Blu-Vio", control_connection="J802-13", part_number="FL-15411", printed_type="Fliptronic power"),
+	46: dict(wire="Blu-Yel", connection="J109-7", control_wire="Org-Grn", control_connection="J802-11", part_number="FL-15411", printed_type="Fliptronic hold"),
+	47: dict(wire="Gry-Yel", connection="J109-5", control_wire="Blu-Gry", control_connection="J802-9", part_number="FL-15411", printed_type="Fliptronic power"),
+	48: dict(wire="Gry-Yel", connection="J109-5", control_wire="Org-Blu", control_connection="J802-7", part_number="FL-15411", printed_type="Fliptronic hold"),
 }
 # Retained VPX script callbacks, per solenoid address.
 SOLENOID_CALLBACKS = {
@@ -628,6 +629,15 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "Printed pages ~2-74 (Flipper Assembly Notes), 6 ('Thing Flips' Automatic Calibration), and ~2-14 (ball-path narrative)",
 					"path": "evidence/excerpts/bally.the-addams-family.1992/flipper-assembly-and-thing-flips.md",
 					"sha256": "928346368bc49fb0599dee35c65ba6b0afa75b2668f433f9f10cb9a76ea8799c",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.addams-family.flipper-controller-wiring",
+					"locator": "PDF page 120, printed page 3-18, Flipper Circuits and flipper-controller-to-playfield wiring",
+					"path": "evidence/excerpts/bally.the-addams-family.1992/flipper-controller-wiring.md",
+					"sha256": "15c614bf10de98b521650ac8281a8fd014362fb096bd6b13ff06d5939a6b0e30",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -1054,9 +1064,17 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 					)
 			physical["notes"] = notes
 
-			wiring: dict[str, Any] = {"board": "WPC power driver board", "control_wire": wiring_data["wire"]}
-			if "connection" in wiring_data:
-				wiring["control_connection"] = wiring_data["connection"]
+			wiring: dict[str, Any] = {"board": "WPC power driver board"}
+			if address in flipper_kinds:
+				wiring["board"] = "Flipper controller board (J801-J806)"
+				wiring["power_wire"] = wiring_data["wire"]
+				wiring["power_connection"] = wiring_data["connection"]
+				wiring["control_wire"] = wiring_data["control_wire"]
+				wiring["control_connection"] = wiring_data["control_connection"]
+			else:
+				wiring["control_wire"] = wiring_data["wire"]
+				if "connection" in wiring_data:
+					wiring["control_connection"] = wiring_data["connection"]
 			if "driver_transistor" in wiring_data:
 				wiring["driver_transistor"] = wiring_data["driver_transistor"]
 			aliases = [{"namespace": "pinmame.solenoid", "value": str(address)}]
@@ -1076,6 +1094,8 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			refs = (MANUAL_HANDBOOK_SOURCE, CORE_SOURCE)
 			if address in SOLENOID_CALLBACKS:
 				refs = (MANUAL_HANDBOOK_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
+			if address in flipper_kinds:
+				refs = (MANUAL_HANDBOOK_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
 			items.append(_device(identifier, label, kind, "pinmame.output.solenoid", address, availability, refs, **extra))
 			continue
 
@@ -1097,6 +1117,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			49: "PinMAME's simulator-only ball-shooter channel; no WPC hardware output.",
 			50: "Reserved PinMAME output position before the first custom-output boundary. tafGameData declares custSol = 0, so this machine claims no custom solenoids at all.",
 		}[address]
+		availability = "used" if address in {29, 30, 31} else "unused"
 		items.append(
 			_device(
 				identifier,
@@ -1104,10 +1125,10 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				"virtual",
 				"pinmame.output.solenoid",
 				address,
-				"unused",
+				availability,
 				(CONTROLLER_SOURCE, CORE_SOURCE),
 				aliases=[{"namespace": "pinmame.solenoid", "value": str(address)}],
-				roles=["internal.wpc-state" if address in {29, 30, 31, 32} else "internal.unused.wpc-output"],
+				roles=["internal.wpc-state" if address in {29, 30, 31} else "internal.unused.wpc-output"],
 				physical={"notes": notes},
 				spatial=not_applicable("virtual", CORE_SOURCE),
 			)
@@ -1611,8 +1632,8 @@ def build() -> dict[str, Any]:
 			"ipdb_id": 20,
 		},
 		"coverage": {
-			"status": "partial",
-			"missing": ["recreation_notes"],
+			"status": "author_ready",
+			"missing": [],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
@@ -1620,7 +1641,7 @@ def build() -> dict[str, Any]:
 				"physical_wiring": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
-				"recreation_knowledge": "candidate",
+				"recreation_knowledge": "validated",
 				"spatial_placement": "validated",
 			},
 		},
@@ -1636,7 +1657,7 @@ def build() -> dict[str, Any]:
 		"mechanisms": mechanisms(),
 		"relationships": relationships(),
 		"sources": source_records(),
-		"knowledge": {"path": "knowledge/bally/the-addams-family-1992.md", "status": "partial"},
+		"knowledge": {"path": "knowledge/bally/the-addams-family-1992.md", "status": "complete"},
 		"conflicts": conflicts(),
 	}
 	identifiers = [device["id"] for device in definition["inputs"] + definition["outputs"]]
@@ -1647,7 +1668,7 @@ def build() -> dict[str, Any]:
 
 
 def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
-	"""Summarize every spatial disposition so the remaining blocker to promotion is auditable."""
+	"""Summarize every reviewed spatial disposition supporting promotion."""
 	resolved_input_addresses: list[int] = []
 	not_applicable_inputs: dict[str, list[int]] = {}
 	for device in definition["inputs"]:
@@ -1688,18 +1709,11 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 	]
 
 	return {
-		"format": "pinmame-spatial-blockers",
+		"format": "pinmame-spatial-audit",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"status": definition["coverage"]["status"],
-		"blockers": [
-			"coverage.missing = [\"recreation_notes\"]: knowledge/bally/the-addams-family-1992.md documents every "
-			"mechanism this definition references, but as a single unreviewed curation pass it has not had the "
-			"independent high-tier review this project requires before a knowledge note counts as validated "
-			"recreation_knowledge. No conflict, unresolved address, or missing spatial placement remains -- this "
-			"is the sole reason the record stays partial rather than a genuine gap in the electrical or spatial "
-			"evidence.",
-		],
+		"blockers": [],
 		"unresolved": [],
 		"placement_count": placement_count,
 		"coordinate_convention": {
@@ -1755,6 +1769,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	]
 	for blocker in report["blockers"]:
 		lines.append(f"- {blocker}")
+	if not report["blockers"]:
+		lines.append("- None; every required dimension is source-reconciled and validated, so the definition is author-ready.")
 	lines += ["", "## Evidence", ""]
 	lines.append(f"- VPX table SHA-256 `{report['source_hashes']['table_sha256']}`")
 	lines.append(f"  - Bounds `{TABLE_BOUNDS}`; normalization `{report['coordinate_convention']['x']}` / `{report['coordinate_convention']['y']}`")
@@ -1798,6 +1814,8 @@ def generate(root: Path = ROOT) -> Path:
 	report = build_spatial_report(definition)
 	write_json(SPATIAL_REPORT_PATH, report)
 	write_text(SPATIAL_REPORT_MARKDOWN_PATH, render_spatial_report(report))
+	if PARTIAL_PATH.is_file():
+		PARTIAL_PATH.unlink()
 	return DEFINITION_PATH
 
 
@@ -1809,8 +1827,8 @@ def check(root: Path = ROOT) -> None:
 	seed = load_json(SEED_PATH)
 	if canonical_bytes(seed) != canonical_bytes(definition):
 		raise RuntimeError(f"{SEED_PATH} is out of date or diverges from the definition; run --regenerate")
-	if AUTHOR_READY_PATH.is_file():
-		raise RuntimeError(f"{AUTHOR_READY_PATH} exists but this game is not promoted; refusing to leave a duplicate definition")
+	if PARTIAL_PATH.is_file():
+		raise RuntimeError(f"{PARTIAL_PATH} exists beside the promoted author-ready definition")
 	report = build_spatial_report(definition)
 	report_on_disk = load_json(SPATIAL_REPORT_PATH)
 	if canonical_bytes(report_on_disk) != canonical_bytes(report):

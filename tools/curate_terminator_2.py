@@ -287,7 +287,24 @@ def output_devices() -> list[dict[str, Any]]:
 	for address in range(29, 51):
 		if address in {34, 36, 46, 48}:
 			continue
-		items.append(_solenoid_output(address, f"Unused WPC State/Generic Output {address}", "virtual", "unused", (CONTROLLER_SOURCE, CORE_SOURCE), roles=["internal.unused.wpc-output"], physical={"notes": "PinMAME compatibility/state channel; not a physical playfield device."}))
+		state_channel = address in {29, 30, 31}
+		if address == 31:
+			label = "Game-On Solenoid Relay"
+			kind = "relay"
+			notes = "On this pre-Fliptronic WPC generation, pinned wpc.c identifies public address 31 as the real Game-On solenoid controlled by WPC_GILAMPS bit 7 through the power-driver relay chain to the cabinet switch and flippers. It is a cabinet/flipper-enable relay, not a playfield device."
+		elif state_channel:
+			label = f"WPC State Channel {address}"
+			kind = "virtual"
+			notes = "PinMAME publishes meaningful WPC controller state at this address; it is not a physical playfield device."
+		elif address == 32:
+			label = f"Unused WPC State/Generic Output {address}"
+			kind = "virtual"
+			notes = "PinMAME's WPC remap has no fourth state bit; this public address is constant zero and is not a physical output."
+		else:
+			label = f"Unused WPC State/Generic Output {address}"
+			kind = "virtual"
+			notes = "PinMAME compatibility/state channel; not a physical playfield device."
+		items.append(_solenoid_output(address, label, kind, "used" if state_channel else "unused", (CONTROLLER_SOURCE, CORE_SOURCE), roles=["internal.wpc-state" if state_channel else "internal.unused.wpc-output"], physical={"notes": notes}))
 	return items
 
 

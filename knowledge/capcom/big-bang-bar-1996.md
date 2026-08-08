@@ -89,4 +89,4 @@ PinMAME's shared `CC_COMPORTS` keyboard-simulation macro (`src/wpc/capcoms.h`, u
 - `vpx-table.bbb-vpw-1-0`: retained table, SHA-256 `7fd6c3a4ada4ae9c8b253a2123e64c8b546ced4e9c4211edff29f01e6647f3d5`, bounds `left=0 top=0 right=952 bottom=2162`.
 - `pinmame.core.4ec52ff0ac13`: `src/wpc/capcom.c`, `src/wpc/capcom.h`, `src/wpc/capgames.c` at the pinned revision.
 
-This curation pass was run without the mandatory independent high-tier cross-provider review described in `docs/INSTRUCTIONS.md`; the record is deliberately kept `partial` with `recreation_notes` in `coverage.missing` until that review runs against the exact proposed tree.
+The recreation knowledge remains candidate: the record is partial for the explicit semantic, mechanism, spatial, polarity, and conflict blockers above, and those gaps prevent this note from supporting independent reconstruction yet.

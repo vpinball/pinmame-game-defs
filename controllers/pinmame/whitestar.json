@@ -20,7 +20,7 @@
         "libpinmame": { "channel": "switch" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "Whitestar uses PinMAME's sequential switch conversion. Public 1-64 are the eight-by-eight playfield/cabinet matrix. Public -3 is coin-door memory protect, -2/-1/0 are the red/green/black coin-door service buttons, 81-84 are right EOS/right button/left EOS/left button, and 88 supplies the fifth dedicated input used by games with an upper flipper. Addresses 85-87 are explicit generic flipper-column holes."
+      "notes": "Whitestar uses PinMAME's sequential switch conversion. Public 1-64 are the eight-by-eight playfield/cabinet matrix. Public -3 is coin-door memory protect, -2/-1/0 are the red/green/black coin-door service buttons, 81-84 are right EOS/right button/left EOS/left button, and 88 supplies the fifth dedicated input used by games with an upper flipper. Addresses 85-87 are explicit generic flipper-column holes. The platform leaves the per-game invSw mask zero, so physical normally-closed/opto construction remains a per-game evidence question; inversion_applied_by_emulator only states that consumers must not re-invert the public API state."
     },
     {
       "id": "pinmame.input.dip",

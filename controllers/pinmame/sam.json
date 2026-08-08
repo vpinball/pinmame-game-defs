@@ -19,7 +19,7 @@
         "libpinmame": { "channel": "switch" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "SAM uses sequential public switch numbering. Matrix switches are 1-64; dedicated D1-D8 are 65-72; D17-D24 are -7 through 0; flipper D9-D16 are exposed in PinMAME's flipper column as 81-88 with right/left and EOS ordering."
+      "notes": "SAM uses sequential public switch numbering. Matrix switches are 1-64; dedicated D1-D8 are 65-72; D17-D24 are -7 through 0; flipper D9-D16 are exposed in PinMAME's flipper column as 81-88 with right/left and EOS ordering. The platform leaves the per-game invSw mask zero, so physical normally-closed/opto construction remains a per-game evidence question; inversion_applied_by_emulator only states that consumers must not re-invert the public API state."
     },
 	{
 	  "id": "pinmame.input.dip",
@@ -48,7 +48,7 @@
         "libpinmame": { "channel": "solenoid" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-	  "notes": "SAM main-driver and game-specific auxiliary outputs share PinMAME's public solenoid address space. Addresses 1-32 are the base driver outputs; address 33 is PinMAME's synthetic game-on/fast-flip state and is never a physical transistor. Most six-transistor games expose addresses through 56; games such as Mustang configure sixteen custom outputs and expose the full 51-66 range, including deliberately unused public holes."
+	  "notes": "SAM main-driver and game-specific auxiliary outputs share PinMAME's public solenoid address space. Addresses 1-32 are the base driver outputs; address 33 is PinMAME's synthetic game-on/fast-flip state and is never a physical transistor. The platform macro publishes the full custom range 51-66 for every SAM game; gameSpecific1 selects which auxiliary write path, if any, can drive those addresses, so each machine must mark inactive public holes unused."
     },
     {
       "id": "pinmame.output.lamp",

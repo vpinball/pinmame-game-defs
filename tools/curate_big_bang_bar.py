@@ -1445,7 +1445,7 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["polarity", "output_semantics", "mechanism_behavior", "spatial_placement", "unresolved_conflicts", "recreation_notes"],
+			"missing": ["polarity", "output_semantics", "mechanism_behavior", "recreation_notes", "spatial_placement", "unresolved_conflicts"],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
@@ -1453,7 +1453,7 @@ def build() -> dict[str, Any]:
 				"physical_wiring": "conflicted",
 				"mechanisms": "candidate",
 				"variant_coverage": "validated",
-				"recreation_knowledge": "candidate",
+				"recreation_knowledge": "observed",
 				"spatial_placement": "candidate",
 			},
 		},
@@ -1665,11 +1665,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"page. The definition therefore carries a non-empty `conflicts` array and "
 		"`coverage.dimensions.physical_wiring = \"conflicted\"`, so promotion to `author_ready` is "
 		"refused; the record stays `partial` with `coverage.missing = [\"polarity\", "
-		"\"output_semantics\", \"mechanism_behavior\", \"spatial_placement\", "
-		"\"unresolved_conflicts\", \"recreation_notes\"]`. This curation pass was also run without "
-		"the mandatory independent high-tier cross-provider review described in "
-		"`docs/INSTRUCTIONS.md`, which alone would keep `recreation_notes` in `coverage.missing` "
-		"even if every other gap were closed.",
+		"\"output_semantics\", \"mechanism_behavior\", \"recreation_notes\", \"spatial_placement\", "
+		"\"unresolved_conflicts\"]`. Recreation knowledge remains observed because the mechanism and "
+		"output-semantics gaps prevent the note from being complete enough for independent reconstruction.",
 		"",
 		"## Retained evidence",
 		"",

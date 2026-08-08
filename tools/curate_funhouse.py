@@ -1332,10 +1332,10 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["spatial_placement", "unresolved_conflicts", "recreation_notes"],
+			"missing": ["output_enumeration", "spatial_placement", "unresolved_conflicts"],
 			"dimensions": {
 				"catalog_identity": "validated",
-				"address_enumeration": "validated",
+				"address_enumeration": "candidate",
 				"semantic_naming": "conflicted",
 				"physical_wiring": "validated",
 				"mechanisms": "validated",
@@ -1356,7 +1356,7 @@ def build() -> dict[str, Any]:
 		"mechanisms": mechanisms(),
 		"relationships": relationships(),
 		"sources": source_records(),
-		"knowledge": {"path": "knowledge/williams/funhouse-1990.md", "status": "partial"},
+		"knowledge": {"path": "knowledge/williams/funhouse-1990.md", "status": "complete"},
 		"conflicts": conflicts(),
 	}
 	identifiers = [device["id"] for device in definition["inputs"] + definition["outputs"]]
@@ -1415,8 +1415,6 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"individual per-bulb spatial extraction for those two collections was not completed in "
 			"this pass.",
 			"conflict.gangway-lamp-12-value and conflict.gi-region-naming are both unresolved.",
-			"knowledge/williams/funhouse-1990.md has not yet had the mandatory independent high-tier "
-			"cross-provider review.",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1543,11 +1541,11 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"## Promotion decision",
 		"",
 		"This record stays `partial`. Two unresolved conflicts (`conflict.gangway-lamp-12-value`, "
-		"`conflict.gi-region-naming`), six addresses with no spatial placement (switch 63; lamps 54/55/56; "
-		"G.I. strings 2 and 4's individual playfield bulbs), and the absence of the mandatory independent "
-		"high-tier cross-provider review together keep `coverage.status = \"partial\"` with "
-		"`coverage.missing = [\"spatial_placement\", \"unresolved_conflicts\", \"recreation_notes\"]`. "
-		"Every other dimension -- catalog identity, address enumeration, physical wiring, mechanism "
+		"`conflict.gi-region-naming`), and six addresses with no spatial placement (switch 63; lamps 54/55/56; "
+		"G.I. strings 2 and 4's individual playfield bulbs) keep `coverage.status = \"partial\"` with "
+		"`coverage.missing = [\"output_enumeration\", \"spatial_placement\", \"unresolved_conflicts\"]`. "
+		"The current solenoid inventory stops at the printed 1-28 table and does not yet enumerate WPC's "
+		"public state and generic-output range. Every other dimension -- catalog identity, physical wiring, mechanism "
 		"inventory and behavior, and variant coverage across the fifteen-driver `fh_l9` clone tree -- is "
 		"validated.",
 		"",
