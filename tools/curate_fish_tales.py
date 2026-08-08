@@ -1156,7 +1156,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not a Fish Tales playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not a Fish Tales playfield device.",
 			31: "PinMAME's synthetic game-on state. Fish Tales sets wpc_set_fastflip_addr(0x7b), so this channel reflects the ROM's fast-flip flag rather than a physical game-on relay.",
-			32: "PinMAME reports this WPC state channel as always zero once a fast-flip address is configured.",
+			32: "PinMAME's WPC remap has no fourth state bit; public address 32 is constant zero in both the WPC_GILAMPS and configured fast-flip branches.",
 			37: "This WPC-Fliptronic generation has no integrated LPDC board (unlike WPC-95), so pinned PinMAME's core_getSol dispatch serves the 37-44 range only for GEN_WPC95/GEN_WPC95DCS/GEN_ALLS11; this address is simply unused space here.",
 			38: "Unused WPC-Fliptronic address space; see 37.",
 			39: "Unused WPC-Fliptronic address space; see 37.",

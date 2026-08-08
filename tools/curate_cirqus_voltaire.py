@@ -1178,7 +1178,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not a Cirqus Voltaire playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not a Cirqus Voltaire playfield device.",
 			31: "PinMAME's synthetic game-on state. Cirqus Voltaire sets wpc_set_fastflip_addr(0x80), so this channel reflects the ROM's fast-flip flag rather than a physical game-on relay.",
-			32: "PinMAME reports this WPC state channel as always zero once a fast-flip address is configured.",
+			32: "PinMAME's WPC remap has no fourth state bit; public address 32 is constant zero in both the WPC_GILAMPS and configured fast-flip branches.",
 			41: "PinMAME's backward-compatibility mirror of LPDC output 39 (Motor Direction). It reports the same physical Ringmaster-motor direction line and is not an additional device; pinned PinMAME's own preliminary cv_ringMech table reads the mechanism through this mirror address rather than 39.",
 			42: "Unused WPC-95 LPDC mirror of output 38 (which the motor circuit table itself marks Not Used).",
 			43: "Unused WPC-95 LPDC mirror of output 39's sibling slot; the motor circuit table declares no third motor-circuit device.",

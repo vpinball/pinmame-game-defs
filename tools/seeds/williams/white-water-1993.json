@@ -7032,7 +7032,7 @@
       "kind": "virtual",
       "label": "WPC State Channel 31",
       "physical": {
-        "notes": "PinMAME mirrors the high WPC_GILAMPS state bit here for Fliptronic machines. Pinned wpc.c explicitly says this generation has no physical Game-On solenoid because the flippers are ROM controlled. The retained script binds SolCallback(31)=\"TiltSol\" with the comment '31 for WPC', which proves the callback is consumed but does not identify a physical relay or other accessory."
+        "notes": "ww.c does not configure wpc_set_fastflip_addr, so PinMAME mirrors WPC_GILAMPS bit 7 here on White Water. Pinned wpc.c explicitly says this Fliptronic generation has no physical Game-On solenoid because the flippers are ROM controlled. The retained script binds SolCallback(31)=\"TiltSol\" with the comment '31 for WPC', which proves the callback is consumed but does not identify a physical relay or other accessory."
       },
       "provenance": {
         "source_refs": [

@@ -89,6 +89,10 @@ class IndianaJonesDefinitionTests(unittest.TestCase):
 		self.assertEqual("vpx", playfield["units"])
 		self.assertEqual("validated", playfield["provenance"]["status"])
 
+	def test_unconfigured_fast_flip_channel_uses_gilamps_state(self) -> None:
+		self.assertIn("WPC_GILAMPS bit 7", self.solenoids[31]["physical"]["notes"])
+		self.assertNotIn("fast-flip RAM flag", self.solenoids[31]["physical"]["notes"])
+
 	def test_two_opto_polarity_conflicts_are_recorded_and_unresolved(self) -> None:
 		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
 		self.assertEqual(

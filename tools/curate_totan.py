@@ -1055,7 +1055,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not a Tales of the Arabian Nights playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not a playfield device.",
 			31: "PinMAME's synthetic game-on state. Tales of the Arabian Nights sets wpc_set_fastflip_addr(0x7b), so this channel reflects the ROM's fast-flip flag rather than a physical game-on relay.",
-			32: "PinMAME reports this WPC state channel as always zero once a fast-flip address is configured.",
+			32: "PinMAME's WPC remap has no fourth state bit; public address 32 is constant zero in both the WPC_GILAMPS and configured fast-flip branches.",
 			37: "Unused WPC-95 LPDC general-purpose output; totanGameData declares no custSol and no LPDC device.",
 			38: "Unused WPC-95 LPDC general-purpose output.",
 			39: "Unused WPC-95 LPDC general-purpose output.",

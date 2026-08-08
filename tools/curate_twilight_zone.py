@@ -965,7 +965,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 		notes = {
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; not a Twilight Zone playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; not a Twilight Zone playfield device.",
-			31: "PinMAME's synthetic game-on state, reflecting the ROM's fast-flip flag rather than a physical game-on relay.",
+			31: "tz.c does not configure wpc_set_fastflip_addr, so PinMAME publishes WPC_GILAMPS bit 7 here. It is meaningful WPC state but not a physical Game-On relay on this Fliptronic generation.",
 			32: "PinMAME reports this WPC state channel as always zero.",
 			49: "PinMAME's simulator-only ball-shooter channel; no WPC-Fliptronic hardware output.",
 			50: "Reserved PinMAME output position before the first custom-output boundary (CORE_FIRSTCUSTSOL=51).",

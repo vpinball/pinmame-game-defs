@@ -11,6 +11,7 @@ from pinmame_game_defs.validation import _validate_curator_placeholder_digests, 
 
 
 ROOT = Path(__file__).resolve().parents[1]
+PRE_FLIPTRONIC_WPC_GENERATIONS = {"0x1", "0x2", "0x4"}
 
 
 class RepositoryValidationTests(unittest.TestCase):
@@ -317,12 +318,14 @@ class RepositoryValidationTests(unittest.TestCase):
 			self.assertEqual("unused", channel["availability"], path.as_posix())
 			self.assertEqual(["internal.unused.wpc-output"], channel["roles"], path.as_posix())
 			self.assertEqual("virtual", channel["spatial"]["reason"], path.as_posix())
+			self.assertIn("zero", channel["physical"]["notes"].lower(), path.as_posix())
+			self.assertNotIn("once a fast-flip address is configured", channel["physical"]["notes"].lower(), path.as_posix())
 			for address in (29, 30, 31):
 				state = [output for output in definition["outputs"] if output["binding"] == {"device": address, "group": "pinmame.output.solenoid"}]
 				self.assertEqual(1, len(state), f"{path.as_posix()}: missing WPC state channel {address}")
 				self.assertEqual("used", state[0]["availability"], f"{path.as_posix()}:{address}")
 				self.assertEqual(["internal.wpc-state"], state[0]["roles"], f"{path.as_posix()}:{address}")
-				if address == 31 and definition["controller"]["platform"] == "pinmame.wpc-alpha":
+				if address == 31 and definition["controller"].get("hardware_generation") in PRE_FLIPTRONIC_WPC_GENERATIONS:
 					self.assertEqual("relay", state[0]["kind"], f"{path.as_posix()}:{address}")
 					self.assertEqual("cabinet_or_service", state[0]["spatial"]["reason"], f"{path.as_posix()}:{address}")
 				else:

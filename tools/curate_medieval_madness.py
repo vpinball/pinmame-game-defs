@@ -1185,7 +1185,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here. The pinned harness observed it active throughout attract mode; it is not a Medieval Madness playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not a Medieval Madness playfield device.",
 			31: "PinMAME's synthetic game-on state. Medieval Madness sets wpc_set_fastflip_addr(0x81), so this channel reflects the ROM's fast-flip flag rather than a physical game-on relay. The pinned harness observed it active while a ball was in play and also in an attract-mode frame four seconds after the coin-door Enter button was released, so a recreation must not treat it as a ball-in-play indicator.",
-			32: "PinMAME reports this WPC state channel as always zero once a fast-flip address is configured.",
+			32: "PinMAME's WPC remap has no fourth state bit; public address 32 is constant zero in both the WPC_GILAMPS and configured fast-flip branches.",
 			38: "Unused WPC-95 LPDC general-purpose output; Medieval Madness populates only LPDC output 37.",
 			39: "Unused WPC-95 LPDC general-purpose output; Medieval Madness populates only LPDC output 37.",
 			40: "Unused WPC-95 LPDC general-purpose output; Medieval Madness populates only LPDC output 37.",

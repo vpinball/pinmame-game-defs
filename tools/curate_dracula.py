@@ -1032,7 +1032,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 		notes = {
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not a Dracula playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not a Dracula playfield device.",
-			31: "PinMAME's synthetic game-on state, taken from the driver's fast-flip RAM flag.",
+			31: "drac.c does not configure wpc_set_fastflip_addr, so PinMAME publishes WPC_GILAMPS bit 7 here. It is meaningful WPC state but not a physical Game-On relay on this Fliptronic generation.",
 			32: "PinMAME reports this WPC state channel as always zero.",
 			37: "Unused WPC-Fliptronic output; this generation has no LPDC board, so 37-44 are simply unused address space (pinned core_getSol only serves that range for GEN_WPC95/GEN_WPC95DCS/GEN_ALLS11).",
 			38: "Unused WPC-Fliptronic output; see 37.",

@@ -1066,7 +1066,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not a Scared Stiff playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not a Scared Stiff playfield device.",
 			31: "PinMAME's synthetic game-on state. Scared Stiff sets wpc_set_fastflip_addr(0x81), so this channel reflects the ROM's fast-flip flag rather than a physical game-on relay.",
-			32: "PinMAME reports this WPC state channel as always zero once a fast-flip address is configured.",
+			32: "PinMAME's WPC remap has no fourth state bit; public address 32 is constant zero in both the WPC_GILAMPS and configured fast-flip branches.",
 			41: "PinMAME's backward-compatibility mirror of LPDC output 37 (Aux Lamp Clock). It reports the same physical shift-register clock line and is not an additional device.",
 			42: "PinMAME's backward-compatibility mirror of LPDC output 38 (Aux Lamp Data); see 41.",
 			43: "PinMAME's backward-compatibility mirror of LPDC output 39 (Spider Wheel 1); it reports the same physical motor-phase drive line and is not an additional device.",

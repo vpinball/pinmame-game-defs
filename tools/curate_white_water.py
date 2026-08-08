@@ -1103,7 +1103,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 		notes = {
 			29: "PinMAME publishes the first of the WPC J111 general-purpose state bits here; it is meaningful public state but not a separate physical relay on this machine.",
 			30: "PinMAME publishes the second of the WPC J111 general-purpose state bits here; it is meaningful public state but not a separate physical relay on this machine.",
-			31: 'PinMAME mirrors the high WPC_GILAMPS state bit here for Fliptronic machines. Pinned wpc.c explicitly says this generation has no physical Game-On solenoid because the flippers are ROM controlled. The retained script binds SolCallback(31)="TiltSol" with the comment \'31 for WPC\', which proves the callback is consumed but does not identify a physical relay or other accessory.',
+			31: 'ww.c does not configure wpc_set_fastflip_addr, so PinMAME mirrors WPC_GILAMPS bit 7 here on White Water. Pinned wpc.c explicitly says this Fliptronic generation has no physical Game-On solenoid because the flippers are ROM controlled. The retained script binds SolCallback(31)="TiltSol" with the comment \'31 for WPC\', which proves the callback is consumed but does not identify a physical relay or other accessory.',
 			32: "PinMAME's WPC remap has no fourth J111 state bit; this public address is constant zero and is not a physical relay.",
 			37: "Unused WPC-Fliptronic address; this hardware generation has no LPDC board, so core_getSol's 37-44 branch (gated on GEN_WPC95/GEN_WPC95DCS) never serves this address here.",
 			38: "Unused WPC-Fliptronic address; see 37.",

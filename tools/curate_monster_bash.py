@@ -1169,7 +1169,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not a Monster Bash playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not a Monster Bash playfield device.",
 			31: "PinMAME's synthetic game-on state. Monster Bash sets wpc_set_fastflip_addr(0x87), so this channel reflects the ROM's fast-flip flag rather than a physical game-on relay.",
-			32: "PinMAME reports this WPC state channel as always zero once a fast-flip address is configured.",
+			32: "PinMAME's WPC remap has no fourth state bit; public address 32 is constant zero in both the WPC_GILAMPS and configured fast-flip branches.",
 			39: "Unused WPC-95 LPDC general-purpose output; Monster Bash populates only LPDC outputs 37 and 38.",
 			40: "Unused WPC-95 LPDC general-purpose output; Monster Bash populates only LPDC outputs 37 and 38.",
 			41: "PinMAME's backward-compatibility mirror of LPDC output 37 (Dracula Motor Forward). It reports the same physical H-bridge drive line and is not an additional device; PinMAME's own mb_mech[2] table (MECH_TWODIRSOL) reads the Dracula mechanism through 41/42 rather than 37/38.",

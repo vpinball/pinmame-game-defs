@@ -100,6 +100,10 @@ class TwilightZoneDefinitionTests(unittest.TestCase):
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 		self.assertTrue(CONTROLLER_PATH.is_file())
 
+	def test_unconfigured_fast_flip_channel_uses_gilamps_state(self) -> None:
+		self.assertIn("WPC_GILAMPS bit 7", self.solenoids[31]["physical"]["notes"])
+		self.assertNotIn("fast-flip flag", self.solenoids[31]["physical"]["notes"])
+
 	def test_every_tz_driver_is_claimed_exactly_once_and_is_physically_compatible(self) -> None:
 		self.assertEqual(DRIVER_IDS, {driver["id"] for driver in self.definition["drivers"]})
 		for driver in self.definition["drivers"]:

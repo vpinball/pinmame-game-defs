@@ -1308,7 +1308,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 		notes = {
 			29: "PinMAME mirrors one of the WPC J111 general-purpose register bits here; it is not an Indiana Jones playfield device.",
 			30: "PinMAME mirrors the second WPC J111 general-purpose register bit here; it is not an Indiana Jones playfield device.",
-			31: "PinMAME's synthetic game-on state, taken from the driver's fast-flip RAM flag.",
+			31: "ij.c does not configure wpc_set_fastflip_addr, so PinMAME publishes WPC_GILAMPS bit 7 here. It is meaningful WPC state but not a physical Game-On relay on this Fliptronic-capable WPC-DCS generation.",
 			32: "PinMAME reports this WPC state channel as always zero.",
 			37: "WPC-DCS has no integrated LPDC board (unlike WPC-95/WPC-95DCS); pinned PinMAME's core_getSol dispatch returns constant 0 for 37-44 on this generation, and ijGameData claims no other use of this address.",
 			38: "Unused WPC-DCS address; see 37.",

@@ -85,6 +85,10 @@ class DraculaDefinitionTests(unittest.TestCase):
 		for driver in self.definition["drivers"]:
 			self.assertEqual("identical", driver["physical_compatibility"])
 
+	def test_unconfigured_fast_flip_channel_uses_gilamps_state(self) -> None:
+		self.assertIn("WPC_GILAMPS bit 7", self.solenoids[31]["physical"]["notes"])
+		self.assertNotIn("fast-flip RAM flag", self.solenoids[31]["physical"]["notes"])
+
 	def test_switch_matrix_covers_every_address_exactly_once(self) -> None:
 		matrix_switches = {address: item for address, item in self.switches.items() if address in MATRIX_ADDRESSES}
 		self.assertEqual(MATRIX_ADDRESSES, set(matrix_switches))
