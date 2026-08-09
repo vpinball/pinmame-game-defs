@@ -14,7 +14,7 @@
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { marked } from 'marked'
+import { marked, Renderer } from 'marked'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const projectRoot = resolve(here, '..')
@@ -155,6 +155,46 @@ console.log(`[data] definitions    : ${definitions.size}`)
 
 marked.use({ gfm: true, breaks: false })
 
+const escapeHtml = (value: string) => value.replace(/[&<>"']/g, character => ({
+	'&': '&amp;',
+	'<': '&lt;',
+	'>': '&gt;',
+	'"': '&quot;',
+	"'": '&#39;',
+})[character]!)
+
+const controllerNotesRenderer = new Renderer()
+controllerNotesRenderer.html = ({ text }) => escapeHtml(text)
+controllerNotesRenderer.heading = function ({ tokens, depth }) {
+	const level = Math.max(4, depth)
+	return `<h${level}>${this.parser.parseInline(tokens)}</h${level}>\n`
+}
+const isSafeControllerNotesUrl = (href: string) => {
+	try {
+		const url = new URL(href, 'https://games.visualpinball.org')
+		return url.protocol === 'http:' || url.protocol === 'https:'
+	} catch {
+		return false
+	}
+}
+controllerNotesRenderer.link = function ({ href, title, tokens }) {
+	const text = this.parser.parseInline(tokens)
+	if (!isSafeControllerNotesUrl(href)) return text
+	return `<a href="${escapeHtml(href)}"${title ? ` title="${escapeHtml(title)}"` : ''}>${text}</a>`
+}
+controllerNotesRenderer.image = ({ href, title, text }) => {
+	if (!isSafeControllerNotesUrl(href)) return escapeHtml(text)
+	return `<img src="${escapeHtml(href)}" alt="${escapeHtml(text)}"${title ? ` title="${escapeHtml(title)}"` : ''}>`
+}
+
+function renderControllerNotes(notes: string | undefined, format: string | undefined): string | null {
+	if (!notes) return null
+	if (format === 'markdown') {
+		return marked.parse(notes, { async: false, renderer: controllerNotesRenderer }) as string
+	}
+	return `<p>${escapeHtml(notes).replace(/\r?\n/g, '<br>\n')}</p>\n`
+}
+
 type Knowledge = {
 	html: string
 	headings: { id: string, text: string }[]
@@ -264,6 +304,10 @@ const controllers = new Map<string, any>()
 for (const path of controllerFiles) {
 	const doc = readJsonAbs(path)
 	if (doc?.format !== 'pinmame-controller-profile') continue
+	doc.groups = (doc.groups ?? []).map((group: any) => ({
+		...group,
+		notesHtml: renderControllerNotes(group.notes, group.notes_format),
+	}))
 	doc.sourcePath = repoPath(path)
 	controllers.set(doc.id, doc)
 }

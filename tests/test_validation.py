@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -369,6 +370,58 @@ class RepositoryValidationTests(unittest.TestCase):
 			if filename == "sam.json":
 				self.assertEqual({}, groups["physical.output.ticket"]["transports"])
 			self.assertEqual("https://github.com/vpinball/pinmame", profile["sources"][-1]["uri"])
+
+	def test_controller_notes_format_requires_notes(self) -> None:
+		profile = copy.deepcopy(load_json(ROOT / "controllers" / "pinmame" / "capcom.json"))
+		group = profile["groups"][0]
+		group.pop("notes")
+		group["notes_format"] = "markdown"
+		errors = validate_against_schema(profile, ROOT / "schemas" / "controller.schema.json", "controller-notes-format")
+		self.assertTrue(any("notes" in error for error in errors), errors)
+
+	def test_controller_markdown_notes_follow_the_rendering_contract(self) -> None:
+		profiles = [load_json(path) for path in sorted((ROOT / "controllers" / "pinmame").glob("*.json"))]
+		groups = [group for profile in profiles for group in profile["groups"]]
+		self.assertEqual(11, len(profiles))
+		self.assertEqual(34, sum(group.get("notes_format") == "markdown" for group in groups))
+		self.assertEqual(9, sum("notes" in group and "notes_format" not in group for group in groups))
+		self.assertEqual(9, sum("notes" not in group for group in groups))
+		for group in groups:
+			if group.get("notes_format") != "markdown":
+				continue
+			notes = group["notes"]
+			with self.subTest(group=group["id"]):
+				self.assertNotRegex(notes, r"<[A-Za-z][^>]*>")
+				headings = re.findall(r"(?m)^(#{1,6})\s+", notes)
+				self.assertTrue(all(len(heading) >= 4 for heading in headings), notes)
+				self.assertRegex(notes, r"(?m)(^####\s|^\|.+\|$|^[-*]\s|\*\*.+?\*\*|`[^`]+`)")
+
+	def test_capcom_flasher_ranges_match_pinned_source(self) -> None:
+		profile = load_json(ROOT / "controllers" / "pinmame" / "capcom.json")
+		notes = next(group["notes"] for group in profile["groups"] if group["id"] == "pinmame.output.solenoid")
+		for table_row in (
+			"| `abv` | Airborne | `20-27` |",
+			"| `bbb` | Big Bang Bar | `21-26` |",
+			"| `bsv` | Breakshot | `28-32` |",
+			"| `ffv` | Flipper Football | `28-32` |",
+			"| `kpb` | Kingpin | `18-19`, `21-31` |",
+			"| `pmv` | Pinball Magic | `21-31` |",
+		):
+			self.assertIn(table_row, notes)
+		self.assertIn("alternative plunger range at `27-31`", notes)
+		self.assertIn("Kingpin's two ranges are explicitly provisional", notes)
+
+	def test_capcom_breakshot_switch_exception_is_documented(self) -> None:
+		profile = load_json(ROOT / "controllers" / "pinmame" / "capcom.json")
+		notes = next(group["notes"] for group in profile["groups"] if group["id"] == "pinmame.input.switch")
+		self.assertIn("When `HAS_SWITCH_BOARD` is true", notes)
+		self.assertIn("`src/wpc/capcom.h`", notes)
+		self.assertNotIn("capcoms.h", notes)
+		self.assertIn("internal switch column 0 (`src/wpc/capcom.h`)", notes)
+		self.assertNotIn("also calls this 'switch column 9'", notes)
+		self.assertIn("low nibble (bits 0-3)", notes)
+		self.assertIn("public addresses 29-32", notes)
+		self.assertIn("lamp-column-strobed switch matrix", notes)
 
 
 if __name__ == "__main__":

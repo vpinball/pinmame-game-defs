@@ -145,6 +145,8 @@ The workflow sets `PINMAME_DEFS_ROOT` to the repo root, `NUXT_APP_BASE_URL` to `
 
 Both directories are generated and git-ignored.
 
+Controller-profile `notes` are escaped and rendered as literal text by default. A group with `notes_format: "markdown"` is parsed as GitHub Flavored Markdown at build time and emitted as `notesHtml`; raw HTML tokens are escaped, unsafe link/image URL schemes are reduced to text, and heading levels are constrained to H4 or deeper beneath the platform group's H3. This opt-in avoids reinterpreting legacy formulas such as `col*10`, while allowing reviewed long notes to use sections, lists, tables, emphasis, and inline code. The Vue app never parses Markdown at runtime.
+
 Catalog stubs — machines PinMAME supports but nobody has described yet — still get a prerendered
 page. A deep link from an authoring tool must always land somewhere that explains the state of the
 definition rather than 404.

@@ -223,15 +223,11 @@ const hasLongNotes = (notes: string | undefined) => (notes?.length ?? 0) > 240
 							<Icon name="lucide:chevron-down" class="size-4 shrink-0 text-ink-4 transition-transform group-open:rotate-180" />
 						</summary>
 						<div class="border-t border-line bg-raised/25 px-5 py-4">
-							<p class="max-w-3xl whitespace-pre-line text-[13px] leading-6 text-ink-2">
-								{{ group.notes }}
-							</p>
+							<div class="knowledge controller-note max-w-3xl text-[13px] leading-6 text-ink-2" v-html="group.notesHtml" />
 						</div>
 					</details>
 
-					<p v-else-if="group.notes" class="border-t border-line px-5 py-3 text-[13px] leading-relaxed text-ink-2">
-						{{ group.notes }}
-					</p>
+					<div v-else-if="group.notes" class="knowledge controller-note border-t border-line px-5 py-3 text-[13px] leading-relaxed text-ink-2" v-html="group.notesHtml" />
 				</article>
 			</section>
 

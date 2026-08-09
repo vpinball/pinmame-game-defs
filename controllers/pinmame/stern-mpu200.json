@@ -20,7 +20,8 @@
         "libpinmame": { "channel": "switch" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "Public switches 1-40 are the five-column by eight-return matrix. Self-test, CPU diagnostic, and sound diagnostic are -7 through -5. VPinMAME exposes the four generic flipper-button positions at 81-84; Ali uses lower-right 82 and lower-left 84."
+      "notes": "#### Public input ranges\n\n| Inputs | Public addresses |\n| --- | --- |\n| Five-column by eight-return matrix | `1-40` |\n| Self-test, CPU diagnostic, and sound diagnostic | `-7` through `-5` |\n| Generic VPinMAME flipper-button positions | `81-84` |\n\nAli uses lower-right `82` and lower-left `84`.",
+      "notes_format": "markdown"
     },
     {
       "id": "physical.input.direct",
@@ -29,7 +30,8 @@
       "label": "Hard-wired physical contacts outside the MPU input API",
       "address_rules": [{ "values": [1, 2] }],
       "transports": {},
-      "notes": "Addresses 1 and 2 are profile-local identities for left and right flipper end-of-stroke contacts. These contacts switch the dual-winding flipper circuits directly and are not PinMAME switch addresses."
+      "notes": "#### Profile-local identities\n\n| Address | Contact |\n| --- | --- |\n| `1` | Left flipper end-of-stroke |\n| `2` | Right flipper end-of-stroke |\n\nThese contacts switch the dual-winding flipper circuits directly and are not PinMAME switch addresses.",
+      "notes_format": "markdown"
     },
     {
       "id": "pinmame.input.dip",
@@ -53,7 +55,8 @@
         "libpinmame": { "channel": "solenoid" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "The decoder exposes public outputs 1-15; value 16 is an unaddressable decoder slot. PinMAME exposes the four continuous outputs at 17-20. Generic VPinMAME flipper callbacks expose lower-right at 46 and lower-left at 48. Physical service-diagnostic numbering is game wiring and remains a machine-level alias."
+      "notes": "#### Public outputs\n\n| Outputs | Public addresses |\n| --- | --- |\n| Decoder | `1-15` |\n| Continuous | `17-20` |\n| Generic VPinMAME lower-right flipper callback | `46` |\n| Generic VPinMAME lower-left flipper callback | `48` |\n\nValue `16` is an unaddressable decoder slot.\n\n**Service diagnostics:** Physical service-diagnostic numbering is game wiring and remains a machine-level alias.",
+      "notes_format": "markdown"
     },
     {
       "id": "pinmame.output.lamp",
@@ -70,7 +73,8 @@
         "libpinmame": { "channel": "lamp" },
 		"controller_plugin": { "group_id": 512, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "The LDA-100 has sixty discrete SCR outputs, not a lamp matrix. PinMAME's four groups contain public values 1-15, 17-31, 33-47, and 49-63; 16, 32, 48, and 64 are unaddressable decoder slots."
+      "notes": "The `LDA-100` has sixty discrete SCR outputs, not a lamp matrix.\n\n| Group | Public values |\n| --- | --- |\n| 1 | `1-15` |\n| 2 | `17-31` |\n| 3 | `33-47` |\n| 4 | `49-63` |\n\nAddresses `16`, `32`, `48`, and `64` are unaddressable decoder slots.",
+      "notes_format": "markdown"
     }
   ],
   "sources": [

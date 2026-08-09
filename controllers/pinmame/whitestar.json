@@ -20,7 +20,8 @@
         "libpinmame": { "channel": "switch" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "Whitestar uses PinMAME's sequential switch conversion. Public 1-64 are the eight-by-eight playfield/cabinet matrix. Public -3 is coin-door memory protect, -2/-1/0 are the red/green/black coin-door service buttons, 81-84 are right EOS/right button/left EOS/left button, and 88 supplies the fifth dedicated input used by games with an upper flipper. Addresses 85-87 are explicit generic flipper-column holes. The platform leaves the per-game invSw mask zero, so physical normally-closed/opto construction remains a per-game evidence question; inversion_applied_by_emulator only states that consumers must not re-invert the public API state."
+      "notes": "#### Public input ranges\n\nWhitestar uses PinMAME's sequential switch conversion.\n\n| Inputs | Public addresses |\n| --- | --- |\n| Eight-by-eight playfield/cabinet matrix | `1-64` |\n| Coin-door memory protect | `-3` |\n| Red/green/black coin-door service buttons | `-2` / `-1` / `0` |\n| Right EOS / right button / left EOS / left button | `81-84` |\n| Fifth dedicated input for games with an upper flipper | `88` |\n\nAddresses `85-87` are explicit generic flipper-column holes.\n\n#### Polarity\n\nThe platform leaves the per-game `invSw` mask zero, so physical normally-closed/opto construction remains a per-game evidence question. `inversion_applied_by_emulator` only states that consumers must not re-invert the public API state.",
+      "notes_format": "markdown"
     },
     {
       "id": "pinmame.input.dip",
@@ -29,7 +30,8 @@
       "label": "CPU-board country configuration bits",
       "address_rules": [{ "minimum": 1, "maximum": 8 }],
       "transports": { "libpinmame": { "channel": "dip" } },
-      "notes": "The physical SW300 country selector consumes the low five bits. The eight-address LibPinMAME DIP contract is retained so definitions can enumerate the complete public bank and mark bits 6-8 unused."
+      "notes": "#### Country selector\n\nThe physical `SW300` country selector consumes the low five bits.\n\nThe eight-address LibPinMAME DIP contract is retained so definitions can enumerate the complete public bank and mark bits `6-8` unused.",
+      "notes_format": "markdown"
     },
     {
       "id": "pinmame.output.solenoid",
@@ -41,7 +43,8 @@
         "libpinmame": { "channel": "solenoid" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "Physical main-board Q1-Q14 and Q17-Q32 retain their public numbers. Physical Q15/Q16 are removed from public 15/16 and exposed through legacy lower-flipper pairs: Q16 right at power-phase address 45 and canonical callback 46, Q15 left at power-phase address 47 and canonical callback 48. PinMAME synthesizes each canonical callback's hold state whenever its power bit is active, so a recreation must not create duplicate flipper devices. Public 15 is PinMAME's synthetic fast-flip/game-on state and public 16 is its unused companion slot. Whitestar auxiliary boards use 33-36; board 520-5068-01 exposes three outputs at 33-35 and leaves 36 unused. Addresses 37-44 are reserved compatibility holes, 49 is the simulation shooter slot, and 50 is reserved."
+      "notes": "#### Main and flipper outputs\n\nPhysical main-board `Q1-Q14` and `Q17-Q32` retain their public numbers. Physical `Q15`/`Q16` are removed from public `15`/`16` and exposed through legacy lower-flipper pairs:\n\n| Physical output | Side | Power-phase address | Canonical callback |\n| --- | --- | --- | --- |\n| `Q16` | Right | `45` | `46` |\n| `Q15` | Left | `47` | `48` |\n\nPinMAME synthesizes each canonical callback's hold state whenever its power bit is active, so a recreation must not create duplicate flipper devices.\n\n#### Synthetic and auxiliary outputs\n\n- Public `15` is PinMAME's synthetic fast-flip/game-on state, and public `16` is its unused companion slot.\n- Whitestar auxiliary boards use `33-36`. Board `520-5068-01` exposes three outputs at `33-35` and leaves `36` unused.\n- Addresses `37-44` are reserved compatibility holes, `49` is the simulation shooter slot, and `50` is reserved.",
+      "notes_format": "markdown"
     },
     {
       "id": "pinmame.output.lamp",
@@ -53,7 +56,8 @@
         "libpinmame": { "channel": "lamp" },
         "controller_plugin": { "group_id": 512, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "Whitestar reports the eight-by-ten controlled-lamp matrix as sequential public addresses 1-80, with addresses ordered across the eight columns before advancing to the next return row. PinMAME sizes this shared transport to 64 + (lampCol * 8); src/wpc/bowlgames.c declares lampCol=34 in coinGameData, shared by the titanic and monopred coin-dropper drivers, hence the platform profile ceiling of 336. A machine definition must enumerate only addresses its own hardware declaration and game-specific driver writes establish; the profile ceiling never creates physical devices."
+      "notes": "#### Controlled-lamp matrix\n\nWhitestar reports the eight-by-ten controlled-lamp matrix as sequential public addresses `1-80`, with addresses ordered across the eight columns before advancing to the next return row.\n\n#### Shared transport ceiling\n\nPinMAME sizes this shared transport to `64 + (lampCol * 8)`. `src/wpc/bowlgames.c` declares `lampCol=34` in `coinGameData`, shared by the `titanic` and `monopred` coin-dropper drivers, hence the platform profile ceiling of `336`.\n\nA machine definition must enumerate only addresses its own hardware declaration and game-specific driver writes establish; the profile ceiling never creates physical devices.",
+      "notes_format": "markdown"
     },
     {
       "id": "pinmame.output.gi",

@@ -8,6 +8,7 @@ Evidence follows a simple precedence rule: a known-working table script governs 
 
 - `machines/` contains canonical definitions classified as `stub`, `partial`, or `author_ready`.
 - `catalog/` maps every in-scope PinMAME driver to one physical-machine definition.
+- `controllers/` defines shared platform address ranges, routing, normalization, and optional reviewed Markdown technical notes.
 - `knowledge/` documents mechanisms, ball paths, edition differences, and recreation guidance.
 - `evidence/` and `reports/` retain reproducible extraction and validation results.
 - `schemas/`, `src/`, and `tools/` contain the format, validators, generators, and extraction utilities.

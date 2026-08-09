@@ -287,6 +287,8 @@ export interface ControllerGroup {
 	address_rules?: { minimum?: number, maximum?: number, values?: number[] }[]
 	transports?: Record<string, Record<string, unknown>>
 	notes?: string
+	notes_format?: 'plain_text' | 'markdown'
+	notesHtml?: string | null
 }
 
 export interface PlatformEntry {

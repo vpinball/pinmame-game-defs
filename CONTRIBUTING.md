@@ -64,6 +64,8 @@ are fine — the consuming engine owns the mapping.
 PinMAME already reports logical active state; never invert again. `normally_closed` describes the
 real part and stays a physical fact.
 
+**Controller notes are plain text unless they opt into Markdown.** Keep a short note literal. When a long controller-profile note benefits from sections, lists, tables, emphasis, or inline code, rewrite it as reviewed GitHub Flavored Markdown and set `notes_format` to `markdown`; start headings at level 4 because the surrounding platform group is already level 3. Do not merely add the flag to existing prose: expressions such as `col*10` can acquire unintended Markdown meaning. Preserve every technical claim, do not embed raw HTML or unsafe link/image URL schemes, and check the rendered platform page before submitting.
+
 ## Making a small correction
 
 1. Open the machine on the reference site and click **Edit the definition** (or **Edit the note**).

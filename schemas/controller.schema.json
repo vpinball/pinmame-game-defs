@@ -50,6 +50,7 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["id", "direction", "kind", "label", "address_rules", "transports"],
+      "dependentRequired": { "notes_format": ["notes"] },
       "properties": {
         "id": { "type": "string", "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$" },
         "direction": { "enum": ["input", "controlled_device", "configuration"] },
@@ -77,7 +78,8 @@
             }
           }
         },
-        "notes": { "type": "string", "minLength": 1 }
+        "notes": { "description": "Technical behavior and exceptions for this controller group. Content is plain text unless notes_format explicitly selects Markdown.", "type": "string", "minLength": 1 },
+        "notes_format": { "description": "How notes is rendered by catalog consumers. Omit this field or use plain_text for literal prose. Use markdown only for reviewed GitHub Flavored Markdown, start nested headings at level 4, and do not embed raw HTML; consumers must escape raw HTML, reject unsafe link and image URL schemes, and keep headings at level 4 or deeper.", "enum": ["plain_text", "markdown"], "default": "plain_text" }
       }
     }
   }

@@ -19,7 +19,8 @@
         "libpinmame": { "channel": "switch" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "SAM uses sequential public switch numbering. Matrix switches are 1-64; dedicated D1-D8 are 65-72; D17-D24 are -7 through 0; flipper D9-D16 are exposed in PinMAME's flipper column as 81-88 with right/left and EOS ordering. The platform leaves the per-game invSw mask zero, so physical normally-closed/opto construction remains a per-game evidence question; inversion_applied_by_emulator only states that consumers must not re-invert the public API state."
+      "notes": "#### Public input ranges\n\nSAM uses sequential public switch numbering.\n\n| Hardware inputs | Public addresses |\n| --- | --- |\n| Matrix switches | `1-64` |\n| Dedicated `D1-D8` | `65-72` |\n| Dedicated `D17-D24` | `-7` through `0` |\n| Flipper `D9-D16` | `81-88`, in PinMAME's flipper column with right/left and EOS ordering |\n\n#### Polarity\n\nThe platform leaves the per-game `invSw` mask zero, so physical normally-closed/opto construction remains a per-game evidence question. `inversion_applied_by_emulator` only states that consumers must not re-invert the public API state.",
+      "notes_format": "markdown"
     },
 	{
 	  "id": "pinmame.input.dip",
@@ -36,7 +37,8 @@
 	  "label": "Optional ticket-dispenser service functions",
 	  "address_rules": [{ "minimum": 33, "maximum": 35 }],
 	  "transports": {},
-	  "notes": "Physical service-diagnostic identities for optional ticket hardware. They are deliberately not LibPinMAME solenoid addresses: SAM public solenoid 33 is PinMAME's synthetic game-on state, and the stable API does not expose these cabinet functions."
+	  "notes": "**Physical service-diagnostic identities** for optional ticket hardware.\n\nThey are deliberately not LibPinMAME solenoid addresses: SAM public solenoid `33` is PinMAME's synthetic game-on state, and the stable API does not expose these cabinet functions.",
+	  "notes_format": "markdown"
 	},
 	{
       "id": "pinmame.output.solenoid",
@@ -48,7 +50,8 @@
         "libpinmame": { "channel": "solenoid" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-	  "notes": "SAM main-driver and game-specific auxiliary outputs share PinMAME's public solenoid address space. Addresses 1-32 are the base driver outputs; address 33 is PinMAME's synthetic game-on/fast-flip state and is never a physical transistor. The platform macro publishes the full custom range 51-66 for every SAM game; gameSpecific1 selects which auxiliary write path, if any, can drive those addresses, so each machine must mark inactive public holes unused."
+	  "notes": "#### Shared address space\n\nSAM main-driver and game-specific auxiliary outputs share PinMAME's public solenoid address space.\n\n| Addresses | Meaning |\n| --- | --- |\n| `1-32` | Base driver outputs |\n| `33` | PinMAME's synthetic game-on/fast-flip state; never a physical transistor |\n| `51-66` | Full custom range published by the platform macro for every SAM game |\n\n#### Auxiliary write paths\n\n`gameSpecific1` selects which auxiliary write path, if any, can drive `51-66`. Each machine must therefore mark inactive public holes unused.",
+	  "notes_format": "markdown"
     },
     {
       "id": "pinmame.output.lamp",
@@ -60,7 +63,8 @@
         "libpinmame": { "channel": "lamp" },
         "controller_plugin": { "group_id": 512, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "The 1-80 range is the conventional matrix. SAM node-board games expose additional LED channels through backward-compatible ChangedLamps addresses. Star Trek configures four node boards and reaches public address 339; the deliberate compatibility gaps at 145, 210, and 275 are not device addresses."
+      "notes": "**Conventional matrix:** `1-80`.\n\nSAM node-board games expose additional LED channels through backward-compatible `ChangedLamps` addresses. Star Trek configures four node boards and reaches public address `339`; the deliberate compatibility gaps at `145`, `210`, and `275` are not device addresses.",
+      "notes_format": "markdown"
     },
     {
       "id": "pinmame.output.gi",

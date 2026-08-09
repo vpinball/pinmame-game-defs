@@ -27,7 +27,8 @@
         "libpinmame": { "channel": "switch" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "Addresses 1-8 are the four coin inputs and four coin-door service buttons. Public matrix addresses use WPC column/row notation 11-88; values ending in 9 or 0 are not matrix positions. The generic flipper column is 111-118 in EOS/button pairs. Pre-Fliptronics games can map their physical EOS switches into the regular matrix while retaining generic cabinet-button inputs."
+      "notes": "#### Cabinet inputs\n\nAddresses `1-8` are the four coin inputs and four coin-door service buttons.\n\n#### Matrix inputs\n\nPublic matrix addresses use WPC column/row notation `11-88`; values ending in `9` or `0` are not matrix positions.\n\n#### Generic flipper inputs\n\nThe generic flipper column is `111-118` in EOS/button pairs. Pre-Fliptronics games can map their physical EOS switches into the regular matrix while retaining generic cabinet-button inputs.",
+      "notes_format": "markdown"
     },
     {
       "id": "pinmame.input.dip",
@@ -47,7 +48,8 @@
         "libpinmame": { "channel": "solenoid" },
         "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "WPC exposes standard drivers 1-28, J111 state outputs 29-30, and public address 31 as the real pre-Fliptronic Game-On solenoid controlled by WPC_GILAMPS bit 7 through the power-driver relay chain to the cabinet switch and flippers. Address 32 is constant zero. Generic flipper callbacks include upper-right 34, upper-left 36, lower-right 46, and lower-left 48, with explicit unused positions through the first custom-output boundary at 50."
+      "notes": "#### Address map\n\n| Public addresses | Behavior |\n| --- | --- |\n| `1-28` | Standard drivers. |\n| `29-30` | J111 state outputs. |\n| `31` | The real pre-Fliptronic Game-On solenoid, controlled by `WPC_GILAMPS` bit `7` through the power-driver relay chain to the cabinet switch and flippers. |\n| `32` | Constant zero. |\n| `34`, `36`, `46`, `48` | Generic flipper callbacks: upper-right, upper-left, lower-right, and lower-left, respectively. |\n\nExplicit unused positions continue through the first custom-output boundary at `50`.",
+      "notes_format": "markdown"
     },
     {
       "id": "pinmame.output.lamp",
