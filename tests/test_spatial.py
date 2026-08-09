@@ -344,8 +344,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
 		self.assertEqual(787, report["machine_count"])
 		self.assertEqual(24, report["author_ready_count"])
-		self.assertEqual(90, report["partial_count"])
-		self.assertEqual(673, report["stub_count"])
+		self.assertEqual(91, report["partial_count"])
+		self.assertEqual(672, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
 		self.assertEqual(788, report["catalog_record_count"])
 		# The thirteen retrofit-pending machines above (which already include X-Men Pro), plus
@@ -404,14 +404,16 @@ class SpatialMigrationTests(unittest.TestCase):
 		# partial/stub/author-ready totals are unchanged by it. Every one of its 64 lamp addresses
 		# resolved, but exactly one recreation was retained, so the placements are observed rather
 		# than validated and the dimension stays incomplete.
-		self.assertEqual(39, report["missing_requirement_counts"]["spatial_placement"])
-		self.assertEqual(28, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Playboy 35th Anniversary replaces one residual stub with one partial definition, so it
+		# moves only the partial/stub totals and leaves the physical-machine total unchanged.
+		self.assertEqual(40, report["missing_requirement_counts"]["spatial_placement"])
+		self.assertEqual(29, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(787, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])
 		self.assertEqual(24, catalog["summary"]["author_ready_count"])
-		self.assertEqual(673, catalog["summary"]["stub_count"])
-		self.assertEqual(91, catalog["summary"]["partial_count"])
+		self.assertEqual(672, catalog["summary"]["stub_count"])
+		self.assertEqual(92, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(13, len(note_paths))
