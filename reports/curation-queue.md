@@ -247,8 +247,8 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 241 | 1989 | STUB - Elvira and the Party Monsters (LA-4) | Bally | stub |
 | 242 | 1989 | STUB - Mousin' Around! (LA-4) | Bally | stub |
 | 243 | 1989 | Transporter the Rescue | Bally | partial |
-| 244 | 1989 | STUB - Monday Night Football (2.9, 50cts) | Data East | stub |
-| 245 | 1989 | STUB - Playboy 35th Anniversary (2.4) | Data East | stub |
+| 244 | 1989 | Playboy 35th Anniversary | Data East | partial |
+| 245 | 1989 | STUB - Monday Night Football (2.9, 50cts) | Data East | stub |
 | 246 | 1989 | STUB - Robocop (3.4) | Data East | stub |
 | 247 | 1989 | STUB - Big House | Gottlieb | stub |
 | 248 | 1989 | STUB - Bone Busters Inc. | Gottlieb | stub |

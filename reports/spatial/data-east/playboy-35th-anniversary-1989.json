@@ -1,0 +1,951 @@
+{
+  "blockers": [
+    {
+      "devices": [
+        "pinmame.dataeast"
+      ],
+      "dimension": "controller_platform",
+      "reason": "Data East uses a System 11-derived emulator implementation, but its board family and diagnostics are not represented by the Williams-only pinmame.system-11 profile.",
+      "would_resolve": "A reviewed Data East controller profile derived from the pinned core and original board documentation."
+    },
+    {
+      "devices": [
+        "coil.driver-4",
+        "coil.driver-5",
+        "coil.driver-13",
+        "coil.driver-14",
+        "coil.driver-15",
+        "coil.driver-19",
+        "coil.driver-25",
+        "coil.driver-26",
+        "coil.driver-27",
+        "coil.driver-28",
+        "coil.driver-29",
+        "coil.driver-30",
+        "coil.driver-31",
+        "coil.driver-32"
+      ],
+      "dimension": "output_semantics",
+      "reason": "Callback aliases/comments disagree with printed groups, one public special-solenoid state is also a background proxy, core PWM typing disagrees with the physical C-bank fitment, and unfitted address 31 lacks a decoded-state trace.",
+      "would_resolve": "Original-machine lamp/coil-test video synchronized with public output traces and a harness endpoint survey."
+    },
+    {
+      "devices": [
+        "mechanism.grotto-kicker",
+        "mechanism.left-slingshot",
+        "mechanism.right-slingshot",
+        "mechanism.left-pop",
+        "mechanism.center-pop",
+        "mechanism.right-pop"
+      ],
+      "dimension": "mechanism_behavior",
+      "reason": "Script establishes event edges but not the hidden Grotto transfer geometry or hardware-triggered special-coil pulse behavior.",
+      "would_resolve": "Original-machine captures of the Grotto ball path and each special-solenoid switch/coil waveform."
+    },
+    {
+      "devices": [
+        "switch.matrix-15",
+        "switch.matrix-16",
+        "coil.driver-10",
+        "coil.driver-45",
+        "coil.driver-46",
+        "coil.driver-47",
+        "coil.driver-48"
+      ],
+      "dimension": "polarity",
+      "reason": "The core publishes cabinet buttons at manual EOS addresses and decoded mux states, but no at-rest/end-of-stroke or relay electrical trace proves physical polarity.",
+      "would_resolve": "Bench capture of cabinet button, EOS, K1 relay, raw A/C driver and public output states."
+    },
+    {
+      "devices": [
+        "lamp.matrix-1",
+        "lamp.matrix-2",
+        "lamp.matrix-3",
+        "lamp.matrix-4",
+        "lamp.matrix-5",
+        "lamp.matrix-6",
+        "lamp.matrix-7",
+        "lamp.matrix-8",
+        "lamp.matrix-9",
+        "lamp.matrix-10",
+        "lamp.matrix-11",
+        "lamp.matrix-12",
+        "lamp.matrix-13",
+        "lamp.matrix-14",
+        "lamp.matrix-15",
+        "lamp.matrix-16",
+        "lamp.matrix-17",
+        "lamp.matrix-18",
+        "lamp.matrix-19",
+        "lamp.matrix-20",
+        "lamp.matrix-21",
+        "lamp.matrix-22",
+        "lamp.matrix-23",
+        "lamp.matrix-24",
+        "lamp.matrix-25",
+        "lamp.matrix-26",
+        "lamp.matrix-27",
+        "lamp.matrix-28",
+        "lamp.matrix-29",
+        "lamp.matrix-30",
+        "lamp.matrix-31",
+        "lamp.matrix-32",
+        "lamp.matrix-33",
+        "lamp.matrix-34",
+        "lamp.matrix-35",
+        "lamp.matrix-36",
+        "lamp.matrix-37",
+        "lamp.matrix-38",
+        "lamp.matrix-39",
+        "lamp.matrix-40",
+        "lamp.matrix-41",
+        "lamp.matrix-42",
+        "lamp.matrix-43",
+        "lamp.matrix-44",
+        "lamp.matrix-45",
+        "lamp.matrix-46",
+        "lamp.matrix-47",
+        "lamp.matrix-48",
+        "lamp.matrix-49",
+        "lamp.matrix-50",
+        "lamp.matrix-51",
+        "lamp.matrix-52",
+        "lamp.matrix-53",
+        "lamp.matrix-54",
+        "lamp.matrix-55",
+        "lamp.matrix-56",
+        "lamp.matrix-57",
+        "lamp.matrix-58",
+        "lamp.matrix-59",
+        "lamp.matrix-60",
+        "lamp.matrix-61",
+        "lamp.matrix-62",
+        "lamp.matrix-63",
+        "lamp.matrix-64",
+        "coil.driver-1",
+        "coil.driver-2",
+        "coil.driver-3",
+        "coil.driver-4",
+        "coil.driver-5",
+        "coil.driver-6",
+        "coil.driver-7",
+        "coil.driver-8",
+        "coil.driver-9",
+        "coil.driver-11",
+        "coil.driver-13",
+        "coil.driver-14",
+        "coil.driver-15",
+        "coil.driver-16",
+        "coil.driver-17",
+        "coil.driver-18",
+        "coil.driver-19",
+        "coil.driver-21",
+        "coil.driver-22",
+        "coil.driver-25",
+        "coil.driver-26",
+        "coil.driver-27",
+        "coil.driver-28",
+        "coil.driver-29",
+        "coil.driver-30"
+      ],
+      "dimension": "spatial_placement",
+      "reason": "Lamp and mechanism coordinates remain retained-table candidates; the manual supplies broad flash groups and backbox/playfield splits but not registered socket centers, and seven routed PINBALL lamps have no physical location in its drawing. Output 12 is classified as backbox-only and needs no playfield coordinate.",
+      "would_resolve": "A dimensionally registered original playfield/backbox survey or address-by-address photographs correlated with lamp, coil, and mechanism tests."
+    },
+    {
+      "devices": [
+        "conflict.shared-port-position-2-vs-unfitted",
+        "conflict.left-eos-vs-public-button-state",
+        "conflict.right-eos-vs-public-button-state",
+        "conflict.shooter-laser-switch-part-numbers",
+        "conflict.outputs-4-and-5-share-pseudo-lamp-105",
+        "conflict.outputs-13-through-15-script-comments-vs-manual",
+        "conflict.muxed-c-bank-core-bulb-type-vs-manual-coils",
+        "conflict.drop-reset-coil-type-print",
+        "conflict.special-solenoid-19-vs-background-proxy",
+        "conflict.flash-location-drawing-vs-playfield-proxies"
+      ],
+      "dimension": "unresolved_conflicts",
+      "reason": "Ten machine-specific source disagreements remain first-class and promotion-critical.",
+      "would_resolve": "Independent original-machine observations or corrected authoritative sources that explicitly settle each recorded conflict."
+    }
+  ],
+  "conflicts": [
+    "conflict.shared-port-position-2-vs-unfitted",
+    "conflict.left-eos-vs-public-button-state",
+    "conflict.right-eos-vs-public-button-state",
+    "conflict.shooter-laser-switch-part-numbers",
+    "conflict.outputs-4-and-5-share-pseudo-lamp-105",
+    "conflict.outputs-13-through-15-script-comments-vs-manual",
+    "conflict.muxed-c-bank-core-bulb-type-vs-manual-coils",
+    "conflict.drop-reset-coil-type-print",
+    "conflict.special-solenoid-19-vs-background-proxy",
+    "conflict.flash-location-drawing-vs-playfield-proxies"
+  ],
+  "coordinate_system": {
+    "normalization": "x=(raw_x-left)/(right-left); y=(raw_y-top)/(bottom-top)",
+    "raw_bounds": {
+      "bottom": 1974.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "0 left, 1 right",
+    "y": "0 rear/backglass, 1 front/apron"
+  },
+  "evidence": {
+    "extraction_manifest_algorithm": "SHA-256 of the UTF-8 JSON object after removing manifest_sha256 and serializing with sorted keys, compact separators, and ensure_ascii=False.",
+    "extraction_manifest_sha256": "408ba0ec4e18187f0f86c1970c33cc31b93af53df24ad83f2eeea599822bb672",
+    "manual_sha256": "0c4be366c30942919b7101c69acfb6563ac8bc6cd5aaaac0bad24ae5b9b1afa7",
+    "script_sha256": "83e632d397afbec660ea356b1820aadbd648d0a90d4affdce5bfc4e864bb0da5",
+    "table_sha256": "3b32aeacee1c5beb1c723e6e1bba79ae269deb36cc56101201b5d171a7a8336b"
+  },
+  "excluded_helpers": {
+    "gi-and-flash-proxies": "The 47 aGiLights entries and grouped flasher objects are visual effects, not surveys of physical bulb sockets.",
+    "laser-helper": "The off-bounds sw17 helper and unbound visible sw17a are excluded. Kicker001_Hit explicitly publishes switch 17 from an in-bounds kickback object, whose center is retained at candidate strength.",
+    "numeric-light-gap": "The nine absent numeric Light names are 26, 32 and 57-63. Each address is explicitly routed to a same-number Flasher proxy and the manual places it in its separate backbox/back-panel box; none is a missing controller output.",
+    "pinball-backglass-row": "Same-number Light objects 41, 49, 53-56 and 64 are executable consumers and are flagged is_backglass=true, but the manual location drawing does not show those seven addresses in either its backbox box or playfield plan. Their presentation-row centers are withheld because no physical source establishes the socket plane.",
+    "synthetic-flipper-states": "Public outputs 45-48 are PinMAME-generated winding states mapped to two physical flipper assemblies. They are virtual addresses with no independent quantity or placement."
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "data-east.playboy-35th-anniversary.1989",
+  "method": [
+    "Asserted both exact gamedata.json bounds (0,0)-(952,1974) before normalization; neither dimension permits borrowing geometry from another machine.",
+    "Read every decisive switch-, lamp-, and coil-table cell from rendered manual pages. Text extraction and OCR were only location and second-reading aids.",
+    "Established runtime visual consumption only from executable SetLamp callbacks and UpdateLamps routing after whole-line VBScript comments were removed.",
+    "Treated numeric object names as candidates. Explicit routing establishes a consumer binding, but object centers remain candidate physical placements unless an executable sensor supplies observed geometry.",
+    "Used script for causal topology and rendered manual construction pages for assemblies. A printed feature label alone never created a mechanism edge.",
+    "Used the printed-page-26 coil/flash plan and separate backbox inset for physical-plane classification and broad feature locations. Repeated group callouts, unresolved small inset digits, and the unregistered drawing frame do not provide normalized socket centers; disagreements with retained playfield effect objects remain explicit."
+  ],
+  "projection_classes": [
+    {
+      "class": "setlamp-coordinate-candidate",
+      "devices": [
+        "lamp.matrix-1",
+        "lamp.matrix-2",
+        "lamp.matrix-3",
+        "lamp.matrix-4",
+        "lamp.matrix-5",
+        "lamp.matrix-6",
+        "lamp.matrix-7",
+        "lamp.matrix-8",
+        "lamp.matrix-9",
+        "lamp.matrix-10",
+        "lamp.matrix-11",
+        "lamp.matrix-12",
+        "lamp.matrix-13",
+        "lamp.matrix-14",
+        "lamp.matrix-15",
+        "lamp.matrix-16",
+        "lamp.matrix-17",
+        "lamp.matrix-18",
+        "lamp.matrix-19",
+        "lamp.matrix-20",
+        "lamp.matrix-21",
+        "lamp.matrix-22",
+        "lamp.matrix-23",
+        "lamp.matrix-24",
+        "lamp.matrix-25",
+        "lamp.matrix-27",
+        "lamp.matrix-28",
+        "lamp.matrix-29",
+        "lamp.matrix-30",
+        "lamp.matrix-31",
+        "lamp.matrix-33",
+        "lamp.matrix-34",
+        "lamp.matrix-35",
+        "lamp.matrix-36",
+        "lamp.matrix-37",
+        "lamp.matrix-38",
+        "lamp.matrix-39",
+        "lamp.matrix-40",
+        "lamp.matrix-42",
+        "lamp.matrix-43",
+        "lamp.matrix-44",
+        "lamp.matrix-45",
+        "lamp.matrix-46",
+        "lamp.matrix-47",
+        "lamp.matrix-48",
+        "lamp.matrix-50",
+        "lamp.matrix-51",
+        "lamp.matrix-52"
+      ],
+      "reason": "Executable same-number routing proves a visual consumer; numeric Light centers are not socket surveys.",
+      "status": "candidate"
+    },
+    {
+      "class": "mechanical-effect-object",
+      "devices": [
+        "coil.driver-16",
+        "coil.driver-17",
+        "coil.driver-18",
+        "coil.driver-19",
+        "coil.driver-21",
+        "coil.driver-22",
+        "coil.driver-25",
+        "coil.driver-26",
+        "coil.driver-27",
+        "coil.driver-28",
+        "coil.driver-29",
+        "coil.driver-30"
+      ],
+      "reason": "Direct events and sensor geometry expose playfield effect anchors rather than under-playfield coil centers.",
+      "status": "candidate"
+    }
+  ],
+  "promotion_decision": "Keep partial. The record enumerates every public address and resolves the major topology, but output annotations/typing, physical polarity, special-coil behavior, lamp socket placement, and ten preserved conflicts prevent author-ready promotion.",
+  "resolved": [
+    {
+      "id": "coil.driver-1",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-11",
+      "placements": 47,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-13",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-14",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-15",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-16",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-17",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-18",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-19",
+      "placements": 1,
+      "status": "conflicted"
+    },
+    {
+      "id": "coil.driver-2",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-21",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-22",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-25",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-26",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-27",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-28",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-29",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-3",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-30",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-4",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-5",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-6",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-7",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-8",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "coil.driver-9",
+      "placements": 4,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-1",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-10",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-11",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-12",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-13",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-14",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-15",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-16",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-17",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-18",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-19",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-2",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-20",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-21",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-22",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-23",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-24",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-25",
+      "placements": 2,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-27",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-28",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-29",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-3",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-30",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-31",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-33",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-34",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-35",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-36",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-37",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-38",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-39",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-4",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-40",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-42",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-43",
+      "placements": 2,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-44",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-45",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-46",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-47",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-48",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-5",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-50",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-51",
+      "placements": 2,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-52",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-6",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-7",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-8",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "lamp.matrix-9",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "switch.matrix-10",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-13",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-14",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-17",
+      "placements": 1,
+      "status": "candidate"
+    },
+    {
+      "id": "switch.matrix-18",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-19",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-20",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-21",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-22",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-23",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-24",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-25",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-26",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-27",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-28",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-29",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-30",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-31",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-32",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-33",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-34",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-35",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-36",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-37",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-38",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-39",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-41",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-42",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-43",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-45",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-46",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-47",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-48",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-49",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-50",
+      "placements": 1,
+      "status": "observed"
+    },
+    {
+      "id": "switch.matrix-51",
+      "placements": 1,
+      "status": "observed"
+    }
+  ],
+  "unresolved": [
+    {
+      "devices": [
+        "lamp.matrix-1",
+        "lamp.matrix-2",
+        "lamp.matrix-3",
+        "lamp.matrix-4",
+        "lamp.matrix-5",
+        "lamp.matrix-6",
+        "lamp.matrix-7",
+        "lamp.matrix-8",
+        "lamp.matrix-9",
+        "lamp.matrix-10",
+        "lamp.matrix-11",
+        "lamp.matrix-12",
+        "lamp.matrix-13",
+        "lamp.matrix-14",
+        "lamp.matrix-15",
+        "lamp.matrix-16",
+        "lamp.matrix-17",
+        "lamp.matrix-18",
+        "lamp.matrix-19",
+        "lamp.matrix-20",
+        "lamp.matrix-21",
+        "lamp.matrix-22",
+        "lamp.matrix-23",
+        "lamp.matrix-24",
+        "lamp.matrix-25",
+        "lamp.matrix-26",
+        "lamp.matrix-27",
+        "lamp.matrix-28",
+        "lamp.matrix-29",
+        "lamp.matrix-30",
+        "lamp.matrix-31",
+        "lamp.matrix-32",
+        "lamp.matrix-33",
+        "lamp.matrix-34",
+        "lamp.matrix-35",
+        "lamp.matrix-36",
+        "lamp.matrix-37",
+        "lamp.matrix-38",
+        "lamp.matrix-39",
+        "lamp.matrix-40",
+        "lamp.matrix-41",
+        "lamp.matrix-42",
+        "lamp.matrix-43",
+        "lamp.matrix-44",
+        "lamp.matrix-45",
+        "lamp.matrix-46",
+        "lamp.matrix-47",
+        "lamp.matrix-48",
+        "lamp.matrix-49",
+        "lamp.matrix-50",
+        "lamp.matrix-51",
+        "lamp.matrix-52",
+        "lamp.matrix-53",
+        "lamp.matrix-54",
+        "lamp.matrix-55",
+        "lamp.matrix-56",
+        "lamp.matrix-57",
+        "lamp.matrix-58",
+        "lamp.matrix-59",
+        "lamp.matrix-60",
+        "lamp.matrix-61",
+        "lamp.matrix-62",
+        "lamp.matrix-63",
+        "lamp.matrix-64"
+      ],
+      "dimension": "physical_socket_binding",
+      "reason": "Playfield lamp centers are table candidates, nine manual-located backbox lamps are deliberately unprojected, and seven PINBALL-letter sockets are not located by the manual despite having table presentation proxies."
+    },
+    {
+      "devices": [
+        "coil.driver-1",
+        "coil.driver-2",
+        "coil.driver-3",
+        "coil.driver-4",
+        "coil.driver-5",
+        "coil.driver-6",
+        "coil.driver-7",
+        "coil.driver-8",
+        "coil.driver-9",
+        "coil.driver-13",
+        "coil.driver-14",
+        "coil.driver-15"
+      ],
+      "dimension": "flasher_socket_binding",
+      "reason": "The manual plan and backbox inset establish broad groups and certain backbox membership, but grouped callouts and five unresolved small inset digits do not identify every socket or complete each plane split; retained effects are presentation-only. Output 12 is excluded because its four clearly assigned backbox symbols equal its complete four-bulb schematic quantity and no output-12 callout appears on the playfield plan."
+    },
+    {
+      "devices": [
+        "coil.driver-10",
+        "coil.driver-25",
+        "coil.driver-26",
+        "coil.driver-27",
+        "coil.driver-28",
+        "coil.driver-29",
+        "coil.driver-30",
+        "coil.driver-31",
+        "coil.driver-32"
+      ],
+      "dimension": "raw-mux-timing",
+      "reason": "Decoded public outputs are usable, but a board-level recreation would still need the exact one-IRQ PIA/K1 relationship and electrical polarity. Address 31 has no fitted physical device, but no trace proves its decoded public slot is constant-zero."
+    }
+  ],
+  "version": 1
+}
