@@ -34,7 +34,8 @@ Usage:
         --id excerpt.kiss.a5-connector-functions \\
         --locator "PDF page 52, LAMP DRIVER A5 connector block"
 
-``--box`` is left,top,right,bottom as fractions of the page, which keeps the call readable and
+``--rotate`` rotates the rendered page counter-clockwise before cropping. ``--box`` is
+left,top,right,bottom as fractions of that oriented page, which keeps the call readable and
 independent of the render resolution.
 """
 
@@ -57,11 +58,20 @@ MAX_BYTES = 100_000
 
 
 def find_pdftoppm() -> str:
-	for candidate in ("pdftoppm", r"C:\Tools\poppler-23.05.0\Library\bin\pdftoppm.exe"):
+	# Prefer a real executable over command-wrapper shims, which do not reliably preserve
+	# quoted Windows paths when invoked through subprocess without a shell. The explicit legacy
+	# path remains a fallback for contributors whose Poppler installation is not on PATH.
+	for candidate in ("pdftoppm.exe", "pdftoppm", r"C:\Tools\poppler-23.05.0\Library\bin\pdftoppm.exe"):
 		resolved = shutil.which(candidate) or (candidate if Path(candidate).is_file() else None)
-		if resolved:
+		if not resolved:
+			continue
+		try:
+			probe = subprocess.run([resolved, "-v"], check=False, capture_output=True, timeout=5)
+		except (OSError, subprocess.TimeoutExpired):
+			continue
+		if probe.returncode == 0:
 			return resolved
-	raise SystemExit("pdftoppm not found; install Poppler or put it on PATH")
+	raise SystemExit("no usable pdftoppm found; install Poppler or put a working executable on PATH")
 
 
 def sha256(path: Path) -> str:
@@ -77,6 +87,8 @@ def main() -> int:
 	parser.add_argument("--pdf", required=True, type=Path)
 	parser.add_argument("--page", required=True, type=int)
 	parser.add_argument("--box", required=True, help="left,top,right,bottom as page fractions")
+	parser.add_argument("--rotate", type=int, choices=(0, 90, 180, 270), default=0,
+	                    help="counter-clockwise page rotation before cropping")
 	parser.add_argument("--out", required=True, type=Path, help="repository-relative .webp path")
 	parser.add_argument("--id", required=True)
 	parser.add_argument("--locator", required=True)
@@ -111,6 +123,8 @@ def main() -> int:
 		# Copy out of the lazy file handle so the temporary directory can be removed on Windows.
 		with Image.open(rendered[0]) as handle:
 			page = handle.copy()
+	if args.rotate:
+		page = page.rotate(args.rotate, expand=True)
 
 	width, height = page.size
 	crop = page.crop((int(left * width), int(top * height), int(right * width), int(bottom * height)))
@@ -131,7 +145,9 @@ def main() -> int:
 		"image_sha256": sha256(out),
 		"image_derivation": (
 			f"{args.pdf.name} page {args.page}, crop box {args.box} of the page, rendered at "
-			f"{args.dpi} dpi with pdftoppm, reduced to {args.width}px wide "
+			f"{args.dpi} dpi with pdftoppm"
+			f"{f', rotated {args.rotate} degrees counter-clockwise' if args.rotate else ''}, "
+			f"reduced to {args.width}px wide "
 			f"{'colour' if args.color else 'grayscale'}, "
 			f"{'lossless' if args.lossless else f'quality {args.quality}'} WebP"
 		),
