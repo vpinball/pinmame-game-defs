@@ -17,8 +17,9 @@ MANIFEST_PATH = ROOT / "tools" / "seeds" / "data-east" / "secret-service-1988-ex
 REPORT_PATH = ROOT / "reports" / "spatial" / "data-east" / "secret-service-1988.json"
 REPORT_MARKDOWN_PATH = ROOT / "reports" / "spatial" / "data-east" / "secret-service-1988.md"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "data-east" / "secret-service-1988.md"
+INSTRUCTIONS_PATH = ROOT / "docs" / "INSTRUCTIONS.md"
 EXCERPT_ROOT = ROOT / "evidence" / "excerpts" / "data-east.secret-service.1988"
-CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "system-11.json"
+DATA_EAST_CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "data-east.json"
 OWN_DRIVERS = {"ssvc_a26", "ssvc_b26", "ssvc_e40", "ssvc_a42"}
 
 
@@ -88,7 +89,7 @@ class SecretServiceDefinitionTests(unittest.TestCase):
     def test_identity_generation_and_four_driver_tree(self) -> None:
         self.assertEqual("data-east.secret-service.1988", self.definition["machine"]["id"])
         self.assertEqual(
-            {"platform": "pinmame.system-11", "hardware_generation": "0x1000", "inversion_applied_by_emulator": True},
+            {"platform": "pinmame.dataeast", "hardware_generation": "0x1000", "inversion_applied_by_emulator": False},
             self.definition["controller"],
         )
         self.assertEqual(OWN_DRIVERS, {driver["id"] for driver in self.definition["drivers"]})
@@ -99,21 +100,11 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertEqual(952.0, self.definition["machine"]["playfield"]["width"])
         self.assertEqual(2162.0, self.definition["machine"]["playfield"]["height"])
 
-    def test_upstream_system_11_profile_covers_exact_data_east_subsets(self) -> None:
-        profile = load_json(CONTROLLER_PATH)
-        groups = {group["id"]: group for group in profile["groups"]}
-
-        def allowed(group_id: str, address: int) -> bool:
-            return any(
-                address in rule.get("values", [])
-                or rule.get("minimum", address + 1) <= address <= rule.get("maximum", address - 1)
-                for rule in groups[group_id]["address_rules"]
-            )
-
-        self.assertTrue(all(allowed("pinmame.input.switch", address) for address in (-7, -6, 1, 64)))
-        self.assertTrue(all(allowed("pinmame.output.solenoid", address) for address in range(1, 51)))
-        self.assertTrue(all(allowed("pinmame.output.lamp", address) for address in range(1, 65)))
-        self.assertTrue(allowed("pinmame.input.dip", 0))
+    def test_data_east_controller_is_not_borrowed_from_system_11(self) -> None:
+        self.assertFalse(DATA_EAST_CONTROLLER_PATH.exists(), "a reviewed Data East controller profile is not yet present")
+        self.assertEqual("pinmame.dataeast", self.definition["controller"]["platform"])
+        self.assertFalse(self.definition["controller"]["inversion_applied_by_emulator"])
+        self.assertIn("controller_platform", self.definition["coverage"]["missing"])
         diagnostics = {item["binding"]["device"] for item in self.definition["inputs"] if item["binding"]["group"] == "pinmame.input.switch" and item["binding"]["device"] < 0}
         self.assertEqual({-7, -6}, diagnostics)
         self.assertNotIn(-5, diagnostics)
@@ -123,9 +114,10 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         coverage = self.definition["coverage"]
         self.assertEqual("partial", coverage["status"])
         self.assertEqual(
-            ["output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"],
+            ["controller_platform", "output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"],
             coverage["missing"],
         )
+        self.assertNotIn("controller_platform", coverage["dimensions"])
         self.assertEqual("conflicted", coverage["dimensions"]["semantic_naming"])
         self.assertEqual("conflicted", coverage["dimensions"]["physical_wiring"])
         self.assertEqual("candidate", coverage["dimensions"]["spatial_placement"])
@@ -171,10 +163,48 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertTrue(all(solenoids[address]["kind"] == "coil" for address in (25, 26, 27, 28, 30, 31, 32)))
         self.assertEqual("unused", solenoids[22]["availability"])
         self.assertEqual("unused", solenoids[29]["availability"])
+        self.assertTrue(all(solenoids[address]["kind"] == "coil" for address in (22, 29)))
+        self.assertTrue(all(solenoids[address]["spatial"]["reason"] == "unused" for address in (22, 29)))
+        self.assertEqual({17: "SP1", 18: "SP2", 19: "SP3", 20: "SP4", 21: "SP5", 22: "SP6"}, {
+            address: next(alias["value"] for alias in solenoids[address]["aliases"] if alias["namespace"] == "manual.coil-number")
+            for address in range(17, 23)
+        })
+        self.assertEqual({17: "Q11", 18: "Q9", 19: "Q8", 20: "Q10", 21: "Q12", 22: "Q13"}, {
+            address: solenoids[address]["wiring"]["driver_transistor"] for address in range(17, 23)
+        })
+        self.assertEqual(1, solenoids[10]["physical"]["quantity"])
+        self.assertEqual(1, solenoids[11]["physical"]["quantity"])
+        self.assertEqual(2, solenoids[9]["physical"]["quantity"])
+        self.assertTrue(all(solenoids[address]["physical"]["quantity"] == 2 for address in range(1, 9)))
+        self.assertTrue(all(solenoids[address]["physical"]["quantity"] == 1 for address in (17, 18, 19, 20, 21)))
+        self.assertNotIn("quantity", solenoids[22]["physical"])
+        self.assertTrue(all(solenoids[address]["provenance"]["status"] == "conflicted" for address in range(17, 23)))
+        self.assertIn("Table prints Q8", solenoids[17]["physical"]["notes"])
+        self.assertIn("schematics assign SP1 to Q11", solenoids[17]["physical"]["notes"])
+        self.assertEqual("internal_nonvisual", solenoids[23]["spatial"]["reason"])
+        self.assertEqual("virtual", solenoids[24]["spatial"]["reason"])
+        virtual_addresses = {address for address, item in solenoids.items() if item["kind"] == "virtual"}
+        self.assertEqual({24, *range(33, 51)}, virtual_addresses)
+        for address in range(45, 49):
+            self.assertEqual("used", solenoids[address]["availability"])
+            self.assertEqual("virtual", solenoids[address]["spatial"]["reason"])
+            self.assertNotIn("quantity", solenoids[address]["physical"])
+            self.assertNotIn("wiring", solenoids[address])
+        emulator_only_addresses = virtual_addresses - set(range(45, 49))
+        self.assertTrue(all(
+            all(source_ref != "manual.data-east.secret-service.1988"
+                for source_ref in solenoids[address]["provenance"]["source_refs"])
+            and all(alias["namespace"] != "manual.coil-number" for alias in solenoids[address]["aliases"])
+            for address in emulator_only_addresses
+        ))
         self.assertTrue(all(solenoids[address]["provenance"]["status"] == "conflicted" for address in set(range(1, 9)) | set(range(25, 33))))
         knowledge = KNOWLEDGE_PATH.read_text(encoding="utf-8")
         self.assertIn("types only output 9 and muxed public 25-32 as #89 bulbs", knowledge)
         self.assertIn("GI at 11, and K1 at 10", knowledge)
+        self.assertIn("Playboy, Time Machine, and Torpedo Alley definitions", knowledge)
+        instructions = INSTRUCTIONS_PATH.read_text(encoding="utf-8")
+        self.assertIn("unless primary game-specific evidence explicitly pairs each public address and SP identity", instructions)
+        self.assertIn("Secret Service is the current disputed example", instructions)
 
     def test_display_topology_is_exactly_de_disp_alpha2(self) -> None:
         layout = [(item["controller_index"], item["segment_start"], item["width"]) for item in self.definition["displays"]]
@@ -193,25 +223,33 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertEqual(["coil.driver-25", "coil.driver-30"], mechanisms["mechanism.kgb-eater"]["actuators"])
         self.assertEqual(["coil.driver-16"], mechanisms["mechanism.whitehouse-lock"]["actuators"])
         self.assertEqual(["coil.driver-45", "coil.driver-46"], mechanisms["mechanism.right-flipper-pair"]["actuators"])
-        for identifier in (
-            "mechanism.left-slingshot", "mechanism.right-slingshot", "mechanism.red-pop-bumper",
-            "mechanism.clear-pop-bumper", "mechanism.blue-pop-bumper",
-        ):
-            self.assertEqual([], mechanisms[identifier]["actuators"], "printed labels must not fabricate a retained runtime binding")
+        self.assertEqual(["coil.driver-20"], mechanisms["mechanism.left-slingshot"]["actuators"])
+        self.assertEqual(["coil.driver-21"], mechanisms["mechanism.right-slingshot"]["actuators"])
+        self.assertEqual(["coil.driver-17"], mechanisms["mechanism.red-pop-bumper"]["actuators"])
+        self.assertEqual(["coil.driver-18"], mechanisms["mechanism.clear-pop-bumper"]["actuators"])
+        self.assertEqual("conflicted", mechanisms["mechanism.clear-pop-bumper"]["provenance"]["status"])
+        self.assertEqual(["coil.driver-19"], mechanisms["mechanism.blue-pop-bumper"]["actuators"])
 
     def test_relay_relationships_cover_public_25_through_32(self) -> None:
         self.assertEqual(8, len(self.definition["relationships"]))
         self.assertEqual({f"coil.driver-{address}" for address in range(25, 33)}, {item["destination"] for item in self.definition["relationships"]})
         self.assertTrue(all(item["source"] == "coil.driver-10" and item["provenance"]["status"] == "conflicted" for item in self.definition["relationships"]))
 
-    def test_all_eight_conflicts_are_first_class(self) -> None:
+    def test_all_ten_conflicts_are_first_class(self) -> None:
         self.assertEqual({
             "conflict.switch-score-labels-matrix-vs-list", "conflict.left-flipper-eos-runtime",
             "conflict.right-flipper-eos-runtime", "conflict.lamp-matrix-vs-description-list",
-            "conflict.mux-bank-output-typing", "conflict.clear-vs-yellow-pop-bumper",
-            "conflict.right-flipper-power-wire", "conflict.output-13-description",
+            "conflict.mux-bank-output-typing", "conflict.right-flipper-power-wire",
+            "conflict.output-13-description",
+            "conflict.special-solenoid-public-mapping", "conflict.special-coil-driver-transistors",
+            "conflict.synthetic-flipper-public-state",
         }, {item["id"] for item in self.definition["conflicts"]})
         self.assertTrue(all(len(item["source_refs"]) >= 2 for item in self.definition["conflicts"]))
+        right_wire = next(item for item in self.definition["conflicts"] if item["id"] == "conflict.right-flipper-power-wire")
+        self.assertEqual("/mechanisms/mechanism.right-flipper-pair", right_wire["path"])
+        self.assertEqual(["manual.data-east.secret-service.1988", "human-review.secret-service-production-renders"], right_wire["source_refs"])
+        self.assertIn("production playfield wiring diagram labels CN3 pin 6 BLU-YEL", right_wire["description"])
+        self.assertNotIn("manual.data-east.secret-service.1988-preliminary", right_wire["source_refs"])
 
     def test_spatial_report_uses_952_bounds_and_names_every_projection(self) -> None:
         report = load_json(REPORT_PATH)
@@ -225,25 +263,62 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertTrue(all(0 <= item["x"] <= 1 and 0 <= item["y"] <= 1 for item in placements))
         self.assertNotIn("spatial", self.inputs["switch.matrix-27"])
         self.assertNotIn("spatial", self.outputs["coil.driver-11"])
+        for output_id in ("coil.driver-6", "coil.driver-7", "coil.driver-9", "coil.driver-13"):
+            self.assertNotIn("spatial", self.outputs[output_id], output_id)
         self.assertEqual(2, len(self.outputs["coil.driver-3"]["spatial"]["placements"]))
         markdown = REPORT_MARKDOWN_PATH.read_text(encoding="utf-8")
         self.assertIn("x: `raw_x / 952`", markdown)
         self.assertIn("## Explicit projection classes", markdown)
         self.assertIn("Keep partial", markdown)
+        blockers = {item["dimension"]: item for item in report["blockers"]}
+        self.assertIn("controller_platform", blockers)
+        self.assertIn("must not borrow the Williams System 11 profile", blockers["controller_platform"]["reason"])
+        output_gap = next(item for item in report["unresolved"] if item["dimension"] == "output_placement")
+        for output_id in ("coil.driver-6", "coil.driver-7", "coil.driver-9", "coil.driver-13"):
+            self.assertIn(output_id, output_gap["devices"])
+            self.assertIn(output_id, blockers["spatial_placement"]["devices"])
 
     def test_evidence_excerpts_exist_hash_and_preserve_literal_cells(self) -> None:
-        excerpts = self.sources["manual.data-east.secret-service.1988"]["excerpts"] + self.sources["manual.data-east.secret-service.1988-preliminary"]["excerpts"]
-        self.assertEqual(5, len(excerpts))
+        excerpts = self.sources["manual.data-east.secret-service.1988"]["excerpts"]
+        self.assertEqual(10, len(excerpts))
         for excerpt in excerpts:
             path = ROOT / excerpt["path"]
             self.assertTrue(path.is_file(), path)
             self.assertEqual(excerpt["sha256"], sha256(path), excerpt["id"])
             self.assertEqual("manual", excerpt["method"])
             self.assertTrue(excerpt["reviewed"])
+        schematic_excerpts = [excerpt for excerpt in excerpts if excerpt["path"].endswith("production-schematics.md")]
+        self.assertEqual({
+            "excerpt.secret-service.cabinet-flipper-switches", "excerpt.secret-service.special-coil-circuits",
+            "excerpt.secret-service.flipper-power-circuits", "excerpt.secret-service.lr-driver-banks",
+            "excerpt.secret-service.switch-wiring", "excerpt.secret-service.lamp-gi-wiring",
+        }, {excerpt["id"] for excerpt in schematic_excerpts})
+        for excerpt in schematic_excerpts:
+            image = ROOT / excerpt["image"]
+            self.assertTrue(image.is_file(), image)
+            self.assertEqual(excerpt["image_sha256"], sha256(image), excerpt["id"])
+            self.assertLessEqual(image.stat().st_size, 100_000, excerpt["id"])
+            self.assertIn("rotated 90 degrees counter-clockwise", excerpt["image_derivation"])
+        for source_id in ("pinmame.catalog.4ec52ff0ac13", "pinmame.core.4ec52ff0ac13"):
+            source = self.sources[source_id]
+            self.assertEqual("BSD-3-Clause", source["license"])
+            self.assertEqual("https://github.com/vpinball/pinmame", source["uri"])
+        manual = self.sources["manual.data-east.secret-service.1988"]
+        self.assertEqual("https://archive.org/details/Data_East__Secret_Service_Manual", manual["uri"])
+        self.assertEqual("Data_East__Secret_Service_Manual", manual["source_id"])
+        self.assertEqual("2026-08-09T20:45:42Z", manual["acquired_at"])
+        self.assertIn("archive-org/Data_East_1988_Secret_Service_Manual.pdf", manual["locator"])
+        for source_id in ("vpx-table.secret-service-bigus-mod-1-1", "vpx-script.secret-service-bigus-mod-1-1"):
+            self.assertTrue(self.sources[source_id]["uri"].startswith("external:pinmame-vpx-sources/data-east/secret-service-1988/"))
+        core_locator = self.sources["pinmame.core.4ec52ff0ac13"]["locator"]
+        for fragment in ("lines 714-715", "737-738", "746-747", "SP6, SP5, SP2, SP3, SP1, and SP4"):
+            self.assertIn(fragment, core_locator)
+        self.assertIn("ssSolNo={3,4,5,1,0,2}", core_locator)
+        self.assertIn("SP6, SP5, SP2, SP3, SP1, and SP4", core_locator)
         switch = (EXCERPT_ROOT / "switch-matrix.md").read_text(encoding="utf-8")
         lamp = (EXCERPT_ROOT / "lamp-matrix.md").read_text(encoding="utf-8")
         coil = (EXCERPT_ROOT / "coil-chart.md").read_text(encoding="utf-8")
-        schematic = (EXCERPT_ROOT / "preliminary-schematics.md").read_text(encoding="utf-8")
+        schematic = (EXCERPT_ROOT / "production-schematics.md").read_text(encoding="utf-8")
         self.assertIn("| 18 | GRN-ORN | WHT-RED | Top 10 Point |", switch)
         self.assertIn("| 18 | Top 310 Point |", switch)
         self.assertIn("| 5 | YEL-BRN | RED-GRN | Jefferson Memorial #2 |", lamp)
@@ -252,18 +327,28 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertIn("| SP3 | Blue Pop Bumper | BLU-ORN | (ORN-BLK) |", coil)
         self.assertIn("| -- | Right Flipper | (BLU-VIO) | -- | BIU-YEL |", coil)
         self.assertIn("SP6's device-type cell is blank", coil)
-        self.assertIn("YELLOW POP BUMPER", schematic)
-        self.assertIn("production label governs", schematic)
+        self.assertIn("printed 17-22 explicitly pair SP1-SP6", coil)
+        self.assertIn("derive SP1, SP3, SP4, SP6, SP5 and SP2 at public 17-22", coil)
+        self.assertIn("source interpretation remains a first-class conflict", coil)
+        self.assertIn("`CLEAR POP BUMPER`", schematic)
+        self.assertIn("SP1/SP2/SP3/SP4/SP5/SP6 to Q11/Q9/Q8/Q10/Q12/Q13", schematic)
+        self.assertIn("CN3 pin 6 `BLU-YEL`", schematic)
+        self.assertIn("literally prints `BIU-YEL`", schematic)
 
     def test_manifest_canonical_digest_and_shape(self) -> None:
         manifest = load_json(MANIFEST_PATH)
         self.assertEqual(972, manifest["file_count"])
         self.assertEqual(53_434_484, manifest["total_bytes"])
         self.assertEqual(972, len(manifest["files"]))
+        algorithm = "SHA-256 of the UTF-8 JSON object after removing manifest_sha256 and serializing with sorted keys, compact separators, and ensure_ascii=False."
+        self.assertEqual(algorithm, manifest["manifest_algorithm"])
         body = {key: value for key, value in manifest.items() if key != "manifest_sha256"}
         canonical = json.dumps(body, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
-        self.assertEqual("3f66d44a4e523f9e8b4cda576f36d2500354024276935ea092ec2cbe12d4bde7", manifest["manifest_sha256"])
+        self.assertEqual("5c80483c2010460c736a8d2e91ef887a72766f08b98fbf939e8abb727aae68ce", manifest["manifest_sha256"])
         self.assertEqual(manifest["manifest_sha256"], hashlib.sha256(canonical).hexdigest())
+        extraction_source = self.sources["vpx-extraction.secret-service-bigus-mod-1-1"]
+        self.assertEqual("6bd34670c2b4880831dde9a843e7c1a6e7365f9c4aea868452f6fe00f25335ac", extraction_source["sha256"])
+        self.assertIn(f"algorithm: {algorithm}", extraction_source["locator"])
 
     def test_catalog_reassigns_four_drivers_and_removes_stub_normally(self) -> None:
         catalog = load_json(ROOT / "catalog" / "pinmame.json")
@@ -337,10 +422,21 @@ class SecretServiceDefinitionTests(unittest.TestCase):
     def test_seed_is_byte_identical_and_knowledge_names_concrete_blockers(self) -> None:
         self.assertEqual(DEFINITION_PATH.read_bytes(), SEED_PATH.read_bytes())
         knowledge = KNOWLEDGE_PATH.read_text(encoding="utf-8")
+        generated_text = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in (DEFINITION_PATH, SEED_PATH, REPORT_PATH, REPORT_MARKDOWN_PATH, KNOWLEDGE_PATH)
+        )
+        self.assertNotIn('"platform": "pinmame.system-11"', generated_text)
+        self.assertNotIn("manual-cache/", generated_text)
         self.assertIn("zero extractable characters", knowledge)
         self.assertIn("Exactly 64 Light objects are named `L1` through `L64`", knowledge)
         self.assertIn("Whole-line-commented callbacks 12 and 13 are stripped", knowledge)
-        self.assertIn("preliminary scan omits its printed page 20", knowledge)
+        self.assertIn("Schematic pages 30 and 32-34 were rendered at 300 dpi", knowledge)
+        self.assertIn("not a Williams System 11 controller profile", knowledge)
+        self.assertIn("inversion_applied_by_emulator` is false", knowledge)
+        self.assertNotIn("pinmame.system-11", knowledge)
+        self.assertNotIn("manual-cache/", knowledge)
+        self.assertNotIn("preliminary", generated_text.casefold())
         self.assertIn("record remains partial", knowledge)
 
 
@@ -373,6 +469,13 @@ class SecretServiceCuratorTests(unittest.TestCase):
             target.write_text("{}\n", encoding="utf-8")
             with self.assertRaises(RuntimeError):
                 self.curator._write(root)
+
+    def test_special_solenoid_mapping_follows_explicit_coil_test_and_preserves_source_conflict(self) -> None:
+        derived = {17 + self.curator.SPECIAL_DE_PERMUTATION[handler]: printed for handler, printed in self.curator.SPECIAL_PIA_HANDLER_TO_PRINTED.items()}
+        self.assertEqual({17:"SP1",18:"SP3",19:"SP4",20:"SP6",21:"SP5",22:"SP2"}, derived)
+        self.assertEqual(derived, self.curator.SPECIAL_SOURCE_INFERRED_PUBLIC_TO_PRINTED)
+        self.assertEqual({17:"SP1",18:"SP2",19:"SP3",20:"SP4",21:"SP5",22:"SP6"}, self.curator.SPECIAL_PUBLIC_TO_PRINTED)
+        self.assertNotEqual(derived, self.curator.SPECIAL_PUBLIC_TO_PRINTED)
 
 
 class SecretServiceExternalEvidenceTests(unittest.TestCase):
@@ -416,21 +519,14 @@ class SecretServiceExternalEvidenceTests(unittest.TestCase):
             self.assertEqual(entry["bytes"], path.stat().st_size, entry["path"])
             self.assertEqual(entry["sha256"], sha256(path), entry["path"])
 
-    def test_exact_manual_hashes_via_supplied_anchor(self) -> None:
+    def test_exact_archive_org_manual_hash_via_supplied_anchor(self) -> None:
         if self.manual_anchor is None:
             self.skipTest("retained manuals are not available")
-        roots = [
-            self.manual_anchor / "by-machine" / "data-east.secret-service.1988" / "contributor-supplied",
-            self.manual_anchor.parent / "manual-cache" / "by-machine" / "data-east.secret-service.1988" / "contributor-supplied",
-        ]
-        root = next((path for path in roots if path.is_dir()), None)
-        self.assertIsNotNone(root, roots)
+        root = self.manual_anchor / "by-machine" / "data-east.secret-service.1988" / "archive-org"
+        self.assertTrue(root.is_dir(), root)
         production = root / "Data_East_1988_Secret_Service_Manual.pdf"
-        preliminary = root / "Data_East_1988_Secret_Service_Preliminary_Instruction_Manual_with_schematics_missing_page_20.pdf"
         self.assertEqual(5_290_463, production.stat().st_size)
         self.assertEqual("f2d9c030951d1d8fef3db36447457689b69bac557935053293dd3c143ec4252a", sha256(production))
-        self.assertEqual(14_510_943, preliminary.stat().st_size)
-        self.assertEqual("8d3b1f4035bf43c4fac33a6ec464bc5ad5771d0bdc615fd8ba2efd853051c14e", sha256(preliminary))
 
 
 if __name__ == "__main__":

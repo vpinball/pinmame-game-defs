@@ -264,7 +264,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 258 | 1988 | STUB - Blackwater 100 | Bally | stub |
 | 259 | 1988 | STUB - Truck Stop (P-3 Prototype) | Bally | stub |
 | 260 | 1988 | STUB - Sport 2000 | Cirsa | stub |
-| 261 | 1988 | STUB - Secret Service (2.6) | Data East | stub |
+| 261 | 1988 | Secret Service | Data East | partial |
 | 262 | 1988 | Time Machine | Data East | partial |
 | 263 | 1988 | Torpedo Alley | Data East | partial |
 | 264 | 1988 | STUB - Bad Girls | Gottlieb | stub |

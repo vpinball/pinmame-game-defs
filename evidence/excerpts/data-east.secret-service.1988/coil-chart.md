@@ -79,7 +79,7 @@ The production table literally prints `VIO-BLK` for 07L, `(ORN-BLK)` for SP3, an
 
 ## Reconciliation to PinMAME public addresses
 
-The raw cells above remain the evidence. The working public mapping follows the printed operator L/R sequence and retained runtime: printed 01L-08L are public 1-8, direct 09-16 remain public 9-16, SP1-SP6 are public 17-22, and printed 01R-08R are relay-selected public 25-32. The retained script independently uses visual callbacks 1-9 and mechanism callbacks 25/26/27/28/30/32.
+The raw cells above remain the evidence. Printed 01L-08L are public 1-8, direct 09-16 remain public 9-16, printed 17-22 explicitly pair SP1-SP6 with those public numbers in the Coil Test, and printed 01R-08R are relay-selected public 25-32. Reading pinned `s11.c` PIA comments as physical SP identities and applying `setSSSol`'s Data East offsets would instead derive SP1, SP3, SP4, SP6, SP5 and SP2 at public 17-22. The explicit operator numbering is used; the source interpretation remains a first-class conflict pending a LibPinMAME trace. The retained script independently uses visual callbacks 1-9 and mechanism callbacks 25/26/27/28/30/32.
 
 Pinned `s11.c` nevertheless types only public 9 and the muxed public 25-32 bank as #89 bulbs, with GI at 11 and K1 mux relay at 10. That emulator metadata disagrees with the manual-plus-script physical kinds for both eight-way banks; the machine definition records the disagreement as a first-class unresolved conflict.
 
