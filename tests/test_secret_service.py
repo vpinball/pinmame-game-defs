@@ -203,8 +203,9 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertIn("GI at 11, and K1 at 10", knowledge)
         self.assertIn("Playboy, Time Machine, and Torpedo Alley definitions", knowledge)
         instructions = INSTRUCTIONS_PATH.read_text(encoding="utf-8")
-        self.assertIn("unless primary game-specific evidence explicitly pairs each public address and SP identity", instructions)
-        self.assertIn("Secret Service is the current disputed example", instructions)
+        self.assertIn("Preserve only identities actually printed by the cited source", instructions)
+        self.assertIn("never manufacture SP1-SP6 aliases from sequential public numbers", instructions)
+        self.assertIn("every affected binding must stay conflicted and require a LibPinMAME trace before resolution", instructions)
 
     def test_display_topology_is_exactly_de_disp_alpha2(self) -> None:
         layout = [(item["controller_index"], item["segment_start"], item["width"]) for item in self.definition["displays"]]

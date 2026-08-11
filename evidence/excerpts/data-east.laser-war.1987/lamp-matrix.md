@@ -1,142 +1,102 @@
-# Laser War lamp matrix (PDF page 21; printed page 19)
+# Laser War lamp matrix (community technical chart)
 
-Human transcription checked cell-by-cell against a 400 dpi Poppler render of the printed page. The PDF text layer is OCR and was not used to decide cells.
-`NOT USED` is preserved as an explicit null label.
+Human transcription checked cell-by-cell against a retained 300 dpi render of the 2021 Inkochnito community technical chart. The chart, not the incomplete ManualsLib page-image archive, is the source for these cells.
 
-| Address | Drive wire | Return wire | Printed label |
+## Printed column headers
+
+| Column | Wire color | Connector pin | Drive transistor |
 | ---: | --- | --- | --- |
-| 1 | YEL-BRN | RED-BRN | Ball in Play |
-| 2 | YEL-BRN | RED-BLK | Match |
-| 3 | YEL-BRN | RED-ORN | Blast Again |
-| 4 | YEL-BRN | RED-YEL | "W" |
-| 5 | YEL-BRN | RED-GRN | "A" |
-| 6 | YEL-BRN | RED-BLU | "R" |
-| 7 | YEL-BRN | RED-VIO | Ramp Multiplier |
-| 8 | YEL-BRN | RED-GRY | Return to Base |
-| 9 | YEL-RED | RED-BRN | Cannon Red |
-| 10 | YEL-RED | RED-BLK | Cannon Yellow |
-| 11 | YEL-RED | RED-ORN | Cannon Blue |
-| 12 | YEL-RED | RED-YEL | Ramp Green Shield |
-| 13 | YEL-RED | RED-GRN | Ramp Orange Arrow |
-| 14 | YEL-RED | RED-BLU | Ramp Amber Arrow |
-| 15 | YEL-RED | RED-VIO | Ramp Clear Arrow |
-| 16 | YEL-RED | RED-GRY | Red Target (Left) |
-| 17 | YEL-ORN | RED-BRN | Red Target (Center) |
-| 18 | YEL-ORN | RED-BLK | Red Target (Right) |
-| 19 | YEL-ORN | RED-ORN | Hot Dog Red |
-| 20 | YEL-ORN | RED-YEL | Lock Eject Red |
-| 21 | YEL-ORN | RED-GRN | Red Eject Arrow Clear |
-| 22 | YEL-ORN | RED-BLU | Red Eject Arrow Amber |
-| 23 | YEL-ORN | RED-VIO | Red Eject Arrow Orange |
-| 24 | YEL-ORN | RED-GRY | Yellow Target (Left) |
-| 25 | YEL-BLK | RED-BRN | Yellow Target (Center) |
-| 26 | YEL-BLK | RED-BLK | Yellow Target (Right) |
-| 27 | YEL-BLK | RED-ORN | Hot Dog Yellow |
-| 28 | YEL-BLK | RED-YEL | Eject Lock Yellow |
-| 29 | YEL-BLK | RED-GRN | Yellow Eject Arrow Clear |
-| 30 | YEL-BLK | RED-BLU | Yellow Eject Arrow Amber |
-| 31 | YEL-BLK | RED-VIO | Yellow Eject Arrow Orange |
-| 32 | YEL-BLK | RED-GRY | Blue Target (Left) |
-| 33 | YEL-GRN | RED-BRN | Blue Target (Center) |
-| 34 | YEL-GRN | RED-BLK | Blue Target (Right) |
-| 35 | YEL-GRN | RED-ORN | Hot Dog Blue |
-| 36 | YEL-GRN | RED-YEL | Eject Blue |
-| 37 | YEL-GRN | RED-GRN | Blue Eject Arrow Clear |
-| 38 | YEL-GRN | RED-BLU | Blue Eject Arrow Amber |
-| 39 | YEL-GRN | RED-VIO | Blue Eject Arrow Orange |
-| 40 | YEL-GRN | RED-GRY | Left Outlane |
-| 41 | YEL-BLU | RED-BRN | Flipper Return Lanes (Left&Right) |
-| 42 | YEL-BLU | RED-BLK | Bonus Holds |
-| 43 | YEL-BLU | RED-ORN | 2 X |
-| 44 | YEL-BLU | RED-YEL | 3 X |
-| 45 | YEL-BLU | RED-GRN | 4 X |
-| 46 | YEL-BLU | RED-BLU | 5 X |
-| 47 | YEL-BLU | RED-VIO | Laser Kick |
-| 48 | YEL-BLU | RED-GRY | Right Outlane |
-| 49 | YEL-VIO | RED-BRN | Ion Cannon (Tip) |
-| 50 | YEL-VIO | RED-BLK | Bonus 1K Red |
-| 51 | YEL-VIO | RED-ORN | Bonus 2K Red |
-| 52 | YEL-VIO | RED-YEL | Bonus 4K Red |
-| 53 | YEL-VIO | RED-GRN | Bonus 8K Red |
-| 54 | YEL-VIO | RED-BLU | Bonus 16K Red |
-| 55 | YEL-VIO | RED-VIO | Bonus 1K Yellow |
-| 56 | YEL-VIO | RED-GRY | Bonus 2K Yellow |
-| 57 | YEL-GRY | RED-BRN | Bonus 4K Yellow |
-| 58 | YEL-GRY | RED-BLK | Bonus 8K Yellow |
-| 59 | YEL-GRY | RED-ORN | Bonus 16K Yellow |
-| 60 | YEL-GRY | RED-YEL | Bonus 1K Blue |
-| 61 | YEL-GRY | RED-GRN | Bonus 2K Blue |
-| 62 | YEL-GRY | RED-BLU | Bonus 4K Blue |
-| 63 | YEL-GRY | RED-VIO | Bonus 8K Blue |
-| 64 | YEL-GRY | RED-GRY | Bonus 16K Blue |
+| 1 | Yellow-Brown | CN7-1 | Q71 |
+| 2 | Yellow-Red | CN7-2 | Q70 |
+| 3 | Yellow-Orange | CN7-3 | Q69 |
+| 4 | Yellow-Black | CN7-4 | Q68 |
+| 5 | Yellow-Green | CN7-6 | Q67 |
+| 6 | Yellow-Blue | CN7-7 | Q66 |
+| 7 | Yellow-Violet | CN7-8 | Q65 |
+| 8 | Yellow-Grey | CN7-9 | Q64 |
 
-Source document SHA-256: `f6c6a09a6c9be42d8851790a5b40060fef7a4dbd6e452e1aa89af4765783a3db`
+## Printed row headers
 
-## Playfield Lamp Location Illustration list (PDF page 22; printed page 20)
+| Row | Wire color | Connector pin | Return transistor |
+| ---: | --- | --- | --- |
+| 1 | Red-Brown | CN6-1 | Q72 |
+| 2 | Red-Black | CN6-2 | Q73 |
+| 3 | Red-Orange | CN6-3 | Q74 |
+| 4 | Red-Yellow | CN6-5 | Q75 |
+| 5 | Red-Green | CN6-6 | Q76 |
+| 6 | Red-Blue | CN6-7 | Q77 |
+| 7 | Red-Violet | CN6-8 | Q78 |
+| 8 | Red-Grey | CN6-9 | Q79 |
 
-| Item | Printed description |
-| ---: | --- |
-| 1 | BALL IN PLAY (BACK BOX) |
-| 2 | MATCH (BACK BOX) |
-| 3 | BLAST AGAIN |
-| 4 | "W" |
-| 5 | "A" |
-| 6 | "R" |
-| 7 | RAMP MULTIPLIER |
-| 8 | RETURN TO BASE |
-| 9 | CANNON RED |
-| 10 | CANNON YELLOW |
-| 11 | CANNON BLUE |
-| 12 | RAMP GREEN SHIELD |
-| 13 | RAMP ORANGE ARROW |
-| 14 | RAMP AMBER ARROW |
-| 15 | RAMP CLEAR ARROW |
-| 16 | RED TARGET (LEFT) |
-| 17 | RED TARGET (CENTER) |
-| 18 | RED TARGET (RIGHT) |
-| 19 | HOT DOG RED |
-| 20 | LOCK EJECT RED |
-| 21 | RED EJECT ARROW CLEAR |
-| 22 | RED EJECT ARROW AMBER |
-| 23 | RED EJECT ARROW ORANGE |
-| 24 | YELLOW TARGET (LEFT) |
-| 25 | YELLOW TARGET (CENTER) |
-| 26 | YELLOW TARGET (RIGHT) |
-| 27 | HOT DOG YELLOW |
-| 28 | EJECT LOCK YELLOW |
-| 29 | YELLOW EJECT ARROW CLEAR |
-| 30 | YELLOW EJECT ARROW AMBER |
-| 31 | YELLOW EJECT ARROW ORANGE |
-| 32 | BLUE TARGET (LEFT) |
-| 33 | BLUE TARGET (CENTER) |
-| 34 | BLUE TARGET (RIGHT) |
-| 35 | HOT DOG BLUE |
-| 36 | EJECT BLUE |
-| 37 | BLUE EJECT ARROW CLEAR |
-| 38 | BLUE EJECT ARROW AMBER |
-| 39 | BLUE EJECT ARROW ORANGE |
-| 40 | LEFT OUTLANE |
-| 41 | FLIPPER RETURN LANES (LEFT AND RIGHT) |
-| 42 | BONUS HOLDS |
-| 43 | 2X |
-| 44 | 3X |
-| 45 | 4X |
-| 46 | 5X |
-| 47 | LASER KICK |
-| 48 | RIGHT OUTLANE |
-| 49 | ION CANNON (TIP) |
-| 50 | BONUS 1K RED |
-| 51 | BONUS 2K RED |
-| 52 | BONUS 4K RED |
-| 53 | BONUS 8K RED |
-| 54 | BONUS 16K RED |
-| 55 | BONUS 1K YELLOW |
-| 56 | BONUS 2K YELLOW |
-| 57 | BONUS 4K YELLOW |
-| 58 | BONUS 8K YELLOW |
-| 59 | BONUS 16K YELLOW |
-| 60 | BONUS 1K BLUE |
-| 61 | BONUS 2K BLUE |
-| 62 | BONUS 4K BLUE |
-| 63 | BONUS 8K BLUE |
-| 64 | BONUS 16K BLUE |
+## Printed matrix cells
+
+| Address | Column | Row | Printed label |
+| ---: | ---: | ---: | --- |
+| 1 | 1 | 1 | Ball in Play |
+| 2 | 1 | 2 | Match |
+| 3 | 1 | 3 | Blast Again |
+| 4 | 1 | 4 | "W" |
+| 5 | 1 | 5 | "A" |
+| 6 | 1 | 6 | "R" |
+| 7 | 1 | 7 | Ramp Multiplier |
+| 8 | 1 | 8 | Return To Base |
+| 9 | 2 | 1 | Cannon Red |
+| 10 | 2 | 2 | Cannon Yellow |
+| 11 | 2 | 3 | Cannon Blue |
+| 12 | 2 | 4 | Ramp Green Shield |
+| 13 | 2 | 5 | Ramp Orange Arrow |
+| 14 | 2 | 6 | Ramp Amber Arrow |
+| 15 | 2 | 7 | Ramp Clear Arrow |
+| 16 | 2 | 8 | Red Target (Left) |
+| 17 | 3 | 1 | Red Target (Center) |
+| 18 | 3 | 2 | Red Target (Right) |
+| 19 | 3 | 3 | Hot Dog Red |
+| 20 | 3 | 4 | Lock Red Eject |
+| 21 | 3 | 5 | Red Eject Clear Arrow |
+| 22 | 3 | 6 | Red Eject Amber Arrow |
+| 23 | 3 | 7 | Red Eject Orange Arrow |
+| 24 | 3 | 8 | Yellow Target (Left) |
+| 25 | 4 | 1 | Yellow Target (Center) |
+| 26 | 4 | 2 | Red Target (Right) |
+| 27 | 4 | 3 | Hot Dog Yellow |
+| 28 | 4 | 4 | Lock Yellow Eject |
+| 29 | 4 | 5 | Yellow Eject Clear Arrow |
+| 30 | 4 | 6 | Yellow Eject Amber Arrow |
+| 31 | 4 | 7 | Yellow Eject Orange Arrow |
+| 32 | 4 | 8 | Blue Target (Left) |
+| 33 | 5 | 1 | Blue Target (Center) |
+| 34 | 5 | 2 | Blue Target (Right) |
+| 35 | 5 | 3 | Hot Dog Blue |
+| 36 | 5 | 4 | Lock Blue Eject |
+| 37 | 5 | 5 | Blue Eject Clear Arrow |
+| 38 | 5 | 6 | Blue Eject Amber Arrow |
+| 39 | 5 | 7 | Blue Eject Orange Arrow |
+| 40 | 5 | 8 | Left Outlane |
+| 41 | 6 | 1 | Flipper Return Lanes (Left & Right) |
+| 42 | 6 | 2 | Bonus Holds |
+| 43 | 6 | 3 | 2X |
+| 44 | 6 | 4 | 3X |
+| 45 | 6 | 5 | 4X |
+| 46 | 6 | 6 | 5X |
+| 47 | 6 | 7 | Laser Kick |
+| 48 | 6 | 8 | Right Outlane |
+| 49 | 7 | 1 | Ion Cannon (Tip) |
+| 50 | 7 | 2 | Bonus 1K Red |
+| 51 | 7 | 3 | Bonus 2K Red |
+| 52 | 7 | 4 | Bonus 4K Red |
+| 53 | 7 | 5 | Bonus 8K Red |
+| 54 | 7 | 6 | Bonus 16K Red |
+| 55 | 7 | 7 | Bonus 1K Yellow |
+| 56 | 7 | 8 | Bonus 2K Yellow |
+| 57 | 8 | 1 | Bonus 4K Yellow |
+| 58 | 8 | 2 | Bonus 8K Yellow |
+| 59 | 8 | 3 | Bonus 16K Yellow |
+| 60 | 8 | 4 | Bonus 1K Blue |
+| 61 | 8 | 5 | Bonus 2K Blue |
+| 62 | 8 | 6 | Bonus 4K Blue |
+| 63 | 8 | 7 | Bonus 8K Blue |
+| 64 | 8 | 8 | Bonus 16K Blue |
+
+The chart literally repeats `Red Target (Right)` at addresses 18 and 26. The semantic reconciliation for address 26 is recorded as a conflict in the machine definition; this excerpt does not normalize the printed cell.
+
+Source document SHA-256: `30a1def10178a2cf7e753046ed44f07d01075a6333791669e4fe0c4e165ddfe7`

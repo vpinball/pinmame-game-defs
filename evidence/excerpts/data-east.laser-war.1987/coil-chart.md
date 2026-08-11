@@ -1,93 +1,42 @@
-# Laser War coil/transistor evidence (PDF pages 23-24; printed pages 21-22)
+# Laser War coil/transistor evidence (community technical chart)
 
-Human transcription checked cell-by-cell against 400 dpi Poppler renders. The PDF text layer was not used to decide cells, and the scan's damaged schematic pages were not used.
+Human transcription checked cell-by-cell against a retained 300 dpi render of the 2021 Inkochnito community technical chart. The chart, not the incomplete ManualsLib page-image archive, is the source for these cells.
 
-## Coil I.D. Chart — literal printed cells (PDF page 23; printed page 21)
+## Switched, CPU controlled auxiliary and constant-power solenoids — printed rows 1L-16
 
-| Printed coil label | Printed description | Drive wire | Power wire | Printed drive transistor | Printed device type |
-| --- | --- | --- | --- | --- | --- |
-| 1L | EXPLOSION | VIO-BRN | BRN | Q 46 | #89 BULBS |
-| 2L | RAMP MULTIPLIER | BLK-BRN | ORN | Q 46 | #89 BULBS |
-| 2L | RED HOT DOG | VIO-RED | BRN | Q 45 | #89 BULBS |
-| 2R | GREEN SHIELD | BLK-RED | ORN | Q 45 | #89 BULBS |
-| 3L | YELLOW HOT DOG | VIO-ORN | BRN | Q 44 | #89 BULBS |
-| 3R | WARRIIRS (Back Glass) | BLK-ORN | ORN | Q 44 | #89 BULBS |
-| 4L | BLUE HOT DOG | VIO-YEL | BRN | Q 43 | #89 BULBS |
-| 4R | LASER WIRE (Back Glass) | BLK-YEL | ORN | Q 43 | #89 BULBS |
-| 5L | ION CANNON | VIO-GRN | BRN | Q 42 | #89 BULBS |
-| 5R | KNOCKER | BLK-GRN | ORN | Q 42 | COIL: 23-800 |
-| 6L | MARS YELLOW | VIO-BLU | BRN | Q 41 | COIL: 23-800 |
-| 6R | NOT USED | BLK-BLU | ORN | Q 41 |  |
-| 7L | MARS RED | VIO-BLK | BRN | Q 40 | #89 BULBS |
-| 7R | NOT USED | BLK-VIO | ORN | Q 40 |  |
-| 8L | MARS BLUE | VIO-GRY | BRN | Q 39 | #89 BULBS |
-| 8R | NOT USED | BLK-GRY | ORN | Q 39 |  |
-| 9 | BALL TROUGH EJECT | BLK-BRN | RED | Q 30 | COIL: 23-840 |
-| 10 | L/R POWER RELAY | BRN-RED | RED | Q 29 | RELAY: 24 VDC |
-| 11 | G. I. RELAY | BRN-ORN | RED | Q 28 | RELAY: 24 VDC |
-| 12 | RED EJECT | BRN-YEL | RED | Q 27 | COIL: 27-1500 |
-| 13 | YELLOW EJECT | BRN-GRN | RED | Q 26 | COIL: 27-1500 |
-| 14 | BLUE EJECT | BRN-BLU | RED | Q 25 | COIL: 27-1500 |
-| 15 | LASER KICK RELAY | BRN-VIO | RED | Q 24 | RELAY: 24 VDC |
-| 16 | OUTHOLE | BRN-GRY | RED | Q 23 | COIL: 23-840 |
+The chart merges each Q46-Q39 transistor cell across its L/R pair; the applicable transistor is repeated below so every row is independently usable. Genuinely blank printed cells are `[blank]`.
 
-The chart above literally prints `2L` twice: once for RAMP MULTIPLIER and once for RED HOT DOG. It also literally prints `WARRIIRS (Back Glass)` and prints `COIL: 23-800` for MARS YELLOW. Those cells are not silently corrected here.
-
-## Playfield Coil Location Illustration list — literal printed cells (PDF page 24; printed page 22)
-
-| Printed item | Printed description | Printed device type / setting |
-| --- | --- | --- |
-| 1L | EXPLOSION | #89 BULBS |
-| 1R | RAMP MULTIPLIER | #89 BULBS |
-| 2L | RED HOT DOG | #89 BULBS |
-| 2R | GREEN SHIELD | #89 BULBS |
-| 3L | YELLOW HOT DOG | #89 BULBS |
-| 3R | WARRIORS (BACK GLASS) | #89 BULBS |
-| 4L | BLUE HOT DOG | #89 BULBS |
-| 5L | ION CANNON | #89 BULBS |
-| 5R | KNOCKER | COIL: 23-800 |
-| 6L | MARS YELLOW | COIL: 23-800 |
-| 6R | NOT USED | — |
-| 7L | MARS RED | #89 BULBS |
-| 7R | NOT USED | — |
-| 8L | MARS BLUE | #89 BULBS |
-| 8R | NOT USED | — |
-| 9 | BALL TROUGH EJECT | COIL: 23-840 |
-| 10 | L/R POWER RELAY | RELAY: 24 VDC |
-| 11 | G.I. RELAY | RELAY: 24 VDC |
-| 12 | RED EJECT | COIL: 27-1500 |
-| 13 | YELLOW EJECT | COIL: 27-1500 |
-| 14 | BLUE EJECT | COIL: 27-1500 |
-| 15 | LASER KICK RELAY | RELAY: 24 VDC |
-| 16 | OUTHOLE | COIL: 23-840 |
-| 30 | INSTALL ADD-A-BALL | OFF |
-| 31 | INSTALL 5 BALL PLAY | OFF |
-| 32 | INSTALL NOVELTY PLAY | OFF |
-| 33 | INSTALL EXTRA EASY | OFF |
-| 34 | INSTALL EASY | OFF |
-| 35 | INSTALL MEDIUM | ON |
-| 36 | INSTALL HARD | OFF |
-| 37 | INSTALL EXTRA HARD | OFF |
-| 38 | ARROW MEMORY | ON |
-| 39 | RAMP SPOTS BONUS | ON |
-| 40 | ATTRACT MODE SOUNDS | ON |
-| 41 | W.A.R. LANES EXTRA BALL | ON |
-| 42 | TARGETS TO LIGHT SPECIAL | 06 |
-| 43 | RAMP LIGHTS FLIPPER LANES | OFF |
-| 44 | FLIPPER RETURN LANES | OFF |
-| 45 | LASER KICK | ON |
-| 46 | AUDITS RESET | OFF |
-| 47 | RESTORE FACTORY SETTINGS | OFF |
-
-This second printed list corrects RAMP MULTIPLIER to `1R` and spells WARRIORS normally, but it repeats `COIL: 23-800` for MARS YELLOW. It omits the `4R` LASER WIRE row that is present in the Coil I.D. Chart.
+| Coil No. | Coil or Flashlamp Description | Drive Transistor (D.T.) | On Which Board? | D.T. Control Line | D.T. Control Line Connect | Power Line | Power Line Connection | Power Description | Coil or Flash Type |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1L | Explosion Flasher | Q46 | CPU to DB | Vio-Brn | CPU CN11-1 | Brn | 4M-8 | 32V L | #89 |
+| 1R | Ramp Multiplier Flasher | Q46 | Gry-Brn | Blk-Brn | to diode board | Orn | 4M-9 | 32V R | #89 |
+| 2L | Red Hot Dog Flasher | Q45 | CPU to DB | Vio-Red | CPU CN11-3 | Brn | 4M-8 | 32V L | #89 |
+| 2R | Green Shield Flasher | Q45 | Gry-Red | Blk-Red | to diode board | Orn | 4M-9 | 32V R | #89 |
+| 3L | Yellow Hot Dog Flasher | Q44 | CPU to DB | Vio-Orn | CPU CN11-4 | Brn | 4M-8 | 32V L | #89 |
+| 3R | Warriors (Back Glass) Flasher | Q44 | Gry-Orn | Blk-Orn | to diode board | Orn | 3F2-6 | 32V R | #89 |
+| 4L | Blue Hot Dog Flasher | Q43 | CPU to DB | Vio-Yel | CPU CN11-5 | Brn | 4M-8 | 32V L | #89 |
+| 4R | Laser Wire (Back Glass) Flasher | Q43 | Gry-Yel | Blk-Yel | to diode board | Orn | 3F2-6 | 32V R | #89 |
+| 5L | Ion Cannon Flasher | Q42 | CPU to DB | Vio-Grn | CPU CN11-6 | Brn | 4M-8 | 32V L | #89 |
+| 5R | Knocker | Q42 | Gry-Grn | Blk-Grn | to diode board | Orn | - | 32V R | 23-800 |
+| 6L | Mars Yellow | Q41 | CPU to DB | Vio-Blu | CPU CN11-7 | Brn | 4M-8 | 32V L | 23-800 |
+| 6R | Not Used | Q41 | Gry-Blu | [blank] | to diode board | [blank] | [blank] | [blank] | [blank] |
+| 7L | Mars Red Flasher | Q40 | CPU to DB | Vio-Blk | CPU CN11-8 | Brn | 4M-8 | 32V L | #89 |
+| 7R | Not Used | Q40 | Gry-Vio | [blank] | to diode board | [blank] | [blank] | [blank] | [blank] |
+| 8L | Mars Blue Flasher | Q39 | CPU to DB | Vio-Gry | CPU CN11-9 | Brn | 4M-8 | 32V L | #89 |
+| 8R | Not Used | Q39 | Gry-Blk | [blank] | to diode board | [blank] | [blank] | [blank] | [blank] |
+| 9 | Ball Trough Eject | Q30 | CPU | Brn-Blk | CN12-1 | Red | PS CN3-6 | 32V | 23-840 |
+| 10 | L/R Power Relay | Q29 | CPU | Brn-Red | CN12-2 | Red | PS CN3-6 | 32V | Relay: 24VDC |
+| 11 | General Illumination Relay | Q28 | CPU | Brn-Orn | CN12-4 | [blank] | PS CN3-6 | 32V | Relay: 24VDC |
+| 12 | Red Eject | Q27 | CPU | Brn-Yel | CN12-5 | Red | PS CN3-6 | 32V | 27-1500 |
+| 13 | Yellow Eject | Q26 | CPU | Brn-Grn | CN12-6 | Red | PS CN3-6 | 32V | 27-1500 |
+| 14 | Blue Eject | Q25 | CPU | Brn-Blu | CN12-7 | Red | PS CN3-6 | 32V | 27-1500 |
+| 15 | Laser Kick (Relay) | Q24 | CPU | Brn-Vio | CN12-8 | Red (Relay); Blu-Yel (Coil) | PS CN3-6; FPS CN3-6 | 32V (Relay); 50V (Coil) | Relay: 24VDC; Coil: 23-900 |
+| 16 | Outhole | Q23 | CPU | Brn-Gry | CN12-9 | Red | PS CN3-6 | 32V | 23-840 |
 
 ## Reconciliation to PinMAME public addresses and semantic kinds
 
-The raw printed cells above remain the evidence. The following are explicit resolutions, not transcription edits:
+- The chart prints RAMP MULTIPLIER as `1R`. PinMAME's relay-selected right bank maps printed 1R-8R to public addresses 25-32, and the retained script independently binds `SolCallback(25)` to the ramp-multiplier flasher.
+- The chart prints MARS YELLOW as coil type `23-800`, while its MARS RED and MARS BLUE partners are `#89` lamps. Pinned `s11.c` describes all three as Mars flashers, so the definition records `kind: flasher` while preserving the printed device-type conflict.
+- Rows 17-22 are transcribed separately with the chart's additional CPU-board connector fields.
 
-- Each transistor pairs one `VIO-*` / `BRN` left drive with one `BLK-*` / `ORN` right drive. RAMP MULTIPLIER is `BLK-BRN` / `ORN` on Q 46, paired with `1L` EXPLOSION (`VIO-BRN` / `BRN`, Q 46), so the duplicated chart label `2L` is electrically `1R`. The location list independently prints `1R`. In PinMAME's relay-selected bank, `1R` is public address 25. The retained script corroborates this with `SolCallback(25) = "SolFlasherRampMultiplier"`, followed by public 26 Green Shield (`2R`) and public 29 Knocker (`5R`).
-- The chart and location list both print MARS YELLOW as `COIL: 23-800`, while the same two lists print MARS RED and MARS BLUE as `#89 BULBS`. Pinned `s11.c` lines 1131-1135 independently describe 'the yellow, red & blue mars flashers' as one two-bulb-per-colour group. The canonical `kind: flasher` is therefore the recorded resolution, while the printed device-type disagreement remains a first-class conflict.
-- The Coil I.D. Chart's `WARRIIRS (Back Glass)` is retained verbatim above. The following location list prints `WARRIORS (BACK GLASS)`, so the canonical label normalizes the evident chart typo to `Warriors (Back Glass)`.
-- Public addresses 25-32 are the relay-selected right bank corresponding to printed 1R-8R; printed 6R-8R (public 30-32) are NOT USED. Public addresses 9-16 are printed directly. Special switched-coil circuits 17-22 are described by the manual prose, but their address-to-device mapping falls in the damaged schematic section and is deliberately not inferred.
-
-Source document SHA-256: `f6c6a09a6c9be42d8851790a5b40060fef7a4dbd6e452e1aa89af4765783a3db`
+Source document SHA-256: `30a1def10178a2cf7e753046ed44f07d01075a6333791669e4fe0c4e165ddfe7`
