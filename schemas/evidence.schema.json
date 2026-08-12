@@ -310,6 +310,25 @@
                 "type": "string",
                 "pattern": "^[0-9a-f]{64}$"
               },
+              "scenario_path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scenario_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "action_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "watch_switches": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "integer"
+                }
+              },
               "self_test_pulses": {
                 "type": "integer",
                 "minimum": 0
@@ -415,6 +434,82 @@
               "uniqueItems": true,
               "items": {
                 "type": "integer"
+              }
+            },
+            "service_language": {
+              "type": "string",
+              "minLength": 1
+            },
+            "ordered_solenoid_on_sequence": {
+              "description": "Observed nonzero solenoid transitions in event order. Repeated addresses are significant and therefore allowed.",
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            "named_action_observations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "label",
+                  "input_kind",
+                  "observed_switch_addresses",
+                  "active_solenoid_addresses",
+                  "transitioned_solenoid_addresses",
+                  "result"
+                ],
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "input_kind": {
+                    "enum": ["switch", "key"]
+                  },
+                  "input_address": {
+                    "type": "integer"
+                  },
+                  "input_name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "observed_switch_addresses": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "active_solenoid_addresses": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "transitioned_solenoid_addresses": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "result": {
+                    "enum": ["observed", "no_matching_transition"]
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": { "properties": { "input_kind": { "const": "switch" } } },
+                    "then": { "required": ["input_address"] }
+                  },
+                  {
+                    "if": { "properties": { "input_kind": { "const": "key" } } },
+                    "then": { "required": ["input_name"] }
+                  }
+                ]
               }
             },
             "display_indices_seen": {

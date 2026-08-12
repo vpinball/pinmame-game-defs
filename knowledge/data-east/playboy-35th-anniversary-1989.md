@@ -19,7 +19,7 @@ Pinned `s11.c` types output 9 as a bulb, 11 as GI, 12-15 as bulbs, and 25-32 as 
 - Solenoid 23 is Game On; 24 is unused; 33-44 are inert; 45-48 are synthetic lower-flipper winding states; 49 is a simulation-only shooter state; 50 is reserved.
 - Solenoid 10 is K1, which selects the C-bank block at public outputs 25-32.
 
-The controller id is `pinmame.dataeast`, not `pinmame.system-11`: sharing PinMAME's `s11.c` implementation does not turn the physical Data East CPU/driver board into Williams System 11 hardware. `INITGAMES11` leaves Playboy's `wpc.invSw` array zero-initialized, and `core.c` copies that zero mask into `coreGlobals.invSw`, so the emulator applies no per-game switch inversion for this driver. No reviewed Data East controller profile exists yet, so `controller_platform` remains an explicit promotion blocker.
+The controller id is `pinmame.dataeast`, not `pinmame.system-11`: sharing PinMAME's `s11.c` implementation does not turn the physical Data East CPU/driver board into Williams System 11 hardware. The reviewed shared profile now supplies the platform address contract. The machine-level `inversion_applied_by_emulator` flag is true because consumers receive normalized public states and must not invert them again. Independently, `INITGAMES11` leaves Playboy's per-game `wpc.invSw` array all zeroes.
 
 The manual prints physical flipper EOS contacts at matrix 15/16, but `FLIP1516` makes the non-fliptronic core overwrite those public addresses with left/right cabinet-button state. This is a PinMAME public-address behavior rather than a description of the physical EOS wiring. A recreation should use public 15/16 as cabinet-button state and must not infer physical EOS state from them.
 
@@ -49,9 +49,8 @@ The table SHA-256 is `3b32aeacee1c5beb1c723e6e1bba79ae269deb36cc56101201b5d171a7
 
 ## Coverage and blockers
 
-Status remains `partial`; `coverage.missing` is [`controller_platform`, `output_semantics`, `mechanism_behavior`, `polarity`, `spatial_placement`, `unresolved_conflicts`].
+Status remains `partial`; `coverage.missing` is [`output_semantics`, `mechanism_behavior`, `polarity`, `spatial_placement`, `unresolved_conflicts`].
 
-- `controller_platform`: no reviewed Data East controller profile yet represents this physical board family.
 - `output_semantics`: callback group aliases/comments and core C-bank bulb typing disagree with printed physical functions.
 - `mechanism_behavior`: hidden Grotto transfer geometry and hardware-triggered special-coil pulse behavior are absent.
 - `polarity`: no original-machine trace reconciles cabinet button/EOS, K1 relay, and raw versus decoded output states.

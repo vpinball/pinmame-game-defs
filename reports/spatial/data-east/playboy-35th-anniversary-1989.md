@@ -15,14 +15,6 @@ Keep partial. The record enumerates every public address and resolves the major 
 
 ## Blockers
 
-### controller_platform
-
-Data East uses a System 11-derived emulator implementation, but its board family and diagnostics are not represented by the Williams-only pinmame.system-11 profile.
-
-Would resolve: A reviewed Data East controller profile derived from the pinned core and original board documentation.
-
-Devices: `pinmame.dataeast`
-
 ### output_semantics
 
 Callback aliases/comments disagree with printed groups, one public special-solenoid state is also a background proxy, core PWM typing disagrees with the physical C-bank fitment, and unfitted address 31 lacks a decoded-state trace.

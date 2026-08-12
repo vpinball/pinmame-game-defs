@@ -1,0 +1,115 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.dataeast",
+  "authority": "pinmame",
+  "hardware_family": "Data East Rev 1/Rev 2/Rev 3 alpha and 128x16/128x32/192x64 DMD controller families emulated by PinMAME's s11 driver",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Data East service buttons and the 8x8 switch matrix",
+      "address_rules": [
+        {
+          "minimum": -7,
+          "maximum": -6
+        },
+        {
+          "minimum": 1,
+          "maximum": 64
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "switch"
+        },
+        "controller_plugin": {
+          "group_id": 1,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "#### Public matrix addresses\n\nData East uses PinMAME's sequential, column-major `1-64` switch namespace inherited by `MACHINE_DRIVER_START(s11)` from `MACHINE_DRIVER_START(PinMAME)`. The registered conversion is `core_swSeq2m(n)=n+7`, so `column=((n-1)/8)+1` and `row=((n-1)%8)+1` for public address `n` (`src/wpc/core.c` `core_swSeq2m`/`core_m2swSeq`; `src/wpc/s11.c` `MACHINE_DRIVER_START(s11)`). It is not WPC's column-times-ten notation.\n\nData East matrix strobes are one-hot. `pia4b_w` keeps only the first asserted strobe bit when `locals.deGame` is true, and `pia4a_r` passes that selected column to `core_getSwCol` (`src/wpc/s11.c`). Public address numbering remains sequential; this hardware detail matters when interpreting traces with malformed multi-bit strobes.\n\n#### Cabinet column and diagnostics\n\n`DE_COMPORTS` supplies ordinary column 1 at public addresses `1-8`: tilt=`1`, ball tilt=`2`, start=`3`, coin 1-3=`4-6`, slam tilt=`7`, and no defined cabinet input at `8` (`src/wpc/s11.h`). These are part of the same switch namespace as the playfield matrix. A game using `S11_MUXSW2` may overwrite public switch `2` with the live mux-relay state in `SWITCH_UPDATE(s11)`; identify switch `2` from the game-specific driver and manual rather than assuming it is always a physical ball-tilt switch.\n\nOnly two negative service addresses exist on Data East hardware:\n\n| Address | PinMAME constant | Driver behavior |\n| --- | --- | --- |\n| `-7` | `DE_SWADVANCE` | Black Advance button; `s11_irqline` presents its asserted public state inverted to PIA2 CA1. |\n| `-6` | `DE_SWUPDN` | Green Up/Down button; presented directly to PIA2 CB1. |\n\nWilliams-only CPU and sound diagnostic addresses `-5` and `-4` are not part of the Data East contract. `DE_COMPORTS2` changes the later green button from toggling to momentary input behavior, but its public address remains `-6` (`src/wpc/s11.h`).\n\n#### Inversion and extensions\n\nThe profile's `inversion_applied_by_emulator` field means consumers use the public LibPinMAME state as delivered and do not perform a second inversion. It does not assert that every game has a nonzero `invSw` mask. The common `INITGAMES11` Data East initializer zero-initializes that mask; custom drivers must be checked individually. A nonzero `hw.swCol` adds game-specific columns above the base `1-64` range and must be declared by that machine rather than inferred from this base rule.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.input.dip",
+      "direction": "configuration",
+      "kind": "dip_switch",
+      "label": "Country jumper W7",
+      "address_rules": [
+        {
+          "values": [
+            0
+          ]
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "dip"
+        }
+      },
+      "notes": "#### Country jumper\n\nThe shared driver exposes one DIP-style configuration bit at public address `0`: the physical country jumper read by `pia2a_r` as `core_getDip(0)<<7`. Data East input definitions reuse the shared one-jumper machine driver (`src/wpc/s11.c` `pia2a_r` and `MACHINE_DRIVER_START(s11)`; `src/wpc/s11.h` shared country-jumper declaration). It is not a bank of operator DIP switches.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Data East coil, flasher, relay, special-solenoid, auxiliary-output, and virtual flipper states",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 64
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "solenoid"
+        },
+        "controller_plugin": {
+          "group_id": 1,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "#### Address map\n\nThe public namespace is a platform-sized outer bound; a machine definition must mark its actual populated, virtual, and unused addresses from its own driver, manual, and trace.\n\n| Addresses | Data East behavior |\n| --- | --- |\n| `1-8` | Eight momentary `A`-side drivers written by `latch2200`. |\n| `9-16` | Eight controlled drivers written by `PIA0:B`; `INITGAMES11` assigns mux relay K1 to public `10`. |\n| `17-22` | Six special-solenoid public states, gated by public enable `23`; see the permutation below. |\n| `23` | `S11_GAMEONSOL` / `CORE_SSFLIPENSOL`, a public virtual enable state for the flipper and switched-solenoid supply. It is not a playfield coil. |\n| `24` | Reserved gap; no shared driver writes a device state here. |\n| `25-32` | Relay-selected `C`-side aliases of the eight physical drivers at `1-8`; see the mux rule below. |\n| `33-36` | Generic upper-flipper range from the cross-platform API. `core_getSol` has no Data East implementation for it, so these addresses are always zero. |\n| `37-44` | Shared-driver auxiliary-output range. DMD-family initializers that pass `S11_PRINTERLINE` as `hw.gameSpecific1` publish `pia2b_w`'s printer-line byte here; alpha initializers reviewed for this profile do not enable `S11_SNDOVERLAY`. Check each game's initializer, source, and runtime evidence before declaring the range populated or unused. |\n| `45-48` | Virtual lower-flipper power/hold states derived from the configured cabinet flipper switches while output `23` enables flippers: right power=`45`, right hold=`46`, left power=`47`, left hold=`48`. |\n| `49` | Cross-platform simulator ball-shooter state, not a physical Data East driver-board output. |\n| `50` | Reserved gap. |\n| `51-64` | Game-specific custom outputs, present only when the driver declares `hw.custSol` and a `getSol` hook. |\n\nData East general illumination is not a separate LibPinMAME GI channel. The shared driver types the appropriate per-game ordinary solenoid output as an AC bulb/relay; most Data East games use output `11`, but the exact populated outputs and electrical types come from the game's own `MACHINE_INIT(s11)` name block and manual. Bind those devices to `pinmame.output.solenoid` with machine output kind `gi`.\n\n#### Special-solenoid permutation\n\nPIA-driven special solenoids are active-low at the PIA handler and gated by `locals.ssEn`. Data East selects `ssSolNo[1]={3,4,5,1,0,2}` in `setSSSol`, producing this exact handler-to-public mapping (`src/wpc/s11.c`):\n\n| PIA handler | Handler slot | Public address |\n| --- | ---: | ---: |\n| `pia1ca2_w` | `0` | `20` |\n| `pia1cb2_w` | `1` | `21` |\n| `pia3ca2_w` | `2` | `22` |\n| `pia3cb2_w` | `3` | `18` |\n| `pia4ca2_w` | `4` | `17` |\n| `pia4cb2_w` | `5` | `19` |\n\nDo not infer SP1-SP6 physical labels from those public numbers. When a game instead populates `sxx.ssSw`, the VBLANK path indexes those slots sequentially as public `17+ii` and does not apply the PIA permutation. Manual circuit identity, PIA handler, `sxx.ssSw` slot, and public output address remain separate facts until a game-specific trace reconciles them.\n\n#### K1 A/C mux\n\n`updsol()` detects the game-specific mux relay—public `10` for the common `INITGAMES11` Data East initializer—and, while it is active, copies the low driver byte from public `1-8` into public `25-32` instead. These are alternate circuits behind the same eight transistors and K1 relay contacts, not sixteen independent drivers. The machine's manual and working VPX script decide which A-side or C-side device is physically wired to each pair. Playboy 35th sets `S11_MUXDELAY`, so `pia0b_w` processes the previous controlled-driver byte and delays the mux decision by one IRQ; traces must preserve that timing rather than expecting same-callback switching.\n\n#### Auxiliary outputs and flippers\n\nFor Data East DMD generations whose initializer sets `S11_PRINTERLINE`, `pia2b_w` writes an eight-bit printer-line/auxiliary byte into internal PWM slots `41-48`; `core_getSol`, `core_getAllSol`, and `core_getAllPhysicSols` expose those slots as public `37-44`. The 128x16 path inverts that byte, while the 128x32/192x64 path does not. The reviewed alpha initializers do not enable `S11_SNDOVERLAY`. Never infer a physical device, availability, or polarity from the shared range alone.\n\nThe common Data East driver macros use `FLIP_SWNO(...)` without `FLIP_SOL(...)`. `core_updateSw` therefore fabricates public `45-48` from the configured left/right cabinet switch state only while public `23` enables the flippers. They are useful controller states for a recreation but do not identify four independently controlled driver-board transistors or prove the physical EOS/power-winding polarity.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "Data East 8x8 lamp matrix and optional game-specific columns",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 64
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "lamp"
+        },
+        "controller_plugin": {
+          "group_id": 512,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "#### Standard matrix\n\n`MACHINE_INIT(s11)` publishes `64 + hw.lampCol*8` lamp states. The standard Data East matrix is public `1-64`, numbered column-major with the same sequential conversion as switches: `column=((n-1)/8)+1`, `row=((n-1)%8)+1`. `pia1a_w` supplies active-low rows and `pia1b_w` supplies columns to `core_write_pwm_output_lamp_matrix` (`src/wpc/s11.c`).\n\nA nonzero `hw.lampCol` adds game-specific columns above `64`; this base profile does not silently claim them. General illumination is not part of this lamp group or a separate GI channel on this driver—it is represented by the game's ordinary solenoid/relay output.",
+      "notes_format": "markdown"
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "locator": "src/wpc/s11.c (s11_irqline, SWITCH_UPDATE(s11), pia1a_w/pia1b_w/pia2a_r/pia2b_w/pia4a_r/pia4b_w, setSSSol, updsol, pia0b_w/pia0cb2_w, MACHINE_INIT(s11), MACHINE_DRIVER_START(s11)); src/wpc/s11.h (DE_COMPORTS/DE_COMPORTS2, DE_SWADVANCE/DE_SWUPDN, S11_GAMEONSOL and hardware flags); src/wpc/degames.c (INITGAMES11, FLIP_SWNO constants and Data East game initializers); src/wpc/core.c (core_swSeq2m/core_m2swSeq, core_updateSw, core_getSol/core_getAllSol/core_getAllPhysicSols); src/wpc/core.h (public solenoid constants and core_tGameData sxx fields); src/wpc/gen.h (GEN_DE/GEN_DEDMD16/GEN_DEDMD32/GEN_DEDMD64/GEN_ALLS11)"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "a6f6d7266d301249ed09c1b0123f8476513a2228",
+      "locator": "src/libpinmame/libpinmame.cpp SetupMsgApi group definitions"
+    }
+  ]
+}

@@ -629,14 +629,14 @@ definition = {
                 "playfield": {"width": 1000.0, "height": 2000.0, "units": "vpx", "provenance": prov("validated", [TABLE])}},
     "coverage": {
         "status": "partial",
-        "missing": ["controller_platform", "output_semantics", "mechanism_behavior", "polarity", "recreation_notes", "spatial_placement", "unresolved_conflicts"],
+        "missing": ["output_semantics", "mechanism_behavior", "polarity", "recreation_notes", "spatial_placement", "unresolved_conflicts"],
         "dimensions": {
             "catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "conflicted",
             "physical_wiring": "conflicted", "mechanisms": "conflicted", "variant_coverage": "validated",
             "recreation_knowledge": "candidate", "spatial_placement": "candidate",
         },
     },
-    "controller": {"platform": "pinmame.dataeast", "hardware_generation": "0x1000", "inversion_applied_by_emulator": False},
+		"controller": {"platform": "pinmame.dataeast", "hardware_generation": "0x1000", "inversion_applied_by_emulator": True},
     "drivers": drivers, "inputs": inputs, "outputs": outputs, "displays": displays,
     "mechanisms": mechanisms, "relationships": relationships, "sources": sources,
     "knowledge": {"path": "knowledge/data-east/torpedo-alley-1988.md", "status": "partial"},
@@ -743,9 +743,6 @@ spatial_report = {
         {"devices": [f"coil.driver-{address}" for address in (17, 18, 19, 21, 22)], "dimension": "special_coil_placement", "reason": "Manual construction and Data East public mapping establish circuit topology, but native physics has no public SolCallback or physical effect object from which to derive an actuator center."},
     ],
     "blockers": [
-        {"devices": ["pinmame.dataeast"], "dimension": "controller_platform",
-         "reason": "The physical Data East CPU/driver board family shares emulator code with System 11, but no reviewed Data East controller profile exists.",
-         "would_resolve": "A reviewed pinmame.dataeast controller profile derived from pinned source and original Data East board documentation."},
         {"devices": [f"coil.driver-{address}" for address in sorted(MUX_TYPING_CONFLICTS)] + ["coil.driver-11", "lamp.matrix-24"], "dimension": "output_semantics",
          "reason": "Pinned output typing, effective callback 11 and active lamp-24 membership disagree with manual construction.",
          "would_resolve": "A PinMAME maintainer explanation or corrected torp_ typing plus a controller trace of relay sides, GI 11 and lamp 24."},
@@ -819,7 +816,7 @@ knowledge_note = """# Data East Torpedo Alley (1988)
 
 ## Identity and controller
 
-Pinned PinMAME groups exactly two 08/88 drivers under `torp_e21`: the Europe 2.1 parent and `torp_a16` 1.6 clone. Both use `INITGAMES11(torp, GEN_DE, de_dispAlpha2, FLIP1516, SNDBRD_DE1S, 0, 0)`, so the ROM variants are physically identical. `GEN_DE` is `0x1000`; `custSol`, `swCol`, `lampCol` and the sound-overlay field are zero. The initializer also leaves `wpc.invSw` zero-initialized, and `core.c` copies that zero mask into `coreGlobals.invSw`, so the emulator applies no per-game switch inversion for either driver. The canonical controller classification is therefore `pinmame.dataeast`, not the Williams `pinmame.system-11` profile; because no reviewed Data East controller profile exists, `controller_platform` remains an explicit blocker.
+Pinned PinMAME groups exactly two 08/88 drivers under `torp_e21`: the Europe 2.1 parent and `torp_a16` 1.6 clone. Both use `INITGAMES11(torp, GEN_DE, de_dispAlpha2, FLIP1516, SNDBRD_DE1S, 0, 0)`, so the ROM variants are physically identical. `GEN_DE` is `0x1000`; `custSol`, `swCol`, `lampCol` and the sound-overlay field are zero. The machine-level `inversion_applied_by_emulator` flag is true because consumers receive normalized public states and must not invert them again. Independently, the initializer leaves the per-game `wpc.invSw` mask all zeroes and `core.c` copies it into `coreGlobals.invSw`. The canonical controller classification is the reviewed `pinmame.dataeast` profile, not Williams `pinmame.system-11`, so no controller-platform blocker remains.
 
 `de_dispAlpha2` contributes exactly four displays: two seven-character 16-segment rows beginning at 1 and 9 and two seven-character numeric rows beginning at 21 and 29. There are no credit/match or ball-in-play entries, so every display has a controlled cabinet/backbox `not_applicable` spatial record.
 
@@ -859,7 +856,7 @@ The three pop bumpers and two slingshots have source-reconciled circuit topology
 
 ## What remains unresolved
 
-`coverage.missing` is exactly `controller_platform`, `output_semantics`, `mechanism_behavior`, `polarity`, `recreation_notes`, `spatial_placement`, and `unresolved_conflicts`. Controller completion needs a reviewed Data East board-family profile rather than reuse of the Williams-only System 11 profile. Output semantics need a PinMAME maintainer explanation or corrected `torp_` typing plus a trace across both K1 states, GI 11 and lamp 24. Mechanism behavior remains conflicted where the printed EOS construction and runtime cabinet-button model disagree. Polarity needs a bench capture of cabinet buttons, EOS contacts at rest/end-of-stroke and public power/hold states. Recreation notes remain candidate while those source conflicts prevent a complete build specification. Spatial completion needs an original-machine socket/address and under-playfield actuator survey covering the playfield, insert board and backbox; the printed quantity of two for each 01L-08L flasher branch is retained, but the table exposes only one usable effect anchor for 01L-06L, two disjoint helper clusters rather than a physical center for 07L, and no active callback for 08L, so no unsupported bulb position is fabricated. Lamp addresses 1, 8, 16, 23, 24, 31 and 32 likewise retain a printed quantity of two while publishing only one candidate object coordinate. No hash-pinned Internet Archive resource or directly verifiable IPDB resource is retained, so the manual's GameEx source URL is recorded but archive/IPDB metadata is intentionally not asserted. The eight conflicts need corrected upstream evidence or independent traces that explicitly settle each disagreement. Until those exist, the record remains partial.
+`coverage.missing` is exactly `output_semantics`, `mechanism_behavior`, `polarity`, `recreation_notes`, `spatial_placement`, and `unresolved_conflicts`. Output semantics need a PinMAME maintainer explanation or corrected `torp_` typing plus a trace across both K1 states, GI 11 and lamp 24. Mechanism behavior remains conflicted where the printed EOS construction and runtime cabinet-button model disagree. Polarity needs a bench capture of cabinet buttons, EOS contacts at rest/end-of-stroke and public power/hold states. Recreation notes remain candidate while those source conflicts prevent a complete build specification. Spatial completion needs an original-machine socket/address and under-playfield actuator survey covering the playfield, insert board and backbox; the printed quantity of two for each 01L-08L flasher branch is retained, but the table exposes only one usable effect anchor for 01L-06L, two disjoint helper clusters rather than a physical center for 07L, and no active callback for 08L, so no unsupported bulb position is fabricated. Lamp addresses 1, 8, 16, 23, 24, 31 and 32 likewise retain a printed quantity of two while publishing only one candidate object coordinate. No hash-pinned Internet Archive resource or directly verifiable IPDB resource is retained, so the manual's GameEx source URL is recorded but archive/IPDB metadata is intentionally not asserted. The eight conflicts need corrected upstream evidence or independent traces that explicitly settle each disagreement. Until those exist, the record remains partial.
 """
 
 

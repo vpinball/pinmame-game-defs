@@ -97,7 +97,7 @@ class TorpedoAlleyDefinitionTests(unittest.TestCase):
     def test_identity_generation_parent_and_bounds(self) -> None:
         self.assertEqual("data-east.torpedo-alley.1988", self.definition["machine"]["id"])
         self.assertEqual(
-            {"platform": "pinmame.dataeast", "hardware_generation": "0x1000", "inversion_applied_by_emulator": False},
+            {"platform": "pinmame.dataeast", "hardware_generation": "0x1000", "inversion_applied_by_emulator": True},
             self.definition["controller"],
         )
         self.assertEqual(OWN_DRIVERS, {driver["id"] for driver in self.definition["drivers"]})
@@ -133,7 +133,7 @@ class TorpedoAlleyDefinitionTests(unittest.TestCase):
         coverage = self.definition["coverage"]
         self.assertEqual("partial", coverage["status"])
         self.assertEqual(
-            ["controller_platform", "output_semantics", "mechanism_behavior", "polarity", "recreation_notes", "spatial_placement", "unresolved_conflicts"],
+            ["output_semantics", "mechanism_behavior", "polarity", "recreation_notes", "spatial_placement", "unresolved_conflicts"],
             coverage["missing"],
         )
         self.assertEqual("validated", coverage["dimensions"]["address_enumeration"])

@@ -89,7 +89,7 @@ class SecretServiceDefinitionTests(unittest.TestCase):
     def test_identity_generation_and_four_driver_tree(self) -> None:
         self.assertEqual("data-east.secret-service.1988", self.definition["machine"]["id"])
         self.assertEqual(
-            {"platform": "pinmame.dataeast", "hardware_generation": "0x1000", "inversion_applied_by_emulator": False},
+            {"platform": "pinmame.dataeast", "hardware_generation": "0x1000", "inversion_applied_by_emulator": True},
             self.definition["controller"],
         )
         self.assertEqual(OWN_DRIVERS, {driver["id"] for driver in self.definition["drivers"]})
@@ -101,10 +101,11 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertEqual(2162.0, self.definition["machine"]["playfield"]["height"])
 
     def test_data_east_controller_is_not_borrowed_from_system_11(self) -> None:
-        self.assertFalse(DATA_EAST_CONTROLLER_PATH.exists(), "a reviewed Data East controller profile is not yet present")
+        self.assertTrue(DATA_EAST_CONTROLLER_PATH.exists())
+        self.assertEqual("pinmame.dataeast", load_json(DATA_EAST_CONTROLLER_PATH)["id"])
         self.assertEqual("pinmame.dataeast", self.definition["controller"]["platform"])
-        self.assertFalse(self.definition["controller"]["inversion_applied_by_emulator"])
-        self.assertIn("controller_platform", self.definition["coverage"]["missing"])
+        self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
+        self.assertNotIn("controller_platform", self.definition["coverage"]["missing"])
         diagnostics = {item["binding"]["device"] for item in self.definition["inputs"] if item["binding"]["group"] == "pinmame.input.switch" and item["binding"]["device"] < 0}
         self.assertEqual({-7, -6}, diagnostics)
         self.assertNotIn(-5, diagnostics)
@@ -114,7 +115,7 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         coverage = self.definition["coverage"]
         self.assertEqual("partial", coverage["status"])
         self.assertEqual(
-            ["controller_platform", "output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"],
+            ["output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"],
             coverage["missing"],
         )
         self.assertNotIn("controller_platform", coverage["dimensions"])
@@ -272,8 +273,7 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertIn("## Explicit projection classes", markdown)
         self.assertIn("Keep partial", markdown)
         blockers = {item["dimension"]: item for item in report["blockers"]}
-        self.assertIn("controller_platform", blockers)
-        self.assertIn("must not borrow the Williams System 11 profile", blockers["controller_platform"]["reason"])
+        self.assertNotIn("controller_platform", blockers)
         output_gap = next(item for item in report["unresolved"] if item["dimension"] == "output_placement")
         for output_id in ("coil.driver-6", "coil.driver-7", "coil.driver-9", "coil.driver-13"):
             self.assertIn(output_id, output_gap["devices"])
@@ -433,8 +433,9 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertIn("Exactly 64 Light objects are named `L1` through `L64`", knowledge)
         self.assertIn("Whole-line-commented callbacks 12 and 13 are stripped", knowledge)
         self.assertIn("Schematic pages 30 and 32-34 were rendered at 300 dpi", knowledge)
-        self.assertIn("not a Williams System 11 controller profile", knowledge)
-        self.assertIn("inversion_applied_by_emulator` is false", knowledge)
+        self.assertIn("not Williams System 11 hardware", knowledge)
+        self.assertIn("reviewed `pinmame.dataeast` profile", knowledge)
+        self.assertIn("inversion_applied_by_emulator` flag is true", knowledge)
         self.assertNotIn("pinmame.system-11", knowledge)
         self.assertNotIn("manual-cache/", knowledge)
         self.assertNotIn("preliminary", generated_text.casefold())

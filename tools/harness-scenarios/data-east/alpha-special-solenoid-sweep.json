@@ -1,0 +1,194 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Diagnostic titles were observed from the five pinned alpha ROMs: Laser War, Secret Service, Time Machine, and Playboy use SWITCH TEST / COIL TEST; German Torpedo Alley uses SCHALTR TEST / SPULE TEST. PinMAME's reviewed 16-segment decoder pattern 0x086D is rendered as S, not 5. The direct-switch sweep deliberately excludes every configured flipper address used by these drivers (15/16, 30/31, and 46/47), because named key actions enable keyboard handling and core_updateSw can overwrite those addresses.",
+  "watch_switches": [
+    -7,
+    -6,
+    14,
+    15,
+    16,
+    20,
+    21,
+    22,
+    28,
+    29,
+    30,
+    31,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53
+  ],
+  "actions": [
+    {
+      "type": "pulse_key",
+      "key": "service_green",
+      "hold_ms": 250,
+      "settle_s": 0.5,
+      "label": "pulse the toggled Green service input once to select Reverse"
+    },
+    {
+      "type": "pulse_until_display",
+      "key": "service_black",
+      "texts": [
+        "SWITCH TEST",
+        "SCHALTR TEST"
+      ],
+      "max_pulses": 40,
+      "hold_ms": 250,
+      "settle_s": 0.9,
+      "label": "advance through sound and display diagnostics to Switch Test"
+    },
+    {
+      "type": "pulse_until_display",
+      "key": "service_black",
+      "texts": [
+        "COIL TEST",
+        "SPULEN TEST",
+        "SPULE TEST",
+        "SPUL TEST"
+      ],
+      "max_pulses": 12,
+      "hold_ms": 250,
+      "settle_s": 0.7,
+      "label": "advance from Switch Test to the transient automatic Coil Test title with the momentary Black service key"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 25, 26, 27, 28, 29, 30, 31, 32],
+      "timeout_s": 5.0,
+      "active_only": true,
+      "label": "confirm automatic Coil Test output without sending another service input"
+    },
+    {
+      "type": "pulse_key",
+      "key": "left_flipper",
+      "hold_ms": 400,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "observe the configured left flipper switch and synthetic output pair"
+    },
+    {
+      "type": "pulse_key",
+      "key": "right_flipper",
+      "hold_ms": 400,
+      "settle_s": 1.0,
+      "snapshot_while_held": true,
+      "label": "observe the configured right flipper switch and synthetic output pair"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 44"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 45"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 48"
+    },
+    {
+      "type": "pulse",
+      "switch": 49,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 49"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 50"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 51"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 52"
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 350,
+      "settle_s": 1.0,
+      "label": "probe candidate special-solenoid trigger switch 53"
+    }
+  ]
+}

@@ -708,6 +708,12 @@ def _address_allowed(address: int, rules: list[dict[str, Any]]) -> bool:
 
 def validate_controller_profile(profile: dict[str, Any]) -> list[str]:
 	errors: list[str] = []
+	canonical_plugin_group_ids = {
+		"pinmame.input.switch": 1,
+		"pinmame.output.solenoid": 1,
+		"pinmame.output.gi": 0x0100,
+		"pinmame.output.lamp": 0x0200,
+	}
 	groups = profile.get("groups")
 	if not isinstance(groups, list):
 		return ["$.groups: must be an array"]
@@ -727,6 +733,12 @@ def validate_controller_profile(profile: dict[str, Any]) -> list[str]:
 				_expect(rule["minimum"] <= rule["maximum"], f"{path}.address_rules[{rule_index}]", "minimum must not exceed maximum", errors)
 		plugin = group.get("transports", {}).get("controller_plugin")
 		if isinstance(plugin, dict) and isinstance(plugin.get("group_id"), int):
+			expected_group_id = canonical_plugin_group_ids.get(group_id) if isinstance(group_id, str) else None
+			if expected_group_id is not None and plugin["group_id"] != expected_group_id:
+				errors.append(
+					f"{path}.transports.controller_plugin.group_id: canonical group {group_id!r} "
+					f"requires {expected_group_id}, got {plugin['group_id']}"
+				)
 			route = (str(group.get("direction")), plugin["group_id"])
 			if route in plugin_routes:
 				errors.append(f"{path}.transports.controller_plugin.group_id: duplicate route in direction {route[0]!r}")

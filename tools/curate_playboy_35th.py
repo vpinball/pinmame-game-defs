@@ -671,8 +671,8 @@ def build_machine() -> dict[str,object]:
     return {
         "format":"pinmame-machine-definition","schema_version":2,
         "machine":{"id":MACHINE_ID,"name":"Playboy 35th Anniversary","manufacturer":"Data East","year":1989,"kind":"physical_pinball","playfield":{"width":RIGHT,"height":BOTTOM,"units":"vpx","provenance":provenance("validated",TABLE_SOURCE)}},
-        "coverage":{"status":"partial","missing":["controller_platform","output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"],"dimensions":{"catalog_identity":"validated","address_enumeration":"validated","semantic_naming":"conflicted","physical_wiring":"conflicted","mechanisms":"conflicted","variant_coverage":"validated","recreation_knowledge":"candidate","spatial_placement":"candidate"}},
-        "controller":{"platform":"pinmame.dataeast","hardware_generation":"0x1000","inversion_applied_by_emulator":False},
+        "coverage":{"status":"partial","missing":["output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"],"dimensions":{"catalog_identity":"validated","address_enumeration":"validated","semantic_naming":"conflicted","physical_wiring":"conflicted","mechanisms":"conflicted","variant_coverage":"validated","recreation_knowledge":"candidate","spatial_placement":"candidate"}},
+		"controller":{"platform":"pinmame.dataeast","hardware_generation":"0x1000","inversion_applied_by_emulator":True},
         "drivers":[{"id":"play_a24","description":"Playboy 35th Anniversary (2.4)","year":"1989","manufacturer":"Data East","flags":0,"physical_compatibility":"identical","variant_notes":"The sole published driver. Exhaustive pinned-source search found no CORE_CLONEDEF and no second DRIVER entry; single-driver coverage is deliberate, not an omitted family."}],
         "inputs":inputs,"outputs":outputs,"displays":displays(),"mechanisms":mechanisms(),
         "relationships":[{"id":f"relationship.lr-relay-{number}","kind":"relay_gated","source":"coil.driver-10","destination":f"coil.driver-{number}","provenance":provenance("conflicted",CORE_SOURCE,MANUAL_SOURCE)} for number in range(25,33)],
@@ -718,7 +718,6 @@ def build_spatial(machine: dict[str,object]) -> dict[str,object]:
             {"dimension":"raw-mux-timing","devices":["coil.driver-10"]+[f"coil.driver-{number}" for number in range(25,33)],"reason":"Decoded public outputs are usable, but a board-level recreation would still need the exact one-IRQ PIA/K1 relationship and electrical polarity. Address 31 has no fitted physical device, but no trace proves its decoded public slot is constant-zero."},
         ],
         "blockers":[
-            {"dimension":"controller_platform","devices":["pinmame.dataeast"],"reason":"Data East uses a System 11-derived emulator implementation, but its board family and diagnostics are not represented by the Williams-only pinmame.system-11 profile.","would_resolve":"A reviewed Data East controller profile derived from the pinned core and original board documentation."},
             {"dimension":"output_semantics","devices":["coil.driver-4","coil.driver-5","coil.driver-13","coil.driver-14","coil.driver-15","coil.driver-19"]+[f"coil.driver-{number}" for number in range(25,33)],"reason":"Callback aliases/comments disagree with printed groups, one public special-solenoid state is also a background proxy, core PWM typing disagrees with the physical C-bank fitment, and unfitted address 31 lacks a decoded-state trace.","would_resolve":"Original-machine lamp/coil-test video synchronized with public output traces and a harness endpoint survey."},
             {"dimension":"mechanism_behavior","devices":["mechanism.grotto-kicker","mechanism.left-slingshot","mechanism.right-slingshot","mechanism.left-pop","mechanism.center-pop","mechanism.right-pop"],"reason":"Script establishes event edges but not the hidden Grotto transfer geometry or hardware-triggered special-coil pulse behavior.","would_resolve":"Original-machine captures of the Grotto ball path and each special-solenoid switch/coil waveform."},
             {"dimension":"polarity","devices":["switch.matrix-15","switch.matrix-16","coil.driver-10","coil.driver-45","coil.driver-46","coil.driver-47","coil.driver-48"],"reason":"The core publishes cabinet buttons at manual EOS addresses and decoded mux states, but no at-rest/end-of-stroke or relay electrical trace proves physical polarity.","would_resolve":"Bench capture of cabinet button, EOS, K1 relay, raw A/C driver and public output states."},
@@ -769,7 +768,7 @@ Pinned `s11.c` types output 9 as a bulb, 11 as GI, 12-15 as bulbs, and 25-32 as 
 - Solenoid 23 is Game On; 24 is unused; 33-44 are inert; 45-48 are synthetic lower-flipper winding states; 49 is a simulation-only shooter state; 50 is reserved.
 - Solenoid 10 is K1, which selects the C-bank block at public outputs 25-32.
 
-The controller id is `pinmame.dataeast`, not `pinmame.system-11`: sharing PinMAME's `s11.c` implementation does not turn the physical Data East CPU/driver board into Williams System 11 hardware. `INITGAMES11` leaves Playboy's `wpc.invSw` array zero-initialized, and `core.c` copies that zero mask into `coreGlobals.invSw`, so the emulator applies no per-game switch inversion for this driver. No reviewed Data East controller profile exists yet, so `controller_platform` remains an explicit promotion blocker.
+The controller id is `pinmame.dataeast`, not `pinmame.system-11`: sharing PinMAME's `s11.c` implementation does not turn the physical Data East CPU/driver board into Williams System 11 hardware. The reviewed shared profile now supplies the platform address contract. The machine-level `inversion_applied_by_emulator` flag is true because consumers receive normalized public states and must not invert them again. Independently, `INITGAMES11` leaves Playboy's per-game `wpc.invSw` array all zeroes.
 
 The manual prints physical flipper EOS contacts at matrix 15/16, but `FLIP1516` makes the non-fliptronic core overwrite those public addresses with left/right cabinet-button state. This is a PinMAME public-address behavior rather than a description of the physical EOS wiring. A recreation should use public 15/16 as cabinet-button state and must not infer physical EOS state from them.
 
@@ -801,7 +800,6 @@ The table SHA-256 is `{TABLE_SHA256}`, contains 1,748 gameitems, and binds `Cons
 
 Status remains `partial`; `coverage.missing` is [{missing}].
 
-- `controller_platform`: no reviewed Data East controller profile yet represents this physical board family.
 - `output_semantics`: callback group aliases/comments and core C-bank bulb typing disagree with printed physical functions.
 - `mechanism_behavior`: hidden Grotto transfer geometry and hardware-triggered special-coil pulse behavior are absent.
 - `polarity`: no original-machine trace reconciles cabinet button/EOS, K1 relay, and raw versus decoded output states.
@@ -815,7 +813,7 @@ Consume PinMAME's decoded public mux outputs without adding another IRQ delay. T
 
 
 LEDGER_ANCHOR = "Data East Playboy 35th Anniversary (`data-east.playboy-35th-anniversary.1989`)"
-LEDGER_BLOCK = """Data East Playboy 35th Anniversary (`data-east.playboy-35th-anniversary.1989`) was curated on 2026-08-09, replacing `stub.pinmame.play_a24`. Pinned source contains the single `CORE_GAMEDEF(play,a24,...)` and no `CORE_CLONEDEF`; the one-driver physical family is deliberate. It remains `partial` with `coverage.missing = ["controller_platform", "output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"]` and ten preserved conflicts. The retained geometry is exactly 952 by 1974, and both extents are asserted before normalization. The controller id is `pinmame.dataeast`; sharing PinMAME's `s11.c` implementation does not make the physical CPU/driver board Williams System 11 hardware, and a reviewed Data East controller profile is still required.
+LEDGER_BLOCK = """Data East Playboy 35th Anniversary (`data-east.playboy-35th-anniversary.1989`) was curated on 2026-08-09, replacing `stub.pinmame.play_a24`. Pinned source contains the single `CORE_GAMEDEF(play,a24,...)` and no `CORE_CLONEDEF`; the one-driver physical family is deliberate. It remains `partial` with `coverage.missing = ["output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"]` and ten preserved conflicts. The retained geometry is exactly 952 by 1974, and both extents are asserted before normalization. The controller id is `pinmame.dataeast`; the reviewed shared profile now represents its common Data East address contract without misclassifying the physical board as Williams System 11.
 
 Six points generalise from this record.
 
@@ -833,7 +831,13 @@ def merge_ledger(current: str) -> str:
     if LEDGER_BLOCK in current:
         return current
     if LEDGER_ANCHOR in current:
-        raise ValueError("Playboy 35th Anniversary ledger entry exists but differs from the generated block")
+        start = current.index(LEDGER_ANCHOR)
+        end = current.find("\nData East ", start + len(LEDGER_ANCHOR))
+        if end < 0:
+            end = current.find("Before selecting a game, check this ledger", start)
+        if end < 0:
+            raise ValueError("Playboy 35th Anniversary ledger entry has no safe replacement boundary")
+        return current[:start] + LEDGER_BLOCK + current[end + 1:]
     marker = "Before selecting a game, check this ledger"
     if marker not in current:
         raise ValueError("CURRENT-STATE insertion marker missing")

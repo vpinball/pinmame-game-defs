@@ -48,7 +48,6 @@ Status: **partial**. Format `pinmame-spatial-blockers`.
 
 ## Blockers
 
-- **controller_platform** — `pinmame.dataeast`: Laser War uses Data East CPU/driver hardware, not a Williams System 11 board. No reviewed pinmame.dataeast controller profile exists yet. Would resolve: A reviewed Data East controller profile derived from pinned source and original board documentation.
 - **polarity** — `coil.driver-45`, `coil.driver-46`, `coil.driver-47`, `coil.driver-48`, `switch.matrix-46`, `switch.matrix-47`: The community technical chart prints the physical flipper/EOS wiring, but controller-facing runtime behavior conflicts with the printed EOS labels and no retained evidence establishes the polarity translation. Would resolve: Bench observation of controller-facing flipper-button and EOS polarity synchronized with the physical contacts.
 - **output_semantics** — `coil.driver-17`, `coil.driver-18`, `coil.driver-19`, `coil.driver-20`, `coil.driver-21`, `coil.driver-22`, `coil.driver-30`, `coil.driver-31`, `coil.driver-32`: The explicit game-specific Coil No. 17-22 table and the mapping inferred from shared Data East PIA comments plus setSSSol disagree on four of the six special-solenoid bindings. The chart marks physical special circuit 22 and right-bank branches 6R-8R unfitted, but pinned PinMAME can still publish their PIA or K1-multiplexed public state at addresses 22 and 30-32. Would resolve: A LibPinMAME trace observing public outputs 17-22 and 30-32 while each bumper and slingshot switch is fired and relay K1 is toggled.
 - **mechanism_behavior** — `mechanism.kickback`, `coil.driver-15`, `switch.matrix-17`: The chart proves that public output 15 drives a relay and that a separately powered 23-900 coil performs the kick, while the script proves that switch 17 triggers the local kick only while the relay is armed. The retained sources do not expose the relay-to-local-coil interface or timing well enough to make the downstream coil a controller actuator. Would resolve: A traced schematic path or synchronized bench capture of output 15, switch 17, and the local kickback winding.
@@ -68,4 +67,4 @@ Status: **partial**. Format `pinmame-spatial-blockers`.
 
 ## Promotion decision
 
-Keep partial. The special-solenoid public mapping remains conflicted, and the Data East controller profile, kickback's relay-to-local-coil implementation, flipper/EOS polarity, and socket-level tower/GI placements remain authoring-critical blockers.
+Keep partial. The special-solenoid public mapping remains conflicted, and the kickback's relay-to-local-coil implementation, flipper/EOS polarity, and socket-level tower/GI placements remain authoring-critical blockers.

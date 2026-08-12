@@ -3,8 +3,7 @@
 Coverage: **partial - manual-verified semantic I/O for the full 8x8 switch and lamp matrices with
 connector, wire-colour and drive-transistor wiring, all 22 printed coil drivers including the
 Left/Right relay pair, and normalized placements from one retained recreation; held below
-author-ready because the Data East controller contract is not yet represented by a profile, the
-W7 jumper meaning and device polarities remain incomplete, only a single recreation was retained,
+author-ready because the W7 jumper meaning and device polarities remain incomplete, only a single recreation was retained,
 and 4 source disagreements are unresolved**
 
 ## Identity
@@ -18,23 +17,17 @@ sets, plus a ROM-layout macro on 1.01. Sound ROMs are byte-identical across all 
 **`batmanf` is Batman Forever, Sega 1995, `GEN_DEDMD64`.** It lives in the same game-table file
 and shares a name prefix, and it is a completely different physical machine. Do not group them.
 
-## Relationship to `pinmame.system-11`, and why this record does not claim it
+## Relationship to the shared Data East profile
 
 Batman is **Data East hardware**, `GEN_DEDMD16`. It is not a Williams System 11 machine. What is
 true is narrower and is a fact about PinMAME rather than about the cabinet: there is no `de.c`,
 `degames.c` includes `s11.h`, and Data East games are driven by the same emulator source file as
 Williams System 11 because the Data East CPU board was closely derived from it.
 
-That makes `controllers/pinmame/system-11.json` the closest existing profile, and the two agree on
-the load-bearing parts: column-major sequential switch numbering, a single DIP-style jumper bit at
-public address 0, 64 lamps, the mux-relay pairing of an A-side address with A+24, address 23 as a
-flipper/switched-solenoid enable with no device behind it, and no GI channel anywhere on the
-platform. Those conclusions were reached here independently from source before that profile
-existed, and they match.
+The reviewed `controllers/pinmame/data-east.json` profile now represents those shared facts directly: column-major sequential switch numbering, the W7 jumper at public DIP address 0, 64 base lamps, the mux-relay pairing of an A-side address with A+24, address 23 as a virtual flipper/switched-solenoid enable, Data East's special-solenoid permutation, and no dedicated GI channel. Batman therefore no longer carries a `controller_platform` blocker.
 
-They are not the same profile, and this record therefore keeps the `pinmame.dataeast` platform
-string that nine already-committed definitions use rather than claiming a Williams one. Four
-differences are established from pinned source:
+The record therefore keeps the `pinmame.dataeast` platform rather than claiming a Williams one.
+Four differences are established from pinned source:
 
 - **Diagnostic buttons.** `s11.h` gives Data East only `DE_SWADVANCE` (-7) and `DE_SWUPDN` (-6).
   The -5 and -4 addresses beside them are `S11_SWCPUDIAG` and `S11_SWSOUNDDIAG`, Williams only.
@@ -45,10 +38,7 @@ differences are established from pinned source:
 - **Advance polarity.** `s11.c` reads Data East's Advance button inverted, as
   `!core_getSw(DE_SWADVANCE)`.
 
-Authoring a Data East profile would set the address contract for all nine of those records at
-once, and whether one profile should span every Data East generation - or whether Sega-era games
-belong under a profile named "Data East" - are scope and naming calls for a maintainer. This
-record documents the model instead of pre-empting that decision.
+The machine-level `inversion_applied_by_emulator: true` follows the repository contract: consumers must not invert normalized public LibPinMAME states again. Batman's per-game `wpc.invSw` mask is independently all zeroes; that fact is retained here rather than overloaded into the consumer-facing flag.
 
 ## The address model, and where it differs from WPC and Whitestar
 

@@ -2,14 +2,6 @@
   "blockers": [
     {
       "devices": [
-        "pinmame.dataeast"
-      ],
-      "dimension": "controller_platform",
-      "reason": "Laser War uses Data East CPU/driver hardware, not a Williams System 11 board. No reviewed pinmame.dataeast controller profile exists yet.",
-      "would_resolve": "A reviewed Data East controller profile derived from pinned source and original board documentation."
-    },
-    {
-      "devices": [
         "coil.driver-45",
         "coil.driver-46",
         "coil.driver-47",
@@ -144,7 +136,7 @@
       "status": "candidate"
     }
   ],
-  "promotion_decision": "Keep partial. The special-solenoid public mapping remains conflicted, and the Data East controller profile, kickback's relay-to-local-coil implementation, flipper/EOS polarity, and socket-level tower/GI placements remain authoring-critical blockers.",
+  "promotion_decision": "Keep partial. The special-solenoid public mapping remains conflicted, and the kickback's relay-to-local-coil implementation, flipper/EOS polarity, and socket-level tower/GI placements remain authoring-critical blockers.",
   "resolved": [
     {
       "id": "switch.matrix-14",

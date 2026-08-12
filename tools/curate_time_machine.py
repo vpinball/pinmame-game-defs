@@ -564,8 +564,8 @@ def build_machine() -> dict[str, object]:
 	return {
 		"format":"pinmame-machine-definition", "schema_version":2,
 		"machine":{"id":MACHINE_ID,"name":"Time Machine","manufacturer":"Data East","year":1988,"kind":"physical_pinball","playfield":{"width":1000.0,"height":1910.0,"units":"vpx","provenance":provenance("validated",TABLE_SOURCE)}},
-		"coverage":{"status":"partial","missing":["controller_platform","output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"],"dimensions":{"catalog_identity":"validated","controller_platform":"unknown","address_enumeration":"validated","semantic_naming":"conflicted","physical_wiring":"conflicted","mechanisms":"conflicted","variant_coverage":"validated","recreation_knowledge":"candidate","spatial_placement":"candidate"}},
-		"controller":{"platform":"pinmame.dataeast","hardware_generation":"0x1000","inversion_applied_by_emulator":False},
+		"coverage":{"status":"partial","missing":["output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"],"dimensions":{"catalog_identity":"validated","address_enumeration":"validated","semantic_naming":"conflicted","physical_wiring":"conflicted","mechanisms":"conflicted","variant_coverage":"validated","recreation_knowledge":"candidate","spatial_placement":"candidate"}},
+		"controller":{"platform":"pinmame.dataeast","hardware_generation":"0x1000","inversion_applied_by_emulator":True},
 		"drivers":[
 			{"id":"tmac_a24","description":"Time Machine (2.4)","year":"1988","manufacturer":"Data East","flags":0,"physical_compatibility":"identical","variant_notes":"Clone-tree parent and retained-table ROM. Highest firmware revision; shared tmacGameData and physical definition."},
 			{"id":"tmac_a18","clone_of":"tmac_a24","description":"Time Machine (1.8)","year":"1988","manufacturer":"Data East","flags":0,"physical_compatibility":"compatible","variant_notes":"Earlier English-language program ROMs; same INITGAMES11 physical GameData, display array, flipper declaration, and sound board as the parent."},
@@ -609,7 +609,6 @@ def build_spatial(machine: dict[str, object]) -> dict[str, object]:
 			{"dimension":"special_coil_binding","devices":["coil.driver-17","coil.driver-22"],"reason":"The manual swaps right and center pop assignments between its table and drawing; pinned Data East routing establishes only that SP1 and SP2 publish as 17 and 22."},
 		],
 		"blockers":[
-			{"dimension":"controller_platform","devices":["controller.platform"],"reason":"Time Machine is correctly classified as pinmame.dataeast, but no Data East controller profile is authored. A System 11 profile cannot stand in for the Data East address contract.","would_resolve":"A reviewed pinmame.dataeast controller profile that explicitly derives the Data East matrix, diagnostic, PIA, mux, and flipper-state rules from pinned PinMAME source."},
 			{"dimension":"output_semantics","devices":["coil.driver-29","coil.driver-30","coil.driver-31","coil.driver-32"],"reason":"Pinned source configures four distinct emulator-published mux-state output types at 29-32, but static evidence does not prove runtime activity. The retained manual has no printed device row for these public states and the retained script registers no callback, so availability is unknown and no physical quantity or socket is claimed.","would_resolve":"A retained original-machine or LibPinMAME runtime trace that records each public state 29-32 under controlled relay conditions, paired with a source-backed circuit or socket survey."},
 			{"dimension":"mechanism_behavior","devices":["coil.driver-17","coil.driver-18","coil.driver-19","coil.driver-21","coil.driver-22"],"reason":"Hardware-triggered special-coil pulse timing is absent from the retained public callbacks, and SP1/SP2 physical assignment conflicts.","would_resolve":"Original-machine captures of each bumper/slingshot switch and special-solenoid state, with right and center bumpers exercised separately."},
 			{"dimension":"polarity","devices":["switch.matrix-15","switch.matrix-16","coil.driver-45","coil.driver-46","coil.driver-47","coil.driver-48"],"reason":"Physical EOS contacts and controller-facing button/synthetic winding states share public meanings without an at-rest/end-of-stroke bench capture.","would_resolve":"Bench capture of cabinet button, EOS at rest/end of stroke, and public power/hold states on an original machine or faithful harness."},
@@ -617,7 +616,7 @@ def build_spatial(machine: dict[str, object]) -> dict[str, object]:
 			{"dimension":"unresolved_conflicts","devices":conflict_ids,"reason":"Five machine-specific source disagreements remain first-class and promotion-critical.","would_resolve":"Corrected upstream sources or independent original-machine traces that explicitly settle each conflicting state."},
 		],
 		"conflicts":conflict_ids,
-		"promotion_decision":"Keep partial. The Data East controller profile, runtime activity of mux states 29-32, SP1/SP2 placement, EOS/button semantics, lamp 25 location, special-coil behavior, polarity, and socket-level placement remain unresolved.",
+		"promotion_decision":"Keep partial. Runtime activity of mux states 29-32, SP1/SP2 placement, EOS/button semantics, lamp 25 location, special-coil behavior, polarity, and socket-level placement remain unresolved.",
 	}
 
 
@@ -639,7 +638,7 @@ Machine definition: `{MACHINE_PATH.as_posix()}`
 
 Pinned PinMAME defines `tmac_a24` as the clone-tree parent, with `tmac_a18` and `tmac_g18` cloning it. All three catalog rows are dated 12/88. The physical declaration is `INITGAMES11(tmac, GEN_DE, de_dispAlpha2, FLIP1516, SNDBRD_DE1S, 0, 0)`. The parent is the highest revision because that is what the macro says; no revision-order rule was inferred.
 
-`de_dispAlpha2` supplies two seven-character alphanumeric and two seven-character numeric displays. They are controlled backbox devices and have explicit `not_applicable` playfield-spatial records. The machine is correctly bound to `pinmame.dataeast`; no Data East controller profile is authored, so `controller_platform` remains a concrete coverage blocker rather than borrowing the System 11 profile. `INITGAMES11` leaves Time Machine's `wpc.invSw` array zero-initialized, and `core.c` copies that zero mask into `coreGlobals.invSw`, so the emulator applies no per-game switch inversion for any of the three drivers.
+`de_dispAlpha2` supplies two seven-character alphanumeric and two seven-character numeric displays. They are controlled backbox devices and have explicit `not_applicable` playfield-spatial records. The machine is correctly bound to the reviewed `pinmame.dataeast` profile and no longer carries a controller-platform blocker. The machine-level `inversion_applied_by_emulator` flag is true because consumers receive normalized public states and must not invert them again. Independently, `INITGAMES11` leaves Time Machine's per-game `wpc.invSw` array all zeroes.
 
 ## Address coverage
 
@@ -672,7 +671,6 @@ The retained table SHA-256 is `{TABLE_SHA256}` and binds the correct parent with
 
 Status remains `partial`. `coverage.missing` is [{missing}].
 
-- `controller_platform`: the Data East platform has no authored controller profile.
 - `output_semantics`: public 29-32 are distinct emulator-published mux states whose runtime activity, physical quantity, and circuit identity are untraced.
 - `mechanism_behavior`: hardware-triggered special-coil timing is not exposed, and SP1/SP2 assignment conflicts.
 - `polarity`: FLIP1516 publishes cabinet-button state where the manual prints physical EOS contacts; no bench capture reconciles rest/end-of-stroke state.
@@ -685,13 +683,13 @@ Recreate only the explicitly mapped addresses and topologies. Do not invent acti
 """
 
 
-LEDGER_BLOCK = """Data East Time Machine (`data-east.time-machine.1988`) was corrected on 2026-08-09 in its isolated worktree. It remains `partial` with `coverage.missing = ["controller_platform", "output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"]` and five unresolved source conflicts. The retained geometry is exactly 1000 by 1910, and both extents are asserted before normalization.
+LEDGER_BLOCK = """Data East Time Machine (`data-east.time-machine.1988`) was corrected on 2026-08-09 in its isolated worktree. It remains `partial` with `coverage.missing = ["output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"]` and five unresolved source conflicts. The retained geometry is exactly 1000 by 1910, and both extents are asserted before normalization.
 
 Four things from it generalise.
 
 1. **An emulator-published output type is not runtime evidence.** Time Machine's `s11.c` short-name block configures four distinct mux-state types at public 29-32, while the retained manual and active table resolve only the first four right-bank devices at 25-28. Without a trace, the remaining states are `unknown` availability with no physical quantity, rather than either live hardware or dead address space.
 2. **A collection-driven lamp mapper can contain more numeric Light names than the controller has addresses.** `vpmMapLights` indexes each member by `TimerInterval`; TimerInterval 1-64 cover the hardware matrix, while sole member `l65` targets unreachable slot 65 and is a backglass presentation helper. Count controller addresses first, then explain every extra object.
-3. **Data East is not a substitute name for the System 11 profile.** Time Machine shares emulator implementation paths with System 11, but its platform record is `pinmame.dataeast`; it remains a controller-platform blocker until an explicit Data East profile is independently derived. Construction and causality likewise remain separate: the script proves a three-position serial lock released through one output, while the retained Archive.org manual's assembly drawing proves one cam, spring-return plunger and coil.
+3. **Data East is not a substitute name for the System 11 profile.** Time Machine shares emulator implementation paths with System 11, but its platform record is the independently derived `pinmame.dataeast` profile. Construction and causality likewise remain separate: the script proves a three-position serial lock released through one output, while the retained Archive.org manual's assembly drawing proves one cam, spring-return plunger and coil.
 4. **Data East's printed SP1-SP6 order is not PinMAME public 17-22 order.** `src/wpc/s11.c` PIA comments identify handlers 0-5 as SP6, SP5, SP2, SP3, SP1 and SP4; applying the Data East `ssSolNo` offsets `{3,4,5,1,0,2}` derives printed SP1, SP3, SP4, SP6, SP5 and SP2 at public 17-22. On Time Machine that moves the unfitted SP6 circuit to public 20, places the known left sling/left pop/right sling at 18/19/21, and leaves the conflicting right/center SP1/SP2 pair at 17/22. Preserve the printed SP identity as a manual alias and derive the public binding from both the handler comments and permutation; sequentially assigning SP1-SP6 to 17-22 silently mislabels five of six addresses.
 
 The physical family is the three-driver `tmac_*` clone tree (`tmac_a24` parent plus English `tmac_a18` and German `tmac_g18` firmware); all share the same physical game-data declaration.
@@ -704,7 +702,13 @@ def merge_ledger(current: str) -> str:
 	if LEDGER_BLOCK in current:
 		return current
 	if anchor in current:
-		raise ValueError("Time Machine ledger entry exists but differs from the generated block")
+		start = current.index(anchor)
+		end = current.find("\nData East ", start + len(anchor))
+		if end < 0:
+			end = current.find("Before selecting a game, check this ledger", start)
+		if end < 0:
+			raise ValueError("Time Machine ledger entry has no safe replacement boundary")
+		return current[:start] + LEDGER_BLOCK + current[end + 1:]
 	marker = "Before selecting a game, check this ledger"
 	if marker not in current:
 		raise ValueError("CURRENT-STATE insertion marker missing")

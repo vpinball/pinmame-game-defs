@@ -6,7 +6,7 @@ Machine definition: `machines/partial/data-east/time-machine-1988.json`
 
 Pinned PinMAME defines `tmac_a24` as the clone-tree parent, with `tmac_a18` and `tmac_g18` cloning it. All three catalog rows are dated 12/88. The physical declaration is `INITGAMES11(tmac, GEN_DE, de_dispAlpha2, FLIP1516, SNDBRD_DE1S, 0, 0)`. The parent is the highest revision because that is what the macro says; no revision-order rule was inferred.
 
-`de_dispAlpha2` supplies two seven-character alphanumeric and two seven-character numeric displays. They are controlled backbox devices and have explicit `not_applicable` playfield-spatial records. The machine is correctly bound to `pinmame.dataeast`; no Data East controller profile is authored, so `controller_platform` remains a concrete coverage blocker rather than borrowing the System 11 profile. `INITGAMES11` leaves Time Machine's `wpc.invSw` array zero-initialized, and `core.c` copies that zero mask into `coreGlobals.invSw`, so the emulator applies no per-game switch inversion for any of the three drivers.
+`de_dispAlpha2` supplies two seven-character alphanumeric and two seven-character numeric displays. They are controlled backbox devices and have explicit `not_applicable` playfield-spatial records. The machine is correctly bound to the reviewed `pinmame.dataeast` profile and no longer carries a controller-platform blocker. The machine-level `inversion_applied_by_emulator` flag is true because consumers receive normalized public states and must not invert them again. Independently, `INITGAMES11` leaves Time Machine's per-game `wpc.invSw` array all zeroes.
 
 ## Address coverage
 
@@ -37,9 +37,8 @@ The retained table SHA-256 is `b6c4b39bc7a672c1914b25e19192ec4cde8432aae00f9a5cd
 
 ## Coverage and blockers
 
-Status remains `partial`. `coverage.missing` is [`controller_platform`, `output_semantics`, `mechanism_behavior`, `polarity`, `spatial_placement`, `unresolved_conflicts`].
+Status remains `partial`. `coverage.missing` is [`output_semantics`, `mechanism_behavior`, `polarity`, `spatial_placement`, `unresolved_conflicts`].
 
-- `controller_platform`: the Data East platform has no authored controller profile.
 - `output_semantics`: public 29-32 are distinct emulator-published mux states whose runtime activity, physical quantity, and circuit identity are untraced.
 - `mechanism_behavior`: hardware-triggered special-coil timing is not exposed, and SP1/SP2 assignment conflicts.
 - `polarity`: FLIP1516 publishes cabinet-button state where the manual prints physical EOS contacts; no bench capture reconciles rest/end-of-stroke state.

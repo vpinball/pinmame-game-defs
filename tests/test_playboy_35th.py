@@ -68,7 +68,7 @@ class PlayboyDefinitionTests(unittest.TestCase):
         coverage = self.definition["coverage"]
         self.assertEqual("partial",coverage["status"])
         self.assertEqual(
-            {"controller_platform","output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"},
+            {"output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"},
             set(coverage["missing"]),
         )
 
@@ -87,7 +87,7 @@ class PlayboyDefinitionTests(unittest.TestCase):
 
     def test_controller_contract_and_mux_delay_are_recorded(self) -> None:
         self.assertEqual(
-            {"platform":"pinmame.dataeast","hardware_generation":"0x1000","inversion_applied_by_emulator":False},
+            {"platform":"pinmame.dataeast","hardware_generation":"0x1000","inversion_applied_by_emulator":True},
             self.definition["controller"],
         )
         source = next(item for item in self.definition["sources"] if item["kind"] == "pinmame_core")

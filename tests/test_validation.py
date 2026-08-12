@@ -8,7 +8,7 @@ from pathlib import Path
 
 from pinmame_game_defs.jsonio import load_json
 from pinmame_game_defs.schema_validation import validate_against_schema
-from pinmame_game_defs.validation import _validate_curator_placeholder_digests, _validate_python_line_endings, _validate_runtime_observations, validate_machine, validate_repository
+from pinmame_game_defs.validation import _validate_curator_placeholder_digests, _validate_python_line_endings, _validate_runtime_observations, validate_controller_profile, validate_machine, validate_repository
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -359,17 +359,31 @@ class RepositoryValidationTests(unittest.TestCase):
 			self.assertNotEqual([], validate_against_schema(rejected, ROOT / "schemas" / "machine.schema.json", label), label)
 
 	def test_controller_plugin_routes_match_pinmame_contract(self) -> None:
-		for filename in ("sam.json", "stern-mpu200.json", "wpc-alpha.json"):
-			profile = load_json(ROOT / "controllers" / "pinmame" / filename)
+		expected = {
+			"pinmame.input.switch": 1,
+			"pinmame.output.solenoid": 1,
+			"pinmame.output.gi": 256,
+			"pinmame.output.lamp": 512,
+		}
+		for path in sorted((ROOT / "controllers" / "pinmame").glob("*.json")):
+			profile = load_json(path)
 			groups = {group["id"]: group for group in profile["groups"]}
-			self.assertEqual(1, groups["pinmame.input.switch"]["transports"]["controller_plugin"]["group_id"])
-			self.assertEqual(1, groups["pinmame.output.solenoid"]["transports"]["controller_plugin"]["group_id"])
-			self.assertEqual(512, groups["pinmame.output.lamp"]["transports"]["controller_plugin"]["group_id"])
-			if "pinmame.output.gi" in groups:
-				self.assertEqual(256, groups["pinmame.output.gi"]["transports"]["controller_plugin"]["group_id"])
-			if filename == "sam.json":
+			for group_id, expected_group_id in expected.items():
+				plugin = groups.get(group_id, {}).get("transports", {}).get("controller_plugin")
+				if plugin is not None:
+					self.assertEqual(expected_group_id, plugin["group_id"], f"{path.name}:{group_id}")
+			if path.name == "sam.json":
 				self.assertEqual({}, groups["physical.output.ticket"]["transports"])
 			self.assertEqual("https://github.com/vpinball/pinmame", profile["sources"][-1]["uri"])
+
+		invalid = copy.deepcopy(load_json(ROOT / "controllers" / "pinmame" / "data-east.json"))
+		solenoid = next(group for group in invalid["groups"] if group["id"] == "pinmame.output.solenoid")
+		solenoid["transports"]["controller_plugin"]["group_id"] = 256
+		self.assertTrue(
+			any("requires 1, got 256" in error for error in validate_controller_profile(invalid))
+		)
+		invalid["groups"][0]["id"] = []
+		self.assertIsInstance(validate_controller_profile(invalid), list)
 
 	def test_controller_notes_format_requires_notes(self) -> None:
 		profile = copy.deepcopy(load_json(ROOT / "controllers" / "pinmame" / "capcom.json"))
@@ -382,8 +396,8 @@ class RepositoryValidationTests(unittest.TestCase):
 	def test_controller_markdown_notes_follow_the_rendering_contract(self) -> None:
 		profiles = [load_json(path) for path in sorted((ROOT / "controllers" / "pinmame").glob("*.json"))]
 		groups = [group for profile in profiles for group in profile["groups"]]
-		self.assertEqual(11, len(profiles))
-		self.assertEqual(34, sum(group.get("notes_format") == "markdown" for group in groups))
+		self.assertEqual(12, len(profiles))
+		self.assertEqual(38, sum(group.get("notes_format") == "markdown" for group in groups))
 		self.assertEqual(9, sum("notes" in group and "notes_format" not in group for group in groups))
 		self.assertEqual(9, sum("notes" not in group for group in groups))
 		for group in groups:

@@ -494,7 +494,7 @@ class BatmanDefinitionTests(unittest.TestCase):
     def test_promotion_state_is_partial(self) -> None:
         coverage = self.definition["coverage"]
         self.assertEqual("partial", coverage["status"])
-        self.assertEqual(["controller_platform", "input_semantics", "mechanism_behavior", "polarity",
+        self.assertEqual(["input_semantics", "mechanism_behavior", "polarity",
                           "recreation_notes", "spatial_placement", "unresolved_conflicts"],
                          coverage["missing"])
 

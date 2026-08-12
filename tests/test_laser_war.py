@@ -78,7 +78,7 @@ class LaserWarDefinitionTests(unittest.TestCase):
 
     def test_identity_generation_and_driver_tree(self) -> None:
         self.assertEqual("data-east.laser-war.1987", self.definition["machine"]["id"])
-        self.assertEqual({"platform": "pinmame.dataeast", "hardware_generation": "0x1000", "inversion_applied_by_emulator": False},
+        self.assertEqual({"platform": "pinmame.dataeast", "hardware_generation": "0x1000", "inversion_applied_by_emulator": True},
                          self.definition["controller"])
         self.assertEqual(OWN_DRIVERS, {driver["id"] for driver in self.definition["drivers"]})
         root = next(driver for driver in self.definition["drivers"] if driver["id"] == "lwar_a83")
@@ -88,10 +88,10 @@ class LaserWarDefinitionTests(unittest.TestCase):
         self.assertEqual({"width": 964.0, "height": 2162.0, "units": "vpx", "provenance": {"status": "validated", "source_refs": ["vpx-table.laser-war-vr-2-0"]}},
                          self.definition["machine"]["playfield"])
 
-    def test_data_east_controller_gap_is_explicit_and_namespaces_are_exact(self) -> None:
-        self.assertFalse((ROOT / "controllers" / "pinmame" / "dataeast.json").exists())
+    def test_data_east_controller_profile_exists_and_namespaces_are_exact(self) -> None:
+        self.assertEqual("pinmame.dataeast", load_json(ROOT / "controllers" / "pinmame" / "data-east.json")["id"])
         blockers = [item for item in load_json(REPORT_PATH)["blockers"] if item["dimension"] == "controller_platform"]
-        self.assertEqual([["pinmame.dataeast"]], [item["devices"] for item in blockers])
+        self.assertEqual([], blockers)
         self.assertEqual({-7, -6}, {item["binding"]["device"] for item in self.definition["inputs"] if item["binding"]["device"] < 0})
         self.assertEqual(set(range(1, 51)), {item["binding"]["device"] for item in self.definition["outputs"] if item["binding"]["group"] == "pinmame.output.solenoid"})
         self.assertEqual(set(range(1, 65)), {item["binding"]["device"] for item in self.definition["outputs"] if item["binding"]["group"] == "pinmame.output.lamp"})
@@ -101,7 +101,7 @@ class LaserWarDefinitionTests(unittest.TestCase):
     def test_coverage_is_fail_closed_and_names_every_missing_dimension(self) -> None:
         coverage = self.definition["coverage"]
         self.assertEqual("partial", coverage["status"])
-        self.assertEqual(["controller_platform", "output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"], coverage["missing"])
+        self.assertEqual(["output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"], coverage["missing"])
         self.assertEqual("conflicted", coverage["dimensions"]["physical_wiring"])
         self.assertEqual("candidate", coverage["dimensions"]["spatial_placement"])
         blockers = load_json(REPORT_PATH)["blockers"]
@@ -422,7 +422,7 @@ class LaserWarDefinitionTests(unittest.TestCase):
         self.assertIn("addresses 22 and 30-32", knowledge)
         self.assertIn("Nine disagreements", knowledge)
         self.assertIn("lamp 26", knowledge)
-        self.assertIn("controller_platform", knowledge)
+        self.assertIn("no longer carries a controller-platform blocker", knowledge)
         self.assertIn("Synthetic flipper outputs 45-48 are virtual", knowledge)
 
 

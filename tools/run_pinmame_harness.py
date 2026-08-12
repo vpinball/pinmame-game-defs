@@ -18,9 +18,10 @@ import re
 import sys
 import threading
 import time
-from functools import partial
 from pathlib import Path
 from typing import Any, Callable
+
+from jsonschema import Draft202012Validator
 
 
 PINMAME_MAX_PATH = 512
@@ -32,6 +33,22 @@ PINMAME_FILE_TYPE_HIGHSCORE = 4
 PINMAME_STATUS_OK = 0
 SEGMENT_16_DISPLAY_TYPES = {0, 1, 16, 17}
 MAX_DMD_EVENTS_PER_DISPLAY = 256
+SCENARIO_FORMAT = "pinmame-harness-scenario"
+SCENARIO_VERSION = 1
+SCENARIO_SCHEMA_PATH = Path(__file__).resolve().parents[1] / "schemas" / "harness-scenario.schema.json"
+# Values are pinned to src/libpinmame/libpinmame.h's PINMAME_KEYCODE enum.
+# The Data East service bindings are corroborated by src/wpc/s11.h DE_COMPORTS:
+# Green=KEYCODE_7, Black=KEYCODE_8; flippers come from src/wpc/core.h CORE_PORTS
+# at the CORE_FLIPINPORT index.
+KEY_ALIASES = {
+	"start": 27,
+	"service_green": 33,
+	"service_black": 34,
+	"left_flipper": 93,
+	"right_flipper": 94,
+}
+MIN_SAFE_PUBLIC_SWITCH = -7
+MAX_SAFE_PUBLIC_SWITCH = 120
 
 # PinMAME's regular 16-segment patterns (core_ascii2seg16). Some ROMs use
 # bespoke animation glyphs; those remain visible as ``?`` while ordinary
@@ -223,6 +240,26 @@ class Recorder:
 				{"time_s": round(time.monotonic() - self.started_at, 6), "event": event, **values}
 			)
 
+	def event_index(self) -> int:
+		with self.lock:
+			return len(self.events)
+
+	def transition_summary(self, start_index: int) -> dict[str, list[dict[str, Any]]]:
+		with self.lock:
+			events = list(self.events[start_index:])
+		summary: dict[str, list[dict[str, Any]]] = {}
+		for event_name, output_key in (("solenoid", "solenoids"), ("lamp", "lamps"), ("gi", "gis")):
+			states: dict[int, list[int]] = {}
+			for event in events:
+				if event.get("event") != event_name:
+					continue
+				states.setdefault(event["number"], []).append(event["state"])
+			summary[output_key] = [
+				{"number": number, "states": values}
+				for number, values in sorted(states.items())
+			]
+		return summary
+
 	def snapshot_displays(
 		self,
 		dmd_dir: Path | None = None,
@@ -230,35 +267,52 @@ class Recorder:
 		snapshot_label: str | None = None,
 	) -> list[dict[str, Any]]:
 		with self.lock:
-			displays = []
-			for index, frame in sorted(self.display_frames.items()):
-				layout = self.display_layouts.get(index, {})
-				display: dict[str, Any] = {"index": index, "layout": layout}
-				if (layout.get("type", -1) & 0x1F) == 14:
-					pixels = bytes(frame)
-					display["pixel_sha256"] = hashlib.sha256(pixels).hexdigest()
-					display["nonzero_pixels"] = sum(pixel != 0 for pixel in pixels)
-					if dmd_dir is not None and snapshot_index is not None:
-						dmd_dir.mkdir(parents=True, exist_ok=True)
-						slug = re.sub(r"[^a-z0-9]+", "-", (snapshot_label or "snapshot").lower()).strip("-")
-						artifact = dmd_dir / f"{snapshot_index:03d}-{slug}-display-{index}.pgm"
-						depth = max(int(layout.get("depth", 1)), 1)
-						max_level = max((1 << depth) - 1, 1)
-						grayscale = (
-							bytes(round(pixel * 255 / max_level) for pixel in pixels)
-							if max(pixels, default=0) <= max_level
-							else pixels
-						)
-						header = f"P5\n{layout['width']} {layout['height']}\n255\n".encode("ascii")
-						artifact.write_bytes(header + grayscale)
-						display["artifact"] = str(artifact)
-				else:
-					display["segments"] = frame
-				text = _decode_segment_frame(layout.get("type", -1), frame)
-				if text is not None:
-					display["text"] = text
-				displays.append(display)
-			return displays
+			frames = [
+				(index, dict(self.display_layouts.get(index, {})), list(frame))
+				for index, frame in sorted(self.display_frames.items())
+			]
+		displays = []
+		for index, layout, frame in frames:
+			display: dict[str, Any] = {"index": index, "layout": layout}
+			if (layout.get("type", -1) & 0x1F) == 14:
+				pixels = bytes(frame)
+				display["pixel_sha256"] = hashlib.sha256(pixels).hexdigest()
+				display["nonzero_pixels"] = sum(pixel != 0 for pixel in pixels)
+				if dmd_dir is not None and snapshot_index is not None:
+					dmd_dir.mkdir(parents=True, exist_ok=True)
+					slug = re.sub(r"[^a-z0-9]+", "-", (snapshot_label or "snapshot").lower()).strip("-")
+					artifact = dmd_dir / f"{snapshot_index:03d}-{slug}-display-{index}.pgm"
+					depth = max(int(layout.get("depth", 1)), 1)
+					max_level = max((1 << depth) - 1, 1)
+					grayscale = (
+						bytes(round(pixel * 255 / max_level) for pixel in pixels)
+						if max(pixels, default=0) <= max_level
+						else pixels
+					)
+					header = f"P5\n{layout['width']} {layout['height']}\n255\n".encode("ascii")
+					artifact.write_bytes(header + grayscale)
+					display["artifact"] = str(artifact)
+			else:
+				display["segments"] = frame
+			text = _decode_segment_frame(layout.get("type", -1), frame)
+			if text is not None:
+				display["text"] = text
+			displays.append(display)
+		return displays
+
+	def current_display_text(self) -> str:
+		"""Return normalized text from every currently decoded segment display."""
+		with self.lock:
+			frames = [
+				(self.display_layouts.get(index, {}).get("type", -1), list(frame))
+				for index, frame in sorted(self.display_frames.items())
+			]
+		texts = [
+			text
+			for display_type, frame in frames
+			if (text := _decode_segment_frame(display_type, frame)) is not None
+		]
+		return " ".join(" ".join(texts).upper().split())
 
 	def record_dmd_frame(self, index: int, frame: list[int]) -> None:
 		with self.lock:
@@ -340,6 +394,7 @@ def _parse_pulse(value: str) -> tuple[int, int, float]:
 		raise argparse.ArgumentTypeError("pulse values must be numeric") from exc
 	if hold_ms <= 0 or settle_s < 0:
 		raise argparse.ArgumentTypeError("pulse hold must be positive and settle non-negative")
+	_validate_public_switch_address(switch, argparse.ArgumentTypeError)
 	return switch, hold_ms, settle_s
 
 
@@ -354,7 +409,45 @@ def _parse_initial_switch(value: str) -> tuple[int, int]:
 		raise argparse.ArgumentTypeError("initial switch values must be integers") from exc
 	if state not in (0, 1):
 		raise argparse.ArgumentTypeError("initial switch state must be 0 or 1")
+	_validate_public_switch_address(switch, argparse.ArgumentTypeError)
 	return switch, state
+
+
+def _parse_watch_switch(value: str) -> int:
+	try:
+		switch = int(value)
+	except ValueError as exc:
+		raise argparse.ArgumentTypeError("watched switch must be an integer") from exc
+	_validate_public_switch_address(switch, argparse.ArgumentTypeError)
+	return switch
+
+
+def _validate_public_switch_address(
+	switch: int,
+	error_type: type[Exception] = ValueError,
+) -> None:
+	"""Reject addresses that can overrun an unchecked sequential PinMAME switch matrix.
+
+	PinMAME's native core_getSw/core_setSw functions do not bounds-check the converted
+	matrix index. Until LibPinMAME exposes a driver's converter, the harness uses the
+	conservative range shared by sequential converters and refuses less-safe addresses.
+	"""
+	if not MIN_SAFE_PUBLIC_SWITCH <= switch <= MAX_SAFE_PUBLIC_SWITCH:
+		raise error_type(
+			f"public switch address must be between {MIN_SAFE_PUBLIC_SWITCH} and "
+			f"{MAX_SAFE_PUBLIC_SWITCH}; got {switch}"
+		)
+
+
+def _load_scenario(path: Path, content: bytes | None = None) -> dict[str, Any]:
+	data = json.loads((content if content is not None else path.read_bytes()).decode("utf-8"))
+	schema = json.loads(SCENARIO_SCHEMA_PATH.read_text(encoding="utf-8"))
+	errors = sorted(Draft202012Validator(schema).iter_errors(data), key=lambda error: list(error.path))
+	if errors:
+		error = errors[0]
+		location = ".".join(str(part) for part in error.path) or "<root>"
+		raise ValueError(f"scenario schema validation failed at {location}: {error.message}")
+	return data
 
 
 def _configure_api(library: ctypes.CDLL) -> None:
@@ -374,6 +467,8 @@ def _configure_api(library: ctypes.CDLL) -> None:
 	library.PinmameStop.restype = None
 	library.PinmameSetSwitch.argtypes = [ctypes.c_int, ctypes.c_int]
 	library.PinmameSetSwitch.restype = None
+	library.PinmameGetSwitch.argtypes = [ctypes.c_int]
+	library.PinmameGetSwitch.restype = ctypes.c_int
 	library.PinmameGetMaxSolenoids.argtypes = []
 	library.PinmameGetMaxSolenoids.restype = ctypes.c_int
 	library.PinmameGetSolenoid.argtypes = [ctypes.c_int]
@@ -414,6 +509,23 @@ def _wait_with_poll(library: ctypes.CDLL, recorder: Recorder, seconds: float) ->
 	_poll_outputs(library, recorder)
 
 
+def _wait_for_display_match(
+	library: ctypes.CDLL,
+	recorder: Recorder,
+	targets: list[str],
+	seconds: float,
+) -> tuple[str | None, str]:
+	"""Poll through a settle window so short-lived diagnostic titles are not skipped."""
+	deadline = time.monotonic() + seconds
+	while True:
+		_poll_outputs(library, recorder)
+		display_text = recorder.current_display_text()
+		matched = next((target for target in targets if target in display_text), None)
+		if matched is not None or time.monotonic() >= deadline:
+			return matched, display_text
+		time.sleep(min(0.01, max(deadline - time.monotonic(), 0)))
+
+
 def _hold_switch(
 	library: ctypes.CDLL,
 	recorder: Recorder,
@@ -441,8 +553,10 @@ def _output_snapshot(
 	label: str,
 	dmd_dir: Path | None = None,
 	snapshot_index: int | None = None,
+	library: ctypes.CDLL | None = None,
+	watch_switches: tuple[int, ...] = (),
 ) -> dict[str, Any]:
-	return {
+	snapshot = {
 		"label": label,
 		"time_s": round(time.monotonic() - recorder.started_at, 6),
 		"active_solenoids": recorder.snapshot_active_solenoids(),
@@ -450,6 +564,12 @@ def _output_snapshot(
 		"active_gis": recorder.snapshot_active_gis(),
 		"displays": recorder.snapshot_displays(dmd_dir, snapshot_index, label),
 	}
+	if library is not None and watch_switches:
+		snapshot["watched_switches"] = [
+			{"number": switch, "state": 1 if library.PinmameGetSwitch(switch) else 0}
+			for switch in watch_switches
+		]
+	return snapshot
 
 
 def _append_output_snapshot(
@@ -457,8 +577,14 @@ def _append_output_snapshot(
 	recorder: Recorder,
 	label: str,
 	dmd_dir: Path | None,
+	library: ctypes.CDLL | None = None,
+	watch_switches: tuple[int, ...] = (),
 ) -> None:
-	snapshots.append(_output_snapshot(recorder, label, dmd_dir, len(snapshots)))
+	snapshots.append(
+		_output_snapshot(
+			recorder, label, dmd_dir, len(snapshots), library, watch_switches
+		)
+	)
 
 
 def _path_bytes(path: Path) -> bytes:
@@ -472,12 +598,61 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 	dll_path = args.library.resolve(strict=True)
 	rom_path = args.rom_path.resolve(strict=True)
 	work_dir = args.work_dir.resolve()
+	scenario_path = args.scenario.resolve(strict=True) if args.scenario else None
+	scenario_bytes = scenario_path.read_bytes() if scenario_path else None
+	scenario_sha256 = hashlib.sha256(scenario_bytes).hexdigest() if scenario_bytes else None
+	scenario = _load_scenario(scenario_path, scenario_bytes) if scenario_path else None
+	if scenario and scenario.get("game") and scenario["game"] != args.game:
+		raise ValueError(
+			f"scenario game {scenario['game']!r} does not match --game {args.game!r}"
+		)
+	if scenario and (args.initial_switch or args.pulse):
+		raise ValueError("--scenario cannot be combined with --initial-switch or --pulse")
+	initial_switches = (
+		[(item["switch"], item["state"]) for item in scenario.get("initial_switches", [])]
+		if scenario
+		else list(args.initial_switch)
+	)
+	actions: list[dict[str, Any]] = (
+		list(scenario.get("actions", []))
+		if scenario
+		else [
+			{
+				"type": "pulse",
+				"switch": switch,
+				"hold_ms": hold_ms,
+				"settle_s": settle_s,
+				"snapshot_while_held": args.snapshot_while_held,
+			}
+			for switch, hold_ms, settle_s in args.pulse
+		]
+	)
+	watch_switch_set = set(args.watch_switch)
+	if scenario:
+		watch_switch_set.update(scenario.get("watch_switches", []))
+	watch_switch_set.update(switch for switch, _state in initial_switches)
+	watch_switch_set.update(
+		action["switch"]
+		for action in actions
+		if action["type"] in ("pulse", "set_switch", "pulse_until_display", "pulse_until_output")
+		and "switch" in action
+	)
+	watch_switches = tuple(sorted(watch_switch_set))
+	for switch in watch_switches:
+		_validate_public_switch_address(switch)
+	use_keyboard = any(
+		action["type"] in ("pulse_key", "set_key")
+		or (action["type"] in ("pulse_until_display", "pulse_until_output") and "key" in action)
+		for action in actions
+	)
 	for child in ("nvram", "cfg", "hi"):
 		(work_dir / child).mkdir(parents=True, exist_ok=True)
 
 	library = ctypes.CDLL(str(dll_path))
 	_configure_api(library)
 	recorder = Recorder()
+	pressed_keys: set[int] = set()
+	pressed_keys_lock = threading.Lock()
 
 	@StateCallback
 	def on_state_updated(state: int, _user_data: int) -> None:
@@ -563,8 +738,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		recorder.record_solenoid(state.solNo, state.state)
 
 	@KeyPressedCallback
-	def is_key_pressed(_keycode: int, _user_data: int) -> int:
-		return 0
+	def is_key_pressed(keycode: int, _user_data: int) -> int:
+		with pressed_keys_lock:
+			return 1 if keycode in pressed_keys else 0
 
 	@SoundCommandCallback
 	def on_sound_command(board: int, command: int, _user_data: int) -> None:
@@ -597,7 +773,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		library.PinmameSetPath(
 			PINMAME_FILE_TYPE_SAMPLES, _path_bytes(args.samples_path.resolve(strict=True))
 		)
-	library.PinmameSetHandleKeyboard(0)
+	library.PinmameSetHandleKeyboard(1 if use_keyboard else 0)
 	library.PinmameSetHandleMechanics(0)
 
 	status = library.PinmameRun(args.game.encode("ascii"))
@@ -605,50 +781,338 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		raise RuntimeError(f"PinmameRun returned status {status}")
 
 	snapshots: list[dict[str, Any]] = []
+	steps: list[dict[str, Any]] = []
+	failure: dict[str, Any] | None = None
+	current_step: int | None = None
+	current_label: str | None = None
 	try:
 		if not recorder.ready.wait(args.ready_timeout):
 			raise TimeoutError("PinMAME did not report a ready state")
-		for switch, state in args.initial_switch:
+		for switch, state in initial_switches:
 			library.PinmameSetSwitch(switch, state)
-			recorder.record("switch", number=switch, state=state, initial=True)
+			recorder.record(
+				"switch",
+				number=switch,
+				state=state,
+				observed_state=1 if library.PinmameGetSwitch(switch) else 0,
+				initial=True,
+			)
 		_wait_with_poll(library, recorder, args.boot_wait)
-		snapshots.append(_output_snapshot(recorder, "booted", args.dmd_dir, len(snapshots)))
-		for step, (switch, hold_ms, settle_s) in enumerate(args.pulse, start=1):
-			recorder.record("switch", number=switch, state=1, step=step)
-			before_release = None
-			if args.snapshot_while_held:
-				before_release = partial(
-					_append_output_snapshot,
-					snapshots,
-					recorder,
-					f"while pulse {step}: switch {switch} held",
-					args.dmd_dir,
-				)
-			_hold_switch(
-				library,
-				recorder,
-				switch,
-				hold_ms / 1000,
-				before_release,
+		snapshots.append(
+			_output_snapshot(
+				recorder, "booted", args.dmd_dir, len(snapshots), library, watch_switches
 			)
-			recorder.record("switch", number=switch, state=0, step=step)
-			_wait_with_poll(library, recorder, settle_s)
-			snapshots.append(
-				_output_snapshot(
-					recorder,
-					f"after pulse {step}: switch {switch}",
-					args.dmd_dir,
-					len(snapshots),
+		)
+		for step_number, action in enumerate(actions, start=1):
+			current_step = step_number
+			start_index = recorder.event_index()
+			action_type = action["type"]
+			label = action.get("label") or f"step {step_number}: {action_type}"
+			current_label = label
+			step_result: dict[str, Any] = {
+				"step": step_number,
+				"type": action_type,
+				"label": label,
+			}
+			if action_type == "pulse":
+				switch = action["switch"]
+				hold_ms = action.get("hold_ms", 100)
+				settle_s = action.get("settle_s", 1.0)
+				recorder.record("switch", number=switch, state=1, step=step_number)
+				observed_while_held: list[int] = []
+
+				def before_release() -> None:
+					observed = 1 if library.PinmameGetSwitch(switch) else 0
+					observed_while_held.append(observed)
+					recorder.record(
+						"switch_observed", number=switch, state=observed, phase="held", step=step_number
+					)
+					if action.get("snapshot_while_held", False):
+						_append_output_snapshot(
+							snapshots,
+							recorder,
+							f"{label} (held)",
+							args.dmd_dir,
+							library,
+							watch_switches,
+						)
+
+				_hold_switch(library, recorder, switch, hold_ms / 1000, before_release)
+				released_state = 1 if library.PinmameGetSwitch(switch) else 0
+				recorder.record(
+					"switch", number=switch, state=0, observed_state=released_state, step=step_number
 				)
+				_wait_with_poll(library, recorder, settle_s)
+				step_result.update(
+					{
+						"switch": switch,
+						"hold_ms": hold_ms,
+						"settle_s": settle_s,
+						"observed_while_held": observed_while_held[-1],
+						"observed_after_release": 1 if library.PinmameGetSwitch(switch) else 0,
+					}
+				)
+			elif action_type == "set_switch":
+				switch = action["switch"]
+				state = action["state"]
+				settle_s = action.get("settle_s", 1.0)
+				library.PinmameSetSwitch(switch, state)
+				observed = 1 if library.PinmameGetSwitch(switch) else 0
+				recorder.record(
+					"switch", number=switch, state=state, observed_state=observed, step=step_number
+				)
+				_wait_with_poll(library, recorder, settle_s)
+				step_result.update(
+					{
+						"switch": switch,
+						"state": state,
+						"settle_s": settle_s,
+						"observed_state": 1 if library.PinmameGetSwitch(switch) else 0,
+					}
+				)
+			elif action_type in ("pulse_key", "set_key"):
+				key = action["key"]
+				keycode = KEY_ALIASES[key]
+				settle_s = action.get("settle_s", 1.0)
+				if action_type == "pulse_key":
+					hold_ms = action.get("hold_ms", 100)
+					with pressed_keys_lock:
+						pressed_keys.add(keycode)
+					recorder.record("key", key=key, keycode=keycode, state=1, step=step_number)
+					_wait_with_poll(library, recorder, hold_ms / 1000)
+					if action.get("snapshot_while_held", False):
+						_append_output_snapshot(
+							snapshots,
+							recorder,
+							f"{label} (held)",
+							args.dmd_dir,
+							library,
+							watch_switches,
+						)
+					with pressed_keys_lock:
+						pressed_keys.discard(keycode)
+					recorder.record("key", key=key, keycode=keycode, state=0, step=step_number)
+					step_result["hold_ms"] = hold_ms
+				else:
+					state = action["state"]
+					with pressed_keys_lock:
+						if state:
+							pressed_keys.add(keycode)
+						else:
+							pressed_keys.discard(keycode)
+					recorder.record("key", key=key, keycode=keycode, state=state, step=step_number)
+					step_result["state"] = state
+				_wait_with_poll(library, recorder, settle_s)
+				step_result.update({"key": key, "keycode": keycode, "settle_s": settle_s})
+			elif action_type == "wait":
+				seconds = action["seconds"]
+				_wait_with_poll(library, recorder, seconds)
+				step_result["seconds"] = seconds
+			elif action_type == "wait_until_output":
+				channel_key = {"solenoid": "solenoids", "lamp": "lamps", "gi": "gis"}[
+					action["channel"]
+				]
+				addresses = set(action["addresses"])
+				timeout_s = action["timeout_s"]
+				active_only = action.get("active_only", False)
+				deadline = time.monotonic() + timeout_s
+				matched_outputs: list[dict[str, Any]] = []
+				while True:
+					_poll_outputs(library, recorder)
+					matched_outputs = [
+						transition
+						for transition in recorder.transition_summary(start_index)[channel_key]
+						if transition["number"] in addresses
+						and (not active_only or any(state != 0 for state in transition["states"]))
+					]
+					if matched_outputs:
+						break
+					remaining = deadline - time.monotonic()
+					if remaining <= 0:
+						raise TimeoutError(
+							f"{label}: no {action['channel']} transition at {sorted(addresses)} "
+							f"within {timeout_s} seconds; display text was "
+							f"{recorder.current_display_text()!r}"
+						)
+					time.sleep(min(0.01, remaining))
+				step_result.update(
+					{
+						"channel": action["channel"],
+						"addresses": action["addresses"],
+						"timeout_s": timeout_s,
+						"active_only": active_only,
+						"matched_outputs": matched_outputs,
+					}
+				)
+			elif action_type == "pulse_until_display":
+				targets = [" ".join(text.upper().split()) for text in action["texts"]]
+				hold_ms = action.get("hold_ms", 100)
+				settle_s = action.get("settle_s", 1.0)
+				max_pulses = action.get("max_pulses", 20)
+				display_text = recorder.current_display_text()
+				display_checks = [{"after_pulses": 0, "display_text": display_text}]
+				matched_text = next((target for target in targets if target in display_text), None)
+				pulses_performed = 0
+				for pulse_number in range(1, max_pulses + 1):
+					if matched_text is not None:
+						break
+					if "switch" in action:
+						switch = action["switch"]
+						recorder.record(
+							"switch", number=switch, state=1, step=step_number, repeat=pulse_number
+						)
+						_hold_switch(library, recorder, switch, hold_ms / 1000)
+						recorder.record(
+							"switch", number=switch, state=0, step=step_number, repeat=pulse_number
+						)
+					else:
+						key = action["key"]
+						keycode = KEY_ALIASES[key]
+						with pressed_keys_lock:
+							pressed_keys.add(keycode)
+						recorder.record(
+							"key", key=key, keycode=keycode, state=1, step=step_number, repeat=pulse_number
+						)
+						_wait_with_poll(library, recorder, hold_ms / 1000)
+						with pressed_keys_lock:
+							pressed_keys.discard(keycode)
+						recorder.record(
+							"key", key=key, keycode=keycode, state=0, step=step_number, repeat=pulse_number
+						)
+					pulses_performed = pulse_number
+					matched_text, display_text = _wait_for_display_match(
+						library, recorder, targets, settle_s
+					)
+					display_checks.append(
+						{"after_pulses": pulse_number, "display_text": display_text}
+					)
+				if matched_text is None:
+					raise TimeoutError(
+						f"{label}: none of {targets!r} appeared after {max_pulses} pulses; "
+						f"last display text was {display_text!r}"
+					)
+				step_result.update(
+					{
+						"switch": action.get("switch"),
+						"key": action.get("key"),
+						"texts": action["texts"],
+						"matched_text": matched_text,
+						"pulses": pulses_performed,
+						"hold_ms": hold_ms,
+						"settle_s": settle_s,
+						"display_checks": display_checks,
+					}
+				)
+			elif action_type == "pulse_until_output":
+				channel_key = {"solenoid": "solenoids", "lamp": "lamps", "gi": "gis"}[
+					action["channel"]
+				]
+				addresses = set(action["addresses"])
+				hold_ms = action.get("hold_ms", 100)
+				settle_s = action.get("settle_s", 1.0)
+				max_pulses = action.get("max_pulses", 20)
+				pulse_checks: list[dict[str, Any]] = []
+				matched_outputs: list[dict[str, Any]] = []
+				for pulse_number in range(1, max_pulses + 1):
+					pulse_start = recorder.event_index()
+					if "switch" in action:
+						switch = action["switch"]
+						recorder.record(
+							"switch", number=switch, state=1, step=step_number, repeat=pulse_number
+						)
+						_hold_switch(library, recorder, switch, hold_ms / 1000)
+						recorder.record(
+							"switch", number=switch, state=0, step=step_number, repeat=pulse_number
+						)
+					else:
+						key = action["key"]
+						keycode = KEY_ALIASES[key]
+						with pressed_keys_lock:
+							pressed_keys.add(keycode)
+						recorder.record(
+							"key", key=key, keycode=keycode, state=1, step=step_number, repeat=pulse_number
+						)
+						_wait_with_poll(library, recorder, hold_ms / 1000)
+						with pressed_keys_lock:
+							pressed_keys.discard(keycode)
+						recorder.record(
+							"key", key=key, keycode=keycode, state=0, step=step_number, repeat=pulse_number
+						)
+					_wait_with_poll(library, recorder, settle_s)
+					pulse_summary = recorder.transition_summary(pulse_start)
+					matched_outputs = [
+						transition
+						for transition in pulse_summary[channel_key]
+						if transition["number"] in addresses
+					]
+					pulse_checks.append(
+						{
+							"after_pulses": pulse_number,
+							"display_text": recorder.current_display_text(),
+							"matched_outputs": matched_outputs,
+						}
+					)
+					if matched_outputs:
+						break
+				else:
+					raise TimeoutError(
+						f"{label}: no {action['channel']} transition at {sorted(addresses)} "
+						f"after {max_pulses} pulses; last display text was "
+						f"{recorder.current_display_text()!r}"
+					)
+				step_result.update(
+					{
+						"switch": action.get("switch"),
+						"key": action.get("key"),
+						"channel": action["channel"],
+						"addresses": action["addresses"],
+						"matched_outputs": matched_outputs,
+						"pulses": len(pulse_checks),
+						"hold_ms": hold_ms,
+						"settle_s": settle_s,
+						"pulse_checks": pulse_checks,
+					}
+				)
+			else:  # _load_scenario rejects this; keep run() defensive for constructed Namespaces.
+				raise ValueError(f"unsupported action type: {action_type}")
+			step_result["transitions"] = recorder.transition_summary(start_index)
+			_append_output_snapshot(
+				snapshots, recorder, label, args.dmd_dir, library, watch_switches
 			)
+			steps.append(step_result)
+			current_step = None
+			current_label = None
 		if args.observe > 0:
 			_wait_with_poll(library, recorder, args.observe)
 			snapshots.append(
 				_output_snapshot(
-					recorder, "final observation", args.dmd_dir, len(snapshots)
+					recorder,
+					"final observation",
+					args.dmd_dir,
+					len(snapshots),
+					library,
+					watch_switches,
 				)
 			)
+	except Exception as exc:
+		failure = {
+			"type": type(exc).__name__,
+			"message": str(exc),
+			"step": current_step,
+			"label": current_label,
+		}
+		recorder.record("failure", **failure)
+		_append_output_snapshot(
+			snapshots,
+			recorder,
+			f"failure: {current_label or type(exc).__name__}",
+			args.dmd_dir,
+			library,
+			watch_switches,
+		)
 	finally:
+		with pressed_keys_lock:
+			pressed_keys.clear()
 		if library.PinmameIsRunning():
 			library.PinmameStop()
 		for _ in range(100):
@@ -661,17 +1125,31 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		"version": 1,
 		"game": args.game,
 		"library": str(dll_path),
+		"library_sha256": hashlib.sha256(dll_path.read_bytes()).hexdigest(),
 		"rom_path": str(rom_path),
 		"work_dir": str(work_dir),
 		"dmd_dir": str(args.dmd_dir.resolve()) if args.dmd_dir else None,
+		"scenario": (
+			{
+				"path": str(scenario_path),
+				"sha256": scenario_sha256,
+				"notes": scenario.get("notes"),
+				"action_count": len(actions),
+			}
+			if scenario_path
+			else None
+		),
+		"watch_switches": list(watch_switches),
 		"initial_switches": [
-			{"switch": switch, "state": state} for switch, state in args.initial_switch
+			{"switch": switch, "state": state} for switch, state in initial_switches
 		],
 		"pulses": [
 			{"switch": switch, "hold_ms": hold_ms, "settle_s": settle_s}
 			for switch, hold_ms, settle_s in args.pulse
 		],
 		"snapshots": snapshots,
+		"steps": steps,
+		"failure": failure,
 		"events": recorder.events,
 		"dmd_event_summary": recorder.snapshot_dmd_event_summary(),
 	}
@@ -684,6 +1162,19 @@ def build_parser() -> argparse.ArgumentParser:
 	parser.add_argument("--rom-path", type=Path, required=True, help="read-only ROM archive directory")
 	parser.add_argument("--work-dir", type=Path, required=True, help="isolated writable PinMAME state directory")
 	parser.add_argument("--samples-path", type=Path, help="optional read-only sample archive directory")
+	parser.add_argument(
+		"--scenario",
+		type=Path,
+		help="optional structured JSON action sequence; cannot be combined with --initial-switch or --pulse",
+	)
+	parser.add_argument(
+		"--watch-switch",
+		type=_parse_watch_switch,
+		action="append",
+		default=[],
+		metavar="SWITCH",
+		help="include the observed public state of this switch in every snapshot; may be repeated",
+	)
 	parser.add_argument(
 		"--initial-switch",
 		type=_parse_initial_switch,
@@ -730,7 +1221,7 @@ def main() -> int:
 		args.output.write_text(serialized, encoding="utf-8")
 	else:
 		sys.stdout.write(serialized)
-	return 0
+	return 1 if result["failure"] else 0
 
 
 if __name__ == "__main__":

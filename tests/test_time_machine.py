@@ -89,7 +89,7 @@ class TimeMachineDefinitionTests(unittest.TestCase):
 	def test_identity_parent_generation_and_exact_bounds(self) -> None:
 		self.assertEqual(OWN_MACHINE, self.definition["machine"]["id"])
 		self.assertEqual({"width":1000.0,"height":1910.0,"units":"vpx","provenance":{"status":"validated","source_refs":["vpx-table.time-machine-2.4.1"]}}, self.definition["machine"]["playfield"])
-		self.assertEqual({"platform":"pinmame.dataeast","hardware_generation":"0x1000","inversion_applied_by_emulator":False}, self.definition["controller"])
+		self.assertEqual({"platform":"pinmame.dataeast","hardware_generation":"0x1000","inversion_applied_by_emulator":True}, self.definition["controller"])
 		core = self.sources["pinmame.core.4ec52ff0ac13"]
 		self.assertEqual("BSD-3-Clause",core["license"])
 		self.assertIn("wpc.invSw zero-initialized",core["locator"])
@@ -201,8 +201,8 @@ class TimeMachineDefinitionTests(unittest.TestCase):
 
 	def test_coverage_and_source_conflicts_are_explicit(self) -> None:
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["controller_platform","output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"], self.definition["coverage"]["missing"])
-		self.assertEqual("unknown", self.definition["coverage"]["dimensions"]["controller_platform"])
+		self.assertEqual(["output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"], self.definition["coverage"]["missing"])
+		self.assertNotIn("controller_platform", self.definition["coverage"]["dimensions"])
 		conflict_ids = {item["id"] for item in self.definition["conflicts"]}
 		self.assertEqual({
 			"conflict.left-eos-vs-public-button-state", "conflict.right-eos-vs-public-button-state",
@@ -216,7 +216,7 @@ class TimeMachineDefinitionTests(unittest.TestCase):
 		self.assertEqual({"left":0.0,"top":0.0,"right":1000.0,"bottom":1910.0}, report["coordinate_system"]["raw_bounds"])
 		self.assertIn("width agreement alone is insufficient", report["method"][0])
 		self.assertIn("l65", report["excluded_helpers"]["lamp_65"])
-		self.assertEqual({"controller_platform","output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"}, {item["dimension"] for item in report["blockers"]})
+		self.assertEqual({"output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"}, {item["dimension"] for item in report["blockers"]})
 		placements = [placement for group in (self.definition["inputs"],self.definition["outputs"]) for item in group for placement in item.get("spatial",{}).get("placements",[])]
 		self.assertTrue(placements)
 		self.assertTrue(all(0 <= item["x"] <= 1 and 0 <= item["y"] <= 1 for item in placements))

@@ -1136,7 +1136,7 @@ definition = {
     "controller": {
         "platform": "pinmame.dataeast",
         "hardware_generation": "0x4000",
-        "inversion_applied_by_emulator": False,
+        "inversion_applied_by_emulator": True,
     },
     "coverage": {
         "status": "partial",

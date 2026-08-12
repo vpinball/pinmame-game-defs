@@ -593,14 +593,14 @@ definition = {
                 "playfield": {"width": 952.0, "height": 2162.0, "units": "vpx", "provenance": prov("validated", [TABLE])}},
     "coverage": {
         "status": "partial",
-        "missing": ["controller_platform", "output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"],
+        "missing": ["output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"],
         "dimensions": {
             "catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "conflicted",
             "physical_wiring": "conflicted", "mechanisms": "conflicted", "variant_coverage": "validated",
             "recreation_knowledge": "candidate", "spatial_placement": "candidate",
         },
     },
-    "controller": {"platform": "pinmame.dataeast", "hardware_generation": "0x1000", "inversion_applied_by_emulator": False},
+		"controller": {"platform": "pinmame.dataeast", "hardware_generation": "0x1000", "inversion_applied_by_emulator": True},
     "drivers": drivers, "inputs": inputs, "outputs": outputs, "displays": displays,
     "mechanisms": mechanisms, "relationships": relationships, "sources": sources,
     "knowledge": {"path": "knowledge/data-east/secret-service-1988.md", "status": "partial"},
@@ -678,9 +678,6 @@ spatial_report = {
         {"devices": ["coil.driver-6", "coil.driver-7", "coil.driver-9", "coil.driver-13", "coil.driver-16", "coil.driver-17", "coil.driver-18", "coil.driver-19", "coil.driver-20", "coil.driver-21"], "dimension": "output_placement", "reason": "No defensible complete socket/actuator placement is bound. Outputs 6, 7 and 9 span a printed playfield feature plus a cabinet emitter but have at most one retained visual proxy; output 13's Coil Test adds an unresolved Clear Mars emitter to its detailed-table backglass label."},
     ],
     "blockers": [
-        {"devices": ["controller.pinmame.dataeast"], "dimension": "controller_platform",
-         "reason": "GEN_DE is a Data East alpha platform; no reviewed pinmame.dataeast controller profile exists, so this machine must not borrow the Williams System 11 profile.",
-         "would_resolve": "A dedicated reviewed pinmame.dataeast profile derived from the pinned GEN_DE implementation, including its public namespace and zero invSw-mask semantics."},
         {"devices": [f"coil.driver-{address}" for address in sorted(MUX_TYPING_CONFLICTS)], "dimension": "output_semantics",
          "reason": "PinMAME modulation types conflict with the manual-plus-script L/R public mapping.",
          "would_resolve": "A PinMAME maintainer explanation or corrected output-type block, plus a controller trace proving public callbacks across relay states."},
@@ -695,7 +692,7 @@ spatial_report = {
          "would_resolve": "Bench capture of button/EOS states and public power/hold outputs on an original machine or faithful PinMAME harness."},
     ],
     "conflicts": [conflict["id"] for conflict in definition["conflicts"]],
-    "promotion_decision": "Keep partial. A reviewed Data East controller profile, mux-bank output typing, traced special-coil public mapping and timing, flipper/EOS behavior, and validated physical placements remain authoring-critical blockers.",
+    "promotion_decision": "Keep partial. Mux-bank output typing, traced special-coil public mapping and timing, flipper/EOS behavior, and validated physical placements remain authoring-critical blockers.",
 }
 
 
@@ -748,9 +745,9 @@ knowledge_note = """# Data East Secret Service (1988)
 
 ## Identity and controller
 
-Pinned PinMAME groups four 03/88 drivers under root `ssvc_a26`: root 2.6, `ssvc_b26` 2.6 alternate sound, `ssvc_e40` 4.0 Europe, and `ssvc_a42` 4.2 alternate sound. All use `INITGAMES11(ssvc, GEN_DE, de_dispAlpha2, FLIP3031, SNDBRD_DE1S, 0, 0)`. `GEN_DE` is Data East generation `0x1000`, not a Williams System 11 controller profile. No reviewed `pinmame.dataeast` profile exists, so the definition records that exact platform but keeps `controller_platform` in coverage missing and in the spatial blockers rather than borrowing a Williams profile.
+Pinned PinMAME groups four 03/88 drivers under root `ssvc_a26`: root 2.6, `ssvc_b26` 2.6 alternate sound, `ssvc_e40` 4.0 Europe, and `ssvc_a42` 4.2 alternate sound. All use `INITGAMES11(ssvc, GEN_DE, de_dispAlpha2, FLIP3031, SNDBRD_DE1S, 0, 0)`. `GEN_DE` is Data East generation `0x1000`, not Williams System 11 hardware. The definition now reuses the reviewed `pinmame.dataeast` profile and no longer carries a controller-platform blocker.
 
-`INITGAMES11` aggregate-initializes `wpc.invSw` with zeroes. Pinned `core.c` copies that exact mask to the runtime switch matrix, so `inversion_applied_by_emulator` is false. This emulator fact does not settle physical EOS polarity or the unresolved three-flipper behavior.
+The machine-level `inversion_applied_by_emulator` flag is true because consumers receive normalized public LibPinMAME states and must not invert them again. Independently, `INITGAMES11` aggregate-initializes the per-game `wpc.invSw` mask with zeroes and pinned `core.c` copies that exact mask to the runtime switch matrix. Neither fact settles physical EOS polarity or the unresolved three-flipper behavior.
 
 `de_dispAlpha2` has exactly four entries: two seven-character 16-segment player rows beginning at segment 1 and 9, followed by two seven-character numeric rows beginning at 21 and 29. Unlike Data East's Alpha1 layout, it contains no credit/match or ball-in-play display entries. The definition therefore enumerates four displays and gives each a controlled cabinet/backbox `not_applicable` spatial record.
 
@@ -790,7 +787,7 @@ The production switch matrix and following list differ at addresses 3, 11-13, 18
 
 Likely service checks follow the proven topology: balls can jam across the three trough positions, the two White House lock positions, top-right eject, and KGB eater; the five-bank must return all targets; the up-post timer must restore its down switch; and the relay/coil compounds for kickback and Kickbig each include a 24 V relay plus 24-900 coil. Exact pulse widths, post dwell on hardware, special-solenoid public callbacks/timing, and flipper/EOS polarity were not captured and must not be invented.
 
-Completion needs a reviewed dedicated Data East controller profile, a PinMAME/controller trace across both L/R relay states, public-output and pulse-timing observation of outputs 17-22 while their switches fire, bench capture of button/EOS and three-flipper behavior, and a socket-address survey of the original playfield/back panel including GI. Until then the record remains partial.
+Completion needs a PinMAME/controller trace across both L/R relay states, public-output and pulse-timing observation of outputs 17-22 while their switches fire, bench capture of button/EOS and three-flipper behavior, and a socket-address survey of the original playfield/back panel including GI. Until then the record remains partial.
 """
 
 

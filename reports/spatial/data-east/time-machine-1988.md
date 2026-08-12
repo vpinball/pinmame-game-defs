@@ -11,17 +11,9 @@ The resolver fails if either right or bottom changes. Coordinates use player-vie
 
 ## Promotion decision
 
-Keep partial. The Data East controller profile, runtime activity of mux states 29-32, SP1/SP2 placement, EOS/button semantics, lamp 25 location, special-coil behavior, polarity, and socket-level placement remain unresolved.
+Keep partial. Runtime activity of mux states 29-32, SP1/SP2 placement, EOS/button semantics, lamp 25 location, special-coil behavior, polarity, and socket-level placement remain unresolved.
 
 ## Blockers
-
-### controller_platform
-
-Time Machine is correctly classified as pinmame.dataeast, but no Data East controller profile is authored. A System 11 profile cannot stand in for the Data East address contract.
-
-Would resolve: A reviewed pinmame.dataeast controller profile that explicitly derives the Data East matrix, diagnostic, PIA, mux, and flipper-state rules from pinned PinMAME source.
-
-Devices: `controller.platform`
 
 ### output_semantics
 

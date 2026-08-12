@@ -2,7 +2,7 @@
 
 ## Identity and controller
 
-Laser War is Data East's first pinball machine. Pinned PinMAME defines its three-driver clone tree with `lwar_a83` as root and assigns `GEN_DE` (`0x1000`), `de_dispAlpha1`, `FLIP4746`, `SNDBRD_DE1S`, no custom solenoids, and Left/Right mux solenoid 10. It runs through the shared `MACHINE_INIT(s11)` emulator path, but the physical controller is Data East CPU Rev 1, not Williams System 11. The definition therefore uses `pinmame.dataeast`; no reviewed profile exists at that id yet, so `controller_platform` remains explicit. `INITGAMES11` leaves the inversion mask zero-initialized and PinMAME copies that mask unchanged, so `inversion_applied_by_emulator` is false.
+Laser War is Data East's first pinball machine. Pinned PinMAME defines its three-driver clone tree with `lwar_a83` as root and assigns `GEN_DE` (`0x1000`), `de_dispAlpha1`, `FLIP4746`, `SNDBRD_DE1S`, no custom solenoids, and Left/Right mux solenoid 10. It runs through the shared `MACHINE_INIT(s11)` emulator path, but the physical controller is Data East CPU Rev 1, not Williams System 11. The definition therefore uses the reviewed `pinmame.dataeast` profile and no longer carries a controller-platform blocker. The machine-level `inversion_applied_by_emulator` flag is true because consumers receive normalized public states and must not invert them again. Independently, `INITGAMES11` leaves this game's per-game `wpc.invSw` mask all zeroes.
 
 The display board is Laser War's 520-5004-00 topology: two seven-character 16-segment alphanumeric player rows, two seven-character numeric player rows, and a shared four-digit numeric credit/ball module. PinMAME exposes that last physical module as four one-digit layout entries, so the definition enumerates all eight controller layout entries. Displays are backbox devices and therefore use controlled `not_applicable` spatial records.
 
@@ -26,4 +26,4 @@ Nine disagreements are recorded as first-class conflicts. Eight remain unresolve
 
 ## What would complete the record
 
-A reviewed Data East controller profile, a LibPinMAME special-solenoid trace, a traced flipper/EOS and kickback relay circuit or synchronized bench capture, and a socket-level survey of the cannon tower, downstream GI circuit, and lamps 8/49 would remove the named blockers. Until then this definition remains partial.
+A LibPinMAME special-solenoid trace, a traced flipper/EOS and kickback relay circuit or synchronized bench capture, and a socket-level survey of the cannon tower, downstream GI circuit, and lamps 8/49 would remove the named blockers. Until then this definition remains partial.

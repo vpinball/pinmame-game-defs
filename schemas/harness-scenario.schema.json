@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/vpinball/pinmame-game-defs/schemas/harness-scenario.schema.json",
+  "title": "PinMAME runtime harness scenario",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "version", "actions"],
+  "properties": {
+    "format": { "const": "pinmame-harness-scenario" },
+    "version": { "const": 1 },
+    "game": { "type": "string", "minLength": 1 },
+    "notes": { "type": "string", "minLength": 1 },
+    "initial_switches": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/switchState" }
+    },
+    "watch_switches": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/publicSwitchAddress" }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "$ref": "#/$defs/pulse" },
+          { "$ref": "#/$defs/setSwitch" },
+          { "$ref": "#/$defs/pulseKey" },
+          { "$ref": "#/$defs/setKey" },
+          { "$ref": "#/$defs/pulseUntilDisplay" },
+          { "$ref": "#/$defs/pulseUntilOutput" },
+          { "$ref": "#/$defs/waitUntilOutput" },
+          { "$ref": "#/$defs/wait" }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "publicSwitchAddress": {
+      "description": "Conservative public-switch envelope safe for PinMAME's sequential converters. The harness intentionally rejects addresses outside this range until it can inspect a driver's converter before calling the unchecked native switch API.",
+      "type": "integer",
+      "minimum": -7,
+      "maximum": 120
+    },
+    "switchState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["switch", "state"],
+      "properties": {
+        "switch": { "$ref": "#/$defs/publicSwitchAddress" },
+        "state": { "enum": [0, 1] }
+      }
+    },
+    "pulse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "switch"],
+      "properties": {
+        "type": { "const": "pulse" },
+        "label": { "type": "string", "minLength": 1 },
+        "switch": { "$ref": "#/$defs/publicSwitchAddress" },
+        "hold_ms": { "type": "number", "exclusiveMinimum": 0, "default": 100 },
+        "settle_s": { "type": "number", "minimum": 0, "default": 1.0 },
+        "snapshot_while_held": { "type": "boolean", "default": false }
+      }
+    },
+    "setSwitch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "switch", "state"],
+      "properties": {
+        "type": { "const": "set_switch" },
+        "label": { "type": "string", "minLength": 1 },
+        "switch": { "$ref": "#/$defs/publicSwitchAddress" },
+        "state": { "enum": [0, 1] },
+        "settle_s": { "type": "number", "minimum": 0, "default": 1.0 }
+      }
+    },
+    "pulseKey": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "key"],
+      "properties": {
+        "type": { "const": "pulse_key" },
+        "label": { "type": "string", "minLength": 1 },
+        "key": { "enum": ["start", "service_green", "service_black", "left_flipper", "right_flipper"] },
+        "hold_ms": { "type": "number", "exclusiveMinimum": 0, "default": 100 },
+        "settle_s": { "type": "number", "minimum": 0, "default": 1.0 },
+        "snapshot_while_held": { "type": "boolean", "default": false }
+      }
+    },
+    "setKey": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "key", "state"],
+      "properties": {
+        "type": { "const": "set_key" },
+        "label": { "type": "string", "minLength": 1 },
+        "key": { "enum": ["start", "service_green", "service_black", "left_flipper", "right_flipper"] },
+        "state": { "enum": [0, 1] },
+        "settle_s": { "type": "number", "minimum": 0, "default": 1.0 }
+      }
+    },
+    "pulseUntilDisplay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "texts"],
+      "oneOf": [
+        {
+          "required": ["switch"],
+          "not": { "required": ["key"] }
+        },
+        {
+          "required": ["key"],
+          "not": { "required": ["switch"] }
+        }
+      ],
+      "properties": {
+        "type": { "const": "pulse_until_display" },
+        "label": { "type": "string", "minLength": 1 },
+        "switch": { "$ref": "#/$defs/publicSwitchAddress" },
+        "key": { "enum": ["start", "service_green", "service_black", "left_flipper", "right_flipper"] },
+        "texts": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "max_pulses": { "type": "integer", "minimum": 1, "default": 20 },
+        "hold_ms": { "type": "number", "exclusiveMinimum": 0, "default": 100 },
+        "settle_s": { "type": "number", "minimum": 0, "default": 1.0 }
+      }
+    },
+    "pulseUntilOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "channel", "addresses"],
+      "oneOf": [
+        {
+          "required": ["switch"],
+          "not": { "required": ["key"] }
+        },
+        {
+          "required": ["key"],
+          "not": { "required": ["switch"] }
+        }
+      ],
+      "properties": {
+        "type": { "const": "pulse_until_output" },
+        "label": { "type": "string", "minLength": 1 },
+        "switch": { "$ref": "#/$defs/publicSwitchAddress" },
+        "key": { "enum": ["start", "service_green", "service_black", "left_flipper", "right_flipper"] },
+        "channel": { "enum": ["solenoid", "lamp", "gi"] },
+        "addresses": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "integer" }
+        },
+        "max_pulses": { "type": "integer", "minimum": 1, "default": 20 },
+        "hold_ms": { "type": "number", "exclusiveMinimum": 0, "default": 100 },
+        "settle_s": { "type": "number", "minimum": 0, "default": 1.0 }
+      }
+    },
+    "wait": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "seconds"],
+      "properties": {
+        "type": { "const": "wait" },
+        "label": { "type": "string", "minLength": 1 },
+        "seconds": { "type": "number", "minimum": 0 }
+      }
+    },
+    "waitUntilOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "channel", "addresses", "timeout_s"],
+      "properties": {
+        "type": { "const": "wait_until_output" },
+        "label": { "type": "string", "minLength": 1 },
+        "channel": { "enum": ["solenoid", "lamp", "gi"] },
+        "addresses": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "integer" }
+        },
+        "timeout_s": { "type": "number", "exclusiveMinimum": 0 },
+        "active_only": { "type": "boolean", "default": false }
+      }
+    }
+  }
+}

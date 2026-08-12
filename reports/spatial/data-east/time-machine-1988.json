@@ -2,14 +2,6 @@
   "blockers": [
     {
       "devices": [
-        "controller.platform"
-      ],
-      "dimension": "controller_platform",
-      "reason": "Time Machine is correctly classified as pinmame.dataeast, but no Data East controller profile is authored. A System 11 profile cannot stand in for the Data East address contract.",
-      "would_resolve": "A reviewed pinmame.dataeast controller profile that explicitly derives the Data East matrix, diagnostic, PIA, mux, and flipper-state rules from pinned PinMAME source."
-    },
-    {
-      "devices": [
         "coil.driver-29",
         "coil.driver-30",
         "coil.driver-31",
@@ -259,7 +251,7 @@
       "status": "candidate"
     }
   ],
-  "promotion_decision": "Keep partial. The Data East controller profile, runtime activity of mux states 29-32, SP1/SP2 placement, EOS/button semantics, lamp 25 location, special-coil behavior, polarity, and socket-level placement remain unresolved.",
+  "promotion_decision": "Keep partial. Runtime activity of mux states 29-32, SP1/SP2 placement, EOS/button semantics, lamp 25 location, special-coil behavior, polarity, and socket-level placement remain unresolved.",
   "resolved": [
     {
       "id": "coil.driver-16",

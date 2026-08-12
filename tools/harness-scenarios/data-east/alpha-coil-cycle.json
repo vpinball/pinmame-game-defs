@@ -1,0 +1,63 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "notes": "Diagnostic titles were observed from the five pinned alpha ROMs: Laser War, Secret Service, Time Machine, and Playboy use SWITCH TEST / COIL TEST; German Torpedo Alley uses SCHALTR TEST / SPULE TEST. PinMAME's reviewed 16-segment decoder pattern 0x086D is rendered as S, not 5.",
+  "watch_switches": [
+    -7,
+    -6,
+    15,
+    16,
+    30,
+    31,
+    46,
+    47
+  ],
+  "actions": [
+    {
+      "type": "pulse_key",
+      "key": "service_green",
+      "hold_ms": 250,
+      "settle_s": 0.5,
+      "label": "pulse the toggled Green service input once to select Reverse"
+    },
+    {
+      "type": "pulse_until_display",
+      "key": "service_black",
+      "texts": [
+        "SWITCH TEST",
+        "SCHALTR TEST"
+      ],
+      "max_pulses": 40,
+      "hold_ms": 250,
+      "settle_s": 0.9,
+      "label": "advance through sound and display diagnostics to Switch Test"
+    },
+    {
+      "type": "pulse_until_display",
+      "key": "service_black",
+      "texts": [
+        "COIL TEST",
+        "SPULEN TEST",
+        "SPULE TEST",
+        "SPUL TEST"
+      ],
+      "max_pulses": 12,
+      "hold_ms": 250,
+      "settle_s": 0.7,
+      "label": "advance from Switch Test to the transient automatic Coil Test title with the momentary Black service key"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 25, 26, 27, 28, 29, 30, 31, 32],
+      "timeout_s": 5.0,
+      "active_only": true,
+      "label": "confirm automatic Coil Test output without sending another service input"
+    },
+    {
+      "type": "wait",
+      "seconds": 60.0,
+      "label": "observe at least one complete automatic regular-coil and mux-bank cycle"
+    }
+  ]
+}
