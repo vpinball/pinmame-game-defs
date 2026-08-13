@@ -346,6 +346,11 @@
                 "type": "integer",
                 "minimum": 0
               },
+              "retained_from": {
+                "description": "Original retained-artifact locator when this exact run was carried forward into a later evidence bundle.",
+                "type": "string",
+                "minLength": 1
+              },
               "initial_switches": {
                 "type": "array",
                 "items": {
@@ -633,9 +638,107 @@
               "items": {
                 "type": "integer"
               }
+            },
+            "runs": {
+              "description": "Run-attributed observations keyed by the matching raw_runs name. Use this when an evidence bundle contains multiple scenarios so observations cannot be mistaken for results of another run.",
+              "type": "object",
+              "minProperties": 1,
+              "propertyNames": {
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/runtimeRunObservations"
+              }
             }
           }
         }
+      }
+    },
+    "runtimeRunObservations": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "diagnostic_checkpoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["matched_text", "after_service_pulses"],
+            "properties": {
+              "matched_text": {"type": "string", "minLength": 1},
+              "after_service_pulses": {"type": "integer", "minimum": 0}
+            }
+          }
+        },
+        "ordered_solenoid_on_sequence": {
+          "description": "Observed nonzero solenoid transitions in event order. Repeated addresses are significant and therefore allowed.",
+          "type": "array",
+          "items": {"type": "integer"}
+        },
+        "solenoid_addresses_seen": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "integer"}
+        },
+        "unobserved_watched_addresses": {
+          "description": "Watched addresses absent from this run. Absence is not proof that an address is unused or unfitted.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "integer"}
+        },
+        "named_action_observations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "input_kind", "observed_switch_addresses", "result"],
+            "properties": {
+              "label": {"type": "string", "minLength": 1},
+              "input_kind": {"enum": ["switch", "key"]},
+              "input_address": {"type": "integer"},
+              "input_name": {"type": "string", "minLength": 1},
+              "observed_switch_addresses": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {"type": "integer"}
+              },
+              "active_solenoid_addresses": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {"type": "integer"}
+              },
+              "transitioned_solenoid_addresses": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {"type": "integer"}
+              },
+              "held_synthetic_solenoid_addresses": {
+                "description": "Synthetic public solenoid addresses observed active in the held-state snapshot, excluding unrelated diagnostic background activity.",
+                "type": "array",
+                "uniqueItems": true,
+                "items": {"type": "integer"}
+              },
+              "result": {"enum": ["observed", "no_matching_transition"]}
+            },
+            "allOf": [
+              {
+                "if": {"properties": {"input_kind": {"const": "switch"}}},
+                "then": {"required": ["input_address"]}
+              },
+              {
+                "if": {"properties": {"input_kind": {"const": "key"}}},
+                "then": {"required": ["input_name"]}
+              }
+            ]
+          }
+        },
+        "switch_addresses_observed_while_held": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "integer"}
+        },
+        "note": {"type": "string", "minLength": 1},
+        "limitation": {"type": "string", "minLength": 1}
       }
     },
     "addressCandidate": {

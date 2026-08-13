@@ -22,6 +22,7 @@ SEED_PATH = Path("tools/seeds/data-east/playboy-35th-anniversary-1989.json")
 SPATIAL_JSON_PATH = Path("reports/spatial/data-east/playboy-35th-anniversary-1989.json")
 SPATIAL_MD_PATH = Path("reports/spatial/data-east/playboy-35th-anniversary-1989.md")
 KNOWLEDGE_PATH = Path("knowledge/data-east/playboy-35th-anniversary-1989.md")
+RUNTIME_EVIDENCE_PATH = Path("evidence/runtime/data-east/playboy-35th-alpha-diagnostics.json")
 STUB_PATH = Path("machines/stubs/play_a24.json")
 STUB_KNOWLEDGE_PATH = Path("knowledge/stubs/play_a24.md")
 MANIFEST_PATH = Path("tools/seeds/data-east/playboy-35th-anniversary-1989-extraction-manifest.json")
@@ -33,6 +34,7 @@ TABLE_SOURCE = "vpx-table.playboy-35th-hybrid-1.1"
 SCRIPT_SOURCE = "vpx-script.playboy-35th-hybrid-1.1"
 EXTRACTION_SOURCE = "vpx-extraction.playboy-35th-hybrid-1.1"
 RENDER_SOURCE = "human-review.playboy-35th-manual-renders"
+RUNTIME_SOURCE = "runtime.playboy-35th.alpha-diagnostics"
 
 MANUAL_FILENAME = "Data_East_1989_Playboy_35th_Anniversary_English_Manual_with_schematics.pdf"
 TABLE_FILENAME = "Playboy 35th Anniversary (Data East 1989) Physics Sound Hybrid MOD 1.1.vpx"
@@ -44,6 +46,13 @@ MANIFEST_CONTENT_SHA256 = "228204226a90f8974c46d30ef4d9b24c24852099ddccf8f8c743c
 MANIFEST_SHA256 = "408ba0ec4e18187f0f86c1970c33cc31b93af53df24ad83f2eeea599822bb672"
 RIGHT = 952.0
 BOTTOM = 1974.0
+RUNTIME_MANIFEST_SHA256 = "c79953d94e5715012acc0e183351a1ee2b1eeec977c087d3dff77c84a0b1527b"
+RUNTIME_AUTO_SHA256 = "a005243cf937dd3c87f1a287c3f302f40fcac92bc95b7a92b293a62cf6ac2adf"
+RUNTIME_SPECIAL_SHA256 = "997699d222223e2f4a3943e65926137e54d322b4afc7f51c94c110caca1cfcfa"
+RUNTIME_AUTO_SCENARIO_SHA256 = "a156f3814db7180466619b10c22b604dd7d0e13aceaaa013e2d08d548fafbb4f"
+RUNTIME_SPECIAL_SCENARIO_SHA256 = "578818832dde4d8123380e8e493e04bf7a297d024ac838ce0c16776259286b82"
+PINMAME_LIBRARY_SHA256 = "ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d"
+ROM_ARCHIVE_SHA256 = "194feee96aec0a6000dffb31af0baa5f133f00507c532b61148a56d5cde02e27"
 
 SWITCH_DRIVES = ["GRN-BRN", "GRN-RED", "GRN-ORN", "GRN-YEL", "GRN-BLK", "GRN-BLU", "GRN-VIO", "GRN-GRY"]
 SWITCH_RETURNS = ["WHT-BRN", "WHT-RED", "WHT-ORN", "WHT-YEL", "WHT-GRN", "WHT-BLU", "WHT-VIO", "WHT-GRY"]
@@ -381,12 +390,15 @@ def switch_input(number: int) -> dict[str,object]:
         physical["notes"] += " The switch-list part number conflicts with the playfield-bottom construction list's shooter-lane/Laser-Kick assignment."
     if number == 17:
         physical["notes"] += " The active script's impulse helper names an off-playfield sw17 trigger, but Kicker001_Hit explicitly publishes switch 17 from an in-bounds kickback object; that executable binding supplies the retained candidate coordinate. The visible sw17a name is unbound and excluded."
+    source_refs = [MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE]
+    if number in {15,16}:
+        source_refs.append(RUNTIME_SOURCE)
     result: dict[str,object] = {
         "id":device_id,"label":f"Unused Switch {number}" if unused else label,"kind":"switch",
         "binding":{"group":"pinmame.input.switch","device":number},"aliases":aliases("pinmame.switch",number,str(number)),
         "availability":"unused" if unused else "used","physical":physical,
         "wiring":{"board":"CPU Board","drive_wire":SWITCH_DRIVES[column],"return_wire":SWITCH_RETURNS[row]},
-        "provenance":provenance("conflicted" if number in conflict_numbers else "validated",MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE),
+        "provenance":provenance("conflicted" if number in conflict_numbers else "validated",*source_refs),
     }
     roles = {
         1:"cabinet.tilt",3:"cabinet.start",4:"cabinet.coin",5:"cabinet.coin",6:"cabinet.coin",7:"cabinet.slam-tilt",
@@ -502,7 +514,7 @@ def solenoid_output(number: int) -> dict[str,object]:
     else:
         kind = "coil"
     conflict_numbers = {3,4,8,9,12,13,14,15,19,25,26,27,28,29,30,31,32}
-    status = "conflicted" if number in conflict_numbers else ("candidate" if number in {8,17,18,21,22,45,46,47,48} else "validated")
+    status = "conflicted" if number in conflict_numbers else ("candidate" if number in {8,17,18,21,22} else ("observed" if number in {45,46,47,48} else "validated"))
     if 1 <= number <= 8:
         manual_number = f"SIDE L {number:02d}"
     elif 9 <= number <= 16:
@@ -556,6 +568,8 @@ def solenoid_output(number: int) -> dict[str,object]:
     if number == 50:
         physical["notes"] += " Reserved public address with no meaningful machine state."
     source_refs = [CORE_SOURCE,SCRIPT_SOURCE]
+    if number in {45,46,47,48}:
+        source_refs.append(RUNTIME_SOURCE)
     if manual_number is not None:
         source_refs.insert(0,MANUAL_SOURCE)
     result: dict[str,object] = {
@@ -645,6 +659,57 @@ def conflicts() -> list[dict[str,object]]:
     ]
 
 
+def build_runtime_evidence() -> dict[str,object]:
+    automatic_watch = [-7,-6,15,16,30,31,46,47]
+    special_watch = [-7,-6,14,15,16,20,21,22,28,29,30,31,43,44,45,46,47,48,49,50,51,52,53]
+    ordered_cycle = [1,10,25,2,10,26,3,10,27,4,10,28,5,10,29,6,10,30,7,8,10,32,9,10,11,12,13,14,15,16]
+    return {
+        "format":"pinmame-machine-evidence","version":1,
+        "extractor":{"id":"tools/run_pinmame_harness.py","version":1},
+        "source":{
+            "kind":"runtime_scenario","repository":"https://github.com/vpinball/pinmame","revision":PINMAME_REVISION,
+            "path":"external:pinmame-review-artifacts/data-east/final-v5/play_a24","sha256":RUNTIME_MANIFEST_SHA256,
+            "manifest_algorithm":"source.sha256 is SHA-256 of manifest.json's exact UTF-8 bytes. manifest.json is compact canonical JSON with sorted keys, separators=(',', ':'), ensure_ascii=False, plus one LF; it lists every file below source.path except manifest.json and manifest.sha256 as {path, sha256, size}, using sorted POSIX-relative paths.",
+            "license":"NOASSERTION","quality":"observed","attribution":"Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external.",
+        },
+        "driver_ids":["play_a24"],"machine_ids":[MACHINE_ID],
+        "switches":[],"outputs":[],"states":[],"mechanisms":[],"recreation_notes":[],
+        "runtime":{
+            "game":"play_a24","rom_archive_sha256":ROM_ARCHIVE_SHA256,
+            "emulator":{"binary":"pinmame64.dll","sha256":PINMAME_LIBRARY_SHA256,"built_from_revision":PINMAME_REVISION},
+            "raw_runs":[
+                {
+                    "name":"automatic-coil-cycle","sha256":RUNTIME_AUTO_SHA256,"scenario_path":"tools/harness-scenarios/data-east/alpha-coil-cycle.json",
+                    "scenario_sha256":RUNTIME_AUTO_SCENARIO_SHA256,"action_count":5,"watch_switches":automatic_watch,"self_test_pulses":19,
+                    "nvram_initialization":"new empty isolated state directory; no NVRAM inherited","boot_wait_s":2.0,"snapshot_count":6,
+                },
+                {
+                    "name":"special-solenoid-sweep","sha256":RUNTIME_SPECIAL_SHA256,"scenario_path":"tools/harness-scenarios/data-east/alpha-special-solenoid-sweep.json",
+                    "scenario_sha256":RUNTIME_SPECIAL_SCENARIO_SHA256,"action_count":21,"watch_switches":special_watch,"self_test_pulses":19,
+                    "nvram_initialization":"new empty isolated state directory; no NVRAM inherited","boot_wait_s":2.0,"snapshot_count":24,
+                },
+            ],
+            "command_template":"python tools/run_pinmame_harness.py --library <libpinmame> --game play_a24 --rom-path <read-only-rom-root> --work-dir <new-isolated-state> --scenario <scenario.json> --boot-wait 2 --output <external-run.json>",
+            "observations":{
+                "runs":{"automatic-coil-cycle":{
+                    "diagnostic_checkpoints":[{"matched_text":"SWITCH TEST","after_service_pulses":11},{"matched_text":"COIL TEST","after_service_pulses":8}],
+                    "ordered_solenoid_on_sequence":ordered_cycle,
+                    "solenoid_addresses_seen":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,23,25,26,27,28,29,30,32],
+                    "unobserved_watched_addresses":[31],
+                    "limitation":"The absence of watched output 31 from this captured full automatic cycle does not prove that the address is dead or unfitted.",
+                },
+                "special-solenoid-sweep":{
+                    "named_action_observations":[
+                        {"label":"left flipper","input_kind":"key","input_name":"left_flipper","observed_switch_addresses":[15],"active_solenoid_addresses":[23,47,48],"transitioned_solenoid_addresses":[47,48],"result":"observed"},
+                        {"label":"right flipper","input_kind":"key","input_name":"right_flipper","observed_switch_addresses":[16],"active_solenoid_addresses":[23,45,46],"transitioned_solenoid_addresses":[45,46],"result":"observed"},
+                    ],
+                    "limitation":"The remaining direct pulse actions ran while the ROM's automatic Coil Test continued. They had no held-state readback and this driver's ssSw mapping is empty, so they make no claim about switch delivery, special-solenoid causality, or public outputs 17-22.",
+                }},
+            },
+        },
+    }
+
+
 def sources() -> list[dict[str,object]]:
     locators = {
         "switch-matrix.md":"PDF pages 25-26, printed pages 22-23","lamp-matrix.md":"PDF pages 27-28, printed pages 24-25",
@@ -656,12 +721,13 @@ def sources() -> list[dict[str,object]]:
     } for path,content in EXCERPTS.items()]
     return [
         {"id":CATALOG_SOURCE,"kind":"pinmame_catalog","uri":"https://github.com/vpinball/pinmame","revision":PINMAME_REVISION,"license":"BSD-3-Clause","locator":"catalog/pinmame.json and src/wpc/driver.c line 474 contain only play_a24 for this title; exhaustive CORE_GAMEDEF/CORE_CLONEDEF search found no clone."},
-        {"id":CORE_SOURCE,"kind":"pinmame_core","uri":"https://github.com/vpinball/pinmame","revision":PINMAME_REVISION,"license":"BSD-3-Clause","locator":"src/wpc/degames.c lines 77 and 237-245 decode INITGAMES11(play, GEN_DE, de_dispAlpha2, FLIP1516, SNDBRD_DE1S, 0, S11_MUXDELAY) into core_tGameData hardware fields and leave wpc.invSw zero-initialized; src/wpc/core.c lines 2455-2456 copy that zero mask into coreGlobals.invSw; src/wpc/s11.h line 229 defines one-IRQ mux delay; src/wpc/s11.c lines 537-554 apply Data East permutation {3,4,5,1,0,2}, lines 618-623 bind handler indices 0-5, and the PIA board comments at lines 714-715, 737-738, and 746-747 identify those handlers as printed SP6, SP5, SP2, SP3, SP1, and SP4 respectively; pia0b_w/updsol and lines 1145-1149 implement prior-byte timing and output types."},
+        {"id":CORE_SOURCE,"kind":"pinmame_core","uri":"https://github.com/vpinball/pinmame","revision":PINMAME_REVISION,"license":"BSD-3-Clause","locator":"src/wpc/degames.c lines 77 and 237-245 decode INITGAMES11(play, GEN_DE, de_dispAlpha2, FLIP1516, SNDBRD_DE1S, 0, S11_MUXDELAY) into core_tGameData hardware fields, leave wpc.invSw zero-initialized, leave sxx.ssSw empty, and set sxx.muxSol=10; src/wpc/core.c lines 2455-2456 copy that zero inversion mask into coreGlobals.invSw; src/wpc/s11.h line 229 defines one-IRQ mux delay; src/wpc/s11.c lines 193-195 skip empty ssSw entries, lines 537-554 apply Data East permutation {3,4,5,1,0,2}, lines 579 and 618-623 establish the PIA setSSSol path and bind handler indices 0-5, and the PIA board comments at lines 714-715, 737-738, and 746-747 identify those handlers as printed SP6, SP5, SP2, SP3, SP1, and SP4 respectively; pia0b_w/updsol and lines 1145-1149 implement prior-byte timing and output types."},
         {"id":MANUAL_SOURCE,"kind":"manual","uri":f"external:pinmame-manuals/by-machine/{MACHINE_ID}/contributor-supplied/{MANUAL_FILENAME}","sha256":MANUAL_SHA256,"locator":"76 pages; 14,450,592 bytes; hashes.json sampled_characters=76,678. Contact sheet at 40 dpi located decisive pages; PDF pages 25-30 rendered at 400 dpi, printed page 26 re-rendered at 600 dpi, and construction pages rendered at 300 dpi. Every mapping cell was read from renders despite the text layer.","license":"Copyright Data East; redistribution status not supplied","attribution":"Data East Playboy 35th Anniversary English manual","original_filename":MANUAL_FILENAME,"rights":"NOASSERTION","excerpts":excerpt_meta},
         {"id":TABLE_SOURCE,"kind":"vpx_table","uri":f"external:pinmame-vpx-sources/data-east/playboy-35th-anniversary-1989/{TABLE_FILENAME}","sha256":TABLE_SHA256,"revision":"Physics Sound Hybrid MOD 1.1","known_working":True,"source_id":"retained-playboy-35th-hybrid-1.1","original_filename":TABLE_FILENAME,"license":"Community table; redistribution terms not supplied","attribution":"Credited Playboy 35th Anniversary table contributors","locator":"vpxtool git:0561bb4; 1748 files under gameitems/; exact asserted bounds (0,0)-(952,1974)"},
         {"id":SCRIPT_SOURCE,"kind":"vpx_script","uri":"external:pinmame-vpx-sources/data-east/playboy-35th-anniversary-1989/vpxtool-extract/script.vbs","sha256":SCRIPT_SHA256,"revision":"script from retained hybrid table 1.1","license":"Community script; redistribution terms not supplied","attribution":"Credited table-script contributors","locator":"Const cGameName=play_a24; HandleMechanics=0; active SetLamp idiom has 15 output bindings plus one SetLamp subroutine definition, no Lampz.MassAssign and no vpmMapLights after whole-line comments are stripped; trough, saucers, Grotto, drop bank, kickback, flippers and sensors supply causality"},
         {"id":EXTRACTION_SOURCE,"kind":"vpx_table","uri":MANIFEST_PATH.as_posix(),"sha256":MANIFEST_CONTENT_SHA256,"revision":"vpxtool git:0561bb4","locator":f"2270 files; 164978347 bytes; algorithm: {MANIFEST_ALGORITHM}; canonical manifest SHA-256 {MANIFEST_SHA256}; 1748 files under gameitems/"},
         {"id":RENDER_SOURCE,"kind":"human_review","uri":f"external:pinmame-manuals/by-machine/{MACHINE_ID}/contributor-supplied/{MANUAL_FILENAME}","locator":"76-page contact sheet at 40 dpi; decisive matrix/coil pages rendered at 400 dpi, printed page 26 re-rendered at 600 dpi, and construction pages rendered at 300 dpi with Poppler on 2026-08-09. Tesseract/PDF text were secondary; rendered cells governed every mapping."},
+        {"id":RUNTIME_SOURCE,"kind":"runtime_scenario","uri":RUNTIME_EVIDENCE_PATH.as_posix(),"revision":PINMAME_REVISION,"sha256":sha256_text(json_text(build_runtime_evidence())),"locator":f"Two successful isolated play_a24 runs pin the exact ROM, LibPinMAME binary, reusable scenarios, raw traces, and external directory manifest {RUNTIME_MANIFEST_SHA256}. The automatic diagnostic records one complete regular/mux output cycle, in which watched branch 31 did not appear; that absence is not proof of dead or unfitted hardware. Named flipper-key actions observe public switches 15/16 and synthetic winding pairs 47/48 and 45/46. The other direct pulse actions ran during automatic Coil Test without held-state readback and make no special-solenoid claim.","license":"NOASSERTION","attribution":"Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external."},
     ]
 
 
@@ -796,6 +862,12 @@ The 76-page manual has SHA-256 `{MANUAL_SHA256}` and a 76,678-character text lay
 
 The table SHA-256 is `{TABLE_SHA256}`, contains 1,748 gameitems, and binds `Const cGameName = "play_a24"`. Its exact bounds are right 952 and bottom 1974. Both values are asserted before normalization, and no other machine's geometry is reused.
 
+## Runtime diagnostic evidence
+
+Two successful LibPinMAME runs used ROM archive SHA-256 `{ROM_ARCHIVE_SHA256}`, native-library SHA-256 `{PINMAME_LIBRARY_SHA256}`, and fresh isolated state directories. Hash-pinned raw-run checkpoints matched the English `SWITCH TEST` and `COIL TEST` titles. The automatic scenario observed one complete ordered output cycle: `1, 10, 25, 2, 10, 26, 3, 10, 27, 4, 10, 28, 5, 10, 29, 6, 10, 30, 7, 8, 10, 32, 9, 10, 11, 12, 13, 14, 15, 16`. This validates that K1 interleaves the left and right public banks in the ROM's own diagnostic sequence; it does not by itself identify physical bulb or coil fitment. Watched branch 31 did not appear in that captured cycle, but the negative observation does not prove the address dead or unfitted.
+
+The named flipper actions have held-state readback: public switch 15 was active with synthetic outputs 47/48, and public switch 16 was active with 45/46. The runtime source is consequently attached to those six public assertions. The remaining direct pulse actions ran while the ROM's automatic Coil Test continued, had no held-state switch readback, and cannot exercise the driver's empty `ssSw` mapping. They make no claim about switch delivery, special-solenoid causality, or public outputs 17-22; the existing conflict and blocker remain.
+
 ## Coverage and blockers
 
 Status remains `partial`; `coverage.missing` is [{missing}].
@@ -815,7 +887,7 @@ Consume PinMAME's decoded public mux outputs without adding another IRQ delay. T
 LEDGER_ANCHOR = "Data East Playboy 35th Anniversary (`data-east.playboy-35th-anniversary.1989`)"
 LEDGER_BLOCK = """Data East Playboy 35th Anniversary (`data-east.playboy-35th-anniversary.1989`) was curated on 2026-08-09, replacing `stub.pinmame.play_a24`. Pinned source contains the single `CORE_GAMEDEF(play,a24,...)` and no `CORE_CLONEDEF`; the one-driver physical family is deliberate. It remains `partial` with `coverage.missing = ["output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"]` and ten preserved conflicts. The retained geometry is exactly 952 by 1974, and both extents are asserted before normalization. The controller id is `pinmame.dataeast`; the reviewed shared profile now represents its common Data East address contract without misclassifying the physical board as Williams System 11.
 
-Six points generalise from this record.
+Seven points generalise from this record.
 
 1. **`S11_MUXDELAY` is public-output timing, not a second mux for consumers to recreate.** Playboy sets a non-zero `gameSpecific1` value. `pia0b_w` delays its PIA port-B byte by one IRQ; `updsol` then attributes the shared A/C driver byte to outputs 1-8 or 25-32 using K1 at output 10. Decoded-output recreations must not add another delay, while raw PIA/board emulation must reproduce the latch.
 2. **The flipper EOS/button disagreement comes from the public PinMAME address contract.** The manual prints EOS contacts at the two `FLIP_SWNO` addresses while PinMAME publishes cabinet-button state there. Keep the pair as conflicts and consume the public addresses as buttons.
@@ -823,6 +895,8 @@ Six points generalise from this record.
 4. **Lamp idioms remain table-specific evidence.** Playboy uses 16 active `SetLamp` occurrences and neither `Lampz.MassAssign` nor `vpmMapLights`. Count executable routes and reconcile every address; do not transfer mapping rules between tables.
 5. **A flasher output can span both the playfield and backbox, while a VPX recreation may model only playfield effects.** Playboy's printed inset clearly assigns backbox bulbs to outputs 3, 4, 8, 9, 12, 14 and 15, but every retained VPX effect for those outputs sits in playfield space; output 12's clear backbox count already equals its schematic total. Preserve certain minima, mark unreadable digits unresolved and treat the VPX points as presentation consumers rather than physical sockets.
 6. **Data East's printed SP1-SP6 sequence does not equal PinMAME public 17-22 order.** The nearby `s11.c` PIA comments—not an assumed printed-number/handler correspondence—identify handlers 0-5 as SP6, SP5, SP2, SP3, SP1 and SP4. Applying `setSSSol`'s Data East offsets `{3,4,5,1,0,2}` derives printed SP1, SP3, SP4, SP6, SP5 and SP2 at public 17-22. Preserve each printed SP number as a manual alias, derive the public binding from both the handler comments and permutation, and keep an unfitted SP6 as the physical unused driver at public 20 rather than shifting it to 22.
+
+7. **A diagnostic trace supports only the paths its scenario can actually drive.** Playboy's automatic coil test interleaves outputs 1-6 with K1 at 10 and the C-bank outputs 25-30, then continues through 7-16; named flipper actions with held-state readback observe switch 15 with 47/48 and switch 16 with 45/46. The other direct pulses ran during automatic Coil Test, had no held-state readback, and cannot reach public 17-22 through this driver's empty `ssSw` mapping. They are retained only as hash-pinned raw provenance and make no special-solenoid claim.
 
 """
 
@@ -853,7 +927,8 @@ def desired_files() -> dict[Path,str]:
     spatial = build_spatial(machine)
     return {
         MACHINE_PATH:json_text(machine),SEED_PATH:json_text(machine),SPATIAL_JSON_PATH:json_text(spatial),
-        SPATIAL_MD_PATH:spatial_markdown(spatial),KNOWLEDGE_PATH:knowledge_markdown(machine),**EXCERPTS,
+        SPATIAL_MD_PATH:spatial_markdown(spatial),KNOWLEDGE_PATH:knowledge_markdown(machine),
+        RUNTIME_EVIDENCE_PATH:json_text(build_runtime_evidence()),**EXCERPTS,
     }
 
 

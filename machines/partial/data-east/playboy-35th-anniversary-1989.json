@@ -1087,7 +1087,8 @@
         "source_refs": [
           "manual.data-east.playboy-35th-anniversary.1989",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.playboy-35th-hybrid-1.1"
+          "vpx-script.playboy-35th-hybrid-1.1",
+          "runtime.playboy-35th.alpha-diagnostics"
         ],
         "status": "conflicted"
       },
@@ -1138,7 +1139,8 @@
         "source_refs": [
           "manual.data-east.playboy-35th-anniversary.1989",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.playboy-35th-hybrid-1.1"
+          "vpx-script.playboy-35th-hybrid-1.1",
+          "runtime.playboy-35th.alpha-diagnostics"
         ],
         "status": "conflicted"
       },
@@ -7123,9 +7125,10 @@
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.playboy-35th-hybrid-1.1"
+          "vpx-script.playboy-35th-hybrid-1.1",
+          "runtime.playboy-35th.alpha-diagnostics"
         ],
-        "status": "candidate"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
@@ -7160,9 +7163,10 @@
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.playboy-35th-hybrid-1.1"
+          "vpx-script.playboy-35th-hybrid-1.1",
+          "runtime.playboy-35th.alpha-diagnostics"
         ],
-        "status": "candidate"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
@@ -7197,9 +7201,10 @@
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.playboy-35th-hybrid-1.1"
+          "vpx-script.playboy-35th-hybrid-1.1",
+          "runtime.playboy-35th.alpha-diagnostics"
         ],
-        "status": "candidate"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
@@ -7234,9 +7239,10 @@
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.playboy-35th-hybrid-1.1"
+          "vpx-script.playboy-35th-hybrid-1.1",
+          "runtime.playboy-35th.alpha-diagnostics"
         ],
-        "status": "candidate"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
@@ -10940,7 +10946,7 @@
       "id": "pinmame.core.4ec52ff0ac13",
       "kind": "pinmame_core",
       "license": "BSD-3-Clause",
-      "locator": "src/wpc/degames.c lines 77 and 237-245 decode INITGAMES11(play, GEN_DE, de_dispAlpha2, FLIP1516, SNDBRD_DE1S, 0, S11_MUXDELAY) into core_tGameData hardware fields and leave wpc.invSw zero-initialized; src/wpc/core.c lines 2455-2456 copy that zero mask into coreGlobals.invSw; src/wpc/s11.h line 229 defines one-IRQ mux delay; src/wpc/s11.c lines 537-554 apply Data East permutation {3,4,5,1,0,2}, lines 618-623 bind handler indices 0-5, and the PIA board comments at lines 714-715, 737-738, and 746-747 identify those handlers as printed SP6, SP5, SP2, SP3, SP1, and SP4 respectively; pia0b_w/updsol and lines 1145-1149 implement prior-byte timing and output types.",
+      "locator": "src/wpc/degames.c lines 77 and 237-245 decode INITGAMES11(play, GEN_DE, de_dispAlpha2, FLIP1516, SNDBRD_DE1S, 0, S11_MUXDELAY) into core_tGameData hardware fields, leave wpc.invSw zero-initialized, leave sxx.ssSw empty, and set sxx.muxSol=10; src/wpc/core.c lines 2455-2456 copy that zero inversion mask into coreGlobals.invSw; src/wpc/s11.h line 229 defines one-IRQ mux delay; src/wpc/s11.c lines 193-195 skip empty ssSw entries, lines 537-554 apply Data East permutation {3,4,5,1,0,2}, lines 579 and 618-623 establish the PIA setSSSol path and bind handler indices 0-5, and the PIA board comments at lines 714-715, 737-738, and 746-747 identify those handlers as printed SP6, SP5, SP2, SP3, SP1, and SP4 respectively; pia0b_w/updsol and lines 1145-1149 implement prior-byte timing and output types.",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
     },
@@ -11029,6 +11035,16 @@
       "kind": "human_review",
       "locator": "76-page contact sheet at 40 dpi; decisive matrix/coil pages rendered at 400 dpi, printed page 26 re-rendered at 600 dpi, and construction pages rendered at 300 dpi with Poppler on 2026-08-09. Tesseract/PDF text were secondary; rendered cells governed every mapping.",
       "uri": "external:pinmame-manuals/by-machine/data-east.playboy-35th-anniversary.1989/contributor-supplied/Data_East_1989_Playboy_35th_Anniversary_English_Manual_with_schematics.pdf"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external.",
+      "id": "runtime.playboy-35th.alpha-diagnostics",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Two successful isolated play_a24 runs pin the exact ROM, LibPinMAME binary, reusable scenarios, raw traces, and external directory manifest c79953d94e5715012acc0e183351a1ee2b1eeec977c087d3dff77c84a0b1527b. The automatic diagnostic records one complete regular/mux output cycle, in which watched branch 31 did not appear; that absence is not proof of dead or unfitted hardware. Named flipper-key actions observe public switches 15/16 and synthetic winding pairs 47/48 and 45/46. The other direct pulse actions ran during automatic Coil Test without held-state readback and make no special-solenoid claim.",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "sha256": "5d13e66acd6b4d62cb908c13684133c250a17da79ad18cce6b0f3e46e91a2e71",
+      "uri": "evidence/runtime/data-east/playboy-35th-alpha-diagnostics.json"
     }
   ]
 }

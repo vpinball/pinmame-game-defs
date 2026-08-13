@@ -20,6 +20,7 @@ MANIFEST_PATH = ROOT/"tools/seeds/data-east/playboy-35th-anniversary-1989-extrac
 KNOWLEDGE_PATH = ROOT/"knowledge/data-east/playboy-35th-anniversary-1989.md"
 SPATIAL_JSON_PATH = ROOT/"reports/spatial/data-east/playboy-35th-anniversary-1989.json"
 SPATIAL_MD_PATH = ROOT/"reports/spatial/data-east/playboy-35th-anniversary-1989.md"
+RUNTIME_EVIDENCE_PATH = ROOT/"evidence/runtime/data-east/playboy-35th-alpha-diagnostics.json"
 EXCERPT_DIR = ROOT/"evidence/excerpts/data-east.playboy-35th-anniversary.1989"
 MANUAL_NAME = "Data_East_1989_Playboy_35th_Anniversary_English_Manual_with_schematics.pdf"
 TABLE_NAME = "Playboy 35th Anniversary (Data East 1989) Physics Sound Hybrid MOD 1.1.vpx"
@@ -341,6 +342,91 @@ class PlayboyDefinitionTests(unittest.TestCase):
         self.assertIn(f"algorithm: {algorithm}",extraction_source["locator"])
         self.assertEqual(extraction_source["sha256"],sha256(MANIFEST_PATH))
 
+    def test_runtime_evidence_is_compact_hash_pinned_and_reproducible(self) -> None:
+        evidence = load_json(RUNTIME_EVIDENCE_PATH)
+        self.assertEqual(["play_a24"],evidence["driver_ids"])
+        self.assertEqual(["data-east.playboy-35th-anniversary.1989"],evidence["machine_ids"])
+        self.assertEqual("c79953d94e5715012acc0e183351a1ee2b1eeec977c087d3dff77c84a0b1527b",evidence["source"]["sha256"])
+        self.assertEqual("observed",evidence["source"]["quality"])
+        self.assertIn("manifest.json's exact UTF-8 bytes",evidence["source"]["manifest_algorithm"])
+        runtime_source = next(item for item in self.definition["sources"] if item["id"] == "runtime.playboy-35th.alpha-diagnostics")
+        self.assertEqual(RUNTIME_EVIDENCE_PATH.relative_to(ROOT).as_posix(),runtime_source["uri"])
+        self.assertEqual(sha256(RUNTIME_EVIDENCE_PATH),runtime_source["sha256"])
+
+        runtime = evidence["runtime"]
+        self.assertEqual("194feee96aec0a6000dffb31af0baa5f133f00507c532b61148a56d5cde02e27",runtime["rom_archive_sha256"])
+        self.assertEqual("ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d",runtime["emulator"]["sha256"])
+        automatic_observations = runtime["observations"]["runs"]["automatic-coil-cycle"]
+        sweep_observations = runtime["observations"]["runs"]["special-solenoid-sweep"]
+        self.assertEqual(
+            [{"matched_text":"SWITCH TEST","after_service_pulses":11},{"matched_text":"COIL TEST","after_service_pulses":8}],
+            automatic_observations["diagnostic_checkpoints"],
+        )
+        expected_cycle = [1,10,25,2,10,26,3,10,27,4,10,28,5,10,29,6,10,30,7,8,10,32,9,10,11,12,13,14,15,16]
+        self.assertEqual(expected_cycle,automatic_observations["ordered_solenoid_on_sequence"])
+        self.assertEqual([31],automatic_observations["unobserved_watched_addresses"])
+        self.assertIn("does not prove",automatic_observations["limitation"])
+        self.assertEqual(
+            [
+                {"label":"left flipper","input_kind":"key","input_name":"left_flipper","observed_switch_addresses":[15],"active_solenoid_addresses":[23,47,48],"transitioned_solenoid_addresses":[47,48],"result":"observed"},
+                {"label":"right flipper","input_kind":"key","input_name":"right_flipper","observed_switch_addresses":[16],"active_solenoid_addresses":[23,45,46],"transitioned_solenoid_addresses":[45,46],"result":"observed"},
+            ],
+            sweep_observations["named_action_observations"],
+        )
+        self.assertIn("make no claim",sweep_observations["limitation"])
+        expected_runs = {
+            "automatic-coil-cycle":("a005243cf937dd3c87f1a287c3f302f40fcac92bc95b7a92b293a62cf6ac2adf",5,6),
+            "special-solenoid-sweep":("997699d222223e2f4a3943e65926137e54d322b4afc7f51c94c110caca1cfcfa",21,24),
+        }
+        for run in runtime["raw_runs"]:
+            self.assertEqual(expected_runs[run["name"]],(run["sha256"],run["action_count"],run["snapshot_count"]))
+            self.assertEqual(2.0,run["boot_wait_s"])
+            self.assertIn("new empty isolated state directory",run["nvram_initialization"])
+            scenario = ROOT/run["scenario_path"]
+            self.assertEqual(run["scenario_sha256"],sha256(scenario))
+
+        artifacts_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+        if not artifacts_root:
+            self.skipTest("evidence roots are not configured")
+        external = Path(artifacts_root)/"data-east/final-v5/play_a24"
+        manifest_path = external/"manifest.json"
+        self.assertEqual(evidence["source"]["sha256"],sha256(manifest_path))
+        self.assertEqual(evidence["source"]["sha256"],(external/"manifest.sha256").read_text(encoding="ascii").strip())
+        from build_external_evidence_manifest import build_manifest, check_manifest
+        self.assertEqual(load_json(manifest_path),build_manifest(external,"play_a24"))
+        self.assertEqual(evidence["source"]["sha256"],check_manifest(external,"play_a24"))
+
+        raw_by_name = {run["name"]:run for run in runtime["raw_runs"]}
+        self.assertEqual(set(raw_by_name),set(runtime["observations"]["runs"]))
+        automatic = load_json(external/"automatic-coil-cycle/run.json")
+        special = load_json(external/"special-solenoid-sweep/run.json")
+        for name,raw in (("automatic-coil-cycle",automatic),("special-solenoid-sweep",special)):
+            path = external/name/"run.json"
+            recorded = raw_by_name[name]
+            self.assertEqual(recorded["sha256"],sha256(path))
+            self.assertIsNone(raw["failure"])
+            self.assertEqual(recorded["action_count"],len(raw["steps"]))
+            self.assertEqual(recorded["snapshot_count"],len(raw["snapshots"]))
+            self.assertEqual(recorded["watch_switches"],raw["watch_switches"])
+            self.assertEqual(recorded["scenario_sha256"],raw["scenario"]["sha256"])
+
+        on_events = [event["number"] for event in automatic["events"] if event.get("event") == "solenoid" and event.get("state") == 1]
+        self.assertTrue(any(on_events[index:index+len(expected_cycle)] == expected_cycle for index in range(len(on_events)-len(expected_cycle)+1)))
+        for side,switch,pair in (("left",15,{47,48}),("right",16,{45,46})):
+            held = next(snapshot for snapshot in special["snapshots"] if snapshot["label"] == f"observe the configured {side} flipper switch and synthetic output pair (held)")
+            states = {row["number"]:row["state"] for row in held["watched_switches"]}
+            self.assertEqual(1,states[switch])
+            self.assertEqual(pair,{number for number in held["active_solenoids"] if number in {45,46,47,48}})
+
+        runtime_ref = "runtime.playboy-35th.alpha-diagnostics"
+        inputs = {item["binding"]["device"]:item for item in self.definition["inputs"] if item["binding"]["group"] == "pinmame.input.switch"}
+        outputs = {item["binding"]["device"]:item for item in self.definition["outputs"] if item["binding"]["group"] == "pinmame.output.solenoid"}
+        for address in (15,16):
+            self.assertIn(runtime_ref,inputs[address]["provenance"]["source_refs"])
+        for address in (45,46,47,48):
+            self.assertEqual("observed",outputs[address]["provenance"]["status"])
+            self.assertIn(runtime_ref,outputs[address]["provenance"]["source_refs"])
+
     def test_no_other_machine_identifiers_leak_into_generated_artifacts(self) -> None:
         this_id = self.definition["machine"]["id"]
         catalog = load_json(ROOT/"catalog/pinmame.json")
@@ -353,7 +439,7 @@ class PlayboyDefinitionTests(unittest.TestCase):
             if driver.get("machine_id") and driver["machine_id"] != this_id and "_" in driver["id"]
         )
         explicit = {"Batman","btmnGameData","btmn","lw3GameData","tmacGameData","ssvcGameData","torpGameData","lwarGameData","GEN_DEDMD16","GEN_DEDMD32","VPW 1.1","VPW 2.0"}
-        blobs = [(path.name,json.dumps(load_json(path))) for path in (DEFINITION_PATH,SEED_PATH,SPATIAL_JSON_PATH)]
+        blobs = [(path.name,json.dumps(load_json(path))) for path in (DEFINITION_PATH,SEED_PATH,SPATIAL_JSON_PATH,RUNTIME_EVIDENCE_PATH)]
         blobs.append((KNOWLEDGE_PATH.name,KNOWLEDGE_PATH.read_text(encoding="utf-8")))
         for name,blob in blobs:
             for needle in sorted(value for value in foreign if len(value) >= 5) + sorted(explicit):

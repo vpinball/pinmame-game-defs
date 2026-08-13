@@ -47,6 +47,12 @@ The 76-page manual has SHA-256 `0c4be366c30942919b7101c69acfb6563ac8bc6cd5aaaac0
 
 The table SHA-256 is `3b32aeacee1c5beb1c723e6e1bba79ae269deb36cc56101201b5d171a7a8336b`, contains 1,748 gameitems, and binds `Const cGameName = "play_a24"`. Its exact bounds are right 952 and bottom 1974. Both values are asserted before normalization, and no other machine's geometry is reused.
 
+## Runtime diagnostic evidence
+
+Two successful LibPinMAME runs used ROM archive SHA-256 `194feee96aec0a6000dffb31af0baa5f133f00507c532b61148a56d5cde02e27`, native-library SHA-256 `ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d`, and fresh isolated state directories. Hash-pinned raw-run checkpoints matched the English `SWITCH TEST` and `COIL TEST` titles. The automatic scenario observed one complete ordered output cycle: `1, 10, 25, 2, 10, 26, 3, 10, 27, 4, 10, 28, 5, 10, 29, 6, 10, 30, 7, 8, 10, 32, 9, 10, 11, 12, 13, 14, 15, 16`. This validates that K1 interleaves the left and right public banks in the ROM's own diagnostic sequence; it does not by itself identify physical bulb or coil fitment. Watched branch 31 did not appear in that captured cycle, but the negative observation does not prove the address dead or unfitted.
+
+The named flipper actions have held-state readback: public switch 15 was active with synthetic outputs 47/48, and public switch 16 was active with 45/46. The runtime source is consequently attached to those six public assertions. The remaining direct pulse actions ran while the ROM's automatic Coil Test continued, had no held-state switch readback, and cannot exercise the driver's empty `ssSw` mapping. They make no claim about switch delivery, special-solenoid causality, or public outputs 17-22; the existing conflict and blocker remain.
+
 ## Coverage and blockers
 
 Status remains `partial`; `coverage.missing` is [`output_semantics`, `mechanism_behavior`, `polarity`, `spatial_placement`, `unresolved_conflicts`].

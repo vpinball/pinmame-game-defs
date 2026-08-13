@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/vpinball/pinmame-game-defs/schemas/external-evidence-manifest.schema.json",
+  "title": "External evidence directory manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["files", "format", "game", "version"],
+  "properties": {
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "size"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1, "pattern": "^[^\\\\]+$" },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "size": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "format": { "const": "pinmame-external-evidence-manifest" },
+    "game": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+    "version": { "const": 1 }
+  }
+}
