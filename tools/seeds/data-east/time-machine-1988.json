@@ -1,23 +1,25 @@
 {
   "conflicts": [
     {
-      "description": "The manual prints a physical Left EOS contact at matrix 15 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put left cabinet-button state at public 15.",
+      "description": "The manual prints a physical Left EOS contact at matrix 15 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put left cabinet-button state at public 15. The runtime trace confirms that emulator-facing button contract but cannot distinguish it from the manual's physical EOS circuit.",
       "id": "conflict.left-eos-vs-public-button-state",
       "path": "/inputs/switch.matrix-15",
       "source_refs": [
         "manual.data-east.time-machine.1988",
         "pinmame.core.4ec52ff0ac13",
-        "vpx-script.time-machine-2.4.1"
+        "vpx-script.time-machine-2.4.1",
+        "runtime.time-machine.alpha-diagnostics"
       ]
     },
     {
-      "description": "The manual prints a physical Right EOS contact at matrix 16 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put right cabinet-button state at public 16.",
+      "description": "The manual prints a physical Right EOS contact at matrix 16 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put right cabinet-button state at public 16. The runtime trace confirms that emulator-facing button contract but cannot distinguish it from the manual's physical EOS circuit.",
       "id": "conflict.right-eos-vs-public-button-state",
       "path": "/inputs/switch.matrix-16",
       "source_refs": [
         "manual.data-east.time-machine.1988",
         "pinmame.core.4ec52ff0ac13",
-        "vpx-script.time-machine-2.4.1"
+        "vpx-script.time-machine-2.4.1",
+        "runtime.time-machine.alpha-diagnostics"
       ]
     },
     {
@@ -62,6 +64,7 @@
       "mechanisms": "conflicted",
       "physical_wiring": "conflicted",
       "recreation_knowledge": "candidate",
+      "runtime_observation": "observed",
       "semantic_naming": "conflicted",
       "spatial_placement": "candidate",
       "variant_coverage": "validated"
@@ -1098,7 +1101,8 @@
         "source_refs": [
           "manual.data-east.time-machine.1988",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.time-machine-2.4.1"
+          "vpx-script.time-machine-2.4.1",
+          "runtime.time-machine.alpha-diagnostics"
         ],
         "status": "conflicted"
       },
@@ -1149,7 +1153,8 @@
         "source_refs": [
           "manual.data-east.time-machine.1988",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.time-machine-2.4.1"
+          "vpx-script.time-machine-2.4.1",
+          "runtime.time-machine.alpha-diagnostics"
         ],
         "status": "conflicted"
       },
@@ -4578,7 +4583,8 @@
         "source_refs": [
           "manual.data-east.time-machine.1988",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.time-machine-2.4.1"
+          "vpx-script.time-machine-2.4.1",
+          "runtime.time-machine.alpha-diagnostics"
         ],
         "status": "validated"
       },
@@ -5163,14 +5169,16 @@
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "runtime.time-machine.alpha-diagnostics"
         ],
         "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
+            "pinmame.core.4ec52ff0ac13",
+            "runtime.time-machine.alpha-diagnostics"
           ],
           "status": "validated"
         },
@@ -5243,7 +5251,8 @@
         "source_refs": [
           "manual.data-east.time-machine.1988",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.time-machine-2.4.1"
+          "vpx-script.time-machine-2.4.1",
+          "runtime.time-machine.alpha-diagnostics"
         ],
         "status": "validated"
       },
@@ -5296,7 +5305,8 @@
         "source_refs": [
           "manual.data-east.time-machine.1988",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.time-machine-2.4.1"
+          "vpx-script.time-machine-2.4.1",
+          "runtime.time-machine.alpha-diagnostics"
         ],
         "status": "validated"
       },
@@ -5349,7 +5359,8 @@
         "source_refs": [
           "manual.data-east.time-machine.1988",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.time-machine-2.4.1"
+          "vpx-script.time-machine-2.4.1",
+          "runtime.time-machine.alpha-diagnostics"
         ],
         "status": "validated"
       },
@@ -5402,7 +5413,8 @@
         "source_refs": [
           "manual.data-east.time-machine.1988",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.time-machine-2.4.1"
+          "vpx-script.time-machine-2.4.1",
+          "runtime.time-machine.alpha-diagnostics"
         ],
         "status": "validated"
       },
@@ -5976,15 +5988,17 @@
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.time-machine-2.4.1"
+          "vpx-script.time-machine-2.4.1",
+          "runtime.time-machine.alpha-diagnostics"
         ],
-        "status": "validated"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
             "pinmame.core.4ec52ff0ac13",
-            "vpx-script.time-machine-2.4.1"
+            "vpx-script.time-machine-2.4.1",
+            "runtime.time-machine.alpha-diagnostics"
           ],
           "status": "validated"
         },
@@ -6013,15 +6027,17 @@
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.time-machine-2.4.1"
+          "vpx-script.time-machine-2.4.1",
+          "runtime.time-machine.alpha-diagnostics"
         ],
-        "status": "validated"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
             "pinmame.core.4ec52ff0ac13",
-            "vpx-script.time-machine-2.4.1"
+            "vpx-script.time-machine-2.4.1",
+            "runtime.time-machine.alpha-diagnostics"
           ],
           "status": "validated"
         },
@@ -6050,15 +6066,17 @@
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.time-machine-2.4.1"
+          "vpx-script.time-machine-2.4.1",
+          "runtime.time-machine.alpha-diagnostics"
         ],
-        "status": "validated"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
             "pinmame.core.4ec52ff0ac13",
-            "vpx-script.time-machine-2.4.1"
+            "vpx-script.time-machine-2.4.1",
+            "runtime.time-machine.alpha-diagnostics"
           ],
           "status": "validated"
         },
@@ -6087,15 +6105,17 @@
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.time-machine-2.4.1"
+          "vpx-script.time-machine-2.4.1",
+          "runtime.time-machine.alpha-diagnostics"
         ],
-        "status": "validated"
+        "status": "observed"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
             "pinmame.core.4ec52ff0ac13",
-            "vpx-script.time-machine-2.4.1"
+            "vpx-script.time-machine-2.4.1",
+            "runtime.time-machine.alpha-diagnostics"
           ],
           "status": "validated"
         },
@@ -9815,7 +9835,7 @@
       "id": "pinmame.core.4ec52ff0ac13",
       "kind": "pinmame_core",
       "license": "BSD-3-Clause",
-      "locator": "src/wpc/degames.c lines 208 and 216-232: INITGAMES11(tmac, GEN_DE, de_dispAlpha2, FLIP1516, SNDBRD_DE1S, 0, 0), parent a24 and two clones; the initializer leaves wpc.invSw zero-initialized and src/wpc/core.c lines 2455-2456 copy that zero mask into coreGlobals.invSw; src/wpc/s11.c lines 537-554 apply Data East permutation {3,4,5,1,0,2}, lines 618-623 bind handler indices 0-5, and PIA board comments at lines 714-715, 737-738, and 746-747 identify those handlers as printed SP6, SP5, SP2, SP3, SP1, and SP4; lines 1169-1173 provide Time Machine-specific output types and mux relay, plus core flipper/public-output code",
+      "locator": "src/wpc/degames.c lines 208 and 216-232: INITGAMES11(tmac, GEN_DE, de_dispAlpha2, FLIP1516, SNDBRD_DE1S, 0, 0), parent a24 and two clones; the initializer leaves wpc.invSw zero-initialized, leaves sxx.ssSw empty, and sets sxx.muxSol=10. src/wpc/core.c lines 2455-2456 copy the zero inversion mask; src/wpc/s11.c lines 193-195 skip empty ssSw entries, lines 537-554 apply Data East permutation {3,4,5,1,0,2}, lines 579 and 618-623 establish the PIA setSSSol path and bind handler indices 0-5, and PIA board comments at lines 714-715, 737-738, and 746-747 identify those handlers as printed SP6, SP5, SP2, SP3, SP1, and SP4; lines 1169-1173 provide Time Machine-specific output types and mux relay, plus core flipper/public-output code",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
     },
@@ -9924,6 +9944,18 @@
       "rights": "NOASSERTION",
       "sha256": "f232f8114ea31776a9d49e274b5ebed32cb3805acb4e719785fe48d43ddd719c",
       "uri": "https://archive.org/download/Data_East_Time_Machine_Manual/Data_East_1988_Time_Machine_Manual.pdf"
+    },
+    {
+      "acquired_at": "2026-08-12T00:50:07Z",
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external.",
+      "id": "runtime.time-machine.alpha-diagnostics",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "The manifest-pinned bundle c67f150caed992fc1c18f5893047af2bd0a833005d1c6bc34efc73e8099ffbcd retains one successful automatic tmac_a24 trace carried forward byte-for-byte from final-v4 and one successful final-v5 switch/flipper trace, each with an isolated state directory. The automatic diagnostic records the regular/K1-mux cycle; held flipper actions observe the emulator-facing 15/16 and 47/48 or 45/46 contracts. Direct switch pulses landed, but they ran during automatic Coil Test and cannot reach public 17-22 through this driver's empty ssSw mapping; they make no special-solenoid identity claim.",
+      "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "rights": "NOASSERTION",
+      "sha256": "b210b0594ce3233c1804d9002c770b74cde6732637705fa2dbd2bbf7942aa7c7",
+      "uri": "evidence/runtime/data-east/time-machine-alpha-diagnostics.json"
     }
   ]
 }

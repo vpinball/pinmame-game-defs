@@ -22,6 +22,7 @@ SEED_PATH = Path("tools/seeds/data-east/time-machine-1988.json")
 SPATIAL_JSON_PATH = Path("reports/spatial/data-east/time-machine-1988.json")
 SPATIAL_MD_PATH = Path("reports/spatial/data-east/time-machine-1988.md")
 KNOWLEDGE_PATH = Path("knowledge/data-east/time-machine-1988.md")
+RUNTIME_EVIDENCE_PATH = Path("evidence/runtime/data-east/time-machine-alpha-diagnostics.json")
 STUB_PATH = Path("machines/stubs/tmac_a24.json")
 STUB_KNOWLEDGE_PATH = Path("knowledge/stubs/tmac_a24.md")
 MANIFEST_PATH = Path("tools/seeds/data-east/time-machine-1988-extraction-manifest.json")
@@ -33,6 +34,7 @@ TABLE_SOURCE = "vpx-table.time-machine-2.4.1"
 SCRIPT_SOURCE = "vpx-script.time-machine-2.4.1"
 EXTRACTION_SOURCE = "vpx-extraction.time-machine-2.4.1"
 RENDER_SOURCE = "human-review.time-machine-manual-renders"
+RUNTIME_SOURCE = "runtime.time-machine.alpha-diagnostics"
 
 MANUAL_SHA256 = "f232f8114ea31776a9d49e274b5ebed32cb3805acb4e719785fe48d43ddd719c"
 MANUAL_URI = "https://archive.org/download/Data_East_Time_Machine_Manual/Data_East_1988_Time_Machine_Manual.pdf"
@@ -42,6 +44,13 @@ SCRIPT_SHA256 = "1ab7a5cfd7c6e55652a1fc4f9a28e05fd55e24b732b897355e0daec1a5602ee
 MANIFEST_ALGORITHM = "SHA-256 of the UTF-8 JSON object after removing manifest_sha256 and serializing with sorted keys, compact separators, and ensure_ascii=False."
 MANIFEST_CONTENT_SHA256 = "96ae681549e9284ccec0eddb0181decb07b0388651fcf9bfb22bd299dfb5a8b6"
 MANIFEST_SHA256 = "91bb4c4b3be5b24ea9b77493e46d83810dd549ca10186ae47da4a1f8f9eaa185"
+RUNTIME_MANIFEST_SHA256 = "c67f150caed992fc1c18f5893047af2bd0a833005d1c6bc34efc73e8099ffbcd"
+RUNTIME_AUTO_SHA256 = "1eac720f03ba33edd4319993c2373467da5f3ff12ba892e8d4d6605120506597"
+RUNTIME_SPECIAL_SHA256 = "e363affc4f3c5539056cf86620f5cb27b48f1e8ecf824385a28b6fd8d0a72a53"
+RUNTIME_AUTO_SCENARIO_SHA256 = "a156f3814db7180466619b10c22b604dd7d0e13aceaaa013e2d08d548fafbb4f"
+RUNTIME_SPECIAL_SCENARIO_SHA256 = "578818832dde4d8123380e8e493e04bf7a297d024ac838ce0c16776259286b82"
+PINMAME_LIBRARY_SHA256 = "ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d"
+ROM_ARCHIVE_SHA256 = "051502cafb6471c238a56a5fc4ef956883b4609e5e5156b03a0f24705f465975"
 
 SWITCH_DRIVES = ["GRN-BRN", "GRN-RED", "GRN-ORN", "GRN-YEL", "GRN-BLK", "GRN-BLU", "GRN-VIO", "GRN-GRY"]
 SWITCH_RETURNS = ["WHT-BRN", "WHT-RED", "WHT-ORN", "WHT-YEL", "WHT-GRN", "WHT-BLU", "WHT-VIO", "WHT-GRY"]
@@ -312,13 +321,16 @@ def switch_input(number: int) -> dict[str, object]:
 		physical["part_number"] = SWITCH_PARTS[number]
 	if number in {15, 16}:
 		physical["notes"] += " The printed parts list separately names the Instant Info flipper function and a physical EOS contact at this address; PinMAME FLIP1516 publishes cabinet-button state here."
+	source_refs = [MANUAL_SOURCE, CORE_SOURCE, SCRIPT_SOURCE]
+	if number in {15,16}:
+		source_refs.append(RUNTIME_SOURCE)
 	result: dict[str, object] = {
 		"id": device_id, "label": f"Unused Switch {number}" if unused else label, "kind": "switch",
 		"binding": {"group": "pinmame.input.switch", "device": number},
 		"aliases": aliases("pinmame.switch", number, str(number)),
 		"availability": "unused" if unused else "used", "physical": physical,
 		"wiring": {"board": "CPU Board", "drive_wire": SWITCH_DRIVES[column], "return_wire": SWITCH_RETURNS[row]},
-		"provenance": provenance("conflicted" if number in {2, 15, 16} else "validated", MANUAL_SOURCE, CORE_SOURCE, SCRIPT_SOURCE),
+		"provenance": provenance("conflicted" if number in {2, 15, 16} else "validated", *source_refs),
 	}
 	roles = {
 		1: "cabinet.tilt", 3: "cabinet.start", 4: "cabinet.coin", 5: "cabinet.coin", 6: "cabinet.coin", 7: "cabinet.slam-tilt",
@@ -419,7 +431,7 @@ def solenoid_output(number: int) -> dict[str, object]:
 			"id": device_id, "label": "Game On / Flipper and Special-Solenoid Enable", "kind": "control_signal",
 			"binding": {"group": "pinmame.output.solenoid", "device": 23}, "aliases": aliases("pinmame.solenoid", 23), "availability": "used",
 			"physical": {"notes": "PinMAME's shared s11 core public Game On state enables the flipper and special-solenoid circuits; this is a controller signal, not a playfield coil."},
-			"spatial": not_applicable("internal_nonvisual", "validated", CORE_SOURCE), "provenance": provenance("validated", CORE_SOURCE),
+			"spatial": not_applicable("internal_nonvisual", "validated", CORE_SOURCE, RUNTIME_SOURCE), "provenance": provenance("validated", CORE_SOURCE, RUNTIME_SOURCE),
 		}
 	label = SOLENOID_LABELS[number]
 	unused = number in {20,24,33,34,35,36,37,38,39,40,41,42,43,44,49,50}
@@ -431,6 +443,7 @@ def solenoid_output(number: int) -> dict[str, object]:
 	status = "validated"
 	if number in {17,22}: status = "conflicted"
 	if number in {29,30,31,32}: status = "candidate"
+	if number in {45,46,47,48}: status = "observed"
 	manual_number = (
 		f"SIDE L {number:02d}" if 1 <= number <= 8
 		else (str(number) if 9 <= number <= 16
@@ -461,6 +474,8 @@ def solenoid_output(number: int) -> dict[str, object]:
 		output_sources = (CORE_SOURCE, SCRIPT_SOURCE)
 	else:
 		output_sources = (MANUAL_SOURCE, CORE_SOURCE, SCRIPT_SOURCE)
+	if number in {10,25,26,27,28,45,46,47,48}:
+		output_sources = (*output_sources, RUNTIME_SOURCE)
 	result: dict[str, object] = {
 		"id": device_id, "label": label, "kind": kind,
 		"binding": {"group": "pinmame.output.solenoid", "device": number},
@@ -530,12 +545,53 @@ def mechanisms() -> list[dict[str, object]]:
 
 def conflicts() -> list[dict[str, object]]:
 	return [
-		{"id":"conflict.left-eos-vs-public-button-state","path":"/inputs/switch.matrix-15","description":"The manual prints a physical Left EOS contact at matrix 15 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put left cabinet-button state at public 15.","source_refs":[MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE]},
-		{"id":"conflict.right-eos-vs-public-button-state","path":"/inputs/switch.matrix-16","description":"The manual prints a physical Right EOS contact at matrix 16 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put right cabinet-button state at public 16.","source_refs":[MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE]},
+		{"id":"conflict.left-eos-vs-public-button-state","path":"/inputs/switch.matrix-15","description":"The manual prints a physical Left EOS contact at matrix 15 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put left cabinet-button state at public 15. The runtime trace confirms that emulator-facing button contract but cannot distinguish it from the manual's physical EOS circuit.","source_refs":[MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE,RUNTIME_SOURCE]},
+		{"id":"conflict.right-eos-vs-public-button-state","path":"/inputs/switch.matrix-16","description":"The manual prints a physical Right EOS contact at matrix 16 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put right cabinet-button state at public 16. The runtime trace confirms that emulator-facing button contract but cannot distinguish it from the manual's physical EOS circuit.","source_refs":[MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE,RUNTIME_SOURCE]},
 		{"id":"conflict.shared-port-position-2-vs-unfitted","path":"/inputs/switch.matrix-2","description":"Shared Data East DE_COMPORTS names matrix position 2 Ball Tilt, while both Time Machine manual switch tables explicitly print position 2 Not Used. The machine record follows the game-specific fitment without erasing the shared-port label.","source_refs":[MANUAL_SOURCE,CORE_SOURCE]},
 		{"id":"conflict.special-coil-right-center-location","path":"/outputs/coil.driver-17","description":"The manual Coil Test table prints SP1 Right Pop Bumper and SP2 Center Pop Bumper. Its location drawing places SP1 at the center pop and SP2 at the right pop. Pinned Data East setSSSol publishes SP1 at public 17 and SP2 at public 22; the two physical assignments remain unresolved and neither output is assigned to a mechanism or coordinate.","source_refs":[MANUAL_SOURCE,RENDER_SOURCE,CORE_SOURCE]},
 		{"id":"conflict.lamp-25-playfield-vs-table-backglass","path":"/outputs/lamp.matrix-25","description":"The manual description list explicitly prints lamp 25 as 2X All Scores Cntr Plyfld. The sole AllLamps member with TimerInterval 25 is Light l25, flagged is_backglass=true on hSpacewarpLights. No physical placement is selected.","source_refs":[MANUAL_SOURCE,TABLE_SOURCE,SCRIPT_SOURCE]},
 	]
+
+
+def build_runtime_evidence() -> dict[str, object]:
+	return {
+		"format":"pinmame-machine-evidence","version":1,
+		"extractor":{"id":"tools/run_pinmame_harness.py","version":1},
+		"source":{
+			"kind":"runtime_scenario","repository":"https://github.com/vpinball/pinmame","revision":PINMAME_REVISION,
+			"path":"external:pinmame-review-artifacts/data-east/final-v5/tmac_a24","sha256":RUNTIME_MANIFEST_SHA256,
+			"manifest_algorithm":"source.sha256 is SHA-256 of manifest.json's exact UTF-8 bytes. manifest.json is compact canonical JSON with sorted keys, separators=(',', ':'), ensure_ascii=False, plus one LF; it lists every file below source.path except manifest.json and manifest.sha256 as {path, sha256, size}, using sorted POSIX-relative paths.",
+			"license":"NOASSERTION","quality":"observed","attribution":"Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external.",
+		},
+		"driver_ids":["tmac_a24"],"machine_ids":[MACHINE_ID],
+		"switches":[],"outputs":[],"states":[],"mechanisms":[],"recreation_notes":[],
+		"runtime":{
+			"game":"tmac_a24","rom_archive_sha256":ROM_ARCHIVE_SHA256,
+			"emulator":{"binary":"pinmame64.dll","sha256":PINMAME_LIBRARY_SHA256,"built_from_revision":PINMAME_REVISION},
+			"raw_runs":[
+				{"name":"automatic-coil-cycle","sha256":RUNTIME_AUTO_SHA256,"scenario_path":"tools/harness-scenarios/data-east/alpha-coil-cycle.json","scenario_sha256":RUNTIME_AUTO_SCENARIO_SHA256,"action_count":5,"watch_switches":[-7,-6,15,16,30,31,46,47],"self_test_pulses":17,"nvram_initialization":"new empty isolated state directory; no NVRAM inherited","retained_from":"external:pinmame-review-artifacts/data-east/final-v4/tmac_a24/automatic-coil-cycle","boot_wait_s":2.0,"snapshot_count":6},
+				{"name":"special-solenoid-sweep","sha256":RUNTIME_SPECIAL_SHA256,"scenario_path":"tools/harness-scenarios/data-east/alpha-special-solenoid-sweep.json","scenario_sha256":RUNTIME_SPECIAL_SCENARIO_SHA256,"action_count":21,"watch_switches":[-7,-6,14,15,16,20,21,22,28,29,30,31,43,44,45,46,47,48,49,50,51,52,53],"self_test_pulses":17,"nvram_initialization":"new empty isolated state directory; no NVRAM inherited","boot_wait_s":2.0,"snapshot_count":24},
+			],
+			"command_template":"python tools/run_pinmame_harness.py --library <libpinmame> --game tmac_a24 --rom-path <read-only-rom-root> --work-dir <new-isolated-state> --scenario <scenario.json> --boot-wait 2 --output <external-run.json>",
+			"observations":{
+				"runs":{"automatic-coil-cycle":{
+					"diagnostic_checkpoints":[{"matched_text":"SWITCH TEST","after_service_pulses":9},{"matched_text":"COIL TEST","after_service_pulses":8}],
+					"ordered_solenoid_on_sequence":[1,10,25,2,10,26,3,10,27,4,10,28,5,6,7,8,9,10,11,12,13,14,15,16],
+					"solenoid_addresses_seen":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,23,25,26,27,28],
+					"unobserved_watched_addresses":[29,30,31,32],
+					"note":"Three pre-window ON events (10, 27, 23) preceded the retained complete repeating cycle. Absence of watched 29-32 from the captured cycle is not proof of dead or unfitted hardware.",
+				},
+				"special-solenoid-sweep":{
+					"named_action_observations":[
+						{"label":"left flipper","input_kind":"key","input_name":"left_flipper","observed_switch_addresses":[15],"held_synthetic_solenoid_addresses":[47,48],"result":"observed"},
+						{"label":"right flipper","input_kind":"key","input_name":"right_flipper","observed_switch_addresses":[16],"held_synthetic_solenoid_addresses":[45,46],"result":"observed"},
+					],
+					"switch_addresses_observed_while_held":[14,20,21,22,28,29,43,44,45,48,49,50,51,52,53],
+					"limitation":"The direct switch pulses landed, but they ran during automatic Coil Test and cannot drive public 17-22 because this driver's ssSw mapping is empty. Resolving SP1/SP2 requires observing ROM PIA setSSSol activity during gameplay or static ROM analysis, not another switch sweep.",
+				}},
+			},
+		},
+	}
 
 
 def sources() -> list[dict[str, object]]:
@@ -549,12 +605,13 @@ def sources() -> list[dict[str, object]]:
 		})
 	return [
 		{"id":CATALOG_SOURCE,"kind":"pinmame_catalog","uri":"https://github.com/vpinball/pinmame","revision":PINMAME_REVISION,"license":"BSD-3-Clause","attribution":"vpinball/PinMAME contributors","acquired_at":"2026-08-05T09:24:53Z","locator":"catalog/pinmame.json entries tmac_a24, tmac_a18, tmac_g18; src/wpc/driver.c lines 471-473 date all three 12/88"},
-		{"id":CORE_SOURCE,"kind":"pinmame_core","uri":"https://github.com/vpinball/pinmame","revision":PINMAME_REVISION,"license":"BSD-3-Clause","attribution":"vpinball/PinMAME contributors","acquired_at":"2026-08-05T09:24:53Z","locator":"src/wpc/degames.c lines 208 and 216-232: INITGAMES11(tmac, GEN_DE, de_dispAlpha2, FLIP1516, SNDBRD_DE1S, 0, 0), parent a24 and two clones; the initializer leaves wpc.invSw zero-initialized and src/wpc/core.c lines 2455-2456 copy that zero mask into coreGlobals.invSw; src/wpc/s11.c lines 537-554 apply Data East permutation {3,4,5,1,0,2}, lines 618-623 bind handler indices 0-5, and PIA board comments at lines 714-715, 737-738, and 746-747 identify those handlers as printed SP6, SP5, SP2, SP3, SP1, and SP4; lines 1169-1173 provide Time Machine-specific output types and mux relay, plus core flipper/public-output code"},
+		{"id":CORE_SOURCE,"kind":"pinmame_core","uri":"https://github.com/vpinball/pinmame","revision":PINMAME_REVISION,"license":"BSD-3-Clause","attribution":"vpinball/PinMAME contributors","acquired_at":"2026-08-05T09:24:53Z","locator":"src/wpc/degames.c lines 208 and 216-232: INITGAMES11(tmac, GEN_DE, de_dispAlpha2, FLIP1516, SNDBRD_DE1S, 0, 0), parent a24 and two clones; the initializer leaves wpc.invSw zero-initialized, leaves sxx.ssSw empty, and sets sxx.muxSol=10. src/wpc/core.c lines 2455-2456 copy the zero inversion mask; src/wpc/s11.c lines 193-195 skip empty ssSw entries, lines 537-554 apply Data East permutation {3,4,5,1,0,2}, lines 579 and 618-623 establish the PIA setSSSol path and bind handler indices 0-5, and PIA board comments at lines 714-715, 737-738, and 746-747 identify those handlers as printed SP6, SP5, SP2, SP3, SP1, and SP4; lines 1169-1173 provide Time Machine-specific output types and mux relay, plus core flipper/public-output code"},
 		{"id":MANUAL_SOURCE,"kind":"manual","uri":MANUAL_URI,"sha256":MANUAL_SHA256,"locator":"Internet Archive item Data_East_Time_Machine_Manual, original file Data_East_1988_Time_Machine_Manual.pdf: 78 pages, 4,542,921 bytes. Item metadata says the file was originally downloaded from IPDB. Rendered pages 26-27 (printed 22-23), 28-29 (printed 24-25), 30-31 (printed 26-27), 67 (printed 47), 74 (printed 54), 76 (printed 56), and 77 (printed 57) decide the transcribed claims; PDF page 78 is blank.","license":"NOASSERTION","attribution":"Data East Pinball, Inc.; Internet Archive item uploaded by wouterdevlieger@gmail.com and described as originally downloaded from IPDB","source_id":"Data_East_Time_Machine_Manual","original_filename":MANUAL_FILENAME,"rights":"NOASSERTION","acquired_at":"2026-08-09T12:41:47Z","excerpts":excerpt_meta},
 		{"id":TABLE_SOURCE,"kind":"vpx_table","uri":"external:pinmame-vpx-sources/data-east/time-machine-1988/Time Machine (Data East 1988) v.2.4.1.vpx","sha256":TABLE_SHA256,"revision":"2.4.1","known_working":True,"source_id":"retained-time-machine-2.4.1","original_filename":"Time Machine (Data East 1988) v.2.4.1.vpx","license":"Community table; redistribution terms not supplied","attribution":"Credited Time Machine table contributors","rights":"NOASSERTION","acquired_at":"2026-08-09T12:35:47Z","locator":"vpxtool git:0561bb4; 2389 extracted gameitem files; exact asserted bounds (0,0)-(1000,1910)"},
 		{"id":SCRIPT_SOURCE,"kind":"vpx_script","uri":"external:pinmame-vpx-sources/data-east/time-machine-1988/vpxtool-extract/script.vbs","sha256":SCRIPT_SHA256,"revision":"script from retained table 2.4.1","source_id":"retained-time-machine-2.4.1-script","original_filename":"script.vbs","license":"Community script; redistribution terms not supplied","attribution":"Credited Time Machine table-script contributors","rights":"NOASSERTION","acquired_at":"2026-08-09T12:35:55Z","locator":"Const cGameName=tmac_a24; UseSolenoids=2, UseLamps=1; HandleMechanics=0; vpmMapLights AllLamps; whole-line comments stripped before callback attribution; trough, VUK, three-position lock, kickback, flipper and sensor causality"},
 		{"id":EXTRACTION_SOURCE,"kind":"vpx_table","uri":MANIFEST_PATH.as_posix(),"sha256":MANIFEST_CONTENT_SHA256,"revision":"vpxtool git:0561bb4","source_id":"retained-time-machine-2.4.1-extraction","original_filename":"time-machine-1988-extraction-manifest.json","license":"Repository-generated metadata under MIT; underlying community-table rights are unchanged","attribution":"Generated from the retained Time Machine 2.4.1 table with vpxtool git:0561bb4","rights":"NOASSERTION","acquired_at":"2026-08-09T12:35:55Z","locator":f"3049 files; 313925219 bytes; algorithm: {MANIFEST_ALGORITHM}; canonical manifest SHA-256 {MANIFEST_SHA256}; 2389 files under gameitems/"},
 		{"id":RENDER_SOURCE,"kind":"human_review","uri":MANUAL_URI,"revision":"visual review 2026-08-09","sha256":MANUAL_SHA256,"license":"NOASSERTION","attribution":"Primary curator review of the retained Data East manual","rights":"NOASSERTION","acquired_at":"2026-08-09T12:41:47Z","locator":"Reviewed retained Archive.org renders at PDF pages 26-31, 67, 74, 76, and 77; every manual claim in the excerpts is limited to visible rendered-page content. PDF page 78 is blank."},
+		{"id":RUNTIME_SOURCE,"kind":"runtime_scenario","uri":RUNTIME_EVIDENCE_PATH.as_posix(),"revision":PINMAME_REVISION,"sha256":sha256_text(json_text(build_runtime_evidence())),"license":"NOASSERTION","attribution":"Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external.","rights":"NOASSERTION","acquired_at":"2026-08-12T00:50:07Z","locator":f"The manifest-pinned bundle {RUNTIME_MANIFEST_SHA256} retains one successful automatic tmac_a24 trace carried forward byte-for-byte from final-v4 and one successful final-v5 switch/flipper trace, each with an isolated state directory. The automatic diagnostic records the regular/K1-mux cycle; held flipper actions observe the emulator-facing 15/16 and 47/48 or 45/46 contracts. Direct switch pulses landed, but they ran during automatic Coil Test and cannot reach public 17-22 through this driver's empty ssSw mapping; they make no special-solenoid identity claim."},
 	]
 
 
@@ -564,7 +621,7 @@ def build_machine() -> dict[str, object]:
 	return {
 		"format":"pinmame-machine-definition", "schema_version":2,
 		"machine":{"id":MACHINE_ID,"name":"Time Machine","manufacturer":"Data East","year":1988,"kind":"physical_pinball","playfield":{"width":1000.0,"height":1910.0,"units":"vpx","provenance":provenance("validated",TABLE_SOURCE)}},
-		"coverage":{"status":"partial","missing":["output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"],"dimensions":{"catalog_identity":"validated","address_enumeration":"validated","semantic_naming":"conflicted","physical_wiring":"conflicted","mechanisms":"conflicted","variant_coverage":"validated","recreation_knowledge":"candidate","spatial_placement":"candidate"}},
+		"coverage":{"status":"partial","missing":["output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"],"dimensions":{"catalog_identity":"validated","address_enumeration":"validated","semantic_naming":"conflicted","physical_wiring":"conflicted","mechanisms":"conflicted","variant_coverage":"validated","recreation_knowledge":"candidate","spatial_placement":"candidate","runtime_observation":"observed"}},
 		"controller":{"platform":"pinmame.dataeast","hardware_generation":"0x1000","inversion_applied_by_emulator":True},
 		"drivers":[
 			{"id":"tmac_a24","description":"Time Machine (2.4)","year":"1988","manufacturer":"Data East","flags":0,"physical_compatibility":"identical","variant_notes":"Clone-tree parent and retained-table ROM. Highest firmware revision; shared tmacGameData and physical definition."},
@@ -667,6 +724,12 @@ The retained Archive.org manual is a 78-page, 4,542,921-byte scan with SHA-256 `
 
 The retained table SHA-256 is `{TABLE_SHA256}` and binds the correct parent with `Const cGameName = "tmac_a24"`. Its exact bounds are 1000 by 1910. Both values are asserted before normalization. Whole-line VBScript comments are removed before any callback or mapping claim; inline executable code remains.
 
+## Runtime diagnostic evidence
+
+The manifest-pinned evidence bundle retains one successful automatic LibPinMAME run carried forward byte-for-byte from the final-v4 capture and one successful final-v5 switch/flipper run. Both used ROM archive SHA-256 `{ROM_ARCHIVE_SHA256}`, library SHA-256 `{PINMAME_LIBRARY_SHA256}`, and isolated state directories. Hash-pinned raw-run checkpoints matched the English `SWITCH TEST` and `COIL TEST` titles. The complete automatic output cycle was `1, 10, 25, 2, 10, 26, 3, 10, 27, 4, 10, 28, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16`; three pre-window ON events (10, 27, 23) preceded that repeating window. This proves that the selected ROM drives public 25-28 during the K1-interleaved test, while watched public 29-32 were not present in this captured cycle. Their absence is not proof of dead or unfitted addresses; the existing output-semantics blocker remains.
+
+Named flipper actions with held-state readback confirmed the emulator-facing contract: public button address 15 accompanies synthetic 47/48, and 16 accompanies 45/46. This does not distinguish the manual's physical EOS interpretation and therefore resolves neither flipper conflict. The remaining direct pulses were observed closed and released, but ran while the ROM's automatic Coil Test continued. Time Machine's `INITGAMES11` initializer leaves `ssSw` empty, and `s11.c` only publishes 17-22 from switch closures when an `ssSw` entry exists; otherwise ROM PIA writes call `setSSSol`. The switch sweep therefore could not exercise 17-22. Resolving the SP1/SP2 identity requires observing `setSSSol` during gameplay or static ROM analysis, not another diagnostic switch sweep.
+
 ## Coverage and blockers
 
 Status remains `partial`. `coverage.missing` is [{missing}].
@@ -683,14 +746,16 @@ Recreate only the explicitly mapped addresses and topologies. Do not invent acti
 """
 
 
-LEDGER_BLOCK = """Data East Time Machine (`data-east.time-machine.1988`) was corrected on 2026-08-09 in its isolated worktree. It remains `partial` with `coverage.missing = ["output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"]` and five unresolved source conflicts. The retained geometry is exactly 1000 by 1910, and both extents are asserted before normalization.
+LEDGER_BLOCK = """Data East Time Machine (`data-east.time-machine.1988`) was corrected on 2026-08-09 and gained hash-pinned runtime diagnostic evidence on 2026-08-12. It remains `partial` with `coverage.missing = ["output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"]` and five unresolved source conflicts. The retained geometry is exactly 1000 by 1910, and both extents are asserted before normalization.
 
-Four things from it generalise.
+Five things from it generalise.
 
 1. **An emulator-published output type is not runtime evidence.** Time Machine's `s11.c` short-name block configures four distinct mux-state types at public 29-32, while the retained manual and active table resolve only the first four right-bank devices at 25-28. Without a trace, the remaining states are `unknown` availability with no physical quantity, rather than either live hardware or dead address space.
 2. **A collection-driven lamp mapper can contain more numeric Light names than the controller has addresses.** `vpmMapLights` indexes each member by `TimerInterval`; TimerInterval 1-64 cover the hardware matrix, while sole member `l65` targets unreachable slot 65 and is a backglass presentation helper. Count controller addresses first, then explain every extra object.
 3. **Data East is not a substitute name for the System 11 profile.** Time Machine shares emulator implementation paths with System 11, but its platform record is the independently derived `pinmame.dataeast` profile. Construction and causality likewise remain separate: the script proves a three-position serial lock released through one output, while the retained Archive.org manual's assembly drawing proves one cam, spring-return plunger and coil.
 4. **Data East's printed SP1-SP6 order is not PinMAME public 17-22 order.** `src/wpc/s11.c` PIA comments identify handlers 0-5 as SP6, SP5, SP2, SP3, SP1 and SP4; applying the Data East `ssSolNo` offsets `{3,4,5,1,0,2}` derives printed SP1, SP3, SP4, SP6, SP5 and SP2 at public 17-22. On Time Machine that moves the unfitted SP6 circuit to public 20, places the known left sling/left pop/right sling at 18/19/21, and leaves the conflicting right/center SP1/SP2 pair at 17/22. Preserve the printed SP identity as a manual alias and derive the public binding from both the handler comments and permutation; sequentially assigning SP1-SP6 to 17-22 silently mislabels five of six addresses.
+
+5. **A diagnostic trace supports only the paths its scenario can actually drive.** Time Machine's automatic cycle observes muxed public outputs 25-28 but not watched 29-32; that absence cannot prove a public address dead or unfitted. Held flipper actions confirm PinMAME's emulator-facing button/synthetic-output contract (15 with 47/48 and 16 with 45/46), but cannot distinguish the manual's physical EOS interpretation. The direct pulses landed, yet `INITGAMES11` leaves this driver's `ssSw` mapping empty and the run remained in automatic Coil Test, so switch closures could not exercise public 17-22. Resolving SP1/SP2 requires gameplay observation of the ROM's PIA `setSSSol` path or static ROM analysis.
 
 The physical family is the three-driver `tmac_*` clone tree (`tmac_a24` parent plus English `tmac_a18` and German `tmac_g18` firmware); all share the same physical game-data declaration.
 
@@ -724,7 +789,8 @@ def desired_files() -> dict[Path, str]:
 	spatial = build_spatial(machine)
 	files = {
 		MACHINE_PATH: json_text(machine), SEED_PATH: json_text(machine), SPATIAL_JSON_PATH: json_text(spatial),
-		SPATIAL_MD_PATH: spatial_markdown(spatial), KNOWLEDGE_PATH: knowledge_markdown(machine), **EXCERPTS,
+		SPATIAL_MD_PATH: spatial_markdown(spatial), KNOWLEDGE_PATH: knowledge_markdown(machine),
+		RUNTIME_EVIDENCE_PATH: json_text(build_runtime_evidence()), **EXCERPTS,
 	}
 	return files
 

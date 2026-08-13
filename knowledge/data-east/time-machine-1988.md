@@ -35,6 +35,12 @@ The retained Archive.org manual is a 78-page, 4,542,921-byte scan with SHA-256 `
 
 The retained table SHA-256 is `b6c4b39bc7a672c1914b25e19192ec4cde8432aae00f9a5cd913c9b2f3c3c4f4` and binds the correct parent with `Const cGameName = "tmac_a24"`. Its exact bounds are 1000 by 1910. Both values are asserted before normalization. Whole-line VBScript comments are removed before any callback or mapping claim; inline executable code remains.
 
+## Runtime diagnostic evidence
+
+The manifest-pinned evidence bundle retains one successful automatic LibPinMAME run carried forward byte-for-byte from the final-v4 capture and one successful final-v5 switch/flipper run. Both used ROM archive SHA-256 `051502cafb6471c238a56a5fc4ef956883b4609e5e5156b03a0f24705f465975`, library SHA-256 `ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d`, and isolated state directories. Hash-pinned raw-run checkpoints matched the English `SWITCH TEST` and `COIL TEST` titles. The complete automatic output cycle was `1, 10, 25, 2, 10, 26, 3, 10, 27, 4, 10, 28, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16`; three pre-window ON events (10, 27, 23) preceded that repeating window. This proves that the selected ROM drives public 25-28 during the K1-interleaved test, while watched public 29-32 were not present in this captured cycle. Their absence is not proof of dead or unfitted addresses; the existing output-semantics blocker remains.
+
+Named flipper actions with held-state readback confirmed the emulator-facing contract: public button address 15 accompanies synthetic 47/48, and 16 accompanies 45/46. This does not distinguish the manual's physical EOS interpretation and therefore resolves neither flipper conflict. The remaining direct pulses were observed closed and released, but ran while the ROM's automatic Coil Test continued. Time Machine's `INITGAMES11` initializer leaves `ssSw` empty, and `s11.c` only publishes 17-22 from switch closures when an `ssSw` entry exists; otherwise ROM PIA writes call `setSSSol`. The switch sweep therefore could not exercise 17-22. Resolving the SP1/SP2 identity requires observing `setSSSol` during gameplay or static ROM analysis, not another diagnostic switch sweep.
+
 ## Coverage and blockers
 
 Status remains `partial`. `coverage.missing` is [`output_semantics`, `mechanism_behavior`, `polarity`, `spatial_placement`, `unresolved_conflicts`].

@@ -1,0 +1,220 @@
+{
+  "driver_ids": [
+    "tmac_a24"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "data-east.time-machine.1988"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game tmac_a24 --rom-path <read-only-rom-root> --work-dir <new-isolated-state> --scenario <scenario.json> --boot-wait 2 --output <external-run.json>",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+      "sha256": "ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d"
+    },
+    "game": "tmac_a24",
+    "observations": {
+      "runs": {
+        "automatic-coil-cycle": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 9,
+              "matched_text": "SWITCH TEST"
+            },
+            {
+              "after_service_pulses": 8,
+              "matched_text": "COIL TEST"
+            }
+          ],
+          "note": "Three pre-window ON events (10, 27, 23) preceded the retained complete repeating cycle. Absence of watched 29-32 from the captured cycle is not proof of dead or unfitted hardware.",
+          "ordered_solenoid_on_sequence": [
+            1,
+            10,
+            25,
+            2,
+            10,
+            26,
+            3,
+            10,
+            27,
+            4,
+            10,
+            28,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "solenoid_addresses_seen": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            23,
+            25,
+            26,
+            27,
+            28
+          ],
+          "unobserved_watched_addresses": [
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        "special-solenoid-sweep": {
+          "limitation": "The direct switch pulses landed, but they ran during automatic Coil Test and cannot drive public 17-22 because this driver's ssSw mapping is empty. Resolving SP1/SP2 requires observing ROM PIA setSSSol activity during gameplay or static ROM analysis, not another switch sweep.",
+          "named_action_observations": [
+            {
+              "held_synthetic_solenoid_addresses": [
+                47,
+                48
+              ],
+              "input_kind": "key",
+              "input_name": "left_flipper",
+              "label": "left flipper",
+              "observed_switch_addresses": [
+                15
+              ],
+              "result": "observed"
+            },
+            {
+              "held_synthetic_solenoid_addresses": [
+                45,
+                46
+              ],
+              "input_kind": "key",
+              "input_name": "right_flipper",
+              "label": "right flipper",
+              "observed_switch_addresses": [
+                16
+              ],
+              "result": "observed"
+            }
+          ],
+          "switch_addresses_observed_while_held": [
+            14,
+            20,
+            21,
+            22,
+            28,
+            29,
+            43,
+            44,
+            45,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53
+          ]
+        }
+      }
+    },
+    "raw_runs": [
+      {
+        "action_count": 5,
+        "boot_wait_s": 2.0,
+        "name": "automatic-coil-cycle",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "retained_from": "external:pinmame-review-artifacts/data-east/final-v4/tmac_a24/automatic-coil-cycle",
+        "scenario_path": "tools/harness-scenarios/data-east/alpha-coil-cycle.json",
+        "scenario_sha256": "a156f3814db7180466619b10c22b604dd7d0e13aceaaa013e2d08d548fafbb4f",
+        "self_test_pulses": 17,
+        "sha256": "1eac720f03ba33edd4319993c2373467da5f3ff12ba892e8d4d6605120506597",
+        "snapshot_count": 6,
+        "watch_switches": [
+          -7,
+          -6,
+          15,
+          16,
+          30,
+          31,
+          46,
+          47
+        ]
+      },
+      {
+        "action_count": 21,
+        "boot_wait_s": 2.0,
+        "name": "special-solenoid-sweep",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "scenario_path": "tools/harness-scenarios/data-east/alpha-special-solenoid-sweep.json",
+        "scenario_sha256": "578818832dde4d8123380e8e493e04bf7a297d024ac838ce0c16776259286b82",
+        "self_test_pulses": 17,
+        "sha256": "e363affc4f3c5539056cf86620f5cb27b48f1e8ecf824385a28b6fd8d0a72a53",
+        "snapshot_count": 24,
+        "watch_switches": [
+          -7,
+          -6,
+          14,
+          15,
+          16,
+          20,
+          21,
+          22,
+          28,
+          29,
+          30,
+          31,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53
+        ]
+      }
+    ],
+    "rom_archive_sha256": "051502cafb6471c238a56a5fc4ef956883b4609e5e5156b03a0f24705f465975"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is SHA-256 of manifest.json's exact UTF-8 bytes. manifest.json is compact canonical JSON with sorted keys, separators=(',', ':'), ensure_ascii=False, plus one LF; it lists every file below source.path except manifest.json and manifest.sha256 as {path, sha256, size}, using sorted POSIX-relative paths.",
+    "path": "external:pinmame-review-artifacts/data-east/final-v5/tmac_a24",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
+    "sha256": "c67f150caed992fc1c18f5893047af2bd0a833005d1c6bc34efc73e8099ffbcd"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

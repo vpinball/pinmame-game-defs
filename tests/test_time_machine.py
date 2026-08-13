@@ -19,6 +19,7 @@ MANIFEST_PATH = ROOT / "tools/seeds/data-east/time-machine-1988-extraction-manif
 REPORT_PATH = ROOT / "reports/spatial/data-east/time-machine-1988.json"
 REPORT_MD_PATH = ROOT / "reports/spatial/data-east/time-machine-1988.md"
 KNOWLEDGE_PATH = ROOT / "knowledge/data-east/time-machine-1988.md"
+RUNTIME_EVIDENCE_PATH = ROOT / "evidence/runtime/data-east/time-machine-alpha-diagnostics.json"
 EXCERPT_ROOT = ROOT / "evidence/excerpts/data-east.time-machine.1988"
 OWN_DRIVERS = {"tmac_a24", "tmac_a18", "tmac_g18"}
 OWN_MACHINE = "data-east.time-machine.1988"
@@ -171,7 +172,7 @@ class TimeMachineDefinitionTests(unittest.TestCase):
 		self.assertTrue(all(self.outputs[number]["provenance"]["source_refs"] == ["manual.data-east.time-machine.1988","pinmame.core.4ec52ff0ac13"] for number in {20,24}))
 		self.assertEqual({17:"Q8",18:"Q10",19:"Q11",20:"Q13",21:"Q12",22:"Q9"}, {number:self.outputs[number]["wiring"]["driver_transistor"] for number in range(17,23)})
 		self.assertTrue(all(self.outputs[number]["provenance"]["source_refs"] == ["pinmame.core.4ec52ff0ac13"] for number in {*range(33,45),49,50}))
-		self.assertTrue(all(self.outputs[number]["provenance"]["source_refs"] == ["pinmame.core.4ec52ff0ac13","vpx-script.time-machine-2.4.1"] for number in {45,46,47,48}))
+		self.assertTrue(all(self.outputs[number]["provenance"]["source_refs"] == ["pinmame.core.4ec52ff0ac13","vpx-script.time-machine-2.4.1","runtime.time-machine.alpha-diagnostics"] for number in {45,46,47,48}))
 
 	def test_mux_relationships_and_special_coil_conflict_are_not_inferred(self) -> None:
 		relationships = self.definition["relationships"]
@@ -295,6 +296,100 @@ class TimeMachineDefinitionTests(unittest.TestCase):
 		self.assertIn(f"algorithm: {algorithm}", extraction_source["locator"])
 		self.assertEqual(DEFINITION_PATH.read_bytes(), SEED_PATH.read_bytes())
 
+	def test_runtime_evidence_is_hash_pinned(self) -> None:
+		evidence = load_json(RUNTIME_EVIDENCE_PATH)
+		self.assertEqual(["tmac_a24"],evidence["driver_ids"])
+		self.assertEqual([OWN_MACHINE],evidence["machine_ids"])
+		self.assertEqual("c67f150caed992fc1c18f5893047af2bd0a833005d1c6bc34efc73e8099ffbcd",evidence["source"]["sha256"])
+		self.assertEqual("observed",evidence["source"]["quality"])
+		runtime_source = self.sources["runtime.time-machine.alpha-diagnostics"]
+		self.assertEqual(RUNTIME_EVIDENCE_PATH.relative_to(ROOT).as_posix(),runtime_source["uri"])
+		self.assertEqual(sha256(RUNTIME_EVIDENCE_PATH),runtime_source["sha256"])
+		runtime = evidence["runtime"]
+		self.assertEqual("051502cafb6471c238a56a5fc4ef956883b4609e5e5156b03a0f24705f465975",runtime["rom_archive_sha256"])
+		self.assertEqual("ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d",runtime["emulator"]["sha256"])
+		expected_cycle = [1,10,25,2,10,26,3,10,27,4,10,28,5,6,7,8,9,10,11,12,13,14,15,16]
+		automatic_observations = runtime["observations"]["runs"]["automatic-coil-cycle"]
+		sweep_observations = runtime["observations"]["runs"]["special-solenoid-sweep"]
+		self.assertEqual(expected_cycle,automatic_observations["ordered_solenoid_on_sequence"])
+		self.assertEqual([29,30,31,32],automatic_observations["unobserved_watched_addresses"])
+		self.assertIn("pre-window",automatic_observations["note"])
+		self.assertEqual(
+			[
+				{"label":"left flipper","input_kind":"key","input_name":"left_flipper","observed_switch_addresses":[15],"held_synthetic_solenoid_addresses":[47,48],"result":"observed"},
+				{"label":"right flipper","input_kind":"key","input_name":"right_flipper","observed_switch_addresses":[16],"held_synthetic_solenoid_addresses":[45,46],"result":"observed"},
+			],
+			sweep_observations["named_action_observations"],
+		)
+		self.assertIn("ssSw mapping is empty",sweep_observations["limitation"])
+		self.assertIn("final-v4",runtime["raw_runs"][0]["retained_from"])
+		self.assertNotIn("retained_from",runtime["raw_runs"][1])
+		for run in runtime["raw_runs"]:
+			self.assertEqual(run["scenario_sha256"],sha256(ROOT/run["scenario_path"]))
+			self.assertEqual(2.0,run["boot_wait_s"])
+			self.assertIn("new empty isolated state directory",run["nvram_initialization"])
+
+		runtime_ref = "runtime.time-machine.alpha-diagnostics"
+		inputs = {item["binding"]["device"]:item for item in self.definition["inputs"] if item["binding"]["group"] == "pinmame.input.switch"}
+		outputs = {item["binding"]["device"]:item for item in self.definition["outputs"] if item["binding"]["group"] == "pinmame.output.solenoid"}
+		for address in (15,16):
+			self.assertIn(runtime_ref,inputs[address]["provenance"]["source_refs"])
+		for address in (10,23,25,26,27,28,45,46,47,48):
+			self.assertIn(runtime_ref,outputs[address]["provenance"]["source_refs"])
+		for address in (45,46,47,48):
+			self.assertEqual("observed",outputs[address]["provenance"]["status"])
+
+	def test_runtime_evidence_reproduces_from_external_raw_runs(self) -> None:
+		artifacts_root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not artifacts_root:
+			self.skipTest("runtime evidence root is not configured")
+		evidence = load_json(RUNTIME_EVIDENCE_PATH)
+		runtime = evidence["runtime"]
+		expected_cycle = runtime["observations"]["runs"]["automatic-coil-cycle"]["ordered_solenoid_on_sequence"]
+		external = Path(artifacts_root)/"data-east/final-v5/tmac_a24"
+		manifest_path = external/"manifest.json"
+		self.assertEqual(evidence["source"]["sha256"],sha256(manifest_path))
+		self.assertEqual(evidence["source"]["sha256"],(external/"manifest.sha256").read_text(encoding="ascii").strip())
+		manifest = load_json(manifest_path)
+		actual_files = []
+		paths = ((path.relative_to(external).as_posix(),path) for path in external.rglob("*") if path.is_file())
+		for relative,path in sorted(paths,key=lambda item:item[0]):
+			if relative in {"manifest.json","manifest.sha256"}:
+				continue
+			actual_files.append({"path":relative,"sha256":sha256(path),"size":path.stat().st_size})
+		self.assertEqual(actual_files,manifest["files"])
+
+		raw_by_name = {run["name"]:run for run in runtime["raw_runs"]}
+		self.assertEqual(set(raw_by_name),set(runtime["observations"]["runs"]))
+		automatic = load_json(external/"automatic-coil-cycle/run.json")
+		special = load_json(external/"special-solenoid-sweep/run.json")
+		for name,raw in (("automatic-coil-cycle",automatic),("special-solenoid-sweep",special)):
+			recorded = raw_by_name[name]
+			self.assertEqual(recorded["sha256"],sha256(external/name/"run.json"))
+			self.assertIsNone(raw["failure"])
+			self.assertEqual(recorded["action_count"],len(raw["steps"]))
+			self.assertEqual(recorded["snapshot_count"],len(raw["snapshots"]))
+			self.assertEqual(recorded["watch_switches"],raw["watch_switches"])
+			self.assertEqual(recorded["scenario_sha256"],raw["scenario"]["sha256"])
+			self.assertEqual(runtime["emulator"]["sha256"],raw["library_sha256"])
+			self.assertEqual(recorded["self_test_pulses"],sum(step["pulses"] for step in raw["steps"] if step["type"] == "pulse_until_display"))
+
+		metadata = load_json(external/"metadata.json")
+		self.assertEqual(runtime["rom_archive_sha256"],metadata["rom_archive_sha256"])
+		self.assertEqual(runtime["emulator"]["sha256"],metadata["library_sha256"])
+
+		on_events = [event["number"] for event in automatic["events"] if event.get("event") == "solenoid" and event.get("state") == 1]
+		self.assertTrue(any(on_events[index:index+len(expected_cycle)] == expected_cycle for index in range(len(on_events)-len(expected_cycle)+1)))
+		direct_steps = [step for step in special["steps"] if step["type"] == "pulse"]
+		self.assertEqual(runtime["observations"]["runs"]["special-solenoid-sweep"]["switch_addresses_observed_while_held"],[step["switch"] for step in direct_steps])
+		self.assertTrue(all(step["observed_while_held"] == 1 and step["observed_after_release"] == 0 for step in direct_steps))
+		for side,switch,pair in (("left",15,{47,48}),("right",16,{45,46})):
+			label = f"observe the configured {side} flipper switch and synthetic output pair (held)"
+			held = next(snapshot for snapshot in special["snapshots"] if snapshot["label"] == label)
+			states = {row["number"]:row["state"] for row in held["watched_switches"]}
+			self.assertEqual(1,states[switch])
+			self.assertEqual(pair,{number for number in held["active_solenoids"] if number in {45,46,47,48}})
+
 	def test_catalog_reassigns_all_three_and_stub_is_deleted_normally(self) -> None:
 		catalog = load_json(ROOT / "catalog/pinmame.json")
 		records = {item["id"]:item for item in catalog["drivers"]}
@@ -307,7 +402,7 @@ class TimeMachineDefinitionTests(unittest.TestCase):
 
 	def test_catalog_derived_forbidden_identifier_guard(self) -> None:
 		catalog = load_json(ROOT / "catalog/pinmame.json")
-		paths = [DEFINITION_PATH,SEED_PATH,REPORT_PATH,REPORT_MD_PATH,KNOWLEDGE_PATH]
+		paths = [DEFINITION_PATH,SEED_PATH,REPORT_PATH,REPORT_MD_PATH,KNOWLEDGE_PATH,RUNTIME_EVIDENCE_PATH]
 		artifact = "\n".join(path.read_text(encoding="utf-8") for path in paths)
 		folded = artifact.casefold()
 		identifier_tokens = set(re.findall(r"[a-z0-9]+(?:[._-][a-z0-9*]+)+", folded))
