@@ -344,8 +344,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
 		self.assertEqual(787, report["machine_count"])
 		self.assertEqual(24, report["author_ready_count"])
-		self.assertEqual(95, report["partial_count"])
-		self.assertEqual(668, report["stub_count"])
+		self.assertEqual(96, report["partial_count"])
+		self.assertEqual(667, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
 		self.assertEqual(788, report["catalog_record_count"])
 		# The thirteen retrofit-pending machines above (which already include X-Men Pro), plus
@@ -415,14 +415,19 @@ class SpatialMigrationTests(unittest.TestCase):
 		# unresolved lamp bindings and manual/emulator output conflict add one gap in each count.
 		# Data East Laser War replaces one residual stub with one partial definition. Its unresolved
 		# tower/GI placements and special-solenoid public mapping add one gap in each count.
-		self.assertEqual(44, report["missing_requirement_counts"]["spatial_placement"])
+		# No Good Gofers replaces one residual stub with one partial definition and adds one spatial
+		# gap. Its apparent auxiliary-output discrepancy is a PinMAME type-metadata defect, not an
+		# unresolved runtime address map, so it does not add an unresolved-conflict gap.
+		self.assertEqual(45, report["missing_requirement_counts"]["spatial_placement"])
 		self.assertEqual(33, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(787, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])
 		self.assertEqual(24, catalog["summary"]["author_ready_count"])
-		self.assertEqual(668, catalog["summary"]["stub_count"])
-		self.assertEqual(96, catalog["summary"]["partial_count"])
+		self.assertEqual(667, catalog["summary"]["stub_count"])
+		# The catalog count includes the separately classified partial diagnostic; coverage counts
+		# only the 787 physical games and therefore reports 96 partial records above.
+		self.assertEqual(97, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(13, len(note_paths))

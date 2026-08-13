@@ -89,7 +89,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 83 | 1997 | STUB - Star Wars Trilogy Special Edition, The (4.03) | Sega | stub | 0% |
 | 84 | 1997 | STUB - X-Files, The (3.03) | Sega | stub | 0% |
 | 85 | 1997 | Medieval Madness | Williams | author_ready | 100% |
-| 86 | 1997 | STUB - No Good Gofers (1.3) | Williams | stub | 0% |
+| 86 | 1997 | No Good Gofers | Williams | partial | 94% |
 | 87 | 1996 | Scared Stiff | Bally | partial | 81% |
 | 88 | 1996 | STUB - League Champ (1.1) | Bally | stub | 0% |
 | 89 | 1996 | STUB - WPC Test Fixture: WPC-95 (1.2) | Bally | stub | 0% |

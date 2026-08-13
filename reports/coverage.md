@@ -6,8 +6,8 @@ Author-ready coverage: **24 / 787 physical-machine records (3.0496%)**
 
 - In-scope drivers: 2866
 - Catalog records: 788 (1 diagnostic/system-software records excluded from game coverage)
-- Explicit stubs: 668
-- Partial definitions: 95
+- Explicit stubs: 667
+- Partial definitions: 96
 - Author-ready definitions: 24
 - Completion gate: FAIL
 
