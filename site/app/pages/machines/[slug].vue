@@ -374,7 +374,7 @@ const ipdbUrl = computed(() =>
 					<h2 class="mb-3 text-xl font-semibold tracking-tight">
 						Coverage
 					</h2>
-					<CoveragePanel :status="detail.coverage.status" :dimensions="detail.coverage.dimensions" :missing="detail.coverage.missing" />
+					<CoveragePanel :status="detail.coverage.status" :score="detail.coverage.completion_score" :dimensions="detail.coverage.dimensions" :missing="detail.coverage.missing" />
 				</section>
 
 				<section v-if="switches.length" id="switches" class="scroll-mt-20 space-y-4">

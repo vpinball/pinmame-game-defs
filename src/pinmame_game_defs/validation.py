@@ -6,6 +6,7 @@ from collections import Counter
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
 
+from .completion import completion_score
 from .errors import ValidationError
 from .evidence_policy import EvidenceAssertion, evidence_priority
 from .jsonio import content_sha256, file_sha256, load_json
@@ -845,6 +846,7 @@ def validate_catalog(catalog: dict[str, Any], repository_root: Path) -> list[str
 	_unique(processing_orders, "$.machines[].processing_order", errors)
 	_expect(sorted(order for order in processing_orders if isinstance(order, int)) == list(range(1, len(machines) + 1)), "$.machines[].processing_order", "must be a contiguous 1-based queue", errors)
 	definition_driver_sets: dict[str, set[str]] = {}
+	definitions_by_path: dict[str, dict[str, Any]] = {}
 	for index, record in enumerate(drivers):
 		if not isinstance(record, dict):
 			errors.append(f"$.drivers[{index}]: must be an object")
@@ -866,6 +868,7 @@ def validate_catalog(catalog: dict[str, Any], repository_root: Path) -> list[str
 				errors.append(f"$.drivers[{index}].definition: missing file {definition_path}")
 				continue
 			definition = load_json(path)
+			definitions_by_path[definition_path] = definition
 			_expect(definition.get("machine", {}).get("id") == machine_id, f"$.drivers[{index}].machine_id", "does not match definition machine ID", errors)
 			_expect(definition.get("coverage", {}).get("status") == record.get("coverage_status"), f"$.drivers[{index}].coverage_status", "does not match definition", errors)
 			_expect(content_sha256(definition) == record.get("definition_sha256"), f"$.drivers[{index}].definition_sha256", "does not match canonical definition content", errors)
@@ -886,6 +889,16 @@ def validate_catalog(catalog: dict[str, Any], repository_root: Path) -> list[str
 		if isinstance(definition_path, str) and definition_path in definition_driver_sets:
 			catalog_driver_ids = {driver.get("id") for driver in drivers if isinstance(driver, dict) and driver.get("machine_id") == machine.get("id")}
 			_expect(definition_driver_sets[definition_path] == catalog_driver_ids, f"$.machines[{index}].definition", "definition driver set does not exactly match the catalog mapping", errors)
+		definition = definitions_by_path.get(definition_path) if isinstance(definition_path, str) else None
+		if definition is not None:
+			coverage = definition.get("coverage", {})
+			_expect(coverage.get("missing") == machine.get("missing"), f"$.machines[{index}].missing", "does not match definition", errors)
+			try:
+				expected_score = completion_score(coverage.get("status"), coverage.get("missing", []))
+			except ValueError as exc:
+				errors.append(f"$.machines[{index}].completion_score: cannot be derived from definition coverage: {exc}")
+			else:
+				_expect(machine.get("completion_score") == expected_score, f"$.machines[{index}].completion_score", f"expected {expected_score} from definition coverage", errors)
 	if isinstance(summary, dict):
 		_expect(summary.get("driver_count") == len(drivers), "$.summary.driver_count", f"expected {len(drivers)}", errors)
 		_expect(summary.get("machine_count") == len(machines), "$.summary.machine_count", f"expected {len(machines)}", errors)

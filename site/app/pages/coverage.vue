@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { CoverageStatus } from '~/types/defs'
 import curation from '../../data/curation.json'
 
 useSeo({
@@ -12,7 +13,7 @@ const repoLink = useRepoLink()
 const queue = curation as {
 	ordering: string
 	pending: number
-	entries: { order: number | null, year: number | null, name: string, manufacturer: string, status: string, slug: string }[]
+	entries: { order: number | null, year: number | null, name: string, manufacturer: string, status: CoverageStatus, completionScore: number, slug: string }[]
 }
 
 const maxDecade = computed(() => Math.max(...site.decades.map(d => d.total), 1))
@@ -30,9 +31,8 @@ const partialPct = computed(() => (site.counts.partial / site.counts.machines) *
 				Coverage
 			</h1>
 			<p class="mt-1.5 max-w-3xl text-sm text-ink-3">
-				Completion is measured over unique physical machines, not ROM count. A clone contributes only through the fully
-				resolved definition it shares. Stubs and partials count for nothing — that is deliberate, so the number never
-				overstates what an author can actually build against.
+				Author-ready coverage is measured over unique physical machines, not ROM count. It remains binary and fail-closed.
+				A separate per-machine completion score ranks unfinished work without presenting a partial as publishable.
 			</p>
 		</header>
 
@@ -173,8 +173,11 @@ const partialPct = computed(() => (site.counts.partial / site.counts.machines) *
 								<td class="px-2 py-2 text-right text-[11px] text-ink-4">
 									{{ row.manufacturer }}
 								</td>
+								<td class="num w-12 px-2 py-2 text-right text-[11px]" :style="{ color: STATUS_META[row.status].color }">
+									{{ row.completionScore }}%
+								</td>
 								<td class="w-6 px-2 py-2">
-									<StatusChip :status="(row.status as any)" dot-only />
+									<StatusChip :status="row.status" dot-only />
 								</td>
 							</tr>
 							<tr v-if="!queue.entries.length">

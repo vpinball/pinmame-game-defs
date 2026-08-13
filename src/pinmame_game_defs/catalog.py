@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Iterable
 
 from . import SCHEMA_VERSION
+from .completion import completion_score
 from .errors import CatalogError
 from .jsonio import content_sha256, file_sha256, write_json, write_text
 from .scope import is_in_scope_driver
@@ -215,6 +216,13 @@ def _stub_missing() -> list[str]:
 	]
 
 
+def _stub_completion_score(machine_id: str, missing: list[str]) -> int:
+	try:
+		return completion_score("stub", missing)
+	except ValueError as exc:
+		raise CatalogError(f"{machine_id}: invalid coverage for completion score: {exc}") from exc
+
+
 def make_stub_definition(root: Driver, family: list[Driver], revision: str) -> dict[str, object]:
 	source = _source_record(revision)
 	machine_id = f"stub.pinmame.{root.id}"
@@ -371,6 +379,7 @@ def generate_stub_catalog(library_path: Path, pinmame_source: Path, repository_r
 			"processing_year": _integer_year(by_id[root_id].year),
 			"machine_kind": "unknown",
 			"coverage_status": "stub",
+			"completion_score": _stub_completion_score(definitions[root_id]["machine"]["id"], definitions[root_id]["coverage"]["missing"]),
 			"missing": definitions[root_id]["coverage"]["missing"],
 		}
 		for root_id in sorted(families)

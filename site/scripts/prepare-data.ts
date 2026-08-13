@@ -123,6 +123,7 @@ type CatalogMachine = {
 	id: string
 	definition: string
 	coverage_status: 'stub' | 'partial' | 'author_ready'
+	completion_score: number
 	driver_count: number
 	machine_kind?: string
 	missing?: string[]
@@ -377,6 +378,7 @@ type MachineIndexEntry = {
 	manufacturer: string
 	year: number | null
 	status: 'stub' | 'partial' | 'author_ready'
+	completionScore: number
 	platform: string | null
 	ipdbId: number | null
 	machineKind: string | null
@@ -415,6 +417,7 @@ type MachineRow = [
 	// Every driver that resolves here. Stub pages have no detail file, so this
 	// is the only place a reader can see which ROM sets are waiting on it.
 	roms: string[],
+	completionScore: number,
 ]
 
 const STATUS_CODE = { stub: 0, partial: 1, author_ready: 2 } as const
@@ -436,6 +439,7 @@ const toRow = (m: MachineIndexEntry): MachineRow => [
 	m.highlights,
 	m.definition,
 	romsByMachine.get(m.id) ?? [],
+	m.completionScore,
 ]
 
 const machineIndex: MachineIndexEntry[] = []
@@ -454,7 +458,10 @@ const detailPayloads = new Map<string, any>()
 for (const [machineId, { path, doc }] of definitions) {
 	seenIds.add(machineId)
 	const catalogEntry = catalogById.get(machineId)
-	const status = doc.coverage?.status ?? catalogEntry?.coverage_status ?? 'stub'
+	if (!catalogEntry) throw new Error(`Definition ${machineId} is missing from catalog/pinmame.json; rebuild the catalog before generating the site.`)
+	const status = doc.coverage?.status ?? 'stub'
+	if (catalogEntry.coverage_status !== status) throw new Error(`Definition ${machineId} has coverage status ${status}, but catalog/pinmame.json has ${catalogEntry.coverage_status}; rebuild the catalog before generating the site.`)
+	if (!Number.isInteger(catalogEntry.completion_score) || catalogEntry.completion_score < 0 || catalogEntry.completion_score > 100) throw new Error(`Definition ${machineId} has no valid generated completion score in catalog/pinmame.json.`)
 	const slug = slugify(machineId)
 	const knowledge = status === 'stub' ? null : renderKnowledge(doc.knowledge?.path)
 	const catalogDrivers = driversByMachine.get(machineId) ?? []
@@ -466,6 +473,7 @@ for (const [machineId, { path, doc }] of definitions) {
 		manufacturer: doc.machine.manufacturer ?? 'Unknown',
 		year: typeof doc.machine.year === 'number' ? doc.machine.year : null,
 		status,
+		completionScore: catalogEntry.completion_score,
 		platform: doc.controller?.platform ?? null,
 		ipdbId: doc.machine.ipdb_id ?? null,
 		machineKind: catalogEntry?.machine_kind ?? null,
@@ -501,6 +509,7 @@ for (const [machineId, { path, doc }] of definitions) {
 			conflicts: doc.conflicts ?? [],
 			coverage: {
 				status,
+				completion_score: entry.completionScore,
 				missing: doc.coverage?.missing ?? [],
 				dimensions: doc.coverage?.dimensions ?? {},
 			},
@@ -528,6 +537,7 @@ for (const record of catalog.machines) {
 		manufacturer: catalogDrivers[0]?.manufacturer ?? 'Unknown',
 		year: record.processing_year ?? null,
 		status: record.coverage_status,
+		completionScore: record.completion_score,
 		platform: null,
 		ipdbId: null,
 		machineKind: record.machine_kind ?? null,
@@ -783,6 +793,14 @@ const coverage = existsSync(join(defsRoot, 'reports', 'coverage.json'))
 	? readJson('reports', 'coverage.json')
 	: null
 
+function queueCompletionScore(entry: any): number {
+	const catalogEntry = catalogById.get(entry.machine_id)
+	if (!catalogEntry) throw new Error(`Queue entry ${entry.machine_id ?? '(missing machine_id)'} is missing from catalog/pinmame.json; rebuild the catalog and reports before generating the site.`)
+	if (entry.completion_score == null) return catalogEntry.completion_score
+	if (entry.completion_score !== catalogEntry.completion_score) throw new Error(`Queue entry ${entry.machine_id} has completion score ${entry.completion_score}, but catalog/pinmame.json has ${catalogEntry.completion_score}; rebuild the reports before generating the site.`)
+	return entry.completion_score
+}
+
 /**
  * The queue holds every catalog record. The site only shows what is coming up
  * next, so the bundled copy is trimmed to the pending head of the list.
@@ -800,6 +818,7 @@ const curationQueue = (() => {
 			name: String(entry.name ?? '').replace(/^STUB\s*-\s*/, ''),
 			manufacturer: entry.manufacturer,
 			status: entry.coverage_status,
+			completionScore: queueCompletionScore(entry),
 			slug: slugify(entry.machine_id ?? ''),
 		})),
 	}
@@ -951,7 +970,7 @@ for (const [machineId, drivers] of driversByMachine) {
 }
 
 writeOut('machines.json', {
-	columns: ['slug', 'name', 'manufacturer', 'year', 'status', 'platform', 'drivers', 'switches', 'lamps', 'coils', 'mechanisms', 'highlights', 'definition', 'roms'],
+	columns: ['slug', 'name', 'manufacturer', 'year', 'status', 'platform', 'drivers', 'switches', 'lamps', 'coils', 'mechanisms', 'highlights', 'definition', 'roms', 'completionScore'],
 	rows: machineIndex.map(toRow),
 })
 writeOut('platforms.json', platformIndex)
@@ -997,6 +1016,7 @@ const publicIndex = {
 		manufacturer: m.manufacturer,
 		year: m.year,
 		status: m.status,
+		completionScore: m.completionScore,
 		platform: m.platform,
 		rootDrivers: m.rootDrivers,
 		// Only described machines have a detail document.
@@ -1094,6 +1114,8 @@ catalog drivers joined, related machines computed, recreation notes rendered to 
 - \`coverage.status\` is fail-closed: \`stub\` means nothing is known, \`partial\` means evidence
   exists but authoring requirements are unmet, \`author_ready\` means a validator confirmed
   completeness. Do not present \`stub\` or \`partial\` data as a usable definition.
+- \`completionScore\` is generated from the fixed author-readiness requirements. It is 0 for stubs
+  and 100 for author-ready definitions, and it never overrides \`coverage.status\`.
 - Provenance is per assertion (\`unknown\`, \`candidate\`, \`observed\`, \`validated\`, \`conflicted\`).
   Observing an output toggle is not the same as knowing what it drives.
 - Addresses are the values PinMAME's public API reports, not hardware pins.

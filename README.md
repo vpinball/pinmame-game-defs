@@ -14,7 +14,7 @@ Evidence follows a simple precedence rule: a known-working table script governs 
 - `schemas/`, `src/`, and `tools/` contain the format, validators, generators, and extraction utilities.
 - `site/` builds the static catalog browser.
 
-Coverage is fail-closed: a stub contains identity-level data, a partial definition has explicit missing or conflicted requirements, and only a fully validated record is marked author-ready. Community-only virtual games and rethemes are outside the catalog’s physical-machine scope.
+Coverage is fail-closed: a stub contains identity-level data, a partial definition has explicit missing or conflicted requirements, and only a fully validated record is marked author-ready. The generated completion score is a separate progress indicator: stubs are always 0%, author-ready definitions are 100%, and partials score the share of the fixed author-readiness requirements they have satisfied. Community-only virtual games and rethemes are outside the catalog’s physical-machine scope.
 
 Playfield coordinates use normalized player view: `x=0` left, `x=1` right, `y=0` rear/backglass, and `y=1` front/apron. Candidate table geometry is never promoted automatically to canonical placement.
 

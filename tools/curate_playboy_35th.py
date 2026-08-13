@@ -7,7 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from pinmame_game_defs.coverage import build_coverage_report, build_curation_queue, write_coverage_report
+from pinmame_game_defs.coverage import build_coverage_report, build_curation_queue, render_coverage_markdown, render_curation_queue_markdown, write_coverage_report
 from pinmame_game_defs.jsonio import content_sha256, load_json, write_text
 from pinmame_game_defs.registry import rebuild_catalog
 
@@ -862,29 +862,11 @@ def compare_lf(path: Path, expected: str) -> bool:
 
 
 def coverage_markdown(report: dict[str,object]) -> str:
-    return f"""# Machine-definition coverage
-
-PinMAME revision: `{report['pinmame_revision']}`
-
-Author-ready coverage: **{report['author_ready_count']} / {report['machine_count']} physical-machine records ({report['author_ready_percent']:.4f}%)**
-
-- In-scope drivers: {report['driver_count']}
-- Catalog records: {report['catalog_record_count']} ({report['non_game_record_count']} diagnostic/system-software records excluded from game coverage)
-- Explicit stubs: {report['stub_count']}
-- Partial definitions: {report['partial_count']}
-- Author-ready definitions: {report['author_ready_count']}
-- Completion gate: {'PASS' if report['completion_gate'] else 'FAIL'}
-
-Stubs and partial definitions are not usable completion credit. A clone driver contributes coverage only through its fully resolved physical-machine definition.
-"""
+    return render_coverage_markdown(report)
 
 
 def queue_markdown(queue: dict[str,object]) -> str:
-    rows = ["# Curation queue","","Physical machines are processed newest-to-oldest. Unknown-year candidates are last, and related driver variants stay together.","","| Order | Year | Machine | Manufacturer | Status |","| ---: | ---: | --- | --- | --- |"]
-    for entry in queue["entries"]:
-        year = str(entry["year"]) if entry["year"] is not None else "unknown"
-        rows.append(f"| {entry['order']} | {year} | {entry['name']} | {entry['manufacturer']} | {entry['coverage_status']} |")
-    return "\n".join(rows)+"\n"
+    return render_curation_queue_markdown(queue)
 
 
 def generate() -> None:

@@ -15,7 +15,7 @@ const query = ref('')
 const status = ref<CoverageStatus | 'all'>('all')
 const manufacturer = ref('all')
 const platform = ref('all')
-const sort = ref<'year' | 'name' | 'size'>('year')
+const sort = ref<'completion' | 'year' | 'name' | 'size'>('completion')
 const view = ref<'grid' | 'table'>('grid')
 const limit = ref(60)
 const tags = ref<string[]>([])
@@ -31,6 +31,8 @@ onMounted(() => {
 	status.value = (params.get('status') as CoverageStatus | null) ?? 'all'
 	manufacturer.value = params.get('mfr') ?? 'all'
 	platform.value = params.get('platform') ?? 'all'
+	const requestedSort = params.get('sort')
+	if (requestedSort && ['completion', 'year', 'name', 'size'].includes(requestedSort)) sort.value = requestedSort as typeof sort.value
 	tags.value = (params.get('tags') ?? '').split(',').filter(Boolean)
 	urlReady.value = true
 })
@@ -50,6 +52,7 @@ watchEffect(() => {
 	if (status.value !== 'all') next.set('status', status.value)
 	if (manufacturer.value !== 'all') next.set('mfr', manufacturer.value)
 	if (platform.value !== 'all') next.set('platform', platform.value)
+	if (sort.value !== 'completion') next.set('sort', sort.value)
 	if (tags.value.length) next.set('tags', tags.value.join(','))
 	if (!urlReady.value || !import.meta.client) return
 	const search = next.toString()
@@ -94,6 +97,7 @@ const filtered = computed(() => {
 	return list.sort((a, b) => {
 		if (sort.value === 'name') return a.name.localeCompare(b.name)
 		if (sort.value === 'size') return (b.switches + b.lamps + b.coils) - (a.switches + a.lamps + a.coils)
+		if (sort.value === 'completion') return b.completionScore - a.completionScore || (b.year ?? 0) - (a.year ?? 0) || a.name.localeCompare(b.name)
 		return rank[a.status] - rank[b.status] || (b.year ?? 0) - (a.year ?? 0) || a.name.localeCompare(b.name)
 	})
 })
@@ -112,6 +116,7 @@ function reset() {
 	status.value = 'all'
 	manufacturer.value = 'all'
 	platform.value = 'all'
+	sort.value = 'completion'
 	tags.value = []
 }
 
@@ -185,6 +190,9 @@ const selectClass = 'rounded-lg border border-line bg-panel px-2.5 py-1.5 text-[
 				</select>
 
 				<select v-model="sort" :class="selectClass">
+					<option value="completion">
+						Sort: completion
+					</option>
 					<option value="year">
 						Sort: coverage, newest
 					</option>
@@ -284,6 +292,9 @@ const selectClass = 'rounded-lg border border-line bg-panel px-2.5 py-1.5 text-[
 							<th class="eyebrow px-3 py-2.5 text-right font-semibold">
 								ROMs
 							</th>
+							<th class="eyebrow px-3 py-2.5 text-right font-semibold">
+								Complete
+							</th>
 							<th class="eyebrow px-3 py-2.5 font-semibold">
 								Coverage
 							</th>
@@ -321,6 +332,9 @@ const selectClass = 'rounded-lg border border-line bg-panel px-2.5 py-1.5 text-[
 							</td>
 							<td class="num px-3 py-2 text-right text-ink-3">
 								{{ machine.drivers }}
+							</td>
+							<td class="num px-3 py-2 text-right text-xs" :style="{ color: STATUS_META[machine.status].color }">
+								{{ machine.completionScore }}%
 							</td>
 							<td class="px-3 py-2">
 								<StatusChip :status="machine.status" size="sm" />

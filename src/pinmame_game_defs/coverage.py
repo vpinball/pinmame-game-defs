@@ -59,6 +59,7 @@ def build_curation_queue(repository_root: Path) -> dict[str, Any]:
 				"machine_kind": machine.get("machine_kind", "unknown"),
 				"root_drivers": machine["root_drivers"],
 				"coverage_status": machine["coverage_status"],
+				"completion_score": machine["completion_score"],
 				"definition": machine["definition"],
 			}
 		)
@@ -71,10 +72,8 @@ def build_curation_queue(repository_root: Path) -> dict[str, Any]:
 	}
 
 
-def write_coverage_report(repository_root: Path) -> dict[str, Any]:
-	report = build_coverage_report(repository_root)
-	write_json(repository_root / "reports" / "coverage.json", report)
-	markdown = f"""# Machine-definition coverage
+def render_coverage_markdown(report: dict[str, Any]) -> str:
+	return f"""# Machine-definition coverage
 
 PinMAME revision: `{report['pinmame_revision']}`
 
@@ -89,12 +88,21 @@ Author-ready coverage: **{report['author_ready_count']} / {report['machine_count
 
 Stubs and partial definitions are not usable completion credit. A clone driver contributes coverage only through its fully resolved physical-machine definition.
 """
-	write_text(repository_root / "reports" / "coverage.md", markdown)
-	queue = build_curation_queue(repository_root)
-	write_json(repository_root / "reports" / "curation-queue.json", queue)
-	rows = ["# Curation queue", "", "Physical machines are processed newest-to-oldest. Unknown-year candidates are last, and related driver variants stay together.", "", "| Order | Year | Machine | Manufacturer | Status |", "| ---: | ---: | --- | --- | --- |"]
+
+
+def render_curation_queue_markdown(queue: dict[str, Any]) -> str:
+	rows = ["# Curation queue", "", "Physical machines are processed newest-to-oldest. Unknown-year candidates are last, and related driver variants stay together.", "", "| Order | Year | Machine | Manufacturer | Status | Complete |", "| ---: | ---: | --- | --- | --- | ---: |"]
 	for entry in queue["entries"]:
 		year = str(entry["year"]) if entry["year"] is not None else "unknown"
-		rows.append(f"| {entry['order']} | {year} | {entry['name']} | {entry['manufacturer']} | {entry['coverage_status']} |")
-	write_text(repository_root / "reports" / "curation-queue.md", "\n".join(rows) + "\n")
+		rows.append(f"| {entry['order']} | {year} | {entry['name']} | {entry['manufacturer']} | {entry['coverage_status']} | {entry['completion_score']}% |")
+	return "\n".join(rows) + "\n"
+
+
+def write_coverage_report(repository_root: Path) -> dict[str, Any]:
+	report = build_coverage_report(repository_root)
+	write_json(repository_root / "reports" / "coverage.json", report)
+	write_text(repository_root / "reports" / "coverage.md", render_coverage_markdown(report))
+	queue = build_curation_queue(repository_root)
+	write_json(repository_root / "reports" / "curation-queue.json", queue)
+	write_text(repository_root / "reports" / "curation-queue.md", render_curation_queue_markdown(queue))
 	return report

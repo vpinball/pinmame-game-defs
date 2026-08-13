@@ -200,6 +200,9 @@ const kinds = [
 						while any address is unnamed, any mechanism lacks its topology, or the recreation note is missing.
 					</p>
 					<p class="mt-3 text-[15px] leading-relaxed text-ink-2">
+						The <strong class="text-ink">completion score</strong> is a progress indicator over the fixed author-readiness requirements. Stubs are always 0%, author-ready definitions are 100%, and partials receive equal credit for every requirement no longer listed as missing. It affects browsing order, never coverage status.
+					</p>
+					<p class="mt-3 text-[15px] leading-relaxed text-ink-2">
 						<strong class="text-ink">Provenance</strong> is per assertion: unknown, candidate, observed, validated,
 						conflicted, deprecated. Observing that output 11 toggled is not the same as knowing it is the gun motor,
 						and failing to observe an output is not evidence that it is unused.

@@ -206,6 +206,7 @@ export function decodeMachineRows(index: { rows: any[][] }): MachineSummary[] {
 		highlights: row[11] ?? [],
 		definition: row[12] ?? '',
 		roms: row[13] ?? [],
+		completionScore: row[14] ?? 0,
 	}))
 }
 

@@ -33,6 +33,7 @@ class MachineClassificationTests(unittest.TestCase):
 		queue = build_curation_queue(REPOSITORY_ROOT)
 		self.assertNotIn("diagnostic.scotts-test-rom-v8", {entry["machine_id"] for entry in queue["entries"]})
 		self.assertEqual(list(range(1, len(queue["entries"]) + 1)), [entry["order"] for entry in queue["entries"]])
+		self.assertTrue(all(0 <= entry["completion_score"] <= 100 for entry in queue["entries"]))
 
 	def test_catalog_contains_only_physical_machine_scope(self) -> None:
 		self.assertEqual({"acd_170_ac", "beachbms", "beav_butt", "bubba", "che_cho", "rambo", "tomjerry"}, OUT_OF_SCOPE_DRIVER_IDS)

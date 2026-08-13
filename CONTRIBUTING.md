@@ -52,6 +52,8 @@ Record it in `conflicts` rather than quietly picking a side.
 any address is unnamed, any mechanism lacks its actuators and sensors, a supported variant is
 unaccounted for, or the recreation note is missing. Do not hand-edit `coverage.status`.
 
+**Completion score is generated progress, not a second coverage status.** Stubs are fixed at 0%, author-ready definitions at 100%, and partials receive equal credit for each fixed author-readiness requirement absent from `coverage.missing`. Do not hand-author or tune the score; update the evidence and missing requirements, then regenerate the catalog and reports.
+
 **Provenance is per assertion, and separate from coverage.** Use `unknown`, `candidate`, `observed`,
 `validated`, `conflicted` or `deprecated` honestly. "Output 11 toggled" is `observed`; "output 11 is
 the gun motor" needs more. Failing to observe an output is not evidence that it is unused.

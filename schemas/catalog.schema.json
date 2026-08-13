@@ -71,7 +71,7 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "root_drivers", "definition", "definition_sha256", "driver_count", "processing_order", "processing_year", "machine_kind", "coverage_status", "missing"],
+        "required": ["id", "root_drivers", "definition", "definition_sha256", "driver_count", "processing_order", "processing_year", "machine_kind", "coverage_status", "completion_score", "missing"],
         "properties": {
           "id": { "type": "string", "minLength": 1 },
           "root_drivers": {
@@ -87,6 +87,7 @@
           "processing_year": { "type": ["integer", "null"], "minimum": 1900, "maximum": 2100 },
           "machine_kind": { "enum": ["physical_pinball", "physical_conversion", "redemption_game", "diagnostic_software", "system_software", "unknown"] },
           "coverage_status": { "enum": ["stub", "partial", "author_ready"] },
+          "completion_score": { "type": "integer", "minimum": 0, "maximum": 100 },
           "missing": { "type": "array", "items": { "type": "string" } }
         }
       }

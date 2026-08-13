@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from .catalog import Driver, make_stub_definition, make_stub_knowledge
+from .completion import completion_score
 from .errors import CatalogError
 from .jsonio import content_sha256, load_json, write_json, write_text
 from .scope import is_in_scope_driver
@@ -52,6 +53,11 @@ def _catalog_machine(
 ) -> dict[str, Any]:
 	drivers = definition["drivers"]
 	root_drivers = sorted({driver_records[driver["id"]]["root_driver"] for driver in drivers})
+	coverage = definition["coverage"]
+	try:
+		score = completion_score(coverage["status"], coverage["missing"])
+	except ValueError as exc:
+		raise CatalogError(f"{definition['machine']['id']}: invalid coverage for completion score: {exc}") from exc
 	return {
 		"id": definition["machine"]["id"],
 		"root_drivers": root_drivers,
@@ -60,8 +66,9 @@ def _catalog_machine(
 		"driver_count": len(drivers),
 		"processing_year": definition["machine"].get("year"),
 		"machine_kind": definition["machine"].get("kind", "unknown"),
-		"coverage_status": definition["coverage"]["status"],
-		"missing": definition["coverage"]["missing"],
+		"coverage_status": coverage["status"],
+		"completion_score": score,
+		"missing": coverage["missing"],
 		"_sort_manufacturer": definition["machine"]["manufacturer"].casefold(),
 		"_sort_name": definition["machine"]["name"].casefold(),
 	}

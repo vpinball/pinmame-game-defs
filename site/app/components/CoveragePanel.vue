@@ -3,6 +3,7 @@ import type { CoverageStatus } from '~/types/defs'
 
 const props = defineProps<{
 	status: CoverageStatus
+	score: number
 	dimensions: Record<string, string>
 	missing: string[]
 }>()
@@ -47,6 +48,11 @@ const meta = computed(() => STATUS_META[props.status])
 				{{ meta.blurb }}
 			</p>
 		</div>
+
+		<CompletionMeter class="mt-4" :score="score" :status="status" />
+		<p class="mt-2 text-[11px] leading-relaxed text-ink-4">
+			Progress is derived from the fixed author-readiness requirements. It helps rank unfinished work, but only a 100% author-ready definition passes the publication gate.
+		</p>
 
 		<dl v-if="rows.length" class="mt-4 space-y-2">
 			<div v-for="row in rows" :key="row.key" class="flex items-center gap-3">

@@ -169,6 +169,7 @@ export interface MachineDetail {
 	}
 	coverage: {
 		status: CoverageStatus
+		completion_score: number
 		missing: string[]
 		dimensions: Record<string, string>
 	}
@@ -200,6 +201,7 @@ export interface MachineSummary {
 	manufacturer: string
 	year: number | null
 	status: CoverageStatus
+	completionScore: number
 	platform: string | null
 	drivers: number
 	switches: number
