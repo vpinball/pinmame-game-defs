@@ -244,13 +244,13 @@ def input_devices() -> list[dict[str, Any]]:
 			extra["physical"] = {"switch_type": "microswitch" if not unused else "unknown", "notes": f"Printed WPC matrix row {row}, column {column}; {'retained VPW switch semantic' if not unused else 'printed Not Used position'}."}
 			items.append(_device_base(f"switch.matrix-{address}", label, kind, "pinmame.input.switch", address, "unused" if unused else "used", (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE) if not unused else (MANUAL_SOURCE, CORE_SOURCE), **extra))
 	for address, label, role in (
-		(111, "Lower Right Flipper Button", "flipper.lower.right.button"), (112, "Lower Right Flipper EOS", "internal.flipper.lower.right.eos"),
-		(113, "Lower Left Flipper Button", "flipper.lower.left.button"), (114, "Lower Left Flipper EOS", "internal.flipper.lower.left.eos"),
+		(111, "Lower Right Flipper EOS", "internal.flipper.lower.right.eos"), (112, "Lower Right Flipper Button", "flipper.lower.right.button"),
+		(113, "Lower Left Flipper EOS", "internal.flipper.lower.left.eos"), (114, "Lower Left Flipper Button", "flipper.lower.left.button"),
 		(115, "Unused Generic Flipper Input 115", "internal.unused.flipper"), (116, "Unused Generic Flipper Input 116", "internal.unused.flipper"),
 		(117, "Unused Generic Flipper Input 117", "internal.unused.flipper"), (118, "Unused Generic Flipper Input 118", "internal.unused.flipper"),
 	):
 		unused = address >= 115
-		items.append(_device_base(f"switch.generic-{address}", label, "switch", "pinmame.input.switch", address, "unused" if unused else "optional", (CONTROLLER_SOURCE, CORE_SOURCE), aliases=aliases("pinmame.switch", address), normally_closed=address in {112, 114}, roles=[role], physical={"location": "lower flipper cabinet/playfield interface", "switch_type": "leaf" if not unused else "unknown"}))
+		items.append(_device_base(f"switch.generic-{address}", label, "switch", "pinmame.input.switch", address, "unused" if unused else "optional", (CONTROLLER_SOURCE, CORE_SOURCE), aliases=aliases("pinmame.switch", address), normally_closed=address in {111, 113}, roles=[role], physical={"location": "lower flipper cabinet/playfield interface", "switch_type": "leaf" if not unused else "unknown"}))
 	for address in range(1, 9):
 		items.append(_device_base(f"switch.dip-{address}", f"CPU/Sound Board DIP {address}", "dip_switch", "pinmame.input.dip", address, "used", (CONTROLLER_SOURCE, MANUAL_SOURCE, CORE_SOURCE), aliases=aliases("pinmame.dip", address), physical={"location": "CPU/Sound board"}))
 	return items
@@ -324,19 +324,19 @@ def lamp_devices() -> list[dict[str, Any]]:
 
 
 def gi_devices() -> list[dict[str, Any]]:
-	labels = {0: "GI 1: Top Insert", 1: "GI 2: Left Playfield", 2: "GI 3: Right Playfield", 3: "GI 4: Not Used", 4: "GI 5: Bottom Insert"}
+	manual_labels = {0: "GI 1: Top Insert", 1: "GI 2: Left Playfield", 2: "GI 3: Right Playfield", 3: "GI 4: Not Used", 4: "GI 5: Bottom Insert"}
+	labels = {**manual_labels, 3: "GI callback 3 (manual GI 4: Not Used)"}
 	items: list[dict[str, Any]] = []
 	for address in range(5):
-		unused = address == 3
-		physical: dict[str, Any] = {"notes": f"Manual GI string: {labels[address]}; printed GI table on manual pages 48-50."}
+		physical: dict[str, Any] = {"notes": f"Manual GI string: {manual_labels[address]}; printed GI table on manual pages 48-50."}
 		if address == 3:
-			physical["notes"] += " Later manual GI table marks GI 4 Not Used; the retained script has a Case 3 visual Light2-Light5 branch, so those facts are not merged into a physical string mapping."
+			physical["notes"] += " Later manual GI table marks GI 4 Not Used, but PinMAME callback 3 is demonstrably active in the retained script and drives Light2-Light5. Availability describes the emulator channel; the physical-string conflict remains unresolved."
 		else:
 			physical["notes"] += " Manual five-string naming is retained; the VPW script exposes only GI2/GI3 emitter arrays and a separate Light2-Light5 branch. See the conflict record and spatial audit."
 		wire_color, connection, transistor, part_number = GI_WIRING[address]
 		if part_number:
 			physical["part_number"] = part_number
-		items.append(_device_base(f"gi.string-{address + 1}", labels[address], "gi", "pinmame.output.gi", address, "unused" if unused else "used", (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE), aliases=aliases("pinmame.gi", address), physical=physical, wiring={"board": "WPC driver board", "control_wire": wire_color, "control_connection": connection, "driver_transistor": transistor}))
+		items.append(_device_base(f"gi.string-{address + 1}", labels[address], "gi", "pinmame.output.gi", address, "used", (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE), aliases=aliases("pinmame.gi", address), range={"minimum": 0, "maximum": 8, "steps": 9}, physical=physical, wiring={"board": "WPC driver board", "control_wire": wire_color, "control_connection": connection, "driver_transistor": transistor}))
 	return items
 
 

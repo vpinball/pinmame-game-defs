@@ -434,7 +434,7 @@ def gi() -> list[dict[str, Any]]:
     result = []
     for address, label, wire, control, return_connection, part, note in rows:
         identifier = f"output.gi-{address}-{slug(label)}"
-        extra: dict[str, Any] = {"availability": "used", "aliases": [{"namespace": "manual.address", "value": f"{address + 1:02d}"}], "physical": {"part_number": part, "location": note, "quantity": 1, "notes": "The manual identifies circuit destinations and bulb types, not a per-string bulb count."}, "wiring": {"board": "WPC-95 power driver board", "drive_wire": wire, "control_connection": control, "return_connection": return_connection, "voltage_type": "ac", "nominal_voltage_v": 6.8}, "range": {"minimum": 0, "maximum": 8, "steps": 8}}
+        extra: dict[str, Any] = {"availability": "used", "aliases": [{"namespace": "manual.address", "value": f"{address + 1:02d}"}], "physical": {"part_number": part, "location": note, "quantity": 1, "notes": "The manual identifies circuit destinations and bulb types, not a per-string bulb count."}, "wiring": {"board": "WPC-95 power driver board", "drive_wire": wire, "control_connection": control, "return_connection": return_connection, "voltage_type": "ac", "nominal_voltage_v": 6.8}, "range": {"minimum": 0, "maximum": 8, "steps": 9}}
         # No collection member is promoted to a physical bulb coordinate: the retained script runs UseGI=0,
         # its collections are presentation proxies, and the manual has no calibrated string layout.
         if address >= 3:

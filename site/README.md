@@ -222,12 +222,14 @@ earns its keep.
 
 | URL | Contents |
 | --- | --- |
-| `data/index.json` | Every machine: slug, status, platform, root drivers, detail URL |
+| `data/index.json` | Every machine: slug, status, physical-machine kind, ROMs, platform, and detail URL |
 | `data/machines/<slug>.json` | Full resolved definition — drivers joined, related machines, note as HTML |
 | `data/drivers.json` | Every PinMAME ROM set mapped to its machine |
 | `data/platforms.json` | Controller profiles and address ranges |
 | `data/search.json` | Compact search index |
 | `llms.txt` | Orientation for agents, including the coverage and provenance caveats |
+
+`data/index.json` version 2 adds `machineKind` and the complete `roms` list to every machine row. Machine kinds are `physical_pinball`, `physical_conversion`, `redemption_game`, `diagnostic_software`, `system_software`, or `unknown`; `unknown` is the default and currently includes most in-scope physical games, so it must not be rejected as nonphysical. Consumers should exclude the explicit kinds their use case does not support: the catalog's overall game coverage excludes `diagnostic_software` and `system_software`, while a physical-pinball selector also excludes `physical_conversion` and `redemption_game`. Consumers can then migrate an existing ROM selection without downloading every machine detail or making an additional driver-index request.
 
 These are the same documents the pages render, so an agent gets data already resolved rather than the
 raw catalog. The canonical source remains the repository; this site is a rendering of it. An MCP

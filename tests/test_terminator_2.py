@@ -49,6 +49,12 @@ class Terminator2DefinitionTests(unittest.TestCase):
 		self.assertEqual("Shooter", switches[78]["label"])
 		self.assertEqual("unused", switches[88]["availability"])
 		self.assertEqual("validated", switches[51]["spatial"]["status"])
+		for address in (111, 113):
+			self.assertEqual("internal_nonvisual", switches[address]["spatial"]["reason"])
+			self.assertEqual(["pinmame.core.4ec52ff0ac13"], switches[address]["spatial"]["provenance"]["source_refs"])
+		for address in (112, 114):
+			self.assertEqual("cabinet_or_service", switches[address]["spatial"]["reason"])
+			self.assertEqual(["manual.williams.terminator-2-judgment-day.1991"], switches[address]["spatial"]["provenance"]["source_refs"])
 
 	def test_outputs_displays_mechanisms_and_variants_are_explicit(self) -> None:
 		solenoids = bindings(self.definition, "outputs", "pinmame.output.solenoid")
@@ -128,7 +134,7 @@ class Terminator2DefinitionTests(unittest.TestCase):
 		self.assertIn("GI string geometry/routing", json.dumps(self.audit["unresolved"]))
 		self.assertEqual([
 			{"kind": "spatial", "scope": "solenoid/effect geometry", "addresses": [12]},
-			{"kind": "spatial", "scope": "GI string geometry/routing", "addresses": [0, 1, 4], "group": "pinmame.output.gi"},
+			{"kind": "spatial", "scope": "GI string geometry/routing", "addresses": [0, 1, 3, 4], "group": "pinmame.output.gi"},
 		], self.audit["unresolved"])
 		self.assertIn("Light2", self.audit["candidate_geometry"]["excluded_graphical_objects"])
 		sources = {item["id"]: item for item in self.definition["sources"]}

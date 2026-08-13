@@ -132,6 +132,14 @@ class RepositoryValidationTests(unittest.TestCase):
 		errors = validate_machine(definition)
 		self.assertTrue(any("physically compatible with the containing machine definition" in error for error in errors))
 
+	def test_integer_range_steps_count_inclusive_values(self) -> None:
+		definition = copy.deepcopy(self.transformers)
+		definition["outputs"][0]["range"] = {"minimum": 0, "maximum": 8, "steps": 8}
+		errors = validate_machine(definition)
+		self.assertTrue(any("must equal the number of distinct integer values" in error for error in errors))
+		definition["outputs"][0]["range"]["steps"] = 9
+		self.assertFalse(any("range.steps" in error for error in validate_machine(definition)))
+
 	def display_override_fixture(self) -> dict[str, object]:
 		definition = copy.deepcopy(self.transformers)
 		driver = definition["drivers"][0]

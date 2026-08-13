@@ -997,7 +997,7 @@ for (const [slug, payload] of detailPayloads) {
 
 const publicIndex = {
 	format: 'pinmame-machine-reference-index',
-	version: 1,
+	version: 2,
 	generatedAt: site.generatedAt,
 	pinmameRevision: site.pinmameRevision,
 	schemaVersion: site.schemaVersion,
@@ -1018,7 +1018,9 @@ const publicIndex = {
 		status: m.status,
 		completionScore: m.completionScore,
 		platform: m.platform,
+		machineKind: m.machineKind,
 		rootDrivers: m.rootDrivers,
+		roms: (driversByMachine.get(m.id) ?? []).map(driver => driver.id),
 		// Only described machines have a detail document.
 		detail: m.hasDetail ? `data/machines/${m.slug}.json` : null,
 		definition: m.definition,
@@ -1094,11 +1096,13 @@ ${lastmod} from PinMAME ${site.pinmameRevision.slice(0, 12)}.
 Prefer these over scraping the pages. Every document is static JSON, CORS-open, and resolved —
 catalog drivers joined, related machines computed, recreation notes rendered to HTML.
 
-- [Index](${siteUrl}/data/index.json): every machine with its slug, status, platform and detail URL
+- [Index](${siteUrl}/data/index.json): every machine with its slug, status, physical-machine kind, ROMs, platform and detail URL
 - [Machine detail](${siteUrl}/data/machines/{slug}.json): full I/O, mechanisms, displays, sources
 - [Drivers](${siteUrl}/data/drivers.json): all ${site.counts.drivers} ROM sets mapped to a machine
 - [Platforms](${siteUrl}/data/platforms.json): controller profiles and address ranges
 - [Search](${siteUrl}/data/search.json): compact index over machines and ROM sets
+
+Machine kinds are physical_pinball, physical_conversion, redemption_game, diagnostic_software, system_software, or unknown. Unknown is the default and currently includes most in-scope physical games, so it must not be rejected as nonphysical. Consumers should exclude the explicit kinds their use case does not support: overall catalog coverage excludes diagnostic_software and system_software, while a physical-pinball selector also excludes physical_conversion and redemption_game.
 
 ## Pages
 

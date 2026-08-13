@@ -498,6 +498,15 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 				device_ids.add(device_id)
 			label = device.get("label")
 			_expect(isinstance(label, str) and bool(label.strip()), f"{path}.label", "must be non-empty", errors)
+			value_range = device.get("range")
+			if isinstance(value_range, dict):
+				minimum = value_range.get("minimum")
+				maximum = value_range.get("maximum")
+				if isinstance(minimum, (int, float)) and not isinstance(minimum, bool) and isinstance(maximum, (int, float)) and not isinstance(maximum, bool):
+					_expect(maximum >= minimum, f"{path}.range.maximum", "must be greater than or equal to minimum", errors)
+				steps = value_range.get("steps")
+				if isinstance(minimum, int) and not isinstance(minimum, bool) and isinstance(maximum, int) and not isinstance(maximum, bool) and isinstance(steps, int) and not isinstance(steps, bool):
+					_expect(steps == maximum - minimum + 1, f"{path}.range.steps", "must equal the number of distinct integer values from minimum through maximum", errors)
 			if status == "author_ready" and isinstance(label, str):
 				_expect(not GENERIC_LABEL_PATTERN.fullmatch(label.strip()), f"{path}.label", "generic generated label is forbidden in author-ready definitions", errors)
 				_expect(device.get("availability") in {"used", "unused", "optional"}, f"{path}.availability", "author-ready devices must declare used, unused, or optional", errors)

@@ -113,9 +113,9 @@ def apply_spatial(definition: dict[str, Any]) -> None:
 			not_applicable(device, "dip_switch", semantic.CONTROLLER_SOURCE)
 		elif device["availability"] == "unused":
 			not_applicable(device, "unused", semantic.MANUAL_SOURCE)
-		elif address in {1, 2, 3, 4, 5, 6, 7, 8, 13, 14, 21, 22, 23, 111, 113}:
+		elif address in {1, 2, 3, 4, 5, 6, 7, 8, 13, 14, 21, 22, 23, 112, 114}:
 			not_applicable(device, "cabinet_or_service", semantic.MANUAL_SOURCE)
-		elif address in {112, 114}:
+		elif address in {111, 113}:
 			not_applicable(device, "internal_nonvisual", semantic.CORE_SOURCE)
 		elif address == 34:
 			device["roles"] = ["cabinet.grip-trigger"]
@@ -182,9 +182,8 @@ def apply_spatial(definition: dict[str, Any]) -> None:
 			add_note(device, "The placement list is the retained script's Case 2 GI2/GI3 emitter group. Its physical five-string identity conflicts with the manual GI table; this is intentionally conflicted evidence, not a resolved five-channel mapping.")
 		else:
 			add_note(device, "Spatial blocker: exact playfield emitter/effect geometry is not proven for this controller channel by the retained VPX objects.")
-	# The manual's GI 4 is explicitly unused; keep it separate from the
-	# script's decorative Light2-Light5 branch.
-	not_applicable(gi[3], "unused", semantic.MANUAL_SOURCE)
+	# Callback 3 is active in the retained script, but the physical manual calls its corresponding
+	# string unused. Leave its placement unresolved alongside the other unproven GI routes.
 
 
 def audit_report(definition: dict[str, Any]) -> dict[str, Any]:

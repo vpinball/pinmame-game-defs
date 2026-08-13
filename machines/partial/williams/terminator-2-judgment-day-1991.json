@@ -3811,47 +3811,6 @@
       },
       "id": "switch.generic-111",
       "kind": "switch",
-      "label": "Lower Right Flipper Button",
-      "normally_closed": false,
-      "physical": {
-        "location": "lower flipper cabinet/playfield interface",
-        "switch_type": "leaf"
-      },
-      "provenance": {
-        "source_refs": [
-          "controller-profile.pinmame-wpc-alpha",
-          "pinmame.core.4ec52ff0ac13"
-        ],
-        "status": "validated"
-      },
-      "roles": [
-        "flipper.lower.right.button"
-      ],
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.terminator-2-judgment-day.1991"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
-      }
-    },
-    {
-      "aliases": [
-        {
-          "namespace": "pinmame.switch",
-          "value": "112"
-        }
-      ],
-      "availability": "optional",
-      "binding": {
-        "device": 112,
-        "group": "pinmame.input.switch"
-      },
-      "id": "switch.generic-112",
-      "kind": "switch",
       "label": "Lower Right Flipper EOS",
       "normally_closed": true,
       "physical": {
@@ -3883,17 +3842,17 @@
       "aliases": [
         {
           "namespace": "pinmame.switch",
-          "value": "113"
+          "value": "112"
         }
       ],
       "availability": "optional",
       "binding": {
-        "device": 113,
+        "device": 112,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.generic-113",
+      "id": "switch.generic-112",
       "kind": "switch",
-      "label": "Lower Left Flipper Button",
+      "label": "Lower Right Flipper Button",
       "normally_closed": false,
       "physical": {
         "location": "lower flipper cabinet/playfield interface",
@@ -3907,7 +3866,7 @@
         "status": "validated"
       },
       "roles": [
-        "flipper.lower.left.button"
+        "flipper.lower.right.button"
       ],
       "spatial": {
         "provenance": {
@@ -3924,15 +3883,15 @@
       "aliases": [
         {
           "namespace": "pinmame.switch",
-          "value": "114"
+          "value": "113"
         }
       ],
       "availability": "optional",
       "binding": {
-        "device": 114,
+        "device": 113,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.generic-114",
+      "id": "switch.generic-113",
       "kind": "switch",
       "label": "Lower Left Flipper EOS",
       "normally_closed": true,
@@ -3958,6 +3917,47 @@
           "status": "validated"
         },
         "reason": "internal_nonvisual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "114"
+        }
+      ],
+      "availability": "optional",
+      "binding": {
+        "device": 114,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.generic-114",
+      "kind": "switch",
+      "label": "Lower Left Flipper Button",
+      "normally_closed": false,
+      "physical": {
+        "location": "lower flipper cabinet/playfield interface",
+        "switch_type": "leaf"
+      },
+      "provenance": {
+        "source_refs": [
+          "controller-profile.pinmame-wpc-alpha",
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "flipper.lower.left.button"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.williams.terminator-2-judgment-day.1991"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
         "status": "not_applicable"
       }
     },
@@ -10343,6 +10343,11 @@
         ],
         "status": "validated"
       },
+      "range": {
+        "maximum": 8,
+        "minimum": 0,
+        "steps": 9
+      },
       "wiring": {
         "board": "WPC driver board",
         "control_connection": "J120-7",
@@ -10377,6 +10382,11 @@
         ],
         "status": "validated"
       },
+      "range": {
+        "maximum": 8,
+        "minimum": 0,
+        "steps": 9
+      },
       "wiring": {
         "board": "WPC driver board",
         "control_connection": "J119-1",
@@ -10410,6 +10420,11 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "range": {
+        "maximum": 8,
+        "minimum": 0,
+        "steps": 9
       },
       "spatial": {
         "placements": [
@@ -10794,16 +10809,16 @@
           "value": "3"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 3,
         "group": "pinmame.output.gi"
       },
       "id": "gi.string-4",
       "kind": "gi",
-      "label": "GI 4: Not Used",
+      "label": "GI callback 3 (manual GI 4: Not Used)",
       "physical": {
-        "notes": "Manual GI string: GI 4: Not Used; printed GI table on manual pages 48-50. Later manual GI table marks GI 4 Not Used; the retained script has a Case 3 visual Light2-Light5 branch, so those facts are not merged into a physical string mapping."
+        "notes": "Manual GI string: GI 4: Not Used; printed GI table on manual pages 48-50. Later manual GI table marks GI 4 Not Used, but PinMAME callback 3 is demonstrably active in the retained script and drives Light2-Light5. Availability describes the emulator channel; the physical-string conflict remains unresolved. Spatial blocker: exact playfield emitter/effect geometry is not proven for this controller channel by the retained VPX objects."
       },
       "provenance": {
         "source_refs": [
@@ -10813,15 +10828,10 @@
         ],
         "status": "validated"
       },
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.terminator-2-judgment-day.1991"
-          ],
-          "status": "validated"
-        },
-        "reason": "unused",
-        "status": "not_applicable"
+      "range": {
+        "maximum": 8,
+        "minimum": 0,
+        "steps": 9
       },
       "wiring": {
         "board": "WPC driver board",
@@ -10856,6 +10866,11 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
+      },
+      "range": {
+        "maximum": 8,
+        "minimum": 0,
+        "steps": 9
       },
       "wiring": {
         "board": "WPC driver board",
