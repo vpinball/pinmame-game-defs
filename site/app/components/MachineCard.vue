@@ -42,7 +42,7 @@ const stats = computed(() => [
 			>{{ tag }}</span>
 		</div>
 
-		<CompletionMeter class="mt-3" :score="machine.completionScore" :status="machine.status" compact />
+		<CompletionMeter v-if="machine.status !== 'author_ready'" class="mt-3" :score="machine.completionScore" :status="machine.status" compact />
 
 		<div class="mt-auto flex items-end justify-between gap-3 pt-4">
 			<dl v-if="stats.length" class="flex gap-3">
