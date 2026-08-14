@@ -589,8 +589,8 @@ drivers = [
 
 definition = {
     "format": "pinmame-machine-definition", "schema_version": 2,
-    "machine": {"id": "data-east.secret-service.1988", "name": "Secret Service", "manufacturer": "Data East", "year": 1988, "kind": "physical_pinball",
-                "playfield": {"width": 952.0, "height": 2162.0, "units": "vpx", "provenance": prov("validated", [TABLE])}},
+    "machine": {"id": "data-east.secret-service.1988", "name": "Secret Service", "manufacturer": "Data East", "year": 1988, "kind": "physical_pinball", "ipdb_id": 2090,
+                "playfield": {"width": 952.0, "height": 2162.0, "units": "vpx", "provenance": prov("validated", [TABLE])}, "opdb_id": "G4qqv-MDW0P"},
     "coverage": {
         "status": "partial",
         "missing": ["output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"],

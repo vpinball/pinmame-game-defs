@@ -652,7 +652,7 @@ def sources(manual: str, premium: bool) -> list[dict[str, object]]:
 def build_premium() -> dict[str, object]:
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": "stern.mustang-premium-limited-edition-boss.2014", "name": "Mustang Premium / Limited Edition / Boss", "manufacturer": "Stern", "year": 2014, "ipdb_id": 6099},
+		"machine": {"id": "stern.mustang-premium-limited-edition-boss.2014", "name": "Mustang Premium / Limited Edition / Boss", "manufacturer": "Stern", "year": 2014, "ipdb_id": 6099, "opdb_id": "GrPOR-M61Pw"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(True), "inputs": complete_inputs(PREMIUM_SWITCHES, PREMIUM_MANUAL, True, True), "outputs": premium_coils() + standard_lamps(PREMIUM_MANUAL, True) + extended_lamps() + [premium_gi()],
@@ -665,7 +665,7 @@ def build_premium() -> dict[str, object]:
 def build_pro() -> dict[str, object]:
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": "stern.mustang-pro.2014", "name": "Mustang Pro", "manufacturer": "Stern", "year": 2014, "ipdb_id": 6098},
+		"machine": {"id": "stern.mustang-pro.2014", "name": "Mustang Pro", "manufacturer": "Stern", "year": 2014, "ipdb_id": 6098, "opdb_id": "GrPOR-MJK2k"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(False), "inputs": complete_inputs(PRO_SWITCHES, PRO_MANUAL, True, False), "outputs": pro_coils() + pro_lamps(),

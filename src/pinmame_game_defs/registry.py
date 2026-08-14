@@ -8,6 +8,7 @@ from .catalog import Driver, make_stub_definition, make_stub_knowledge
 from .completion import completion_score
 from .errors import CatalogError
 from .jsonio import content_sha256, load_json, write_json, write_text
+from .opdb import load_opdb_machine_identity_index
 from .scope import is_in_scope_driver
 
 
@@ -116,11 +117,15 @@ def rebuild_catalog(repository_root: Path) -> dict[str, Any]:
 			residual_families[record["root_driver"]].append(all_drivers[driver_id])
 
 	revision = previous["source"]["pinmame_revision"]
+	opdb_identities = load_opdb_machine_identity_index(repository_root)
 	stub_definitions: list[tuple[dict[str, Any], str]] = []
 	for root_id, family in sorted(residual_families.items()):
 		family.sort(key=lambda driver: driver.id)
 		root = all_drivers[root_id]
 		definition = make_stub_definition(root, family, revision)
+		opdb_identity = opdb_identities.get(definition["machine"]["id"])
+		if opdb_identity is not None:
+			definition["machine"].update(opdb_identity)
 		relative_path = f"machines/stubs/{root_id}.json"
 		write_json(repository_root / relative_path, definition)
 		write_text(repository_root / "knowledge" / "stubs" / f"{root_id}.md", make_stub_knowledge(root, family, revision))

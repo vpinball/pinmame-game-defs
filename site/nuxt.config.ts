@@ -13,6 +13,25 @@ import tailwindcss from '@tailwindcss/vite'
 const base = (process.env.NUXT_APP_BASE_URL || '/').replace(/\/*$/, '/')
 const route = (path: string) => `${base}${path.replace(/^\//, '')}`
 
+// `app/utils/sources.ts` selects these at runtime, so @nuxt/icon's static
+// scanner cannot discover them from literal <Icon name="…"> attributes.
+const sourceIcons = [
+	'lucide:activity',
+	'lucide:archive',
+	'lucide:binary',
+	'lucide:book-open',
+	'lucide:cpu',
+	'lucide:file',
+	'lucide:file-code-2',
+	'lucide:file-type-2',
+	'lucide:file-warning',
+	'lucide:list',
+	'lucide:play',
+	'lucide:table-2',
+	'lucide:terminal',
+	'lucide:user-check',
+]
+
 function machineRoutes(): string[] {
 	try {
 		const index = JSON.parse(
@@ -81,7 +100,7 @@ export default defineNuxtConfig({
 	icon: {
 		mode: 'svg',
 		serverBundle: false,
-		clientBundle: { scan: true, includeCustomCollections: true },
+		clientBundle: { scan: true, icons: sourceIcons, includeCustomCollections: true },
 	},
 
 	runtimeConfig: {

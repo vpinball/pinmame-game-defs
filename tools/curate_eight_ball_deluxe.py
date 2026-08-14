@@ -922,6 +922,7 @@ def build_definition() -> dict[str, Any]:
 			"year": 1981,
 			"kind": "physical_pinball",
 			"playfield": {"width": 952.0, "height": 1974.0, "units": "vpx", "provenance": provenance(VPX_TABLE_SOURCE, VPX_EXTRACTION_SOURCE)},
+			"opdb_id": "G5KXk-MLB9V",
 		},
 		"coverage": {
 			"status": "partial",

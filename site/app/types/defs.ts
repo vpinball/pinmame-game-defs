@@ -240,6 +240,7 @@ export interface MachineDetail {
 		manufacturer: string
 		year?: number
 		ipdb_id?: number
+		opdb_id?: string
 	}
 	controller?: {
 		platform?: string

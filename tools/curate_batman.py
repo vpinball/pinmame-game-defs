@@ -972,6 +972,7 @@ definition = {
         "playfield": {"width": RESOLUTION["playfield"]["width"],
                       "height": RESOLUTION["playfield"]["height"],
                       "units": "vpx"},
+        "opdb_id": "GrOpb-MQ7w1",
     },
     "controller": {
         "platform": "pinmame.dataeast",

@@ -398,7 +398,7 @@ def sources(manual: str, premium: bool) -> list[dict[str, object]]:
 def build_premium() -> dict[str, object]:
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": "stern.star-trek-premium-limited-edition.2013", "name": "Star Trek Premium / Limited Edition", "manufacturer": "Stern", "year": 2013, "ipdb_id": 6046},
+		"machine": {"id": "stern.star-trek-premium-limited-edition.2013", "name": "Star Trek Premium / Limited Edition", "manufacturer": "Stern", "year": 2013, "ipdb_id": 6046, "opdb_id": "Gryw4-MNEKn"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(True), "inputs": inputs(PREMIUM_MANUAL, True), "outputs": coils(PREMIUM_MANUAL, True) + lamps(PREMIUM_MANUAL, True),
@@ -411,7 +411,7 @@ def build_premium() -> dict[str, object]:
 def build_pro() -> dict[str, object]:
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": "stern.star-trek-pro.2013", "name": "Star Trek Pro", "manufacturer": "Stern", "year": 2013, "ipdb_id": 6046},
+		"machine": {"id": "stern.star-trek-pro.2013", "name": "Star Trek Pro", "manufacturer": "Stern", "year": 2013, "ipdb_id": 6044, "opdb_id": "Gryw4-MwNky"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(False), "inputs": inputs(PRO_MANUAL, True, PRO_SWITCHES, PRO_VPX_SOURCE), "outputs": coils(PRO_MANUAL, True, False, PRO_VPX_SOURCE) + pro_lamps(),

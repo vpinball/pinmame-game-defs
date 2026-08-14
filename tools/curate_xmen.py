@@ -451,7 +451,7 @@ def sources(le: bool) -> list[dict[str, object]]:
 def build_le() -> dict[str, object]:
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": "stern.x-men-limited-edition.2012", "name": "X-Men Limited Edition (Magneto / Wolverine)", "manufacturer": "Stern", "year": 2012, "kind": "physical_pinball", "model_number": "I-00D2", "ipdb_id": 5823},
+		"machine": {"id": "stern.x-men-limited-edition.2012", "name": "X-Men Limited Edition (Magneto / Wolverine)", "manufacturer": "Stern", "year": 2012, "kind": "physical_pinball", "model_number": "I-00D2", "ipdb_id": 5823, "opdb_id": "Grj6X-MJNV1-AOwN1"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(True), "inputs": inputs(True), "outputs": le_coils() + le_lamps(),
@@ -464,7 +464,7 @@ def build_le() -> dict[str, object]:
 def build_pro() -> dict[str, object]:
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": "stern.x-men-pro.2012", "name": "X-Men Pro", "manufacturer": "Stern", "year": 2012, "kind": "physical_pinball", "model_number": "I-00D1", "ipdb_id": 5822},
+		"machine": {"id": "stern.x-men-pro.2012", "name": "X-Men Pro", "manufacturer": "Stern", "year": 2012, "kind": "physical_pinball", "model_number": "I-00D1", "ipdb_id": 5822, "opdb_id": "Grj6X-MJwj5"},
 		# Partial is asserted here rather than left to fail_closed_spatial_partial(): this definition
 		# lists missing requirements and carries an unresolved lamp-59 conflict, so author_ready would
 		# be self-contradictory on its own terms. Removing this machine from

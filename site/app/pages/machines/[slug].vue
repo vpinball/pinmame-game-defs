@@ -145,6 +145,8 @@ const manufacturerUrl = computed(() => `/machines?mfr=${encodeURIComponent(manuf
 
 const ipdbUrl = computed(() =>
 	detail.value?.machine.ipdb_id ? `https://www.ipdb.org/machine.cgi?id=${detail.value.machine.ipdb_id}` : null)
+const opdbUrl = computed(() =>
+	detail.value?.machine.opdb_id ? `https://opdb.org/search?q=${encodeURIComponent(detail.value.machine.opdb_id)}` : null)
 </script>
 
 <template>
@@ -194,6 +196,17 @@ const ipdbUrl = computed(() =>
 			</div>
 
 			<div class="flex flex-wrap items-center gap-2">
+				<a
+					v-if="opdbUrl"
+					:href="opdbUrl"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 text-[13px] text-ink-2 transition-colors hover:border-amber/40 hover:text-ink"
+				>
+					<Icon name="lucide:database" class="size-3.5" />
+					OPDB
+					<Icon name="lucide:external-link" class="size-3" />
+				</a>
 				<a
 					v-if="ipdbUrl"
 					:href="ipdbUrl"

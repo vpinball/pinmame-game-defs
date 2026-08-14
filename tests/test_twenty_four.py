@@ -30,7 +30,7 @@ class TwentyFourDefinitionTests(unittest.TestCase):
 		cls.evidence = load_json(EVIDENCE_PATH)
 
 	def test_identity_and_coverage_remain_conspicuous_partial(self) -> None:
-		self.assertEqual({"id": "stern.twenty-four.2009", "ipdb_id": 5419, "kind": "physical_pinball", "manufacturer": "Stern", "name": "24", "year": 2009}, self.definition["machine"])
+		self.assertEqual({"id": "stern.twenty-four.2009", "ipdb_id": 5419, "kind": "physical_pinball", "manufacturer": "Stern", "name": "24", "opdb_id": "GrEkZ-ML13O", "year": 2009}, self.definition["machine"])
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual({"input_semantics", "output_semantics", "mechanism_behavior", "recreation_notes", "spatial_placement", "unresolved_conflicts"}, set(self.definition["coverage"]["missing"]))

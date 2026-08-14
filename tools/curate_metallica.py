@@ -311,7 +311,7 @@ def sources(include_validated_evidence: bool) -> list[dict[str, object]]:
 def build_premium() -> dict[str, object]:
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": "stern.metallica-premium-limited-edition.2013", "name": "Metallica Premium / Limited Edition", "manufacturer": "Stern", "year": 2013, "ipdb_id": 6037},
+		"machine": {"id": "stern.metallica-premium-limited-edition.2013", "name": "Metallica Premium / Limited Edition", "manufacturer": "Stern", "year": 2013, "ipdb_id": 6031, "opdb_id": "GRBE4-MOE4l"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(True), "inputs": inputs(True), "outputs": coils(True) + lamps(True),
@@ -499,7 +499,7 @@ def pro_sources() -> list[dict[str, object]]:
 def build_pro() -> dict[str, object]:
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": "stern.metallica-pro.2013", "name": "Metallica Pro", "manufacturer": "Stern", "year": 2013, "ipdb_id": 6037},
+		"machine": {"id": "stern.metallica-pro.2013", "name": "Metallica Pro", "manufacturer": "Stern", "year": 2013, "ipdb_id": 6028, "opdb_id": "GRBE4-MQK1Z"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(False), "inputs": pro_inputs(), "outputs": pro_outputs(),

@@ -1764,6 +1764,7 @@ def build() -> dict[str, Any]:
 			"kind": "physical_pinball",
 			"ipdb_id": 4032,
 			"model_number": "50059",
+			"opdb_id": "G5pe4-MePZv",
 		},
 		"coverage": {
 			"status": "author_ready",

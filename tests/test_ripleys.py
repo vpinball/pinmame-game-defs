@@ -87,7 +87,7 @@ class RipleysDefinitionTests(unittest.TestCase):
 
 	def test_identity_driver_family_and_fail_closed_spatial_gate(self) -> None:
 		self.assertEqual(
-			{"id": "stern.ripley-s-believe-it-or-not.2004", "ipdb_id": 4917, "kind": "physical_pinball", "manufacturer": "Stern", "name": "Ripley's Believe It or Not!", "year": 2004},
+			{"id": "stern.ripley-s-believe-it-or-not.2004", "ipdb_id": 4917, "kind": "physical_pinball", "manufacturer": "Stern", "name": "Ripley's Believe It or Not!", "opdb_id": "GRWyB-MLz6Z", "year": 2004},
 			self.definition["machine"],
 		)
 		self.assertEqual(2, self.definition["schema_version"])

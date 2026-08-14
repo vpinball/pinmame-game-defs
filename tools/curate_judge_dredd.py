@@ -2028,6 +2028,8 @@ def build() -> dict[str, Any]:
 			"manufacturer": "Bally",
 			"year": 1993,
 			"kind": "physical_pinball",
+			"ipdb_id": 1322,
+			"opdb_id": "GRoZw-MLW3j",
 			"playfield": {
 				"width": PLAYFIELD_WIDTH,
 				"height": PLAYFIELD_HEIGHT,

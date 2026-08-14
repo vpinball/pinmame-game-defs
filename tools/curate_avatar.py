@@ -402,7 +402,7 @@ def build(limited_edition: bool) -> dict[str, object]:
 	machine_id = "stern.avatar-limited-edition.2010" if limited_edition else "stern.avatar-pro.2010"
 	name = "Avatar Limited Edition" if limited_edition else "Avatar Pro"
 	runtime_source = LE_RUNTIME_SOURCE if limited_edition else PRO_RUNTIME_SOURCE
-	machine: dict[str, object] = {"id": machine_id, "name": name, "manufacturer": "Stern", "year": 2010, "kind": "physical_pinball", "ipdb_id": 5653 if limited_edition else 5618}
+	machine: dict[str, object] = {"id": machine_id, "name": name, "manufacturer": "Stern", "year": 2010, "kind": "physical_pinball", "ipdb_id": 5653 if limited_edition else 5618, "opdb_id": "GrZBr-MyNZz" if limited_edition else "GrZBr-MDbx7"}
 	if limited_edition:
 		machine["model_number"] = "I-00B6"
 	return {

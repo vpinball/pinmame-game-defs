@@ -23,9 +23,7 @@ this project's identity rule a later firmware revision does not create a new phy
 so the physical record is 2006 and the parent driver's own 2008 year is carried only on that
 driver's record.
 
-`machine.ipdb_id` is omitted rather than guessed. IPDB was unreachable during this pass: it
-returns HTTP 403 behind Cloudflare to a plain fetch and no headful browser session was
-available. The year did not depend on it.
+The pinned OPDB snapshot and ROM crosswalk identify this machine as IPDB 5163. Direct IPDB access was unavailable during the original curation pass, and the physical year still does not depend on that database: the service manual and pinned PinMAME catalog independently establish 2006.
 
 The physical family is the twenty-eight-driver `potc` clone tree: `potc_600af` plus
 twenty-seven language and firmware clones (four each of V1.09, V1.10, V1.13, V1.15, V3.00,

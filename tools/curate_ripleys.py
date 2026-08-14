@@ -433,7 +433,7 @@ def sources() -> list[dict[str, object]]:
 def build() -> dict[str, object]:
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": "stern.ripley-s-believe-it-or-not.2004", "name": "Ripley's Believe It or Not!", "manufacturer": "Stern", "year": 2004, "kind": "physical_pinball", "ipdb_id": 4917},
+		"machine": {"id": "stern.ripley-s-believe-it-or-not.2004", "name": "Ripley's Believe It or Not!", "manufacturer": "Stern", "year": 2004, "kind": "physical_pinball", "ipdb_id": 4917, "opdb_id": "GRWyB-MLz6Z"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.whitestar", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(), "inputs": inputs(), "outputs": solenoid_outputs() + lamp_outputs(),

@@ -393,7 +393,7 @@ def drivers() -> list[dict[str, Any]]:
 def build_semantic() -> dict[str, Any]:
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 2,
-		"machine": {"id": "williams.terminator-2-judgment-day.1991", "name": "Terminator 2: Judgment Day", "manufacturer": "Williams", "year": 1991, "kind": "physical_pinball", "ipdb_id": 2524, "model_number": "T2"},
+		"machine": {"id": "williams.terminator-2-judgment-day.1991", "name": "Terminator 2: Judgment Day", "manufacturer": "Williams", "year": 1991, "kind": "physical_pinball", "ipdb_id": 2524, "model_number": "T2", "opdb_id": "GR9Bx-MQkd5"},
 		"coverage": {"status": "partial", "missing": ["spatial_placement", "unresolved_conflicts"], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "conflicted", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated", "spatial_placement": "unknown"}},
 		"controller": {"platform": "pinmame.wpc-alpha", "hardware_generation": "0x4", "inversion_applied_by_emulator": True},
 		"drivers": drivers(), "inputs": input_devices(), "outputs": output_devices() + lamp_devices() + gi_devices(), "displays": displays(), "mechanisms": mechanisms(),

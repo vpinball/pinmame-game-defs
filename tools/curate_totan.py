@@ -1649,6 +1649,7 @@ def build() -> dict[str, Any]:
 			"year": 1996,
 			"kind": "physical_pinball",
 			"ipdb_id": 3824,
+			"opdb_id": "G4llj-MQYb2",
 		},
 		"coverage": {
 			"status": "partial",

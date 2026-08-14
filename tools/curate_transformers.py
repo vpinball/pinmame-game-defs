@@ -405,7 +405,7 @@ def build(limited_edition: bool) -> dict[str, object]:
 	runtime_source = LE_RUNTIME_SOURCE if limited_edition else PRO_RUNTIME_SOURCE
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": machine_id, "name": name, "manufacturer": "Stern", "year": 2011, "kind": "physical_pinball"},
+		"machine": {"id": machine_id, "name": name, "manufacturer": "Stern", "year": 2011, "kind": "physical_pinball", "ipdb_id": 5753 if limited_edition else 5709, "opdb_id": "GRnPz-Mx0XO" if limited_edition else "GRnPz-MLBzV"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(limited_edition), "inputs": inputs(limited_edition), "outputs": main_outputs(limited_edition) + (le_aux_outputs() if limited_edition else []) + lamps(limited_edition),

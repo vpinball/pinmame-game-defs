@@ -1649,7 +1649,7 @@ definition = {
     "format": partial["format"],
     "inputs": inputs,
     "knowledge": {"path": "knowledge/stern/lord-of-the-rings-2003.md", "status": "partial"},
-    "machine": {**partial["machine"], "kind": "physical_pinball", "ipdb_id": 4858},
+    "machine": {**partial["machine"], "kind": "physical_pinball", "ipdb_id": 4858, "opdb_id": "GrqZX-MD15w"},
     "mechanisms": mechanisms,
     "outputs": outputs,
     "relationships": relationships,

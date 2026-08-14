@@ -458,7 +458,7 @@ def build_premium() -> dict[str, object]:
 	outputs = coil_outputs(PREMIUM_COILS, PREMIUM_MANUAL, True) + premium_lamps()
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": "stern.the-walking-dead-premium-limited-edition.2014", "name": "The Walking Dead Premium / Limited Edition", "manufacturer": "Stern", "year": 2014, "ipdb_id": 6156},
+		"machine": {"id": "stern.the-walking-dead-premium-limited-edition.2014", "name": "The Walking Dead Premium / Limited Edition", "manufacturer": "Stern", "year": 2014, "ipdb_id": 6156, "opdb_id": "G5nz5-MP3r1"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(True), "inputs": complete_inputs(PREMIUM_SWITCHES, PREMIUM_MANUAL, True, True), "outputs": outputs,
@@ -471,7 +471,7 @@ def build_premium() -> dict[str, object]:
 def build_pro() -> dict[str, object]:
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": "stern.the-walking-dead-pro.2014", "name": "The Walking Dead Pro", "manufacturer": "Stern", "year": 2014, "ipdb_id": 6155},
+		"machine": {"id": "stern.the-walking-dead-pro.2014", "name": "The Walking Dead Pro", "manufacturer": "Stern", "year": 2014, "ipdb_id": 6155, "opdb_id": "G5nz5-M3d38"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(False), "inputs": complete_inputs(PRO_SWITCHES, PRO_MANUAL, True, False), "outputs": coil_outputs(PRO_COILS, PRO_MANUAL, True, PRO_VPX_SOURCE) + pro_lamps(),

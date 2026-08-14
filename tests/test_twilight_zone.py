@@ -76,7 +76,7 @@ class TwilightZoneDefinitionTests(unittest.TestCase):
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("bally.twilight-zone.1993", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
-		self.assertEqual(2358, self.definition["machine"]["ipdb_id"])
+		self.assertEqual(2684, self.definition["machine"]["ipdb_id"])
 		self.assertEqual(1993, self.definition["machine"]["year"])
 		self.assertEqual("pinmame.wpc-fliptronic", self.definition["controller"]["platform"])
 		self.assertEqual("0x8", self.definition["controller"]["hardware_generation"])

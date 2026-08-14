@@ -455,7 +455,7 @@ def home_sources() -> list[dict[str, object]]:
 
 
 def build(home: bool) -> dict[str, object]:
-	machine = {"id": HOME_MACHINE_ID, "name": "Batman: The Dark Knight Standard/Home Edition", "manufacturer": "Stern", "year": 2010, "kind": "physical_pinball", "ipdb_id": 5583} if home else {"id": PRO_MACHINE_ID, "name": "Batman: The Dark Knight Pro", "manufacturer": "Stern", "year": 2008, "kind": "physical_pinball", "ipdb_id": 5307}
+	machine = {"id": HOME_MACHINE_ID, "name": "Batman: The Dark Knight Standard/Home Edition", "manufacturer": "Stern", "year": 2010, "kind": "physical_pinball", "ipdb_id": 5583, "opdb_id": "G4yVw-MQY90"} if home else {"id": PRO_MACHINE_ID, "name": "Batman: The Dark Knight Pro", "manufacturer": "Stern", "year": 2008, "kind": "physical_pinball", "ipdb_id": 5307, "opdb_id": "G4yVw-M85j8"}
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1, "machine": machine,
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},

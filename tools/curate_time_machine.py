@@ -621,7 +621,7 @@ def build_machine() -> dict[str, object]:
 	outputs = [solenoid_output(number) for number in range(1, 51)] + [lamp_output(number) for number in range(1, 65)]
 	return {
 		"format":"pinmame-machine-definition", "schema_version":2,
-		"machine":{"id":MACHINE_ID,"name":"Time Machine","manufacturer":"Data East","year":1988,"kind":"physical_pinball","playfield":{"width":1000.0,"height":1910.0,"units":"vpx","provenance":provenance("validated",TABLE_SOURCE)}},
+		"machine":{"id":MACHINE_ID,"name":"Time Machine","manufacturer":"Data East","year":1988,"kind":"physical_pinball","ipdb_id":2565,"opdb_id":"GR99Y-MJ9Zy","playfield":{"width":1000.0,"height":1910.0,"units":"vpx","provenance":provenance("validated",TABLE_SOURCE)}},
 		"coverage":{"status":"partial","missing":["output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"],"dimensions":{"catalog_identity":"validated","address_enumeration":"validated","semantic_naming":"conflicted","physical_wiring":"conflicted","mechanisms":"conflicted","variant_coverage":"validated","recreation_knowledge":"candidate","spatial_placement":"candidate","runtime_observation":"observed"}},
 		"controller":{"platform":"pinmame.dataeast","hardware_generation":"0x1000","inversion_applied_by_emulator":True},
 		"drivers":[

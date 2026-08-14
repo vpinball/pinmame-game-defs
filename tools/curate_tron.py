@@ -369,7 +369,7 @@ def build(limited_edition: bool) -> dict[str, object]:
 	runtime_source = LE_RUNTIME_SOURCE if limited_edition else PRO_RUNTIME_SOURCE
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": machine_id, "name": name, "manufacturer": "Stern", "year": 2011, "kind": "physical_pinball", "model_number": "I-00C2" if limited_edition else "I-00B9", "ipdb_id": 5707 if limited_edition else 5682},
+		"machine": {"id": machine_id, "name": name, "manufacturer": "Stern", "year": 2011, "kind": "physical_pinball", "model_number": "I-00C2" if limited_edition else "I-00B9", "ipdb_id": 5707 if limited_edition else 5682, "opdb_id": "GrkL5-MJoNN" if limited_edition else "GrkL5-MLvrX"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(limited_edition), "inputs": inputs(limited_edition), "outputs": main_outputs(limited_edition) + lamps(limited_edition),
@@ -508,7 +508,7 @@ def pro_extraction_report() -> dict[str, object]:
 	             'model_number': 'I-00B9',
 	             'name': 'TRON: Legacy Pro',
 	             'required_edition': 'physical Pro',
-	             'year': 2011},
+	             'year': 2011, "opdb_id": "GrkL5-MLvrX"},
 	 'next_actions': ['Acquire an exact physical Pro VPX or VPT from an authorized source and record its path, size, and SHA-256 before '
 	                  'extraction.',
 	                  'Copy and hash that exact source under the target path without replacing or deleting any existing source.',

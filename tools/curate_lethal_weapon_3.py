@@ -1137,9 +1137,11 @@ definition = {
         "manufacturer": "Data East",
         "year": 1992,
         "kind": "physical_pinball",
+        "ipdb_id": 1433,
         "playfield": {"width": RESOLUTION["playfield"]["width"],
                       "height": RESOLUTION["playfield"]["height"],
                       "units": "vpx"},
+        "opdb_id": "GRokL-MQP78",
     },
     "controller": {
         "platform": "pinmame.dataeast",

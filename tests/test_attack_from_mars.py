@@ -74,11 +74,9 @@ class AttackFromMarsDefinitionTests(unittest.TestCase):
 		self.assertEqual(1995, machine["year"])
 		self.assertEqual("physical_pinball", machine["kind"])
 
-	def test_no_unverified_ipdb_identity_is_asserted(self) -> None:
-		# IPDB was Cloudflare-gated during curation and no IPDB evidence record was retained, so the
-		# optional identity fields must stay absent rather than carry an unsourced value.
+	def test_opdb_crosswalk_supplies_ipdb_identity(self) -> None:
 		machine = self.definition["machine"]
-		self.assertNotIn("ipdb_id", machine)
+		self.assertEqual(3781, machine["ipdb_id"])
 		self.assertNotIn("model_number", machine)
 
 	def test_promotion_state(self) -> None:
@@ -382,9 +380,8 @@ class AttackFromMarsDefinitionTests(unittest.TestCase):
 
 	def test_knowledge_note_does_not_assert_unretained_sources_as_authority(self) -> None:
 		text = KNOWLEDGE_PATH.read_text(encoding="utf-8")
-		# No IPDB identity is retained, so the note must not assert one.
-		self.assertNotIn("IPDB 3781", text)
-		self.assertIn("No IPDB identity is asserted", text)
+		self.assertIn("IPDB 3781", text)
+		self.assertIn("reports/opdb-identity.json", text)
 		# The 176-page manual and the altsound package are contributor-held, not retained here.
 		self.assertIn("contributor-held", text)
 		self.assertNotIn("retained community altsound.csv", text)

@@ -862,8 +862,8 @@ drivers = [
 
 definition = {
     "format": "pinmame-machine-definition", "schema_version": 2,
-    "machine": {"id": "data-east.laser-war.1987", "name": "Laser War", "manufacturer": "Data East", "year": 1987, "kind": "physical_pinball",
-                "playfield": {"width": 964.0, "height": 2162.0, "units": "vpx", "provenance": prov("validated", [TABLE])}},
+    "machine": {"id": "data-east.laser-war.1987", "name": "Laser War", "manufacturer": "Data East", "year": 1987, "kind": "physical_pinball", "ipdb_id": 1415,
+                "playfield": {"width": 964.0, "height": 2162.0, "units": "vpx", "provenance": prov("validated", [TABLE])}, "opdb_id": "G5one-MQY5V"},
     "coverage": {
         "status": "partial",
         "missing": ["output_semantics", "mechanism_behavior", "polarity", "spatial_placement", "unresolved_conflicts"],

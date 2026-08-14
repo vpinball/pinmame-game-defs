@@ -673,7 +673,7 @@ function commonTitle(names: string[]): string {
  */
 type FamilyDoc = {
 	format: string
-	family: { id: string, title: string, manufacturer?: string }
+	family: { id: string, title: string, manufacturer?: string, opdb_id?: string }
 	members: { machine_id: string, edition?: string, differences?: string }[]
 	knowledge?: { path?: string }
 	sources?: any[]
@@ -747,7 +747,8 @@ const authoredFamilies = familyDocs.map((doc) => {
 		.filter((m): m is { entry: MachineIndexEntry, spec: typeof doc.members[number] } => !!m.entry)
 		.sort((a, b) => (a.entry.year ?? 0) - (b.entry.year ?? 0) || a.entry.name.localeCompare(b.entry.name))
 	const title = doc.family.title
-	const slug = slugify(doc.family.id.includes('.') ? title : doc.family.id)
+	let slug = slugify(doc.family.id.includes('.') ? title : doc.family.id)
+	if (familySlugs.has(slug)) slug = slugify(`${title}-${doc.family.id}`)
 	familySlugs.add(slug)
 	const knowledge = renderKnowledge(doc.knowledge?.path)
 	return {
