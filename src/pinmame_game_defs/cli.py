@@ -12,6 +12,7 @@ from .errors import DefinitionError
 from .legacy import import_legacy_definitions
 from .jsonio import load_json, write_json, write_text
 from .manuals import acquire_archive_document, acquire_url_document, extract_manual_document
+from .opdb import import_opdb
 from .pinmame_source import extract_pinmame_simulations
 from .registry import rebuild_catalog
 from .roms import index_rom_corpus
@@ -59,6 +60,10 @@ def _build_parser() -> argparse.ArgumentParser:
 
 	subparsers.add_parser("validate", help="Validate catalog reachability, hashes, canonical fields, references, and author-ready gates.")
 	subparsers.add_parser("import-legacy", help="Migrate legacy games/platforms into partial VPE-neutral definitions and rebuild the exact driver registry.")
+	opdb_parser = subparsers.add_parser("import-opdb", help="Apply OPDB IPDB identities and machine-family grouping from the PinMAME ROM crosswalk.")
+	opdb_parser.add_argument("--snapshot", required=True, type=_path, help="Downloaded latest-opdb.json snapshot; the snapshot remains external to the repository.")
+	opdb_parser.add_argument("--acquired-at", required=True, help="ISO-8601 timestamp at which the OPDB snapshot was downloaded.")
+	opdb_parser.add_argument("--check", action="store_true", help="Fail if any OPDB-derived repository file is stale; do not write.")
 	pinmame_source_parser = subparsers.add_parser("extract-pinmame-sims", help="Extract candidate semantic I/O, state, mechanism, and recreation evidence from PinMAME simulations.")
 	pinmame_source_parser.add_argument("--pinmame-source", required=True, type=_path, help="Pinned PinMAME source checkout.")
 	vpx_parser = subparsers.add_parser("extract-vpx", help="Extract candidate semantic I/O and mechanism evidence from both pinned VPX script corpora.")
@@ -169,6 +174,13 @@ def main(argv: Sequence[str] | None = None) -> None:
 			write_coverage_report(repository_root)
 			print(f"Created {report['created_machine_count']} partial physical-machine definitions from legacy sources.")
 			print(f"Catalog now contains {report['catalog_summary']['machine_count']} records: {report['catalog_summary']['partial_count']} partial and {report['catalog_summary']['stub_count']} stubs.")
+			status = 0
+		elif args.command == "import-opdb":
+			report = import_opdb(repository_root, args.snapshot, args.acquired_at, args.check)
+			summary = report["summary"]
+			verb = "Verified" if args.check else "Updated"
+			print(f"{verb} {summary['resolved_machine_count']} machine identities across {summary['family_count']} OPDB families.")
+			print(f"CSV coverage: {summary['mapped_catalog_driver_count']}/{summary['catalog_driver_count']} catalog drivers; {summary['unmapped_machine_count']} machine definitions remain unmapped.")
 			status = 0
 		elif args.command == "extract-pinmame-sims":
 			report = extract_pinmame_simulations(args.pinmame_source, repository_root)

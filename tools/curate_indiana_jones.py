@@ -1894,6 +1894,7 @@ def build() -> dict[str, Any]:
 				"units": "vpx",
 				"provenance": provenance(VPX_TABLE_SOURCE),
 			},
+			"opdb_id": "G4xZy-MLno6",
 		},
 		"coverage": {
 			"status": "partial",

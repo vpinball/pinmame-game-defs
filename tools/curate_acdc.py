@@ -532,10 +532,10 @@ def source_set(variant: str) -> list[dict[str, object]]:
 
 
 MACHINE_META = {
-	"premium": {"id": "stern.ac-dc-premium-limited-edition-luci.2012", "name": "AC/DC Premium / Limited Edition / LUCI Premium", "manufacturer": "Stern", "year": 2012, "kind": "physical_pinball", "model_number": "500-55C7-01 / 500-55C8-01", "ipdb_id": 5775},
-	"pro": {"id": "stern.ac-dc-pro.2012", "name": "AC/DC Pro (original)", "manufacturer": "Stern", "year": 2012, "kind": "physical_pinball", "model_number": "500-55C0-01"},
-	"led-pro": {"id": "stern.ac-dc-led-pro.2014", "name": "AC/DC LED Pro", "manufacturer": "Stern", "year": 2014, "kind": "physical_pinball"},
-	"vault": {"id": "stern.ac-dc-vault-edition.2018", "name": "AC/DC Vault Edition", "manufacturer": "Stern", "year": 2018, "kind": "physical_pinball"},
+	"premium": {"id": "stern.ac-dc-premium-limited-edition-luci.2012", "name": "AC/DC Premium / Limited Edition / LUCI Premium", "manufacturer": "Stern", "year": 2012, "kind": "physical_pinball", "model_number": "500-55C7-01 / 500-55C8-01", "ipdb_id": 5775, "opdb_id": "G43W4-MXrPx"},
+	"pro": {"id": "stern.ac-dc-pro.2012", "name": "AC/DC Pro (original)", "manufacturer": "Stern", "year": 2012, "kind": "physical_pinball", "model_number": "500-55C0-01", "ipdb_id": 5767, "opdb_id": "G43W4-MKNW0"},
+	"led-pro": {"id": "stern.ac-dc-led-pro.2014", "name": "AC/DC LED Pro", "manufacturer": "Stern", "year": 2014, "kind": "physical_pinball", "ipdb_id": 6441, "opdb_id": "G43W4-MKNW0-AOENR"},
+	"vault": {"id": "stern.ac-dc-vault-edition.2018", "name": "AC/DC Vault Edition", "manufacturer": "Stern", "year": 2018, "kind": "physical_pinball", "ipdb_id": 6439, "opdb_id": "G43W4-MKNX0"},
 }
 DRIVER_GROUPS = {"premium": PREMIUM_IDS, "pro": ORIGINAL_PRO_IDS, "led-pro": LED_PRO_IDS, "vault": VAULT_IDS}
 VARIANT_NOTES = {

@@ -1574,6 +1574,8 @@ def build() -> dict[str, Any]:
 			"manufacturer": "Bally",
 			"model_number": "1215",
 			"name": "Flash Gordon",
+			"ipdb_id": 874,
+			"opdb_id": "G5728-MDbjD",
 			"playfield": {
 				"height": TABLE_HEIGHT,
 				"provenance": provenance(TABLE_SOURCE),

@@ -1707,6 +1707,7 @@ def build() -> dict[str, Any]:
 			"kind": "physical_pinball",
 			"ipdb_id": 861,
 			"playfield": {"width": PLAYFIELD_WIDTH, "height": PLAYFIELD_HEIGHT, "units": "vpx"},
+			"opdb_id": "G5Wxd-MLxl3",
 		},
 		"coverage": {
 			"status": "partial",

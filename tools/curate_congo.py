@@ -1696,6 +1696,7 @@ def build() -> dict[str, Any]:
 			"manufacturer": "Williams",
 			"year": 1995,
 			"kind": "physical_pinball",
+			"ipdb_id": 3780,
 			"model_number": "16-50050-101",
 			"playfield": {
 				"width": TABLE_WIDTH,
@@ -1703,6 +1704,7 @@ def build() -> dict[str, Any]:
 				"units": "vpx",
 				"provenance": provenance(VPX_TABLE_SOURCE),
 			},
+			"opdb_id": "GrNd0-MJNW1",
 		},
 		"coverage": {
 			"status": "partial",

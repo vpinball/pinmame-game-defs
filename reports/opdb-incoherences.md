@@ -1,0 +1,676 @@
+# OPDB mapping incoherences
+
+This report is generated from `machines/opdb_id.csv`, the pinned PinMAME catalog, the current machine definitions, and the retained OPDB snapshot identified in `reports/opdb-identity.json`.
+
+## CSV OPDB IDs absent from the snapshot
+
+Count: **4**
+
+- csv_opdb_id=G43KY-MQKKV; replacement_opdb_id=GRw0Z-Ml9Eb-A1qre; romsets=camlight
+- csv_opdb_id=G48Ex-MDWNj; replacement_opdb_id=GRw0Z-Ml9Eb-ARDKp; romsets=foxylady
+- csv_opdb_id=G56jk-MnKlw; replacement_opdb_id=GRw0Z-Ml9Eb-AOdrJ; romsets=chucklck
+- csv_opdb_id=GRBV9-MLy6e; replacement_opdb_id=GRw0Z-Ml9Eb-A10qb; romsets=real
+
+## CSV ROM sets absent from the PinMAME catalog
+
+Count: **11**
+
+- romset=acd_170_ac; opdb_id=G43W4-MKNX0
+- romset=beachbms; opdb_id=G5B9Z-MLBjW
+- romset=beav_butt; opdb_id=G5DYX-M0oVW
+- romset=kpb106; opdb_id=G48od-MJNnn
+- romset=kpv106; opdb_id=G48od-MJNnn
+- romset=medusaf; opdb_id=G4xXQ-MDWW1
+- romset=rambo; opdb_id=GrJWP-MJ7N1
+- romset=rs_70; opdb_id=G4dWd-MJ2p6
+- romset=smbv; opdb_id=GRBzQ-MLO1j
+- romset=tom_20; opdb_id=G5BLE-MQ75Y
+- romset=tomjerry; opdb_id=G5B9Z-MLBjW
+
+## Catalog drivers without a CSV mapping
+
+Count: **338**
+
+- `aar_101`
+- `afv_d4`
+- `afv_l4`
+- `alcat_l7`
+- `alienwar`
+- `america`
+- `antar`
+- `antar2`
+- `aqualana`
+- `aqualand`
+- `arist_l1`
+- `arizona`
+- `atla_ltd`
+- `atleta`
+- `ator`
+- `ator2`
+- `attack`
+- `bay_402`
+- `bbbowlin`
+- `bellring`
+- `bigbat`
+- `bigtown`
+- `blbeauty`
+- `blkfever`
+- `blroller`
+- `break`
+- `brooklyn`
+- `brooklyna`
+- `brooks`
+- `brvteafp`
+- `brvteam`
+- `bsktball`
+- `bstrk_l1`
+- `canasta`
+- `canastfp`
+- `cavemane`
+- `cavnegr1`
+- `cavnegr2`
+- `cavnegro`
+- `centauri`
+- `centaurj`
+- `cerberus`
+- `champion`
+- `chance`
+- `cntine31`
+- `cntinntl`
+- `cntintl2`
+- `cobra`
+- `columbia`
+- `comeback`
+- `corsarfp`
+- `corsario`
+- `cosflash`
+- `cosmic`
+- `cowboy`
+- `cowboy3a`
+- `cowboy3p`
+- `ctcheese`
+- `ctchzdlx`
+- `darkshad`
+- `deleontest4`
+- `detest`
+- `dinoeggs`
+- `discodan`
+- `domino2`
+- `dragfis17`
+- `drakor`
+- `empsback`
+- `escape`
+- `evlfight`
+- `f1gp`
+- `faeton`
+- `faeton6d`
+- `fantacar`
+- `fireact`
+- `fireactd`
+- `fjholden`
+- `flashman`
+- `fldragon`
+- `football`
+- `force`
+- `force_ekky`
+- `formula1`
+- `futrquen`
+- `gamatros`
+- `gemini`
+- `gemini1`
+- `ggate`
+- `ggatea`
+- `ghv101`
+- `glxplay`
+- `glxplay2`
+- `gmine_l2`
+- `goldgam2`
+- `goldgame`
+- `goldgkit1`
+- `goldgnew`
+- `goldgstake`
+- `gork`
+- `gunshot`
+- `halley`
+- `halleya`
+- `halleyb`
+- `hangon`
+- `hawkman`
+- `hawkman1`
+- `heavymtl`
+- `hhotel`
+- `howzat`
+- `hs_l1`
+- `hshot_p8`
+- `hshot_p9`
+- `hustler`
+- `hypbl_l2`
+- `hypbl_l3`
+- `hypbl_l4`
+- `hypbl_l5`
+- `hypbl_l6`
+- `icecold`
+- `icecoldf`
+- `icemania`
+- `ind250cc`
+- `ironball`
+- `jpinball`
+- `kidnap`
+- `kingt_l1`
+- `kkongltd`
+- `kz26`
+- `ladylukt`
+- `lancelot`
+- `lapbylap`
+- `lapbylfp`
+- `larana`
+- `larana2`
+- `lastlap`
+- `lazrlord`
+- `lc_11`
+- `lortium`
+- `lunelle`
+- `mac_1808`
+- `mac_zois`
+- `macgalxb`
+- `macgalxy`
+- `macjungl`
+- `macjungn`
+- `madrace`
+- `marqueen`
+- `mbossy`
+- `mdntmrdr`
+- `megaatoa`
+- `megaaton`
+- `mephist1`
+- `mephisto`
+- `metalman`
+- `meteort`
+- `michigan`
+- `michkit1`
+- `michkitb`
+- `michnew`
+- `michstake`
+- `mmmaster`
+- `monopred`
+- `monrobwl`
+- `montana`
+- `moonlght`
+- `moonlifp`
+- `movmastr`
+- `mrblack`
+- `mrblack1`
+- `msdisco`
+- `mundiafp`
+- `mundial`
+- `mysteria`
+- `nautilus`
+- `nbamac`
+- `nemesis`
+- `newdixie`
+- `ngtfever`
+- `nudgeit`
+- `obaoba`
+- `obaoba1`
+- `obaobao`
+- `odin`
+- `odin_dlx`
+- `odinp`
+- `odisea`
+- `olympus`
+- `omni_l1`
+- `orbit1`
+- `papillon`
+- `party`
+- `pecmen`
+- `penalty`
+- `pentacp2`
+- `pentacps`
+- `pentacpt`
+- `pentacup`
+- `petaco`
+- `petaco2`
+- `petacon`
+- `petacona`
+- `pfevr_l2`
+- `pfevr_p3`
+- `ph_04`
+- `phntmshp`
+- `pimbal`
+- `pinclofp`
+- `pinclown`
+- `polar`
+- `poleposn`
+- `pomp_l1`
+- `pp100`
+- `punkywil`
+- `rally`
+- `rapidfia`
+- `rapidfir`
+- `ratrc_l1`
+- `redbaron`
+- `ridersrf`
+- `rock2500`
+- `rush_10`
+- `s80btest`
+- `s80tst`
+- `sam1_flashb_0102`
+- `sam1_flashb_0106`
+- `sam1_flashb_0210`
+- `sam1_flashb_0230`
+- `sam1_flashb_0310`
+- `sam_iii`
+- `sam_iv`
+- `saturn2`
+- `saturnfp`
+- `scarn103`
+- `scarn105`
+- `scarn200`
+- `scarn9nj`
+- `scotest8`
+- `scrzy_l1`
+- `sf_d1`
+- `sf_l1`
+- `shark`
+- `sharkt`
+- `shfin_l1`
+- `shock`
+- `skatebrd`
+- `skflight`
+- `sklflite`
+- `slalom03`
+- `snake`
+- `snspare1`
+- `snspare2`
+- `snspares`
+- `solarwar`
+- `sonstwar`
+- `sonstwr2`
+- `spacehaw`
+- `spain82`
+- `spcgambl`
+- `spchawfp`
+- `spcpnthr`
+- `spcpoker`
+- `spcpoker_ekky`
+- `spctrai0`
+- `spctrain`
+- `splbn_l0`
+- `sport2k`
+- `sprbwlfp`
+- `sshuttl1`
+- `sshuttle`
+- `starfira`
+- `starfire`
+- `stest`
+- `storm`
+- `strax_p7`
+- `strik_d4`
+- `strik_l4`
+- `superdix`
+- `sureshot`
+- `swrds_rr1`
+- `swrds_rr1b`
+- `sys1test`
+- `szone_l2`
+- `szone_l5`
+- `t2_l2sp1`
+- `taf_d7bs`
+- `tafg_i3bs`
+- `taitest`
+- `taurs_l1`
+- `tdawg_l1`
+- `terrlake`
+- `tf95_12`
+- `tfa_13`
+- `tfdmd_l3`
+- `tfs_12`
+- `theraid`
+- `theraida`
+- `thrdwrld`
+- `tigerrag`
+- `titan`
+- `titan1`
+- `titanic`
+- `tmacltd2`
+- `tmacltd4`
+- `topaz_l1`
+- `topazi`
+- `topgame`
+- `topgamet`
+- `toppin`
+- `topsound`
+- `trailer`
+- `trebol`
+- `tricksht`
+- `tripjok`
+- `tstrk_l1`
+- `tt_game`
+- `tts_l1`
+- `tts_l2`
+- `ttt_10`
+- `uboat65`
+- `ufo_x`
+- `v1`
+- `vegast`
+- `vikngkng`
+- `voleybal`
+- `vortex`
+- `wackadoo`
+- `walkyria`
+- `wldtexas`
+- `wolfman`
+- `worlddef`
+- `worlddfp`
+- `wrldtou4`
+- `zarza`
+- `zarza1`
+- `zekepeak`
+- `zephy`
+- `zephya`
+- `zira`
+
+## Machine definitions without a CSV mapping
+
+Count: **238**
+
+- `diagnostic.scotts-test-rom-v8`
+- `stub.pinmame.aar_101`
+- `stub.pinmame.afv_l4`
+- `stub.pinmame.alcat_l7`
+- `stub.pinmame.alienwar`
+- `stub.pinmame.america`
+- `stub.pinmame.antar`
+- `stub.pinmame.aqualand`
+- `stub.pinmame.arist_l1`
+- `stub.pinmame.arizona`
+- `stub.pinmame.atla_ltd`
+- `stub.pinmame.atleta`
+- `stub.pinmame.ator`
+- `stub.pinmame.attack`
+- `stub.pinmame.bbbowlin`
+- `stub.pinmame.bellring`
+- `stub.pinmame.bigbat`
+- `stub.pinmame.bigtown`
+- `stub.pinmame.blbeauty`
+- `stub.pinmame.blkfever`
+- `stub.pinmame.blroller`
+- `stub.pinmame.break`
+- `stub.pinmame.brooklyn`
+- `stub.pinmame.brooks`
+- `stub.pinmame.brvteam`
+- `stub.pinmame.bsktball`
+- `stub.pinmame.bstrk_l1`
+- `stub.pinmame.canasta`
+- `stub.pinmame.cavnegro`
+- `stub.pinmame.centauri`
+- `stub.pinmame.cerberus`
+- `stub.pinmame.champion`
+- `stub.pinmame.chance`
+- `stub.pinmame.cntine31`
+- `stub.pinmame.cntinntl`
+- `stub.pinmame.cobra`
+- `stub.pinmame.columbia`
+- `stub.pinmame.comeback`
+- `stub.pinmame.corsario`
+- `stub.pinmame.cosflash`
+- `stub.pinmame.cosmic`
+- `stub.pinmame.cowboy`
+- `stub.pinmame.cowboy3p`
+- `stub.pinmame.ctcheese`
+- `stub.pinmame.darkshad`
+- `stub.pinmame.deleontest4`
+- `stub.pinmame.detest`
+- `stub.pinmame.dinoeggs`
+- `stub.pinmame.discodan`
+- `stub.pinmame.domino2`
+- `stub.pinmame.drakor`
+- `stub.pinmame.empsback`
+- `stub.pinmame.escape`
+- `stub.pinmame.evlfight`
+- `stub.pinmame.f1gp`
+- `stub.pinmame.faeton`
+- `stub.pinmame.fantacar`
+- `stub.pinmame.fireact`
+- `stub.pinmame.fireactd`
+- `stub.pinmame.fjholden`
+- `stub.pinmame.flashman`
+- `stub.pinmame.fldragon`
+- `stub.pinmame.football`
+- `stub.pinmame.force`
+- `stub.pinmame.formula1`
+- `stub.pinmame.futrquen`
+- `stub.pinmame.gamatros`
+- `stub.pinmame.gemini`
+- `stub.pinmame.ggate`
+- `stub.pinmame.ghv101`
+- `stub.pinmame.glxplay`
+- `stub.pinmame.glxplay2`
+- `stub.pinmame.gmine_l2`
+- `stub.pinmame.goldgame`
+- `stub.pinmame.gork`
+- `stub.pinmame.gunshot`
+- `stub.pinmame.halley`
+- `stub.pinmame.hangon`
+- `stub.pinmame.hawkman`
+- `stub.pinmame.heavymtl`
+- `stub.pinmame.hhotel`
+- `stub.pinmame.howzat`
+- `stub.pinmame.hshot_p8`
+- `stub.pinmame.hustler`
+- `stub.pinmame.hypbl_l4`
+- `stub.pinmame.icecold`
+- `stub.pinmame.icemania`
+- `stub.pinmame.ind250cc`
+- `stub.pinmame.ironball`
+- `stub.pinmame.jpinball`
+- `stub.pinmame.kidnap`
+- `stub.pinmame.kingt_l1`
+- `stub.pinmame.kkongltd`
+- `stub.pinmame.kz26`
+- `stub.pinmame.ladylukt`
+- `stub.pinmame.lancelot`
+- `stub.pinmame.lapbylap`
+- `stub.pinmame.larana`
+- `stub.pinmame.lastlap`
+- `stub.pinmame.lazrlord`
+- `stub.pinmame.lc_11`
+- `stub.pinmame.lortium`
+- `stub.pinmame.lunelle`
+- `stub.pinmame.mac_1808`
+- `stub.pinmame.macgalxy`
+- `stub.pinmame.macjungl`
+- `stub.pinmame.macjungn`
+- `stub.pinmame.madrace`
+- `stub.pinmame.marqueen`
+- `stub.pinmame.mbossy`
+- `stub.pinmame.mdntmrdr`
+- `stub.pinmame.megaaton`
+- `stub.pinmame.mephisto`
+- `stub.pinmame.metalman`
+- `stub.pinmame.meteort`
+- `stub.pinmame.michigan`
+- `stub.pinmame.mmmaster`
+- `stub.pinmame.monopred`
+- `stub.pinmame.monrobwl`
+- `stub.pinmame.montana`
+- `stub.pinmame.moonlght`
+- `stub.pinmame.movmastr`
+- `stub.pinmame.msdisco`
+- `stub.pinmame.mundial`
+- `stub.pinmame.mysteria`
+- `stub.pinmame.nautilus`
+- `stub.pinmame.nbamac`
+- `stub.pinmame.nemesis`
+- `stub.pinmame.newdixie`
+- `stub.pinmame.ngtfever`
+- `stub.pinmame.nudgeit`
+- `stub.pinmame.obaoba`
+- `stub.pinmame.odin`
+- `stub.pinmame.odisea`
+- `stub.pinmame.olympus`
+- `stub.pinmame.omni_l1`
+- `stub.pinmame.orbit1`
+- `stub.pinmame.papillon`
+- `stub.pinmame.party`
+- `stub.pinmame.pecmen`
+- `stub.pinmame.penalty`
+- `stub.pinmame.pentacp2`
+- `stub.pinmame.pentacup`
+- `stub.pinmame.petaco`
+- `stub.pinmame.petaco2`
+- `stub.pinmame.petacon`
+- `stub.pinmame.pfevr_l2`
+- `stub.pinmame.ph_04`
+- `stub.pinmame.phntmshp`
+- `stub.pinmame.pimbal`
+- `stub.pinmame.pinclown`
+- `stub.pinmame.polar`
+- `stub.pinmame.poleposn`
+- `stub.pinmame.pomp_l1`
+- `stub.pinmame.punkywil`
+- `stub.pinmame.rally`
+- `stub.pinmame.rapidfir`
+- `stub.pinmame.ratrc_l1`
+- `stub.pinmame.redbaron`
+- `stub.pinmame.ridersrf`
+- `stub.pinmame.rock2500`
+- `stub.pinmame.rush_10`
+- `stub.pinmame.s80btest`
+- `stub.pinmame.s80tst`
+- `stub.pinmame.sam1_flashb_0310`
+- `stub.pinmame.sam_iii`
+- `stub.pinmame.scarn200`
+- `stub.pinmame.scrzy_l1`
+- `stub.pinmame.sf_l1`
+- `stub.pinmame.shark`
+- `stub.pinmame.sharkt`
+- `stub.pinmame.shfin_l1`
+- `stub.pinmame.shock`
+- `stub.pinmame.skatebrd`
+- `stub.pinmame.skflight`
+- `stub.pinmame.sklflite`
+- `stub.pinmame.slalom03`
+- `stub.pinmame.snake`
+- `stub.pinmame.snspares`
+- `stub.pinmame.solarwar`
+- `stub.pinmame.sonstwar`
+- `stub.pinmame.spacehaw`
+- `stub.pinmame.spain82`
+- `stub.pinmame.spcgambl`
+- `stub.pinmame.spcpnthr`
+- `stub.pinmame.spcpoker`
+- `stub.pinmame.spctrain`
+- `stub.pinmame.splbn_l0`
+- `stub.pinmame.sport2k`
+- `stub.pinmame.sshuttle`
+- `stub.pinmame.starfire`
+- `stub.pinmame.stest`
+- `stub.pinmame.storm`
+- `stub.pinmame.strax_p7`
+- `stub.pinmame.strik_l4`
+- `stub.pinmame.superdix`
+- `stub.pinmame.sureshot`
+- `stub.pinmame.sys1test`
+- `stub.pinmame.szone_l5`
+- `stub.pinmame.taitest`
+- `stub.pinmame.taurs_l1`
+- `stub.pinmame.tdawg_l1`
+- `stub.pinmame.terrlake`
+- `stub.pinmame.tf95_12`
+- `stub.pinmame.tfa_13`
+- `stub.pinmame.tfdmd_l3`
+- `stub.pinmame.tfs_12`
+- `stub.pinmame.theraid`
+- `stub.pinmame.thrdwrld`
+- `stub.pinmame.titan`
+- `stub.pinmame.titanic`
+- `stub.pinmame.tmacltd4`
+- `stub.pinmame.topaz_l1`
+- `stub.pinmame.topazi`
+- `stub.pinmame.topgame`
+- `stub.pinmame.toppin`
+- `stub.pinmame.topsound`
+- `stub.pinmame.trailer`
+- `stub.pinmame.trebol`
+- `stub.pinmame.tricksht`
+- `stub.pinmame.tripjok`
+- `stub.pinmame.tstrk_l1`
+- `stub.pinmame.tt_game`
+- `stub.pinmame.tts_l2`
+- `stub.pinmame.ttt_10`
+- `stub.pinmame.uboat65`
+- `stub.pinmame.ufo_x`
+- `stub.pinmame.v1`
+- `stub.pinmame.vikngkng`
+- `stub.pinmame.voleybal`
+- `stub.pinmame.vortex`
+- `stub.pinmame.wackadoo`
+- `stub.pinmame.walkyria`
+- `stub.pinmame.wolfman`
+- `stub.pinmame.worlddef`
+- `stub.pinmame.zarza`
+- `stub.pinmame.zephy`
+- `stub.pinmame.zira`
+
+## CSV OPDB records without an IPDB number
+
+Count: **1**
+
+- opdb_id=Grj6X-MJNV1; name=X-Men (LE)
+
+## Definitions mapped to multiple OPDB machine records
+
+Count: **6**
+
+- machine_id=stern.mustang-premium-limited-edition-boss.2014; opdb_ids=GrPOR-M61Pw,GrPOR-MLq5x
+- machine_id=stub.pinmame.agsoccer; opdb_ids=G5wxv-MQP9z,G5wxv-MnKkN
+- machine_id=stub.pinmame.blakpyra; opdb_ids=GRB8Z-MQKXV,GRVnY-MDz0l
+- machine_id=stub.pinmame.flight2k; opdb_ids=G48kY-MDxRV,GRo6e-MQPov
+- machine_id=stub.pinmame.playboy; opdb_ids=GrkOB-MD00x,GrkOB-MJVvl
+- machine_id=stub.pinmame.tmachzac; opdb_ids=GR99Y-MJ9Zy,GRnoY-MQVwx
+
+## Definitions mapped across multiple OPDB families
+
+Count: **3**
+
+- machine_id=stub.pinmame.blakpyra; family_opdb_ids=GRB8Z,GRVnY; opdb_ids=GRB8Z-MQKXV,GRVnY-MDz0l
+- machine_id=stub.pinmame.flight2k; family_opdb_ids=G48kY,GRo6e; opdb_ids=G48kY-MDxRV,GRo6e-MQPov
+- machine_id=stub.pinmame.tmachzac; family_opdb_ids=GR99Y,GRnoY; opdb_ids=GR99Y-MJ9Zy,GRnoY-MQVwx
+
+## CSV OPDB machine records split across definitions
+
+Count: **14**
+
+- opdb_id=G41yq-MQP65; machine_ids=stub.pinmame.blckhole,stub.pinmame.blkholea
+- opdb_id=G439V-MDvWZ; machine_ids=stub.pinmame.ebalchmb,stub.pinmame.eballchp
+- opdb_id=G43W4-MKNX0; machine_ids=stern.ac-dc-led-pro.2014,stern.ac-dc-pro.2012,stern.ac-dc-vault-edition.2018
+- opdb_id=G4jXr-MQ6kz; machine_ids=bally.kiss.1979,stub.pinmame.kiss
+- opdb_id=G4yVw-M85j8; machine_ids=stern.batman-the-dark-knight-pro.2008,stern.batman-the-dark-knight-standard-home-edition.2010
+- opdb_id=G562j-MDyoK; machine_ids=stub.pinmame.bbeltzac,stub.pinmame.blackblt
+- opdb_id=G5KXk-MLB9V; machine_ids=bally.eight-ball-deluxe.1981,stub.pinmame.eballdlx
+- opdb_id=G5VDd-MJpqO; machine_ids=stub.pinmame.frpwr_a7,stub.pinmame.frpwr_d7,stub.pinmame.frpwr_e7,stub.pinmame.frpwr_l6
+- opdb_id=G5b38-MDqkx; machine_ids=stub.pinmame.meteor,stub.pinmame.meteora
+- opdb_id=G5wxv-MP3k9; machine_ids=stub.pinmame.usafootb,stub.pinmame.usafootr
+- opdb_id=GR99Y-MJ9Zy; machine_ids=data-east.time-machine.1988,stub.pinmame.tmachzac
+- opdb_id=GRbl7-ML8EY; machine_ids=stub.pinmame.alcapone,stub.pinmame.speakesy
+- opdb_id=GrEzp-MDbW3; machine_ids=stub.pinmame.vlcno_1b,stub.pinmame.vlcno_ax
+- opdb_id=GrqVL-MDyKe; machine_ids=stub.pinmame.vegas,stub.pinmame.vegasgp
+
+## Selected OPDB records that intentionally differ from the CSV machine record
+
+Count: **7**
+
+- machine_id=stern.ac-dc-led-pro.2014; csv_opdb_ids=G43W4-MKNX0; selected_opdb_id=G43W4-MKNW0-AOENR; selected_ipdb_id=6441
+- machine_id=stern.ac-dc-premium-limited-edition-luci.2012; csv_opdb_ids=G43W4-MrRpw; selected_opdb_id=G43W4-MXrPx; selected_ipdb_id=5775
+- machine_id=stern.ac-dc-pro.2012; csv_opdb_ids=G43W4-MKNX0; selected_opdb_id=G43W4-MKNW0; selected_ipdb_id=5767
+- machine_id=stern.mustang-pro.2014; csv_opdb_ids=GR6bk-MDE6e; selected_opdb_id=GrPOR-MJK2k; selected_ipdb_id=6098
+- machine_id=capcom.big-bang-bar.1996; csv_opdb_ids=G56vo-Ml9Pp; selected_opdb_id=G56vo-MLl1Z; selected_ipdb_id=4001
+- machine_id=stern.batman-the-dark-knight-standard-home-edition.2010; csv_opdb_ids=G4yVw-M85j8; selected_opdb_id=G4yVw-MQY90; selected_ipdb_id=5583
+- machine_id=stern.x-men-limited-edition.2012; csv_opdb_ids=Grj6X-MJNV1; selected_opdb_id=Grj6X-MJNV1-AOwN1; selected_ipdb_id=5823
+
+## Selected OPDB families that differ from the CSV family
+
+Count: **1**
+
+- machine_id=stern.mustang-pro.2014; csv_family_opdb_ids=GR6bk; selected_family_opdb_id=GrPOR

@@ -77,7 +77,7 @@ class TheatreOfMagicDefinitionTests(unittest.TestCase):
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("bally.theatre-of-magic.1995", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
-		self.assertEqual(2358, self.definition["machine"]["ipdb_id"])
+		self.assertEqual(2845, self.definition["machine"]["ipdb_id"])
 		self.assertEqual(1995, self.definition["machine"]["year"])
 		self.assertEqual("pinmame.wpc-security", self.definition["controller"]["platform"])
 		self.assertEqual("0x20", self.definition["controller"]["hardware_generation"])

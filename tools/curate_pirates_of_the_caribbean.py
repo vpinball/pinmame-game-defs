@@ -999,7 +999,7 @@ def source_records() -> list[dict[str, Any]]:
 				"identity were established. The committed digest-verified transcriptions themselves live "
 				f"under {EXCERPT_ROOT}/ and are the canonical copies. This record also documents that IPDB "
 				"was unreachable during this pass (HTTP 403 behind Cloudflare to a plain fetch, no headful "
-				"browser session available), which is why machine.ipdb_id is omitted rather than guessed."
+				"browser session available). The later OPDB crosswalk import supplies machine.ipdb_id from a pinned OPDB snapshot."
 			),
 			"license": "NOASSERTION",
 			"attribution": "pinmame-game-defs curation",
@@ -2010,6 +2010,8 @@ def build() -> dict[str, Any]:
 			"manufacturer": "Stern",
 			"year": 2006,
 			"kind": "physical_pinball",
+			"ipdb_id": 5163,
+			"opdb_id": "GR7ZX-MQ23b",
 			"playfield": {"width": PLAYFIELD_WIDTH, "height": PLAYFIELD_HEIGHT, "units": "vpx"},
 		},
 		"coverage": {

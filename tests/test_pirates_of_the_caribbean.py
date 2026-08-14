@@ -95,7 +95,7 @@ class IdentityTests(unittest.TestCase):
 		self.assertEqual("Pirates of the Caribbean", machine["name"])
 		self.assertEqual(2006, machine["year"], "the physical machine is 2006; potc_600af's own 2008 year belongs on that driver only")
 		self.assertEqual("physical_pinball", machine["kind"])
-		self.assertNotIn("ipdb_id", machine, "IPDB was unreachable during curation; the id must not be guessed")
+		self.assertEqual(5163, machine["ipdb_id"])
 
 	def test_machine_id_manufacturer_segment_matches_its_directory(self) -> None:
 		self.assertEqual("stern", MACHINE_ID.split(".")[0])

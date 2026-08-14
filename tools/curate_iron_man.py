@@ -609,7 +609,7 @@ def build(vault_edition: bool) -> dict[str, object]:
 	machine_id = "stern.iron-man-vault-edition.2014" if vault_edition else "stern.iron-man.2010"
 	return {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": machine_id, "name": "Iron Man Pro Vault Edition" if vault_edition else "Iron Man", "manufacturer": "Stern", "year": 2014 if vault_edition else 2010, "kind": "physical_pinball", "model_number": "I-00B0" if vault_edition else "I-00B3", "ipdb_id": 6154 if vault_edition else 5550},
+		"machine": {"id": machine_id, "name": "Iron Man Pro Vault Edition" if vault_edition else "Iron Man", "manufacturer": "Stern", "year": 2014 if vault_edition else 2010, "kind": "physical_pinball", "model_number": "I-00B0" if vault_edition else "I-00B3", "ipdb_id": 6154 if vault_edition else 5550, "opdb_id": "GRVq4-M4oNp" if vault_edition else "GRVq4-MLyxq"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(vault_edition), "inputs": inputs(), "outputs": main_outputs(vault_edition) + lamps(vault_edition),

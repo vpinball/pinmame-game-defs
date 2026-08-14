@@ -413,7 +413,7 @@ def build_definition() -> dict[str, object]:
 	return {
 		"format": "pinmame-machine-definition",
 		"schema_version": 1,
-		"machine": {"id": "stern.ali.1980", "name": "Ali", "manufacturer": "Stern", "year": 1980, "kind": "physical_pinball", "ipdb_id": 43},
+		"machine": {"id": "stern.ali.1980", "name": "Ali", "manufacturer": "Stern", "year": 1980, "kind": "physical_pinball", "ipdb_id": 43, "opdb_id": "G43kO-MQ50p"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.stern-mpu200", "inversion_applied_by_emulator": True},
 		"drivers": [

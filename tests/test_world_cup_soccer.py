@@ -96,7 +96,7 @@ class WorldCupSoccerDefinitionTests(unittest.TestCase):
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("midway.world-cup-soccer.1994", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
-		self.assertEqual(2361, self.definition["machine"]["ipdb_id"])
+		self.assertEqual(2811, self.definition["machine"]["ipdb_id"])
 		self.assertEqual(1994, self.definition["machine"]["year"])
 		self.assertEqual("Bally", self.definition["machine"]["manufacturer"])
 		self.assertEqual("pinmame.wpc-security", self.definition["controller"]["platform"])

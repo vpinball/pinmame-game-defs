@@ -26,7 +26,7 @@ class AliDefinitionTests(unittest.TestCase):
 		cls.evidence = load_json(EVIDENCE_PATH)
 
 	def test_physical_family_contains_stock_clone_and_conversion_roots(self) -> None:
-		self.assertEqual({"id": "stern.ali.1980", "name": "Ali", "manufacturer": "Stern", "year": 1980, "kind": "physical_pinball", "ipdb_id": 43}, self.definition["machine"])
+		self.assertEqual({"id": "stern.ali.1980", "name": "Ali", "manufacturer": "Stern", "year": 1980, "kind": "physical_pinball", "ipdb_id": 43, "opdb_id": "G43kO-MQ50p"}, self.definition["machine"])
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
 		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])

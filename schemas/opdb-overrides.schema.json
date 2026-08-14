@@ -1,0 +1,30 @@
+{
+  "$id": "https://github.com/vpinball/pinmame-game-defs/schemas/opdb-overrides.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "pinmame-opdb-overrides" },
+    "machines": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "opdb_id": { "pattern": "^G[A-Za-z0-9]+-[A-Za-z0-9-]+$", "type": "string" },
+          "reason": { "minLength": 1, "pattern": "[A-Za-z0-9]", "type": "string" }
+        },
+        "required": ["opdb_id", "reason"],
+        "type": "object"
+      },
+      "propertyNames": { "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$" },
+      "type": "object"
+    },
+    "schema_version": { "const": 1 },
+    "stale_opdb_ids": {
+      "additionalProperties": { "pattern": "^G[A-Za-z0-9]+-[A-Za-z0-9-]+$", "type": "string" },
+      "propertyNames": { "pattern": "^G[A-Za-z0-9]+-[A-Za-z0-9-]+$" },
+      "type": "object"
+    }
+  },
+  "required": ["format", "schema_version", "machines", "stale_opdb_ids"],
+  "title": "Reviewed OPDB identity overrides",
+  "type": "object"
+}

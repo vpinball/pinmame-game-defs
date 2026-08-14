@@ -1,0 +1,91 @@
+{
+  "$id": "https://github.com/vpinball/pinmame-game-defs/schemas/opdb-identity.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "pinmame-opdb-identity" },
+    "incoherences": {
+      "additionalProperties": false,
+      "properties": {
+        "catalog_drivers_without_csv_mapping": { "type": "array" },
+        "csv_records_split_across_definitions": { "type": "array" },
+        "csv_records_without_ipdb": { "type": "array" },
+        "csv_romsets_not_in_catalog": { "type": "array" },
+        "csv_targets_missing_from_snapshot": { "type": "array" },
+        "definitions_with_multiple_csv_families": { "type": "array" },
+        "definitions_with_multiple_csv_records": { "type": "array" },
+        "machine_definitions_without_csv_mapping": { "type": "array" },
+        "selected_family_differs_from_csv": { "type": "array" },
+        "selected_record_differs_from_csv": { "type": "array" }
+      },
+      "required": ["catalog_drivers_without_csv_mapping", "csv_records_split_across_definitions", "csv_records_without_ipdb", "csv_romsets_not_in_catalog", "csv_targets_missing_from_snapshot", "definitions_with_multiple_csv_families", "definitions_with_multiple_csv_records", "machine_definitions_without_csv_mapping", "selected_family_differs_from_csv", "selected_record_differs_from_csv"],
+      "type": "object"
+    },
+    "machines": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "definition": { "minLength": 1, "type": "string" },
+          "family_opdb_id": { "pattern": "^G[A-Za-z0-9]+$", "type": "string" },
+          "ipdb_id": { "minimum": 1, "type": "integer" },
+          "machine_id": { "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$", "type": "string" },
+          "mapped_driver_count": { "minimum": 1, "type": "integer" },
+          "mapped_opdb_ids": {
+            "items": { "minLength": 1, "type": "string" },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "opdb_id": { "pattern": "^G[A-Za-z0-9]+-[A-Za-z0-9-]+$", "type": "string" },
+          "resolution": { "enum": ["csv", "existing", "override", "stale_id_rewrite"] }
+        },
+        "required": ["machine_id", "definition", "opdb_id", "family_opdb_id", "ipdb_id", "mapped_driver_count", "mapped_opdb_ids", "resolution"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "mapping": {
+      "additionalProperties": false,
+      "properties": {
+        "path": { "const": "machines/opdb_id.csv" },
+        "row_count": { "minimum": 1, "type": "integer" },
+        "sha256": { "pattern": "^[0-9a-f]{64}$", "type": "string" }
+      },
+      "required": ["path", "sha256", "row_count"],
+      "type": "object"
+    },
+    "schema_version": { "const": 1 },
+    "source": {
+      "additionalProperties": false,
+      "properties": {
+        "acquired_at": { "format": "date-time", "type": "string" },
+        "sha256": { "pattern": "^[0-9a-f]{64}$", "type": "string" },
+        "uri": { "format": "uri", "type": "string" }
+      },
+      "required": ["uri", "sha256", "acquired_at"],
+      "type": "object"
+    },
+    "summary": {
+      "additionalProperties": false,
+      "properties": {
+        "catalog_driver_count": { "minimum": 0, "type": "integer" },
+        "csv_row_count": { "minimum": 0, "type": "integer" },
+        "family_count": { "minimum": 0, "type": "integer" },
+        "mapped_catalog_driver_count": { "minimum": 0, "type": "integer" },
+        "resolved_machine_count": { "minimum": 0, "type": "integer" },
+        "unmapped_catalog_driver_count": { "minimum": 0, "type": "integer" },
+        "unmapped_machine_count": { "minimum": 0, "type": "integer" }
+      },
+      "required": ["csv_row_count", "catalog_driver_count", "mapped_catalog_driver_count", "unmapped_catalog_driver_count", "resolved_machine_count", "unmapped_machine_count", "family_count"],
+      "type": "object"
+    },
+    "unmapped_machine_ids": {
+      "items": { "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$", "type": "string" },
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": ["format", "schema_version", "source", "mapping", "summary", "machines", "unmapped_machine_ids", "incoherences"],
+  "title": "PinMAME to OPDB identity resolution report",
+  "type": "object"
+}

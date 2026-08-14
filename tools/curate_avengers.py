@@ -531,7 +531,7 @@ def build(limited_edition: bool) -> dict[str, object]:
 	knowledge_path = "knowledge/stern/avengers-limited-edition-2012.md" if limited_edition else "knowledge/stern/avengers-pro-2012.md"
 	definition = {
 		"format": "pinmame-machine-definition", "schema_version": 1,
-		"machine": {"id": machine_id, "name": name, "manufacturer": "Stern", "year": 2012, "ipdb_id": 5940},
+		"machine": {"id": machine_id, "name": name, "manufacturer": "Stern", "year": 2012, "ipdb_id": 5940 if limited_edition else 5938, "opdb_id": "GRzNR-MyNq8" if limited_edition else "GRzNR-MLlEj"},
 		"coverage": {"status": "author_ready", "missing": [], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "validated", "recreation_knowledge": "validated"}},
 		"controller": {"platform": "pinmame.sam", "inversion_applied_by_emulator": True},
 		"drivers": driver_records(limited_edition), "inputs": inputs(manual, script, limited_edition),

@@ -737,7 +737,7 @@ def build_machine() -> dict[str,object]:
     outputs = [solenoid_output(number) for number in range(1,51)]+[lamp_output(number) for number in range(1,65)]
     return {
         "format":"pinmame-machine-definition","schema_version":2,
-        "machine":{"id":MACHINE_ID,"name":"Playboy 35th Anniversary","manufacturer":"Data East","year":1989,"kind":"physical_pinball","playfield":{"width":RIGHT,"height":BOTTOM,"units":"vpx","provenance":provenance("validated",TABLE_SOURCE)}},
+        "machine":{"id":MACHINE_ID,"name":"Playboy 35th Anniversary","manufacturer":"Data East","year":1989,"kind":"physical_pinball","ipdb_id":1822,"opdb_id":"GRL60-MLW2q","playfield":{"width":RIGHT,"height":BOTTOM,"units":"vpx","provenance":provenance("validated",TABLE_SOURCE)}},
         "coverage":{"status":"partial","missing":["output_semantics","mechanism_behavior","polarity","spatial_placement","unresolved_conflicts"],"dimensions":{"catalog_identity":"validated","address_enumeration":"validated","semantic_naming":"conflicted","physical_wiring":"conflicted","mechanisms":"conflicted","variant_coverage":"validated","recreation_knowledge":"candidate","spatial_placement":"candidate"}},
 		"controller":{"platform":"pinmame.dataeast","hardware_generation":"0x1000","inversion_applied_by_emulator":True},
         "drivers":[{"id":"play_a24","description":"Playboy 35th Anniversary (2.4)","year":"1989","manufacturer":"Data East","flags":0,"physical_compatibility":"identical","variant_notes":"The sole published driver. Exhaustive pinned-source search found no CORE_CLONEDEF and no second DRIVER entry; single-driver coverage is deliberate, not an omitted family."}],

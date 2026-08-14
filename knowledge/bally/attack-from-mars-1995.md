@@ -4,7 +4,7 @@ Coverage: **author_ready - manual-verified semantic I/O with full connector, wir
 
 ## Identity and evidence precedence
 
-WPC-95 machine. The PinMAME family roots at `afm_113` with clones including `afm_113b` (1.13b, the common home-ROM revision), earlier `afm_03`/`afm_10`/`afm_11`, the Pinball FX and Ultrapin derivatives, and three FreeWPC community firmware revisions. **No IPDB identity is asserted.** IPDB was Cloudflare-gated throughout curation and no IPDB evidence record was retained, so `machine.ipdb_id` and `machine.model_number` are deliberately absent from the definition rather than carrying an unsourced value.
+WPC-95 machine, IPDB 3781. The PinMAME family roots at `afm_113` with clones including `afm_113b` (1.13b, the common home-ROM revision), earlier `afm_03`/`afm_10`/`afm_11`, the Pinball FX and Ultrapin derivatives, and three FreeWPC community firmware revisions. The IPDB identity comes from the pinned OPDB snapshot and ROM crosswalk recorded in `reports/opdb-identity.json`; no model number is asserted.
 
 Physical inventory authority is the **Bally/Midway Operators Handbook 16-10206**, retained in this repository's evidence roots at SHA-256 `5900c779f3bfb14251ada18d25a4dde84dd608b6ddd988ece8c92ea20fd0114b`: lamp matrix and lamp locations on printed pages 2-3, switch matrix and switch locations on 4-5, solenoid/flasher table and locations on 6-7, upper playfield parts on 8-9. Every table was read from rendered pages, not OCR, and transcribed into the retained review artifact.
 

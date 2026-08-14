@@ -11,6 +11,7 @@ from .conflicts import unresolved_conflicts
 from .errors import ValidationError
 from .evidence_policy import EvidenceAssertion, evidence_priority
 from .jsonio import content_sha256, file_sha256, load_json
+from .opdb import opdb_family_id
 from .schema_validation import check_schema_documents, validate_against_schema
 from .scope import OUT_OF_SCOPE_DRIVER_IDS
 
@@ -1040,8 +1041,58 @@ def _validate_spatial_reports(
 			)
 
 
+def _validate_opdb_identity(
+	repository_root: Path,
+	definitions_by_machine: dict[str, dict[str, Any]],
+	errors: list[str],
+) -> None:
+	report_path = repository_root / "reports" / "opdb-identity.json"
+	if not report_path.is_file():
+		return
+	report = load_json(report_path)
+	errors.extend(validate_against_schema(report, repository_root / "schemas" / "opdb-identity.schema.json", "reports/opdb-identity.json"))
+	resolved: dict[str, dict[str, Any]] = {}
+	for index, record in enumerate(report.get("machines", [])):
+		if not isinstance(record, dict) or not isinstance(record.get("machine_id"), str):
+			continue
+		machine_id = record["machine_id"]
+		_expect(machine_id not in resolved, f"reports/opdb-identity.json $.machines[{index}].machine_id", f"duplicate machine ID {machine_id}", errors)
+		resolved[machine_id] = record
+		definition = definitions_by_machine.get(machine_id)
+		if definition is None:
+			errors.append(f"reports/opdb-identity.json $.machines[{index}].machine_id: unknown machine {machine_id}")
+			continue
+		_expect(definition.get("machine", {}).get("ipdb_id") == record.get("ipdb_id"), f"reports/opdb-identity.json $.machines[{index}].ipdb_id", "does not match the machine definition", errors)
+		_expect(definition.get("machine", {}).get("opdb_id") == record.get("opdb_id"), f"reports/opdb-identity.json $.machines[{index}].opdb_id", "does not match the machine definition", errors)
+	family_schema = repository_root / "schemas" / "family.schema.json"
+	memberships: dict[str, str] = {}
+	for path in sorted((repository_root / "families").glob("**/*.json")):
+		relative_path = path.relative_to(repository_root).as_posix()
+		family = load_json(path)
+		errors.extend(validate_against_schema(family, family_schema, relative_path))
+		family_id = family.get("family", {}).get("id")
+		seen_members: set[str] = set()
+		for index, member in enumerate(family.get("members", [])):
+			machine_id = member.get("machine_id") if isinstance(member, dict) else None
+			if not isinstance(machine_id, str):
+				continue
+			_expect(machine_id not in seen_members, f"{relative_path} $.members[{index}].machine_id", f"duplicate family member {machine_id}", errors)
+			seen_members.add(machine_id)
+			_expect(machine_id in definitions_by_machine, f"{relative_path} $.members[{index}].machine_id", f"unknown machine {machine_id}", errors)
+			if machine_id in memberships:
+				errors.append(f"{relative_path} $.members[{index}].machine_id: {machine_id} already belongs to {memberships[machine_id]}")
+			elif isinstance(family_id, str):
+				memberships[machine_id] = family_id
+	for machine_id, record in resolved.items():
+		expected_family = opdb_family_id(record["family_opdb_id"])
+		_expect(memberships.get(machine_id) == expected_family, "families", f"{machine_id} must belong to {expected_family}", errors)
+
+
 def validate_repository(repository_root: Path) -> list[str]:
 	errors: list[str] = check_schema_documents(repository_root)
+	overrides_path = repository_root / "config" / "opdb-overrides.json"
+	if overrides_path.is_file():
+		errors.extend(validate_against_schema(load_json(overrides_path), repository_root / "schemas" / "opdb-overrides.schema.json", "config/opdb-overrides.json"))
 	_validate_curator_placeholder_digests(repository_root, errors)
 	_validate_python_line_endings(repository_root, errors)
 	controller_profiles = _load_controller_profiles(repository_root, errors)
@@ -1090,6 +1141,7 @@ def validate_repository(repository_root: Path) -> list[str]:
 				errors.append(f"{relative_path} $.driver_ids: custom-ROM-only virtual driver {driver_id!r} is outside the physical-machine scope")
 		_validate_runtime_observations(evidence, relative_path, definitions_by_machine, errors)
 	_validate_spatial_reports(repository_root, definitions_by_machine, errors)
+	_validate_opdb_identity(repository_root, definitions_by_machine, errors)
 	return errors
 
 
