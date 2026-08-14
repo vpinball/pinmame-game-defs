@@ -7,6 +7,7 @@ from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
 
 from .completion import completion_score
+from .conflicts import unresolved_conflicts
 from .errors import ValidationError
 from .evidence_policy import EvidenceAssertion, evidence_priority
 from .jsonio import content_sha256, file_sha256, load_json
@@ -422,16 +423,20 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 	_expect(isinstance(missing, list), "$.coverage.missing", "must be an array", errors)
 	if isinstance(missing, list):
 		_unique(missing, "$.coverage.missing", errors)
-		# Claiming a blocker that does not exist costs the definition real
-		# completion score, and hides that the work is already done. Ignored
-		# conflicts do not count: they are recorded, not outstanding.
-		if "unresolved_conflicts" in missing:
-			_expect(
-				bool(unresolved_conflicts(definition)),
-				"$.coverage.missing",
-				"unresolved_conflicts is listed but every conflict is ignored or absent",
-				errors,
-			)
+		# `unresolved_conflicts` in this list and an unresolved conflict in the
+		# record are the same fact, so they must agree in both directions.
+		# Claiming the blocker without holding one costs real completion score
+		# and hides work that is already done; holding one without claiming it
+		# hands out credit nobody earned, which is how eighteen definitions came
+		# to overstate their score for as long as the rule ran one way only.
+		# Ignored conflicts count as neither: they are recorded, not outstanding.
+		if isinstance(definition.get("conflicts"), list) or definition.get("conflicts") is None:
+			outstanding = bool(unresolved_conflicts(definition))
+			claimed = "unresolved_conflicts" in missing
+			if claimed and not outstanding:
+				_expect(False, "$.coverage.missing", "unresolved_conflicts is listed but every conflict is ignored or absent", errors)
+			elif outstanding and not claimed:
+				_expect(False, "$.coverage.missing", "the definition holds unresolved conflicts but does not list unresolved_conflicts", errors)
 	dimensions = coverage.get("dimensions")
 	_expect(isinstance(dimensions, dict), "$.coverage.dimensions", "must be an object", errors)
 	if isinstance(dimensions, dict):
@@ -712,55 +717,6 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 			errors,
 		)
 	return errors
-
-
-def unresolved_conflicts(definition: dict[str, Any]) -> list[dict[str, Any]]:
-	"""Conflicts that still need evidence.
-
-	`status` is absent on every record written before the field existed, and
-	absent means unresolved: a conflict has to be opted out of blocking
-	deliberately, never by omission.
-
-	A stated reason is part of what the state *is*, not a separate schema
-	courtesy, so it is checked here rather than only in the schema. Otherwise
-	`{"status": "ignored"}` alone lifts the author-ready gate wherever the
-	validator runs without a schema pass in front of it, and the one sentence
-	that justifies ignoring a real disagreement becomes optional.
-	"""
-	return [
-		conflict
-		for conflict in definition.get("conflicts") or []
-		if not _is_ignored(conflict)
-	]
-
-
-def _is_ignored(conflict: Any) -> bool:
-	"""A conflict is ignored only if it says so *and* says why.
-
-	The reason has to contain an ASCII letter or digit. Three weaker rules were
-	tried and each let a rationale through that renders as nothing: `minLength:
-	1` accepts a single space; `.strip()` accepts U+200B ZERO WIDTH SPACE and
-	every other invisible Unicode does not classify as whitespace; and
-	`str.isalnum()` accepts default-ignorable *letters* such as U+115F HANGUL
-	CHOSEONG FILLER, which is a letter to Unicode and zero ink on screen.
-
-	ASCII is deliberate rather than lazy. The schema states the same rule as a
-	`pattern`, JSON Schema specifies ECMA-262 regex semantics, and `\\w` is
-	Unicode-aware in Python but ASCII-only in ECMAScript — so a Unicode-class
-	rule means two different things depending on which validator runs it. Every
-	rationale in this catalog, and the runbook that governs them, is English.
-	A rule that is identical in both engines is worth more here than one that
-	would accept a rationale written entirely in another script.
-	"""
-	if not isinstance(conflict, dict) or conflict.get("status") != "ignored":
-		return False
-	rationale = conflict.get("rationale")
-	return isinstance(rationale, str) and any(
-		"a" <= character <= "z" or "A" <= character <= "Z" or "0" <= character <= "9"
-		for character in rationale
-	)
-
-
 def _address_allowed(address: int, rules: list[dict[str, Any]]) -> bool:
 	for rule in rules:
 		values = rule.get("values")

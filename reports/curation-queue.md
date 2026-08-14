@@ -18,7 +18,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 12 | 2013 | Star Trek Pro | Stern | author_ready | 100% |
 | 13 | 2012 | AC/DC Premium / Limited Edition / LUCI Premium | Stern | author_ready | 100% |
 | 14 | 2012 | AC/DC Pro (original) | Stern | author_ready | 100% |
-| 15 | 2012 | The Avengers Limited Edition | Stern | partial | 94% |
+| 15 | 2012 | The Avengers Limited Edition | Stern | partial | 88% |
 | 16 | 2012 | The Avengers Pro | Stern | author_ready | 100% |
 | 17 | 2012 | X-Men Limited Edition (Magneto / Wolverine) | Stern | partial | 94% |
 | 18 | 2012 | X-Men Pro | Stern | partial | 88% |
@@ -29,7 +29,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 23 | 2011 | TRON: Legacy Limited Edition | Stern | author_ready | 100% |
 | 24 | 2011 | TRON: Legacy Pro | Stern | partial | 94% |
 | 25 | 2010 | Avatar Limited Edition | Stern | partial | 94% |
-| 26 | 2010 | Avatar Pro | Stern | partial | 94% |
+| 26 | 2010 | Avatar Pro | Stern | partial | 88% |
 | 27 | 2010 | Batman: The Dark Knight Standard/Home Edition | Stern | partial | 94% |
 | 28 | 2010 | Iron Man | Stern | author_ready | 100% |
 | 29 | 2010 | STUB - Big Buck Hunter Pro (V1.7) | Stern | stub | 0% |
@@ -53,7 +53,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 47 | 2005 | STUB - Firepower (Sys.7/6-digit /10 Scoring rev. 31) | Williams / Oliver | stub | 0% |
 | 48 | 2005 | STUB - Firepower (Sys.7/6-digit conversion rev. 31) | Williams / Oliver | stub | 0% |
 | 49 | 2005 | STUB - Firepower (Sys.7/7-digit conversion rev. 31) | Williams / Oliver | stub | 0% |
-| 50 | 2004 | Ripley's Believe It or Not! | Stern | partial | 94% |
+| 50 | 2004 | Ripley's Believe It or Not! | Stern | partial | 88% |
 | 51 | 2004 | STUB - Elvis (5.00) | Stern | stub | 0% |
 | 52 | 2004 | STUB - Harley-Davidson (Stern, 4.00) | Stern | stub | 0% |
 | 53 | 2003 | Lord of the Rings | Stern | partial | 75% |
@@ -82,7 +82,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 76 | 1998 | STUB - Wack-A-Doodle-Doo (Redemption) | Sega | stub | 0% |
 | 77 | 1998 | Monster Bash | Williams | partial | 88% |
 | 78 | 1997 | Cirqus Voltaire | Bally | partial | 88% |
-| 79 | 1997 | NBA Fastbreak | Bally | partial | 19% |
+| 79 | 1997 | NBA Fastbreak | Bally | partial | 13% |
 | 80 | 1997 | Starship Troopers | Sega | partial | 19% |
 | 81 | 1997 | STUB - Lost World: Jurassic Park, The (2.02) | Sega | stub | 0% |
 | 82 | 1997 | STUB - Space Jam (3.00) | Sega | stub | 0% |
@@ -130,8 +130,8 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 124 | 1995 | STUB - Baywatch (4.00) | Sega | stub | 0% |
 | 125 | 1995 | STUB - Mach 2 | Spinball (Spain) | stub | 0% |
 | 126 | 1995 | Congo | Williams | partial | 94% |
-| 127 | 1995 | Johnny Mnemonic | Williams | partial | 19% |
-| 128 | 1995 | No Fear: Dangerous Sports | Williams | partial | 19% |
+| 127 | 1995 | Johnny Mnemonic | Williams | partial | 13% |
+| 128 | 1995 | No Fear: Dangerous Sports | Williams | partial | 13% |
 | 129 | 1995 | STUB - Dirty Harry (LX-2) | Williams | stub | 0% |
 | 130 | 1995 | STUB - Jack*Bot (1.0R) | Williams | stub | 0% |
 | 131 | 1994 | STUB - U.S.A. Football (Redemption, P08) | Alvin G | stub | 0% |
@@ -151,7 +151,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 145 | 1994 | STUB - Goofy Hoops (Redemption) | Romstar | stub | 0% |
 | 146 | 1994 | STUB - Frankenstein, Mary Shelley's | Sega | stub | 0% |
 | 147 | 1994 | STUB - Io Moon | Sleic (Spain) | stub | 0% |
-| 148 | 1994 | Red and Ted's Road Show | Williams | partial | 19% |
+| 148 | 1994 | Red and Ted's Road Show | Williams | partial | 13% |
 | 149 | 1994 | STUB - Demolition Man (LX-4) | Williams | stub | 0% |
 | 150 | 1994 | STUB - Flintstones, The (LX-5) | Williams | stub | 0% |
 | 151 | 1993 | STUB - A.G. Soccer-Ball (R18u, 2.1 Sound) | Alvin G | stub | 0% |
@@ -178,9 +178,9 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 172 | 1993 | Star Trek: The Next Generation | Williams | partial | 94% |
 | 173 | 1993 | STUB - Addams Family Values (Coin Dropper) (L-4) | Williams | stub | 0% |
 | 174 | 1993 | White Water | Williams | partial | 94% |
-| 175 | 1992 | Black Rose | Bally | partial | 19% |
+| 175 | 1992 | Black Rose | Bally | partial | 13% |
 | 176 | 1992 | Creature from the Black Lagoon | Bally | partial | 81% |
-| 177 | 1992 | Doctor Who | Bally | partial | 19% |
+| 177 | 1992 | Doctor Who | Bally | partial | 13% |
 | 178 | 1992 | STUB - Gilligan's Island (L-9) | Bally | stub | 0% |
 | 179 | 1992 | The Addams Family | Bally | author_ready | 100% |
 | 180 | 1992 | Hook | Data East | partial | 19% |
@@ -217,7 +217,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 211 | 1991 | STUB - Hurricane (L-2) | Williams | stub | 0% |
 | 212 | 1991 | STUB - Slugfest (L-1) | Williams | stub | 0% |
 | 213 | 1991 | Terminator 2: Judgment Day | Williams | partial | 88% |
-| 214 | 1991 | The Machine: Bride of Pinbot | Williams | partial | 19% |
+| 214 | 1991 | The Machine: Bride of Pinbot | Williams | partial | 13% |
 | 215 | 1990 | Radical! | Bally | partial | 19% |
 | 216 | 1990 | STUB - Bugs Bunny's Birthday Ball (L-2) | Bally | stub | 0% |
 | 217 | 1990 | STUB - Dr. Dude (LA-2) | Bally | stub | 0% |
@@ -237,7 +237,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 231 | 1990 | STUB - Mundial 90 | Inder (Spain) | stub | 0% |
 | 232 | 1990 | STUB - Mac Attack | Mr. Game (Italy) | stub | 0% |
 | 233 | 1990 | STUB - World Cup '90 | Mr. Game (Italy) | stub | 0% |
-| 234 | 1990 | Diner | Williams | partial | 19% |
+| 234 | 1990 | Diner | Williams | partial | 13% |
 | 235 | 1990 | FunHouse | Williams | partial | 81% |
 | 236 | 1990 | STUB - Riverboat Gambler (L-3) | Williams | stub | 0% |
 | 237 | 1990 | STUB - Rollergames (LA-2) | Williams | stub | 0% |
@@ -325,7 +325,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 319 | 1987 | STUB - White Force | Stargame | stub | 0% |
 | 320 | 1987 | STUB - Scramble | Tecnoplay | stub | 0% |
 | 321 | 1987 | STUB - X Force | Tecnoplay | stub | 0% |
-| 322 | 1987 | F-14 Tomcat | Williams | partial | 19% |
+| 322 | 1987 | F-14 Tomcat | Williams | partial | 13% |
 | 323 | 1987 | Space Station | Williams | partial | 19% |
 | 324 | 1987 | STUB - Big Guns (L-8) | Williams | stub | 0% |
 | 325 | 1987 | STUB - Fire! (L-3) | Williams | stub | 0% |
@@ -336,7 +336,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 330 | 1987 | STUB - New Star's Phoenix (Italian Speech) | Zaccaria | stub | 0% |
 | 331 | 1987 | STUB - Spooky | Zaccaria | stub | 0% |
 | 332 | 1987 | STUB - Star's Phoenix (Italian Speech) | Zaccaria | stub | 0% |
-| 333 | 1986 | Special Force | Bally | partial | 19% |
+| 333 | 1986 | Special Force | Bally | partial | 13% |
 | 334 | 1986 | STUB - Black Belt | Bally | stub | 0% |
 | 335 | 1986 | STUB - Lady Luck | Bally | stub | 0% |
 | 336 | 1986 | STUB - MotorDome (rev. D) | Bally | stub | 0% |
@@ -382,7 +382,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 376 | 1986 | STUB - Black Belt (Zaccaria) | Zaccaria | stub | 0% |
 | 377 | 1986 | STUB - Mexico 86 (German Speech) | Zaccaria | stub | 0% |
 | 378 | 1986 | STUB - Zankor (TMS5200 Italian Speech) | Zaccaria | stub | 0% |
-| 379 | 1985 | Beat The Clock | Bally | partial | 19% |
+| 379 | 1985 | Beat The Clock | Bally | partial | 13% |
 | 380 | 1985 | STUB - Cybernaut | Bally | stub | 0% |
 | 381 | 1985 | STUB - Eight Ball Champ | Bally | stub | 0% |
 | 382 | 1985 | STUB - Champion | Barni | stub | 0% |
@@ -520,10 +520,10 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 514 | 1982 | Warlok | Williams | partial | 19% |
 | 515 | 1982 | STUB - Spellbinder (L-0 BETA) | Williams / Jess M. Askey | stub | 0% |
 | 516 | 1982 | STUB - Soccer Kings | Zaccaria | stub | 0% |
-| 517 | 1981 | Centaur | Bally | partial | 94% |
+| 517 | 1981 | Centaur | Bally | partial | 88% |
 | 518 | 1981 | Eight Ball Deluxe | Bally | partial | 75% |
 | 519 | 1981 | Fathom | Bally | partial | 81% |
-| 520 | 1981 | Spectrum | Bally | partial | 19% |
+| 520 | 1981 | Spectrum | Bally | partial | 13% |
 | 521 | 1981 | STUB - Eight Ball Deluxe (rev. 15) | Bally | stub | 0% |
 | 522 | 1981 | STUB - Elektra | Bally | stub | 0% |
 | 523 | 1981 | STUB - Embryon | Bally | stub | 0% |
@@ -563,7 +563,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 557 | 1981 | STUB - Earth, Wind & Fire | Zaccaria | stub | 0% |
 | 558 | 1981 | STUB - Locomotion | Zaccaria | stub | 0% |
 | 559 | 1980 | Flash Gordon | Bally | partial | 88% |
-| 560 | 1980 | Skateball | Bally | partial | 19% |
+| 560 | 1980 | Skateball | Bally | partial | 13% |
 | 561 | 1980 | STUB - Continental (Bingo) | Bally | stub | 0% |
 | 562 | 1980 | STUB - Frontier | Bally | stub | 0% |
 | 563 | 1980 | STUB - Hotdoggin' | Bally | stub | 0% |
@@ -620,7 +620,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 614 | 1979 | STUB - Hercules | Atari | stub | 0% |
 | 615 | 1979 | STUB - Road Runner (Prototype) | Atari | stub | 0% |
 | 616 | 1979 | STUB - Superman | Atari | stub | 0% |
-| 617 | 1979 | Harlem Globetrotters on Tour | Bally | partial | 19% |
+| 617 | 1979 | Harlem Globetrotters on Tour | Bally | partial | 13% |
 | 618 | 1979 | Kiss | Bally | author_ready | 100% |
 | 619 | 1979 | STUB - Dolly Parton | Bally | stub | 0% |
 | 620 | 1979 | STUB - Future Spa | Bally | stub | 0% |

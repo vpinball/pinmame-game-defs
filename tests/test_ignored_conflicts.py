@@ -235,6 +235,33 @@ class ValidatorGateTests(unittest.TestCase):
 			"one unresolved conflict is enough to earn the claim",
 		)
 
+	def test_holding_a_conflict_without_claiming_the_blocker_is_rejected(self) -> None:
+		"""The other direction of the same equivalence.
+
+		`completion_score` is derived from `coverage.missing`, so omitting the
+		requirement while holding a real conflict hands out credit nobody
+		earned. Eighteen definitions did exactly that for as long as the rule
+		ran one way only.
+		"""
+		from pinmame_game_defs.validation import validate_machine
+
+		_path, definition = self._author_ready_definition()
+		candidate = copy.deepcopy(definition)
+		candidate["coverage"]["status"] = "partial"
+		candidate["coverage"]["missing"] = ["polarity"]
+		candidate["conflicts"] = [_conflict()]
+		self.assertTrue(
+			any("does not list unresolved_conflicts" in str(error) for error in validate_machine(candidate)),
+			"holding an unresolved conflict without listing the requirement must be rejected",
+		)
+
+		# An ignored conflict is not outstanding, so it must not force the claim.
+		candidate["conflicts"] = [_conflict(status="ignored", rationale="Cannot reach a recreation.")]
+		self.assertFalse(
+			any("does not list unresolved_conflicts" in str(error) for error in validate_machine(candidate)),
+			"an ignored conflict must not require the blocker to be claimed",
+		)
+
 	def test_the_schema_rejects_a_rationale_that_says_nothing(self) -> None:
 		"""The other half of the same rule, at the schema layer."""
 		from jsonschema import Draft202012Validator

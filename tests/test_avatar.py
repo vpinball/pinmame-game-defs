@@ -46,7 +46,10 @@ class AvatarDefinitionTests(unittest.TestCase):
 		for definition in (self.pro, self.le):
 			self.assertEqual(2, definition["schema_version"])
 			self.assertEqual("partial", definition["coverage"]["status"])
-			self.assertEqual(["spatial_placement"], definition["coverage"]["missing"])
+			expected = ["spatial_placement"]
+			if definition.get("conflicts"):
+				expected.append("unresolved_conflicts")
+			self.assertEqual(expected, definition["coverage"]["missing"])
 			self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 			if definition is self.le:
 				self.assertEqual("not_applicable", definition["displays"][0]["spatial"]["status"])

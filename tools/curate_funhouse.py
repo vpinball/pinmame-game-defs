@@ -1339,7 +1339,7 @@ def build() -> dict[str, Any]:
 			"manufacturer": "Williams",
 			"year": 1990,
 			"kind": "physical_pinball",
-			"ipdb_id": 860,
+			"ipdb_id": 966,
 		},
 		"coverage": {
 			"status": "partial",

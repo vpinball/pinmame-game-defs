@@ -176,7 +176,8 @@ class CentaurDefinitionTests(unittest.TestCase):
 		self.assertTrue(
 			all(conflict["id"].startswith("conflict.aux-lamp-") for conflict in self.definition["conflicts"])
 		)
-		self.assertNotIn("unresolved_conflicts", self.definition["coverage"]["missing"])
+		# The conflicts are real and now cost the score, but neither is about this address.
+		self.assertNotIn("coil.driver-17", [conflict["path"] for conflict in self.definition["conflicts"]])
 
 	def test_every_mpu_option_switch_is_enumerated(self) -> None:
 		self.assertEqual(set(range(1, 33)), set(self.dips))
@@ -520,7 +521,9 @@ class CentaurDefinitionTests(unittest.TestCase):
 		"""
 		coverage = self.definition["coverage"]
 		self.assertEqual("partial", coverage["status"])
-		self.assertEqual(["spatial_placement"], coverage["missing"])
+		# Two auxiliary-lamp conflicts are unresolved, so the requirement is listed too;
+		# omitting it credited this record with work nobody had done.
+		self.assertEqual(["spatial_placement", "unresolved_conflicts"], coverage["missing"])
 		self.assertEqual("candidate", coverage["dimensions"]["spatial_placement"])
 		self.assertTrue(
 			all(v == "validated" for k, v in coverage["dimensions"].items() if k != "spatial_placement")

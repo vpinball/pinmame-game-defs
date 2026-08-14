@@ -15,6 +15,7 @@ from xml.sax.saxutils import escape
 
 from .errors import DefinitionError
 from .jsonio import file_sha256, load_json
+from .conflicts import unresolved_conflicts
 
 
 PLAYFIELD_SPACE_DESCRIPTION = "playfield is normalized VPX/player view: x=0 left, x=1 right, y=0 rear/backglass end, y=1 front/apron end."
@@ -116,6 +117,15 @@ def fail_closed_spatial_partial(definition: dict[str, Any]) -> dict[str, Any]:
 	missing = list(coverage.get("missing", []))
 	if "spatial_placement" not in missing:
 		missing.append("spatial_placement")
+	# The definition this downgrades was written as author-ready, where an
+	# unresolved conflict cannot exist, so its `missing` list has no reason to
+	# mention one. Demoting it to partial makes that list load-bearing again --
+	# `completion_score` is derived from it -- and leaving the conflicts out
+	# hands the machine credit for work nobody has done. Three definitions
+	# overstated their score this way until the validator started checking the
+	# two directions against each other.
+	if unresolved_conflicts(result) and "unresolved_conflicts" not in missing:
+		missing.append("unresolved_conflicts")
 	coverage["missing"] = missing
 	coverage.setdefault("dimensions", {})["spatial_placement"] = "unknown"
 	return result

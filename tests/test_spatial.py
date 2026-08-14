@@ -9,6 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from pinmame_game_defs.cli import main as cli_main
+from pinmame_game_defs.conflicts import unresolved_conflicts
 from pinmame_game_defs.schema_validation import validate_against_schema
 from pinmame_game_defs.spatial import (
 	SPATIAL_RETROFIT_PENDING_MACHINE_IDS,
@@ -333,7 +334,12 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
 			else:
-				self.assertEqual(["spatial_placement"], definition["coverage"]["missing"])
+				# A pending retrofit that also holds unresolved conflicts must
+				# list both; the downgrade used to append only spatial_placement.
+				expected = ["spatial_placement"]
+				if unresolved_conflicts(definition):
+					expected.append("unresolved_conflicts")
+				self.assertEqual(expected, definition["coverage"]["missing"])
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
 		self.assertEqual(24, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
@@ -419,7 +425,13 @@ class SpatialMigrationTests(unittest.TestCase):
 		# gap. Its apparent auxiliary-output discrepancy is a PinMAME type-metadata defect, not an
 		# unresolved runtime address map, so it does not add an unresolved-conflict gap.
 		self.assertEqual(45, report["missing_requirement_counts"]["spatial_placement"])
-		self.assertEqual(33, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# 33 until the coverage rule was made symmetric. Eighteen definitions held
+		# unresolved conflicts while omitting the requirement — fourteen because
+		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
+		# emitted, and four because `fail_closed_spatial_partial` appended only
+		# `spatial_placement` when it downgraded an author-ready record. Both are
+		# fixed at source; this count is now the honest one.
+		self.assertEqual(51, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(787, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

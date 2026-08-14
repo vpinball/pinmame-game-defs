@@ -276,11 +276,14 @@ def build_curated_definition() -> dict[str, object]:
 		"attribution": "Table authors credited in the retained VPX table; archive copy retained for review",
 		"rights": "NOASSERTION",
 	})
+	# Conflicts have to be attached before the downgrade, not after: the
+	# downgrade is what rewrites `coverage.missing`, and it can only add
+	# `unresolved_conflicts` for conflicts it can see.
+	definition["conflicts"] = SPATIAL_CONFLICTS
 	definition = fail_closed_spatial_partial(definition)
 	definition["schema_version"] = 2
 	definition["machine"]["kind"] = "physical_pinball"
 	apply_spatial(definition)
-	definition["conflicts"] = SPATIAL_CONFLICTS
 	return definition
 
 

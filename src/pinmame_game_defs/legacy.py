@@ -625,7 +625,12 @@ def import_legacy_definitions(repository_root: Path) -> dict[str, Any]:
 			"machine": identity,
 			"coverage": {
 				"status": "partial",
-				"missing": MIGRATION_MISSING,
+				# A conflict this importer just emitted is an outstanding
+				# requirement, and `completion_score` is derived from this list:
+				# omitting it hands the machine credit for work nobody has done.
+				# The fixed list left it out regardless of what was emitted,
+				# which silently overstated eighteen definitions.
+				"missing": MIGRATION_MISSING + ["unresolved_conflicts"] if builder.conflicts else MIGRATION_MISSING,
 				"dimensions": {
 					"catalog_identity": "observed",
 					"address_enumeration": "candidate",
