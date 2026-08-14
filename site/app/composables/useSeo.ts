@@ -11,6 +11,9 @@ export function useSeo(input: {
 	/** Page title without the site suffix; omit on the home page. */
 	title?: MaybeRefOrGetter<string | undefined>
 	description: MaybeRefOrGetter<string>
+	/** Public path or absolute URL for a page-specific social card. */
+	image?: MaybeRefOrGetter<string | undefined>
+	imageAlt?: MaybeRefOrGetter<string | undefined>
 	/** Keeps a page reachable and crawlable but out of the index. */
 	noindex?: MaybeRefOrGetter<boolean>
 }) {
@@ -26,6 +29,13 @@ export function useSeo(input: {
 	const description = computed(() => toValue(input.description))
 	const socialTitle = computed(() =>
 		title.value ? `${title.value} · PinMAME Machine Reference` : 'PinMAME Machine Reference')
+	const socialImage = computed(() => {
+		const image = toValue(input.image)?.trim()
+		if (!image) return `${siteUrl}/og.png`
+		if (/^https?:\/\//i.test(image)) return image
+		return `${siteUrl}/${image.replace(/^\/+/, '')}`
+	})
+	const socialImageAlt = computed(() => toValue(input.imageAlt) ?? 'PinMAME Machine Reference — every switch, lamp and coil PinMAME can talk to')
 
 	useHead({
 		title,
@@ -39,14 +49,15 @@ export function useSeo(input: {
 		ogUrl: canonical,
 		ogType: 'website',
 		ogSiteName: 'PinMAME Machine Reference',
-		ogImage: `${siteUrl}/og.png`,
+		ogImage: socialImage,
 		ogImageWidth: 1200,
 		ogImageHeight: 630,
-		ogImageAlt: 'PinMAME Machine Reference — every switch, lamp and coil PinMAME can talk to',
+		ogImageAlt: socialImageAlt,
 		twitterCard: 'summary_large_image',
 		twitterTitle: socialTitle,
 		twitterDescription: description,
-		twitterImage: `${siteUrl}/og.png`,
+		twitterImage: socialImage,
+		twitterImageAlt: socialImageAlt,
 		// `follow` matters: a stub still links to its ROM sets and its machine's
 		// siblings, and those links should keep carrying weight.
 		robots: () => (toValue(input.noindex) ? 'noindex, follow' : 'index, follow'),

@@ -222,10 +222,7 @@ nine unique words each and are served `noindex, follow`.
 `useSeo()` is the single place that sets a page's title, description, canonical URL and social card,
 so the four cannot drift. `NUXT_PUBLIC_SITE_URL` (default `https://games.visualpinball.org`) is the absolute public root including any subpath; canonicals and sitemap entries are generated to match byte for byte.
 
-`public/og.png` is drawn at build time by `scripts/make-og-image.ts` — the same 5×7 WPC font the hero
-uses, rasterised into a pixel buffer and encoded as a PNG with nothing but `node:zlib`. Links to this
-site get pasted into Discord and VPForums far more than they get found through search, so the card
-earns its keep.
+`public/og.png`, one card per curated machine under `public/og/machines/`, and one card per platform under `public/og/platforms/` are drawn at build time by `scripts/make-og-image.ts` — the same 5×7 WPC font the hero uses, rasterised into a pixel buffer and encoded as PNG with nothing but `node:zlib`. A machine card puts its title on at most two DMD lines, truncates overflow with three dots, and identifies the manufacturer and year below; stub pages keep the generic card. Platform cards apply the same title treatment to the hardware family. The generated PNGs are ignored by Git and recreated for every static build. Links to this site get pasted into Discord and VPForums far more than they get found through search, so the cards earn their keep.
 
 ### Endpoints for tools and agents
 

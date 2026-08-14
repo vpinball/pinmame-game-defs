@@ -9,11 +9,15 @@ if (!platform.value) {
 	throw createError({ statusCode: 404, statusMessage: 'Platform not found', fatal: true })
 }
 
+const title = computed(() => platform.value?.hardwareFamily ?? platform.value?.id ?? 'Platform')
+
 useSeo({
-	title: () => platform.value?.hardwareFamily ?? platform.value?.id ?? 'Platform',
+	title,
 	description: () => platform.value?.profile
 		? `${platform.value.hardwareFamily ?? platform.value.id} controller profile: legal address ranges, LibPinMAME transports and the normalisation PinMAME applies, across ${platform.value.machines} machines.`
 		: `${platform.value?.id} is referenced by ${platform.value?.machines ?? 0} machines but has no authored controller profile yet.`,
+	image: () => `/og/platforms/${platform.value!.slug}.png`,
+	imageAlt: () => `${title.value} — PinMAME platform`,
 })
 
 const DIRECTION_META: Record<string, { label: string, color: string, icon: string }> = {

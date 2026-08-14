@@ -30,6 +30,8 @@ useSeo({
 	description: () => detail.value
 		? `${name.value} (${manufacturer.value}, ${year.value}) — ${detail.value.inputs.length} inputs, ${detail.value.outputs.length} outputs, ${detail.value.mechanisms.length} mechanisms and the PinMAME addresses behind them.`
 		: `${name.value} is catalogued in PinMAME but not yet described.`,
+	image: () => status.value === 'stub' ? undefined : `/og/machines/${slug.value}.png`,
+	imageAlt: () => status.value === 'stub' ? undefined : `${name.value} — ${manufacturer.value}${year.value ? `, ${year.value}` : ''}`,
 	// A stub's only unique content is its name and ROM list. Indexing 683 of
 	// them would dilute the described machines they share a domain with, so
 	// they stay crawlable and linkable but out of the index.
