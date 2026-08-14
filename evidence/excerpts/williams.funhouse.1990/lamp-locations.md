@@ -1,9 +1,6 @@
 # FunHouse — Lamps (printed page 2-36)
 
-Source: `Funhouse_OPS.pdf`, PDF page 97 (printed "2-36"), rendered at 300 dpi and read directly
-from the image. Confirmed at 600 dpi for address 12, which reads "10,000" exactly (see
-`conflict.gangway-lamp-12-value` in the promoted definition for the disagreement against the
-lamp-matrix page's "100,000").
+Source: `Funhouse_OPS.pdf`, PDF page 97 (printed "2-36"), rendered at 300 dpi and read directly from the image. Confirmed at 600 dpi for address 12, which reads "10,000" exactly. The November 1990 handbook's lamp matrix and the maintainer-supplied physical playfield photograph independently confirm that the real insert is `Gangway 100,000`, so this isolated `10,000` entry is retained as evidence of a one-digit typographical error rather than an unresolved machine-definition conflict.
 
 Full "No. / Bulb / Description" table, both columns of the printed page, in printed order.
 

@@ -325,11 +325,12 @@ class RepositoryValidationTests(unittest.TestCase):
 				state = [output for output in definition["outputs"] if output["binding"] == {"device": address, "group": "pinmame.output.solenoid"}]
 				self.assertEqual(1, len(state), f"{path.as_posix()}: missing WPC state channel {address}")
 				self.assertEqual("used", state[0]["availability"], f"{path.as_posix()}:{address}")
-				self.assertEqual(["internal.wpc-state"], state[0]["roles"], f"{path.as_posix()}:{address}")
 				if address == 31 and definition["controller"].get("hardware_generation") in PRE_FLIPTRONIC_WPC_GENERATIONS:
+					self.assertIn("internal.wpc-state", state[0]["roles"], f"{path.as_posix()}:{address}")
 					self.assertEqual("relay", state[0]["kind"], f"{path.as_posix()}:{address}")
 					self.assertEqual("cabinet_or_service", state[0]["spatial"]["reason"], f"{path.as_posix()}:{address}")
 				else:
+					self.assertEqual(["internal.wpc-state"], state[0]["roles"], f"{path.as_posix()}:{address}")
 					self.assertEqual("virtual", state[0]["kind"], f"{path.as_posix()}:{address}")
 					self.assertEqual("virtual", state[0]["spatial"]["reason"], f"{path.as_posix()}:{address}")
 			checked.append(definition["machine"]["id"])

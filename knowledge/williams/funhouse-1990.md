@@ -1,186 +1,73 @@
 # Williams FunHouse (1990)
 
-Physical machine ID: `williams.funhouse.1990`. Manufacturer Williams, released 1990, design by
-Pat Lawlor. FunHouse is a Williams WPC-Alpha machine: two sixteen-character sixteen-segment
-alphanumeric displays (`GEN_WPCALPHA_2`, `wpc_dispAlpha`), not a dot-matrix display, and it
-predates Fliptronics — its flipper coils are wired directly through a dedicated flipper driver
-board rather than through the CPU-addressable solenoid matrix. This is the first WPC-Alpha
-machine curated in this project.
+Physical machine ID: `williams.funhouse.1990`. FunHouse is a Williams WPC-Alpha machine with two sixteen-character alphanumeric displays. It predates Fliptronics: the physical flipper coils are direct-wired through a dedicated flipper driver board, while PinMAME publishes synthetic button-driven states for digital flipper animation.
 
 ## Identity and driver family
 
-Pinned PinMAME's `fh_l9` clone tree has fifteen drivers: the production `fh_l9` (L-9, SL-3, 1992)
-parent plus fourteen clones spanning firmware revisions L-2 through L-9/9.05H/9.06H/9.07H, LED
-ghost-fix variants (D-3/D-4/D-5/D-9), an unofficial German translation MOD (L-9b/D-9b), a
-community LED-fix-plus-ball-saver MOD (9.07H), a FreeWPC 0.91 community firmware (`fh_f91`), and
-one genuinely distinct-generation prototype (`fh_pa1`, "L-2, Prototype PA-1 system 11 sound").
+Pinned PinMAME's `fh_l9` clone tree has sixteen drivers: production parent `fh_l9` plus fifteen firmware revisions, LED ghost-fix variants, translation/rules modifications, FreeWPC firmware, and prototype `fh_pa1`. All use the same physical playfield and authoring-relevant address inventory.
 
-`fh_pa1` deserves a specific note: pinned `init_fh` dispatches between two different
-`core_tGameData` structs by driver name — `fhGameData` (`GEN_WPCALPHA_2`) for every production
-driver, and `fhpa1GameData` (`GEN_WPCALPHA_1`) only for `fh_pa1`. The two structs are otherwise
-identical field-for-field (same `FLIP_SWNO(12,11)`, same mechanism handlers, same lamp-position
-table, same inverted-switch mask), so `fh_pa1` is the same physical playfield running on an
-earlier WPC-Alpha-1/System-11 sound-board generation rather than a different machine — the same
-class of relationship this project already established for BY35 firmware clones, just expressed
-through a second `core_tGameData` rather than a shared one.
+`fh_pa1` uses a distinct `GEN_WPCALPHA_1` `core_tGameData` because the prototype had the earlier System 11 sound subsystem; production drivers use `GEN_WPCALPHA_2`. The two structs copy the same flipper-switch declaration, mechanisms, lamp-position data, and inverted-switch mask, so this is a controller/sound-generation variant of the same machine rather than another playfield.
 
-The retained known-working table's own script binds `fh_905h` (`Const cGameName="fh_905h"`, line
-64) — note the line above it, `'Const cGameName="fh_905"` (no trailing "h"), is commented out and
-is not the active binding. `fh_905h` is a clone of the production `fh_l9` parent with an identical
-I/O inventory, so this definition's production-driver evidence transfers directly.
+The prototype struct also retains `gameSpecific1=1`, a stale value copied before production FunHouse was corrected to zero. In pinned `wpc.c`, that flag selects the unrelated `WPC_CFTBL` chase-light integrator and writes internal PWM lamp slots 65-72 from solenoids 20/24 and G.I. bits 0/3. `wpc_init` still publishes only 64 lamps because `fh_pa1` has `lampCol=0`, so those internal slots are not an eight-lamp FunHouse extension. They are a pinned-source defect and must not be recreated as physical lamps.
 
-## Controller platform
+The retained known-working table binds `fh_905h` at active script line 64. The adjacent `fh_905` assignment is commented out. `fh_905h` is physically identical to the `fh_l9` parent.
 
-`controllers/pinmame/wpc-alpha.json` was reused unchanged. Its address rules (switches 1-8 and
-11-88/111-118 matrix, solenoids 1-50, lamps 11-88, five G.I. strings 0-4) match `fhGameData`
-exactly. FunHouse itself never uses the 111-118 Fliptronic column at all — both flipper switches
-(11 Right Flipper, 12 Left Flipper) sit in the ordinary 8x8 matrix, confirmed directly by
-`FLIP_SWNO(12,11)`'s explicit switch-number override.
+## Controller and public addresses
 
-## FunHouse has no CPU-controlled flipper solenoid
+The record reuses `controllers/pinmame/wpc-alpha.json` unchanged. It enumerates eight dedicated cabinet inputs, the complete 8×8 switch matrix, all eight public generic-flipper input positions 111-118, eight CPU DIP positions, 50 public solenoid/state positions, the complete 8×8 lamp matrix, five G.I. strings, and both displays. Generic inputs 112 and 114 are live right/left cabinet-button states; the other six positions are explicit unused addresses.
 
-This is the single most important structural fact about this machine's I/O model, and it
-generalizes to every future WPC-Alpha/WPC-DMD (pre-Fliptronics) machine this project curates.
-`fhGameData`'s flipper field is `FLIP_SWNO(12,11)` alone — no `FLIP_SOL()` call. Pinned
-`core_getSol`/`core_updateSw` only route a public solenoid address to a flipper-coil position
-(`CORE_FIRSTLFLIPSOL`=45, `CORE_FIRSTUFLIPSOL`=33) when the driver's own `hw.flippers` bitmask
-declares `FLIP_SOL(...)`; FunHouse's bitmask never does. The printed Flipper Circuits wiring page
-(manual page 3-17) independently confirms the physical construction: Left/Right Flipper Power and
-four Upper/Lower Flipper positions are wired through a dedicated flipper driver board (connectors
-`J109`/`J110`) straight to the flipper buttons and end-of-stroke switches, with no printed solenoid
-address anywhere on that page. `GENWPC_HASFLIPTRON` in pinned `wpc.c` excludes both
-`GEN_WPCALPHA_1`/`GEN_WPCALPHA_2` *and* `GEN_WPCDMD` — i.e. every WPC generation before true
-Fliptronics lacks CPU flipper-coil control entirely, not just the alphanumeric-display machines.
-A curator working a WPC-DMD (monochrome DMD, still pre-Fliptronics) machine should check this
-exact same fact rather than assuming a WPC-generation DMD game has Fliptronic addresses.
+Public outputs 1-28 are the printed coils, motors, and flasher circuits. Addresses 29 and 30 mirror live J111/WPC_GILAMPS state bits. Address 31 is the real pre-Fliptronic Game-On relay whose documented chain runs from CPU board U4/J121 through power-driver J113, the relay, J110, the cabinet switch, and J109 to the flippers. Address 32 is constant zero; 33-44 are unused on this machine/generation; 49 is the live virtual `sShooterRel` channel consumed by the built-in PinMAME simulator's left- and right-shooter transitions; and 50 is the reserved gap before the custom-output range, which FunHouse does not declare. Address 49 has no physical driver-board circuit.
 
-## Switch matrix: a clean two-opto sweep
+## Physical flippers versus synthetic outputs
 
-FunHouse's manual identifies opto construction by a plain `"(opto)"` suffix directly in a switch's
-printed description — never by matrix-cell shading (unlike Monster Bash's shaded "OPTO, TYPICALLY
-CLOSED" cells). Sweeping every printed cell on both the switch-locations page (2-38) and the
-switch-matrix wiring page (2-39) finds exactly two: switch 51 (Dummy Jaw) and switch 55 (Steps
-Superdog). Pinned `fhGameData`'s inverted-switch mask is `{0x00,0x00,0x00,0x00,0x00,0x11,0x00,
-0x00,0x00,0x00,0x00,0x00}` — column 5 = `0x11` = binary `00010001` = bits 1 and 5 set = row 1
-(address 51) and row 5 (address 55). Zero disagreement: both printed optos are the exact two
-PinMAME normalizes, and nothing else in the matrix is opto construction on either page.
+`fhGameData` declares `FLIP_SWNO(12,11)` and no `FLIP_SOL()` bits. The handbook lists three fitted assemblies: lower right FL-11630, lower left FL-11630, and upper left FL-11753. The printed flipper-circuit page shows them wired through the dedicated flipper driver board and cabinet buttons, outside the CPU-addressable solenoid matrix; its generic upper-right position is unfitted on FunHouse. Public inputs 112 and 114 are the generic right/left cabinet-button states. `core_updateSw` copies them to ordinary matrix inputs 11 and 12 for the ROM, so 11/12 are neither playfield coordinates nor EOS contacts.
 
-## Two unresolved conflicts
+When the Game-On relay is active, `core_updateSw` fabricates public states 45-48 from the live flipper buttons because the physical coils are not CPU controlled. Addresses 45/46 represent the same right-side state in power and combined public views, and 47/48 do the same for the left side. The retained script consumes callbacks `sLRFlipper` (46) and `sLLFlipper` (48); `SolLFlipper` rotates both `LeftFlipper` and `LeftFlipper1`. A recreation should use 46 for the lower-right bat and 48 for both lower-left and upper-left bats, but must not model 45-48 as four additional physical coils.
 
-**`conflict.gangway-lamp-12-value`.** The lamp-locations page (2-36) prints lamp 12 as "Gangway
-10,000"; the lamp-matrix wiring page (2-37) prints the same address as "Gangway 100,000". Both
-were confirmed at 600 dpi — this is a genuine cross-page disagreement, not a misread. Lamps 11,
-13, 14, 15, 16 print an unambiguous ascending ladder (75,000 / 150,000 / 200,000 / 250,000 / Extra
-Ball) on both pages, which only 100,000 continues monotonically. The promoted definition's label
-uses "Gangway 100,000" on the strength of that pattern, but the underlying print disagreement is
-recorded as unresolved rather than silently discarded — a plain "10,000" reading has not been
-independently ruled out (e.g. by a lower-value early-ladder step that just isn't the value the
-neighbors suggest).
+## Switch matrix and trough
 
-**`conflict.gi-region-naming`.** The manual's G.I. locations page (2-40) labels string 02 "Front
-Playfield" and string 05 "Top Playfield". The retained known-working script's own `UpdateGI`/
-`UpdateGI2` region-header comment labels the same two addresses (0-based Case 1, Case 4) "Rudy"
-and "Lower Playfield" — and its actual implemented behavior matches the script's own labels
-exactly: Case 1 drives only the `RudySign1`/`RudySign2`/`RudyShade` collection (not a generic
-playfield wash), and Case 4 drives the `GI_Lower` collection (the opposite end of the table from
-"Top"). String 01 ("Upper Backglass"/Case 0) agrees between both sources, and string 03 ("Rear
-Playfield"/Case 2 "Upper Playfield") is a plausible reconciliation under this project's
-`y=0`-is-rear coordinate convention (the "upper" screen direction and the "rear" physical
-direction describe the same end of the table), but strings 02 and 05 remain a direct, unreconciled
-contradiction about which physical region each address illuminates. The promoted definition names
-each G.I. device from the manual (physical-construction authority) while using the script's real
-implemented light collections for spatial placement (runtime authority), and discloses the
-disagreement on both affected devices.
+The manual marks exactly two switches `(opto)`: 51 Dummy Jaw and 55 Steps Superdog. Pinned `fhGameData`'s inverted-switch mask sets exactly those two positions (`0x11` in column 5), so PinMAME's public polarity is fully normalized with no disagreement.
 
-## Rudy: three independent mechanisms sharing one figure
+Switch 63 is Right Trough. The November 1990 handbook places callout 63 at the rightmost trough position, while the retained script's `ballrelease_hit` asserts `Controller.Switch(63)` and `KickBallToLane` kicks the same `ballrelease` object before clearing it. That kicker supplies the validated position and makes the trough sequence explicit: drained ball at outhole 73, trough positions 72/74/63, then solenoid 15 releases the rightmost ball into a shooter lane.
 
-Rudy the animated dummy is genuinely three separate drive systems packed into one head assembly
-(`A-13718 Head Assembly`), not one:
+## Rudy comprises separate mechanisms
 
-1. **Jaw** — solenoids 21 (Mouth Motor, `A-13997` DC gearmotor) and 22 (Up/Down Driver, direction
-   relay) together, through a worm gear/sector pair (`A-13752 Jaw Drive Assembly`). Pinned
-   `fh_handleMech`: jaw open + (21 energized, 22 not) → close; jaw closed + (21 and 22 both
-   energized) → open. This is a motor-plus-direction-relay mechanism, the same structural pattern
-   this project has already documented for Monster Bash's Dracula motor and Tales of the Arabian
-   Nights' Ringmaster — check for it whenever a manual lists two solenoids with "Motor"/"Driver" or
-   "Forward"/"Backward"/"Up"/"Down" naming on a mechanism.
-2. **Eyelid latch** — solenoids 26 (open) / 27 (close), a persistent two-state latch independent
-   of jaw position.
-3. **Eye left/right** — solenoids 25 (right) / 28 (left), read as a momentary position signal each
-   mechanics tick rather than a latch; neither held means eyes-straight.
+Rudy's head assembly combines three independent systems:
 
-None of the five eye/jaw-adjacent solenoids (21, 22, 25-28) has a dedicated VPX mechanism object
-distinct from the head figure itself in the retained extraction, so all five are spatially
-projected onto switch 51 (Dummy Jaw), the only fixed point recorded for the assembly.
+1. The jaw uses solenoid 21, a continuously running A-13997 DC gearmotor, and solenoid 22, its direction relay. Pinned `fh_handleMech` closes the open jaw when 21 is active alone and opens the closed jaw when 21 and 22 are active together. Dummy Jaw opto 51 detects a ball in the mouth.
+2. Solenoids 26 and 27 latch the eyelids open and closed.
+3. Solenoids 25 and 28 move the eyes right and left; neither active means straight ahead.
 
-## Trap door: switch state read from the door's own rotation, not a contact switch
+No separate retained-table object identifies the jaw motor or four eye/eyelid drives apart from the head assembly, so outputs 21, 22, and 25-28 are explicitly projected onto the fixed Dummy Jaw position rather than assigned invented coordinates.
 
-The retained script's `TrapMover_Timer` sets `Controller.Switch(76) = 1` (Trap Door Closed) once
-the door primitive's `RotX` falls to 90 degrees and clears it once the door opens past 90 —
-exactly the "sensor state derived from a continuous mechanism position, not a discrete switch
-object" pattern this project has repeatedly documented (Dracula's position optos, the Up/Down
-Bank, the Frankenstein table). Solenoid 5 opens and solenoid 6 closes the door; both are projected
-onto the same trap-door primitive as switch 76 for the same reason.
+## Trap door, gates, locks, and kickouts
 
-## Two addresses named "Kickbig" that are not typos of each other
+Solenoids 5 and 6 open and close the upper-right trap door. The retained script derives switch 76 directly from the door primitive's `RotX`, asserting it at the closed angle rather than reading a discrete contact object. Switch 75 senses the upper-right loop path next to the door.
 
-The manual prints "Kickbig" as a real term twice: solenoid 3 ("Kickbig", Rudy's Hideout kicker)
-and solenoid 4 ("Tunnel Kickbig", the tunnel kickout coil). These are two distinct, unrelated
-circuits — not a duplicated label or an OCR artifact — and the manual is internally consistent
-about it (the parts list, the switch table, and the schematic pages all use the same spelling).
-Do not silently "correct" this to "Kickback" without independent evidence; it is transcribed
-verbatim here.
+Solenoid 2 controls the upper-ramp/Steps-track diverter and automatically returns after the window modeled by `fh_handleMech`. Solenoid 14 controls the left-outlane Steps gate, rerouting a ball to the left shooter lane as a save feature; it likewise has no separate position sensor.
 
-## Flasher solenoid quantities are disclosed, not individually placed
+The three lock sensors 25, 27, and 28 share one A-14138 three-switch assembly. Solenoid 8 releases the locked balls for multiball. Rudy's Hideout uses switch 46 and solenoid 3, while the separate Dummy Eject Hole uses switch 65 and solenoid 16.
 
-The solenoid table prints explicit bulb counts for six flasher circuits: 17 (3 Blue Flashers), 18
-(Dummy Flashers, read as 1), 19 (2 Clock Flashers), 20 (2 Superdog Flashers), 23 (3 Red Flashers),
-24 (3 Clear Flashers). Each is treated as one physical dome/flasher fixture location (using the
-retained table's primary dome/flasher render object) with the printed bulb count recorded in
-`physical.quantity` and `physical.notes`, rather than attempting to place each individual bulb —
-a flasher dome with multiple bulbs bundled together is a single fixture location in a way a
-lamp-matrix insert with `(x N)` spread across the playfield is not (compare lamps 53/61/82 below,
-which genuinely are spread across the playfield and get one placement per bulb).
+The manual really uses `Kickbig` twice: solenoid 3 is `Kickbig` and solenoid 4 is `Tunnel Kickbig`. These are distinct devices, not OCR errors or misspellings to normalize without evidence.
 
-## Lamp matrix is fully populated; three multi-bulb addresses confirmed by geometry
+## Lamps and flashers
 
-Unlike the switch and solenoid tables (which both list several unfitted positions), the 64-address
-lamp matrix has no "Not Used" row at all — every position lights a real bulb. Three addresses
-carry an explicit `(x 2)` marker on the lamp-matrix page: 53 (Superdog Lamp), 61 (Left & Inside Rt
-Flipper Lanes), and 82 (Special Outlanes). The retained table's own object geometry independently
-confirms this is a real quantity, not a rendering artifact: `l53`/`l53a` sit roughly 48 units
-apart, and `l61`/`l61a` and `l82`/`l82a` sit on opposite sides of the table entirely (over 580
-units apart for 61, matching its printed "Left & Inside Rt" description literally). By contrast,
-addresses 51, 52, and 72 (all "Jet Bumper" lamps) carry a second or third same-named object in the
-retained table (`l51a`/`l51b`, etc.) that sits within about 15-25 units of the primary object —
-the same bumper's own cap-plus-skirt lighting layers rather than a second physical bulb — and the
-manual prints no quantity marker for any of the three, so each gets exactly one placement.
+The controlled lamp matrix is fully populated. Addresses 53, 61, and 82 are marked `(x 2)` and have two spatially distinct physical bulbs. Same-named co-located table objects for 51, 52, and 72 are brightness/render layers around one manual-documented bulb, so each remains quantity one.
 
-## Three lamps with a real bulb but no resolved coordinate
+Lamp 12 is `Gangway 100,000`. The original operations manual's lamp matrix, the supplied November 1990 handbook's lamp matrix, and the physical playfield photograph agree; the original manual's isolated `Gangway 10,000` lamp-location entry is therefore a resolved one-digit typo. The physical award ladder is 75,000 / 100,000 / 150,000 / 200,000 / 250,000 / Extra Ball.
 
-Addresses 54 (Steps Lights Frenzy), 55 (Steps Lights Ex. Ball), and 56 (Steps 500,000) are each
-modeled in the retained table by four separate "finger"-shaped Light objects (`Bot_finger_1-4`,
-`Mid_finger_1-4`, `Top_finger_1-4`) forming a chase-lit arrow icon, not by one bulb at one fixed
-coordinate. The manual states a single `#555`/`#44` bulb per address with no quantity marker.
-Rather than guess which of the four finger segments is "the" bulb (or invent a centroid, which
-this project's own Centaur lamp-113 lesson already established as the worst kind of fabrication),
-spatial placement for these three addresses is left unresolved and named in `coverage.missing`.
+The November handbook's lamp-location drawing shows Steps lamps 56, 55, and 54 as top, middle, and bottom sockets in one vertical stack. In the retained table, `Top_finger_1`, `Mid_finger_1`, and `Bot_finger_1` are the five-unit-radius physical hotspots. The `_2`, `_3`, and `_4` objects are larger rendering layers for the same three inserts and are excluded from quantity and placement counts.
 
-## G.I. strings 2 and 4: real light collections, individual bulbs not yet extracted
+Six printed flasher circuits carry explicit bulb quantities: 17 has three blue bulbs, 18 one Dummy flasher bulb, 19 two Clock bulbs, 20 two Superdog bulbs, 23 three red bulbs, and 24 three clear bulbs. The retained table provides three distinct emitter objects for each of 17, 23, and 24. It abstracts circuit 19's two Clock bulbs into one physical Light fixture, so that circuit preserves the manual's two-socket quantity as explicit co-located placements. Circuit 20 has distinct `F20` and `F20a` Light objects, and the pinned community script assigns both to output 20, so the Superdog bulbs retain separate measured positions.
 
-G.I. address 2 ("Rear Playfield") drives the retained script's `GI_Upper` collection (19 Light
-objects); address 4 ("Top Playfield") drives `GI_Lower` (45 objects). Both are genuine playfield
-lighting circuits with real implemented geometry, but per-bulb spatial extraction for these two
-collections was not completed in this curation pass — recorded as a named spatial gap rather than
-either skipped silently or approximated. G.I. address 1 ("Front Playfield"/script "Rudy") drives
-only three objects (`RudySign1`, `RudySign2`, `RudyShade`) and was fully placed. G.I. addresses 0
-and 3 have no case handler in the retained script at all (no playfield lighting effect
-implemented for either), matching their manual descriptions as backbox/insert-panel circuits.
+## General illumination
 
-## Outstanding work
+The known-working script is authoritative for runtime semantics. All retained known-working FunHouse scripts examined use the same effective mapping: address 1 drives Rudy, address 2 drives the upper/rear playfield, address 4 drives the lower playfield, and addresses 0 and 3 have no distinct playfield handler. The handbook supplies the exact physical circuit mapping: public 0/printed 01 uses Brown/White-Brown Q18/F10, 1/02 Violet/White-Violet Q10/F6, 2/03 Yellow/White-Yellow Q14/F8, 3/04 Orange/White-Orange Q16/F9, and 4/05 Green/White-Green Q12/F7.
 
-- `switch.matrix-63` (Right Trough) has no dedicated VPX trigger/target object in the retained
-  extraction.
-- Lamps 54/55/56 and G.I. strings 2/4's individual bulbs (see above).
-- The two unresolved conflicts above.
-- The recreation knowledge is source-reconciled and complete; only the spatial gaps and two explicit conflicts above remain in `coverage.missing`.
+Address 1 has three Rudy sign/shade emitters. GI_Upper's 19 table objects collapse into 15 physical hotspots after co-located brightness layers are clustered; GI_Lower's 45 objects collapse into 14. Every stored coordinate comes from the smallest-radius named object in its cluster, never from an arithmetic centroid. Address 0 is genuinely backglass-only in playfield authoring space. Address 3 is not: the handbook proves printed circuit 04 serves both the center backglass and a right-rear playfield branch. No retained script identifies the individual playfield emitters, so address 3 deliberately has no spatial record rather than a false cabinet-only disposition.
+
+## Spatial convention and remaining blocker
+
+Coordinates use the retained table bounds `left=0 top=0 right=964 bottom=2162`, normalized as `x/964` and `y/2162`, with `x=0` left, `x=1` right, `y=0` rear/backglass, and `y=1` apron/player. Cabinet, DIP, constant, unused, and virtual positions carry explicit not-applicable records. Projections are limited to a mechanism's own known object and are enumerated in the spatial audit.
+
+The record remains partial only for spatial placement. Catalog identity, address enumeration, semantic names, polarity/normalization, physical wiring, displays, mechanisms, variants, recreation notes, provenance, and conflicts are validated. Promotion requires a socket-level survey identifying the individual right-rear-playfield emitters on G.I. circuit 04/public address 3; until then, guessing their count or coordinates would make the definition less useful to an author.

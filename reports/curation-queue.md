@@ -238,7 +238,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 232 | 1990 | STUB - Mac Attack | Mr. Game (Italy) | stub | 0% |
 | 233 | 1990 | STUB - World Cup '90 | Mr. Game (Italy) | stub | 0% |
 | 234 | 1990 | Diner | Williams | partial | 13% |
-| 235 | 1990 | FunHouse | Williams | partial | 81% |
+| 235 | 1990 | FunHouse | Williams | partial | 94% |
 | 236 | 1990 | STUB - Riverboat Gambler (L-3) | Williams | stub | 0% |
 | 237 | 1990 | STUB - Rollergames (LA-2) | Williams | stub | 0% |
 | 238 | 1990 | STUB - Star Trax (Domestic Prototype) | Williams | stub | 0% |
