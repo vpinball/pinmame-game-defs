@@ -1444,7 +1444,14 @@ def conflicts() -> list[dict[str, Any]]:
 				"public addresses are in doubt on either source; only which now-repurposed flipper-side driver "
 				"transistor pair physically underlies each address disagrees. Unresolved; recorded for provenance "
 				"completeness rather than blocking the device labels, which are taken directly from the manual's "
-				"function column."
+				"function column. "
+				"Resolution path: this is a board fact rather than a game fact, so any Fliptronic II board "
+				"schematic that assigns each upper power/hold driver transistor to a side settles it -- read "
+				"it against the four printed rows here, Q1/Q5 on J907-2/J907-1 for 33/34 and Q2/Q7 on "
+				"J907-5/J907-4 for 35/36; this manual's own pages 3-17 through 3-21 do not, because they "
+				"print the Fliptronic II cabinet-switch and end-of-stroke circuits rather than the coil-driver "
+				"assignment. Failing that, a photograph of a Fliptronic II board showing the transistor "
+				"silkscreen beside each J907 pin, or corrected upstream naming in src/wpc/core.h. Unresolved."
 			),
 			"source_refs": [MANUAL_SOURCE, CORE_SOURCE],
 		},

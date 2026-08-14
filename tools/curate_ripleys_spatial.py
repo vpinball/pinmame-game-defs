@@ -460,13 +460,13 @@ def _assert_contract(definition: dict[str, object]) -> None:
 CONFLICTS = [
 	{
 		"id": "conflict.ripleys.uk-table-scope",
-		"description": "The selected exact 1.0.3 VPX is explicitly a UK model with All-Skill extra posts. The canonical record covers the shared 2004 physical product plus optional UK hardware, so common named playfield objects are promoted while Q33-Q35 and any UK-only geometry remain unresolved; no standard-machine coordinates are projected from the UK table.",
+		"description": "The selected exact 1.0.3 VPX is explicitly a UK model with All-Skill extra posts. The canonical record covers the shared 2004 physical product plus optional UK hardware, so common named playfield objects are promoted while Q33-Q35 and any UK-only geometry remain unresolved; no standard-machine coordinates are projected from the UK table. Resolution path: a UK-market source that locates the three optional posts rather than only wiring them -- a playfield location drawing or post-kit installation sheet for the 520-5068-01 auxiliary board naming where the 090-5044-00T and 090-5030-00T posts mount, a photograph of a UK-configured playfield showing all three, or a second retained known-working VPX recreation of a UK machine that binds public 33-35 to named actuator objects -- because the retained manual's own UK 3X auxiliary-board pages (PDF 162-166) give wiring only; Ripley's was mass-produced, so a UK operator or owner can supply the photograph and a curator can search the community table archives for the second recreation. Unresolved.",
 		"path": "outputs[pinmame.output.solenoid:33|34|35]",
 		"source_refs": [TABLE_SOURCE, MANUAL_SOURCE, CORE_SOURCE],
 	},
 	{
 		"id": "conflict.ripleys-q24-script-revision",
-		"description": "The exact archived table's Q24 callback invokes a sound-only vpmsolsound routine, while the retained VPW v1.3 script comments out its Q24 SolKnocker callback. The Stern manual calls Q24 an optional unassigned 5 V output. The physical disposition is therefore no stock Q24 device, but the two table scripts are not behavior-identical for an optional external installation.",
+		"description": "The exact archived table's Q24 callback invokes a sound-only vpmsolsound routine, while the retained VPW v1.3 script comments out its Q24 SolKnocker callback. The Stern manual calls Q24 an optional unassigned 5 V output. The physical disposition is therefore no stock Q24 device, but the two table scripts are not behavior-identical for an optional external installation. Resolution path: a Stern accessory or parts listing, or a service bulletin, naming what the optional 5 V output at J7-P10 is sold to drive, or a photograph of an unmodified 2004 machine's Whitestar I/O Power Driver board showing whether anything is connected at that pin, either of which an operator or owner of this mass-produced machine can supply; the retained gameplay trace already observed public 24 carrying state, so what is open is physical fitment rather than whether the ROM drives the address. Unresolved.",
 		"path": "outputs[pinmame.output.solenoid:24]",
 		"source_refs": [TABLE_SOURCE, VPX_SOURCE, MANUAL_SOURCE],
 	},

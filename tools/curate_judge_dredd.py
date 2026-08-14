@@ -1900,7 +1900,12 @@ def conflicts() -> list[dict[str, Any]]:
 				"for these three. 61 and 77 carry an A-16598 part number that discloses no construction "
 				"either way, which weakens the manual side for those two but not for 71. Resolving it needs "
 				"a LibPinMAME harness trace against a legal jd_l1 or jd_l7 ROM observing the idle public "
-				"state of 61, 71 and 77 with no ball on the globe and the crane parked."
+				"state of 61, 71 and 77 with no ball on the globe and the crane parked. "
+				"Resolution path: run the repository's LibPinMAME gameplay harness against a legal jd_l1 "
+				"or jd_l7 ROM with 61, 71 and 77 watched, reading their idle state with no ball on the "
+				"globe and the crane parked and their transitions as each is made; independently, a "
+				"photograph or parts breakdown of the A-16598 assembly would fix construction for 61 and "
+				"77, which the printed part number alone does not disclose. Unresolved."
 			),
 			"source_refs": [MANUAL_SOURCE, CORE_SOURCE, MANUAL_SUPPORT_SOURCE],
 		},
@@ -1919,7 +1924,11 @@ def conflicts() -> list[dict[str, Any]]:
 				"emulator inversion would produce. Either the A-16486 target really is an opto assembly "
 				"whose construction this manual does not spell out, or the mask's column 5 is wrong. "
 				"Resolving it needs a LibPinMAME harness trace observing the idle public state of 54-58 "
-				"with the bank reset, or a photograph of an A-16486 target assembly."
+				"with the bank reset, or a photograph of an A-16486 target assembly. "
+				"Resolution path: run the repository's LibPinMAME gameplay harness against a legal jd_l1 "
+				"or jd_l7 ROM with 54-58 watched, reading them with the JUDGE bank reset and again with "
+				"each target knocked down, or obtain a photograph of an A-16486 target assembly showing "
+				"whether it carries a discrete LED and phototransistor pair. Unresolved."
 			),
 			"source_refs": [MANUAL_SOURCE, CORE_SOURCE],
 		},
@@ -1948,7 +1957,12 @@ def conflicts() -> list[dict[str, Any]]:
 				"recreation bound to jd_l1 must decide whether to wire three addresses the production "
 				"manual says do not exist. Resolving it needs a photograph of an unrestored production "
 				"playfield at those three positions, or a LibPinMAME trace comparing what jd_l1 and jd_l7 "
-				"actually read."
+				"actually read. "
+				"Resolution path: a photograph of an unrestored production playfield at the crane / Magnet "
+				"Over Ring, orbit-ramp and right-ramp positions showing whether a switch body is fitted at "
+				"each, together with a LibPinMAME gameplay-harness trace run twice — once on a legal jd_l1 "
+				"ROM and once on jd_l7 — watching 28, 32, 65 and 67 under the same driven inputs so the "
+				"revision difference is observed rather than inferred. Unresolved."
 			),
 			"source_refs": [MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE],
 		},
@@ -1975,7 +1989,13 @@ def conflicts() -> list[dict[str, Any]]:
 				"GI 3 contains two playfield objects and no backglass, while the manual gives both "
 				"candidate strings entries in both columns. Resolving it needs a LibPinMAME harness trace "
 				"driving each GI address in turn against a legal ROM, or a photograph of the J120/J121 "
-				"harness on a real machine."
+				"harness on a real machine. "
+				"Resolution path: run the machine's own general-illumination test on an unrestored unit and "
+				"record which of the five printed wire colours (Wht-Brn J-120-7, Wht-Org J-120-8, Wht-Yel "
+				"J-120-9, Wht-Grn J-120-10, Wht-Vio J-120-11 on printed 2-44) lights at each step, since "
+				"printed 3-10 draws one unnumbered representative string and cannot say which triac serves "
+				"which string; pairing that against a LibPinMAME harness trace driving public GI 0-4 in "
+				"turn on a legal jd_l1 or jd_l7 ROM closes the mapping from both ends. Unresolved."
 			),
 			"source_refs": [MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE, CONTROLLER_SOURCE],
 		},

@@ -77,19 +77,19 @@ SPATIAL_CONFLICTS = [
 	{
 		"id": "conflict.pro-le-target-and-sling-spatial",
 		"path": "inputs[pinmame.input.switch:7|8|26|27],outputs[pinmame.output.solenoid:17|18]",
-		"description": "The retained Pro table offers polygon-derived target and slingshot centers, but the reviewed Limited Edition record either disagrees materially or explicitly rejects the corresponding manually calibrated points. No polygon centroid is promoted as a physical switch or actuator placement until the cross-edition object mapping is reconciled.",
+		"description": "The retained Pro table offers polygon-derived target and slingshot centers, but the reviewed Limited Edition record either disagrees materially or explicitly rejects the corresponding manually calibrated points. No polygon centroid is promoted as a physical switch or actuator placement until the cross-edition object mapping is reconciled. Resolution path: an overhead photograph or measured survey of an unrestored Pro playfield locating the two slingshot assemblies and the right standup bank, scaled against the retained manual's own to-scale playfield-underside plan on PDF page 26 (printed 'p 7', Main Playfield Bottom - Miscellaneous Parts and Brackets), whose slingshot footprints PDF page 6 already ties to LEFT SW. 26, RIGHT SW. 27 and coils Q17/Q18; or a second, independently authored known-working Pro recreation whose object centers do not descend from the single archive/VPU table lineage retained here. Unresolved.",
 		"source_refs": [PRO_MANUAL, ARCHIVE_TABLE_SOURCE, VPX_SOURCE],
 	},
 	{
 		"id": "conflict.pro-le-mechanism-spatial",
 		"path": "outputs[pinmame.output.solenoid:5|6|7|13|19]",
-		"description": "The Pro candidate projected relay, motor, and Link lockup channels onto shared mechanism or target anchors that the Limited Edition review rejects or places differently. Internal relay/motor loads are nonvisual and Q6/Q7 remain unlocated until the mechanism crosswalk is reconciled.",
+		"description": "The Pro candidate projected relay, motor, and Link lockup channels onto shared mechanism or target anchors that the Limited Edition review rejects or places differently. Internal relay/motor loads are nonvisual and Q6/Q7 remain unlocated until the mechanism crosswalk is reconciled. Resolution path: the Link lockup assembly drawing from a complete Stern Avatar parts book, since the retained 55-page copy is a selection whose own pages cross-reference sections it does not contain (PDF page 26 points at 'the Yellow Pages, PCBs, Pages y 42 - y 43' and 'the Blue Pages, Page b 23'); or an underside photograph of an unrestored Pro playfield locating the Q6 LINK LOCKUP UP and Q7 LINK LOCKUP LATCH coils against the three 511-5249-xx relay/connector assemblies that same page already marks as item 2. Unresolved.",
 		"source_refs": [PRO_MANUAL, ARCHIVE_TABLE_SOURCE, VPX_SOURCE],
 	},
 	{
 		"id": "conflict.pro-le-flasher-quantity",
 		"path": "outputs[pinmame.output.solenoid:25|30|31]",
-		"description": "Q25/Q30/Q31 physical quantities inferred from Pro render objects contradict the reviewed Limited Edition record derived from the same manual. Near-co-located helper objects do not prove separate physical emitters, so quantities and placements remain withheld.",
+		"description": "Q25/Q30/Q31 physical quantities inferred from Pro render objects contradict the reviewed Limited Edition record derived from the same manual. Near-co-located helper objects do not prove separate physical emitters, so quantities and placements remain withheld. Resolution path: a photograph or socket survey of an unrestored Pro playfield recording how many #89 sockets Q25, Q30 and Q31 each feed and where they sit, read against the Pro Coils Detailed Chart Table on PDF page 36 (printed 'y 2'), whose own multiplier column prints LEFT SIDE BLUE (X2) at Q30 and RIGHT SIDE BLUE (X2) at Q31 and no multiplier at Q25 POP BUMPER FLASH; the retained 55-page extract contains no flash-lamp location drawing, so a complete Stern Avatar parts book would also serve. Unresolved.",
 		"source_refs": [PRO_MANUAL, ARCHIVE_TABLE_SOURCE, VPX_SOURCE],
 	},
 ]

@@ -25,7 +25,7 @@
       "status": "ignored"
     },
     {
-      "description": "The manual's paired L/R wiring and retained active callbacks make public 1-8 flash lamps and 25-32 mechanisms. Torpedo Alley's pinned s11.c block instead types only public 25-32 as eight muxed #89 bulbs; the semantic map follows the manual/runtime agreement and retains the emulator typing disagreement.",
+      "description": "The manual's paired L/R wiring and retained active callbacks make public 1-8 flash lamps and 25-32 mechanisms. Torpedo Alley's pinned s11.c block instead types only public 25-32 as eight muxed #89 bulbs; the semantic map follows the manual/runtime agreement and retains the emulator typing disagreement. Resolution path: a corrected torp_ output-typing block in upstream src/wpc/s11.c, which a PinMAME contributor can submit against the manual's own printed L/R wiring, or a LibPinMAME trace against a legal torp_e21 ROM captured in both K1 relay states observing what the emulator publishes at 1-8 and at 25-32. Unresolved.",
       "id": "conflict.mux-bank-output-typing",
       "path": "/outputs/coil.driver-*",
       "source_refs": [
@@ -35,7 +35,7 @@
       ]
     },
     {
-      "description": "The Coil Test table and coil-location plan print SP1 Center Thumper Bumper and SP2 Right Thumper Bumper. The special-coil wiring diagram prints SP2 Center and SP1 Right. The two-against-one working labels are used without erasing the schematic cells.",
+      "description": "The Coil Test table and coil-location plan print SP1 Center Thumper Bumper and SP2 Right Thumper Bumper. The special-coil wiring diagram prints SP2 Center and SP1 Right. The two-against-one working labels are used without erasing the schematic cells. Resolution path: a photograph or continuity check of an unrestored playfield tracing the printed BLU-ORN CPU CN19-3 and BLU-RED CPU CN19-4 control leads to the center and right thumper-bumper bodies, or a LibPinMAME gameplay-harness trace against a legal torp_e21 ROM that starts a ball and closes each bumper's own switch while watching public 17 and 22. Unresolved.",
       "id": "conflict.special-solenoid-sp1-sp2-schematic-swap",
       "path": "/outputs/coil.driver-17",
       "source_refs": [
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "description": "Manual and pinned s11.c identify output 11 as the general-illumination relay. The retained script assigns GIUpdate to 11, then later overwrites the same SolCallback array slot with Sol11BG, so the known-working table's effective callback is a backglass proxy.",
+      "description": "Manual and pinned s11.c identify output 11 as the general-illumination relay. The retained script assigns GIUpdate to 11, then later overwrites the same SolCallback array slot with Sol11BG, so the known-working table's effective callback is a backglass proxy. Resolution path: the disagreement is with the retained table rather than with the machine, so what would close it is a corrected build of that table, or a second independently authored known-working Torpedo Alley recreation whose SolCallback(11) survives to drive general illumination; a table author can supply either. Unresolved.",
       "id": "conflict.output-11-callback-overwrite",
       "path": "/outputs/coil.driver-11",
       "source_refs": [
@@ -54,7 +54,7 @@
       ]
     },
     {
-      "description": "The manual assigns 23 to Bottom Left Star Rollover and the extraction contains SW23 at that location, but active SW23_Hit pulses public switch 18 (Left Return).",
+      "description": "The manual assigns 23 to Bottom Left Star Rollover and the extraction contains SW23 at that location, but active SW23_Hit pulses public switch 18 (Left Return). Resolution path: a continuity check or photograph of an unrestored playfield tracing the bottom left star rollover back to the GRN-ORN drive and WHT-VIO return the printed matrix gives address 23, or a second independently authored known-working Torpedo Alley recreation whose bottom-left-star handler pulses 23 rather than 18. Unresolved.",
       "id": "conflict.switch-23-runtime-misroute",
       "path": "/inputs/switch.matrix-23",
       "source_refs": [
@@ -64,7 +64,7 @@
       ]
     },
     {
-      "description": "The manual assigns 36 to Right Star Rollover and the extraction contains SW36 at that location, but active SW36_Hit pulses public switch 26 (S lane).",
+      "description": "The manual assigns 36 to Right Star Rollover and the extraction contains SW36 at that location, but active SW36_Hit pulses public switch 26 (S lane). Resolution path: a continuity check or photograph of an unrestored playfield tracing the right star rollover back to the GRN-BLK drive and WHT-YEL return the printed matrix gives address 36, or a second independently authored known-working Torpedo Alley recreation whose right-star handler pulses 36 rather than 26. Unresolved.",
       "id": "conflict.switch-36-runtime-misroute",
       "path": "/inputs/switch.matrix-36",
       "source_refs": [
@@ -74,7 +74,7 @@
       ]
     },
     {
-      "description": "The manual fits lamp 24 as Insert 1 Torpedo (2) and the extraction has an L24 Light object. The script's only Lights(24) assignment is whole-line commented, so shared VPM lamp polling cannot reach it through this table's active membership array.",
+      "description": "The manual fits lamp 24 as Insert 1 Torpedo (2) and the extraction has an L24 Light object. The script's only Lights(24) assignment is whole-line commented, so shared VPM lamp polling cannot reach it through this table's active membership array. Resolution path: a photograph of an unrestored playfield confirming that two Insert 1 Torpedo bulbs hang on the YEL-ORN drive and RED-GRY return the printed matrix gives address 24, together with a LibPinMAME trace against a legal torp_e21 ROM observing whether the ROM drives public lamp 24 outside its own lamp test; a corrected build of the retained table, or a second known-working recreation whose Lights(24) assignment is live, would supply the runtime binding. Unresolved.",
       "id": "conflict.lamp-24-runtime-omission",
       "path": "/outputs/lamp.matrix-24",
       "source_refs": [

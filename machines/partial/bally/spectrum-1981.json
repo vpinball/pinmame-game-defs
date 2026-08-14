@@ -1,7 +1,7 @@
 {
   "conflicts": [
     {
-      "description": "Legacy sources disagree on label: 'Ball Roll Tilt' versus 'Left Flipper Button'.",
+      "description": "Legacy sources disagree on label: 'Ball Roll Tilt' versus 'Left Flipper Button'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, which would also show whether the left flipper button is given a matrix address on this machine at all, or a LibPinMAME gameplay-harness trace against a legal spectrum ROM holding public switch 2 during play to see whether the ROM registers a tilt rather than reporting a playfield device -- pinned BY35_COMPORTS writes no cabinet input into public 2, so unlike public 7 and 16 that address can be held. Unresolved.",
       "id": "conflict.pinmame-input-switch-2-none",
       "path": "binding:pinmame.input.switch/2/None",
       "source_refs": [
@@ -10,7 +10,7 @@
       ]
     },
     {
-      "description": "Legacy sources disagree on label: 'Tilt' versus 'Top Saucer Kicker'.",
+      "description": "Legacy sources disagree on label: 'Tilt' versus 'Top Saucer Kicker'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a continuity check on the switch harness at that matrix position; a harness hold cannot settle it, because pinned BY35_COMPORTS puts Ball Tilt on switch column 1 bit 6 and SWITCH_UPDATE(by35) rewrites public 7 from the cabinet input port every frame on every BY35 game. Unresolved.",
       "id": "conflict.pinmame-input-switch-7-none",
       "path": "binding:pinmame.input.switch/7/None",
       "source_refs": [

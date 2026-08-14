@@ -1767,7 +1767,13 @@ def conflicts() -> list[dict[str, Any]]:
 				"3 = \"Backbox 2\", address 4 = \"Backbox 1\") as authoritative, but the disagreement itself is "
 				"unresolved rather than silently normalized away. Neither address has a playfield coordinate "
 				"regardless of which label is used, since both are backbox insert-panel strings the retained "
-				"script's UpdateGI never dispatches."
+				"script's UpdateGI never dispatches. "
+				"Resolution path: a photograph or continuity check of the backbox insert-panel harness on an "
+				"unrestored machine, establishing which physical string plugs J106-5/J106-10 and which plugs "
+				"J106-6/J106-11 with the cabinet leg on J104-1/J104-3, or a second printed revision of the "
+				"Bally manual whose pages 2-46 and 2-50 agree with each other; no emulator trace can settle "
+				"it, because only the printed name attached to each already-identified drive is in dispute. "
+				"Unresolved."
 			),
 			"source_refs": [MANUAL_SOURCE, VPX_SCRIPT_SOURCE],
 		},

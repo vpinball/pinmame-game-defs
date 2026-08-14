@@ -1296,7 +1296,11 @@ def conflicts() -> list[dict[str, Any]]:
 				"definition follows the manual because lamp-to-bulb identity is physical construction rather than "
 				"runtime semantics, and because three printed sources agree against one community recreation, but "
 				"the disagreement is unresolved on the evidence retained here: settling it needs a lamp test on real "
-				"hardware or a photograph of the A5J1 harness. Unresolved."
+				"hardware or a photograph of the A5J1 harness. Resolution path: a lamp test on an unrestored machine "
+				"observing which thumper bumper lights while public 12 and public 28 are driven in turn, or a "
+				"photograph of the A5J1 harness showing which bumper socket pins 12 and 27 each feed; a LibPinMAME "
+				"trace cannot settle it, because PinMAME reports the matrix bit rather than the bulb it reaches. "
+				"Unresolved."
 			),
 			"source_refs": [SCHEMATICS_SOURCE, MANUAL_SOURCE, BOARD_SOURCE, VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE],
 		},

@@ -227,10 +227,12 @@ export function enrichConflict(conflict: any, sources: any[], revision: string):
 	// panel's whole claim for an ignored record is "here is why it does not
 	// matter" — so a record without one is shown as the open question it still
 	// is, matching what the validator counts.
-	// A letter or digit, not merely `.trim()`: U+200B and friends survive a trim
-	// and would render the reason block empty.
+	// An ASCII letter or digit, matching the schema `pattern` and the validator
+	// exactly. `.trim()` alone keeps U+200B, and a Unicode letter class keeps
+	// default-ignorable letters like U+115F — both render as an empty reason
+	// block under a heading that promises one.
 	const rationale = typeof conflict.rationale === 'string' ? conflict.rationale.trim() : ''
-	const ignored = conflict.status === 'ignored' && /[\p{L}\p{N}]/u.test(rationale)
+	const ignored = conflict.status === 'ignored' && /[A-Za-z0-9]/.test(rationale)
 
 	return {
 		id: conflict.id,

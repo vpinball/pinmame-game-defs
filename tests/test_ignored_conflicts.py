@@ -37,22 +37,22 @@ def _conflict(**overrides):
 
 class IgnoredConflictStateTests(unittest.TestCase):
 	def test_absent_status_is_unresolved(self) -> None:
-		from pinmame_game_defs.validation import _unresolved_conflicts
+		from pinmame_game_defs.validation import unresolved_conflicts
 
 		definition = {"conflicts": [_conflict()]}
-		self.assertEqual(1, len(_unresolved_conflicts(definition)))
+		self.assertEqual(1, len(unresolved_conflicts(definition)))
 
 	def test_ignored_is_not_unresolved(self) -> None:
-		from pinmame_game_defs.validation import _unresolved_conflicts
+		from pinmame_game_defs.validation import unresolved_conflicts
 
 		definition = {"conflicts": [_conflict(status="ignored", rationale="Cannot reach a recreation.")]}
-		self.assertEqual([], _unresolved_conflicts(definition))
+		self.assertEqual([], unresolved_conflicts(definition))
 
 	def test_explicit_unresolved_still_counts(self) -> None:
-		from pinmame_game_defs.validation import _unresolved_conflicts
+		from pinmame_game_defs.validation import unresolved_conflicts
 
 		definition = {"conflicts": [_conflict(status="unresolved")]}
-		self.assertEqual(1, len(_unresolved_conflicts(definition)))
+		self.assertEqual(1, len(unresolved_conflicts(definition)))
 
 	def test_ignored_without_a_usable_reason_still_counts(self) -> None:
 		"""The reason is what the state *is*; without one, nothing is opted out.
@@ -62,11 +62,18 @@ class IgnoredConflictStateTests(unittest.TestCase):
 		single space. Each of these would otherwise lift the author-ready gate
 		on an assertion nobody justified.
 		"""
-		from pinmame_game_defs.validation import _unresolved_conflicts
+		from pinmame_game_defs.validation import unresolved_conflicts
 
-		# U+200B and U+FEFF are not whitespace to Unicode, so `.strip()` keeps
-		# them and the reason renders as nothing.
-		for rationale in (None, "", " ", "\n\t ", "\u200b", "\u200b \ufeff", 42, [], {"why": "because"}):
+		# Each of these renders as nothing and defeats a weaker rule:
+		# U+200B/U+FEFF are not whitespace to Unicode, so `.strip()` keeps them;
+		# U+115F HANGUL CHOSEONG FILLER and U+3164 are default-ignorable but are
+		# *letters*, so `str.isalnum()` accepts them.
+		for rationale in (
+			None, "", " ", "\n\t ",
+			"\u200b", "\u200b \ufeff",
+			"\u115f", "\u1160", "\u3164", "\uffa0",
+			42, [], {"why": "because"},
+		):
 			with self.subTest(rationale=rationale):
 				conflict = _conflict(status="ignored")
 				if rationale is not None:
@@ -74,9 +81,34 @@ class IgnoredConflictStateTests(unittest.TestCase):
 				definition = {"conflicts": [conflict]}
 				self.assertEqual(
 					1,
-					len(_unresolved_conflicts(definition)),
+					len(unresolved_conflicts(definition)),
 					"an ignored conflict with no stated reason must keep counting as unresolved",
 				)
+
+	def test_a_digit_is_a_stated_reason(self) -> None:
+		"""Pins "letter *or digit*".
+
+		Without this, narrowing the runtime check to `isalpha()` or the schema
+		pattern to `[A-Za-z]` passes every other test in this module \u2014 the
+		contract would be documented but not enforced.
+		"""
+		from pinmame_game_defs.validation import unresolved_conflicts
+
+		definition = {"conflicts": [_conflict(status="ignored", rationale="Superseded by 1988 revision.")]}
+		self.assertEqual([], unresolved_conflicts(definition))
+		self.assertEqual([], unresolved_conflicts({"conflicts": [_conflict(status="ignored", rationale="1988")]}))
+
+		# and the schema layer, which states the same rule as a `pattern`
+		from jsonschema import Draft202012Validator
+
+		schema = json.loads((REPOSITORY_ROOT / "schemas" / "machine.schema.json").read_text(encoding="utf-8"))
+		conflict_schema = dict(schema["$defs"]["conflict"])
+		conflict_schema["$defs"] = schema["$defs"]
+		self.assertEqual(
+			[],
+			list(Draft202012Validator(conflict_schema).iter_errors(_conflict(status="ignored", rationale="1988"))),
+			"the schema pattern must accept a digit, not only a letter",
+		)
 
 
 class CommittedRecordTests(unittest.TestCase):
@@ -112,7 +144,7 @@ class CommittedRecordTests(unittest.TestCase):
 		A second copy drifts: it would have gone on accepting a bare
 		`status: "ignored"` after the real one started demanding a rationale.
 		"""
-		from pinmame_game_defs.validation import _unresolved_conflicts
+		from pinmame_game_defs.validation import unresolved_conflicts
 
 		for path in sorted(REPOSITORY_ROOT.glob("machines/**/*.json")):
 			document = json.loads(path.read_text(encoding="utf-8"))
@@ -121,7 +153,7 @@ class CommittedRecordTests(unittest.TestCase):
 				continue
 			with self.subTest(path=path.name):
 				self.assertTrue(
-					_unresolved_conflicts(document),
+					unresolved_conflicts(document),
 					"lists unresolved_conflicts but every conflict is ignored or absent",
 				)
 
@@ -216,7 +248,7 @@ class ValidatorGateTests(unittest.TestCase):
 			list(validator.iter_errors(_conflict(status="ignored"))),
 			"an ignored conflict with no rationale must fail the schema",
 		)
-		for rationale in ("", " ", "\n\t ", "\u200b", "\u200b \ufeff"):
+		for rationale in ("", " ", "\n\t ", "​", "​ ﻿", "ᅟ", "ㅤ"):
 			with self.subTest(rationale=rationale):
 				self.assertTrue(
 					list(validator.iter_errors(_conflict(status="ignored", rationale=rationale))),

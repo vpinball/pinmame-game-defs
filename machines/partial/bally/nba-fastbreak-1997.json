@@ -1,7 +1,7 @@
 {
   "conflicts": [
     {
-      "description": "Legacy sources disagree on label: 'Coin Button 1' versus 'Backbox Basket Score 1'.",
+      "description": "Legacy sources disagree on label: 'Coin Button 1' versus 'Backbox Basket Score 1'. Resolution path: pinned WPC_COMPORTS, which puts IPT_COIN1 in switch column 0 at public 1 on every WPC game, read against pinned nbaf.c, which gives this machine one backbox basket switch at public 12 plus Basket Made and Basket Hold on Fliptronic positions F5 and F7 rather than three basket sensors at 1-3; this machine's own printed switch matrix, no copy of which is currently retained, would confirm it directly. Unresolved.",
       "id": "conflict.pinmame-input-switch-1-none",
       "path": "binding:pinmame.input.switch/1/None",
       "source_refs": [
@@ -10,7 +10,7 @@
       ]
     },
     {
-      "description": "Legacy sources disagree on label: 'Coin Button 2' versus 'Backbox Basket Score 2'.",
+      "description": "Legacy sources disagree on label: 'Coin Button 2' versus 'Backbox Basket Score 2'. Resolution path: pinned WPC_COMPORTS, which puts IPT_COIN2 in switch column 0 at public 2 on every WPC game, read against pinned nbaf.c, which gives this machine one backbox basket switch at public 12 plus Basket Made and Basket Hold on Fliptronic positions F5 and F7 rather than three basket sensors at 1-3; this machine's own printed switch matrix, no copy of which is currently retained, would confirm it directly. Unresolved.",
       "id": "conflict.pinmame-input-switch-2-none",
       "path": "binding:pinmame.input.switch/2/None",
       "source_refs": [
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "description": "Legacy sources disagree on label: 'Coin Button 3' versus 'Backbox Basket Score 3'.",
+      "description": "Legacy sources disagree on label: 'Coin Button 3' versus 'Backbox Basket Score 3'. Resolution path: pinned WPC_COMPORTS, which puts IPT_COIN3 in switch column 0 at public 3 on every WPC game, read against pinned nbaf.c, which gives this machine one backbox basket switch at public 12 plus Basket Made and Basket Hold on Fliptronic positions F5 and F7 rather than three basket sensors at 1-3; this machine's own printed switch matrix, no copy of which is currently retained, would confirm it directly. Unresolved.",
       "id": "conflict.pinmame-input-switch-3-none",
       "path": "binding:pinmame.input.switch/3/None",
       "source_refs": [
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Flasher — Upper Left / BG Left'.",
+      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Flasher — Upper Left / BG Left'. Resolution path: this machine's own printed Solenoid/Flasher table, no copy of which is currently retained, or a LibPinMAME trace against a legal nbaf_31 ROM observing whether public 19 pulses like a flasher or holds for the duration of a game; pinned core.h's WPC solenoid numbering puts the standard driver range at 1-28 and the game-on state at 29-31, and wpc.c records that a Fliptronic-or-later board has no game-on relay at all, so no WPC generation places one at 19. Unresolved.",
       "id": "conflict.pinmame-output-solenoid-19-none",
       "path": "binding:pinmame.output.solenoid/19/None",
       "source_refs": [

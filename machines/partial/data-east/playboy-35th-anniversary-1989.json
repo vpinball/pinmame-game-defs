@@ -1,7 +1,7 @@
 {
   "conflicts": [
     {
-      "description": "Shared Data East DE_COMPORTS names matrix position 2 Ball Tilt, while both Playboy manual switch tables print position 2 Not Used. Game-specific fitment is retained without erasing the shared-port label.",
+      "description": "Shared Data East DE_COMPORTS names matrix position 2 Ball Tilt, while both Playboy manual switch tables print position 2 Not Used. Game-specific fitment is retained without erasing the shared-port label. Resolution path: a photograph or continuity check of an unrestored cabinet's WHT-RED return line, which the printed matrix gives as position 2's return, showing whether any contact lands on it, or a Data East cabinet or coin-door parts page from a title whose own chart does name the position - the Lethal Weapon 3 manual retained in this repository prints it 4th Coin - identifying the contact the shared macro bit was reserved for. Unresolved.",
       "id": "conflict.shared-port-position-2-vs-unfitted",
       "path": "/inputs/switch.matrix-2",
       "source_refs": [
@@ -34,7 +34,7 @@
       "status": "ignored"
     },
     {
-      "description": "The manual switch list prints Shooter Lane part 500-5142-00 and Left Outlane part 500-5143-00. Its playfield-bottom list prints Laser Kick switch/bracket 500-5142-00 and Shooter lane switch/bracket 500-5143-00.",
+      "description": "The manual switch list prints Shooter Lane part 500-5142-00 and Left Outlane part 500-5143-00. Its playfield-bottom list prints Laser Kick switch/bracket 500-5142-00 and Shooter lane switch/bracket 500-5143-00. Resolution path: a Data East parts catalogue or service bulletin that lists 500-5142-00 and 500-5143-00 against their assembly names, or a photograph of an unrestored machine's shooter-lane and Laser Kick switch/bracket assemblies compared against those two part numbers. Unresolved.",
       "id": "conflict.shooter-laser-switch-part-numbers",
       "path": "/inputs/switch.matrix-14",
       "source_refs": [
@@ -43,7 +43,7 @@
       ]
     },
     {
-      "description": "The active lines bind both public outputs 4 and 5 to SetLamp 105. UpdateLamps has distinct Fl4 at pseudo 104 and Fl5 at 105, leaving Fl4 without a driving callback even though the manual prints separate Spinner 2 and Spinner 3 flash groups.",
+      "description": "The active lines bind both public outputs 4 and 5 to SetLamp 105. UpdateLamps has distinct Fl4 at pseudo 104 and Fl5 at 105, leaving Fl4 without a driving callback even though the manual prints separate Spinner 2 and Spinner 3 flash groups. Resolution path: a photograph of an unrestored playfield confirming that Spinner 2 and Spinner 3 each carry their own flash group, as the printed schematic's identical NO.89 (3) plus NO.906 (1) rows for outputs 4 and 5 claim, together with a corrected build of the retained table or a second independently authored known-working Playboy recreation that drives Fl4 and Fl5 from their own outputs. Unresolved.",
       "id": "conflict.outputs-4-and-5-share-pseudo-lamp-105",
       "path": "/outputs/coil.driver-4",
       "source_refs": [
@@ -53,7 +53,7 @@
       ]
     },
     {
-      "description": "The manual prints 13 Ramp Right, 14 Mansion Flash, and no feature label for 15. Active-line inline comments instead call 13 'flasher13 PB', 14 'Right Ramp', and 15 'mansion flasher'. Generic Fl13/Fl14/Fl15 names do not settle the shift, so manual labels and script annotations remain separate.",
+      "description": "The manual prints 13 Ramp Right, 14 Mansion Flash, and no feature label for 15. Active-line inline comments instead call 13 'flasher13 PB', 14 'Right Ramp', and 15 'mansion flasher'. Generic Fl13/Fl14/Fl15 names do not settle the shift, so manual labels and script annotations remain separate. Resolution path: an original-machine run of the ROM's own automatic Coil Test, which the retained play_a24 diagnostic trace shows firing 13, then 14, then 15, then 16 in that order, recording which physical flash group lights at each step; a machine owner can do that from the coin door. Unresolved.",
       "id": "conflict.outputs-13-through-15-script-comments-vs-manual",
       "path": "/outputs/coil.driver-13",
       "source_refs": [
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "description": "Pinned Playboy s11.c uniformly assigns #89-bulb PWM type to public 25-32. The rendered manual fits Outhole, Trough, VUK, Champagne Kicker, Drop Reset, Grotto Kicking and Knocker coils at 25-30/32 and no R07 branch at 31. Core numbering/timing and manual construction are retained without treating the type metadata as fitment authority.",
+      "description": "Pinned Playboy s11.c uniformly assigns #89-bulb PWM type to public 25-32. The rendered manual fits Outhole, Trough, VUK, Champagne Kicker, Drop Reset, Grotto Kicking and Knocker coils at 25-30/32 and no R07 branch at 31. Core numbering/timing and manual construction are retained without treating the type metadata as fitment authority. Resolution path: a corrected play_ output-typing block in upstream src/wpc/s11.c, which a PinMAME contributor can submit because the printed schematic already itemizes real coils by part type at 25-30 and 32; separately, whether public 31 carries any meaningful state needs a LibPinMAME gameplay trace, because the retained play_a24 automatic Coil Test cycle never asserted that address and records that absence as a stated limitation rather than as proof it is dead. Unresolved.",
       "id": "conflict.muxed-c-bank-core-bulb-type-vs-manual-coils",
       "path": "/outputs/coil.driver-25",
       "source_refs": [
@@ -73,7 +73,7 @@
       ]
     },
     {
-      "description": "The rendered output schematic appears to print Drop Target Reset as 23-1200, while the adjacent coil part-number chart prints one 12-1200 coil and no 23-1200. No correction is inferred.",
+      "description": "The rendered output schematic appears to print Drop Target Reset as 23-1200, while the adjacent coil part-number chart prints one 12-1200 coil and no 23-1200. No correction is inferred. Resolution path: a Data East parts catalogue entry for assembly 090-5008-00, the one assembly the same chart pairs with its single 12-1200 coil, or a photograph of the coil sleeve on an unrestored Drop Target Reset assembly showing which type is stamped on it. Unresolved.",
       "id": "conflict.drop-reset-coil-type-print",
       "path": "/outputs/coil.driver-29",
       "source_refs": [
@@ -82,7 +82,7 @@
       ]
     },
     {
-      "description": "Pinned Data East setSSSol maps the manual's SP4 left-pop-bumper circuit to public 19. The active table additionally maps public 19 to pseudo-lamp 119 and off-playfield FL19 as a background flasher. The proxy is recorded as a consumer side effect, not a physical coil location.",
+      "description": "Pinned Data East setSSSol maps the manual's SP4 left-pop-bumper circuit to public 19. The active table additionally maps public 19 to pseudo-lamp 119 and off-playfield FL19 as a background flasher. The proxy is recorded as a consumer side effect, not a physical coil location. Resolution path: a LibPinMAME gameplay-harness trace against a legal play_a24 ROM that starts a ball and closes the left pop-bumper switch while watching public 19; the retained play_a24 diagnostic run cannot show it, because this driver's ssSw mapping is empty and the ROM's automatic Coil Test never reaches 17-22. Unresolved.",
       "id": "conflict.special-solenoid-19-vs-background-proxy",
       "path": "/outputs/coil.driver-19",
       "source_refs": [
@@ -93,7 +93,7 @@
       ]
     },
     {
-      "description": "The manual's separate backbox inset clearly assigns bulbs to outputs 3, 4, 8, 9, 12, 14 and 15, while every retained VPX effect for those outputs is located in playfield space. Output 12 alone has four clear backbox symbols, equal to its complete schematic quantity, yet three playfield effect objects. Small 5/6-like and 13/16-like inset glyphs remain unassigned. Each output note preserves the certain minimum; VPX effects are not promoted into extra physical sockets.",
+      "description": "The manual's separate backbox inset clearly assigns bulbs to outputs 3, 4, 8, 9, 12, 14 and 15, while every retained VPX effect for those outputs is located in playfield space. Output 12 alone has four clear backbox symbols, equal to its complete schematic quantity, yet three playfield effect objects. Small 5/6-like and 13/16-like inset glyphs remain unassigned. Each output note preserves the certain minimum; VPX effects are not promoted into extra physical sockets. Resolution path: a higher-resolution scan of printed page 26's backbox inset from a second copy of this manual, resolving the small unassigned 5/6-like and 13/16-like glyphs, or a photograph or socket survey of an unrestored backbox counting the flash bulbs actually wired to each of outputs 3, 4, 8, 9, 12, 14 and 15. Unresolved.",
       "id": "conflict.flash-location-drawing-vs-playfield-proxies",
       "path": "/outputs/coil.driver-3",
       "source_refs": [

@@ -1,7 +1,7 @@
 {
   "conflicts": [
     {
-      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Ted Motor Direction'.",
+      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Ted Motor Direction'. Resolution path: pinned rs.c's own sTedMotorDrv 19 definition, which names public 19 for this game specifically, weighed against pinned core.h's WPC solenoid numbering, which puts the game-on state at 29-31 and never at 19, and confirmed by a LibPinMAME trace against a legal rs_l6 ROM observing public 19 while Ted's jaw motor is driven. Unresolved.",
       "id": "conflict.pinmame-output-solenoid-19-none",
       "path": "binding:pinmame.output.solenoid/19/None",
       "source_refs": [

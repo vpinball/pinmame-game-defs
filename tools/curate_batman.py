@@ -766,7 +766,14 @@ conflicts = [
             "per-game measurement, so the printed table is the better authority for what is "
             "fitted here, and the address is recorded unused - but pinned PinMAME will still "
             "accept and publish a value on it. Unresolved in the sense that no source states "
-            "whether the DE platform ever fitted the contact this bit was reserved for."
+            "whether the DE platform ever fitted the contact this bit was reserved for. "
+            "Resolution path: a photograph or continuity check of an unrestored cabinet's "
+            "WHT-RED CN10-8 return line, which this machine's own printed chart gives as "
+            "position 2's return, showing whether any contact lands on it; or a Data East "
+            "cabinet or coin-door parts page from a title whose own chart does name the "
+            "position - the Lethal Weapon 3 manual retained in this repository prints it "
+            "4th Coin - identifying the contact the shared macro bit was reserved for. "
+            "Unresolved."
         ),
         "source_refs": [CORE, MANUAL],
     },

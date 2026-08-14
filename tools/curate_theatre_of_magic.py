@@ -1624,7 +1624,13 @@ def conflicts() -> list[dict[str, Any]]:
 				"addresses 0 and 1 controlled not_applicable/cabinet_or_service devices despite the script's "
 				"visual behavior. Unresolved: whether any production unit's backbox strings genuinely double as a "
 				"visual dimming relay for playfield GI would require a LibPinMAME harness trace or a second "
-				"independent manual copy; this curation defaults to the manual's own wiring table."
+				"independent manual copy; this curation defaults to the manual's own wiring table. "
+				"Resolution path: run the machine's own general-illumination test on an unrestored "
+				"production unit and photograph what actually lights at the two steps for strings 1 and 2, "
+				"or continuity-check the printed Wht-Brn J120-7/Q18 and Wht-Org J120-8/Q10 drives into the "
+				"backbox insert panel against the playfield harness; a second printed copy of manual "
+				"16-50039-101 would independently confirm the Backbox/Playfield split of the wiring table. "
+				"Unresolved."
 			),
 			"source_refs": [MANUAL_SOURCE, VPX_SCRIPT_SOURCE],
 		},

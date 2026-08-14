@@ -1,7 +1,7 @@
 {
   "conflicts": [
     {
-      "description": "Legacy sources disagree on label: 'Ball Roll Tilt' versus 'Center Drop Target 1 (Left)'.",
+      "description": "Legacy sources disagree on label: 'Ball Roll Tilt' versus 'Center Drop Target 1 (Left)'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a LibPinMAME gameplay-harness trace against a legal skatebll ROM holding public switch 2 to see whether the ROM registers a tilt, and pulsing the drop-target bank reset coil at public solenoid 10 to see whether 2 clears with the rest of its bank -- pinned BY35_COMPORTS writes no cabinet input into public 2, so unlike public 7 and 16 that address can be held. Unresolved.",
       "id": "conflict.pinmame-input-switch-2-none",
       "path": "binding:pinmame.input.switch/2/None",
       "source_refs": [
@@ -10,7 +10,7 @@
       ]
     },
     {
-      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Upper Right Flipper'.",
+      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Upper Right Flipper'. Resolution path: this machine's own printed Bally Solenoid Identification Table, no copy of which is currently retained, or a boot-and-play LibPinMAME trace against a legal skatebll ROM observing whether public 19 holds continuously for the duration of a game like a flipper-enable relay or pulses with the upper right flipper; pinned core.h gives BY17/BY35 fifteen pulsed outputs and four hold outputs at 17-20 and no game-on address anywhere, and which device each hold output carries is a per-game question on this platform. Unresolved.",
       "id": "conflict.pinmame-output-solenoid-19-none",
       "path": "binding:pinmame.output.solenoid/19/None",
       "source_refs": [

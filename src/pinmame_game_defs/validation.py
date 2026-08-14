@@ -427,7 +427,7 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 		# conflicts do not count: they are recorded, not outstanding.
 		if "unresolved_conflicts" in missing:
 			_expect(
-				bool(_unresolved_conflicts(definition)),
+				bool(unresolved_conflicts(definition)),
 				"$.coverage.missing",
 				"unresolved_conflicts is listed but every conflict is ignored or absent",
 				errors,
@@ -706,7 +706,7 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 		# recreation. It stays in the record so the reader can account for the
 		# assertions it explains, and it does not gate author readiness.
 		_expect(
-			not _unresolved_conflicts(definition),
+			not unresolved_conflicts(definition),
 			"$.conflicts",
 			"author-ready definition cannot have unresolved conflicts",
 			errors,
@@ -714,7 +714,7 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 	return errors
 
 
-def _unresolved_conflicts(definition: dict[str, Any]) -> list[dict[str, Any]]:
+def unresolved_conflicts(definition: dict[str, Any]) -> list[dict[str, Any]]:
 	"""Conflicts that still need evidence.
 
 	`status` is absent on every record written before the field existed, and
@@ -737,15 +737,28 @@ def _unresolved_conflicts(definition: dict[str, Any]) -> list[dict[str, Any]]:
 def _is_ignored(conflict: Any) -> bool:
 	"""A conflict is ignored only if it says so *and* says why.
 
-	The reason has to contain a letter or a digit. `minLength: 1` accepts a
-	single space, and `.strip()` accepts U+200B ZERO WIDTH SPACE and every
-	other invisible that Unicode does not classify as whitespace — either one
-	lifts the author-ready gate behind a rationale that renders as nothing.
+	The reason has to contain an ASCII letter or digit. Three weaker rules were
+	tried and each let a rationale through that renders as nothing: `minLength:
+	1` accepts a single space; `.strip()` accepts U+200B ZERO WIDTH SPACE and
+	every other invisible Unicode does not classify as whitespace; and
+	`str.isalnum()` accepts default-ignorable *letters* such as U+115F HANGUL
+	CHOSEONG FILLER, which is a letter to Unicode and zero ink on screen.
+
+	ASCII is deliberate rather than lazy. The schema states the same rule as a
+	`pattern`, JSON Schema specifies ECMA-262 regex semantics, and `\\w` is
+	Unicode-aware in Python but ASCII-only in ECMAScript — so a Unicode-class
+	rule means two different things depending on which validator runs it. Every
+	rationale in this catalog, and the runbook that governs them, is English.
+	A rule that is identical in both engines is worth more here than one that
+	would accept a rationale written entirely in another script.
 	"""
 	if not isinstance(conflict, dict) or conflict.get("status") != "ignored":
 		return False
 	rationale = conflict.get("rationale")
-	return isinstance(rationale, str) and any(character.isalnum() for character in rationale)
+	return isinstance(rationale, str) and any(
+		"a" <= character <= "z" or "A" <= character <= "Z" or "0" <= character <= "9"
+		for character in rationale
+	)
 
 
 def _address_allowed(address: int, rules: list[dict[str, Any]]) -> bool:

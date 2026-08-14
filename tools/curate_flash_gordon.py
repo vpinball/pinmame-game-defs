@@ -1001,7 +1001,10 @@ CONFLICTS = [
 			"y-coordinates are likewise swapped relative to the switches of the same names; that "
 			"pair additionally sits inside "
 			"conflict.right-side-target-upper-lower-transposition and is not independently resolved "
-			"here.",
+			"here. Resolution path: this game's own printed playfield insert map traced to A5J2-14 "
+			"and A5J2-15, a photograph of an unrestored machine's A5J2 harness at those two pins, or "
+			"a lamp test on real hardware observing which outlane insert lights while public 15 and "
+			"public 31 are driven in turn. Unresolved.",
 		"source_refs": [MANUAL_SOURCE, TABLE_SOURCE, SCRIPT_SOURCE],
 	},
 	{
@@ -1018,7 +1021,10 @@ CONFLICTS = [
 			"placement, which means this definition deliberately places switch 12 on the table object "
 			"named sw15 and switch 15 on the object named sw12. Resolving it needs a photograph of an "
 			"unrestored machine with the two target harnesses traced, or a stuck-switch self-test on "
-			"real hardware.",
+			"real hardware. Resolution path: a photograph of an unrestored machine with the two "
+			"right-rail target harnesses traced back to the A6 switch matrix, or closing each of the "
+			"two targets by hand on real hardware during the machine's own Switch Assembly self test "
+			"and reading which number the score displays report for it. Unresolved.",
 		"source_refs": [MANUAL_SOURCE, TABLE_SOURCE, SCRIPT_SOURCE],
 	},
 	{
@@ -1033,7 +1039,12 @@ CONFLICTS = [
 			"as the five that do. The address is left unused with no spatial key rather than resolved "
 			"either way; a LibPinMAME harness trace observing whether a legal flashgdn ROM ever drives "
 			"public 100 outside the lamp self-test would settle whether the ROM believes the circuit "
-			"exists, though only a machine or a factory insert map can settle whether a bulb does.",
+			"exists, though only a machine or a factory insert map can settle whether a bulb does. "
+			"Resolution path: run the implemented LibPinMAME gameplay harness against a legal "
+			"flashgdn ROM and observe whether public lamp 100 is ever driven outside the lamp self "
+			"test, then a photograph of an unrestored machine's A9J3 harness at pin 11, or a factory "
+			"playfield insert map reaching that pin, to settle whether a bulb is fitted behind it. "
+			"Unresolved.",
 		"source_refs": [MANUAL_SOURCE, SCRIPT_SOURCE],
 	},
 ]

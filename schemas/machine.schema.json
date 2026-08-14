@@ -617,10 +617,10 @@
           "enum": ["unresolved", "ignored"]
         },
         "rationale": {
-          "description": "Why an ignored conflict cannot affect a recreation. Required when status is ignored, and must contain a letter or a digit: minLength alone accepts a single space, and a non-whitespace test still accepts invisibles such as U+200B.",
+          "description": "Why an ignored conflict cannot affect a recreation. Required when status is ignored, and must contain an ASCII letter or digit. minLength alone accepts a single space; a non-whitespace test still accepts invisibles such as U+200B; and a Unicode letter test still accepts default-ignorable letters such as U+115F. ASCII also keeps this pattern identical under Python re and ECMA-262, where \\w disagrees.",
           "type": "string",
           "minLength": 1,
-          "pattern": "[^\\W_]"
+          "pattern": "[A-Za-z0-9]"
         }
       },
       "allOf": [

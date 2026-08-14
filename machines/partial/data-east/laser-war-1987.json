@@ -1,7 +1,7 @@
 {
   "conflicts": [
     {
-      "description": "The community technical chart's switch matrix prints Laser Kick, while the retained runtime calls the same address Kickback. The combined label preserves both terms.",
+      "description": "The community technical chart's switch matrix prints Laser Kick, while the retained runtime calls the same address Kickback. The combined label preserves both terms. Resolution path: a legible copy of Data East's own printed Laser War switch list, which the retained 42-page image-only manual archive cannot supply because its typeset chart text is absent from the page images, would give the factory name for this address. Unresolved.",
       "id": "conflict.switch-17-name",
       "path": "/inputs/switch.matrix-17/label",
       "source_refs": [
@@ -34,7 +34,7 @@
       "status": "ignored"
     },
     {
-      "description": "The printed lamp matrix assigns address 8 to Return To Base. The retained script has no lamp-8 callback and uses its l8a-v tower helpers under solenoid 5 instead, so no physical lamp-8 placement is asserted.",
+      "description": "The printed lamp matrix assigns address 8 to Return To Base. The retained script has no lamp-8 callback and uses its l8a-v tower helpers under solenoid 5 instead, so no physical lamp-8 placement is asserted. Resolution path: a photograph of an unrestored playfield showing where the Return To Base insert sits and that the address-8 branch feeds it, or a second independently authored known-working Laser War recreation that binds lamp 8 to its own object. Unresolved.",
       "id": "conflict.lamp-8-runtime-binding",
       "path": "/outputs/lamp.matrix-8",
       "source_refs": [
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "description": "The community technical chart literally prints Red Target (Right) at lamp 26, duplicating lamp 18. The retained table places amber l26 beside the yellow target bank and the same chart names switch 32 Yellow Target (Right), so the structured semantic label remains Yellow Target (Right) while the printed disagreement is preserved verbatim.",
+      "description": "The community technical chart literally prints Red Target (Right) at lamp 26, duplicating lamp 18. The retained table places amber l26 beside the yellow target bank and the same chart names switch 32 Yellow Target (Right), so the structured semantic label remains Yellow Target (Right) while the printed disagreement is preserved verbatim. Resolution path: a corrected revision of the 2021 Inkochnito technical chart from its author, or a photograph of an unrestored playfield showing which target insert the address-26 lamp branch actually feeds. Unresolved.",
       "id": "conflict.lamp-26-printed-label-duplicate",
       "path": "/outputs/lamp.matrix-26/label",
       "source_refs": [
@@ -53,7 +53,7 @@
       ]
     },
     {
-      "description": "The community technical chart calls Mars Yellow device type 23-800, while the otherwise matching Mars Red and Mars Blue rows say #89. Pinned s11.c independently treats the yellow, red and blue Mars flashers as one two-bulb-per-colour group, so kind flasher is the documented resolution; the printed 23-800 disagreement is retained verbatim and remains first-class provenance.",
+      "description": "The community technical chart calls Mars Yellow device type 23-800, while the otherwise matching Mars Red and Mars Blue rows say #89. Pinned s11.c independently treats the yellow, red and blue Mars flashers as one two-bulb-per-colour group, so kind flasher is the documented resolution; the printed 23-800 disagreement is retained verbatim and remains first-class provenance. Resolution path: a photograph of an unrestored playfield's Mars Yellow position showing whether the chart's Vio-Blu CPU CN11-7 branch feeds #89 bulbs like its Mars Red and Mars Blue partners or a 23-800 coil, or a legible copy of Data East's own printed coil table for this game, which the retained image-only manual archive does not supply. Unresolved.",
       "id": "conflict.mars-yellow-printed-device-type",
       "path": "/outputs/coil.driver-6/kind",
       "source_refs": [
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "description": "The community technical chart types public 4, 5, 7, and 8 as additional #89 flashers, public 6 as a disputed 23-800 Mars circuit, public 29 as a 23-800 knocker, and public 30-32 as unfitted. Pinned s11.c instead applies #89-bulb PWM typing only to public 1-3 and then to all public 25-32. The semantic mapping follows the game-specific chart and retained runtime while preserving the emulator output-typing disagreement.",
+      "description": "The community technical chart types public 4, 5, 7, and 8 as additional #89 flashers, public 6 as a disputed 23-800 Mars circuit, public 29 as a 23-800 knocker, and public 30-32 as unfitted. Pinned s11.c instead applies #89-bulb PWM typing only to public 1-3 and then to all public 25-32. The semantic mapping follows the game-specific chart and retained runtime while preserving the emulator output-typing disagreement. Resolution path: a corrected lwar_ output-typing block in upstream src/wpc/s11.c, which a PinMAME contributor can submit against the chart's printed per-row device types, together with a LibPinMAME gameplay trace against a legal lwar_a83 ROM observing whether public 30-32 ever carry state, since the chart proves rows 6R, 7R and 8R carry no physical load but PinMAME can still publish those addresses. Unresolved.",
       "id": "conflict.mux-bank-output-typing",
       "path": "/outputs/coil.driver-*",
       "source_refs": [
@@ -73,7 +73,7 @@
       ]
     },
     {
-      "description": "The community technical chart numbers Blue Pop, Yellow Pop, Left Sling, Red Pop, Right Sling and the unfitted driver as Coil No. 17-22. It does not print SP identities. Interpreting pinned s11.c's shared SS handler comments and Data East offsets produces a different physical-device order at public 17-22. The definition follows the game-specific chart as a conflicted working mapping and marks all six outputs and five mechanisms conflicted until a LibPinMAME trace observes the public pulses.",
+      "description": "The community technical chart numbers Blue Pop, Yellow Pop, Left Sling, Red Pop, Right Sling and the unfitted driver as Coil No. 17-22. It does not print SP identities. Interpreting pinned s11.c's shared SS handler comments and Data East offsets produces a different physical-device order at public 17-22. The definition follows the game-specific chart as a conflicted working mapping and marks all six outputs and five mechanisms conflicted until a LibPinMAME trace observes the public pulses. Resolution path: that trace has to be a gameplay run rather than a diagnostic sweep - boot a legal lwar_a83 ROM in the implemented harness, start a ball, and close each pop-bumper and slingshot switch in turn while watching public 17-22 - because the retained Data East alpha Coil Test traces show the ROM's automatic cycle never pulsing those addresses. Unresolved.",
       "id": "conflict.special-solenoid-public-mapping",
       "path": "/outputs/coil.driver-17..22",
       "source_refs": [
@@ -82,7 +82,7 @@
       ]
     },
     {
-      "description": "PinMAME synthesizes public power/hold states 45-48 for FLIP4746 even though Laser War's physical flippers use cabinet-wired dual-winding assemblies rather than four distinct CPU driver outputs. The printed EOS labels and retained button-state callbacks do not establish a winding-by-winding public mapping, so all four virtual states remain conflicted.",
+      "description": "PinMAME synthesizes public power/hold states 45-48 for FLIP4746 even though Laser War's physical flippers use cabinet-wired dual-winding assemblies rather than four distinct CPU driver outputs. The printed EOS labels and retained button-state callbacks do not establish a winding-by-winding public mapping, so all four virtual states remain conflicted. Resolution path: a LibPinMAME harness trace against a legal lwar_a83 ROM holding each flipper button and reading the idle and held state of 45-48, paired with a bench continuity check on an unrestored machine's dual-winding flipper assemblies showing which winding the button feed energises and which remains energised past end of stroke. Unresolved.",
       "id": "conflict.synthetic-flipper-public-state",
       "path": "/outputs/coil.driver-45..48",
       "source_refs": [

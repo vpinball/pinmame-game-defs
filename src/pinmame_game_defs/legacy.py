@@ -130,6 +130,29 @@ def _names_one_device(first: str, second: str) -> bool:
 	)
 
 
+def _conflict_resolution_path(group: str, device_number: int) -> str:
+	"""The trailing `Resolution path:` clause of a generated label conflict.
+
+	Every conflict this importer emits has the same shape: a legacy platform
+	record's blanket cabinet/address map on one side and one game record's own
+	label on the other, both claiming one public address. So the evidence that
+	settles it is the same shape too, even though the decisive item differs by
+	platform -- name all three rather than guess which one this machine needs.
+
+	A conflict with no resolution path asks a future curator to rediscover the
+	question before they can start on the answer, which is why the clause is
+	generated here instead of being added by hand afterwards.
+	"""
+	return (
+		f"Resolution path: this machine's own printed switch or solenoid table for {group} {device_number}, "
+		"read against the pinned PinMAME driver's own address definitions for this game and the platform "
+		"input-port declaration its hardware generation uses, since one side of this disagreement is a "
+		"legacy platform record's blanket cabinet map and the other is one game's own label; failing that, "
+		"a LibPinMAME harness trace against a legal ROM for this machine observing what the address does. "
+		"Unresolved."
+	)
+
+
 def _repository_revision(repository_root: Path) -> str:
 	try:
 		result = subprocess.run(
@@ -314,7 +337,7 @@ class _DeviceBuilder:
 						{
 							"id": unique_identifier("conflict", f"{group}-{device_number}-{channel}", {conflict["id"] for conflict in self.conflicts}),
 							"path": f"binding:{group}/{device_number}/{channel}",
-							"description": f"Legacy sources disagree on label: {existing['label']!r} versus {label!r}.",
+							"description": f"Legacy sources disagree on label: {existing['label']!r} versus {label!r}. {_conflict_resolution_path(group, device_number)}",
 							"source_refs": refs,
 						}
 					)

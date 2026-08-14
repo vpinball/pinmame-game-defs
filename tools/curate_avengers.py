@@ -189,7 +189,7 @@ def conflicts(limited_edition: bool, manual: str, script: str) -> list[dict[str,
 	return [{
 		"id": "conflict.le-upper-right-orbit-address",
 		"path": "inputs[pinmame.input.switch:58|61]",
-		"description": "The official LE physical switch-location drawing marks the disputed upper-right-orbit coordinate as switch 61, while the same manual's switch matrix grid identifies switch 58 as RIGHT ORBIT and the known-working LE VPX script drives sw58 without a sw61 handler. The address mapping cannot be reconciled without guessing, so both spatial placements and the unused classification for 61 are withheld.",
+		"description": "The official LE physical switch-location drawing marks the disputed upper-right-orbit coordinate as switch 61, while the same manual's switch matrix grid identifies switch 58 as RIGHT ORBIT and the known-working LE VPX script drives sw58 without a sw61 handler. The address mapping cannot be reconciled without guessing, so both spatial placements and the unused classification for 61 are withheld. Resolution path: a LibPinMAME Switch Test trace against a legal avs_170h ROM holding public 58 and then 61 and recording the name the ROM prints for each, which shows whether this firmware names any device at 61 at all; or, decisively, a continuity check by an owner or operator with the playfield raised, reading whether the upper-right-orbit switch's return lead is the TAN-RED wire on J12-P8 recorded here for 58 or the TAN-GRN wire on J12-P4 recorded here for 61. Unresolved.",
 		"source_refs": [manual, script],
 	}]
 

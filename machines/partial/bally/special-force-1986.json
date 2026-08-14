@@ -1,7 +1,7 @@
 {
   "conflicts": [
     {
-      "description": "Legacy sources disagree on label: 'Ball Roll Tilt' versus 'Chopper Top'.",
+      "description": "Legacy sources disagree on label: 'Ball Roll Tilt' versus 'Chopper Top'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a LibPinMAME gameplay-harness trace against a legal specforc ROM holding public switch 2 during play to see whether the ROM registers a tilt rather than reporting a playfield device -- pinned BY35_COMPORTS writes no cabinet input into public 2, so unlike public 7 and 16 that address can be held. Unresolved.",
       "id": "conflict.pinmame-input-switch-2-none",
       "path": "binding:pinmame.input.switch/2/None",
       "source_refs": [
@@ -10,7 +10,7 @@
       ]
     },
     {
-      "description": "Legacy sources disagree on label: 'Tilt' versus 'Right Magna Save Button'.",
+      "description": "Legacy sources disagree on label: 'Tilt' versus 'Right Magna Save Button'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a continuity check on the switch harness at that matrix position; a harness hold cannot settle it, because pinned BY35_COMPORTS puts Ball Tilt on switch column 1 bit 6 and SWITCH_UPDATE(by35) rewrites public 7 from the cabinet input port every frame on every BY35 game. Unresolved.",
       "id": "conflict.pinmame-input-switch-7-none",
       "path": "binding:pinmame.input.switch/7/None",
       "source_refs": [
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "description": "Legacy sources disagree on label: 'Slam Tilt' versus 'Standup Target'.",
+      "description": "Legacy sources disagree on label: 'Slam Tilt' versus 'Standup Target'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a continuity check on the switch harness at that matrix position; a harness hold cannot settle it, because pinned BY35_COMPORTS puts Slam Tilt on switch column 2 bit 7 and SWITCH_UPDATE(by35) rewrites public 16 from the cabinet input port every frame on every BY35 game. Unresolved.",
       "id": "conflict.pinmame-input-switch-16-none",
       "path": "binding:pinmame.input.switch/16/None",
       "source_refs": [
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Unused / Empty'.",
+      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Unused / Empty'. Resolution path: this machine's own printed Bally Solenoid Identification Table, no copy of which is currently retained, or a boot-and-play LibPinMAME trace against a legal specforc ROM observing whether public 19 holds continuously for the duration of a game like a flipper-enable relay or never asserts at all; pinned core.h gives BY17/BY35 fifteen pulsed outputs and four hold outputs at 17-20 and no game-on address anywhere, and which device each hold output carries is a per-game question on this platform. Unresolved.",
       "id": "conflict.pinmame-output-solenoid-19-none",
       "path": "binding:pinmame.output.solenoid/19/None",
       "source_refs": [

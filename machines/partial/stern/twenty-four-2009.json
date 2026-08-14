@@ -1,7 +1,7 @@
 {
   "conflicts": [
     {
-      "description": "The pinned v2.3.1 script and exact table identify Q21/Q23/Q25/Q30 as the four suitcase stepper drive positions, but no authoritative source establishes their A/B/C/D phase order or individual wiring. The ordinary coil test skips these decoder holes and the suitcase menu capture proves only that a separate test exists.",
+      "description": "The pinned v2.3.1 script and exact table identify Q21/Q23/Q25/Q30 as the four suitcase stepper drive positions, but no authoritative source establishes their A/B/C/D phase order or individual wiring. The ordinary coil test skips these decoder holes and the suitcase menu capture proves only that a separate test exists. Resolution path: a LibPinMAME gameplay-harness run against a legal twenty4_150 ROM that enters the dedicated Suitcase Motor Test already located in the ROM's auxiliary diagnostic menu and records the assertion order of public outputs 21, 23, 25 and 30 across a full travel cycle, or a continuity check by an owner or operator on an unrestored machine's 511-5072-00 24 V stepper and its 036-5634-11-A7 cable. Unresolved.",
       "id": "conflict.suitcase-stepper-phase-order",
       "path": "mechanisms[mechanism.suitcase].behavior",
       "source_refs": [
@@ -13,7 +13,7 @@
       ]
     },
     {
-      "description": "The ROM diagnostics establish switch labels and state behavior, and Stern page 43 identifies two suitcase microswitch part types, but the available official material does not establish factory contact construction, normal state, and mounting/seat for every used playfield contact. Used matrix records therefore retain switch_type unknown.",
+      "description": "The ROM diagnostics establish switch labels and state behavior, and Stern page 43 identifies two suitcase microswitch part types, but the available official material does not establish factory contact construction, normal state, and mounting/seat for every used playfield contact. Used matrix records therefore retain switch_type unknown. Resolution path: a complete official Stern service chart or playfield parts list that names a switch part number per numbered contact, the way the retained partial parts book already does on page 43 for the suitcase's 180-5119-00 and 180-5119-02 microswitches, or a close-up parts survey of an unrestored playfield by an owner recording the fitted contact type at each used address; no ROM diagnostic can supply it, because the Switch Test reports labels and state only. Unresolved.",
       "id": "conflict.playfield-contact-construction",
       "path": "inputs[*].physical",
       "source_refs": [
@@ -24,7 +24,7 @@
       ]
     },
     {
-      "description": "The exact VPX exposes Drain and BallRelease but no SW18-SW22 contact objects. The ordered five-point projection preserves controller order and shared-assembly geometry with about +/-0.03 normalized practical uncertainty, but not physical seat coordinates or contact/optic construction.",
+      "description": "The exact VPX exposes Drain and BallRelease but no SW18-SW22 contact objects. The ordered five-point projection preserves controller order and shared-assembly geometry with about +/-0.03 normalized practical uncertainty, but not physical seat coordinates or contact/optic construction. Resolution path: a ball-trough assembly drawing or parts page from a complete Stern 24 book that seats SW18-SW22 individually, an underside photograph of an unrestored machine's trough with the five contacts and their board visible, or a second independently authored known-working 24 recreation that models each trough contact as its own object rather than the Drain/BallRelease pair the retained table exposes. Unresolved.",
       "id": "conflict.hidden-trough-seats",
       "path": "inputs[pinmame.input.switch 18-22].spatial",
       "source_refs": [
@@ -34,7 +34,7 @@
       ]
     },
     {
-      "description": "The ROM diagnostic groups lamps 72-75 as CTU and 76-78 as MOLE without establishing individual face order; the exact script's Q27 description contains the tentative 'under jet?' wording. Bindings and coordinates are retained, but physical naming is not fully authoritative.",
+      "description": "The ROM diagnostic groups lamps 72-75 as CTU and 76-78 as MOLE without establishing individual face order; the exact script's Q27 description contains the tentative 'under jet?' wording. Bindings and coordinates are retained, but physical naming is not fully authoritative. Resolution path: a photograph of an unrestored 24 playfield showing the CTU and MOLE insert legends in their physical order, taken while the ROM's own Single Lamp Test drives 72-78 one address at a time on that machine so each face can be read off against its address, plus a photograph or complete Stern coil chart locating the Q27 flasher socket; the retained partial parts book carries no lamp-location or flash-lamp drawing, and the captured Single Lamp Test sweep names the two insert groups only. Unresolved.",
       "id": "conflict.lamp-face-and-q27-naming",
       "path": "outputs[pinmame.output.lamp 72-78] and outputs[pinmame.output.solenoid 27]",
       "source_refs": [

@@ -1355,7 +1355,16 @@ def conflicts() -> list[dict[str, Any]]:
 				"mirrors S10/Right Flipper) per the source-code mirror logic, not per PinMAME's "
 				"'Lower Right/Lower Left' constant names. Unresolved: the exact value of the script's "
 				"own sLRFlipper/sLLFlipper symbols, and therefore whether the retained table's visual "
-				"flipper handlers are internally consistent with this physical mapping."
+				"flipper handlers are internally consistent with this physical mapping. "
+				"Resolution path: read the numeric definitions of sLRFlipper and sLLFlipper out of the "
+				"two VPinMAME script libraries the retained script itself loads -- controller.vbs at "
+				"script line 130 and Capcom.VBS at script line 134 -- neither of which is present in "
+				"the retained extraction or in either pinned VPX script corpus, so a curator must "
+				"obtain them from the Visual Pinball/VPinMAME distribution this table requires; "
+				"independently, a LibPinMAME gameplay-harness run against a legal bbb109 ROM that "
+				"closes the driver's own FLIP_SWNO(5,6) flipper-button switches one at a time while "
+				"watching public 9, 10, 45 and 47 together shows which physical circuit each mirror "
+				"address carries. Unresolved."
 			),
 			"source_refs": [CORE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE, SCHEMATIC_SOURCE],
 		},
@@ -1372,7 +1381,14 @@ def conflicts() -> list[dict[str, Any]]:
 				"Left/Right/Upper-Right). Address 35 therefore mirrors an unrelated device (the Eject "
 				"Hole coil, already separately modeled at address 12) purely as an artifact of "
 				"PinMAME's fixed positional mirror assumption, not a genuine flipper address on this "
-				"specific game."
+				"specific game. "
+				"Resolution path: a LibPinMAME gameplay-harness trace against a legal bbb109 ROM "
+				"watching public 12 and 35 together while the eject hole fires, proving that 35 only "
+				"ever repeats 12 and never carries drive of its own, or an upstream change removing "
+				"capcom.c's unconditional 9/10/11/12 mirror, which the driver's own comment already "
+				"asks for; no photograph or teardown can settle this one, because the disagreement is "
+				"about what PinMAME calls a synthetic address rather than about the machine's wiring, "
+				"on which the manual and schematic sheet 7 already agree. Unresolved."
 			),
 			"source_refs": [CORE_SOURCE, MANUAL_SOURCE, SCHEMATIC_SOURCE],
 		},
@@ -1390,7 +1406,16 @@ def conflicts() -> list[dict[str, Any]]:
 				"Whether the Tube Dancer's mechanical pop/bounce action is actually solenoid-driven "
 				"through address 22 (despite the bulb-shaped schematic symbol) or is purely "
 				"spring/gravity return with address 22 driving only lamp effects is not resolved by "
-				"any source available to this curation."
+				"any source available to this curation. "
+				"Resolution path: a LibPinMAME gameplay-harness trace against a legal bbb109 ROM "
+				"comparing address 22's drive pattern against the confirmed coil addresses and "
+				"against the confirmed flasher addresses 21 and 23-26, since a kicking coil and a "
+				"flasher bulb are not driven with the same pulse shape, or a teardown photograph of "
+				"the Tube Lady Assembly showing whether the item-1A coil on printed page 108 is wired "
+				"to the S22 branch; the physical half of that is a weak path on this machine, because "
+				"Big Bang Bar barely reached production and an unrestored example to photograph is "
+				"unlikely to be found, so the harness trace is the part a curator can realistically "
+				"obtain. Unresolved."
 			),
 			"source_refs": [MANUAL_SOURCE, SCHEMATIC_SOURCE],
 		},
@@ -1407,7 +1432,14 @@ def conflicts() -> list[dict[str, Any]]:
 				"halves together as if they were one mechanism (DivTubef.RotateToEnd alongside "
 				"DivTube.isDropped/DivTube1.isDropped in the same Sub), so this is not a case of two "
 				"unrelated devices sharing a name by coincidence. No coordinate for either address is "
-				"promoted to a validated placement."
+				"promoted to a validated placement. "
+				"Resolution path: read the numbered playfield-location diagram printed beside the "
+				"Ref. table on the retained manual's printed page 82 (PDF page 86) for Ref. 14 and "
+				"15 and commit it as a rendered crop, which locates both diverters from the machine's "
+				"own document rather than from the retained table's inconsistent objects, and "
+				"corroborate it with a second independent known-working Big Bang Bar recreation whose "
+				"SolRDivert1/SolRDivert2 objects agree; the manual is already retained here, so this "
+				"needs no access to a physical machine. Unresolved."
 			),
 			"source_refs": [VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE],
 		},

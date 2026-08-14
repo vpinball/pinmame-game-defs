@@ -1275,7 +1275,12 @@ def conflicts() -> list[dict[str, Any]]:
 				"scoring-value text) was available to settle this outright. The promoted definition's label "
 				"uses \"Gangway 100,000\" on the strength of the award-ladder pattern, but the disagreement "
 				"itself is unresolved and the smaller-value reading has not been ruled out as a genuine "
-				"factory print. Unresolved."
+				"factory print. Resolution path: a photograph of an unrestored FunHouse playfield's "
+				"gangway-lane inserts, whose printed legends are the physical object both manual pages are "
+				"describing, or a second printed revision of the manual whose 2-36 and 2-37 agree; "
+				"independently, a LibPinMAME gameplay-harness trace against a legal fh_l9 ROM reading the "
+				"alphanumeric score displays as the gangway lane is collected with lamp 12 lit would show "
+				"which value the ROM actually awards. Unresolved."
 			),
 			"source_refs": [MANUAL_SOURCE, MANUAL_SUPPORT_SOURCE],
 		},
@@ -1295,7 +1300,13 @@ def conflicts() -> list[dict[str, Any]]:
 				"remain a direct disagreement about which physical region each address illuminates. The "
 				"promoted definition uses the manual's printed label as the device name (physical-construction "
 				"authority) while using the script's real implemented objects for spatial placement (runtime "
-				"authority) and discloses the disagreement in each device's notes. Unresolved."
+				"authority) and discloses the disagreement in each device's notes. Resolution path: run the "
+				"machine's own general-illumination test on an unrestored production unit and photograph "
+				"which region lights at each of the five steps, or continuity-check the feed and return "
+				"pairs printed on page 3-17 -- Feed 2 Violet on J120-6/J119-3/J121-6 through Q10, Feed 5 "
+				"Orange on J120-2/J121-2 through Q16 -- into the bulb groups they actually reach, which also "
+				"fixes the feed-number-to-public-address correspondence that page leaves assumed. "
+				"Unresolved."
 			),
 			"source_refs": [MANUAL_SOURCE, VPX_SCRIPT_SOURCE],
 		},

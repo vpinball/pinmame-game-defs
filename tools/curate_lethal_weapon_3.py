@@ -904,7 +904,12 @@ conflicts = [
             "half, while the same manual's printed-page-28 location drawing has a clearly legible "
             "3L callout in the lower-right shooter-housing/cabinet extension. The drawing does not "
             "name the device or expose a recoverable leader termination, and the retained script "
-            "has no SolCallback(3), so neither fitted nor unused is asserted."
+            "has no SolCallback(3), so neither fitted nor unused is asserted. "
+            "Resolution path: a photograph or parts survey of an unrestored machine's "
+            "lower-right shooter-housing and cabinet extension showing whether anything is "
+            "wired to drive 3's printed GRY-ORN CN-11 branch at that location, or a "
+            "higher-resolution scan of printed page 28 from a second copy of this manual "
+            "that resolves where the 3L leader terminates. Unresolved."
         ),
         "source_refs": [MANUAL, SCRIPT_REF],
     },
@@ -915,7 +920,10 @@ conflicts = [
             "The manual prints three physical No. 89 flash lamps on right-side drive 6, while the "
             "known-working script binds four in-bounds Light effect objects (F130, F130a, F130b, "
             "F130c). The four recorded coordinates are presentation effects rather than four claimed "
-            "physical sockets; an original-machine socket survey is needed to select the three bulbs."
+            "physical sockets; an original-machine socket survey is needed to select the three bulbs. "
+            "Resolution path: that survey is a photograph of an unrestored playfield counting the "
+            "No. 89 sockets wired to drive 6's right-side branch and recording where each one sits, "
+            "which a machine owner or restorer can supply. Unresolved."
         ),
         "source_refs": [MANUAL, TABLE, SCRIPT_REF],
     },

@@ -1,7 +1,7 @@
 {
   "conflicts": [
     {
-      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Flasher F19'.",
+      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Flasher F19'. Resolution path: this machine's own printed Solenoid/Flasher table, no copy of which is currently retained, or a LibPinMAME trace against a legal dw_l2 ROM observing whether public 19 pulses like a flasher or holds for the duration of a game; pinned core.h's WPC solenoid numbering puts the standard driver range at 1-28 and the game-on state at 29-31, and wpc.c records that a Fliptronic-or-later board has no game-on relay at all, so no WPC generation places one at 19. Unresolved.",
       "id": "conflict.pinmame-output-solenoid-19-none",
       "path": "binding:pinmame.output.solenoid/19/None",
       "source_refs": [

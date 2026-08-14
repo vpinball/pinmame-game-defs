@@ -1,7 +1,7 @@
 {
   "conflicts": [
     {
-      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Tilt'.",
+      "description": "Legacy sources disagree on label: 'ROM Started' versus 'Tilt'. Resolution path: pinned s11.h's S11_GAMEONSOL 23 and core.h's S9/S11 solenoid numbering, which both make public 23 the flipper and switched-solenoid enable line rather than a tilt output, read against this machine's own printed solenoid table, no copy of which is currently retained; a LibPinMAME trace against a legal diner_l4 ROM observing whether public 23 holds for the duration of a game and drops at game over would settle it independently. Unresolved.",
       "id": "conflict.pinmame-output-solenoid-23-none",
       "path": "binding:pinmame.output.solenoid/23/None",
       "source_refs": [

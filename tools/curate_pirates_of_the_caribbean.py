@@ -1958,7 +1958,12 @@ def conflicts() -> list[dict[str, Any]]:
 				"and Plus at -1, which is what this record uses. It is recorded as a first-class conflict for "
 				"provenance completeness in the same spirit as the naming defect already recorded for "
 				"Williams Bram Stoker's Dracula, even though both addresses are coin-door service buttons "
-				"and neither can affect an authored playfield device. Unresolved in pinned source."
+				"and neither can affect an authored playfield device. Unresolved in pinned source. "
+				"Resolution path: an upstream correction to sam.c so its descriptive dedswitch_upper_r "
+				"comment block agrees with its own SAM_COMPORTS assignment, which any contributor can open "
+				"as a pull request against vpinball/pinmame and a maintainer can merge; no physical "
+				"evidence is outstanding, because this machine's own dedicated-switch block already "
+				"settles which red button is which. Unresolved."
 			),
 			"source_refs": [CORE_SOURCE, MANUAL_SOURCE],
 		},

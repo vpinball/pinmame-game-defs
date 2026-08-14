@@ -870,7 +870,12 @@ def conflict_records() -> list[dict[str, Any]]:
 				"\"Bally Midway\" imprint that did not exist until 1983-84, not the physical machine's "
 				"release year. This definition uses 1981, matching the pinned driver and the pre-existing "
 				"stub identity; the table author's \"1980\" is treated as an informal/incorrect dating "
-				"rather than a competing authority. See knowledge/bally/eight-ball-deluxe-1981.md."
+				"rather than a competing authority. See knowledge/bally/eight-ball-deluxe-1981.md. "
+				"Resolution path: the IPDB machine entry for this title, read through the headful "
+				"browser session IPDB's Cloudflare gate requires, or a first-printing copy of this "
+				"manual carrying the original Bally imprint rather than the later Bally Midway "
+				"reprint stamp; either dates the physical machine independently of the pinned driver "
+				"and of the table author's title text. Unresolved."
 			),
 			"source_refs": [VPX_TABLE_SOURCE, CORE_SOURCE, MANUAL_SOURCE],
 		},

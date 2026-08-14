@@ -1,7 +1,7 @@
 {
   "conflicts": [
     {
-      "description": "Legacy sources disagree on label: 'Ball Roll Tilt' versus 'Drop Target 2 (Left Bank)'.",
+      "description": "Legacy sources disagree on label: 'Ball Roll Tilt' versus 'Drop Target 2 (Left Bank)'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a LibPinMAME gameplay-harness trace against a legal beatclck ROM holding public switch 2 to see whether the ROM registers a tilt, and pulsing the drop-target bank reset coil at public solenoid 11 to see whether 2 clears with the rest of its bank -- pinned BY35_COMPORTS writes no cabinet input into public 2, so unlike public 7 and 16 that address can be held. Unresolved.",
       "id": "conflict.pinmame-input-switch-2-none",
       "path": "binding:pinmame.input.switch/2/None",
       "source_refs": [
@@ -10,7 +10,7 @@
       ]
     },
     {
-      "description": "Legacy sources disagree on label: 'Tilt' versus 'Drop Target 6 (Left Bank)'.",
+      "description": "Legacy sources disagree on label: 'Tilt' versus 'Drop Target 6 (Left Bank)'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a continuity check on the switch harness at that matrix position; a harness hold cannot settle it, because pinned BY35_COMPORTS puts Ball Tilt on switch column 1 bit 6 and SWITCH_UPDATE(by35) rewrites public 7 from the cabinet input port every frame on every BY35 game. Unresolved.",
       "id": "conflict.pinmame-input-switch-7-none",
       "path": "binding:pinmame.input.switch/7/None",
       "source_refs": [
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "description": "Legacy sources disagree on label: 'Slam Tilt' versus 'Wire Trigger'.",
+      "description": "Legacy sources disagree on label: 'Slam Tilt' versus 'Wire Trigger'. Resolution path: this machine's own printed Bally switch table, no copy of which is currently retained, or a continuity check on the switch harness at that matrix position; a harness hold cannot settle it, because pinned BY35_COMPORTS puts Slam Tilt on switch column 2 bit 7 and SWITCH_UPDATE(by35) rewrites public 16 from the cabinet input port every frame on every BY35 game. Unresolved.",
       "id": "conflict.pinmame-input-switch-16-none",
       "path": "binding:pinmame.input.switch/16/None",
       "source_refs": [
