@@ -49,11 +49,11 @@ Devices: `lamp.matrix-1`, `lamp.matrix-2`, `lamp.matrix-3`, `lamp.matrix-4`, `la
 
 ### unresolved_conflicts
 
-Five machine-specific source disagreements remain first-class and promotion-critical.
+Three machine-specific source disagreements remain first-class and promotion-critical. The two flipper end-of-stroke naming records are recorded as ignored: the answer cannot reach a recreation, so they are not listed here.
 
 Would resolve: Corrected upstream sources or independent original-machine traces that explicitly settle each conflicting state.
 
-Devices: `conflict.left-eos-vs-public-button-state`, `conflict.right-eos-vs-public-button-state`, `conflict.shared-port-position-2-vs-unfitted`, `conflict.special-coil-right-center-location`, `conflict.lamp-25-playfield-vs-table-backglass`
+Devices: `conflict.shared-port-position-2-vs-unfitted`, `conflict.special-coil-right-center-location`, `conflict.lamp-25-playfield-vs-table-backglass`
 
 ## Resolver controls
 

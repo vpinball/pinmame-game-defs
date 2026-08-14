@@ -61,7 +61,7 @@ Status remains `partial`; `coverage.missing` is [`output_semantics`, `mechanism_
 - `mechanism_behavior`: hidden Grotto transfer geometry and hardware-triggered special-coil pulse behavior are absent.
 - `polarity`: no original-machine trace reconciles cabinet button/EOS, K1 relay, and raw versus decoded output states.
 - `spatial_placement`: table objects are presentation candidates, flash groups lack socket surveys, and seven routed PINBALL lamps are not located by the manual's drawing at all.
-- `unresolved_conflicts`: ten source disagreements remain first-class.
+- `unresolved_conflicts`: eight source disagreements remain first-class. Two further records, the flipper end-of-stroke naming pair, are kept as ignored and do not block.
 
 ## Recreation boundary
 

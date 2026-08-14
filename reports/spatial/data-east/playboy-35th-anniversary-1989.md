@@ -11,7 +11,7 @@ Both extents are asserted, and no other machine geometry was reused.
 
 ## Promotion decision
 
-Keep partial. The record enumerates every public address and resolves the major topology, but output annotations/typing, physical polarity, special-coil behavior, lamp socket placement, and ten preserved conflicts prevent author-ready promotion.
+Keep partial. The record enumerates every public address and resolves the major topology, but output annotations/typing, physical polarity, special-coil behavior, lamp socket placement, and eight unresolved conflicts prevent author-ready promotion.
 
 ## Blockers
 
@@ -49,11 +49,11 @@ Devices: `lamp.matrix-1`, `lamp.matrix-2`, `lamp.matrix-3`, `lamp.matrix-4`, `la
 
 ### unresolved_conflicts
 
-Ten machine-specific source disagreements remain first-class and promotion-critical.
+Eight machine-specific source disagreements remain first-class and promotion-critical. The two flipper end-of-stroke naming records are recorded as ignored: the answer cannot reach a recreation, so they are not listed here.
 
 Would resolve: Independent original-machine observations or corrected authoritative sources that explicitly settle each recorded conflict.
 
-Devices: `conflict.shared-port-position-2-vs-unfitted`, `conflict.left-eos-vs-public-button-state`, `conflict.right-eos-vs-public-button-state`, `conflict.shooter-laser-switch-part-numbers`, `conflict.outputs-4-and-5-share-pseudo-lamp-105`, `conflict.outputs-13-through-15-script-comments-vs-manual`, `conflict.muxed-c-bank-core-bulb-type-vs-manual-coils`, `conflict.drop-reset-coil-type-print`, `conflict.special-solenoid-19-vs-background-proxy`, `conflict.flash-location-drawing-vs-playfield-proxies`
+Devices: `conflict.shared-port-position-2-vs-unfitted`, `conflict.shooter-laser-switch-part-numbers`, `conflict.outputs-4-and-5-share-pseudo-lamp-105`, `conflict.outputs-13-through-15-script-comments-vs-manual`, `conflict.muxed-c-bank-core-bulb-type-vs-manual-coils`, `conflict.drop-reset-coil-type-print`, `conflict.special-solenoid-19-vs-background-proxy`, `conflict.flash-location-drawing-vs-playfield-proxies`
 
 ## Resolver controls
 

@@ -422,6 +422,16 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 	_expect(isinstance(missing, list), "$.coverage.missing", "must be an array", errors)
 	if isinstance(missing, list):
 		_unique(missing, "$.coverage.missing", errors)
+		# Claiming a blocker that does not exist costs the definition real
+		# completion score, and hides that the work is already done. Ignored
+		# conflicts do not count: they are recorded, not outstanding.
+		if "unresolved_conflicts" in missing:
+			_expect(
+				bool(_unresolved_conflicts(definition)),
+				"$.coverage.missing",
+				"unresolved_conflicts is listed but every conflict is ignored or absent",
+				errors,
+			)
 	dimensions = coverage.get("dimensions")
 	_expect(isinstance(dimensions, dict), "$.coverage.dimensions", "must be an object", errors)
 	if isinstance(dimensions, dict):
@@ -692,8 +702,50 @@ def validate_machine(definition: dict[str, Any], repository_root: Path | None = 
 		_expect(bool(definition.get("outputs")), "$.outputs", "author-ready definition requires a complete output inventory", errors)
 		_expect(bool(definition.get("displays")), "$.displays", "author-ready definition requires a display inventory", errors)
 		_expect(bool(definition.get("mechanisms")), "$.mechanisms", "author-ready definition requires a mechanism inventory", errors)
-		_expect(not definition.get("conflicts"), "$.conflicts", "author-ready definition cannot have unresolved conflicts", errors)
+		# An ignored conflict is a real disagreement that cannot reach a
+		# recreation. It stays in the record so the reader can account for the
+		# assertions it explains, and it does not gate author readiness.
+		_expect(
+			not _unresolved_conflicts(definition),
+			"$.conflicts",
+			"author-ready definition cannot have unresolved conflicts",
+			errors,
+		)
 	return errors
+
+
+def _unresolved_conflicts(definition: dict[str, Any]) -> list[dict[str, Any]]:
+	"""Conflicts that still need evidence.
+
+	`status` is absent on every record written before the field existed, and
+	absent means unresolved: a conflict has to be opted out of blocking
+	deliberately, never by omission.
+
+	A stated reason is part of what the state *is*, not a separate schema
+	courtesy, so it is checked here rather than only in the schema. Otherwise
+	`{"status": "ignored"}` alone lifts the author-ready gate wherever the
+	validator runs without a schema pass in front of it, and the one sentence
+	that justifies ignoring a real disagreement becomes optional.
+	"""
+	return [
+		conflict
+		for conflict in definition.get("conflicts") or []
+		if not _is_ignored(conflict)
+	]
+
+
+def _is_ignored(conflict: Any) -> bool:
+	"""A conflict is ignored only if it says so *and* says why.
+
+	The reason has to contain a letter or a digit. `minLength: 1` accepts a
+	single space, and `.strip()` accepts U+200B ZERO WIDTH SPACE and every
+	other invisible that Unicode does not classify as whitespace — either one
+	lifts the author-ready gate behind a rationale that renders as nothing.
+	"""
+	if not isinstance(conflict, dict) or conflict.get("status") != "ignored":
+		return False
+	rationale = conflict.get("rationale")
+	return isinstance(rationale, str) and any(character.isalnum() for character in rationale)
 
 
 def _address_allowed(address: int, rules: list[dict[str, Any]]) -> bool:

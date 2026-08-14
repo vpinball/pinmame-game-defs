@@ -14,7 +14,18 @@ import type { RichConflict } from '~/types/defs'
  * follows for anyone who needs the argument. Nothing is summarised away — the
  * text is the record's own, only marked up (see scripts/conflicts.ts).
  */
-defineProps<{ conflicts: RichConflict[] }>()
+const props = defineProps<{ conflicts: RichConflict[] }>()
+
+/*
+ * An ignored conflict is a real disagreement that cannot reach a recreation --
+ * the standing case is flipper end-of-stroke naming, where the address carries
+ * cabinet-button state and there is no coil to protect. The record stays,
+ * because it explains why the devices it names are marked conflicted, but it is
+ * not outstanding work and it does not gate author readiness. Sorting it below
+ * the real ones, without the alert colour, is the whole point of the state.
+ */
+const unresolved = computed(() => props.conflicts.filter(c => c.status !== 'ignored'))
+const ignored = computed(() => props.conflicts.filter(c => c.status === 'ignored'))
 
 /** Bare numbers need their group to mean anything; device ids read alone. */
 const address = (target: { label: string, group: string | null }) => {
@@ -25,11 +36,14 @@ const address = (target: { label: string, group: string | null }) => {
 </script>
 
 <template>
-	<section class="rounded-panel border border-alert/35 bg-panel">
-		<header class="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-alert/25 px-4 py-3">
+	<section class="rounded-panel border bg-panel" :class="unresolved.length ? 'border-alert/35' : 'border-line'">
+		<header
+			v-if="unresolved.length"
+			class="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-alert/25 px-4 py-3"
+		>
 			<h2 class="flex items-center gap-2 text-sm font-semibold text-alert">
 				<Icon name="lucide:triangle-alert" class="size-4" />
-				{{ conflicts.length }} unresolved conflict{{ conflicts.length === 1 ? '' : 's' }}
+				{{ unresolved.length }} unresolved conflict{{ unresolved.length === 1 ? '' : 's' }}
 			</h2>
 			<p class="text-[13px] text-ink-3">
 				Sources disagree here and nobody has settled it. Treat these addresses as unproven.
@@ -37,7 +51,7 @@ const address = (target: { label: string, group: string | null }) => {
 		</header>
 
 		<article
-			v-for="conflict in conflicts"
+			v-for="conflict in unresolved"
 			:key="conflict.id"
 			class="border-b border-line-soft px-4 py-4 last:border-0"
 		>
@@ -105,6 +119,62 @@ const address = (target: { label: string, group: string | null }) => {
 				{{ conflict.path }}
 			</p>
 		</article>
+
+		<!-- recorded, understood, and deliberately not blocking -->
+		<template v-if="ignored.length">
+			<header
+				class="flex flex-wrap items-baseline gap-x-3 gap-y-1 px-4 py-3"
+				:class="unresolved.length ? 'border-t border-line' : 'border-b border-line'"
+			>
+				<h2 class="flex items-center gap-2 text-sm font-semibold text-ink-2">
+					<Icon name="lucide:circle-slash" class="size-4 text-ink-4" />
+					{{ ignored.length }} recorded, not blocking
+				</h2>
+				<p class="text-[13px] text-ink-3">
+					The sources really do disagree, but the answer cannot change a table.
+				</p>
+			</header>
+
+			<article
+				v-for="conflict in ignored"
+				:key="conflict.id"
+				class="border-b border-line-soft px-4 py-4 last:border-0"
+			>
+				<h3 v-if="conflict.title" class="text-[14px] font-semibold text-ink-2">
+					{{ conflict.title }}
+				</h3>
+
+				<dl v-if="conflict.targets.length" class="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-[12px]">
+					<dt class="text-ink-4">
+						Affects
+					</dt>
+					<dd
+						v-for="target in conflict.targets"
+						:key="`${target.group}-${target.label}`"
+						class="num rounded border border-line bg-raised px-1.5 py-0.5 text-ink-3"
+					>
+						{{ address(target) }}
+					</dd>
+				</dl>
+
+				<!-- eslint-disable-next-line vue/no-v-html -- built by scripts/conflicts.ts -->
+				<div class="conflict-body mt-3 max-w-3xl opacity-80" v-html="conflict.bodyHtml" />
+
+				<div
+					v-if="conflict.rationaleHtml"
+					class="mt-3 flex max-w-3xl gap-2.5 rounded-lg border border-line bg-raised/60 px-3 py-2.5"
+				>
+					<Icon name="lucide:circle-slash" class="mt-0.5 size-3.5 shrink-0 text-ink-4" />
+					<div class="min-w-0">
+						<p class="eyebrow mb-1">
+							Why it does not matter here
+						</p>
+						<!-- eslint-disable-next-line vue/no-v-html -- same build-time source -->
+						<p class="conflict-body text-[13px] text-ink-3" v-html="conflict.rationaleHtml" />
+					</div>
+				</div>
+			</article>
+		</template>
 	</section>
 </template>
 

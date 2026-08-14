@@ -611,8 +611,27 @@
           "minItems": 2,
           "uniqueItems": true,
           "items": { "$ref": "#/$defs/identifier" }
+        },
+        "status": {
+          "description": "unresolved (default) means evidence is still needed. ignored means the disagreement is real but cannot affect a recreation, so it does not gate author readiness; it requires a rationale.",
+          "enum": ["unresolved", "ignored"]
+        },
+        "rationale": {
+          "description": "Why an ignored conflict cannot affect a recreation. Required when status is ignored, and must contain a letter or a digit: minLength alone accepts a single space, and a non-whitespace test still accepts invisibles such as U+200B.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "[^\\W_]"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "status": { "const": "ignored" } },
+            "required": ["status"]
+          },
+          "then": { "required": ["rationale"] }
+        }
+      ]
     }
   }
 }

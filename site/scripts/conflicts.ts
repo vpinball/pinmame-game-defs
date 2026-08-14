@@ -29,6 +29,10 @@ export type ConflictTarget = { label: string, group: string | null }
 
 export type RichConflict = {
 	id: string
+	/** `ignored` = a real disagreement that cannot reach a recreation. */
+	status: 'unresolved' | 'ignored'
+	/** Why it cannot reach one. Present only on an ignored conflict. */
+	rationaleHtml: string | null
 	/** Humanised id, or null when it only restates the address. */
 	title: string | null
 	path: string | null
@@ -218,8 +222,20 @@ export function enrichConflict(conflict: any, sources: any[], revision: string):
 	const path: string = conflict.path ?? ''
 	const settled = stripUnresolved(resolution)
 
+	// Absent means unresolved: a conflict is opted out of blocking deliberately,
+	// never by omission. The stated reason is part of what the state is — the
+	// panel's whole claim for an ignored record is "here is why it does not
+	// matter" — so a record without one is shown as the open question it still
+	// is, matching what the validator counts.
+	// A letter or digit, not merely `.trim()`: U+200B and friends survive a trim
+	// and would render the reason block empty.
+	const rationale = typeof conflict.rationale === 'string' ? conflict.rationale.trim() : ''
+	const ignored = conflict.status === 'ignored' && /[\p{L}\p{N}]/u.test(rationale)
+
 	return {
 		id: conflict.id,
+		status: ignored ? 'ignored' : 'unresolved',
+		rationaleHtml: ignored ? markup(rationale, revision) : null,
 		// Auto-generated ids restate the binding they came from, and a heading
 		// that repeats the chip beside it is noise.
 		title: title && alphanumeric(title) !== alphanumeric(path) ? title : null,

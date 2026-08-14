@@ -13,21 +13,25 @@
       "description": "The manual prints a physical Left EOS contact at matrix 15 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put left cabinet-button state at public 15.",
       "id": "conflict.left-eos-vs-public-button-state",
       "path": "/inputs/switch.matrix-15",
+      "rationale": "An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.",
       "source_refs": [
         "manual.data-east.playboy-35th-anniversary.1989",
         "pinmame.core.4ec52ff0ac13",
         "vpx-script.playboy-35th-hybrid-1.1"
-      ]
+      ],
+      "status": "ignored"
     },
     {
       "description": "The manual prints a physical Right EOS contact at matrix 16 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put right cabinet-button state at public 16.",
       "id": "conflict.right-eos-vs-public-button-state",
       "path": "/inputs/switch.matrix-16",
+      "rationale": "An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.",
       "source_refs": [
         "manual.data-east.playboy-35th-anniversary.1989",
         "pinmame.core.4ec52ff0ac13",
         "vpx-script.playboy-35th-hybrid-1.1"
-      ]
+      ],
+      "status": "ignored"
     },
     {
       "description": "The manual switch list prints Shooter Lane part 500-5142-00 and Left Outlane part 500-5143-00. Its playfield-bottom list prints Laser Kick switch/bracket 500-5142-00 and Shooter lane switch/bracket 500-5143-00.",

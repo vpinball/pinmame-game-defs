@@ -13,21 +13,25 @@
       "description": "The community technical chart prints a physical Right E.O.S. switch and flipper circuit, while FLIP4746 and the retained script use address 46 as right-flipper button state. The retained sources do not reconcile the physical contact and its polarity with that controller-facing behavior.",
       "id": "conflict.right-flipper-eos-runtime",
       "path": "/inputs/switch.matrix-46",
+      "rationale": "An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The physical contact's polarity goes with it: a consumer reads the published button state, never the EOS contact, and the separate question of which physical winding each synthetic 45-48 state drives is recorded on its own at conflict.synthetic-flipper-public-state. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.",
       "source_refs": [
         "tech-chart.pinballrebel.data-east-laser-war",
         "pinmame.core.4ec52ff0ac13",
         "vpx-script.laser-war-vr-2-0"
-      ]
+      ],
+      "status": "ignored"
     },
     {
       "description": "The community technical chart prints a physical Left E.O.S. switch and flipper circuit, while FLIP4746 and the retained script use address 47 as left-flipper button state. The retained sources do not reconcile the physical contact and its polarity with that controller-facing behavior.",
       "id": "conflict.left-flipper-eos-runtime",
       "path": "/inputs/switch.matrix-47",
+      "rationale": "An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The physical contact's polarity goes with it: a consumer reads the published button state, never the EOS contact, and the separate question of which physical winding each synthetic 45-48 state drives is recorded on its own at conflict.synthetic-flipper-public-state. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.",
       "source_refs": [
         "tech-chart.pinballrebel.data-east-laser-war",
         "pinmame.core.4ec52ff0ac13",
         "vpx-script.laser-war-vr-2-0"
-      ]
+      ],
+      "status": "ignored"
     },
     {
       "description": "The printed lamp matrix assigns address 8 to Return To Base. The retained script has no lamp-8 callback and uses its l8a-v tower helpers under solenoid 5 instead, so no physical lamp-8 placement is asserted.",

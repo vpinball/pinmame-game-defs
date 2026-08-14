@@ -49,7 +49,7 @@ Status remains `partial`. `coverage.missing` is [`output_semantics`, `mechanism_
 - `mechanism_behavior`: hardware-triggered special-coil timing is not exposed, and SP1/SP2 assignment conflicts.
 - `polarity`: FLIP1516 publishes cabinet-button state where the manual prints physical EOS contacts; no bench capture reconciles rest/end-of-stroke state.
 - `spatial_placement`: lamp coordinates are table candidates, flash groups lack socket surveys, and the conflicted outputs have no selected position.
-- `unresolved_conflicts`: five source disagreements remain recorded in the definition and spatial report.
+- `unresolved_conflicts`: three source disagreements remain recorded in the definition and spatial report. Two further records, the flipper end-of-stroke naming pair, are kept as ignored and do not block.
 
 ## Recreation boundary
 

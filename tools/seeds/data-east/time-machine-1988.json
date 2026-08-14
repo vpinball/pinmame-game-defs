@@ -4,23 +4,27 @@
       "description": "The manual prints a physical Left EOS contact at matrix 15 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put left cabinet-button state at public 15. The runtime trace confirms that emulator-facing button contract but cannot distinguish it from the manual's physical EOS circuit.",
       "id": "conflict.left-eos-vs-public-button-state",
       "path": "/inputs/switch.matrix-15",
+      "rationale": "An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.",
       "source_refs": [
         "manual.data-east.time-machine.1988",
         "pinmame.core.4ec52ff0ac13",
         "vpx-script.time-machine-2.4.1",
         "runtime.time-machine.alpha-diagnostics"
-      ]
+      ],
+      "status": "ignored"
     },
     {
       "description": "The manual prints a physical Right EOS contact at matrix 16 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put right cabinet-button state at public 16. The runtime trace confirms that emulator-facing button contract but cannot distinguish it from the manual's physical EOS circuit.",
       "id": "conflict.right-eos-vs-public-button-state",
       "path": "/inputs/switch.matrix-16",
+      "rationale": "An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.",
       "source_refs": [
         "manual.data-east.time-machine.1988",
         "pinmame.core.4ec52ff0ac13",
         "vpx-script.time-machine-2.4.1",
         "runtime.time-machine.alpha-diagnostics"
-      ]
+      ],
+      "status": "ignored"
     },
     {
       "description": "Shared Data East DE_COMPORTS names matrix position 2 Ball Tilt, while both Time Machine manual switch tables explicitly print position 2 Not Used. The machine record follows the game-specific fitment without erasing the shared-port label.",

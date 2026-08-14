@@ -129,6 +129,10 @@ export interface Source {
  */
 export interface RichConflict {
 	id: string
+	/** `ignored` = a real disagreement that cannot reach a recreation. */
+	status: 'unresolved' | 'ignored'
+	/** Why it cannot reach one. Present only on an ignored conflict. */
+	rationaleHtml: string | null
 	/** Humanised id, or null when it only restates the address. */
 	title: string | null
 	path: string | null
