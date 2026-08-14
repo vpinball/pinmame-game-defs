@@ -436,3 +436,41 @@ Public flasher 25 drives three physical pop-bumper bulbs rather than one point. 
 It covers the 46-driver `lotr` clone tree. Every driver shares `init_lotr` and the same PinMAME routing, but the 2008 Limited Edition's physical compatibility remains unverified and is not inferred from that software identity. The definition remains explicitly partial with `coverage.missing` `["polarity", "spatial_placement", "unresolved_conflicts", "variant_differences"]`: switch 15's public opto polarity is unresolved, fifteen printed devices remain spatially unplaced, some retained-table placements are only observed, and the 2008 edition still needs a sourced hardware comparison.
 
 Four exact known-working VPX tables are retained as spatial evidence. Three factory-layout recreations form the lamp, switch and flasher consensus; independence between them is unestablished, so a placement is validated only when all three agree. The fourth, a Neo LED derivative of a JPSalas table, contributes a supplemental measurement for addresses 81-99 but cannot promote a position by itself. Every LED coordinate is selected through each script's explicit public-address binding, including Hanibal's non-identity mapping, rather than by guessing from object names. Five LED addresses remain without a coordinate because the four script-bound measurements form no two-table cluster inside the 0.025 threshold; lower-support placements remain observed, disagreements are recorded, and printed manual diagrams resolve explicitly documented tie-breaks. The official image-only Stern service manual, its deterministic machine-readable transcription, committed reviewed excerpts, the four VPX files and scripts, complete current-`vpxtool` extraction manifests, and the generated spatial artifact are retained or referenced under the standard evidence layout and hash-checked by the LOTR test suite.
+
+## Conflict hygiene pass (2026-08-05)
+
+A review of every `conflicts` record carrying no resolution path found that 138 of 164 gave a future
+curator no way to start. 31 of those were not disagreements about a physical machine at all, and are
+removed; the rule that produced them is fixed at source, and `docs/INSTRUCTIONS.md` now carries the
+standard under **What is not a conflict**.
+
+`import-legacy` compared a platform record's generic cabinet label against a game record's own label
+for the same address and emitted a conflict whenever the two strings differed, with no notion of
+whether they named the same device: `ROM Started` against `Game On Relay`, `Coin Button 1` against
+`Coin 1`, `Lower Right Flipper` against `Right Flipper`. `legacy.py` now applies `_names_one_device`
+before emitting anything, so a re-import cannot recreate them. The pairs naming genuinely different
+devices — `Ball Roll Tilt` against `Drop Target 2`, `Coin Button 1` against `Backbox Basket Score 1`,
+`Coin Button 3` against `Right Coin Chute` — are untouched and remain first-class conflicts.
+
+That helper is deliberately conservative, because a false positive deletes a real disagreement
+silently while a false negative only leaves a record someone can close later. Two defects in its
+first draft, both caught before merge and both now pinned by `tests/test_legacy_label_synonyms.py`:
+side words are stripped as qualifiers, so `Upper Left Flipper` and `Upper Right Flipper` merged on
+core equality until the side test was moved ahead of it; and an unrestricted subset rule plus
+`relay`/`solenoid` in the noise list merged `Right Flipper Button` with `Right Flipper EOS` and
+`Start Button` with `Start Relay`. Equivalence beyond exact equality is now an explicitly written-out
+pair, and a device-class word is never noise.
+
+**The flipper end-of-stroke records were deliberately left in place.** They are not authoring-relevant
+— an EOS switch protects a physical coil winding, a recreation has no coil, and these platforms model
+no EOS at all — but the affected addresses carry `provenance.status = "conflicted"`, and removing the
+record that explains it leaves an assertion no reader can account for. Retiring the conflict, the
+device label and that provenance is one reviewed pass per machine, not cleanup, and the runbook now
+says so. The adjacent `synthetic-flipper-public-state` records are not EOS naming at all: which
+physical winding each fabricated `45-48` state corresponds to is a real unresolved question.
+
+No coverage status, `coverage.missing` list or completion score changed: none of the definitions whose
+`conflicts` array emptied had `unresolved_conflicts` in `coverage.missing` to begin with. The catalog
+holds 133 conflicts against 164 before the pass, across 13 touched definitions and seeds.
+`tools/prune_nonconflicts.py` clears the already-committed records using `legacy.py`'s own function
+rather than a second copy of the rule, and has a `--check` mode.

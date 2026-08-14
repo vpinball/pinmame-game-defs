@@ -63,6 +63,73 @@ MIGRATION_MISSING = [
 ]
 
 
+# Words that qualify a device without changing which device it is. Device-class
+# words are deliberately absent: a relay is not a button, and an end-of-stroke
+# contact is not a button either, so `relay`, `solenoid` and `eos` all have to
+# keep two labels apart.
+_LABEL_NOISE = frozenset({"button", "lower", "plumb", "bob", "bracket", "with", "the", "a"})
+_LABEL_SIDES = frozenset({"left", "right", "center", "upper"})
+# Equivalences no amount of word overlap can see. Each pair is one device that a
+# platform record and a game record simply name differently, and each is written
+# out in full rather than reached by stripping words, so adding one is a
+# deliberate act with a reviewable diff.
+_LABEL_SYNONYMS: tuple[tuple[frozenset[str], frozenset[str]], ...] = (
+	(frozenset({"rom", "started"}), frozenset({"game", "on", "relay"})),
+	(frozenset({"rom", "started"}), frozenset({"game", "on", "solenoid"})),
+	(frozenset({"rom", "started"}), frozenset({"game", "on", "gi", "relay"})),
+	(frozenset({"rom", "started"}), frozenset({"gi", "relay"})),
+	(frozenset({"start"}), frozenset({"credit"})),
+)
+
+
+def _label_words(label: str) -> list[str]:
+	words = "".join(character if character.isalnum() else " " for character in label.lower()).split()
+	# One spelling of centre, so `Center Pop Bumper` and `Centre Pop Bumper` do
+	# not read as two opposing sides.
+	return ["center" if word == "centre" else word for word in words]
+
+
+def _names_one_device(first: str, second: str) -> bool:
+	"""True when two labels are two names for the same device.
+
+	The platform record carries generic cabinet labels and a game record carries
+	its own, so the two disagree on wording constantly: `ROM Started` against
+	`Game On Relay`, `Coin Button 1` against `Coin 1`, `Lower Right Flipper`
+	against `Right Flipper`. None of those is a disagreement about the machine,
+	and emitting a conflict for each produced dozens of records that no evidence
+	could ever resolve because there was nothing to resolve.
+
+	A genuine disagreement -- `Ball Roll Tilt` against `Drop Target 2` -- still
+	returns False and still becomes a conflict.
+	"""
+	words_first = _label_words(first)
+	words_second = _label_words(second)
+
+	# The side test runs FIRST and can only ever return False. Side words are
+	# stripped as noise below -- they do not distinguish a device from itself --
+	# which means `Upper Left Flipper` and `Upper Right Flipper` reduce to the
+	# same core and would merge on equality alone. Two devices on opposite sides
+	# of the playfield are the single most likely real disagreement in this
+	# corpus, so nothing may reach the equality check before this.
+	sides_first = {word for word in words_first if word in _LABEL_SIDES}
+	sides_second = {word for word in words_second if word in _LABEL_SIDES}
+	if sides_first and sides_second and sides_first != sides_second:
+		return False
+
+	core_first = frozenset(word for word in words_first if word not in _LABEL_NOISE)
+	core_second = frozenset(word for word in words_second if word not in _LABEL_NOISE)
+	if core_first == core_second:
+		return True
+
+	# No subset rule. `Right Flipper Button` reduces to {flipper} and `Right
+	# Flipper EOS` to {flipper, eos}; treating the first as a subset of the
+	# second would merge a button with an end-of-stroke contact and delete a
+	# real disagreement. Anything beyond exact equality has to be written out.
+	return any(
+		{core_first, core_second} == {left, right} for left, right in _LABEL_SYNONYMS
+	)
+
+
 def _repository_revision(repository_root: Path) -> str:
 	try:
 		result = subprocess.run(
@@ -240,7 +307,7 @@ class _DeviceBuilder:
 					existing["aliases"].append(alias)
 			if kind == "flasher" and existing.get("kind") == "coil":
 				existing["kind"] = "flasher"
-			if existing.get("label") != label:
+			if existing.get("label") != label and not _names_one_device(existing.get("label", ""), label):
 				refs = existing["provenance"]["source_refs"]
 				if len(refs) >= 2:
 					self.conflicts.append(
