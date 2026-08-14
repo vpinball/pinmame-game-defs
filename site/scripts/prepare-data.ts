@@ -15,6 +15,7 @@ import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync,
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { marked, Renderer } from 'marked'
+import { enrichConflict } from './conflicts.ts'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const projectRoot = resolve(here, '..')
@@ -506,7 +507,11 @@ for (const [machineId, { path, doc }] of definitions) {
 				const excerpts = readExcerpts(source)
 				return excerpts.length ? { ...source, excerpts } : source
 			}),
-			conflicts: doc.conflicts ?? [],
+			// Enriched at build time: the raw record is one unbroken paragraph of
+			// prose with the address, the disagreeing parties and the way out all
+			// run together. See scripts/conflicts.ts.
+			conflicts: (doc.conflicts ?? []).map((conflict: any) =>
+				enrichConflict(conflict, doc.sources ?? [], catalog.source.pinmame_revision)),
 			coverage: {
 				status,
 				completion_score: entry.completionScore,

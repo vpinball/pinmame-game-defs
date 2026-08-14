@@ -334,20 +334,7 @@ const ipdbUrl = computed(() =>
 
 			<div class="min-w-0 space-y-10">
 				<!-- conflicts first: they change what an author should trust -->
-				<div v-if="detail.conflicts.length" class="rounded-panel border border-alert/35 bg-panel p-4">
-					<div class="flex items-center gap-2">
-						<Icon name="lucide:triangle-alert" class="size-4 text-alert" />
-						<h2 class="text-sm font-semibold text-alert">
-							{{ detail.conflicts.length }} unresolved conflict{{ detail.conflicts.length === 1 ? '' : 's' }}
-						</h2>
-					</div>
-					<ul class="mt-3 space-y-2">
-						<li v-for="conflict in detail.conflicts" :key="conflict.id" class="text-[13px] leading-relaxed text-ink-2">
-							{{ conflict.description }}
-							<span v-if="conflict.path" class="num ml-1 text-[11px] text-ink-4">{{ conflict.path }}</span>
-						</li>
-					</ul>
-				</div>
+				<ConflictPanel v-if="detail.conflicts.length" :conflicts="detail.conflicts" />
 
 				<section id="setup" class="scroll-mt-20">
 					<SetupPanel :machine="detail" />

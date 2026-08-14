@@ -123,11 +123,28 @@ export interface Source {
 	source_id?: string
 }
 
-export interface Conflict {
+/**
+ * A conflict as the page consumes it — enriched at build time by
+ * `scripts/conflicts.ts` from the raw record's single prose field.
+ */
+export interface RichConflict {
 	id: string
-	description: string
-	path?: string
-	source_refs?: string[]
+	/** Humanised id, or null when it only restates the address. */
+	title: string | null
+	path: string | null
+	/** The addresses in dispute, where the free-form `path` could be parsed. */
+	targets: { label: string, group: string | null }[]
+	bodyHtml: string
+	/** What a human has to go and do, when the record says. */
+	resolutionHtml: string | null
+	sources: {
+		id: string
+		kind: string | null
+		uri: string | null
+		locator: string | null
+		/** True when `source_refs` names an id the definition does not define. */
+		missing: boolean
+	}[]
 }
 
 export interface DriverVariant {
@@ -181,7 +198,7 @@ export interface MachineDetail {
 	relationships: Relationship[]
 	drivers: DriverVariant[]
 	sources: Source[]
-	conflicts: Conflict[]
+	conflicts: RichConflict[]
 	sourcePath: string
 	knowledgePath: string | null
 	knowledgeHtml: string | null
