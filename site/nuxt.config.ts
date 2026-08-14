@@ -55,7 +55,20 @@ export default defineNuxtConfig({
 	future: { compatibilityVersion: 4 },
 	devtools: { enabled: false },
 
-	modules: ['@nuxt/icon'],
+	// The site has no SFC <route> blocks, so omit Vue Router's otherwise
+	// automatic Volar plugin and its redundant language-service work.
+	modules: [
+		'@nuxt/icon',
+		(_options, nuxt) => {
+			nuxt.hook('modules:done', () => {
+				nuxt.hook('prepare:types', ({ tsConfig }) => {
+					const vueCompilerOptions = tsConfig.vueCompilerOptions
+					if (!vueCompilerOptions || !Array.isArray(vueCompilerOptions.plugins)) return
+					vueCompilerOptions.plugins = vueCompilerOptions.plugins.filter(plugin => typeof plugin !== 'string' || !plugin.endsWith('/sfc-route-blocks'))
+				})
+			})
+		},
+	],
 
 	css: ['~/assets/css/main.css'],
 

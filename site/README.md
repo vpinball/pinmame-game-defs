@@ -222,12 +222,14 @@ earns its keep.
 
 | URL | Contents |
 | --- | --- |
-| `data/index.json` | Every machine: slug, status, platform, root drivers, detail URL |
+| `data/index.json` | Catalog v2: every machine with its kind, status, platform, root drivers, complete ROM-set list and detail URL |
 | `data/machines/<slug>.json` | Full resolved definition — drivers joined, related machines, note as HTML |
 | `data/drivers.json` | Every PinMAME ROM set mapped to its machine |
 | `data/platforms.json` | Controller profiles and address ranges |
 | `data/search.json` | Compact search index |
 | `llms.txt` | Orientation for agents, including the coverage and provenance caveats |
+
+`data/index.json` identifies its contract with `format: "pinmame-machine-reference-index"` and `version: 2`. Relative to v1, every machine carries the authoritative `machineKind` and complete `roms` list; consumers should reject unknown future versions.
 
 These are the same documents the pages render, so an agent gets data already resolved rather than the
 raw catalog. The canonical source remains the repository; this site is a rendering of it. An MCP

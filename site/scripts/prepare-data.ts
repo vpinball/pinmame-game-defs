@@ -451,6 +451,9 @@ for (const driver of catalog.drivers) {
 	list.push(driver)
 	driversByMachine.set(driver.machine_id, list)
 }
+for (const [machineId, drivers] of driversByMachine) {
+	romsByMachine.set(machineId, drivers.map(driver => driver.id))
+}
 
 let detailCount = 0
 const seenIds = new Set<string>()
@@ -560,6 +563,10 @@ for (const record of catalog.machines) {
 }
 
 machineIndex.sort((a, b) => (b.year ?? 0) - (a.year ?? 0) || a.name.localeCompare(b.name))
+for (const machine of machineIndex) {
+	if (!machine.machineKind?.trim()) throw new Error(`Machine ${machine.id} has no machine kind; catalog v2 cannot be generated.`)
+	if (!romsByMachine.get(machine.id)?.length) throw new Error(`Machine ${machine.id} has no ROM sets; catalog v2 cannot be generated.`)
+}
 
 // ---------------------------------------------------------------------------
 // families
@@ -970,10 +977,6 @@ for (const machine of machineIndex) {
 }
 
 writeOut('site.json', site)
-for (const [machineId, drivers] of driversByMachine) {
-	romsByMachine.set(machineId, drivers.map(driver => driver.id))
-}
-
 writeOut('machines.json', {
 	columns: ['slug', 'name', 'manufacturer', 'year', 'status', 'platform', 'drivers', 'switches', 'lamps', 'coils', 'mechanisms', 'highlights', 'definition', 'roms', 'completionScore'],
 	rows: machineIndex.map(toRow),
@@ -1000,9 +1003,26 @@ for (const [slug, payload] of detailPayloads) {
 	writePublic(`machines/${slug}.json`, payload)
 }
 
+const publicMachines = machineIndex.map(m => ({
+	slug: m.slug,
+	id: m.id,
+	name: m.name,
+	manufacturer: m.manufacturer,
+	year: m.year,
+	status: m.status,
+	completionScore: m.completionScore,
+	platform: m.platform,
+	machineKind: m.machineKind,
+	rootDrivers: m.rootDrivers,
+	roms: romsByMachine.get(m.id) ?? [],
+	// Only described machines have a detail document.
+	detail: m.hasDetail ? `data/machines/${m.slug}.json` : null,
+	definition: m.definition,
+}))
+
 const publicIndex = {
 	format: 'pinmame-machine-reference-index',
-	version: 1,
+	version: 2,
 	generatedAt: site.generatedAt,
 	pinmameRevision: site.pinmameRevision,
 	schemaVersion: site.schemaVersion,
@@ -1014,20 +1034,7 @@ const publicIndex = {
 		search: 'data/search.json',
 		platforms: 'data/platforms.json',
 	},
-	machines: machineIndex.map(m => ({
-		slug: m.slug,
-		id: m.id,
-		name: m.name,
-		manufacturer: m.manufacturer,
-		year: m.year,
-		status: m.status,
-		completionScore: m.completionScore,
-		platform: m.platform,
-		rootDrivers: m.rootDrivers,
-		// Only described machines have a detail document.
-		detail: m.hasDetail ? `data/machines/${m.slug}.json` : null,
-		definition: m.definition,
-	})),
+	machines: publicMachines,
 }
 writePublic('index.json', publicIndex)
 writePublic('platforms.json', platformIndex)
@@ -1099,11 +1106,13 @@ ${lastmod} from PinMAME ${site.pinmameRevision.slice(0, 12)}.
 Prefer these over scraping the pages. Every document is static JSON, CORS-open, and resolved —
 catalog drivers joined, related machines computed, recreation notes rendered to HTML.
 
-- [Index](${siteUrl}/data/index.json): every machine with its slug, status, platform and detail URL
+- [Index](${siteUrl}/data/index.json): catalog v2 with every machine's kind, status, platform, complete ROM-set list and detail URL
 - [Machine detail](${siteUrl}/data/machines/{slug}.json): full I/O, mechanisms, displays, sources
 - [Drivers](${siteUrl}/data/drivers.json): all ${site.counts.drivers} ROM sets mapped to a machine
 - [Platforms](${siteUrl}/data/platforms.json): controller profiles and address ranges
 - [Search](${siteUrl}/data/search.json): compact index over machines and ROM sets
+
+The index contract is \`format: "pinmame-machine-reference-index"\` with \`version: 2\`. Relative to v1, every machine now carries its authoritative \`machineKind\` and complete \`roms\` list; consumers should reject unknown future versions.
 
 ## Pages
 
