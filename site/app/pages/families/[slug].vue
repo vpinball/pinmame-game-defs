@@ -28,6 +28,8 @@ useSeo({
 })
 
 const machines = computed(() => family.value!.machines)
+const opdbUrl = computed(() =>
+	family.value?.opdbId ? `https://opdb.org/search?q=${encodeURIComponent(family.value.opdbId)}` : null)
 
 const COUNTS = [
 	{ key: 'switches', label: 'Switches', kind: 'switch' },
@@ -83,9 +85,22 @@ const differenceCount = computed(() =>
 		</nav>
 
 		<header class="mb-8">
-			<h1 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-				{{ family.title }}
-			</h1>
+			<div class="flex flex-wrap items-start justify-between gap-4">
+				<h1 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+					{{ family.title }}
+				</h1>
+				<a
+					v-if="opdbUrl"
+					:href="opdbUrl"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 text-[13px] text-ink-2 transition-colors hover:border-amber/40 hover:text-ink"
+				>
+					<Icon name="lucide:database" class="size-3.5" />
+					OPDB
+					<Icon name="lucide:external-link" class="size-3" />
+				</a>
+			</div>
 			<p class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-ink-3">
 				<span>{{ family.manufacturer }}</span>
 				<span class="num">{{ family.years[0] === family.years[1] ? family.years[0] : `${family.years[0]}–${family.years[1]}` }}</span>

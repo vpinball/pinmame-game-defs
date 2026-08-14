@@ -311,6 +311,8 @@ export interface MachineFamily {
 	slug: string
 	title: string
 	manufacturer: string
+	/** Open Pinball Database machine-group identifier for authored families. */
+	opdbId: string | null
 	/** Null once the family is authored rather than inferred from ROM names. */
 	driverPrefix: string | null
 	/** True when the catalog states the grouping instead of the site deriving it. */
