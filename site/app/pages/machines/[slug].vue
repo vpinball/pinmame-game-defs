@@ -85,6 +85,16 @@ const placements = computed(() => {
 	return devices.filter(d => d.spatial && d.spatial.status !== 'not_applicable').length
 })
 
+/**
+ * External, non-canonical build-time data. Absent for most machines, and
+ * deliberately kept out of `sources` — it is someone else's project under its
+ * own licence, not evidence anybody weighed for this definition.
+ */
+const memoryMaps = computed(() => {
+	const maps = detail.value?.externalData?.pinballMemoryMaps
+	return maps?.maps?.length ? maps : null
+})
+
 const sections = computed(() => {
 	if (!detail.value) return []
 	const items = [
@@ -97,6 +107,7 @@ const sections = computed(() => {
 		{ id: 'wiring', label: 'Direct wiring', icon: 'lucide:cable', show: detail.value.relationships.length > 0, count: detail.value.relationships.length },
 		{ id: 'notes', label: 'Recreation notes', icon: 'lucide:notebook-pen', show: !!detail.value.knowledgeHtml },
 		{ id: 'roms', label: 'ROM sets', icon: 'lucide:disc-3', show: true, count: detail.value.catalogDrivers?.length ?? detail.value.drivers.length },
+		{ id: 'memory-maps', label: 'Memory maps', icon: 'lucide:memory-stick', show: !!memoryMaps.value, count: memoryMaps.value?.maps.length },
 		{ id: 'sources', label: 'Evidence', icon: 'lucide:library-big', show: detail.value.sources.length > 0, count: detail.value.sources.length },
 	]
 	return items.filter(item => item.show)
@@ -509,6 +520,13 @@ const ipdbUrl = computed(() =>
 						</p>
 					</header>
 					<DriverTable :drivers="detail.drivers" :catalog-drivers="detail.catalogDrivers" />
+				</section>
+
+				<!-- Keyed by ROM name, so it sits with the ROM sets — and ahead of
+				     Evidence, which is the definition's own provenance and must not
+				     read as though it included someone else's dataset. -->
+				<section v-if="memoryMaps" id="memory-maps" class="scroll-mt-20">
+					<MemoryMapPanel :data="memoryMaps" />
 				</section>
 
 				<section v-if="detail.sources.length" id="sources" class="scroll-mt-20">

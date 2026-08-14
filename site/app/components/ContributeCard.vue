@@ -75,7 +75,7 @@ const links = computed(() => [
 
 const body = computed(() => props.hint ?? (props.tone === 'author'
 	? 'Nobody has described this one yet. If you own it, have the manual, or have already built a working table for it, the definition is a single JSON file — and every address you name moves it closer to author-ready.'
-	: 'This site renders the catalog and adds nothing to it, so fixes belong in the definition itself. Editing on GitHub forks it for you and opens the pull request; no local checkout needed.'))
+	: 'Canonical machine fixes belong in the definition itself. Editing on GitHub forks it for you and opens the pull request; no local checkout needed.'))
 
 const buttonClass = (primary: boolean) =>
 	primary

@@ -1,9 +1,10 @@
 /**
  * Build-time data pipeline.
  *
- * Reads the `pinmame-game-defs` repository and emits a set of small, static
- * JSON documents under `data/` that the Nuxt app imports directly. Nothing in
- * the app ever touches the defs repo at runtime — the site is fully static.
+ * Reads the `pinmame-game-defs` repository plus an optional read-only Pinball
+ * Memory Maps checkout and emits static JSON documents under `data/` and
+ * `public/data/`. Nothing touches either checkout at runtime — the site is
+ * fully static, and external facts remain namespaced build-time enrichment.
  *
  * Resolution order for the defs repo:
  *   1. $PINMAME_DEFS_ROOT
@@ -16,6 +17,7 @@ import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { marked, Renderer } from 'marked'
 import { enrichConflict } from './conflicts.ts'
+import { loadPinballMemoryMaps, type MemoryMapSummary } from './memory-maps.ts'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const projectRoot = resolve(here, '..')
@@ -135,10 +137,23 @@ type CatalogMachine = {
 
 const catalog = readJson<Catalog>('catalog', 'pinmame.json')
 
+const memoryMaps = loadPinballMemoryMaps(
+	process.env.PINBALL_MEMORY_MAPS_ROOT,
+	process.env.PINBALL_MEMORY_MAPS_COMMIT,
+	new Set(catalog.drivers.map(driver => driver.id)),
+	publicDataRoot,
+)
+
 console.log(`[data] defs root      : ${defsRoot}`)
 console.log(`[data] pinmame rev    : ${catalog.source.pinmame_revision.slice(0, 12)}`)
 console.log(`[data] drivers        : ${catalog.drivers.length}`)
 console.log(`[data] catalog records: ${catalog.machines.length}`)
+if (memoryMaps) {
+	console.log(`[data] memory maps    : ${memoryMaps.maps.length} maps at ${memoryMaps.source.commit.slice(0, 12)}`)
+	console.log(`[data] mapped drivers : ${memoryMaps.byDriver.size}; ${memoryMaps.unmatchedRoms.length} external-only ROM IDs`)
+} else {
+	console.log('[data] memory maps    : not configured (set PINBALL_MEMORY_MAPS_ROOT to enable)')
+}
 
 // Every machine definition on disk, keyed by machine.id. The catalog can lag
 // behind a freshly committed definition, so disk wins for content.
@@ -419,6 +434,11 @@ type MachineRow = [
 	// is the only place a reader can see which ROM sets are waiting on it.
 	roms: string[],
 	completionScore: number,
+	// How many external memory maps join this machine by exact driver id. Zero
+	// on every row when no upstream checkout was configured. Counted from the
+	// catalog's own driver list, so a stub qualifies exactly like a described
+	// machine — the join is on the ROM name, not on how much we know about it.
+	memoryMaps: number,
 ]
 
 const STATUS_CODE = { stub: 0, partial: 1, author_ready: 2 } as const
@@ -441,6 +461,7 @@ const toRow = (m: MachineIndexEntry): MachineRow => [
 	m.definition,
 	romsByMachine.get(m.id) ?? [],
 	m.completionScore,
+	memoryMapsByMachine.get(m.id)?.length ?? 0,
 ]
 
 const machineIndex: MachineIndexEntry[] = []
@@ -453,6 +474,26 @@ for (const driver of catalog.drivers) {
 }
 for (const [machineId, drivers] of driversByMachine) {
 	romsByMachine.set(machineId, drivers.map(driver => driver.id))
+}
+
+type MachineMemoryMapSummary = MemoryMapSummary & { matchedDrivers: string[] }
+const memoryMapsByMachine = new Map<string, MachineMemoryMapSummary[]>()
+if (memoryMaps) {
+	for (const [machineId, drivers] of driversByMachine) {
+		const maps = new Map<string, MachineMemoryMapSummary>()
+		for (const driver of drivers) {
+			const memoryMap = memoryMaps.byDriver.get(driver.id)
+			if (!memoryMap) continue
+			const existing = maps.get(memoryMap.sourcePath)
+			if (existing) existing.matchedDrivers.push(driver.id)
+			else maps.set(memoryMap.sourcePath, { ...memoryMap, matchedDrivers: [driver.id] })
+		}
+		if (maps.size) {
+			memoryMapsByMachine.set(machineId, [...maps.values()]
+				.map(memoryMap => ({ ...memoryMap, matchedDrivers: memoryMap.matchedDrivers.sort() }))
+				.sort((a, b) => a.sourcePath.localeCompare(b.sourcePath)))
+		}
+	}
 }
 
 let detailCount = 0
@@ -528,6 +569,16 @@ for (const [machineId, { path, doc }] of definitions) {
 			knowledgeHeadings: knowledge?.headings ?? [],
 			knowledgeSummary: knowledge?.summary ?? [],
 			catalogDrivers,
+			...(memoryMaps && memoryMapsByMachine.has(machineId)
+				? {
+					externalData: {
+						pinballMemoryMaps: {
+							source: memoryMaps.source,
+							maps: memoryMapsByMachine.get(machineId),
+						},
+					},
+				}
+				: {}),
 		})
 	}
 }
@@ -763,6 +814,13 @@ const driverIndex = catalog.drivers.map(driver => ({
 	machineSlug: slugByMachineId.get(driver.machine_id) ?? slugify(driver.machine_id),
 	machineName: nameByMachineId.get(driver.machine_id) ?? driver.description,
 	status: driver.coverage_status,
+	memoryMap: memoryMaps?.byDriver.has(driver.id)
+		? {
+			sourcePath: memoryMaps.byDriver.get(driver.id)!.sourcePath,
+			dataUrl: memoryMaps.byDriver.get(driver.id)!.dataUrl,
+			platform: memoryMaps.byDriver.get(driver.id)!.platform,
+		}
+		: null,
 }))
 
 // ---------------------------------------------------------------------------
@@ -903,6 +961,16 @@ const site = {
 	missing: [...missingCounts.entries()].sort((a, b) => b[1] - a[1]).map(([requirement, count]) => ({ requirement, count })),
 	platforms: platformIndex.map(p => ({ id: p.id, slug: p.slug, hardwareFamily: p.hardwareFamily, hasProfile: p.hasProfile, machines: p.machines, authorReady: p.authorReady })),
 	abstractParents: catalog.abstract_parents ?? [],
+	externalSources: memoryMaps
+		? {
+			pinballMemoryMaps: {
+				...memoryMaps.source,
+				mapCount: memoryMaps.maps.length,
+				matchedDriverCount: memoryMaps.byDriver.size,
+				unmatchedRomCount: memoryMaps.unmatchedRoms.length,
+			},
+		}
+		: {},
 }
 
 // ---------------------------------------------------------------------------
@@ -978,7 +1046,7 @@ for (const machine of machineIndex) {
 
 writeOut('site.json', site)
 writeOut('machines.json', {
-	columns: ['slug', 'name', 'manufacturer', 'year', 'status', 'platform', 'drivers', 'switches', 'lamps', 'coils', 'mechanisms', 'highlights', 'definition', 'roms', 'completionScore'],
+	columns: ['slug', 'name', 'manufacturer', 'year', 'status', 'platform', 'drivers', 'switches', 'lamps', 'coils', 'mechanisms', 'highlights', 'definition', 'roms', 'completionScore', 'memoryMaps'],
 	rows: machineIndex.map(toRow),
 })
 writeOut('platforms.json', platformIndex)
@@ -990,6 +1058,37 @@ writeOut('detail-slugs.json', [...detailPayloads.keys()].sort())
 // Large, page-specific indexes stay out of the JS bundle.
 writePublic('drivers.json', driverIndex)
 writePublic('search.json', searchIndex)
+
+if (memoryMaps) {
+	const mappedDrivers = catalog.drivers
+		.filter(driver => memoryMaps.byDriver.has(driver.id))
+		.map(driver => {
+			const memoryMap = memoryMaps.byDriver.get(driver.id)!
+			return {
+				id: driver.id,
+				machineId: driver.machine_id,
+				machineSlug: slugByMachineId.get(driver.machine_id) ?? slugify(driver.machine_id),
+				sourcePath: memoryMap.sourcePath,
+				dataUrl: memoryMap.dataUrl,
+			}
+		})
+	writePublic('memory-maps/source.json', {
+		format: 'pinball-memory-maps-site-source',
+		version: 1,
+		...memoryMaps.source,
+		mapCount: memoryMaps.maps.length,
+		matchedDriverCount: memoryMaps.byDriver.size,
+		unmatchedRoms: memoryMaps.unmatchedRoms,
+	})
+	writePublic('memory-maps/index.json', {
+		format: 'pinball-memory-maps-site-index',
+		version: 1,
+		source: memoryMaps.source,
+		maps: memoryMaps.maps,
+		drivers: mappedDrivers,
+		unmatchedRoms: memoryMaps.unmatchedRoms,
+	})
+}
 
 // ---------------------------------------------------------------------------
 // machine-readable endpoints
@@ -1018,6 +1117,7 @@ const publicMachines = machineIndex.map(m => ({
 	// Only described machines have a detail document.
 	detail: m.hasDetail ? `data/machines/${m.slug}.json` : null,
 	definition: m.definition,
+	memoryMapCount: memoryMapsByMachine.get(m.id)?.length ?? 0,
 }))
 
 const publicIndex = {
@@ -1033,6 +1133,7 @@ const publicIndex = {
 		drivers: 'data/drivers.json',
 		search: 'data/search.json',
 		platforms: 'data/platforms.json',
+		...(memoryMaps ? { memoryMaps: 'data/memory-maps/index.json' } : {}),
 	},
 	machines: publicMachines,
 }
@@ -1093,9 +1194,7 @@ writeFileSync(
 	join(projectRoot, 'public', 'llms.txt'),
 	`# PinMAME Machine Reference
 
-> A browsable reference for the pinmame-game-defs catalog: every switch, lamp, coil, display and
-> mechanism of a PinMAME-supported pinball machine, the address the emulator reports for each, and
-> the evidence behind every claim. Generated from the catalog; it adds no facts of its own.
+> A browsable reference for the pinmame-game-defs catalog: every switch, lamp, coil, display and mechanism of a PinMAME-supported pinball machine, the address the emulator reports for each, and the evidence behind every claim. Canonical definition facts remain distinct from clearly attributed build-time external data.
 
 Catalog state: ${site.counts.machines} physical machines, ${site.counts.drivers} PinMAME ROM sets,
 ${site.counts.authorReady} author-ready and ${site.counts.partial} partial definitions, generated
@@ -1111,6 +1210,7 @@ catalog drivers joined, related machines computed, recreation notes rendered to 
 - [Drivers](${siteUrl}/data/drivers.json): all ${site.counts.drivers} ROM sets mapped to a machine
 - [Platforms](${siteUrl}/data/platforms.json): controller profiles and address ranges
 - [Search](${siteUrl}/data/search.json): compact index over machines and ROM sets
+${memoryMaps ? `- [Memory maps](${siteUrl}/data/memory-maps/index.json): external Pinball Memory Maps at commit ${memoryMaps.source.commit.slice(0, 12)}, joined only by exact driver id\n` : ''}
 
 The index contract is \`format: "pinmame-machine-reference-index"\` with \`version: 2\`. Relative to v1, every machine now carries its authoritative \`machineKind\` and complete \`roms\` list; consumers should reject unknown future versions.
 
@@ -1133,6 +1233,7 @@ The index contract is \`format: "pinmame-machine-reference-index"\` with \`versi
 - Provenance is per assertion (\`unknown\`, \`candidate\`, \`observed\`, \`validated\`, \`conflicted\`).
   Observing an output toggle is not the same as knowing what it drives.
 - Addresses are the values PinMAME's public API reports, not hardware pins.
+${memoryMaps ? `- \`externalData.pinballMemoryMaps\` is LGPL-licensed supplemental data from a pinned external source. Its presence does not change machine-definition coverage and does not prove that sibling ROMs share a memory layout.\n` : ''}
 - The canonical source is https://github.com/vpinball/pinmame-game-defs — this site is a rendering.
 `,
 )

@@ -34,12 +34,20 @@ const stats = computed(() => [
 			<StatusChip :status="machine.status" size="sm" />
 		</div>
 
-		<div v-if="machine.highlights.length" class="mt-3 flex flex-wrap gap-1.5">
+		<div v-if="machine.highlights.length || machine.memoryMaps" class="mt-3 flex flex-wrap gap-1.5">
 			<span
 				v-for="tag in machine.highlights"
 				:key="tag"
 				class="rounded border border-line bg-raised px-1.5 py-0.5 text-[10px] text-ink-3 capitalize"
 			>{{ tag }}</span>
+			<span
+				v-if="machine.memoryMaps"
+				class="inline-flex items-center gap-1 rounded border border-dashed border-line bg-raised px-1.5 py-0.5 text-[10px] text-ink-3"
+				:title="MEMORY_MAP_BADGE.title"
+			>
+				<Icon :name="MEMORY_MAP_BADGE.icon" class="size-2.5 shrink-0" />
+				Memory Map
+			</span>
 		</div>
 
 		<CompletionMeter v-if="machine.status !== 'author_ready'" class="mt-3" :score="machine.completionScore" :status="machine.status" compact />

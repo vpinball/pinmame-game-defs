@@ -28,6 +28,35 @@ export const STATUS_META: Record<CoverageStatus, { label: string, short: string,
 const STATUS_BY_CODE: CoverageStatus[] = ['stub', 'partial', 'author_ready']
 
 /* ---------------------------------------------------------------------------
+   External memory maps
+--------------------------------------------------------------------------- */
+
+/**
+ * The "memory map available" badge, shared by the browse cards, the browse table
+ * and the ROM lookup so the three cannot drift apart.
+ *
+ * It deliberately borrows nothing from `STATUS_META`. A coverage colour answers
+ * "how complete is this repository's own definition"; a memory map is a third
+ * party's file that answers nothing of the sort, and a machine can be a bare
+ * stub and still have one. So the badge carries no status hue at all — neutral
+ * ink inside the dashed border `MemoryMapPanel` already uses for borrowed
+ * material, with the words, not a colour, doing the work.
+ *
+ * The word "external" is in the visible label rather than only in the tooltip or
+ * the dashed border, because neither of those survives a screen reader, a touch
+ * device or a monochrome print — and "this is not our data" is the whole point.
+ * That also makes the label self-sufficient, so the non-interactive badges need
+ * no `aria-label`; only the ROM-table link takes one, to keep eighty otherwise
+ * identical link names apart.
+ */
+export const MEMORY_MAP_BADGE = {
+	icon: 'lucide:memory-stick',
+	label: 'External memory map',
+	title: 'An external ROM memory map from the Pinball Memory Maps project covers this machine. It is not part of the definition and does not count towards coverage.',
+	chip: 'inline-flex items-center gap-1 rounded border border-dashed border-line bg-raised px-1.5 py-0.5 text-[10px] whitespace-nowrap text-ink-3',
+} as const
+
+/* ---------------------------------------------------------------------------
    Device kinds
 --------------------------------------------------------------------------- */
 
@@ -207,6 +236,10 @@ export function decodeMachineRows(index: { rows: any[][] }): MachineSummary[] {
 		definition: row[12] ?? '',
 		roms: row[13] ?? [],
 		completionScore: row[14] ?? 0,
+		// Absent from an index generated before this column existed, and absent in
+		// spirit from any build that ran without the upstream checkout — both mean
+		// the same thing to every consumer, so both decode to zero.
+		memoryMaps: row[15] ?? 0,
 	}))
 }
 
