@@ -86,6 +86,12 @@ const shown = (key: string, list: string[]) => (isExpanded(key) ? list : list.sl
 
 const mapKey = (index: number, field: string) => `${index}:${field}`
 
+/** ROM sets named upstream that do not belong to the machine on this page. */
+const additionalRoms = (roms: string[], matchedDrivers: string[]) => {
+	const matched = new Set(matchedDrivers)
+	return roms.filter(rom => !matched.has(rom))
+}
+
 /** `maps/wpc/mm.map.json` -> `mm.map.json`, for a heading that fits. */
 const fileName = (path: string) => path.split('/').filter(Boolean).at(-1) ?? path
 </script>
@@ -203,35 +209,11 @@ const fileName = (path: string) => path.split('/').filter(Boolean).at(-1) ?? pat
 			</p>
 
 			<dl class="mt-3 space-y-2.5">
-				<!-- Every ROM the upstream map claims to cover — which can reach beyond
-				     this machine, since one map may serve a whole driver family. -->
-				<div v-if="map.roms.length" class="flex flex-col gap-1.5 sm:flex-row sm:gap-3">
-					<dt class="eyebrow shrink-0 pt-1 sm:w-28" title="ROM sets the upstream map lists, which may include sets that do not resolve to this machine">
-						Upstream ROMs
-					</dt>
-					<dd class="flex min-w-0 flex-wrap items-center gap-1.5">
-						<span
-							v-for="rom in shown(mapKey(index, 'roms'), map.roms)"
-							:key="rom"
-							class="num rounded-md border border-line bg-raised px-1.5 py-0.5 text-[11px] text-ink-2"
-						>{{ rom }}</span>
-						<button
-							v-if="map.roms.length > LIMIT"
-							type="button"
-							class="rounded-md border border-line px-1.5 py-0.5 text-[11px] text-ink-3 transition-colors hover:border-amber/40 hover:text-amber"
-							:aria-expanded="isExpanded(mapKey(index, 'roms'))"
-							@click="toggle(mapKey(index, 'roms'))"
-						>
-							{{ isExpanded(mapKey(index, 'roms')) ? 'Show fewer' : `+${map.roms.length - LIMIT} more` }}
-						</button>
-					</dd>
-				</div>
-
-				<!-- Which of this machine's own drivers those ROM names hit. That match
-				     is the only claim on this card the site itself makes. -->
+				<!-- Lead with the useful claim: which ROM sets on this machine the map
+				     applies to. Do not repeat the full upstream list when it is identical. -->
 				<div v-if="map.matchedDrivers.length" class="flex flex-col gap-1.5 sm:flex-row sm:gap-3">
-					<dt class="eyebrow shrink-0 pt-1 sm:w-28" title="Drivers on this page the upstream ROM names resolved to">
-						Matched here
+					<dt class="eyebrow shrink-0 pt-1 sm:w-28" title="ROM sets on this machine that are covered by the upstream map">
+						Applies to ROMs
 					</dt>
 					<dd class="flex min-w-0 flex-wrap items-center gap-1.5">
 						<span
@@ -247,6 +229,30 @@ const fileName = (path: string) => path.split('/').filter(Boolean).at(-1) ?? pat
 							@click="toggle(mapKey(index, 'drivers'))"
 						>
 							{{ isExpanded(mapKey(index, 'drivers')) ? 'Show fewer' : `+${map.matchedDrivers.length - LIMIT} more` }}
+						</button>
+					</dd>
+				</div>
+
+				<!-- A shared map can cover a wider driver family. Only surface those extra
+				     upstream ROM IDs when there is an actual distinction to explain. -->
+				<div v-if="additionalRoms(map.roms, map.matchedDrivers).length" class="flex flex-col gap-1.5 sm:flex-row sm:gap-3">
+					<dt class="eyebrow shrink-0 pt-1 sm:w-28" title="Other ROM sets named by the upstream map that are not on this machine page">
+						Also covers
+					</dt>
+					<dd class="flex min-w-0 flex-wrap items-center gap-1.5">
+						<span
+							v-for="rom in shown(mapKey(index, 'additional-roms'), additionalRoms(map.roms, map.matchedDrivers))"
+							:key="rom"
+							class="num rounded-md border border-line bg-raised px-1.5 py-0.5 text-[11px] text-ink-2"
+						>{{ rom }}</span>
+						<button
+							v-if="additionalRoms(map.roms, map.matchedDrivers).length > LIMIT"
+							type="button"
+							class="rounded-md border border-line px-1.5 py-0.5 text-[11px] text-ink-3 transition-colors hover:border-amber/40 hover:text-amber"
+							:aria-expanded="isExpanded(mapKey(index, 'additional-roms'))"
+							@click="toggle(mapKey(index, 'additional-roms'))"
+						>
+							{{ isExpanded(mapKey(index, 'additional-roms')) ? 'Show fewer' : `+${additionalRoms(map.roms, map.matchedDrivers).length - LIMIT} more` }}
 						</button>
 					</dd>
 				</div>
