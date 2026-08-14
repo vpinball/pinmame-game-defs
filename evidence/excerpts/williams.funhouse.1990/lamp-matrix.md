@@ -32,12 +32,7 @@ is not used by this definition).
 
 ## Cross-page disagreements found
 
-- **Address 12**: this page reads "Gangway 100,000" (confirmed at 600 dpi: row 2, column 1,
-  clearly "100, 000" not "10, 000"). The lamp-locations page (`lamp-locations.md`, printed 2-36)
-  reads "Gangway 10,000" for the same address, also confirmed at 600 dpi. The two pages disagree
-  by exactly one digit. Recorded as `conflict.gangway-lamp-12-value`, unresolved; the promoted
-  definition's device label uses "Gangway 100,000" because it is the only value that fits the
-  ladder implied by its neighbors (75,000 / ? / 150,000 / 200,000 / 250,000 / Extra Ball).
+- **Address 12**: this page reads "Gangway 100,000" (confirmed at 600 dpi: row 2, column 1, clearly "100, 000" not "10, 000"). The lamp-locations page (`lamp-locations.md`, printed 2-36) reads "Gangway 10,000" for the same address, also confirmed at 600 dpi. The November 1990 handbook's lamp matrix and the maintainer-supplied physical playfield photograph independently confirm `100,000`, which also fits the printed 75,000 / 100,000 / 150,000 / 200,000 / 250,000 / Extra Ball ladder. The lone `10,000` entry is therefore a resolved one-digit typographical error.
 - **Address 51**: this page's cell reads "Lower Left Jet Bumper"; the lamp-locations page (and the
   solenoid/GI locations page, `solenoid-locations.md`) both read plain "Lower Jet Bumper" with no
   "Left" qualifier. FunHouse has exactly three jet bumpers (Left/Right/Lower per the solenoid

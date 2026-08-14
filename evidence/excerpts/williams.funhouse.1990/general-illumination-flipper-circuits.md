@@ -12,14 +12,12 @@ Source: `Funhouse_OPS.pdf`, PDF page 120, rendered at 300 dpi and read directly 
 | Yellow | Feed 4 | J120-3 | — | J121-3 | Q14 |
 | Orange | Feed 5 | J120-2 | — | J121-2 | Q16 |
 | White/Green | Return 1 | J120-10 | — | J121-10 | F7 |
-| White/Violet | Return 2 | J120-11 | — | J121-11 | F6 |
+| White/Violet | Return 2 | J120-11 | J119-1 | J121-11 | F6 |
 | White/Brown | Return 3 | J120-7 | — | J121-7 | F10 |
 | White/Yellow | Return 4 | J120-9 | — | J121-9 | F8 |
 | White/Orange | Return 5 | J120-8 | — | J121-8 | F9 |
 
-Five feeds, matching the five printed G.I. strings on `solenoid-locations.md` in the same 1-5
-order (Feed N assumed to correspond to printed G.I. address N by position; this table does not
-itself repeat the G.I. string names).
+This interboard table numbers five generic feed/return pairs but does not repeat the game-specific G.I. circuit names. The November 1990 operator handbook supplies that missing association through its named circuit table: printed 01 Upper Backglass is Brown/White-Brown through Q18/F10; 02 Front Playfield is Violet/White-Violet through Q10/F6; 03 Rear Playfield is Yellow/White-Yellow through Q14/F8; 04 Center Backglass / Right Rear Playfield is Orange/White-Orange through Q16/F9; and 05 Top Playfield is Green/White-Green through Q12/F7. Generic feed number is therefore not the printed FunHouse circuit number. The handbook's `J119-1` connector for circuit 02 agrees with the White/Violet Return 2 cabinet branch on this page; its earlier omission from this transcription was a transcription error.
 
 ## Flipper Circuits — connectors from Power Driver Board
 
@@ -38,16 +36,7 @@ itself repeat the G.I. string names).
 | Orange/Gray | Left Flipper Ground | J110-2, 1 |
 | Orange/Violet | Right Flipper Ground | J110-4, 3 |
 
-This is a generic flipper-driver-board connector template: FunHouse has exactly two flippers (per
-the switch table, addresses 11/12, and the solenoid table, which lists no upper-flipper coil at
-all), so the "Upper Left Flipper" / "Upper Right Flipper" rows describe unpopulated positions on a
-board layout shared with other WPC titles that do have four flippers. Critically, no row on this
-page carries a public solenoid address (1-50) — flipper coils on this pre-Fliptronics WPC-Alpha
-generation are wired directly through this dedicated flipper driver board and the flipper
-buttons/EOS switches, not through the CPU-addressable solenoid matrix; `fhGameData` in pinned
-PinMAME source declares `FLIP_SWNO(12,11)` (flipper switches only) with no `FLIP_SOL()` call, so
-`core_getSol` never routes anything to the standard flipper-coil addresses 33/34/35/36/45/46/47/48
-for this driver. See `knowledge/williams/funhouse-1990.md`.
+The handbook's coil inventory identifies three fitted physical flipper assemblies: lower right FL-11630, lower left FL-11630, and upper left FL-11753. The upper-right connector position in this generic flipper-driver-board table is unfitted on FunHouse. Critically, no row on this page carries a public solenoid address (1-50): flipper coils on this pre-Fliptronics WPC-Alpha generation are wired directly through the dedicated flipper driver board and the cabinet buttons/EOS switches, not through the CPU-addressable solenoid matrix. `fhGameData` in pinned PinMAME declares `FLIP_SWNO(12,11)` with no `FLIP_SOL()` call, so `core_getSol` never routes a physical flipper coil to public outputs 33-36 or 45-48. The retained script independently confirms the three-bat layout because its left callback rotates both `LeftFlipper` and `LeftFlipper1`, while the right callback rotates one right bat. See `knowledge/williams/funhouse-1990.md`.
 
 ## Power Circuits — connectors from Power Driver Board (two printed tables on this page)
 

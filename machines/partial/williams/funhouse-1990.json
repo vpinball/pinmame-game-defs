@@ -1,24 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "The lamp-locations parts list (manual printed page 2-36) reads \"Gangway 10,000\" for lamp 12, confirmed at 600 dpi. The lamp-matrix wiring page (printed page 2-37) reads \"Gangway 100,000\" for the same address, also confirmed at 600 dpi. Lamps 11/13/14/15/16 print an unambiguous ascending award ladder on both pages (75,000 / 150,000 / 200,000 / 250,000 / Extra Ball), which only 100,000 continues monotonically; 10,000 would be a value smaller than the first rung. No independent third source (the retained script does not implement scoring-value text) was available to settle this outright. The promoted definition's label uses \"Gangway 100,000\" on the strength of the award-ladder pattern, but the disagreement itself is unresolved and the smaller-value reading has not been ruled out as a genuine factory print. Resolution path: a photograph of an unrestored FunHouse playfield's gangway-lane inserts, whose printed legends are the physical object both manual pages are describing, or a second printed revision of the manual whose 2-36 and 2-37 agree; independently, a LibPinMAME gameplay-harness trace against a legal fh_l9 ROM reading the alphanumeric score displays as the gangway lane is collected with lamp 12 lit would show which value the ROM actually awards. Unresolved.",
-      "id": "conflict.gangway-lamp-12-value",
-      "path": "outputs[binding.device=12,group=pinmame.output.lamp]",
-      "source_refs": [
-        "manual.williams.funhouse.1990",
-        "manual-support.williams.funhouse.1990"
-      ]
-    },
-    {
-      "description": "The manual's printed general-illumination locations page (2-40) labels G.I. string 02 \"Front Playfield\" and string 05 \"Top Playfield\". The retained known-working script's own UpdateGI/UpdateGI2 region header comment labels the same two addresses (0-based Case 1 and Case 4) \"Rudy\" and \"Lower Playfield\" respectively, and its actual implemented behavior matches those script labels exactly: Case 1 drives only the RudySign1/RudySign2/RudyShade collection (not a generic front-playfield wash), and Case 4 drives the GI_Lower collection (the reverse of \"Top\"). G.I. string 01 (\"Upper Backglass\"/Case 0) agrees between both sources, and string 03 (\"Rear Playfield\"/Case 2 \"Upper Playfield\") is a plausible reconciliation under this project's y=0-is-rear coordinate convention, but strings 02 and 05 remain a direct disagreement about which physical region each address illuminates. The promoted definition uses the manual's printed label as the device name (physical-construction authority) while using the script's real implemented objects for spatial placement (runtime authority) and discloses the disagreement in each device's notes. Resolution path: run the machine's own general-illumination test on an unrestored production unit and photograph which region lights at each of the five steps, or continuity-check the feed and return pairs printed on page 3-17 -- Feed 2 Violet on J120-6/J119-3/J121-6 through Q10, Feed 5 Orange on J120-2/J121-2 through Q16 -- into the bulb groups they actually reach, which also fixes the feed-number-to-public-address correspondence that page leaves assumed. Unresolved.",
-      "id": "conflict.gi-region-naming",
-      "path": "outputs[binding.group=pinmame.output.gi,binding.device=1,4]",
-      "source_refs": [
-        "manual.williams.funhouse.1990",
-        "vpx-script.fh-1-3"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "hardware_generation": "0x2",
     "inversion_applied_by_emulator": true,
@@ -26,19 +7,17 @@
   },
   "coverage": {
     "dimensions": {
-      "address_enumeration": "candidate",
+      "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "validated",
       "physical_wiring": "validated",
       "recreation_knowledge": "validated",
-      "semantic_naming": "conflicted",
-      "spatial_placement": "candidate",
+      "semantic_naming": "validated",
+      "spatial_placement": "unknown",
       "variant_coverage": "validated"
     },
     "missing": [
-      "output_enumeration",
-      "spatial_placement",
-      "unresolved_conflicts"
+      "spatial_placement"
     ],
     "status": "partial"
   },
@@ -173,7 +152,7 @@
       "id": "fh_pa1",
       "manufacturer": "Williams",
       "physical_compatibility": "compatible",
-      "variant_notes": "Prototype PA-1 game ROM (labeled L-2, System 11 sound). Pinned PinMAME binds it to a distinct GEN_WPCALPHA_1 core_tGameData (fhpa1GameData) rather than the production fhGameData, reflecting the earlier WPC-Alpha-1/System-11 sound-board generation used before the machine's WPC-Alpha-2 sound board shipped. The switch, solenoid, lamp, and mechanism definitions transcribed here are unchanged between the two structs (fhpa1GameData copies fhGameData's flipper/mech/lamp-display fields and inverted-switch mask verbatim), so this remains the same physical playfield with an earlier sound subsystem, not a different machine.",
+      "variant_notes": "Prototype PA-1 game ROM (labeled L-2, System 11 sound). Pinned PinMAME binds it to a distinct GEN_WPCALPHA_1 core_tGameData (fhpa1GameData) rather than the production fhGameData, reflecting the earlier WPC-Alpha-1/System-11 sound-board generation used before the machine's WPC-Alpha-2 sound board shipped. The switch, solenoid, lamp, and mechanism definitions transcribed here are unchanged between the two structs. The prototype struct also retains a stale gameSpecific1=1 copied before production FunHouse was corrected: pinned wpc.c therefore executes the unrelated WPC_CFTBL chase-light integrator and writes internal PWM lamp slots 65-72 from solenoids 20/24 and G.I. bits 0/3, but lampCol=0 keeps the public lamp count at 64. Those internal slots are a pinned-source defect, not fitted FunHouse lamps. This remains the same physical playfield with an earlier sound subsystem, not a different machine.",
       "year": "1990"
     },
     {
@@ -700,7 +679,8 @@
       "label": "Right Flipper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 1, return row 1.",
+        "location": "cabinet flipper-button input",
+        "notes": "Printed switch-matrix drive column 1, return row 1. This CPU-facing matrix state is copied from PinMAME's generic cabinet flipper input 112; it is not an EOS contact or a playfield-positioned sensor.",
         "part_number": "A-9990-1",
         "switch_type": "leaf"
       },
@@ -712,23 +692,19 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "flipper.lower.right.button-matrix-copy"
+      ],
       "spatial": {
-        "placements": [
-          {
-            "id": "switch.matrix-11.sensor",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.fh-1-3"
-              ],
-              "status": "validated"
-            },
-            "role": "sensor",
-            "space": "playfield",
-            "x": 0.60409,
-            "y": 0.842652
-          }
-        ],
-        "status": "validated"
+        "provenance": {
+          "source_refs": [
+            "manual.williams.funhouse.1990",
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "WPC-Alpha CPU board",
@@ -756,7 +732,8 @@
       "label": "Left Flipper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 1, return row 2.",
+        "location": "cabinet flipper-button input",
+        "notes": "Printed switch-matrix drive column 1, return row 2. This CPU-facing matrix state is copied from PinMAME's generic cabinet flipper input 114; it is not an EOS contact or a playfield-positioned sensor.",
         "part_number": "A9989-1",
         "switch_type": "leaf"
       },
@@ -768,23 +745,19 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "flipper.left.button-matrix-copy"
+      ],
       "spatial": {
-        "placements": [
-          {
-            "id": "switch.matrix-12.sensor",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.fh-1-3"
-              ],
-              "status": "validated"
-            },
-            "role": "sensor",
-            "space": "playfield",
-            "x": 0.264227,
-            "y": 0.842652
-          }
-        ],
-        "status": "validated"
+        "provenance": {
+          "source_refs": [
+            "manual.williams.funhouse.1990",
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       },
       "wiring": {
         "board": "WPC-Alpha CPU board",
@@ -3019,7 +2992,7 @@
       "label": "Right Trough",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 6, return row 3. No dedicated VPX trigger/target object was found for this address in the retained extraction; spatial placement is left unresolved.",
+        "notes": "Printed switch-matrix drive column 6, return row 3. The November 1990 handbook places this at the rightmost trough position; the retained script's ballrelease kicker asserts this switch while occupied and clears it when solenoid 15 ejects the ball, so that kicker supplies the validated coordinate.",
         "part_number": "p/o B-8925",
         "switch_type": "microswitch"
       },
@@ -3028,6 +3001,26 @@
           "manual.williams.funhouse.1990",
           "pinmame.core.4ec52ff0ac13",
           "vpx-script.fh-1-3"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.matrix-63.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.funhouse.1990.operator-handbook",
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.877269,
+            "y": 0.863859
+          }
         ],
         "status": "validated"
       },
@@ -4120,6 +4113,332 @@
     {
       "aliases": [
         {
+          "namespace": "pinmame.switch",
+          "value": "111"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 111,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.generic-111",
+      "kind": "switch",
+      "label": "Unused Generic Flipper Input 111",
+      "normally_closed": false,
+      "physical": {
+        "location": "internal public address space",
+        "notes": "Public generic-flipper-column position. FunHouse declares no input at this position, so it is explicitly unused.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "112"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 112,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.generic-112",
+      "kind": "switch",
+      "label": "Generic Right Flipper Button State",
+      "normally_closed": false,
+      "physical": {
+        "location": "cabinet flipper button",
+        "notes": "Live generic cabinet-flipper input published from PinMAME's switch column 11. core_updateSw copies this state to matrix switch 11; it represents the right cabinet button and the physical lower-right flipper assembly.",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "flipper.lower.right.button"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "113"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 113,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.generic-113",
+      "kind": "switch",
+      "label": "Unused Generic Flipper Input 113",
+      "normally_closed": false,
+      "physical": {
+        "location": "internal public address space",
+        "notes": "Public generic-flipper-column position. FunHouse declares no input at this position, so it is explicitly unused.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "114"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 114,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.generic-114",
+      "kind": "switch",
+      "label": "Generic Left Flipper Button State",
+      "normally_closed": false,
+      "physical": {
+        "location": "cabinet flipper button",
+        "notes": "Live generic cabinet-flipper input published from PinMAME's switch column 11. core_updateSw copies this state to matrix switch 12; the one left cabinet button directly drives both the lower-left and upper-left physical flipper assemblies.",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "flipper.left.button"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "115"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 115,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.generic-115",
+      "kind": "switch",
+      "label": "Unused Generic Flipper Input 115",
+      "normally_closed": false,
+      "physical": {
+        "location": "internal public address space",
+        "notes": "Public generic-flipper-column position. FunHouse declares no input at this position, so it is explicitly unused.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "116"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 116,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.generic-116",
+      "kind": "switch",
+      "label": "Unused Generic Flipper Input 116",
+      "normally_closed": false,
+      "physical": {
+        "location": "internal public address space",
+        "notes": "Public generic-flipper-column position. FunHouse declares no input at this position, so it is explicitly unused.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "117"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 117,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.generic-117",
+      "kind": "switch",
+      "label": "Unused Generic Flipper Input 117",
+      "normally_closed": false,
+      "physical": {
+        "location": "internal public address space",
+        "notes": "Public generic-flipper-column position. FunHouse declares no input at this position, so it is explicitly unused.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "118"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 118,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.generic-118",
+      "kind": "switch",
+      "label": "Unused Generic Flipper Input 118",
+      "normally_closed": false,
+      "physical": {
+        "location": "internal public address space",
+        "notes": "Public generic-flipper-column position. FunHouse declares no input at this position, so it is explicitly unused.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
           "namespace": "pinmame.dip",
           "value": "1"
         },
@@ -4610,7 +4929,7 @@
         "device.outhole",
         "device.trough"
       ],
-      "behavior": "FunHouse has two manual shooter lanes (left, switch 47; right, switch 62) feeding a shared trough. Solenoid 1 (Outhole) kicks a drained ball into the trough; solenoid 15 (Trough, retained script comment \"Main trough kickout\") ejects a trough ball back to a shooter lane. Trough positions are Left Trough (72), Center Trough (74), and Right Trough (63, no VPX geometry resolved in this pass -- see coverage.missing).",
+      "behavior": "FunHouse has two manual shooter lanes (left, switch 47; right, switch 62) feeding a shared trough. Solenoid 1 (Outhole) kicks a drained ball into the trough; solenoid 15 (Trough, retained script comment \"Main trough kickout\") ejects a trough ball back to a shooter lane. Trough positions are Left Trough (72), Center Trough (74), and Right Trough (63). The handbook places 63 at the rightmost trough position, and the retained script asserts it on the ballrelease kicker until solenoid 15 ejects that ball into a shooter lane.",
       "id": "mechanism.trough-and-shooters",
       "kind": "kicker",
       "label": "Ball trough, outhole, and dual shooter lanes",
@@ -4621,6 +4940,14 @@
           "label": "Ball in outhole",
           "sensors": [
             "switch.matrix-73"
+          ]
+        },
+        {
+          "description": "Rightmost trough sensor on the ballrelease kicker.",
+          "id": "right-trough",
+          "label": "Ball at right trough / release",
+          "sensors": [
+            "switch.matrix-63"
           ]
         },
         {
@@ -4652,6 +4979,7 @@
         "switch.matrix-73",
         "switch.matrix-72",
         "switch.matrix-74",
+        "switch.matrix-63",
         "switch.matrix-47",
         "switch.matrix-62"
       ]
@@ -4882,19 +5210,55 @@
       ]
     },
     {
-      "actuators": [],
-      "behavior": "FunHouse is a pre-Fliptronics WPC-Alpha machine: fhGameData declares FLIP_SWNO(12,11) (flipper switches only) with no FLIP_SOL() call, so pinned PinMAME's core_getSol never routes any public solenoid address to a flipper coil for this driver. The printed Flipper Circuits wiring page (page 120) confirms the physical construction: Left/Right Flipper Power and four Upper/Lower Flipper positions are wired through a dedicated flipper driver board (J109/J110) directly to the flipper buttons and end-of-stroke switches, entirely separate from the CPU-addressable solenoid matrix (1-50). Switches 11 (Right Flipper) and 12 (Left Flipper) sit in the ordinary switch matrix (not a dedicated Fliptronic column, which does not exist on this hardware generation) and are read by the CPU for scoring/combo purposes only; they do not gate whether the flipper fires. FunHouse has no upper flippers.",
+      "actuators": [
+        "device.synthetic-lower-right-flipper",
+        "device.synthetic-left-flipper"
+      ],
+      "behavior": "FunHouse is a pre-Fliptronics WPC-Alpha machine: fhGameData declares FLIP_SWNO(12,11) (flipper switches only) with no FLIP_SOL() call, so no public address represents a CPU-controlled physical flipper driver. PinMAME nevertheless fabricates public states 45-48 from the live button inputs while the Game-On relay is enabled; retained callbacks sLRFlipper (46) and sLLFlipper (48) use those synthetic states to animate the digital flippers. SolLFlipper rotates both LeftFlipper and LeftFlipper1. The handbook's coil inventory and the printed Flipper Circuits wiring page confirm three fitted physical assemblies: lower right FL-11630, lower left FL-11630, and upper left FL-11753; the upper-right board position is unfitted. They are wired through a dedicated flipper driver board (J109/J110) directly to the flipper buttons and end-of-stroke switches, entirely separate from the CPU-addressable solenoid matrix (1-50). Generic public inputs 112 and 114 represent the cabinet buttons; core_updateSw copies them to ordinary matrix inputs 11 and 12 for the ROM. Neither 11 nor 12 is a playfield EOS contact. The one left button and synthetic left state drive both fitted left bats, and states 45-48 must not be recreated as four additional coils.",
       "id": "mechanism.flippers",
       "kind": "other",
-      "label": "Lower flipper pair (no CPU-controlled solenoid)",
+      "label": "Three direct-wired flippers with two synthetic PinMAME states",
+      "positions": [
+        {
+          "description": "Direct-wired FL-11630 assembly; animate from synthetic public state 46.",
+          "id": "lower-right",
+          "label": "Lower-right flipper",
+          "sensors": [
+            "switch.generic-112",
+            "switch.matrix-11"
+          ]
+        },
+        {
+          "description": "Direct-wired FL-11630 assembly; animate from synthetic public state 48.",
+          "id": "lower-left",
+          "label": "Lower-left flipper",
+          "sensors": [
+            "switch.generic-114",
+            "switch.matrix-12"
+          ]
+        },
+        {
+          "description": "Direct-wired FL-11753 assembly; the same left callback/state animates this bat together with the lower-left bat.",
+          "id": "upper-left",
+          "label": "Upper-left flipper",
+          "sensors": [
+            "switch.generic-114",
+            "switch.matrix-12"
+          ]
+        }
+      ],
       "provenance": {
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
-          "manual.williams.funhouse.1990"
+          "manual.williams.funhouse.1990",
+          "manual.williams.funhouse.1990.operator-handbook",
+          "vpx-script.fh-1-3"
         ],
         "status": "validated"
       },
       "sensors": [
+        "switch.generic-112",
+        "switch.generic-114",
         "switch.matrix-11",
         "switch.matrix-12"
       ]
@@ -5791,7 +6155,7 @@
       "kind": "flasher",
       "label": "3 Blue Flashers",
       "physical": {
-        "notes": "Printed solenoid table entry 17. Printed flashlamp complement: 3 #906 bulb(s) on this circuit. Retained script callback: SetBlueDome.",
+        "notes": "Printed solenoid table entry 17. Printed flashlamp complement: 3 #906 bulb(s) on this circuit. The retained table supplies one distinct emitter object for each printed bulb, so every socket has its own placement. Retained script callback: SetBlueDome.",
         "quantity": 3
       },
       "provenance": {
@@ -5805,7 +6169,7 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.3-blue-flashers.emitter",
+            "id": "device.3-blue-flashers.emitter.1",
             "provenance": {
               "source_refs": [
                 "vpx-table.fh-1-3"
@@ -5816,6 +6180,32 @@
             "space": "playfield",
             "x": 0.607818,
             "y": 0.066095
+          },
+          {
+            "id": "device.3-blue-flashers.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.257915,
+            "y": 0.313511
+          },
+          {
+            "id": "device.3-blue-flashers.emitter.3",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.931763,
+            "y": 0.490629
           }
         ],
         "status": "validated"
@@ -5891,7 +6281,7 @@
       "kind": "flasher",
       "label": "2 Clock Flashers",
       "physical": {
-        "notes": "Printed solenoid table entry 19. Printed flashlamp complement: 2 #906 bulb(s) on this circuit. Retained script callback: setlamp 119,.",
+        "notes": "Printed solenoid table entry 19. Printed flashlamp complement: 2 #906 bulb(s) on this circuit. The retained table abstracts both printed sockets into one physical Light fixture; the two explicit co-located placements preserve the manual quantity without inventing a separation the table does not provide. Retained script callback: setlamp 119,.",
         "quantity": 2
       },
       "provenance": {
@@ -5905,7 +6295,20 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.2-clock-flashers.emitter",
+            "id": "device.2-clock-flashers.emitter.1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.434362,
+            "y": 0.658164
+          },
+          {
+            "id": "device.2-clock-flashers.emitter.2",
             "provenance": {
               "source_refs": [
                 "vpx-table.fh-1-3"
@@ -5941,24 +6344,26 @@
       "kind": "flasher",
       "label": "2 Superdog Flashers",
       "physical": {
-        "notes": "Printed solenoid table entry 20. Printed flashlamp complement: 2 #906 bulb(s) on this circuit. Retained script callback: setlamp 120,.",
+        "notes": "Printed solenoid table entry 20. Printed flashlamp complement: 2 #906 bulb(s) on this circuit. The retained table supplies distinct F20 and F20a Light objects, and the pinned community script assigns both to output 20; each printed Superdog socket therefore has its own placement. Retained script callback: setlamp 120,.",
         "quantity": 2
       },
       "provenance": {
         "source_refs": [
           "manual.williams.funhouse.1990",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.fh-1-3"
+          "vpx-script.fh-1-3",
+          "vpx-script.funhouse-community-current"
         ],
         "status": "validated"
       },
       "spatial": {
         "placements": [
           {
-            "id": "device.2-superdog-flashers.emitter",
+            "id": "device.2-superdog-flashers.emitter.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.fh-1-3"
+                "vpx-table.fh-1-3",
+                "vpx-script.funhouse-community-current"
               ],
               "status": "validated"
             },
@@ -5966,6 +6371,20 @@
             "space": "playfield",
             "x": 0.446452,
             "y": 0.46247
+          },
+          {
+            "id": "device.2-superdog-flashers.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.fh-1-3",
+                "vpx-script.funhouse-community-current"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.460268,
+            "y": 0.512137
           }
         ],
         "status": "validated"
@@ -6089,7 +6508,7 @@
       "kind": "flasher",
       "label": "3 Red Flashers",
       "physical": {
-        "notes": "Printed solenoid table entry 23. Printed flashlamp complement: 3 #906 bulb(s) on this circuit. Retained script callback: SetRedDome.",
+        "notes": "Printed solenoid table entry 23. Printed flashlamp complement: 3 #906 bulb(s) on this circuit. The retained table supplies one distinct emitter object for each printed bulb, so every socket has its own placement. Retained script callback: SetRedDome.",
         "quantity": 3
       },
       "provenance": {
@@ -6103,7 +6522,7 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.3-red-flashers.emitter",
+            "id": "device.3-red-flashers.emitter.1",
             "provenance": {
               "source_refs": [
                 "vpx-table.fh-1-3"
@@ -6114,6 +6533,32 @@
             "space": "playfield",
             "x": 0.766934,
             "y": 0.087572
+          },
+          {
+            "id": "device.3-red-flashers.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.252168,
+            "y": 0.291859
+          },
+          {
+            "id": "device.3-red-flashers.emitter.3",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.932054,
+            "y": 0.531739
           }
         ],
         "status": "validated"
@@ -6139,7 +6584,7 @@
       "kind": "flasher",
       "label": "3 Clear Flashers",
       "physical": {
-        "notes": "Printed solenoid table entry 24. Printed flashlamp complement: 3 #906 bulb(s) on this circuit. Retained script callback: SetWhiteDome.",
+        "notes": "Printed solenoid table entry 24. Printed flashlamp complement: 3 #906 bulb(s) on this circuit. The retained table supplies one distinct emitter object for each printed bulb, so every socket has its own placement. Retained script callback: SetWhiteDome.",
         "quantity": 3
       },
       "provenance": {
@@ -6153,7 +6598,7 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.3-clear-flashers.emitter",
+            "id": "device.3-clear-flashers.emitter.1",
             "provenance": {
               "source_refs": [
                 "vpx-table.fh-1-3"
@@ -6164,6 +6609,32 @@
             "space": "playfield",
             "x": 0.929512,
             "y": 0.109304
+          },
+          {
+            "id": "device.3-clear-flashers.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.247033,
+            "y": 0.270019
+          },
+          {
+            "id": "device.3-clear-flashers.emitter.3",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.932168,
+            "y": 0.572932
           }
         ],
         "status": "validated"
@@ -6372,6 +6843,890 @@
     {
       "aliases": [
         {
+          "namespace": "pinmame.solenoid",
+          "value": "29"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.wpc-j111-state-29",
+      "kind": "virtual",
+      "label": "WPC J111 State 29",
+      "physical": {
+        "notes": "PinMAME mirrors WPC_GILAMPS bit 5, one of the CPU board's J111 GPIO state bits, to public address 29. It is a live controller state channel rather than a separate physical playfield device."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.wpc-state"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "30"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.wpc-j111-state-30",
+      "kind": "virtual",
+      "label": "WPC J111 State 30",
+      "physical": {
+        "notes": "PinMAME mirrors WPC_GILAMPS bit 6, one of the CPU board's J111 GPIO state bits, to public address 30. It is a live controller state channel rather than a separate physical playfield device."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.wpc-state"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "31"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.game-on-solenoid-relay",
+      "kind": "relay",
+      "label": "Game-On Solenoid Relay",
+      "physical": {
+        "notes": "The real pre-Fliptronic Game-On relay controlled by WPC_GILAMPS bit 7. Pinned wpc.c documents the chain from CPU board U4/J121 through power-driver J113, the relay, J110, the cabinet switch, and J109 to the flippers. This cabinet/flipper-enable relay is not a playfield coil."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.wpc-state",
+        "cabinet.game-on-relay"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "32"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-state-output-32",
+      "kind": "virtual",
+      "label": "Unused WPC State Output 32",
+      "physical": {
+        "notes": "PinMAME's WPC state remap has no fourth bit at public address 32, so this position is constant zero."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused.wpc-output"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "33"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 33,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-output-33",
+      "kind": "virtual",
+      "label": "Unused WPC Output 33",
+      "physical": {
+        "notes": "Generic upper-flipper-shaped public position; FunHouse declares no CPU-controlled FLIP_SOL bits, so PinMAME never drives it even though the physical machine has a direct-wired upper-left flipper."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused-platform-slot"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "34"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 34,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-output-34",
+      "kind": "virtual",
+      "label": "Unused WPC Output 34",
+      "physical": {
+        "notes": "Generic upper-flipper-shaped public position; FunHouse declares no CPU-controlled FLIP_SOL bits, so PinMAME never drives it even though the physical machine has a direct-wired upper-left flipper."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused-platform-slot"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "35"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 35,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-output-35",
+      "kind": "virtual",
+      "label": "Unused WPC Output 35",
+      "physical": {
+        "notes": "Generic upper-flipper-shaped public position; FunHouse declares no CPU-controlled FLIP_SOL bits, so PinMAME never drives it even though the physical machine has a direct-wired upper-left flipper."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused-platform-slot"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "36"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 36,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-output-36",
+      "kind": "virtual",
+      "label": "Unused WPC Output 36",
+      "physical": {
+        "notes": "Generic upper-flipper-shaped public position; FunHouse declares no CPU-controlled FLIP_SOL bits, so PinMAME never drives it even though the physical machine has a direct-wired upper-left flipper."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused-platform-slot"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "37"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-output-37",
+      "kind": "virtual",
+      "label": "Unused WPC Output 37",
+      "physical": {
+        "notes": "Platform public-output position not served by this WPC-Alpha generation; PinMAME returns zero."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused-platform-slot"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "38"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-output-38",
+      "kind": "virtual",
+      "label": "Unused WPC Output 38",
+      "physical": {
+        "notes": "Platform public-output position not served by this WPC-Alpha generation; PinMAME returns zero."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused-platform-slot"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "39"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-output-39",
+      "kind": "virtual",
+      "label": "Unused WPC Output 39",
+      "physical": {
+        "notes": "Platform public-output position not served by this WPC-Alpha generation; PinMAME returns zero."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused-platform-slot"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "40"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-output-40",
+      "kind": "virtual",
+      "label": "Unused WPC Output 40",
+      "physical": {
+        "notes": "Platform public-output position not served by this WPC-Alpha generation; PinMAME returns zero."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused-platform-slot"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "41"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-output-41",
+      "kind": "virtual",
+      "label": "Unused WPC Output 41",
+      "physical": {
+        "notes": "Platform public-output position not served by this WPC-Alpha generation; PinMAME returns zero."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused-platform-slot"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "42"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-output-42",
+      "kind": "virtual",
+      "label": "Unused WPC Output 42",
+      "physical": {
+        "notes": "Platform public-output position not served by this WPC-Alpha generation; PinMAME returns zero."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused-platform-slot"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "43"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-output-43",
+      "kind": "virtual",
+      "label": "Unused WPC Output 43",
+      "physical": {
+        "notes": "Platform public-output position not served by this WPC-Alpha generation; PinMAME returns zero."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused-platform-slot"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "44"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unused-wpc-output-44",
+      "kind": "virtual",
+      "label": "Unused WPC Output 44",
+      "physical": {
+        "notes": "Platform public-output position not served by this WPC-Alpha generation; PinMAME returns zero."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused-platform-slot"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "45"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 45,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.synthetic-lower-right-flipper-power",
+      "kind": "virtual",
+      "label": "Synthetic Lower Right Flipper Power",
+      "physical": {
+        "notes": "PinMAME's synthetic lower-right power bit. Because FunHouse has no CPU-controlled flipper solenoids, core_updateSw fabricates addresses 45-48 from the live flipper-button states while the real Game-On relay is enabled. The physical coil remains direct-wired through the flipper driver board."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.synthetic-flipper"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "46"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.synthetic-lower-right-flipper",
+      "kind": "virtual",
+      "label": "Synthetic Lower Right Flipper",
+      "physical": {
+        "notes": "PinMAME's combined lower-right public flipper state. It mirrors the same fabricated button-driven state as address 45 and is the sLRFlipper callback consumed by the retained script; it does not represent an additional physical coil."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.synthetic-flipper",
+        "flipper.lower.right"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "47"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 47,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.synthetic-left-flipper-power",
+      "kind": "virtual",
+      "label": "Synthetic Left Flipper Power",
+      "physical": {
+        "notes": "PinMAME's synthetic left-side power bit. It is fabricated from the live left-flipper button state under the same conditions as address 45 and has no physical driver-board output of its own; the one state covers both direct-wired left bats."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.synthetic-flipper"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "48"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 48,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.synthetic-left-flipper",
+      "kind": "virtual",
+      "label": "Synthetic Left Flipper",
+      "physical": {
+        "notes": "PinMAME's combined left-side public flipper state. It mirrors the same fabricated button-driven state as address 47 and is the sLLFlipper callback consumed by the retained script; that callback rotates both LeftFlipper and LeftFlipper1, matching the physical lower-left and upper-left bats. It does not represent an additional physical coil."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.synthetic-flipper",
+        "flipper.lower.left",
+        "flipper.upper.left"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "49"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.pinmame-simulator-ball-shooter",
+      "kind": "virtual",
+      "label": "PinMAME Simulator Ball-Shooter Channel",
+      "physical": {
+        "notes": "Platform simulator-only fake ball-shooter solenoid (sShooterRel). The built-in FunHouse simulator consumes it in both left- and right-shooter state transitions; it remains virtual and has no physical FunHouse driver-board circuit."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.simulator-ball-shooter"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "50"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 50,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "device.unassigned-solenoid-slot-50",
+      "kind": "virtual",
+      "label": "Unassigned Solenoid Slot 50",
+      "physical": {
+        "notes": "Reserved platform gap before custom outputs. FunHouse declares no custom solenoids, so no address above 50 is published for this game."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "controller-profile.pinmame-wpc-alpha"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "internal.unused-platform-slot"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "controller-profile.pinmame-wpc-alpha"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
           "namespace": "pinmame.lamp",
           "value": "11"
         },
@@ -6447,12 +7802,14 @@
       "kind": "lamp",
       "label": "Gangway 100,000",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 1, return row 2. Printed bulb type #555. The lamp-locations page (2-36) reads \"Gangway 10,000\" while the lamp-matrix page (2-37) reads \"Gangway 100,000\" for this same address (both confirmed at 600 dpi); see conflict.gangway-lamp-12-value. This label uses the matrix page's value, which fits the ascending 75,000/100,000/150,000/200,000/250,000/Extra-Ball award ladder implied by its neighbors.",
+        "notes": "Printed lamp-matrix drive column 1, return row 2. Printed bulb type #555. The older lamp-locations page (2-36) reads \"Gangway 10,000\", but its matrix page, the November 1990 handbook, and the maintainer-supplied physical playfield photograph all identify the insert as Gangway 100,000. The isolated 10,000 entry is a resolved one-digit typo.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.williams.funhouse.1990",
+          "manual.williams.funhouse.1990.operator-handbook",
+          "photo.williams.funhouse.1990.a13",
           "vpx-script.fh-1-3",
           "pinmame.core.4ec52ff0ac13"
         ],
@@ -8432,7 +9789,7 @@
       "kind": "lamp",
       "label": "Steps Lights Frenzy",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 5, return row 4. Printed bulb type #555. The retained table models this address with four distinct 'finger'-shaped Light objects forming a chase-lit arrow icon rather than one bulb at one coordinate, and the manual states a single bulb with no quantity marker; spatial placement is left unresolved rather than guessing which finger segment is authoritative.",
+        "notes": "Printed lamp-matrix drive column 5, return row 4. Printed bulb type #555. The handbook lamp-location drawing confirms one physical socket at this address. The retained table's five-unit-radius `_finger_1` object is the actual hotspot; `_finger_2` through `_finger_4` are larger render layers around the same insert effect and are excluded from the physical count.",
         "quantity": 1
       },
       "provenance": {
@@ -8440,6 +9797,26 @@
           "manual.williams.funhouse.1990",
           "vpx-script.fh-1-3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-54.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.funhouse.1990.operator-handbook",
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.199859,
+            "y": 0.281846
+          }
         ],
         "status": "validated"
       },
@@ -8472,7 +9849,7 @@
       "kind": "lamp",
       "label": "Steps Lights Ex. Ball",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 5, return row 5. Printed bulb type #555. The retained table models this address with four distinct 'finger'-shaped Light objects forming a chase-lit arrow icon rather than one bulb at one coordinate, and the manual states a single bulb with no quantity marker; spatial placement is left unresolved rather than guessing which finger segment is authoritative.",
+        "notes": "Printed lamp-matrix drive column 5, return row 5. Printed bulb type #555. The handbook lamp-location drawing confirms one physical socket at this address. The retained table's five-unit-radius `_finger_1` object is the actual hotspot; `_finger_2` through `_finger_4` are larger render layers around the same insert effect and are excluded from the physical count.",
         "quantity": 1
       },
       "provenance": {
@@ -8480,6 +9857,26 @@
           "manual.williams.funhouse.1990",
           "vpx-script.fh-1-3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-55.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.funhouse.1990.operator-handbook",
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.201836,
+            "y": 0.23651
+          }
         ],
         "status": "validated"
       },
@@ -8512,7 +9909,7 @@
       "kind": "lamp",
       "label": "Steps 500,000",
       "physical": {
-        "notes": "Printed lamp-matrix drive column 5, return row 6. Printed bulb type #555. The retained table models this address with four distinct 'finger'-shaped Light objects forming a chase-lit arrow icon rather than one bulb at one coordinate, and the manual states a single bulb with no quantity marker; spatial placement is left unresolved rather than guessing which finger segment is authoritative.",
+        "notes": "Printed lamp-matrix drive column 5, return row 6. Printed bulb type #555. The handbook lamp-location drawing confirms one physical socket at this address. The retained table's five-unit-radius `_finger_1` object is the actual hotspot; `_finger_2` through `_finger_4` are larger render layers around the same insert effect and are excluded from the physical count.",
         "quantity": 1
       },
       "provenance": {
@@ -8520,6 +9917,26 @@
           "manual.williams.funhouse.1990",
           "vpx-script.fh-1-3",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-56.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.williams.funhouse.1990.operator-handbook",
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.201117,
+            "y": 0.192765
+          }
         ],
         "status": "validated"
       },
@@ -10070,6 +11487,10 @@
         {
           "namespace": "manual.address",
           "value": "01"
+        },
+        {
+          "namespace": "manual.label",
+          "value": "Upper Backglass G.I."
         }
       ],
       "availability": "used",
@@ -10081,23 +11502,26 @@
       "kind": "gi",
       "label": "Upper Backglass G.I.",
       "physical": {
-        "notes": "Printed general-illumination string 01 (Upper Backglass G.I.). Retained script region: Upper BackGlass (Case 0). Insert-panel connector: J121-5. Backbox-only circuit; the retained script implements no case for this address, so it has no playfield coordinate."
+        "notes": "Printed general-illumination string 01 is labeled Upper Backglass G.I.; the retained script's runtime region is Upper BackGlass (Case 0). Insert-panel connector: J121-1. Script behavior is canonical for runtime semantics, while the printed name is retained as a manual-label alias and physical-construction note. This is a physical backglass-only branch with no playfield emitter and is outside playfield authoring space."
       },
       "provenance": {
         "source_refs": [
           "manual.williams.funhouse.1990",
+          "manual.williams.funhouse.1990.operator-handbook",
           "vpx-script.fh-1-3",
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
       },
       "roles": [
-        "cabinet.insert-panel"
+        "cabinet.backglass"
       ],
       "spatial": {
         "provenance": {
           "source_refs": [
-            "manual.williams.funhouse.1990"
+            "manual.williams.funhouse.1990",
+            "manual.williams.funhouse.1990.operator-handbook",
+            "vpx-script.fh-1-3"
           ],
           "status": "validated"
         },
@@ -10106,8 +11530,12 @@
       },
       "wiring": {
         "board": "WPC-Alpha power driver board",
-        "control_connection": "J120-5",
-        "driver_transistor": "Q12"
+        "control_connection": "J120-1",
+        "control_wire": "Brown",
+        "driver_transistor": "Q18",
+        "return_component": "F10",
+        "return_connection": "J120-7 / J121-7",
+        "return_wire": "White-Brown"
       }
     },
     {
@@ -10119,6 +11547,10 @@
         {
           "namespace": "manual.address",
           "value": "02"
+        },
+        {
+          "namespace": "manual.label",
+          "value": "Front Playfield G.I."
         }
       ],
       "availability": "used",
@@ -10128,14 +11560,15 @@
       },
       "id": "gi.string-1",
       "kind": "gi",
-      "label": "Front Playfield G.I.",
+      "label": "Rudy G.I.",
       "physical": {
-        "notes": "Printed general-illumination string 02 (Front Playfield G.I.). Retained script region: Rudy (Case 1). Insert-panel connector: J121-6. Retained script UpdateGI2/UpdateGI Case 1 drives only the Rudy sign/shade collection (RudySign1, RudySign2, RudyShade) -- it does not implement a generic 'front playfield' lighting effect. The manual's 'Front Playfield' label and the script's Rudy-specific behavior are recorded as a disagreement about which physical region this string illuminates; see conflict.gi-region-naming. Spatial placement uses the three real implemented objects, projected onto Rudy's own sign/shade assembly.",
+        "notes": "Printed general-illumination string 02 is labeled Front Playfield G.I.; the retained script's runtime region is Rudy (Case 1). Insert-panel connector: J121-6. Script behavior is canonical for runtime semantics, while the printed name is retained as a manual-label alias and physical-construction note. Retained script Case 1 drives only RudySign1, RudySign2, and RudyShade, so the three real implemented objects locate this runtime group on Rudy's sign/shade assembly.",
         "quantity": 3
       },
       "provenance": {
         "source_refs": [
           "manual.williams.funhouse.1990",
+          "manual.williams.funhouse.1990.operator-handbook",
           "vpx-script.fh-1-3",
           "pinmame.core.4ec52ff0ac13"
         ],
@@ -10190,8 +11623,12 @@
       },
       "wiring": {
         "board": "WPC-Alpha power driver board",
-        "control_connection": "J120-6",
-        "driver_transistor": "Q10"
+        "control_connection": "J120-6 / J119-3",
+        "control_wire": "Violet",
+        "driver_transistor": "Q10",
+        "return_component": "F6",
+        "return_connection": "J120-11 / J121-11 / J119-1",
+        "return_wire": "White-Violet"
       }
     },
     {
@@ -10203,6 +11640,10 @@
         {
           "namespace": "manual.address",
           "value": "03"
+        },
+        {
+          "namespace": "manual.label",
+          "value": "Rear Playfield G.I."
         }
       ],
       "availability": "used",
@@ -10212,22 +11653,243 @@
       },
       "id": "gi.string-2",
       "kind": "gi",
-      "label": "Rear Playfield G.I.",
+      "label": "Upper/Rear Playfield G.I.",
       "physical": {
-        "notes": "Printed general-illumination string 03 (Rear Playfield G.I.). Retained script region: Upper Playfield (Case 2). Insert-panel connector: J121-1. Retained script drives a real playfield light collection (GI_Upper (19 members)) for this string, but individual per-bulb spatial extraction for that collection was not completed in this pass; spatial placement is left unresolved rather than guessing representative positions."
+        "notes": "Printed general-illumination string 03 is labeled Rear Playfield G.I.; the retained script's runtime region is Upper Playfield (Case 2). Insert-panel connector: J121-3. Script behavior is canonical for runtime semantics, while the printed name is retained as a manual-label alias and physical-construction note. Retained script Case 2 drives GI_Upper. Its 19 render objects reduce to 15 physical emitter hotspots after clustering co-located brightness layers; the smallest-radius named light in each cluster supplies the coordinate, with no centroid or synthetic point.",
+        "quantity": 15
       },
       "provenance": {
         "source_refs": [
           "manual.williams.funhouse.1990",
+          "manual.williams.funhouse.1990.operator-handbook",
           "vpx-script.fh-1-3",
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "gi.string-2.emitter.1",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.159636,
+            "y": 0.026365
+          },
+          {
+            "id": "gi.string-2.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.893615,
+            "y": 0.028146
+          },
+          {
+            "id": "gi.string-2.emitter.3",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.056362,
+            "y": 0.061723
+          },
+          {
+            "id": "gi.string-2.emitter.4",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.952628,
+            "y": 0.064875
+          },
+          {
+            "id": "gi.string-2.emitter.5",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.299793,
+            "y": 0.083924
+          },
+          {
+            "id": "gi.string-2.emitter.6",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.523551,
+            "y": 0.112567
+          },
+          {
+            "id": "gi.string-2.emitter.7",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.176233,
+            "y": 0.11846
+          },
+          {
+            "id": "gi.string-2.emitter.8",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.540764,
+            "y": 0.131754
+          },
+          {
+            "id": "gi.string-2.emitter.9",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.358806,
+            "y": 0.189862
+          },
+          {
+            "id": "gi.string-2.emitter.10",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.166603,
+            "y": 0.275318
+          },
+          {
+            "id": "gi.string-2.emitter.11",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.049908,
+            "y": 0.331432
+          },
+          {
+            "id": "gi.string-2.emitter.12",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.191442,
+            "y": 0.334527
+          },
+          {
+            "id": "gi.string-2.emitter.13",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.897303,
+            "y": 0.336229
+          },
+          {
+            "id": "gi.string-2.emitter.14",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.063739,
+            "y": 0.371313
+          },
+          {
+            "id": "gi.string-2.emitter.15",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.078492,
+            "y": 0.40256
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "WPC-Alpha power driver board",
-        "control_connection": "J120-1",
-        "driver_transistor": "Q18"
+        "control_connection": "J120-3",
+        "control_wire": "Yellow",
+        "driver_transistor": "Q14",
+        "return_component": "F8",
+        "return_connection": "J120-9 / J121-9",
+        "return_wire": "White-Yellow"
       }
     },
     {
@@ -10239,6 +11901,10 @@
         {
           "namespace": "manual.address",
           "value": "04"
+        },
+        {
+          "namespace": "manual.label",
+          "value": "Center Backglass / Right Rear Playfield G.I."
         }
       ],
       "availability": "used",
@@ -10248,35 +11914,31 @@
       },
       "id": "gi.string-3",
       "kind": "gi",
-      "label": "Cntr Bckglss/Rt. Rr Plfld G.I.",
+      "label": "Center Backglass / Right Rear Playfield G.I.",
       "physical": {
-        "notes": "Printed general-illumination string 04 (Cntr Bckglss/Rt. Rr Plfld G.I.). Retained script region: Center BackGlass (Case 3). Insert-panel connector: J121-3. Backbox-only circuit; the retained script implements no case for this address, so it has no playfield coordinate. The manual additionally claims a \"Rt. Rr Plfld\" (playfield) component for this circuit that the retained script never implements; no playfield coordinate is asserted for that claim."
+        "notes": "Printed general-illumination string 04 is labeled Center Backglass / Right Rear Playfield G.I.; the retained script's runtime region is Center BackGlass (Case 3). Insert-panel connector: J121-2. Script behavior is canonical for runtime semantics, while the printed name is retained as a manual-label alias and physical-construction note. The handbook proves that printed circuit 04 is a mixed physical branch serving both the center backglass and right-rear playfield. Every retained known-working script omits a distinct handler, so the individual right-rear playfield emitters remain unresolved and no coordinate or quantity is invented."
       },
       "provenance": {
         "source_refs": [
           "manual.williams.funhouse.1990",
+          "manual.williams.funhouse.1990.operator-handbook",
           "vpx-script.fh-1-3",
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
       },
       "roles": [
-        "cabinet.insert-panel"
+        "cabinet.backglass",
+        "playfield.general-illumination"
       ],
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.williams.funhouse.1990"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
-      },
       "wiring": {
         "board": "WPC-Alpha power driver board",
-        "control_connection": "J120-3",
-        "driver_transistor": "Q14"
+        "control_connection": "J120-2",
+        "control_wire": "Orange",
+        "driver_transistor": "Q16",
+        "return_component": "F9",
+        "return_connection": "J120-8 / J121-8",
+        "return_wire": "White-Orange"
       }
     },
     {
@@ -10288,6 +11950,10 @@
         {
           "namespace": "manual.address",
           "value": "05"
+        },
+        {
+          "namespace": "manual.label",
+          "value": "Top Playfield G.I."
         }
       ],
       "availability": "used",
@@ -10297,22 +11963,229 @@
       },
       "id": "gi.string-4",
       "kind": "gi",
-      "label": "Top Playfield G.I.",
+      "label": "Lower Playfield G.I.",
       "physical": {
-        "notes": "Printed general-illumination string 05 (Top Playfield G.I.). Retained script region: Lower Playfield (Case 4). Insert-panel connector: J121-2. Retained script drives a real playfield light collection (GI_Lower (45 members)) for this string, but individual per-bulb spatial extraction for that collection was not completed in this pass; spatial placement is left unresolved rather than guessing representative positions. The manual's \"Top Playfield\" label directly contradicts the script's own region comment \"Lower Playfield\" for this address; see conflict.gi-region-naming."
+        "notes": "Printed general-illumination string 05 is labeled Top Playfield G.I.; the retained script's runtime region is Lower Playfield (Case 4). Insert-panel connector: J121-5. Script behavior is canonical for runtime semantics, while the printed name is retained as a manual-label alias and physical-construction note. Retained script Case 4 drives GI_Lower. Its 45 render objects reduce to 14 physical emitter hotspots after clustering co-located brightness layers; the smallest-radius named light in each cluster supplies the coordinate, with no centroid or synthetic point.",
+        "quantity": 14
       },
       "provenance": {
         "source_refs": [
           "manual.williams.funhouse.1990",
+          "manual.williams.funhouse.1990.operator-handbook",
           "vpx-script.fh-1-3",
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "gi.string-4.emitter.1",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.562996,
+            "y": 0.473099
+          },
+          {
+            "id": "gi.string-4.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.063132,
+            "y": 0.509797
+          },
+          {
+            "id": "gi.string-4.emitter.3",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.121318,
+            "y": 0.570539
+          },
+          {
+            "id": "gi.string-4.emitter.4",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.120396,
+            "y": 0.583696
+          },
+          {
+            "id": "gi.string-4.emitter.5",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.777842,
+            "y": 0.623165
+          },
+          {
+            "id": "gi.string-4.emitter.6",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.215693,
+            "y": 0.767503
+          },
+          {
+            "id": "gi.string-4.emitter.7",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.661275,
+            "y": 0.768162
+          },
+          {
+            "id": "gi.string-4.emitter.8",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.219483,
+            "y": 0.780739
+          },
+          {
+            "id": "gi.string-4.emitter.9",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.767688,
+            "y": 0.792313
+          },
+          {
+            "id": "gi.string-4.emitter.10",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.150942,
+            "y": 0.807551
+          },
+          {
+            "id": "gi.string-4.emitter.11",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.686954,
+            "y": 0.817347
+          },
+          {
+            "id": "gi.string-4.emitter.12",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.20094,
+            "y": 0.8229
+          },
+          {
+            "id": "gi.string-4.emitter.13",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.747153,
+            "y": 0.944086
+          },
+          {
+            "id": "gi.string-4.emitter.14",
+            "provenance": {
+              "source_refs": [
+                "vpx-script.fh-1-3",
+                "vpx-table.fh-1-3"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.175111,
+            "y": 0.944281
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "WPC-Alpha power driver board",
-        "control_connection": "J120-2",
-        "driver_transistor": "Q16"
+        "control_connection": "J120-5",
+        "control_wire": "Green",
+        "driver_transistor": "Q12",
+        "return_component": "F7",
+        "return_connection": "J120-10 / J121-10",
+        "return_wire": "White-Green"
       }
     }
   ],
@@ -10333,7 +12206,7 @@
       "id": "pinmame.core.4ec52ff0ac13",
       "kind": "pinmame_core",
       "license": "BSD-3-Clause",
-      "locator": "src/wpc/sims/wpc/full/fh.c fhGameData GEN_WPCALPHA_2 with wpc_dispAlpha, FLIP_SWNO(12,11) (flipper switches only, no FLIP_SOL -- no CPU-controlled flipper solenoid is declared for this driver), the inverted-switch mask {0x00,0x00,0x00,0x00,0x00,0x11,0x00,0x00,0x00,0x00,0x00,0x00} (column 5 = 0x11 = bits 1 and 5 = addresses 51 and 55), swStart/swTilt/swSlamTilt/swCoinDoor dedicated switches, every swXX/sXX #define, fh_handleMech (diverter, step gate, trap door, Rudy jaw/eyes causality), fhpa1GameData (GEN_WPCALPHA_1 prototype variant), and init_fh's driver-name dispatch between the two; src/wpc/wpc.c wpc_dispAlpha layout and GENWPC_HASFLIPTRON/GENWPC_HASDMD exclusion of GEN_WPCALPHA_1/GEN_WPCALPHA_2; src/wpc/core.h CORE_MAXSWCOL=16 (columns 0-9 matrix, 10 coin door, 11 cabinet/flippers) and CORE_FIRSTLFLIPSOL/CORE_FIRSTUFLIPSOL; src/wpc/gen.h GEN_WPCALPHA_1/GEN_WPCALPHA_2 definitions.",
+      "locator": "src/wpc/sims/wpc/full/fh.c fhGameData GEN_WPCALPHA_2 with wpc_dispAlpha, FLIP_SWNO(12,11) (flipper switches only, no FLIP_SOL -- no CPU-controlled flipper solenoid is declared for this driver), the inverted-switch mask {0x00,0x00,0x00,0x00,0x00,0x11,0x00,0x00,0x00,0x00,0x00,0x00} (column 5 = 0x11 = bits 1 and 5 = addresses 51 and 55), swStart/swTilt/swSlamTilt/swCoinDoor dedicated switches, every swXX/sXX #define, fh_handleMech (diverter, step gate, trap door, Rudy jaw/eyes causality), fhpa1GameData (GEN_WPCALPHA_1 prototype variant), and init_fh's driver-name dispatch between the two; src/wpc/wpc.c wpc_dispAlpha layout and GENWPC_HASFLIPTRON/GENWPC_HASDMD exclusion of GEN_WPCALPHA_1/GEN_WPCALPHA_2; src/wpc/core.h CORE_MAXSWCOL=16 (columns 0-9 matrix, 10 coin door, 11 cabinet/flippers), CORE_FIRSTLFLIPSOL/CORE_FIRSTUFLIPSOL/CORE_FIRSTSIMSOL, core_updateSw's generic flipper input column 111-118, matrix copies 112->11 and 114->12, synthetic-flipper fallback, and core_getSol's complete 1-50 public dispatch; fh.c simulator states that consume sShooterRel (CORE_FIRSTSIMSOL=49); src/wpc/wpc.c's WPC_GILAMPS/J111/Game-On mapping, wpc_init public lamp count, and WPC_CFTBL chase-light integration; git history showing the prototype struct added with the copied flag in bc2649ff8fe25699c0c1a7fd21857913cec9c5af and production FunHouse corrected to zero in 1302113d46d00aff945f688d066cca022b8625b2 without updating fhpa1GameData; src/wpc/gen.h GEN_WPCALPHA_1/GEN_WPCALPHA_2 definitions.",
       "revision": "4ec52ff0ac133ac251681518aed2249e19fe26eb",
       "uri": "https://github.com/vpinball/pinmame"
     },
@@ -10347,6 +12220,7 @@
       "uri": "internal:controllers/pinmame/wpc-alpha.json"
     },
     {
+      "acquired_at": "2026-08-07T00:18:16Z",
       "attribution": "Williams Electronics Games, Inc.; scan hosted by the Internet Archive",
       "excerpts": [
         {
@@ -10376,7 +12250,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.funhouse.1990/lamp-locations.md",
           "reviewed": true,
-          "sha256": "0a05d47eb1ec1159498d978ab1a1cdeee669ac444bfec6a49c94d13916455c53",
+          "sha256": "6cb17cb8ed46b1c501b7d45625532e6cbb070e0d9a67b791bd4299909771a677",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -10385,7 +12259,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.funhouse.1990/lamp-matrix.md",
           "reviewed": true,
-          "sha256": "ccbca902876402a125e4448c8a799f5d0a76a3d96080823efff30865e9808793",
+          "sha256": "b70eee7219327b65aca8b5f8b251d849adc8c722f882568ea5cd4cf609e1cfe9",
           "transcribed_by": "curator, read from the rendered page (address 12 confirmed at 600 dpi)"
         },
         {
@@ -10394,7 +12268,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.funhouse.1990/solenoid-locations.md",
           "reviewed": true,
-          "sha256": "89084bb0a0524c3701b9f0134ddf00ff9bcfac24235a2c2e714dd0e91ee410d2",
+          "sha256": "7afd56bc2cd4c72a2fc89c29519b05cf8fcb6758e8bb13cbb9942d03726e034e",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -10412,7 +12286,7 @@
           "method": "manual",
           "path": "evidence/excerpts/williams.funhouse.1990/general-illumination-flipper-circuits.md",
           "reviewed": true,
-          "sha256": "56b81515ce01cb20c11d3f9137ef93c6f40381c316e3ad56f08406aab7b2e1a5",
+          "sha256": "1798116b6e9c38a2f02aef1f38ea90760f500ebfba4b8a52ae73b38c3d6b0d3d",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -10428,13 +12302,15 @@
       "id": "manual.williams.funhouse.1990",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "122-page Williams FunHouse operations manual scan (Internet Archive item arcademanual_Funhouse_OPS), with a working but multi-column-scrambled text layer. Printed pages 2-36 through 2-40 carry the lamp/switch/solenoid/G.I. location parts lists and their matrix and wiring tables; printed pages 2-24 and 2-32 carry the Jaw Drive/Eject Assembly and Unique Parts pages that fix Rudy's and the trap door's mechanism construction; Section 3 (printed 3-15 through 3-17) carries the Interboard Wiring switch/lamp/solenoid/G.I./flipper circuit tables.",
+      "locator": "Locally retained 122-page derivative of the Williams FunHouse operations-manual scan from Internet Archive item arcademanual_Funhouse_OPS (details URL above; item uploader manuallibrary@textfiles.com; public date 2017-09-20). Its byte identity is the local SHA-256 recorded here and must not be conflated with a current Archive.org derivative. It has a working but multi-column-scrambled text layer. Printed pages 2-36 through 2-40 carry the lamp/switch/solenoid/G.I. location parts lists and their matrix and wiring tables; printed pages 2-24 and 2-32 carry the Jaw Drive/Eject Assembly and Unique Parts pages that fix Rudy's and the trap door's mechanism construction; Section 3 (printed 3-15 through 3-17) carries the Interboard Wiring switch/lamp/solenoid/G.I./flipper circuit tables.",
       "original_filename": "Funhouse_OPS.pdf",
       "rights": "NOASSERTION",
       "sha256": "b658e7d0985a5e8588981c974d9c9448ea7cc574b2d21e5acb386c718a1f0f47",
-      "uri": "external:pinmame-manuals/by-machine/williams.funhouse.1990/archive-arcademanual_Funhouse_OPS/Funhouse_OPS.pdf"
+      "source_id": "arcademanual_Funhouse_OPS",
+      "uri": "https://archive.org/details/arcademanual_Funhouse_OPS"
     },
     {
+      "acquired_at": "2026-08-07T00:00:00Z",
       "attribution": "pinmame-game-defs curation",
       "id": "manual-support.williams.funhouse.1990",
       "kind": "human_review",
@@ -10444,6 +12320,62 @@
       "uri": "external:pinmame-review-artifacts/funhouse/manual-transcription.md"
     },
     {
+      "acquired_at": "2026-08-14T17:36:41Z",
+      "attribution": "Williams Electronics Games, Inc.; maintainer-supplied scan",
+      "excerpts": [
+        {
+          "id": "excerpt.funhouse.operator-handbook-lamps",
+          "locator": "PDF pages 7-8, lamp matrix and lamp-location drawing",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-lamp-evidence.md",
+          "reviewed": true,
+          "sha256": "9f5f69e9c1b0ba87228f32e0a5a0deb77283bc706b6bc1b709cfd1dc35fe5567",
+          "transcribed_by": "curator, read from rendered page images"
+        },
+        {
+          "id": "excerpt.funhouse.operator-handbook-switch-gi",
+          "locator": "PDF pages 5 and 9-10, G.I. table and switch matrix/location drawing",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-switch-gi-evidence.md",
+          "reviewed": true,
+          "sha256": "c3eb1b27f58312463fdadbd7e35d96693bdf91d1015143121bfcd3795362e120",
+          "transcribed_by": "curator, read from rendered page images"
+        }
+      ],
+      "id": "manual.williams.funhouse.1990.operator-handbook",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "Eleven-page November 1990 Williams operator handbook supplied by the maintainer. PDF pages 5-10 contain the solenoid/G.I., lamp, and switch tables and location drawings used to resolve the remaining FunHouse evidence questions.",
+      "original_filename": "Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf",
+      "rights": "NOASSERTION",
+      "sha256": "bb30eacaac0ee7001f59339102da5a1bfe528c2a4dbd63d2247e00fba89f1b13",
+      "uri": "external:pinmame-manuals/by-machine/williams.funhouse.1990/maintainer-supplied-2026-08-14/Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf"
+    },
+    {
+      "acquired_at": "2026-08-14T17:37:39Z",
+      "attribution": "Maintainer-supplied photograph; photographer unknown",
+      "excerpts": [
+        {
+          "id": "excerpt.funhouse.playfield-photo-gangway",
+          "locator": "Visible lower-playfield Gangway inserts",
+          "method": "manual",
+          "path": "evidence/excerpts/williams.funhouse.1990/playfield-photo-gangway.md",
+          "reviewed": true,
+          "sha256": "788613103dfbec9958f3b05cb36592be94bca1e4ff8cc82d5598357c6a771ea0",
+          "transcribed_by": "curator, read from the supplied image"
+        }
+      ],
+      "id": "photo.williams.funhouse.1990.a13",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "Maintainer-supplied 500 by 375 lower-playfield photograph showing the Gangway 100,000 and 200,000 insert legends.",
+      "original_filename": "funhouse-image-A13.jpg",
+      "rights": "NOASSERTION",
+      "sha256": "b56821de487adc55f128e4a94d8d55a4ef2c2e23cd1c0291f1118363c6ecaa81",
+      "uri": "external:pinmame-manuals/by-machine/williams.funhouse.1990/maintainer-supplied-2026-08-14/funhouse-image-A13.jpg"
+    },
+    {
+      "acquired_at": "2026-08-07T15:17:32Z",
       "attribution": "VPX table authors",
       "id": "vpx-table.fh-1-3",
       "kind": "vpx_table",
@@ -10455,23 +12387,38 @@
       "uri": "external:pinmame-vpx-sources/williams/funhouse-1990/source/Funhouse%20%28Williams%201990%29_1.3.vpx"
     },
     {
+      "acquired_at": "2026-08-07T15:17:33Z",
       "attribution": "table authors",
       "id": "vpx-script.fh-1-3",
       "kind": "vpx_script",
       "known_working": true,
       "license": "NOASSERTION",
-      "locator": "Retained embedded script (80,593 bytes). Runtime and mechanism-causality authority: Const cGameName = \"fh_905h\" (line 64; the commented-out line 63 reads \"fh_905\" and is not the active binding), the SolCallback table for solenoids 1-8, 14-28, the UpdateLamps per-address light bindings, the UpdateGI/UpdateGI2 G.I. region dispatch (Case 0/1/2/3/4), the trap door TrapMover_Timer state machine (Controller.Switch(76) set from PrTrap.RotX), and the SolCallback(sLRFlipper)/SolCallback(sLLFlipper) generic core.vbs registration that this driver never exercises (fhGameData declares no FLIP_SOL).",
+      "locator": "Retained embedded script (80,593 bytes). Runtime and mechanism-causality authority: Const cGameName = \"fh_905h\" (line 64; the commented-out line 63 reads \"fh_905\" and is not the active binding), the SolCallback table for solenoids 1-8, 14-28, the UpdateLamps per-address light bindings, the UpdateGI/UpdateGI2 G.I. region dispatch (Case 0/1/2/3/4), the trap door TrapMover_Timer state machine (Controller.Switch(76) set from PrTrap.RotX), and the SolCallback(sLRFlipper)/SolCallback(sLLFlipper) registration that consumes PinMAME's synthetic button-driven flipper states because fhGameData declares no FLIP_SOL; SolLFlipper drives both LeftFlipper and LeftFlipper1, independently corroborating the lower-left plus upper-left physical pair.",
       "original_filename": "script.vbs",
       "rights": "NOASSERTION",
       "sha256": "322fba2dec939b50e0730da8caca177545aa8f8bc055ba136360ae55deb4e863",
       "uri": "external:pinmame-vpx-sources/williams/funhouse-1990/extracted-vpxtool/script.vbs"
     },
     {
+      "acquired_at": "2026-08-14T00:00:00Z",
+      "attribution": "VPX table-script authors",
+      "id": "vpx-script.funhouse-community-current",
+      "kind": "vpx_script",
+      "known_working": true,
+      "license": "NOASSERTION",
+      "locator": "Pinned community script corpus at revision 0c036bb61b4b4e8c778c37559f6795df8cd1521e, lines 2444-2446: output 20 is assigned to the distinct F20 and F20a Light objects (plus render helper f20b).",
+      "original_filename": "Funhouse (Williams 1990).vbs",
+      "rights": "NOASSERTION",
+      "sha256": "37cf4e41a6dc9772968cc8a1b13797e7ffb6f504d7e43cd15a6bb12926e9ae3d",
+      "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Funhouse%20%28Williams%201990%29.vbs"
+    },
+    {
+      "acquired_at": "2026-08-07T15:17:33Z",
       "attribution": "vpxtool extraction",
       "id": "vpx-extraction.fh-1-3",
       "kind": "vpx_table",
       "license": "NOASSERTION",
-      "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 85620e05458bd72bc57c2e203001a0f35db9806431e66e07ee08f05e90346ba9; 2212 files, 219908807 bytes, produced with vpxtool from the retained table. Bounds are left=0 top=0 right=964 bottom=2162.",
+      "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 85620e05458bd72bc57c2e203001a0f35db9806431e66e07ee08f05e90346ba9; 2212 files, 219908807 bytes, produced with vpxtool git:v0.33.3 from the retained table. Bounds are left=0 top=0 right=964 bottom=2162.",
       "uri": "external:pinmame-vpx-sources/williams/funhouse-1990/extracted-vpxtool.manifest.json"
     }
   ]

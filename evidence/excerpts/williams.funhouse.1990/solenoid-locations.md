@@ -54,19 +54,6 @@ as "Left Slingshot (Kicker)" / "Right Slingshot (Kicker)".
 | 04 | #555 | Cntr Bckglss/Rt. Rr Plfld G.I. |
 | 05 | #555 | Top Playfield G.I. |
 
-Five printed G.I. circuits, numbered 01-05. The retained known-working script's own `UpdateGI`/
-`UpdateGI2` region comments number the same five circuits 0-4 (one less, i.e. public address =
-printed number minus one) and describe them differently: "01 Upper BackGlass" (Case 0, agrees with
-this page), "02 Rudy" (Case 1, this page says "Front Playfield"), "03 Upper Playfield" (Case 2,
-this page says "Rear Playfield" — plausibly the same region described from two different
-reference frames, since this project's `y=0` rear/backglass convention makes "upper" and "rear"
-describe the same physical end of the table), "04 Center BackGlass" (Case 3, this page says "Cntr
-Bckglss/Rt. Rr Plfld" — same core "center backglass" wording, but this page additionally claims a
-playfield component the script never implements), and "05 Lower Playfield" (Case 4, this page says
-"Top Playfield" — a direct top/lower contradiction with no reconciling reading found). See
-`conflict.gi-region-naming` in the promoted definition.
+Five printed G.I. circuits, numbered 01-05. PinMAME exposes them at zero-based public addresses 0-4. The retained known-working script's `UpdateGI`/`UpdateGI2` comments and behavior are canonical for runtime semantics under the project's evidence-authority rule: address 1 drives Rudy, address 2 drives the upper/rear playfield, and address 4 drives the lower playfield; addresses 0 and 3 have no playfield handler. The printed names remain useful manual-label aliases and physical-construction notes. In particular, this page says printed circuit 04 also feeds the right-rear playfield, but no retained known-working script identifies a distinct emitter, so the definition does not invent one.
 
-The accompanying playfield diagram (right half of the page) circles each solenoid's approximate
-physical location by number; that drawing is evidence for existence and general area only. Every
-normalized coordinate used in the promoted definition comes from the retained VPX table's own
-extracted object geometry (`vpx-geometry.txt`).
+The accompanying playfield diagram (right half of the page) circles each solenoid's approximate physical location by number; that drawing is evidence for existence and general area only. Every stored normalized coordinate comes from the retained VPX table's own extracted object geometry (`vpx-geometry.txt`). Circuits 17, 23, and 24 have one distinct retained emitter per printed bulb. Circuit 19's two Clock bulbs remain an explicit co-located pair because the retained table abstracts them into one fixture. Circuit 20 instead has distinct `F20` and `F20a` Light objects, and the pinned community script assigns both to output 20, so its two Superdog bulbs retain separate measured placements.

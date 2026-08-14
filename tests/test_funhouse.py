@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 import unittest
@@ -10,8 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 DEFINITION_PATH = ROOT / "machines" / "partial" / "williams" / "funhouse-1990.json"
-SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "funhouse-1990.json"
 AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "williams" / "funhouse-1990.json"
+SEED_PATH = ROOT / "tools" / "seeds" / "williams" / "funhouse-1990.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "williams" / "funhouse-1990.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-alpha.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "williams" / "funhouse-1990.json"
@@ -32,15 +33,10 @@ def load_json(path: Path) -> dict[str, object]:
 
 
 def bindings(definition: dict[str, object], collection: str, group: str) -> dict[int, dict[str, object]]:
-	return {
-		item["binding"]["device"]: item
-		for item in definition[collection]
-		if item["binding"]["group"] == group
-	}
+	return {item["binding"]["device"]: item for item in definition[collection] if item["binding"]["group"] == group}
 
 
 def _run_curator_without_mode() -> None:
-	"""Invoke the curator's CLI with no mode so argparse rejects it instead of writing files."""
 	import curate_funhouse as curator
 
 	argv = sys.argv
@@ -60,20 +56,17 @@ class FunHouseDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_partial_identity_and_coverage(self) -> None:
+	def test_partial_identity_and_single_spatial_blocker(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
 		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(
-			["output_enumeration", "spatial_placement", "unresolved_conflicts"],
-			self.definition["coverage"]["missing"],
-		)
-		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["address_enumeration"])
-		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["semantic_naming"])
-		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
+		self.assertEqual("unknown", self.definition["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual({"validated"}, {value for key, value in self.definition["coverage"]["dimensions"].items() if key != "spatial_placement"})
 		self.assertEqual("williams.funhouse.1990", self.definition["machine"]["id"])
 		self.assertEqual("Williams", self.definition["machine"]["manufacturer"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
 		self.assertEqual(1990, self.definition["machine"]["year"])
+		self.assertEqual(966, self.definition["machine"]["ipdb_id"])
 		self.assertEqual("pinmame.wpc-alpha", self.definition["controller"]["platform"])
 		self.assertEqual("0x2", self.definition["controller"]["hardware_generation"])
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
@@ -81,9 +74,8 @@ class FunHouseDefinitionTests(unittest.TestCase):
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 
 	def test_driver_tree_matches_pinned_catalog(self) -> None:
-		driver_ids = {driver["id"] for driver in self.definition["drivers"]}
-		self.assertEqual(DRIVER_IDS, driver_ids)
 		by_id = {driver["id"]: driver for driver in self.definition["drivers"]}
+		self.assertEqual(DRIVER_IDS, set(by_id))
 		self.assertNotIn("clone_of", by_id["fh_l9"])
 		for driver_id in DRIVER_IDS - {"fh_l9"}:
 			self.assertEqual("fh_l9", by_id[driver_id]["clone_of"], driver_id)
@@ -92,204 +84,205 @@ class FunHouseDefinitionTests(unittest.TestCase):
 			self.assertGreater(len(driver["variant_notes"]), 0)
 		self.assertEqual("compatible", by_id["fh_pa1"]["physical_compatibility"])
 		self.assertIn("GEN_WPCALPHA_1", by_id["fh_pa1"]["variant_notes"])
+		self.assertIn("gameSpecific1=1", by_id["fh_pa1"]["variant_notes"])
+		self.assertIn("WPC_CFTBL", by_id["fh_pa1"]["variant_notes"])
+		self.assertIn("internal PWM lamp slots 65-72", by_id["fh_pa1"]["variant_notes"])
+
+	def test_retained_source_identity_and_tool_version_are_pinned(self) -> None:
+		by_id = {source["id"]: source for source in self.definition["sources"]}
+		manual = by_id["manual.williams.funhouse.1990"]
+		self.assertEqual("arcademanual_Funhouse_OPS", manual["source_id"])
+		self.assertEqual("https://archive.org/details/arcademanual_Funhouse_OPS", manual["uri"])
+		self.assertEqual("2026-08-07T00:18:16Z", manual["acquired_at"])
+		self.assertIn("manuallibrary@textfiles.com", manual["locator"])
+		self.assertEqual("2026-08-14T17:36:41Z", by_id["manual.williams.funhouse.1990.operator-handbook"]["acquired_at"])
+		self.assertEqual("2026-08-14T17:37:39Z", by_id["photo.williams.funhouse.1990.a13"]["acquired_at"])
+		self.assertEqual("2026-08-07T15:17:32Z", by_id["vpx-table.fh-1-3"]["acquired_at"])
+		self.assertEqual("2026-08-07T15:17:33Z", by_id["vpx-script.fh-1-3"]["acquired_at"])
+		self.assertIn("vpxtool git:v0.33.3", by_id["vpx-extraction.fh-1-3"]["locator"])
 
 	def test_controller_profile_reused_unchanged(self) -> None:
 		profile = load_json(CONTROLLER_PATH)
 		self.assertEqual("pinmame.wpc-alpha", profile["id"])
-		group_ids = {group["id"] for group in profile["groups"]}
-		self.assertEqual(
-			{"pinmame.input.switch", "pinmame.input.dip", "pinmame.output.solenoid", "pinmame.output.lamp", "pinmame.output.gi"},
-			group_ids,
-		)
+		self.assertEqual({"pinmame.input.switch", "pinmame.input.dip", "pinmame.output.solenoid", "pinmame.output.lamp", "pinmame.output.gi"}, {group["id"] for group in profile["groups"]})
 
-	def test_switch_matrix_enumeration_and_unused_positions(self) -> None:
-		matrix_switches = {addr: sw for addr, sw in self.switches.items() if addr in MATRIX_ADDRESSES}
+	def test_switch_and_dip_enumeration(self) -> None:
+		matrix_switches = {address: switch for address, switch in self.switches.items() if address in MATRIX_ADDRESSES}
 		self.assertEqual(MATRIX_ADDRESSES, set(matrix_switches))
 		for address, switch in matrix_switches.items():
 			if address in UNUSED_MATRIX_ADDRESSES:
 				self.assertEqual("unused", switch["availability"], address)
-				self.assertEqual("not_applicable", switch["spatial"]["status"], address)
 				self.assertEqual("unused", switch["spatial"]["reason"], address)
 			else:
 				self.assertEqual("used", switch["availability"], address)
 		for address in range(1, 9):
-			self.assertIn(address, self.switches, f"cabinet switch {address}")
-			self.assertEqual("switch.cabinet-" + str(address), self.switches[address]["id"])
-		for address in range(1, 9):
-			key = 1000 + address
-			# DIP switches are a separate binding group; verified below.
-		dips = bindings(self.definition, "inputs", "pinmame.input.dip")
-		self.assertEqual(set(range(1, 9)), set(dips))
+			self.assertEqual(f"switch.cabinet-{address}", self.switches[address]["id"])
+		self.assertEqual(set(range(111, 119)), {address for address in self.switches if 111 <= address <= 118})
+		for address in {112, 114}:
+			self.assertEqual("used", self.switches[address]["availability"])
+			self.assertEqual("cabinet_or_service", self.switches[address]["spatial"]["reason"])
+		for address in {111, 113, 115, 116, 117, 118}:
+			self.assertEqual("unused", self.switches[address]["availability"])
+			self.assertEqual("unused", self.switches[address]["spatial"]["reason"])
+		for address in {11, 12}:
+			self.assertEqual("cabinet_or_service", self.switches[address]["spatial"]["reason"])
+			self.assertIn("matrix state is copied", self.switches[address]["physical"]["notes"])
+		self.assertEqual(set(range(1, 9)), set(bindings(self.definition, "inputs", "pinmame.input.dip")))
 
-	def test_only_two_optos_and_pinmame_normalizes_both(self) -> None:
+	def test_optos_and_constant_switch_are_normalized(self) -> None:
 		for address, switch in self.switches.items():
-			if address not in MATRIX_ADDRESSES:
-				continue
 			if address in OPTO_ADDRESSES:
 				self.assertEqual("opto", switch["physical"].get("switch_type"), address)
 				self.assertTrue(switch["normally_closed"], address)
-			elif address not in UNUSED_MATRIX_ADDRESSES and address != 24:
+			elif address in MATRIX_ADDRESSES and address not in UNUSED_MATRIX_ADDRESSES and address != 24:
 				self.assertNotEqual("opto", switch["physical"].get("switch_type"), address)
+		self.assertEqual("constant", self.switches[24]["kind"])
+		self.assertTrue(self.switches[24]["constant_active"])
+		self.assertTrue(self.switches[24]["initial_active"])
 
-	def test_constant_switch_24(self) -> None:
-		switch = self.switches[24]
-		self.assertEqual("constant", switch["kind"])
-		self.assertTrue(switch["constant_active"])
-		self.assertTrue(switch["initial_active"])
-		self.assertEqual("constant", switch["spatial"]["reason"])
+	def test_right_trough_switch_is_resolved_on_ballrelease(self) -> None:
+		switch = self.switches[63]
+		self.assertEqual("Right Trough", switch["label"])
+		self.assertEqual("validated", switch["spatial"]["status"])
+		placement = switch["spatial"]["placements"][0]
+		self.assertAlmostEqual(0.877269, placement["x"], places=6)
+		self.assertAlmostEqual(0.863859, placement["y"], places=6)
+		self.assertIn("manual.williams.funhouse.1990.operator-handbook", placement["provenance"]["source_refs"])
 
-	def test_flipper_switches_have_no_cpu_solenoid(self) -> None:
-		solenoid_addresses = set(self.solenoids)
-		for address in (33, 34, 35, 36, 45, 46, 47, 48):
-			self.assertNotIn(address, solenoid_addresses, f"no flipper solenoid should exist at {address}")
-		self.assertIn(11, self.switches)
-		self.assertIn(12, self.switches)
-		self.assertEqual("Right Flipper", self.switches[11]["label"])
-		self.assertEqual("Left Flipper", self.switches[12]["label"])
-		flipper_mechanism = next(m for m in self.definition["mechanisms"] if m["id"] == "mechanism.flippers")
-		self.assertEqual([], flipper_mechanism["actuators"])
-
-	def test_solenoid_enumeration(self) -> None:
-		self.assertEqual(set(range(1, 29)), set(self.solenoids))
-		flasher_addresses = {17, 18, 19, 20, 23, 24}
-		for address in flasher_addresses:
+	def test_public_solenoid_contract_is_complete(self) -> None:
+		self.assertEqual(set(range(1, 51)), set(self.solenoids))
+		for address in {17, 18, 19, 20, 23, 24}:
 			self.assertEqual("flasher", self.solenoids[address]["kind"], address)
-			self.assertGreaterEqual(self.solenoids[address]["physical"]["quantity"], 1)
+			self.assertEqual(self.solenoids[address]["physical"]["quantity"], len(self.solenoids[address]["spatial"]["placements"]), address)
+		self.assertEqual(2, len({(placement["x"], placement["y"]) for placement in self.solenoids[20]["spatial"]["placements"]}))
+		self.assertEqual(
+			[(0.446452, 0.46247), (0.460268, 0.512137)],
+			[(placement["x"], placement["y"]) for placement in self.solenoids[20]["spatial"]["placements"]],
+		)
+		self.assertIn("vpx-script.funhouse-community-current", self.solenoids[20]["provenance"]["source_refs"])
 		self.assertEqual("motor", self.solenoids[21]["kind"])
 		self.assertEqual("motor", self.solenoids[22]["kind"])
-		self.assertEqual("not_applicable", self.solenoids[7]["spatial"]["status"])
 		self.assertEqual("cabinet_or_service", self.solenoids[7]["spatial"]["reason"])
 
-	def test_lamp_matrix_fully_populated_with_no_unused_position(self) -> None:
+	def test_wpc_state_and_virtual_output_dispositions(self) -> None:
+		for address in (29, 30):
+			self.assertEqual("virtual", self.solenoids[address]["kind"])
+			self.assertEqual("used", self.solenoids[address]["availability"])
+			self.assertEqual("virtual", self.solenoids[address]["spatial"]["reason"])
+		self.assertEqual("relay", self.solenoids[31]["kind"])
+		self.assertEqual("used", self.solenoids[31]["availability"])
+		self.assertEqual(["internal.wpc-state", "cabinet.game-on-relay"], self.solenoids[31]["roles"])
+		self.assertEqual("cabinet_or_service", self.solenoids[31]["spatial"]["reason"])
+		for address in {32, *range(33, 45), 50}:
+			self.assertEqual("virtual", self.solenoids[address]["kind"], address)
+			self.assertEqual("unused", self.solenoids[address]["availability"], address)
+			self.assertEqual("virtual", self.solenoids[address]["spatial"]["reason"], address)
+		self.assertEqual("virtual", self.solenoids[49]["kind"])
+		self.assertEqual("used", self.solenoids[49]["availability"])
+		self.assertEqual(["internal.simulator-ball-shooter"], self.solenoids[49]["roles"])
+		self.assertIn("sShooterRel", self.solenoids[49]["physical"]["notes"])
+
+	def test_synthetic_flipper_states_are_not_physical_coils(self) -> None:
+		for address in range(45, 49):
+			self.assertEqual("virtual", self.solenoids[address]["kind"], address)
+			self.assertEqual("used", self.solenoids[address]["availability"], address)
+			self.assertEqual("virtual", self.solenoids[address]["spatial"]["reason"], address)
+		flippers = next(mechanism for mechanism in self.definition["mechanisms"] if mechanism["id"] == "mechanism.flippers")
+		self.assertEqual(["device.synthetic-lower-right-flipper", "device.synthetic-left-flipper"], flippers["actuators"])
+		self.assertEqual({"lower-right", "lower-left", "upper-left"}, {position["id"] for position in flippers["positions"]})
+		self.assertIn("FL-11753", flippers["behavior"])
+		self.assertIn("both LeftFlipper and LeftFlipper1", flippers["behavior"])
+		self.assertIn("must not", flippers["behavior"])
+
+	def test_lamp_matrix_and_multi_bulb_quantities(self) -> None:
 		self.assertEqual(MATRIX_ADDRESSES, set(self.lamps))
-		for address, lamp in self.lamps.items():
-			self.assertEqual("used", lamp["availability"], address)
-
-	def test_multi_bulb_lamp_quantities_match_manual_markers(self) -> None:
+		self.assertTrue(all(lamp["availability"] == "used" for lamp in self.lamps.values()))
 		for address in (53, 61, 82):
-			lamp = self.lamps[address]
-			self.assertEqual(2, lamp["physical"]["quantity"], address)
-			self.assertEqual(2, len(lamp["spatial"]["placements"]), address)
+			self.assertEqual(2, self.lamps[address]["physical"]["quantity"], address)
+			self.assertEqual(2, len(self.lamps[address]["spatial"]["placements"]), address)
 		for address in (51, 52, 72):
-			lamp = self.lamps[address]
-			self.assertEqual(1, lamp["physical"]["quantity"], address)
-			self.assertEqual(1, len(lamp["spatial"]["placements"]), address)
+			self.assertEqual(1, self.lamps[address]["physical"]["quantity"], address)
+			self.assertEqual(1, len(self.lamps[address]["spatial"]["placements"]), address)
 
-	def test_lamps_without_resolved_spatial_are_named_and_omit_the_key(self) -> None:
+	def test_steps_lamps_use_one_hotspot_each_in_vertical_order(self) -> None:
 		for address in (54, 55, 56):
-			lamp = self.lamps[address]
-			self.assertNotIn("spatial", lamp, address)
-			self.assertIn("finger", lamp["physical"]["notes"], address)
+			self.assertEqual("validated", self.lamps[address]["spatial"]["status"])
+			self.assertEqual(1, self.lamps[address]["physical"]["quantity"])
+			self.assertEqual(1, len(self.lamps[address]["spatial"]["placements"]))
+			self.assertIn("_finger_1", self.lamps[address]["physical"]["notes"])
+		y = {address: self.lamps[address]["spatial"]["placements"][0]["y"] for address in (54, 55, 56)}
+		self.assertLess(y[56], y[55])
+		self.assertLess(y[55], y[54])
 
-	def test_switch_63_has_no_resolved_spatial(self) -> None:
-		self.assertNotIn("spatial", self.switches[63])
-
-	def test_gangway_lamp_conflict_is_recorded(self) -> None:
-		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertIn("conflict.gangway-lamp-12-value", conflicts)
-		conflict = conflicts["conflict.gangway-lamp-12-value"]
-		self.assertGreaterEqual(len(conflict["source_refs"]), 2)
-		self.assertIn("unresolved", conflict["description"].lower())
+	def test_gangway_typo_is_resolved_and_no_conflicts_remain(self) -> None:
 		self.assertEqual("Gangway 100,000", self.lamps[12]["label"])
+		self.assertIn("resolved one-digit typo", self.lamps[12]["physical"]["notes"])
+		refs = set(self.lamps[12]["provenance"]["source_refs"])
+		self.assertIn("manual.williams.funhouse.1990.operator-handbook", refs)
+		self.assertIn("photo.williams.funhouse.1990.a13", refs)
+		self.assertEqual([], self.definition["conflicts"])
 
-	def test_gi_region_conflict_is_recorded(self) -> None:
-		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertIn("conflict.gi-region-naming", conflicts)
-		self.assertEqual({"conflict.gangway-lamp-12-value", "conflict.gi-region-naming"}, set(conflicts))
-
-	def test_gi_enumeration_and_dispositions(self) -> None:
+	def test_gi_enumeration_and_physical_hotspots(self) -> None:
 		self.assertEqual(set(range(5)), set(self.gi))
 		self.assertEqual("not_applicable", self.gi[0]["spatial"]["status"])
-		self.assertEqual("validated", self.gi[1]["spatial"]["status"])
-		self.assertEqual(3, len(self.gi[1]["spatial"]["placements"]))
-		self.assertNotIn("spatial", self.gi[2])
-		self.assertEqual("not_applicable", self.gi[3]["spatial"]["status"])
-		self.assertNotIn("spatial", self.gi[4])
+		self.assertNotIn("spatial", self.gi[3])
+		self.assertEqual("Q18", self.gi[0]["wiring"]["driver_transistor"])
+		self.assertEqual("Q10", self.gi[1]["wiring"]["driver_transistor"])
+		self.assertEqual("Q14", self.gi[2]["wiring"]["driver_transistor"])
+		self.assertEqual("Q16", self.gi[3]["wiring"]["driver_transistor"])
+		self.assertEqual("Q12", self.gi[4]["wiring"]["driver_transistor"])
+		for address, quantity in ((1, 3), (2, 15), (4, 14)):
+			self.assertEqual("validated", self.gi[address]["spatial"]["status"])
+			self.assertEqual(quantity, self.gi[address]["physical"]["quantity"])
+			self.assertEqual(quantity, len(self.gi[address]["spatial"]["placements"]))
+		self.assertEqual("Rudy G.I.", self.gi[1]["label"])
+		self.assertEqual("Upper/Rear Playfield G.I.", self.gi[2]["label"])
+		self.assertEqual("Lower Playfield G.I.", self.gi[4]["label"])
 
-	def test_displays_are_two_sixteen_character_segment_displays(self) -> None:
-		displays = self.definition["displays"]
-		self.assertEqual(2, len(displays))
-		for display in displays:
+	def test_displays_and_mechanisms_are_complete(self) -> None:
+		self.assertEqual(2, len(self.definition["displays"]))
+		for display in self.definition["displays"]:
 			self.assertEqual("segment", display["kind"])
 			self.assertEqual(16, display["width"])
 			self.assertEqual("not_applicable", display["spatial"]["status"])
-		by_index = {display["controller_index"]: display for display in displays}
-		self.assertEqual({0, 1}, set(by_index))
-		self.assertEqual(0, by_index[0]["segment_start"])
-		self.assertEqual(20, by_index[1]["segment_start"])
+		self.assertEqual({0, 1}, {display["controller_index"] for display in self.definition["displays"]})
+		self.assertEqual({"mechanism.rudy-jaw", "mechanism.rudy-eyes", "mechanism.trap-door", "mechanism.step-gate", "mechanism.ramp-diverter", "mechanism.trough-and-shooters", "mechanism.tunnel-kickout", "mechanism.rudys-hideout", "mechanism.dummy-eject-hole", "mechanism.multiball-lock", "mechanism.jet-bumpers", "mechanism.slingshots", "mechanism.flippers"}, {mechanism["id"] for mechanism in self.definition["mechanisms"]})
 
-	def test_mechanisms_present(self) -> None:
-		mechanism_ids = {mechanism["id"] for mechanism in self.definition["mechanisms"]}
-		expected = {
-			"mechanism.rudy-jaw", "mechanism.rudy-eyes", "mechanism.trap-door", "mechanism.step-gate",
-			"mechanism.ramp-diverter", "mechanism.trough-and-shooters", "mechanism.tunnel-kickout",
-			"mechanism.rudys-hideout", "mechanism.dummy-eject-hole", "mechanism.multiball-lock",
-			"mechanism.jet-bumpers", "mechanism.slingshots", "mechanism.flippers",
-		}
-		self.assertEqual(expected, mechanism_ids)
-
-	def test_spatial_positions_are_in_range_and_at_most_six_decimals(self) -> None:
+	def test_spatial_positions_are_normalized_and_only_gi_3_is_missing(self) -> None:
+		missing = []
 		for collection in (self.switches, self.solenoids, self.lamps, self.gi):
 			for device in collection.values():
 				spatial = device.get("spatial")
-				if spatial is None or spatial["status"] != "validated":
+				if spatial is None:
+					missing.append((device["binding"]["group"], device["binding"]["device"]))
+					continue
+				if spatial["status"] != "validated":
 					continue
 				for placement in spatial["placements"]:
 					for axis in ("x", "y"):
 						self.assertGreaterEqual(placement[axis], 0.0)
 						self.assertLessEqual(placement[axis], 1.0)
 						self.assertLessEqual(len(str(placement[axis]).partition(".")[2]), 6)
+		self.assertEqual([("pinmame.output.gi", 3)], missing)
 
-	def test_geometric_ordering_regression_assertions(self) -> None:
-		switch_x = {addr: sw["spatial"]["placements"][0]["x"] for addr, sw in self.switches.items() if sw.get("spatial") and sw["spatial"]["status"] == "validated"}
-		switch_y = {addr: sw["spatial"]["placements"][0]["y"] for addr, sw in self.switches.items() if sw.get("spatial") and sw["spatial"]["status"] == "validated"}
-		lamp_x = {addr: lamp["spatial"]["placements"][0]["x"] for addr, lamp in self.lamps.items() if lamp.get("spatial") and lamp["spatial"]["status"] == "validated"}
-
-		# Left flipper (12) sits left of right flipper (11).
-		self.assertLess(switch_x[12], switch_x[11])
-		# Left slingshot (41) sits left of right slingshot (53).
+	def test_geometric_ordering_regressions(self) -> None:
+		switch_x = {address: switch["spatial"]["placements"][0]["x"] for address, switch in self.switches.items() if switch.get("spatial") and switch["spatial"]["status"] == "validated"}
+		switch_y = {address: switch["spatial"]["placements"][0]["y"] for address, switch in self.switches.items() if switch.get("spatial") and switch["spatial"]["status"] == "validated"}
+		lamp_x = {address: lamp["spatial"]["placements"][0]["x"] for address, lamp in self.lamps.items() if lamp.get("spatial") and lamp["spatial"]["status"] == "validated"}
 		self.assertLess(switch_x[41], switch_x[53])
-		# Left outlane (43) sits left of right outlane (52).
 		self.assertLess(switch_x[43], switch_x[52])
-		# Jet bumpers: Left (18) < Lower (68) < Right (77), matching the switch labels' own naming.
 		self.assertLess(switch_x[18], switch_x[68])
 		self.assertLess(switch_x[68], switch_x[77])
-		# Left ballshooter (47) sits left of right ballshooter (62).
 		self.assertLess(switch_x[47], switch_x[62])
+		for left, right in zip(range(11, 16), range(12, 17)):
+			self.assertLess(lamp_x[left], lamp_x[right])
+		self.assertLess(self.lamps[61]["spatial"]["placements"][0]["x"], self.lamps[61]["spatial"]["placements"][1]["x"])
+		self.assertLess(self.lamps[82]["spatial"]["placements"][0]["x"], self.lamps[82]["spatial"]["placements"][1]["x"])
+		self.assertAlmostEqual(self.lamps[51]["spatial"]["placements"][0]["x"], self.switches[68]["spatial"]["placements"][0]["x"], delta=0.01)
 
-		# Rear/front: the trap door (76) sits well toward the rear/backglass end relative to the
-		# flippers (11/12), which sit at the front/apron end.
-		self.assertLess(switch_y[76], switch_y[11])
-		self.assertLess(switch_y[76], switch_y[12])
-
-		# Gangway lamp row (11-16) reads left to right in ascending address order.
-		self.assertLess(lamp_x[11], lamp_x[12])
-		self.assertLess(lamp_x[12], lamp_x[13])
-		self.assertLess(lamp_x[13], lamp_x[14])
-		self.assertLess(lamp_x[14], lamp_x[15])
-		self.assertLess(lamp_x[15], lamp_x[16])
-
-		# Lamp 61's two placements: the "Left" one is left of the "Inside Rt" one.
-		placements_61 = self.lamps[61]["spatial"]["placements"]
-		self.assertLess(placements_61[0]["x"], placements_61[1]["x"])
-		# Lamp 82's two placements (Special Outlanes, left and right) likewise.
-		placements_82 = self.lamps[82]["spatial"]["placements"]
-		self.assertLess(placements_82[0]["x"], placements_82[1]["x"])
-
-	def test_lamp_position_agrees_with_the_bumper_switch_it_names(self) -> None:
-		# Lamp 51 ("Lower Jet Bumper") should sit close to switch/solenoid 68's Lower Jet Bumper
-		# object (both bind to the retained table's Bumper3 object).
-		lamp_x = self.lamps[51]["spatial"]["placements"][0]["x"]
-		switch_x = self.switches[68]["spatial"]["placements"][0]["x"]
-		self.assertAlmostEqual(lamp_x, switch_x, delta=0.01)
-
-	def test_seed_is_byte_identical_to_promoted_definition(self) -> None:
+	def test_seed_and_curator_are_deterministic(self) -> None:
 		self.assertEqual(DEFINITION_PATH.read_bytes(), SEED_PATH.read_bytes())
-
-	def test_no_stale_author_ready_definition(self) -> None:
 		self.assertFalse(AUTHOR_READY_PATH.exists())
-
-	def test_curator_check_passes(self) -> None:
 		import curate_funhouse as curator
 
 		curator.check(ROOT)
@@ -298,33 +291,33 @@ class FunHouseDefinitionTests(unittest.TestCase):
 		with self.assertRaises(SystemExit):
 			_run_curator_without_mode()
 
-	def test_spatial_report_matches_curator(self) -> None:
+	def test_spatial_audit_matches_curator_and_names_gi_blocker(self) -> None:
 		import curate_funhouse as curator
 
-		definition = curator.build()
-		report = curator.build_spatial_report(definition)
+		report = curator.build_spatial_report(curator.build())
 		self.assertEqual(report, load_json(SPATIAL_REPORT_PATH))
+		self.assertEqual("pinmame-spatial-blockers", report["format"])
+		self.assertEqual("partial", report["status"])
+		self.assertEqual(1, len(report["blockers"]))
+		self.assertIn("socket-level", report["blockers"][0])
+		self.assertEqual([{"group": "pinmame.output.gi", "address": 3}], report["unresolved"])
+		self.assertEqual("vpxtool git:v0.33.3", report["extraction"]["vpxtool_version"])
 		self.assertEqual(curator.render_spatial_report(report), SPATIAL_REPORT_MARKDOWN_PATH.read_text(encoding="utf-8"))
 
 	def test_device_identifiers_are_unique(self) -> None:
 		identifiers = [device["id"] for device in self.definition["inputs"] + self.definition["outputs"]]
 		self.assertEqual(len(identifiers), len(set(identifiers)))
 
-	def test_excerpts_referenced_by_manual_source_exist_and_hash_match(self) -> None:
-		sources = {source["id"]: source for source in self.definition["sources"]}
-		manual = sources["manual.williams.funhouse.1990"]
-		for excerpt in manual["excerpts"]:
-			path = ROOT / excerpt["path"]
-			self.assertTrue(path.is_file(), excerpt["path"])
-			import hashlib
-
-			digest = hashlib.sha256(path.read_bytes()).hexdigest()
-			self.assertEqual(excerpt["sha256"], digest, excerpt["path"])
-			if "image" in excerpt:
-				image_path = ROOT / excerpt["image"]
-				self.assertTrue(image_path.is_file(), excerpt["image"])
-				image_digest = hashlib.sha256(image_path.read_bytes()).hexdigest()
-				self.assertEqual(excerpt["image_sha256"], image_digest, excerpt["image"])
+	def test_all_committed_excerpts_exist_and_hash_match(self) -> None:
+		for source in self.definition["sources"]:
+			for excerpt in source.get("excerpts", []):
+				path = ROOT / excerpt["path"]
+				self.assertTrue(path.is_file(), excerpt["path"])
+				self.assertEqual(excerpt["sha256"], hashlib.sha256(path.read_bytes()).hexdigest(), excerpt["path"])
+				if "image" in excerpt:
+					image_path = ROOT / excerpt["image"]
+					self.assertTrue(image_path.is_file(), excerpt["image"])
+					self.assertEqual(excerpt["image_sha256"], hashlib.sha256(image_path.read_bytes()).hexdigest(), excerpt["image"])
 
 
 if __name__ == "__main__":

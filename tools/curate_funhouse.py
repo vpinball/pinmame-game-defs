@@ -39,13 +39,18 @@ CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
 CONTROLLER_SOURCE = "controller-profile.pinmame-wpc-alpha"
 MANUAL_SOURCE = "manual.williams.funhouse.1990"
 MANUAL_SUPPORT_SOURCE = "manual-support.williams.funhouse.1990"
+OPERATOR_HANDBOOK_SOURCE = "manual.williams.funhouse.1990.operator-handbook"
+PLAYFIELD_PHOTO_SOURCE = "photo.williams.funhouse.1990.a13"
 VPX_TABLE_SOURCE = "vpx-table.fh-1-3"
 VPX_SCRIPT_SOURCE = "vpx-script.fh-1-3"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.fh-1-3"
+VPXTABLE_SCRIPTS_SOURCE = "vpx-script.funhouse-community-current"
 
 TABLE_SHA256 = "69c37fa9a84e669a2934d6da0e5ee0277c4a0ef01e71eaa19e7271ba3396873e"
 SCRIPT_SHA256 = "322fba2dec939b50e0730da8caca177545aa8f8bc055ba136360ae55deb4e863"
 MANUAL_SHA256 = "b658e7d0985a5e8588981c974d9c9448ea7cc574b2d21e5acb386c718a1f0f47"
+OPERATOR_HANDBOOK_SHA256 = "bb30eacaac0ee7001f59339102da5a1bfe528c2a4dbd63d2247e00fba89f1b13"
+PLAYFIELD_PHOTO_SHA256 = "b56821de487adc55f128e4a94d8d55a4ef2c2e23cd1c0291f1118363c6ecaa81"
 
 EXTRACTION_RELATIVE_PATH = Path("williams/funhouse-1990/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("williams/funhouse-1990/extracted-vpxtool.manifest.json")
@@ -68,7 +73,7 @@ DRIVER_COMPATIBILITY = {
 	"fh_905h": ("identical", "9.05H game ROM. This is the driver the retained known-working script binds to (Const cGameName=\"fh_905h\"); it drives the identical I/O inventory as L-9."),
 	"fh_906h": ("identical", "9.06H Coin Play game ROM; a later firmware revision of the same physical machine with no controller-address or playfield change."),
 	"fh_907h": ("identical", "9.07H LED ghost fix plus ball-saver MOD, a community patch of 9.05H; no controller-address or playfield change."),
-	"fh_pa1": ("compatible", "Prototype PA-1 game ROM (labeled L-2, System 11 sound). Pinned PinMAME binds it to a distinct GEN_WPCALPHA_1 core_tGameData (fhpa1GameData) rather than the production fhGameData, reflecting the earlier WPC-Alpha-1/System-11 sound-board generation used before the machine's WPC-Alpha-2 sound board shipped. The switch, solenoid, lamp, and mechanism definitions transcribed here are unchanged between the two structs (fhpa1GameData copies fhGameData's flipper/mech/lamp-display fields and inverted-switch mask verbatim), so this remains the same physical playfield with an earlier sound subsystem, not a different machine."),
+	"fh_pa1": ("compatible", "Prototype PA-1 game ROM (labeled L-2, System 11 sound). Pinned PinMAME binds it to a distinct GEN_WPCALPHA_1 core_tGameData (fhpa1GameData) rather than the production fhGameData, reflecting the earlier WPC-Alpha-1/System-11 sound-board generation used before the machine's WPC-Alpha-2 sound board shipped. The switch, solenoid, lamp, and mechanism definitions transcribed here are unchanged between the two structs. The prototype struct also retains a stale gameSpecific1=1 copied before production FunHouse was corrected: pinned wpc.c therefore executes the unrelated WPC_CFTBL chase-light integrator and writes internal PWM lamp slots 65-72 from solenoids 20/24 and G.I. bits 0/3, but lampCol=0 keeps the public lamp count at 64. Those internal slots are a pinned-source defect, not fitted FunHouse lamps. This remains the same physical playfield with an earlier sound subsystem, not a different machine."),
 	"fh_l2": ("identical", "L-2 game ROM, the earliest production-generation firmware retained by PinMAME; no controller-address or playfield change from L-9."),
 	"fh_l3": ("identical", "L-3 game ROM; no controller-address or playfield change."),
 	"fh_d3": ("identical", "D-3 game ROM, an LED ghost-fix revision of L-3; no controller-address or playfield change."),
@@ -212,19 +217,23 @@ SOLENOID_CALLBACKS = {
 
 # --- Printed general-illumination table (manual page 2-40) ------------------------------------
 GI_LABELS = {
+	0: "Upper Backglass G.I.", 1: "Rudy G.I.", 2: "Upper/Rear Playfield G.I.",
+	3: "Center Backglass / Right Rear Playfield G.I.", 4: "Lower Playfield G.I.",
+}
+GI_MANUAL_LABELS = {
 	0: "Upper Backglass G.I.", 1: "Front Playfield G.I.", 2: "Rear Playfield G.I.",
-	3: "Cntr Bckglss/Rt. Rr Plfld G.I.", 4: "Top Playfield G.I.",
+	3: "Center Backglass / Right Rear Playfield G.I.", 4: "Top Playfield G.I.",
 }
 GI_SCRIPT_REGIONS = {
 	0: "Upper BackGlass (Case 0)", 1: "Rudy (Case 1)", 2: "Upper Playfield (Case 2)",
 	3: "Center BackGlass (Case 3)", 4: "Lower Playfield (Case 4)",
 }
 GI_FEED_WIRING = {
-	0: dict(control_connection="J120-5", driver_transistor="Q12", insert_connection="J121-5"),
-	1: dict(control_connection="J120-6", driver_transistor="Q10", insert_connection="J121-6", cabinet_connection="J119-3"),
-	2: dict(control_connection="J120-1", driver_transistor="Q18", insert_connection="J121-1"),
-	3: dict(control_connection="J120-3", driver_transistor="Q14", insert_connection="J121-3"),
-	4: dict(control_connection="J120-2", driver_transistor="Q16", insert_connection="J121-2"),
+	0: dict(control_connection="J120-1", control_wire="Brown", driver_transistor="Q18", insert_connection="J121-1", return_connection="J120-7 / J121-7", return_wire="White-Brown", return_component="F10"),
+	1: dict(control_connection="J120-6 / J119-3", control_wire="Violet", driver_transistor="Q10", insert_connection="J121-6", return_connection="J120-11 / J121-11 / J119-1", return_wire="White-Violet", return_component="F6"),
+	2: dict(control_connection="J120-3", control_wire="Yellow", driver_transistor="Q14", insert_connection="J121-3", return_connection="J120-9 / J121-9", return_wire="White-Yellow", return_component="F8"),
+	3: dict(control_connection="J120-2", control_wire="Orange", driver_transistor="Q16", insert_connection="J121-2", return_connection="J120-8 / J121-8", return_wire="White-Orange", return_component="F9"),
+	4: dict(control_connection="J120-5", control_wire="Green", driver_transistor="Q12", insert_connection="J121-5", return_connection="J120-10 / J121-10", return_wire="White-Green", return_component="F7"),
 }
 
 # --- Printed lamp table (manual pages 2-36 locations, 2-37 wiring) ----------------------------
@@ -265,7 +274,7 @@ LAMP_ROW_WIRING = {
 
 # --- Normalized playfield coordinates from the retained VPX extraction (x/964, y/2162) --------
 SWITCH_POSITIONS = {
-	11: [(0.60409, 0.842652)], 12: [(0.264227, 0.842652)], 15: [(0.145448, 0.30695)],
+	15: [(0.145448, 0.30695)],
 	16: [(0.687465, 0.112309)], 17: [(0.15384, 0.596574)], 18: [(0.615994, 0.443693)],
 	25: [(0.288262, 0.135109)], 26: [(0.145027, 0.263304)], 27: [(0.239196, 0.147339)],
 	28: [(0.193812, 0.158922)], 31: [(0.554663, 0.521479)], 32: [(0.512372, 0.454203)],
@@ -277,23 +286,25 @@ SWITCH_POSITIONS = {
 	52: [(0.875051, 0.75622)], 53: [(0.657699, 0.73899)], 54: [(0.209337, 0.383022)],
 	55: [(0.400243, 0.157399)], 56: [(0.262034, 0.325482)], 57: [(0.859425, 0.623967)],
 	58: [(0.732298, 0.567893)], 61: [(0.73663, 0.720266)], 62: [(0.943105, 0.888831)],
+	63: [(0.877269, 0.863859)],
 	64: [(0.33837, 0.348324)], 65: [(0.660429, 0.20844)], 66: [(0.93145, 0.187398)],
 	67: [(0.820074, 0.578718)], 68: [(0.764603, 0.518256)], 71: [(0.804597, 0.71963)],
 	72: [(0.769422, 0.891111)], 74: [(0.824195, 0.877197)], 75: [(0.849795, 0.10813)],
 	76: [(0.81201, 0.238809)], 77: [(0.843763, 0.431839)],
 	73: [(0.500721, 0.960313)],
 }
-# Switches with no dedicated VPX trigger/target object found in the retained extraction.
-SWITCH_SPATIAL_UNRESOLVED = {63}
-
 SOLENOID_POSITIONS = {
 	1: [(0.500721, 0.960313)], 2: [(0.900092, 0.335841)], 3: [(0.78147, 0.13193)],
 	4: [(0.693624, 0.61287)], 5: [(0.81201, 0.238809)], 6: [(0.81201, 0.238809)],
 	8: [(0.433493, 0.564827)], 9: [(0.615994, 0.443693)], 10: [(0.843763, 0.431839)],
 	11: [(0.764603, 0.518256)], 12: [(0.211364, 0.738475)], 13: [(0.657699, 0.73899)],
 	14: [(0.100533, 0.84034)], 15: [(0.877269, 0.863859)], 16: [(0.660429, 0.20844)],
-	17: [(0.607818, 0.066095)], 18: [(0.585264, 0.326788)], 19: [(0.434362, 0.658164)],
-	20: [(0.446452, 0.46247)], 23: [(0.766934, 0.087572)], 24: [(0.929512, 0.109304)],
+	17: [(0.607818, 0.066095), (0.257915, 0.313511), (0.931763, 0.490629)],
+	18: [(0.585264, 0.326788)],
+	19: [(0.434362, 0.658164), (0.434362, 0.658164)],
+	20: [(0.446452, 0.46247), (0.460268, 0.512137)],
+	23: [(0.766934, 0.087572), (0.252168, 0.291859), (0.932054, 0.531739)],
+	24: [(0.929512, 0.109304), (0.247033, 0.270019), (0.932168, 0.572932)],
 	21: [(0.630723, 0.273491)], 22: [(0.630723, 0.273491)],
 	25: [(0.630723, 0.273491)], 26: [(0.630723, 0.273491)],
 	27: [(0.630723, 0.273491)], 28: [(0.630723, 0.273491)],
@@ -311,7 +322,8 @@ LAMP_POSITIONS = {
 	41: [(0.347821, 0.657825)], 42: [(0.390515, 0.690546)], 43: [(0.476207, 0.690458)],
 	44: [(0.509063, 0.676773)], 45: [(0.508473, 0.638964)], 46: [(0.511423, 0.59882)],
 	47: [(0.356393, 0.598672)], 48: [(0.359823, 0.638964)], 51: [(0.765445, 0.51738)],
-	52: [(0.61674, 0.442817)], 57: [(0.264182, 0.328014)], 58: [(0.665193, 0.541238)],
+	52: [(0.61674, 0.442817)], 54: [(0.199859, 0.281846)], 55: [(0.201836, 0.23651)],
+	56: [(0.201117, 0.192765)], 57: [(0.264182, 0.328014)], 58: [(0.665193, 0.541238)],
 	53: [(0.453204, 0.476406), (0.459149, 0.498521)],
 	61: [(0.129717, 0.690238), (0.735779, 0.675768)], 62: [(0.185918, 0.623502)],
 	63: [(0.437713, 0.41654)], 64: [(0.283597, 0.377782)], 65: [(0.230091, 0.418084)],
@@ -323,15 +335,19 @@ LAMP_POSITIONS = {
 	83: [(0.357697, 0.433994)], 84: [(0.302018, 0.41577)], 85: [(0.391661, 0.348521)],
 	86: [(0.350594, 0.378278)], 87: [(0.4368, 0.382814)],
 }
-# 54/55/56 (Steps Lights Frenzy/Ex.Ball/500,000) are each modeled in the retained table by four
-# distinct "finger"-shaped Light objects forming a chase-lit arrow icon (Bot_finger_1-4 /
-# Mid_finger_1-4 / Top_finger_1-4), not by one bulb at one coordinate; the manual's Lamps table
-# lists a single #555/#44 bulb for each address with no quantity marker. Rather than guess which
-# of the four finger segments represents "the" bulb, spatial placement for these three addresses
-# is left unresolved.
-LAMP_SPATIAL_UNRESOLVED = {54, 55, 56}
-
 GI_RUDY_POSITIONS = [(0.698912, 0.09342), (0.83687, 0.113912), (0.76868, 0.317499)]
+GI_UPPER_POSITIONS = [
+	(0.159636, 0.026365), (0.893615, 0.028146), (0.056362, 0.061723), (0.952628, 0.064875),
+	(0.299793, 0.083924), (0.523551, 0.112567), (0.176233, 0.11846), (0.540764, 0.131754),
+	(0.358806, 0.189862), (0.166603, 0.275318), (0.049908, 0.331432), (0.191442, 0.334527),
+	(0.897303, 0.336229), (0.063739, 0.371313), (0.078492, 0.40256),
+]
+GI_LOWER_POSITIONS = [
+	(0.562996, 0.473099), (0.063132, 0.509797), (0.121318, 0.570539), (0.120396, 0.583696),
+	(0.777842, 0.623165), (0.215693, 0.767503), (0.661275, 0.768162), (0.219483, 0.780739),
+	(0.767688, 0.792313), (0.150942, 0.807551), (0.686954, 0.817347), (0.20094, 0.8229),
+	(0.747153, 0.944086), (0.175111, 0.944281),
+]
 
 
 def _file_sha256(path: Path) -> str:
@@ -450,7 +466,13 @@ def source_records() -> list[dict[str, Any]]:
 				"jaw/eyes causality), fhpa1GameData (GEN_WPCALPHA_1 prototype variant), and init_fh's driver-name "
 				"dispatch between the two; src/wpc/wpc.c wpc_dispAlpha layout and GENWPC_HASFLIPTRON/GENWPC_HASDMD "
 				"exclusion of GEN_WPCALPHA_1/GEN_WPCALPHA_2; src/wpc/core.h CORE_MAXSWCOL=16 (columns 0-9 matrix, "
-				"10 coin door, 11 cabinet/flippers) and CORE_FIRSTLFLIPSOL/CORE_FIRSTUFLIPSOL; src/wpc/gen.h "
+				"10 coin door, 11 cabinet/flippers), CORE_FIRSTLFLIPSOL/CORE_FIRSTUFLIPSOL/CORE_FIRSTSIMSOL, "
+				"core_updateSw's generic flipper input column 111-118, matrix copies 112->11 and 114->12, "
+				"synthetic-flipper fallback, and core_getSol's complete 1-50 public dispatch; fh.c simulator "
+				"states that consume sShooterRel (CORE_FIRSTSIMSOL=49); src/wpc/wpc.c's WPC_GILAMPS/J111/Game-On "
+				"mapping, wpc_init public lamp count, and WPC_CFTBL chase-light integration; git history showing "
+				"the prototype struct added with the copied flag in bc2649ff8fe25699c0c1a7fd21857913cec9c5af and "
+				"production FunHouse corrected to zero in 1302113d46d00aff945f688d066cca022b8625b2 without updating fhpa1GameData; src/wpc/gen.h "
 				"GEN_WPCALPHA_1/GEN_WPCALPHA_2 definitions."
 			),
 			"license": "BSD-3-Clause",
@@ -468,12 +490,16 @@ def source_records() -> list[dict[str, Any]]:
 		{
 			"id": MANUAL_SOURCE,
 			"kind": "manual",
-			"uri": "external:pinmame-manuals/by-machine/williams.funhouse.1990/archive-arcademanual_Funhouse_OPS/Funhouse_OPS.pdf",
+			"uri": "https://archive.org/details/arcademanual_Funhouse_OPS",
+			"source_id": "arcademanual_Funhouse_OPS",
 			"original_filename": "Funhouse_OPS.pdf",
 			"sha256": MANUAL_SHA256,
+			"acquired_at": "2026-08-07T00:18:16Z",
 			"locator": (
-				"122-page Williams FunHouse operations manual scan (Internet Archive item "
-				"arcademanual_Funhouse_OPS), with a working but multi-column-scrambled text layer. Printed pages "
+				"Locally retained 122-page derivative of the Williams FunHouse operations-manual scan from Internet Archive item "
+				"arcademanual_Funhouse_OPS (details URL above; item uploader manuallibrary@textfiles.com; public date "
+				"2017-09-20). Its byte identity is the local SHA-256 recorded here and must not be conflated with a "
+				"current Archive.org derivative. It has a working but multi-column-scrambled text layer. Printed pages "
 				"2-36 through 2-40 carry the lamp/switch/solenoid/G.I. location parts lists and their matrix and "
 				"wiring tables; printed pages 2-24 and 2-32 carry the Jaw Drive/Eject Assembly and Unique Parts "
 				"pages that fix Rudy's and the trap door's mechanism construction; Section 3 (printed 3-15 "
@@ -508,7 +534,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.funhouse.lamp-locations",
 					"locator": "PDF page 97, printed 2-36, lamp-locations parts list",
 					"path": "evidence/excerpts/williams.funhouse.1990/lamp-locations.md",
-					"sha256": "0a05d47eb1ec1159498d978ab1a1cdeee669ac444bfec6a49c94d13916455c53",
+					"sha256": "6cb17cb8ed46b1c501b7d45625532e6cbb070e0d9a67b791bd4299909771a677",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -517,7 +543,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.funhouse.lamp-matrix",
 					"locator": "PDF page 98, printed 2-37, lamp matrix wiring table",
 					"path": "evidence/excerpts/williams.funhouse.1990/lamp-matrix.md",
-					"sha256": "ccbca902876402a125e4448c8a799f5d0a76a3d96080823efff30865e9808793",
+					"sha256": "b70eee7219327b65aca8b5f8b251d849adc8c722f882568ea5cd4cf609e1cfe9",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page (address 12 confirmed at 600 dpi)",
 					"reviewed": True,
@@ -526,7 +552,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.funhouse.solenoid-locations",
 					"locator": "PDF page 101, printed 2-40, solenoid and general-illumination locations parts list",
 					"path": "evidence/excerpts/williams.funhouse.1990/solenoid-locations.md",
-					"sha256": "89084bb0a0524c3701b9f0134ddf00ff9bcfac24235a2c2e714dd0e91ee410d2",
+					"sha256": "7afd56bc2cd4c72a2fc89c29519b05cf8fcb6758e8bb13cbb9942d03726e034e",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -544,7 +570,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.funhouse.general-illumination-flipper-circuits",
 					"locator": "PDF page 120, printed 3-17, General Illumination/Flipper/Power/Logic/Display Circuits interboard wiring tables",
 					"path": "evidence/excerpts/williams.funhouse.1990/general-illumination-flipper-circuits.md",
-					"sha256": "56b81515ce01cb20c11d3f9137ef93c6f40381c316e3ad56f08406aab7b2e1a5",
+					"sha256": "1798116b6e9c38a2f02aef1f38ea90760f500ebfba4b8a52ae73b38c3d6b0d3d",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -565,6 +591,7 @@ def source_records() -> list[dict[str, Any]]:
 			"kind": "human_review",
 			"uri": "external:pinmame-review-artifacts/funhouse/manual-transcription.md",
 			"revision": "2026-08-07",
+			"acquired_at": "2026-08-07T00:00:00Z",
 			"locator": (
 				"Consolidated retained human transcription of every rendered manual table used by this "
 				"definition, together with the rendered PNG page cache under "
@@ -575,11 +602,67 @@ def source_records() -> list[dict[str, Any]]:
 			"attribution": "pinmame-game-defs curation",
 		},
 		{
+			"id": OPERATOR_HANDBOOK_SOURCE,
+			"kind": "manual",
+			"uri": "external:pinmame-manuals/by-machine/williams.funhouse.1990/maintainer-supplied-2026-08-14/Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf",
+			"original_filename": "Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf",
+			"sha256": OPERATOR_HANDBOOK_SHA256,
+			"acquired_at": "2026-08-14T17:36:41Z",
+			"locator": "Eleven-page November 1990 Williams operator handbook supplied by the maintainer. PDF pages 5-10 contain the solenoid/G.I., lamp, and switch tables and location drawings used to resolve the remaining FunHouse evidence questions.",
+			"license": "NOASSERTION",
+			"attribution": "Williams Electronics Games, Inc.; maintainer-supplied scan",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.funhouse.operator-handbook-lamps",
+					"locator": "PDF pages 7-8, lamp matrix and lamp-location drawing",
+					"path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-lamp-evidence.md",
+					"sha256": "9f5f69e9c1b0ba87228f32e0a5a0deb77283bc706b6bc1b709cfd1dc35fe5567",
+					"method": "manual",
+					"transcribed_by": "curator, read from rendered page images",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.funhouse.operator-handbook-switch-gi",
+					"locator": "PDF pages 5 and 9-10, G.I. table and switch matrix/location drawing",
+					"path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-switch-gi-evidence.md",
+					"sha256": "c3eb1b27f58312463fdadbd7e35d96693bdf91d1015143121bfcd3795362e120",
+					"method": "manual",
+					"transcribed_by": "curator, read from rendered page images",
+					"reviewed": True,
+				},
+			],
+		},
+		{
+			"id": PLAYFIELD_PHOTO_SOURCE,
+			"kind": "human_review",
+			"uri": "external:pinmame-manuals/by-machine/williams.funhouse.1990/maintainer-supplied-2026-08-14/funhouse-image-A13.jpg",
+			"original_filename": "funhouse-image-A13.jpg",
+			"sha256": PLAYFIELD_PHOTO_SHA256,
+			"acquired_at": "2026-08-14T17:37:39Z",
+			"locator": "Maintainer-supplied 500 by 375 lower-playfield photograph showing the Gangway 100,000 and 200,000 insert legends.",
+			"license": "NOASSERTION",
+			"attribution": "Maintainer-supplied photograph; photographer unknown",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.funhouse.playfield-photo-gangway",
+					"locator": "Visible lower-playfield Gangway inserts",
+					"path": "evidence/excerpts/williams.funhouse.1990/playfield-photo-gangway.md",
+					"sha256": "788613103dfbec9958f3b05cb36592be94bca1e4ff8cc82d5598357c6a771ea0",
+					"method": "manual",
+					"transcribed_by": "curator, read from the supplied image",
+					"reviewed": True,
+				},
+			],
+		},
+		{
 			"id": VPX_TABLE_SOURCE,
 			"kind": "vpx_table",
 			"uri": "external:pinmame-vpx-sources/williams/funhouse-1990/source/Funhouse%20%28Williams%201990%29_1.3.vpx",
 			"original_filename": "Funhouse (Williams 1990)_1.3.vpx",
 			"sha256": TABLE_SHA256,
+			"acquired_at": "2026-08-07T15:17:32Z",
 			"locator": (
 				f"Retained known-working recreation of the physical machine, version 1.3. Exact playfield bounds "
 				f"are {TABLE_BOUNDS}; normalized coordinates are x/964 and y/2162. Geometry authority only for "
@@ -596,27 +679,43 @@ def source_records() -> list[dict[str, Any]]:
 			"original_filename": "script.vbs",
 			"sha256": "322fba2dec939b50e0730da8caca177545aa8f8bc055ba136360ae55deb4e863",
 			"known_working": True,
+			"acquired_at": "2026-08-07T15:17:33Z",
 			"locator": (
 				'Retained embedded script (80,593 bytes). Runtime and mechanism-causality authority: '
 				'Const cGameName = "fh_905h" (line 64; the commented-out line 63 reads "fh_905" and is not the '
 				"active binding), the SolCallback table for solenoids 1-8, 14-28, the UpdateLamps per-address "
 				"light bindings, the UpdateGI/UpdateGI2 G.I. region dispatch (Case 0/1/2/3/4), the trap door "
 				"TrapMover_Timer state machine (Controller.Switch(76) set from PrTrap.RotX), and the "
-				"SolCallback(sLRFlipper)/SolCallback(sLLFlipper) generic core.vbs registration that this driver "
-				"never exercises (fhGameData declares no FLIP_SOL)."
+				"SolCallback(sLRFlipper)/SolCallback(sLLFlipper) registration that consumes PinMAME's synthetic "
+				"button-driven flipper states because fhGameData declares no FLIP_SOL; SolLFlipper drives both "
+				"LeftFlipper and LeftFlipper1, independently corroborating the lower-left plus upper-left physical pair."
 			),
 			"license": "NOASSERTION",
 			"attribution": "table authors",
 			"rights": "NOASSERTION",
 		},
 		{
+			"id": VPXTABLE_SCRIPTS_SOURCE,
+			"kind": "vpx_script",
+			"uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Funhouse%20%28Williams%201990%29.vbs",
+			"original_filename": "Funhouse (Williams 1990).vbs",
+			"sha256": "37cf4e41a6dc9772968cc8a1b13797e7ffb6f504d7e43cd15a6bb12926e9ae3d",
+			"known_working": True,
+			"acquired_at": "2026-08-14T00:00:00Z",
+			"locator": "Pinned community script corpus at revision 0c036bb61b4b4e8c778c37559f6795df8cd1521e, lines 2444-2446: output 20 is assigned to the distinct F20 and F20a Light objects (plus render helper f20b).",
+			"license": "NOASSERTION",
+			"attribution": "VPX table-script authors",
+			"rights": "NOASSERTION",
+		},
+		{
 			"id": VPX_EXTRACTION_SOURCE,
 			"kind": "vpx_table",
 			"uri": "external:pinmame-vpx-sources/williams/funhouse-1990/extracted-vpxtool.manifest.json",
+			"acquired_at": "2026-08-07T15:17:33Z",
 			"locator": (
 				"Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under "
 				f"extracted-vpxtool; manifest SHA-256 {EXTRACTION_MANIFEST_SHA256}; {EXTRACTION_FILE_COUNT} files, "
-				f"{EXTRACTION_TOTAL_BYTES} bytes, produced with vpxtool from the retained table. Bounds are "
+				f"{EXTRACTION_TOTAL_BYTES} bytes, produced with vpxtool git:v0.33.3 from the retained table. Bounds are "
 				f"{TABLE_BOUNDS}."
 			),
 			"license": "NOASSERTION",
@@ -711,7 +810,7 @@ def input_devices() -> list[dict[str, Any]]:
 			if address == 23:
 				notes += ' Pinned fh.c declares a vestigial #define swTicket 23 never referenced elsewhere in the driver, matching the manual\'s "Not Used" fitment; treated as unfitted.'
 			if address == 63:
-				notes += " No dedicated VPX trigger/target object was found for this address in the retained extraction; spatial placement is left unresolved."
+				notes += " The November 1990 handbook places this at the rightmost trough position; the retained script's ballrelease kicker asserts this switch while occupied and clears it when solenoid 15 ejects the ball, so that kicker supplies the validated coordinate."
 			if address == 73:
 				notes += " Projected onto the retained table's Drain kicker object, which the outhole solenoid (1) also shares; no separate switch-only object exists."
 			physical["notes"] = notes
@@ -721,6 +820,7 @@ def input_devices() -> list[dict[str, Any]]:
 				"physical": physical,
 				"wiring": _switch_wiring(address),
 			}
+			refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
 			if unused:
 				availability = "unused"
 				extra["spatial"] = not_applicable("unused", MANUAL_SOURCE)
@@ -730,23 +830,72 @@ def input_devices() -> list[dict[str, Any]]:
 				extra["constant_active"] = True
 				extra["initial_active"] = True
 				extra["spatial"] = not_applicable("constant", MANUAL_SOURCE)
-				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
 			else:
 				availability = "used"
 				extra["normally_closed"] = address in OPTO_SWITCHES
-				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
-				if address in {13, 14, 21, 22}:
+				if address in {11, 12}:
+					role = "flipper.lower.right.button-matrix-copy" if address == 11 else "flipper.left.button-matrix-copy"
+					extra["roles"] = [role]
+					extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, CORE_SOURCE)
+					physical["location"] = "cabinet flipper-button input"
+					physical["notes"] += (
+						" This CPU-facing matrix state is copied from PinMAME's generic cabinet flipper input "
+						f"{112 if address == 11 else 114}; it is not an EOS contact or a playfield-positioned sensor."
+					)
+				elif address in {13, 14, 21, 22}:
 					role = {13: "cabinet.start", 14: "cabinet.tilt", 21: "cabinet.slam-tilt", 22: "cabinet.coin-door"}[address]
 					extra["roles"] = [role]
 					extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
 					physical["location"] = "cabinet"
 					if address == 22:
 						extra["initial_active"] = True
-				elif address in SWITCH_SPATIAL_UNRESOLVED:
-					pass
 				else:
-					extra["spatial"] = located(identifier, "sensor", SWITCH_POSITIONS[address], VPX_TABLE_SOURCE)
+					spatial_refs = (OPERATOR_HANDBOOK_SOURCE, VPX_SCRIPT_SOURCE, VPX_TABLE_SOURCE) if address == 63 else (VPX_TABLE_SOURCE,)
+					extra["spatial"] = located(identifier, "sensor", SWITCH_POSITIONS[address], *spatial_refs)
 			items.append(_device(identifier, label, kind, "pinmame.input.switch", address, availability, refs, **extra))
+
+	for address in range(111, 119):
+		used = address in {112, 114}
+		right = address == 112
+		label = (
+			"Generic Right Flipper Button State" if right else
+			"Generic Left Flipper Button State" if address == 114 else
+			f"Unused Generic Flipper Input {address}"
+		)
+		notes = (
+			"Live generic cabinet-flipper input published from PinMAME's switch column 11. "
+			+ (
+				"core_updateSw copies this state to matrix switch 11; it represents the right cabinet button and the physical lower-right flipper assembly."
+				if right else
+				"core_updateSw copies this state to matrix switch 12; the one left cabinet button directly drives both the lower-left and upper-left physical flipper assemblies."
+			)
+			if used else
+			"Public generic-flipper-column position. FunHouse declares no input at this position, so it is explicitly unused."
+		)
+		extra: dict[str, Any] = {
+			"aliases": [{"namespace": "pinmame.switch", "value": str(address)}],
+			"physical": {
+				"location": "cabinet flipper button" if used else "internal public address space",
+				"switch_type": "button" if used else "other",
+				"notes": notes,
+			},
+			"normally_closed": False,
+			"spatial": not_applicable("cabinet_or_service" if used else "unused", CORE_SOURCE, CONTROLLER_SOURCE),
+		}
+		if used:
+			extra["roles"] = ["flipper.lower.right.button" if right else "flipper.left.button"]
+		items.append(
+			_device(
+				f"switch.generic-{address}",
+				label,
+				"switch",
+				"pinmame.input.switch",
+				address,
+				"used" if used else "unused",
+				(CORE_SOURCE, CONTROLLER_SOURCE),
+				**extra,
+			)
+		)
 
 	dip_labels = {n: f"CPU DIP {n} (country/option configuration bit)" for n in range(1, 9)}
 	for address in range(1, 9):
@@ -788,7 +937,6 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 		label = SOLENOID_LABELS[address]
 		identifier = output_id(label)
 		is_flasher = address in FLASHER_QUANTITIES
-		is_flipper_related = False
 		kind = "flasher" if is_flasher else "motor" if address in {21, 22} else "coil"
 		physical: dict[str, Any] = {}
 		part_number = SOLENOID_PARTS.get(address)
@@ -799,6 +947,12 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			quantity = FLASHER_QUANTITIES[address]
 			physical["quantity"] = quantity
 			notes += f" Printed flashlamp complement: {quantity} {part_number} bulb(s) on this circuit."
+			if address in {17, 23, 24}:
+				notes += " The retained table supplies one distinct emitter object for each printed bulb, so every socket has its own placement."
+			elif address == 19:
+				notes += " The retained table abstracts both printed sockets into one physical Light fixture; the two explicit co-located placements preserve the manual quantity without inventing a separation the table does not provide."
+			elif address == 20:
+				notes += " The retained table supplies distinct F20 and F20a Light objects, and the pinned community script assigns both to output 20; each printed Superdog socket therefore has its own placement."
 		if address in SOLENOID_CALLBACKS:
 			notes += f" Retained script callback: {SOLENOID_CALLBACKS[address]}."
 		if address == 7:
@@ -842,9 +996,53 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			extra["roles"] = ["cabinet.knocker"]
 			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
 		else:
-			extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], VPX_TABLE_SOURCE)
+			spatial_refs = (VPX_TABLE_SOURCE, VPXTABLE_SCRIPTS_SOURCE) if address == 20 else (VPX_TABLE_SOURCE,)
+			extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], *spatial_refs)
 		refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE) if address in SOLENOID_CALLBACKS else (MANUAL_SOURCE, CORE_SOURCE)
+		if address == 20:
+			refs += (VPXTABLE_SCRIPTS_SOURCE,)
 		items.append(_device(identifier, label, kind, "pinmame.output.solenoid", address, "used", refs, **extra))
+	public_state_outputs = {
+		29: ("device.wpc-j111-state-29", "WPC J111 State 29", "virtual", "used", ["internal.wpc-state"], "PinMAME mirrors WPC_GILAMPS bit 5, one of the CPU board's J111 GPIO state bits, to public address 29. It is a live controller state channel rather than a separate physical playfield device."),
+		30: ("device.wpc-j111-state-30", "WPC J111 State 30", "virtual", "used", ["internal.wpc-state"], "PinMAME mirrors WPC_GILAMPS bit 6, one of the CPU board's J111 GPIO state bits, to public address 30. It is a live controller state channel rather than a separate physical playfield device."),
+		31: ("device.game-on-solenoid-relay", "Game-On Solenoid Relay", "relay", "used", ["internal.wpc-state", "cabinet.game-on-relay"], "The real pre-Fliptronic Game-On relay controlled by WPC_GILAMPS bit 7. Pinned wpc.c documents the chain from CPU board U4/J121 through power-driver J113, the relay, J110, the cabinet switch, and J109 to the flippers. This cabinet/flipper-enable relay is not a playfield coil."),
+		32: ("device.unused-wpc-state-output-32", "Unused WPC State Output 32", "virtual", "unused", ["internal.unused.wpc-output"], "PinMAME's WPC state remap has no fourth bit at public address 32, so this position is constant zero."),
+	}
+	for address in range(33, 45):
+		public_state_outputs[address] = (
+			f"device.unused-wpc-output-{address}",
+			f"Unused WPC Output {address}",
+			"virtual",
+			"unused",
+			["internal.unused-platform-slot"],
+			("Generic upper-flipper-shaped public position; FunHouse declares no CPU-controlled FLIP_SOL bits, so PinMAME never drives it even though the physical machine has a direct-wired upper-left flipper." if address <= 36 else "Platform public-output position not served by this WPC-Alpha generation; PinMAME returns zero."),
+		)
+	public_state_outputs.update({
+		45: ("device.synthetic-lower-right-flipper-power", "Synthetic Lower Right Flipper Power", "virtual", "used", ["internal.synthetic-flipper"], "PinMAME's synthetic lower-right power bit. Because FunHouse has no CPU-controlled flipper solenoids, core_updateSw fabricates addresses 45-48 from the live flipper-button states while the real Game-On relay is enabled. The physical coil remains direct-wired through the flipper driver board."),
+		46: ("device.synthetic-lower-right-flipper", "Synthetic Lower Right Flipper", "virtual", "used", ["internal.synthetic-flipper", "flipper.lower.right"], "PinMAME's combined lower-right public flipper state. It mirrors the same fabricated button-driven state as address 45 and is the sLRFlipper callback consumed by the retained script; it does not represent an additional physical coil."),
+		47: ("device.synthetic-left-flipper-power", "Synthetic Left Flipper Power", "virtual", "used", ["internal.synthetic-flipper"], "PinMAME's synthetic left-side power bit. It is fabricated from the live left-flipper button state under the same conditions as address 45 and has no physical driver-board output of its own; the one state covers both direct-wired left bats."),
+		48: ("device.synthetic-left-flipper", "Synthetic Left Flipper", "virtual", "used", ["internal.synthetic-flipper", "flipper.lower.left", "flipper.upper.left"], "PinMAME's combined left-side public flipper state. It mirrors the same fabricated button-driven state as address 47 and is the sLLFlipper callback consumed by the retained script; that callback rotates both LeftFlipper and LeftFlipper1, matching the physical lower-left and upper-left bats. It does not represent an additional physical coil."),
+		49: ("device.pinmame-simulator-ball-shooter", "PinMAME Simulator Ball-Shooter Channel", "virtual", "used", ["internal.simulator-ball-shooter"], "Platform simulator-only fake ball-shooter solenoid (sShooterRel). The built-in FunHouse simulator consumes it in both left- and right-shooter state transitions; it remains virtual and has no physical FunHouse driver-board circuit."),
+		50: ("device.unassigned-solenoid-slot-50", "Unassigned Solenoid Slot 50", "virtual", "unused", ["internal.unused-platform-slot"], "Reserved platform gap before custom outputs. FunHouse declares no custom solenoids, so no address above 50 is published for this game."),
+	})
+	for address in range(29, 51):
+		identifier, label, kind, availability, roles, notes = public_state_outputs[address]
+		reason = "cabinet_or_service" if address == 31 else "virtual"
+		items.append(
+			_device(
+				identifier,
+				label,
+				kind,
+				"pinmame.output.solenoid",
+				address,
+				availability,
+				(CORE_SOURCE, CONTROLLER_SOURCE),
+				aliases=[{"namespace": "pinmame.solenoid", "value": str(address)}],
+				roles=roles,
+				physical={"notes": notes},
+				spatial=not_applicable(reason, CORE_SOURCE, CONTROLLER_SOURCE),
+			)
+		)
 	return items
 
 
@@ -865,22 +1063,19 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				notes += f' The lamp-matrix page marks this insert "(x {LAMP_QUANTITIES[address]})" and the retained table binds that many distinct, non-co-located bulb positions.'
 			if address == 12:
 				notes += (
-					' The lamp-locations page (2-36) reads "Gangway 10,000" while the lamp-matrix page (2-37) '
-					'reads "Gangway 100,000" for this same address (both confirmed at 600 dpi); see '
-					"conflict.gangway-lamp-12-value. This label uses the matrix page's value, which fits the "
-					"ascending 75,000/100,000/150,000/200,000/250,000/Extra-Ball award ladder implied by its "
-					"neighbors."
+					' The older lamp-locations page (2-36) reads "Gangway 10,000", but its matrix page, the '
+					"November 1990 handbook, and the maintainer-supplied physical playfield photograph all identify "
+					"the insert as Gangway 100,000. The isolated 10,000 entry is a resolved one-digit typo."
 				)
 			if address == 51:
 				notes += ' The lamp-matrix page additionally prints "(Left)" on this cell; the lamp-locations page has no such qualifier, and there are only three jet bumpers on this machine (Left/Right/Lower per the solenoid table), so this is read as a positional descriptor rather than a naming conflict.'
 			if address == 88:
 				notes += " Cabinet Start-button backlight, explicitly annotated \"(cabinet)\" on the lamp-locations page."
-			if address in LAMP_SPATIAL_UNRESOLVED:
+			if address in {54, 55, 56}:
 				notes += (
-					" The retained table models this address with four distinct 'finger'-shaped Light objects "
-					"forming a chase-lit arrow icon rather than one bulb at one coordinate, and the manual states "
-					"a single bulb with no quantity marker; spatial placement is left unresolved rather than "
-					"guessing which finger segment is authoritative."
+					" The handbook lamp-location drawing confirms one physical socket at this address. The retained "
+					"table's five-unit-radius `_finger_1` object is the actual hotspot; `_finger_2` through `_finger_4` "
+					"are larger render layers around the same insert effect and are excluded from the physical count."
 				)
 			physical["notes"] = notes
 
@@ -911,10 +1106,8 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
 			else:
 				availability = "used"
-				if address in LAMP_SPATIAL_UNRESOLVED:
-					pass
-				else:
-					extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE)
+				spatial_refs = (OPERATOR_HANDBOOK_SOURCE, VPX_SCRIPT_SOURCE, VPX_TABLE_SOURCE) if address in {54, 55, 56} else (VPX_TABLE_SOURCE,)
+				extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], *spatial_refs)
 			items.append(
 				_device(
 					identifier,
@@ -923,7 +1116,7 @@ def lamp_outputs() -> list[dict[str, Any]]:
 					"pinmame.output.lamp",
 					address,
 					availability,
-					(MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE),
+					(MANUAL_SOURCE, OPERATOR_HANDBOOK_SOURCE, PLAYFIELD_PHOTO_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE) if address == 12 else (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE),
 					**extra,
 				)
 			)
@@ -936,50 +1129,62 @@ def gi_outputs() -> list[dict[str, Any]]:
 		identifier = f"gi.string-{address}"
 		wiring_data = GI_FEED_WIRING[address]
 		notes = (
-			f"Printed general-illumination string {address + 1:02d} ({label}). Retained script region: "
-			f"{GI_SCRIPT_REGIONS[address]}. Insert-panel connector: {wiring_data['insert_connection']}."
+			f"Printed general-illumination string {address + 1:02d} is labeled {GI_MANUAL_LABELS[address]}; "
+			f"the retained script's runtime region is {GI_SCRIPT_REGIONS[address]}. Insert-panel connector: "
+			f"{wiring_data['insert_connection']}. Script behavior is canonical for runtime semantics, while the "
+			"printed name is retained as a manual-label alias and physical-construction note."
 		)
 		extra: dict[str, Any] = {
 			"aliases": [
 				{"namespace": "pinmame.gi", "value": str(address)},
 				{"namespace": "manual.address", "value": f"{address + 1:02d}"},
+				{"namespace": "manual.label", "value": GI_MANUAL_LABELS[address]},
 			],
-			"wiring": {
+		"wiring": {
 				"board": "WPC-Alpha power driver board",
+				"control_wire": wiring_data["control_wire"],
 				"control_connection": wiring_data["control_connection"],
 				"driver_transistor": wiring_data["driver_transistor"],
+				"return_wire": wiring_data["return_wire"],
+				"return_connection": wiring_data["return_connection"],
+				"return_component": wiring_data["return_component"],
 			},
 		}
 		physical: dict[str, Any] = {}
-		if address == 1:
+		if address == 0:
+			notes += " This is a physical backglass-only branch with no playfield emitter and is outside playfield authoring space."
+			extra["roles"] = ["cabinet.backglass"]
+			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, OPERATOR_HANDBOOK_SOURCE, VPX_SCRIPT_SOURCE)
+		elif address == 1:
 			notes += (
-				" Retained script UpdateGI2/UpdateGI Case 1 drives only the Rudy sign/shade collection "
-				"(RudySign1, RudySign2, RudyShade) -- it does not implement a generic 'front playfield' "
-				"lighting effect. The manual's 'Front Playfield' label and the script's Rudy-specific behavior "
-				"are recorded as a disagreement about which physical region this string illuminates; see "
-				"conflict.gi-region-naming. Spatial placement uses the three real implemented objects, "
-				"projected onto Rudy's own sign/shade assembly."
+				" Retained script Case 1 drives only RudySign1, RudySign2, and RudyShade, so the three real "
+				"implemented objects locate this runtime group on Rudy's sign/shade assembly."
 			)
 			physical["quantity"] = len(GI_RUDY_POSITIONS)
 			extra["spatial"] = located(identifier, "emitter", GI_RUDY_POSITIONS, VPX_SCRIPT_SOURCE, VPX_TABLE_SOURCE)
-		elif address in {2, 4}:
-			region = "GI_Upper (19 members)" if address == 2 else "GI_Lower (45 members)"
+		elif address == 2:
 			notes += (
-				f" Retained script drives a real playfield light collection ({region}) for this string, but "
-				"individual per-bulb spatial extraction for that collection was not completed in this pass; "
-				"spatial placement is left unresolved rather than guessing representative positions."
+				" Retained script Case 2 drives GI_Upper. Its 19 render objects reduce to 15 physical emitter "
+				"hotspots after clustering co-located brightness layers; the smallest-radius named light in each "
+				"cluster supplies the coordinate, with no centroid or synthetic point."
 			)
-			if address == 4:
-				notes += (
-					' The manual\'s "Top Playfield" label directly contradicts the script\'s own region comment '
-					'"Lower Playfield" for this address; see conflict.gi-region-naming.'
-				)
-		else:
-			notes += " Backbox-only circuit; the retained script implements no case for this address, so it has no playfield coordinate."
-			extra["roles"] = ["cabinet.insert-panel"]
-			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
-			if address == 3:
-				notes += ' The manual additionally claims a "Rt. Rr Plfld" (playfield) component for this circuit that the retained script never implements; no playfield coordinate is asserted for that claim.'
+			physical["quantity"] = len(GI_UPPER_POSITIONS)
+			extra["spatial"] = located(identifier, "emitter", GI_UPPER_POSITIONS, VPX_SCRIPT_SOURCE, VPX_TABLE_SOURCE)
+		elif address == 3:
+			notes += (
+				" The handbook proves that printed circuit 04 is a mixed physical branch serving both the center "
+				"backglass and right-rear playfield. Every retained known-working script omits a distinct handler, "
+				"so the individual right-rear playfield emitters remain unresolved and no coordinate or quantity is invented."
+			)
+			extra["roles"] = ["cabinet.backglass", "playfield.general-illumination"]
+		elif address == 4:
+			notes += (
+				" Retained script Case 4 drives GI_Lower. Its 45 render objects reduce to 14 physical emitter "
+				"hotspots after clustering co-located brightness layers; the smallest-radius named light in each "
+				"cluster supplies the coordinate, with no centroid or synthetic point."
+			)
+			physical["quantity"] = len(GI_LOWER_POSITIONS)
+			extra["spatial"] = located(identifier, "emitter", GI_LOWER_POSITIONS, VPX_SCRIPT_SOURCE, VPX_TABLE_SOURCE)
 		physical["notes"] = notes
 		extra["physical"] = physical
 		items.append(
@@ -990,7 +1195,7 @@ def gi_outputs() -> list[dict[str, Any]]:
 				"pinmame.output.gi",
 				address,
 				"used",
-				(MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE),
+				(MANUAL_SOURCE, OPERATOR_HANDBOOK_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE),
 				**extra,
 			)
 		)
@@ -1135,14 +1340,16 @@ def mechanisms() -> list[dict[str, Any]]:
 			"Ball trough, outhole, and dual shooter lanes",
 			"kicker",
 			[output_id("Outhole"), output_id("Trough")],
-			["switch.matrix-73", "switch.matrix-72", "switch.matrix-74", "switch.matrix-47", "switch.matrix-62"],
+			["switch.matrix-73", "switch.matrix-72", "switch.matrix-74", "switch.matrix-63", "switch.matrix-47", "switch.matrix-62"],
 			"FunHouse has two manual shooter lanes (left, switch 47; right, switch 62) feeding a shared trough. "
 			"Solenoid 1 (Outhole) kicks a drained ball into the trough; solenoid 15 (Trough, retained script "
 			"comment \"Main trough kickout\") ejects a trough ball back to a shooter lane. Trough positions are "
-			"Left Trough (72), Center Trough (74), and Right Trough (63, no VPX geometry resolved in this "
-			"pass -- see coverage.missing).",
+			"Left Trough (72), Center Trough (74), and Right Trough (63). The handbook places 63 at the "
+			"rightmost trough position, and the retained script asserts it on the ballrelease kicker until "
+			"solenoid 15 ejects that ball into a shooter lane.",
 			[
 				("outhole", "Ball in outhole", ["switch.matrix-73"], "Drain sensor before the trough kickout."),
+				("right-trough", "Ball at right trough / release", ["switch.matrix-63"], "Rightmost trough sensor on the ballrelease kicker."),
 				("left-shooter", "Left shooter lane", ["switch.matrix-47"], "Manual left plunger lane."),
 				("right-shooter", "Right shooter lane", ["switch.matrix-62"], "Manual right plunger lane."),
 			],
@@ -1236,22 +1443,29 @@ def mechanisms() -> list[dict[str, Any]]:
 		),
 		mechanism(
 			"mechanism.flippers",
-			"Lower flipper pair (no CPU-controlled solenoid)",
+			"Three direct-wired flippers with two synthetic PinMAME states",
 			"other",
-			[],
-			["switch.matrix-11", "switch.matrix-12"],
+			["device.synthetic-lower-right-flipper", "device.synthetic-left-flipper"],
+			["switch.generic-112", "switch.generic-114", "switch.matrix-11", "switch.matrix-12"],
 			"FunHouse is a pre-Fliptronics WPC-Alpha machine: fhGameData declares FLIP_SWNO(12,11) (flipper "
-			"switches only) with no FLIP_SOL() call, so pinned PinMAME's core_getSol never routes any public "
-			"solenoid address to a flipper coil for this driver. The printed Flipper Circuits wiring page "
-			"(page 120) confirms the physical construction: Left/Right Flipper Power and four Upper/Lower "
-			"Flipper positions are wired through a dedicated flipper driver board (J109/J110) directly to "
+			"switches only) with no FLIP_SOL() call, so no public address represents a CPU-controlled physical "
+			"flipper driver. PinMAME nevertheless fabricates public states 45-48 from the live button inputs "
+			"while the Game-On relay is enabled; retained callbacks sLRFlipper (46) and sLLFlipper (48) use "
+			"those synthetic states to animate the digital flippers. SolLFlipper rotates both LeftFlipper and "
+			"LeftFlipper1. The handbook's coil inventory and the printed Flipper Circuits wiring page confirm "
+			"three fitted physical assemblies: lower right FL-11630, lower left FL-11630, and upper left FL-11753; "
+			"the upper-right board position is unfitted. They are wired through a dedicated flipper driver board (J109/J110) directly to "
 			"the flipper buttons and end-of-stroke switches, entirely separate from the CPU-addressable "
-			"solenoid matrix (1-50). Switches 11 (Right Flipper) and 12 (Left Flipper) sit in the ordinary "
-			"switch matrix (not a dedicated Fliptronic column, which does not exist on this hardware "
-			"generation) and are read by the CPU for scoring/combo purposes only; they do not gate whether "
-			"the flipper fires. FunHouse has no upper flippers.",
-			[],
-			CORE_SOURCE, MANUAL_SOURCE,
+			"solenoid matrix (1-50). Generic public inputs 112 and 114 represent the cabinet buttons; core_updateSw "
+			"copies them to ordinary matrix inputs 11 and 12 for the ROM. Neither 11 nor 12 is a playfield EOS "
+			"contact. The one left button and synthetic left state drive both fitted left bats, and states 45-48 "
+			"must not be recreated as four additional coils.",
+			[
+				("lower-right", "Lower-right flipper", ["switch.generic-112", "switch.matrix-11"], "Direct-wired FL-11630 assembly; animate from synthetic public state 46."),
+				("lower-left", "Lower-left flipper", ["switch.generic-114", "switch.matrix-12"], "Direct-wired FL-11630 assembly; animate from synthetic public state 48."),
+				("upper-left", "Upper-left flipper", ["switch.generic-114", "switch.matrix-12"], "Direct-wired FL-11753 assembly; the same left callback/state animates this bat together with the lower-left bat."),
+			],
+			CORE_SOURCE, MANUAL_SOURCE, OPERATOR_HANDBOOK_SOURCE, VPX_SCRIPT_SOURCE,
 		),
 	]
 
@@ -1261,56 +1475,7 @@ def relationships() -> list[dict[str, Any]]:
 
 
 def conflicts() -> list[dict[str, Any]]:
-	return [
-		{
-			"id": "conflict.gangway-lamp-12-value",
-			"path": "outputs[binding.device=12,group=pinmame.output.lamp]",
-			"description": (
-				"The lamp-locations parts list (manual printed page 2-36) reads \"Gangway 10,000\" for lamp "
-				"12, confirmed at 600 dpi. The lamp-matrix wiring page (printed page 2-37) reads \"Gangway "
-				"100,000\" for the same address, also confirmed at 600 dpi. Lamps 11/13/14/15/16 print an "
-				"unambiguous ascending award ladder on both pages (75,000 / 150,000 / 200,000 / 250,000 / "
-				"Extra Ball), which only 100,000 continues monotonically; 10,000 would be a value smaller "
-				"than the first rung. No independent third source (the retained script does not implement "
-				"scoring-value text) was available to settle this outright. The promoted definition's label "
-				"uses \"Gangway 100,000\" on the strength of the award-ladder pattern, but the disagreement "
-				"itself is unresolved and the smaller-value reading has not been ruled out as a genuine "
-				"factory print. Resolution path: a photograph of an unrestored FunHouse playfield's "
-				"gangway-lane inserts, whose printed legends are the physical object both manual pages are "
-				"describing, or a second printed revision of the manual whose 2-36 and 2-37 agree; "
-				"independently, a LibPinMAME gameplay-harness trace against a legal fh_l9 ROM reading the "
-				"alphanumeric score displays as the gangway lane is collected with lamp 12 lit would show "
-				"which value the ROM actually awards. Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, MANUAL_SUPPORT_SOURCE],
-		},
-		{
-			"id": "conflict.gi-region-naming",
-			"path": "outputs[binding.group=pinmame.output.gi,binding.device=1,4]",
-			"description": (
-				"The manual's printed general-illumination locations page (2-40) labels G.I. string 02 "
-				"\"Front Playfield\" and string 05 \"Top Playfield\". The retained known-working script's own "
-				"UpdateGI/UpdateGI2 region header comment labels the same two addresses (0-based Case 1 and "
-				"Case 4) \"Rudy\" and \"Lower Playfield\" respectively, and its actual implemented behavior "
-				"matches those script labels exactly: Case 1 drives only the RudySign1/RudySign2/RudyShade "
-				"collection (not a generic front-playfield wash), and Case 4 drives the GI_Lower collection "
-				"(the reverse of \"Top\"). G.I. string 01 (\"Upper Backglass\"/Case 0) agrees between both "
-				"sources, and string 03 (\"Rear Playfield\"/Case 2 \"Upper Playfield\") is a plausible "
-				"reconciliation under this project's y=0-is-rear coordinate convention, but strings 02 and 05 "
-				"remain a direct disagreement about which physical region each address illuminates. The "
-				"promoted definition uses the manual's printed label as the device name (physical-construction "
-				"authority) while using the script's real implemented objects for spatial placement (runtime "
-				"authority) and discloses the disagreement in each device's notes. Resolution path: run the "
-				"machine's own general-illumination test on an unrestored production unit and photograph "
-				"which region lights at each of the five steps, or continuity-check the feed and return "
-				"pairs printed on page 3-17 -- Feed 2 Violet on J120-6/J119-3/J121-6 through Q10, Feed 5 "
-				"Orange on J120-2/J121-2 through Q16 -- into the bulb groups they actually reach, which also "
-				"fixes the feed-number-to-public-address correspondence that page leaves assumed. "
-				"Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, VPX_SCRIPT_SOURCE],
-		},
-	]
+	return []
 
 
 def drivers() -> list[dict[str, Any]]:
@@ -1344,16 +1509,16 @@ def build() -> dict[str, Any]:
 		},
 		"coverage": {
 			"status": "partial",
-			"missing": ["output_enumeration", "spatial_placement", "unresolved_conflicts"],
+			"missing": ["spatial_placement"],
 			"dimensions": {
 				"catalog_identity": "validated",
-				"address_enumeration": "candidate",
-				"semantic_naming": "conflicted",
+				"address_enumeration": "validated",
+				"semantic_naming": "validated",
 				"physical_wiring": "validated",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
-				"spatial_placement": "candidate",
+				"spatial_placement": "unknown",
 			},
 		},
 		"controller": {
@@ -1416,17 +1581,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"machine_id": definition["machine"]["id"],
 		"status": "partial",
 		"blockers": [
-			"Switch 63 (Right Trough) has no dedicated VPX trigger/target object in the retained "
-			"extraction; spatial placement is left unresolved.",
-			"Lamps 54, 55, and 56 (Steps Lights Frenzy/Ex.Ball/500,000) are each modeled by four "
-			"distinct 'finger'-shaped Light objects forming a chase-lit arrow rather than one bulb at "
-			"one coordinate; the manual states a single bulb per address with no quantity marker, so "
-			"no single representative coordinate is asserted.",
-			"G.I. strings 2 (Rear Playfield) and 4 (Top Playfield) each drive a real playfield light "
-			"collection in the retained script (GI_Upper, 19 members; GI_Lower, 45 members), but "
-			"individual per-bulb spatial extraction for those two collections was not completed in "
-			"this pass.",
-			"conflict.gangway-lamp-12-value and conflict.gi-region-naming are both unresolved.",
+			"G.I. public address 3 / printed circuit 04 is a mixed center-backglass and right-rear-playfield branch. The handbook proves the playfield branch exists, but none of the retained known-working scripts or extracted table objects identifies its individual emitters; a socket-level wiring survey is required before spatial placement can be validated."
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1442,11 +1597,13 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"manifest_uri": "external:pinmame-vpx-sources/williams/funhouse-1990/extracted-vpxtool.manifest.json",
 			"source_ref": VPX_EXTRACTION_SOURCE,
 			"total_bytes": EXTRACTION_TOTAL_BYTES,
-			"vpxtool_version": "vpxtool",
+			"vpxtool_version": "vpxtool git:v0.33.3",
 		},
 		"source_hashes": {
 			"embedded_script_sha256": SCRIPT_SHA256,
 			"manual_sha256": MANUAL_SHA256,
+			"operator_handbook_sha256": OPERATOR_HANDBOOK_SHA256,
+			"playfield_photo_sha256": PLAYFIELD_PHOTO_SHA256,
 			"table_sha256": TABLE_SHA256,
 		},
 		"placement_count": placement_count,
@@ -1483,6 +1640,8 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		},
 		"excluded_object_classes": [
 			"l51a/l51b, l52a/l52b, l72a/l72b co-located brightness-doubling and same-fixture secondary Light objects (manual prints one bulb per address with no quantity marker)",
+			"Bot_finger_2-4, Mid_finger_2-4, and Top_finger_2-4 render layers around the five-unit-radius physical hotspot objects used for lamps 54-56",
+			"Co-located larger-radius GI_Upper and GI_Lower render layers grouped into 15 and 14 physical emitter hotspots respectively; the smallest-radius named object supplies each coordinate",
 			"fmflNN / cfXX flash-modulation and clock-face helper Light/Flasher objects paired with each primary lNN lamp object",
 			"LBballoon/LRballoon/LYballoon/lHotDogCartB optional-mod decorative objects gated behind BalloonMod/HotDogCartMod table toggles",
 		],
@@ -1497,37 +1656,22 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	lines = [
 		"# FunHouse (Williams, 1990) spatial review",
 		"",
-		f"Status: {report['status']}. This is the first WPC-Alpha machine curated in this project. "
-		"The physical machine record lives at `machines/partial/williams/funhouse-1990.json`.",
+		f"Status: {report['status']}. The physical machine record lives at `machines/partial/williams/funhouse-1990.json`.",
 		"",
-		"The matching source is the retained known-working `Funhouse (Williams 1990)_1.3.vpx` at "
-		f"SHA-256 `{TABLE_SHA256}`. The retained extraction produced the embedded script at SHA-256 "
-		f"`{SCRIPT_SHA256}`; that embedded stream is the runtime and causality authority. Exact "
-		f"playfield bounds are `{TABLE_BOUNDS}`, and every canonical coordinate is x/964 and y/2162 "
-		"rounded to at most six fractional places.",
+		f"The matching source is the retained known-working `Funhouse (Williams 1990)_1.3.vpx` at SHA-256 `{TABLE_SHA256}`. Its embedded script at SHA-256 `{SCRIPT_SHA256}` is the runtime and causality authority. Exact playfield bounds are `{TABLE_BOUNDS}`, and every canonical coordinate is x/964 and y/2162 rounded to at most six fractional places.",
 		"",
 		"## Evidence decisions",
 		"",
-		"- The embedded script is the runtime address and causality authority; the Williams operations "
-		"manual is the physical inventory, quantity, polarity, and wiring authority; pinned PinMAME owns "
-		"controller topology; the retained table supplies geometry.",
-		"- This manual carries a working `pdftotext` text layer, but its multi-column tables scramble "
-		"under extraction, so every printed table used here was still read from 300/600 dpi rendered "
-		"page images, not OCR text.",
-		"- FunHouse's switch matrix has exactly two opto positions (51, 55), both marked \"(opto)\" in "
-		"the manual and both normalized by pinned PinMAME's inverted-switch mask -- a clean sweep with "
-		"zero polarity disagreement.",
-		"- FunHouse is pre-Fliptronics WPC-Alpha hardware: `fhGameData` declares flipper switches only "
-		"(`FLIP_SWNO(12,11)`) with no `FLIP_SOL()`, so no public solenoid address drives a flipper coil. "
-		"Flipper power is wired through a dedicated flipper driver board (printed Flipper Circuits page) "
-		"entirely outside the CPU-addressable solenoid matrix.",
-		"- Several switches and solenoids have no dedicated trigger/kicker object because the retained "
-		"script sets their public state directly from another mechanism's own position (the trap door's "
-		"rotation angle) or shares a saucer helper's underlying kicker object with a co-located switch. "
-		"Those addresses are documented projections onto the real object that carries the underlying "
-		"state, listed below.",
-		"- Two addresses (switch 63; G.I. strings 2 and 4's individual bulbs) and three lamps (54/55/56) "
-		"have no asserted spatial placement at all rather than an invented or approximated coordinate.",
+		"- The embedded script is the runtime address and causality authority; the Williams manuals are the physical inventory, quantity, polarity, and wiring authority; pinned PinMAME owns controller topology; the retained table supplies geometry.",
+		"- The original operations manual has a usable but column-scrambled text layer, so its tables were read from rendered page images. The supplied November 1990 handbook was likewise visually checked at 250 dpi, with 600 dpi crops for small callouts.",
+		"- FunHouse's switch matrix has exactly two opto positions (51 and 55), both marked `(opto)` in the manual and both normalized by pinned PinMAME's inverted-switch mask.",
+		"- Lamp 12 is `Gangway 100,000`: two Williams lamp-matrix pages and the physical playfield photograph agree, resolving the older lamp-location page's isolated `10,000` as a typo.",
+		"- The handbook's lamp-location drawing identifies lamps 56, 55, and 54 as the top, middle, and bottom sockets in the Steps stack. The retained table's `_finger_1` objects are the physical hotspots; `_finger_2` through `_finger_4` are render layers.",
+		"- Printed flasher 20 has two Superdog bulbs. The retained table supplies distinct F20 and F20a objects, and the pinned community script assigns both to output 20, so both physical sockets retain their own measured coordinates.",
+		"- Switch 63 is placed on the retained `ballrelease` kicker because the handbook locates it at the right trough and the script asserts and clears that exact switch as the kicker receives and releases the ball.",
+		"- Runtime G.I. names and grouping follow the known-working script. GI_Upper's 19 render objects form 15 physical hotspots and GI_Lower's 45 render objects form 14; each coordinate is an actual smallest-radius named light, never a centroid.",
+		"- FunHouse is pre-Fliptronics WPC-Alpha hardware. It has lower-right, lower-left, and upper-left direct-wired physical flippers. PinMAME publishes two button-driven synthetic sides at 45-48 for digital animation; the left callback drives both fitted left bats, and those virtual states have no playfield coordinates of their own.",
+		"- Printed G.I. circuit 04 is a mixed center-backglass/right-rear-playfield branch. The playfield emitters are not identified by any retained known-working table, so output G.I. address 3 remains deliberately unresolved.",
 		"",
 		"## Explicit projections",
 		"",
@@ -1552,21 +1696,14 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"This record stays `partial`. Two unresolved conflicts (`conflict.gangway-lamp-12-value`, "
-		"`conflict.gi-region-naming`), and six addresses with no spatial placement (switch 63; lamps 54/55/56; "
-		"G.I. strings 2 and 4's individual playfield bulbs) keep `coverage.status = \"partial\"` with "
-		"`coverage.missing = [\"output_enumeration\", \"spatial_placement\", \"unresolved_conflicts\"]`. "
-		"The current solenoid inventory stops at the printed 1-28 table and does not yet enumerate WPC's "
-		"public state and generic-output range. Every other dimension -- catalog identity, physical wiring, mechanism "
-		"inventory and behavior, and variant coverage across the fifteen-driver `fh_l9` clone tree -- is "
-		"validated.",
+		"The record remains `partial`: its public contract, semantics, wiring, mechanisms, variants, and recreation knowledge are validated, but the individual right-rear-playfield emitters on mixed G.I. address 3 cannot be placed without guessing. `coverage.missing` is exactly `[\"spatial_placement\"]`; a socket-level circuit-04 survey is the concrete promotion requirement.",
 		"",
 		"## Retained evidence",
 		"",
 		f"- Extraction manifest `{report['extraction']['manifest_uri']}`, SHA-256 `{EXTRACTION_MANIFEST_SHA256}`, "
 		f"{EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes.",
-		"- Human transcription of every printed table read from the rendered manual pages: "
-		"`external:pinmame-review-artifacts/funhouse/manual-transcription.md`.",
+		"- Human transcription of every printed table read from the rendered original manual pages: `external:pinmame-review-artifacts/funhouse/manual-transcription.md`.",
+		f"- Maintainer-supplied November 1990 operator handbook SHA-256 `{OPERATOR_HANDBOOK_SHA256}` and lower-playfield photograph SHA-256 `{PLAYFIELD_PHOTO_SHA256}`.",
 		"",
 	]
 	return "\n".join(lines)
@@ -1600,7 +1737,7 @@ def check(root: Path = ROOT) -> None:
 	if definition_path.read_bytes() != expected:
 		raise RuntimeError(f"FunHouse definition drifted from its deterministic curator: {definition_path}")
 	if seed_path.read_bytes() != expected:
-		raise RuntimeError(f"FunHouse seed is not byte-identical to the promoted definition: {seed_path}")
+		raise RuntimeError(f"FunHouse seed is not byte-identical to the canonical definition: {seed_path}")
 	report = build_spatial_report(definition)
 	report_path = root / SPATIAL_REPORT_PATH.relative_to(ROOT)
 	markdown_path = root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT)

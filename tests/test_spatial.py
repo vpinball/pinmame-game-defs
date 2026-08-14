@@ -424,6 +424,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# No Good Gofers replaces one residual stub with one partial definition and adds one spatial
 		# gap. Its apparent auxiliary-output discrepancy is a PinMAME type-metadata defect, not an
 		# unresolved runtime address map, so it does not add an unresolved-conflict gap.
+		# FunHouse's evidence pass resolved its prior semantic conflicts but deliberately retains one
+		# spatial gap for the unidentified right-rear-playfield emitters on mixed G.I. circuit 04.
 		self.assertEqual(45, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
@@ -431,7 +433,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# emitted, and four because `fail_closed_spatial_partial` appended only
 		# `spatial_placement` when it downgraded an author-ready record. Both are
 		# fixed at source; this count is now the honest one.
-		self.assertEqual(51, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# FunHouse resolves one of the 51 unresolved-conflict requirements present on the rebased
+		# baseline, leaving only its independently documented spatial blocker.
+		self.assertEqual(50, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(787, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])
