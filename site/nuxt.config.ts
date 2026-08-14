@@ -130,7 +130,7 @@ export default defineNuxtConfig({
 		prerender: {
 			crawlLinks: true,
 			failOnError: false,
-			routes: ['/', '/machines', '/roms', '/platforms', '/coverage', '/guide', '/schema', ...machineRoutes(), ...platformRoutes(), ...familyRoutes()].map(route),
+			routes: ['/', '/machines', '/roms', '/platforms', '/coverage', '/guide', '/schema', '/about', ...machineRoutes(), ...platformRoutes(), ...familyRoutes()].map(route),
 		},
 	},
 

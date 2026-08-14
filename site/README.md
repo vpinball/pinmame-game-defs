@@ -19,6 +19,7 @@ The site renders the canonical machine-definition catalog and keeps its facts di
 | `/coverage` | Completion report and curation queue |
 | `/guide` | How to read a definition — identity, bindings, polarity, roles, provenance, evidence precedence |
 | `/schema` | Every field of every type, generated from the JSON Schemas themselves |
+| `/about` | Why the project exists, how evidence-backed AI curation works, and how to contribute spare inference |
 
 `⌘K` / `Ctrl K` (or `/`) opens a search across every machine **and** every ROM set.
 

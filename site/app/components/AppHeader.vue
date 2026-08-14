@@ -11,6 +11,7 @@ const links = [
 	{ to: '/coverage', label: 'Coverage' },
 	{ to: '/guide', label: 'Guide' },
 	{ to: '/schema', label: 'Schema' },
+	{ to: '/about', label: 'About' },
 ]
 
 const isActive = (to: string) => route.path === to || route.path.startsWith(`${to}/`)

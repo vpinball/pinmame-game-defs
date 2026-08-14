@@ -1162,6 +1162,7 @@ const sitemapEntries: { loc: string, priority: string }[] = [
 	{ loc: pageUrl('coverage/'), priority: '0.6' },
 	{ loc: pageUrl('guide/'), priority: '0.8' },
 	{ loc: pageUrl('schema/'), priority: '0.6' },
+	{ loc: pageUrl('about/'), priority: '0.5' },
 	// Stubs are `noindex` — a page whose only unique content is a name would
 	// dilute the described machines it shares a domain with.
 	...machineIndex.filter(m => m.hasDetail).map(m => ({ loc: pageUrl(`machines/${m.slug}/`), priority: '0.7' })),
@@ -1222,6 +1223,7 @@ The index contract is \`format: "pinmame-machine-reference-index"\` with \`versi
 - [Coverage](${siteUrl}/coverage/): completion report and curation queue
 - [Guide](${siteUrl}/guide/): how to read a definition — identity, bindings, polarity, provenance
 - [Schema](${siteUrl}/schema/): every field of every type, generated from the JSON Schemas
+- [About](${siteUrl}/about/): why this project uses evidence-backed AI curation and how to contribute
 
 ## Notes for agents
 

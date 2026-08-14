@@ -37,6 +37,7 @@ const expected = [
 	'coverage',
 	'guide',
 	'schema',
+	'about',
 	...machines.rows.map(row => `machines/${row[0]}`),
 	...platforms.map(platform => `platforms/${platform.slug}`),
 	...families.map(family => `families/${family.slug}`),

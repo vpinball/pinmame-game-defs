@@ -23,6 +23,9 @@ const generated = computed(() => new Date(site.generatedAt).toISOString().slice(
 					coils, displays and mechanisms needed to recreate a PinMAME-supported machine. Canonical machine facts come
 					from that repository; build-time external data is labeled, pinned and attributed separately.
 				</p>
+				<p class="mt-3 text-xs">
+					<NuxtLink to="/about" class="text-amber hover:underline">About this project</NuxtLink>
+				</p>
 			</div>
 
 			<div>
