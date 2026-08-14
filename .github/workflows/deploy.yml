@@ -17,16 +17,22 @@ on:
       # The schema reference page is generated from these on every build.
       - 'schemas/**'
       - '.github/workflows/deploy.yml'
+  pull_request:
   workflow_dispatch:
+
+# Build-time website enrichment is pinned independently from the canonical
+# machine-definition data. The resolved checkout commit is also written into
+# every generated memory-map endpoint and machine detail payload.
+env:
+  PINBALL_MEMORY_MAPS_COMMIT: d8693b9ca59a1b871d2a473be3adb0392471a8e3
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
-# One deploy at a time; queued runs replace each other rather than racing.
+# Cancel superseded runs for the same branch or pull request without allowing a
+# pull-request build to cancel a production deployment.
 concurrency:
-  group: pages
+  group: pages-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -38,6 +44,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Check out Pinball Memory Maps
+        uses: actions/checkout@v7
+        with:
+          repository: tomlogic/pinball-memory-maps
+          ref: ${{ env.PINBALL_MEMORY_MAPS_COMMIT }}
+          path: .external/pinball-memory-maps
+          persist-credentials: false
+
       - uses: actions/setup-node@v7
         with:
           node-version: 22
@@ -46,10 +60,20 @@ jobs:
 
       - run: npm ci
 
+      - name: Type-check site
+        env:
+          PINBALL_MEMORY_MAPS_ROOT: ${{ github.workspace }}/.external/pinball-memory-maps
+          PINBALL_MEMORY_MAPS_COMMIT: ${{ env.PINBALL_MEMORY_MAPS_COMMIT }}
+        run: npm run data && npm run typecheck
+
       - name: Build static site
         env:
           # The catalog lives one level up from the site folder.
           PINMAME_DEFS_ROOT: ${{ github.workspace }}
+          # Read-only external enrichment. prepare-data validates this checkout
+          # and writes its resolved commit into generated website JSON only.
+          PINBALL_MEMORY_MAPS_ROOT: ${{ github.workspace }}/.external/pinball-memory-maps
+          PINBALL_MEMORY_MAPS_COMMIT: ${{ env.PINBALL_MEMORY_MAPS_COMMIT }}
           # The custom domain serves this project from its origin root.
           NUXT_APP_BASE_URL: /
           # Absolute public root — canonical URLs, Open Graph tags and the
@@ -63,12 +87,17 @@ jobs:
         run: npm run generate
 
       - uses: actions/upload-pages-artifact@v5
+        if: github.event_name != 'pull_request'
         with:
           path: site/.output/public
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

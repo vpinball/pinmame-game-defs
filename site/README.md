@@ -4,8 +4,7 @@ A static, browsable reference for the [`pinmame-game-defs`](https://github.com/v
 catalog — the switches, lamps, coils, displays and mechanisms a table author needs to recreate a
 PinMAME-supported machine, plus the evidence behind every claim.
 
-The site renders the catalog and adds nothing to it. If a fact is not in the definitions, it is not
-on the page.
+The site renders the canonical machine-definition catalog and keeps its facts distinct from build-time external enrichment. When configured, machine pages also expose clearly attributed Pinball Memory Maps data fetched from a pinned upstream commit; that generated data is never committed to this repository and never changes definition coverage or canonical hashes.
 
 ## What it gives a table author
 
@@ -52,6 +51,12 @@ Point it somewhere else with:
 
 ```bash
 PINMAME_DEFS_ROOT=/path/to/pinmame-game-defs npm run dev
+```
+
+To include the optional read-only memory-map enrichment locally, point the build at a checkout and, when reproducibility matters, require its exact commit:
+
+```bash
+PINBALL_MEMORY_MAPS_ROOT=/path/to/pinball-memory-maps PINBALL_MEMORY_MAPS_COMMIT=<full-commit> npm run dev
 ```
 
 ## Building
@@ -119,7 +124,7 @@ because the tile always sits beside the name it stands for.
 
 The site lives inside `pinmame-game-defs` and rebuilds on every catalog change. Its workflow is installed at the repository root as `.github/workflows/deploy.yml`, the contribution guide is at root because site actions link it there, and `site/public/CNAME` preserves the production custom domain in the generated artifact. In the repository settings, set **Pages → Source** to **GitHub Actions** and configure `games.visualpinball.org` as the custom domain.
 
-The workflow sets `PINMAME_DEFS_ROOT` to the repo root, `NUXT_APP_BASE_URL` to `/`, and `NUXT_PUBLIC_SITE_URL` to `https://games.visualpinball.org`. Forks using a GitHub project-page subpath must override both URL values.
+The workflow sets `PINMAME_DEFS_ROOT` to the repo root, checks out the read-only `tomlogic/pinball-memory-maps` dependency at the full commit pinned in `deploy.yml`, and passes both its path and expected commit to the data pipeline. The resolved upstream commit and LGPL attribution are saved in generated website JSON. `NUXT_APP_BASE_URL` is `/`, and `NUXT_PUBLIC_SITE_URL` is `https://games.visualpinball.org`; forks using a GitHub project-page subpath must override both URL values.
 
 > Testing a subpath build locally on Windows: Git Bash rewrites a leading-slash value into a Windows
 > path, so `NUXT_APP_BASE_URL=/pinmame-game-defs/` silently becomes `C:/Program Files/Git/…`. Prefix
@@ -142,8 +147,11 @@ The workflow sets `PINMAME_DEFS_ROOT` to the repo root, `NUXT_APP_BASE_URL` to `
   - `machines/<slug>.json` — one resolved definition per described machine, with its note
     rendered to HTML at build time
   - `index.json`, `drivers.json` (~2 900 ROM sets), `platforms.json`, `search.json`
+  - `memory-maps/index.json`, `memory-maps/source.json`, `memory-maps/maps/**/*.map.json`, and `memory-maps/platforms/*.json` — optional build-time external data, deduplicated by upstream source path and joined to machines by exact PinMAME driver ID
 
 Both directories are generated and git-ignored.
+
+The Pinball Memory Maps payload is supplemental, retains its upstream LGPL-3.0-only license and commit provenance, and is never treated as evidence that a machine definition is complete or that another ROM revision shares the same memory layout. This program makes use of content from the [Pinball Memory Maps project](https://github.com/tomlogic/pinball-memory-maps).
 
 Controller-profile `notes` are escaped and rendered as literal text by default. A group with `notes_format: "markdown"` is parsed as GitHub Flavored Markdown at build time and emitted as `notesHtml`; raw HTML tokens are escaped, unsafe link/image URL schemes are reduced to text, and heading levels are constrained to H4 or deeper beneath the platform group's H3. This opt-in avoids reinterpreting legacy formulas such as `col*10`, while allowing reviewed long notes to use sections, lists, tables, emphasis, and inline code. The Vue app never parses Markdown at runtime.
 
@@ -227,6 +235,9 @@ earns its keep.
 | `data/drivers.json` | Every PinMAME ROM set mapped to its machine |
 | `data/platforms.json` | Controller profiles and address ranges |
 | `data/search.json` | Compact search index |
+| `data/memory-maps/index.json` | Optional build-time index joining exact PinMAME driver IDs to pinned external memory maps |
+| `data/memory-maps/maps/**/*.map.json` | Exact read-only Pinball Memory Maps files copied into the generated site artifact |
+| `data/memory-maps/platforms/*.json` | Exact upstream platform layouts needed to interpret the generated memory-map files |
 | `llms.txt` | Orientation for agents, including the coverage and provenance caveats |
 
 `data/index.json` identifies its contract with `format: "pinmame-machine-reference-index"` and `version: 2`. Relative to v1, every machine carries the authoritative `machineKind` and complete `roms` list; consumers should reject unknown future versions.

@@ -173,6 +173,63 @@ export interface CatalogDriver {
 	coverage_status: CoverageStatus
 }
 
+/* ---------------------------------------------------------------------------
+   External data
+
+   Read-only material generated at build time from an upstream project that this
+   repository does not own. It is checked out during the site build, never copied
+   into canonical repository data, and it carries its own licence and provenance.
+
+   Deliberately a separate branch of `MachineDetail` rather than extra `sources`
+   entries: a `Source` is evidence a curator read and weighed, and this is not —
+   nothing here contributes to a machine's coverage.
+--------------------------------------------------------------------------- */
+
+/** Where an external dataset came from, and under what terms it may be shown. */
+export interface ExternalSourceRef {
+	/** Upstream repository — a URL, or `owner/name`. */
+	repository: string
+	/** Full commit the build pinned. */
+	commit: string
+	/** SPDX identifier of the upstream licence. */
+	license: string
+	attribution: string
+}
+
+/** One upstream memory map, as the build-time generator resolved it. */
+export interface MemoryMap {
+	/** Path of the map within the upstream repository. */
+	sourcePath: string
+	/** Permalink to that file at the pinned upstream commit. */
+	sourceUrl: string
+	/** The copy this site generated, served as a static asset. */
+	dataUrl: string
+	/** Memory platform the map describes, in upstream's own vocabulary. */
+	platform: string
+	/** Exact upstream and generated copies of that platform's memory layout. */
+	platformSourceUrl: string
+	platformDataUrl: string
+	/** Upstream's own file-format and content revisions, when it states them. */
+	fileFormat: number | null
+	version: number | null
+	/** ROM sets the upstream map names. */
+	roms: string[]
+	/** Catalog drivers those ROM names resolved to on this machine. */
+	matchedDrivers: string[]
+	/** Named regions the map documents. */
+	sections: string[]
+}
+
+export interface PinballMemoryMaps {
+	source: ExternalSourceRef
+	maps: MemoryMap[]
+}
+
+/** Optional, and absent for every machine no upstream dataset covers. */
+export interface ExternalData {
+	pinballMemoryMaps?: PinballMemoryMaps
+}
+
 export interface MachineDetail {
 	slug: string
 	format: string
@@ -210,6 +267,11 @@ export interface MachineDetail {
 	/** Leading `Label: **value**` lines, lifted out of the note's prose. */
 	knowledgeSummary: { label: string, value: string }[]
 	catalogDrivers: CatalogDriver[]
+	/**
+	 * Generated from upstream projects at build time. Never canonical, never part
+	 * of coverage — see `ExternalData`.
+	 */
+	externalData?: ExternalData
 	/** The title this machine is one edition of, when it has siblings. */
 	family: { slug: string, title: string, editions: number, differences: string | null } | null
 	related: { slug: string, name: string, manufacturer: string, year: number | null, status: CoverageStatus }[]
@@ -232,6 +294,15 @@ export interface MachineSummary {
 	highlights: string[]
 	definition: string
 	roms: string[]
+	/**
+	 * External memory maps joining this machine by exact driver id — see
+	 * `ExternalData`. Zero when the build ran without an upstream checkout, and
+	 * zero is the only signal the browse page needs to render nothing.
+	 *
+	 * Independent of `status`: a stub with a matching ROM name has one, and an
+	 * author-ready machine may have none. Never treat it as coverage.
+	 */
+	memoryMaps: number
 }
 
 /** Editions of one title, derived from the shared PinMAME driver prefix. */
@@ -346,6 +417,11 @@ export interface DriverEntry {
 	machineSlug: string
 	machineName: string
 	status: CoverageStatus
+	/**
+	 * The upstream memory map this ROM set resolves to, when one exists. A
+	 * per-driver pointer, not the full record the machine page renders.
+	 */
+	memoryMap?: { sourcePath: string, dataUrl: string, platform: string } | null
 }
 
 export interface SearchRow {
@@ -392,4 +468,17 @@ export interface SiteData {
 	missing: { requirement: string, count: number }[]
 	platforms: { id: string, slug: string, hardwareFamily: string | null, hasProfile: boolean, machines: number, authorReady: number }[]
 	abstractParents: { id: string, direct_child_count: number }[]
+	/**
+	 * Roll-up of the external datasets this build pinned. Empty when none were
+	 * configured. Kept apart from `counts` and `corpus`, which describe what this
+	 * repository itself has curated.
+	 */
+	externalSources?: {
+		pinballMemoryMaps?: ExternalSourceRef & {
+			mapCount: number
+			matchedDriverCount: number
+			/** ROM names upstream carries that no catalog driver resolves. */
+			unmatchedRomCount: number
+		}
+	}
 }

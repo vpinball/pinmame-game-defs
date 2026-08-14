@@ -24,6 +24,10 @@ const machines = readIndex<{ rows: [string, ...unknown[]][] }>('machines.json')
 const platforms = readIndex<{ slug: string }[]>('platforms.json')
 const families = readIndex<{ slug: string }[]>('families.json')
 const site = readIndex<{ summary: { machine_count: number, driver_count: number } }>('site.json')
+const memoryMapIndexPath = join(projectRoot, 'public', 'data', 'memory-maps', 'index.json')
+const memoryMaps = existsSync(memoryMapIndexPath)
+	? JSON.parse(readFileSync(memoryMapIndexPath, 'utf8')) as { maps?: { dataUrl?: string, platformDataUrl?: string }[] }
+	: null
 
 const expected = [
 	'',
@@ -53,6 +57,15 @@ for (const asset of [
 	'robots.txt',
 	'llms.txt',
 	'.nojekyll',
+	...(memoryMaps
+		? [
+			'data/memory-maps/index.json',
+			'data/memory-maps/source.json',
+			'data/memory-maps/LICENSE',
+			...(memoryMaps.maps ?? []).map(memoryMap => memoryMap.dataUrl).filter((path): path is string => typeof path === 'string'),
+			...(memoryMaps.maps ?? []).map(memoryMap => memoryMap.platformDataUrl).filter((path): path is string => typeof path === 'string'),
+		]
+		: []),
 ]) {
 	if (!existsSync(join(outRoot, asset))) missing.push(asset)
 }

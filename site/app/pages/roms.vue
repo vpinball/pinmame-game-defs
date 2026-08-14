@@ -62,6 +62,17 @@ function score(driver: DriverEntry, needle: string) {
 }
 
 const visible = computed(() => filtered.value.slice(0, limit.value))
+
+/**
+ * Where a ROM's memory-map badge points.
+ *
+ * Straight at the panel when the machine has a detail page, and at the page
+ * itself when it does not: a stub renders no `#memory-maps` section, so the
+ * fragment would silently do nothing and leave the reader at the top of the
+ * page wondering what they had missed.
+ */
+const memoryMapLink = (driver: DriverEntry) =>
+	`/machines/${driver.machineSlug}${driver.status === 'stub' ? '' : '#memory-maps'}`
 </script>
 
 <template>
@@ -126,8 +137,21 @@ const visible = computed(() => filtered.value.slice(0, limit.value))
 					</thead>
 					<tbody>
 						<tr v-for="driver in visible" :key="driver.id" class="border-b border-line-soft last:border-0 hover:bg-hover/60">
-							<td class="px-4 py-2 whitespace-nowrap">
-								<span class="num rounded-md border border-amber/25 bg-amber/8 px-1.5 py-0.5 text-xs text-amber">{{ driver.id }}</span>
+							<td class="px-4 py-2">
+								<span class="flex flex-wrap items-center gap-x-2 gap-y-1">
+									<span class="num rounded-md border border-amber/25 bg-amber/8 px-1.5 py-0.5 text-xs whitespace-nowrap text-amber">{{ driver.id }}</span>
+									<NuxtLink
+										v-if="driver.memoryMap"
+										:to="memoryMapLink(driver)"
+										class="transition-colors hover:border-amber/40 hover:text-amber"
+										:class="MEMORY_MAP_BADGE.chip"
+										:title="`${MEMORY_MAP_BADGE.title} Platform ${driver.memoryMap?.platform}.`"
+										:aria-label="`${MEMORY_MAP_BADGE.label} for ${driver.id} on ${driver.machineName}`"
+									>
+										<Icon :name="MEMORY_MAP_BADGE.icon" class="size-2.5 shrink-0" />
+										{{ MEMORY_MAP_BADGE.label }}
+									</NuxtLink>
+								</span>
 							</td>
 							<td class="px-3 py-2 text-ink-2">
 								{{ driver.description }}

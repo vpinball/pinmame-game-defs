@@ -15,6 +15,14 @@ const query = ref('')
 const status = ref<CoverageStatus | 'all'>('all')
 const manufacturer = ref('all')
 const platform = ref('all')
+/**
+ * External memory-map availability. Orthogonal to `status` on purpose: a stub
+ * can have a map and an author-ready machine can lack one, so this is its own
+ * axis rather than another coverage value.
+ */
+const MEMORY_MAP_FILTERS = ['all', 'available', 'unavailable'] as const
+type MemoryMapFilter = typeof MEMORY_MAP_FILTERS[number]
+const memoryMap = ref<MemoryMapFilter>('all')
 const sort = ref<'completion' | 'year' | 'name' | 'size'>('completion')
 const view = ref<'grid' | 'table'>('grid')
 const limit = ref(60)
@@ -31,6 +39,12 @@ onMounted(() => {
 	status.value = (params.get('status') as CoverageStatus | null) ?? 'all'
 	manufacturer.value = params.get('mfr') ?? 'all'
 	platform.value = params.get('platform') ?? 'all'
+	// Validated against the allowed set — an arbitrary `?memmap=` from a hand-typed
+	// URL must not leave the control showing a value it cannot represent.
+	const requestedMemoryMap = params.get('memmap')
+	if (requestedMemoryMap && (MEMORY_MAP_FILTERS as readonly string[]).includes(requestedMemoryMap)) {
+		memoryMap.value = requestedMemoryMap as MemoryMapFilter
+	}
 	const requestedSort = params.get('sort')
 	if (requestedSort && ['completion', 'year', 'name', 'size'].includes(requestedSort)) sort.value = requestedSort as typeof sort.value
 	tags.value = (params.get('tags') ?? '').split(',').filter(Boolean)
@@ -52,6 +66,7 @@ watchEffect(() => {
 	if (status.value !== 'all') next.set('status', status.value)
 	if (manufacturer.value !== 'all') next.set('mfr', manufacturer.value)
 	if (platform.value !== 'all') next.set('platform', platform.value)
+	if (memoryMap.value !== 'all') next.set('memmap', memoryMap.value)
 	if (sort.value !== 'completion') next.set('sort', sort.value)
 	if (tags.value.length) next.set('tags', tags.value.join(','))
 	if (!urlReady.value || !import.meta.client) return
@@ -59,7 +74,7 @@ watchEffect(() => {
 	history.replaceState(history.state, '', search ? `?${search}` : window.location.pathname)
 })
 
-watch([query, status, manufacturer, platform, sort, tags], () => { limit.value = 60 })
+watch([query, status, manufacturer, platform, memoryMap, sort, tags], () => { limit.value = 60 })
 
 const manufacturers = computed(() => site.manufacturers.filter(m => m.machines >= 3))
 const platforms = computed(() => site.platforms.filter(p => p.machines > 0).sort((a, b) => b.machines - a.machines))
@@ -71,6 +86,7 @@ const preTagged = computed(() => {
 		(status.value === 'all' || m.status === status.value)
 		&& (manufacturer.value === 'all' || m.manufacturer === manufacturer.value)
 		&& (platform.value === 'all' || m.platform === platform.value)
+		&& (memoryMap.value === 'all' || (memoryMap.value === 'available' ? m.memoryMaps > 0 : m.memoryMaps === 0))
 		&& (!needle || m.name.toLowerCase().includes(needle) || m.manufacturer.toLowerCase().includes(needle) || String(m.year ?? '').includes(needle)),
 	)
 })
@@ -111,17 +127,31 @@ const counts = computed(() => ({
 	stub: machines.value.filter(m => m.status === 'stub').length,
 }))
 
+/**
+ * Counted against the whole catalog, exactly like the coverage counts above, so
+ * the two controls report on the same basis. `available` doubles as the switch
+ * that hides the control entirely: a build with no upstream checkout has zero
+ * everywhere, and an always-empty filter is worse than no filter.
+ */
+const memoryMapCounts = computed(() => ({
+	all: machines.value.length,
+	available: machines.value.filter(m => m.memoryMaps > 0).length,
+	unavailable: machines.value.filter(m => m.memoryMaps === 0).length,
+}))
+
 function reset() {
 	query.value = ''
 	status.value = 'all'
 	manufacturer.value = 'all'
 	platform.value = 'all'
+	memoryMap.value = 'all'
 	sort.value = 'completion'
 	tags.value = []
 }
 
 const hasFilters = computed(() =>
-	!!query.value || status.value !== 'all' || manufacturer.value !== 'all' || platform.value !== 'all' || tags.value.length > 0)
+	!!query.value || status.value !== 'all' || manufacturer.value !== 'all' || platform.value !== 'all'
+	|| memoryMap.value !== 'all' || tags.value.length > 0)
 
 const selectClass = 'rounded-lg border border-line bg-panel px-2.5 py-1.5 text-[13px] text-ink-2 focus:border-amber/50 focus:outline-none'
 </script>
@@ -186,6 +216,29 @@ const selectClass = 'rounded-lg border border-line bg-panel px-2.5 py-1.5 text-[
 					</option>
 					<option v-for="p in platforms" :key="p.id" :value="p.id">
 						{{ platformShort(p.id) }} ({{ p.machines }})
+					</option>
+				</select>
+
+				<!--
+					A select rather than a segmented group: the bar already carries four
+					controls plus the view toggle, and a fourth button group wraps it onto
+					a second row at laptop widths. Hidden when the build has no upstream
+					checkout, where every option would read zero.
+				-->
+				<select
+					v-if="memoryMapCounts.available"
+					v-model="memoryMap"
+					:class="selectClass"
+					aria-label="Filter by external memory-map availability"
+				>
+					<option value="all">
+						External memory map: any
+					</option>
+					<option value="available">
+						External memory map: available ({{ memoryMapCounts.available }})
+					</option>
+					<option value="unavailable">
+						External memory map: none ({{ memoryMapCounts.unavailable }})
 					</option>
 				</select>
 
@@ -307,10 +360,21 @@ const selectClass = 'rounded-lg border border-line bg-panel px-2.5 py-1.5 text-[
 							class="cursor-pointer border-b border-line-soft last:border-0 hover:bg-hover/60"
 							@click="router.push(`/machines/${machine.slug}`)"
 						>
+							<!--
+								The badge sits with the machine's identity, not in the Coverage
+								column, so nothing about its position suggests it is a coverage
+								value. A plain span, so the row's click handler is untouched.
+							-->
 							<td class="px-4 py-2">
-								<NuxtLink :to="`/machines/${machine.slug}`" class="hover:text-amber">
-									{{ machine.name }}
-								</NuxtLink>
+								<span class="flex flex-wrap items-center gap-x-2 gap-y-1">
+									<NuxtLink :to="`/machines/${machine.slug}`" class="hover:text-amber">
+										{{ machine.name }}
+									</NuxtLink>
+									<span v-if="machine.memoryMaps" :class="MEMORY_MAP_BADGE.chip" :title="MEMORY_MAP_BADGE.title">
+										<Icon :name="MEMORY_MAP_BADGE.icon" class="size-2.5 shrink-0" />
+										{{ MEMORY_MAP_BADGE.label }}
+									</span>
+								</span>
 							</td>
 							<td class="px-3 py-2 text-ink-3">
 								{{ machine.manufacturer }}

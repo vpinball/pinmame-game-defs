@@ -20,8 +20,8 @@ const generated = computed(() => new Date(site.generatedAt).toISOString().slice(
 					A browsable view of the
 					<a :href="repoLink.dir('machines')" target="_blank" rel="noopener noreferrer" class="num text-amber hover:underline">pinmame-game-defs</a>
 					catalog: the switches, lamps,
-					coils, displays and mechanisms needed to recreate a PinMAME-supported machine. Generated straight from the
-					repository — this site never adds facts the definitions do not contain.
+					coils, displays and mechanisms needed to recreate a PinMAME-supported machine. Canonical machine facts come
+					from that repository; build-time external data is labeled, pinned and attributed separately.
 				</p>
 			</div>
 
