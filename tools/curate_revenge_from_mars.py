@@ -6,6 +6,7 @@ import json
 import re
 from pathlib import Path
 
+from curate_revenge_from_mars_spatial import AFTERMARKET_SWITCH_POSITIONS, LAMP_POSITIONS, SOLENOID_DRIVER_POSITIONS, SWITCH_POSITIONS, apply_spatial
 from pinmame_game_defs.jsonio import write_json, write_text
 
 
@@ -18,9 +19,54 @@ REJECTED_VPX_SOURCE = "vpx-table.attack-and-revenge-v600-rejected"
 MANUAL_SHA256 = "6ba2c0728d26e379d1e1a0b2a2ff5eb40f61fce2d38c45e0e4f094166df0b9df"
 MANUAL_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-service-tables.md"
 MANUAL_EXCERPT_SHA256 = "e283b2b47f41ebe5c5464d2cda49df531d069dc57db8e91f29c12c9ef90c663b"
+MANUAL_LOCATION_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-location-maps.md"
+MANUAL_LOCATION_EXCERPT_SHA256 = "c49204469dbe1bea9d159833f7f862a765d873660cc43f19bb55f0aa3274c938"
+MANUAL_LOCATION_IMAGES = {
+	"lamp-a": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/lamp-locations-matrix-a.webp",
+		"sha256": "212a2bfc3d3e0a78c04210fb601692c77b7bc76fd44c2a41ca7ed2dab7e7a7cb",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 78, crop box 0.2,0.08,0.83,0.92, scanned page rendered at its native resolution (embedded image xref 250, 2533px across 8.33in), rendered at 304 dpi, 1584x2988 WebP quality 80",
+		"review_frame": {"image_pixels": [1584, 2988], "outer_table_bounds": [308, 291, 1354, 2876]},
+	},
+	"lamp-b": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/lamp-locations-matrix-b.webp",
+		"sha256": "c8a9acc6c349db286d05f681a3182a373d6bd0f607eec927c21c143d45061b87",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 80, crop box 0.2,0.08,0.81,0.9, scanned page rendered at its native resolution (embedded image xref 256, 2513px across 8.27in), rendered at 304 dpi, 1534x2917 WebP quality 80",
+		"review_frame": {"image_pixels": [1534, 2917], "outer_table_bounds": [176, 289, 1294, 2890]},
+	},
+	"switches": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/playfield-switch-locations.webp",
+		"sha256": "3c55555ed5637207efe17e992b26c09662f0986d633367555ebe94dc66b1e221",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 82, crop box 0.15,0.07,0.8,0.91, scanned page rendered at its native resolution (embedded image xref 263, 2547px across 8.38in), rendered at 304 dpi, 1635x2988 WebP quality 80",
+		"review_frame": {"image_pixels": [1635, 2988], "outer_table_bounds": [336, 465, 1296, 2874]},
+	},
+	"solenoids": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/solenoid-flasher-locations.webp",
+		"sha256": "d9b66fa87bb5cd85f0ee5098fc76040fd489fb87d852ccf8613c55a7308862ca",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 84, crop box 0.15,0.07,0.8,0.91, scanned page rendered at its native resolution (embedded image xref 270, 2533px across 8.33in), rendered at 304 dpi, 1635x2988 WebP quality 80",
+		"review_frame": {"image_pixels": [1635, 2988], "outer_table_bounds": [361, 477, 1356, 2860]},
+	},
+}
+AFTERMARKET_SOURCE = "manual.rfm.mypinballs-opto-expansion-v2"
+AFTERMARKET_SHA256 = "00a744e1cc6507c328b22f33fc4f3aa6f8ec4826dce0a8874493023ee8d48fbf"
+AFTERMARKET_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/mypinballs-opto-expansion-install.md"
+AFTERMARKET_EXCERPT_SHA256 = "c8a30f75b6fd67138828b05e820de9a6944ddd3ac12241a8b15bbe4fa9483972"
+AFTERMARKET_IMAGES = {
+	"trough": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/aftermarket-six-ball-trough.webp",
+		"sha256": "af9c94880b4ac4cc43306ca8b8d7d59b3613e79a31fa9ef8b44a83157ff4336a",
+		"derivation": "mypinballs_rfm_opto_upgrade_kit_instructions_v2-0.pdf page 6, crop box 0.08,0.07,0.75,0.72, scanned page rendered at its native resolution (embedded image xref 46, 754px across 5.02in), rendered at 117 dpi, capped to 650px wide, 651x893 WebP quality 45",
+	},
+	"lock": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/aftermarket-three-ball-lock.webp",
+		"sha256": "f738eaf5371e08fd1c4bc8404b1aa5ebf79bb9e95b027308616df5f81b1934e0",
+		"derivation": "mypinballs_rfm_opto_upgrade_kit_instructions_v2-0.pdf page 7, crop box 0.08,0.04,0.75,0.72, scanned page rendered at its native resolution (embedded image xref 52, 754px across 5.02in), rendered at 117 dpi, capped to 650px wide, 651x935 WebP quality 45",
+	},
+}
 REJECTED_VPX_SHA256 = "9a5415a3b6b5a57b01749415789019fe7037a828e9ab691ce64cd1720b2294be"
 DEFINITION_PATH = ROOT / "machines/partial/bally/revenge-from-mars-1999.json"
 KNOWLEDGE_PATH = ROOT / "knowledge/bally/revenge-from-mars-1999.md"
+SPATIAL_REPORT_PATH = ROOT / "reports/spatial/bally/revenge-from-mars-1999.json"
 
 
 def slug(value: str) -> str:
@@ -658,7 +704,37 @@ def build_drivers() -> list[dict[str, object]]:
 SOURCES = [
 	{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames: exact 15-driver rfm_120 through rfm_260 clone family", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 	{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/p2k.c: public switch translation, opto polarity, output publication, video layout, ROM variants, and hardware-generation contract; src/wpc/p2k_names.h: machine-test-verified RFM switch, coil, and lamp tables", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
-	{"id": MANUAL_SOURCE, "kind": "manual", "uri": "external:pinmame-manuals/_unsorted/Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf", "sha256": MANUAL_SHA256, "locator": "February 1999 model 50070 operations manual; PDF pages 86-88 / printed pages 2-46 through 2-48 lamp matrices, switch matrix, dedicated inputs, and solenoid table; assembly and wiring sections", "excerpts": [{"id": "excerpt.rfm.operations-service-tables", "locator": "PDF pages 86-88; printed pages 2-46 through 2-48", "path": MANUAL_EXCERPT, "sha256": MANUAL_EXCERPT_SHA256, "method": "mixed", "transcribed_by": "Codex with pypdf text extraction and visual page review", "reviewed": True}], "license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "Williams Electronics Games, Inc."},
+	{
+		"id": MANUAL_SOURCE,
+		"kind": "manual",
+		"uri": "external:pinmame-manuals/_unsorted/Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf",
+		"sha256": MANUAL_SHA256,
+		"locator": "February 1999 model 50070 operations manual; PDF pages 78, 80, 82, and 84 / printed pages 2-38, 2-40, 2-42, and 2-44 location drawings; PDF pages 86-88 / printed pages 2-46 through 2-48 service tables; assembly and wiring sections",
+		"excerpts": [
+			{"id": "excerpt.rfm.operations-service-tables", "locator": "PDF pages 86-88; printed pages 2-46 through 2-48", "path": MANUAL_EXCERPT, "sha256": MANUAL_EXCERPT_SHA256, "method": "mixed", "transcribed_by": "Codex with pypdf text extraction and visual page review", "reviewed": True},
+			{"id": "excerpt.rfm.lamp-locations-matrix-a", "locator": "PDF page 78; printed page 2-38, Lamp Locations (Matrix A)", "path": MANUAL_LOCATION_EXCERPT, "sha256": MANUAL_LOCATION_EXCERPT_SHA256, "image": MANUAL_LOCATION_IMAGES["lamp-a"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["lamp-a"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["lamp-a"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.lamp-locations-matrix-b", "locator": "PDF page 80; printed page 2-40, Lamp Locations (Matrix B)", "path": MANUAL_LOCATION_EXCERPT, "sha256": MANUAL_LOCATION_EXCERPT_SHA256, "image": MANUAL_LOCATION_IMAGES["lamp-b"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["lamp-b"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["lamp-b"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.playfield-switch-locations", "locator": "PDF page 82; printed page 2-42, Playfield Switch Locations", "path": MANUAL_LOCATION_EXCERPT, "sha256": MANUAL_LOCATION_EXCERPT_SHA256, "image": MANUAL_LOCATION_IMAGES["switches"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["switches"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["switches"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.solenoid-flasher-locations", "locator": "PDF page 84; printed page 2-44, Solenoid/Flasher Locations", "path": MANUAL_LOCATION_EXCERPT, "sha256": MANUAL_LOCATION_EXCERPT_SHA256, "image": MANUAL_LOCATION_IMAGES["solenoids"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["solenoids"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["solenoids"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+		],
+		"license": "NOASSERTION",
+		"rights": "NOASSERTION",
+		"attribution": "Williams Electronics Games, Inc.",
+	},
+	{
+		"id": AFTERMARKET_SOURCE,
+		"kind": "manual",
+		"uri": "external:pinmame-manuals/_unsorted/mypinballs_rfm_opto_upgrade_kit_instructions_v2-0.pdf",
+		"sha256": AFTERMARKET_SHA256,
+		"locator": "myPinballs Revenge From Mars Opto Expansion Upgrade Install Instructions v2.0; PDF pages 2 and 6 for six-ball trough positions 53-54; PDF pages 3 and 7 for physical-lock positions 55-56",
+		"excerpts": [
+			{"id": "excerpt.rfm.aftermarket-six-ball-trough", "locator": "PDF page 2 wiring table and PDF page 6 Figure 6 installed trough photograph", "path": AFTERMARKET_EXCERPT, "sha256": AFTERMARKET_EXCERPT_SHA256, "image": AFTERMARKET_IMAGES["trough"]["path"], "image_sha256": AFTERMARKET_IMAGES["trough"]["sha256"], "image_derivation": AFTERMARKET_IMAGES["trough"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.aftermarket-three-ball-lock", "locator": "PDF page 3 wiring table and PDF page 7 Figure 7 installed lock photograph", "path": AFTERMARKET_EXCERPT, "sha256": AFTERMARKET_EXCERPT_SHA256, "image": AFTERMARKET_IMAGES["lock"]["path"], "image_sha256": AFTERMARKET_IMAGES["lock"]["sha256"], "image_derivation": AFTERMARKET_IMAGES["lock"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+		],
+		"license": "NOASSERTION",
+		"rights": "NOASSERTION",
+		"attribution": "myPinballs Electronics",
+	},
 	{"id": REJECTED_VPX_SOURCE, "kind": "vpx_table", "uri": "external:pinmame-vpx-sources/bally/revenge-from-mars-1999/source/Attack%20and%20Revenge%20from%20Mars%20%28Midway-Williams%29%20v600.vpx", "sha256": REJECTED_VPX_SHA256, "locator": "12,959,744-byte hybrid JPSalas v6.0.0 table; embedded script cGameName=afm_113b and AFM switch/solenoid callbacks; visually confirmed Attack from Mars geometry, rejected for RFM spatial or controller evidence", "original_filename": "Attack and Revenge from Mars (Midway-Williams) v600.vpx", "known_working": False, "license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "JPSalas and credited table contributors"},
 ]
 
@@ -666,27 +742,100 @@ SOURCES = [
 def build_definition() -> dict[str, object]:
 	inputs = build_inputs()
 	outputs = build_outputs()
+	apply_spatial(inputs, outputs, MANUAL_SOURCE, AFTERMARKET_SOURCE)
 	return {
 		"format": "pinmame-machine-definition",
 		"schema_version": 2,
 		"machine": {"id": "bally.revenge-from-mars.1999", "name": "Revenge from Mars", "manufacturer": "Bally", "year": 1999, "kind": "physical_pinball", "model_number": "50070", "ipdb_id": 4446},
-		"coverage": {"status": "partial", "missing": ["mechanism_behavior", "polarity", "variant_differences", "spatial_placement"], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "observed", "mechanisms": "observed", "variant_coverage": "observed", "recreation_knowledge": "observed", "spatial_placement": "unknown"}},
+		"coverage": {"status": "partial", "missing": ["mechanism_behavior", "polarity", "variant_differences"], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "observed", "mechanisms": "observed", "variant_coverage": "observed", "recreation_knowledge": "observed", "spatial_placement": "observed"}},
 		"controller": {"platform": "pinmame.p2k", "hardware_generation": "0x8000000000000", "inversion_applied_by_emulator": True},
 		"drivers": build_drivers(),
 		"inputs": inputs,
 		"outputs": outputs,
-		"displays": [{"id": "display.pinball-2000-video", "label": "Pinball 2000 reflected playfield video", "kind": "video", "controller_index": 0, "width": 640, "height": 480, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": provenance(CORE_SOURCE)}, "provenance": provenance(CORE_SOURCE)}],
+		"displays": [{"id": "display.pinball-2000-video", "label": "Pinball 2000 reflected playfield video", "kind": "video", "controller_index": 0, "width": 640, "height": 480, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": provenance(CORE_SOURCE, MANUAL_SOURCE)}, "provenance": provenance(CORE_SOURCE, MANUAL_SOURCE)}],
 		"mechanisms": build_mechanisms(inputs, outputs),
 		"relationships": [],
 		"sources": SOURCES,
 		"knowledge": {"path": "knowledge/bally/revenge-from-mars-1999.md", "status": "partial"},
-		"conflicts": [{"id": "conflict.slingshot-spotlight-lamp-pair", "path": "$.outputs[manual.address=18B|28B].label", "description": "The operations manual prints Left Slingshot Spotlight at 18B and Right at 28B. PinMAME's complete machine lamp-test walk reports the opposite pair: public 15/manual 18B is Right and public 31/manual 28B is Left. The canonical labels follow the measured machine test.", "source_refs": [MANUAL_SOURCE, CORE_SOURCE], "status": "ignored", "rationale": "The discrepancy is fully resolved for recreation by the machine test; retaining it documents why the runtime-correct labels intentionally differ from the printed grid."}],
+		"conflicts": [{"id": "conflict.slingshot-spotlight-lamp-pair", "path": "$.outputs[manual.address=18B|28B].label", "description": "The operations manual's table and physical location drawing place Left Slingshot Spotlight at 18B on the left slingshot and Right at 28B on the right. PinMAME's complete machine lamp-test walk reports the opposite semantic pair: public 15/manual 18B is Right and public 31/manual 28B is Left. Canonical labels follow the measured machine test, while coordinates follow the manual's physical addresses and drawing.", "source_refs": [MANUAL_SOURCE, CORE_SOURCE], "status": "ignored", "rationale": "The deterministic split resolves recreation without inventing a wiring swap: runtime controls semantic labels, and the factory drawing controls physical positions. The record explains why each runtime-named spotlight appears on the opposite physical slingshot."}],
+	}
+
+
+def build_spatial_report(definition: dict[str, object]) -> dict[str, object]:
+	inputs = definition["inputs"]
+	outputs = definition["outputs"]
+
+	def binding(device: dict[str, object]) -> dict[str, object]:
+		return {"group": device["binding"]["group"], "address": device["binding"]["device"]}
+
+	def grouped_not_applicable(devices: list[dict[str, object]]) -> dict[str, list[object]]:
+		grouped: dict[str, list[object]] = {}
+		for device in devices:
+			spatial = device.get("spatial", {})
+			if spatial.get("status") != "not_applicable":
+				continue
+			reason = str(spatial["reason"])
+			value: object = device["binding"]["device"] if device["binding"]["group"] == "pinmame.input.switch" else binding(device)
+			grouped.setdefault(reason, []).append(value)
+		for values in grouped.values():
+			values.sort(key=lambda value: value if isinstance(value, int) else (value["group"], value["address"]))
+		return dict(sorted(grouped.items()))
+
+	resolved_outputs = [binding(device) for device in outputs if device.get("spatial", {}).get("status") in {"observed", "validated"}]
+	resolved_outputs.sort(key=lambda item: (item["group"], item["address"]))
+	return {
+		"format": "pinmame-spatial-blockers",
+		"version": 1,
+		"machine_id": definition["machine"]["id"],
+		"status": "stock_spatial_observed_machine_partial",
+		"coordinate_convention": {
+			"space": "playfield",
+			"x": "0=left, 1=right in player view",
+			"y": "0=rear/backglass, 1=front/apron",
+			"source": "Orthographic factory service drawings, plus the myPinballs v2.0 installation photographs for optional switches 53-56; callout endpoints and device centers manually projected into one normalized playfield plane",
+			"precision": "Three decimal places for deterministic authoring anchors; every projected placement remains observed because the sources are line art and installation photographs rather than surveyed CAD",
+		},
+		"evidence": [
+			{"excerpt_id": "excerpt.rfm.lamp-locations-matrix-a", "locator": "PDF page 78 / printed page 2-38", "image": MANUAL_LOCATION_IMAGES["lamp-a"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["lamp-a"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["lamp-a"]["derivation"], "projection_review_frame": MANUAL_LOCATION_IMAGES["lamp-a"]["review_frame"]},
+			{"excerpt_id": "excerpt.rfm.lamp-locations-matrix-b", "locator": "PDF page 80 / printed page 2-40", "image": MANUAL_LOCATION_IMAGES["lamp-b"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["lamp-b"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["lamp-b"]["derivation"], "projection_review_frame": MANUAL_LOCATION_IMAGES["lamp-b"]["review_frame"]},
+			{"excerpt_id": "excerpt.rfm.playfield-switch-locations", "locator": "PDF page 82 / printed page 2-42", "image": MANUAL_LOCATION_IMAGES["switches"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["switches"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["switches"]["derivation"], "projection_review_frame": MANUAL_LOCATION_IMAGES["switches"]["review_frame"]},
+			{"excerpt_id": "excerpt.rfm.solenoid-flasher-locations", "locator": "PDF page 84 / printed page 2-44", "image": MANUAL_LOCATION_IMAGES["solenoids"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["solenoids"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["solenoids"]["derivation"], "projection_review_frame": MANUAL_LOCATION_IMAGES["solenoids"]["review_frame"]},
+			{"excerpt_id": "excerpt.rfm.aftermarket-six-ball-trough", "locator": "myPinballs v2.0 PDF pages 2 and 6", "image": AFTERMARKET_IMAGES["trough"]["path"], "image_sha256": AFTERMARKET_IMAGES["trough"]["sha256"], "image_derivation": AFTERMARKET_IMAGES["trough"]["derivation"]},
+			{"excerpt_id": "excerpt.rfm.aftermarket-three-ball-lock", "locator": "myPinballs v2.0 PDF pages 3 and 7", "image": AFTERMARKET_IMAGES["lock"]["path"], "image_sha256": AFTERMARKET_IMAGES["lock"]["sha256"], "image_derivation": AFTERMARKET_IMAGES["lock"]["derivation"]},
+		],
+		"placement_count": len(SWITCH_POSITIONS) + len(AFTERMARKET_SWITCH_POSITIONS) + len(SOLENOID_DRIVER_POSITIONS) + len(LAMP_POSITIONS),
+		"resolved_input_addresses": sorted(SWITCH_POSITIONS | AFTERMARKET_SWITCH_POSITIONS),
+		"resolved_output_bindings": resolved_outputs,
+		"not_applicable_inputs": grouped_not_applicable(inputs),
+		"not_applicable_outputs": grouped_not_applicable(outputs),
+		"projection_classes": [
+			{"class": "manual_callout_endpoint", "detail": "A leader-line endpoint marks an observed physical switch, lamp, flasher, or actuator effect location."},
+			{"class": "directly_labelled_device_center", "detail": "Where the factory drawing labels a device or insert directly, its drawn center supplies an observed point."},
+			{"class": "shared_center_loop_assembly", "detail": "The switch drawing prints address 31 twice and presents 31/32 as one paired center-loop callout; both reed switches share one observed assembly point because the line art does not provide surveyable separation."},
+			{"class": "shared_mechanism_effect", "detail": "Power/hold winding pairs 33/34, 35/36, 37/38, and 39/40 share the one physical assembly location printed by the manual."},
+			{"class": "aftermarket_sequence_projection", "detail": "Optional trough switches 53-54 continue the photographed factory PCB's evenly spaced Ball 1-4 sequence; lock switches 55-56 use the photographed omitted mounting positions in the existing right-lockup weldment. These four points are observed, not validated."},
+		],
+		"transformations": [
+			{"class": "manual_projection", "detail": "Project the player-view drawing point into x=0..1 and y=0..1 using each crop's retained pixel dimensions and approximate outer-table review bounds, without claiming an affine transform or surveyed dimensions."},
+			{"class": "public_address_reconciliation", "detail": "Preserve printed solenoid driver numbers as manual.address aliases before applying PinMAME's public 33-48 remap."},
+			{"class": "aftermarket_install_projection", "detail": "Combine the factory assembly locations with myPinballs v2.0 Figures 6-7 to place optional optos at usable authoring points while preserving observed status and explicit non-surveyed notes."},
+		],
+		"promotion_decision": {
+			"decision": "remain_partial",
+			"coverage_missing": definition["coverage"]["missing"],
+			"reason": "Every stock playfield device and documented expansion opto has an observed authoring position, but the service drawings are not surveyed geometry; runtime mechanism dynamics, non-opto polarity and pulse semantics, and remaining hardware/firmware fitment are also not author-ready.",
+		},
+		"unresolved_blockers": [
+			{"id": "mechanism-runtime-behavior", "blocker": "Startup states, transition timing, ball routes, and launch vectors need repeatable runtime validation."},
+			{"id": "non-opto-polarity-and-pulses", "blocker": "Normally-open/closed and pulse semantics remain incomplete for non-opto devices."},
+			{"id": "variant-hardware-fitment", "blocker": "The opto kit's physical fitment is documented and positioned, but exact per-driver combinations for the six-ball expansion, knocker, shaker, ticket option, and Prism/firmware revisions still need authentication."},
+		],
 	}
 
 
 KNOWLEDGE = """# Revenge from Mars (Bally, 1999)
 
-Coverage: **partial - complete public address inventory and stock wiring, with mechanism dynamics, non-opto polarity, firmware-option fitment, and spatial placement still incomplete**
+Coverage: **partial - complete public address inventory, stock wiring, observed stock spatial placement, and observed aftermarket opto placement, with mechanism dynamics, non-opto polarity, and firmware-option fitment still incomplete**
 
 ## Identity and Pinball 2000 architecture
 
@@ -701,6 +850,12 @@ Playfield switches use public column/row addresses `11-88`. Printed direct input
 Board drivers 1-32 retain public solenoid numbers 1-32. Board drivers 33-36 are exported through PinMAME's lower-flipper public addresses 45-48. Board drivers 37-48 become custom public outputs 51-62. Do not remap the printed driver numbers directly for 33-48; the JSON preserves both values as separate aliases.
 
 The lamp board is not two contiguous 8x8 matrices. It is eight columns of sixteen bits, interleaving Bank A and Bank B per column. Convert printed notation with `public = (column - 1) * 16 + (Bank B ? 8 : 0) + (row - 1)`. The public range is zero-based `0-127` and the definition includes every cell, including all twelve printed unused positions.
+
+## Stock spatial map
+
+The factory location drawings on printed pages 2-38, 2-40, 2-42, and 2-44 locate every fitted stock playfield lamp, switch, solenoid effect, and flasher. Their player-view callout endpoints and directly labelled device centers are manually projected into the repository's normalized playfield plane (`x=0` left, `x=1` right, `y=0` rear, `y=1` apron). The retained excerpt records each crop's native pixel dimensions and approximate outer-table review bounds, but the drawings are orthographic service line art rather than surveyed CAD; all projected coordinates therefore remain `observed` and stop at three decimal places. Cabinet buttons, coin-door illumination, service hardware, unused outputs, and virtual outputs remain spatially not applicable.
+
+The switch drawing has no devices at optional addresses 53-56 because the stock model 50070 is a four-ball machine. The myPinballs v2.0 installation guide documents the retrofit: Trough Ball 5 and 6 populate the two blank positions on the factory trough opto PCBs, while Right Lockup 2 and 3 populate mounting positions retained on the production lock weldment after those sensors were removed for cost. The trough points continue the factory Ball 1-4 spacing; the two lock points project consecutive ball positions within the existing Right Lockup 1 assembly. These four placements are `observed`, with explicit non-surveyed notes, rather than being presented as factory-manual coordinates.
 
 ## Stock devices and optional hardware
 
@@ -718,28 +873,32 @@ PinMAME's P2K video source is 640x240. The exported CORE_VIDEO layout is 640x480
 
 PinMAME's current `p2k_names.h` tables were walked completely against the games' own switch, coil, and lamp tests. Those measured runtime names and public addresses take precedence over visual inference. The manual remains physical truth for connectors, wires, driver transistors, parts, and stock-vs-unused fitment.
 
-The operations manual swaps one lamp-name pair: it prints Left Slingshot Spotlight at 18B and Right at 28B. The machine lamp test reports the reverse. The definition therefore binds public 15/manual 18B to Right Slingshot Spotlight and public 31/manual 28B to Left Slingshot Spotlight, matching the running machine, and retains the discrepancy as an ignored conflict with rationale.
+The operations manual's table and location drawing place 18B on the left slingshot and 28B on the right, while the machine lamp test reports the opposite semantic names. The definition therefore binds public 15/manual 18B to the runtime name Right Slingshot Spotlight at the manual's left-side coordinate and public 31/manual 28B to the runtime name Left Slingshot Spotlight at the manual's right-side coordinate. This deterministic split keeps machine-test semantics and factory physical positions without inventing a wiring swap, and the ignored conflict records why the names and sides appear crossed.
 
 The supplied `Attack and Revenge from Mars (Midway-Williams) v600.vpx` is not RFM geometry. Its embedded script runs `afm_113b`, its callbacks are Attack from Mars addresses, and its extracted screenshot shows the AFM playfield. It is retained at SHA-256 `9a5415a3b6b5a57b01749415789019fe7037a828e9ab691ce64cd1720b2294be` as a rejected candidate and contributes no RFM spatial or controller assertion.
 
 ## Remaining author-ready work
 
-- Obtain a faithful RFM VPX/VPE scene or measured playfield survey and map each physical playfield sensor, lamp effect, flasher, and actuator into normalized coordinates.
 - Validate mechanism startup states, transition timing, ball routes, and launch vectors in an actual RFM recreation or repeatable runtime harness.
 - Complete non-opto normally-open/closed and pulse semantics instead of inferring them from labels alone.
 - Authenticate the optional six-ball/opto-expander, knocker, shaker, ticket, and Prism/firmware combinations per driver revision.
 
 ## Sources
 
-- `manual.rfm.operations-1999`: February 1999 model 50070 operations manual, SHA-256 `6ba2c0728d26e379d1e1a0b2a2ff5eb40f61fce2d38c45e0e4f094166df0b9df`; service tables and assemblies.
+- `manual.rfm.operations-1999`: February 1999 model 50070 operations manual, SHA-256 `6ba2c0728d26e379d1e1a0b2a2ff5eb40f61fce2d38c45e0e4f094166df0b9df`; four stock location drawings, service tables, and assemblies.
+- `manual.rfm.mypinballs-opto-expansion-v2`: myPinballs Opto Expansion Upgrade Install Instructions v2.0, SHA-256 `00a744e1cc6507c328b22f33fc4f3aa6f8ec4826dce0a8874493023ee8d48fbf`; retrofit wiring tables and installed trough/lock photographs.
 - `pinmame.core.8371478a7640`: pinned P2K implementation and machine-test-verified device tables at revision `8371478a7640f1896dcdf565aed340dc5df989ba`.
 - `vpx-table.attack-and-revenge-v600-rejected`: exact user-supplied hybrid VPX, rejected because it runs AFM ROM semantics and AFM geometry.
 """
 
 
 def expected_files() -> dict[Path, str]:
-	definition = json.dumps(build_definition(), indent=2, ensure_ascii=False, sort_keys=True) + "\n"
-	return {DEFINITION_PATH: definition, KNOWLEDGE_PATH: KNOWLEDGE}
+	definition = build_definition()
+	return {
+		DEFINITION_PATH: json.dumps(definition, indent=2, ensure_ascii=False, sort_keys=True) + "\n",
+		KNOWLEDGE_PATH: KNOWLEDGE,
+		SPATIAL_REPORT_PATH: json.dumps(build_spatial_report(definition), indent=2, ensure_ascii=False, sort_keys=True) + "\n",
+	}
 
 
 def check() -> None:
@@ -752,9 +911,19 @@ def check() -> None:
 	for obsolete in (ROOT / "machines/stubs/rfm_160.json", ROOT / "knowledge/stubs/rfm_160.md"):
 		if obsolete.exists():
 			errors.append(f"obsolete {obsolete.relative_to(ROOT)} still exists")
-	excerpt = ROOT / MANUAL_EXCERPT
-	if hashlib.sha256(excerpt.read_bytes()).hexdigest() != MANUAL_EXCERPT_SHA256:
-		errors.append(f"hash mismatch for {MANUAL_EXCERPT}")
+	locked_evidence = {
+		MANUAL_EXCERPT: MANUAL_EXCERPT_SHA256,
+		MANUAL_LOCATION_EXCERPT: MANUAL_LOCATION_EXCERPT_SHA256,
+		**{image["path"]: image["sha256"] for image in MANUAL_LOCATION_IMAGES.values()},
+		AFTERMARKET_EXCERPT: AFTERMARKET_EXCERPT_SHA256,
+		**{image["path"]: image["sha256"] for image in AFTERMARKET_IMAGES.values()},
+	}
+	for relative_path, expected_sha256 in locked_evidence.items():
+		path = ROOT / relative_path
+		if not path.exists():
+			errors.append(f"missing {relative_path}")
+		elif hashlib.sha256(path.read_bytes()).hexdigest() != expected_sha256:
+			errors.append(f"hash mismatch for {relative_path}")
 	if errors:
 		raise SystemExit("\n".join(errors))
 
@@ -763,8 +932,10 @@ def write() -> None:
 	definition = build_definition()
 	DEFINITION_PATH.parent.mkdir(parents=True, exist_ok=True)
 	KNOWLEDGE_PATH.parent.mkdir(parents=True, exist_ok=True)
+	SPATIAL_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
 	write_json(DEFINITION_PATH, definition)
 	write_text(KNOWLEDGE_PATH, KNOWLEDGE)
+	write_json(SPATIAL_REPORT_PATH, build_spatial_report(definition))
 
 
 def main() -> None:

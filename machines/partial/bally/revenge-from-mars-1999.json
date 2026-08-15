@@ -1,10 +1,10 @@
 {
   "conflicts": [
     {
-      "description": "The operations manual prints Left Slingshot Spotlight at 18B and Right at 28B. PinMAME's complete machine lamp-test walk reports the opposite pair: public 15/manual 18B is Right and public 31/manual 28B is Left. The canonical labels follow the measured machine test.",
+      "description": "The operations manual's table and physical location drawing place Left Slingshot Spotlight at 18B on the left slingshot and Right at 28B on the right. PinMAME's complete machine lamp-test walk reports the opposite semantic pair: public 15/manual 18B is Right and public 31/manual 28B is Left. Canonical labels follow the measured machine test, while coordinates follow the manual's physical addresses and drawing.",
       "id": "conflict.slingshot-spotlight-lamp-pair",
       "path": "$.outputs[manual.address=18B|28B].label",
-      "rationale": "The discrepancy is fully resolved for recreation by the machine test; retaining it documents why the runtime-correct labels intentionally differ from the printed grid.",
+      "rationale": "The deterministic split resolves recreation without inventing a wiring swap: runtime controls semantic labels, and the factory drawing controls physical positions. The record explains why each runtime-named spotlight appears on the opposite physical slingshot.",
       "source_refs": [
         "manual.rfm.operations-1999",
         "pinmame.core.8371478a7640"
@@ -25,14 +25,13 @@
       "physical_wiring": "observed",
       "recreation_knowledge": "observed",
       "semantic_naming": "validated",
-      "spatial_placement": "unknown",
+      "spatial_placement": "observed",
       "variant_coverage": "observed"
     },
     "missing": [
       "mechanism_behavior",
       "polarity",
-      "variant_differences",
-      "spatial_placement"
+      "variant_differences"
     ],
     "status": "partial"
   },
@@ -45,14 +44,16 @@
       "label": "Pinball 2000 reflected playfield video",
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640"
+          "pinmame.core.8371478a7640",
+          "manual.rfm.operations-1999"
         ],
         "status": "validated"
       },
       "spatial": {
         "provenance": {
           "source_refs": [
-            "pinmame.core.8371478a7640"
+            "pinmame.core.8371478a7640",
+            "manual.rfm.operations-1999"
           ],
           "status": "validated"
         },
@@ -245,6 +246,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.11.right-ramp-entrance.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.9,
+            "y": 0.08
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-1 (U45-18)",
@@ -283,6 +302,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.12.left-ramp-exit.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.09,
+            "y": 0.055
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -424,6 +461,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.15.drop-target-down.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.76,
+            "y": 0.235
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-1 (U45-18)",
@@ -462,6 +517,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.16.left-outlane.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.115,
+            "y": 0.785
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -502,6 +575,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.17.right-return-lane.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.795,
+            "y": 0.715
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-1 (U45-18)",
@@ -540,6 +631,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.18.shooter-lane.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.955,
+            "y": 0.905
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -779,6 +888,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.25.left-loop-low.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.13,
+            "y": 0.305
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-2 (U45-17)",
@@ -817,6 +944,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.26.left-return-lane.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.21,
+            "y": 0.715
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -857,6 +1002,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.27.right-outlane.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.885,
+            "y": 0.785
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-2 (U45-17)",
@@ -896,6 +1059,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.28.right-ramp-exit.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.59,
+            "y": 0.055
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-2 (U45-17)",
@@ -926,6 +1107,7 @@
       "label": "Center Loop Reed (Bottom)",
       "physical": {
         "location": "Center Loop Reed (Bottom)",
+        "notes": "The switch-location drawing prints address 31 twice: once as a top callout and again beside 32 at the center-loop assembly. Addresses 31 and 32 use one shared observed assembly point because the paired right-margin callout does not provide surveyable separation.",
         "switch_type": "reed"
       },
       "provenance": {
@@ -934,6 +1116,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.31.center-loop-reed-bottom.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.655,
+            "y": 0.2
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -965,6 +1165,7 @@
       "label": "Center Loop Reed (Top)",
       "physical": {
         "location": "Center Loop Reed (Top)",
+        "notes": "The switch-location drawing prints address 31 twice: once as a top callout and again beside 32 at the center-loop assembly. Addresses 31 and 32 use one shared observed assembly point because the paired right-margin callout does not provide surveyable separation.",
         "switch_type": "reed"
       },
       "provenance": {
@@ -973,6 +1174,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.32.center-loop-reed-top.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.655,
+            "y": 0.2
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -1013,6 +1232,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.33.center-target-4.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.635,
+            "y": 0.385
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-3 (U45-16)",
@@ -1051,6 +1288,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.34.center-target-3.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.59,
+            "y": 0.41
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -1091,6 +1346,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.35.center-target-2.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.545,
+            "y": 0.435
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-3 (U45-16)",
@@ -1129,6 +1402,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.36.center-target-1.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.46
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -1169,6 +1460,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.37.martian-target-4-center.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.31,
+            "y": 0.335
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-3 (U45-16)",
@@ -1207,6 +1516,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.38.up-down-ramp-up.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.39,
+            "y": 0.47
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -1248,6 +1575,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.41.trough-jam.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.75,
+            "y": 0.9
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-4 (U45-15)",
@@ -1287,6 +1632,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.42.trough-ball-1.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.66,
+            "y": 0.97
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -1328,6 +1691,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.43.trough-ball-2.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.58,
+            "y": 0.97
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-4 (U45-15)",
@@ -1367,6 +1748,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.44.trough-ball-3.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.97
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -1408,6 +1807,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.45.trough-ball-4.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.42,
+            "y": 0.97
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-4 (U45-15)",
@@ -1448,6 +1865,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.46.right-popper.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.685,
+            "y": 0.285
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-4 (U45-15)",
@@ -1487,6 +1922,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.47.jet-exit.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.255,
+            "y": 0.33
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -1577,6 +2030,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.51.right-lockup-1.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.695,
+            "y": 0.205
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-5 (U45-14)",
@@ -1617,6 +2088,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.52.left-ramp-entrance.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.165,
+            "y": 0.205
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-5 (U45-14)",
@@ -1648,6 +2137,7 @@
       "normally_closed": true,
       "physical": {
         "location": "Trough Ball 5",
+        "notes": "Optional myPinballs six-ball trough opto. Position continues the factory trough's evenly spaced Ball 1-4 sequence and is an observed projection from the v2.0 installation photograph, not a surveyed coordinate.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1656,6 +2146,25 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.53.trough-ball-5.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999",
+                "manual.rfm.mypinballs-opto-expansion-v2"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.34,
+            "y": 0.97
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -1688,6 +2197,7 @@
       "normally_closed": true,
       "physical": {
         "location": "Trough Ball 6",
+        "notes": "Optional myPinballs six-ball trough opto. Position continues the factory trough's evenly spaced Ball 1-4 sequence and is an observed projection from the v2.0 installation photograph, not a surveyed coordinate.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1696,6 +2206,25 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.54.trough-ball-6.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999",
+                "manual.rfm.mypinballs-opto-expansion-v2"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.26,
+            "y": 0.97
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -1728,6 +2257,7 @@
       "normally_closed": true,
       "physical": {
         "location": "Right Lockup 2",
+        "notes": "Optional myPinballs physical-lock opto installed in the production weldment's omitted mounting position. Position is an observed intra-assembly projection from the v2.0 installation photograph, not a surveyed coordinate.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1736,6 +2266,25 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.55.right-lockup-2.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999",
+                "manual.rfm.mypinballs-opto-expansion-v2"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.695,
+            "y": 0.185
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -1768,6 +2317,7 @@
       "normally_closed": true,
       "physical": {
         "location": "Right Lockup 3",
+        "notes": "Optional myPinballs physical-lock opto installed in the production weldment's omitted mounting position. Position is an observed intra-assembly projection from the v2.0 installation photograph, not a surveyed coordinate.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1776,6 +2326,25 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.56.right-lockup-3.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999",
+                "manual.rfm.mypinballs-opto-expansion-v2"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.695,
+            "y": 0.165
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -1914,6 +2483,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.61.left-slingshot.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.22,
+            "y": 0.675
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-6 (U45-13)",
@@ -1952,6 +2539,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.62.right-slingshot.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.78,
+            "y": 0.675
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -1992,6 +2597,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.63.left-jet.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.14,
+            "y": 0.145
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-6 (U45-13)",
@@ -2031,6 +2654,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.64.right-jet.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.17,
+            "y": 0.24
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-6 (U45-13)",
@@ -2069,6 +2710,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.65.bottom-jet.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.19,
+            "y": 0.31
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -2158,6 +2817,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.67.right-loop-low.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.875,
+            "y": 0.31
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-6 (U45-13)",
@@ -2196,6 +2873,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.68.right-loop-high.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.865,
+            "y": 0.115
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -2236,6 +2931,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.71.martian-target-3-left-top.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.08,
+            "y": 0.5
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-7 (U45-12)",
@@ -2274,6 +2987,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.72.martian-target-2-left-mid.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.075,
+            "y": 0.56
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -2314,6 +3045,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.73.martian-target-1-left-bot.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.07,
+            "y": 0.62
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-7 (U45-12)",
@@ -2352,6 +3101,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.74.center-loop-rollover.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.475,
+            "y": 0.055
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -2392,6 +3159,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.75.center-deflector-panel.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.285,
+            "y": 0.21
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-7 (U45-12)",
@@ -2430,6 +3215,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.76.right-top-lane.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.385,
+            "y": 0.07
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -2470,6 +3273,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.77.left-top-lane.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.3,
+            "y": 0.07
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-7 (U45-12)",
@@ -2508,6 +3329,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.78.left-loop-high.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.085,
+            "y": 0.12
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -2744,6 +3583,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.85.martian-target-7-right-bot.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.92,
+            "y": 0.62
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-8 (U45-11)",
@@ -2783,6 +3640,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.86.martian-target-6-right-mid.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.915,
+            "y": 0.56
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J116-8 (U45-11)",
@@ -2821,6 +3696,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.87.martian-target-5-right-top.sensor",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.91,
+            "y": 0.5
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -4291,6 +5184,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.1.left-martian.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.16,
+            "y": 0.48
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J110-13",
@@ -4329,6 +5240,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.2.right-martian.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.84,
+            "y": 0.48
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -4369,6 +5298,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.3.jet-exit-post.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.2,
+            "y": 0.29
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J110-15",
@@ -4407,6 +5354,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.4.right-gate.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.47,
+            "y": 0.035
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -4447,6 +5412,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.5.left-gate.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.1,
+            "y": 0.04
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J110-17",
@@ -4485,6 +5468,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.6.drop-target-down.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.69,
+            "y": 0.22
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -4525,6 +5526,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.7.drop-target-up.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.69,
+            "y": 0.22
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J110-19",
@@ -4563,6 +5582,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.8.right-popper.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.69,
+            "y": 0.29
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -4603,6 +5640,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.9.trough-eject.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.66,
+            "y": 0.93
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J112-11",
@@ -4641,6 +5696,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.10.left-slingshot.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.2,
+            "y": 0.68
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -4681,6 +5754,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.11.right-slingshot.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.8,
+            "y": 0.68
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J112-13",
@@ -4719,6 +5810,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.12.left-jet.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.13,
+            "y": 0.15
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -4759,6 +5868,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.13.right-jet.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.17,
+            "y": 0.23
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J112-15",
@@ -4797,6 +5924,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.14.bottom-jet.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.18,
+            "y": 0.3
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -4837,6 +5982,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.15.autoplunger.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.95,
+            "y": 0.92
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J112-17",
@@ -4876,6 +6039,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.16.right-lockup.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.72,
+            "y": 0.18
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J112-18",
@@ -4914,6 +6095,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.17.center-arrow-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.43
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -5143,6 +6342,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.22.right-popper-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.68,
+            "y": 0.28
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J110-6",
@@ -5181,6 +6398,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.23.left-arch-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.23,
+            "y": 0.94
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -5268,6 +6503,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.25.right-arch-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.77,
+            "y": 0.94
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J112-9",
@@ -5306,6 +6559,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.26.left-martian-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.08,
+            "y": 0.49
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -5346,6 +6617,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.27.right-martian-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.92,
+            "y": 0.49
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J112-19",
@@ -5384,6 +6673,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.28.attack-mars-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.5
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -5588,6 +6895,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.33.right-flipper-power.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.65,
+            "y": 0.82
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J112-1",
@@ -5626,6 +6951,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.34.right-flipper-hold.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.65,
+            "y": 0.82
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -5666,6 +7009,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.35.left-flipper-power.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.35,
+            "y": 0.82
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J112-3",
@@ -5704,6 +7065,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.36.left-flipper-hold.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.35,
+            "y": 0.82
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -5744,6 +7123,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.37.lock-diverter-power.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.59,
+            "y": 0.12
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J112-5",
@@ -5782,6 +7179,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.38.lock-diverter-hold.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.59,
+            "y": 0.12
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -5822,6 +7237,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.39.up-down-ramp-power.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.38,
+            "y": 0.38
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "drive_connection": "J112-7",
@@ -5860,6 +7293,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "driver.40.up-down-ramp-hold.effect",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.38,
+            "y": 0.38
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -6413,6 +7864,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.4.right-top-lane.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.39,
+            "y": 0.055
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-9",
@@ -6452,6 +7921,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.5.left-top-lane.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.3,
+            "y": 0.055
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -6493,6 +7980,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.6.martian-target-4-center.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.34,
+            "y": 0.3
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-9",
@@ -6532,6 +8037,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.7.center-loop-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.39
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -6573,6 +8096,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.8.secret-weapon.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.43,
+            "y": 0.7
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-10",
@@ -6612,6 +8153,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.9.tower-struggle.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.44,
+            "y": 0.75
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -6653,6 +8212,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.10.center-saucer-beam-left.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.47,
+            "y": 0.69
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-10",
@@ -6692,6 +8269,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.11.question-mark.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.75
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -6733,6 +8328,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.12.center-saucer-beam-right.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.55,
+            "y": 0.69
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-10",
@@ -6772,6 +8385,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.13.drive-in-demolition.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.56,
+            "y": 0.75
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -6813,6 +8444,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.14.paris-in-peril.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.59,
+            "y": 0.7
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-10",
@@ -6844,7 +8493,7 @@
       "label": "Right Slingshot Spotlight",
       "physical": {
         "location": "Right Slingshot Spotlight",
-        "notes": "Manual lamp-matrix position 18B."
+        "notes": "Manual lamp-matrix position 18B. The semantic label follows the runtime lamp test, while this observed coordinate follows the manual drawing's physical address: 18B is drawn at the left slingshot and 28B at the right."
       },
       "provenance": {
         "source_refs": [
@@ -6852,6 +8501,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.15.right-slingshot-spotlight.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.22,
+            "y": 0.73
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -7093,6 +8760,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.20.mothership-multiball-right.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.55,
+            "y": 0.58
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-10",
@@ -7132,6 +8817,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.21.mothership-multiball-left.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.45,
+            "y": 0.58
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -7173,6 +8876,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.22.left-return-lane.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.27,
+            "y": 0.69
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-10",
@@ -7212,6 +8933,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.23.left-outlane.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.17,
+            "y": 0.7
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -7253,6 +8992,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.24.big-o-beam.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.62,
+            "y": 0.69
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-11",
@@ -7292,6 +9049,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.25.right-saucer-beam-left.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.57,
+            "y": 0.67
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -7333,6 +9108,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.26.weapons.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.574,
+            "y": 0.62
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-11",
@@ -7372,6 +9165,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.27.saucer.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.62
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -7413,6 +9224,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.28.fuel.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.44,
+            "y": 0.62
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-11",
@@ -7452,6 +9281,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.29.left-saucer-beam-right.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.43,
+            "y": 0.67
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -7493,6 +9340,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.30.center-saucer-beam-center.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.65
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-11",
@@ -7524,7 +9389,7 @@
       "label": "Left Slingshot Spotlight",
       "physical": {
         "location": "Left Slingshot Spotlight",
-        "notes": "Manual lamp-matrix position 28B."
+        "notes": "Manual lamp-matrix position 28B. The semantic label follows the runtime lamp test, while this observed coordinate follows the manual drawing's physical address: 18B is drawn at the left slingshot and 28B at the right."
       },
       "provenance": {
         "source_refs": [
@@ -7532,6 +9397,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.31.left-slingshot-spotlight.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.78,
+            "y": 0.73
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -7773,6 +9656,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.36.left-drain-to-trough.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.38,
+            "y": 0.9
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-11",
@@ -7812,6 +9713,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.37.right-drain-to-trough.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.62,
+            "y": 0.9
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -7853,6 +9772,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.38.right-return-lane.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.73,
+            "y": 0.69
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-11",
@@ -7892,6 +9829,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.39.right-outlane.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.83,
+            "y": 0.7
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -7933,6 +9888,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.40.mars-kneads-women.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.66,
+            "y": 0.7
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-12",
@@ -7972,6 +9945,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.41.right-saucer-beam-right.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.62,
+            "y": 0.66
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -8013,6 +10004,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.42.saucer-rim-9-right.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.68,
+            "y": 0.58
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-12",
@@ -8052,6 +10061,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.43.saucer-rim-8.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.64,
+            "y": 0.58
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -8093,6 +10120,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.44.saucer-rim-7.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.6,
+            "y": 0.58
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-12",
@@ -8133,6 +10178,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.45.saucer-rim-6.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.56,
+            "y": 0.58
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-12",
@@ -8172,6 +10235,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.46.saucer-rim-5.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.52,
+            "y": 0.58
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -8263,6 +10344,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.48.right-popper-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.69,
+            "y": 0.34
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-12",
@@ -8302,6 +10401,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.49.extra-ball.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.36,
+            "y": 0.62
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -8343,6 +10460,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.50.martian-attack.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.46,
+            "y": 0.45
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-12",
@@ -8382,6 +10517,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.51.stroke-of-luck.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.49,
+            "y": 0.41
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -8423,6 +10576,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.52.left-side-spotlight.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.13,
+            "y": 0.36
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-12",
@@ -8462,6 +10633,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.53.center-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.49
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -8503,6 +10692,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.54.right-martian-high.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.79,
+            "y": 0.51
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-12",
@@ -8542,6 +10749,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.55.right-martian-low.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.8,
+            "y": 0.56
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -8583,6 +10808,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.56.martian-happy-hour.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.39,
+            "y": 0.69
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-13",
@@ -8622,6 +10865,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.57.alien-abduction.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.34,
+            "y": 0.7
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -8663,6 +10924,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.58.left-saucer-beam-left.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.4,
+            "y": 0.66
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-13",
@@ -8702,6 +10981,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.59.saucer-rim-1-left.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.36,
+            "y": 0.58
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -8743,6 +11040,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.60.saucer-rim-2.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.4,
+            "y": 0.58
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-13",
@@ -8783,6 +11098,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.61.saucer-rim-3.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.44,
+            "y": 0.58
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-13",
@@ -8822,6 +11155,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.62.saucer-rim-4.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.48,
+            "y": 0.58
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -8913,6 +11264,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.64.multiball.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.32
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-13",
@@ -8952,6 +11321,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.65.capture-2.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.36
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -8993,6 +11380,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.66.capture-1.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.4
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-13",
@@ -9032,6 +11437,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.67.capture-zone-active.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.44
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -9073,6 +11496,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.68.shoot-again.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.86
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-13",
@@ -9113,6 +11554,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.69.behind-center-targets.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.5,
+            "y": 0.05
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-13",
@@ -9152,6 +11611,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.70.upper-right-corner-middle.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.91,
+            "y": 0.08
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -9243,6 +11720,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.72.right-loop-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.78,
+            "y": 0.42
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-14",
@@ -9282,6 +11777,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.73.right-loop-circle.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.77,
+            "y": 0.46
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -9323,6 +11836,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.74.right-ramp-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.7,
+            "y": 0.38
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-14",
@@ -9362,6 +11893,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.75.right-ramp-circle.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.67,
+            "y": 0.42
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -9403,6 +11952,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.76.left-loop-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.24,
+            "y": 0.37
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-14",
@@ -9442,6 +12009,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.77.left-ramp-arrow.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.34,
+            "y": 0.36
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -9483,6 +12068,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.78.left-loop-circle.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.24,
+            "y": 0.42
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-14",
@@ -9522,6 +12125,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.79.left-ramp-circle.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.34,
+            "y": 0.42
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -9563,6 +12184,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.80.shooter-lane-9-top.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.94,
+            "y": 0.17
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-14",
@@ -9602,6 +12241,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.81.under-right-ramp-low.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.87,
+            "y": 0.52
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -9643,6 +12300,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.82.under-right-ramp-high.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.87,
+            "y": 0.45
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-14",
@@ -9682,6 +12357,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.83.upper-right-corner-low.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.9,
+            "y": 0.12
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -9723,6 +12416,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.84.right-arch-right.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.85,
+            "y": 0.86
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-14",
@@ -9762,6 +12473,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.85.right-arch-left.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.76,
+            "y": 0.83
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -9803,6 +12532,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.86.left-arch-right.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.24,
+            "y": 0.83
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-14",
@@ -9842,6 +12589,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.87.left-arch-left.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.15,
+            "y": 0.86
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -9883,6 +12648,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.88.martian-target-5-right-top.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.88,
+            "y": 0.5
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-15",
@@ -9922,6 +12705,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.89.martian-target-6-right-mid.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.88,
+            "y": 0.56
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -9963,6 +12764,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.90.martian-target-7-right-bot.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.88,
+            "y": 0.62
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-15",
@@ -10002,6 +12821,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.91.martian-target-3-left-top.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.12,
+            "y": 0.5
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -10043,6 +12880,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.92.martian-target-2-left-mid.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.12,
+            "y": 0.56
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-15",
@@ -10082,6 +12937,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.93.martian-target-1-left-bot.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.12,
+            "y": 0.62
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -10123,6 +12996,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.94.right-martian-eye.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.75,
+            "y": 0.69
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-15",
@@ -10162,6 +13053,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.95.left-martian-eye.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.25,
+            "y": 0.69
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -10203,6 +13112,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.96.left-side-1-bottom.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.035,
+            "y": 0.65
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-15",
@@ -10242,6 +13169,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.97.left-side-2.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.035,
+            "y": 0.59
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -10283,6 +13228,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.98.left-side-3.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.035,
+            "y": 0.53
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-15",
@@ -10322,6 +13285,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.99.left-side-4-top.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.035,
+            "y": 0.47
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -10363,6 +13344,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.100.under-left-ramp-bottom.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.13,
+            "y": 0.42
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-15",
@@ -10402,6 +13401,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.101.under-left-ramp-top.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.11,
+            "y": 0.36
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -10443,6 +13460,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.102.between-left-bottom-jets.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.18,
+            "y": 0.27
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-15",
@@ -10483,6 +13518,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.103.upper-left-corner.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.05,
+            "y": 0.07
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-15",
@@ -10522,6 +13575,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.104.bottom-jet-bumper.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.18,
+            "y": 0.29
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -10613,6 +13684,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.106.left-jet-bumper.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.14,
+            "y": 0.16
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-16",
@@ -10652,6 +13741,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.107.left-of-left-top-lane.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.22,
+            "y": 0.06
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -10693,6 +13800,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.108.between-upper-right-top-lanes.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.35,
+            "y": 0.06
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-16",
@@ -10732,6 +13857,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.109.right-of-right-top-lane.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.48,
+            "y": 0.06
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -10773,6 +13916,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.110.top-of-center-loop.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.52,
+            "y": 0.025
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-16",
@@ -10812,6 +13973,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.111.upper-right-corner-high.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.91,
+            "y": 0.04
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -10853,6 +14032,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.112.right-slingshot-bottom.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.82,
+            "y": 0.73
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-16",
@@ -10892,6 +14089,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.113.right-slingshot-saucer.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.78,
+            "y": 0.68
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -10933,6 +14148,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.114.right-return-lane-right.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.81,
+            "y": 0.65
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-16",
@@ -10972,6 +14205,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.115.right-return-lane-left.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.75,
+            "y": 0.65
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -11013,6 +14264,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.116.left-return-lane-right.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.28,
+            "y": 0.65
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-16",
@@ -11052,6 +14321,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.117.left-return-lane-left.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.22,
+            "y": 0.65
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -11093,6 +14380,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.118.left-slingshot-saucer.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.22,
+            "y": 0.68
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J108-16",
@@ -11132,6 +14437,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.119.left-slingshot-bottom.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.18,
+            "y": 0.73
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -11173,6 +14496,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.120.shooter-lane-1-bottom.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.94,
+            "y": 0.76
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-17",
@@ -11212,6 +14553,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.121.shooter-lane-2.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.94,
+            "y": 0.7
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -11253,6 +14612,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.122.shooter-lane-3.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.94,
+            "y": 0.64
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-17",
@@ -11292,6 +14669,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.123.shooter-lane-4.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.94,
+            "y": 0.58
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -11333,6 +14728,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.124.shooter-lane-5.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.94,
+            "y": 0.52
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-17",
@@ -11372,6 +14785,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.125.shooter-lane-6.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.94,
+            "y": 0.46
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -11413,6 +14844,24 @@
         ],
         "status": "validated"
       },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.126.shooter-lane-7.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.94,
+            "y": 0.4
+          }
+        ],
+        "status": "observed"
+      },
       "wiring": {
         "board": "Pinball 2000 power driver board",
         "control_connection": "J107-17",
@@ -11452,6 +14901,24 @@
           "manual.rfm.operations-1999"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.127.shooter-lane-8.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.rfm.operations-1999"
+              ],
+              "status": "observed"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.94,
+            "y": 0.34
+          }
+        ],
+        "status": "observed"
       },
       "wiring": {
         "board": "Pinball 2000 power driver board",
@@ -11496,15 +14963,99 @@
           "reviewed": true,
           "sha256": "e283b2b47f41ebe5c5464d2cda49df531d069dc57db8e91f29c12c9ef90c663b",
           "transcribed_by": "Codex with pypdf text extraction and visual page review"
+        },
+        {
+          "id": "excerpt.rfm.lamp-locations-matrix-a",
+          "image": "evidence/excerpts/bally.revenge-from-mars.1999/lamp-locations-matrix-a.webp",
+          "image_derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 78, crop box 0.2,0.08,0.83,0.92, scanned page rendered at its native resolution (embedded image xref 250, 2533px across 8.33in), rendered at 304 dpi, 1584x2988 WebP quality 80",
+          "image_sha256": "212a2bfc3d3e0a78c04210fb601692c77b7bc76fd44c2a41ca7ed2dab7e7a7cb",
+          "locator": "PDF page 78; printed page 2-38, Lamp Locations (Matrix A)",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-location-maps.md",
+          "reviewed": true,
+          "sha256": "c49204469dbe1bea9d159833f7f862a765d873660cc43f19bb55f0aa3274c938",
+          "transcribed_by": "Codex with visual review"
+        },
+        {
+          "id": "excerpt.rfm.lamp-locations-matrix-b",
+          "image": "evidence/excerpts/bally.revenge-from-mars.1999/lamp-locations-matrix-b.webp",
+          "image_derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 80, crop box 0.2,0.08,0.81,0.9, scanned page rendered at its native resolution (embedded image xref 256, 2513px across 8.27in), rendered at 304 dpi, 1534x2917 WebP quality 80",
+          "image_sha256": "c8a9acc6c349db286d05f681a3182a373d6bd0f607eec927c21c143d45061b87",
+          "locator": "PDF page 80; printed page 2-40, Lamp Locations (Matrix B)",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-location-maps.md",
+          "reviewed": true,
+          "sha256": "c49204469dbe1bea9d159833f7f862a765d873660cc43f19bb55f0aa3274c938",
+          "transcribed_by": "Codex with visual review"
+        },
+        {
+          "id": "excerpt.rfm.playfield-switch-locations",
+          "image": "evidence/excerpts/bally.revenge-from-mars.1999/playfield-switch-locations.webp",
+          "image_derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 82, crop box 0.15,0.07,0.8,0.91, scanned page rendered at its native resolution (embedded image xref 263, 2547px across 8.38in), rendered at 304 dpi, 1635x2988 WebP quality 80",
+          "image_sha256": "3c55555ed5637207efe17e992b26c09662f0986d633367555ebe94dc66b1e221",
+          "locator": "PDF page 82; printed page 2-42, Playfield Switch Locations",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-location-maps.md",
+          "reviewed": true,
+          "sha256": "c49204469dbe1bea9d159833f7f862a765d873660cc43f19bb55f0aa3274c938",
+          "transcribed_by": "Codex with visual review"
+        },
+        {
+          "id": "excerpt.rfm.solenoid-flasher-locations",
+          "image": "evidence/excerpts/bally.revenge-from-mars.1999/solenoid-flasher-locations.webp",
+          "image_derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 84, crop box 0.15,0.07,0.8,0.91, scanned page rendered at its native resolution (embedded image xref 270, 2533px across 8.33in), rendered at 304 dpi, 1635x2988 WebP quality 80",
+          "image_sha256": "d9b66fa87bb5cd85f0ee5098fc76040fd489fb87d852ccf8613c55a7308862ca",
+          "locator": "PDF page 84; printed page 2-44, Solenoid/Flasher Locations",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-location-maps.md",
+          "reviewed": true,
+          "sha256": "c49204469dbe1bea9d159833f7f862a765d873660cc43f19bb55f0aa3274c938",
+          "transcribed_by": "Codex with visual review"
         }
       ],
       "id": "manual.rfm.operations-1999",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "February 1999 model 50070 operations manual; PDF pages 86-88 / printed pages 2-46 through 2-48 lamp matrices, switch matrix, dedicated inputs, and solenoid table; assembly and wiring sections",
+      "locator": "February 1999 model 50070 operations manual; PDF pages 78, 80, 82, and 84 / printed pages 2-38, 2-40, 2-42, and 2-44 location drawings; PDF pages 86-88 / printed pages 2-46 through 2-48 service tables; assembly and wiring sections",
       "rights": "NOASSERTION",
       "sha256": "6ba2c0728d26e379d1e1a0b2a2ff5eb40f61fce2d38c45e0e4f094166df0b9df",
       "uri": "external:pinmame-manuals/_unsorted/Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf"
+    },
+    {
+      "attribution": "myPinballs Electronics",
+      "excerpts": [
+        {
+          "id": "excerpt.rfm.aftermarket-six-ball-trough",
+          "image": "evidence/excerpts/bally.revenge-from-mars.1999/aftermarket-six-ball-trough.webp",
+          "image_derivation": "mypinballs_rfm_opto_upgrade_kit_instructions_v2-0.pdf page 6, crop box 0.08,0.07,0.75,0.72, scanned page rendered at its native resolution (embedded image xref 46, 754px across 5.02in), rendered at 117 dpi, capped to 650px wide, 651x893 WebP quality 45",
+          "image_sha256": "af9c94880b4ac4cc43306ca8b8d7d59b3613e79a31fa9ef8b44a83157ff4336a",
+          "locator": "PDF page 2 wiring table and PDF page 6 Figure 6 installed trough photograph",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.revenge-from-mars.1999/mypinballs-opto-expansion-install.md",
+          "reviewed": true,
+          "sha256": "c8a30f75b6fd67138828b05e820de9a6944ddd3ac12241a8b15bbe4fa9483972",
+          "transcribed_by": "Codex with visual review"
+        },
+        {
+          "id": "excerpt.rfm.aftermarket-three-ball-lock",
+          "image": "evidence/excerpts/bally.revenge-from-mars.1999/aftermarket-three-ball-lock.webp",
+          "image_derivation": "mypinballs_rfm_opto_upgrade_kit_instructions_v2-0.pdf page 7, crop box 0.08,0.04,0.75,0.72, scanned page rendered at its native resolution (embedded image xref 52, 754px across 5.02in), rendered at 117 dpi, capped to 650px wide, 651x935 WebP quality 45",
+          "image_sha256": "f738eaf5371e08fd1c4bc8404b1aa5ebf79bb9e95b027308616df5f81b1934e0",
+          "locator": "PDF page 3 wiring table and PDF page 7 Figure 7 installed lock photograph",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.revenge-from-mars.1999/mypinballs-opto-expansion-install.md",
+          "reviewed": true,
+          "sha256": "c8a30f75b6fd67138828b05e820de9a6944ddd3ac12241a8b15bbe4fa9483972",
+          "transcribed_by": "Codex with visual review"
+        }
+      ],
+      "id": "manual.rfm.mypinballs-opto-expansion-v2",
+      "kind": "manual",
+      "license": "NOASSERTION",
+      "locator": "myPinballs Revenge From Mars Opto Expansion Upgrade Install Instructions v2.0; PDF pages 2 and 6 for six-ball trough positions 53-54; PDF pages 3 and 7 for physical-lock positions 55-56",
+      "rights": "NOASSERTION",
+      "sha256": "00a744e1cc6507c328b22f33fc4f3aa6f8ec4826dce0a8874493023ee8d48fbf",
+      "uri": "external:pinmame-manuals/_unsorted/mypinballs_rfm_opto_upgrade_kit_instructions_v2-0.pdf"
     },
     {
       "attribution": "JPSalas and credited table contributors",

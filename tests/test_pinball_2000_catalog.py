@@ -92,7 +92,8 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		self.assertEqual("bally.revenge-from-mars.1999", definition["machine"]["id"])
 		self.assertEqual(RFM_DRIVERS, {driver["id"] for driver in definition["drivers"]})
 		self.assertEqual("partial", definition["coverage"]["status"])
-		self.assertEqual(["mechanism_behavior", "polarity", "variant_differences", "spatial_placement"], definition["coverage"]["missing"])
+		self.assertEqual(["mechanism_behavior", "polarity", "variant_differences"], definition["coverage"]["missing"])
+		self.assertEqual("observed", definition["coverage"]["dimensions"]["spatial_placement"])
 		self.assertFalse((ROOT / "machines/stubs/rfm_160.json").exists())
 		self.assertFalse((ROOT / "knowledge/stubs/rfm_160.md").exists())
 

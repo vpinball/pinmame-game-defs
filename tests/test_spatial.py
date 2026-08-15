@@ -429,9 +429,10 @@ class SpatialMigrationTests(unittest.TestCase):
 		# unresolved runtime address map, so it does not add an unresolved-conflict gap.
 		# FunHouse's evidence pass resolved its prior semantic conflicts but deliberately retains one
 		# spatial gap for the unidentified right-rear-playfield emitters on mixed G.I. circuit 04.
-		# Revenge from Mars replaces its Pinball 2000 stub with an honest partial whose supplied
-		# hybrid AFM table cannot establish RFM geometry, adding one genuine spatial blocker.
-		self.assertEqual(46, report["missing_requirement_counts"]["spatial_placement"])
+		# Revenge from Mars now resolves its stock geometry from the four factory location drawings;
+		# its supplied hybrid AFM table remains rejected; documented expansion optos have observed
+		# positions while the remaining per-firmware expansion fitment stays a variant blocker.
+		self.assertEqual(45, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
