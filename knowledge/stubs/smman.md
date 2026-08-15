@@ -47,4 +47,4 @@ Do not use this stub as an authoring definition.
 
 ## Sources
 
-- PinMAME `4ec52ff0ac133ac251681518aed2249e19fe26eb`, public `PinmameGetGames` catalog entry for `smman`.
+- PinMAME `8371478a7640f1896dcdf565aed340dc5df989ba`, public `PinmameGetGames` catalog entry for `smman`.

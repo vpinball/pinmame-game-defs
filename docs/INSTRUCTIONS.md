@@ -141,7 +141,7 @@ if ($abandonedIncoming.Count -gt 0) {
 }
 
 $checkouts = @(
-	@{ Name = 'pinmame'; Url = 'https://github.com/vpinball/pinmame.git'; Revision = '4ec52ff0ac133ac251681518aed2249e19fe26eb' },
+	@{ Name = 'pinmame'; Url = 'https://github.com/vpinball/pinmame.git'; Revision = '8371478a7640f1896dcdf565aed340dc5df989ba' },
 	@{ Name = 'vpxtable_scripts'; Url = 'https://github.com/sverrewl/vpxtable_scripts.git'; Revision = '0c036bb61b4b4e8c778c37559f6795df8cd1521e' },
 	@{ Name = 'vpx-standalone-scripts'; Url = 'https://github.com/jsm174/vpx-standalone-scripts.git'; Revision = '15d112648a1b94b9f59eb8b3c335d57283653c50' }
 )
@@ -551,7 +551,7 @@ Per-game success is necessary but not sufficient. Keep working until every gate 
 - The legacy 11-class managed corpus and old JSON corpus remain covered by migration/compatibility fixtures, including numeric and zero-padded aliases, negative diagnostics, platform-specific merge behavior, duplicate/collision cases, direct flipper relationships, and authored mech reverse resolution. The hint migration report explicitly drops all authoring hints, and unresolved semantic device references hard-fail rather than silently becoming controller ID `0`.
 - Schema and semantic validation reject invalid JSON, stale generated files, duplicate or illegal bindings, alias cycles, dangling imports/models, mixed ID types, unsupported transports, illegal re-inversion, ambiguous inheritance, spatial violations, and dishonest promotion. Representative valid artifacts and every known failing fixture are tested.
 - Runtime evidence uses the pinned library and legally supplied ROMs in isolated per-run state. Run manifests pin ROM and emulator hashes, NVRAM initialization, service language, actions, timeouts, normalized observations, and output/display checkpoints. ROM bytes and NVRAM blobs remain external; host input readback is never treated as ROM evidence; wrong-switch, wrong-output, wrong-idle-state, and wrong-mechanism fixtures must fail clearly.
-- Every one of the 785 physical-game records is `author_ready`, every supported physical/controller variant is accounted for, and the generated completion gate is true. Stubs contribute zero coverage; partials are not publishable as complete entries; the non-game diagnostic remains separately classified.
+- Every one of the 789 physical-game records is `author_ready`, every supported physical/controller variant is accounted for, and the generated completion gate is true. Stubs contribute zero coverage; partials are not publishable as complete entries; the non-game diagnostic remains separately classified.
 - Machine families and cited edition-difference prose are complete without conflating unrelated titles or collapsing edition-specific devices, geometry, mechanisms, or compatibility.
 - All reviewed curation work is integrated on `master`, no required change remains only in a worktree, generated catalogs/reports match the integrated tree, and completed branches/worktrees are safely cleaned.
 

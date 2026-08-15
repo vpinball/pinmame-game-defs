@@ -23,7 +23,7 @@ GOLD_STUB_PATH = ROOT / "machines" / "stubs" / "tafg_lx3.json"
 DRIVER_IDS = {
 	"taf_l5", "taf_p2", "taf_p3", "taf_l1", "taf_d1", "taf_l2", "taf_d2", "taf_l3", "taf_d3",
 	"taf_l4", "taf_d4", "taf_l5c", "taf_l7", "taf_d7", "taf_d7bs", "taf_l6", "taf_d6", "taf_h4",
-	"taf_i4", "taf_d5",
+	"taf_i4", "taf_i4bs", "taf_d5",
 }
 MATRIX_ADDRESSES = {column * 10 + row for column in range(1, 9) for row in range(1, 9)}
 UNUSED_MATRIX_ADDRESSES = {11, 12, 23, 28, 46, 52, 83, 88}
@@ -125,6 +125,8 @@ class AddamsFamilyDefinitionTests(unittest.TestCase):
 		self.assertNotIn("clone_of", by_id["taf_l5"])
 		for driver_id in DRIVER_IDS - {"taf_l5"}:
 			self.assertEqual("taf_l5", by_id[driver_id]["clone_of"], driver_id)
+		self.assertEqual("compatible", by_id["taf_i4bs"]["physical_compatibility"])
+		self.assertIn("ball-saver", by_id["taf_i4bs"]["variant_notes"])
 		# tafg_* (Gold, 1994 Williams reissue) must never appear here -- it is a separate physical machine.
 		self.assertFalse(any(driver_id.startswith("tafg") for driver_id in DRIVER_IDS))
 
@@ -378,6 +380,10 @@ class AddamsFamilyDefinitionTests(unittest.TestCase):
 
 	def test_sources_are_hashed_licensed_and_free_of_local_paths(self) -> None:
 		sources = {source["id"]: source for source in self.definition["sources"]}
+		self.assertEqual(
+			"8371478a7640f1896dcdf565aed340dc5df989ba",
+			sources["pinmame.catalog.8371478a7640"]["revision"],
+		)
 		self.assertIn("vpx-script.taf-g5k-2-3-2", sources)
 		self.assertTrue(sources["vpx-script.taf-g5k-2-3-2"]["known_working"])
 		self.assertEqual(
