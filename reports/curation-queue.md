@@ -69,7 +69,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 63 | 2001 | STUB - NFL | Stern | stub | 0% |
 | 64 | 2000 | STUB - Sharkey's Shootout (2.11) | Stern | stub | 0% |
 | 65 | 2000 | STUB - Striker Xtreme (1.02) | Stern | stub | 0% |
-| 66 | 1999 | Revenge from Mars | Bally | partial | 88% |
+| 66 | 1999 | Revenge from Mars | Bally | partial | 94% |
 | 67 | 1999 | STUB - Harley-Davidson (Sega, 1.03, Display 1.04) | Sega | stub | 0% |
 | 68 | 1999 | STUB - South Park (1.03) | Sega | stub | 0% |
 | 69 | 1998 | Cactus Canyon | Bally | partial | 94% |

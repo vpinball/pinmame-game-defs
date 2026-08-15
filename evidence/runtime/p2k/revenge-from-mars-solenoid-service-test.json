@@ -1,0 +1,295 @@
+{
+  "driver_ids": [
+    "rfm_160"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.revenge-from-mars.1999"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <release-libpinmame> --game rfm_160 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --scenario tools/harness-scenarios/pinball-2000/rfm-solenoid-service-test.json --dmd-dir <external-frame-dir> --output <external-run.json>",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "rfm_160",
+    "observations": {
+      "display_indices_seen": [
+        0
+      ],
+      "display_layouts_seen": [
+        {
+          "depth": 24,
+          "height": 480,
+          "type": 15,
+          "width": 640
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_enter",
+          "label": "start Repeat mode on the first solenoid; public output 1 transition observed",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "target public output 2 in the factory solenoid test; transition observed",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "select Jet Exit Post in the factory solenoid test",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            3
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "target public output 4 in the factory solenoid test; transition observed",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            4
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "cross the documented Left Gate entry in the factory solenoid test; no public output 5 transition observed",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "select Drop Target Down in the factory solenoid test",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "select Drop Target Up in the factory solenoid test",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            7
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "select Right Popper in the factory solenoid test",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            8
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "select Trough Eject in the factory solenoid test",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            9
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "select Auto Plunger in the factory solenoid test",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "select Right Lockup in the factory solenoid test",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            16
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "target lower-right flipper power output 45; right power and hold winding transitions observed",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            45,
+            46
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "target lower-left flipper power output 47; left power and hold winding transitions observed",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "select Lock Diverter Power in the factory solenoid test",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            51
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "select Lock Diverter Hold in the factory solenoid test",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            52
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "select Up/Down Ramp Power in the factory solenoid test",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            53
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_kind": "key",
+          "input_name": "service_up",
+          "label": "select Up/Down Ramp Hold in the factory solenoid test",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            54
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        32,
+        45,
+        46,
+        47,
+        48,
+        51,
+        52,
+        53,
+        54
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 27,
+        "boot_wait_s": 2.0,
+        "name": "rfm-160-solenoid-service-test-04",
+        "nvram_initialization": "empty isolated state directory",
+        "scenario_path": "tools/harness-scenarios/pinball-2000/rfm-solenoid-service-test.json",
+        "scenario_sha256": "ebd7d68968d6c953d8921cc23588bb4f3831a2e0913de39601b19f9833a62635",
+        "self_test_pulses": 0,
+        "sha256": "47df7e4c1139f14e227334d2d87b809cc78c66ed5c0f334b31bc6a435d654afc",
+        "snapshot_count": 28,
+        "watch_switches": []
+      }
+    ],
+    "rom_archive_sha256": "9a8af78690f7b6e73854a6018aedccbb55aa8c3aa0dc740a45ab0a3859b6df61"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "service_diagnostic",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/revenge-from-mars-1999/harness/rfm-160-solenoid-service-test-04/run.json",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "47df7e4c1139f14e227334d2d87b809cc78c66ed5c0f334b31bc6a435d654afc"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

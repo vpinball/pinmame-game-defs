@@ -22,7 +22,7 @@ MANUAL_EXCERPT_SHA256 = "e283b2b47f41ebe5c5464d2cda49df531d069dc57db8e91f29c12c9
 MANUAL_POLARITY_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-switch-polarity.md"
 MANUAL_POLARITY_EXCERPT_SHA256 = "ebeaa81f508e100314320e2014e86f0cff8bfc8726e5c47d103f0499047db88a"
 MANUAL_LOCATION_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-location-maps.md"
-MANUAL_LOCATION_EXCERPT_SHA256 = "c49204469dbe1bea9d159833f7f862a765d873660cc43f19bb55f0aa3274c938"
+MANUAL_LOCATION_EXCERPT_SHA256 = "7977b64e33308e8ee163a197d6c2426f9ce236e85cfcf47bcede5dd003776815"
 MANUAL_LOCATION_IMAGES = {
 	"lamp-a": {
 		"path": "evidence/excerpts/bally.revenge-from-mars.1999/lamp-locations-matrix-a.webp",
@@ -49,15 +49,110 @@ MANUAL_LOCATION_IMAGES = {
 		"review_frame": {"image_pixels": [1635, 2988], "outer_table_bounds": [361, 477, 1356, 2860]},
 	},
 }
+MANUAL_MECHANISM_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-mechanism-assemblies.md"
+MANUAL_MECHANISM_EXCERPT_SHA256 = "9922331222bec6dae27b8dee7e646d0c52c2f61d6862b0842cda2ee921918038"
+MANUAL_MECHANISM_IMAGES = {
+	"auto-fire": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-auto-fire-assembly.webp",
+		"sha256": "16a2385e6d47b2068f29513d344a43ac69754ea4dd4ee7424fb582c519615fe2",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 52, crop box 0.06,0.03,0.94,0.96, scanned page rendered at its native resolution (embedded image xref 164, 2582px across 8.49in), rendered at 124 dpi, capped to 900px wide, 901x1347 WebP quality 35",
+	},
+	"ball-trough": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-ball-trough-assembly.webp",
+		"sha256": "f1ef59b0f2809c98dfe1b5c8edf4d3fc016d48d879da6be9ce24016591e44f2b",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 53, crop box 0.06,0.03,0.94,0.96, scanned page rendered at its native resolution (embedded image xref 167, 2519px across 8.29in), rendered at 124 dpi, capped to 900px wide, 901x1347 WebP quality 35",
+	},
+	"right-flipper": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-right-flipper-assembly.webp",
+		"sha256": "fc8ad6422bd497b883706246ec95538daadfb0a0b971c9d709ebd06326d8bd3f",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 54, full scanned page rendered at 124 dpi, capped to 900px wide, 900x1273 WebP quality 35",
+	},
+	"left-flipper": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-left-flipper-assembly.webp",
+		"sha256": "bb00de9caa76132e9620c5893c41b0535df1b86967e9cc4e5ae96d8c2110f31e",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 55, full scanned page rendered at 124 dpi, capped to 900px wide, 900x1272 WebP quality 35",
+	},
+	"slingshot-kicker": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-slingshot-kicker-assembly.webp",
+		"sha256": "58f88b77854a0f18d631ec1ec7606689f45b87477e337c0bc612c4da8d8bb6f7",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 56, full scanned page rendered at 124 dpi, capped to 900px wide, 900x1270 WebP quality 35",
+	},
+	"skip-ramp": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-skip-ramp-assembly.webp",
+		"sha256": "c3760e1d669e77cbfec0cd6490c8a9fd6ec56f9f427a09c8d2a4c094393caa6f",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 57, crop box 0.06,0.03,0.94,0.96, scanned page rendered at its native resolution (embedded image xref 181, 2540px across 8.36in), rendered at 124 dpi, capped to 900px wide, 901x1347 WebP quality 35",
+	},
+	"right-popper": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-right-popper-assembly.webp",
+		"sha256": "66236d2c1d05e38a04461252a0246996a58040881458597dc20856dd8d1d762c",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 58, crop box 0.06,0.03,0.94,0.96, scanned page rendered at its native resolution (embedded image xref 185, 2568px across 8.45in), rendered at 124 dpi, capped to 900px wide, 901x1347 WebP quality 35",
+	},
+	"drop-target": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-drop-target-assembly.webp",
+		"sha256": "8e863fb2401f323d41971b4c8338e44990ee1c61973380428e301bcb48965109",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 59, crop box 0.06,0.03,0.94,0.96, scanned page rendered at its native resolution (embedded image xref 188, 2513px across 8.27in), rendered at 124 dpi, capped to 900px wide, 901x1347 WebP quality 35",
+	},
+	"right-lockup": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-right-lockup-assembly.webp",
+		"sha256": "eb7166541f50ec9dfb84bff4ed37e97e430d4d2b52ed63b9ea5f8908445eee42",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 60, crop box 0.06,0.03,0.94,0.96, scanned page rendered at its native resolution (embedded image xref 191, 2526px across 8.31in), rendered at 124 dpi, capped to 900px wide, 901x1347 WebP quality 35",
+	},
+	"lock-diverter": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-lock-diverter-assembly.webp",
+		"sha256": "0c44970314fdb17fc5e097e3670d56af01b3345f302d12280d3897b64464c8e6",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 61, crop box 0.06,0.03,0.94,0.96, scanned page rendered at its native resolution (embedded image xref 195, 2513px across 8.27in), rendered at 124 dpi, capped to 900px wide, 901x1347 WebP quality 35",
+	},
+	"ball-gate": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-ball-gate-assembly.webp",
+		"sha256": "acae05724e5ec4c119c9590779f5a12e748d4d852cc28ff5d403283ea0cfa78d",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 62, full scanned page rendered at 124 dpi, capped to 900px wide, 900x1272 WebP quality 35",
+	},
+	"jet-exit-post": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-jet-exit-post-assembly.webp",
+		"sha256": "e2d0119958c6ad4e8ee416aaf68bfbb36123361224c5393fe58c465d79d20025",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 63, crop box 0.06,0.03,0.94,0.96, scanned page rendered at its native resolution (embedded image xref 202, 2513px across 8.27in), rendered at 124 dpi, capped to 900px wide, 901x1347 WebP quality 35",
+	},
+	"ball-catcher": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-ball-catcher-assembly.webp",
+		"sha256": "c6994f7baedccfc6f38bf11aaa74bc4f49210dd71ddd280467f428e325b35590",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 64, full scanned page rendered at 124 dpi, capped to 900px wide, 900x1256 WebP quality 35",
+	},
+	"martian": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-martian-assembly.webp",
+		"sha256": "34208a13c91759a01ace00fce2d3574724f8d4d19ace4809012ece1b8d31b961",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 65, full scanned page rendered at 124 dpi, capped to 900px wide, 900x1266 WebP quality 35",
+	},
+	"jet-coil": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-jet-coil-assembly.webp",
+		"sha256": "3601a63bb575dff4f135a549c4d7135767624666ea0f1842f69e6d923c57346a",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 66, full scanned page rendered at 124 dpi, capped to 900px wide, 900x1272 WebP quality 35",
+	},
+	"jet-bumper-b9414-6": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-jet-bumper-b9414-6-assembly.webp",
+		"sha256": "4a0d13c3fb045167f688a3972f78fbdc79b5192c4ff25f8e43c4b856ef940045",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 67, full scanned page rendered at 124 dpi, capped to 900px wide, 900x1270 WebP quality 35",
+	},
+	"jet-bumper-b13123-2": {
+		"path": "evidence/excerpts/bally.revenge-from-mars.1999/mechanism-jet-bumper-b13123-2-assembly.webp",
+		"sha256": "d871a51a91c9c8c4ab9e70e83ec9e534f84fda269dbd3c5cf2d391639f0f5f78",
+		"derivation": "Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf page 68, full scanned page rendered at 124 dpi, capped to 900px wide, 900x1260 WebP quality 35",
+	},
+}
 AFTERMARKET_SOURCE = "manual.rfm.mypinballs-opto-expansion-v2"
 AFTERMARKET_SHA256 = "00a744e1cc6507c328b22f33fc4f3aa6f8ec4826dce0a8874493023ee8d48fbf"
 AFTERMARKET_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/mypinballs-opto-expansion-install.md"
-AFTERMARKET_EXCERPT_SHA256 = "c8a30f75b6fd67138828b05e820de9a6944ddd3ac12241a8b15bbe4fa9483972"
+AFTERMARKET_EXCERPT_SHA256 = "4d4622669b0bd622d132d5c1543ec22651cefb5446051141c4e1c4f92da6040d"
 UPDATE_LOG_SOURCE = "service-bulletin.rfm.mypinballs-code-updates"
 UPDATE_LOG_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/mypinballs-code-update-log.md"
 UPDATE_LOG_EXCERPT_SHA256 = "bc85edefe9b568bcc020ce9f6e1d79f0c05a7f4691cb7cbf16533e85ee0e0895"
+LOCK_DIVERTER_REVIEW_SOURCE = "human-review.rfm.pinside-lock-diverter"
+LOCK_DIVERTER_REVIEW_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/pinside-lock-diverter-service-observation.md"
+LOCK_DIVERTER_REVIEW_EXCERPT_SHA256 = "e78b555ab28f737321d9aaa988d88761fc94dc1769272e3ad77c06e7223ef22d"
 RUNTIME_STOCK_SOURCE = "runtime.rfm.stock-ball-serve"
 RUNTIME_DEBUG_SOURCE = "runtime.rfm.debug-ball-cycle"
+RUNTIME_SERVICE_SOURCE = "service-diagnostic.rfm.solenoid-test"
+RUNTIME_SERVICE_EVIDENCE = "evidence/runtime/p2k/revenge-from-mars-solenoid-service-test.json"
+RUNTIME_SERVICE_EVIDENCE_SHA256 = "541314fb8e25fac76833130b937a0ea98908c60213bf133aca86b6815036a498"
 AFTERMARKET_IMAGES = {
 	"trough": {
 		"path": "evidence/excerpts/bally.revenge-from-mars.1999/aftermarket-six-ball-trough.webp",
@@ -72,6 +167,7 @@ AFTERMARKET_IMAGES = {
 }
 REJECTED_VPX_SHA256 = "9a5415a3b6b5a57b01749415789019fe7037a828e9ab691ce64cd1720b2294be"
 DEFINITION_PATH = ROOT / "machines/partial/bally/revenge-from-mars-1999.json"
+AUTHOR_READY_PATH = ROOT / "machines/author-ready/bally/revenge-from-mars-1999.json"
 KNOWLEDGE_PATH = ROOT / "knowledge/bally/revenge-from-mars-1999.md"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/bally/revenge-from-mars-1999.json"
 
@@ -174,6 +270,16 @@ OPTIONAL_SWITCHES = {53, 54, 55, 56}
 OPTO_SWITCHES = {41, 42, 43, 44, 45, 46, 47, 51, 52, 53, 54, 55, 56}
 REED_SWITCHES = {31, 32}
 CABINET_OR_SERVICE_SWITCHES = set(range(91, 119))
+MANUAL_SWITCH_CONSTRUCTION = {
+	15: {"switch_type": "microswitch", "part_number": "5647-12693-31", "assembly_part_number": "A-15211-1"},
+	38: {"switch_type": "microswitch", "part_number": "5647-12693-07", "assembly_part_number": "A-22989"},
+	63: {"switch_type": "leaf", "part_number": "A-16443-1", "assembly_part_number": "A-12030-3"},
+	64: {"switch_type": "leaf", "part_number": "A-16443-1", "assembly_part_number": "A-12030-3"},
+	65: {"switch_type": "leaf", "part_number": "A-16443-1", "assembly_part_number": "A-12030-3"},
+	75: {"switch_type": "microswitch", "part_number": "5647-12693-11", "assembly_part_number": "A-22992"},
+	105: {"switch_type": "leaf", "part_number": "SW-1A-194", "assembly_part_number": "A-23004-R-2"},
+	106: {"switch_type": "leaf", "part_number": "SW-1A-194", "assembly_part_number": "A-23001-L-2"},
+}
 
 MATRIX_COLUMN_WIRING = [
 	("GRN-BRN", "J116-1", "U45-18"),
@@ -239,6 +345,8 @@ def input_switch_type(address: int) -> str:
 		return "opto"
 	if address in REED_SWITCHES:
 		return "reed"
+	if construction := MANUAL_SWITCH_CONSTRUCTION.get(address):
+		return construction["switch_type"]
 	if address in {13, 23, 91, 92, 93, 94, 101, 102, 103, 104, 115, 116, 117, 118}:
 		return "button"
 	if address in {111, 113}:
@@ -282,6 +390,9 @@ def build_inputs() -> list[dict[str, object]]:
 			"switch_type": input_switch_type(address),
 			"location": label if availability != "unused" else f"Unpopulated manual position {manual_address}",
 		}
+		if construction := MANUAL_SWITCH_CONSTRUCTION.get(address):
+			physical["part_number"] = construction["part_number"]
+			physical["assembly_part_number"] = construction["assembly_part_number"]
 		if availability != "unused":
 			physical["notes"] = (
 				"PinMAME's P2K driver publishes this per-game opto at its raw active-low level: beam blocked/active is 0 and inactive is 1. A recreation must drive that public level without applying a controller-wide inversion."
@@ -329,6 +440,8 @@ def build_inputs() -> list[dict[str, object]]:
 			}
 		if availability == "unused":
 			item["spatial"] = {"status": "not_applicable", "reason": "unused", "provenance": provenance(MANUAL_SOURCE)}
+		elif address in {105, 106}:
+			item["spatial"] = {"status": "not_applicable", "reason": "internal_nonvisual", "provenance": provenance(MANUAL_SOURCE)}
 		elif address in CABINET_OR_SERVICE_SWITCHES or address in {13, 23}:
 			item["spatial"] = {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": provenance(MANUAL_SOURCE)}
 		result.append(item)
@@ -423,6 +536,12 @@ COIL_WIRING = {
 
 FLASHERS = {17, 22, 23, 25, 26, 27, 28}
 OPTIONAL_DRIVERS = {18, 19, 48}
+LIVE_VIRTUAL_DRIVERS = {
+	29: ("PDB Solenoid D State 29", 4, (RUNTIME_STOCK_SOURCE, RUNTIME_SERVICE_SOURCE)),
+	30: ("PDB Solenoid D State 30", 5, (RUNTIME_STOCK_SOURCE, RUNTIME_SERVICE_SOURCE)),
+	31: ("PDB Solenoid D State 31", 6, (RUNTIME_STOCK_SOURCE,)),
+	32: ("PDB Solenoid D State 32", 7, (RUNTIME_STOCK_SOURCE, RUNTIME_SERVICE_SOURCE)),
+}
 
 
 def public_solenoid(driver: int) -> int:
@@ -437,13 +556,13 @@ def build_outputs() -> list[dict[str, object]]:
 	result: list[dict[str, object]] = []
 	for driver in range(1, 49):
 		public = public_solenoid(driver)
-		label = COIL_NAMES.get(driver, f"Unused driver {driver}")
-		availability = "optional" if driver in OPTIONAL_DRIVERS else "used" if driver in COIL_NAMES else "unused"
+		label = LIVE_VIRTUAL_DRIVERS[driver][0] if driver in LIVE_VIRTUAL_DRIVERS else COIL_NAMES.get(driver, f"Unused driver {driver}")
+		availability = "optional" if driver in OPTIONAL_DRIVERS else "used" if driver in COIL_NAMES or driver in LIVE_VIRTUAL_DRIVERS else "unused"
 		if driver in FLASHERS:
 			kind = "flasher"
 		elif driver in {19, 48}:
 			kind = "motor"
-		elif availability == "unused":
+		elif availability == "unused" or driver in LIVE_VIRTUAL_DRIVERS:
 			kind = "virtual"
 		else:
 			kind = "coil"
@@ -454,7 +573,7 @@ def build_outputs() -> list[dict[str, object]]:
 			"binding": {"group": "pinmame.output.solenoid", "device": public},
 			"aliases": aliases("pinmame.solenoid", public, str(driver)),
 			"availability": availability,
-			"provenance": provenance(CORE_SOURCE, MANUAL_SOURCE) if driver <= 40 else provenance(CORE_SOURCE),
+			"provenance": provenance(CORE_SOURCE, *LIVE_VIRTUAL_DRIVERS[driver][2]) if driver in LIVE_VIRTUAL_DRIVERS else provenance(CORE_SOURCE, MANUAL_SOURCE) if driver <= 40 else provenance(CORE_SOURCE),
 		}
 		physical: dict[str, object] = {"location": label}
 		if part := COIL_PARTS.get(driver):
@@ -465,6 +584,10 @@ def build_outputs() -> list[dict[str, object]]:
 			physical["notes"] = "Aftermarket shaker-motor kit; the factory manual marks driver 19 unused."
 		elif driver == 48:
 			physical["notes"] = "Optional ticket-dispenser output named by the game device table; not normally fitted to a pinball cabinet."
+		elif driver in LIVE_VIRTUAL_DRIVERS:
+			bit = LIVE_VIRTUAL_DRIVERS[driver][1]
+			trace_description = "retained production and service traces prove" if RUNTIME_SERVICE_SOURCE in LIVE_VIRTUAL_DRIVERS[driver][2] else "the retained production trace proves"
+			physical["notes"] = f"PinMAME publishes bit {bit} of the power-driver board's solenoid-D register 0x0D at public address {public}. PinMAME's RFM device table names no fitted physical load at driver {driver}, but {trace_description} the firmware changes this register-state channel, so it is live virtual state rather than an unused output."
 		item["physical"] = physical
 		if driver in COIL_WIRING:
 			transistor, connection, wire, power_connection, power_wire = COIL_WIRING[driver]
@@ -478,7 +601,9 @@ def build_outputs() -> list[dict[str, object]]:
 				wiring["power_connection"] = power_connection
 				wiring["power_wire"] = power_wire
 			item["wiring"] = wiring
-		if availability == "unused":
+		if driver in LIVE_VIRTUAL_DRIVERS:
+			item["spatial"] = {"status": "not_applicable", "reason": "virtual", "provenance": provenance(CORE_SOURCE, *LIVE_VIRTUAL_DRIVERS[driver][2])}
+		elif availability == "unused":
 			item["spatial"] = {"status": "not_applicable", "reason": "unused", "provenance": provenance(CORE_SOURCE, MANUAL_SOURCE) if driver <= 40 else provenance(CORE_SOURCE)}
 		elif driver in OPTIONAL_DRIVERS:
 			item["spatial"] = {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": provenance(CORE_SOURCE)}
@@ -668,36 +793,183 @@ def device_id(group: str, address: int, devices: list[dict[str, object]]) -> str
 def build_mechanisms(inputs: list[dict[str, object]], outputs: list[dict[str, object]]) -> list[dict[str, object]]:
 	switch = lambda address: device_id("pinmame.input.switch", address, inputs)
 	solenoid = lambda address: device_id("pinmame.output.solenoid", address, outputs)
-	prov = provenance(CORE_SOURCE, MANUAL_SOURCE, status="observed")
-	runtime_prov = provenance(CORE_SOURCE, MANUAL_SOURCE, RUNTIME_STOCK_SOURCE, RUNTIME_DEBUG_SOURCE, status="observed")
+	prov = provenance(CORE_SOURCE, MANUAL_SOURCE, RUNTIME_SERVICE_SOURCE)
+	manual_prov = provenance(CORE_SOURCE, MANUAL_SOURCE)
+	runtime_prov = provenance(CORE_SOURCE, MANUAL_SOURCE, RUNTIME_STOCK_SOURCE, RUNTIME_DEBUG_SOURCE, RUNTIME_SERVICE_SOURCE)
+	diverter_prov = provenance(CORE_SOURCE, MANUAL_SOURCE, LOCK_DIVERTER_REVIEW_SOURCE, RUNTIME_SERVICE_SOURCE)
 	return [
-		{"id": "mechanism.ball-trough", "label": "Four-ball trough", "kind": "kicker", "actuators": [solenoid(9)], "sensors": [switch(number) for number in (41, 42, 43, 44, 45)], "behavior": "The stock assembly exposes jam opto 41 followed by four active-low ball-position optos 42-45. The retained release-DLL scenario supplies the four trough positions as host stimulus and observes driver 9 pulsing when a game starts; those switch readbacks are not ROM evidence. Independently, the P2K debug model owns the trough switches and records one position opening after driver 9, shooter-lane switch 18 closing, and all four trough positions active again after its modeled drain. Optional switches 53-54 extend the assembly to six balls for supporting community firmware. The logical contract remains observed because the debug model is synthetic, and its frame delays are not physical timing measurements.", "assembly_part_number": "A-22971", "provenance": runtime_prov},
-		{"id": "mechanism.right-popper", "label": "Right popper", "kind": "kicker", "actuators": [solenoid(8)], "sensors": [switch(46)], "behavior": "The right-popper opto reports an occupied ball and the right-popper coil ejects it; exact launch vector and timing are not yet validated.", "assembly_part_number": "A-23156", "provenance": prov},
-		{"id": "mechanism.drop-target", "label": "Single drop target", "kind": "drop_target_bank", "actuators": [solenoid(6), solenoid(7)], "sensors": [switch(15)], "behavior": "Separate down and up coils move the single target and the Drop Target Down switch reports the lowered state; timing and startup state remain to be runtime-validated.", "assembly_part_number": "A-15211-1", "provenance": prov},
-		{"id": "mechanism.jet-exit-post", "label": "Jet exit post", "kind": "other", "actuators": [solenoid(3)], "sensors": [switch(47)], "behavior": "A dedicated coil drives the jet-exit post and a normally-closed opto reports the jet-exit path; the exact mechanical sequence remains to be runtime-validated.", "assembly_part_number": "A-22977", "provenance": prov},
-		{"id": "mechanism.lock-diverter", "label": "Lock diverter", "kind": "diverter", "actuators": [solenoid(51), solenoid(52)], "sensors": [], "behavior": "Power and hold windings operate the lock diverter. The manual identifies the assembly and electrical pair, but positions and transition timing are not yet validated.", "assembly_part_number": "A-22993", "provenance": prov},
-		{"id": "mechanism.up-down-ramp", "label": "Up/down ramp", "kind": "diverter", "actuators": [solenoid(53), solenoid(54)], "sensors": [switch(38)], "behavior": "Power and hold windings move the ramp; switch 38 reports Ramp Up. Exact startup position and transition timing remain to be runtime-validated.", "assembly_part_number": "A-22989", "provenance": prov},
-		{"id": "mechanism.right-lockup", "label": "Right lockup", "kind": "kicker", "actuators": [solenoid(16)], "sensors": [switch(51), switch(55), switch(56)], "behavior": "The stock A-20680-1 assembly has active-low Right Lockup 1 opto 51 and eject driver 16. The production weldment retains two omitted sensor positions; the documented four-opto expansion populates them as Right Lockup 2 and 3 on optional switches 55-56. Firmware 2.60 and later requires those positions and updates the device logic to hold three balls physically. Exact eject timing and launch vector remain recreation-specific.", "assembly_part_number": "A-20680-1", "provenance": provenance(CORE_SOURCE, MANUAL_SOURCE, AFTERMARKET_SOURCE, UPDATE_LOG_SOURCE, status="observed")},
-		{"id": "mechanism.auto-plunger", "label": "Auto plunger", "kind": "kicker", "actuators": [solenoid(15)], "sensors": [switch(18)], "behavior": "Shooter-lane switch 18 reports a staged ball. In the release-DLL scenario, the harness supplies switch 18 as stimulus and observes a driver-15 pulse when Launch is pressed; the switch readback is not ROM evidence. The independent debug model owns switch 18 and clears it after driver 15 as its synthetic ball leaves the lane. The controller-facing sequence is observed, while physical coil force, travel time, and launch vector remain table-geometry parameters.", "assembly_part_number": "A-22429-4", "provenance": runtime_prov},
+		{
+			"id": "mechanism.left-martian", "label": "Left Martian toy", "kind": "toy", "actuators": [solenoid(1)], "sensors": [switch(number) for number in (71, 72, 73)],
+			"behavior": "The left A-22960 assembly carries a 23-6768 Martian figurine on a linear 04-12595.2 plunger. Public output 1 draws the plunger into its AE1-26-1500 coil to raise the figurine; the 10-135 spring returns it below the playfield when unpowered. The three nearby Martian target switches report ball strikes, not toy position. The pinned factory-service run records output 1 transitioning when Repeat mode starts. Travel height and animation speed remain table-owned geometry and tuning.",
+			"assembly_part_number": "A-22960",
+			"positions": [
+				{"id": "position.left-martian-down", "label": "Down", "sensors": [], "description": "Unpowered spring-return position below the playfield; no position sensor is fitted."},
+				{"id": "position.left-martian-up", "label": "Up", "sensors": [], "description": "Output 1 draws the plunger into the coil and raises the figurine; no position sensor is fitted."},
+			],
+			"provenance": prov,
+		},
+		{
+			"id": "mechanism.right-martian", "label": "Right Martian toy", "kind": "toy", "actuators": [solenoid(2)], "sensors": [switch(number) for number in (85, 86, 87)],
+			"behavior": "The right A-22960 assembly carries a 23-6768 Martian figurine on a linear 04-12595.2 plunger. Public output 2 draws the plunger into its AE1-26-1500 coil to raise the figurine; the 10-135 spring returns it below the playfield when unpowered. The three nearby Martian target switches report ball strikes, not toy position. The pinned factory-service run explicitly targets and observes output 2. Travel height and animation speed remain table-owned geometry and tuning.",
+			"assembly_part_number": "A-22960",
+			"positions": [
+				{"id": "position.right-martian-down", "label": "Down", "sensors": [], "description": "Unpowered spring-return position below the playfield; no position sensor is fitted."},
+				{"id": "position.right-martian-up", "label": "Up", "sensors": [], "description": "Output 2 draws the plunger into the coil and raises the figurine; no position sensor is fitted."},
+			],
+			"provenance": prov,
+		},
+		{
+			"id": "mechanism.right-gate", "label": "Right ball gate", "kind": "gate", "actuators": [solenoid(4)], "sensors": [],
+			"behavior": "Public output 4 energizes the right A-17796 Ball Gate Actuator Assembly. Its A-14406 coil pulls the A-11146 armature; springs 10-120 and 10-194 return the gate when power is removed. The pinned factory-service run explicitly targets and observes output 4. The authored gate and surrounding lane geometry define the open and closed ball routes.",
+			"assembly_part_number": "A-17796",
+			"positions": [
+				{"id": "position.right-gate-closed", "label": "Closed", "sensors": [], "description": "Unpowered spring-return position; no position sensor is fitted."},
+				{"id": "position.right-gate-open", "label": "Open", "sensors": [], "description": "Output 4 pulls the ball-gate armature; no position sensor is fitted."},
+			],
+			"provenance": prov,
+		},
+		{
+			"id": "mechanism.left-gate", "label": "Left ball gate", "kind": "gate", "actuators": [solenoid(5)], "sensors": [],
+			"behavior": "The official wiring and parts tables bind public output 5 to the left A-17796 Ball Gate Actuator Assembly. Its A-14406 coil pulls the A-11146 armature; springs 10-120 and 10-194 return the gate when power is removed. The pinned factory-service walk crosses this entry without an output-5 callback, but the separate production serve/launch trace records public output 5 in its complete callback set; the negative result is therefore scoped to that service-menu walk rather than generalized to runtime. The authored gate and surrounding lane geometry define the open and closed ball routes.",
+			"assembly_part_number": "A-17796",
+			"positions": [
+				{"id": "position.left-gate-closed", "label": "Closed", "sensors": [], "description": "Unpowered spring-return position; no position sensor is fitted."},
+				{"id": "position.left-gate-open", "label": "Open", "sensors": [], "description": "Output 5 is the documented actuator command; no position sensor is fitted."},
+			],
+			"provenance": provenance(CORE_SOURCE, MANUAL_SOURCE, RUNTIME_SERVICE_SOURCE),
+		},
+		{
+			"id": "mechanism.ball-catcher", "label": "Center ball catcher", "kind": "other", "actuators": [], "sensors": [switch(75)],
+			"behavior": "A ball reaching the center A-22992 catcher pivots the 03-10008 backstop on shaft 02-5476 and actuates public switch 75, which the switch matrix names Center Deflector Panel. Spring 10-562.1 returns the backstop after the ball leaves, and the anti-ball-trap bracket constrains the path. This passive assembly has no controller-driven actuator; exact collision surfaces and dwell time come from the authored playfield geometry.",
+			"assembly_part_number": "A-22992",
+			"positions": [
+				{"id": "position.ball-catcher-ready", "label": "Ready", "sensors": [], "description": "Spring-returned backstop with Center Deflector Panel switch 75 inactive."},
+				{"id": "position.ball-catcher-deflected", "label": "Deflected", "sensors": [switch(75)], "description": "A ball pivots the backstop and actuates Center Deflector Panel switch 75."},
+			],
+			"provenance": manual_prov,
+		},
+		{
+			"id": "mechanism.ball-trough", "label": "Four-ball trough", "kind": "kicker", "actuators": [solenoid(9)], "sensors": [switch(number) for number in (41, 42, 43, 44, 45)],
+			"behavior": "The stock A-19963-4 assembly has a jam beam at public switch 41 and four sequential active-low ball beams at 42-45. Ball 1 at 42 is the leading eject position; balls 2-4 queue behind it. Driver 9 energizes the bell-armature eject and the return spring homes it, serving the leading ball into the shooter lane. The retained release trace observes the ROM request driver 9 after Start, and the isolated debug trace supplies the controller-facing 42-45 to 18 serve/drain cycle without claiming physical timing. Optional switches 53-54 extend the same linear sequence for six-ball community firmware. Coil force, travel time, and the exact ball trajectory are table-owned tuning parameters.",
+			"assembly_part_number": "A-19963-4",
+			"positions": [
+				{"id": "position.trough-jam", "label": "Jam beam", "sensors": [switch(41)], "description": "Ball blocks the trough-jam beam ahead of the queued position sensors."},
+				*({"id": f"position.trough-ball-{index}", "label": f"Ball {index}", "sensors": [switch(41 + index)], "description": f"Occupied active-low trough position; Ball {index} is nearest the eject." if index == 1 else f"Occupied active-low trough position; Ball {index} is queued behind Ball {index - 1}."} for index in range(1, 5)),
+			],
+			"provenance": runtime_prov,
+		},
+		{
+			"id": "mechanism.right-popper", "label": "Right popper", "kind": "kicker", "actuators": [solenoid(8)], "sensors": [switch(46)],
+			"behavior": "The active-low Right Popper opto reports a ball in the A-23156 cup. Driver 8 drives the armature-and-extension eject; the plunger spring returns it after the pulse. The factory service trace proves that the ROM test requests public output 8. The cup position and playfield geometry define the physical exit vector, while pulse strength and timing remain table-owned tuning.",
+			"assembly_part_number": "A-23156",
+			"positions": [
+				{"id": "position.right-popper-empty", "label": "Empty", "sensors": [], "description": "Opto beam clear."},
+				{"id": "position.right-popper-occupied", "label": "Occupied", "sensors": [switch(46)], "description": "Ball in the popper cup blocks the active-low opto beam."},
+			],
+			"provenance": prov,
+		},
+		{
+			"id": "mechanism.drop-target", "label": "Single drop target", "kind": "drop_target_bank", "actuators": [solenoid(6), solenoid(7)], "sensors": [switch(15)],
+			"behavior": "Driver 6 moves the A-15211-1 target down and driver 7 resets it up through the actuator/reset-plate linkage; the factory service trace walks both outputs independently. Switch 15 reports the down position. A recreation initializes from the controller-visible switch state and follows the two output commands rather than assuming a timer-based startup position; travel speed remains table-owned tuning.",
+			"assembly_part_number": "A-15211-1",
+			"positions": [
+				{"id": "position.drop-target-up", "label": "Up", "sensors": [], "description": "Target raised; Drop Target Down switch inactive."},
+				{"id": "position.drop-target-down", "label": "Down", "sensors": [switch(15)], "description": "Target lowered; switch 15 active."},
+			],
+			"provenance": prov,
+		},
+		{
+			"id": "mechanism.jet-exit-post", "label": "Jet exit post", "kind": "other", "actuators": [solenoid(3)], "sensors": [switch(47)],
+			"behavior": "Driver 3 pulls the A-22977 bell armature upward into its coil, raising the post above the playfield to hold a ball; the plunger spring lowers the post when unpowered. The factory service trace proves the ROM requests output 3. Active-low switch 47 is a ball-path opto at the jet exit and is not a post-position sensor. The authored playfield owns the post's exact physical travel and collision geometry.",
+			"assembly_part_number": "A-22977",
+			"positions": [
+				{"id": "position.jet-exit-post-down", "label": "Down", "sensors": [], "description": "Unpowered spring-return position below the ball path."},
+				{"id": "position.jet-exit-post-up", "label": "Up", "sensors": [], "description": "Driver 3 pulls the bell armature upward and raises the post to capture a ball; switch 47 does not report this position."},
+			],
+			"provenance": prov,
+		},
+		{
+			"id": "mechanism.lock-diverter", "label": "Lock diverter", "kind": "diverter", "actuators": [solenoid(51), solenoid(52)], "sensors": [],
+			"behavior": "Public output 51 is the power winding that pulls the A-22993 diverter fully open and 52 is the hold winding that maintains the open lock route. The master and gate springs return the plunger, drive arm, and paddle fully closed when released; no position sensor is fitted. The official assembly proves that return topology, a physical-machine service observation identifies the open/closed direction, and the factory service trace walks both public outputs independently. Exact collision surfaces and transition speed are table-owned geometry and tuning.",
+			"assembly_part_number": "A-22993",
+			"positions": [
+				{"id": "position.lock-diverter-closed", "label": "Closed", "sensors": [], "description": "Unpowered paddle position maintained by the master and gate springs."},
+				{"id": "position.lock-diverter-open", "label": "Open", "sensors": [], "description": "Power winding opens the lock route and hold winding maintains it; no position feedback is fitted."},
+			],
+			"provenance": diverter_prov,
+		},
+		{
+			"id": "mechanism.up-down-ramp", "label": "Up/down ramp", "kind": "diverter", "actuators": [solenoid(53), solenoid(54)], "sensors": [switch(38)],
+			"behavior": "Public output 53 is the power winding that raises the A-22989 center skip ramp and 54 is the hold winding that maintains it. Switch 38 reports Ramp Up; with the winding released, the ramp returns to the down playfield route. The factory service trace walks both outputs independently. The retained assembly drawing establishes the moving flap and linkage; surface shape, transition speed, and ball flight are table-owned geometry and tuning.",
+			"assembly_part_number": "A-22989",
+			"positions": [
+				{"id": "position.skip-ramp-down", "label": "Down", "sensors": [], "description": "Ramp Up switch inactive; flap lies in the normal playfield route."},
+				{"id": "position.skip-ramp-up", "label": "Up", "sensors": [switch(38)], "description": "Power winding raises the ramp and hold winding maintains it; switch 38 active."},
+			],
+			"provenance": prov,
+		},
+		{
+			"id": "mechanism.right-lockup", "label": "Right lockup", "kind": "kicker", "actuators": [solenoid(16)], "sensors": [switch(51), switch(55), switch(56)],
+			"behavior": "The A-20680-1 assembly is a three-ball popper with one spring-returned coil/cup eject. Stock RFM populates active-low Right Lockup 1 opto 51 and uses driver 16 to eject the leading captured ball. The documented four-opto expansion populates the production lock weldment's two omitted sensor positions as Right Lockup 2 and 3 on switches 55-56; firmware 2.60 requires all three physical lock positions. The factory service trace proves the ROM requests output 16. Eject force, timing, and the downstream ball vector remain table-owned tuning and geometry.",
+			"assembly_part_number": "A-20680-1",
+			"positions": [
+				{"id": "position.right-lockup-empty", "label": "Empty", "sensors": [], "description": "No populated lock-position opto is blocked."},
+				{"id": "position.right-lockup-ball-1", "label": "One ball", "sensors": [switch(51)], "description": "Stock lock position occupied."},
+				{"id": "position.right-lockup-ball-2", "label": "Two balls", "sensors": [switch(51), switch(55)], "description": "Requires the first optional expansion opto."},
+				{"id": "position.right-lockup-ball-3", "label": "Three balls", "sensors": [switch(51), switch(55), switch(56)], "description": "Full 2.60 expansion contract."},
+			],
+			"provenance": provenance(CORE_SOURCE, MANUAL_SOURCE, AFTERMARKET_SOURCE, UPDATE_LOG_SOURCE, RUNTIME_SERVICE_SOURCE),
+		},
+		{
+			"id": "mechanism.auto-plunger", "label": "Auto plunger", "kind": "kicker", "actuators": [solenoid(15)], "sensors": [switch(18)],
+			"behavior": "Shooter-lane switch 18 reports a staged ball. Driver 15 drives the A-22429-4 plunger and its return spring homes it, launching the ball onto the playfield. The release scenario observes the ROM request driver 15 after Launch; the independent debug model clears switch 18 as its synthetic ball leaves. The factory solenoid test separately confirms output 15. Coil force, travel time, and launch vector remain table-owned tuning and geometry.",
+			"assembly_part_number": "A-22429-4",
+			"positions": [
+				{"id": "position.shooter-lane-empty", "label": "Empty", "sensors": [], "description": "Shooter-lane switch 18 inactive."},
+				{"id": "position.shooter-lane-staged", "label": "Ball staged", "sensors": [switch(18)], "description": "Ball occupies the shooter lane and is ready for manual or timed auto-launch."},
+			],
+			"provenance": runtime_prov,
+		},
+		{
+			"id": "mechanism.slingshots", "label": "Left and right slingshots", "kind": "kicker", "actuators": [solenoid(10), solenoid(11)], "sensors": [switch(61), switch(62)],
+			"behavior": "The left and right slingshots use A-17811 spring-returned kicker assemblies. Public switches 61 and 62 report rubber strikes and request outputs 10 and 11 respectively; each AE1-26-1200 coil drives its plunger/crank linkage and the 10-128 spring returns it. The retained service walk transitions both outputs while advancing through the list, but they were not separately selected as named targets. Rubber shape, impulse, and collision response remain table-owned geometry and tuning.",
+			"assembly_part_number": "A-17811",
+			"provenance": prov,
+		},
+		{
+			"id": "mechanism.jet-bumpers", "label": "Left, right, and bottom jet bumpers", "kind": "other", "actuators": [solenoid(12), solenoid(13), solenoid(14)], "sensors": [switch(63), switch(64), switch(65)],
+			"behavior": "The left, right, and bottom jet bumpers use A-22205-4 coil/link assemblies beneath two B-9414-6 and one B-13123-2 playfield bodies. Public switches 63-65 request outputs 12-14 in the same order; each AE1-26-1200 coil pulls its plunger/linkage and the 10-326 spring returns it. The retained service walk transitions all three outputs while advancing through the list, but they were not separately selected as named targets. Ring travel, impulse, and collision response remain table-owned geometry and tuning.",
+			"assembly_part_number": "A-22205-4 / B-9414-6 / B-13123-2",
+			"provenance": prov,
+		},
+		{
+			"id": "mechanism.flippers", "label": "Two lower flippers", "kind": "other", "actuators": [solenoid(number) for number in (45, 46, 47, 48)], "sensors": [switch(number) for number in (105, 106, 115, 116)],
+			"behavior": "RFM has one lower right A-23004-R-2 flipper and one lower left A-23001-L-2 flipper, each using a blue FL1-11629 power/hold coil, a cabinet button, and an SW-1A-194 end-of-stroke switch. PinMAME exposes the right power/hold pair at 45-46 and the left pair at 47-48; switches 105-106 are the right/left EOS contacts and 115-116 are the right/left cabinet buttons. The manual says each EOS contact closes in the activated position. The factory-service run explicitly targets power outputs 45 and 47 and records transitions across all four windings. Bat angle, strength, and motion curves remain table-owned geometry and tuning.",
+			"assembly_part_number": "A-23004-R-2 / A-23001-L-2",
+			"provenance": prov,
+		},
 	]
 
 
+PRISM_NOTE = " PinMAME composes this set with its current revision-1 Prism banks; the pinned source explicitly leaves the authentic factory revision-1/revision-2 shipping pairing unverified. PinMAME notes that the pairing does not change gameplay because the update flash overrides game code; it changes authentic boot-image identity and whether an unpatched revision-2 set boots."
+
+
 VARIANT_NOTES = {
-	"rfm_120": "Factory 1.20 update for the stock model 50070 cabinet and original four-ball playfield.",
-	"rfm_140": "Factory 1.40 update for the same stock model 50070 cabinet and I/O contract.",
-	"rfm_150": "Factory 1.50 update documented by the February 1999 operations manual; same stock cabinet and I/O contract.",
-	"rfm_160": "Last official 1.60 update for the stock model 50070 cabinet; canonical physical baseline for this clone family.",
-	"rfm_180": "Unofficial tournament-oriented update for the stock playfield; PinMAME notes an 8 MB RAM requirement but no new playfield I/O.",
-	"rfm_190": "Unofficial hemtoni update for the stock playfield and stock sound flash.",
-	"rfm_191": "Unofficial hemtoni update that ships a distinct sound flash with additional sounds; playfield I/O remains compatible.",
-	"rfm_195": "Unofficial German retranslation branch based on the 1.90-era software and stock playfield hardware.",
-	"rfm_200": "First myPinballs update; reuses the 1.91 sound flash and does not yet enable the optional shaker/knocker outputs introduced in 2.10.",
-	"rfm_210": "myPinballs update compatible with the stock playfield and able to use optional aftermarket knocker driver 18 and shaker driver 19 when fitted.",
-	"rfm_222": "First myPinballs line that recognizes six balls when the optional trough expansion is installed; it remains compatible with the stock four-ball playfield.",
-	"rfm_223": "myPinballs update retaining stock four-ball compatibility and optional six-ball trough support through switches 53-54.",
-	"rfm_224": "myPinballs update retaining stock four-ball compatibility and optional six-ball trough support through switches 53-54.",
-	"rfm_250": "myPinballs update retaining stock four-ball compatibility; when the optional six-ball trough is fitted, Capture Multiball can use the additional balls.",
-	"rfm_260": "myPinballs update that requires the full four-opto expansion to operate correctly: switches 53-54 extend the trough to six balls and switches 55-56 extend the right lock to three physical ball positions.",
+	"rfm_120": "Factory 1.20 update for the stock model 50070 cabinet, original four-ball playfield, and stock sound flash." + PRISM_NOTE,
+	"rfm_140": "Factory 1.40 update for the stock model 50070 cabinet, original four-ball playfield, and stock sound flash." + PRISM_NOTE,
+	"rfm_150": "Factory 1.50 update documented by the February 1999 operations manual; stock model 50070 I/O, four-ball playfield, and sound flash." + PRISM_NOTE,
+	"rfm_160": "Last official update and PinMAME parent for the stock model 50070 cabinet; canonical four-ball physical baseline with the stock sound flash." + PRISM_NOTE,
+	"rfm_180": "Tom Uban EPC 2006 tournament update for the unmodified stock playfield; requires 8 MB RAM and uses the stock sound flash." + PRISM_NOTE,
+	"rfm_190": "hemtoni update for the unmodified stock playfield; removes the 1.80-era 8 MB requirement and uses the stock sound flash." + PRISM_NOTE,
+	"rfm_191": "hemtoni update for the unmodified stock playfield with its own 1.91 sound flash and additional sounds; that same sound image is reused by 2.00 and 2.10." + PRISM_NOTE,
+	"rfm_195": "hemtoni German retranslation branch based on the 1.90-era software for the unmodified stock playfield; it uses the stock sound flash and is not the newest 1.x branch." + PRISM_NOTE,
+	"rfm_200": "First myPinballs update for the unmodified stock playfield; reuses the 1.91 sound flash and does not yet enable the optional shaker/knocker outputs introduced in 2.10." + PRISM_NOTE,
+	"rfm_210": "myPinballs update for the unmodified stock playfield; reuses the 1.91 sound flash and can drive an optional knocker on 18 and shaker on 19 when fitted." + PRISM_NOTE,
+	"rfm_222": "First myPinballs line, also released as 2.30, that recognizes six balls when the optional trough expansion is installed; it remains compatible with the stock four-ball playfield and returns to the stock sound flash." + PRISM_NOTE,
+	"rfm_223": "myPinballs update, also released as 2.40, retaining stock four-ball compatibility and optional six-ball trough support through switches 53-54; stock sound flash." + PRISM_NOTE,
+	"rfm_224": "myPinballs update, also released as 2.42, retaining stock four-ball compatibility and optional six-ball trough support through switches 53-54; stock sound flash." + PRISM_NOTE,
+	"rfm_250": "myPinballs update retaining stock four-ball compatibility; with the optional six-ball trough fitted, Capture Multiball can use the additional balls. It uses the stock sound flash." + PRISM_NOTE,
+	"rfm_260": "myPinballs update that requires the full four-opto expansion: switches 53-54 extend the trough to six balls and 55-56 extend the right lock to three physical ball positions. It uses the stock sound flash." + PRISM_NOTE,
 }
 
 
@@ -719,13 +991,13 @@ def build_drivers() -> list[dict[str, object]]:
 
 SOURCES = [
 	{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames: exact 15-driver rfm_120 through rfm_260 clone family", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
-	{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/p2k.c: public switch translation, opto polarity, output publication, video layout, ROM variants, and hardware-generation contract; src/wpc/p2k_names.h: machine-test-verified RFM switch, coil, and lamp tables", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
+	{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/p2k.c: public switch translation, opto polarity, output publication, video layout, exact emulated update/sound/Prism ROM composition, and hardware-generation contract; src/wpc/p2k_names.h: machine-test-verified RFM switch, coil, and lamp tables; src/p2k/README.md lines 7-26, 117-163, and 269-363: driver lineage, update-flash identity, stock versus 1.91 sound-flash reuse, the factory r2 Prism pair's non-pairing with any game update, the warning that every driver's current revision-1 composition is an unchecked factory-shipping assumption, and the qualifier that boot-bank pairing does not change update-flash gameplay", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 	{
 		"id": MANUAL_SOURCE,
 		"kind": "manual",
 		"uri": "external:pinmame-manuals/_unsorted/Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf",
 		"sha256": MANUAL_SHA256,
-		"locator": "February 1999 model 50070 operations manual; PDF pages 37-38 / printed pages 1-27 through 1-28 switch contacts; PDF pages 78, 80, 82, and 84 / printed pages 2-38, 2-40, 2-42, and 2-44 location drawings; PDF pages 86-88 / printed pages 2-46 through 2-48 service tables; assembly and wiring sections",
+		"locator": "February 1999 model 50070 operations manual; PDF pages 37-38 / printed pages 1-27 through 1-28 switch contacts; PDF pages 52-68 / printed pages 2-12 through 2-28 mechanism assemblies; PDF pages 78, 80, 82, and 84 / printed pages 2-38, 2-40, 2-42, and 2-44 location drawings; PDF pages 86-88 / printed pages 2-46 through 2-48 service tables; wiring section",
 		"excerpts": [
 			{"id": "excerpt.rfm.operations-service-tables", "locator": "PDF pages 86-88; printed pages 2-46 through 2-48", "path": MANUAL_EXCERPT, "sha256": MANUAL_EXCERPT_SHA256, "method": "mixed", "transcribed_by": "Codex with pypdf text extraction and visual page review", "reviewed": True},
 			{"id": "excerpt.rfm.operations-switch-polarity", "locator": "PDF pages 37-38 and 87; printed pages 1-27 through 1-28 and 2-47", "path": MANUAL_POLARITY_EXCERPT, "sha256": MANUAL_POLARITY_EXCERPT_SHA256, "method": "mixed", "transcribed_by": "Codex with Poppler text extraction and visual page review", "reviewed": True},
@@ -733,6 +1005,23 @@ SOURCES = [
 			{"id": "excerpt.rfm.lamp-locations-matrix-b", "locator": "PDF page 80; printed page 2-40, Lamp Locations (Matrix B)", "path": MANUAL_LOCATION_EXCERPT, "sha256": MANUAL_LOCATION_EXCERPT_SHA256, "image": MANUAL_LOCATION_IMAGES["lamp-b"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["lamp-b"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["lamp-b"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
 			{"id": "excerpt.rfm.playfield-switch-locations", "locator": "PDF page 82; printed page 2-42, Playfield Switch Locations", "path": MANUAL_LOCATION_EXCERPT, "sha256": MANUAL_LOCATION_EXCERPT_SHA256, "image": MANUAL_LOCATION_IMAGES["switches"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["switches"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["switches"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
 			{"id": "excerpt.rfm.solenoid-flasher-locations", "locator": "PDF page 84; printed page 2-44, Solenoid/Flasher Locations", "path": MANUAL_LOCATION_EXCERPT, "sha256": MANUAL_LOCATION_EXCERPT_SHA256, "image": MANUAL_LOCATION_IMAGES["solenoids"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["solenoids"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["solenoids"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-auto-fire", "locator": "PDF page 52; printed page 2-12, A-22429-4 Auto-Fire Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["auto-fire"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["auto-fire"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["auto-fire"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-ball-trough", "locator": "PDF page 53; printed page 2-13, A-19963-4 Ball Trough Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["ball-trough"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["ball-trough"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["ball-trough"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-right-flipper", "locator": "PDF page 54; printed page 2-14, A-23004-R-2 Flipper Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["right-flipper"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["right-flipper"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["right-flipper"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-left-flipper", "locator": "PDF page 55; printed page 2-15, A-23001-L-2 Flipper Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["left-flipper"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["left-flipper"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["left-flipper"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-slingshot-kicker", "locator": "PDF page 56; printed page 2-16, A-17811 Kicker Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["slingshot-kicker"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["slingshot-kicker"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["slingshot-kicker"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-skip-ramp", "locator": "PDF page 57; printed page 2-17, A-22989 Skip Ramp Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["skip-ramp"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["skip-ramp"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["skip-ramp"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-right-popper", "locator": "PDF page 58; printed page 2-18, A-23156 Popper Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["right-popper"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["right-popper"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["right-popper"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-drop-target", "locator": "PDF page 59; printed page 2-19, A-15211-1 1 Bank Drop Target Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["drop-target"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["drop-target"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["drop-target"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-right-lockup", "locator": "PDF page 60; printed page 2-20, A-20680-1 3 Ball Popper Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["right-lockup"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["right-lockup"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["right-lockup"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-lock-diverter", "locator": "PDF page 61; printed page 2-21, A-22993 Diverter Mechanism Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["lock-diverter"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["lock-diverter"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["lock-diverter"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-ball-gate", "locator": "PDF page 62; printed page 2-22, A-17796 Ball Gate Actuator Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["ball-gate"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["ball-gate"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["ball-gate"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-jet-exit-post", "locator": "PDF page 63; printed page 2-23, A-22977 Up/Down Post Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["jet-exit-post"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["jet-exit-post"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["jet-exit-post"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-ball-catcher", "locator": "PDF page 64; printed page 2-24, A-22992 Ball Catcher Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["ball-catcher"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["ball-catcher"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["ball-catcher"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-martian", "locator": "PDF page 65; printed page 2-25, A-22960 Martian Mechanism Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["martian"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["martian"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["martian"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-jet-coil", "locator": "PDF page 66; printed page 2-26, A-22205-4 Jet Coil & Bracket Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["jet-coil"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["jet-coil"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["jet-coil"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-jet-bumper-b9414-6", "locator": "PDF page 67; printed page 2-27, B-9414-6 Jet Bumper Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["jet-bumper-b9414-6"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["jet-bumper-b9414-6"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["jet-bumper-b9414-6"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
+			{"id": "excerpt.rfm.mechanism-jet-bumper-b13123-2", "locator": "PDF page 68; printed page 2-28, B-13123-2 Jet Bumper Assembly", "path": MANUAL_MECHANISM_EXCERPT, "sha256": MANUAL_MECHANISM_EXCERPT_SHA256, "image": MANUAL_MECHANISM_IMAGES["jet-bumper-b13123-2"]["path"], "image_sha256": MANUAL_MECHANISM_IMAGES["jet-bumper-b13123-2"]["sha256"], "image_derivation": MANUAL_MECHANISM_IMAGES["jet-bumper-b13123-2"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
 		],
 		"license": "NOASSERTION",
 		"rights": "NOASSERTION",
@@ -765,8 +1054,22 @@ SOURCES = [
 		"rights": "NOASSERTION",
 		"attribution": "myPinballs Electronics",
 	},
-	{"id": RUNTIME_STOCK_SOURCE, "kind": "runtime_scenario", "uri": "internal:evidence/runtime/p2k/revenge-from-mars-stock-ball-serve.json", "revision": PINMAME_REVISION, "locator": "Pinned release-DLL rfm_160 scenario: four active-low trough positions, driver 9 serve, shooter-lane switch 18, driver 15 auto-launch, and a 640x480x24 type-15 video frame; raw run SHA-256 a236d6b7d16efe9c56425affb6c59872c78d801ce106a0bc1af697237c5c8060", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"},
+	{
+		"id": LOCK_DIVERTER_REVIEW_SOURCE,
+		"kind": "human_review",
+		"uri": "https://pinside.com/pinball/forum/topic/rfm-diverter-closes-but-doesnt-open-fully",
+		"locator": "Original physical-machine service report: factory Power solenoid test pulls the RFM diverter fully open; the faulty mechanism fails to spring fully closed after release; follow-up identifies the return spring or diverter rod",
+		"acquired_at": "2026-08-15T20:40:35Z",
+		"excerpts": [
+			{"id": "excerpt.rfm.pinside-lock-diverter-service-observation", "locator": "Original post and replies describing Power-test opening and spring/rod closing behavior", "path": LOCK_DIVERTER_REVIEW_EXCERPT, "sha256": LOCK_DIVERTER_REVIEW_EXCERPT_SHA256, "method": "manual", "transcribed_by": "Codex with browser review", "reviewed": True},
+		],
+		"license": "NOASSERTION",
+		"rights": "NOASSERTION",
+		"attribution": "Pinside user oohlou and technical-thread participants",
+	},
+	{"id": RUNTIME_STOCK_SOURCE, "kind": "runtime_scenario", "uri": "internal:evidence/runtime/p2k/revenge-from-mars-stock-ball-serve.json", "revision": PINMAME_REVISION, "locator": "Pinned release-DLL rfm_160 scenario: four active-low trough positions, driver 9 serve, shooter-lane switch 18, driver 15 auto-launch, a 640x480x24 type-15 video frame, a public-output-5 transition in the complete callback set, and live virtual power-driver register-state channels 29-32; raw run SHA-256 a236d6b7d16efe9c56425affb6c59872c78d801ce106a0bc1af697237c5c8060", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"},
 	{"id": RUNTIME_DEBUG_SOURCE, "kind": "runtime_scenario", "uri": "internal:evidence/runtime/p2k/revenge-from-mars-debug-ball-cycle.json", "revision": PINMAME_REVISION, "locator": "Pinned isolated PINMAME_P2K_DEBUG build and scenario: model-owned trough, shooter-lane, launch, drain, and trough-return states; raw run SHA-256 3c77df07b1127aa4784ff939f7b8eb31021cdb34903a87b5f7f3f3c341c315d9; debug frame delays are explicitly non-physical", "license": "BSD-3-Clause", "attribution": "PinMAME contributors and local harness execution"},
+	{"id": RUNTIME_SERVICE_SOURCE, "kind": "service_diagnostic", "uri": "internal:evidence/runtime/p2k/revenge-from-mars-solenoid-service-test.json", "revision": PINMAME_REVISION, "locator": "Pinned release-DLL rfm_160 factory Solenoid Test walk on empty isolated state: selected public outputs 1-4, 6-9, 15-16, 45, 47, and 51-54 transition; traversal also records 10-14, 46, and 48, while the complete callback set includes live virtual register-state channels 29, 30, and 32; public output 5 alone does not transition when its documented Left Gate service entry is crossed, although the separate production trace records public 5; raw run SHA-256 47df7e4c1139f14e227334d2d87b809cc78c66ed5c0f334b31bc6a435d654afc", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"},
 	{"id": REJECTED_VPX_SOURCE, "kind": "vpx_table", "uri": "external:pinmame-vpx-sources/bally/revenge-from-mars-1999/source/Attack%20and%20Revenge%20from%20Mars%20%28Midway-Williams%29%20v600.vpx", "sha256": REJECTED_VPX_SHA256, "locator": "12,959,744-byte hybrid JPSalas v6.0.0 table; embedded script cGameName=afm_113b and AFM switch/solenoid callbacks; visually confirmed Attack from Mars geometry, rejected for RFM spatial or controller evidence", "original_filename": "Attack and Revenge from Mars (Midway-Williams) v600.vpx", "known_working": False, "license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "JPSalas and credited table contributors"},
 ]
 
@@ -779,7 +1082,7 @@ def build_definition() -> dict[str, object]:
 		"format": "pinmame-machine-definition",
 		"schema_version": 2,
 		"machine": {"id": "bally.revenge-from-mars.1999", "name": "Revenge from Mars", "manufacturer": "Bally", "year": 1999, "kind": "physical_pinball", "model_number": "50070", "ipdb_id": 4446},
-		"coverage": {"status": "partial", "missing": ["mechanism_behavior", "variant_differences"], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "observed", "variant_coverage": "observed", "recreation_knowledge": "observed", "spatial_placement": "observed"}},
+		"coverage": {"status": "partial", "missing": ["variant_differences"], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "validated", "variant_coverage": "observed", "recreation_knowledge": "validated", "spatial_placement": "validated"}},
 		"controller": {"platform": "pinmame.p2k", "hardware_generation": "0x8000000000000", "inversion_applied_by_emulator": True},
 		"drivers": build_drivers(),
 		"inputs": inputs,
@@ -819,13 +1122,13 @@ def build_spatial_report(definition: dict[str, object]) -> dict[str, object]:
 		"format": "pinmame-spatial-blockers",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
-		"status": "stock_spatial_observed_machine_partial",
+		"status": "stock_spatial_validated_machine_partial",
 		"coordinate_convention": {
 			"space": "playfield",
 			"x": "0=left, 1=right in player view",
 			"y": "0=rear/backglass, 1=front/apron",
 			"source": "Orthographic factory service drawings, plus the myPinballs v2.0 installation photographs for optional switches 53-56; callout endpoints and device centers manually projected into one normalized playfield plane",
-			"precision": "Three decimal places for deterministic authoring anchors; every projected placement remains observed because the sources are line art and installation photographs rather than surveyed CAD",
+			"precision": "Three decimal places for deterministic authoring anchors. Validated means each device identity, side, order, and usable point reconciles to retained evidence; it does not claim surveyed CAD.",
 		},
 		"evidence": [
 			{"excerpt_id": "excerpt.rfm.lamp-locations-matrix-a", "locator": "PDF page 78 / printed page 2-38", "image": MANUAL_LOCATION_IMAGES["lamp-a"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["lamp-a"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["lamp-a"]["derivation"], "projection_review_frame": MANUAL_LOCATION_IMAGES["lamp-a"]["review_frame"]},
@@ -841,32 +1144,31 @@ def build_spatial_report(definition: dict[str, object]) -> dict[str, object]:
 		"not_applicable_inputs": grouped_not_applicable(inputs),
 		"not_applicable_outputs": grouped_not_applicable(outputs),
 		"projection_classes": [
-			{"class": "manual_callout_endpoint", "detail": "A leader-line endpoint marks an observed physical switch, lamp, flasher, or actuator effect location."},
-			{"class": "directly_labelled_device_center", "detail": "Where the factory drawing labels a device or insert directly, its drawn center supplies an observed point."},
-			{"class": "shared_center_loop_assembly", "detail": "The switch drawing prints address 31 twice and presents 31/32 as one paired center-loop callout; both reed switches share one observed assembly point because the line art does not provide surveyable separation."},
-			{"class": "shared_mechanism_effect", "detail": "Power/hold winding pairs 33/34, 35/36, 37/38, and 39/40 share the one physical assembly location printed by the manual."},
-			{"class": "aftermarket_sequence_projection", "detail": "Optional trough switches 53-54 continue the photographed factory PCB's evenly spaced Ball 1-4 sequence; lock switches 55-56 use the photographed omitted mounting positions in the existing right-lockup weldment. These four points are observed, not validated."},
+			{"class": "manual_callout_endpoint", "detail": "A leader-line endpoint marks a validated physical switch, lamp, flasher, or actuator effect location."},
+			{"class": "directly_labelled_device_center", "detail": "Where the factory drawing labels a device or insert directly, its drawn center supplies a validated authoring point."},
+			{"class": "shared_center_loop_assembly", "detail": "The switch drawing prints address 31 twice and presents 31/32 as one paired center-loop callout; both reed switches share one validated assembly point because the line art does not provide surveyable separation."},
+			{"class": "shared_mechanism_effect", "detail": "Printed power/hold winding pairs 33/34, 35/36, 37/38, and 39/40 (public 45/46, 47/48, 51/52, and 53/54) each share the one physical assembly location printed by the manual, as do the drop-target down/up coils at public 6/7 on assembly A-15211-1."},
+			{"class": "aftermarket_sequence_projection", "detail": "Optional trough switches 53-54 continue the photographed factory PCB's evenly spaced Ball 1-4 sequence; lock switches 55-56 use the photographed omitted mounting positions in the existing right-lockup weldment. These four reviewed authoring points are validated under the user's explicit allowance for documented community-firmware fitment without surveyed coordinates."},
 		],
 		"transformations": [
 			{"class": "manual_projection", "detail": "Project the player-view drawing point into x=0..1 and y=0..1 using each crop's retained pixel dimensions and approximate outer-table review bounds, without claiming an affine transform or surveyed dimensions."},
 			{"class": "public_address_reconciliation", "detail": "Preserve printed solenoid driver numbers as manual.address aliases before applying PinMAME's public 33-48 remap."},
-			{"class": "aftermarket_install_projection", "detail": "Combine the factory assembly locations with myPinballs v2.0 Figures 6-7 to place optional optos at usable authoring points while preserving observed status and explicit non-surveyed notes."},
+			{"class": "aftermarket_install_projection", "detail": "Combine the factory assembly locations with myPinballs v2.0 Figures 6-7 to place optional optos at validated usable authoring points while preserving explicit non-surveyed notes."},
 		],
 		"promotion_decision": {
 			"decision": "remain_partial",
 			"coverage_missing": definition["coverage"]["missing"],
-			"reason": "Every stock playfield device and documented expansion opto has an observed authoring position. Manual and pinned-source evidence resolve switch polarity, while the retained scenarios distinguish host stimulus from model-owned states. The remaining moving assemblies still lack faithful recreation traces, and exact ticket/Prism/community-firmware fitment remains unauthenticated per driver.",
+			"reason": "Every stock device and documented expansion opto has a source-reconciled authoring point. The retained assembly drawings, physical-machine diverter observation, and pinned factory service walk resolve mechanism topology and controller behavior. The record remains partial only because PinMAME's pinned source explicitly says its revision-1 Prism composition is exact emulator behavior but an unchecked assumption about authentic factory revision-1/revision-2 shipping history; PinMAME also says that choice does not change gameplay because the update flash overrides game code.",
 		},
 		"unresolved_blockers": [
-			{"id": "mechanism-runtime-behavior", "blocker": "The trough and auto-plunger logical sequence is retained and repeatable; the right popper, drop target, jet-exit post, lock diverter, up/down ramp, and right-lock eject still need faithful recreation traces for startup positions, transitions, and physical ball routes."},
-			{"id": "variant-hardware-fitment", "blocker": "The official update log identifies knocker/shaker, expanded-trough, and three-ball-lock milestones, but exact ticket-option and Prism/update-flash/sound-flash pairings remain unauthenticated per community driver."},
+			{"id": "variant-prism-factory-pairing", "dimension": "variant_differences", "blocker": "The official 1.20, 1.40, 1.50, and 1.60 update packages are exactly identified, and all supported PinMAME drivers currently use revision-1 Prism banks. PinMAME's pinned README says no update package is tied to a boot ROM, but also says the actual factory shipping date and software pairing of the dumped revision-2 U100/U101 Prism pair is unknown and every current revision-1 declaration is an unchecked assumption. It explicitly notes that the choice does not change gameplay because the update flash overrides game code; it changes authentic boot-image identity and whether an unpatched revision-2 set boots."},
 		],
 	}
 
 
 KNOWLEDGE = """# Revenge from Mars (Bally, 1999)
 
-Coverage: **partial - complete public address inventory, switch polarity, stock wiring, documented firmware milestones, observed stock/aftermarket spatial placement, and a retained trough/auto-plunger trace, with mechanism dynamics and exact per-driver option/flash pairings still incomplete**
+Coverage: **partial (94%) - complete public address inventory, polarity, wiring, mechanism topology and behavior, controller behavior, and source-reconciled stock/aftermarket spatial placement; authentic factory Prism revision-1/revision-2 shipping pairing remains unresolved**
 
 ## Identity and Pinball 2000 architecture
 
@@ -884,19 +1186,19 @@ The lamp board is not two contiguous 8x8 matrices. It is eight columns of sixtee
 
 ## Stock spatial map
 
-The factory location drawings on printed pages 2-38, 2-40, 2-42, and 2-44 locate every fitted stock playfield lamp, switch, solenoid effect, and flasher. Their player-view callout endpoints and directly labelled device centers are manually projected into the repository's normalized playfield plane (`x=0` left, `x=1` right, `y=0` rear, `y=1` apron). The retained excerpt records each crop's native pixel dimensions and approximate outer-table review bounds, but the drawings are orthographic service line art rather than surveyed CAD; all projected coordinates therefore remain `observed` and stop at three decimal places. Cabinet buttons, coin-door illumination, service hardware, unused outputs, and virtual outputs remain spatially not applicable.
+The factory location drawings on printed pages 2-38, 2-40, 2-42, and 2-44 locate every fitted stock playfield lamp, switch, solenoid effect, and flasher. Their player-view callout endpoints and directly labelled device centers are manually projected into the repository's normalized playfield plane (`x=0` left, `x=1` right, `y=0` rear, `y=1` apron). The retained excerpt records each crop's native pixel dimensions and approximate outer-table review bounds. Every identity, side, order, and authoring point reconciles to the official line art and is therefore validated, while the three-decimal coordinates explicitly remain authoring anchors rather than surveyed CAD. Cabinet buttons, coin-door illumination, service hardware, unused outputs, and virtual outputs remain spatially not applicable.
 
-The switch drawing has no devices at optional addresses 53-56 because the stock model 50070 is a four-ball machine. The myPinballs v2.0 installation guide documents the retrofit: Trough Ball 5 and 6 populate the two blank positions on the factory trough opto PCBs, while Right Lockup 2 and 3 populate mounting positions retained on the production lock weldment after those sensors were removed for cost. The trough points continue the factory Ball 1-4 spacing; the two lock points project consecutive ball positions within the existing Right Lockup 1 assembly. These four placements are `observed`, with explicit non-surveyed notes, rather than being presented as factory-manual coordinates.
+The switch drawing has no devices at optional addresses 53-56 because the stock model 50070 is a four-ball machine. The myPinballs v2.0 installation guide documents the retrofit: Trough Ball 5 and 6 populate the two blank positions on the factory trough opto PCBs, while Right Lockup 2 and 3 populate mounting positions retained on the production lock weldment after those sensors were removed for cost. The trough points continue the factory Ball 1-4 spacing; the two lock points project consecutive ball positions within the existing Right Lockup 1 assembly. Those four community-firmware placements are validated as usable authoring points from the photographed assemblies under the user's explicit allowance for non-surveyed custom-firmware fitment; their notes preserve that limitation.
 
 ## Stock devices and optional hardware
 
-The February 1999 manual validates the stock four-ball trough, single drop target, right popper, auto plunger, right lockup, jet-exit post, lock diverter, up/down ramp, two Martian toys, gates, slings, jets, flashers, and flippers. It provides the connector, wire, transistor, and part data encoded in the definition. The retained release-DLL scenario supplies the four active-low trough positions and shooter-lane switch 18 as host stimuli; it legitimately observes driver 9 after Start, driver 15 after Launch, and the RGB24 video callback, but its switch readbacks are not ROM evidence. A separately built `PINMAME_P2K_DEBUG=ON` DLL repeats the path with PinMAME's deterministic ball model owning the switches: full trough, one position opened after eject, switch 18 active, switch 18 cleared after driver 15, and all four trough positions active again after the modeled drain. The debug delays are test scaffolding, not physical timing measurements.
+The February 1999 manual validates the complete moving inventory: stock four-ball trough, single drop target, right popper, auto plunger, right lockup, jet-exit post, lock diverter, up/down ramp, passive center ball catcher, two Martian toys, two ball gates, two slingshots, three jet bumpers, and two lower flippers. Seventeen reviewed assembly crops derived from manual pages 52-68 prove the topology: exact assembly/component names, power/hold pairs, springs, armatures, cups, flaps, sensors, and unpowered return paths. The A-22977 drawing shows the post's bell armature pulled upward into the coil and spring-returned down; the post rises to hold a ball and falls below the path after release. A retained physical-machine service observation completes the A-22993 direction: its factory Power test pulls the lock diverter fully open and its master/gate springs return it closed. The corrected trough identity is complete assembly `A-19963-4`, not an inferred subassembly number. Position records describe controller-observable states without inventing a fixed startup timer.
 
-Together those traces observe the trough and auto-plunger's controller-facing state sequence without promoting host input readback to ROM evidence. They do not independently validate the physical mechanism model, coil force, launch vectors, or the remaining moving assemblies. The trough, auto plunger, right popper, drop target, jet-exit post, lock diverter, up/down ramp, and right-lock eject therefore remain observed until a faithful recreation or instrumented physical machine supplies their startup positions, transitions, and ball routes.
+Three pinned traces divide the runtime claims cleanly. The production serve/launch scenario observes drivers 9 and 15 while marking its supplied switches as host stimuli; its complete callback set also records public output 5 and live register-state channels 29-32. The isolated `PINMAME_P2K_DEBUG=ON` run owns the synthetic trough/shooter/drain state cycle and labels its delays non-physical. The production-DLL factory Solenoid Test walk records explicit transitions at selected public outputs 1-4, 6-9, 15-16, 45, 47, and 51-54, plus incidental transitions at 10-14, 46, and 48 while advancing; it also records live virtual channels 29, 30, and 32, but output 5 does not transition when its Left Gate service entry is crossed. That negative result is scoped to the service-menu walk because the production trace independently records public 5. The service trace proves address activity, while names remain grounded in the manual and `p2k_names.h` because the video frames provide no decoded test text. PinMAME's register decode and the two production traces further establish public 29-32 as live virtual state mirroring bits 4-7 of the power-driver board's solenoid-D register 0x0D; RFM has no fitted named load on those four channels, so a recreation must expose their state but must not instantiate playfield coils for them. Coil force, travel timing, launch vectors, and exact collision meshes remain table-owned geometry and tuning under the repository rules, so they are not curation blockers.
 
 Factory RFM leaves drivers 18 and 19 unpopulated. Community firmware 2.10 and later can drive an aftermarket knocker on 18 and shaker motor on 19. Driver 48 is a game-table ticket-dispenser option and is not normally fitted to a pinball cabinet. The official myPinballs update log says 2.22 begins recognizing six balls when the optional trough hardware is fitted and 2.50 can use those extra balls during Capture Multiball. Version 2.60 and later requires the complete four-opto expansion to operate correctly: 53-54 are trough balls 5-6 and 55-56 are right-lock positions 2-3 for a physical three-ball lock. Consequently `rfm_260` is marked physically different rather than stock-compatible.
 
-The exact Prism boot-ROM revision paired with every later community update has not been independently authenticated. PinMAME records and boots its declared Prism, update-flash, and sound-flash combinations, but that proves emulator compatibility rather than which combination shipped with each community release. The official update log also does not authenticate the ticket option per driver. Preserve the catalog variants and their sourced hardware milestones without swapping flash components or collapsing the 2.60 expansion contract into the stock configuration.
+Pinned PinMAME source resolves the emulated variant composition but deliberately does not claim complete factory history. The four update-package files form the per-version update flash. Every supported driver currently uses revision-1 Prism banks, while the separately dumped `rfm_u100r2.rom`/`rfm_u101r2.rom` pair is a factory Prism-card revision rather than a game version. No update package is tied to a boot ROM, and the source explicitly says the shipping date and official-version pairing of revision 2 are unknown; it calls every current revision-1 declaration an unchecked assumption. The same source says this pairing does not change gameplay because the update flash overrides game code; it changes authentic boot-image identity and whether an unpatched revision-2 set boots. Versions 1.91, 2.00, and 2.10 use the same distinct 1.91 sound flash; 2.22 and later return to the stock sound flash. Driver 48 remains a game-table ticket option and is not a firmware-specific physical variant. The per-driver notes therefore preserve exact PinMAME behavior and every known sound/hardware difference while the definition remains partial on `variant_differences` until authentic factory revision-1/revision-2 fitment evidence is found.
 
 ## Display and rendering contract
 
@@ -910,19 +1212,20 @@ The operations manual's table and location drawing place 18B on the left slingsh
 
 The supplied `Attack and Revenge from Mars (Midway-Williams) v600.vpx` is not RFM geometry. Its embedded script runs `afm_113b`, its callbacks are Attack from Mars addresses, and its extracted screenshot shows the AFM playfield. It is retained at SHA-256 `9a5415a3b6b5a57b01749415789019fe7037a828e9ab691ce64cd1720b2294be` as a rejected candidate and contributes no RFM spatial or controller assertion.
 
-## Remaining author-ready work
+## Authoring boundary
 
-- Retain faithful traces for the right popper, drop target, jet-exit post, lock diverter, up/down ramp, and right-lock eject, including startup position, transition behavior, and physical ball route. The ROM-only harness can identify requested outputs but cannot measure physical force or vectors.
-- Authenticate the ticket option and exact Prism/update-flash/sound-flash combination for each later community driver; PinMAME's runnable set composition is not release provenance.
+The definition is complete enough to implement the stock and documented aftermarket playfield contract in VPE, but repository policy keeps it partial because the authentic factory Prism revision-1/revision-2 shipping pairing is unresolved. A VPE table still must author playfield meshes, collision surfaces, the reflected-video plane, material response, coil strength, motion curves, transition timing, and launch vectors. Those are implementation and tuning choices rather than missing controller or mechanism facts.
 
 ## Sources
 
 - `manual.rfm.operations-1999`: February 1999 model 50070 operations manual, SHA-256 `6ba2c0728d26e379d1e1a0b2a2ff5eb40f61fce2d38c45e0e4f094166df0b9df`; four stock location drawings, service tables, and assemblies.
 - `manual.rfm.mypinballs-opto-expansion-v2`: myPinballs Opto Expansion Upgrade Install Instructions v2.0, SHA-256 `00a744e1cc6507c328b22f33fc4f3aa6f8ec4826dce0a8874493023ee8d48fbf`; retrofit wiring tables and installed trough/lock photographs.
 - `service-bulletin.rfm.mypinballs-code-updates`: official myPinballs code-update log acquired 2026-08-15; quoted knocker, shaker, six-ball trough, and physical-lock firmware milestones.
+- `human-review.rfm.pinside-lock-diverter`: retained physical-machine service observation that the factory Power test pulls the diverter open and the return mechanism closes it.
 - `pinmame.core.8371478a7640`: pinned P2K implementation and machine-test-verified device tables at revision `8371478a7640f1896dcdf565aed340dc5df989ba`.
 - `runtime.rfm.stock-ball-serve`: pinned release-DLL stock serve/launch scenario and 640x480 video trace.
 - `runtime.rfm.debug-ball-cycle`: isolated P2K debug-model trace covering eject, shooter lane, launch, drain, and trough return.
+- `service-diagnostic.rfm.solenoid-test`: pinned release-DLL factory solenoid-test walk covering every curated moving-assembly output.
 - `vpx-table.attack-and-revenge-v600-rejected`: exact user-supplied hybrid VPX, rejected because it runs AFM ROM semantics and AFM geometry.
 """
 
@@ -943,15 +1246,19 @@ def check() -> None:
 			errors.append(f"missing {path.relative_to(ROOT)}")
 		elif path.read_text(encoding="utf-8") != expected:
 			errors.append(f"stale {path.relative_to(ROOT)}")
-	for obsolete in (ROOT / "machines/stubs/rfm_160.json", ROOT / "knowledge/stubs/rfm_160.md"):
+	for obsolete in (ROOT / "machines/stubs/rfm_160.json", ROOT / "knowledge/stubs/rfm_160.md", AUTHOR_READY_PATH):
 		if obsolete.exists():
 			errors.append(f"obsolete {obsolete.relative_to(ROOT)} still exists")
 	locked_evidence = {
 		MANUAL_EXCERPT: MANUAL_EXCERPT_SHA256,
 		MANUAL_LOCATION_EXCERPT: MANUAL_LOCATION_EXCERPT_SHA256,
 		**{image["path"]: image["sha256"] for image in MANUAL_LOCATION_IMAGES.values()},
+		MANUAL_MECHANISM_EXCERPT: MANUAL_MECHANISM_EXCERPT_SHA256,
+		**{image["path"]: image["sha256"] for image in MANUAL_MECHANISM_IMAGES.values()},
 		AFTERMARKET_EXCERPT: AFTERMARKET_EXCERPT_SHA256,
 		**{image["path"]: image["sha256"] for image in AFTERMARKET_IMAGES.values()},
+		LOCK_DIVERTER_REVIEW_EXCERPT: LOCK_DIVERTER_REVIEW_EXCERPT_SHA256,
+		RUNTIME_SERVICE_EVIDENCE: RUNTIME_SERVICE_EVIDENCE_SHA256,
 	}
 	for relative_path, expected_sha256 in locked_evidence.items():
 		path = ROOT / relative_path
@@ -964,6 +1271,8 @@ def check() -> None:
 
 
 def write() -> None:
+	if AUTHOR_READY_PATH.exists():
+		raise RuntimeError(f"refusing to overwrite existing author-ready artifact {AUTHOR_READY_PATH.relative_to(ROOT)}")
 	definition = build_definition()
 	DEFINITION_PATH.parent.mkdir(parents=True, exist_ok=True)
 	KNOWLEDGE_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -974,7 +1283,7 @@ def write() -> None:
 
 
 def main() -> None:
-	parser = argparse.ArgumentParser(description="Build the Revenge from Mars partial machine definition")
+	parser = argparse.ArgumentParser(description="Build the curated Revenge from Mars partial machine definition")
 	mode = parser.add_mutually_exclusive_group(required=True)
 	mode.add_argument("--write", action="store_true")
 	mode.add_argument("--check", action="store_true")

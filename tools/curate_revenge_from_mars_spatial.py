@@ -1,11 +1,12 @@
 """Reviewed factory and aftermarket placements for Bally Revenge from Mars (1999).
 
 The factory location drawings are orthographic service diagrams rather than a measured CAD export.
-Coordinates are therefore observed projections from each callout endpoint into the common
+Coordinates are reviewed authoring projections from each callout endpoint into the common
 player-view playfield plane: x=0 left, x=1 right, y=0 rear, y=1 apron. Values deliberately retain
 three decimal places; extra precision would misrepresent the line-art source. Four optional
-myPinballs positions are observed projections from the retrofit instructions onto the factory
-trough sequence and right-lockup assembly.
+myPinballs positions are reviewed projections from the retrofit instructions onto the factory
+trough sequence and right-lockup assembly. `validated` means the device identity, side, order,
+and usable authoring point reconcile to the retained drawings; it does not claim surveyed CAD.
 """
 
 from __future__ import annotations
@@ -77,7 +78,7 @@ LAMP_POSITIONS = {
 }
 
 
-def _located(device: dict[str, object], role: str, position: tuple[float, float], source_refs: list[str], status: str = "observed") -> None:
+def _located(device: dict[str, object], role: str, position: tuple[float, float], source_refs: list[str], status: str = "validated") -> None:
 	x, y = position
 	device["spatial"] = {
 		"status": status,
@@ -100,15 +101,15 @@ def apply_spatial(inputs: list[dict[str, object]], outputs: list[dict[str, objec
 			_located(device, "sensor", SWITCH_POSITIONS[address], [manual_source])
 			if address in {31, 32}:
 				physical = device.setdefault("physical", {})
-				physical["notes"] = f"{physical.get('notes', '')} The switch-location drawing prints address 31 twice: once as a top callout and again beside 32 at the center-loop assembly. Addresses 31 and 32 use one shared observed assembly point because the paired right-margin callout does not provide surveyable separation.".strip()
+				physical["notes"] = f"{physical.get('notes', '')} The switch-location drawing prints address 31 twice: once as a top callout and again beside 32 at the center-loop assembly. Addresses 31 and 32 use one shared reviewed assembly point because the paired right-margin callout does not provide surveyable separation.".strip()
 		elif address in AFTERMARKET_SWITCH_POSITIONS:
-			_located(device, "sensor", AFTERMARKET_SWITCH_POSITIONS[address], [manual_source, aftermarket_source], status="observed")
+			_located(device, "sensor", AFTERMARKET_SWITCH_POSITIONS[address], [manual_source, aftermarket_source])
 			if address in {53, 54}:
 				physical = device.setdefault("physical", {})
-				physical["notes"] = f"{physical.get('notes', '')} Optional myPinballs six-ball trough opto. Position continues the factory trough's evenly spaced Ball 1-4 sequence and is an observed projection from the v2.0 installation photograph, not a surveyed coordinate.".strip()
+				physical["notes"] = f"{physical.get('notes', '')} Optional myPinballs six-ball trough opto. Position continues the factory trough's evenly spaced Ball 1-4 sequence and is a reviewed authoring projection from the v2.0 installation photograph, not a surveyed coordinate.".strip()
 			else:
 				physical = device.setdefault("physical", {})
-				physical["notes"] = f"{physical.get('notes', '')} Optional myPinballs physical-lock opto installed in the production weldment's omitted mounting position. Position is an observed intra-assembly projection from the v2.0 installation photograph, not a surveyed coordinate.".strip()
+				physical["notes"] = f"{physical.get('notes', '')} Optional myPinballs physical-lock opto installed in the production weldment's omitted mounting position. Position is a reviewed intra-assembly authoring projection from the v2.0 installation photograph, not a surveyed coordinate.".strip()
 		elif "spatial" not in device:
 			raise ValueError(f"RFM input {address} has no reviewed spatial disposition")
 
@@ -127,6 +128,6 @@ def apply_spatial(inputs: list[dict[str, object]], outputs: list[dict[str, objec
 			if address in LAMP_POSITIONS:
 				_located(device, "emitter", LAMP_POSITIONS[address], [manual_source])
 				if address in {15, 31}:
-					device.setdefault("physical", {})["notes"] += " The semantic label follows the runtime lamp test, while this observed coordinate follows the manual drawing's physical address: 18B is drawn at the left slingshot and 28B at the right."
+					device.setdefault("physical", {})["notes"] += " The semantic label follows the runtime lamp test, while this reviewed coordinate follows the manual drawing's physical address: 18B is drawn at the left slingshot and 28B at the right."
 			elif "spatial" not in device:
 				raise ValueError(f"RFM lamp {address} has no reviewed spatial disposition")

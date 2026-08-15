@@ -1,6 +1,6 @@
 {
   "coordinate_convention": {
-    "precision": "Three decimal places for deterministic authoring anchors; every projected placement remains observed because the sources are line art and installation photographs rather than surveyed CAD",
+    "precision": "Three decimal places for deterministic authoring anchors. Validated means each device identity, side, order, and usable point reconciles to retained evidence; it does not claim surveyed CAD.",
     "source": "Orthographic factory service drawings, plus the myPinballs v2.0 installation photographs for optional switches 53-56; callout endpoints and device centers manually projected into one normalized playfield plane",
     "space": "playfield",
     "x": "0=left, 1=right in player view",
@@ -112,8 +112,6 @@
       102,
       103,
       104,
-      105,
-      106,
       111,
       112,
       113,
@@ -121,6 +119,10 @@
       116,
       117,
       118
+    ],
+    "internal_nonvisual": [
+      105,
+      106
     ],
     "unused": [
       14,
@@ -238,22 +240,6 @@
         "group": "pinmame.output.solenoid"
       },
       {
-        "address": 29,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 30,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 31,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 32,
-        "group": "pinmame.output.solenoid"
-      },
-      {
         "address": 55,
         "group": "pinmame.output.solenoid"
       },
@@ -281,38 +267,55 @@
         "address": 61,
         "group": "pinmame.output.solenoid"
       }
+    ],
+    "virtual": [
+      {
+        "address": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 32,
+        "group": "pinmame.output.solenoid"
+      }
     ]
   },
   "placement_count": 192,
   "projection_classes": [
     {
       "class": "manual_callout_endpoint",
-      "detail": "A leader-line endpoint marks an observed physical switch, lamp, flasher, or actuator effect location."
+      "detail": "A leader-line endpoint marks a validated physical switch, lamp, flasher, or actuator effect location."
     },
     {
       "class": "directly_labelled_device_center",
-      "detail": "Where the factory drawing labels a device or insert directly, its drawn center supplies an observed point."
+      "detail": "Where the factory drawing labels a device or insert directly, its drawn center supplies a validated authoring point."
     },
     {
       "class": "shared_center_loop_assembly",
-      "detail": "The switch drawing prints address 31 twice and presents 31/32 as one paired center-loop callout; both reed switches share one observed assembly point because the line art does not provide surveyable separation."
+      "detail": "The switch drawing prints address 31 twice and presents 31/32 as one paired center-loop callout; both reed switches share one validated assembly point because the line art does not provide surveyable separation."
     },
     {
       "class": "shared_mechanism_effect",
-      "detail": "Power/hold winding pairs 33/34, 35/36, 37/38, and 39/40 share the one physical assembly location printed by the manual."
+      "detail": "Printed power/hold winding pairs 33/34, 35/36, 37/38, and 39/40 (public 45/46, 47/48, 51/52, and 53/54) each share the one physical assembly location printed by the manual, as do the drop-target down/up coils at public 6/7 on assembly A-15211-1."
     },
     {
       "class": "aftermarket_sequence_projection",
-      "detail": "Optional trough switches 53-54 continue the photographed factory PCB's evenly spaced Ball 1-4 sequence; lock switches 55-56 use the photographed omitted mounting positions in the existing right-lockup weldment. These four points are observed, not validated."
+      "detail": "Optional trough switches 53-54 continue the photographed factory PCB's evenly spaced Ball 1-4 sequence; lock switches 55-56 use the photographed omitted mounting positions in the existing right-lockup weldment. These four reviewed authoring points are validated under the user's explicit allowance for documented community-firmware fitment without surveyed coordinates."
     }
   ],
   "promotion_decision": {
     "coverage_missing": [
-      "mechanism_behavior",
       "variant_differences"
     ],
     "decision": "remain_partial",
-    "reason": "Every stock playfield device and documented expansion opto has an observed authoring position. Manual and pinned-source evidence resolve switch polarity, while the retained scenarios distinguish host stimulus from model-owned states. The remaining moving assemblies still lack faithful recreation traces, and exact ticket/Prism/community-firmware fitment remains unauthenticated per driver."
+    "reason": "Every stock device and documented expansion opto has a source-reconciled authoring point. The retained assembly drawings, physical-machine diverter observation, and pinned factory service walk resolve mechanism topology and controller behavior. The record remains partial only because PinMAME's pinned source explicitly says its revision-1 Prism composition is exact emulator behavior but an unchecked assumption about authentic factory revision-1/revision-2 shipping history; PinMAME also says that choice does not change gameplay because the update flash overrides game code."
   },
   "resolved_input_addresses": [
     11,
@@ -939,7 +942,7 @@
       "group": "pinmame.output.solenoid"
     }
   ],
-  "status": "stock_spatial_observed_machine_partial",
+  "status": "stock_spatial_validated_machine_partial",
   "transformations": [
     {
       "class": "manual_projection",
@@ -951,17 +954,14 @@
     },
     {
       "class": "aftermarket_install_projection",
-      "detail": "Combine the factory assembly locations with myPinballs v2.0 Figures 6-7 to place optional optos at usable authoring points while preserving observed status and explicit non-surveyed notes."
+      "detail": "Combine the factory assembly locations with myPinballs v2.0 Figures 6-7 to place optional optos at validated usable authoring points while preserving explicit non-surveyed notes."
     }
   ],
   "unresolved_blockers": [
     {
-      "blocker": "The trough and auto-plunger logical sequence is retained and repeatable; the right popper, drop target, jet-exit post, lock diverter, up/down ramp, and right-lock eject still need faithful recreation traces for startup positions, transitions, and physical ball routes.",
-      "id": "mechanism-runtime-behavior"
-    },
-    {
-      "blocker": "The official update log identifies knocker/shaker, expanded-trough, and three-ball-lock milestones, but exact ticket-option and Prism/update-flash/sound-flash pairings remain unauthenticated per community driver.",
-      "id": "variant-hardware-fitment"
+      "blocker": "The official 1.20, 1.40, 1.50, and 1.60 update packages are exactly identified, and all supported PinMAME drivers currently use revision-1 Prism banks. PinMAME's pinned README says no update package is tied to a boot ROM, but also says the actual factory shipping date and software pairing of the dumped revision-2 U100/U101 Prism pair is unknown and every current revision-1 declaration is an unchecked assumption. It explicitly notes that the choice does not change gameplay because the update flash overrides game code; it changes authentic boot-image identity and whether an unpatched revision-2 set boots.",
+      "dimension": "variant_differences",
+      "id": "variant-prism-factory-pairing"
     }
   ],
   "version": 1

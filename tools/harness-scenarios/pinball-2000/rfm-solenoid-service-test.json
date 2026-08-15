@@ -1,0 +1,240 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "rfm_160",
+  "notes": "Enter the factory RFM solenoid diagnostic through the coin-door controls, close the door to enable the emulated high-voltage edge, then walk the repeat-mode solenoid list. This supplements the operations-manual wiring and assembly evidence by recording which documented public outputs PinMAME emits; public output 5 is crossed explicitly because the pinned run does not report a transition there. The trace does not measure physical force, travel, or timing.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 18.0,
+      "label": "let the machine finish power-up with the coin door open"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_enter",
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "open the System Menu"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_enter",
+      "hold_ms": 100,
+      "settle_s": 8.0,
+      "label": "open Diagnostics"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_escape",
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "leave the startup test report for the Diagnostics menu"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_up",
+      "hold_ms": 100,
+      "settle_s": 0.25,
+      "label": "select Tests"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_enter",
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "open the Tests menu"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_up",
+      "hold_ms": 100,
+      "settle_s": 0.25,
+      "label": "select Lamps"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_up",
+      "hold_ms": 100,
+      "settle_s": 0.25,
+      "label": "select Solenoid Test"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_enter",
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "enter the Solenoid Test"
+    },
+    {
+      "type": "pulse_key",
+      "key": "coin_door",
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "close the emulated coin door to enable the high-voltage edge"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_enter",
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "start Repeat mode on the first solenoid"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [2],
+      "max_pulses": 2,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Right Martian"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [3],
+      "max_pulses": 2,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Jet Exit Post"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [4],
+      "max_pulses": 2,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Right Gate"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_up",
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance across Left Gate; public output 5 was not observed in the pinned PinMAME service run"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [6],
+      "max_pulses": 2,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Drop Target Down"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [7],
+      "max_pulses": 2,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Drop Target Up"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [8],
+      "max_pulses": 2,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Right Popper"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [9],
+      "max_pulses": 2,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Trough Eject"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [15],
+      "max_pulses": 7,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Auto Plunger"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [16],
+      "max_pulses": 2,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Right Lockup"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [45],
+      "max_pulses": 20,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Lower Right Flipper Power"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [47],
+      "max_pulses": 3,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Lower Left Flipper Power"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [51],
+      "max_pulses": 3,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Lock Diverter Power"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [52],
+      "max_pulses": 2,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Lock Diverter Hold"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [53],
+      "max_pulses": 2,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Up/Down Ramp Power"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "service_up",
+      "channel": "solenoid",
+      "addresses": [54],
+      "max_pulses": 2,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "advance to Up/Down Ramp Hold"
+    }
+  ]
+}
