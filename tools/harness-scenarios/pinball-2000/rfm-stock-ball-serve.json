@@ -1,0 +1,76 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "rfm_160",
+  "notes": "Exercise the stock four-ball RFM trough-eject, shooter-lane, and auto-plunger path through the keyboard-owned Pinball 2000 inputs. The coin-door and trough-loader controls are toggle inputs. The source-owned Balls In Trough input keeps all four active-low trough optos asserted without racing the per-frame opto reset. This scenario proves logical device/output sequencing, not physical coil force, travel vectors, or millisecond mechanism timing.",
+  "watch_switches": [13, 18, 23, 42, 43, 44, 45, 112],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 18.0,
+      "label": "let the machine finish power-up before presenting balls"
+    },
+    {
+      "type": "pulse_key",
+      "key": "coin_door",
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "close the keyboard-owned coin-door toggle"
+    },
+    {
+      "type": "pulse_key",
+      "key": "balls_in_trough",
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "load the stock four-ball trough after boot"
+    },
+    {
+      "type": "pulse_key",
+      "key": "coin_1",
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "add one credit"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "start",
+      "channel": "solenoid",
+      "addresses": [9],
+      "max_pulses": 1,
+      "hold_ms": 500,
+      "settle_s": 3.0,
+      "label": "start a game and observe the trough-eject output"
+    },
+    {
+      "type": "pulse_key",
+      "key": "balls_in_trough",
+      "hold_ms": 100,
+      "settle_s": 0.5,
+      "label": "release the synthetic full-trough toggle after the eject"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 1,
+      "settle_s": 1.0,
+      "label": "report the served ball in the shooter lane"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "launch",
+      "channel": "solenoid",
+      "addresses": [15],
+      "max_pulses": 1,
+      "hold_ms": 250,
+      "settle_s": 1.0,
+      "label": "press Launch and observe the auto-plunger output"
+    },
+    {
+      "type": "set_switch",
+      "switch": 18,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "report the ball leaving the shooter lane"
+    }
+  ]
+}

@@ -19,6 +19,8 @@ REJECTED_VPX_SOURCE = "vpx-table.attack-and-revenge-v600-rejected"
 MANUAL_SHA256 = "6ba2c0728d26e379d1e1a0b2a2ff5eb40f61fce2d38c45e0e4f094166df0b9df"
 MANUAL_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-service-tables.md"
 MANUAL_EXCERPT_SHA256 = "e283b2b47f41ebe5c5464d2cda49df531d069dc57db8e91f29c12c9ef90c663b"
+MANUAL_POLARITY_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-switch-polarity.md"
+MANUAL_POLARITY_EXCERPT_SHA256 = "ebeaa81f508e100314320e2014e86f0cff8bfc8726e5c47d103f0499047db88a"
 MANUAL_LOCATION_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/operations-manual-location-maps.md"
 MANUAL_LOCATION_EXCERPT_SHA256 = "c49204469dbe1bea9d159833f7f862a765d873660cc43f19bb55f0aa3274c938"
 MANUAL_LOCATION_IMAGES = {
@@ -51,6 +53,11 @@ AFTERMARKET_SOURCE = "manual.rfm.mypinballs-opto-expansion-v2"
 AFTERMARKET_SHA256 = "00a744e1cc6507c328b22f33fc4f3aa6f8ec4826dce0a8874493023ee8d48fbf"
 AFTERMARKET_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/mypinballs-opto-expansion-install.md"
 AFTERMARKET_EXCERPT_SHA256 = "c8a30f75b6fd67138828b05e820de9a6944ddd3ac12241a8b15bbe4fa9483972"
+UPDATE_LOG_SOURCE = "service-bulletin.rfm.mypinballs-code-updates"
+UPDATE_LOG_EXCERPT = "evidence/excerpts/bally.revenge-from-mars.1999/mypinballs-code-update-log.md"
+UPDATE_LOG_EXCERPT_SHA256 = "bc85edefe9b568bcc020ce9f6e1d79f0c05a7f4691cb7cbf16533e85ee0e0895"
+RUNTIME_STOCK_SOURCE = "runtime.rfm.stock-ball-serve"
+RUNTIME_DEBUG_SOURCE = "runtime.rfm.debug-ball-cycle"
 AFTERMARKET_IMAGES = {
 	"trough": {
 		"path": "evidence/excerpts/bally.revenge-from-mars.1999/aftermarket-six-ball-trough.webp",
@@ -271,6 +278,17 @@ def build_inputs() -> list[dict[str, object]]:
 		manual_address = str(address)
 		if address >= 91:
 			manual_address = f"D{direct_number(address)}"
+		physical: dict[str, object] = {
+			"switch_type": input_switch_type(address),
+			"location": label if availability != "unused" else f"Unpopulated manual position {manual_address}",
+		}
+		if availability != "unused":
+			physical["notes"] = (
+				"PinMAME's P2K driver publishes this per-game opto at its raw active-low level: beam blocked/active is 0 and inactive is 1. A recreation must drive that public level without applying a controller-wide inversion."
+				if address in OPTO_SWITCHES
+				else "PinMAME's P2K driver publishes this grounded contact active-high: closed/active is 1 and open/inactive is 0."
+			)
+		source_refs = [CORE_SOURCE, AFTERMARKET_SOURCE] if address in OPTIONAL_SWITCHES else [CORE_SOURCE, MANUAL_SOURCE]
 		item: dict[str, object] = {
 			"id": f"switch.{address}.{slug(label)}",
 			"label": label,
@@ -278,14 +296,11 @@ def build_inputs() -> list[dict[str, object]]:
 			"binding": {"group": "pinmame.input.switch", "device": address},
 			"aliases": aliases("pinmame.switch", address, manual_address),
 			"availability": availability,
-			"physical": {
-				"switch_type": input_switch_type(address),
-				"location": label if availability != "unused" else f"Unpopulated manual position {manual_address}",
-			},
-			"provenance": provenance(CORE_SOURCE, MANUAL_SOURCE),
+			"physical": physical,
+			"provenance": provenance(*source_refs),
 		}
-		if address in OPTO_SWITCHES:
-			item["normally_closed"] = True
+		if availability != "unused":
+			item["normally_closed"] = address in OPTO_SWITCHES
 		roles = input_roles(address)
 		if roles:
 			item["roles"] = roles
@@ -654,15 +669,16 @@ def build_mechanisms(inputs: list[dict[str, object]], outputs: list[dict[str, ob
 	switch = lambda address: device_id("pinmame.input.switch", address, inputs)
 	solenoid = lambda address: device_id("pinmame.output.solenoid", address, outputs)
 	prov = provenance(CORE_SOURCE, MANUAL_SOURCE, status="observed")
+	runtime_prov = provenance(CORE_SOURCE, MANUAL_SOURCE, RUNTIME_STOCK_SOURCE, RUNTIME_DEBUG_SOURCE, status="observed")
 	return [
-		{"id": "mechanism.ball-trough", "label": "Four-ball trough", "kind": "kicker", "actuators": [solenoid(9)], "sensors": [switch(number) for number in (41, 42, 43, 44, 45)], "behavior": "Stock assembly exposes a jam opto followed by four ball-position optos; the trough-eject coil feeds the shooter lane. Later firmware can use optional fifth and sixth ball optos, but their exact physical expansion geometry remains unvalidated.", "assembly_part_number": "A-22971", "provenance": prov},
+		{"id": "mechanism.ball-trough", "label": "Four-ball trough", "kind": "kicker", "actuators": [solenoid(9)], "sensors": [switch(number) for number in (41, 42, 43, 44, 45)], "behavior": "The stock assembly exposes jam opto 41 followed by four active-low ball-position optos 42-45. The retained release-DLL scenario supplies the four trough positions as host stimulus and observes driver 9 pulsing when a game starts; those switch readbacks are not ROM evidence. Independently, the P2K debug model owns the trough switches and records one position opening after driver 9, shooter-lane switch 18 closing, and all four trough positions active again after its modeled drain. Optional switches 53-54 extend the assembly to six balls for supporting community firmware. The logical contract remains observed because the debug model is synthetic, and its frame delays are not physical timing measurements.", "assembly_part_number": "A-22971", "provenance": runtime_prov},
 		{"id": "mechanism.right-popper", "label": "Right popper", "kind": "kicker", "actuators": [solenoid(8)], "sensors": [switch(46)], "behavior": "The right-popper opto reports an occupied ball and the right-popper coil ejects it; exact launch vector and timing are not yet validated.", "assembly_part_number": "A-23156", "provenance": prov},
 		{"id": "mechanism.drop-target", "label": "Single drop target", "kind": "drop_target_bank", "actuators": [solenoid(6), solenoid(7)], "sensors": [switch(15)], "behavior": "Separate down and up coils move the single target and the Drop Target Down switch reports the lowered state; timing and startup state remain to be runtime-validated.", "assembly_part_number": "A-15211-1", "provenance": prov},
 		{"id": "mechanism.jet-exit-post", "label": "Jet exit post", "kind": "other", "actuators": [solenoid(3)], "sensors": [switch(47)], "behavior": "A dedicated coil drives the jet-exit post and a normally-closed opto reports the jet-exit path; the exact mechanical sequence remains to be runtime-validated.", "assembly_part_number": "A-22977", "provenance": prov},
 		{"id": "mechanism.lock-diverter", "label": "Lock diverter", "kind": "diverter", "actuators": [solenoid(51), solenoid(52)], "sensors": [], "behavior": "Power and hold windings operate the lock diverter. The manual identifies the assembly and electrical pair, but positions and transition timing are not yet validated.", "assembly_part_number": "A-22993", "provenance": prov},
 		{"id": "mechanism.up-down-ramp", "label": "Up/down ramp", "kind": "diverter", "actuators": [solenoid(53), solenoid(54)], "sensors": [switch(38)], "behavior": "Power and hold windings move the ramp; switch 38 reports Ramp Up. Exact startup position and transition timing remain to be runtime-validated.", "assembly_part_number": "A-22989", "provenance": prov},
-		{"id": "mechanism.right-lockup", "label": "Right lockup", "kind": "kicker", "actuators": [solenoid(16)], "sensors": [switch(51), switch(55), switch(56)], "behavior": "The stock cabinet has one right-lockup opto and eject coil. Later firmware names two optional additional lockup optos; exact expansion fitment and ball-state behavior remain unvalidated.", "assembly_part_number": "A-20680-1", "provenance": prov},
-		{"id": "mechanism.auto-plunger", "label": "Auto plunger", "kind": "kicker", "actuators": [solenoid(15)], "sensors": [switch(18)], "behavior": "The shooter-lane switch reports a staged ball and the auto-plunger coil launches it; exact launch vector and timing remain to be validated in a faithful RFM recreation.", "assembly_part_number": "A-22429-4", "provenance": prov},
+		{"id": "mechanism.right-lockup", "label": "Right lockup", "kind": "kicker", "actuators": [solenoid(16)], "sensors": [switch(51), switch(55), switch(56)], "behavior": "The stock A-20680-1 assembly has active-low Right Lockup 1 opto 51 and eject driver 16. The production weldment retains two omitted sensor positions; the documented four-opto expansion populates them as Right Lockup 2 and 3 on optional switches 55-56. Firmware 2.60 and later requires those positions and updates the device logic to hold three balls physically. Exact eject timing and launch vector remain recreation-specific.", "assembly_part_number": "A-20680-1", "provenance": provenance(CORE_SOURCE, MANUAL_SOURCE, AFTERMARKET_SOURCE, UPDATE_LOG_SOURCE, status="observed")},
+		{"id": "mechanism.auto-plunger", "label": "Auto plunger", "kind": "kicker", "actuators": [solenoid(15)], "sensors": [switch(18)], "behavior": "Shooter-lane switch 18 reports a staged ball. In the release-DLL scenario, the harness supplies switch 18 as stimulus and observes a driver-15 pulse when Launch is pressed; the switch readback is not ROM evidence. The independent debug model owns switch 18 and clears it after driver 15 as its synthetic ball leaves the lane. The controller-facing sequence is observed, while physical coil force, travel time, and launch vector remain table-geometry parameters.", "assembly_part_number": "A-22429-4", "provenance": runtime_prov},
 	]
 
 
@@ -677,11 +693,11 @@ VARIANT_NOTES = {
 	"rfm_195": "Unofficial German retranslation branch based on the 1.90-era software and stock playfield hardware.",
 	"rfm_200": "First myPinballs update; reuses the 1.91 sound flash and does not yet enable the optional shaker/knocker outputs introduced in 2.10.",
 	"rfm_210": "myPinballs update compatible with the stock playfield and able to use optional aftermarket knocker driver 18 and shaker driver 19 when fitted.",
-	"rfm_222": "myPinballs update compatible with the stock four-ball playfield; later six-ball hardware support begins in this firmware line and exact optional fitment must be selected by the author.",
-	"rfm_223": "myPinballs update compatible with the stock four-ball playfield and optional six-ball/opto-expander hardware.",
-	"rfm_224": "myPinballs update compatible with the stock four-ball playfield and optional six-ball/opto-expander hardware.",
-	"rfm_250": "myPinballs update compatible with the stock four-ball playfield and optional six-ball/opto-expander hardware.",
-	"rfm_260": "myPinballs update that requires the opto expansion for its six-ball mode and uses optional switches 53-56; it can still run the unmodified stock playfield configuration described by the project notes, but the selected hardware mode must be explicit.",
+	"rfm_222": "First myPinballs line that recognizes six balls when the optional trough expansion is installed; it remains compatible with the stock four-ball playfield.",
+	"rfm_223": "myPinballs update retaining stock four-ball compatibility and optional six-ball trough support through switches 53-54.",
+	"rfm_224": "myPinballs update retaining stock four-ball compatibility and optional six-ball trough support through switches 53-54.",
+	"rfm_250": "myPinballs update retaining stock four-ball compatibility; when the optional six-ball trough is fitted, Capture Multiball can use the additional balls.",
+	"rfm_260": "myPinballs update that requires the full four-opto expansion to operate correctly: switches 53-54 extend the trough to six balls and switches 55-56 extend the right lock to three physical ball positions.",
 }
 
 
@@ -695,7 +711,7 @@ def build_drivers() -> list[dict[str, object]]:
 		driver = {key: row[key] for key in ("id", "description", "year", "manufacturer", "flags")}
 		if "clone_of" in row:
 			driver["clone_of"] = row["clone_of"]
-		driver["physical_compatibility"] = "identical" if row["id"] in {"rfm_120", "rfm_140", "rfm_150", "rfm_160"} else "compatible"
+		driver["physical_compatibility"] = "identical" if row["id"] in {"rfm_120", "rfm_140", "rfm_150", "rfm_160"} else "different" if row["id"] == "rfm_260" else "compatible"
 		driver["variant_notes"] = VARIANT_NOTES[row["id"]]
 		result.append(driver)
 	return result
@@ -709,9 +725,10 @@ SOURCES = [
 		"kind": "manual",
 		"uri": "external:pinmame-manuals/_unsorted/Bally_1999_Revenge_From_Mars_Operations_Manual_February_1999_OCR_searchable.pdf",
 		"sha256": MANUAL_SHA256,
-		"locator": "February 1999 model 50070 operations manual; PDF pages 78, 80, 82, and 84 / printed pages 2-38, 2-40, 2-42, and 2-44 location drawings; PDF pages 86-88 / printed pages 2-46 through 2-48 service tables; assembly and wiring sections",
+		"locator": "February 1999 model 50070 operations manual; PDF pages 37-38 / printed pages 1-27 through 1-28 switch contacts; PDF pages 78, 80, 82, and 84 / printed pages 2-38, 2-40, 2-42, and 2-44 location drawings; PDF pages 86-88 / printed pages 2-46 through 2-48 service tables; assembly and wiring sections",
 		"excerpts": [
 			{"id": "excerpt.rfm.operations-service-tables", "locator": "PDF pages 86-88; printed pages 2-46 through 2-48", "path": MANUAL_EXCERPT, "sha256": MANUAL_EXCERPT_SHA256, "method": "mixed", "transcribed_by": "Codex with pypdf text extraction and visual page review", "reviewed": True},
+			{"id": "excerpt.rfm.operations-switch-polarity", "locator": "PDF pages 37-38 and 87; printed pages 1-27 through 1-28 and 2-47", "path": MANUAL_POLARITY_EXCERPT, "sha256": MANUAL_POLARITY_EXCERPT_SHA256, "method": "mixed", "transcribed_by": "Codex with Poppler text extraction and visual page review", "reviewed": True},
 			{"id": "excerpt.rfm.lamp-locations-matrix-a", "locator": "PDF page 78; printed page 2-38, Lamp Locations (Matrix A)", "path": MANUAL_LOCATION_EXCERPT, "sha256": MANUAL_LOCATION_EXCERPT_SHA256, "image": MANUAL_LOCATION_IMAGES["lamp-a"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["lamp-a"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["lamp-a"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
 			{"id": "excerpt.rfm.lamp-locations-matrix-b", "locator": "PDF page 80; printed page 2-40, Lamp Locations (Matrix B)", "path": MANUAL_LOCATION_EXCERPT, "sha256": MANUAL_LOCATION_EXCERPT_SHA256, "image": MANUAL_LOCATION_IMAGES["lamp-b"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["lamp-b"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["lamp-b"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
 			{"id": "excerpt.rfm.playfield-switch-locations", "locator": "PDF page 82; printed page 2-42, Playfield Switch Locations", "path": MANUAL_LOCATION_EXCERPT, "sha256": MANUAL_LOCATION_EXCERPT_SHA256, "image": MANUAL_LOCATION_IMAGES["switches"]["path"], "image_sha256": MANUAL_LOCATION_IMAGES["switches"]["sha256"], "image_derivation": MANUAL_LOCATION_IMAGES["switches"]["derivation"], "method": "manual", "transcribed_by": "Codex with visual review", "reviewed": True},
@@ -735,6 +752,21 @@ SOURCES = [
 		"rights": "NOASSERTION",
 		"attribution": "myPinballs Electronics",
 	},
+	{
+		"id": UPDATE_LOG_SOURCE,
+		"kind": "service_bulletin",
+		"uri": "https://www.mypinballs.com/software/rfm/code_updates.jsp",
+		"locator": "Official myPinballs RFM code-update log: version 2.10 optional knocker/shaker controls, 2.22 six-ball recognition, 2.50 upgraded-trough multiball behavior, and 2.60 full four-opto expansion requirement",
+		"acquired_at": "2026-08-15T17:11:46Z",
+		"excerpts": [
+			{"id": "excerpt.rfm.mypinballs-code-hardware-milestones", "locator": "Update v2.10, v2.22, v2.50, and v2.60 hardware-related entries", "path": UPDATE_LOG_EXCERPT, "sha256": UPDATE_LOG_EXCERPT_SHA256, "method": "manual", "transcribed_by": "Codex with browser review", "reviewed": True},
+		],
+		"license": "NOASSERTION",
+		"rights": "NOASSERTION",
+		"attribution": "myPinballs Electronics",
+	},
+	{"id": RUNTIME_STOCK_SOURCE, "kind": "runtime_scenario", "uri": "internal:evidence/runtime/p2k/revenge-from-mars-stock-ball-serve.json", "revision": PINMAME_REVISION, "locator": "Pinned release-DLL rfm_160 scenario: four active-low trough positions, driver 9 serve, shooter-lane switch 18, driver 15 auto-launch, and a 640x480x24 type-15 video frame; raw run SHA-256 a236d6b7d16efe9c56425affb6c59872c78d801ce106a0bc1af697237c5c8060", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"},
+	{"id": RUNTIME_DEBUG_SOURCE, "kind": "runtime_scenario", "uri": "internal:evidence/runtime/p2k/revenge-from-mars-debug-ball-cycle.json", "revision": PINMAME_REVISION, "locator": "Pinned isolated PINMAME_P2K_DEBUG build and scenario: model-owned trough, shooter-lane, launch, drain, and trough-return states; raw run SHA-256 3c77df07b1127aa4784ff939f7b8eb31021cdb34903a87b5f7f3f3c341c315d9; debug frame delays are explicitly non-physical", "license": "BSD-3-Clause", "attribution": "PinMAME contributors and local harness execution"},
 	{"id": REJECTED_VPX_SOURCE, "kind": "vpx_table", "uri": "external:pinmame-vpx-sources/bally/revenge-from-mars-1999/source/Attack%20and%20Revenge%20from%20Mars%20%28Midway-Williams%29%20v600.vpx", "sha256": REJECTED_VPX_SHA256, "locator": "12,959,744-byte hybrid JPSalas v6.0.0 table; embedded script cGameName=afm_113b and AFM switch/solenoid callbacks; visually confirmed Attack from Mars geometry, rejected for RFM spatial or controller evidence", "original_filename": "Attack and Revenge from Mars (Midway-Williams) v600.vpx", "known_working": False, "license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "JPSalas and credited table contributors"},
 ]
 
@@ -747,12 +779,12 @@ def build_definition() -> dict[str, object]:
 		"format": "pinmame-machine-definition",
 		"schema_version": 2,
 		"machine": {"id": "bally.revenge-from-mars.1999", "name": "Revenge from Mars", "manufacturer": "Bally", "year": 1999, "kind": "physical_pinball", "model_number": "50070", "ipdb_id": 4446},
-		"coverage": {"status": "partial", "missing": ["mechanism_behavior", "polarity", "variant_differences"], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "observed", "mechanisms": "observed", "variant_coverage": "observed", "recreation_knowledge": "observed", "spatial_placement": "observed"}},
+		"coverage": {"status": "partial", "missing": ["mechanism_behavior", "variant_differences"], "dimensions": {"catalog_identity": "validated", "address_enumeration": "validated", "semantic_naming": "validated", "physical_wiring": "validated", "mechanisms": "observed", "variant_coverage": "observed", "recreation_knowledge": "observed", "spatial_placement": "observed"}},
 		"controller": {"platform": "pinmame.p2k", "hardware_generation": "0x8000000000000", "inversion_applied_by_emulator": True},
 		"drivers": build_drivers(),
 		"inputs": inputs,
 		"outputs": outputs,
-		"displays": [{"id": "display.pinball-2000-video", "label": "Pinball 2000 reflected playfield video", "kind": "video", "controller_index": 0, "width": 640, "height": 480, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": provenance(CORE_SOURCE, MANUAL_SOURCE)}, "provenance": provenance(CORE_SOURCE, MANUAL_SOURCE)}],
+		"displays": [{"id": "display.pinball-2000-video", "label": "Pinball 2000 reflected playfield video", "kind": "video", "controller_index": 0, "width": 640, "height": 480, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": provenance(CORE_SOURCE, MANUAL_SOURCE, RUNTIME_STOCK_SOURCE)}, "provenance": provenance(CORE_SOURCE, MANUAL_SOURCE, RUNTIME_STOCK_SOURCE)}],
 		"mechanisms": build_mechanisms(inputs, outputs),
 		"relationships": [],
 		"sources": SOURCES,
@@ -823,19 +855,18 @@ def build_spatial_report(definition: dict[str, object]) -> dict[str, object]:
 		"promotion_decision": {
 			"decision": "remain_partial",
 			"coverage_missing": definition["coverage"]["missing"],
-			"reason": "Every stock playfield device and documented expansion opto has an observed authoring position, but the service drawings are not surveyed geometry; runtime mechanism dynamics, non-opto polarity and pulse semantics, and remaining hardware/firmware fitment are also not author-ready.",
+			"reason": "Every stock playfield device and documented expansion opto has an observed authoring position. Manual and pinned-source evidence resolve switch polarity, while the retained scenarios distinguish host stimulus from model-owned states. The remaining moving assemblies still lack faithful recreation traces, and exact ticket/Prism/community-firmware fitment remains unauthenticated per driver.",
 		},
 		"unresolved_blockers": [
-			{"id": "mechanism-runtime-behavior", "blocker": "Startup states, transition timing, ball routes, and launch vectors need repeatable runtime validation."},
-			{"id": "non-opto-polarity-and-pulses", "blocker": "Normally-open/closed and pulse semantics remain incomplete for non-opto devices."},
-			{"id": "variant-hardware-fitment", "blocker": "The opto kit's physical fitment is documented and positioned, but exact per-driver combinations for the six-ball expansion, knocker, shaker, ticket option, and Prism/firmware revisions still need authentication."},
+			{"id": "mechanism-runtime-behavior", "blocker": "The trough and auto-plunger logical sequence is retained and repeatable; the right popper, drop target, jet-exit post, lock diverter, up/down ramp, and right-lock eject still need faithful recreation traces for startup positions, transitions, and physical ball routes."},
+			{"id": "variant-hardware-fitment", "blocker": "The official update log identifies knocker/shaker, expanded-trough, and three-ball-lock milestones, but exact ticket-option and Prism/update-flash/sound-flash pairings remain unauthenticated per community driver."},
 		],
 	}
 
 
 KNOWLEDGE = """# Revenge from Mars (Bally, 1999)
 
-Coverage: **partial - complete public address inventory, stock wiring, observed stock spatial placement, and observed aftermarket opto placement, with mechanism dynamics, non-opto polarity, and firmware-option fitment still incomplete**
+Coverage: **partial - complete public address inventory, switch polarity, stock wiring, documented firmware milestones, observed stock/aftermarket spatial placement, and a retained trough/auto-plunger trace, with mechanism dynamics and exact per-driver option/flash pairings still incomplete**
 
 ## Identity and Pinball 2000 architecture
 
@@ -845,7 +876,7 @@ The power-driver board still exposes conventional playfield switches, coils, fla
 
 ## Public controller numbering
 
-Playfield switches use public column/row addresses `11-88`. Printed direct inputs `D1-D8`, `D9-D16`, and `D17-D24` are exposed at `91-98`, `101-108`, and `111-118`. The factory manual's shaded trough, popper, jet-exit, lockup, and ramp-entry optos physically rest closed; PinMAME normalizes them before exposing switch state. The later optional expansion positions 53-56 are also optos.
+Playfield switches use public column/row addresses `11-88`. Printed direct inputs `D1-D8`, `D9-D16`, and `D17-D24` are exposed at `91-98`, `101-108`, and `111-118`. The factory manual's shaded trough, popper, jet-exit, lockup, and ramp-entry optos physically rest closed; the later optional expansion positions 53-56 use the same opto convention. PinMAME publishes every per-game P2K opto at its raw active-low level (`0` active/beam blocked, `1` inactive), not at a normalized active-high level. Every other fitted contact is recorded normally open: the manual requires an open gap for playfield blade contacts and explicitly calls both EOS switches normally open, while PinMAME's P2K input map uses inactive `0` / active `1` for the remaining grounded controls. The controller's `inversion_applied_by_emulator` flag still means consumers use the mixed public levels as delivered and do not apply one controller-wide inversion.
 
 Board drivers 1-32 retain public solenoid numbers 1-32. Board drivers 33-36 are exported through PinMAME's lower-flipper public addresses 45-48. Board drivers 37-48 become custom public outputs 51-62. Do not remap the printed driver numbers directly for 33-48; the JSON preserves both values as separate aliases.
 
@@ -859,11 +890,13 @@ The switch drawing has no devices at optional addresses 53-56 because the stock 
 
 ## Stock devices and optional hardware
 
-The February 1999 manual validates the stock four-ball trough, single drop target, right popper, auto plunger, right lockup, jet-exit post, lock diverter, up/down ramp, two Martian toys, gates, slings, jets, flashers, and flippers. It provides the connector, wire, transistor, and part data encoded in the definition. The manual establishes inventory and wiring but not enough dynamic detail to claim complete ball routing, actuator timing, startup positions, or launch vectors; those mechanism records remain observed.
+The February 1999 manual validates the stock four-ball trough, single drop target, right popper, auto plunger, right lockup, jet-exit post, lock diverter, up/down ramp, two Martian toys, gates, slings, jets, flashers, and flippers. It provides the connector, wire, transistor, and part data encoded in the definition. The retained release-DLL scenario supplies the four active-low trough positions and shooter-lane switch 18 as host stimuli; it legitimately observes driver 9 after Start, driver 15 after Launch, and the RGB24 video callback, but its switch readbacks are not ROM evidence. A separately built `PINMAME_P2K_DEBUG=ON` DLL repeats the path with PinMAME's deterministic ball model owning the switches: full trough, one position opened after eject, switch 18 active, switch 18 cleared after driver 15, and all four trough positions active again after the modeled drain. The debug delays are test scaffolding, not physical timing measurements.
 
-Factory RFM leaves drivers 18 and 19 unpopulated. Community firmware 2.10 and later can drive an aftermarket knocker on 18 and shaker motor on 19. Driver 48 is a game-table ticket-dispenser option and is not normally fitted to a pinball cabinet. Firmware 2.22 and later can support a six-ball trough through an opto expansion; 2.60 uses optional switches 53-56 and requires the expansion for its six-ball mode. An author must select the intended firmware and physical option set explicitly.
+Together those traces observe the trough and auto-plunger's controller-facing state sequence without promoting host input readback to ROM evidence. They do not independently validate the physical mechanism model, coil force, launch vectors, or the remaining moving assemblies. The trough, auto plunger, right popper, drop target, jet-exit post, lock diverter, up/down ramp, and right-lock eject therefore remain observed until a faithful recreation or instrumented physical machine supplies their startup positions, transitions, and ball routes.
 
-The exact Prism boot-ROM revision paired with every later community update has not been independently authenticated. PinMAME boots its currently declared set combinations, but that is not proof that each pairing shipped together. Preserve the catalog variants and their notes; do not silently collapse all revisions into a single hardware claim.
+Factory RFM leaves drivers 18 and 19 unpopulated. Community firmware 2.10 and later can drive an aftermarket knocker on 18 and shaker motor on 19. Driver 48 is a game-table ticket-dispenser option and is not normally fitted to a pinball cabinet. The official myPinballs update log says 2.22 begins recognizing six balls when the optional trough hardware is fitted and 2.50 can use those extra balls during Capture Multiball. Version 2.60 and later requires the complete four-opto expansion to operate correctly: 53-54 are trough balls 5-6 and 55-56 are right-lock positions 2-3 for a physical three-ball lock. Consequently `rfm_260` is marked physically different rather than stock-compatible.
+
+The exact Prism boot-ROM revision paired with every later community update has not been independently authenticated. PinMAME records and boots its declared Prism, update-flash, and sound-flash combinations, but that proves emulator compatibility rather than which combination shipped with each community release. The official update log also does not authenticate the ticket option per driver. Preserve the catalog variants and their sourced hardware milestones without swapping flash components or collapsing the 2.60 expansion contract into the stock configuration.
 
 ## Display and rendering contract
 
@@ -879,15 +912,17 @@ The supplied `Attack and Revenge from Mars (Midway-Williams) v600.vpx` is not RF
 
 ## Remaining author-ready work
 
-- Validate mechanism startup states, transition timing, ball routes, and launch vectors in an actual RFM recreation or repeatable runtime harness.
-- Complete non-opto normally-open/closed and pulse semantics instead of inferring them from labels alone.
-- Authenticate the optional six-ball/opto-expander, knocker, shaker, ticket, and Prism/firmware combinations per driver revision.
+- Retain faithful traces for the right popper, drop target, jet-exit post, lock diverter, up/down ramp, and right-lock eject, including startup position, transition behavior, and physical ball route. The ROM-only harness can identify requested outputs but cannot measure physical force or vectors.
+- Authenticate the ticket option and exact Prism/update-flash/sound-flash combination for each later community driver; PinMAME's runnable set composition is not release provenance.
 
 ## Sources
 
 - `manual.rfm.operations-1999`: February 1999 model 50070 operations manual, SHA-256 `6ba2c0728d26e379d1e1a0b2a2ff5eb40f61fce2d38c45e0e4f094166df0b9df`; four stock location drawings, service tables, and assemblies.
 - `manual.rfm.mypinballs-opto-expansion-v2`: myPinballs Opto Expansion Upgrade Install Instructions v2.0, SHA-256 `00a744e1cc6507c328b22f33fc4f3aa6f8ec4826dce0a8874493023ee8d48fbf`; retrofit wiring tables and installed trough/lock photographs.
+- `service-bulletin.rfm.mypinballs-code-updates`: official myPinballs code-update log acquired 2026-08-15; quoted knocker, shaker, six-ball trough, and physical-lock firmware milestones.
 - `pinmame.core.8371478a7640`: pinned P2K implementation and machine-test-verified device tables at revision `8371478a7640f1896dcdf565aed340dc5df989ba`.
+- `runtime.rfm.stock-ball-serve`: pinned release-DLL stock serve/launch scenario and 640x480 video trace.
+- `runtime.rfm.debug-ball-cycle`: isolated P2K debug-model trace covering eject, shooter lane, launch, drain, and trough return.
 - `vpx-table.attack-and-revenge-v600-rejected`: exact user-supplied hybrid VPX, rejected because it runs AFM ROM semantics and AFM geometry.
 """
 

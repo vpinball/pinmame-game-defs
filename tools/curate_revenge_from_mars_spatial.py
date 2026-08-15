@@ -99,13 +99,16 @@ def apply_spatial(inputs: list[dict[str, object]], outputs: list[dict[str, objec
 		if address in SWITCH_POSITIONS:
 			_located(device, "sensor", SWITCH_POSITIONS[address], [manual_source])
 			if address in {31, 32}:
-				device.setdefault("physical", {})["notes"] = "The switch-location drawing prints address 31 twice: once as a top callout and again beside 32 at the center-loop assembly. Addresses 31 and 32 use one shared observed assembly point because the paired right-margin callout does not provide surveyable separation."
+				physical = device.setdefault("physical", {})
+				physical["notes"] = f"{physical.get('notes', '')} The switch-location drawing prints address 31 twice: once as a top callout and again beside 32 at the center-loop assembly. Addresses 31 and 32 use one shared observed assembly point because the paired right-margin callout does not provide surveyable separation.".strip()
 		elif address in AFTERMARKET_SWITCH_POSITIONS:
 			_located(device, "sensor", AFTERMARKET_SWITCH_POSITIONS[address], [manual_source, aftermarket_source], status="observed")
 			if address in {53, 54}:
-				device.setdefault("physical", {})["notes"] = "Optional myPinballs six-ball trough opto. Position continues the factory trough's evenly spaced Ball 1-4 sequence and is an observed projection from the v2.0 installation photograph, not a surveyed coordinate."
+				physical = device.setdefault("physical", {})
+				physical["notes"] = f"{physical.get('notes', '')} Optional myPinballs six-ball trough opto. Position continues the factory trough's evenly spaced Ball 1-4 sequence and is an observed projection from the v2.0 installation photograph, not a surveyed coordinate.".strip()
 			else:
-				device.setdefault("physical", {})["notes"] = "Optional myPinballs physical-lock opto installed in the production weldment's omitted mounting position. Position is an observed intra-assembly projection from the v2.0 installation photograph, not a surveyed coordinate."
+				physical = device.setdefault("physical", {})
+				physical["notes"] = f"{physical.get('notes', '')} Optional myPinballs physical-lock opto installed in the production weldment's omitted mounting position. Position is an observed intra-assembly projection from the v2.0 installation photograph, not a surveyed coordinate.".strip()
 		elif "spatial" not in device:
 			raise ValueError(f"RFM input {address} has no reviewed spatial disposition")
 

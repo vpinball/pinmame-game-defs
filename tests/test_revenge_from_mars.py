@@ -10,8 +10,12 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFINITION_PATH = ROOT / "machines" / "partial" / "bally" / "revenge-from-mars-1999.json"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "p2k.json"
 EXCERPT_PATH = ROOT / "evidence" / "excerpts" / "bally.revenge-from-mars.1999" / "operations-manual-service-tables.md"
+POLARITY_EXCERPT_PATH = ROOT / "evidence" / "excerpts" / "bally.revenge-from-mars.1999" / "operations-manual-switch-polarity.md"
 LOCATION_EXCERPT_PATH = ROOT / "evidence" / "excerpts" / "bally.revenge-from-mars.1999" / "operations-manual-location-maps.md"
 AFTERMARKET_EXCERPT_PATH = ROOT / "evidence" / "excerpts" / "bally.revenge-from-mars.1999" / "mypinballs-opto-expansion-install.md"
+UPDATE_LOG_EXCERPT_PATH = ROOT / "evidence" / "excerpts" / "bally.revenge-from-mars.1999" / "mypinballs-code-update-log.md"
+STOCK_RUNTIME_PATH = ROOT / "evidence" / "runtime" / "p2k" / "revenge-from-mars-stock-ball-serve.json"
+DEBUG_RUNTIME_PATH = ROOT / "evidence" / "runtime" / "p2k" / "revenge-from-mars-debug-ball-cycle.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "bally" / "revenge-from-mars-1999.json"
 LOCATION_IMAGES = {
 	"lamp-locations-matrix-a.webp": "212a2bfc3d3e0a78c04210fb601692c77b7bc76fd44c2a41ca7ed2dab7e7a7cb",
@@ -62,6 +66,9 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 			[{"minimum": 1, "maximum": 32}, {"minimum": 45, "maximum": 48}, {"minimum": 51, "maximum": 62}],
 			groups["pinmame.output.solenoid"]["address_rules"],
 		)
+		polarity_notes = groups["pinmame.input.switch"]["notes"]
+		for token in ("mixed raw public levels", "active-low", "active-high", "exactly as delivered"):
+			self.assertIn(token, polarity_notes)
 
 	def test_all_switch_driver_and_lamp_positions_are_explicit(self) -> None:
 		inputs = {item["binding"]["device"]: item for item in self.definition["inputs"]}
@@ -70,7 +77,10 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 		self.assertEqual(88, len(inputs))
 		self.assertEqual({53, 54, 55, 56}, {address for address, item in inputs.items() if item["availability"] == "optional"})
 		self.assertEqual({41, 42, 43, 44, 45, 46, 47, 51, 52, 53, 54, 55, 56}, {address for address, item in inputs.items() if item.get("normally_closed")})
-		self.assertTrue(all("normally_closed" not in item for address, item in inputs.items() if address not in {41, 42, 43, 44, 45, 46, 47, 51, 52, 53, 54, 55, 56}))
+		self.assertTrue(all(item["normally_closed"] is False for item in inputs.values() if item["availability"] == "used" and item["binding"]["device"] not in {41, 42, 43, 44, 45, 46, 47, 51, 52}))
+		self.assertTrue(all("normally_closed" not in item for item in inputs.values() if item["availability"] == "unused"))
+		self.assertTrue(all("active-low" in inputs[address]["physical"]["notes"] for address in {41, 42, 43, 44, 45, 46, 47, 51, 52, 53, 54, 55, 56}))
+		self.assertTrue(all("active-high" in item["physical"]["notes"] for item in inputs.values() if item["availability"] == "used" and item["binding"]["device"] not in {41, 42, 43, 44, 45, 46, 47, 51, 52}))
 
 		solenoids = {item["binding"]["device"]: item for item in self.definition["outputs"] if item["binding"]["group"] == "pinmame.output.solenoid"}
 		self.assertEqual(set(range(1, 33)) | set(range(45, 49)) | set(range(51, 63)), set(solenoids))
@@ -88,12 +98,14 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 
 	def test_video_contract_preserves_the_line_doubled_export(self) -> None:
 		self.assertEqual(
-			[{"id": "display.pinball-2000-video", "label": "Pinball 2000 reflected playfield video", "kind": "video", "controller_index": 0, "width": 640, "height": 480, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": {"status": "validated", "source_refs": ["pinmame.core.8371478a7640", "manual.rfm.operations-1999"]}}, "provenance": {"status": "validated", "source_refs": ["pinmame.core.8371478a7640", "manual.rfm.operations-1999"]}}],
+			[{"id": "display.pinball-2000-video", "label": "Pinball 2000 reflected playfield video", "kind": "video", "controller_index": 0, "width": 640, "height": 480, "spatial": {"status": "not_applicable", "reason": "cabinet_or_service", "provenance": {"status": "validated", "source_refs": ["pinmame.core.8371478a7640", "manual.rfm.operations-1999", "runtime.rfm.stock-ball-serve"]}}, "provenance": {"status": "validated", "source_refs": ["pinmame.core.8371478a7640", "manual.rfm.operations-1999", "runtime.rfm.stock-ball-serve"]}}],
 			self.definition["displays"],
 		)
 
 	def test_factory_location_drawings_observe_stock_spatial_placement(self) -> None:
-		self.assertEqual(["mechanism_behavior", "polarity", "variant_differences"], self.definition["coverage"]["missing"])
+		self.assertEqual(["mechanism_behavior", "variant_differences"], self.definition["coverage"]["missing"])
+		self.assertEqual("validated", self.definition["coverage"]["dimensions"]["physical_wiring"])
+		self.assertEqual("observed", self.definition["coverage"]["dimensions"]["variant_coverage"])
 		self.assertEqual("observed", self.definition["coverage"]["dimensions"]["spatial_placement"])
 		self.assertTrue(all("spatial" in item for item in self.definition["inputs"] + self.definition["outputs"]))
 		self.assertEqual(0, sum(item["spatial"]["status"] == "validated" for item in self.definition["inputs"] + self.definition["outputs"]))
@@ -152,17 +164,23 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 		sources = {source["id"]: source for source in self.definition["sources"]}
 		manual = sources["manual.rfm.operations-1999"]
 		aftermarket = sources["manual.rfm.mypinballs-opto-expansion-v2"]
+		update_log = sources["service-bulletin.rfm.mypinballs-code-updates"]
 		self.assertEqual("6ba2c0728d26e379d1e1a0b2a2ff5eb40f61fce2d38c45e0e4f094166df0b9df", manual["sha256"])
 		self.assertEqual("00a744e1cc6507c328b22f33fc4f3aa6f8ec4826dce0a8874493023ee8d48fbf", aftermarket["sha256"])
+		self.assertEqual("https://www.mypinballs.com/software/rfm/code_updates.jsp", update_log["uri"])
+		self.assertEqual("2026-08-15T17:11:46Z", update_log["acquired_at"])
 		self.assertEqual("9a5415a3b6b5a57b01749415789019fe7037a828e9ab691ce64cd1720b2294be", sources["vpx-table.attack-and-revenge-v600-rejected"]["sha256"])
 		self.assertFalse(sources["vpx-table.attack-and-revenge-v600-rejected"]["known_working"])
 		self.assertIn("cGameName=afm_113b", sources["vpx-table.attack-and-revenge-v600-rejected"]["locator"])
 		self.assertEqual("e283b2b47f41ebe5c5464d2cda49df531d069dc57db8e91f29c12c9ef90c663b", hashlib.sha256(EXCERPT_PATH.read_bytes()).hexdigest())
+		self.assertEqual("ebeaa81f508e100314320e2014e86f0cff8bfc8726e5c47d103f0499047db88a", hashlib.sha256(POLARITY_EXCERPT_PATH.read_bytes()).hexdigest())
 		self.assertEqual("c49204469dbe1bea9d159833f7f862a765d873660cc43f19bb55f0aa3274c938", hashlib.sha256(LOCATION_EXCERPT_PATH.read_bytes()).hexdigest())
 		self.assertEqual("c8a30f75b6fd67138828b05e820de9a6944ddd3ac12241a8b15bbe4fa9483972", hashlib.sha256(AFTERMARKET_EXCERPT_PATH.read_bytes()).hexdigest())
-		self.assertEqual(5, len(manual["excerpts"]))
+		self.assertEqual("bc85edefe9b568bcc020ce9f6e1d79f0c05a7f4691cb7cbf16533e85ee0e0895", hashlib.sha256(UPDATE_LOG_EXCERPT_PATH.read_bytes()).hexdigest())
+		self.assertEqual(6, len(manual["excerpts"]))
 		self.assertEqual(4, sum("image" in excerpt for excerpt in manual["excerpts"]))
 		self.assertEqual(2, len(aftermarket["excerpts"]))
+		self.assertEqual(1, len(update_log["excerpts"]))
 		for filename, expected_sha256 in LOCATION_IMAGES.items():
 			image_path = LOCATION_EXCERPT_PATH.parent / filename
 			self.assertLess(image_path.stat().st_size, 1_500_000 if filename in FACTORY_LOCATION_IMAGES else 100_000)
@@ -177,7 +195,45 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 		self.assertEqual(6, len(self.spatial_report["evidence"]))
 		self.assertEqual(4, sum("projection_review_frame" in evidence for evidence in self.spatial_report["evidence"]))
 		self.assertEqual("remain_partial", self.spatial_report["promotion_decision"]["decision"])
-		self.assertEqual(["mechanism_behavior", "polarity", "variant_differences"], self.spatial_report["promotion_decision"]["coverage_missing"])
+		self.assertEqual(["mechanism_behavior", "variant_differences"], self.spatial_report["promotion_decision"]["coverage_missing"])
+		self.assertEqual(["mechanism-runtime-behavior", "variant-hardware-fitment"], [item["id"] for item in self.spatial_report["unresolved_blockers"]])
+
+	def test_firmware_hardware_contract_is_explicit(self) -> None:
+		drivers = {driver["id"]: driver for driver in self.definition["drivers"]}
+		self.assertEqual("compatible", drivers["rfm_222"]["physical_compatibility"])
+		self.assertIn("six balls", drivers["rfm_222"]["variant_notes"])
+		self.assertEqual("different", drivers["rfm_260"]["physical_compatibility"])
+		for token in ("requires", "53-54", "55-56", "three physical"):
+			self.assertIn(token, drivers["rfm_260"]["variant_notes"])
+
+	def test_runtime_evidence_pins_release_and_debug_ball_cycles(self) -> None:
+		stock = load_json(STOCK_RUNTIME_PATH)
+		debug = load_json(DEBUG_RUNTIME_PATH)
+		self.assertEqual("deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c", stock["runtime"]["emulator"]["sha256"])
+		self.assertEqual("a236d6b7d16efe9c56425affb6c59872c78d801ce106a0bc1af697237c5c8060", stock["runtime"]["raw_runs"][0]["sha256"])
+		self.assertEqual("642645d81cdc10189c6592e4e1407b399e19ef7ec6f3eae2bf42dda78bedb3f7", stock["runtime"]["raw_runs"][0]["scenario_sha256"])
+		self.assertEqual([{"depth": 24, "height": 480, "type": 15, "width": 640}], stock["runtime"]["observations"]["display_layouts_seen"])
+		self.assertEqual("057ead79397dce64cdd6798dbb8d1042b9224304c3fd7c3daa43aae2875a494c", debug["runtime"]["emulator"]["sha256"])
+		self.assertEqual("3c77df07b1127aa4784ff939f7b8eb31021cdb34903a87b5f7f3f3c341c315d9", debug["runtime"]["raw_runs"][0]["sha256"])
+		self.assertEqual("f7df41e0c3ba6afd9aa36066fc57d52ea5a3f49ef1ec52b1b1c9b27c63589a85", debug["runtime"]["raw_runs"][0]["scenario_sha256"])
+		for observation in stock["runtime"]["observations"]["named_action_observations"]:
+			self.assertEqual([], observation["observed_switch_addresses"])
+			self.assertTrue(observation["host_stimulus_switch_addresses"])
+		for observation in debug["runtime"]["observations"]["runs"]["debug-ball-cycle-02"]["named_action_observations"]:
+			self.assertTrue(observation["observed_switch_addresses"])
+			self.assertTrue(observation["host_stimulus_switch_addresses"])
+		note = debug["runtime"]["observations"]["runs"]["debug-ball-cycle-02"]["note"]
+		for token in ("42-45", "driver 9", "switch 18", "driver 15", "modeled drain"):
+			self.assertIn(token, note)
+
+	def test_trough_and_autoplunger_use_retained_runtime_provenance(self) -> None:
+		mechanisms = {item["id"]: item for item in self.definition["mechanisms"]}
+		for identifier in ("mechanism.ball-trough", "mechanism.auto-plunger"):
+			self.assertEqual("observed", mechanisms[identifier]["provenance"]["status"])
+			self.assertIn("runtime.rfm.stock-ball-serve", mechanisms[identifier]["provenance"]["source_refs"])
+			self.assertIn("runtime.rfm.debug-ball-cycle", mechanisms[identifier]["provenance"]["source_refs"])
+		self.assertEqual("observed", mechanisms["mechanism.right-lockup"]["provenance"]["status"])
+		self.assertIn("service-bulletin.rfm.mypinballs-code-updates", mechanisms["mechanism.right-lockup"]["provenance"]["source_refs"])
 
 	def test_only_resolved_manual_lamp_disagreement_is_retained(self) -> None:
 		self.assertEqual(1, len(self.definition["conflicts"]))

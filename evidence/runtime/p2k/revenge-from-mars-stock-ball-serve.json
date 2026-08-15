@@ -1,0 +1,160 @@
+{
+  "driver_ids": [
+    "rfm_160"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.revenge-from-mars.1999"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <release-libpinmame> --game rfm_160 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --scenario tools/harness-scenarios/pinball-2000/rfm-stock-ball-serve.json --dmd-dir <external-frame-dir> --output <external-run.json>",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "rfm_160",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            30
+          ],
+          "display_index": 0,
+          "interpreted_text": "RFM gameplay frame after the stock shooter-lane ball is launched",
+          "label": "final production-DLL gameplay frame",
+          "nonzero_pixels": 88330,
+          "pixel_sha256": "c791eab26e79ea27cd5670601f112e6fb27c445e080ca1bbde82b6f36c455132"
+        }
+      ],
+      "display_indices_seen": [
+        0
+      ],
+      "display_layouts_seen": [
+        {
+          "depth": 24,
+          "height": 480,
+          "type": 15,
+          "width": 640
+        }
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [
+            30
+          ],
+          "input_kind": "key",
+          "input_name": "start",
+          "label": "start a game and observe the trough-eject output",
+          "host_stimulus_switch_addresses": [
+            13,
+            42,
+            43,
+            44,
+            45,
+            112
+          ],
+		  "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            6,
+            9,
+            29,
+            31
+          ]
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            30
+          ],
+          "input_kind": "key",
+          "input_name": "launch",
+          "label": "press Launch and observe the auto-plunger output",
+		  "host_stimulus_switch_addresses": [
+            18,
+            23,
+            112
+          ],
+		  "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            15,
+            29
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        29,
+        30,
+        31,
+        32,
+        51,
+        52,
+        53,
+        54
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 9,
+        "boot_wait_s": 2.0,
+        "name": "stock-ball-serve-02",
+        "nvram_initialization": "empty isolated state directory",
+        "scenario_path": "tools/harness-scenarios/pinball-2000/rfm-stock-ball-serve.json",
+        "scenario_sha256": "642645d81cdc10189c6592e4e1407b399e19ef7ec6f3eae2bf42dda78bedb3f7",
+        "self_test_pulses": 0,
+        "sha256": "a236d6b7d16efe9c56425affb6c59872c78d801ce106a0bc1af697237c5c8060",
+        "snapshot_count": 10,
+        "watch_switches": [
+          13,
+          18,
+          23,
+          42,
+          43,
+          44,
+          45,
+          112
+        ]
+      }
+    ],
+    "rom_archive_sha256": "9a8af78690f7b6e73854a6018aedccbb55aa8c3aa0dc740a45ab0a3859b6df61"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/revenge-from-mars-1999/harness/rfm-160-stock-serve-02/run.json",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "a236d6b7d16efe9c56425affb6c59872c78d801ce106a0bc1af697237c5c8060"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

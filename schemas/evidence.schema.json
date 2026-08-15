@@ -481,12 +481,21 @@
                     "minLength": 1
                   },
                   "observed_switch_addresses": {
+					"description": "Emulator-, ROM-, or model-driven switch states observed during the action. Host-injected switch/key readback must not appear here.",
                     "type": "array",
                     "uniqueItems": true,
                     "items": {
                       "type": "integer"
                     }
                   },
+				  "host_stimulus_switch_addresses": {
+					"description": "Public switch states supplied by the harness host during the action. These are stimulus/readback, not ROM observations.",
+					"type": "array",
+					"uniqueItems": true,
+					"items": {
+					  "type": "integer"
+					}
+				  },
                   "active_solenoid_addresses": {
                     "type": "array",
                     "uniqueItems": true,
@@ -698,10 +707,17 @@
               "input_address": {"type": "integer"},
               "input_name": {"type": "string", "minLength": 1},
               "observed_switch_addresses": {
+				"description": "Emulator-, ROM-, or model-driven switch states observed during the action. Host-injected switch/key readback must not appear here.",
                 "type": "array",
                 "uniqueItems": true,
                 "items": {"type": "integer"}
               },
+			  "host_stimulus_switch_addresses": {
+				"description": "Public switch states supplied by the harness host during the action. These are stimulus/readback, not ROM observations.",
+				"type": "array",
+				"uniqueItems": true,
+				"items": {"type": "integer"}
+			  },
               "active_solenoid_addresses": {
                 "type": "array",
                 "uniqueItems": true,

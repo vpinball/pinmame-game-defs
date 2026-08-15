@@ -1,6 +1,6 @@
 # Revenge from Mars (Bally, 1999)
 
-Coverage: **partial - complete public address inventory, stock wiring, observed stock spatial placement, and observed aftermarket opto placement, with mechanism dynamics, non-opto polarity, and firmware-option fitment still incomplete**
+Coverage: **partial - complete public address inventory, switch polarity, stock wiring, documented firmware milestones, observed stock/aftermarket spatial placement, and a retained trough/auto-plunger trace, with mechanism dynamics and exact per-driver option/flash pairings still incomplete**
 
 ## Identity and Pinball 2000 architecture
 
@@ -10,7 +10,7 @@ The power-driver board still exposes conventional playfield switches, coils, fla
 
 ## Public controller numbering
 
-Playfield switches use public column/row addresses `11-88`. Printed direct inputs `D1-D8`, `D9-D16`, and `D17-D24` are exposed at `91-98`, `101-108`, and `111-118`. The factory manual's shaded trough, popper, jet-exit, lockup, and ramp-entry optos physically rest closed; PinMAME normalizes them before exposing switch state. The later optional expansion positions 53-56 are also optos.
+Playfield switches use public column/row addresses `11-88`. Printed direct inputs `D1-D8`, `D9-D16`, and `D17-D24` are exposed at `91-98`, `101-108`, and `111-118`. The factory manual's shaded trough, popper, jet-exit, lockup, and ramp-entry optos physically rest closed; the later optional expansion positions 53-56 use the same opto convention. PinMAME publishes every per-game P2K opto at its raw active-low level (`0` active/beam blocked, `1` inactive), not at a normalized active-high level. Every other fitted contact is recorded normally open: the manual requires an open gap for playfield blade contacts and explicitly calls both EOS switches normally open, while PinMAME's P2K input map uses inactive `0` / active `1` for the remaining grounded controls. The controller's `inversion_applied_by_emulator` flag still means consumers use the mixed public levels as delivered and do not apply one controller-wide inversion.
 
 Board drivers 1-32 retain public solenoid numbers 1-32. Board drivers 33-36 are exported through PinMAME's lower-flipper public addresses 45-48. Board drivers 37-48 become custom public outputs 51-62. Do not remap the printed driver numbers directly for 33-48; the JSON preserves both values as separate aliases.
 
@@ -24,11 +24,13 @@ The switch drawing has no devices at optional addresses 53-56 because the stock 
 
 ## Stock devices and optional hardware
 
-The February 1999 manual validates the stock four-ball trough, single drop target, right popper, auto plunger, right lockup, jet-exit post, lock diverter, up/down ramp, two Martian toys, gates, slings, jets, flashers, and flippers. It provides the connector, wire, transistor, and part data encoded in the definition. The manual establishes inventory and wiring but not enough dynamic detail to claim complete ball routing, actuator timing, startup positions, or launch vectors; those mechanism records remain observed.
+The February 1999 manual validates the stock four-ball trough, single drop target, right popper, auto plunger, right lockup, jet-exit post, lock diverter, up/down ramp, two Martian toys, gates, slings, jets, flashers, and flippers. It provides the connector, wire, transistor, and part data encoded in the definition. The retained release-DLL scenario supplies the four active-low trough positions and shooter-lane switch 18 as host stimuli; it legitimately observes driver 9 after Start, driver 15 after Launch, and the RGB24 video callback, but its switch readbacks are not ROM evidence. A separately built `PINMAME_P2K_DEBUG=ON` DLL repeats the path with PinMAME's deterministic ball model owning the switches: full trough, one position opened after eject, switch 18 active, switch 18 cleared after driver 15, and all four trough positions active again after the modeled drain. The debug delays are test scaffolding, not physical timing measurements.
 
-Factory RFM leaves drivers 18 and 19 unpopulated. Community firmware 2.10 and later can drive an aftermarket knocker on 18 and shaker motor on 19. Driver 48 is a game-table ticket-dispenser option and is not normally fitted to a pinball cabinet. Firmware 2.22 and later can support a six-ball trough through an opto expansion; 2.60 uses optional switches 53-56 and requires the expansion for its six-ball mode. An author must select the intended firmware and physical option set explicitly.
+Together those traces observe the trough and auto-plunger's controller-facing state sequence without promoting host input readback to ROM evidence. They do not independently validate the physical mechanism model, coil force, launch vectors, or the remaining moving assemblies. The trough, auto plunger, right popper, drop target, jet-exit post, lock diverter, up/down ramp, and right-lock eject therefore remain observed until a faithful recreation or instrumented physical machine supplies their startup positions, transitions, and ball routes.
 
-The exact Prism boot-ROM revision paired with every later community update has not been independently authenticated. PinMAME boots its currently declared set combinations, but that is not proof that each pairing shipped together. Preserve the catalog variants and their notes; do not silently collapse all revisions into a single hardware claim.
+Factory RFM leaves drivers 18 and 19 unpopulated. Community firmware 2.10 and later can drive an aftermarket knocker on 18 and shaker motor on 19. Driver 48 is a game-table ticket-dispenser option and is not normally fitted to a pinball cabinet. The official myPinballs update log says 2.22 begins recognizing six balls when the optional trough hardware is fitted and 2.50 can use those extra balls during Capture Multiball. Version 2.60 and later requires the complete four-opto expansion to operate correctly: 53-54 are trough balls 5-6 and 55-56 are right-lock positions 2-3 for a physical three-ball lock. Consequently `rfm_260` is marked physically different rather than stock-compatible.
+
+The exact Prism boot-ROM revision paired with every later community update has not been independently authenticated. PinMAME records and boots its declared Prism, update-flash, and sound-flash combinations, but that proves emulator compatibility rather than which combination shipped with each community release. The official update log also does not authenticate the ticket option per driver. Preserve the catalog variants and their sourced hardware milestones without swapping flash components or collapsing the 2.60 expansion contract into the stock configuration.
 
 ## Display and rendering contract
 
@@ -44,13 +46,15 @@ The supplied `Attack and Revenge from Mars (Midway-Williams) v600.vpx` is not RF
 
 ## Remaining author-ready work
 
-- Validate mechanism startup states, transition timing, ball routes, and launch vectors in an actual RFM recreation or repeatable runtime harness.
-- Complete non-opto normally-open/closed and pulse semantics instead of inferring them from labels alone.
-- Authenticate the optional six-ball/opto-expander, knocker, shaker, ticket, and Prism/firmware combinations per driver revision.
+- Retain faithful traces for the right popper, drop target, jet-exit post, lock diverter, up/down ramp, and right-lock eject, including startup position, transition behavior, and physical ball route. The ROM-only harness can identify requested outputs but cannot measure physical force or vectors.
+- Authenticate the ticket option and exact Prism/update-flash/sound-flash combination for each later community driver; PinMAME's runnable set composition is not release provenance.
 
 ## Sources
 
 - `manual.rfm.operations-1999`: February 1999 model 50070 operations manual, SHA-256 `6ba2c0728d26e379d1e1a0b2a2ff5eb40f61fce2d38c45e0e4f094166df0b9df`; four stock location drawings, service tables, and assemblies.
 - `manual.rfm.mypinballs-opto-expansion-v2`: myPinballs Opto Expansion Upgrade Install Instructions v2.0, SHA-256 `00a744e1cc6507c328b22f33fc4f3aa6f8ec4826dce0a8874493023ee8d48fbf`; retrofit wiring tables and installed trough/lock photographs.
+- `service-bulletin.rfm.mypinballs-code-updates`: official myPinballs code-update log acquired 2026-08-15; quoted knocker, shaker, six-ball trough, and physical-lock firmware milestones.
 - `pinmame.core.8371478a7640`: pinned P2K implementation and machine-test-verified device tables at revision `8371478a7640f1896dcdf565aed340dc5df989ba`.
+- `runtime.rfm.stock-ball-serve`: pinned release-DLL stock serve/launch scenario and 640x480 video trace.
+- `runtime.rfm.debug-ball-cycle`: isolated P2K debug-model trace covering eject, shooter lane, launch, drain, and trough return.
 - `vpx-table.attack-and-revenge-v600-rejected`: exact user-supplied hybrid VPX, rejected because it runs AFM ROM semantics and AFM geometry.

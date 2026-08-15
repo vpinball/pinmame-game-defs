@@ -11,7 +11,7 @@
     "id": { "type": "string", "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$" },
     "authority": { "const": "pinmame" },
     "hardware_family": { "type": "string", "minLength": 1 },
-    "inversion_applied_by_emulator": { "description": "The public PinMAME API state is already normalized and consumers must not invert it again. This contract does not claim that every physically normally-closed switch has a nonzero per-game inversion mask.", "const": true },
+    "inversion_applied_by_emulator": { "description": "Consumers must use the public PinMAME API state as delivered and must not apply another controller-wide inversion. This contract does not claim that every public input is active-high or that every physically normally-closed switch has a nonzero per-game inversion mask; platform and per-game notes preserve mixed-level exceptions.", "const": true },
     "groups": {
       "type": "array",
       "minItems": 1,

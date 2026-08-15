@@ -1,0 +1,164 @@
+{
+  "driver_ids": [
+    "rfm_160"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "bally.revenge-from-mars.1999"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "Set P2K_TROUGH=4, P2K_BALLSAT=1200, P2K_DRAIN=60, P2K_LANEHOLD=20, P2K_PLAYFIELD=1, P2K_HITRATE=30, and P2K_HITLEN=5 in the harness process; then run python tools/run_pinmame_harness.py --library <PINMAME_P2K_DEBUG-on-libpinmame> --game rfm_160 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --scenario tools/harness-scenarios/pinball-2000/rfm-debug-ball-cycle.json --dmd-dir <external-frame-dir> --output <external-run.json>.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba with PINMAME_P2K_DEBUG=ON",
+      "sha256": "057ead79397dce64cdd6798dbb8d1042b9224304c3fd7c3daa43aae2875a494c"
+    },
+    "game": "rfm_160",
+    "observations": {
+      "display_indices_seen": [
+        0
+      ],
+      "display_layouts_seen": [
+        {
+          "depth": 24,
+          "height": 480,
+          "type": 15,
+          "width": 640
+        }
+      ],
+      "runs": {
+        "debug-ball-cycle-02": {
+          "limitation": "PinMAME's compile-time debug ball model validates the controller-facing state sequence only. Its frame delays are test scaffolding, not measured physical travel times, coil strength, or launch vectors.",
+          "named_action_observations": [
+            {
+              "active_solenoid_addresses": [
+                29,
+                30
+              ],
+              "input_kind": "key",
+              "input_name": "start",
+              "label": "start follows trough eject into the model-owned shooter lane",
+			  "host_stimulus_switch_addresses": [
+				13,
+				112
+			  ],
+              "observed_switch_addresses": [
+                18,
+                42,
+                43,
+                44,
+                45
+              ],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6,
+                9,
+                29,
+                31
+              ]
+            },
+            {
+              "active_solenoid_addresses": [
+                30
+              ],
+              "input_kind": "key",
+              "input_name": "launch",
+              "label": "launch clears the model-owned shooter lane",
+			  "host_stimulus_switch_addresses": [
+				23,
+				112
+			  ],
+              "observed_switch_addresses": [
+                18,
+                42,
+                43,
+                44,
+                45
+              ],
+              "result": "observed",
+              "transitioned_solenoid_addresses": [
+                6,
+                15,
+                29
+              ]
+            }
+          ],
+          "note": "Snapshots record the deterministic sequence full trough 42-45 active-low -> driver 9 and shooter-lane switch 18 active with trough position 45 open -> driver 15 and shooter-lane switch 18 inactive -> all four trough positions active again after the modeled drain.",
+          "solenoid_addresses_seen": [
+            6,
+            9,
+            12,
+            13,
+            15,
+            29,
+            30,
+            31,
+            32
+          ],
+          "switch_addresses_observed_while_held": [
+            18,
+            42,
+            43,
+            44,
+            45
+          ]
+        }
+      },
+      "solenoid_addresses_seen": [
+        6,
+        9,
+        12,
+        13,
+        15,
+        29,
+        30,
+        31,
+        32
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 7,
+        "boot_wait_s": 2.0,
+        "name": "debug-ball-cycle-02",
+        "nvram_initialization": "empty isolated state directory; the debug model places four balls at emulated frame 1200 after the machine completes its empty-trough power-up checks",
+        "scenario_path": "tools/harness-scenarios/pinball-2000/rfm-debug-ball-cycle.json",
+        "scenario_sha256": "f7df41e0c3ba6afd9aa36066fc57d52ea5a3f49ef1ec52b1b1c9b27c63589a85",
+        "self_test_pulses": 0,
+        "sha256": "3c77df07b1127aa4784ff939f7b8eb31021cdb34903a87b5f7f3f3c341c315d9",
+        "snapshot_count": 8,
+        "watch_switches": [
+          13,
+          18,
+          23,
+          42,
+          43,
+          44,
+          45,
+          112
+        ]
+      }
+    ],
+    "rom_archive_sha256": "9a8af78690f7b6e73854a6018aedccbb55aa8c3aa0dc740a45ab0a3859b6df61"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME's compile-time P2K debug model and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/revenge-from-mars-1999/harness/rfm-160-debug-ball-cycle-02/run.json",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "3c77df07b1127aa4784ff939f7b8eb31021cdb34903a87b5f7f3f3c341c315d9"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

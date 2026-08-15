@@ -1,0 +1,58 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "rfm_160",
+  "notes": "Exercise PinMAME's compile-time P2K_DEBUG ball model. Run only against a separately built PINMAME_P2K_DEBUG=ON DLL with P2K_TROUGH=4, P2K_BALLSAT=1200, P2K_DRAIN=60, P2K_LANEHOLD=20, and P2K_PLAYFIELD=1. The model owns the stock active-low trough optos and shooter-lane switch; this scenario supplies only cabinet actions and asserts the ROM's trough-eject and auto-plunger outputs. It validates logical state sequencing, not physical travel time, coil force, or launch vectors.",
+  "watch_switches": [13, 18, 23, 42, 43, 44, 45, 112],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 20.0,
+      "label": "wait for boot and debug-model trough placement"
+    },
+    {
+      "type": "pulse_key",
+      "key": "coin_door",
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "close the coin door and enable high voltage"
+    },
+    {
+      "type": "pulse_key",
+      "key": "coin_1",
+      "hold_ms": 100,
+      "settle_s": 1.0,
+      "label": "add one credit"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "start",
+      "channel": "solenoid",
+      "addresses": [9],
+      "max_pulses": 1,
+      "hold_ms": 500,
+      "settle_s": 0.75,
+      "label": "start a game and let the model follow the trough eject"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5,
+      "label": "observe the model-owned shooter-lane state"
+    },
+    {
+      "type": "pulse_until_output",
+      "key": "launch",
+      "channel": "solenoid",
+      "addresses": [15],
+      "max_pulses": 1,
+      "hold_ms": 250,
+      "settle_s": 0.5,
+      "label": "launch the model-owned shooter-lane ball"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5,
+      "label": "observe the modeled drain returning the ball to the trough"
+    }
+  ]
+}

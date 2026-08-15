@@ -36,16 +36,46 @@ MAX_DMD_EVENTS_PER_DISPLAY = 256
 SCENARIO_FORMAT = "pinmame-harness-scenario"
 SCENARIO_VERSION = 1
 SCENARIO_SCHEMA_PATH = Path(__file__).resolve().parents[1] / "schemas" / "harness-scenario.schema.json"
+# Behavior-changing P2K ball/switch-model inputs retained in run provenance.
+# Debug logging, trap, forwarding, map-dump, and performance-only variables are intentionally excluded.
+P2K_DEBUG_ENVIRONMENT_NAMES = (
+	"P2K_BALLSAT",
+	"P2K_DOORCLOSE",
+	"P2K_DRAIN",
+	"P2K_HANDPLUNGE",
+	"P2K_HITLEN",
+	"P2K_HITRATE",
+	"P2K_LANEHOLD",
+	"P2K_NAMES",
+	"P2K_PLAY",
+	"P2K_PLAYFIELD",
+	"P2K_PLAYHOLD",
+	"P2K_SWSWEEP",
+	"P2K_SWSWEEPAT",
+	"P2K_SWWATCH",
+	"P2K_TROUGH",
+)
 # Values are pinned to src/libpinmame/libpinmame.h's PINMAME_KEYCODE enum.
 # The Data East service bindings are corroborated by src/wpc/s11.h DE_COMPORTS:
 # Green=KEYCODE_7, Black=KEYCODE_8; flippers come from src/wpc/core.h CORE_PORTS
-# at the CORE_FLIPINPORT index.
+# at the CORE_FLIPINPORT index. The Pinball 2000 bindings follow src/wpc/p2k.c's
+# input_ports_rfm declaration and its measured diagnostic-button ordering.
 KEY_ALIASES = {
+	"balls_in_trough": 1,
+	"service_escape": 26,
 	"start": 27,
+	"coin_1": 31,
 	"service_green": 33,
+	"service_enter": 33,
 	"service_black": 34,
+	"service_up": 34,
+	"service_down": 35,
+	"launch": 66,
+	"coin_door": 78,
 	"left_flipper": 93,
 	"right_flipper": 94,
+	"left_action": 95,
+	"right_action": 96,
 }
 MIN_SAFE_PUBLIC_SWITCH = -7
 MAX_SAFE_PUBLIC_SWITCH = 120
@@ -227,9 +257,12 @@ class Recorder:
 		self.lock = threading.Lock()
 		self.events: list[dict[str, Any]] = []
 		self.display_layouts: dict[int, dict[str, int]] = {}
-		self.display_frames: dict[int, list[int]] = {}
+		self.display_frames: dict[int, list[int] | bytes] = {}
 		self.dmd_change_counts: dict[int, int] = {}
 		self.dmd_suppressed_counts: dict[int, int] = {}
+		self.video_change_counts: dict[int, int] = {}
+		self.video_suppressed_counts: dict[int, int] = {}
+		self.video_frame_hashes: dict[int, str] = {}
 		self.solenoid_states: dict[int, int] = {}
 		self.lamp_states: dict[int, int] = {}
 		self.gi_states: dict[int, int] = {}
@@ -268,13 +301,18 @@ class Recorder:
 	) -> list[dict[str, Any]]:
 		with self.lock:
 			frames = [
-				(index, dict(self.display_layouts.get(index, {})), list(frame))
+				(
+					index,
+					dict(self.display_layouts.get(index, {})),
+					bytes(frame) if isinstance(frame, bytes) else list(frame),
+				)
 				for index, frame in sorted(self.display_frames.items())
 			]
 		displays = []
 		for index, layout, frame in frames:
 			display: dict[str, Any] = {"index": index, "layout": layout}
-			if (layout.get("type", -1) & 0x1F) == 14:
+			display_type = layout.get("type", -1) & 0x1F
+			if display_type == 14:
 				pixels = bytes(frame)
 				display["pixel_sha256"] = hashlib.sha256(pixels).hexdigest()
 				display["nonzero_pixels"] = sum(pixel != 0 for pixel in pixels)
@@ -292,6 +330,20 @@ class Recorder:
 					header = f"P5\n{layout['width']} {layout['height']}\n255\n".encode("ascii")
 					artifact.write_bytes(header + grayscale)
 					display["artifact"] = str(artifact)
+			elif display_type == 15:
+				pixels = bytes(frame)
+				display["pixel_format"] = "rgb24"
+				display["pixel_sha256"] = hashlib.sha256(pixels).hexdigest()
+				display["nonblack_pixels"] = sum(
+					any(pixels[offset : offset + 3]) for offset in range(0, len(pixels), 3)
+				)
+				if dmd_dir is not None and snapshot_index is not None:
+					dmd_dir.mkdir(parents=True, exist_ok=True)
+					slug = re.sub(r"[^a-z0-9]+", "-", (snapshot_label or "snapshot").lower()).strip("-")
+					artifact = dmd_dir / f"{snapshot_index:03d}-{slug}-display-{index}.ppm"
+					header = f"P6\n{layout['width']} {layout['height']}\n255\n".encode("ascii")
+					artifact.write_bytes(header + pixels)
+					display["artifact"] = str(artifact)
 			else:
 				display["segments"] = frame
 			text = _decode_segment_frame(layout.get("type", -1), frame)
@@ -306,6 +358,8 @@ class Recorder:
 			frames = [
 				(self.display_layouts.get(index, {}).get("type", -1), list(frame))
 				for index, frame in sorted(self.display_frames.items())
+				if (self.display_layouts.get(index, {}).get("type", -1) & 0x1F)
+				in SEGMENT_16_DISPLAY_TYPES
 			]
 		texts = [
 			text
@@ -326,11 +380,32 @@ class Recorder:
 			else:
 				self.dmd_suppressed_counts[index] = self.dmd_suppressed_counts.get(index, 0) + 1
 
+	def record_video_frame(self, index: int, frame: bytes) -> None:
+		frame_sha256 = hashlib.sha256(frame).hexdigest()
+		with self.lock:
+			if self.video_frame_hashes.get(index) == frame_sha256:
+				return
+			self.display_frames[index] = frame
+			self.video_frame_hashes[index] = frame_sha256
+			change_count = self.video_change_counts.get(index, 0) + 1
+			self.video_change_counts[index] = change_count
+			if change_count <= MAX_DMD_EVENTS_PER_DISPLAY:
+				self.events.append({"time_s": round(time.monotonic() - self.started_at, 6), "event": "video", "index": index, "pixel_sha256": frame_sha256})
+			else:
+				self.video_suppressed_counts[index] = self.video_suppressed_counts.get(index, 0) + 1
+
 	def snapshot_dmd_event_summary(self) -> dict[str, dict[str, int]]:
 		with self.lock:
 			return {
 				str(index): {"changed_frames": count, "recorded_events": min(count, MAX_DMD_EVENTS_PER_DISPLAY), "suppressed_events": self.dmd_suppressed_counts.get(index, 0)}
 				for index, count in sorted(self.dmd_change_counts.items())
+			}
+
+	def snapshot_video_event_summary(self) -> dict[str, dict[str, int]]:
+		with self.lock:
+			return {
+				str(index): {"changed_frames": count, "recorded_events": min(count, MAX_DMD_EVENTS_PER_DISPLAY), "suppressed_events": self.video_suppressed_counts.get(index, 0)}
+				for index, count in sorted(self.video_change_counts.items())
 			}
 
 	def record_lamp(self, number: int, state: int) -> None:
@@ -532,11 +607,14 @@ def _hold_switch(
 	switch: int,
 	hold_seconds: float,
 	before_release: Callable[[], None] | None = None,
+	*,
+	active_state: int = 1,
 ) -> None:
 	"""Keep a switch asserted even when a hardware driver refreshes its cabinet column."""
+	rest_state = 1 - active_state
 	deadline = time.monotonic() + hold_seconds
 	while True:
-		library.PinmameSetSwitch(switch, 1)
+		library.PinmameSetSwitch(switch, active_state)
 		_poll_outputs(library, recorder)
 		remaining = deadline - time.monotonic()
 		if remaining <= 0:
@@ -544,7 +622,7 @@ def _hold_switch(
 		time.sleep(min(0.01, remaining))
 	if before_release is not None:
 		before_release()
-	library.PinmameSetSwitch(switch, 0)
+	library.PinmameSetSwitch(switch, rest_state)
 	_poll_outputs(library, recorder)
 
 
@@ -698,7 +776,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 			frame = list(ctypes.string_at(data, layout.width * layout.height))
 			recorder.record_dmd_frame(index, frame)
 			return
-		if layout.length <= 0 or display_type == 15:
+		if display_type == 15:
+			if layout.width <= 0 or layout.height <= 0:
+				return
+			frame = ctypes.string_at(data, layout.width * layout.height * 3)
+			recorder.record_video_frame(index, frame)
+			return
+		if layout.length <= 0:
 			return
 		segments = ctypes.cast(data, ctypes.POINTER(ctypes.c_uint16))
 		frame = [segments[offset] for offset in range(layout.length)]
@@ -818,7 +902,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 				switch = action["switch"]
 				hold_ms = action.get("hold_ms", 100)
 				settle_s = action.get("settle_s", 1.0)
-				recorder.record("switch", number=switch, state=1, step=step_number)
+				active_state = action.get("active_state", 1)
+				rest_state = 1 - active_state
+				recorder.record("switch", number=switch, state=active_state, step=step_number)
 				observed_while_held: list[int] = []
 
 				def before_release() -> None:
@@ -837,10 +923,17 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 							watch_switches,
 						)
 
-				_hold_switch(library, recorder, switch, hold_ms / 1000, before_release)
+				_hold_switch(
+					library,
+					recorder,
+					switch,
+					hold_ms / 1000,
+					before_release,
+					active_state=active_state,
+				)
 				released_state = 1 if library.PinmameGetSwitch(switch) else 0
 				recorder.record(
-					"switch", number=switch, state=0, observed_state=released_state, step=step_number
+					"switch", number=switch, state=rest_state, observed_state=released_state, step=step_number
 				)
 				_wait_with_poll(library, recorder, settle_s)
 				step_result.update(
@@ -848,6 +941,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 						"switch": switch,
 						"hold_ms": hold_ms,
 						"settle_s": settle_s,
+						"active_state": active_state,
+						"rest_state": rest_state,
 						"observed_while_held": observed_while_held[-1],
 						"observed_after_release": 1 if library.PinmameGetSwitch(switch) else 0,
 					}
@@ -958,12 +1053,14 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 						break
 					if "switch" in action:
 						switch = action["switch"]
+						active_state = action.get("active_state", 1)
+						rest_state = 1 - active_state
 						recorder.record(
-							"switch", number=switch, state=1, step=step_number, repeat=pulse_number
+							"switch", number=switch, state=active_state, step=step_number, repeat=pulse_number
 						)
-						_hold_switch(library, recorder, switch, hold_ms / 1000)
+						_hold_switch(library, recorder, switch, hold_ms / 1000, active_state=active_state)
 						recorder.record(
-							"switch", number=switch, state=0, step=step_number, repeat=pulse_number
+							"switch", number=switch, state=rest_state, step=step_number, repeat=pulse_number
 						)
 					else:
 						key = action["key"]
@@ -1000,6 +1097,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 						"pulses": pulses_performed,
 						"hold_ms": hold_ms,
 						"settle_s": settle_s,
+						"active_state": action.get("active_state", 1) if "switch" in action else None,
 						"display_checks": display_checks,
 					}
 				)
@@ -1017,12 +1115,14 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 					pulse_start = recorder.event_index()
 					if "switch" in action:
 						switch = action["switch"]
+						active_state = action.get("active_state", 1)
+						rest_state = 1 - active_state
 						recorder.record(
-							"switch", number=switch, state=1, step=step_number, repeat=pulse_number
+							"switch", number=switch, state=active_state, step=step_number, repeat=pulse_number
 						)
-						_hold_switch(library, recorder, switch, hold_ms / 1000)
+						_hold_switch(library, recorder, switch, hold_ms / 1000, active_state=active_state)
 						recorder.record(
-							"switch", number=switch, state=0, step=step_number, repeat=pulse_number
+							"switch", number=switch, state=rest_state, step=step_number, repeat=pulse_number
 						)
 					else:
 						key = action["key"]
@@ -1070,6 +1170,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 						"pulses": len(pulse_checks),
 						"hold_ms": hold_ms,
 						"settle_s": settle_s,
+						"active_state": action.get("active_state", 1) if "switch" in action else None,
 						"pulse_checks": pulse_checks,
 					}
 				)
@@ -1126,6 +1227,11 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		"game": args.game,
 		"library": str(dll_path),
 		"library_sha256": hashlib.sha256(dll_path.read_bytes()).hexdigest(),
+		"p2k_debug_environment": {
+			name: os.environ[name]
+			for name in P2K_DEBUG_ENVIRONMENT_NAMES
+			if name in os.environ
+		},
 		"rom_path": str(rom_path),
 		"work_dir": str(work_dir),
 		"dmd_dir": str(args.dmd_dir.resolve()) if args.dmd_dir else None,
@@ -1152,6 +1258,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		"failure": failure,
 		"events": recorder.events,
 		"dmd_event_summary": recorder.snapshot_dmd_event_summary(),
+		"video_event_summary": recorder.snapshot_video_event_summary(),
 	}
 
 
@@ -1197,7 +1304,7 @@ def build_parser() -> argparse.ArgumentParser:
 	parser.add_argument(
 		"--dmd-dir",
 		type=Path,
-		help="optional directory for grayscale PGM snapshots of DMD displays",
+		help="optional directory for grayscale PGM DMD snapshots and RGB PPM video snapshots",
 	)
 	parser.add_argument(
 		"--snapshot-while-held",

@@ -59,6 +59,7 @@
         "type": { "const": "pulse" },
         "label": { "type": "string", "minLength": 1 },
         "switch": { "$ref": "#/$defs/publicSwitchAddress" },
+        "active_state": { "description": "Raw public level repeatedly applied during the pulse. A driver SWITCH_UPDATE callback can still overwrite this level between writes, so do not use direct pulses as evidence for driver-owned inputs.", "enum": [0, 1], "default": 1 },
         "hold_ms": { "type": "number", "exclusiveMinimum": 0, "default": 100 },
         "settle_s": { "type": "number", "minimum": 0, "default": 1.0 },
         "snapshot_while_held": { "type": "boolean", "default": false }
@@ -83,7 +84,7 @@
       "properties": {
         "type": { "const": "pulse_key" },
         "label": { "type": "string", "minLength": 1 },
-        "key": { "enum": ["start", "service_green", "service_black", "left_flipper", "right_flipper"] },
+        "key": { "enum": ["balls_in_trough", "service_escape", "start", "coin_1", "service_green", "service_enter", "service_black", "service_up", "service_down", "launch", "coin_door", "left_flipper", "right_flipper", "left_action", "right_action"] },
         "hold_ms": { "type": "number", "exclusiveMinimum": 0, "default": 100 },
         "settle_s": { "type": "number", "minimum": 0, "default": 1.0 },
         "snapshot_while_held": { "type": "boolean", "default": false }
@@ -96,7 +97,7 @@
       "properties": {
         "type": { "const": "set_key" },
         "label": { "type": "string", "minLength": 1 },
-        "key": { "enum": ["start", "service_green", "service_black", "left_flipper", "right_flipper"] },
+        "key": { "enum": ["balls_in_trough", "service_escape", "start", "coin_1", "service_green", "service_enter", "service_black", "service_up", "service_down", "launch", "coin_door", "left_flipper", "right_flipper", "left_action", "right_action"] },
         "state": { "enum": [0, 1] },
         "settle_s": { "type": "number", "minimum": 0, "default": 1.0 }
       }
@@ -115,11 +116,18 @@
           "not": { "required": ["switch"] }
         }
       ],
+      "allOf": [
+        {
+          "if": { "required": ["key"] },
+          "then": { "not": { "required": ["active_state"] } }
+        }
+      ],
       "properties": {
         "type": { "const": "pulse_until_display" },
         "label": { "type": "string", "minLength": 1 },
         "switch": { "$ref": "#/$defs/publicSwitchAddress" },
-        "key": { "enum": ["start", "service_green", "service_black", "left_flipper", "right_flipper"] },
+        "key": { "enum": ["balls_in_trough", "service_escape", "start", "coin_1", "service_green", "service_enter", "service_black", "service_up", "service_down", "launch", "coin_door", "left_flipper", "right_flipper", "left_action", "right_action"] },
+        "active_state": { "description": "Raw public level repeatedly applied during each pulse. A driver SWITCH_UPDATE callback can still overwrite this level between writes, so do not use direct pulses as evidence for driver-owned inputs.", "enum": [0, 1], "default": 1 },
         "texts": {
           "type": "array",
           "minItems": 1,
@@ -145,11 +153,18 @@
           "not": { "required": ["switch"] }
         }
       ],
+      "allOf": [
+        {
+          "if": { "required": ["key"] },
+          "then": { "not": { "required": ["active_state"] } }
+        }
+      ],
       "properties": {
         "type": { "const": "pulse_until_output" },
         "label": { "type": "string", "minLength": 1 },
         "switch": { "$ref": "#/$defs/publicSwitchAddress" },
-        "key": { "enum": ["start", "service_green", "service_black", "left_flipper", "right_flipper"] },
+        "key": { "enum": ["balls_in_trough", "service_escape", "start", "coin_1", "service_green", "service_enter", "service_black", "service_up", "service_down", "launch", "coin_door", "left_flipper", "right_flipper", "left_action", "right_action"] },
+        "active_state": { "description": "Raw public level repeatedly applied during each pulse. A driver SWITCH_UPDATE callback can still overwrite this level between writes, so do not use direct pulses as evidence for driver-owned inputs.", "enum": [0, 1], "default": 1 },
         "channel": { "enum": ["solenoid", "lamp", "gi"] },
         "addresses": {
           "type": "array",

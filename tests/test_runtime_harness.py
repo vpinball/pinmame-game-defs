@@ -59,6 +59,21 @@ class RuntimeHarnessTests(unittest.TestCase):
 		self.assertEqual([(41, 1)], observed)
 		self.assertEqual((41, 0), library.switch_calls[-1])
 
+	def test_active_low_pulse_holds_zero_and_releases_one(self) -> None:
+		library = self.FakeLibrary()
+		recorder = HARNESS.Recorder()
+		observed: list[tuple[int, int]] = []
+		HARNESS._hold_switch(
+			library,
+			recorder,
+			42,
+			0.001,
+			lambda: observed.append(library.switch_calls[-1]),
+			active_state=0,
+		)
+		self.assertEqual([(42, 0)], observed)
+		self.assertEqual((42, 1), library.switch_calls[-1])
+
 	def test_held_snapshot_cli_is_opt_in(self) -> None:
 		parser = HARNESS.build_parser()
 		args = parser.parse_args([
@@ -118,7 +133,7 @@ class RuntimeHarnessTests(unittest.TestCase):
 			"watch_switches": [-7, -6, 47],
 			"initial_switches": [{"switch": 47, "state": 0}],
 			"actions": [
-				{"type": "pulse", "switch": -7, "hold_ms": 120, "settle_s": 0.2},
+				{"type": "pulse", "switch": -7, "active_state": 0, "hold_ms": 120, "settle_s": 0.2},
 				{"type": "set_switch", "switch": 47, "state": 1, "settle_s": 0.1},
 				{"type": "pulse_key", "key": "left_flipper", "hold_ms": 80, "settle_s": 0.1},
 				{
@@ -174,6 +189,22 @@ class RuntimeHarnessTests(unittest.TestCase):
 			with self.assertRaisesRegex(ValueError, "scenario schema validation failed"):
 				HARNESS._load_scenario(path)
 
+	def test_keyboard_pulses_reject_switch_polarity(self) -> None:
+		for action in (
+			{"type": "pulse_until_display", "key": "start", "active_state": 0, "texts": ["TEST"]},
+			{"type": "pulse_until_output", "key": "start", "active_state": 0, "channel": "solenoid", "addresses": [1]},
+		):
+			invalid = {
+				"format": HARNESS.SCENARIO_FORMAT,
+				"version": HARNESS.SCENARIO_VERSION,
+				"actions": [action],
+			}
+			with self.subTest(action=action["type"]), tempfile.TemporaryDirectory() as directory:
+				path = Path(directory) / "scenario.json"
+				path.write_text(json.dumps(invalid), encoding="utf-8")
+				with self.assertRaisesRegex(ValueError, "scenario schema validation failed"):
+					HARNESS._load_scenario(path)
+
 	def test_retained_scenarios_validate_against_the_schema(self) -> None:
 		paths = sorted((ROOT / "tools" / "harness-scenarios").glob("**/*.json"))
 		self.assertGreaterEqual(len(paths), 2)
@@ -201,7 +232,23 @@ class RuntimeHarnessTests(unittest.TestCase):
 
 	def test_key_aliases_preserve_reviewed_pinned_values(self) -> None:
 		self.assertEqual(
-			{"start": 27, "service_green": 33, "service_black": 34, "left_flipper": 93, "right_flipper": 94},
+			{
+				"balls_in_trough": 1,
+				"service_escape": 26,
+				"start": 27,
+				"coin_1": 31,
+				"service_green": 33,
+				"service_enter": 33,
+				"service_black": 34,
+				"service_up": 34,
+				"service_down": 35,
+				"launch": 66,
+				"coin_door": 78,
+				"left_flipper": 93,
+				"right_flipper": 94,
+				"left_action": 95,
+				"right_action": 96,
+			},
 			HARNESS.KEY_ALIASES,
 		)
 		schema = json.loads(HARNESS.SCENARIO_SCHEMA_PATH.read_text(encoding="utf-8"))
@@ -209,6 +256,17 @@ class RuntimeHarnessTests(unittest.TestCase):
 			sorted(HARNESS.KEY_ALIASES),
 			sorted(schema["$defs"]["pulseKey"]["properties"]["key"]["enum"]),
 		)
+		self.assertNotIn("release_on_display_change", schema["$defs"]["pulseKey"]["properties"])
+		for action_name in ("pulse", "pulseUntilDisplay", "pulseUntilOutput"):
+			self.assertIn("driver-owned", schema["$defs"][action_name]["properties"]["active_state"]["description"])
+
+	def test_p2k_debug_environment_names_are_explicit_and_sorted(self) -> None:
+		self.assertEqual(
+			tuple(sorted(HARNESS.P2K_DEBUG_ENVIRONMENT_NAMES)),
+			HARNESS.P2K_DEBUG_ENVIRONMENT_NAMES,
+		)
+		self.assertIn("P2K_TROUGH", HARNESS.P2K_DEBUG_ENVIRONMENT_NAMES)
+		self.assertIn("P2K_PLAYFIELD", HARNESS.P2K_DEBUG_ENVIRONMENT_NAMES)
 
 	def test_config_abi_preserves_required_boundary_fields(self) -> None:
 		fields = [name for name, _field_type in HARNESS.PinmameConfig._fields_]
@@ -236,6 +294,8 @@ class RuntimeHarnessTests(unittest.TestCase):
 		recorder = HARNESS.Recorder()
 		recorder.display_layouts[0] = {"type": 1}
 		recorder.display_frames[0] = [0x0071, 0x0877, 0x0039, 0x2201, 0x003F, 0x1873, 0x2500]
+		recorder.display_layouts[1] = {"type": 15}
+		recorder.display_frames[1] = bytes(640 * 480 * 3)
 		recorder.snapshot_displays = mock.Mock(side_effect=AssertionError("full snapshot must not run"))
 		self.assertEqual("FACTORY", recorder.current_display_text())
 		recorder.snapshot_displays.assert_not_called()
@@ -265,6 +325,35 @@ class RuntimeHarnessTests(unittest.TestCase):
 		with tempfile.TemporaryDirectory() as directory:
 			displays = recorder.snapshot_displays(Path(directory), 0, "booted")
 			self.assertEqual(b"P5\n2 1\n255\n\x00\xff", Path(displays[0]["artifact"]).read_bytes())
+
+	def test_video_frame_hash_suppresses_duplicate_frames(self) -> None:
+		recorder = HARNESS.Recorder()
+		recorder.record_video_frame(1, bytes([0, 0, 0]))
+		recorder.record_video_frame(1, bytes([0, 0, 0]))
+		recorder.record_video_frame(1, bytes([1, 0, 0]))
+		self.assertEqual(2, recorder.video_change_counts[1])
+		self.assertEqual(hashlib.sha256(bytes([1, 0, 0])).hexdigest(), recorder.video_frame_hashes[1])
+
+	def test_video_snapshot_records_rgb_hash_and_optional_pixmap(self) -> None:
+		recorder = HARNESS.Recorder()
+		recorder.display_layouts[0] = {
+			"type": 15, "top": 0, "left": 0, "length": 0,
+			"width": 2, "height": 1, "depth": 24,
+		}
+		frame = bytes([255, 0, 0, 0, 0, 0])
+		recorder.record_video_frame(0, frame)
+		with tempfile.TemporaryDirectory() as directory:
+			displays = recorder.snapshot_displays(Path(directory), 4, "P2K service menu")
+			self.assertEqual("rgb24", displays[0]["pixel_format"])
+			self.assertEqual(hashlib.sha256(frame).hexdigest(), displays[0]["pixel_sha256"])
+			self.assertEqual(1, displays[0]["nonblack_pixels"])
+			artifact = Path(displays[0]["artifact"])
+			self.assertEqual("004-p2k-service-menu-display-0.ppm", artifact.name)
+			self.assertEqual(b"P6\n2 1\n255\n" + frame, artifact.read_bytes())
+		self.assertEqual(
+			{"changed_frames": 1, "recorded_events": 1, "suppressed_events": 0},
+			recorder.snapshot_video_event_summary()["0"],
+		)
 
 	def test_dmd_change_events_are_bounded_with_a_loss_summary(self) -> None:
 		recorder = HARNESS.Recorder()
