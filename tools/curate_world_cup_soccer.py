@@ -433,6 +433,14 @@ def _file_sha256(path: Path) -> str:
 	return digest.hexdigest()
 
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from the file on disk
+# rather than from a literal in this curator (see tools/curate_torpedo_alley.py's EXCERPT_IMAGE_HASHES).
+EXCERPT_IMAGE_HASHES = {
+	path.name: _file_sha256(path)
+	for path in sorted((ROOT / "evidence/excerpts/midway.world-cup-soccer.1994").glob("*.webp"))
+}
+
+
 def build_extraction_manifest(extraction_root: Path) -> dict[str, Any]:
 	if not extraction_root.is_dir():
 		raise RuntimeError(f"World Cup Soccer retained extraction is missing: {extraction_root}")
@@ -612,26 +620,38 @@ def source_records() -> list[dict[str, Any]]:
 				excerpt(
 					"switch-locations", "PDF pages 112-113, printed pages 2-46/2-47, switch-locations parts list",
 					"switch-locations.md", "80522bb19ee82917a86a9e95163f94638272cc1884a17a3bd591c12681bb0ba5",
+					image="switch-locations.webp", image_sha256=EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					image_derivation="World_Cup_Soccer_OPS.pdf page 113, crop box 0.02,0.02,0.98,0.97, scanned page rendered at its native resolution (embedded image xref 468, 2550px across 8.50in), rendered at 300 dpi, 2448x3135 WebP quality 80 -- page 113 (printed 2-47, items 51-88) carries the playfield location drawing that continues from page 112's item table (F1-F4, 11-48, table only, no drawing); the two-page table is fully captured in the transcription, so the single load-bearing drawing page was cropped rather than the earlier table-only half",
 				),
 				excerpt(
 					"lamp-matrix", "PDF page 110, printed page 2-44, LAMP MATRIX table",
 					"lamp-matrix.md", "d7f630b73fc01e3b828aebc8552acede5c1dde9b416919a4ad5fa62632e517e4",
+					image="lamp-matrix.webp", image_sha256=EXCERPT_IMAGE_HASHES["lamp-matrix.webp"],
+					image_derivation="World_Cup_Soccer_OPS.pdf page 110, crop box 0.04,0.06,0.8,0.575, scanned page rendered at its native resolution (embedded image xref 454, 2556px across 8.52in), rendered at 155 dpi, capped to 1000px wide, 1001x878 WebP quality 80",
 				),
 				excerpt(
 					"lamp-locations", "PDF pages 110-111, printed pages 2-44/2-45, lamp-locations parts list",
 					"lamp-locations.md", "f671dd2f014c20bce60e6f033a89c1a4a49580c51e42f858d8ed0f8d03659abf",
+					image="lamp-locations.webp", image_sha256=EXCERPT_IMAGE_HASHES["lamp-locations.webp"],
+					image_derivation="World_Cup_Soccer_OPS.pdf page 111, crop box 0.02,0.02,0.98,0.97, scanned page rendered at its native resolution (embedded image xref 459, 2550px across 8.50in), rendered at 300 dpi, 2448x3135 WebP quality 80 -- page 111 (printed 2-45, items 51-88) carries the playfield location drawing that continues from page 110's item table (11-48, table only, no drawing); the two-page table is fully captured in the transcription, so the single load-bearing drawing page was cropped rather than the earlier table-only half",
 				),
 				excerpt(
 					"solenoid-flasher-wiring", "PDF page 114, printed page 2-48, SOLENOID/FLASHER TABLE and Flipper Circuits",
 					"solenoid-flasher-wiring.md", "b2f0f78cb29275bf6632b319cab584e23e602341e7eb5cc698d88cd6d4ce1ded",
+					image="solenoid-flasher-wiring.webp", image_sha256=EXCERPT_IMAGE_HASHES["solenoid-flasher-wiring.webp"],
+					image_derivation="World_Cup_Soccer_OPS.pdf page 114, crop box 0.02,0.04,0.98,0.59, scanned page rendered at its native resolution (embedded image xref 472, 2562px across 8.54in), rendered at 300 dpi, 2448x1815 WebP quality 80",
 				),
 				excerpt(
 					"solenoid-flasher-locations", "PDF page 114, printed page 2-48, SOLENOID/FLASHER LOCATIONS parts list",
 					"solenoid-flasher-locations.md", "6abb4566d87e3016b5d865ec0d0d384a8fb1abefc28647878c1bb25b36e97a81",
+					image="solenoid-flasher-locations.webp", image_sha256=EXCERPT_IMAGE_HASHES["solenoid-flasher-locations.webp"],
+					image_derivation="World_Cup_Soccer_OPS.pdf page 114, crop box 0.02,0.585,0.98,0.98, scanned page rendered at its native resolution (embedded image xref 472, 2562px across 8.54in), rendered at 300 dpi, 2448x1304 WebP quality 80",
 				),
 				excerpt(
 					"general-illumination", "PDF page 115, printed page 2-49, General Illumination Circuits summary",
 					"general-illumination.md", "02eb1bd6a9ad5efeb7b73b5be731cc6ba725d358c148999aef84137c485f8cd4",
+					image="general-illumination.webp", image_sha256=EXCERPT_IMAGE_HASHES["general-illumination.webp"],
+					image_derivation="World_Cup_Soccer_OPS.pdf page 115, crop box 0.03,0.11,0.46,0.49, scanned page rendered at its native resolution (embedded image xref 477, 2562px across 8.54in), rendered at 300 dpi, 1097x1254 WebP quality 80",
 				),
 				excerpt(
 					"boards-and-assemblies", "PDF pages 78, 80, 81, 108, printed 2-12/2-14/2-15/2-42, opto/motor board and Lower Playfield Parts pages",

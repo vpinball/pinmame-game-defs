@@ -797,6 +797,13 @@ relationships.append({
     "provenance": prov("candidate", [COIL_EXCERPT, SCRIPT_REF]),
 })
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+    path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+    for path in sorted((Path(__file__).resolve().parents[1] / "evidence/excerpts/data-east.laser-war.1987").glob("*.webp"))
+}
+
 excerpt_base = "evidence/excerpts/data-east.laser-war.1987"
 sources = [
     {"id": CATALOG, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame",
@@ -835,19 +842,29 @@ sources = [
      "excerpts": [
          {"id": "excerpt.laser-war.switch-matrix", "locator": "Page 1, complete Switch Matrix",
           "path": f"{excerpt_base}/switch-matrix.md", "sha256": EVIDENCE_HASHES["switch-matrix.md"], "method": "manual",
-          "transcribed_by": "curator, visually checked cell-by-cell against a retained 300 dpi render", "reviewed": True},
+          "transcribed_by": "curator, visually checked cell-by-cell against a retained 300 dpi render", "reviewed": True,
+          "image": f"{excerpt_base}/switch-matrix.webp", "image_sha256": EXCERPT_IMAGE_HASHES["switch-matrix.webp"],
+          "image_derivation": "Data_East_Laser_War_Tech_Chart.pdf page 1, crop box 0.535,0.505,0.995,0.995, born-digital page rendered for legibility (smallest type in region 6.0pt, targeting 11px glyphs), rendered at 132 dpi, 1033x712 WebP quality 80"},
          {"id": "excerpt.laser-war.lamp-matrix", "locator": "Page 1, complete Lamp Matrix",
           "path": f"{excerpt_base}/lamp-matrix.md", "sha256": EVIDENCE_HASHES["lamp-matrix.md"], "method": "manual",
-          "transcribed_by": "curator, visually checked cell-by-cell against a retained 300 dpi render", "reviewed": True},
+          "transcribed_by": "curator, visually checked cell-by-cell against a retained 300 dpi render", "reviewed": True,
+          "image": f"{excerpt_base}/lamp-matrix.webp", "image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix.webp"],
+          "image_derivation": "Data_East_Laser_War_Tech_Chart.pdf page 1, crop box 0.535,0.03,0.995,0.495, born-digital page rendered for legibility (smallest type in region 6.0pt, targeting 11px glyphs), rendered at 132 dpi, 1033x676 WebP quality 80"},
          {"id": "excerpt.laser-war.coil-chart", "locator": "Page 1, Switched, CPU Controlled Auxiliary & Constant Power Solenoids, rows 1L-16",
           "path": f"{excerpt_base}/coil-chart.md", "sha256": EVIDENCE_HASHES["coil-chart.md"], "method": "manual",
-          "transcribed_by": "curator, visually checked cell-by-cell against a retained 300 dpi render", "reviewed": True},
+          "transcribed_by": "curator, visually checked cell-by-cell against a retained 300 dpi render", "reviewed": True,
+          "image": f"{excerpt_base}/coil-chart.webp", "image_sha256": EXCERPT_IMAGE_HASHES["coil-chart.webp"],
+          "image_derivation": "Data_East_Laser_War_Tech_Chart.pdf page 1, crop box 0.045,0.49,0.52,0.798, born-digital page rendered for legibility (smallest type in region 7.0pt, targeting 11px glyphs), rendered at 114 dpi, 919x386 WebP quality 80"},
          {"id": "excerpt.laser-war.technical-chart-special-solenoids", "locator": "Page 1, Switched, CPU Controlled Auxiliary & Constant Power Solenoids, complete printed rows 17-22",
           "path": f"{excerpt_base}/technical-chart-special-solenoids.md", "sha256": EVIDENCE_HASHES["technical-chart-special-solenoids.md"], "method": "manual",
-          "transcribed_by": "curator, visually checked cell-by-cell against a retained 300 dpi render", "reviewed": True},
+          "transcribed_by": "curator, visually checked cell-by-cell against a retained 300 dpi render", "reviewed": True,
+          "image": f"{excerpt_base}/technical-chart-special-solenoids.webp", "image_sha256": EXCERPT_IMAGE_HASHES["technical-chart-special-solenoids.webp"],
+          "image_derivation": "Data_East_Laser_War_Tech_Chart.pdf page 1, crop box 0.045,0.798,0.52,0.864, born-digital page rendered for legibility (smallest type in region 7.0pt, targeting 11px glyphs), rendered at 114 dpi, 919x84 WebP quality 80"},
          {"id": "excerpt.laser-war.flipper-circuits", "locator": "Page 1, Flipper Circuits table",
           "path": f"{excerpt_base}/flipper-circuits.md", "sha256": EVIDENCE_HASHES["flipper-circuits.md"], "method": "manual",
-          "transcribed_by": "curator, visually checked cell-by-cell against a retained 300 dpi render", "reviewed": True},
+          "transcribed_by": "curator, visually checked cell-by-cell against a retained 300 dpi render", "reviewed": True,
+          "image": f"{excerpt_base}/flipper-circuits.webp", "image_sha256": EXCERPT_IMAGE_HASHES["flipper-circuits.webp"],
+          "image_derivation": "Data_East_Laser_War_Tech_Chart.pdf page 1, crop box 0.045,0.865,0.52,0.93, born-digital page rendered for legibility (smallest type in region 7.0pt, targeting 11px glyphs), rendered at 114 dpi, 919x83 WebP quality 80"},
      ]},
 ]
 

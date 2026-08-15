@@ -673,6 +673,15 @@ def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
 
 
+EXCERPT_IMAGE_DIR = ROOT / "evidence/excerpts/williams.indiana-jones-the-pinball-adventure.1993"
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted(EXCERPT_IMAGE_DIR.glob("*.webp"))
+}
+
+
 def source_records() -> list[dict[str, Any]]:
 	return [
 		{
@@ -740,6 +749,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/williams.indiana-jones-the-pinball-adventure.1993/switch-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-matrix.webp"],
+					"image_derivation": "Indiana_Jones_OPS.pdf page 110, crop box 0.08,0.07,0.96,0.6, scanned page rendered at its native resolution (embedded image xref 472, 2464px across 8.21in), rendered at 118 dpi, capped to 850px wide, 851x687 WebP quality 80",
 				},
 				{
 					"id": "excerpt.indiana-jones.switch-locations",
@@ -749,6 +761,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/williams.indiana-jones-the-pinball-adventure.1993/switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					"image_derivation": "Indiana_Jones_OPS.pdf page 111, crop box 0.02,0.04,0.99,0.93, scanned page rendered at its native resolution (embedded image xref 476, 2464px across 8.21in), rendered at 300 dpi, 2391x2938 WebP quality 80",
 				},
 				{
 					"id": "excerpt.indiana-jones.solenoid-flasher-wiring",
@@ -758,6 +773,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/williams.indiana-jones-the-pinball-adventure.1993/solenoid-flasher-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-wiring.webp"],
+					"image_derivation": "Indiana_Jones_OPS.pdf page 114, crop box 0.06,0.06,0.98,0.71, scanned page rendered at its native resolution (embedded image xref 491, 2496px across 8.32in), rendered at 300 dpi, 2268x2146 WebP quality 80",
 				},
 				{
 					"id": "excerpt.indiana-jones.general-illumination",
@@ -767,6 +785,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/williams.indiana-jones-the-pinball-adventure.1993/general-illumination.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
+					"image_derivation": "Indiana_Jones_OPS.pdf page 114, crop box 0.08,0.515,0.96,0.6, scanned page rendered at its native resolution (embedded image xref 491, 2496px across 8.32in), rendered at 300 dpi, 2169x281 WebP quality 80",
 				},
 				{
 					"id": "excerpt.indiana-jones.lamp-matrix-and-locations",
@@ -776,6 +797,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/williams.indiana-jones-the-pinball-adventure.1993/lamp-matrix-and-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix-and-locations.webp"],
+					"image_derivation": "Indiana_Jones_OPS.pdf page 113, crop box 0.02,0.035,0.99,0.925, scanned page rendered at its native resolution (embedded image xref 486, 2464px across 8.21in), rendered at 300 dpi, 2391x2939 WebP quality 80",
 				},
 				{
 					"id": "excerpt.indiana-jones.board-assemblies",
@@ -785,6 +809,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/williams.indiana-jones-the-pinball-adventure.1993/board-assemblies.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["board-assemblies.webp"],
+					"image_derivation": "Indiana_Jones_OPS.pdf page 138, crop box 0.05,0.05,0.98,0.93, scanned page rendered at its native resolution (embedded image xref 602, 2489px across 8.30in), rendered at 300 dpi, 2292x2905 WebP quality 80 -- the load-bearing single page of the four cited (136, 138-139, 140): it shows connector J5-4 wired to switch column 9 fanning out to both the 3-sw Opto PCB (idol) and the Motor Opto Switch PCB (mini playfield), plus the J3/J4 custom-solenoid drive connections (37-42) documented in solenoid-flasher-wiring.md.",
 				},
 			],
 		},

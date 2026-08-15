@@ -732,6 +732,14 @@ def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
 
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((ROOT / "evidence/excerpts/bally.judge-dredd.1993").glob("*.webp"))
+}
+
+
 def source_records() -> list[dict[str, Any]]:
 	return [
 		{
@@ -833,6 +841,13 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.judge-dredd.1993/lamp-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix.webp"],
+					"image_derivation": (
+						"Bally_1993_Judge_Dredd_Manual.pdf page 108, crop box 0.06,0.08,0.93,0.79, scanned "
+						"page rendered at its native resolution (embedded image xref 455, 5088px across "
+						"8.48in), rendered at 352 dpi, capped to 2600px wide, 2601x2754 WebP quality 80"
+					),
 				},
 				{
 					"id": "excerpt.judge-dredd.lamp-locations",
@@ -842,6 +857,13 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.judge-dredd.1993/lamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations.webp"],
+					"image_derivation": (
+						"Bally_1993_Judge_Dredd_Manual.pdf page 109, crop box 0.04,0.045,0.97,0.965, scanned "
+						"page rendered at its native resolution (embedded image xref 459, 5089px across "
+						"8.48in), rendered at 330 dpi, capped to 2600px wide, 2601x3337 WebP quality 80"
+					),
 				},
 				{
 					"id": "excerpt.judge-dredd.solenoid-flasher-table",
@@ -851,6 +873,13 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.judge-dredd.1993/solenoid-flasher-table.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-table.webp"],
+					"image_derivation": (
+						"Bally_1993_Judge_Dredd_Manual.pdf page 112, crop box 0.04,0.045,0.96,0.62, scanned "
+						"page rendered at its native resolution (embedded image xref 473, 5089px across "
+						"8.48in), rendered at 333 dpi, capped to 2600px wide, 2601x2110 WebP quality 80"
+					),
 				},
 				{
 					"id": "excerpt.judge-dredd.solenoid-flasher-locations",
@@ -860,6 +889,13 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.judge-dredd.1993/solenoid-flasher-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-locations.webp"],
+					"image_derivation": (
+						"Bally_1993_Judge_Dredd_Manual.pdf page 113, crop box 0.04,0.045,0.97,0.87, scanned "
+						"page rendered at its native resolution (embedded image xref 478, 5088px across "
+						"8.48in), rendered at 330 dpi, capped to 2600px wide, 2601x2994 WebP quality 80"
+					),
 				},
 				{
 					"id": "excerpt.judge-dredd.general-illumination",
@@ -869,6 +905,13 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.judge-dredd.1993/general-illumination.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
+					"image_derivation": (
+						"Bally_1993_Judge_Dredd_Manual.pdf page 124, crop box 0.1,0.055,0.92,0.9, scanned "
+						"page rendered at its native resolution (embedded image xref 528, 5088px across "
+						"8.48in), rendered at 374 dpi, capped to 2600px wide, 2601x3477 WebP quality 80"
+					),
 				},
 				{
 					"id": "excerpt.judge-dredd.dedicated-switches",
@@ -878,6 +921,13 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.judge-dredd.1993/dedicated-switches.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["dedicated-switches.webp"],
+					"image_derivation": (
+						"Bally_1993_Judge_Dredd_Manual.pdf page 117, crop box 0.05,0.06,0.95,0.945, scanned "
+						"page rendered at its native resolution (embedded image xref 496, 5100px across "
+						"8.50in), rendered at 341 dpi, capped to 2600px wide, 2601x3319 WebP quality 80"
+					),
 				},
 			],
 		},

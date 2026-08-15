@@ -7,6 +7,8 @@ import unittest
 from pathlib import Path
 
 
+from test_excerpts import DRAWING_LIMIT, IMAGE_LIMIT, PAGE_SCALE_DRAWINGS
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
@@ -397,7 +399,11 @@ class CongoDefinitionTests(unittest.TestCase):
 				self.assertTrue(image_path.is_file(), excerpt["image"])
 				image_digest = hashlib.sha256(image_path.read_bytes()).hexdigest()
 				self.assertEqual(excerpt["image_sha256"], image_digest, excerpt["id"])
-				self.assertLessEqual(image_path.stat().st_size, 100_000, excerpt["id"])
+				# Defer to the shared budget rather than restate it: this machine's
+				# switch-locations crop is a page-scale drawing, and a second copy of
+				# the rule here would have to be kept in step with tests/test_excerpts.py.
+				limit = DRAWING_LIMIT if excerpt["id"] in PAGE_SCALE_DRAWINGS else IMAGE_LIMIT
+				self.assertLessEqual(image_path.stat().st_size, limit, excerpt["id"])
 
 	def test_controller_profile_declares_every_used_binding_group(self) -> None:
 		profile = load_json(CONTROLLER_PATH)

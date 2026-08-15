@@ -543,6 +543,14 @@ def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
 
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((ROOT / "evidence/excerpts/bally.scared-stiff.1996").glob("*.webp"))
+}
+
+
 def source_records() -> list[dict[str, Any]]:
 	return [
 		{
@@ -615,6 +623,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 109-110, printed 2-44/2-45, Switch Locations parts list and opto sweep",
 					"path": "evidence/excerpts/bally.scared-stiff.1996/switch-locations-opto-sweep.md",
 					"sha256": "77d5659cd97d4e78a969249174c14e440acd544a5b5b4cef047e41a5ab243a5b",
+					"image": "evidence/excerpts/bally.scared-stiff.1996/switch-locations-opto-sweep.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations-opto-sweep.webp"],
+					"image_derivation": "Scared_Stiff_OPS.pdf page 109, crop box 0.08,0.5,0.96,0.945, scanned page rendered at its native resolution (embedded image xref 465, 1700px across 8.50in), rendered at 200 dpi, 1496x979 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -624,6 +635,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 2 and PDF pages 118-120, printed 3-5/3-6, Solenoid/Flasher Table",
 					"path": "evidence/excerpts/bally.scared-stiff.1996/solenoid-flasher-wiring.md",
 					"sha256": "4280ee3062f347f129a1c4da851e4d0b28900ceeb18c5aabb6e168dc98b26fdc",
+					"image": "evidence/excerpts/bally.scared-stiff.1996/solenoid-flasher-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-wiring.webp"],
+					"image_derivation": "Scared_Stiff_OPS.pdf page 118, crop box 0.03,0.045,0.99,0.925, scanned page rendered at its native resolution (embedded image xref 508, 2565px across 8.52in), rendered at 301 dpi, 2458x2915 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -633,6 +647,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 111, printed 2-46, Solenoid Locations parts list",
 					"path": "evidence/excerpts/bally.scared-stiff.1996/solenoid-flasher-locations.md",
 					"sha256": "4f3555a8b11a8d6afb31d5c37a8875913db7acc6cf3037497b78fb249bfaa1a3",
+					"image": "evidence/excerpts/bally.scared-stiff.1996/solenoid-flasher-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-locations.webp"],
+					"image_derivation": "Scared_Stiff_OPS.pdf page 111, crop box 0.08,0.685,0.98,0.955, scanned page rendered at its native resolution (embedded image xref 474, 1700px across 8.50in), rendered at 200 dpi, 1530x594 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -642,6 +659,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 111 (printed 2-46 continuation) and PDF page 123 (printed 3-10), General Illumination",
 					"path": "evidence/excerpts/bally.scared-stiff.1996/general-illumination.md",
 					"sha256": "6e8d48e90326bb78882516259b3376d34ba5060812255db90f16c14f3839fecb",
+					"image": "evidence/excerpts/bally.scared-stiff.1996/general-illumination.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
+					"image_derivation": "Scared_Stiff_OPS.pdf page 111, crop box 0.08,0.505,0.98,0.615, scanned page rendered at its native resolution (embedded image xref 474, 1700px across 8.50in), rendered at 200 dpi, 1530x242 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -651,6 +671,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 107-108, printed 2-42/2-43, Lamp Matrix and Lamp Locations",
 					"path": "evidence/excerpts/bally.scared-stiff.1996/lamp-matrix-and-locations.md",
 					"sha256": "36f653c442f9b77202985f3520b9d00b2b415216707e5566b49af1df9a6c1c64",
+					"image": "evidence/excerpts/bally.scared-stiff.1996/lamp-matrix-and-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix-and-locations.webp"],
+					"image_derivation": "Scared_Stiff_OPS.pdf page 107, crop box 0.1,0.04,0.94,0.93, scanned page rendered at its native resolution (embedded image xref 455, 612px across 8.50in), rendered at 72 dpi, 515x706 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,

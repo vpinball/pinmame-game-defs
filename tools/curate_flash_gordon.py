@@ -1373,6 +1373,12 @@ def build_sources() -> list[dict[str, Any]]:
 			"excerpts": [
 				{
 					"id": "excerpt.flash-gordon.self-test-tables",
+					"image": "evidence/excerpts/bally.flash-gordon.1980/self-test-tables.webp",
+					"image_derivation": "Flash Gordon Bally 1981 English Manual.pdf page 22, crop box "
+						"0.06,0.03,0.9,0.775, scanned page rendered at its native resolution (embedded "
+						"image xref 87, 2556px across 8.52in), rendered at 300 dpi, 2142x2459 WebP "
+						"quality 80",
+					"image_sha256": "@self-test-tables.webp",
 					"locator": "PDF page 22, printed 17, Solenoid Identification Table and Switch "
 						"Assembly Self-Test Display Numbers",
 					"method": "manual",
@@ -1411,6 +1417,12 @@ def build_sources() -> list[dict[str, Any]]:
 				},
 				{
 					"id": "excerpt.flash-gordon.lamp-driver-a5-connectors",
+					"image": "evidence/excerpts/bally.flash-gordon.1980/lamp-driver-a5-connectors.webp",
+					"image_derivation": "Flash Gordon Bally 1981 English Manual.pdf page 48, crop box "
+						"0.015,0.455,0.585,0.895, scanned page rendered at its native resolution "
+						"(embedded image xref 204, 2550px across 8.50in), rendered at 300 dpi, "
+						"1454x1453 WebP quality 80",
+					"image_sha256": "@lamp-driver-a5-connectors.webp",
 					"locator": "PDF page 48, LAMP DRIVER A5 connector block, J1/J2/J3/J4",
 					"method": "manual",
 					"path": "evidence/excerpts/bally.flash-gordon.1980/lamp-driver-a5-connectors.md",
@@ -1434,6 +1446,12 @@ def build_sources() -> list[dict[str, Any]]:
 				},
 				{
 					"id": "excerpt.flash-gordon.solenoid-driver-a3-connectors",
+					"image": "evidence/excerpts/bally.flash-gordon.1980/solenoid-driver-a3-connectors.webp",
+					"image_derivation": "Flash Gordon Bally 1981 English Manual.pdf page 49, crop box "
+						"0.385,0.065,0.975,0.895, scanned page rendered at its native resolution "
+						"(embedded image xref 209, 2550px across 8.50in), rendered at 300 dpi, "
+						"1506x2740 WebP quality 80",
+					"image_sha256": "@solenoid-driver-a3-connectors.webp",
 					"locator": "PDF page 49, drawing W-1187-26C, Voltage Regulator / Solenoid Driver A3 "
 						"connectors, Table B, Table C and Strobe Module A13",
 					"method": "manual",
@@ -1444,6 +1462,12 @@ def build_sources() -> list[dict[str, Any]]:
 				},
 				{
 					"id": "excerpt.flash-gordon.parts-list-coils",
+					"image": "evidence/excerpts/bally.flash-gordon.1980/parts-list-coils.webp",
+					"image_derivation": "Flash Gordon Bally 1981 English Manual.pdf page 25, crop box "
+						"0.06,0.03,0.94,0.635, scanned page rendered at its native resolution (embedded "
+						"image xref 100, 2569px across 8.56in), rendered at 300 dpi, 2244x1997 WebP "
+						"quality 80",
+					"image_sha256": "@parts-list-coils.webp",
 					"locator": "PDF page 25, printed 20, XI. PARTS LIST, plus the cover copyright line",
 					"method": "manual",
 					"path": "evidence/excerpts/bally.flash-gordon.1980/parts-list-coils.md",

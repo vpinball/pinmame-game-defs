@@ -763,6 +763,13 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 40, printed page 32, Switches parts list and numbered switch-locations drawing",
 					"path": "evidence/excerpts/williams.high-speed.1986/switch-locations.md",
 					"sha256": "e6a898af8284af9f4db709b0703b72fb7d5fdd41b3e2d39b9e0bab6a60187a0b",
+					"image": "evidence/excerpts/williams.high-speed.1986/switch-locations.webp",
+					"image_sha256": "b1dd601aa0e32f8f6705e8560cf5859675092aa3738e76e0ea529e0f85ca2430",
+					"image_derivation": (
+						"high_speed_instruction_manual.pdf page 40, crop box 0.045,0.045,0.985,0.94 of the page, "
+						"scanned page rendered at its native resolution (embedded image xref 167, 2583px across "
+						"8.61in), rendered at 300 dpi, 2398x2954 WebP quality 80"
+					),
 					"method": "manual", "transcribed_by": "curator, read from the rendered page", "reviewed": True,
 				},
 				{
@@ -783,6 +790,13 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 41, printed page 33, Lamps list",
 					"path": "evidence/excerpts/williams.high-speed.1986/lamp-locations.md",
 					"sha256": "e1445fb3a4a43b1a83962f34806288ce2a9449e9970bd56b2b718a045ee2604c",
+					"image": "evidence/excerpts/williams.high-speed.1986/lamp-locations.webp",
+					"image_sha256": "a0c7a71e6965afd533600eb396c3e779a0f711fdc497e855d17100b98c599457",
+					"image_derivation": (
+						"high_speed_instruction_manual.pdf page 41, crop box 0.045,0.045,0.92,0.94 of the page, "
+						"scanned page rendered at its native resolution (embedded image xref 171, 2575px across "
+						"8.58in), rendered at 300 dpi, 2232x2954 WebP quality 80"
+					),
 					"method": "manual", "transcribed_by": "curator, read from the rendered page", "reviewed": True,
 				},
 				{
@@ -790,6 +804,13 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 33, printed page 25, HIGH SPEED Solenoid Table and SOLENOID TEST text",
 					"path": "evidence/excerpts/williams.high-speed.1986/solenoid-table.md",
 					"sha256": "d0acbd7c48baacccb0e23d1fccff7a921092a6f390afb40bf8c71731fc1b6e4e",
+					"image": "evidence/excerpts/williams.high-speed.1986/solenoid-table.webp",
+					"image_sha256": "84c32ec7e712a18ce73c754fb15cf5e66bb960a759c586fa86931682b8d845fa",
+					"image_derivation": (
+						"high_speed_instruction_manual.pdf page 33, crop box 0.055,0.11,0.945,0.73 of the page, "
+						"scanned page rendered at its native resolution (embedded image xref 138, 2583px across "
+						"8.61in), rendered at 300 dpi, 2270x2046 WebP quality 80"
+					),
 					"method": "manual", "transcribed_by": "curator, read from the rendered page", "reviewed": True,
 				},
 				{
@@ -797,6 +818,13 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 42, printed page 34, Solenoids/Flashers and Rubber Parts lists with the numbered locations drawing",
 					"path": "evidence/excerpts/williams.high-speed.1986/solenoid-flasher-locations.md",
 					"sha256": "16e6a560409d220cad6cec815fefd5ba8d8e21a0db53c87594d7ecdd8fd973ff",
+					"image": "evidence/excerpts/williams.high-speed.1986/solenoid-flasher-locations.webp",
+					"image_sha256": "9809c1f7f12e99b047c06b11d7b431ccc0a787b9f7e22d638dfd43d60d4c3322",
+					"image_derivation": (
+						"high_speed_instruction_manual.pdf page 42, crop box 0.045,0.2,0.98,0.8 of the page, "
+						"scanned page rendered at its native resolution (embedded image xref 175, 2570px across "
+						"8.57in), rendered at 300 dpi, 2385x1980 WebP quality 80"
+					),
 					"method": "manual", "transcribed_by": "curator, read from the rendered page", "reviewed": True,
 				},
 				{

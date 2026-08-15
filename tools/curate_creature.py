@@ -534,6 +534,14 @@ def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
 
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((ROOT / "evidence/excerpts/bally.creature-from-the-black-lagoon.1992").glob("*.webp"))
+}
+
+
 def source_records() -> list[dict[str, Any]]:
 	return [
 		{
@@ -603,6 +611,13 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.creature-from-the-black-lagoon.1992/switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					"image_derivation": (
+						"Creature_From_The_Black_Lagoon_OPS.pdf page 101, crop box 0.065,0.17,0.44,0.83, "
+						"scanned page rendered at its native resolution (embedded image xref 426, 1727px "
+						"across 8.64in), rendered at 200 dpi, 637x1541 WebP quality 80"
+					),
 				},
 				{
 					"id": "excerpt.creature.switch-matrix",
@@ -612,6 +627,13 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.creature-from-the-black-lagoon.1992/switch-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-matrix.webp"],
+					"image_derivation": (
+						"Creature_From_The_Black_Lagoon_OPS.pdf page 106, crop box 0.04,0.05,0.97,0.9, "
+						"scanned page rendered at its native resolution (embedded image xref 448, 1696px "
+						"across 8.48in), rendered at 200 dpi, 1579x1984 WebP quality 80"
+					),
 				},
 				{
 					"id": "excerpt.creature.lamp-locations",
@@ -621,6 +643,13 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.creature-from-the-black-lagoon.1992/lamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations.webp"],
+					"image_derivation": (
+						"Creature_From_The_Black_Lagoon_OPS.pdf page 100, crop box 0.055,0.15,0.48,0.92, "
+						"scanned page rendered at its native resolution (embedded image xref 421, 1723px "
+						"across 8.62in), rendered at 200 dpi, 722x1798 WebP quality 80"
+					),
 				},
 				{
 					"id": "excerpt.creature.lamp-matrix",
@@ -630,6 +659,13 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.creature-from-the-black-lagoon.1992/lamp-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix.webp"],
+					"image_derivation": (
+						"Creature_From_The_Black_Lagoon_OPS.pdf page 108, crop box 0.13,0.045,0.97,0.91, "
+						"scanned page rendered at its native resolution (embedded image xref 456, 1696px "
+						"across 8.48in), rendered at 200 dpi, 1426x2014 WebP quality 80"
+					),
 				},
 				{
 					"id": "excerpt.creature.solenoid-flasher-locations",
@@ -639,6 +675,13 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.creature-from-the-black-lagoon.1992/solenoid-flasher-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-locations.webp"],
+					"image_derivation": (
+						"Creature_From_The_Black_Lagoon_OPS.pdf page 103, crop box 0.045,0.15,0.56,0.9, "
+						"scanned page rendered at its native resolution (embedded image xref 435, 1696px "
+						"across 8.48in), rendered at 200 dpi, 874x1751 WebP quality 80"
+					),
 				},
 				{
 					"id": "excerpt.creature.solenoid-flasher-wiring",
@@ -648,6 +691,13 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.creature-from-the-black-lagoon.1992/solenoid-flasher-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-wiring.webp"],
+					"image_derivation": (
+						"Creature_From_The_Black_Lagoon_OPS.pdf page 109, crop box 0.04,0.045,0.97,0.9, "
+						"scanned page rendered at its native resolution (embedded image xref 461, 1696px "
+						"across 8.48in), rendered at 200 dpi, 1579x1996 WebP quality 80"
+					),
 				},
 			],
 		},

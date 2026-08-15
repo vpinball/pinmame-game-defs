@@ -48,6 +48,13 @@ HANDBOOK_SHA256 = "76c468eb747a61a176874d3b02cb495451eea9b5f9268a69ba58603bc8a9c
 SCHEMATIC_SHA256 = "074431d774b1410fd6d38191ace4150866023c66e2d3a5185361f114ca4afedd"
 MANUAL_TRANSCRIPTION_SHA256 = "17e8aed2524e79b671633026c0872cda8c6724d5d2e3b2bf9d6c49018fb5462e"
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((ROOT / "evidence/excerpts/bally.the-addams-family.1992").glob("*.webp"))
+}
+
 EXTRACTION_RELATIVE_PATH = Path("bally/the-addams-family-1992/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("bally/the-addams-family-1992/extracted-vpxtool.manifest.json")
 EXTRACTION_MANIFEST_SHA256 = "d79a5a3723fbd4041460764ec598a78683963370566033d0701cacc93ad1d4dc"
@@ -618,6 +625,9 @@ def source_records() -> list[dict[str, Any]]:
 				{
 					"id": "excerpt.addams-family.switch-locations",
 					"locator": "Printed page 2-39, Switch Locations parts list, plus the opto-determination sweep and PinMAME mask cross-check",
+					"image": "evidence/excerpts/bally.the-addams-family.1992/switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					"image_derivation": "Bally_1992_The_Addams_Family_Operations_Manual_January_1992_includes_schematics_OCR_searchable.pdf page 97, crop box 0.09,0.095,0.575,0.965, scanned page rendered at its native resolution (embedded image xref 401, 5100px across 8.50in), rendered at 600 dpi, 2474x5742 WebP quality 80",
 					"path": "evidence/excerpts/bally.the-addams-family.1992/switch-locations.md",
 					"sha256": "209b9687e06ae02a77985afe62201d6e47a66e7008bc37ed3d88300f7d7e47c8",
 					"method": "manual",
@@ -636,6 +646,9 @@ def source_records() -> list[dict[str, Any]]:
 				{
 					"id": "excerpt.addams-family.flipper-controller-wiring",
 					"locator": "PDF page 120, printed page 3-18, Flipper Circuits and flipper-controller-to-playfield wiring",
+					"image": "evidence/excerpts/bally.the-addams-family.1992/flipper-controller-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["flipper-controller-wiring.webp"],
+					"image_derivation": "Bally_1992_The_Addams_Family_Operations_Manual_January_1992_includes_schematics_OCR_searchable.pdf page 120, crop box 0.07,0.04,0.87,0.645, scanned page rendered at its native resolution (embedded image xref 501, 5100px across 8.50in), rendered at 382 dpi, capped to 2600px wide, 2601x2545 WebP quality 80",
 					"path": "evidence/excerpts/bally.the-addams-family.1992/flipper-controller-wiring.md",
 					"sha256": "15c614bf10de98b521650ac8281a8fd014362fb096bd6b13ff06d5939a6b0e30",
 					"method": "manual",
@@ -662,6 +675,9 @@ def source_records() -> list[dict[str, Any]]:
 				{
 					"id": "excerpt.addams-family.solenoid-flasher-table",
 					"locator": "Printed page 5, Solenoid Table and Flipper Coils list",
+					"image": "evidence/excerpts/bally.the-addams-family.1992/solenoid-flasher-table.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-table.webp"],
+					"image_derivation": "Bally_1992_The_Addams_Family_Operator_s_Handbook_January_1991_OCR_searchable_has_lamp_and_switch_matrices.pdf page 6, crop box 0.03,0.055,0.96,0.652, scanned page rendered at its native resolution (embedded image xref 21, 3300px across 5.50in), rendered at 137 dpi, capped to 700px wide, 701x696 WebP quality 80",
 					"path": "evidence/excerpts/bally.the-addams-family.1992/solenoid-flasher-table.md",
 					"sha256": "2f21364f1a5bf2d855e73733ffa23914540cdbf9bf328d33fa2e8bf369357281",
 					"method": "manual",
@@ -671,6 +687,9 @@ def source_records() -> list[dict[str, Any]]:
 				{
 					"id": "excerpt.addams-family.general-illumination",
 					"locator": "Printed page 5, General Illumination Circuits",
+					"image": "evidence/excerpts/bally.the-addams-family.1992/general-illumination.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
+					"image_derivation": "Bally_1992_The_Addams_Family_Operator_s_Handbook_January_1991_OCR_searchable_has_lamp_and_switch_matrices.pdf page 6, crop box 0.03,0.648,0.96,0.775, scanned page rendered at its native resolution (embedded image xref 21, 3300px across 5.50in), rendered at 508 dpi, capped to 2600px wide, 2601x550 WebP quality 80",
 					"path": "evidence/excerpts/bally.the-addams-family.1992/general-illumination.md",
 					"sha256": "b9dc0b005514a8b67f487ea945434901f6a472f0872f006e89fb17fb43314798",
 					"method": "manual",
@@ -680,6 +699,9 @@ def source_records() -> list[dict[str, Any]]:
 				{
 					"id": "excerpt.addams-family.lamp-matrix",
 					"locator": "Printed page 7, Lamp Matrix",
+					"image": "evidence/excerpts/bally.the-addams-family.1992/lamp-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix.webp"],
+					"image_derivation": "Bally_1992_The_Addams_Family_Operator_s_Handbook_January_1991_OCR_searchable_has_lamp_and_switch_matrices.pdf page 8, crop box 0.06,0.038,0.93,0.975, scanned page rendered at its native resolution (embedded image xref 30, 3300px across 5.50in), rendered at 178 dpi, capped to 850px wide, 851x1416 WebP quality 80",
 					"path": "evidence/excerpts/bally.the-addams-family.1992/lamp-matrix.md",
 					"sha256": "1de81d75364e7a724854b8ada4835bbca7f5a27241ad827d40310fe22fb7c3b4",
 					"method": "manual",
@@ -689,6 +711,9 @@ def source_records() -> list[dict[str, Any]]:
 				{
 					"id": "excerpt.addams-family.switch-matrix",
 					"locator": "Printed pages 9-10, Switch Matrix wiring",
+					"image": "evidence/excerpts/bally.the-addams-family.1992/switch-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-matrix.webp"],
+					"image_derivation": "Bally_1992_The_Addams_Family_Operator_s_Handbook_January_1991_OCR_searchable_has_lamp_and_switch_matrices.pdf page 10, crop box 0.01,0.02,0.985,0.99, scanned page rendered at its native resolution (embedded image xref 38, 5100px across 8.50in), rendered at 121 dpi, capped to 1000px wide, 1001x645 WebP quality 80",
 					"path": "evidence/excerpts/bally.the-addams-family.1992/switch-matrix.md",
 					"sha256": "6b53246ded9ff9bfd3890177efdc5f12bd95e47d9b6525974f736196d63aecfc",
 					"method": "manual",

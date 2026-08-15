@@ -562,6 +562,14 @@ def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
 
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((Path(__file__).resolve().parents[1] / "evidence/excerpts/williams.white-water.1993").glob("*.webp"))
+}
+
+
 def source_records() -> list[dict[str, Any]]:
 	return [
 		{
@@ -632,6 +640,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/williams.white-water.1993/switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					"image_derivation": "Williams_1993_White_Water_English_Manual.pdf page 104, crop box 0.02,0.03,0.99,0.93, scanned page rendered at its native resolution (embedded image xref 438, 5100px across 8.50in), rendered at 315 dpi, capped to 2600px wide, 2601x3119 WebP quality 80",
 				},
 				{
 					"id": "excerpt.white-water.switch-matrix",
@@ -641,6 +652,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/williams.white-water.1993/switch-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-matrix.webp"],
+					"image_derivation": "Williams_1993_White_Water_English_Manual.pdf page 114, crop box 0.07,0.03,0.99,0.93, scanned page rendered at its native resolution (embedded image xref 484, 6590px across 10.98in), rendered at 99 dpi, capped to 1000px wide, 1001x758 WebP quality 80",
 				},
 				{
 					"id": "excerpt.white-water.lamp-locations",
@@ -650,6 +664,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/williams.white-water.1993/lamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations.webp"],
+					"image_derivation": "Williams_1993_White_Water_English_Manual.pdf page 102, crop box 0.02,0.03,0.99,0.94, scanned page rendered at its native resolution (embedded image xref 429, 5100px across 8.50in), rendered at 315 dpi, capped to 2600px wide, 2601x3153 WebP quality 80",
 				},
 				{
 					"id": "excerpt.white-water.lamp-matrix",
@@ -659,6 +676,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/williams.white-water.1993/lamp-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix.webp"],
+					"image_derivation": "Williams_1993_White_Water_English_Manual.pdf page 112, crop box 0.13,0.08,0.87,0.9, scanned page rendered at its native resolution (embedded image xref 474, 6590px across 10.98in), rendered at 148 dpi, capped to 1200px wide, 1201x1030 WebP quality 80",
 				},
 				{
 					"id": "excerpt.white-water.solenoid-flasher-locations",
@@ -668,6 +688,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/williams.white-water.1993/solenoid-flasher-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-locations.webp"],
+					"image_derivation": "Williams_1993_White_Water_English_Manual.pdf page 103, crop box 0.02,0.035,0.5,0.79, scanned page rendered at its native resolution (embedded image xref 433, 5112px across 8.52in), rendered at 600 dpi, 2448x4977 WebP quality 80",
 				},
 				{
 					"id": "excerpt.white-water.solenoid-flasher-wiring",
@@ -677,6 +700,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/williams.white-water.1993/solenoid-flasher-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-wiring.webp"],
+					"image_derivation": "Williams_1993_White_Water_English_Manual.pdf page 118, crop box 0.09,0.06,0.99,0.9, scanned page rendered at its native resolution (embedded image xref 504, 6590px across 10.98in), rendered at 263 dpi, capped to 2600px wide, 2600x1879 WebP quality 80",
 				},
 				{
 					"id": "excerpt.white-water.chase-lamp-board",
@@ -686,6 +712,12 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					# Page 132 is the more load-bearing/schematic of the two cited pages
+					# (page 66 is a generic backbox exploded-parts drawing; page 132 is
+					# the actual "& Schematic" pinout the excerpt's claims rest on).
+					"image": "evidence/excerpts/williams.white-water.1993/chase-lamp-board.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["chase-lamp-board.webp"],
+					"image_derivation": "Williams_1993_White_Water_English_Manual.pdf page 132, crop box 0.03,0.02,0.97,0.95, scanned page rendered at its native resolution (embedded image xref 571, 5100px across 8.50in), rendered at 325 dpi, capped to 2600px wide, 2601x3325 WebP quality 80",
 				},
 				{
 					"id": "excerpt.white-water.bigfoot-test",

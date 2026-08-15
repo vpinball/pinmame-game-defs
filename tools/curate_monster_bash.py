@@ -30,6 +30,13 @@ SEED_PATH = ROOT / "tools/seeds/williams/monster-bash-1998.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/monster-bash-1998.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/monster-bash-1998.md"
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((ROOT / "evidence/excerpts/williams.monster-bash.1998").glob("*.webp"))
+}
+
 PINMAME_REVISION = "4ec52ff0ac133ac251681518aed2249e19fe26eb"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
@@ -649,6 +656,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 116-117, printed 2-48/2-49, switch-locations parts list",
 					"path": "evidence/excerpts/williams.monster-bash.1998/switch-locations.md",
 					"sha256": "4dd414f43ae88a2d3e64f40ad85ec3cb1c9767aa59eafbc837370d47a9f6a8f2",
+					"image": "evidence/excerpts/williams.monster-bash.1998/switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					"image_derivation": "Williams_1998_Monster_Bash_English_Manual.pdf page 116, crop box 0.15,0.03,0.91,0.89, scanned page rendered at its native resolution (embedded image xref 481, 4986px across 8.31in), rendered at 414 dpi, capped to 2600px wide, 2601x4164 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -670,6 +680,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 112, printed 2-44, lamp-locations parts list",
 					"path": "evidence/excerpts/williams.monster-bash.1998/lamp-locations.md",
 					"sha256": "bd375fb9ec32550387cd1d7ebe69779d8ccd28240129d8a08ad0e9a299c2712c",
+					"image": "evidence/excerpts/williams.monster-bash.1998/lamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations.webp"],
+					"image_derivation": "Williams_1998_Monster_Bash_English_Manual.pdf page 112, crop box 0.16,0.04,0.92,0.88, scanned page rendered at its native resolution (embedded image xref 465, 4959px across 8.27in), rendered at 382 dpi, capped to 2400px wide, 2401x3755 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -679,6 +692,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 120, printed 2-52, lamp matrix wiring table",
 					"path": "evidence/excerpts/williams.monster-bash.1998/lamp-matrix.md",
 					"sha256": "69fd8340c0324e0ca991e14652fdaca5a9aa1b67cf449a91d748bdb10f689205",
+					"image": "evidence/excerpts/williams.monster-bash.1998/lamp-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix.webp"],
+					"image_derivation": "Williams_1998_Monster_Bash_English_Manual.pdf page 120, crop box 0.08,0.03,0.87,0.53, scanned page rendered at its native resolution (embedded image xref 499, 5068px across 8.45in), rendered at 130 dpi, capped to 850px wide, 851x762 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -688,6 +704,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 114, printed 2-46, solenoid/flasher locations parts list",
 					"path": "evidence/excerpts/williams.monster-bash.1998/solenoid-flasher-locations.md",
 					"sha256": "335515d2c806ed3e14fd04cdf77845872af0fc79958f514ac6d4606ff6c214f1",
+					"image": "evidence/excerpts/williams.monster-bash.1998/solenoid-flasher-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-locations.webp"],
+					"image_derivation": "Williams_1998_Monster_Bash_English_Manual.pdf page 114, crop box 0.16,0.03,0.95,0.64, scanned page rendered at its native resolution (embedded image xref 473, 4972px across 8.29in), rendered at 398 dpi, capped to 2600px wide, 2601x2842 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -697,6 +716,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 121, printed 2-53, solenoid/flasher wiring table",
 					"path": "evidence/excerpts/williams.monster-bash.1998/solenoid-flasher-wiring.md",
 					"sha256": "66b0b99fbede03f85298dabddae8f8354d133edae3a5d53addaf1ff6ebd7d14c",
+					"image": "evidence/excerpts/williams.monster-bash.1998/solenoid-flasher-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-wiring.webp"],
+					"image_derivation": "Williams_1998_Monster_Bash_English_Manual.pdf page 121, crop box 0.08,0.03,0.96,0.55, scanned page rendered at its native resolution (embedded image xref 503, 5000px across 8.33in), rendered at 357 dpi, capped to 2600px wide, 2601x2175 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -706,6 +728,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 114 and 121, printed 2-46 and 2-53, general illumination location and wiring",
 					"path": "evidence/excerpts/williams.monster-bash.1998/general-illumination.md",
 					"sha256": "745bae316909842d9b7853c2f2672e1da49532177dd349bb460ed0d64b322970",
+					"image": "evidence/excerpts/williams.monster-bash.1998/general-illumination.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
+					"image_derivation": "Williams_1998_Monster_Bash_English_Manual.pdf page 121, crop box 0.08,0.53,0.96,0.68, scanned page rendered at its native resolution (embedded image xref 503, 5000px across 8.33in), rendered at 206 dpi, capped to 1500px wide, 1501x363 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -715,6 +740,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 78-84, printed 2-10 through 2-16, board/assembly pages fixing device construction",
 					"path": "evidence/excerpts/williams.monster-bash.1998/boards-and-assemblies.md",
 					"sha256": "9f7836b0ffb632401f0985286e6d439051243ff8a992d62f3e06bbc4137314f6",
+					"image": "evidence/excerpts/williams.monster-bash.1998/boards-and-assemblies.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["boards-and-assemblies.webp"],
+					"image_derivation": "Williams_1998_Monster_Bash_English_Manual.pdf page 81, crop box 0.1,0.68,0.9,0.89, scanned page rendered at its native resolution (embedded image xref 328, 4972px across 8.29in), rendered at 393 dpi, capped to 2600px wide, 2600x966 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,

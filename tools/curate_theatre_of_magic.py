@@ -608,6 +608,14 @@ def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
 
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((ROOT / "evidence/excerpts/bally.theatre-of-magic.1995").glob("*.webp"))
+}
+
+
 def source_records() -> list[dict[str, Any]]:
 	return [
 		{
@@ -675,6 +683,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 2, DIP switch country chart",
 					"path": "evidence/excerpts/bally.theatre-of-magic.1995/dip-switch-country-chart.md",
 					"sha256": "376b7b3af50393253445796c65278a89c2fa5ddae73e6a027ae1a3521a8f93dc",
+					"image": "evidence/excerpts/bally.theatre-of-magic.1995/dip-switch-country-chart.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["dip-switch-country-chart.webp"],
+					"image_derivation": "Theatre_of_Magic_OPS.pdf page 2, crop box 0.05,0.08,0.97,0.27, scanned page rendered at its native resolution (embedded image xref 4, 2568px across 8.31in), rendered at 237 dpi, capped to 1800px wide, 1801x527 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, verified against the rendered page",
 					"reviewed": True,
@@ -684,6 +695,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 2, Solenoid/Flasher Table and Flipper Circuits",
 					"path": "evidence/excerpts/bally.theatre-of-magic.1995/solenoid-flasher-wiring.md",
 					"sha256": "1e754fc43b950969b6ef5e2163344e725829ef7f0207256019bcadda303be1ca",
+					"image": "evidence/excerpts/bally.theatre-of-magic.1995/solenoid-flasher-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-wiring.webp"],
+					"image_derivation": "Theatre_of_Magic_OPS.pdf page 2, crop box 0.03,0.26,0.99,0.89, scanned page rendered at its native resolution (embedded image xref 4, 2568px across 8.31in), rendered at 309 dpi, 2453x2278 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, verified against the rendered page",
 					"reviewed": True,
@@ -693,6 +707,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 2, General Illumination",
 					"path": "evidence/excerpts/bally.theatre-of-magic.1995/general-illumination.md",
 					"sha256": "8d16c9820c2a23483b462148ddb3d3fd4a36794ea8dd5e526004b43e500b9fe9",
+					"image": "evidence/excerpts/bally.theatre-of-magic.1995/general-illumination.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
+					"image_derivation": "Theatre_of_Magic_OPS.pdf page 2, crop box 0.03,0.68,0.99,0.75, scanned page rendered at its native resolution (embedded image xref 4, 2568px across 8.31in), rendered at 309 dpi, 2453x254 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, verified against the rendered page",
 					"reviewed": True,
@@ -702,6 +719,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 116, printed 2-40, Lamp Matrix",
 					"path": "evidence/excerpts/bally.theatre-of-magic.1995/lamp-matrix.md",
 					"sha256": "28c4adb6749471f686344e631d6aff7adf7a95062145d2345a3e604f6d487f7d",
+					"image": "evidence/excerpts/bally.theatre-of-magic.1995/lamp-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix.webp"],
+					"image_derivation": "Theatre_of_Magic_OPS.pdf page 116, crop box 0.05,0.03,0.98,0.51, scanned page rendered at its native resolution (embedded image xref 480, 2575px across 8.33in), rendered at 130 dpi, capped to 1000px wide, 1001x731 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, verified against the rendered page",
 					"reviewed": True,
@@ -711,6 +731,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 117, printed 2-41, Lamp Locations parts list",
 					"path": "evidence/excerpts/bally.theatre-of-magic.1995/lamp-locations.md",
 					"sha256": "ab00109255b88ed8cbf5a55358fe70205105af8f4effc5c96fe1a1248d381c6d",
+					"image": "evidence/excerpts/bally.theatre-of-magic.1995/lamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations.webp"],
+					"image_derivation": "Theatre_of_Magic_OPS.pdf page 117, crop box 0.05,0.04,0.98,0.955, scanned page rendered at its native resolution (embedded image xref 484, 2554px across 8.27in), rendered at 309 dpi, 2376x3308 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, verified against the rendered page",
 					"reviewed": True,
@@ -732,6 +755,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 119, printed 2-43, Switch Locations parts list",
 					"path": "evidence/excerpts/bally.theatre-of-magic.1995/switch-locations.md",
 					"sha256": "5ec316e8c8874073e48235d2c8ac70e64951b01b427a6256356cf3edb63337af",
+					"image": "evidence/excerpts/bally.theatre-of-magic.1995/switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					"image_derivation": "Theatre_of_Magic_OPS.pdf page 119, crop box 0.05,0.04,0.98,0.97, scanned page rendered at its native resolution (embedded image xref 492, 2554px across 8.27in), rendered at 309 dpi, 2376x3362 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, verified against the rendered page",
 					"reviewed": True,
@@ -741,6 +767,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 120-121, printed 2-44/2-45, Solenoid/Flashlamp Locations parts list",
 					"path": "evidence/excerpts/bally.theatre-of-magic.1995/solenoid-flashlamp-locations.md",
 					"sha256": "8d3df2db58e0a26caf0e16d8362027bfd73bf9c9d200381f88c706683683af25",
+					"image": "evidence/excerpts/bally.theatre-of-magic.1995/solenoid-flashlamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flashlamp-locations.webp"],
+					"image_derivation": "Theatre_of_Magic_OPS.pdf page 121, crop box 0.05,0.03,0.98,0.965, scanned page rendered at its native resolution (embedded image xref 500, 2554px across 8.27in), rendered at 309 dpi, 2376x3380 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, verified against the rendered page",
 					"reviewed": True,

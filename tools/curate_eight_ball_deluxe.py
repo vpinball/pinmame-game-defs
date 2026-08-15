@@ -437,6 +437,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 22, printed page 17, SOLENOID IDENTIFICATION TABLE",
 					"path": "evidence/excerpts/bally.eight-ball-deluxe.1981/solenoid-identification-table.md",
 					"sha256": "b734b37cb03ccc8d01fa70e09bfb2964d75f5d5af6d1554e015cf21d737e7f91",
+					"image": "evidence/excerpts/bally.eight-ball-deluxe.1981/solenoid-identification-table.webp",
+					"image_sha256": "b826717d59e4ae7c8ea2de9e4cb23cc7d72f10081cc1b01497c04764d45720ce",
+					"image_derivation": "Eight_Ball_Deluxe_OPS.pdf page 22, crop box 0.0993,0.0807,0.9146,0.3258, scanned page rendered at its native resolution (embedded image xref 92, 2563px across 8.54in), rendered at 260 dpi, capped to 1800px wide, 1801x699 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -446,6 +449,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 22, printed page 17, SWITCH ASSEMBLY SELF-TEST DISPLAY NUMBERS",
 					"path": "evidence/excerpts/bally.eight-ball-deluxe.1981/switch-self-test-table.md",
 					"sha256": "7cbca13d63cab3e21f62f6b13a4fa91158bd649d11c440cd9488d1fdbc6162c2",
+					"image": "evidence/excerpts/bally.eight-ball-deluxe.1981/switch-self-test-table.webp",
+					"image_sha256": "d78044e556c583d98c633a7c0d491157c58bdfdf18df58e76347c326dcbf8344",
+					"image_derivation": "Eight_Ball_Deluxe_OPS.pdf page 22, crop box 0.1012,0.3466,0.9049,0.8059, scanned page rendered at its native resolution (embedded image xref 92, 2563px across 8.54in), rendered at 176 dpi, capped to 1200px wide, 1201x886 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -467,6 +473,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 8-9, printed pages 3-4, Section IV FEATURE OPERATION AND SCORING",
 					"path": "evidence/excerpts/bally.eight-ball-deluxe.1981/feature-operation.md",
 					"sha256": "1c7c655068a1f2f7bb1ddfd70e56b84c58dfdc1fe67c6c812e0334a84f4f5fea",
+					"image": "evidence/excerpts/bally.eight-ball-deluxe.1981/feature-operation.webp",
+					"image_sha256": "6200d93207efebe46fb0dc9ccb169d5099f4c43415359de297bf961e68903ad7",
+					"image_derivation": "Eight_Ball_Deluxe_OPS.pdf page 8, crop box 0.1311,0.0825,0.95,0.8188, scanned page rendered at its native resolution (embedded image xref 29, 2563px across 8.54in), rendered at 86 dpi, capped to 600px wide, 601x697 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -922,6 +931,12 @@ def build_definition() -> dict[str, Any]:
 			"year": 1981,
 			"kind": "physical_pinball",
 			"playfield": {"width": 952.0, "height": 1974.0, "units": "vpx", "provenance": provenance(VPX_TABLE_SOURCE, VPX_EXTRACTION_SOURCE)},
+			# The OPDB import added both identity fields to the committed record
+			# but only `opdb_id` here, so the next regeneration of this curator
+			# silently dropped the IPDB id. `--check` stayed green because the
+			# file then matched the curator's own incomplete output; only
+			# `reports/opdb-identity.json` noticed.
+			"ipdb_id": 762,
 			"opdb_id": "G5KXk-MLB9V",
 		},
 		"coverage": {

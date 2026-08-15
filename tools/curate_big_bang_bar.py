@@ -605,6 +605,14 @@ def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
 
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((ROOT / "evidence/excerpts/capcom.big-bang-bar.1996").glob("*.webp"))
+}
+
+
 def source_records() -> list[dict[str, Any]]:
 	return [
 		{
@@ -675,6 +683,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/capcom.big-bang-bar.1996/switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					"image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 87, crop box 0.03,0.095,0.98,0.945, scanned page rendered at its native resolution (embedded image xref 386, 4960px across 8.27in), rendered at 331 dpi, capped to 2600px wide, 2601x3089 WebP quality 80",
 				},
 				{
 					"id": "excerpt.big-bang-bar.lamp-locations",
@@ -684,6 +695,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/capcom.big-bang-bar.1996/lamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations.webp"],
+					"image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 85, crop box 0.03,0.1,0.98,0.925, scanned page rendered at its native resolution (embedded image xref 378, 4960px across 8.27in), rendered at 331 dpi, capped to 2600px wide, 2601x2998 WebP quality 80",
 				},
 				{
 					"id": "excerpt.big-bang-bar.solenoid-locations",
@@ -693,6 +707,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/capcom.big-bang-bar.1996/solenoid-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-locations.webp"],
+					"image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 86, crop box 0.02,0.1,0.44,0.6, scanned page rendered at its native resolution (embedded image xref 382, 4960px across 8.27in), rendered at 600 dpi, 2084x3293 WebP quality 80",
 				},
 				{
 					"id": "excerpt.big-bang-bar.opto-boards",

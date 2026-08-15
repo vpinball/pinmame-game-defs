@@ -20,6 +20,10 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 
 
 ROOT = Path(__file__).resolve().parents[1]
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((ROOT / "evidence/excerpts/williams.tales-of-the-arabian-nights.1996").glob("*.webp"))
+}
 # GI address 2 (printed String 3) is documented backbox-only by the manual's own wiring table, but
 # the retained script's Sub UpdateGI binds ONLY that address to a broad playfield-wide dimming effect
 # while the manual's two genuine playfield strings (addresses 3 and 4) receive no script binding at
@@ -572,6 +576,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 1, DIP switch country chart",
 					"path": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/dip-switch-country-chart.md",
 					"sha256": "ca37fa8539adfa7534036b9c8a8e77dd502043a9851789f44f6e2ef1d62041e2",
+					"image": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/dip-switch-country-chart.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["dip-switch-country-chart.webp"],
+					"image_derivation": "Williams_1996_Tales_of_the_Arabian_Nights_Manual.pdf page 2, crop box 0.1,0.16,0.9,0.295, scanned page rendered at its native resolution (embedded image xref 5, 2556px across 8.52in), rendered at 300 dpi, 2040x446 WebP quality 80",
 					"method": "mixed",
 					"transcribed_by": "curator, OCR text located the page then re-verified against the rendered page",
 					"reviewed": True,
@@ -593,6 +600,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 121, printed 2-39, Switch Locations parts list plus opto cross-check",
 					"path": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/switch-locations.md",
 					"sha256": "80bdf761c572c3227748712b81b71eb1cc6e38e7a8fbd128f0cf570212093791",
+					"image": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					"image_derivation": "Williams_1996_Tales_of_the_Arabian_Nights_Manual.pdf page 121, crop box 0.08,0.08,0.575,0.86, scanned page rendered at its native resolution (embedded image xref 500, 2556px across 8.52in), rendered at 300 dpi, 1263x2574 WebP quality 80",
 					"method": "mixed",
 					"transcribed_by": "curator, OCR text located the page then re-verified against the rendered page",
 					"reviewed": True,
@@ -602,6 +612,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 118-119, printed 2-36/2-37, Lamp Matrix and Lamp Locations",
 					"path": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/lamp-matrix-and-locations.md",
 					"sha256": "c1680be0c412c1f25499da1292cee6021bffb01a5dbb77e426e52f14035ab11e",
+					"image": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/lamp-matrix-and-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix-and-locations.webp"],
+					"image_derivation": "Williams_1996_Tales_of_the_Arabian_Nights_Manual.pdf page 118, crop box 0.114,0.019,0.89,0.537, scanned page rendered at its native resolution (embedded image xref 487, 2562px across 8.54in), rendered at 300 dpi, 1980x1711 WebP quality 80",
 					"method": "mixed",
 					"transcribed_by": "curator, OCR text located the page then re-verified against the rendered page",
 					"reviewed": True,
@@ -611,6 +624,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 122, printed 2-40, Solenoid/Flasher Table and Flipper circuits",
 					"path": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/solenoid-flasher-wiring.md",
 					"sha256": "69911b8fe2d3e8db5905da5ed21975dbde58b99b4710e09b345e0548cede0853",
+					"image": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/solenoid-flasher-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-wiring.webp"],
+					"image_derivation": "Williams_1996_Tales_of_the_Arabian_Nights_Manual.pdf page 122, crop box 0.0735,0.01515,0.8905,0.6414, scanned page rendered at its native resolution (embedded image xref 504, 2550px across 8.50in), rendered at 300 dpi, 2084x2068 WebP quality 80",
 					"method": "mixed",
 					"transcribed_by": "curator, OCR text located the page then re-verified against the rendered page",
 					"reviewed": True,
@@ -620,6 +636,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 122, printed 2-40, General Illumination",
 					"path": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/general-illumination.md",
 					"sha256": "e6491d8c499213be0d585071e7ba3fc4dbf732cfc9f2b2e956f2219638a5ebc2",
+					"image": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/general-illumination.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
+					"image_derivation": "Williams_1996_Tales_of_the_Arabian_Nights_Manual.pdf page 122, crop box 0.0784,0.399,0.8709,0.4811, scanned page rendered at its native resolution (embedded image xref 504, 2550px across 8.50in), rendered at 300 dpi, 2022x272 WebP quality 80",
 					"method": "mixed",
 					"transcribed_by": "curator, OCR text located the page then re-verified against the rendered page",
 					"reviewed": True,
@@ -629,6 +648,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 123, printed 2-41, Solenoid/Flashlamp Locations parts list",
 					"path": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/solenoid-flashlamp-locations.md",
 					"sha256": "53a210ad2429b69579aaa18485e3d688e6129e277f82cb85e509963dcc72aa93",
+					"image": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/solenoid-flashlamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flashlamp-locations.webp"],
+					"image_derivation": "Williams_1996_Tales_of_the_Arabian_Nights_Manual.pdf page 123, crop box 0.0899,0.09,0.4739,0.8055, scanned page rendered at its native resolution (embedded image xref 508, 2575px across 8.58in), rendered at 300 dpi, 980x2362 WebP quality 80",
 					"method": "mixed",
 					"transcribed_by": "curator, OCR text located the page then re-verified against the rendered page",
 					"reviewed": True,
@@ -638,6 +660,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 124, printed 2-42, Ramps assembly parts list",
 					"path": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/ramps.md",
 					"sha256": "e40837cf45d42c2b647e5851b87cd5ca6405037486ac141a24de7f55e8dbaa25",
+					"image": "evidence/excerpts/williams.tales-of-the-arabian-nights.1996/ramps.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["ramps.webp"],
+					"image_derivation": "Williams_1996_Tales_of_the_Arabian_Nights_Manual.pdf page 124, crop box 0.1062,0.0694,0.4739,0.2715, scanned page rendered at its native resolution (embedded image xref 512, 2582px across 8.61in), rendered at 300 dpi, 939x667 WebP quality 80",
 					"method": "mixed",
 					"transcribed_by": "curator, OCR text located the page then re-verified against the rendered page",
 					"reviewed": True,

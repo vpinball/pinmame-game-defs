@@ -17,6 +17,7 @@ artifacts; use ``--check`` to refuse drift.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import tempfile
 from pathlib import Path
@@ -38,6 +39,13 @@ DOCUMENT_HASHES = json.loads("{\n  \"LW3Addendum.pdf\": {\n    \"bytes\": 150889
 # recorded hash cannot drift from the transcription it describes.
 EXCERPT_HASHES = json.loads("{\n  \"addendum.md\": \"b45b935091aa167427518152b1b09725fef05a33db06c87a7dcc871466c7d5c5\",\n  \"coil-drivers.md\": \"58de574339c7b817c1c4d71194c1c7c6611aaed6e6561095da84e4d5e81b89a2\",\n  \"lamp-matrix.md\": \"627fa49d6592b8d35a6536d346486add7971ff09a903406be0a8760e31cc2b68\",\n  \"switch-matrix.md\": \"f975d7d7557b6a4cdca85eeeb68ff3ec31e0b9b1010f340bb0370511d4f140f1\"\n}")
 COIL_LOCATION_IMAGE_SHA256 = "4625dcabd1840761e1816ff1edd7d3a687884c1f7858a8320d7fefc958fcc953"
+
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+    path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+    for path in sorted((ROOT / "evidence/excerpts/data-east.lethal-weapon-3.1992").glob("*.webp"))
+}
 
 
 MANUAL = "manual.data-east.lethal-weapon-3.1992"
@@ -1036,6 +1044,9 @@ sources = [
                 "locator": "printed pages 24-25 (PDF 28-29), Switch Matrix Chart and complete Switch Part Numbers table",
                 "path": "evidence/excerpts/data-east.lethal-weapon-3.1992/switch-matrix.md",
                 "sha256": EXCERPT_HASHES["switch-matrix.md"],
+                "image": "evidence/excerpts/data-east.lethal-weapon-3.1992/switch-matrix.webp",
+                "image_sha256": EXCERPT_IMAGE_HASHES["switch-matrix.webp"],
+                "image_derivation": "Lethal_Weapon_3_OPS.pdf page 28, crop box 0.09,0.4,0.955,0.878, scanned page rendered at its native resolution (embedded image xref 135, 2552px across 8.51in), rendered at 116 dpi, capped to 850px wide, 851x613 WebP quality 80",
                 "method": "manual",
                 "transcribed_by": "curator, read from a 400 dpi render; this document has no text layer",
                 "reviewed": True,
@@ -1045,6 +1056,9 @@ sources = [
                 "locator": "printed page 26 (PDF 30), Lamp Matrix Chart",
                 "path": "evidence/excerpts/data-east.lethal-weapon-3.1992/lamp-matrix.md",
                 "sha256": EXCERPT_HASHES["lamp-matrix.md"],
+                "image": "evidence/excerpts/data-east.lethal-weapon-3.1992/lamp-matrix.webp",
+                "image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix.webp"],
+                "image_derivation": "Lethal_Weapon_3_OPS.pdf page 30, crop box 0.09,0.445,0.955,0.878, scanned page rendered at its native resolution (embedded image xref 145, 2552px across 8.51in), rendered at 116 dpi, capped to 850px wide, 851x555 WebP quality 80",
                 "method": "manual",
                 "transcribed_by": "curator, read from a 400 dpi render; this document has no text layer",
                 "reviewed": True,
@@ -1081,6 +1095,9 @@ sources = [
             "locator": "factory addendum of 2 July 1992, both pages",
             "path": "evidence/excerpts/data-east.lethal-weapon-3.1992/addendum.md",
             "sha256": EXCERPT_HASHES["addendum.md"],
+            "image": "evidence/excerpts/data-east.lethal-weapon-3.1992/addendum.webp",
+            "image_sha256": EXCERPT_IMAGE_HASHES["addendum.webp"],
+            "image_derivation": "LW3Addendum.pdf page 1, crop box 0.035,0.03,0.955,0.94, scanned page rendered at its native resolution (embedded image xref 6, 3296px across 10.99in), rendered at 109 dpi, capped to 850px wide, 851x1089 WebP quality 80",
             "method": "manual",
             "transcribed_by": "curator, read from the contributor-supplied addendum",
             "reviewed": True,

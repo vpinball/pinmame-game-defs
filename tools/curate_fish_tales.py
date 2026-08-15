@@ -556,6 +556,14 @@ def write_extraction_manifest(source_root: Path) -> Path:
 	return manifest_path
 
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: _file_sha256(path)
+	for path in sorted((ROOT / "evidence/excerpts/williams.fish-tales.1992").glob("*.webp"))
+}
+
+
 def provenance(*source_refs: str) -> dict[str, Any]:
 	return {"status": "validated", "source_refs": list(source_refs)}
 
@@ -648,6 +656,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 91, printed page 2-43, Switch Locations parts list",
 					"path": "evidence/excerpts/williams.fish-tales.1992/switch-locations.md",
 					"sha256": "ab9f84d395990f1001ae0513b48e95febd663925becabefa27a8b15386026c43",
+					"image": "evidence/excerpts/williams.fish-tales.1992/switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					"image_derivation": "Fish_Tales_OPS.pdf page 91, crop box 0.035,0.088,0.485,0.83, scanned page rendered at its native resolution (embedded image xref 386, 1297px across 8.65in), rendered at 150 dpi, 575x1225 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -669,6 +680,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 90, printed page 2-42, Lamp Locations parts list",
 					"path": "evidence/excerpts/williams.fish-tales.1992/lamp-locations.md",
 					"sha256": "b84fdff8105cd94992f56073849e4eca5a4ebd484839d854b612e729181f12a0",
+					"image": "evidence/excerpts/williams.fish-tales.1992/lamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations.webp"],
+					"image_derivation": "Fish_Tales_OPS.pdf page 90, crop box 0.035,0.088,0.485,0.905, scanned page rendered at its native resolution (embedded image xref 382, 1275px across 8.50in), rendered at 150 dpi, 575x1349 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -678,6 +692,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 96, printed page 3-2, Lamp Matrix wiring table",
 					"path": "evidence/excerpts/williams.fish-tales.1992/lamp-matrix.md",
 					"sha256": "0310672b30d51602bd625b8e10db9be8c1f2fe0c65cc4055c35da1a3f9e5505f",
+					"image": "evidence/excerpts/williams.fish-tales.1992/lamp-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix.webp"],
+					"image_derivation": "Fish_Tales_OPS.pdf page 96, crop box 0.04,0.1,0.98,0.86, scanned page rendered at its native resolution (embedded image xref 409, 1650px across 11.00in), rendered at 97 dpi, capped to 1000px wide, 1001x625 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -687,6 +704,16 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 88-89, printed pages 2-40/2-41, Playfield Parts (flipper assembly line items)",
 					"path": "evidence/excerpts/williams.fish-tales.1992/solenoid-flasher-locations.md",
 					"sha256": "babc0267301790497b89a7151e406be05331b9248c39ad95456fc0457e705584",
+					# The excerpt's own transcription (solenoid-flasher-locations.md) is
+					# explicitly read from PDF page 92 (printed 2-44), the Solenoid/Flasher
+					# Locations parts list -- not PDF pages 88-89 named in this record's
+					# `locator` field above. That locator mismatch predates this image pass;
+					# per task scope it is reported rather than corrected here. The image is
+					# rendered from the page the transcription actually covers so it can be
+					# checked against the transcription it documents.
+					"image": "evidence/excerpts/williams.fish-tales.1992/solenoid-flasher-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-locations.webp"],
+					"image_derivation": "Fish_Tales_OPS.pdf page 92, crop box 0.03,0.088,0.49,0.835, scanned page rendered at its native resolution (embedded image xref 391, 1291px across 8.61in), rendered at 150 dpi, 587x1233 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -696,6 +723,19 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 102-103 and 128, printed pages 3-8/3-9 and 3-34, Solenoid Table, General Illumination, Flipper Circuits, Solenoid Wiring, and Fliptronic II interboard wiring",
 					"path": "evidence/excerpts/williams.fish-tales.1992/solenoid-flasher-wiring.md",
 					"sha256": "c47774f19c004ad902766f79ed3d64b659a1cae181a5c7213b5bc6c181a31671",
+					# This excerpt's transcription spans three pages across two locations
+					# (102-103 and 128). Only the primary numeric table -- the Solenoid
+					# Table with its General Illumination and Flipper Circuits sections,
+					# all on PDF page 102 -- is committed as an image; it is the excerpt's
+					# largest, most detailed section (including the two verified printed
+					# anomalies the transcription calls out) and the one this record's
+					# other prose treats as authoritative. PDF page 103 (the Solenoid
+					# Wiring block diagram, a corroborating cross-check per the
+					# transcription's own text) and PDF page 128 (the separate Fliptronic
+					# II Board Interboard Wiring page) are not included in this image.
+					"image": "evidence/excerpts/williams.fish-tales.1992/solenoid-flasher-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-wiring.webp"],
+					"image_derivation": "Fish_Tales_OPS.pdf page 102, crop box 0.124,0.095,0.956,0.86, scanned page rendered at its native resolution (embedded image xref 439, 1665px across 11.10in), rendered at 150 dpi, 1374x976 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -705,6 +745,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 102, printed page 3-8, General Illumination table (same page as the Solenoid Table)",
 					"path": "evidence/excerpts/williams.fish-tales.1992/general-illumination.md",
 					"sha256": "9fb5812444a9c496e8b130b546f68203704f59ed340df3c674e9f474ca9763c3",
+					"image": "evidence/excerpts/williams.fish-tales.1992/general-illumination.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
+					"image_derivation": "Fish_Tales_OPS.pdf page 102, crop box 0.124,0.645,0.956,0.745, scanned page rendered at its native resolution (embedded image xref 439, 1665px across 11.10in), rendered at 150 dpi, 1374x128 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,

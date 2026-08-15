@@ -39,6 +39,13 @@ EVIDENCE_HASHES = json.loads("{\n  \"extraction_file_count\": 1882,\n  \"extract
 # recorded hash cannot drift from the transcription it describes.
 EXCERPT_HASHES = json.loads("{\n  \"coil-drivers.md\": \"f05ef8db0b1973a4ff8ac5f7af0eb710f4bde9758ff814c0ed2ee876def4dadb\",\n  \"coil-flash-locations.webp\": \"32fa959a16db866949b19bb6c5b4287b570d5d66ebc975fdc8234024d43b2732\",\n  \"lamp-matrix.md\": \"b2af7c8577ba2aa81dc42325bf4e98a25621b01118d93abef1bbb8cf153d5e1c\",\n  \"switch-matrix.md\": \"ea6aceaa185b972488654f994821429bb20e542170dc3446534eeb3e61504a75\"\n}")
 
+# Committed crops are binary, so unlike the transcriptions above they are hashed from the file on
+# disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((ROOT / "evidence/excerpts/data-east.batman.1991").glob("*.webp"))
+}
+
 
 MANUAL = "manual.data-east.batman.1991"
 CORE = "pinmame.core.4ec52ff0ac13"
@@ -893,6 +900,9 @@ sources = [
                 "method": "manual",
                 "transcribed_by": "curator, read from a 400 dpi render; this document has no text layer",
                 "reviewed": True,
+                "image": "evidence/excerpts/data-east.batman.1991/switch-matrix.webp",
+                "image_sha256": EXCERPT_IMAGE_HASHES["switch-matrix.webp"],
+                "image_derivation": "Data_East_1991_Batman_Manual.pdf page 28, crop box 0.08,0.41,0.98,0.9, scanned page rendered at its native resolution (embedded image xref 223, 2544px across 8.26in), rendered at 114 dpi, capped to 850px wide, 851x656 WebP quality 80",
             },
             {
                 "id": "excerpt.batman.lamp-matrix",
@@ -902,6 +912,9 @@ sources = [
                 "method": "manual",
                 "transcribed_by": "curator, read from a 400 dpi render; this document has no text layer",
                 "reviewed": True,
+                "image": "evidence/excerpts/data-east.batman.1991/lamp-matrix.webp",
+                "image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix.webp"],
+                "image_derivation": "Data_East_1991_Batman_Manual.pdf page 30, crop box 0.06,0.42,0.98,0.885, scanned page rendered at its native resolution (embedded image xref 239, 2544px across 8.26in), rendered at 112 dpi, capped to 850px wide, 851x609 WebP quality 80",
             },
             {
                 "id": "excerpt.batman.coil-drivers",

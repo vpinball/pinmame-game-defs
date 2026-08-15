@@ -499,6 +499,14 @@ def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
 
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((ROOT / "evidence/excerpts/bally.twilight-zone.1993").glob("*.webp"))
+}
+
+
 def source_records() -> list[dict[str, Any]]:
 	return [
 		{
@@ -566,6 +574,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.twilight-zone.1993/switch-locations-continued.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations-continued.webp"],
+					"image_derivation": "Twilight_Zone_OPS.pdf page 61, crop box 0.02,0.085,0.45,0.925, scanned page rendered at its native resolution (embedded image xref 259, 2556px across 8.52in), rendered at 300 dpi, 1097x2773 WebP quality 80",
 				},
 				{
 					"id": "excerpt.twilight-zone.solenoid-flasher-locations",
@@ -575,6 +586,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.twilight-zone.1993/solenoid-flasher-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-locations.webp"],
+					"image_derivation": "Twilight_Zone_OPS.pdf page 62, crop box 0.02,0.085,0.58,0.885, scanned page rendered at its native resolution (embedded image xref 264, 2562px across 8.54in), rendered at 300 dpi, 1428x2641 WebP quality 80",
 				},
 				{
 					"id": "excerpt.twilight-zone.general-illumination",
@@ -584,6 +598,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.twilight-zone.1993/general-illumination.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
+					"image_derivation": "Twilight_Zone_OPS.pdf page 62, crop box 0.02,0.665,0.45,0.785, scanned page rendered at its native resolution (embedded image xref 264, 2562px across 8.54in), rendered at 300 dpi, 1097x397 WebP quality 80",
 				},
 				{
 					"id": "excerpt.twilight-zone.lamp-locations",
@@ -593,6 +610,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": "evidence/excerpts/bally.twilight-zone.1993/lamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations.webp"],
+					"image_derivation": "Twilight_Zone_OPS.pdf page 63, crop box 0.02,0.085,0.45,0.87, scanned page rendered at its native resolution (embedded image xref 269, 2550px across 8.50in), rendered at 300 dpi, 1097x2591 WebP quality 80",
 				},
 			],
 		},

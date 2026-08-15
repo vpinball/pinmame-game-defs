@@ -441,6 +441,14 @@ def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
 
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((ROOT / "evidence/excerpts/williams.funhouse.1990").glob("*.webp"))
+}
+
+
 def source_records() -> list[dict[str, Any]]:
 	return [
 		{
@@ -514,6 +522,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 99, printed 2-38, switch-locations parts list",
 					"path": "evidence/excerpts/williams.funhouse.1990/switch-locations.md",
 					"sha256": "998d63a2d06cc9b5afcf444ad652179af47e1b1af392fb26d22cd6dee789fcbb",
+					"image": "evidence/excerpts/williams.funhouse.1990/switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					"image_derivation": "Funhouse_OPS.pdf page 99, crop box 0.06,0.06,0.9,0.93, scanned page rendered at its native resolution (embedded image xref 416, 2556px across 8.52in), rendered at 300 dpi, 2138x2857 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -535,6 +546,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 97, printed 2-36, lamp-locations parts list",
 					"path": "evidence/excerpts/williams.funhouse.1990/lamp-locations.md",
 					"sha256": "6cb17cb8ed46b1c501b7d45625532e6cbb070e0d9a67b791bd4299909771a677",
+					"image": "evidence/excerpts/williams.funhouse.1990/lamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations.webp"],
+					"image_derivation": "Funhouse_OPS.pdf page 97, crop box 0.08,0.07,0.86,0.93, scanned page rendered at its native resolution (embedded image xref 406, 2550px across 8.50in), rendered at 300 dpi, 1985x2824 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -544,6 +558,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 98, printed 2-37, lamp matrix wiring table",
 					"path": "evidence/excerpts/williams.funhouse.1990/lamp-matrix.md",
 					"sha256": "b70eee7219327b65aca8b5f8b251d849adc8c722f882568ea5cd4cf609e1cfe9",
+					"image": "evidence/excerpts/williams.funhouse.1990/lamp-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix.webp"],
+					"image_derivation": "Funhouse_OPS.pdf page 98, crop box 0.055,0.48,0.965,0.915, scanned page rendered at its native resolution (embedded image xref 411, 2563px across 8.54in), rendered at 156 dpi, capped to 1200px wide, 1201x741 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page (address 12 confirmed at 600 dpi)",
 					"reviewed": True,
@@ -553,6 +570,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 101, printed 2-40, solenoid and general-illumination locations parts list",
 					"path": "evidence/excerpts/williams.funhouse.1990/solenoid-locations.md",
 					"sha256": "7afd56bc2cd4c72a2fc89c29519b05cf8fcb6758e8bb13cbb9942d03726e034e",
+					"image": "evidence/excerpts/williams.funhouse.1990/solenoid-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-locations.webp"],
+					"image_derivation": "Funhouse_OPS.pdf page 101, crop box 0.06,0.06,0.58,0.65, scanned page rendered at its native resolution (embedded image xref 425, 2550px across 8.50in), rendered at 300 dpi, 1324x1938 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -562,6 +582,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 119, printed 3-16, Switch/Lamp/Solenoid Circuits interboard wiring tables",
 					"path": "evidence/excerpts/williams.funhouse.1990/switch-lamp-solenoid-circuits.md",
 					"sha256": "b5b143551a0fd5255ee211d7cdc959a52cd776db56ffa708c9ceff95c7d45de4",
+					"image": "evidence/excerpts/williams.funhouse.1990/switch-lamp-solenoid-circuits.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-lamp-solenoid-circuits.webp"],
+					"image_derivation": "Funhouse_OPS.pdf page 119, crop box 0.03,0.035,0.97,0.78, scanned page rendered at its native resolution (embedded image xref 512, 3297px across 10.99in), rendered at 253 dpi, capped to 2600px wide, 2601x1598 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -571,6 +594,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 120, printed 3-17, General Illumination/Flipper/Power/Logic/Display Circuits interboard wiring tables",
 					"path": "evidence/excerpts/williams.funhouse.1990/general-illumination-flipper-circuits.md",
 					"sha256": "1798116b6e9c38a2f02aef1f38ea90760f500ebfba4b8a52ae73b38c3d6b0d3d",
+					"image": "evidence/excerpts/williams.funhouse.1990/general-illumination-flipper-circuits.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination-flipper-circuits.webp"],
+					"image_derivation": "Funhouse_OPS.pdf page 120, crop box 0.03,0.035,0.97,0.78, scanned page rendered at its native resolution (embedded image xref 517, 3287px across 10.96in), rendered at 253 dpi, capped to 2600px wide, 2601x1598 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -580,6 +606,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 85 and 93, printed 2-24 and 2-32, Jaw Drive/Eject Assembly and Unique Parts pages",
 					"path": "evidence/excerpts/williams.funhouse.1990/rudy-mechanism-parts.md",
 					"sha256": "45a06c3150ef08f2380452187cd7baec4f77ad8448e7e0990e0c6307ceb81966",
+					"image": "evidence/excerpts/williams.funhouse.1990/rudy-mechanism-parts.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["rudy-mechanism-parts.webp"],
+					"image_derivation": "Funhouse_OPS.pdf page 85, crop box 0.08,0.045,0.92,0.9, scanned page rendered at its native resolution (embedded image xref 354, 2588px across 8.63in), rendered at 300 dpi, 2138x2807 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -618,6 +647,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 7-8, lamp matrix and lamp-location drawing",
 					"path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-lamp-evidence.md",
 					"sha256": "9f5f69e9c1b0ba87228f32e0a5a0deb77283bc706b6bc1b709cfd1dc35fe5567",
+					"image": "evidence/excerpts/williams.funhouse.1990/operator-handbook-lamp-evidence.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["operator-handbook-lamp-evidence.webp"],
+					"image_derivation": "Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf page 8, crop box 0.13,0.24,0.58,0.56, scanned page rendered at its native resolution (embedded image xref 21, 3300px across 5.50in), rendered at 485 dpi, capped to 1200px wide, 1201x1319 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from rendered page images",
 					"reviewed": True,
@@ -627,6 +659,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 5 and 9-10, G.I. table and switch matrix/location drawing",
 					"path": "evidence/excerpts/williams.funhouse.1990/operator-handbook-switch-gi-evidence.md",
 					"sha256": "c3eb1b27f58312463fdadbd7e35d96693bdf91d1015143121bfcd3795362e120",
+					"image": "evidence/excerpts/williams.funhouse.1990/operator-handbook-switch-gi-evidence.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["operator-handbook-switch-gi-evidence.webp"],
+					"image_derivation": "Williams_1990_Funhouse_Operator_s_Handbook_November_1990_OCR_searchable.pdf page 5, crop box 0.1,0.15,0.9,0.77, scanned page rendered at its native resolution (embedded image xref 12, 3300px across 5.50in), rendered at 136 dpi, capped to 600px wide, 600x720 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from rendered page images",
 					"reviewed": True,

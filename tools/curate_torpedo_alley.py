@@ -575,6 +575,13 @@ EVIDENCE_HASHES = {
 }
 EVIDENCE_HASHES["extraction-manifest.json"] = hashlib.sha256(json_bytes(MANIFEST)).hexdigest()
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((Path(__file__).resolve().parents[1] / "evidence/excerpts/data-east.torpedo-alley.1988").glob("*.webp"))
+}
+
 excerpt_base = "evidence/excerpts/data-east.torpedo-alley.1988"
 sources = [
     {"id": CATALOG, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame",
@@ -593,7 +600,12 @@ sources = [
      "original_filename": "Data_East_1988_Torpedo_Alley_Manual_English.pdf", "rights": "NOASSERTION",
      "excerpts": [
          {"id": "excerpt.torpedo-alley.switch-matrix", "locator": "PDF pages 24-25, printed pages 20-21",
-          "path": f"{excerpt_base}/switch-matrix.md", "sha256": EVIDENCE_HASHES["switch-matrix.md"], "method": "manual", "transcribed_by": "curator, render-decided at 400 dpi", "reviewed": True},
+          "path": f"{excerpt_base}/switch-matrix.md", "sha256": EVIDENCE_HASHES["switch-matrix.md"], "method": "manual", "transcribed_by": "curator, render-decided at 400 dpi", "reviewed": True,
+          # The retained manual is not publicly hosted, so the transcription alone
+          # is uncheckable by a reader. The crop carries the chart itself, at the
+          # scan's own resolution rather than a guessed one.
+          "image": f"{excerpt_base}/switch-matrix.webp", "image_sha256": EXCERPT_IMAGE_HASHES["switch-matrix.webp"],
+          "image_derivation": "Data_East_1988_Torpedo_Alley_Manual_English.pdf page 24, crop box 0.055,0.465,0.975,0.965, scanned page rendered at its native resolution (embedded image xref 522, 3307px across 8.27in), rendered at 158 dpi, capped to 1200px wide, 1201x924 WebP quality 80"},
          {"id": "excerpt.torpedo-alley.lamp-matrix", "locator": "PDF pages 26-27, printed pages 22-23",
           "path": f"{excerpt_base}/lamp-matrix.md", "sha256": EVIDENCE_HASHES["lamp-matrix.md"], "method": "manual", "transcribed_by": "curator, render-decided at 400 dpi", "reviewed": True},
          {"id": "excerpt.torpedo-alley.coil-and-flipper", "locator": "PDF pages 28-29 and 35-38, printed pages 24-25 and foldout wiring pages 30-31",

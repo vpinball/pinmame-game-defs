@@ -51,6 +51,13 @@ TABLE_BOUNDS = "left=0 top=0 right=964 bottom=2162"
 TABLE_WIDTH = 964.0
 TABLE_HEIGHT = 2162.0
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from the file on disk
+# rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((ROOT / "evidence/excerpts/williams.congo.1995").glob("*.webp"))
+}
+
 DRIVER_IDS = ("congo_21", "congo_20", "congo_20s10k", "congo_13", "congo_11")
 DRIVER_COMPATIBILITY = {
 	"congo_21": (
@@ -657,6 +664,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 110, printed 2-41, Switch Locations parts list",
 					"path": "evidence/excerpts/williams.congo.1995/switch-locations.md",
 					"sha256": "a239ecfc3ca259d997ab447bae310877ac20a14f8fd43128a8cf92d0fb709788",
+					"image": "evidence/excerpts/williams.congo.1995/switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					"image_derivation": "Congo_OPS.pdf page 110, crop box 0.03,0.085,0.5,0.92, scanned page rendered at its native resolution (embedded image xref 464, 1700px across 8.50in), rendered at 200 dpi, 799x1842 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -678,6 +688,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 108, printed 2-39, Lamp Locations parts list",
 					"path": "evidence/excerpts/williams.congo.1995/lamp-locations.md",
 					"sha256": "0490f2fe67deaba27451640045371936695f4f7a97b701c1ce6dd92e6e5ad838",
+					"image": "evidence/excerpts/williams.congo.1995/lamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations.webp"],
+					"image_derivation": "Congo_OPS.pdf page 108, crop box 0.04,0.1,0.49,0.85, scanned page rendered at its native resolution (embedded image xref 455, 1700px across 8.50in), rendered at 200 dpi, 765x1655 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -687,6 +700,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 107, printed 2-38, LAMP MATRIX table",
 					"path": "evidence/excerpts/williams.congo.1995/lamp-matrix.md",
 					"sha256": "67263bbc4ad51f56f381dd30053ba1a8363b44928c3972cce0f5552db15ab33c",
+					"image": "evidence/excerpts/williams.congo.1995/lamp-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix.webp"],
+					"image_derivation": "Congo_OPS.pdf page 107, crop box 0.05,0.04,0.97,0.52, scanned page rendered at its native resolution (embedded image xref 451, 1700px across 8.50in), rendered at 153 dpi, capped to 1200px wide, 1201x813 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -696,6 +712,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 111, printed 2-42, SOLENOID/FLASHER TABLE, General Illumination, and Flipper Circuits",
 					"path": "evidence/excerpts/williams.congo.1995/solenoid-flasher-table.md",
 					"sha256": "086b0949f1b5515672907f266e01d9dbb4383161eaf19ed4e62597e808672328",
+					"image": "evidence/excerpts/williams.congo.1995/solenoid-flasher-table.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-table.webp"],
+					"image_derivation": "Congo_OPS.pdf page 111, crop box 0.02,0.01,0.98,0.62, scanned page rendered at its native resolution (embedded image xref 468, 1700px across 8.50in), rendered at 86 dpi, capped to 700px wide, 701x578 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -705,6 +724,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 112, printed 2-43, Solenoid/Flashlamp Locations, Flippers, and General Illumination",
 					"path": "evidence/excerpts/williams.congo.1995/solenoid-flashlamp-locations.md",
 					"sha256": "9d995116ed35c57fc75c80bc95e1349a4671dabdb6a0974a9e88f481ebaeb7d5",
+					"image": "evidence/excerpts/williams.congo.1995/solenoid-flashlamp-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flashlamp-locations.webp"],
+					"image_derivation": "Congo_OPS.pdf page 112, crop box 0.04,0.09,0.5,0.74, scanned page rendered at its native resolution (embedded image xref 472, 1700px across 8.50in), rendered at 200 dpi, 782x1434 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -714,6 +736,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 2 (front matter, unnumbered), DIP Switch Chart and duplicate Solenoid/Flasher Table",
 					"path": "evidence/excerpts/williams.congo.1995/dip-switch-chart.md",
 					"sha256": "76311d6972ea3bd3e9dffa169d71c792867b9b2557d0b1d66aa1c2d759b90a93",
+					"image": "evidence/excerpts/williams.congo.1995/dip-switch-chart.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["dip-switch-chart.webp"],
+					"image_derivation": "Congo_OPS.pdf page 2, crop box 0.05,0.095,0.95,0.33, scanned page rendered at its native resolution (embedded image xref 4, 1700px across 8.50in), rendered at 200 dpi, 1530x517 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,

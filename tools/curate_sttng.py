@@ -599,6 +599,14 @@ def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
 
 
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((Path(__file__).resolve().parents[1] / "evidence/excerpts/williams.star-trek-the-next-generation.1993").glob("*.webp"))
+}
+
+
 def source_records() -> list[dict[str, Any]]:
 	return [
 		{
@@ -678,6 +686,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 95, printed 2-43, Switch Locations parts list",
 					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/switch-locations.md",
 					"sha256": "f7d48e1f0142ca868b9ad95523153647c7d61b862bd39e5205fc9db0c338fb22",
+					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					"image_derivation": "Star_Trek_TNG_OPS.pdf page 95, crop box 0.02,0.05,0.99,0.94, scanned page rendered at its native resolution (embedded image xref 403, 2567px across 8.33in), rendered at 308 dpi, 2471x3206 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -687,6 +698,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 121 (printed 3-23, Gun Circuit Diagram) and PDF page 51 (printed 1-41, Removing the Gun Assembly)",
 					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/gun-assembly.md",
 					"sha256": "357928d58c3934b62f28643c744a9c8aaad486bfeee5bcf11c6764ad9d46267d",
+					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/gun-assembly.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["gun-assembly.webp"],
+					"image_derivation": "Star_Trek_TNG_OPS.pdf page 121, crop box 0.03,0.06,0.98,0.94, scanned page rendered at its native resolution (embedded image xref 521, 2588px across 8.40in), rendered at 308 dpi, 2420x3170 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -705,6 +719,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF pages 92-93, printed 2-40/2-41, Lamp Matrix and Lamp Locations",
 					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/lamp-matrix-and-locations.md",
 					"sha256": "8f7c6f3627d2dd964598d9566266b5588d7d399926a90090eab543664a809dfe",
+					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/lamp-matrix-and-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix-and-locations.webp"],
+					"image_derivation": "Star_Trek_TNG_OPS.pdf page 92, crop box 0.03,0.03,0.98,0.56, scanned page rendered at its native resolution (embedded image xref 389, 2574px across 8.36in), rendered at 308 dpi, 2420x1910 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -714,6 +731,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 96, printed 2-44, Solenoid/Flasher Table and Flipper Circuits",
 					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/solenoid-flasher-wiring.md",
 					"sha256": "52a786aec5587e96ce97eea8b6a3dd5882c112837c669236c36c32eb5df581f2",
+					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/solenoid-flasher-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-wiring.webp"],
+					"image_derivation": "Star_Trek_TNG_OPS.pdf page 96, crop box 0.02,0.03,0.99,0.79, scanned page rendered at its native resolution (embedded image xref 408, 2546px across 8.27in), rendered at 308 dpi, 2471x2738 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -723,6 +743,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 97, printed 2-45, Solenoid/Flasher Location parts list",
 					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/solenoid-flasher-locations.md",
 					"sha256": "82442dac2dea28f11827bc1c6815b7e3f33ed8becb6af4e6491e80d3bdae9648",
+					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/solenoid-flasher-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-locations.webp"],
+					"image_derivation": "Star_Trek_TNG_OPS.pdf page 97, crop box 0.02,0.06,0.58,0.97, scanned page rendered at its native resolution (embedded image xref 412, 2567px across 8.33in), rendered at 308 dpi, 1427x3278 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -732,6 +755,9 @@ def source_records() -> list[dict[str, Any]]:
 					"locator": "PDF page 96, printed 2-44, General Illumination wiring",
 					"path": "evidence/excerpts/williams.star-trek-the-next-generation.1993/general-illumination.md",
 					"sha256": "2a260ba559a63d0272d21f68365e3ea83dfd1848f797f6672ea06feeb385c549",
+					"image": "evidence/excerpts/williams.star-trek-the-next-generation.1993/general-illumination.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
+					"image_derivation": "Star_Trek_TNG_OPS.pdf page 96, crop box 0.02,0.518,0.99,0.605, scanned page rendered at its native resolution (embedded image xref 408, 2546px across 8.27in), rendered at 308 dpi, 2471x315 WebP quality 80",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,

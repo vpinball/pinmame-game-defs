@@ -210,6 +210,34 @@ MANUAL_EXCERPTS = [
     ("excerpt.ngg.wheel-motor-optos", "PDF page 137, printed 3-23, Motor 2-Opto Board and wheel motor", "wheel-motor-and-optos.md", "b95486be8b4e82dc896eaaa4bdeacc13efd9ee9eeece2432efc6113613277c65"),
 ]
 
+# Repo-relative crop filename plus the tool's own printed `image_derivation` (copied
+# verbatim) for every excerpt that carries a rendered image. For the two excerpts whose
+# `path` already points straight at a committed .webp (step-flasher-locations,
+# switch-matrix-image) the same file is reused as `image`; those two were not
+# regenerated, so their derivation text is a plain, honest description of what the
+# committed file shows rather than a tool-printed string. `image_sha256` is read from
+# the committed file on disk rather than hand-typed, so a hash typo cannot silently
+# diverge from the file it names.
+EXCERPT_IMAGES_DIR = ROOT / "evidence/excerpts/williams.no-good-gofers.1997"
+EXCERPT_IMAGE_HASHES = {
+    path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+    for path in sorted(EXCERPT_IMAGES_DIR.glob("*.webp"))
+}
+EXCERPT_IMAGES: dict[str, tuple[str, str]] = {
+    "excerpt.ngg.auxiliary-8-driver-board": ("auxiliary-8-driver-board.webp", "No_Good_Gofers_OPS.pdf page 138, crop box 0.04,0.06,0.96,0.95, scanned page rendered at its native resolution (embedded image xref 581, 2561px across 8.29in), rendered at 309 dpi, 2350x3218 WebP quality 80"),
+    "excerpt.ngg.flipper-circuits": ("flipper-circuits.webp", "No_Good_Gofers_OPS.pdf page 125, crop box 0.03,0.06,0.97,0.93, scanned page rendered at its native resolution (embedded image xref 518, 2582px across 8.36in), rendered at 309 dpi, 2402x3146 WebP quality 80"),
+    "excerpt.ngg.general-illumination": ("general-illumination.webp", "No_Good_Gofers_OPS.pdf page 144, crop box 0.03,0.06,0.97,0.92, scanned page rendered at its native resolution (embedded image xref 609, 2554px across 8.27in), rendered at 109 dpi, capped to 850px wide, 851x1102 WebP quality 80"),
+    "excerpt.ngg.lamp-locations": ("lamp-locations.webp", "No_Good_Gofers_OPS.pdf page 102, crop box 0.1,0.05,0.95,0.95, scanned page rendered at its native resolution (embedded image xref 417, 2582px across 8.36in), rendered at 309 dpi, 2172x3254 WebP quality 80"),
+    "excerpt.ngg.lamp-matrix": ("lamp-matrix.webp", "No_Good_Gofers_OPS.pdf page 112, crop box 0.03,0.05,0.97,0.58, scanned page rendered at its native resolution (embedded image xref 460, 2554px across 8.27in), rendered at 129 dpi, capped to 1000px wide, 1001x799 WebP quality 80"),
+    "excerpt.ngg.solenoid-locations": ("solenoid-flasher-locations.webp", "No_Good_Gofers_OPS.pdf page 105, crop box 0.12,0.06,0.9,0.9, scanned page rendered at its native resolution (embedded image xref 429, 2589px across 8.38in), rendered at 309 dpi, 1993x3037 WebP quality 80"),
+    "excerpt.ngg.solenoid-wiring": ("solenoid-flasher-wiring.webp", "No_Good_Gofers_OPS.pdf page 113, crop box 0.03,0.02,0.97,0.94, scanned page rendered at its native resolution (embedded image xref 465, 2554px across 8.27in), rendered at 309 dpi, 2402x3326 WebP quality 80"),
+    "excerpt.ngg.step-flasher-locations": ("step-flasher-locations.webp", "Cropped from No_Good_Gofers_OPS.pdf page 105 (printed 2-45, Solenoid/Flasher Locations playfield drawing): the left-hand margin of the drawing, showing leader-line callouts 24, 15, 04, 47, 48, 49, 06 and the top of 12 running top-to-bottom beside the playfield's left edge -- the left-side step-flasher domes 47/48/49 plus the adjacent Underground Pass, Center Ramp Make, Left Gofer Up, and Jet Popper callouts. Committed file is 620x1227 px WebP; the render tool, exact crop box, and DPI used to produce it were not recorded at the time and are not reconstructed here because the file must not be regenerated."),
+    "excerpt.ngg.switch-locations": ("switch-locations.webp", "No_Good_Gofers_OPS.pdf page 108, crop box 0.04,0.05,0.96,0.97, scanned page rendered at its native resolution (embedded image xref 441, 2582px across 8.36in), rendered at 309 dpi, 2350x3326 WebP quality 80"),
+    "excerpt.ngg.switch-matrix": ("switch-matrix-table.webp", "No_Good_Gofers_OPS.pdf page 116, crop box 0.03,0.03,0.97,0.64, scanned page rendered at its native resolution (embedded image xref 479, 2568px across 8.31in), rendered at 90 dpi, capped to 700px wide, 701x644 WebP quality 80"),
+    "excerpt.ngg.switch-matrix-image": ("switch-matrix.webp", "Cropped from No_Good_Gofers_OPS.pdf page 116 (printed 3-1, Section 3 SWITCH MATRIX table): the 8-column x 8-row matrix grid only (column headers 1-8 with wire/connector/receiver, row headers 1-8 with wire/connector/receiver, and every cell 11-88), including the opto-shading halftone on the fifteen addresses 31-38, 41, 42, 44, 45, 46, 63, 64. It excludes the Dedicated Grounded Switches column at the page's left margin, the Flipper Grounded Switches column at the right margin, the page title, and the legend/Switch Matrix Circuit diagram below the table. Committed file is 700x749 px WebP; the render tool, exact crop box, and DPI used to produce it were not recorded at the time and are not reconstructed here because the file must not be regenerated."),
+    "excerpt.ngg.wheel-motor-optos": ("wheel-motor-and-optos.webp", "No_Good_Gofers_OPS.pdf page 137, crop box 0.05,0.05,0.95,0.83, scanned page rendered at its native resolution (embedded image xref 577, 2582px across 8.36in), rendered at 161 dpi, capped to 1200px wide, 1201x1472 WebP quality 80"),
+}
+
 
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
@@ -284,7 +312,16 @@ def matrix_wiring(address: int) -> dict[str, Any]:
 
 
 def sources() -> list[dict[str, Any]]:
-    excerpts = [{"id": item[0], "locator": item[1], "path": f"evidence/excerpts/williams.no-good-gofers.1997/{item[2]}", "sha256": item[3], "method": "manual", "transcribed_by": "curator, visually checked against retained 300 dpi renders", "reviewed": True} for item in MANUAL_EXCERPTS]
+    excerpts = []
+    for item in MANUAL_EXCERPTS:
+        excerpt = {"id": item[0], "locator": item[1], "path": f"evidence/excerpts/williams.no-good-gofers.1997/{item[2]}", "sha256": item[3], "method": "manual", "transcribed_by": "curator, visually checked against retained 300 dpi renders", "reviewed": True}
+        image = EXCERPT_IMAGES.get(item[0])
+        if image:
+            filename, derivation = image
+            excerpt["image"] = f"evidence/excerpts/williams.no-good-gofers.1997/{filename}"
+            excerpt["image_sha256"] = EXCERPT_IMAGE_HASHES[filename]
+            excerpt["image_derivation"] = derivation
+        excerpts.append(excerpt)
     return [
         {"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/driver.c No Good Gofers catalog entries and src/wpc/sims/wpc/full/ngg.c CORE_GAMEDEF/CORE_CLONEDEF", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
         {"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sims/wpc/full/ngg.c nggGameData GEN_WPC95 with hw.custSol=8, ngg_getSol indexing WPC_EXTBOARD2 from CORE_CUSTSOLNO(1), FLIP_SW(FLIP_L|FLIP_U)|FLIP_SOL(FLIP_L|FLIP_UR), inverted-switch mask, wpc_set_modsol_aux_board(2), wheel and gofer/ramp/slam mechanisms; src/wpc/core.h CORE_FIRSTCUSTSOL=51/CORE_CUSTSOLNO; src/wpc/core.c custom-output dispatch; src/wpc/wpc.c No Good Gofers core_set_pwm_output_type table. The latter types 42+14 through 49+14 (56-63) but does not map or drive public state and extends past this driver's declared 51-58 custom range, so it is retained as a PinMAME output-type metadata defect rather than treated as a second address map.", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},

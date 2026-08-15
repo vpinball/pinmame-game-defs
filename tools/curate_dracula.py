@@ -25,6 +25,14 @@ SEED_PATH = ROOT / "tools/seeds/williams/bram-stoker-s-dracula-1993.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/williams/bram-stoker-s-dracula-1993.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/williams/bram-stoker-s-dracula-1993.md"
 
+EXCERPT_BASE = "evidence/excerpts/williams.bram-stoker-s-dracula.1993"
+# Committed crops are binary, so unlike the transcriptions they are hashed from
+# the file on disk rather than from a literal in this curator.
+EXCERPT_IMAGE_HASHES = {
+	path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+	for path in sorted((ROOT / EXCERPT_BASE).glob("*.webp"))
+}
+
 PINMAME_REVISION = "4ec52ff0ac133ac251681518aed2249e19fe26eb"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
@@ -597,6 +605,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": f"{EXCERPT_BASE}/switch-matrix.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-matrix.webp"],
+					"image_derivation": "Dracula_Bram_Stoker_OPS.pdf page 116, crop box 0.1,0.14,0.9,0.9, scanned page rendered at its native resolution (embedded image xref 500, 1650px across 11.00in), rendered at 114 dpi, capped to 1000px wide, 1000x735 WebP quality 80",
 				},
 				{
 					"id": "excerpt.dracula.switch-locations",
@@ -606,6 +617,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": f"{EXCERPT_BASE}/switch-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+					"image_derivation": "Dracula_Bram_Stoker_OPS.pdf page 109, crop box 0.04,0.03,0.94,0.98, scanned page rendered at its native resolution (embedded image xref 467, 1275px across 8.50in), rendered at 150 dpi, 1148x1568 WebP quality 80",
 				},
 				{
 					"id": "excerpt.dracula.lamp-matrix-and-locations",
@@ -615,6 +629,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": f"{EXCERPT_BASE}/lamp-matrix-and-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix-and-locations.webp"],
+					"image_derivation": "Dracula_Bram_Stoker_OPS.pdf page 114, crop box 0.1,0.12,0.9,0.9, scanned page rendered at its native resolution (embedded image xref 490, 1650px across 11.00in), rendered at 150 dpi, 1320x995 WebP quality 80",
 				},
 				{
 					"id": "excerpt.dracula.solenoid-flasher-locations",
@@ -624,6 +641,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": f"{EXCERPT_BASE}/solenoid-flasher-locations.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-locations.webp"],
+					"image_derivation": "Dracula_Bram_Stoker_OPS.pdf page 108, crop box 0.05,0.03,0.97,0.985, scanned page rendered at its native resolution (embedded image xref 463, 1294px across 8.63in), rendered at 150 dpi, 1174x1577 WebP quality 80",
 				},
 				{
 					"id": "excerpt.dracula.solenoid-flasher-wiring",
@@ -633,6 +653,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": f"{EXCERPT_BASE}/solenoid-flasher-wiring.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-wiring.webp"],
+					"image_derivation": "Dracula_Bram_Stoker_OPS.pdf page 120, crop box 0.06,0.06,0.94,0.89, scanned page rendered at its native resolution (embedded image xref 520, 1650px across 11.00in), rendered at 150 dpi, 1452x1059 WebP quality 80",
 				},
 				{
 					"id": "excerpt.dracula.general-illumination",
@@ -642,6 +665,9 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+					"image": f"{EXCERPT_BASE}/general-illumination.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["general-illumination.webp"],
+					"image_derivation": "Dracula_Bram_Stoker_OPS.pdf page 128, crop box 0.07,0.1,0.93,0.92, scanned page rendered at its native resolution (embedded image xref 560, 1650px across 11.00in), rendered at 150 dpi, 1420x1046 WebP quality 80",
 				},
 			],
 		},

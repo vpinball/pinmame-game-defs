@@ -571,9 +571,9 @@ class HighSpeedDefinitionTests(unittest.TestCase):
 			if excerpt.get("image"):
 				self.assertTrue(excerpt["image_derivation"])
 		self.assertEqual(
-			3,
+			7,
 			sum(1 for excerpt in excerpts.values() if excerpt.get("image")),
-			"the switch matrix, the lamp matrix and the GI wiring are the three drawing-shaped facts",
+			"every excerpt whose page could be cropped now carries the region it was read from",
 		)
 
 	def test_controller_profile_declares_every_used_binding_group(self) -> None:

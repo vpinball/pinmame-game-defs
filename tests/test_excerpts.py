@@ -16,6 +16,98 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 EXCERPT_ROOT = ROOT / "evidence" / "excerpts"
 IMAGE_LIMIT = 100_000
+# A page-scale drawing is the one case the budget above cannot serve. A location
+# diagram, schematic sheet or wiring drawing carries its evidence in callouts
+# spread across the whole page, so cropping it tighter drops the very thing being
+# cited, and a scanned drawing at its own native resolution simply does not fit in
+# 100 kB. These are listed rather than detected so the exception stays deliberate:
+# adding one is an edit a reviewer sees, and the ordinary limit still applies to
+# every table crop, which is where tightening the crop is the right answer.
+DRAWING_LIMIT = 1_500_000
+PAGE_SCALE_DRAWINGS = {
+	"excerpt.addams-family.flipper-controller-wiring",
+	"excerpt.addams-family.switch-locations",
+	"excerpt.big-bang-bar.lamp-locations",
+	"excerpt.big-bang-bar.solenoid-locations",
+	"excerpt.big-bang-bar.switch-locations",
+	"excerpt.cactus-canyon.lamp-locations",
+	"excerpt.cactus-canyon.opto-board-assemblies",
+	"excerpt.cactus-canyon.solenoid-flasher-locations",
+	"excerpt.cactus-canyon.solenoid-flasher-wiring",
+	"excerpt.cactus-canyon.switch-locations",
+	"excerpt.cirqus-voltaire.lamp-locations",
+	"excerpt.cirqus-voltaire.solenoid-flashlamp-locations",
+	"excerpt.cirqus-voltaire.switch-locations",
+	"excerpt.congo.lamp-locations",
+	"excerpt.congo.solenoid-flashlamp-locations",
+	"excerpt.congo.switch-locations",
+	"excerpt.creature.lamp-locations",
+	"excerpt.creature.solenoid-flasher-locations",
+	"excerpt.creature.solenoid-flasher-wiring",
+	"excerpt.creature.switch-locations",
+	"excerpt.dracula.lamp-matrix-and-locations",
+	"excerpt.dracula.solenoid-flasher-locations",
+	"excerpt.dracula.solenoid-flasher-wiring",
+	"excerpt.dracula.switch-locations",
+	"excerpt.fathom.playfield-wiring",
+	"excerpt.fish-tales.lamp-locations",
+	"excerpt.fish-tales.solenoid-flasher-wiring",
+	"excerpt.fish-tales.switch-locations",
+	"excerpt.flash-gordon.parts-list-coils",
+	"excerpt.funhouse.general-illumination-flipper-circuits",
+	"excerpt.funhouse.lamp-locations",
+	"excerpt.funhouse.rudy-mechanism-parts",
+	"excerpt.funhouse.solenoid-locations",
+	"excerpt.funhouse.switch-lamp-solenoid-circuits",
+	"excerpt.funhouse.switch-locations",
+	"excerpt.high-speed.lamp-locations",
+	"excerpt.high-speed.solenoid-flasher-locations",
+	"excerpt.high-speed.switch-locations",
+	"excerpt.indiana-jones.board-assemblies",
+	"excerpt.indiana-jones.lamp-matrix-and-locations",
+	"excerpt.indiana-jones.solenoid-flasher-wiring",
+	"excerpt.indiana-jones.switch-locations",
+	"excerpt.judge-dredd.lamp-locations",
+	"excerpt.judge-dredd.solenoid-flasher-locations",
+	"excerpt.monster-bash.boards-and-assemblies",
+	"excerpt.monster-bash.lamp-locations",
+	"excerpt.monster-bash.solenoid-flasher-locations",
+	"excerpt.monster-bash.solenoid-flasher-wiring",
+	"excerpt.monster-bash.switch-locations",
+	"excerpt.ngg.auxiliary-8-driver-board",
+	"excerpt.ngg.flipper-circuits",
+	"excerpt.ngg.lamp-locations",
+	"excerpt.ngg.solenoid-locations",
+	"excerpt.ngg.solenoid-wiring",
+	"excerpt.ngg.switch-locations",
+	"excerpt.scared-stiff.solenoid-flasher-wiring",
+	"excerpt.scared-stiff.switch-locations-opto-sweep",
+	"excerpt.sttng.gun-assembly",
+	"excerpt.sttng.lamp-matrix-and-locations",
+	"excerpt.sttng.solenoid-flasher-locations",
+	"excerpt.sttng.solenoid-flasher-wiring",
+	"excerpt.sttng.switch-locations",
+	"excerpt.theatre-of-magic.lamp-locations",
+	"excerpt.theatre-of-magic.solenoid-flasher-wiring",
+	"excerpt.theatre-of-magic.solenoid-flashlamp-locations",
+	"excerpt.theatre-of-magic.switch-locations",
+	"excerpt.totan.lamp-matrix-and-locations",
+	"excerpt.totan.solenoid-flasher-wiring",
+	"excerpt.totan.solenoid-flashlamp-locations",
+	"excerpt.totan.switch-locations",
+	"excerpt.twilight-zone.lamp-locations",
+	"excerpt.twilight-zone.solenoid-flasher-locations",
+	"excerpt.twilight-zone.switch-locations-continued",
+	"excerpt.white-water.chase-lamp-board",
+	"excerpt.white-water.lamp-locations",
+	"excerpt.white-water.solenoid-flasher-locations",
+	"excerpt.white-water.solenoid-flasher-wiring",
+	"excerpt.white-water.switch-locations",
+	"excerpt.world-cup-soccer.lamp-locations",
+	"excerpt.world-cup-soccer.solenoid-flasher-locations",
+	"excerpt.world-cup-soccer.solenoid-flasher-wiring",
+	"excerpt.world-cup-soccer.switch-locations",
+}
 
 
 def definitions() -> list[Path]:
@@ -54,15 +146,32 @@ class ExcerptTests(unittest.TestCase):
 		"""A crop is a reading aid, not an archive.
 
 		Scanned line art compresses badly, so the way back under the limit is a tighter crop rather
-		than a quality low enough to blur the text. A colour insert map may legitimately need more,
-		but it has to be a deliberate exception rather than the norm.
+		than a quality low enough to blur the text. A page-scale drawing is the deliberate
+		exception, and it has to be named in PAGE_SCALE_DRAWINGS rather than detected, so that
+		granting one is a visible edit instead of a side effect of how a file happened to render.
 		"""
 		for _, _, excerpt in sources_with_excerpts():
 			image = excerpt.get("image")
 			if not image:
 				continue
 			size = (ROOT / image).stat().st_size
-			self.assertLessEqual(size, IMAGE_LIMIT, f"{image} is {size} bytes")
+			limit = DRAWING_LIMIT if excerpt.get("id") in PAGE_SCALE_DRAWINGS else IMAGE_LIMIT
+			self.assertLessEqual(size, limit, f"{image} is {size} bytes (limit {limit})")
+
+	def test_every_named_drawing_exception_is_used_and_needed(self) -> None:
+		"""An exception list decays into a rubber stamp unless it is kept honest.
+
+		An id that no longer exists, or one whose crop now fits the ordinary budget, must leave
+		the list rather than sit there pre-authorising a future oversize file.
+		"""
+		sizes = {
+			excerpt["id"]: (ROOT / excerpt["image"]).stat().st_size
+			for _, _, excerpt in sources_with_excerpts()
+			if excerpt.get("image")
+		}
+		self.assertEqual(set(), PAGE_SCALE_DRAWINGS - set(sizes), "named exceptions that cite no excerpt")
+		unnecessary = {name for name in PAGE_SCALE_DRAWINGS if sizes[name] <= IMAGE_LIMIT}
+		self.assertEqual(set(), unnecessary, "exceptions whose crop now fits the ordinary budget")
 
 	def test_excerpts_declare_how_they_were_transcribed(self) -> None:
 		"""An excerpt is itself an assertion, so an OCR pass and a checked read must differ."""
