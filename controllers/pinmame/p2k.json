@@ -1,0 +1,79 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.p2k",
+  "authority": "pinmame",
+  "hardware_family": "Midway Pinball 2000",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Playfield matrix, coin-door, diagnostic, EOS, and cabinet inputs",
+      "address_rules": [
+        { "minimum": 11, "maximum": 18 },
+        { "minimum": 21, "maximum": 28 },
+        { "minimum": 31, "maximum": 38 },
+        { "minimum": 41, "maximum": 48 },
+        { "minimum": 51, "maximum": 58 },
+        { "minimum": 61, "maximum": 68 },
+        { "minimum": 71, "maximum": 78 },
+        { "minimum": 81, "maximum": 88 },
+        { "minimum": 91, "maximum": 98 },
+        { "minimum": 101, "maximum": 108 },
+        { "minimum": 111, "maximum": 118 }
+      ],
+      "transports": {
+        "libpinmame": { "channel": "switch" },
+        "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "#### Playfield matrix\n\nAddresses `11-88` use column-times-ten plus one-based row notation. Values ending in `9` or `0` are not matrix positions. PinMAME translates those public addresses through `p2k_sw2m` and `p2k_m2sw`.\n\n#### Dedicated inputs\n\nThe board's 24 direct inputs are exposed as three public columns: printed `D1-D8` become `91-98`, `D9-D16` become `101-108`, and `D17-D24` become `111-118`. They carry coin, diagnostic, EOS, cabinet, and action-button inputs.\n\n#### Polarity\n\nThe per-game opto list physically rests closed. PinMAME normalizes those states before consumers see them, so clients must not apply another controller-wide inversion.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Power-driver board coils, flashers, flipper circuits, and custom outputs",
+      "address_rules": [
+        { "minimum": 1, "maximum": 32 },
+        { "minimum": 45, "maximum": 48 },
+        { "minimum": 51, "maximum": 62 }
+      ],
+      "transports": {
+        "libpinmame": { "channel": "solenoid" },
+        "controller_plugin": { "group_id": 1, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "Board drivers `1-32` retain their number. Board drivers `33-36` are the lower-flipper circuits and are exported at public solenoids `45-48`. Board drivers `37-48` are exported as custom public solenoids `51-62`. Public ranges `33-44` and `49-50` do not represent Pinball 2000 driver-board positions and are intentionally excluded.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "Eight columns of two interleaved eight-row lamp banks",
+      "address_rules": [
+        { "minimum": 0, "maximum": 127 }
+      ],
+      "transports": {
+        "libpinmame": { "channel": "lamp" },
+        "controller_plugin": { "group_id": 512, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
+      },
+      "notes": "The public address is a zero-based bit index in the sixteen exported lamp bytes. For the manual's column, bank, and row notation use `address = (column - 1) * 16 + (bank B ? 8 : 0) + (row - 1)`. Thus manual `11A` is public `0`; there is no one-based offset. PinMAME's machine-test walk verified all 128 positions.",
+      "notes_format": "markdown"
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "locator": "src/wpc/p2k.c p2k_sw2m/p2k_m2sw, p2k_sync_io, p2k_getSol, P2K_CUSTSOL_COUNT, p2kGameData, and p2k_disp; src/wpc/p2k_names.h measured device-table notes; src/libpinmame/libpinmame.h PINMAME_HARDWARE_GEN_P2K"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "a6f6d7266d301249ed09c1b0123f8476513a2228",
+      "locator": "src/libpinmame/libpinmame.cpp SetupMsgApi controller-plugin group definitions"
+    }
+  ]
+}

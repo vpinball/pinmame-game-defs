@@ -56,20 +56,20 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 50 | 2004 | Ripley's Believe It or Not! | Stern | partial | 88% |
 | 51 | 2004 | STUB - Elvis (5.00) | Stern | stub | 0% |
 | 52 | 2004 | STUB - Harley-Davidson (Stern, 4.00) | Stern | stub | 0% |
-| 53 | 2003 | STUB - Pinball 2000: Revenge From Mars (1.60) | Midway | stub | 0% |
-| 54 | 2003 | STUB - Pinball 2000: Star Wars Episode I (1.50) | Midway | stub | 0% |
-| 55 | 2003 | Lord of the Rings | Stern | partial | 75% |
-| 56 | 2003 | STUB - Terminator 3: Rise of the Machines (4.00) | Stern | stub | 0% |
-| 57 | 2003 | The Simpsons Pinball Party | Stern | partial | 75% |
-| 58 | 2002 | RollerCoaster Tycoon | Stern | partial | 19% |
-| 59 | 2002 | STUB - Monopoly (Coin Dropper) | Stern | stub | 0% |
-| 60 | 2002 | STUB - Playboy (Stern, 5.00) | Stern | stub | 0% |
-| 61 | 2001 | Austin Powers | Stern | partial | 19% |
-| 62 | 2001 | STUB - High Roller Casino (3.00) | Stern | stub | 0% |
-| 63 | 2001 | STUB - Monopoly (3.20) | Stern | stub | 0% |
-| 64 | 2001 | STUB - NFL | Stern | stub | 0% |
-| 65 | 2000 | STUB - Sharkey's Shootout (2.11) | Stern | stub | 0% |
-| 66 | 2000 | STUB - Striker Xtreme (1.02) | Stern | stub | 0% |
+| 53 | 2003 | STUB - Pinball 2000: Star Wars Episode I (1.50) | Midway | stub | 0% |
+| 54 | 2003 | Lord of the Rings | Stern | partial | 75% |
+| 55 | 2003 | STUB - Terminator 3: Rise of the Machines (4.00) | Stern | stub | 0% |
+| 56 | 2003 | The Simpsons Pinball Party | Stern | partial | 75% |
+| 57 | 2002 | RollerCoaster Tycoon | Stern | partial | 19% |
+| 58 | 2002 | STUB - Monopoly (Coin Dropper) | Stern | stub | 0% |
+| 59 | 2002 | STUB - Playboy (Stern, 5.00) | Stern | stub | 0% |
+| 60 | 2001 | Austin Powers | Stern | partial | 19% |
+| 61 | 2001 | STUB - High Roller Casino (3.00) | Stern | stub | 0% |
+| 62 | 2001 | STUB - Monopoly (3.20) | Stern | stub | 0% |
+| 63 | 2001 | STUB - NFL | Stern | stub | 0% |
+| 64 | 2000 | STUB - Sharkey's Shootout (2.11) | Stern | stub | 0% |
+| 65 | 2000 | STUB - Striker Xtreme (1.02) | Stern | stub | 0% |
+| 66 | 1999 | Revenge from Mars | Bally | partial | 75% |
 | 67 | 1999 | STUB - Harley-Davidson (Sega, 1.03, Display 1.04) | Sega | stub | 0% |
 | 68 | 1999 | STUB - South Park (1.03) | Sega | stub | 0% |
 | 69 | 1998 | Cactus Canyon | Bally | partial | 94% |
