@@ -396,6 +396,7 @@ Count: **360**
 
 Count: **240**
 
+- `bally.revenge-from-mars.1999`
 - `diagnostic.scotts-test-rom-v8`
 - `stub.pinmame.aar_101`
 - `stub.pinmame.afv_l4`
@@ -555,7 +556,6 @@ Count: **240**
 - `stub.pinmame.rapidfir`
 - `stub.pinmame.ratrc_l1`
 - `stub.pinmame.redbaron`
-- `stub.pinmame.rfm_160`
 - `stub.pinmame.ridersrf`
 - `stub.pinmame.rock2500`
 - `stub.pinmame.rush_10`

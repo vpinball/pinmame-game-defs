@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "catalog" / "pinmame.json"
 PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
-RFM_PATH = ROOT / "machines" / "stubs" / "rfm_160.json"
+RFM_PATH = ROOT / "machines" / "partial" / "bally" / "revenge-from-mars-1999.json"
 SWEP1_PATH = ROOT / "machines" / "stubs" / "swep1_150.json"
 TAF_PATH = ROOT / "machines" / "author-ready" / "bally" / "the-addams-family-1992.json"
 
@@ -53,17 +53,17 @@ class Pinball2000CatalogTests(unittest.TestCase):
 				"game_count": 789,
 				"machine_count": 790,
 				"non_game_count": 1,
-				"partial_count": 97,
+				"partial_count": 98,
 				"root_driver_count": 774,
-				"stub_count": 669,
+				"stub_count": 668,
 			},
 			self.catalog["summary"],
 		)
 
 	def test_pinball_2000_families_are_complete_and_grouped(self) -> None:
-		for driver_ids, root_driver, definition, machine_id in (
-			(RFM_DRIVERS, "rfm_160", "machines/stubs/rfm_160.json", "stub.pinmame.rfm_160"),
-			(SWEP1_DRIVERS, "swep1_150", "machines/stubs/swep1_150.json", "stub.pinmame.swep1_150"),
+		for driver_ids, root_driver, definition, machine_id, coverage in (
+			(RFM_DRIVERS, "rfm_160", "machines/partial/bally/revenge-from-mars-1999.json", "bally.revenge-from-mars.1999", "partial"),
+			(SWEP1_DRIVERS, "swep1_150", "machines/stubs/swep1_150.json", "stub.pinmame.swep1_150", "stub"),
 		):
 			catalog_family = {driver_id for driver_id in self.catalog_drivers if driver_id.startswith(root_driver.split("_")[0] + "_")}
 			self.assertEqual(driver_ids, catalog_family)
@@ -72,24 +72,29 @@ class Pinball2000CatalogTests(unittest.TestCase):
 				self.assertEqual(root_driver, row["root_driver"])
 				self.assertEqual(definition, row["definition"])
 				self.assertEqual(machine_id, row["machine_id"])
-				self.assertEqual("stub", row["coverage_status"])
+				self.assertEqual(coverage, row["coverage_status"])
 
-	def test_pinball_2000_records_remain_fail_closed_stubs(self) -> None:
-		for path, driver_ids, machine_id, knowledge_path in (
-			(RFM_PATH, RFM_DRIVERS, "stub.pinmame.rfm_160", "knowledge/stubs/rfm_160.md"),
-			(SWEP1_PATH, SWEP1_DRIVERS, "stub.pinmame.swep1_150", "knowledge/stubs/swep1_150.md"),
-		):
-			definition = load_json(path)
-			self.assertEqual(machine_id, definition["machine"]["id"])
-			self.assertNotIn("kind", definition["machine"])
-			self.assertEqual(driver_ids, {driver["id"] for driver in definition["drivers"]})
-			self.assertEqual("stub", definition["coverage"]["status"])
-			self.assertEqual(STUB_MISSING, definition["coverage"]["missing"])
-			for collection in ("inputs", "outputs", "displays", "mechanisms", "relationships", "conflicts"):
-				self.assertEqual([], definition[collection])
-			self.assertEqual({PINMAME_REVISION}, {source["revision"] for source in definition["sources"]})
-			self.assertEqual(knowledge_path, definition["knowledge"]["path"])
-			self.assertTrue((ROOT / knowledge_path).is_file())
+	def test_swep1_remains_a_fail_closed_stub(self) -> None:
+		definition = load_json(SWEP1_PATH)
+		self.assertEqual("stub.pinmame.swep1_150", definition["machine"]["id"])
+		self.assertNotIn("kind", definition["machine"])
+		self.assertEqual(SWEP1_DRIVERS, {driver["id"] for driver in definition["drivers"]})
+		self.assertEqual("stub", definition["coverage"]["status"])
+		self.assertEqual(STUB_MISSING, definition["coverage"]["missing"])
+		for collection in ("inputs", "outputs", "displays", "mechanisms", "relationships", "conflicts"):
+			self.assertEqual([], definition[collection])
+		self.assertEqual({PINMAME_REVISION}, {source["revision"] for source in definition["sources"]})
+		self.assertEqual("knowledge/stubs/swep1_150.md", definition["knowledge"]["path"])
+		self.assertTrue((ROOT / definition["knowledge"]["path"]).is_file())
+
+	def test_rfm_is_promoted_to_an_honest_partial(self) -> None:
+		definition = load_json(RFM_PATH)
+		self.assertEqual("bally.revenge-from-mars.1999", definition["machine"]["id"])
+		self.assertEqual(RFM_DRIVERS, {driver["id"] for driver in definition["drivers"]})
+		self.assertEqual("partial", definition["coverage"]["status"])
+		self.assertEqual(["mechanism_behavior", "polarity", "variant_differences", "spatial_placement"], definition["coverage"]["missing"])
+		self.assertFalse((ROOT / "machines/stubs/rfm_160.json").exists())
+		self.assertFalse((ROOT / "knowledge/stubs/rfm_160.md").exists())
 
 	def test_new_addams_family_variant_does_not_create_a_residual_stub(self) -> None:
 		definition = load_json(TAF_PATH)
