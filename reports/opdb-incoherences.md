@@ -29,7 +29,7 @@ Count: **11**
 
 ## Catalog drivers without a CSV mapping
 
-Count: **338**
+Count: **360**
 
 - `aar_101`
 - `afv_d4`
@@ -249,6 +249,21 @@ Count: **338**
 - `rapidfir`
 - `ratrc_l1`
 - `redbaron`
+- `rfm_120`
+- `rfm_140`
+- `rfm_150`
+- `rfm_160`
+- `rfm_180`
+- `rfm_190`
+- `rfm_191`
+- `rfm_195`
+- `rfm_200`
+- `rfm_210`
+- `rfm_222`
+- `rfm_223`
+- `rfm_224`
+- `rfm_250`
+- `rfm_260`
 - `ridersrf`
 - `rock2500`
 - `rush_10`
@@ -309,6 +324,12 @@ Count: **338**
 - `strik_l4`
 - `superdix`
 - `sureshot`
+- `swep1_130`
+- `swep1_140`
+- `swep1_150`
+- `swep1_200`
+- `swep1_201`
+- `swep1_210`
 - `swrds_rr1`
 - `swrds_rr1b`
 - `sys1test`
@@ -316,6 +337,7 @@ Count: **338**
 - `szone_l5`
 - `t2_l2sp1`
 - `taf_d7bs`
+- `taf_i4bs`
 - `tafg_i3bs`
 - `taitest`
 - `taurs_l1`
@@ -372,7 +394,7 @@ Count: **338**
 
 ## Machine definitions without a CSV mapping
 
-Count: **238**
+Count: **240**
 
 - `diagnostic.scotts-test-rom-v8`
 - `stub.pinmame.aar_101`
@@ -533,6 +555,7 @@ Count: **238**
 - `stub.pinmame.rapidfir`
 - `stub.pinmame.ratrc_l1`
 - `stub.pinmame.redbaron`
+- `stub.pinmame.rfm_160`
 - `stub.pinmame.ridersrf`
 - `stub.pinmame.rock2500`
 - `stub.pinmame.rush_10`
@@ -571,6 +594,7 @@ Count: **238**
 - `stub.pinmame.strik_l4`
 - `stub.pinmame.superdix`
 - `stub.pinmame.sureshot`
+- `stub.pinmame.swep1_150`
 - `stub.pinmame.sys1test`
 - `stub.pinmame.szone_l5`
 - `stub.pinmame.taitest`

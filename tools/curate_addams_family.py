@@ -31,6 +31,8 @@ STUB_PATH = ROOT / "machines/stubs/taf_l5.json"
 PINMAME_REVISION = "4ec52ff0ac133ac251681518aed2249e19fe26eb"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
+LATEST_CATALOG_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
+LATEST_CATALOG_SOURCE = f"pinmame.catalog.{LATEST_CATALOG_REVISION[:12]}"
 CONTROLLER_SOURCE = "controller-profile.pinmame-wpc-fliptronic"
 MANUAL_SOURCE = "manual.bally.the-addams-family.1992.ops"
 MANUAL_HANDBOOK_SOURCE = "manual.bally.the-addams-family.1992.handbook"
@@ -68,7 +70,7 @@ BOUNDS_Y = 2164.76
 DRIVER_IDS = (
 	"taf_l5", "taf_p2", "taf_p3", "taf_l1", "taf_d1", "taf_l2", "taf_d2", "taf_l3", "taf_d3",
 	"taf_l4", "taf_d4", "taf_l5c", "taf_l7", "taf_d7", "taf_d7bs", "taf_l6", "taf_d6", "taf_h4",
-	"taf_i4", "taf_d5",
+	"taf_i4", "taf_i4bs", "taf_d5",
 )
 DRIVER_COMPATIBILITY = {
 	"taf_l5": (
@@ -107,6 +109,12 @@ DRIVER_COMPATIBILITY = {
 	"taf_d6": ("identical", "D-6 LED Ghost Fix ROM pairing with L-6 (SYS 2.55 REV 7.6)."),
 	"taf_h4": ("identical", "H-4 game ROM (SYS 3.21 REV 0.6), the newest known TAF revision with additional home settings."),
 	"taf_i4": ("identical", "I-4 LED Ghost Fix ROM pairing with H-4 (SYS 3.21 REV 7.6)."),
+	"taf_i4bs": (
+		"compatible",
+		"Community 2026 RedBall patch of H-4 adding a configurable ball-saver feature (Adjustment A.2, "
+		"setting 33) plus the No-Ghosting patch; a firmware modification of the same physical machine's "
+		"ROM, not a different physical edition.",
+	),
 	"taf_d5": (
 		"identical",
 		"D-5 LED Ghost Fix ROM (SYS 2.43 REV 0.5). Pinned PinMAME's own comment: this one is a weird "
@@ -572,6 +580,18 @@ def source_records() -> list[dict[str, Any]]:
 			"uri": "https://github.com/vpinball/pinmame",
 			"revision": PINMAME_REVISION,
 			"locator": "Pinned catalog driver records for the taf_* clone tree",
+			"license": "BSD-3-Clause",
+			"attribution": "PinMAME contributors",
+		},
+		{
+			"id": LATEST_CATALOG_SOURCE,
+			"kind": "pinmame_catalog",
+			"uri": "https://github.com/vpinball/pinmame",
+			"revision": LATEST_CATALOG_REVISION,
+			"locator": (
+				"PinmameGetGames taf_i4bs entry and src/wpc/sims/wpc/full/taf.c CORE_CLONEDEF: "
+				"2026 RedBall I-4 LED Ghost Fix + Ballsaver MOD, cloned from taf_l5"
+			),
 			"license": "BSD-3-Clause",
 			"attribution": "PinMAME contributors",
 		},

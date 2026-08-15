@@ -348,12 +348,15 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
 		self.assertEqual(catalog["summary"]["game_count"], report["machine_count"])
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
-		self.assertEqual(787, report["machine_count"])
+		self.assertEqual(789, report["machine_count"])
 		self.assertEqual(24, report["author_ready_count"])
 		self.assertEqual(96, report["partial_count"])
-		self.assertEqual(667, report["stub_count"])
+		self.assertEqual(669, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
-		self.assertEqual(788, report["catalog_record_count"])
+		self.assertEqual(790, report["catalog_record_count"])
+		# The Pinball 2000 baseline adds Revenge From Mars and Star Wars Episode I as two
+		# honest physical-game stubs. Its other new root, taf_i4bs, joins the existing
+		# Addams Family definition and therefore does not add another physical record.
 		# The thirteen retrofit-pending machines above (which already include X-Men Pro), plus
 		# Terminator 2, plus Centaur, plus Twilight Zone. Centaur is not a retrofit: every one of
 		# its devices carries a spatial record except auxiliary lamp 113, a fitted A9 circuit whose
@@ -436,13 +439,13 @@ class SpatialMigrationTests(unittest.TestCase):
 		# FunHouse resolves one of the 51 unresolved-conflict requirements present on the rebased
 		# baseline, leaving only its independently documented spatial blocker.
 		self.assertEqual(50, report["missing_requirement_counts"]["unresolved_conflicts"])
-		self.assertEqual(788, len(catalog["machines"]))
-		self.assertEqual(787, catalog["summary"]["game_count"])
-		self.assertEqual(788, catalog["summary"]["machine_count"])
+		self.assertEqual(790, len(catalog["machines"]))
+		self.assertEqual(789, catalog["summary"]["game_count"])
+		self.assertEqual(790, catalog["summary"]["machine_count"])
 		self.assertEqual(24, catalog["summary"]["author_ready_count"])
-		self.assertEqual(667, catalog["summary"]["stub_count"])
+		self.assertEqual(669, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic; coverage counts
-		# only the 787 physical games and therefore reports 96 partial records above.
+		# only the 789 physical games and therefore reports 96 partial records above.
 		self.assertEqual(97, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
