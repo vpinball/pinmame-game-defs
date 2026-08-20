@@ -598,11 +598,29 @@ def build_runtime_evidence() -> dict[str, object]:
 def sources() -> list[dict[str, object]]:
 	excerpt_meta = []
 	for path, content in EXCERPTS.items():
-		excerpt_meta.append({
+		 excerpt_meta.append({
 			"id": "excerpt.time-machine." + path.stem,
 			"path": path.as_posix(), "sha256": sha256_text(content), "method": "manual", "reviewed": True,
 			"locator": {"switch-matrix.md":"PDF pages 26-27, printed pages 22-23","lamp-matrix.md":"PDF pages 28-29, printed pages 24-25","coil-and-flipper.md":"PDF pages 30-31, printed pages 26-27","mechanism-construction.md":"PDF page 67 (printed 47) and PDF pages 74, 76, 77 (printed 54, 56, 57)"}[path.name],
 			"transcribed_by": "primary curator; OCR located, Poppler render decided",
+			"image": {
+				"switch-matrix.md": "evidence/excerpts/data-east.time-machine.1988/switch-matrix.webp",
+				"lamp-matrix.md": "evidence/excerpts/data-east.time-machine.1988/lamp-matrix.webp",
+				"coil-and-flipper.md": "evidence/excerpts/data-east.time-machine.1988/coil-and-flipper.webp",
+				"mechanism-construction.md": "evidence/excerpts/data-east.time-machine.1988/mechanism-construction.webp",
+			}[path.name],
+			"image_sha256": {
+				"switch-matrix.md": "c53ad0d5d902f54db4c0587267b3ba705f5c0fce2f3a8ebc8a865c33ceacb8e5",
+				"lamp-matrix.md": "8e3fae0a719f87016276d35d43aa6679b4992964566188bf437f10222559df22",
+				"coil-and-flipper.md": "1704e6a845ebc28ba8dc0a3bb12fc1ee85e07be9aacd740ca5e714a03eda256f",
+				"mechanism-construction.md": "31e8d1068905c18edb79c182f221e4e1d093172ff7de75d5b8fdbfef84f14f16",
+			}[path.name],
+			"image_derivation": {
+				"switch-matrix.md": "Data_East_1988_Time_Machine_Manual.pdf page 26, crop box 0.04,0.52,0.96,0.9, scanned page rendered at its native resolution (embedded image xref 125, 1696px across 8.48in), rendered at 154 dpi, capped to 1200px wide, grayscale, 1201x682 WebP quality 65",
+				"lamp-matrix.md": "Data_East_1988_Time_Machine_Manual.pdf page 28, crop box 0.04,0.5,0.96,0.91, scanned page rendered at its native resolution (embedded image xref 135, 1696px across 8.48in), rendered at 154 dpi, capped to 1200px wide, grayscale, 1201x736 WebP quality 65",
+				"coil-and-flipper.md": "Data_East_1988_Time_Machine_Manual.pdf page 30, crop box 0.04,0.51,0.96,0.94, scanned page rendered at its native resolution (embedded image xref 145, 1696px across 8.48in), rendered at 154 dpi, capped to 1200px wide, grayscale, 1201x772 WebP quality 65",
+				"mechanism-construction.md": "Data_East_1988_Time_Machine_Manual.pdf page 67, crop box 0.03,0.15,0.5,0.94, scanned page rendered at its native resolution (embedded image xref 330, 1696px across 8.48in), rendered at 163 dpi, capped to 650px wide, grayscale, 651x1504 WebP quality 30",
+			}[path.name],
 		})
 	return [
 		{"id":CATALOG_SOURCE,"kind":"pinmame_catalog","uri":"https://github.com/vpinball/pinmame","revision":PINMAME_REVISION,"license":"BSD-3-Clause","attribution":"vpinball/PinMAME contributors","acquired_at":"2026-08-05T09:24:53Z","locator":"catalog/pinmame.json entries tmac_a24, tmac_a18, tmac_g18; src/wpc/driver.c lines 471-473 date all three 12/88"},
