@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import unittest
 from pathlib import Path
@@ -137,6 +138,14 @@ class AliDefinitionTests(unittest.TestCase):
 		self.assertEqual("6dbde0131a367c643ae87fe511052d28d83ed0cb6b74b87ba731a900678f1849", sources["vpx.ali.jp-salas.1.0.1"]["sha256"])
 		self.assertEqual("14137b288aee843e834f509b467dd288fcf0e3269afcbd397e2276d31c24533f", sources["vpx-table.ali.jp-salas.1.0.1"]["sha256"])
 		self.assertEqual("cb14917ee85f7b86b1c4c61b4b9c147c8e7909a97e52e21f2dfe237ac35219bf", sources["runtime.ali.service-solenoid-test"]["sha256"])
+		manual = sources["manual.ali.tech-chart"]
+		self.assertEqual(3, len(manual["excerpts"]))
+		for excerpt in manual["excerpts"]:
+			path = ROOT / excerpt["path"]
+			self.assertTrue(path.is_file(), path)
+			self.assertEqual(excerpt["sha256"], hashlib.sha256(path.read_bytes()).hexdigest(), excerpt["id"])
+			self.assertTrue((ROOT / excerpt["image"]).is_file(), excerpt["id"])
+			self.assertTrue(excerpt["reviewed"])
 
 
 if __name__ == "__main__":
