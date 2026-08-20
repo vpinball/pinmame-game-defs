@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -20,6 +21,7 @@ VPX_REVISION = "0c036bb61b4b4e8c778c37559f6795df8cd1521e"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
 MANUAL_SOURCE = "manual.avatar-pro-le.2010"
+EXCERPT_ROOT = ROOT / "evidence/excerpts/stern.avatar-pro-limited-edition.2010"
 VPX_SOURCE = "vpx.avatar-pro-lw-vpumod-1.12"
 VPX_TABLE_SOURCE = "vpx-table.avatar-pro.vpuniverse-4755"
 PRO_ROM_SOURCE = "rom.avatar-pro.avr-200"
@@ -34,6 +36,52 @@ TRANSPORTER_DOWN_SOURCE = "diagnostic.avatar-le.transporter-up-to-down"
 TRANSPORTER_UP_SOURCE = "diagnostic.avatar-le.transporter-down-to-up"
 AMP_SUIT_SOURCE = "diagnostic.avatar-le.amp-suit-motor"
 AMP_BANK_SOURCE = "diagnostic.avatar-le.three-bank-motor"
+
+
+def avatar_manual_source() -> dict[str, object]:
+	base = {
+		"id": MANUAL_SOURCE,
+		"kind": "manual",
+		"uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/Avatar-Manual.pdf",
+		"sha256": "afaed95b1b3406193a234a4afa579f15bc5bb3c4cd92859def4ad7b202fab04b",
+		"locator": "Official 55-page scanned Stern service manual; assemblies/gameplay pages 4-32, Pro coil chart PDF page 36, Q1-Q32 board wiring 37-38, GI 39, switch matrix 40, lamp matrix 41, cabinet wiring 42, and flippers 43. Page 41 explicitly labels J13 as eight lamp-column drives and J12 as ten lamp returns.",
+		"license": "NOASSERTION",
+		"attribution": "Stern Pinball, Inc.",
+		"source_id": "official-stern",
+		"original_filename": "Avatar-Manual.pdf",
+		"rights": "NOASSERTION",
+		"acquired_at": "2026-08-03T00:42:02.303917Z",
+	}
+	entries = [
+		("coil-chart", "excerpt.avatar-pro-le.coil-chart", "PDF page 36, COILS DETAILED CHART TABLE", "Avatar-Manual.pdf page 36, crop box 0.04,0.05,0.92,0.86, scanned page rendered at its native resolution (embedded image xref 164, 2613px across 8.65in), rendered at 82 dpi, capped to 600px wide, grayscale, 601x782 WebP quality 28"),
+		("q1-q32-wiring", "excerpt.avatar-pro-le.q1-q32-wiring", "PDF page 37, Backbox I/O Power Driver Board Detailed Wiring Diagram", "Avatar-Manual.pdf page 37, crop box 0.05,0.04,0.56,0.94, scanned page rendered at its native resolution (embedded image xref 168, 2496px across 8.26in), rendered at 190 dpi, capped to 800px wide, grayscale, 801x1999 WebP quality 30"),
+		("backbox-board-layout", "excerpt.avatar-pro-le.backbox-board-layout", "PDF page 38, Backbox Wiring", "Avatar-Manual.pdf page 38, crop box 0.04,0.04,0.96,0.92, scanned page rendered at its native resolution (embedded image xref 173, 3532px across 11.70in), rendered at 93 dpi, capped to 1000px wide, grayscale, 1001x677 WebP quality 35"),
+		("gi-wiring", "excerpt.avatar-pro-le.gi-wiring", "PDF page 39, General Illumination Circuit Detailed Wiring Diagram", "Avatar-Manual.pdf page 39, crop box 0.04,0.04,0.96,0.93, scanned page rendered at its native resolution (embedded image xref 178, 2496px across 8.26in), rendered at 99 dpi, capped to 750px wide, grayscale, 751x1027 WebP quality 28"),
+		("switch-matrix", "excerpt.avatar-pro-le.switch-matrix", "PDF page 40, Playfield Switch Wiring Diagram", "Avatar-Manual.pdf page 40, crop box 0.05,0.06,0.95,0.91, scanned page rendered at its native resolution (embedded image xref 183, 3532px across 11.70in), rendered at 105 dpi, capped to 1100px wide, grayscale, 1101x735 WebP quality 40"),
+		("lamp-matrix", "excerpt.avatar-pro-le.lamp-matrix", "PDF page 41, Playfield Lamp Wiring Diagram", "Avatar-Manual.pdf page 41, crop box 0.04,0.05,0.95,0.92, scanned page rendered at its native resolution (embedded image xref 188, 3536px across 11.71in), rendered at 103 dpi, capped to 1100px wide, grayscale, 1101x744 WebP quality 40"),
+		("cabinet-wiring", "excerpt.avatar-pro-le.cabinet-wiring", "PDF page 42, Cabinet and Coin Door Wiring", "Avatar-Manual.pdf page 42, crop box 0.04,0.04,0.96,0.93, scanned page rendered at its native resolution (embedded image xref 193, 2502px across 8.28in), rendered at 118 dpi, capped to 900px wide, grayscale, 901x1233 WebP quality 35"),
+		("flipper-wiring", "excerpt.avatar-pro-le.flipper-wiring", "PDF page 43, Flipper Circuit Wiring Diagram", "Avatar-Manual.pdf page 43, crop box 0.04,0.04,0.96,0.93, scanned page rendered at its native resolution (embedded image xref 198, 2496px across 8.26in), rendered at 105 dpi, capped to 800px wide, grayscale, 801x1096 WebP quality 30"),
+	]
+	excerpts = []
+	for stem, excerpt_id, locator, derivation in entries:
+		markdown = EXCERPT_ROOT / f"{stem}.md"
+		image = EXCERPT_ROOT / f"{stem}.webp"
+		if not markdown.is_file() or not image.is_file():
+			raise FileNotFoundError(f"Avatar manual excerpt is missing: {markdown} or {image}")
+		excerpts.append({
+			"id": excerpt_id,
+			"locator": locator,
+			"path": str(markdown.relative_to(ROOT)).replace("\\", "/"),
+			"sha256": hashlib.sha256(markdown.read_bytes()).hexdigest(),
+			"image": str(image.relative_to(ROOT)).replace("\\", "/"),
+			"image_sha256": hashlib.sha256(image.read_bytes()).hexdigest(),
+			"image_derivation": derivation,
+			"method": "manual",
+			"transcribed_by": "curator, read from the rendered page",
+			"reviewed": True,
+		})
+	base["excerpts"] = excerpts
+	return base
 
 
 def slug(value: str) -> str:
@@ -377,8 +425,8 @@ def sources(limited_edition: bool) -> list[dict[str, object]]:
 	if not limited_edition:
 		table_source.update({"known_working": False, "locator": "Authenticated VPU exact Pro geometry candidate; extracted Avatar (Stern 2010).vpx SHA-256 1838f6fc52c3599dd57382999a2ff7200e38cf741f658c479037b614c51d307a and embedded script SHA-256 0fa91c9232c2eca200c1598c759bd7b1dee742ccc63fb0de87105a062de4b4bd, byte-distinct from known-working semantic script SHA-256 8fc8cb6ce0c02af97feb69f3271dce02b5531c79ead4171f614a4bc02614db29; geometry confirmation only"})
 	result = [
-		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/Avatar-Manual.pdf", "sha256": "afaed95b1b3406193a234a4afa579f15bc5bb3c4cd92859def4ad7b202fab04b", "locator": "Official 55-page scanned Stern service manual; assemblies/gameplay pages 4-32, Pro coil chart PDF page 36, Q1-Q32 board wiring 37-38, GI 39, switch matrix 40, lamp matrix 41, cabinet wiring 42, and flippers 43. Page 41 explicitly labels J13 as eight lamp-column drives and J12 as ten lamp returns.", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "official-stern", "original_filename": "Avatar-Manual.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-03T00:42:02.303917Z"},
-		{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Avatar%20(Stern%202012)%20v1.12%20LW_VPUMod.vbs", "revision": VPX_REVISION, "sha256": "8fc8cb6ce0c02af97feb69f3271dce02b5531c79ead4171f614a4bc02614db29", "locator": "Known-working exact avr_200 Pro script: switch callbacks, inverted captive-ball contact, lamps/GI, four-ball trough, magnet, AMP bank motion, suit motor, Link lock, and playfield collision causality", "license": "NOASSERTION", "attribution": "Table authors credited in the script; vpxtable_scripts contributors"},
+		avatar_manual_source(),
+		{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Avatar%20%28Stern%202012%29%20v1.12%20LW_VPUMod.vbs", "revision": VPX_REVISION, "sha256": "8fc8cb6ce0c02af97feb69f3271dce02b5531c79ead4171f614a4bc02614db29", "locator": "Known-working exact avr_200 Pro script: switch callbacks, inverted captive-ball contact, lamps/GI, four-ball trough, magnet, AMP bank motion, suit motor, Link lock, and playfield collision causality", "license": "NOASSERTION", "attribution": "Table authors credited in the script; vpxtable_scripts contributors"},
 		table_source,
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c Avatar INITGAME/driver family, SAM_GAME_AUXSOL12 transport, SAM public switch translation, synthetic game-on output, and 128x32 DMD", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 		{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames avr_ driver records and clone graph", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
