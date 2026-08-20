@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -540,9 +541,54 @@ PRO_MANUAL_EXCERPTS = [
 	},
 ]
 
+ACDC_MANUAL_EXCERPT_ROOTS = {
+	PREMIUM_MANUAL: ROOT / "evidence/excerpts/stern.ac-dc-premium-limited-edition.2012",
+	LUCI_MANUAL: ROOT / "evidence/excerpts/stern.ac-dc-luci-premium.2013",
+}
+ACDC_MANUAL_FILENAMES = {
+	PREMIUM_MANUAL: "ACDC_Prem_web.pdf",
+	LUCI_MANUAL: "ACDC_Luci_web.pdf",
+}
+ACDC_MANUAL_EXCERPT_ENTRIES = [
+	("switch-locations", "switch-locations", "PDF page 17, complete switch-location drawing and typical switch wiring", "page 17, crop box 0.03,0.05,0.97,0.92, born-digital page rendered for legibility (smallest type in region 3.5pt, targeting 11px glyphs), rendered at 113 dpi, capped to 900px wide, grayscale, 901x1079 WebP quality 55"),
+	("lamp-map-single", "lamp-map-single", "PDF page 19, Premium single-LED playfield map", "page 19, crop box 0.03,0.05,0.97,0.85, born-digital page rendered for legibility (smallest type in region 3.3pt, targeting 11px glyphs), rendered at 113 dpi, capped to 900px wide, grayscale, 901x993 WebP quality 55"),
+	("lamp-locations-table", "lamp-locations-table", "PDF page 20, lamp numbers, names, and driver-board connectors", "page 20, crop box 0.03,0.05,0.97,0.95, born-digital page rendered for legibility (smallest type in region 9.5pt, targeting 11px glyphs), rendered at 83 dpi, grayscale, rotated 270 degrees counter-clockwise, 640x864 WebP quality 55"),
+	("lamp-map-tricolor", "lamp-map-tricolor", "PDF page 21, Premium tri-color LED playfield map", "page 21, crop box 0.03,0.05,0.97,0.95, born-digital page rendered for legibility (smallest type in region 4.6pt, targeting 11px glyphs), rendered at 87 dpi, capped to 900px wide, grayscale, rotated 270 degrees counter-clockwise, 667x901 WebP quality 55"),
+	("coil-locations", "coil-locations", "PDF page 23, complete coil-location drawing and typical coil wiring", "page 23, crop box 0.03,0.05,0.97,0.9, born-digital page rendered for legibility (smallest type in region 3.9pt, targeting 11px glyphs), rendered at 113 dpi, capped to 900px wide, grayscale, 901x1055 WebP quality 55"),
+	("aux-coils", "aux-coils", "PDF page 24, auxiliary coils 41-48 table", "page 24, crop box 0.03,0.05,0.97,0.95, born-digital page rendered for legibility (smallest type in region 4.6pt, targeting 11px glyphs), rendered at 87 dpi, capped to 900px wide, grayscale, rotated 90 degrees counter-clockwise, 667x901 WebP quality 55"),
+	("cannon-motor-switch", "cannon-motor-switch", "PDF page 46, Cannon motor and switch / AC/DC cannon assemblies", "page 46, crop box 0.04,0.04,0.96,0.94, born-digital page rendered for legibility (smallest type in region 3.5pt, targeting 11px glyphs), rendered at 115 dpi, capped to 900px wide, grayscale, 901x1141 WebP quality 55"),
+	("bell-and-block", "bell-and-block", "PDF page 53, Premium bell and block, plunger, and kicker assemblies", "page 53, crop box 0.04,0.04,0.96,0.94, born-digital page rendered for legibility (smallest type in region 7.2pt, targeting 11px glyphs), rendered at 110 dpi, grayscale, 861x1090 WebP quality 55"),
+	("lower-mini-playfield", "lower-mini-playfield", "PDF page 56, lower mini-playfield assembly", "page 56, crop box 0.03,0.03,0.97,0.95, born-digital page rendered for legibility (smallest type in region 4.4pt, targeting 11px glyphs), rendered at 113 dpi, capped to 900px wide, grayscale, 901x1141 WebP quality 55"),
+	("rocking-band", "rocking-band", "PDF page 57, rocking band assembly", "page 57, crop box 0.03,0.03,0.97,0.95, born-digital page rendered for legibility (smallest type in region 2.6pt, targeting 11px glyphs), rendered at 113 dpi, capped to 900px wide, grayscale, 901x1141 WebP quality 55"),
+]
+
+
+def acdc_manual_excerpts(manual_id: str) -> list[dict[str, object]]:
+	root = ACDC_MANUAL_EXCERPT_ROOTS[manual_id]
+	filename = ACDC_MANUAL_FILENAMES[manual_id]
+	excerpts: list[dict[str, object]] = []
+	for stem, suffix, locator, derivation in ACDC_MANUAL_EXCERPT_ENTRIES:
+		markdown = root / f"{stem}.md"
+		image = root / f"{stem}.webp"
+		if not markdown.is_file() or not image.is_file():
+			raise FileNotFoundError(f"AC/DC manual excerpt is missing: {markdown} or {image}")
+		excerpts.append({
+			"id": f"excerpt.acdc.{manual_id.removeprefix('manual.').replace('.', '-')}.{suffix}",
+			"locator": locator,
+			"path": str(markdown.relative_to(ROOT)).replace("\\", "/"),
+			"sha256": hashlib.sha256(markdown.read_bytes()).hexdigest(),
+			"image": str(image.relative_to(ROOT)).replace("\\", "/"),
+			"image_sha256": hashlib.sha256(image.read_bytes()).hexdigest(),
+			"image_derivation": f"{filename} {derivation}",
+			"method": "manual",
+			"transcribed_by": "curator, read from the rendered page",
+			"reviewed": True,
+		})
+	return excerpts
+
 MANUAL_SOURCES = {
-	PREMIUM_MANUAL: {"id": PREMIUM_MANUAL, "kind": "manual", "uri": "https://www.sternpinball.com/manuals/", "sha256": "d3de500b504b165023e3858883067ca518543307387ec2460397b740ebe240b6", "locator": "ACDC_Prem_web.pdf pages 16-24 and 42-59; local cache manufacturer.stern.d3de500b504b", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "ACDC_Prem_web.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T17:29:48.3213976Z"},
-	LUCI_MANUAL: {"id": LUCI_MANUAL, "kind": "manual", "uri": "https://www.sternpinball.com/manuals/", "sha256": "65bb776389508259513cb72f4c24f054f97dfaa0eee87557a0f76e3175acf524", "locator": "ACDC_Luci_web.pdf pages 16-24 and 42-59; local cache manufacturer.stern.65bb77638950", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "ACDC_Luci_web.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T17:11:09.695917Z"},
+	PREMIUM_MANUAL: {"id": PREMIUM_MANUAL, "kind": "manual", "uri": "https://www.sternpinball.com/manuals/", "sha256": "d3de500b504b165023e3858883067ca518543307387ec2460397b740ebe240b6", "locator": "ACDC_Prem_web.pdf pages 16-24 and 42-59; local cache manufacturer.stern.d3de500b504b; rendered excerpts cover the complete switch, lamp, coil, auxiliary-coil, cannon, bell, lower-mini-playfield, and rocking-band evidence pages", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "ACDC_Prem_web.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T17:29:48.3213976Z", "excerpts": acdc_manual_excerpts(PREMIUM_MANUAL)},
+	LUCI_MANUAL: {"id": LUCI_MANUAL, "kind": "manual", "uri": "https://www.sternpinball.com/manuals/", "sha256": "65bb776389508259513cb72f4c24f054f97dfaa0eee87557a0f76e3175acf524", "locator": "ACDC_Luci_web.pdf pages 16-24 and 42-59; local cache manufacturer.stern.65bb77638950; rendered excerpts cover the complete switch, lamp, coil, auxiliary-coil, cannon, bell, lower-mini-playfield, and rocking-band evidence pages", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "ACDC_Luci_web.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T17:11:09.695917Z", "excerpts": acdc_manual_excerpts(LUCI_MANUAL)},
 	PRO_MANUAL: {"id": PRO_MANUAL, "kind": "manual", "uri": "https://www.sternpinball.com/manuals/", "sha256": "987d42c68b586af1b0d66100b9f34d5215dfaf67574032849adb1c2f18c6cab5", "locator": "ACDC_Pro_web.pdf pages 16-21 and major-assembly/wiring sections; local cache manufacturer.stern.987d42c68b58", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "ACDC_Pro_web.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T17:22:42.0568607Z", "excerpts": PRO_MANUAL_EXCERPTS},
 }
 VPX_SOURCES = {
