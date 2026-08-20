@@ -20,7 +20,6 @@ PINMAME_REVISION = "4ec52ff0ac133ac251681518aed2249e19fe26eb"
 VPX_REVISION = "0c036bb61b4b4e8c778c37559f6795df8cd1521e"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
-MANUAL_SOURCE = "manual.x-men-pro-le.2012"
 MANUAL_HIRES_SOURCE = "manual.x-men-pro-le.2012.high-resolution"
 PRODUCT_SOURCE = "stern.x-men-product-page"
 LE_VPX_SOURCE = "vpx.x-men-le-vpw-1.0.6"
@@ -108,9 +107,9 @@ def matrix_switch(number: int, le: bool) -> dict[str, object]:
 	label = spec[0] if used else f"Unused matrix switch {number}"
 	row, column = divmod(number - 1, 16)
 	if used:
-		sources = (MANUAL_SOURCE, MANUAL_HIRES_SOURCE, LE_VPX_SOURCE) if le else (MANUAL_SOURCE, MANUAL_HIRES_SOURCE, PRO_VPX_SOURCE, PRO_VPX_TABLE_SOURCE)
+		sources = (MANUAL_HIRES_SOURCE, LE_VPX_SOURCE) if le else (MANUAL_HIRES_SOURCE, PRO_VPX_SOURCE, PRO_VPX_TABLE_SOURCE)
 	else:
-		sources = (MANUAL_SOURCE, MANUAL_HIRES_SOURCE)
+		sources = (MANUAL_HIRES_SOURCE,)
 	result: dict[str, object] = {
 		"id": f"switch.{slug(label)}", "label": label, "kind": "switch",
 		"binding": {"group": "pinmame.input.switch", "device": number},
@@ -127,9 +126,9 @@ def matrix_switch(number: int, le: bool) -> dict[str, object]:
 
 def dedicated_switch(device: int, manual_number: int, label: str, availability: str, switch_type: str, normally_closed: bool, vpx_source: str) -> dict[str, object]:
 	if availability != "unused":
-		sources = (MANUAL_SOURCE, MANUAL_HIRES_SOURCE, vpx_source, CORE_SOURCE) if vpx_source != PRO_VPX_SOURCE else (MANUAL_SOURCE, MANUAL_HIRES_SOURCE, PRO_VPX_SOURCE, PRO_VPX_TABLE_SOURCE, CORE_SOURCE)
+		sources = (MANUAL_HIRES_SOURCE, vpx_source, CORE_SOURCE) if vpx_source != PRO_VPX_SOURCE else (MANUAL_HIRES_SOURCE, PRO_VPX_SOURCE, PRO_VPX_TABLE_SOURCE, CORE_SOURCE)
 	else:
-		sources = (MANUAL_SOURCE, MANUAL_HIRES_SOURCE, CORE_SOURCE)
+		sources = (MANUAL_HIRES_SOURCE, CORE_SOURCE)
 	return {
 		"id": f"switch.{slug(label)}", "label": label, "kind": "switch",
 		"binding": {"group": "pinmame.input.switch", "device": device},
@@ -159,7 +158,7 @@ def inputs(le: bool) -> list[dict[str, object]]:
 	for spec in dedicated:
 		items.append(dedicated_switch(*spec, vpx_source))
 	for number in range(1, 9):
-		items.append({"id": f"switch.dip-{number}", "label": f"CPU/Sound board DIP switch {number}", "kind": "dip_switch", "binding": {"group": "pinmame.input.dip", "device": number}, "aliases": aliases("pinmame.dip", number, f"D-{24 + number}"), "availability": "used", "physical": {"switch_type": "dip", "location": "CPU/Sound board"}, "provenance": provenance("validated", MANUAL_SOURCE, MANUAL_HIRES_SOURCE, CORE_SOURCE)})
+		items.append({"id": f"switch.dip-{number}", "label": f"CPU/Sound board DIP switch {number}", "kind": "dip_switch", "binding": {"group": "pinmame.input.dip", "device": number}, "aliases": aliases("pinmame.dip", number, f"D-{24 + number}"), "availability": "used", "physical": {"switch_type": "dip", "location": "CPU/Sound board"}, "provenance": provenance("validated", MANUAL_HIRES_SOURCE, CORE_SOURCE)})
 	return items
 
 
@@ -218,10 +217,10 @@ def main_wiring(address: int) -> dict[str, object]:
 def le_coils() -> list[dict[str, object]]:
 	items = []
 	for address, (label, kind, availability) in MAIN_COILS.items():
-		sources = (MANUAL_SOURCE, MANUAL_HIRES_SOURCE, LE_VPX_SOURCE) if availability == "used" else (MANUAL_SOURCE, MANUAL_HIRES_SOURCE)
+		sources = (MANUAL_HIRES_SOURCE, LE_VPX_SOURCE) if availability == "used" else (MANUAL_HIRES_SOURCE,)
 		items.append(output(address, label, kind, availability, "validated", sources, manual_address=str(address), wiring=main_wiring(address)))
 	for address, (label, kind, transistor, wire) in AUX_COILS.items():
-		items.append(output(address, label, kind, "used", "validated", (MANUAL_SOURCE, MANUAL_HIRES_SOURCE, LE_VPX_SOURCE, CORE_SOURCE), manual_address=transistor, wiring={"board": "520-5325-00 eight-transistor auxiliary driver board", "driver_transistor": transistor, "power_wire": "YEL-VIO", "nominal_voltage_v": 50, "voltage_type": "dc", "control_wire": wire}))
+		items.append(output(address, label, kind, "used", "validated", (MANUAL_HIRES_SOURCE, LE_VPX_SOURCE, CORE_SOURCE), manual_address=transistor, wiring={"board": "520-5325-00 eight-transistor auxiliary driver board", "driver_transistor": transistor, "power_wire": "YEL-VIO", "nominal_voltage_v": 50, "voltage_type": "dc", "control_wire": wire}))
 	items.append(output(33, "ROM flipper-enable state", "virtual", "used", "validated", (LE_VPX_SOURCE, LE_RUNTIME_SOURCE, CORE_SOURCE), physical={"notes": "PinMAME/VPM software output used by the proven table to gate all three flippers; it is not an I/O Power Driver transistor."}, output_id="virtual.flipper-enable"))
 	return items
 
@@ -265,7 +264,7 @@ def pro_coils() -> list[dict[str, object]]:
 			availability = "optional"
 		elif address == 24:
 			availability = "optional"
-		sources = (PRO_VPX_SOURCE, PRO_VPX_TABLE_SOURCE, PRODUCT_SOURCE, MANUAL_SOURCE, MANUAL_HIRES_SOURCE)
+		sources = (PRO_VPX_SOURCE, PRO_VPX_TABLE_SOURCE, PRODUCT_SOURCE, MANUAL_HIRES_SOURCE)
 		physical = PRO_COIL_PHYSICAL.get(address)
 		items.append(output(address, label, kind, availability, "validated", sources, manual_address=str(address), physical=physical, wiring=main_wiring(address)))
 	items.append(output(33, "PinMAME SAM game-on state", "virtual", "used", "validated", (CORE_SOURCE,), physical={"notes": "SAM_FASTFLIPSOL synthetic state used for low-latency flipper gating; not a physical I/O Power Driver transistor."}, output_id="virtual.game-on"))
@@ -290,9 +289,9 @@ def le_lamps() -> list[dict[str, object]]:
 	for address in range(1, 81):
 		label = LAMPS.get(address, f"Unused lamp {address}")
 		availability = "used" if address in LAMPS else "unused"
-		sources = (MANUAL_SOURCE, MANUAL_HIRES_SOURCE, LE_VPX_SOURCE) if availability == "used" else (MANUAL_SOURCE, MANUAL_HIRES_SOURCE)
+		sources = (MANUAL_HIRES_SOURCE, LE_VPX_SOURCE) if availability == "used" else (MANUAL_HIRES_SOURCE,)
 		items.append(output(address, label, "lamp", availability, "validated", sources, "pinmame.output.lamp", str(address), wiring={"board": "I/O Power Driver board lamp matrix", "control_connection": f"matrix-{address}"}, output_id=f"lamp.{slug(label)}-{address}"))
-	items.append(output(0, "General illumination master", "gi", "used", "validated", (MANUAL_SOURCE, LE_VPX_SOURCE, LE_RUNTIME_SOURCE), "pinmame.output.gi", "GI-0", output_id="gi.master"))
+	items.append(output(0, "General illumination master", "gi", "used", "validated", (MANUAL_HIRES_SOURCE, LE_VPX_SOURCE, LE_RUNTIME_SOURCE), "pinmame.output.gi", "GI-0", output_id="gi.master"))
 	return items
 
 
@@ -352,7 +351,7 @@ def mechanism(mechanism_id: str, label: str, kind: str, actuators: list[str], se
 
 
 def le_mechanisms() -> list[dict[str, object]]:
-	sources = (MANUAL_SOURCE, MANUAL_HIRES_SOURCE, LE_VPX_SOURCE)
+	sources = (MANUAL_HIRES_SOURCE, LE_VPX_SOURCE)
 	return [
 		mechanism("mechanism.trough", "Four-ball trough", "other", ["device.trough-up-kicker"], ["switch.trough-4-left", "switch.trough-3", "switch.trough-2", "switch.trough-1-right", "switch.trough-jam"], "Four physical balls occupy switches 18-21 from left to right. Output 1 advances the rightmost ball to the shooter lane through jam opto 22; the proven table initializes 18-21 closed.", sources),
 		mechanism("mechanism.auto-launcher", "Auto launcher", "kicker", ["device.auto-launch"], ["switch.shooter-lane"], "Output 2 launches a ball held at shooter-lane switch 23. Preserve a manual plunger input as well because the shooter assembly supports player plunges.", sources),
@@ -526,7 +525,6 @@ X_MEN_MANUAL_EXCERPTS = [
 def sources(le: bool) -> list[dict[str, object]]:
 	vpx_source = {"id": LE_VPX_SOURCE if le else PRO_VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/X-Men%20LE%20%28Stern%202012%29%20VPW%20v1.0.6.vbs" if le else "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/X-Men%28ICPjuggla%296-27c.vbs", "revision": VPX_REVISION, "sha256": "6d445e52398640bd35a498553bb0ba32f1b9ce23e2964d0694c18ff2e9225650" if le else "2441d88ab8aef581fcdef3dd5c0b9523a36feb3ce4afb6133811f1f01b381afb", "locator": "X-Men LE (Stern 2012) VPW v1.0.6.vbs: initialization, solenoid callbacks, GI callbacks, Iceman movement, Nightcrawler state machines, Magneto disc, lock, kickers, trough, and switches" if le else "X-Men(ICPjuggla)6-27c.vbs: Pro ROM xmn_151, solenoid callbacks, lamp callback addresses, Wolverine and Magneto magnets, trough, lock, kickers, ramps, and switches", "license": "NOASSERTION", "attribution": "Table authors credited in the script and vpxtable_scripts contributors"}
 	result = [
-		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/XMenManual_042214.pdf", "sha256": "0812b91d0950ff8c1b15c5bc17afc827029ca8aaaa0bbb78cc11ea606b629bf8", "locator": "XMenManual_042214.pdf: PDF pages 56-62 and 97-117; official low-resolution manufacturer copy. Edition-specific low-current and GI evidence is treated as LE-only and is not transferred to Pro quantities or positions.", "license": "NOASSERTION", "attribution": "Stern Pinball", "source_id": "stern", "original_filename": "XMenManual_042214.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T00:00:00Z"},
 		{"id": MANUAL_HIRES_SOURCE, "kind": "manual", "uri": "https://primetimeamusements.com/wp-content/uploads/2015/05/XMenManual_042214.pdf", "sha256": "d793836fefab6c0de53463943e36245c7ed800d5ca86675e3c2b2f46df693643", "locator": "Higher-resolution scan of the same Stern manual; switch pages 56-57, lamp pages 58-59, low-current pages 60-61, auxiliary LE coils page 62, and GI maps pages 109-111. Selected pages are retained as hash-locked renders under external:pinmame-manuals/by-machine/stern.x-men-pro-limited-edition.2012/primetime-amusements/extracted/rendered-pages; page 60 lacks a Q18 X2 marker while page 61 draws two Q18 callouts, and both are LE-only.", "license": "NOASSERTION", "attribution": "Stern Pinball manual mirrored by PrimeTime Amusements", "original_filename": "XMenManual_042214-high-resolution.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T00:00:00Z", "excerpts": X_MEN_MANUAL_EXCERPTS},
 		vpx_source,
 		{"id": PRODUCT_SOURCE, "kind": "human_review", "uri": "https://sternpinball.com/game/x-men-pro/", "locator": "Manufacturer Pro and Limited Edition feature inventories, including edition-only Ice Slide, Nightcrawler, spinning disc, and color GI mechanisms", "license": "NOASSERTION", "attribution": "Stern Pinball", "acquired_at": "2026-08-02T00:00:00Z"},

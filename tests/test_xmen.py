@@ -443,8 +443,7 @@ class XMenDefinitionTests(unittest.TestCase):
 
 	def test_sources_and_exact_rom_run_are_hash_locked(self) -> None:
 		sources = {source["id"]: source for source in self.le["sources"]}
-		self.assertEqual("0812b91d0950ff8c1b15c5bc17afc827029ca8aaaa0bbb78cc11ea606b629bf8", sources["manual.x-men-pro-le.2012"]["sha256"])
-		self.assertIn("LE-only", sources["manual.x-men-pro-le.2012"]["locator"])
+		self.assertNotIn("manual.x-men-pro-le.2012", sources)
 		self.assertEqual("d793836fefab6c0de53463943e36245c7ed800d5ca86675e3c2b2f46df693643", sources["manual.x-men-pro-le.2012.high-resolution"]["sha256"])
 		self.assertIn("page 60 lacks a Q18 X2 marker", sources["manual.x-men-pro-le.2012.high-resolution"]["locator"])
 		self.assertEqual("6d445e52398640bd35a498553bb0ba32f1b9ce23e2964d0694c18ff2e9225650", sources["vpx.x-men-le-vpw-1.0.6"]["sha256"])

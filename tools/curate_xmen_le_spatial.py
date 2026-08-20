@@ -18,7 +18,7 @@ from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed
 TABLE_SOURCE = "vpx-table.x-men-le-vpw-1.0"
 CORROBORATING_SOURCE = "vpx-table.x-men-le-v2.0.1"
 CORROBORATING_TEST_SOURCE = "vpx-table.x-men-le-v2.2.7a-test"
-MANUAL_SOURCE = "manual.x-men-pro-le.2012"
+MANUAL_SOURCE = "manual.x-men-pro-le.2012.high-resolution"
 CORE_SOURCE = "pinmame.core.4ec52ff0ac13"
 
 UNRESOLVED_INPUTS = {22}
