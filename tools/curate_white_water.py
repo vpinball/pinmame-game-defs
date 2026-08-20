@@ -37,7 +37,6 @@ CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
 CONTROLLER_SOURCE = "controller-profile.pinmame-wpc-fliptronic"
 MANUAL_SOURCE = "manual.williams.white-water.1993"
-HANDBOOK_SOURCE = "manual-support.williams.white-water.1993.handbook"
 MANUAL_SUPPORT_SOURCE = "manual-support.williams.white-water.1993"
 VPX_TABLE_SOURCE = "vpx-table.ww-flupper"
 VPX_SCRIPT_SOURCE = "vpx-script.ww-flupper"
@@ -46,7 +45,6 @@ VPX_EXTRACTION_SOURCE = "vpx-extraction.ww-flupper"
 TABLE_SHA256 = "7c59095e9c6a7e100e79f80d7d83497b1c87817bc9daf939721f1a8727a781cd"
 SCRIPT_SHA256 = "0676acb1e610bda8f42f94a915a70bb1b71b6e48462326dd43083a3ab4fa0096"
 MANUAL_SHA256 = "919f057184916e5ba43141eee7ccf3955a4aae9dfb22118033888d39eea888c0"
-HANDBOOK_SHA256 = "e133b899641bfa71b844f8eb42c00b1ac4a2ac6f273ee7153c7569bce5fc7f85"
 MANUAL_TRANSCRIPTION_SHA256 = "0c55e5c896738526846d9a04b3b96f5ca61fbfbd5dc85fdd3516c29f1f94a64f"
 
 EXTRACTION_RELATIVE_PATH = Path("williams/white-water-1993/extracted-vpxtool")
@@ -732,17 +730,6 @@ def source_records() -> list[dict[str, Any]]:
 					"reviewed": True,
 				},
 			],
-		},
-		{
-			"id": HANDBOOK_SOURCE,
-			"kind": "manual",
-			"uri": "external:pinmame-manuals/by-machine/williams.white-water.1993/ipdb/Williams_1993_White_Water_Operators_Handbook.pdf",
-			"original_filename": "Williams_1993_White_Water_Operators_Handbook.pdf",
-			"sha256": HANDBOOK_SHA256,
-			"locator": "15-page Operator's Handbook; consulted for a Bigfoot Mech. Assembly parts reference. Contributes no fact not already established with better provenance by the main manual.",
-			"license": "NOASSERTION",
-			"attribution": "Williams Electronics Games, Inc.",
-			"rights": "NOASSERTION",
 		},
 		{
 			"id": MANUAL_SUPPORT_SOURCE,
