@@ -657,6 +657,9 @@ def source_records() -> list[dict[str, Any]]:
 				{
 					"id": "excerpt.addams-family.flipper-assembly-and-thing-flips",
 					"locator": "Printed pages ~2-74 (Flipper Assembly Notes), 6 ('Thing Flips' Automatic Calibration), and ~2-14 (ball-path narrative)",
+					"image": "evidence/excerpts/bally.the-addams-family.1992/flipper-assembly-and-thing-flips.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["flipper-assembly-and-thing-flips.webp"],
+					"image_derivation": "Bally_1992_The_Addams_Family_Operations_Manual_January_1992_includes_schematics_OCR_searchable.pdf page 74, crop box 0.035,0.04,0.97,0.78, scanned page rendered at its native resolution (embedded image xref 301, 5100px across 8.50in), rendered at 88 dpi, capped to 700px wide, 701x718 WebP quality 70",
 					"path": "evidence/excerpts/bally.the-addams-family.1992/flipper-assembly-and-thing-flips.md",
 					"sha256": "928346368bc49fb0599dee35c65ba6b0afa75b2668f433f9f10cb9a76ea8799c",
 					"method": "manual",
