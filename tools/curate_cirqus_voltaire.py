@@ -41,6 +41,41 @@ MANUAL_SHA256 = "14cb9a4a225a7f5e6b9ea8b3f81b8626f3307cf299c4420d34612d42367a0ee
 SB101_SHA256 = "ebf2bf28d58b27f6f39203b05ffb3b5ca797bc8adf79e289c27e467e058ff0ac"
 SB102_SHA256 = "d7721bdd95a741720cfd49904ebd53f43b6d6ca4ff827129692ad0b406c916bf"
 SB104_SHA256 = "af63fd98cc858a756751fdac787b3e239d469fcc3cf7a1ecd6dd880ec9af8594"
+BULLETIN_EXCERPT_PATH = "evidence/excerpts/bally.cirqus-voltaire.1997/service-bulletins.md"
+BULLETIN_EXCERPT_SHA256 = "128692994bf0bb16ea16958cfb505e7379154c45d05853c1f6384ee69e1a2995"
+
+BULLETIN_EXCERPTS = {
+	101: {
+		"id": "excerpt.cirqus-voltaire.service-bulletin-101",
+		"locator": "PDF page 1, complete SB101 field-fix notice",
+		"image": "evidence/excerpts/bally.cirqus-voltaire.1997/service-bulletin-101.webp",
+		"image_sha256": "fe9eae98deb670d19ba7525f05351e134dd1a2b942519e4801f35d66394e07be",
+		"image_derivation": "Bally_1997_Cirqus_Voltaire_Service_Bulletin_101.pdf page 1, crop box 0.03,0.03,0.97,0.97, born-digital page rendered for legibility (smallest type in region 14.0pt, targeting 11px glyphs), rendered at 57 dpi, 453x586 WebP quality 55",
+	},
+	102: {
+		"id": "excerpt.cirqus-voltaire.service-bulletin-102",
+		"locator": "PDF page 1, complete SB102 upgrade-kit notice",
+		"image": "evidence/excerpts/bally.cirqus-voltaire.1997/service-bulletin-102.webp",
+		"image_sha256": "fb20cb86ee7520313118146f6024afdc44c7edea6480c6fb62aebed550384b6f",
+		"image_derivation": "Bally_1997_Cirqus_Voltaire_Service_Bulletin_102.pdf page 1, crop box 0.03,0.03,0.97,0.97, born-digital page rendered for legibility (smallest type in region 5.2pt, targeting 11px glyphs), rendered at 106 dpi, capped to 850px wide, 851x1101 WebP quality 55",
+	},
+	104: {
+		"id": "excerpt.cirqus-voltaire.service-bulletin-104",
+		"locator": "PDF page 1, complete SB104 adjustment notice",
+		"image": "evidence/excerpts/bally.cirqus-voltaire.1997/service-bulletin-104.webp",
+		"image_sha256": "429e8285675f167a5b0662b049d77c876916179505e1226edbb0d14ca8ecd6b4",
+		"image_derivation": "Bally_1997_Cirqus_Voltaire_Service_Bulletin_104.pdf page 1, crop box 0.03,0.03,0.97,0.97, born-digital page rendered for legibility (smallest type in region 13.1pt, targeting 11px glyphs), rendered at 61 dpi, 485x628 WebP quality 55",
+	},
+}
+
+for excerpt in BULLETIN_EXCERPTS.values():
+	excerpt.update({
+		"path": BULLETIN_EXCERPT_PATH,
+		"sha256": BULLETIN_EXCERPT_SHA256,
+		"method": "manual",
+		"transcribed_by": "curator, read from the rendered page",
+		"reviewed": True,
+	})
 
 EXTRACTION_RELATIVE_PATH = Path("bally/cirqus-voltaire-1997/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("bally/cirqus-voltaire-1997/extracted-vpxtool.manifest.json")
@@ -658,6 +693,7 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "Williams Electronics Games, Inc.",
 			"rights": "NOASSERTION",
+			"excerpts": [BULLETIN_EXCERPTS[101]],
 		},
 		{
 			"id": "manual.bally.cirqus-voltaire.1997.service-bulletin-102",
@@ -669,6 +705,7 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "Williams Electronics Games, Inc.",
 			"rights": "NOASSERTION",
+			"excerpts": [BULLETIN_EXCERPTS[102]],
 		},
 		{
 			"id": "manual.bally.cirqus-voltaire.1997.service-bulletin-104",
@@ -680,6 +717,7 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "Williams Electronics Games, Inc.",
 			"rights": "NOASSERTION",
+			"excerpts": [BULLETIN_EXCERPTS[104]],
 		},
 		{
 			"id": VPX_TABLE_SOURCE,
