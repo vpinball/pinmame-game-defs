@@ -488,6 +488,102 @@ def driver_records(limited_edition: bool) -> list[dict[str, object]]:
 		result.append(record)
 	return result
 
+AVENGERS_PRO_MANUAL_EXCERPTS = [
+	{
+		"id": "excerpt.avengers-pro.switch-matrix",
+		"locator": "Avengers-Pro-Manual.pdf page 13, printed page 11, complete Switch Matrix Grid #1-#64 and dedicated switch/DIP blocks",
+		"path": "evidence/excerpts/stern.avengers-pro.2012/switch-matrix.md",
+		"sha256": "704e719f72c896a004c783bd7acc5a475c2ec7cb10bd464e1ac71dfee2f2edbe",
+		"image": "evidence/excerpts/stern.avengers-pro.2012/switch-matrix.webp",
+		"image_sha256": "27b71d21ca0d805bda374c5857f7736e73a6ac16f023065109e0d80b360fb035",
+		"image_derivation": "Avengers-Pro-Manual.pdf page 13, crop box 0.06,0.08,0.94,0.86, scanned page rendered at its native resolution (embedded image xref 54, 3296px across 10.99in), rendered at 72 dpi, capped to 700px wide, grayscale, 701x477 WebP quality 60",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.avengers-pro.coils-detailed-chart",
+		"locator": "Avengers-Pro-Manual.pdf page 16, printed page 14, complete Coils Detailed Chart Table Q1-Q32",
+		"path": "evidence/excerpts/stern.avengers-pro.2012/coils-detailed-chart.md",
+		"sha256": "7a5e3a7129153602ef5b929504d72485431f2a3c8ebd60eb72a93153bdb59f10",
+		"image": "evidence/excerpts/stern.avengers-pro.2012/coils-detailed-chart.webp",
+		"image_sha256": "f0a195b2bc899c801fc92e533c6f355cb9cb1b56e0df4f9f26f8d19c8c59f7d8",
+		"image_derivation": "Avengers-Pro-Manual.pdf page 16, crop box 0.08,0.07,0.93,0.9, scanned page rendered at its native resolution (embedded image xref 68, 2534px across 8.45in), rendered at 84 dpi, capped to 600px wide, grayscale, 601x765 WebP quality 50",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.avengers-pro.lamp-matrix",
+		"locator": "Avengers-Pro-Manual.pdf page 19, printed page 17, complete Lamp Matrix Grid #1-#80",
+		"path": "evidence/excerpts/stern.avengers-pro.2012/lamp-matrix.md",
+		"sha256": "9626d08202a649a2479ccf7110fc0e8be5952ccd2af6b324ad5a616e26acdee2",
+		"image": "evidence/excerpts/stern.avengers-pro.2012/lamp-matrix.webp",
+		"image_sha256": "18e556e7c887e388467fa7411fcd7d9603350a777962eca4832b0894cb9c421d",
+		"image_derivation": "Avengers-Pro-Manual.pdf page 19, crop box 0.08,0.08,0.93,0.9, scanned page rendered at its native resolution (embedded image xref 82, 3296px across 10.99in), rendered at 75 dpi, capped to 700px wide, grayscale, 701x519 WebP quality 60",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+]
+
+AVENGERS_LE_MANUAL_EXCERPTS = [
+	{
+		"id": "excerpt.avengers-le.switch-matrix",
+		"locator": "Avengers-LE-Manual-compressed.pdf page 63, printed page 4, complete Switch Matrix Grid #1-#64 and dedicated switch/DIP blocks",
+		"path": "evidence/excerpts/stern.avengers-limited-edition.2012/switch-matrix.md",
+		"sha256": "211eaaa0ebfc7874b7e16e38a470cd6f2267036fd2c1547e86e77304982e79fe",
+		"image": "evidence/excerpts/stern.avengers-limited-edition.2012/switch-matrix.webp",
+		"image_sha256": "18a0e2f4e6028f5b584e8931385ecb842492f6a6eae406f4d28d1d1fed27a959",
+		"image_derivation": "Avengers-LE-Manual-compressed.pdf page 63, crop box 0.06,0.08,0.94,0.87, scanned page rendered at its native resolution (embedded image xref 288, 1698px across 11.79in), rendered at 68 dpi, capped to 700px wide, grayscale, 701x446 WebP quality 60",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.avengers-le.lamp-matrix",
+		"locator": "Avengers-LE-Manual-compressed.pdf page 65, printed page 6, complete Lamp Matrix Grid #1-#80",
+		"path": "evidence/excerpts/stern.avengers-limited-edition.2012/lamp-matrix.md",
+		"sha256": "96fe51ae801c42e7fc0038c0f5a1c14bb5c99a7b3f20d0b60523634dd4baec39",
+		"image": "evidence/excerpts/stern.avengers-limited-edition.2012/lamp-matrix.webp",
+		"image_sha256": "deb7c1805e3e06757c3fee6a4b86468382dd68c71fedf4a9fe728b5eeff31f68",
+		"image_derivation": "Avengers-LE-Manual-compressed.pdf page 65, crop box 0.07,0.08,0.94,0.9, scanned page rendered at its native resolution (embedded image xref 297, 1698px across 11.79in), rendered at 69 dpi, capped to 700px wide, grayscale, 701x467 WebP quality 60",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.avengers-le.coils-detailed-chart",
+		"locator": "Avengers-LE-Manual-compressed.pdf page 67, printed page 8, complete Coils Detailed Chart Table Q1-Q32",
+		"path": "evidence/excerpts/stern.avengers-limited-edition.2012/coils-detailed-chart.md",
+		"sha256": "0d12150e675b5ffecd67c5173735ae5f4d1cca6987fe1cb2eedcbf1a933ba323",
+		"image": "evidence/excerpts/stern.avengers-limited-edition.2012/coils-detailed-chart.webp",
+		"image_sha256": "4dccab060319a1c8cae258fd150105d20cb6f30a4fd86b15f5513945fb77b778",
+		"image_derivation": "Avengers-LE-Manual-compressed.pdf page 67, crop box 0.08,0.07,0.94,0.9, scanned page rendered at its native resolution (embedded image xref 307, 1190px across 8.26in), rendered at 84 dpi, capped to 600px wide, grayscale, 601x820 WebP quality 50",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.avengers-le.auxiliary-coils",
+		"locator": "Avengers-LE-Manual-compressed.pdf page 69, printed page 10, auxiliary driver table for physical drivers 41-48",
+		"path": "evidence/excerpts/stern.avengers-limited-edition.2012/auxiliary-coils.md",
+		"sha256": "d93964b4cfecb674e298c199a8cb0b5fcff3541cc9aeb361f5a25fbfff9da1fd",
+		"image": "evidence/excerpts/stern.avengers-limited-edition.2012/auxiliary-coils.webp",
+		"image_sha256": "0d99f624c6b557a5034c5a2e14c84cf5b08bf290c7697e3a589ecde8c4f34fce",
+		"image_derivation": "Avengers-LE-Manual-compressed.pdf page 69, crop box 0.08,0.08,0.92,0.48, scanned page rendered at its native resolution (embedded image xref 316, 1684px across 11.69in), rendered at 71 dpi, capped to 700px wide, grayscale, 701x236 WebP quality 60",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.avengers-le.auxiliary-board-wiring",
+		"locator": "Avengers-LE-Manual-compressed.pdf page 108, printed sheet Y5, 520-5325-00 eight-transistor driver-board wiring and layout",
+		"path": "evidence/excerpts/stern.avengers-limited-edition.2012/auxiliary-board-wiring.md",
+		"sha256": "e51be5dc601188c5787878e87ca743f980eb19a0f1dd68d0f7f9700db6e87361",
+		"image": "evidence/excerpts/stern.avengers-limited-edition.2012/auxiliary-board-wiring.webp",
+		"image_sha256": "05a004f0d675e13d4e91784f8bb859f7f0c2e98051f5a6339bb332f5254b9fde",
+		"image_derivation": "Avengers-LE-Manual-compressed.pdf page 108, crop box 0.03,0.04,0.97,0.94, scanned page rendered at its native resolution (embedded image xref 495, 1206px across 8.38in), rendered at 90 dpi, capped to 700px wide, grayscale, 701x949 WebP quality 60",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.avengers-le.gi-led-locations",
+		"locator": "Avengers-LE-Manual-compressed.pdf page 117, printed sheet Y15, complete GI LED locations drawing",
+		"path": "evidence/excerpts/stern.avengers-limited-edition.2012/gi-led-locations.md",
+		"sha256": "846d9dd861ebd6cbf86122300c85c8cdf93504379f335d234e557746cd586800",
+		"image": "evidence/excerpts/stern.avengers-limited-edition.2012/gi-led-locations.webp",
+		"image_sha256": "7320564a62c07de66cae861684fa1d7ffd95183627bb88bbbbf1f548f7e6d776",
+		"image_derivation": "Avengers-LE-Manual-compressed.pdf page 117, crop box 0.04,0.08,0.96,0.9, scanned page rendered at its native resolution (embedded image xref 534, 1684px across 11.69in), rendered at 65 dpi, capped to 700px wide, grayscale, 701x441 WebP quality 60",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+]
+
 
 def sources(limited_edition: bool) -> list[dict[str, object]]:
 	manual = LE_MANUAL if limited_edition else PRO_MANUAL
@@ -500,10 +596,11 @@ def sources(limited_edition: bool) -> list[dict[str, object]]:
 		"locator": "Avengers-LE-Manual-compressed.pdf: PDF pages 63-69, 105-108, and 117 plus assembly drawings" if limited_edition else "Avengers-Pro-Manual.pdf: PDF pages 13-20 plus model-specific assembly drawings",
 		"license": "NOASSERTION", "attribution": "Stern Pinball", "source_id": "stern",
 		"original_filename": "Avengers-LE-Manual-compressed.pdf" if limited_edition else "Avengers-Pro-Manual.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T00:00:00Z",
+		"excerpts": AVENGERS_LE_MANUAL_EXCERPTS if limited_edition else AVENGERS_PRO_MANUAL_EXCERPTS,
 	}
 	script_record = {
 		"id": script, "kind": "vpx_script",
-		"uri": f"https://github.com/sverrewl/vpxtable_scripts/blob/{VPX_REVISION}/{'JPs%20Avengers%20Classic%20LE%20(Stern%20-%202012)%20v600.vbs' if limited_edition else 'Avengers%20(Stern%202012)4k1.3.1.vbs'}",
+		"uri": f"https://github.com/sverrewl/vpxtable_scripts/blob/{VPX_REVISION}/{'JPs%20Avengers%20Classic%20LE%20%28Stern%20-%202012%29%20v600.vbs' if limited_edition else 'Avengers%20%28Stern%202012%294k1.3.1.vbs'}",
 		"revision": VPX_REVISION,
 		"sha256": "c6da231a360a0f062fa5b434d08faca3c1b7b6a5436cc51b5b54dac924e1a3b4" if limited_edition else "85ea928246dbdf4b59a73e5237b6d248970770d3146381b06a1620c92cba21e8",
 		"locator": "JPs Avengers Classic LE (Stern - 2012) v600.vbs lines 81-151, 250-315, 343-461, and 745-845" if limited_edition else "Avengers (Stern 2012)4k1.3.1.vbs lines 130-388, 609-658, 927-1060, and 1112-1145",
