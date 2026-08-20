@@ -78,6 +78,51 @@ VISUAL_REVIEW_CACHE = (
 	("hi/sec1-53.png", "f1edbf1fe772526437bebd1f608630bd567f46b29c7434c2e17a71c550f80c0d", "Printed page 1-24: the two-minute troll lower-out and T.21 empty balls"),
 )
 
+MANUAL_EXCERPT_BASE = "evidence/excerpts/williams.medieval-madness.1997"
+MANUAL_EXCERPT_PATH = f"{MANUAL_EXCERPT_BASE}/manual-proof.md"
+MANUAL_EXCERPT_SHA256 = "71e2e0edd657f753d27e73d0be1b51b66b54747c25fc70b6d1813ee024bc1021"
+
+
+def _manual_excerpt(identifier: str, locator: str, image: str, image_sha256: str, image_derivation: str) -> dict[str, Any]:
+	return {
+		"id": identifier,
+		"locator": locator,
+		"path": MANUAL_EXCERPT_PATH,
+		"sha256": MANUAL_EXCERPT_SHA256,
+		"image": f"{MANUAL_EXCERPT_BASE}/{image}",
+		"image_sha256": image_sha256,
+		"image_derivation": image_derivation,
+		"method": "manual",
+		"transcribed_by": "curator, visually checked against the retained crop",
+		"reviewed": True,
+	}
+
+
+MANUAL_PART1_EXCERPTS = [
+	_manual_excerpt("excerpt.medieval-madness.power-table", "PDF page 2, complete solenoid/flasher, GI, flipper and motor table", "power-table.webp", "369fb7df5b344451a0a0fdb516a9d4a6ae23a3f1cc06ca3cb46ebdcfae08df37", "Medieval_Madness_1_OPS.pdf page 2, crop box 0.08,0.04,0.92,0.96, scanned page rendered at its native resolution (embedded image xref 4, 2601px across 8.67in), rendered at 91 dpi, capped to 650px wide, 651x922 WebP quality 40"),
+	_manual_excerpt("excerpt.medieval-madness.loop-gate-tests", "PDF page 49, printed 1-20, Loop/Gate Test", "loop-gate-tests.webp", "94761e88f45947962c8bcbaf943c0b09b4b4e79341a0ab309c143d8c7d4ea2c6", "Medieval_Madness_1_OPS.pdf page 49, crop box 0.05,0.04,0.95,0.96, scanned page rendered at its native resolution (embedded image xref 200, 2569px across 8.56in), rendered at 92 dpi, capped to 700px wide, 701x927 WebP quality 45"),
+	_manual_excerpt("excerpt.medieval-madness.tower-troll-test", "PDF page 50, printed 1-21, Tower Test and Trolls Test", "tower-troll-test.webp", "247e02a5a52e29a68f4e78290391816407dc4c46434884be782222dfc07709a6", "Medieval_Madness_1_OPS.pdf page 50, crop box 0.05,0.04,0.95,0.96, scanned page rendered at its native resolution (embedded image xref 204, 2588px across 8.63in), rendered at 92 dpi, capped to 700px wide, 701x927 WebP quality 45"),
+	_manual_excerpt("excerpt.medieval-madness.drawbridge-castle-tests", "PDF page 51, printed 1-22, Drawbridge Test and Castle Gate Test", "drawbridge-castle-tests.webp", "3c4c70478aaef3703b4936cf16824d1f0271862fdaa9d03e5e627d857afb7a8f", "Medieval_Madness_1_OPS.pdf page 51, crop box 0.05,0.04,0.95,0.96, scanned page rendered at its native resolution (embedded image xref 208, 2575px across 8.58in), rendered at 92 dpi, capped to 700px wide, 701x927 WebP quality 45"),
+	_manual_excerpt("excerpt.medieval-madness.castle-troll-tests", "PDF page 52, printed 1-23, Castle Gate and Trolls tests", "castle-troll-tests.webp", "403ade0b51f6465a1417fed5da1d6ca13cd4c24204cea4dec533817088e54b68", "Medieval_Madness_1_OPS.pdf page 52, crop box 0.05,0.04,0.95,0.96, scanned page rendered at its native resolution (embedded image xref 212, 2569px across 8.56in), rendered at 92 dpi, capped to 700px wide, 701x927 WebP quality 45"),
+	_manual_excerpt("excerpt.medieval-madness.troll-empty-balls-tests", "PDF page 53, printed 1-24, Trolls and Empty Balls tests", "troll-empty-balls-tests.webp", "d7bffe524a5a0ddc978934974c133afa382f3135fbaed36e2168e9e844c1474e", "Medieval_Madness_1_OPS.pdf page 53, crop box 0.05,0.04,0.95,0.96, scanned page rendered at its native resolution (embedded image xref 216, 2595px across 8.65in), rendered at 111 dpi, capped to 850px wide, 851x1126 WebP quality 55"),
+]
+
+MANUAL_PARTS_EXCERPTS = [
+	_manual_excerpt("excerpt.medieval-madness.lamp-locations", "PDF page 48, printed 2-47, complete lamp-location drawing", "lamp-locations.webp", "f34bac59454b880a290f57b2b84031db2dc611948f5fd4fe06f00e8e0598ba7f", "Medievel Madness Operations Manual.pdf page 48, crop box 0.05,0.03,0.95,0.95, scanned page rendered at its native resolution (embedded image xref 207, 2506px across 8.35in), rendered at 113 dpi, capped to 850px wide, 851x1142 WebP quality 55"),
+	_manual_excerpt("excerpt.medieval-madness.switch-locations", "PDF page 50, printed 2-49, complete switch-location drawing", "switch-locations.webp", "45559aadeab71a9b71d82385b2a2993895a560041e78322f96055f34e7f41851", "Medievel Madness Operations Manual.pdf page 50, crop box 0.05,0.03,0.95,0.95, scanned page rendered at its native resolution (embedded image xref 215, 2506px across 8.35in), rendered at 113 dpi, capped to 850px wide, 851x1142 WebP quality 55"),
+	_manual_excerpt("excerpt.medieval-madness.solenoid-locations", "PDF page 52, printed 2-51, complete solenoid/flashlamp-location drawing", "solenoid-locations.webp", "fbdc3ce1cc747d0757f4c5b76b9cba6856495dc073fc04f518748233f530ed78", "Medievel Madness Operations Manual.pdf page 52, crop box 0.05,0.03,0.95,0.95, scanned page rendered at its native resolution (embedded image xref 224, 2512px across 8.37in), rendered at 113 dpi, capped to 850px wide, 851x1142 WebP quality 55"),
+	_manual_excerpt("excerpt.medieval-madness.lamp-matrix", "PDF page 53, printed 2-52, complete lamp matrix", "lamp-matrix.webp", "5e046f3f4c8a4ecdd39669408cb119da11afd5f20aafd1dd4c598ab12c60c9e8", "Medievel Madness Operations Manual.pdf page 53, crop box 0.05,0.03,0.95,0.92, scanned page rendered at its native resolution (embedded image xref 229, 2525px across 8.42in), rendered at 113 dpi, capped to 850px wide, 851x1105 WebP quality 55"),
+	_manual_excerpt("excerpt.medieval-madness.switch-matrix", "PDF page 54, printed 2-53, complete switch matrix", "switch-matrix.webp", "bf14d870d39f1dc79cdd3a61d4e183b9291ec29eb126601bcbc5832f0de62a09", "Medievel Madness Operations Manual.pdf page 54, crop box 0.05,0.03,0.95,0.92, scanned page rendered at its native resolution (embedded image xref 234, 2512px across 8.37in), rendered at 113 dpi, capped to 850px wide, 851x1105 WebP quality 55"),
+	_manual_excerpt("excerpt.medieval-madness.solenoid-table", "PDF page 55, printed 2-54, complete solenoid/flasher table", "solenoid-table.webp", "53f52b1158200f0fc0ff2136be2eaa2b6696bc02719d5d27b3611943e031abef", "Medievel Madness Operations Manual.pdf page 55, crop box 0.05,0.03,0.95,0.92, scanned page rendered at its native resolution (embedded image xref 238, 2500px across 8.33in), rendered at 93 dpi, capped to 700px wide, 701x911 WebP quality 45"),
+]
+
+MANUAL_SCHEMATICS_EXCERPTS = [
+	_manual_excerpt("excerpt.medieval-madness.switch-matrix-circuit", "PDF page 2, printed 3-2, switch matrix and CPU-board circuit", "switch-matrix-circuit.webp", "1b1c57b126e0dd12120106d010948938270042aee34abbc931434f81538bb915", "Medieval_Madness_3_OPS.pdf page 2, crop box 0.04,0.03,0.96,0.95, scanned page rendered at its native resolution (embedded image xref 5, 2569px across 8.56in), rendered at 109 dpi, capped to 850px wide, 851x1101 WebP quality 55"),
+	_manual_excerpt("excerpt.medieval-madness.solenoid-wiring", "PDF page 6, printed 3-6, controlled-solenoid wiring", "solenoid-wiring.webp", "6847df1b8243f107b496e1eab41ee29ad9a8151527fce82eb5e68ebedec27adb", "Medieval_Madness_3_OPS.pdf page 6, crop box 0.04,0.03,0.96,0.95, scanned page rendered at its native resolution (embedded image xref 24, 2562px across 8.54in), rendered at 109 dpi, capped to 850px wide, 851x1101 WebP quality 55"),
+	_manual_excerpt("excerpt.medieval-madness.general-illumination-circuit", "PDF page 10, printed 3-10, general-illumination circuit", "general-illumination-circuit.webp", "255c8e8b63a035a8c7fe1339526a23a24dc7d05b90fee8ceb4d6bf04b9126725", "Medieval_Madness_3_OPS.pdf page 10, crop box 0.04,0.03,0.96,0.95, scanned page rendered at its native resolution (embedded image xref 42, 2562px across 8.54in), rendered at 109 dpi, capped to 850px wide, 851x1101 WebP quality 55"),
+	_manual_excerpt("excerpt.medieval-madness.flipper-circuit", "PDF page 11, printed 3-11, complete four-flipper circuit", "flipper-circuit.webp", "fca9e5f01188313f3bf201fc39b352aa6944eb1c38e8cca0d4010c1abcfc8124", "Medieval_Madness_3_OPS.pdf page 11, crop box 0.04,0.03,0.96,0.95, scanned page rendered at its native resolution (embedded image xref 47, 2562px across 8.54in), rendered at 109 dpi, capped to 850px wide, 851x1101 WebP quality 55"),
+]
+
 EXTRACTION_RELATIVE_PATH = Path("williams/medieval-madness-1997/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("williams/medieval-madness-1997/extracted-vpxtool.manifest.json")
 EXTRACTION_MANIFEST_SHA256 = "2f5a08bb9ce459a90934b3999e6ee96b15b4885f5a07dee8681c1f2b3ca50442"
@@ -719,6 +764,7 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "Williams Electronics Games, Inc.; scan hosted by the Internet Archive",
 			"rights": "NOASSERTION",
+			"excerpts": MANUAL_PART1_EXCERPTS,
 		},
 		{
 			"id": MANUAL_PARTS_SOURCE,
@@ -739,6 +785,7 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "Williams Electronics Games, Inc.; scan hosted by Arcade Archive",
 			"rights": "NOASSERTION",
+			"excerpts": MANUAL_PARTS_EXCERPTS,
 		},
 		{
 			"id": MANUAL_SCHEMATICS_SOURCE,
@@ -756,6 +803,7 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "Williams Electronics Games, Inc.; scan hosted by the Internet Archive",
 			"rights": "NOASSERTION",
+			"excerpts": MANUAL_SCHEMATICS_EXCERPTS,
 		},
 		{
 			"id": MANUAL_SUPPORT_SOURCE,
