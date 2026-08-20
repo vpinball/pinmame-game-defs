@@ -138,10 +138,10 @@ class KissDefinitionTests(unittest.TestCase):
 		self.assertIn("power-on pulse", device["physical"]["notes"])
 
 	def test_public_seventeen_is_a_coil_here_not_a_switch_strobe(self) -> None:
-		"""The five-column matrix is why this address is free for the detour gate.
+		"""The game-specific inventory and runtime leave this address free for the detour gate.
 
-		A six-column BY35 game spends one continuous output on the sixth column strobe. Kiss has
-		forty switches in five columns and does not, so 17 drives the right outlane detour gate.
+		A six-column BY35 game can spend one continuous output on the sixth column strobe. Kiss has
+		forty listed switches and uses 17 to drive the right outlane detour gate instead.
 		"""
 		device = self.solenoids[17]
 		self.assertEqual("used", device["availability"])
@@ -153,13 +153,22 @@ class KissDefinitionTests(unittest.TestCase):
 
 	# -------------------------------------------------------------- switches --
 	def test_five_column_matrix_stops_at_forty(self) -> None:
-		"""Addresses 41-48 are never scanned because there is no sixth strobe."""
+		"""The game-specific printed inventory ends at 40 and 41-48 are not populated."""
 		for address in range(41, 49):
 			device = self.switches[address]
 			self.assertEqual("unused", device["availability"], address)
 			self.assertIn("five-column", device["physical"]["notes"], address)
 		for address in (28, 29, 32):
 			self.assertEqual("unused", self.switches[address]["availability"], address)
+
+	def test_j2_correction_is_not_used_as_five_column_proof(self) -> None:
+		"""The generic J2 block does not rule out an ST5 routed through another connector."""
+		for address in range(41, 49):
+			self.assertNotIn(
+				"manual-omissions.bally.kiss.1979",
+				self.switches[address]["provenance"]["source_refs"],
+				address,
+			)
 
 	def test_flipper_buttons_are_not_matrix_switches(self) -> None:
 		"""On this generation they are wired through the K1 relay, so 81-88 are emulator mirrors."""
@@ -408,6 +417,10 @@ class KissEvidenceTests(unittest.TestCase):
 			"c5b151bfc2d2672fce7b405519bda07051bd54e115e9484f39fe05159d47bc23",
 			sources["schematic.as-2518-43-auxiliary-lamp-driver"]["sha256"],
 		)
+		self.assertEqual(
+			"2f39bd677aeecd26605ac832a419d5b6d3922e3016a7e0c64a1dd19b2e2d9e3e",
+			sources["manual-omissions.bally.kiss.1979"]["sha256"],
+		)
 
 	def test_manual_is_reachable_when_configured(self) -> None:
 		root = os.environ.get("PINMAME_MANUALS_ROOT")
@@ -415,12 +428,13 @@ class KissEvidenceTests(unittest.TestCase):
 			self.skipTest("evidence roots are not configured")
 		import hashlib
 
-		path = Path(root) / "by-machine" / "bally.kiss.1979" / "Bally_1979_Kiss_Manual.pdf"
-		self.assertTrue(path.is_file(), str(path))
-		self.assertEqual(
-			"b9f7b1dfbc76267bce3e14544f9f576b07a08b9909acc13913f3e906464292d1",
-			hashlib.sha256(path.read_bytes()).hexdigest(),
-		)
+		for name, digest in {
+			"Bally_1979_Kiss_Manual.pdf": "b9f7b1dfbc76267bce3e14544f9f576b07a08b9909acc13913f3e906464292d1",
+			"Bally_1979_Kiss_Omissions_to_Schematic_Diagrams_user_submitted.pdf": "2f39bd677aeecd26605ac832a419d5b6d3922e3016a7e0c64a1dd19b2e2d9e3e",
+		}.items():
+			path = Path(root) / "by-machine" / "bally.kiss.1979" / name
+			self.assertTrue(path.is_file(), str(path))
+			self.assertEqual(digest, hashlib.sha256(path.read_bytes()).hexdigest(), str(path))
 
 
 if __name__ == "__main__":
