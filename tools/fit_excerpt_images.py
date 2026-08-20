@@ -22,7 +22,7 @@ import re
 from pathlib import Path
 
 from render_excerpt_image import render
-from rerender_excerpt_images import DERIVATION, _find_pdf, _manual_roots
+from rerender_excerpt_images import DERIVATION, _find_pdf, _manual_roots, _render_options
 
 # Narrow in steps rather than a true bisection: each render costs a page
 # rasterisation, and the first or second step almost always fits.
@@ -69,9 +69,11 @@ def main() -> None:
 					crop = tuple(parts) if len(parts) == 4 else None
 
 				original = target.stat().st_size
+				rotate, color = _render_options(derivation)
 				for width in WIDTH_STEPS:
 					new_derivation, _digest = render(
 						pdf, int(match.group("page")), target, crop, 11.0, width, 80,
+						rotate=rotate, color=color,
 					)
 					if target.stat().st_size <= arguments.limit:
 						break

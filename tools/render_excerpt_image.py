@@ -23,13 +23,15 @@ that the smallest glyph lands at a readable pixel height.
 Usage:
 
     python tools/render_excerpt_image.py <pdf> <page> <out.webp> \\
-        [--crop x0,y0,x1,y1] [--min-glyph-px N] [--max-width N] [--quality N]
+        [--crop x0,y0,x1,y1] [--rotate 90] [--color] [--min-glyph-px N] [--max-width N] [--quality N]
 
 `--crop` is a normalized box in page coordinates: 0,0 is the top-left of the
 page and 1,1 the bottom-right. Omit it to render the whole page, which is
 rarely what you want -- crop to the table or the drawing being cited.
 
 Prints the `image_derivation` string and the SHA-256 to record on the excerpt.
+Use `--rotate` for scans whose page content is stored sideways; the crop box is
+applied before the counter-clockwise output rotation.
 """
 
 from __future__ import annotations
@@ -147,6 +149,8 @@ def render(
 	min_glyph_pixels: float,
 	max_width: int,
 	quality: int,
+	rotate: int = 0,
+	color: bool = True,
 ) -> tuple[str, str]:
 	with fitz.open(pdf_path) as document:
 		if not 1 <= page_number <= document.page_count:
@@ -164,6 +168,10 @@ def render(
 			dpi = scale * POINTS_PER_INCH
 		pixmap = page.get_pixmap(matrix=fitz.Matrix(scale, scale), clip=region, alpha=False)
 		image = Image.open(io.BytesIO(pixmap.tobytes("png")))
+		if not color:
+			image = image.convert("L")
+		if rotate:
+			image = image.rotate(rotate, expand=True)
 
 	buffer = io.BytesIO()
 	image.save(buffer, format="WEBP", quality=quality, method=6)
@@ -174,7 +182,9 @@ def render(
 	box = "full page" if crop is None else "crop box " + ",".join(f"{value:g}" for value in crop)
 	derivation = (
 		f"{pdf_path.name} page {page_number}, {box}, {analysis.detail}, "
-		f"rendered at {dpi:.0f} dpi{capped}, {image.width}x{image.height} WebP quality {quality}"
+		f"rendered at {dpi:.0f} dpi{capped}, {'colour' if color else 'grayscale'}"
+		f"{f', rotated {rotate} degrees counter-clockwise' if rotate else ''}, "
+		f"{image.width}x{image.height} WebP quality {quality}"
 	)
 	return derivation, hashlib.sha256(payload).hexdigest()
 
@@ -185,6 +195,9 @@ def main() -> None:
 	parser.add_argument("page", type=int, help="1-based PDF page number")
 	parser.add_argument("output", type=Path)
 	parser.add_argument("--crop", help="normalized x0,y0,x1,y1 of the page")
+	parser.add_argument("--rotate", type=int, choices=(0, 90, 180, 270), default=0,
+	                    help="counter-clockwise rotation after cropping")
+	parser.add_argument("--color", action="store_true", help="preserve colour; grayscale is the default")
 	parser.add_argument("--min-glyph-px", type=float, default=DEFAULT_MIN_GLYPH_PIXELS)
 	parser.add_argument("--max-width", type=int, default=DEFAULT_MAX_WIDTH)
 	parser.add_argument("--quality", type=int, default=80)
@@ -200,6 +213,7 @@ def main() -> None:
 	derivation, digest = render(
 		arguments.pdf, arguments.page, arguments.output, crop,
 		arguments.min_glyph_px, arguments.max_width, arguments.quality,
+		rotate=arguments.rotate, color=arguments.color,
 	)
 	print(f"image            {arguments.output.as_posix()}")
 	print(f"image_sha256     {digest}")

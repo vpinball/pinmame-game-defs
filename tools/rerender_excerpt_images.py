@@ -27,6 +27,19 @@ DERIVATION = re.compile(
 	r"^(?P<pdf>.+?\.pdf) page (?P<page>\d+), "
 	r"(?:crop box (?P<crop>[\d.,]+)|full page)"
 )
+ROTATION = re.compile(r", rotated (?P<degrees>90|180|270) degrees counter-clockwise")
+
+
+def _render_options(derivation: str) -> tuple[int, bool]:
+	"""Recover orientation and colour mode from a recorded derivation.
+
+	Older derivations did not record a colour mode because the renderer preserved
+	colour unconditionally, so absence of either marker intentionally means colour.
+	"""
+	rotation = ROTATION.search(derivation)
+	rotate = int(rotation.group("degrees")) if rotation else 0
+	color = "grayscale" not in derivation.lower()
+	return rotate, color
 
 
 def _manual_roots(repository_root: Path) -> list[Path]:
@@ -92,9 +105,11 @@ def main() -> None:
 				original = target.stat().st_size
 				before += original
 				destination = target if arguments.write else target.with_suffix(".rerender.tmp")
+				rotate, color = _render_options(derivation)
 				new_derivation, digest = render(
 					pdf, int(match.group("page")), destination, crop,
 					11.0, arguments.max_width, arguments.quality,
+					rotate=rotate, color=color,
 				)
 				size = destination.stat().st_size
 				after += size
