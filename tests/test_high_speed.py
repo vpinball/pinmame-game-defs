@@ -571,7 +571,7 @@ class HighSpeedDefinitionTests(unittest.TestCase):
 			if excerpt.get("image"):
 				self.assertTrue(excerpt["image_derivation"])
 		self.assertEqual(
-			7,
+			9,
 			sum(1 for excerpt in excerpts.values() if excerpt.get("image")),
 			"every excerpt whose page could be cropped now carries the region it was read from",
 		)
