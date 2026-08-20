@@ -656,6 +656,8 @@ def source_records() -> list[dict[str, Any]]:
 				excerpt(
 					"boards-and-assemblies", "PDF pages 78, 80, 81, 108, printed 2-12/2-14/2-15/2-42, opto/motor board and Lower Playfield Parts pages",
 					"boards-and-assemblies.md", "3577ac6493066b82c552f7dfc5a0961cfe233cad44c29f66274fcd1061a456b1",
+					image="boards-and-assemblies.webp", image_sha256=EXCERPT_IMAGE_HASHES["boards-and-assemblies.webp"],
+					image_derivation="World_Cup_Soccer_OPS.pdf page 108, crop box 0.03,0.04,0.98,0.96, scanned page rendered at its native resolution (embedded image xref 445, 2588px across 8.63in), rendered at 87 dpi, capped to 700px wide, 701x878 WebP quality 70",
 				),
 			],
 		},
