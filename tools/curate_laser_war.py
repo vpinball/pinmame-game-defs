@@ -315,6 +315,24 @@ The chart proves two physical dual-winding flipper assemblies and their cabinet 
 
 Source document SHA-256: `30a1def10178a2cf7e753046ed44f07d01075a6333791669e4fe0c4e165ddfe7`
 """
+EXCERPT_PAYLOADS["manual-switch-locations.md"] = """# Laser War playfield switch locations (factory manual)
+
+The Data East instruction manual's playfield drawing labels the physical switch locations with the numbered contacts used by the machine. The drawing visibly places the trough and eject switches, shooter-lane and ramp switches, target banks, pop bumpers, slingshots, flippers, and upper playfield switches. This excerpt is placement evidence from the factory manual; the switch-matrix electrical semantics remain attributed to the retained technical chart.
+
+Source document SHA-256: `e8e55768c990f2967594f4112bc2ec7403c55e5283c7b69fae2ff5c1d21fefbf`
+"""
+EXCERPT_PAYLOADS["manual-lamp-locations.md"] = """# Laser War playfield lamp locations (factory manual)
+
+The Data East instruction manual's playfield drawing labels the physical lamp locations with numbered circles across the playfield. The drawing shows the lamp positions around the targets, bumpers, slingshots, lanes, and other playfield features. This excerpt establishes physical placement only; the lamp-matrix electrical mapping remains attributed to the retained technical chart.
+
+Source document SHA-256: `e8e55768c990f2967594f4112bc2ec7403c55e5283c7b69fae2ff5c1d21fefbf`
+"""
+EXCERPT_PAYLOADS["manual-coil-locations.md"] = """# Laser War playfield coil locations (factory manual)
+
+The Data East instruction manual's playfield drawing labels the physical coil and solenoid locations with numbered circles. The drawing shows the flippers, pop bumpers, slingshots, eject and kickback hardware, and other powered playfield devices. This excerpt establishes physical placement only; the controller-facing coil and flasher semantics remain attributed to the retained technical chart and PinMAME source.
+
+Source document SHA-256: `e8e55768c990f2967594f4112bc2ec7403c55e5283c7b69fae2ff5c1d21fefbf`
+"""
 EVIDENCE_HASHES.update({
     name: hashlib.sha256(payload.encode("utf-8")).hexdigest()
     for name, payload in EXCERPT_PAYLOADS.items()
@@ -816,7 +834,24 @@ sources = [
      "acquired_at": "2026-08-09T18:37:51Z",
      "locator": "42-page image-only archive reconstructed in page order from the complete ManualsLib page-image set. The retained `_bg` images preserve playfield switch, lamp, and coil location drawings on PDF pages 20, 22, and 24, plus the coil-harness and CPU schematic drawings on pages 28 and 33. The typeset chart text is absent from this archive, so no matrix or coil-table transcription is attributed to it.",
      "license": "Copyright Data East; redistribution status not supplied", "attribution": "Data East Laser War instruction manual",
-     "original_filename": "Data_East_Laser_War_Instruction_Manual_complete_image_archive.pdf", "rights": "NOASSERTION"},
+     "original_filename": "Data_East_Laser_War_Instruction_Manual_complete_image_archive.pdf", "rights": "NOASSERTION",
+     "excerpts": [
+         {"id": "excerpt.laser-war.manual-switch-locations", "locator": "PDF page 20, playfield switch locations drawing",
+          "path": f"{excerpt_base}/manual-switch-locations.md", "sha256": EVIDENCE_HASHES["manual-switch-locations.md"], "method": "manual",
+          "transcribed_by": "curator, visually checked against the retained page render", "reviewed": True,
+          "image": f"{excerpt_base}/switch-locations.webp", "image_sha256": EXCERPT_IMAGE_HASHES["switch-locations.webp"],
+          "image_derivation": "Data_East_Laser_War_Instruction_Manual_complete_image_archive.pdf page 20, crop box 0.03,0.16,0.58,0.83, scanned page rendered at its native resolution (embedded image xref 41, 950px across 9.50in), rendered at 100 dpi, grayscale, 523x825 WebP quality 70"},
+         {"id": "excerpt.laser-war.manual-lamp-locations", "locator": "PDF page 22, playfield lamp locations drawing",
+          "path": f"{excerpt_base}/manual-lamp-locations.md", "sha256": EVIDENCE_HASHES["manual-lamp-locations.md"], "method": "manual",
+          "transcribed_by": "curator, visually checked against the retained page render", "reviewed": True,
+          "image": f"{excerpt_base}/lamp-locations.webp", "image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations.webp"],
+          "image_derivation": "Data_East_Laser_War_Instruction_Manual_complete_image_archive.pdf page 22, crop box 0.03,0.16,0.58,0.83, scanned page rendered at its native resolution (embedded image xref 45, 950px across 9.50in), rendered at 100 dpi, grayscale, 523x825 WebP quality 70"},
+         {"id": "excerpt.laser-war.manual-coil-locations", "locator": "PDF page 24, playfield coil and solenoid locations drawing",
+          "path": f"{excerpt_base}/manual-coil-locations.md", "sha256": EVIDENCE_HASHES["manual-coil-locations.md"], "method": "manual",
+          "transcribed_by": "curator, visually checked against the retained page render", "reviewed": True,
+          "image": f"{excerpt_base}/coil-locations.webp", "image_sha256": EXCERPT_IMAGE_HASHES["coil-locations.webp"],
+          "image_derivation": "Data_East_Laser_War_Instruction_Manual_complete_image_archive.pdf page 24, crop box 0.03,0.16,0.58,0.83, scanned page rendered at its native resolution (embedded image xref 49, 950px across 9.50in), rendered at 100 dpi, grayscale, 523x825 WebP quality 70"},
+     ]},
     {"id": TABLE, "kind": "vpx_table", "uri": "external:pinmame-vpx-sources/data-east/laser-war-1987/Laser War (Data East 1987) w VR Room v2.0.vpx",
      "revision": "2.0", "sha256": "43b88ba675a1e8430d822930100c386f5cf63c2e18fa048b339cf54eb4fed586",
      "locator": "vpxtool git:0561bb4; playfield bounds asserted as (0,0)-(964,2162)", "source_id": "retained-known-working-laser-war-2.0",

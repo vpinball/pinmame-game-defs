@@ -272,9 +272,18 @@ class LaserWarDefinitionTests(unittest.TestCase):
 
     def test_evidence_excerpts_exist_and_hashes_match_source_records(self) -> None:
         manual = self.sources["manual.data-east.laser-war.1987"]
-        self.assertNotIn("excerpts", manual)
+        self.assertEqual(3, len(manual["excerpts"]))
         self.assertIn("typeset chart text is absent", manual["locator"])
         self.assertEqual("2026-08-09T18:37:51Z", manual["acquired_at"])
+        for excerpt in manual["excerpts"]:
+            path = ROOT / excerpt["path"]
+            self.assertTrue(path.is_file(), path)
+            self.assertEqual(excerpt["sha256"], sha256(path), excerpt["id"])
+            self.assertEqual("manual", excerpt["method"])
+            self.assertTrue(excerpt["reviewed"])
+            self.assertTrue(excerpt["image"].endswith(".webp"))
+            self.assertTrue((ROOT / excerpt["image"]).is_file(), excerpt["id"])
+            self.assertRegex(excerpt["locator"], r"PDF page (20|22|24)")
         tech_chart = self.sources["tech-chart.pinballrebel.data-east-laser-war"]
         self.assertEqual("service_diagnostic", tech_chart["kind"])
         self.assertIn("secondary evidence", tech_chart["locator"])
