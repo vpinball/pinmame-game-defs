@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+REPOSITORY_ROOT = ROOT
 SOURCE_ROOT = ROOT / "src"
 TOOLS = Path(__file__).resolve().parent
 for import_root in (SOURCE_ROOT, TOOLS):
@@ -31,6 +33,8 @@ VPX_REVISION = "0c036bb61b4b4e8c778c37559f6795df8cd1521e"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
 MANUAL_SOURCE = "manual.transformers-pro-le.2011"
+EXCERPT_ROOT = REPOSITORY_ROOT / "evidence/excerpts/stern.transformers-pro.2011"
+LE_EXCERPT_ROOT = REPOSITORY_ROOT / "evidence/excerpts/stern.transformers-limited-edition.2011"
 PRO_VPX_SOURCE = "vpx.transformers-pro-vpw-2.3.1"
 PRO_VPX_TABLE_SOURCE = "vpx-table.transformers-pro-sg1bson-mod-of-jpsalas-1.0.0"
 PRO_SPATIAL_REGISTER_SOURCE = "evidence.transformers-pro-spatial-candidate-register"
@@ -378,12 +382,76 @@ def driver_records(limited_edition: bool) -> list[dict[str, object]]:
 	return sorted(selected, key=lambda record: record["id"])
 
 
+def transformers_manual_source(limited_edition: bool) -> dict[str, object]:
+	manual_uri = "https://wp.sternpinball.com/wp-content/uploads/2018/11/Transformers-Manual-LE.pdf" if limited_edition else "https://wp.sternpinball.com/wp-content/uploads/2018/11/Transformers-Manual.pdf"
+	manual_name = "Transformers-Manual-LE.pdf" if limited_edition else "Transformers-Manual.pdf"
+	manual_locator = "Combined 134-page official Stern manual: Limited Edition switches PDF page 60, coils 62-63, lamps 65, and custom assemblies 36-39; Pro supplement switches 129, coils 131, and lamps 133" if limited_edition else PRO_MANUAL_LOCATOR
+	base: dict[str, object] = {
+		"id": MANUAL_SOURCE,
+		"kind": "manual",
+		"uri": manual_uri,
+		"sha256": "9a4ff4cc3f5391bf730d226eb969c855c7c8c0f429c33e66d846d4069c7898b8",
+		"locator": manual_locator,
+		"license": "NOASSERTION",
+		"attribution": "Stern Pinball",
+		"source_id": "stern",
+		"original_filename": manual_name,
+		"rights": "NOASSERTION",
+		"acquired_at": "2026-08-02T21:00:42Z",
+	}
+	common_entries = [
+		(EXCERPT_ROOT, "meg-ball-trap-assembly", "excerpt.transformers-pro.meg-ball-trap-assembly", "PDF page 36, MEG BALL TRAP ASSEMBLY 511-6977-00", "Transformers-Manual.pdf page 36, crop box 0.04,0.05,0.96,0.92, scanned page rendered at its native resolution (embedded image xref 163, 1684px across 11.69in), rendered at 56 dpi, capped to 600px wide, grayscale, 601x401 WebP quality 30"),
+		(EXCERPT_ROOT, "meg-ptegt-assembly", "excerpt.transformers-pro.meg-ptegt-assembly", "PDF page 37, MEG PTEGT ASSEMBLY 511-6978-00", "Transformers-Manual.pdf page 37, crop box 0.04,0.05,0.96,0.92, scanned page rendered at its native resolution (embedded image xref 168, 1684px across 11.69in), rendered at 56 dpi, capped to 600px wide, grayscale, 601x401 WebP quality 30"),
+		(EXCERPT_ROOT, "starscream-target-assembly", "excerpt.transformers-pro.starscream-target-assembly", "PDF page 38, STARSCREAM TARGET ASSEMBLY 511-6979-00", "Transformers-Manual.pdf page 38, crop box 0.04,0.05,0.96,0.92, scanned page rendered at its native resolution (embedded image xref 173, 1684px across 11.69in), rendered at 56 dpi, capped to 600px wide, grayscale, 601x401 WebP quality 30"),
+		(EXCERPT_ROOT, "back-panel-assembly", "excerpt.transformers-pro.back-panel-assembly", "PDF page 39, BACK PANEL ASSEMBLY 500-7205-01", "Transformers-Manual.pdf page 39, crop box 0.04,0.05,0.96,0.92, scanned page rendered at its native resolution (embedded image xref 177, 1190px across 8.26in), rendered at 105 dpi, capped to 800px wide, grayscale, rotated 270 degrees counter-clockwise, 1072x801 WebP quality 40"),
+	]
+	if limited_edition:
+		entries = common_entries + [
+			(LE_EXCERPT_ROOT, "le-switch-matrix", "excerpt.transformers-le.switch-matrix", "PDF page 60, LIMITED EDITION SWITCH MATRIX GRID", "Transformers-Manual.pdf page 60, crop box 0.03,0.04,0.97,0.94, scanned page rendered at its native resolution (embedded image xref 275, 1684px across 11.69in), rendered at 82 dpi, capped to 900px wide, grayscale, 901x609 WebP quality 35"),
+			(LE_EXCERPT_ROOT, "le-switch-locations", "excerpt.transformers-le.switch-locations", "PDF page 61, LIMITED EDITION SWITCH LOCATIONS", "Transformers-Manual.pdf page 61, crop box 0.03,0.04,0.97,0.94, scanned page rendered at its native resolution (embedded image xref 280, 1190px across 8.26in), rendered at 84 dpi, capped to 650px wide, grayscale, 651x881 WebP quality 25"),
+			(LE_EXCERPT_ROOT, "le-coil-chart", "excerpt.transformers-le.coil-chart", "PDF page 62, LIMITED EDITION COILS DETAILED CHART Q1-Q32", "Transformers-Manual.pdf page 62, crop box 0.03,0.04,0.97,0.94, scanned page rendered at its native resolution (embedded image xref 285, 1190px across 8.26in), rendered at 103 dpi, capped to 800px wide, grayscale, 801x1085 WebP quality 28"),
+			(LE_EXCERPT_ROOT, "le-auxiliary-coils", "excerpt.transformers-le.auxiliary-coils", "PDF page 63, LIMITED EDITION AUXILIARY COILS Q41-Q46", "Transformers-Manual.pdf page 63, crop box 0.04,0.05,0.96,0.4, scanned page rendered at its native resolution (embedded image xref 289, 1190px across 8.26in), rendered at 105 dpi, capped to 800px wide, grayscale, 801x432 WebP quality 40"),
+			(LE_EXCERPT_ROOT, "le-coil-locations", "excerpt.transformers-le.coil-locations", "PDF page 64, LIMITED EDITION COIL & FLASH LAMP LOCATIONS", "Transformers-Manual.pdf page 64, crop box 0.03,0.04,0.97,0.94, scanned page rendered at its native resolution (embedded image xref 293, 1190px across 8.26in), rendered at 90 dpi, capped to 700px wide, grayscale, 701x949 WebP quality 30"),
+			(LE_EXCERPT_ROOT, "le-lamp-matrix", "excerpt.transformers-le.lamp-matrix", "PDF page 65, LIMITED EDITION LAMP MATRIX GRID", "Transformers-Manual.pdf page 65, crop box 0.03,0.04,0.97,0.94, scanned page rendered at its native resolution (embedded image xref 298, 1684px across 11.69in), rendered at 82 dpi, capped to 900px wide, grayscale, 901x609 WebP quality 35"),
+			(LE_EXCERPT_ROOT, "le-lamp-locations", "excerpt.transformers-le.lamp-locations", "PDF page 66, LIMITED EDITION LAMP LOCATIONS", "Transformers-Manual.pdf page 66, crop box 0.03,0.04,0.97,0.94, scanned page rendered at its native resolution (embedded image xref 302, 1190px across 8.26in), rendered at 84 dpi, capped to 650px wide, grayscale, 651x881 WebP quality 25"),
+		]
+	else:
+		entries = common_entries + [
+			(EXCERPT_ROOT, "pro-switch-matrix", "excerpt.transformers-pro.pro-switch-matrix", "PDF page 129, PRO SWITCH MATRIX GRID", "Transformers-Manual.pdf page 129, crop box 0.04,0.05,0.96,0.78, scanned page rendered at its native resolution (embedded image xref 592, 1684px across 11.69in), rendered at 74 dpi, capped to 800px wide, grayscale, 801x450 WebP quality 30"),
+			(EXCERPT_ROOT, "pro-switch-locations", "excerpt.transformers-pro.pro-switch-locations", "PDF page 130, PRO SWITCH LOCATIONS", "Transformers-Manual.pdf page 130, crop box 0.03,0.04,0.97,0.94, scanned page rendered at its native resolution (embedded image xref 597, 1190px across 8.26in), rendered at 84 dpi, capped to 650px wide, grayscale, 651x881 WebP quality 25"),
+			(EXCERPT_ROOT, "pro-coil-chart", "excerpt.transformers-pro.pro-coil-chart", "PDF page 131, PRO COILS DETAILED CHART TABLE", "Transformers-Manual.pdf page 131, crop box 0.04,0.05,0.96,0.86, scanned page rendered at its native resolution (embedded image xref 602, 1190px across 8.26in), rendered at 92 dpi, capped to 700px wide, grayscale, 701x873 WebP quality 28"),
+			(EXCERPT_ROOT, "pro-coil-locations", "excerpt.transformers-pro.pro-coil-locations", "PDF page 132, PRO COIL & FLASH LAMP LOCATIONS", "Transformers-Manual.pdf page 132, crop box 0.03,0.04,0.97,0.94, scanned page rendered at its native resolution (embedded image xref 607, 1190px across 8.26in), rendered at 84 dpi, capped to 650px wide, grayscale, 651x881 WebP quality 24"),
+			(EXCERPT_ROOT, "pro-lamp-matrix", "excerpt.transformers-pro.pro-lamp-matrix", "PDF page 133, PRO LAMP MATRIX GRID", "Transformers-Manual.pdf page 133, crop box 0.04,0.06,0.96,0.78, scanned page rendered at its native resolution (embedded image xref 612, 1684px across 11.69in), rendered at 74 dpi, capped to 800px wide, grayscale, 801x444 WebP quality 30"),
+			(EXCERPT_ROOT, "pro-lamp-locations", "excerpt.transformers-pro.pro-lamp-locations", "PDF page 134, PRO LAMP LOCATIONS", "Transformers-Manual.pdf page 134, crop box 0.03,0.04,0.97,0.94, scanned page rendered at its native resolution (embedded image xref 617, 1190px across 8.26in), rendered at 84 dpi, capped to 650px wide, grayscale, 651x881 WebP quality 24"),
+		]
+	excerpts = []
+	for excerpt_root, stem, excerpt_id, locator, derivation in entries:
+		markdown = excerpt_root / f"{stem}.md"
+		image = excerpt_root / f"{stem}.webp"
+		if not markdown.is_file() or not image.is_file():
+			raise FileNotFoundError(f"Transformers manual excerpt is missing: {markdown} or {image}")
+		excerpts.append({
+			"id": excerpt_id,
+			"locator": locator,
+			"path": str(markdown.relative_to(REPOSITORY_ROOT)).replace("\\", "/"),
+			"sha256": hashlib.sha256(markdown.read_bytes()).hexdigest(),
+			"image": str(image.relative_to(REPOSITORY_ROOT)).replace("\\", "/"),
+			"image_sha256": hashlib.sha256(image.read_bytes()).hexdigest(),
+			"image_derivation": derivation,
+			"method": "manual",
+			"transcribed_by": "curator, read from the rendered page",
+			"reviewed": True,
+		})
+	base["excerpts"] = excerpts
+	return base
+
+
 def sources(limited_edition: bool) -> list[dict[str, object]]:
 	manual_uri = "https://wp.sternpinball.com/wp-content/uploads/2018/11/Transformers-Manual-LE.pdf" if limited_edition else "https://wp.sternpinball.com/wp-content/uploads/2018/11/Transformers-Manual.pdf"
 	manual_name = "Transformers-Manual-LE.pdf" if limited_edition else "Transformers-Manual.pdf"
 	manual_locator = "Combined 134-page official Stern manual: Limited Edition switches PDF page 60, coils 62-63, lamps 65, and custom assemblies 36-39; Pro supplement switches 129, coils 131, and lamps 133" if limited_edition else PRO_MANUAL_LOCATOR
 	result = [
-		{"id": MANUAL_SOURCE, "kind": "manual", "uri": manual_uri, "sha256": "9a4ff4cc3f5391bf730d226eb969c855c7c8c0f429c33e66d846d4069c7898b8", "locator": manual_locator, "license": "NOASSERTION", "attribution": "Stern Pinball", "source_id": "stern", "original_filename": manual_name, "rights": "NOASSERTION", "acquired_at": "2026-08-02T21:00:42Z"},
+		transformers_manual_source(limited_edition),
 		{"id": REVIEW_SOURCE, "kind": "human_review", "uri": "https://www.pinballnews.com/games/transformers/index6a.html", "locator": "Contemporaneous detailed physical review: Pro/LE playfield differences; Optimus ramp and switches; Megatron trough, target and cannon; Starscream rotation; Ironhide mini-playfield; controlled gates; lamps", "license": "NOASSERTION", "attribution": "Pinball News", "acquired_at": "2026-08-02T22:00:00Z"},
 		{"id": PRODUCT_SOURCE, "kind": "human_review", "uri": "https://www.sternpinball.com/game/transformers/", "locator": "Manufacturer product feature inventory and physical edition overview", "license": "NOASSERTION", "attribution": "Stern Pinball", "acquired_at": "2026-08-02T22:00:00Z"},
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c Transformers INITGAME/driver family, SAM_2COL, 12-output auxiliary-board serialization, PWM lamp declarations, and 128x32 DMD", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
@@ -393,7 +461,7 @@ def sources(limited_edition: bool) -> list[dict[str, object]]:
 		result.append({"id": LE_RUNTIME_SOURCE, "kind": "runtime_scenario", "uri": "external:pinmame-game-code/transformers-limited-edition/harness/boot-start.raw.json", "revision": PINMAME_REVISION, "sha256": "b3a32d9033023bc9c3d2d36b32f56645e5f002225f43f2fdbe4779b81b6045f7", "locator": "Exact tf_180h boot/start scenario with switches 18-21 initialized, four coin pulses, and start; ROM archive SHA-256 0ce389603bb0ccc237e71937ddadb8a5534f2499fdf610f6ec4087bdf29d22f4", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"})
 	else:
 		result.extend([
-			{"id": PRO_VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Transformers%20Pro%20(Stern%202011)%20v.2.3.1.vbs", "revision": VPX_REVISION, "sha256": "987b8cae80fbe6cb00c652507fba2eaf422afef8a57852a7e4c59d5b3f9e157b", "locator": "Transformers Pro (Stern 2011) v.2.3.1.vbs: tf_180 controller, trough/launcher/ejects, solenoid callbacks, gates, flippers, Megatron lock, Optimus ramp motor and endpoint switches, bash toy, switches, lamps, and GI", "license": "NOASSERTION", "attribution": "VPW and table authors credited in the script; vpxtable_scripts contributors"},
+			{"id": PRO_VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Transformers%20Pro%20%28Stern%202011%29%20v.2.3.1.vbs", "revision": VPX_REVISION, "sha256": "987b8cae80fbe6cb00c652507fba2eaf422afef8a57852a7e4c59d5b3f9e157b", "locator": "Transformers Pro (Stern 2011) v.2.3.1.vbs: tf_180 controller, trough/launcher/ejects, solenoid callbacks, gates, flippers, Megatron lock, Optimus ramp motor and endpoint switches, bash toy, switches, lamps, and GI", "license": "NOASSERTION", "attribution": "VPW and table authors credited in the script; vpxtable_scripts contributors"},
 			{"id": PRO_RUNTIME_SOURCE, "kind": "runtime_scenario", "uri": "external:pinmame-game-code/transformers-pro/harness/boot-start.raw.json", "revision": PINMAME_REVISION, "sha256": "5f7c0caa85b1b5b8799e6cceef8e7d9ec7d9ddd63f0b8364ab5e9168c88443da", "locator": "Exact tf_180 boot/start scenario with switches 18-21 initialized, four coin pulses, and start; ROM archive SHA-256 8689f01315ad4f6b7001c7a99147093c64297631104610a7ac03e34152e8f352", "license": "NOASSERTION", "attribution": "Generated locally with LibPinMAME from the user-authorized ROM corpus; ROM bytes remain external"},
 		])
 	return result
