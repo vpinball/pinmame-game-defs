@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import load_json, write_json
@@ -10,6 +11,7 @@ from pinmame_game_defs.jsonio import load_json, write_json
 ROOT = Path(__file__).resolve().parents[1]
 PARTIAL_PATH = ROOT / "machines/partial/stern/spider-man-vault-edition-2016.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/stern/spider-man-vault-edition-2016.json"
+EXCERPT_ROOT = ROOT / "evidence/excerpts/stern.spider-man-vault-edition.2016"
 
 TABLE_SOURCE = "vpx-table.spider-man-ve-2.2"
 SCRIPT_SOURCE = "vpx.spider-man-ve-2.2"
@@ -28,6 +30,50 @@ TABLE_SOURCE_RECORD = {
 	"sha256": "b258efeecc3dcbffd7dae79c52fdd39bba8c9a82e918034f170ab75c90764f11",
 	"uri": "local-evidence://stern/spider-man-vault-edition-2016/Spider-Man_VE_2.2.vpx",
 }
+
+
+def _manual_excerpts() -> list[dict[str, object]]:
+	"""Return the retained, visually checked manual transcriptions for this machine."""
+	entries = [
+		("switch-locations", "excerpt.spider-man-ve.switch-locations", "PDF page 15, section 1.12 SWITCH LOCATIONS"),
+		("lamp-locations", "excerpt.spider-man-ve.lamp-locations", "PDF page 17, section 1.13 LAMP LOCATIONS"),
+		("coil-locations-bottom", "excerpt.spider-man-ve.coil-locations-bottom", "PDF page 19, section 1.14 COILS & FLASH LAMP LOCATIONS, underside view"),
+		("coil-locations-top", "excerpt.spider-man-ve.coil-locations-top", "PDF page 19, section 1.14 COILS & FLASH LAMP LOCATIONS, upper-playfield/backbox view"),
+		("coils-detailed-chart", "excerpt.spider-man-ve.coils-detailed-chart", "PDF page 52, COILS DETAILED CHART TABLE"),
+		("gi-circuit-layout", "excerpt.spider-man-ve.gi-circuit-layout", "PDF page 55, PLAYFIELD WIRING, GI circuit layout"),
+		("trough-opto-pcb", "excerpt.spider-man-ve.trough-opto-pcb", "PDF page 64, THROUGH UP-KICKER DUAL OPTO PCBS"),
+		("trough-opto-led1", "excerpt.spider-man-ve.trough-opto-led1", "PDF page 65, OPTO TROUBLESHOOTING and LED1 alignment/test"),
+		("trough-opto-led2", "excerpt.spider-man-ve.trough-opto-led2", "PDF page 66, LED2 alignment/test"),
+	]
+	result = []
+	for stem, excerpt_id, locator in entries:
+		markdown = EXCERPT_ROOT / f"{stem}.md"
+		image = EXCERPT_ROOT / f"{stem}.webp"
+		if not markdown.is_file() or not image.is_file():
+			raise FileNotFoundError(f"Spider-Man VE excerpt is missing: {markdown} or {image}")
+		result.append({
+			"id": excerpt_id,
+			"locator": locator,
+			"path": str(markdown.relative_to(ROOT)).replace("\\", "/"),
+			"sha256": hashlib.sha256(markdown.read_bytes()).hexdigest(),
+			"image": str(image.relative_to(ROOT)).replace("\\", "/"),
+			"image_sha256": hashlib.sha256(image.read_bytes()).hexdigest(),
+			"image_derivation": {
+				"switch-locations": "SpiderMan_VE_web.pdf page 15, crop box 0.04,0.17,0.5,0.92, scanned page rendered at its native resolution (embedded image xref 263, 496px across 4.95in), rendered at 100 dpi, grayscale, 392x827 WebP quality 45",
+				"lamp-locations": "SpiderMan_VE_web.pdf page 17, crop box 0.06,0.18,0.5,0.93, scanned page rendered at its native resolution (embedded image xref 308, 288px across 2.87in), rendered at 100 dpi, grayscale, 376x829 WebP quality 45",
+				"coil-locations-bottom": "SpiderMan_VE_web.pdf page 19, crop box 0.05,0.18,0.52,0.93, scanned page rendered at its native resolution (embedded image xref 394, 558px across 5.57in), rendered at 100 dpi, grayscale, 401x827 WebP quality 45",
+				"coil-locations-top": "SpiderMan_VE_web.pdf page 19, crop box 0.55,0.15,0.96,0.64, scanned page rendered at its native resolution (embedded image xref 396, 334px across 3.34in), rendered at 100 dpi, grayscale, 350x540 WebP quality 45",
+				"coils-detailed-chart": "SpiderMan_VE_web.pdf page 52, crop box 0.04,0.03,0.97,0.95, born-digital page rendered for legibility (smallest type in region 5.2pt, targeting 11px glyphs), rendered at 98 dpi, capped to 1000px wide, grayscale, rotated 90 degrees counter-clockwise, 766x1001 WebP quality 40",
+				"gi-circuit-layout": "SpiderMan_VE_web.pdf page 55, crop box 0.04,0.15,0.43,0.92, born-digital page rendered for legibility (smallest type in region 1.1pt, targeting 11px glyphs), rendered at 211 dpi, capped to 700px wide, grayscale, 701x1789 WebP quality 30",
+				"trough-opto-pcb": "SpiderMan_VE_web.pdf page 64, crop box 0.04,0.08,0.96,0.94, born-digital page rendered for legibility (smallest type in region 2.8pt, targeting 11px glyphs), rendered at 115 dpi, capped to 900px wide, grayscale, 901x1090 WebP quality 45",
+				"trough-opto-led1": "SpiderMan_VE_web.pdf page 65, crop box 0.04,0.08,0.96,0.94, born-digital page rendered for legibility (smallest type in region 4.8pt, targeting 11px glyphs), rendered at 102 dpi, capped to 800px wide, grayscale, 801x968 WebP quality 35",
+				"trough-opto-led2": "SpiderMan_VE_web.pdf page 66, crop box 0.04,0.08,0.96,0.94, scanned page rendered at its native resolution (embedded image xref 1467, 701px across 7.00in), rendered at 100 dpi, grayscale, 784x948 WebP quality 45",
+		}[stem],
+			"method": "manual",
+			"transcribed_by": "curator, read from the rendered page",
+			"reviewed": True,
+		})
+	return result
 
 
 INPUT_POSITIONS = {
@@ -274,6 +320,8 @@ def promote() -> None:
 	definition = load_json(input_path)
 	if not any(source["id"] == TABLE_SOURCE for source in definition["sources"]):
 		definition["sources"].append(TABLE_SOURCE_RECORD)
+	manual_source = next(source for source in definition["sources"] if source["id"] == MANUAL_SOURCE)
+	manual_source["excerpts"] = _manual_excerpts()
 	definition["schema_version"] = 2
 	definition["machine"]["kind"] = "physical_pinball"
 	definition["coverage"]["status"] = "author_ready"
