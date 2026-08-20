@@ -492,18 +492,66 @@ COMMON_SOURCES = [
 	{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/driver.c and generated exact driver catalog"},
 	{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c AC/DC ROM declarations, clone lineage, SAM generation, auxiliary-output flags, public output mapping, and DMD topology"},
 ]
+PRO_MANUAL_EXCERPT_BASE = "evidence/excerpts/stern.ac-dc-pro.2012"
+PRO_MANUAL_EXCERPT_PATH = f"{PRO_MANUAL_EXCERPT_BASE}/service-tables.md"
+PRO_MANUAL_EXCERPT_SHA256 = "26a5886e1a70a6dbc1c61dc94e7941020348621562b2b570051e5883fa7fd2b4"
+PRO_MANUAL_EXCERPTS = [
+	{
+		"id": "excerpt.acdc-pro.switch-matrix", "locator": "PDF page 16, complete switch matrix and dedicated-switch tables",
+		"path": PRO_MANUAL_EXCERPT_PATH, "sha256": PRO_MANUAL_EXCERPT_SHA256,
+		"image": f"{PRO_MANUAL_EXCERPT_BASE}/switch-matrix.webp", "image_sha256": "f2690d5b10a394e1b33d4f1ee2ad42cdfdc880ef4a9a65963864cd141656ff8e",
+		"image_derivation": "ACDC_Pro_web.pdf page 16, crop box 0.03,0.06,0.97,0.81, born-digital page rendered for legibility (smallest type in region 1.9pt, targeting 11px glyphs), rendered at 87 dpi, capped to 900px wide, 901x556 WebP quality 65",
+		"method": "manual", "transcribed_by": "curator, visually checked against the retained crop", "reviewed": True,
+	},
+	{
+		"id": "excerpt.acdc-pro.switch-locations", "locator": "PDF page 17, complete switch-location drawing",
+		"path": PRO_MANUAL_EXCERPT_PATH, "sha256": PRO_MANUAL_EXCERPT_SHA256,
+		"image": f"{PRO_MANUAL_EXCERPT_BASE}/switch-locations.webp", "image_sha256": "ff807c5255aab9b58ecd06fe3540fa951926c6ece684bd00e1425a6e1d55142a",
+		"image_derivation": "ACDC_Pro_web.pdf page 17, crop box 0.035,0.07,0.965,0.91, born-digital page rendered for legibility (smallest type in region 2.9pt, targeting 11px glyphs), rendered at 104 dpi, capped to 820px wide, 821x960 WebP quality 55",
+		"method": "manual", "transcribed_by": "curator, visually checked against the retained crop", "reviewed": True,
+	},
+	{
+		"id": "excerpt.acdc-pro.lamp-matrix", "locator": "PDF page 18, complete lamp-matrix table",
+		"path": PRO_MANUAL_EXCERPT_PATH, "sha256": PRO_MANUAL_EXCERPT_SHA256,
+		"image": f"{PRO_MANUAL_EXCERPT_BASE}/lamp-matrix.webp", "image_sha256": "3154cd03065f912c7860828e1cfe443fac45a15e3d0abe8eb3e11f238ad860a1",
+		"image_derivation": "ACDC_Pro_web.pdf page 18, crop box 0.03,0.06,0.97,0.81, born-digital page rendered for legibility (smallest type in region 5.5pt, targeting 11px glyphs), rendered at 87 dpi, capped to 900px wide, 901x556 WebP quality 65",
+		"method": "manual", "transcribed_by": "curator, visually checked against the retained crop", "reviewed": True,
+	},
+	{
+		"id": "excerpt.acdc-pro.lamp-locations", "locator": "PDF page 19, complete lamp-location drawing",
+		"path": PRO_MANUAL_EXCERPT_PATH, "sha256": PRO_MANUAL_EXCERPT_SHA256,
+		"image": f"{PRO_MANUAL_EXCERPT_BASE}/lamp-locations.webp", "image_sha256": "6e3bdf491d625981e16b90d5919939fef2097c9c013d0285ebc7173046ccc2ea",
+		"image_derivation": "ACDC_Pro_web.pdf page 19, crop box 0.035,0.07,0.965,0.91, born-digital page rendered for legibility (smallest type in region 3.5pt, targeting 11px glyphs), rendered at 104 dpi, capped to 820px wide, 821x960 WebP quality 55",
+		"method": "manual", "transcribed_by": "curator, visually checked against the retained crop", "reviewed": True,
+	},
+	{
+		"id": "excerpt.acdc-pro.coil-chart", "locator": "PDF page 20, complete Q1-Q32 and optional Q33-Q40 coil chart",
+		"path": PRO_MANUAL_EXCERPT_PATH, "sha256": PRO_MANUAL_EXCERPT_SHA256,
+		"image": f"{PRO_MANUAL_EXCERPT_BASE}/coil-chart.webp", "image_sha256": "a5704114632c4de07257cf40884ba7a8925bef67a4f9087f87898c0c9decf288",
+		"image_derivation": "ACDC_Pro_web.pdf page 20, crop box 0.04,0.08,0.96,0.9, born-digital page rendered for legibility (smallest type in region 5.5pt, targeting 11px glyphs), rendered at 89 dpi, capped to 900px wide, 901x621 WebP quality 65",
+		"method": "manual", "transcribed_by": "curator, visually checked against the retained crop", "reviewed": True,
+	},
+	{
+		"id": "excerpt.acdc-pro.coil-locations", "locator": "PDF page 21, complete coil-location drawing",
+		"path": PRO_MANUAL_EXCERPT_PATH, "sha256": PRO_MANUAL_EXCERPT_SHA256,
+		"image": f"{PRO_MANUAL_EXCERPT_BASE}/coil-locations.webp", "image_sha256": "800d77f66541ee5d840da43fdd81adfffe06e970b685d7527866a5f54e0d2127",
+		"image_derivation": "ACDC_Pro_web.pdf page 21, crop box 0.035,0.07,0.965,0.91, born-digital page rendered for legibility (smallest type in region 4.1pt, targeting 11px glyphs), rendered at 114 dpi, capped to 900px wide, 901x1053 WebP quality 65",
+		"method": "manual", "transcribed_by": "curator, visually checked against the retained crop", "reviewed": True,
+	},
+]
+
 MANUAL_SOURCES = {
 	PREMIUM_MANUAL: {"id": PREMIUM_MANUAL, "kind": "manual", "uri": "https://www.sternpinball.com/manuals/", "sha256": "d3de500b504b165023e3858883067ca518543307387ec2460397b740ebe240b6", "locator": "ACDC_Prem_web.pdf pages 16-24 and 42-59; local cache manufacturer.stern.d3de500b504b", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "ACDC_Prem_web.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T17:29:48.3213976Z"},
 	LUCI_MANUAL: {"id": LUCI_MANUAL, "kind": "manual", "uri": "https://www.sternpinball.com/manuals/", "sha256": "65bb776389508259513cb72f4c24f054f97dfaa0eee87557a0f76e3175acf524", "locator": "ACDC_Luci_web.pdf pages 16-24 and 42-59; local cache manufacturer.stern.65bb77638950", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "ACDC_Luci_web.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T17:11:09.695917Z"},
-	PRO_MANUAL: {"id": PRO_MANUAL, "kind": "manual", "uri": "https://www.sternpinball.com/manuals/", "sha256": "987d42c68b586af1b0d66100b9f34d5215dfaf67574032849adb1c2f18c6cab5", "locator": "ACDC_Pro_web.pdf pages 16-21 and major-assembly/wiring sections; local cache manufacturer.stern.987d42c68b58", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "ACDC_Pro_web.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T17:22:42.0568607Z"},
+	PRO_MANUAL: {"id": PRO_MANUAL, "kind": "manual", "uri": "https://www.sternpinball.com/manuals/", "sha256": "987d42c68b586af1b0d66100b9f34d5215dfaf67574032849adb1c2f18c6cab5", "locator": "ACDC_Pro_web.pdf pages 16-21 and major-assembly/wiring sections; local cache manufacturer.stern.987d42c68b58", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "ACDC_Pro_web.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T17:22:42.0568607Z", "excerpts": PRO_MANUAL_EXCERPTS},
 }
 VPX_SOURCES = {
-	PREMIUM_VPX: {"id": PREMIUM_VPX, "kind": "vpx_script", "uri": "https://github.com/vpinball/vpxtable_scripts", "revision": VPX_REVISION, "sha256": "b478b21272befd41908aa3ef4daf3a90d4838334346718cb4d5fde7f23bb2fc0", "locator": "AC-DC LUCI Premium VR (Stern 2013) v1.1.4.vbs; callbacks, initial state, routes, cannon, bell, diverters, lamps, and mechanism behavior", "license": "NOASSERTION", "attribution": "VPW table contributors credited in the script"},
+	PREMIUM_VPX: {"id": PREMIUM_VPX, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/AC-DC%20LUCI%20Premium%20VR%20%28Stern%202013%29%20v1.1.4.vbs", "revision": VPX_REVISION, "sha256": "b478b21272befd41908aa3ef4daf3a90d4838334346718cb4d5fde7f23bb2fc0", "locator": "AC-DC LUCI Premium VR (Stern 2013) v1.1.4.vbs; callbacks, initial state, routes, cannon, bell, diverters, lamps, and mechanism behavior", "license": "NOASSERTION", "attribution": "VPW table contributors credited in the script"},
 	PREMIUM_TABLE: {"id": PREMIUM_TABLE, "kind": "vpx_table", "uri": "local-evidence://vpx-table/acdc-luci-v15", "sha256": "0adcd0b3801856ae2687185dffac068e2ff42edf473696ed653ae168b11f1d4d", "locator": "ACDC LUCI (Stern 2013) v15.vpx (156,454,912 bytes); cGameName=acd_170hc; VPX bounds 0,0-952.9412231445312,2117.64697265625; exact object/collection extraction retained under the review artifact manifest", "license": "NOASSERTION", "attribution": "LUCI table contributors credited in the table", "original_filename": "ACDC LUCI (Stern 2013) v15.vpx", "rights": "NOASSERTION"},
 	PREMIUM_SCRIPT: {"id": PREMIUM_SCRIPT, "kind": "vpx_script", "uri": "local-evidence://vpx-table/acdc-luci-v15/script.vbs", "sha256": "55755ddbde8bdab343775e46d8c8aeec9878c7694f34619942c5701d8ad3a832", "locator": "script.vbs extracted from exact LUCI v15; cGameName=acd_170hc, UseGI=0, controller callbacks, initial cannon/bell state, switch computations, lamp assignments, flasher mirrors, and auxiliary routes", "license": "NOASSERTION", "attribution": "LUCI table contributors credited in the script", "original_filename": "script.vbs", "rights": "NOASSERTION"},
-	PRO_VPX: {"id": PRO_VPX, "kind": "vpx_script", "uri": "https://github.com/vpinball/vpxtable_scripts", "revision": VPX_REVISION, "sha256": "e0fdef84892ea8bce6eae179509ac8262f103bac0173c2e822a4fe10aafcf7fa", "locator": "AC-DC Pro-1.0 Lighting Bug Fix.vbs; exact Pro controller callbacks, ball devices, cannon positions, switch semantics, GI, lamps, and flashers", "license": "NOASSERTION", "attribution": "ninuzzu and credited AC/DC Pro table contributors"},
+	PRO_VPX: {"id": PRO_VPX, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/AC-DC%20Pro-1.0%20Lighting%20Bug%20Fix.vbs", "revision": VPX_REVISION, "sha256": "e0fdef84892ea8bce6eae179509ac8262f103bac0173c2e822a4fe10aafcf7fa", "locator": "AC-DC Pro-1.0 Lighting Bug Fix.vbs; exact Pro controller callbacks, ball devices, cannon positions, switch semantics, GI, lamps, and flashers", "license": "NOASSERTION", "attribution": "ninuzzu and credited AC/DC Pro table contributors"},
 	PRO_TABLE: {"id": PRO_TABLE, "kind": "vpx_table", "uri": "local-evidence://vpx-table/acdc-pro-1.0", "sha256": "44bf3d67f96968103ab71f26b8b12786e5590f62bd73589b85060983dc62d9e9", "locator": "AC-DC Pro-1.0.vpx (78,274,560 bytes); cGameName=acd_170 and splash says AC/DC Pro (Stern 2012); 235 centered candidates; normalized bounds 0,0-952,2115; geometry-only shared original-Pro/LED-Pro evidence, not LED-Pro product identity", "license": "NOASSERTION", "attribution": "AC/DC Pro table contributors; geometry reviewed locally", "original_filename": "AC-DC Pro-1.0.vpx", "rights": "NOASSERTION"},
-	VAULT_VPX: {"id": VAULT_VPX, "kind": "vpx_script", "uri": "https://github.com/vpinball/vpxtable_scripts", "revision": VPX_REVISION, "sha256": "88101e2184729f952d196fdfe5885f9d7e81ec211b7b1b675d724419fcb6a7f1", "locator": "AC-DC Pro Vault-1.0 Lighting Bug Fix.vbs; exact passive swinging-bell behavior at switch 36 and removed inserts 14, 15, and 17", "license": "NOASSERTION", "attribution": "ninuzzu and credited AC/DC Pro Vault table contributors"},
+	VAULT_VPX: {"id": VAULT_VPX, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/AC-DC%20Pro%20Vault-1.0%20Lighting%20Bug%20Fix.vbs", "revision": VPX_REVISION, "sha256": "88101e2184729f952d196fdfe5885f9d7e81ec211b7b1b675d724419fcb6a7f1", "locator": "AC-DC Pro Vault-1.0 Lighting Bug Fix.vbs; exact passive swinging-bell behavior at switch 36 and removed inserts 14, 15, and 17", "license": "NOASSERTION", "attribution": "ninuzzu and credited AC/DC Pro Vault table contributors"},
 	VAULT_TABLE: {"id": VAULT_TABLE, "kind": "vpx_table", "uri": "https://vpuniverse.com/files/file/5489-acdc/", "sha256": "10a460c6b84fc1b8b372bf7b3d92b1904ee5eed9d5aad29fe384e7a6502fa328", "locator": "AC-DC Pro Vault-1.0.vpx (79,429,632 bytes); verified and extracted with vpxtool git:v0.33.3; normalized gameitem geometry and collection membership reviewed against manual pages 17, 19, 21, 42, and 48", "license": "NOASSERTION", "rights": "NOASSERTION", "attribution": "ninuzzu and credited AC/DC Pro Vault table contributors", "original_filename": "AC-DC Pro Vault-1.0.vpx"},
 }
 RUNTIME_SOURCES = {
