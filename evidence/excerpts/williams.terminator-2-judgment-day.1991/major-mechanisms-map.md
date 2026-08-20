@@ -1,0 +1,7 @@
+# Terminator 2: Judgment Day - major-mechanisms map
+
+Source: `Terminator 2 Judgement Day Operations Manual.pdf` (ARC ARC retained source SHA-256 `8540d654b39c58ad3b19ece0f42eb1dfdb8460d249e9480f8906385c8ecdb16b`), PDF page 70, printed page 2-4, "Locations Diagram - Game Major Mechanisms", underside of the raised playfield. The crop is the labelled drawing itself, manually checked rather than OCR-derived.
+
+The drawing identifies the physical inventory relevant to recreation: A-8039-3 Outhole Assembly and the ball-trough switches at the rear; C-13174-L and C-13174-R flipper assemblies, both printed as "Right Flipper Assy." in the source; B-11873 Left Kickback Assembly and A-14525 Right Kickback Assembly; C-9638 Ball Shooter Assembly with B-9362-R-3 Coil & Bracket Assembly; two B-12665 kicker-arm assemblies with B-13935 Coil & Bracket assemblies; a left B-9361-R-6 Ball Eject Assembly with B-11203-L-1 Coil & Bracket Assembly and a right B-9361-R Ball Eject Assembly with B-11203-R-1 Coil & Bracket Assembly; A-14501 Ball Popper; A-14615 one-bank drop target; three B-9414-3/A-9415-2 jet-bumper/coil assemblies; A-14507 Gun Kicker Assembly; A-14504 Platform Assembly; and A-13892-2 Motor Regulator Assembly.
+
+The triangular A through K marks show that the lamp assemblies are distributed around these same physical regions, but their detailed parts table is outside this tight crop and is not asserted here. The drawing supplies physical assemblies and topology, not an asserted switch or lamp coordinate survey.

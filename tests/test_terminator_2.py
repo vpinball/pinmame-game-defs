@@ -132,6 +132,16 @@ class Terminator2DefinitionTests(unittest.TestCase):
 		], self.audit["unresolved"])
 		self.assertIn("Light2", self.audit["candidate_geometry"]["excluded_graphical_objects"])
 		sources = {item["id"]: item for item in self.definition["sources"]}
+		manual = sources["manual.williams.terminator-2-judgment-day.1991"]
+		self.assertEqual("8540d654b39c58ad3b19ece0f42eb1dfdb8460d249e9480f8906385c8ecdb16b", manual["sha256"])
+		self.assertEqual("Terminator 2 Judgement Day Operations Manual.pdf", manual["original_filename"])
+		self.assertEqual({
+			"excerpt.t2.switch-matrix", "excerpt.t2.solenoid-table-01-08", "excerpt.t2.solenoid-table-09-16",
+			"excerpt.t2.solenoid-table-flashers-gi", "excerpt.t2.lamp-matrix", "excerpt.t2.major-mechanisms-map",
+			"excerpt.t2.cannon-platform-assembly",
+		}, {excerpt["id"] for excerpt in manual["excerpts"]})
+		self.assertTrue(all("scanned page rendered at its native resolution" in excerpt["image_derivation"] for excerpt in manual["excerpts"]))
+		self.assertTrue(all("pdftoppm" not in excerpt["image_derivation"] for excerpt in manual["excerpts"]))
 		self.assertEqual("3727bf57102fceb13b9f8e6370bd7bc4fbd2571d95affb7bff34eb7c5f2e9f8c", sources["vpx-table.t2-vpw-0022"]["sha256"])
 		self.assertEqual("b5153ac46f6d4b58afb676c1f7bfdff17c6ffb953941daed8dd841c679f4e831", sources["vpx-script.t2-vpw-0022"]["sha256"])
 		self.assertEqual("https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Terminator%202%20%28Williams%201991%29.vbs", sources["vpx-script.t2-modern-comparison"]["uri"])
