@@ -10,6 +10,7 @@ back into an identity mapping is a regression.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import unittest
 from pathlib import Path
@@ -278,6 +279,13 @@ class CentaurDefinitionTests(unittest.TestCase):
 		self.assertTrue(manual["uri"].startswith("external:pinmame-manuals/"))
 		for field in ("license", "attribution", "original_filename", "rights", "acquired_at"):
 			self.assertIn(field, manual)
+		self.assertEqual(3, len(manual["excerpts"]))
+		for excerpt in manual["excerpts"]:
+			path = ROOT / excerpt["path"]
+			self.assertTrue(path.is_file(), path)
+			self.assertEqual(excerpt["sha256"], hashlib.sha256(path.read_bytes()).hexdigest(), excerpt["id"])
+			self.assertTrue((ROOT / excerpt["image"]).is_file(), excerpt["id"])
+			self.assertTrue(excerpt["reviewed"])
 		runtime = sources["runtime.centaur.solenoid-self-test"]
 		self.assertEqual(
 			"internal:evidence/runtime/by35/centaur-solenoid-self-test.json", runtime["uri"]
