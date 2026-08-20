@@ -776,9 +776,12 @@ def source_records() -> list[dict[str, Any]]:
 				},
 				{
 					"id": "excerpt.theatre-of-magic.eddy-and-trunk-teardown",
-					"locator": "PDF page 45 (printed 1-45, Eddy Sensor Calibration) and PDF page 50 (printed 1-50, Magic Trunk teardown)",
+					"locator": "PDF page 69 (printed 1-45, Eddy Sensor Calibration) and PDF pages 100-101 (printed 1-50, Magic Trunk teardown)",
 					"path": "evidence/excerpts/bally.theatre-of-magic.1995/eddy-and-trunk-teardown.md",
 					"sha256": "73ee6efa9327b9fdc098cc0bfcb56aed94a88ac3ea06580db3d839810487abf6",
+					"image": "evidence/excerpts/bally.theatre-of-magic.1995/eddy-and-trunk-teardown.webp",
+					"image_sha256": "471f7188b7833c1a1080583bd63f8622651bf35650bcf6aa1f2d4340e04a95d3",
+					"image_derivation": "Theatre_of_Magic_OPS.pdf page 69, crop box 0.08,0.08,0.93,0.87, scanned page rendered at its native resolution (embedded image xref 275, 2561px across 8.29in), rendered at 100 dpi, capped to 700px wide, 701x921 WebP quality 70",
 					"method": "manual",
 					"transcribed_by": "curator, verified against the rendered page",
 					"reviewed": True,
