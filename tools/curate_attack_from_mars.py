@@ -63,6 +63,37 @@ VISUAL_REVIEW_CACHE = (
 	("upperpf-10.png", "29bce9dbf1f0f4ab5ccc27c7e3f6bc787ba02e95a41b01ff3a86ce3001ddefe0", "300 dpi crop of the upper playfield parts list showing four A-20579/A-20479 alien mech assemblies with distinct figurine support brackets, A-17797-2 Right Ball Gate with A-17797-1 Left Ball Gate, and the wire/plastic ramp assemblies that carry the ramp flashers"),
 )
 
+MANUAL_EXCERPT_BASE = "evidence/excerpts/bally.attack-from-mars.1995"
+MANUAL_EXCERPT_PATH = f"{MANUAL_EXCERPT_BASE}/operator-handbook.md"
+MANUAL_EXCERPT_SHA256 = "ddf442a9894a0ddc6a0a495d7e37955d98633eb03416255abd5bd7a28d678ace"
+
+
+def _manual_excerpt(identifier: str, locator: str, image: str, image_sha256: str, image_derivation: str) -> dict[str, Any]:
+	return {
+		"id": identifier,
+		"locator": locator,
+		"path": MANUAL_EXCERPT_PATH,
+		"sha256": MANUAL_EXCERPT_SHA256,
+		"image": f"{MANUAL_EXCERPT_BASE}/{image}",
+		"image_sha256": image_sha256,
+		"image_derivation": image_derivation,
+		"method": "manual",
+		"transcribed_by": "curator, visually checked against the retained crop",
+		"reviewed": True,
+	}
+
+
+MANUAL_EXCERPTS = [
+	_manual_excerpt("excerpt.attack-from-mars.lamp-matrix-and-list", "PDF page 4, printed page 2, lamp matrix and locations 11-58", "lamp-matrix-and-list.webp", "2919ff1e26edd2216d3eb3995f7ab3a735a0c81caaa85c28ffa5bb2f895abcba", "Attack_From_Mars_OPS.pdf page 4, crop box 0.34,0.04,0.96,0.95, scanned page rendered at its native resolution (embedded image xref 13, 1529px across 5.10in), rendered at 207 dpi, capped to 650px wide, 651x1552 WebP quality 45"),
+	_manual_excerpt("excerpt.attack-from-mars.lamp-locations", "PDF page 5, printed page 3, lamp locations 61-88 and playfield drawing", "lamp-locations.webp", "b58969e58dfaff76c50e06c906fc7c283ba4a8bda469a107f0649951d4b6ab18", "Attack_From_Mars_OPS.pdf page 5, crop box 0.05,0.04,0.95,0.95, scanned page rendered at its native resolution (embedded image xref 17, 1593px across 5.31in), rendered at 179 dpi, capped to 850px wide, 851x1343 WebP quality 55"),
+	_manual_excerpt("excerpt.attack-from-mars.switch-matrix-and-list", "PDF page 6, printed page 4, switch matrix and locations F1-F8/11-48", "switch-matrix-and-list.webp", "f271b27f2fc50d0b38378f20b822471703802e16f2642aa090161711a2dd058d", "Attack_From_Mars_OPS.pdf page 6, crop box 0.2,0.04,0.82,0.95, scanned page rendered at its native resolution (embedded image xref 22, 1536px across 5.12in), rendered at 189 dpi, capped to 600px wide, 601x1418 WebP quality 40"),
+	_manual_excerpt("excerpt.attack-from-mars.switch-locations", "PDF page 7, printed page 5, switch locations 51-78 and playfield drawing", "switch-locations.webp", "d78ae6dd37927d9a014b71ddc32f78d9a5afc2f832502a48d532990d670ee81c", "Attack_From_Mars_OPS.pdf page 7, crop box 0.26,0.04,0.78,0.95, scanned page rendered at its native resolution (embedded image xref 26, 1598px across 5.33in), rendered at 219 dpi, capped to 600px wide, 600x1629 WebP quality 40"),
+	_manual_excerpt("excerpt.attack-from-mars.solenoid-table-and-list", "PDF page 8, printed page 6, solenoid/flasher table and locations 01-16", "solenoid-table-and-list.webp", "098ac66589c2541ff28a9d4a854ff8e15b960501d0f5740759b507f9ac269276", "Attack_From_Mars_OPS.pdf page 8, crop box 0.1,0.04,0.9,0.95, scanned page rendered at its native resolution (embedded image xref 31, 1524px across 5.08in), rendered at 148 dpi, capped to 600px wide, 600x1102 WebP quality 40"),
+	_manual_excerpt("excerpt.attack-from-mars.solenoid-locations", "PDF page 9, printed page 7, solenoid locations 17-39, GI, flippers and playfield drawing", "solenoid-locations.webp", "e35a7cf52d6ff13a181e58b76554501d3f67000dedd9108701116e54710f4ee8", "Attack_From_Mars_OPS.pdf page 9, crop box 0.18,0.04,0.82,0.95, scanned page rendered at its native resolution (embedded image xref 35, 1602px across 5.34in), rendered at 192 dpi, capped to 650px wide, 651x1419 WebP quality 45"),
+	_manual_excerpt("excerpt.attack-from-mars.upper-playfield-parts-list", "PDF page 10, printed page 8, upper-playfield parts list", "upper-playfield-parts-list.webp", "f5998b36eb5ae0758dfc691cd3065aadce56b1bb05e9c07fbc46a021bcc8be8d", "Attack_From_Mars_OPS.pdf page 10, crop box 0.1,0.03,0.9,0.95, scanned page rendered at its native resolution (embedded image xref 39, 1540px across 5.13in), rendered at 159 dpi, capped to 650px wide, 651x1195 WebP quality 45"),
+	_manual_excerpt("excerpt.attack-from-mars.upper-playfield-parts-map", "PDF page 11, printed page 9, upper-playfield parts drawing", "upper-playfield-parts-map.webp", "eeeec58e00f0aff6d3b0af1afd2042c06550375306793c03ed1d3cb6f750af48", "Attack_From_Mars_OPS.pdf page 11, crop box 0.14,0.03,0.86,0.94, scanned page rendered at its native resolution (embedded image xref 43, 1604px across 5.35in), rendered at 169 dpi, capped to 650px wide, 651x1268 WebP quality 45"),
+]
+
 EXTRACTION_RELATIVE_PATH = Path("bally/attack-from-mars-1995/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("bally/attack-from-mars-1995/extraction-manifest.json")
 EXTRACTION_MANIFEST_SHA256 = "f2d555ebcf2b9dc563178400d741350006f8627f197eea47e2f2379045dbeb5e"
@@ -754,6 +785,7 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "Bally/Midway Manufacturing Company; scan hosted by the Internet Archive",
 			"rights": "NOASSERTION",
+			"excerpts": MANUAL_EXCERPTS,
 		},
 		{
 			"id": MANUAL_SUPPORT_SOURCE,
