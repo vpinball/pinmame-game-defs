@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -19,12 +20,63 @@ VPX_REVISION = "0c036bb61b4b4e8c778c37559f6795df8cd1521e"
 CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
 MANUAL_SOURCE = "manual.tron-legacy-pro-le.2011"
+EXCERPT_ROOT = ROOT / "evidence/excerpts/stern.tron-legacy-pro-limited-edition.2011"
 VPX_SOURCE = "vpx.tron-legacy-le-vpm-1.1.4"
 STERN_SOURCE = "stern.tron-legacy-product-page"
 PRO_IPDB_SOURCE = "ipdb.tron-legacy-pro.5682"
 LE_IPDB_SOURCE = "ipdb.tron-legacy-limited-edition.5707"
 PRO_RUNTIME_SOURCE = "runtime.tron-legacy-pro.boot-start"
 LE_RUNTIME_SOURCE = "runtime.tron-legacy-limited-edition.boot-start"
+
+
+def tron_manual_source() -> dict[str, object]:
+	base = {
+		"id": MANUAL_SOURCE,
+		"kind": "manual",
+		"uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/Tron-Manual.pdf",
+		"sha256": "1212d9f1f5bdb33e9b248299d0e1693ad1103f82129234a1348f0aa8edd47e84",
+		"locator": "Official 111-page scanned Stern manual: Pro switches/coils/lamps PDF pages 49/51/53, LE pages 55/57/59, location maps on following pages, major assemblies 1-30, and wiring 93-111",
+		"license": "NOASSERTION",
+		"attribution": "Stern Pinball, Inc.",
+		"source_id": "stern",
+		"original_filename": "Tron-Manual.pdf",
+		"rights": "NOASSERTION",
+		"acquired_at": "2026-08-02T23:21:40.923848Z",
+	}
+	entries = [
+		("pro-switch-matrix", "excerpt.tron.pro-switch-matrix", "PDF page 49, PRO SWITCH MATRIX GRID", "Tron-Manual.pdf page 49, crop box 0.05,0.08,0.9,0.72, scanned page rendered at its native resolution (embedded image xref 228, 1684px across 11.69in), rendered at 80 dpi, capped to 800px wide, grayscale, 801x426 WebP quality 30"),
+		("pro-switch-locations", "excerpt.tron.pro-switch-locations", "PDF page 50, PRO SWITCH LOCATIONS", "Tron-Manual.pdf page 50, crop box 0.03,0.05,0.97,0.92, scanned page rendered at its native resolution (embedded image xref 232, 1190px across 8.26in), rendered at 84 dpi, capped to 650px wide, grayscale, 651x853 WebP quality 25"),
+		("pro-coil-chart", "excerpt.tron.pro-coil-chart", "PDF page 51, PRO COILS DETAILED CHART TABLE", "Tron-Manual.pdf page 51, crop box 0.05,0.08,0.92,0.78, scanned page rendered at its native resolution (embedded image xref 236, 1190px across 8.26in), rendered at 111 dpi, capped to 800px wide, grayscale, 801x911 WebP quality 30"),
+		("pro-coil-locations", "excerpt.tron.pro-coil-locations", "PDF page 52, PRO COIL & FLASH LAMP LOCATIONS", "Tron-Manual.pdf page 52, crop box 0.03,0.05,0.97,0.92, scanned page rendered at its native resolution (embedded image xref 240, 1190px across 8.26in), rendered at 84 dpi, capped to 650px wide, grayscale, 651x853 WebP quality 25"),
+		("pro-lamp-matrix", "excerpt.tron.pro-lamp-matrix", "PDF page 53, PRO LAMP MATRIX GRID", "Tron-Manual.pdf page 53, crop box 0.05,0.10,0.92,0.73, scanned page rendered at its native resolution (embedded image xref 245, 1695px across 11.77in), rendered at 79 dpi, capped to 800px wide, grayscale, 801x411 WebP quality 30"),
+		("pro-lamp-locations", "excerpt.tron.pro-lamp-locations", "PDF page 54, PRO LAMP LOCATIONS", "Tron-Manual.pdf page 54, crop box 0.03,0.05,0.97,0.92, scanned page rendered at its native resolution (embedded image xref 250, 1206px across 8.38in), rendered at 84 dpi, capped to 650px wide, grayscale, 651x853 WebP quality 25"),
+		("le-switch-matrix", "excerpt.tron.le-switch-matrix", "PDF page 55, LE SWITCH MATRIX GRID", "Tron-Manual.pdf page 55, crop box 0.05,0.08,0.9,0.72, scanned page rendered at its native resolution (embedded image xref 255, 1700px across 11.81in), rendered at 80 dpi, capped to 800px wide, grayscale, 801x426 WebP quality 30"),
+		("le-switch-locations", "excerpt.tron.le-switch-locations", "PDF page 56, LE SWITCH LOCATIONS", "Tron-Manual.pdf page 56, crop box 0.03,0.05,0.97,0.92, scanned page rendered at its native resolution (embedded image xref 260, 1262px across 8.76in), rendered at 77 dpi, capped to 600px wide, grayscale, 601x787 WebP quality 23"),
+		("le-coil-chart", "excerpt.tron.le-coil-chart", "PDF page 57, LE COILS DETAILED CHART TABLE", "Tron-Manual.pdf page 57, crop box 0.05,0.08,0.92,0.78, scanned page rendered at its native resolution (embedded image xref 265, 1219px across 8.47in), rendered at 104 dpi, capped to 750px wide, grayscale, 751x855 WebP quality 28"),
+		("le-coil-locations", "excerpt.tron.le-coil-locations", "PDF page 58, LE COIL & FLASH LAMP LOCATIONS", "Tron-Manual.pdf page 58, crop box 0.03,0.05,0.97,0.92, scanned page rendered at its native resolution (embedded image xref 270, 1226px across 8.51in), rendered at 84 dpi, capped to 650px wide, grayscale, 651x853 WebP quality 25"),
+		("le-lamp-matrix", "excerpt.tron.le-lamp-matrix", "PDF page 59, LE LAMP MATRIX GRID", "Tron-Manual.pdf page 59, crop box 0.05,0.10,0.92,0.73, scanned page rendered at its native resolution (embedded image xref 275, 1720px across 11.94in), rendered at 79 dpi, capped to 800px wide, grayscale, 801x411 WebP quality 30"),
+		("le-lamp-locations", "excerpt.tron.le-lamp-locations", "PDF page 60, LE LAMP LOCATIONS", "Tron-Manual.pdf page 60, crop box 0.03,0.05,0.97,0.92, scanned page rendered at its native resolution (embedded image xref 279, 1222px across 8.49in), rendered at 104 dpi, capped to 650px wide, grayscale, 651x853 WebP quality 25"),
+	]
+	excerpts = []
+	for stem, excerpt_id, locator, derivation in entries:
+		markdown = EXCERPT_ROOT / f"{stem}.md"
+		image = EXCERPT_ROOT / f"{stem}.webp"
+		if not markdown.is_file() or not image.is_file():
+			raise FileNotFoundError(f"TRON manual excerpt is missing: {markdown} or {image}")
+		excerpts.append({
+			"id": excerpt_id,
+			"locator": locator,
+			"path": str(markdown.relative_to(ROOT)).replace("\\", "/"),
+			"sha256": hashlib.sha256(markdown.read_bytes()).hexdigest(),
+			"image": str(image.relative_to(ROOT)).replace("\\", "/"),
+			"image_sha256": hashlib.sha256(image.read_bytes()).hexdigest(),
+			"image_derivation": derivation,
+			"method": "manual",
+			"transcribed_by": "curator, read from the rendered page",
+			"reviewed": True,
+		})
+	base["excerpts"] = excerpts
+	return base
 
 
 def slug(value: str) -> str:
@@ -353,8 +405,8 @@ def sources(limited_edition: bool) -> list[dict[str, object]]:
 	ipdb_id = 5707 if limited_edition else 5682
 	ipdb_source = LE_IPDB_SOURCE if limited_edition else PRO_IPDB_SOURCE
 	return [
-		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/Tron-Manual.pdf", "sha256": "1212d9f1f5bdb33e9b248299d0e1693ad1103f82129234a1348f0aa8edd47e84", "locator": "Official 111-page scanned Stern manual: Pro switches/coils/lamps PDF pages 49/51/53, LE pages 55/57/59, location maps on following pages, major assemblies 1-30, and wiring 93-111", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "Tron-Manual.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T23:21:40.923848Z"},
-		{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Tron%20Legacy%20LE%20(Stern%202011)%20VPMmod%20v1.1.4.vbs", "revision": VPX_REVISION, "sha256": "d257913fb05fa054bbf15a8605d4b9b3af2887514355784cbfbc5c92a36adfcc", "known_working": True, "locator": "Known-working trn_174h script: four-ball initialization, eject and launcher constants, drop bank, target-bank travel, Recognizer positions, disc and post callbacks, staged upper flipper, and BGR ramp-light consumption", "license": "NOASSERTION", "attribution": "Table authors credited in the script; vpxtable_scripts contributors"},
+		tron_manual_source(),
+		{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Tron%20Legacy%20LE%20%28Stern%202011%29%20VPMmod%20v1.1.4.vbs", "revision": VPX_REVISION, "sha256": "d257913fb05fa054bbf15a8605d4b9b3af2887514355784cbfbc5c92a36adfcc", "known_working": True, "locator": "Known-working trn_174h script: four-ball initialization, eject and launcher constants, drop bank, target-bank travel, Recognizer positions, disc and post callbacks, staged upper flipper, and BGR ramp-light consumption", "license": "NOASSERTION", "attribution": "Table authors credited in the script; vpxtable_scripts contributors"},
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c TRON driver family, SAM_5COL+1 custom lamp column, tricolor board C/D strobes, fast-flip addresses, GI 0, game-on 33, and 128x32 DMD", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 		{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames trn_ records and clone graph", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 		{"id": STERN_SOURCE, "kind": "human_review", "uri": "https://sternpinball.com/game/tron/", "locator": "Manufacturer product identity and common feature inventory: two ramps, motorized Recognizer target bank, spinning identity disc, three flippers, and licensed presentation", "license": "NOASSERTION", "attribution": "Stern Pinball", "acquired_at": "2026-08-02T23:00:00Z"},
