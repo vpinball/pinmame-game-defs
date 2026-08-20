@@ -71,6 +71,17 @@ PLAYFIELD_WIDTH = 952.0
 PLAYFIELD_HEIGHT = 1974.0
 TABLE_BOUNDS = "left=0 top=0 right=952 bottom=1974"
 
+EXCERPT_IMAGES = {
+	"game-adjustments.md": {
+		"image_sha256": "55fc031691027a34c59eb0eb2468b50ea6d51468307e6fadf121448f92a65c75",
+		"image_derivation": "Bally_1981_Fathom_English_Manual.pdf page 13, crop box 0.05,0.05,0.95,0.95, scanned page rendered at its native resolution (embedded image xref 51, 1275px across 8.50in), rendered at 92 dpi, capped to 700px wide, 701x907 WebP quality 70",
+	},
+	"auxiliary-lamp-driver-a9.md": {
+		"image_sha256": "1a2517465d3959f40a9c335d032a03805737d835690ae9aaa898a2606e6576cf",
+		"image_derivation": "Bally_1981_Fathom_Schematics.pdf page 6, crop box 0.04,0.03,0.98,0.9, scanned page rendered at its native resolution (embedded image xref 25, 10030px across 17.00in), rendered at 44 dpi, capped to 700px wide, 701x420 WebP quality 70",
+	},
+}
+
 DRIVER_IDS = ("fathom", "fathoma", "fathomb")
 DRIVER_COMPATIBILITY = {
 	"fathom": (
@@ -1309,7 +1320,7 @@ def conflicts() -> list[dict[str, Any]]:
 
 def source_records() -> list[dict[str, Any]]:
 	def excerpt(identifier: str, locator: str, name: str, digest: str, *, reviewed: bool = True) -> dict[str, Any]:
-		return {
+		record = {
 			"id": identifier,
 			"locator": locator,
 			"path": f"evidence/excerpts/{MACHINE_ID}/{name}",
@@ -1318,6 +1329,15 @@ def source_records() -> list[dict[str, Any]]:
 			"transcribed_by": "curator, read from rendered pages",
 			"reviewed": reviewed,
 		}
+		image = EXCERPT_IMAGES.get(name)
+		if image:
+			record.update(
+				{
+					"image": f"evidence/excerpts/{MACHINE_ID}/{name.removesuffix('.md')}.webp",
+					**image,
+				}
+			)
+		return record
 
 	return [
 		{
