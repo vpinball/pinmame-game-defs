@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-import json
 import ast
+import hashlib
 import importlib.util
+import json
 import sys
 import tempfile
 import unittest
@@ -160,6 +161,13 @@ class TwentyFourDefinitionTests(unittest.TestCase):
 		self.assertIn("not a complete service I/O chart", sources["manual.stern-24-parts.2009"]["locator"])
 		self.assertEqual("20f04adaba96926b74aa91dba7f88024a70012eb601242d18dfb15ed3da1f990", sources["manual.stern-sam-io-reference.2014"]["sha256"])
 		self.assertIn("not evidence for any 24 game semantic", sources["manual.stern-sam-io-reference.2014"]["locator"])
+		self.assertEqual(3, len(sources["manual.stern-sam-io-reference.2014"]["excerpts"]))
+		for excerpt in sources["manual.stern-sam-io-reference.2014"]["excerpts"]:
+			path = ROOT / excerpt["path"]
+			self.assertTrue(path.is_file(), path)
+			self.assertEqual(excerpt["sha256"], hashlib.sha256(path.read_bytes()).hexdigest(), excerpt["id"])
+			self.assertTrue((ROOT / excerpt["image"]).is_file(), excerpt["id"])
+			self.assertTrue(excerpt["reviewed"])
 		self.assertEqual("7bf550806bd87c17417a974ed75b1700885da883e0dce5ce31d7dc7ba6cc094f", sources["vpx.stern-24-2.3.1"]["sha256"])
 		self.assertEqual("7e8bf294f3b3dd4bfe53e2727957d000568bc9d079caeed60038ceeb8d1b89f5", sources["vpx-table.stern-24-2009-local"]["sha256"])
 		self.assertEqual("be3a0e0e96df6d232fa1fa99110e63781abdca5484a1b97de75de0fd1760135a", sources["vpx.stern-24-embedded-2.0.1"]["sha256"])

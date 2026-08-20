@@ -408,11 +408,44 @@ TWENTY_FOUR_MANUAL_EXCERPTS = [
 	},
 ]
 
+SAM_REFERENCE_EXCERPTS = [
+	{
+		"id": "excerpt.twenty-four.sam-reference.switch-matrix-left",
+		"locator": "IronMan_Vault_web.pdf page 16, dedicated SAM inputs D-1 through D-24 and DIP positions D-25 through D-30; shared board convention only",
+		"path": "evidence/excerpts/stern.twenty-four.2009/sam-reference-switch-matrix-left.md",
+		"sha256": "e7cb5078a027cd3c2dda595711ae9dfb08ea6ab8bbcd83c0957072028c1fa85d",
+		"image": "evidence/excerpts/stern.iron-man-vault-edition.2014/switch-matrix-left.webp",
+		"image_sha256": "9e20dbaa0e790cefe1871a7b6af694074121fe26276de4090d154a15fe48e372",
+		"image_derivation": "IronMan_Vault_web.pdf page 16, crop box 0.04,0.1,0.52,0.84, born-digital page rendered for legibility (smallest type in region 1.8pt, targeting 11px glyphs), rendered at 147 dpi, capped to 600px wide, grayscale, rotated 90 degrees counter-clockwise, 1198x600 WebP quality 25",
+		"method": "manual", "transcribed_by": "curator, read from the rendered source crop", "reviewed": True,
+	},
+	{
+		"id": "excerpt.twenty-four.sam-reference.switch-matrix-right",
+		"locator": "IronMan_Vault_web.pdf page 16, standard SAM switch-matrix rows, columns, wire colors, and CPU/Sound-board connections; shared topology only",
+		"path": "evidence/excerpts/stern.twenty-four.2009/sam-reference-switch-matrix-right.md",
+		"sha256": "1c362f922ac75d661e2c624f8f0db8e210311aa48a36214f4286fb4d412fbb32",
+		"image": "evidence/excerpts/stern.iron-man-vault-edition.2014/switch-matrix-right.webp",
+		"image_sha256": "b9ddf3b6d64af10f603ddccbc7e1d8e4cd8e3c42c98468520ea80d5d345e5581",
+		"image_derivation": "IronMan_Vault_web.pdf page 16, crop box 0.48,0.1,0.97,0.84, born-digital page rendered for legibility (smallest type in region 5.5pt, targeting 11px glyphs), rendered at 143 dpi, grayscale, rotated 90 degrees counter-clockwise, 1168x598 WebP quality 25",
+		"method": "manual", "transcribed_by": "curator, read from the rendered source crop", "reviewed": True,
+	},
+	{
+		"id": "excerpt.twenty-four.sam-reference.coil-table",
+		"locator": "IronMan_Vault_web.pdf page 20, SAM I/O Power Driver Q1 through Q32 driver and control-connector table; shared board convention only",
+		"path": "evidence/excerpts/stern.twenty-four.2009/sam-reference-coil-table.md",
+		"sha256": "ad25b06e2b70ae2f255578366f1ef85aa2ee33ca130d2199333dd28ca7c6dfd6",
+		"image": "evidence/excerpts/stern.iron-man-vault-edition.2014/coil-table.webp",
+		"image_sha256": "7b7fd31e3d4ebc9b236d93ce5929c0e40b6d03e5ed90967789f8ed699de382fe",
+		"image_derivation": "IronMan_Vault_web.pdf page 20, crop box 0.08,0.05,0.94,0.84, born-digital page rendered for legibility (smallest type in region 5.5pt, targeting 11px glyphs), rendered at 106 dpi, capped to 1000px wide, grayscale, rotated 90 degrees counter-clockwise, 711x1001 WebP quality 50",
+		"method": "manual", "transcribed_by": "curator, read from the rendered source crop", "reviewed": True,
+	},
+]
+
 
 def sources() -> list[dict[str, object]]:
 	return [
 		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://sternpinball.com/wp-content/uploads/2018/11/24Manual.pdf", "sha256": "c547202e54b3ffbe53ba955db9eed8d52a6fef4b4807416de2f31ccf18aaf71f", "locator": "Official 72-page partial Pink/Blue parts and assembly book. Custom assemblies are on PDF pages 39-47; suitcase assembly 511-5092-00, 24 V stepper 511-5072-00, 180-5119-02 light-actuation microswitch, and 180-5119-00 microswitch are identified on page 43. It gives no Q21/Q23/Q25/Q30 phase sequence, wire-color map, or complete factory contact seating, and is not a complete service I/O chart; pages 1-52 are image scans and later pages are generic appendices.", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "24Manual.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-03T04:08:34.2127718Z", "excerpts": TWENTY_FOUR_MANUAL_EXCERPTS},
-		{"id": SAM_REFERENCE_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2022/06/IronMan_Vault_web.pdf", "sha256": "20f04adaba96926b74aa91dba7f88024a70012eb601242d18dfb15ed3da1f990", "locator": "Later official service manual for a machine using the same SAM CPU/Sound and I/O Power Driver boards. Used only for standardized SAM matrix, dedicated-input, lamp-matrix, Q-control connector pinouts, and supply topology; it is not evidence for any 24 game semantic or installed device.", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "IronMan_Vault_web.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-03T03:02:35.240041Z"},
+		{"id": SAM_REFERENCE_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2022/06/IronMan_Vault_web.pdf", "sha256": "20f04adaba96926b74aa91dba7f88024a70012eb601242d18dfb15ed3da1f990", "locator": "Later official service manual for a machine using the same SAM CPU/Sound and I/O Power Driver boards. Used only for standardized SAM matrix, dedicated-input, lamp-matrix, Q-control connector pinouts, and supply topology; it is not evidence for any 24 game semantic or installed device. Committed excerpts show the shared switch and Q-output board conventions without transferring Iron Man labels.", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "IronMan_Vault_web.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-03T03:02:35.240041Z", "excerpts": SAM_REFERENCE_EXCERPTS},
 		{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/24%20%28Stern%202009%29%20v.2.3.1.vbs", "revision": VPX_REVISION, "sha256": "7bf550806bd87c17417a974ed75b1700885da883e0dce5ce31d7dc7ba6cc094f", "locator": "Known-working exact twenty4_150 table script: all switch handlers, four-ball trough, corrected suitcase lock mapping and animation, Safe House and Sniper facades, gates/posts, drop resets, flippers, flashers, lamps, and GI. Line 626 registers only SolCallback(21) as the logical animation trigger while its inline hardware comment explicitly lists suitcase motor solenoid positions 21, 23, 25, and 30; the unregistered positions are physical stepper drives, not separate VPX callbacks.", "license": "NOASSERTION", "attribution": "Table authors credited in the script; vpxtable_scripts contributors"},
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c twenty4 INITGAME/driver family, SAM_NO_AUX, SAM public switch translation, synthetic game-on output, and 128x32 DMD.", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 		{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames twenty4_ driver records and clone graph.", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
