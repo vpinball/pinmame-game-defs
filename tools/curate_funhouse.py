@@ -733,6 +733,7 @@ def source_records() -> list[dict[str, Any]]:
 			"id": VPXTABLE_SCRIPTS_SOURCE,
 			"kind": "vpx_script",
 			"uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Funhouse%20%28Williams%201990%29.vbs",
+			"revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
 			"original_filename": "Funhouse (Williams 1990).vbs",
 			"sha256": "37cf4e41a6dc9772968cc8a1b13797e7ffb6f504d7e43cd15a6bb12926e9ae3d",
 			"known_working": True,
