@@ -1478,6 +1478,9 @@ def build_sources() -> list[dict[str, Any]]:
 				{
 					"id": "excerpt.flash-gordon.option-switches",
 					"locator": "PDF pages 10-13, printed 5-8, V. GAME ADJUSTMENTS",
+					"image": "evidence/excerpts/bally.flash-gordon.1980/option-switches.webp",
+					"image_derivation": "Flash Gordon Bally 1981 English Manual.pdf page 12, crop box 0.05,0.05,0.95,0.94, scanned page rendered at its native resolution (embedded image xref 45, 2556px across 8.52in), rendered at 92 dpi, capped to 700px wide, 701x897 WebP quality 70",
+					"image_sha256": "1781a4e2fed90ce9045e91109441dc76c2773ee441a7e0bf13772deade31d0dc",
 					"method": "manual",
 					"path": "evidence/excerpts/bally.flash-gordon.1980/option-switches.md",
 					"reviewed": True,
@@ -1525,7 +1528,7 @@ def build_sources() -> list[dict[str, Any]]:
 		{
 			"id": CORPUS_SCRIPT_SOURCE,
 			"kind": "vpx_script",
-			"uri": "https://github.com/sverrewl/vpxtable_scripts",
+			"uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Flash%20Gordon%20%28Bally%201981%29%20VPW%20Mod%20v3.1.3.vbs",
 			"revision": CORPUS_REVISION,
 			"sha256": CORPUS_SCRIPT_SHA256,
 			"locator": "Flash Gordon (Bally 1981) VPW Mod v3.1.3.vbs in the pinned known-working script "
