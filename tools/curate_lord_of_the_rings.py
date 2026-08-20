@@ -493,6 +493,9 @@ SOURCES = [
                 "path": "evidence/excerpts/stern.lord-of-the-rings.2003/switch-matrix-dedicated-switches.md",
                 "reviewed": True,
                 "sha256": _excerpt_sha(EXCERPT_DIR / "switch-matrix-dedicated-switches.md"),
+                "image": "evidence/excerpts/stern.lord-of-the-rings.2003/switch-matrix-dedicated-switches.webp",
+                 "image_sha256": "eca06e367d03e2fcec46b7ff2d8ad916999a6ce5bde17536e57a44c8c482f6df",
+                 "image_derivation": "Lord-of-the-Rings-Manual.pdf page 6, crop box 0.1,0.08,0.9,0.43, scanned page rendered at its native resolution (embedded image xref 15, 1224px across 8.50in), rendered at 118 dpi, capped to 800px wide, grayscale, 800x454 WebP quality 35",
             },
             {
                 "id": "excerpt.lotr.lamp-matrix",
@@ -501,6 +504,9 @@ SOURCES = [
                 "path": "evidence/excerpts/stern.lord-of-the-rings.2003/lamp-matrix.md",
                 "reviewed": True,
                 "sha256": _excerpt_sha(EXCERPT_DIR / "lamp-matrix.md"),
+                "image": "evidence/excerpts/stern.lord-of-the-rings.2003/lamp-matrix.webp",
+                 "image_sha256": "7b587a3c050350775ba527fa04b6e6efac56a18a62c804626cb72c7124a1a582",
+                 "image_derivation": "Lord-of-the-Rings-Manual.pdf page 7, crop box 0.1,0.08,0.9,0.43, scanned page rendered at its native resolution (embedded image xref 18, 1224px across 8.50in), rendered at 118 dpi, capped to 800px wide, grayscale, 800x454 WebP quality 35",
             },
             {
                 "id": "excerpt.lotr.coils-detailed-chart",
@@ -509,6 +515,9 @@ SOURCES = [
                 "path": "evidence/excerpts/stern.lord-of-the-rings.2003/coils-detailed-chart.md",
                 "reviewed": True,
                 "sha256": _excerpt_sha(EXCERPT_DIR / "coils-detailed-chart.md"),
+                "image": "evidence/excerpts/stern.lord-of-the-rings.2003/coils-detailed-chart.webp",
+                 "image_sha256": "a04b2a9287504f41c11647c3edc243b17ad6d7d2e16f24d7ca8dfbb04f0fee5e",
+                 "image_derivation": "Lord-of-the-Rings-Manual.pdf page 8, crop box 0.1,0.08,0.9,0.78, scanned page rendered at its native resolution (embedded image xref 21, 1224px across 8.50in), rendered at 103 dpi, capped to 700px wide, grayscale, 701x794 WebP quality 20",
             },
             {
                 "id": "excerpt.lotr.coil-flash-lamp-locations",
