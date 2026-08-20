@@ -333,6 +333,29 @@ EXCERPTS = {
     Path("evidence/excerpts/data-east.playboy-35th-anniversary.1989/mechanism-construction.md"): excerpt_mechanisms(),
 }
 
+EXCERPT_IMAGES = {
+    "switch-matrix.md": {
+        "image": "evidence/excerpts/data-east.playboy-35th-anniversary.1989/switch-matrix.webp",
+        "image_sha256": "57ba35c200507d4c9409a8f668571e6dc6af17069816551810f54c53c65d44b6",
+        "image_derivation": "Data_East_1989_Playboy_35th_Anniversary_English_Manual_with_schematics.pdf page 25, crop box 0.04,0.49,0.96,0.9, scanned page rendered at its native resolution (embedded image xref 163, 1241px across 8.32in), rendered at 149 dpi, 1136x672 WebP quality 65, grayscale",
+    },
+    "lamp-matrix.md": {
+        "image": "evidence/excerpts/data-east.playboy-35th-anniversary.1989/lamp-matrix.webp",
+        "image_sha256": "1ef2c520b988af69600991e4a44fe98cafa437f3dabb98787201b702d3b882cd",
+        "image_derivation": "Data_East_1989_Playboy_35th_Anniversary_English_Manual_with_schematics.pdf page 27, crop box 0.04,0.48,0.96,0.9, scanned page rendered at its native resolution (embedded image xref 176, 1241px across 8.34in), rendered at 149 dpi, 1133x687 WebP quality 65, grayscale",
+    },
+    "coil-and-flipper.md": {
+        "image": "evidence/excerpts/data-east.playboy-35th-anniversary.1989/coil-and-flipper.webp",
+        "image_sha256": "14a44be087ae3b154a883b950115d84569327159c1135067b8209852f3392ae6",
+        "image_derivation": "Data_East_1989_Playboy_35th_Anniversary_English_Manual_with_schematics.pdf page 30, crop box 0.04,0.05,0.96,0.94, scanned page rendered at its native resolution (embedded image xref 197, 1241px across 8.30in), rendered at 150 dpi, 1140x1462 WebP quality 65, grayscale",
+    },
+    "mechanism-construction.md": {
+        "image": "evidence/excerpts/data-east.playboy-35th-anniversary.1989/mechanism-construction.webp",
+        "image_sha256": "e6dcdca18b1a0da2bdc98b3e4abaff858e2be1b69f2ccfe2e785044a4094d847",
+        "image_derivation": "Data_East_1989_Playboy_35th_Anniversary_English_Manual_with_schematics.pdf page 68, crop box 0.03,0.16,0.61,0.94, scanned page rendered at its native resolution (embedded image xref 466, 1241px across 8.34in), rendered at 149 dpi, 715x1275 WebP quality 55, grayscale",
+    },
+}
+
 
 def sha256_text(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
@@ -719,6 +742,7 @@ def sources() -> list[dict[str,object]]:
     excerpt_meta = [{
         "id":"excerpt.playboy-35th."+path.stem,"path":path.as_posix(),"sha256":sha256_text(content),"method":"manual","reviewed":True,
         "locator":locators[path.name],"transcribed_by":"primary curator; PDF text/OCR located or cross-checked, Poppler render decided",
+        **EXCERPT_IMAGES[path.name],
     } for path,content in EXCERPTS.items()]
     return [
         {"id":CATALOG_SOURCE,"kind":"pinmame_catalog","uri":"https://github.com/vpinball/pinmame","revision":PINMAME_REVISION,"license":"BSD-3-Clause","locator":"catalog/pinmame.json and src/wpc/driver.c line 474 contain only play_a24 for this title; exhaustive CORE_GAMEDEF/CORE_CLONEDEF search found no clone."},
