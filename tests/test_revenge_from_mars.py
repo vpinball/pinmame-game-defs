@@ -236,7 +236,7 @@ class RevengeFromMarsDefinitionTests(unittest.TestCase):
 		self.assertEqual("9922331222bec6dae27b8dee7e646d0c52c2f61d6862b0842cda2ee921918038", hashlib.sha256(MECHANISM_EXCERPT_PATH.read_bytes()).hexdigest())
 		self.assertEqual("e78b555ab28f737321d9aaa988d88761fc94dc1769272e3ad77c06e7223ef22d", hashlib.sha256(LOCK_DIVERTER_EXCERPT_PATH.read_bytes()).hexdigest())
 		self.assertEqual(23, len(manual["excerpts"]))
-		self.assertEqual(21, sum("image" in excerpt for excerpt in manual["excerpts"]))
+		self.assertEqual(23, sum("image" in excerpt for excerpt in manual["excerpts"]))
 		self.assertEqual(2, len(aftermarket["excerpts"]))
 		self.assertEqual(1, len(update_log["excerpts"]))
 		for filename, expected_sha256 in LOCATION_IMAGES.items():
