@@ -32,6 +32,111 @@ EMBEDDED_SCRIPT_SHA256 = "ce456682b9161116b167ff7c70095d986901e2c226aa5e48a0ee7e
 SIDECAR_SCRIPT_SHA256 = "cf34b7ccad9aa3bac58b0338914315fa97f74479d52914037b42921e113bb237"
 VPXTOOL_VERSION = "git:v0.33.3"
 EXTERNAL_SOURCE_URI = "external:pinmame-vpx-sources/stern/spider-man-2007/source"
+MANUAL_EXCERPT_PATH = "evidence/excerpts/stern.spider-man.2007/manual-proof.md"
+MANUAL_EXCERPT_SHA256 = "f7bd9468b07c3398a10118fca1d562a5438b0daabb88020329519ba0fffabd01"
+
+
+def _manual_excerpt(excerpt_id: str, locator: str, image: str, image_sha256: str, image_derivation: str) -> dict[str, object]:
+	return {
+		"id": excerpt_id,
+		"locator": locator,
+		"path": MANUAL_EXCERPT_PATH,
+		"sha256": MANUAL_EXCERPT_SHA256,
+		"image": f"evidence/excerpts/stern.spider-man.2007/{image}",
+		"image_sha256": image_sha256,
+		"image_derivation": image_derivation,
+		"method": "manual",
+		"transcribed_by": "curator, read from the rendered page",
+		"reviewed": True,
+	}
+
+
+MANUAL_EXCERPTS = [
+	_manual_excerpt(
+		"excerpt.spider-man.switch-matrix",
+		"PDF page 6, complete Switch Matrix Grid #1-#64 and dedicated-switch block D-1 through D-32",
+		"switch-matrix.webp",
+		"303187e54faa14ba20c35a71aa1cd013f239eef9ee5b40d03a56e6155734c269",
+		"Spider-Man_Manual.pdf page 6, crop box 0.04,0.04,0.96,0.92, born-digital page rendered for legibility (smallest type in region 2.0pt, targeting 11px glyphs), rendered at 79 dpi, capped to 620px wide, grayscale, rotated 90 degrees counter-clockwise, 769x621 WebP quality 35",
+	),
+	_manual_excerpt(
+		"excerpt.spider-man.switch-locations",
+		"PDF page 7, Switch Locations playfield diagram and wiring legends",
+		"switch-locations.webp",
+		"30991ad5188679f1ac275c30acfe6e5a17b71fae94965d5d5ff38151af191961",
+		"Spider-Man_Manual.pdf page 7, crop box 0.06,0.07,0.95,0.91, born-digital page rendered for legibility (smallest type in region 4.2pt, targeting 11px glyphs), rendered at 93 dpi, capped to 700px wide, colour, 701x856 WebP quality 45",
+	),
+	_manual_excerpt(
+		"excerpt.spider-man.lamp-matrix",
+		"PDF page 8, complete Lamp Matrix Grid #1-#80",
+		"lamp-matrix.webp",
+		"b1fdacb0506bdd5202564afc87c272f3136fb11aaceb25c8ef600f2f0cfd34bc",
+		"Spider-Man_Manual.pdf page 8, crop box 0.04,0.04,0.96,0.92, born-digital page rendered for legibility (smallest type in region 6.8pt, targeting 11px glyphs), rendered at 79 dpi, capped to 620px wide, grayscale, rotated 90 degrees counter-clockwise, 769x621 WebP quality 35",
+	),
+	_manual_excerpt(
+		"excerpt.spider-man.lamp-locations",
+		"PDF page 9, Lamp Locations playfield and rear-panel diagrams",
+		"lamp-locations.webp",
+		"5636bbf4e7bb1c0a1c727042da8e75f3e0448711b23fa0556fe5ac835f982453",
+		"Spider-Man_Manual.pdf page 9, crop box 0.06,0.07,0.95,0.91, born-digital page rendered for legibility (smallest type in region 4.4pt, targeting 11px glyphs), rendered at 86 dpi, capped to 650px wide, colour, 651x795 WebP quality 40",
+	),
+	_manual_excerpt(
+		"excerpt.spider-man.coil-chart",
+		"PDF page 10, complete Coils Detailed Chart Table Q1-Q35",
+		"coil-chart.webp",
+		"2dcd6d09bf0f5b2c5a503560c815c010e8b0d20d3c4ca1ca60822b7ab60a373d",
+		"Spider-Man_Manual.pdf page 10, crop box 0.06,0.05,0.94,0.93, born-digital page rendered for legibility (smallest type in region 6.0pt, targeting 11px glyphs), rendered at 87 dpi, capped to 650px wide, grayscale, 651x842 WebP quality 40",
+	),
+	_manual_excerpt(
+		"excerpt.spider-man.coil-locations",
+		"PDF page 11, Coil and Flash Lamp Locations diagrams",
+		"coil-locations.webp",
+		"18d784529a841dd4a0fc15cd47b5098645da3ff1098cdbfc6bab4ceb78d194a8",
+		"Spider-Man_Manual.pdf page 11, crop box 0.06,0.06,0.95,0.91, born-digital page rendered for legibility (smallest type in region 3.5pt, targeting 11px glyphs), rendered at 86 dpi, capped to 650px wide, colour, 651x805 WebP quality 40",
+	),
+	_manual_excerpt(
+		"excerpt.spider-man.four-ball-trough",
+		"PDF page 85, 4-Ball Trough Assembly 500-6318-24-ND",
+		"four-ball-trough.webp",
+		"cd78ed554fa9c5254feb0e4b524dd0b3d538141f10471e03a7038dcd2d6c7cef",
+		"Spider-Man_Manual.pdf page 85, crop box 0.07,0.02,0.94,0.93, scanned page rendered at its native resolution (embedded image xref 2365, 1089px across 7.25in), rendered at 95 dpi, capped to 700px wide, grayscale, 701x949 WebP quality 45",
+	),
+	_manual_excerpt(
+		"excerpt.spider-man.green-goblin-assembly",
+		"PDF page 91, Green Goblin and Q19 coil-actuator assemblies",
+		"green-goblin-assembly.webp",
+		"fd4c7cbf2e3d53ed802dd5068ac89974aa759ba95dd19c290fd1c4ed510bd864",
+		"Spider-Man_Manual.pdf page 91, crop box 0.05,0.02,0.94,0.91, scanned page rendered at its native resolution (embedded image xref 2490, 1089px across 7.26in), rendered at 112 dpi, capped to 850px wide, colour, 851x1101 WebP quality 55",
+	),
+	_manual_excerpt(
+		"excerpt.spider-man.doc-ock-webslinger",
+		"PDF page 95, Doc Ock Webslinger Assembly",
+		"doc-ock-webslinger.webp",
+		"fb226b196983f77738a91726fa9f9e542dbc940efe9ec73c04eebc070b5250c3",
+		"Spider-Man_Manual.pdf page 95, crop box 0.05,0.02,0.94,0.91, scanned page rendered at its native resolution (embedded image xref 2536, 2552px across 6.38in), rendered at 112 dpi, capped to 850px wide, grayscale, 851x1101 WebP quality 55",
+	),
+	_manual_excerpt(
+		"excerpt.spider-man.sandman-three-bank",
+		"PDF page 100, Sandman 3-Bank Up/Down Motor and Target Assemblies",
+		"sandman-three-bank.webp",
+		"ae4de72da83af835468e40fe864ad9fb1e7a4deae8d916b6f3d3742c529ae1d1",
+		"Spider-Man_Manual.pdf page 100, crop box 0.04,0.02,0.95,0.91, born-digital page rendered for legibility (smallest type in region 6.0pt, targeting 11px glyphs), rendered at 110 dpi, capped to 850px wide, grayscale, 851x1076 WebP quality 55",
+	),
+	_manual_excerpt(
+		"excerpt.spider-man.driver-board-wiring",
+		"PDF page 119, Backbox I/O Power Driver Board detailed wiring diagram",
+		"driver-board-wiring.webp",
+		"4d9cfb9f300c0f90f48b90e86d8be73a6a4ce9a215196bb87b8bd2ff8a502628",
+		"Spider-Man_Manual.pdf page 119, crop box 0.02,0.02,0.98,0.94, born-digital page rendered for legibility (smallest type in region 2.0pt, targeting 11px glyphs), rendered at 86 dpi, capped to 700px wide, colour, 701x870 WebP quality 45",
+	),
+	_manual_excerpt(
+		"excerpt.spider-man.gi-wiring",
+		"PDF page 121, General Illumination Circuit detailed wiring diagram",
+		"gi-wiring.webp",
+		"6b498a5c61bf5b361aab0d653b92427ab991c30f0e1d4338a4dd639820e62d0d",
+		"Spider-Man_Manual.pdf page 121, crop box 0.05,0.02,0.95,0.94, born-digital page rendered for legibility (smallest type in region 1.2pt, targeting 11px glyphs), rendered at 92 dpi, capped to 700px wide, colour, 701x927 WebP quality 45",
+	),
+]
 
 TABLE_SOURCE_RECORD: dict[str, object] = {
 	"attribution": "Spider-Man_3.0.vpx table authors; retained exact working table",
@@ -87,7 +192,7 @@ SIDECAR_SCRIPT_SOURCE_RECORD: dict[str, object] = {
 	),
 	"revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
 	"sha256": SIDECAR_SCRIPT_SHA256,
-	"uri": f"{EXTERNAL_SOURCE_URI}/Spider-Man_3.0.vbs",
+	"uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/Spider-Man_3.0.vbs",
 }
 
 
@@ -415,6 +520,8 @@ def _assert_complete_base(definition: dict[str, object]) -> None:
 def _canonicalize_causality(definition: dict[str, object]) -> dict[str, object]:
 	"""Bind semantic claims to the exact table's embedded Script stream."""
 	sources = [source for source in definition["sources"] if source.get("id") not in {TABLE_SOURCE, SCRIPT_SOURCE, SIDECAR_SCRIPT_SOURCE}]
+	manual_source = next(source for source in sources if source.get("id") == MANUAL_SOURCE)
+	manual_source["excerpts"] = MANUAL_EXCERPTS
 	sources.extend([EMBEDDED_SCRIPT_SOURCE_RECORD, SIDECAR_SCRIPT_SOURCE_RECORD, TABLE_SOURCE_RECORD])
 	definition["sources"] = sources
 	for mechanism in definition["mechanisms"]:
