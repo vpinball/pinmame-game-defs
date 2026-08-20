@@ -337,6 +337,80 @@ def driver_records(limited_edition: bool) -> list[dict[str, object]]:
 	return sorted(selected, key=lambda record: record["id"])
 
 
+ROLLING_STONES_MANUAL_EXCERPTS = [
+	{
+		"id": "excerpt.rolling-stones.switch-matrix",
+		"locator": "Rolling-Stones-Manual.pdf page 51, printed page 14, complete Switch Matrix Grid #1-#64 and dedicated switch/DIP blocks",
+		"path": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/switch-matrix.md",
+		"sha256": "47c9a333b799f8c9fc591521e5f15763c3910b45aab2915864dcd4417dba4cdc",
+		"image": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/switch-matrix.webp",
+		"image_sha256": "329e1578344cc75d45e25f653436ed754cc6f604ff03090425dde9477d74e46a",
+		"image_derivation": "Rolling-Stones-Manual.pdf page 51, crop box 0.08,0.08,0.94,0.84, scanned page rendered at its native resolution (embedded image xref 240, 1698px across 11.79in), rendered at 70 dpi, capped to 700px wide, grayscale, 701x438 WebP quality 55",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.rolling-stones.switch-locations",
+		"locator": "Rolling-Stones-Manual.pdf page 52, printed page 15, playfield switch-location drawing",
+		"path": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/switch-locations.md",
+		"sha256": "daf2aeb8b3635e1ef1f1a5d58035248924cc24731aab93b020a5d24e871821b0",
+		"image": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/switch-locations.webp",
+		"image_sha256": "0efd971522bda7baf57c8c750264a10a5e28d1bf2eceb9aea8c9ff1a7b8f3f13",
+		"image_derivation": "Rolling-Stones-Manual.pdf page 52, crop box 0.04,0.12,0.58,0.94, scanned page rendered at its native resolution (embedded image xref 244, 1216px across 8.44in), rendered at 90 dpi, capped to 400px wide, grayscale, 401x861 WebP quality 40",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.rolling-stones.lamp-matrix",
+		"locator": "Rolling-Stones-Manual.pdf page 53, printed page 16, complete Lamp Matrix Grid #1-#80",
+		"path": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/lamp-matrix.md",
+		"sha256": "ae72e90094b75455e473a523f606e77106916dd9e006a90189d1bdc942a4d776",
+		"image": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/lamp-matrix.webp",
+		"image_sha256": "748a688563267ab524f614a4d49a0e4589b6ef5015bc8f822528311a9e2b4486",
+		"image_derivation": "Rolling-Stones-Manual.pdf page 53, crop box 0.08,0.08,0.94,0.86, scanned page rendered at its native resolution (embedded image xref 248, 1695px across 11.77in), rendered at 70 dpi, capped to 700px wide, grayscale, 701x449 WebP quality 55",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.rolling-stones.coil-chart",
+		"locator": "Rolling-Stones-Manual.pdf page 55, printed page 18, complete Coils Detailed Chart Table Q1-Q32",
+		"path": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/coil-chart.md",
+		"sha256": "22c0feaa92b2b9fb62524eb57bdf5f225e39bbf8c4e0b4a31280e9bc934985d1",
+		"image": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/coil-chart.webp",
+		"image_sha256": "098f856f2448191637768a95e8e38444e9536548d430d1ec1972e8d5bb4ed778",
+		"image_derivation": "Rolling-Stones-Manual.pdf page 55, crop box 0.08,0.08,0.94,0.9, scanned page rendered at its native resolution (embedded image xref 258, 1190px across 8.26in), rendered at 84 dpi, capped to 600px wide, grayscale, 601x811 WebP quality 50",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.rolling-stones.premium-coil-chart",
+		"locator": "Rolling-Stones-Manual.pdf page 78, printed sheet Y2, Premium Q1-Q32 coil appendix",
+		"path": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/premium-coil-chart.md",
+		"sha256": "c95fd968e334d251f98dce775b891b6be8bbccf233d078ac8cc41e4bed2e03bc",
+		"image": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/premium-coil-chart.webp",
+		"image_sha256": "3426dc1cf9ab244d3874fb6fdd487808543415f8d315eef5461ce5ea7eeeedde",
+		"image_derivation": "Rolling-Stones-Manual.pdf page 78, crop box 0.08,0.08,0.94,0.88, scanned page rendered at its native resolution (embedded image xref 363, 1219px across 8.47in), rendered at 84 dpi, capped to 600px wide, grayscale, 601x791 WebP quality 50",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.rolling-stones.gi-wiring",
+		"locator": "Rolling-Stones-Manual.pdf page 85, printed sheet Y9, playfield GI wiring diagram",
+		"path": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/gi-wiring.md",
+		"sha256": "34caa98bbc0c19395333ef15e3bc911bd47bff9dbf1f7eb86294d3fa85a5750b",
+		"image": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/gi-wiring.webp",
+		"image_sha256": "e6fbd53c313986067e280d80b869a8e6b908e72df04f9a1779e23f059021ab9b",
+		"image_derivation": "Rolling-Stones-Manual.pdf page 85, crop box 0.03,0.05,0.97,0.94, scanned page rendered at its native resolution (embedded image xref 397, 1190px across 8.26in), rendered at 90 dpi, capped to 700px wide, grayscale, 701x939 WebP quality 50",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.rolling-stones.premium-magnet-driver",
+		"locator": "Rolling-Stones-Manual.pdf page 95, printed sheet Y19, Premium magnet driver board schematic",
+		"path": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/premium-magnet-driver.md",
+		"sha256": "fc4253407902bb2184ca80babb055fdaadc5d8989f0c62c53eb5fd9daba15208",
+		"image": "evidence/excerpts/stern.the-rolling-stones-pro-limited-edition.2011/premium-magnet-driver.webp",
+		"image_sha256": "5766f6dd10e156b13ceb072a7335e8f61ef5694e3f3d60c8830452ede6d86798",
+		"image_derivation": "Rolling-Stones-Manual.pdf page 95, crop box 0.05,0.08,0.95,0.9, scanned page rendered at its native resolution (embedded image xref 445, 1700px across 11.81in), rendered at 67 dpi, capped to 700px wide, grayscale, 701x452 WebP quality 50",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+]
+
+
 def sources(limited_edition: bool) -> list[dict[str, object]]:
 	runtime_source = LE_RUNTIME_SOURCE if limited_edition else STANDARD_RUNTIME_SOURCE
 	raw_hash = "81e0780965d9af7f37fffe036da6e6d6bee76905f14b594fbc744534f57bc72c" if limited_edition else "56292ef32243878eb6347fbb64dc8e0684ae2b49e0c33f75593a2de133329c59"
@@ -345,8 +419,8 @@ def sources(limited_edition: bool) -> list[dict[str, object]]:
 	ipdb_source = IPDB_LE_SOURCE if limited_edition else IPDB_STANDARD_SOURCE
 	ipdb_id = 5708 if limited_edition else 5668
 	result = [
-		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/Rolling-Stones-Manual.pdf", "sha256": "1c9dd7f3085ccb159ec2ef976c29602b704c979e7ffcbbfe6bad987916bd22bf", "locator": "Official 99-page scanned Stern manual: switch matrix chart PDF page 51, physical switch-location drawing page 52, lamps 53, flasher/coil chart 55/78, major assemblies 1-24, wiring 85-95, and Premium-only notes on 51/55", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "Rolling-Stones-Manual.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T22:32:15.219822Z"},
-		{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/The%20Rolling%20Stones%20LE%20(Stern%202011)%20v1.0.6i.vbs", "revision": VPX_REVISION, "sha256": "969b5a547874f611e55a2cf09dfabcc02f63a816b27e6d459b65f7f6f5298033", "locator": "Known-working rsn_110h table script: callbacks, switches, lamps/GI, trough and ceramic-ball identity, center lock, magnets/posts, controlled gate, auto launch, and seven-position Moving Mick causality", "license": "NOASSERTION", "attribution": "Table authors credited in the script; vpxtable_scripts contributors"},
+		{"id": MANUAL_SOURCE, "kind": "manual", "uri": "https://wp.sternpinball.com/wp-content/uploads/2018/11/Rolling-Stones-Manual.pdf", "sha256": "1c9dd7f3085ccb159ec2ef976c29602b704c979e7ffcbbfe6bad987916bd22bf", "locator": "Official 99-page scanned Stern manual: switch matrix chart PDF page 51, physical switch-location drawing page 52, lamps 53, flasher/coil chart 55/78, major assemblies 1-24, wiring 85-95, and Premium-only notes on 51/55", "license": "NOASSERTION", "attribution": "Stern Pinball, Inc.", "source_id": "stern", "original_filename": "Rolling-Stones-Manual.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T22:32:15.219822Z", "excerpts": ROLLING_STONES_MANUAL_EXCERPTS},
+		{"id": VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/The%20Rolling%20Stones%20LE%20%28Stern%202011%29%20v1.0.6i.vbs", "revision": VPX_REVISION, "sha256": "969b5a547874f611e55a2cf09dfabcc02f63a816b27e6d459b65f7f6f5298033", "locator": "Known-working rsn_110h table script: callbacks, switches, lamps/GI, trough and ceramic-ball identity, center lock, magnets/posts, controlled gate, auto launch, and seven-position Moving Mick causality", "license": "NOASSERTION", "attribution": "Table authors credited in the script; vpxtable_scripts contributors"},
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c rsn INITGAME/driver family, SAM_NO_AUX, SAM switch serialization, game-on output, and 128x32 DMD", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 		{"id": CATALOG_SOURCE, "kind": "pinmame_catalog", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "PinmameGetGames rsn_ driver records and clone graph", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},
 		{"id": STERN_SOURCE, "kind": "human_review", "uri": "https://www.sternpinball.com/game/the-rolling-stones/", "locator": "Manufacturer feature inventory: two ramps, Moving Mick target, ball lock, molded lips, songs, modes, and playfield theme", "license": "NOASSERTION", "attribution": "Stern Pinball", "acquired_at": "2026-08-02T22:00:00Z"},
