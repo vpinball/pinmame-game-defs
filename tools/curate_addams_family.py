@@ -36,7 +36,6 @@ LATEST_CATALOG_SOURCE = f"pinmame.catalog.{LATEST_CATALOG_REVISION[:12]}"
 CONTROLLER_SOURCE = "controller-profile.pinmame-wpc-fliptronic"
 MANUAL_SOURCE = "manual.bally.the-addams-family.1992.ops"
 MANUAL_HANDBOOK_SOURCE = "manual.bally.the-addams-family.1992.handbook"
-MANUAL_SCHEMATIC_SOURCE = "manual.bally.the-addams-family.1992.wpc-schematic"
 MANUAL_SUPPORT_SOURCE = "manual-support.bally.the-addams-family.1992"
 VPX_TABLE_SOURCE = "vpx-table.taf-g5k-2-3-2"
 VPX_SCRIPT_SOURCE = "vpx-script.taf-g5k-2-3-2"
@@ -47,7 +46,6 @@ TABLE_SHA256 = "85af088f0ed6d59c83599102e6245cc2eab5674e69d29882db6f0eaacf05e858
 SCRIPT_SHA256 = "c5f1aedc5f05c277459d97be18046f07e2617522841545317ebdfad4ec34e2fc"
 OPS_MANUAL_SHA256 = "3cca7c4adc6280f42515fcc117457e32bf723b3d3a7005123d8094b3c65e2662"
 HANDBOOK_SHA256 = "76c468eb747a61a176874d3b02cb495451eea9b5f9268a69ba58603bc8a9cf8f"
-SCHEMATIC_SHA256 = "074431d774b1410fd6d38191ace4150866023c66e2d3a5185361f114ca4afedd"
 MANUAL_TRANSCRIPTION_SHA256 = "17e8aed2524e79b671633026c0872cda8c6724d5d2e3b2bf9d6c49018fb5462e"
 
 # Committed crops are binary, so unlike the transcriptions they are hashed from
@@ -744,17 +742,6 @@ def source_records() -> list[dict[str, Any]]:
 					"reviewed": True,
 				},
 			],
-		},
-		{
-			"id": MANUAL_SCHEMATIC_SOURCE,
-			"kind": "manual",
-			"uri": "external:pinmame-manuals/by-machine/bally.the-addams-family.1992/ipdb/Bally_1992_The_Addams_Family_WPC_Schematic_Manual_January_1992_OCR_searchable.pdf",
-			"original_filename": "Bally_1992_The_Addams_Family_WPC_Schematic_Manual_January_1992_OCR_searchable.pdf",
-			"sha256": SCHEMATIC_SHA256,
-			"locator": "14-page WPC Schematic Manual (part 16-20017-102A, January 1992); identity-checked only (cover confirms the same 16-20017 part-number family).",
-			"license": "NOASSERTION",
-			"attribution": "Midway Manufacturing Company, manufacturers of Bally amusement games",
-			"rights": "NOASSERTION",
 		},
 		{
 			"id": MANUAL_SUPPORT_SOURCE,
@@ -1795,7 +1782,6 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"embedded_script_sha256": SCRIPT_SHA256,
 			"ops_manual_sha256": OPS_MANUAL_SHA256,
 			"handbook_sha256": HANDBOOK_SHA256,
-			"wpc_schematic_manual_sha256": SCHEMATIC_SHA256,
 		},
 		"visual_review_cache": {
 			"root": "external:pinmame-manuals/rendered/bally.the-addams-family.1992/",
