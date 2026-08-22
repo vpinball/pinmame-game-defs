@@ -440,6 +440,16 @@ X_MEN_MANUAL_EXCERPTS = [
 		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
 	},
 	{
+		"id": "excerpt.x-men.trough-assembly",
+		"locator": "XMenManual_042214-high-resolution.pdf page 3, printed page b3, four-ball trough cut-away and dual-opto assembly",
+		"path": "evidence/excerpts/stern.x-men-pro-limited-edition.2012/trough-assembly.md",
+		"sha256": "685f27f05770fe23297f2e3522927d47a22b7696b149cd6a9cb598924a7047c5",
+		"image": "evidence/excerpts/stern.x-men-pro-limited-edition.2012/trough-assembly.webp",
+		"image_sha256": "1925b74ccaed87f11e00a415afab806aa85f0e04e285044b9a9cd1325c45be4d",
+		"image_derivation": "XMenManual_042214-high-resolution.pdf page 3, crop box 0.1,0.34,0.96,0.9, scanned page rendered at its native resolution (embedded image xref 9, 2578px across 8.54in), rendered at 113 dpi, capped to 800px wide, grayscale, 801x738 WebP quality 60",
+		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
 		"id": "excerpt.x-men.lamp-matrix",
 		"locator": "XMenManual_042214-high-resolution.pdf page 58, printed page 6, complete Lamp Matrix Grid #1-#80",
 		"path": "evidence/excerpts/stern.x-men-pro-limited-edition.2012/lamp-matrix.md",
@@ -473,11 +483,21 @@ X_MEN_MANUAL_EXCERPTS = [
 		"id": "excerpt.x-men.coil-locations",
 		"locator": "XMenManual_042214-high-resolution.pdf page 61, printed page 9, complete coil/flasher location drawing",
 		"path": "evidence/excerpts/stern.x-men-pro-limited-edition.2012/coil-locations.md",
-		"sha256": "9062735abf8a0f8a77e01ee91862f4d3111c18d448e19e3cad4b4a5f0f9d8293",
+		"sha256": "0e02b06b71b8d06404946b394ea23c03675b2a01407d0d59803e87ef18a58ac5",
 		"image": "evidence/excerpts/stern.x-men-pro-limited-edition.2012/coil-locations.webp",
 		"image_sha256": "61be164568e617b70f2cdbdaf0e8a88112d63d640cfae933500d86af60f16264",
 		"image_derivation": "XMenManual_042214-high-resolution.pdf page 61, crop box 0.03,0.07,0.98,0.96, scanned page rendered at its native resolution (embedded image xref 280, 2530px across 8.38in), rendered at 64 dpi, capped to 500px wide, grayscale, 501x663 WebP quality 50",
 		"method": "manual", "transcribed_by": "curator, visually verified against the rendered page", "reviewed": True,
+	},
+	{
+		"id": "excerpt.x-men.magneto-disc-coil-locations",
+		"locator": "XMenManual_042214-high-resolution.pdf page 61, printed page 9, native-resolution Magneto disc region with reproducible frame and device-symbol measurements",
+		"path": "evidence/excerpts/stern.x-men-pro-limited-edition.2012/magneto-disc-coil-locations.md",
+		"sha256": "b625823903a591e08cdf9039e4db748a16181cc8502139433242c57880e273c2",
+		"image": "evidence/excerpts/stern.x-men-pro-limited-edition.2012/magneto-disc-coil-locations.webp",
+		"image_sha256": "ebec8fc15f256805cdeb96e5729756949ba6644beb5f90be4379baee12ae8cef",
+		"image_derivation": "XMenManual_042214-high-resolution.pdf page 61, crop box 0.2,0.37,0.45,0.54, scanned page rendered at its native resolution (embedded image xref 280, 2530px across 8.38in), rendered at 302 dpi, grayscale, 625x602 WebP quality 70",
+		"method": "manual", "transcribed_by": "curator, measured and visually verified against the native-resolution rendered page", "reviewed": True,
 	},
 	{
 		"id": "excerpt.x-men.auxiliary-coils",
@@ -525,7 +545,7 @@ X_MEN_MANUAL_EXCERPTS = [
 def sources(le: bool) -> list[dict[str, object]]:
 	vpx_source = {"id": LE_VPX_SOURCE if le else PRO_VPX_SOURCE, "kind": "vpx_script", "uri": "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/X-Men%20LE%20%28Stern%202012%29%20VPW%20v1.0.6.vbs" if le else "https://github.com/sverrewl/vpxtable_scripts/blob/0c036bb61b4b4e8c778c37559f6795df8cd1521e/X-Men%28ICPjuggla%296-27c.vbs", "revision": VPX_REVISION, "sha256": "6d445e52398640bd35a498553bb0ba32f1b9ce23e2964d0694c18ff2e9225650" if le else "2441d88ab8aef581fcdef3dd5c0b9523a36feb3ce4afb6133811f1f01b381afb", "locator": "X-Men LE (Stern 2012) VPW v1.0.6.vbs: initialization, solenoid callbacks, GI callbacks, Iceman movement, Nightcrawler state machines, Magneto disc, lock, kickers, trough, and switches" if le else "X-Men(ICPjuggla)6-27c.vbs: Pro ROM xmn_151, solenoid callbacks, lamp callback addresses, Wolverine and Magneto magnets, trough, lock, kickers, ramps, and switches", "license": "NOASSERTION", "attribution": "Table authors credited in the script and vpxtable_scripts contributors"}
 	result = [
-		{"id": MANUAL_HIRES_SOURCE, "kind": "manual", "uri": "https://primetimeamusements.com/wp-content/uploads/2015/05/XMenManual_042214.pdf", "sha256": "d793836fefab6c0de53463943e36245c7ed800d5ca86675e3c2b2f46df693643", "locator": "Higher-resolution scan of the same Stern manual; switch pages 56-57, lamp pages 58-59, low-current pages 60-61, auxiliary LE coils page 62, and GI maps pages 109-111. Selected pages are retained as hash-locked renders under external:pinmame-manuals/by-machine/stern.x-men-pro-limited-edition.2012/primetime-amusements/extracted/rendered-pages; page 60 lacks a Q18 X2 marker while page 61 draws two Q18 callouts, and both are LE-only.", "license": "NOASSERTION", "attribution": "Stern Pinball manual mirrored by PrimeTime Amusements", "original_filename": "XMenManual_042214-high-resolution.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T00:00:00Z", "excerpts": X_MEN_MANUAL_EXCERPTS},
+		{"id": MANUAL_HIRES_SOURCE, "kind": "manual", "uri": "https://primetimeamusements.com/wp-content/uploads/2015/05/XMenManual_042214.pdf", "sha256": "d793836fefab6c0de53463943e36245c7ed800d5ca86675e3c2b2f46df693643", "locator": "Higher-resolution scan of the same Stern manual; the page-3 trough cut-away identifies the vertically stacked switch-21/switch-22 dual-opto exit assembly, switch pages 56-57 cover matrix and locations, lamp pages 58-59 cover the matrix and locations, low-current pages 60-61 cover output inventory and locations, page 62 covers auxiliary LE coils, and GI maps are on pages 109-111. Selected pages are retained as hash-locked renders under external:pinmame-manuals/by-machine/stern.x-men-pro-limited-edition.2012/primetime-amusements/extracted/rendered-pages; page 60 lacks a Q18 X2 marker while page 61 draws two Q18 callouts, and both are LE-only.", "license": "NOASSERTION", "attribution": "Stern Pinball manual mirrored by PrimeTime Amusements", "original_filename": "XMenManual_042214-high-resolution.pdf", "rights": "NOASSERTION", "acquired_at": "2026-08-02T00:00:00Z", "excerpts": X_MEN_MANUAL_EXCERPTS},
 		vpx_source,
 		{"id": PRODUCT_SOURCE, "kind": "human_review", "uri": "https://sternpinball.com/game/x-men-pro/", "locator": "Manufacturer Pro and Limited Edition feature inventories, including edition-only Ice Slide, Nightcrawler, spinning disc, and color GI mechanisms", "license": "NOASSERTION", "attribution": "Stern Pinball", "acquired_at": "2026-08-02T00:00:00Z"},
 		{"id": CORE_SOURCE, "kind": "pinmame_core", "uri": "https://github.com/vpinball/pinmame", "revision": PINMAME_REVISION, "locator": "src/wpc/sam.c X-Men INITGAME and full driver family; src/wpc/sam_original.c historical ROM identity; public custom outputs 51-58 for the eight-transistor board", "license": "BSD-3-Clause", "attribution": "PinMAME contributors"},

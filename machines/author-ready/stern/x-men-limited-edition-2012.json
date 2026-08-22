@@ -12,13 +12,11 @@
       "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
-      "spatial_placement": "unknown",
+      "spatial_placement": "validated",
       "variant_coverage": "validated"
     },
-    "missing": [
-      "spatial_placement"
-    ],
-    "status": "partial"
+    "missing": [],
+    "status": "author_ready"
   },
   "displays": [
     {
@@ -33,6 +31,17 @@
           "runtime.x-men-le.boot-start"
         ],
         "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manual.x-men-pro-le.2012.high-resolution"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       },
       "width": 128
     }
@@ -1317,7 +1326,8 @@
       "label": "Trough jam",
       "normally_closed": false,
       "physical": {
-        "location": "Under-apron four-ball trough; distinct manual trough-jam opto. Exact retained LE tables do not supply its geometry.",
+        "location": "Under-apron trough exit; upper stacking beam on the same dual-opto board assembly as switch 21.",
+        "notes": "The Stern page-b3 trough cut-away places switch 22 directly above switch 21 on the shared transmitter/receiver pair. Because that distinction is vertical, both sensors share the exact switch-21 table anchor in the normalized two-dimensional playfield plane.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1331,6 +1341,25 @@
       "roles": [
         "ball.position"
       ],
+      "spatial": {
+        "placements": [
+          {
+            "id": "switch.trough-jam.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.x-men-le-vpw-1.0",
+                "manual.x-men-pro-le.2012.high-resolution"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.858076,
+            "y": 0.857914
+          }
+        ],
+        "status": "validated"
+      },
       "wiring": {
         "board": "CPU/Sound board",
         "drive_connection": "J1-P3",
@@ -5079,6 +5108,17 @@
     "model_number": "I-00D2",
     "name": "X-Men Limited Edition (Magneto / Wolverine)",
     "opdb_id": "Grj6X-MJNV1-AOwN1",
+    "playfield": {
+      "height": 2115,
+      "provenance": {
+        "source_refs": [
+          "vpx-table.x-men-le-vpw-1.0"
+        ],
+        "status": "validated"
+      },
+      "units": "vpx",
+      "width": 952
+    },
     "year": 2012
   },
   "mechanisms": [
@@ -5834,7 +5874,8 @@
             "id": "device.center-lock-up-posts.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.x-men-le-vpw-1.0"
+                "vpx-table.x-men-le-vpw-1.0",
+                "vpx.x-men-le-vpw-1.0.6"
               ],
               "status": "validated"
             },
@@ -5893,7 +5934,8 @@
             "id": "device.center-lock-latch.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.x-men-le-vpw-1.0"
+                "vpx-table.x-men-le-vpw-1.0",
+                "vpx.x-men-le-vpw-1.0.6"
               ],
               "status": "validated"
             },
@@ -6565,14 +6607,45 @@
       "kind": "flasher",
       "label": "Disc clear double flasher",
       "physical": {
-        "location": "Magneto spinning-disc flasher assembly; per-socket geometry is not exposed by the retained tables.",
-        "notes": "Stern manual PDF page 60 requires two sockets. The exact retained LE tables expose one virtual/render center for this circuit; no per-socket coordinate is asserted.",
+        "location": "Magneto rotating-disc clear flasher pair, at the two Q19 callouts on opposite sides of the disc.",
+        "notes": "Stern manual PDF pages 60-61 control the Limited Edition installed quantity and physical location. Placements are reproducibly measured page-61 numbered device-symbol centers normalized against the documented playfield frame and rounded to three decimals; they preserve the factory drawing's socket relationships but are not exact VPX emitter-object centers.",
         "quantity": 2
       },
       "provenance": {
         "source_refs": [
           "manual.x-men-pro-le.2012.high-resolution",
           "vpx.x-men-le-vpw-1.0.6"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.disc-clear-double-flasher.emitter.clear.01",
+            "provenance": {
+              "source_refs": [
+                "manual.x-men-pro-le.2012.high-resolution"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.433,
+            "y": 0.349
+          },
+          {
+            "id": "device.disc-clear-double-flasher.emitter.clear.02",
+            "provenance": {
+              "source_refs": [
+                "manual.x-men-pro-le.2012.high-resolution"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.656,
+            "y": 0.456
+          }
         ],
         "status": "validated"
       },
@@ -6607,14 +6680,45 @@
       "kind": "flasher",
       "label": "Disc blue double flasher",
       "physical": {
-        "location": "Magneto spinning-disc flasher assembly; per-socket geometry is not exposed by the retained tables.",
-        "notes": "Stern manual PDF page 60 requires two sockets. The exact retained LE tables expose one virtual/render center for this circuit; no per-socket coordinate is asserted.",
+        "location": "Magneto rotating-disc blue flasher pair, alternating with the two Q19 clear flashers.",
+        "notes": "Stern manual PDF pages 60-61 control the Limited Edition installed quantity and physical location. Placements are reproducibly measured page-61 numbered device-symbol centers normalized against the documented playfield frame and rounded to three decimals; they preserve the factory drawing's socket relationships but are not exact VPX emitter-object centers.",
         "quantity": 2
       },
       "provenance": {
         "source_refs": [
           "manual.x-men-pro-le.2012.high-resolution",
           "vpx.x-men-le-vpw-1.0.6"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.disc-blue-double-flasher.emitter.blue.01",
+            "provenance": {
+              "source_refs": [
+                "manual.x-men-pro-le.2012.high-resolution"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.669,
+            "y": 0.4
+          },
+          {
+            "id": "device.disc-blue-double-flasher.emitter.blue.02",
+            "provenance": {
+              "source_refs": [
+                "manual.x-men-pro-le.2012.high-resolution"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.487,
+            "y": 0.47
+          }
         ],
         "status": "validated"
       },
@@ -7248,14 +7352,32 @@
       "kind": "flasher",
       "label": "Magneto spotlight flasher",
       "physical": {
-        "location": "Cyclops spinner flasher assembly; exact emitter geometry is not exposed by the retained tables.",
-        "notes": "The retained VPW v1.0 point (0.689153, 0.184374) is an undisclosed Cyclops spinner proxy, not an F30 emitter. No f130 emitter exists in the retained exact LE tables; no F30 spatial placement is asserted.",
+        "location": "Magneto spotlight immediately left of the rotating disc on the factory coil-location drawing.",
+        "notes": "Stern manual PDF pages 60-61 control the Limited Edition installed quantity and physical location. Placements are reproducibly measured page-61 numbered device-symbol centers normalized against the documented playfield frame and rounded to three decimals; they preserve the factory drawing's socket relationships but are not exact VPX emitter-object centers.",
         "quantity": 1
       },
       "provenance": {
         "source_refs": [
           "manual.x-men-pro-le.2012.high-resolution",
           "vpx.x-men-le-vpw-1.0.6"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.magneto-spotlight-flasher.emitter.spotlight",
+            "provenance": {
+              "source_refs": [
+                "manual.x-men-pro-le.2012.high-resolution"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.371,
+            "y": 0.425
+          }
         ],
         "status": "validated"
       },
@@ -12226,6 +12348,18 @@
           "transcribed_by": "curator, visually verified against the rendered page"
         },
         {
+          "id": "excerpt.x-men.trough-assembly",
+          "image": "evidence/excerpts/stern.x-men-pro-limited-edition.2012/trough-assembly.webp",
+          "image_derivation": "XMenManual_042214-high-resolution.pdf page 3, crop box 0.1,0.34,0.96,0.9, scanned page rendered at its native resolution (embedded image xref 9, 2578px across 8.54in), rendered at 113 dpi, capped to 800px wide, grayscale, 801x738 WebP quality 60",
+          "image_sha256": "1925b74ccaed87f11e00a415afab806aa85f0e04e285044b9a9cd1325c45be4d",
+          "locator": "XMenManual_042214-high-resolution.pdf page 3, printed page b3, four-ball trough cut-away and dual-opto assembly",
+          "method": "manual",
+          "path": "evidence/excerpts/stern.x-men-pro-limited-edition.2012/trough-assembly.md",
+          "reviewed": true,
+          "sha256": "685f27f05770fe23297f2e3522927d47a22b7696b149cd6a9cb598924a7047c5",
+          "transcribed_by": "curator, visually verified against the rendered page"
+        },
+        {
           "id": "excerpt.x-men.lamp-matrix",
           "image": "evidence/excerpts/stern.x-men-pro-limited-edition.2012/lamp-matrix.webp",
           "image_derivation": "XMenManual_042214-high-resolution.pdf page 58, crop box 0.12,0.09,0.92,0.84, scanned page rendered at its native resolution (embedded image xref 267, 3562px across 11.79in), rendered at 75 dpi, capped to 700px wide, grayscale, 700x465 WebP quality 70",
@@ -12270,8 +12404,20 @@
           "method": "manual",
           "path": "evidence/excerpts/stern.x-men-pro-limited-edition.2012/coil-locations.md",
           "reviewed": true,
-          "sha256": "9062735abf8a0f8a77e01ee91862f4d3111c18d448e19e3cad4b4a5f0f9d8293",
+          "sha256": "0e02b06b71b8d06404946b394ea23c03675b2a01407d0d59803e87ef18a58ac5",
           "transcribed_by": "curator, visually verified against the rendered page"
+        },
+        {
+          "id": "excerpt.x-men.magneto-disc-coil-locations",
+          "image": "evidence/excerpts/stern.x-men-pro-limited-edition.2012/magneto-disc-coil-locations.webp",
+          "image_derivation": "XMenManual_042214-high-resolution.pdf page 61, crop box 0.2,0.37,0.45,0.54, scanned page rendered at its native resolution (embedded image xref 280, 2530px across 8.38in), rendered at 302 dpi, grayscale, 625x602 WebP quality 70",
+          "image_sha256": "ebec8fc15f256805cdeb96e5729756949ba6644beb5f90be4379baee12ae8cef",
+          "locator": "XMenManual_042214-high-resolution.pdf page 61, printed page 9, native-resolution Magneto disc region with reproducible frame and device-symbol measurements",
+          "method": "manual",
+          "path": "evidence/excerpts/stern.x-men-pro-limited-edition.2012/magneto-disc-coil-locations.md",
+          "reviewed": true,
+          "sha256": "b625823903a591e08cdf9039e4db748a16181cc8502139433242c57880e273c2",
+          "transcribed_by": "curator, measured and visually verified against the native-resolution rendered page"
         },
         {
           "id": "excerpt.x-men.auxiliary-coils",
@@ -12325,7 +12471,7 @@
       "id": "manual.x-men-pro-le.2012.high-resolution",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "Higher-resolution scan of the same Stern manual; switch pages 56-57, lamp pages 58-59, low-current pages 60-61, auxiliary LE coils page 62, and GI maps pages 109-111. Selected pages are retained as hash-locked renders under external:pinmame-manuals/by-machine/stern.x-men-pro-limited-edition.2012/primetime-amusements/extracted/rendered-pages; page 60 lacks a Q18 X2 marker while page 61 draws two Q18 callouts, and both are LE-only.",
+      "locator": "Higher-resolution scan of the same Stern manual; the page-3 trough cut-away identifies the vertically stacked switch-21/switch-22 dual-opto exit assembly, switch pages 56-57 cover matrix and locations, lamp pages 58-59 cover the matrix and locations, low-current pages 60-61 cover output inventory and locations, page 62 covers auxiliary LE coils, and GI maps are on pages 109-111. Selected pages are retained as hash-locked renders under external:pinmame-manuals/by-machine/stern.x-men-pro-limited-edition.2012/primetime-amusements/extracted/rendered-pages; page 60 lacks a Q18 X2 marker while page 61 draws two Q18 callouts, and both are LE-only.",
       "original_filename": "XMenManual_042214-high-resolution.pdf",
       "rights": "NOASSERTION",
       "sha256": "d793836fefab6c0de53463943e36245c7ed800d5ca86675e3c2b2f46df693643",

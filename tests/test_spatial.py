@@ -321,7 +321,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		definitions = [load_json(path) for path in sorted((ROOT / "machines" / "partial").rglob("*.json"))]
 		migrated = {definition["machine"]["id"]: definition for definition in definitions if definition["machine"]["id"] in SPATIAL_RETROFIT_PENDING_MACHINE_IDS}
 		self.assertEqual(set(SPATIAL_RETROFIT_PENDING_MACHINE_IDS), set(migrated))
-		self.assertEqual(13, len(migrated))
+		self.assertEqual(12, len(migrated))
 		for definition in migrated.values():
 			self.assertEqual(2, definition["schema_version"])
 			self.assertEqual("partial", definition["coverage"]["status"])
@@ -342,22 +342,22 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual(expected, definition["coverage"]["missing"])
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
-		self.assertEqual(24, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
+		self.assertEqual(25, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		report = build_coverage_report(ROOT)
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
 		self.assertEqual(catalog["summary"]["game_count"], report["machine_count"])
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
 		self.assertEqual(789, report["machine_count"])
-		self.assertEqual(24, report["author_ready_count"])
-		self.assertEqual(97, report["partial_count"])
+		self.assertEqual(25, report["author_ready_count"])
+		self.assertEqual(96, report["partial_count"])
 		self.assertEqual(668, report["stub_count"])
 		self.assertEqual(1, report["non_game_record_count"])
 		self.assertEqual(790, report["catalog_record_count"])
 		# The Pinball 2000 baseline adds Revenge From Mars and Star Wars Episode I as two
 		# honest physical-game stubs. Its other new root, taf_i4bs, joins the existing
 		# Addams Family definition and therefore does not add another physical record.
-		# The thirteen retrofit-pending machines above (which already include X-Men Pro), plus
+		# The twelve retrofit-pending machines above (which already include X-Men Pro), plus
 		# Terminator 2, plus Centaur, plus Twilight Zone. Centaur is not a retrofit: every one of
 		# its devices carries a spatial record except auxiliary lamp 113, a fitted A9 circuit whose
 		# function the factory schematic leaves blank and which nothing locates. Monster Bash is
@@ -432,7 +432,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Revenge from Mars now resolves its stock geometry from the four factory location drawings;
 		# its supplied hybrid AFM table remains rejected; documented expansion optos have observed
 		# positions while the remaining per-firmware expansion fitment stays a variant blocker.
-		self.assertEqual(45, report["missing_requirement_counts"]["spatial_placement"])
+		self.assertEqual(44, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -445,14 +445,14 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(790, len(catalog["machines"]))
 		self.assertEqual(789, catalog["summary"]["game_count"])
 		self.assertEqual(790, catalog["summary"]["machine_count"])
-		self.assertEqual(24, catalog["summary"]["author_ready_count"])
+		self.assertEqual(25, catalog["summary"]["author_ready_count"])
 		self.assertEqual(668, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic; coverage counts
-		# only the 789 physical games and therefore reports 97 partial records above.
-		self.assertEqual(98, catalog["summary"]["partial_count"])
+		# only the 789 physical games and therefore reports 96 partial records above.
+		self.assertEqual(97, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
-		self.assertEqual(13, len(note_paths))
+		self.assertEqual(12, len(note_paths))
 		for relative_path in note_paths:
 			note = (ROOT / relative_path).read_text(encoding="utf-8")
 			if relative_path == "knowledge/stern/twenty-four-2009.md":

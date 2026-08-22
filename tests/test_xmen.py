@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-LE_PATH = ROOT / "machines" / "partial" / "stern" / "x-men-limited-edition-2012.json"
+LE_PATH = ROOT / "machines" / "author-ready" / "stern" / "x-men-limited-edition-2012.json"
 PRO_PATH = ROOT / "machines" / "partial" / "stern" / "x-men-pro-2012.json"
 EVIDENCE_PATH = ROOT / "evidence" / "runtime" / "sam" / "x-men-limited-edition-boot-start.json"
 PRO_SPATIAL_AUDIT_PATH = ROOT / "reports" / "spatial" / "stern" / "x-men-pro-2012.json"
@@ -40,11 +40,11 @@ class XMenDefinitionTests(unittest.TestCase):
 		cls.pro = load_json(PRO_PATH)
 		cls.evidence = load_json(EVIDENCE_PATH)
 
-	def test_le_remains_fail_closed_while_pro_remains_partial(self) -> None:
+	def test_le_is_author_ready_while_pro_remains_partial(self) -> None:
 		self.assertEqual(2, self.le["schema_version"])
-		self.assertEqual("partial", self.le["coverage"]["status"])
-		self.assertEqual(["spatial_placement"], self.le["coverage"]["missing"])
-		self.assertEqual("unknown", self.le["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual("author_ready", self.le["coverage"]["status"])
+		self.assertEqual([], self.le["coverage"]["missing"])
+		self.assertEqual("validated", self.le["coverage"]["dimensions"]["spatial_placement"])
 		self.assertEqual(2, self.pro["schema_version"])
 		self.assertEqual("partial", self.pro["coverage"]["status"])
 		self.assertEqual(["spatial_placement", "unresolved_conflicts"], self.pro["coverage"]["missing"])
@@ -54,21 +54,18 @@ class XMenDefinitionTests(unittest.TestCase):
 		self.assertEqual(["conflict.pro-lamp-59-script-versus-physical-inventory"], [conflict["id"] for conflict in self.pro["conflicts"]])
 		self.assertEqual("outputs[pinmame.output.lamp:59]", self.pro["conflicts"][0]["path"])
 		self.assertTrue(LE_PATH.exists())
-		self.assertFalse((ROOT / "machines" / "author-ready" / "stern" / "x-men-limited-edition-2012.json").exists())
+		self.assertFalse((ROOT / "machines" / "partial" / "stern" / "x-men-limited-edition-2012.json").exists())
 		self.assertTrue(PRO_PATH.exists())
+		self.assertEqual(
+			{"width": 952, "height": 2115, "units": "vpx", "provenance": {"status": "validated", "source_refs": ["vpx-table.x-men-le-vpw-1.0"]}},
+			self.le["machine"]["playfield"],
+		)
 
 	def test_le_spatial_records_preserve_exact_table_geometry_and_manual_multiplicity(self) -> None:
 		switches = bindings(self.le, "inputs", "pinmame.input.switch")
 		outputs = bindings(self.le, "outputs", "pinmame.output.solenoid")
 		lamps = bindings(self.le, "outputs", "pinmame.output.lamp")
-		unresolved_bindings = {
-			("pinmame.input.switch", 22),
-			("pinmame.output.solenoid", 19),
-			("pinmame.output.solenoid", 20),
-			("pinmame.output.solenoid", 30),
-		}
-		located_devices = [device for device in [*self.le["inputs"], *self.le["outputs"]] if (device["binding"]["group"], device["binding"]["device"]) not in unresolved_bindings]
-		self.assertTrue(all("spatial" in device for device in located_devices))
+		self.assertTrue(all("spatial" in device for device in [*self.le["inputs"], *self.le["outputs"]]))
 		self.assertEqual("validated", switches[34]["spatial"]["status"])
 		self.assertEqual((0.713607, 0.753937), (switches[34]["spatial"]["placements"][0]["x"], switches[34]["spatial"]["placements"][0]["y"]))
 		self.assertEqual((0.926444, 0.376846), (switches[35]["spatial"]["placements"][0]["x"], switches[35]["spatial"]["placements"][0]["y"]))
@@ -80,6 +77,7 @@ class XMenDefinitionTests(unittest.TestCase):
 			self.assertIn("Derived/shared assembly geometry", outputs[address]["physical"]["notes"])
 			self.assertIn("Trigger.sw53.center", outputs[address]["physical"]["notes"])
 			self.assertNotIn((0.526589, 0.204940), {(placement["x"], placement["y"]) for placement in outputs[address]["spatial"]["placements"]})
+			self.assertEqual({"vpx-table.x-men-le-vpw-1.0", "vpx.x-men-le-vpw-1.0.6"}, set(outputs[address]["spatial"]["placements"][0]["provenance"]["source_refs"]))
 		self.assertEqual(31, self.le["outputs"][-1]["physical"]["quantity"])
 		self.assertEqual(3, outputs[28]["physical"]["quantity"])
 		self.assertEqual(3, outputs[29]["physical"]["quantity"])
@@ -90,12 +88,15 @@ class XMenDefinitionTests(unittest.TestCase):
 		self.assertEqual(2, outputs[20]["physical"]["quantity"])
 		flasher_outputs = {address: outputs[address] for address in (17, 18, 19, 20, 21, 22, 25, 28, 29, 30, 31, 32)}
 		self.assertEqual(21, sum(device["physical"]["quantity"] for device in flasher_outputs.values()))
-		self.assertEqual(16, sum(len(device.get("spatial", {}).get("placements", [])) for device in flasher_outputs.values()))
-		for address in (19, 20, 30):
-			self.assertNotIn("spatial", flasher_outputs[address])
+		self.assertEqual(21, sum(len(device.get("spatial", {}).get("placements", [])) for device in flasher_outputs.values()))
 		self.assertEqual(1, flasher_outputs[30]["physical"]["quantity"])
-		self.assertIn("Cyclops spinner proxy", flasher_outputs[30]["physical"]["notes"])
-		self.assertIn("No f130 emitter exists", flasher_outputs[30]["physical"]["notes"])
+		self.assertIn("manual PDF pages 60-61", flasher_outputs[30]["physical"]["notes"])
+		self.assertIn("Magneto spotlight", flasher_outputs[30]["physical"]["location"])
+		self.assertEqual([(0.433, 0.349), (0.656, 0.456)], [(placement["x"], placement["y"]) for placement in flasher_outputs[19]["spatial"]["placements"]])
+		self.assertEqual([(0.669, 0.400), (0.487, 0.470)], [(placement["x"], placement["y"]) for placement in flasher_outputs[20]["spatial"]["placements"]])
+		self.assertEqual([(0.371, 0.425)], [(placement["x"], placement["y"]) for placement in flasher_outputs[30]["spatial"]["placements"]])
+		for address in (19, 20, 30):
+			self.assertTrue(all(placement["provenance"]["source_refs"] == ["manual.x-men-pro-le.2012.high-resolution"] for placement in flasher_outputs[address]["spatial"]["placements"]))
 		self.assertEqual([(0.608390, 0.169829), (0.450827, 0.172193)], [(placement["x"], placement["y"]) for placement in flasher_outputs[22]["spatial"]["placements"]])
 		self.assertEqual(["device.magneto-left-right-double-flasher.emitter.f122a", "device.magneto-left-right-double-flasher.emitter.f122b"], [placement["id"] for placement in flasher_outputs[22]["spatial"]["placements"]])
 		self.assertTrue(all(placement["provenance"]["source_refs"] == ["vpx-table.x-men-le-v2.0.1"] for placement in flasher_outputs[22]["spatial"]["placements"]))
@@ -111,13 +112,16 @@ class XMenDefinitionTests(unittest.TestCase):
 		switches = bindings(self.le, "inputs", "pinmame.input.switch")
 		self.assertEqual("Trough jam", switches[22]["label"])
 		self.assertEqual("opto", switches[22]["physical"]["switch_type"])
-		self.assertNotIn("spatial", switches[22])
+		self.assertEqual((0.858076, 0.857914), (switches[22]["spatial"]["placements"][0]["x"], switches[22]["spatial"]["placements"][0]["y"]))
+		self.assertEqual((switches[21]["spatial"]["placements"][0]["x"], switches[21]["spatial"]["placements"][0]["y"]), (switches[22]["spatial"]["placements"][0]["x"], switches[22]["spatial"]["placements"][0]["y"]))
+		self.assertIn("directly above switch 21", switches[22]["physical"]["notes"])
 		placements = [placement for device in [*self.le["inputs"], *self.le["outputs"]] for placement in device.get("spatial", {}).get("placements", [])]
-		self.assertTrue(all(len(placement["provenance"]["source_refs"]) == 1 for placement in placements))
+		self.assertTrue(all(placement["provenance"]["source_refs"] for placement in placements))
 		self.assertNotIn((0.469952, 0.241956), {(placement["x"], placement["y"]) for placement in placements})
 		self.assertNotIn((0.591291, 0.242244), {(placement["x"], placement["y"]) for placement in placements})
 		self.assertNotIn((0.689153, 0.184374), {(placement["x"], placement["y"]) for placement in placements})
 		self.assertEqual(["vpx-table.x-men-le-vpw-1.0"], switches[21]["spatial"]["placements"][0]["provenance"]["source_refs"])
+		self.assertEqual({"vpx-table.x-men-le-vpw-1.0", "manual.x-men-pro-le.2012.high-resolution"}, set(switches[22]["spatial"]["placements"][0]["provenance"]["source_refs"]))
 		self.assertEqual(["vpx-table.x-men-le-v2.0.1"], flasher_outputs[18]["spatial"]["placements"][0]["provenance"]["source_refs"])
 		sources = {source["id"]: source for source in self.le["sources"]}
 		self.assertEqual("vpx_table", sources["vpx-table.x-men-le-vpw-1.0"]["kind"])
@@ -129,8 +133,10 @@ class XMenDefinitionTests(unittest.TestCase):
 			self.assertNotRegex(json.dumps(sources[source_id]), r"L:[\\\\/]")
 		self.assertNotIn("vpx-table.x-men-pro-physmod5", {ref for device in self.le["outputs"] for placement in device.get("spatial", {}).get("placements", []) for ref in placement.get("provenance", {}).get("source_refs", [])})
 		knowledge = (ROOT / "knowledge" / "stern" / "x-men-limited-edition-2012.md").read_text(encoding="utf-8")
-		self.assertIn("F30 exact emitter geometry is unresolved", knowledge)
-		self.assertIn("F19/F20 per-socket geometry, F30 emitter geometry, and switch 22 exact geometry", knowledge)
+		self.assertIn("Page 61 places both F19 clear sockets and both F20 blue sockets", knowledge)
+		self.assertIn("switch 22 is the upper stacking beam", knowledge)
+		self.assertIn("Q4 control measurement", knowledge)
+		self.assertIn("the definition is author-ready", knowledge)
 
 	def test_le_vpx_cache_is_byte_identical_and_review_artifacts_are_retained(self) -> None:
 		sources = {source["id"]: source for source in self.le["sources"]}
@@ -151,7 +157,7 @@ class XMenDefinitionTests(unittest.TestCase):
 		for path in (
 			ROOT / "knowledge" / "stern" / "x-men-limited-edition-2012.md",
 			ROOT / "knowledge" / "stern" / "x-men-pro-2012.md",
-			ROOT / "machines" / "partial" / "stern" / "x-men-limited-edition-2012.json",
+			LE_PATH,
 			ROOT / "machines" / "partial" / "stern" / "x-men-pro-2012.json",
 			PRO_SPATIAL_AUDIT_PATH,
 			ROOT / "tests" / "test_xmen.py",
@@ -446,6 +452,12 @@ class XMenDefinitionTests(unittest.TestCase):
 		self.assertNotIn("manual.x-men-pro-le.2012", sources)
 		self.assertEqual("d793836fefab6c0de53463943e36245c7ed800d5ca86675e3c2b2f46df693643", sources["manual.x-men-pro-le.2012.high-resolution"]["sha256"])
 		self.assertIn("page 60 lacks a Q18 X2 marker", sources["manual.x-men-pro-le.2012.high-resolution"]["locator"])
+		excerpts = {excerpt["id"]: excerpt for excerpt in sources["manual.x-men-pro-le.2012.high-resolution"]["excerpts"]}
+		magneto = excerpts["excerpt.x-men.magneto-disc-coil-locations"]
+		self.assertEqual("b625823903a591e08cdf9039e4db748a16181cc8502139433242c57880e273c2", magneto["sha256"])
+		self.assertEqual("ebec8fc15f256805cdeb96e5729756949ba6644beb5f90be4379baee12ae8cef", magneto["image_sha256"])
+		for key, digest in (("path", magneto["sha256"]), ("image", magneto["image_sha256"])):
+			self.assertEqual(digest, hashlib.sha256((ROOT / magneto[key]).read_bytes()).hexdigest())
 		self.assertEqual("6d445e52398640bd35a498553bb0ba32f1b9ce23e2964d0694c18ff2e9225650", sources["vpx.x-men-le-vpw-1.0.6"]["sha256"])
 		runtime = self.evidence["runtime"]
 		self.assertEqual("xmn_151h", runtime["game"])
@@ -459,29 +471,47 @@ class XMenDefinitionTests(unittest.TestCase):
 				bindings_seen = [(item["binding"]["group"], item["binding"]["device"]) for item in collection]
 				self.assertEqual(len(bindings_seen), len(set(bindings_seen)))
 
-	def test_author_ready_conflict_is_non_destructive_for_both_curators(self) -> None:
-		spec = importlib.util.spec_from_file_location("curate_xmen_regeneration_test", ROOT / "tools" / "curate_xmen.py")
-		self.assertIsNotNone(spec)
-		self.assertIsNotNone(spec.loader)
-		module = importlib.util.module_from_spec(spec)
-		spec.loader.exec_module(module)
+	def test_spatial_curator_owns_idempotent_author_ready_output(self) -> None:
+		spatial_spec = importlib.util.spec_from_file_location("curate_xmen_le_spatial_idempotence_test", ROOT / "tools" / "curate_xmen_le_spatial.py")
+		self.assertIsNotNone(spatial_spec)
+		self.assertIsNotNone(spatial_spec.loader)
+		spatial_module = importlib.util.module_from_spec(spatial_spec)
+		spatial_spec.loader.exec_module(spatial_module)
 		with tempfile.TemporaryDirectory() as temporary:
-			module.ROOT = Path(temporary)
-			definition_path = module.ROOT / "machines" / "author-ready" / "stern" / "x-men-limited-edition-2012.json"
-			definition_path.parent.mkdir(parents=True)
-			definition_path.write_bytes(b'{"coverage": {"status": "author_ready"}}\n')
-			with self.assertRaisesRegex(RuntimeError, "author-ready canonical definition already exists"):
-				module.main()
-			self.assertTrue(definition_path.exists())
-			self.assertFalse((module.ROOT / "machines" / "partial" / "stern" / "x-men-limited-edition-2012.json").exists())
-			spatial_spec = importlib.util.spec_from_file_location("curate_xmen_le_spatial_conflict_test", ROOT / "tools" / "curate_xmen_le_spatial.py")
-			self.assertIsNotNone(spatial_spec)
-			self.assertIsNotNone(spatial_spec.loader)
-			spatial_module = importlib.util.module_from_spec(spatial_spec)
-			spatial_spec.loader.exec_module(spatial_module)
-			with self.assertRaisesRegex(RuntimeError, "author-ready canonical definition already exists"):
-				spatial_module.generate(root=module.ROOT)
-			self.assertTrue(definition_path.exists())
+			root = Path(temporary)
+			definition_path = root / "machines" / "author-ready" / "stern" / "x-men-limited-edition-2012.json"
+			spatial_module.generate(root=root)
+			first = definition_path.read_bytes()
+			spatial_module.generate(root=root)
+			self.assertEqual(first, definition_path.read_bytes())
+			spatial_module.check(root=root)
+			definition_path.write_bytes(first + b"\n")
+			with self.assertRaisesRegex(RuntimeError, "generated artifact drift"):
+				spatial_module.check(root=root)
+			self.assertFalse((root / "machines" / "partial" / "stern" / "x-men-limited-edition-2012.json").exists())
+
+	def test_spatial_curator_refuses_to_overwrite_a_deliberate_demotion(self) -> None:
+		spatial_spec = importlib.util.spec_from_file_location("curate_xmen_le_spatial_demotion_test", ROOT / "tools" / "curate_xmen_le_spatial.py")
+		self.assertIsNotNone(spatial_spec)
+		self.assertIsNotNone(spatial_spec.loader)
+		spatial_module = importlib.util.module_from_spec(spatial_spec)
+		spatial_spec.loader.exec_module(spatial_module)
+		with tempfile.TemporaryDirectory() as temporary:
+			root = Path(temporary)
+			author_ready_path = root / "machines" / "author-ready" / "stern" / "x-men-limited-edition-2012.json"
+			partial_path = root / "machines" / "partial" / "stern" / "x-men-limited-edition-2012.json"
+			spatial_module.generate(root=root)
+			partial_path.parent.mkdir(parents=True, exist_ok=True)
+			author_ready_path.replace(partial_path)
+			demoted = load_json(partial_path)
+			demoted["coverage"]["status"] = "partial"
+			demoted["coverage"]["missing"] = ["spatial_placement"]
+			partial_path.write_text(json.dumps(demoted, indent=2) + "\n", encoding="utf-8")
+			before = partial_path.read_bytes()
+			with self.assertRaisesRegex(RuntimeError, "deliberate demotion"):
+				spatial_module.generate(root=root)
+			self.assertEqual(before, partial_path.read_bytes())
+			self.assertFalse(author_ready_path.exists())
 
 	def test_base_and_spatial_curators_share_byte_stable_canonical_le_generation(self) -> None:
 		base_spec = importlib.util.spec_from_file_location("curate_xmen_ordering_test", ROOT / "tools" / "curate_xmen.py")
@@ -498,7 +528,7 @@ class XMenDefinitionTests(unittest.TestCase):
 		with tempfile.TemporaryDirectory() as temporary:
 			root = Path(temporary)
 			spatial_module.generate(root=root)
-			paths = [root / "machines" / "partial" / "stern" / "x-men-limited-edition-2012.json", root / "knowledge" / "stern" / "x-men-limited-edition-2012.md"]
+			paths = [root / "machines" / "author-ready" / "stern" / "x-men-limited-edition-2012.json", root / "knowledge" / "stern" / "x-men-limited-edition-2012.md"]
 			spatial_first = [path.read_bytes() for path in paths]
 			spatial_module.generate(root=root)
 			self.assertEqual(spatial_first, [path.read_bytes() for path in paths])
@@ -506,14 +536,14 @@ class XMenDefinitionTests(unittest.TestCase):
 			base_module.ROOT = root
 			base_module.main()
 			self.assertEqual(spatial_first, [path.read_bytes() for path in paths])
-			self.assertIn(b"F19/F20 per-socket geometry", spatial_first[1])
+			self.assertIn(b"both F19 clear sockets and both F20 blue sockets", spatial_first[1])
 			pro_paths = [root / "machines" / "partial" / "stern" / "x-men-pro-2012.json", root / "knowledge" / "stern" / "x-men-pro-2012.md", root / "reports" / "spatial" / "stern" / "x-men-pro-2012.json"]
 			pro_first = [path.read_bytes() for path in pro_paths]
 			self.assertEqual([PRO_PATH.read_bytes(), (ROOT / "knowledge" / "stern" / "x-men-pro-2012.md").read_bytes(), PRO_SPATIAL_AUDIT_PATH.read_bytes()], pro_first)
 			base_module.main()
 			self.assertEqual(spatial_first, [path.read_bytes() for path in paths])
 			self.assertEqual(pro_first, [path.read_bytes() for path in pro_paths])
-			self.assertFalse((root / "machines" / "author-ready" / "stern" / "x-men-limited-edition-2012.json").exists())
+			self.assertFalse((root / "machines" / "partial" / "stern" / "x-men-limited-edition-2012.json").exists())
 
 
 if __name__ == "__main__":

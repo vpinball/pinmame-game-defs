@@ -31,7 +31,6 @@ SPATIAL_RETROFIT_PENDING_MACHINE_IDS = (
 	"stern.transformers-pro.2011",
 	"stern.tron-legacy-pro.2011",
 	"stern.twenty-four.2009",
-	"stern.x-men-limited-edition.2012",
 	"stern.x-men-pro.2012",
 )
 

@@ -48,12 +48,12 @@ class Pinball2000CatalogTests(unittest.TestCase):
 	def test_catalog_baseline_counts(self) -> None:
 		self.assertEqual(
 			{
-				"author_ready_count": 24,
+				"author_ready_count": 25,
 				"driver_count": 2888,
 				"game_count": 789,
 				"machine_count": 790,
 				"non_game_count": 1,
-				"partial_count": 98,
+				"partial_count": 97,
 				"root_driver_count": 774,
 				"stub_count": 668,
 			},

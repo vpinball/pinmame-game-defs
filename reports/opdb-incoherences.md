@@ -680,9 +680,9 @@ Count: **6**
 - machine_id=stern.ac-dc-led-pro.2014; csv_opdb_ids=G43W4-MKNW0; selected_opdb_id=G43W4-MKNW0-AOENR; selected_ipdb_id=6441
 - machine_id=stern.ac-dc-premium-limited-edition-luci.2012; csv_opdb_ids=G43W4-MrRpw; selected_opdb_id=G43W4-MXrPx; selected_ipdb_id=5775
 - machine_id=stern.ac-dc-vault-edition.2018; csv_opdb_ids=G43W4-MKNW0; selected_opdb_id=G43W4-MKNX0; selected_ipdb_id=6439
+- machine_id=stern.x-men-limited-edition.2012; csv_opdb_ids=Grj6X-MJNV1; selected_opdb_id=Grj6X-MJNV1-AOwN1; selected_ipdb_id=5823
 - machine_id=capcom.big-bang-bar.1996; csv_opdb_ids=G56vo-Ml9Pp; selected_opdb_id=G56vo-MLl1Z; selected_ipdb_id=4001
 - machine_id=stern.batman-the-dark-knight-standard-home-edition.2010; csv_opdb_ids=G4yVw-M85j8; selected_opdb_id=G4yVw-MQY90; selected_ipdb_id=5583
-- machine_id=stern.x-men-limited-edition.2012; csv_opdb_ids=Grj6X-MJNV1; selected_opdb_id=Grj6X-MJNV1-AOwN1; selected_ipdb_id=5823
 
 ## Selected OPDB families that differ from the CSV family
 

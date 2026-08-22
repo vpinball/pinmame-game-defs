@@ -20,7 +20,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 14 | 2012 | AC/DC Pro (original) | Stern | author_ready | 100% |
 | 15 | 2012 | The Avengers Limited Edition | Stern | partial | 88% |
 | 16 | 2012 | The Avengers Pro | Stern | author_ready | 100% |
-| 17 | 2012 | X-Men Limited Edition (Magneto / Wolverine) | Stern | partial | 94% |
+| 17 | 2012 | X-Men Limited Edition (Magneto / Wolverine) | Stern | author_ready | 100% |
 | 18 | 2012 | X-Men Pro | Stern | partial | 88% |
 | 19 | 2011 | The Rolling Stones (Standard) | Stern | author_ready | 100% |
 | 20 | 2011 | The Rolling Stones Limited Edition | Stern | author_ready | 100% |

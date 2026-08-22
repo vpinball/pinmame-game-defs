@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 import sys
+import tempfile
 
 TOOLS = Path(__file__).resolve().parent
 ROOT = Path(__file__).resolve().parents[1]
@@ -11,19 +13,18 @@ for import_root in (ROOT / "src", TOOLS):
 	if str(import_root) not in sys.path:
 		sys.path.insert(0, str(import_root))
 
-from curate_xmen import LE_KNOWLEDGE, build_le, refuse_if_canonical_definition_exists
+from curate_xmen import LE_KNOWLEDGE, build_le
 from pinmame_game_defs.jsonio import write_json, write_text
-from pinmame_game_defs.spatial import fail_closed_spatial_knowledge, fail_closed_spatial_partial
 
 TABLE_SOURCE = "vpx-table.x-men-le-vpw-1.0"
 CORROBORATING_SOURCE = "vpx-table.x-men-le-v2.0.1"
 CORROBORATING_TEST_SOURCE = "vpx-table.x-men-le-v2.2.7a-test"
 MANUAL_SOURCE = "manual.x-men-pro-le.2012.high-resolution"
+SCRIPT_SOURCE = "vpx.x-men-le-vpw-1.0.6"
 CORE_SOURCE = "pinmame.core.4ec52ff0ac13"
 
-UNRESOLVED_INPUTS = {22}
-UNRESOLVED_FLASHERS = {19, 20, 30}
 CORROBORATING_GEOMETRY_OUTPUTS = {18, 22, 28, 29, 31}
+MANUAL_DERIVED_GEOMETRY_OUTPUTS = {19, 20, 30}
 
 TABLE_SOURCE_RECORD = {
 	"id": TABLE_SOURCE,
@@ -100,7 +101,7 @@ INPUT_POSITIONS: dict[int, list[tuple[float, float]]] = {
 	4: [(0.233580, 0.562019)], 7: [(0.832983, 0.487234)], 8: [(0.832983, 0.525532)],
 	11: [(0.084819, 0.388448)], 12: [(0.437556, 0.318400)], 13: [(0.179486, 0.205924)], 14: [(0.075417, 0.147665)],
 	18: [(0.646125, 0.922217)], 19: [(0.719888, 0.898681)], 20: [(0.790850, 0.877247)],
-	21: [(0.858076, 0.857914)], 23: [(0.947528, 0.887323)],
+	21: [(0.858076, 0.857914)], 22: [(0.858076, 0.857914)], 23: [(0.947528, 0.887323)],
 	24: [(0.040627, 0.748208)], 25: [(0.121629, 0.719866)],
 	26: [(0.213427, 0.720161)], 27: [(0.634191, 0.720606)],
 	28: [(0.719549, 0.698139)], 29: [(0.854134, 0.738323)],
@@ -180,11 +181,14 @@ SOLENOID_POSITIONS: dict[int, list[tuple[float, float] | tuple[str, float, float
 	14: [(0.634191, 0.720606)], 15: [(0.258410, 0.827754)], 16: [(0.587091, 0.827754)],
 	17: [(0.063596, 0.303155), (0.063778, 0.601628)],
 	18: [(0.951053, 0.309522)],
+	19: [("clear.01", 0.433, 0.349), ("clear.02", 0.656, 0.456)],
+	20: [("blue.01", 0.669, 0.400), ("blue.02", 0.487, 0.470)],
 	21: [(0.343684, 0.433658)],
 	22: [("f122a", 0.608390, 0.169829), ("f122b", 0.450827, 0.172193)], 23: [(0.526293, 0.404828)],
 	25: [(0.189278, 0.383700)], 26: [(0.360405, 0.059397)],
 	27: [(0.713607, 0.753937), (0.926444, 0.376846)], 28: [("f28a", 0.148958, 0.018409), ("f28b", 0.286423, 0.018409), ("f28c", 0.425408, 0.018409)],
 	29: [("f29a", 0.559517, 0.018409), ("f29b", 0.699833, 0.018409), ("f29c", 0.837139, 0.018409)],
+	30: [("spotlight", 0.371, 0.425)],
 	31: [("f131a", 0.118833, 0.882520), ("f131b", 0.791374, 0.881999)],
 	32: [(0.529075, 0.158083)], 51: [(0.389991, 0.476778)],
 	52: [(0.437556, 0.318400)], 53: [(0.715157, 0.347220)], 57: [(0.437556, 0.318400)],
@@ -195,6 +199,19 @@ FLASHER_QUANTITIES = {17: 2, 18: 1, 19: 2, 20: 2, 21: 1, 22: 2, 25: 1, 28: 3, 29
 
 
 def apply_spatial(definition: dict[str, object]) -> None:
+	definition["machine"]["playfield"] = {
+		"width": 952,
+		"height": 2115,
+		"units": "vpx",
+		"provenance": provenance(TABLE_SOURCE),
+	}
+	for display in definition["displays"]:
+		display["spatial"] = {
+			"status": "not_applicable",
+			"reason": "cabinet_or_service",
+			"provenance": provenance(CORE_SOURCE, MANUAL_SOURCE),
+		}
+
 	for device in definition["inputs"]:
 		device.pop("spatial", None)
 		group = str(device["binding"]["group"])
@@ -203,11 +220,9 @@ def apply_spatial(definition: dict[str, object]) -> None:
 			not_applicable(device, "dip_switch", MANUAL_SOURCE)
 		elif device["availability"] == "unused":
 			not_applicable(device, "unused", MANUAL_SOURCE)
-		elif address in UNRESOLVED_INPUTS:
-			device.setdefault("physical", {})["location"] = "Under-apron four-ball trough; distinct manual trough-jam opto. Exact retained LE tables do not supply its geometry."
-			continue
 		elif address in INPUT_POSITIONS:
-			located(device, "sensor", INPUT_POSITIONS[address], (TABLE_SOURCE,))
+			coordinate_sources = (TABLE_SOURCE, MANUAL_SOURCE) if group == "pinmame.input.switch" and address == 22 else (TABLE_SOURCE,)
+			located(device, "sensor", INPUT_POSITIONS[address], coordinate_sources)
 		elif address in FLIPPER_INPUT_POSITIONS:
 			located(device, "sensor", FLIPPER_INPUT_POSITIONS[address], (TABLE_SOURCE,))
 		elif address in CABINET_INPUT_ROLES:
@@ -218,6 +233,10 @@ def apply_spatial(definition: dict[str, object]) -> None:
 
 		if group == "pinmame.input.switch" and address in {18, 19, 20, 21}:
 			device.setdefault("physical", {})["location"] = "Under-apron four-ball trough; exact table kicker center supplies the placement."
+		elif group == "pinmame.input.switch" and address == 22:
+			physical = device.setdefault("physical", {})
+			physical["location"] = "Under-apron trough exit; upper stacking beam on the same dual-opto board assembly as switch 21."
+			physical["notes"] = "The Stern page-b3 trough cut-away places switch 22 directly above switch 21 on the shared transmitter/receiver pair. Because that distinction is vertical, both sensors share the exact switch-21 table anchor in the normalized two-dimensional playfield plane."
 		elif group == "pinmame.input.switch" and address in {12, 50}:
 			device.setdefault("physical", {})["location"] = "Left Nightcrawler moving pop-up assembly; the exact table uses one wall assembly for the down and hit sensors."
 		elif group == "pinmame.input.switch" and address in {51, 56}:
@@ -249,27 +268,34 @@ def apply_spatial(definition: dict[str, object]) -> None:
 		elif group == "pinmame.output.solenoid" and address in {54, 55, 56}:
 			device["roles"] = ["internal.gi.channel"]
 			not_applicable(device, "internal_nonvisual", MANUAL_SOURCE)
-		elif group == "pinmame.output.solenoid" and address in UNRESOLVED_FLASHERS:
-			physical = device.setdefault("physical", {})
-			physical["quantity"] = FLASHER_QUANTITIES[address]
-			if address == 30:
-				physical["location"] = "Cyclops spinner flasher assembly; exact emitter geometry is not exposed by the retained tables."
-				physical["notes"] = "The retained VPW v1.0 point (0.689153, 0.184374) is an undisclosed Cyclops spinner proxy, not an F30 emitter. No f130 emitter exists in the retained exact LE tables; no F30 spatial placement is asserted."
-			else:
-				physical["location"] = "Magneto spinning-disc flasher assembly; per-socket geometry is not exposed by the retained tables."
-				physical["notes"] = "Stern manual PDF page 60 requires two sockets. The exact retained LE tables expose one virtual/render center for this circuit; no per-socket coordinate is asserted."
 		elif group == "pinmame.output.solenoid" and address in SOLENOID_POSITIONS:
 			role = "emitter" if kind == "flasher" else "effect"
-			coordinate_source = CORROBORATING_SOURCE if address in CORROBORATING_GEOMETRY_OUTPUTS else TABLE_SOURCE
-			located(device, role, SOLENOID_POSITIONS[address], (coordinate_source,))
+			if address in MANUAL_DERIVED_GEOMETRY_OUTPUTS:
+				coordinate_sources = (MANUAL_SOURCE,)
+			elif address in CORROBORATING_GEOMETRY_OUTPUTS:
+				coordinate_sources = (CORROBORATING_SOURCE,)
+			elif address in {6, 7}:
+				coordinate_sources = (TABLE_SOURCE, SCRIPT_SOURCE)
+			else:
+				coordinate_sources = (TABLE_SOURCE,)
+			located(device, role, SOLENOID_POSITIONS[address], coordinate_sources)
 			physical = device.setdefault("physical", {})
 			if kind == "flasher":
 				quantity = FLASHER_QUANTITIES[address]
 				if len(SOLENOID_POSITIONS[address]) != quantity:
 					raise ValueError(f"X-Men LE flasher F{address} socket reconciliation mismatch: expected {quantity}, got {len(SOLENOID_POSITIONS[address])}")
 				physical["quantity"] = quantity
-				physical["notes"] = "Stern manual PDF page 60 controls the installed quantity; each direct flasher placement is an exact table-object coordinate. Derived/shared assembly anchors are disclosed separately and are not exact actuator coordinates."
-				if address == 18:
+				if address in MANUAL_DERIVED_GEOMETRY_OUTPUTS:
+					physical["notes"] = "Stern manual PDF pages 60-61 control the Limited Edition installed quantity and physical location. Placements are reproducibly measured page-61 numbered device-symbol centers normalized against the documented playfield frame and rounded to three decimals; they preserve the factory drawing's socket relationships but are not exact VPX emitter-object centers."
+				else:
+					physical["notes"] = "Stern manual PDF page 60 controls the installed quantity; each direct flasher placement is an exact table-object coordinate. Derived/shared assembly anchors are disclosed separately and are not exact actuator coordinates."
+				if address == 19:
+					physical["location"] = "Magneto rotating-disc clear flasher pair, at the two Q19 callouts on opposite sides of the disc."
+				elif address == 20:
+					physical["location"] = "Magneto rotating-disc blue flasher pair, alternating with the two Q19 clear flashers."
+				elif address == 30:
+					physical["location"] = "Magneto spotlight immediately left of the rotating disc on the factory coil-location drawing."
+				elif address == 18:
 					physical["location"] = "Right-side flasher assembly; one manual socket at the exact LE v2.0.1 Light.Flasherlight3 center (905.4027, 654.639). The paired Flasher.Flasherflash3 is a render layer, not a second socket."
 				elif address == 22:
 					physical["location"] = "Magneto left/right flasher pair; exact LE v2.0.1 Light.f122a and Light.f122b emitter centers provide two distinct physical assemblies."
@@ -316,12 +342,6 @@ def _assert_flasher_socket_contract(definition: dict[str, object]) -> None:
 	}
 	for address, quantity in FLASHER_QUANTITIES.items():
 		device = outputs[address]
-		if address in UNRESOLVED_FLASHERS:
-			if "spatial" in device:
-				raise ValueError(f"X-Men LE F{address} has unresolved geometry but received spatial placements")
-			if device.get("physical", {}).get("quantity") != quantity:
-				raise ValueError(f"X-Men LE F{address} quantity mismatch")
-			continue
 		placements = device["spatial"]["placements"]
 		if len(placements) != quantity:
 			raise ValueError(f"X-Men LE F{address} requires {quantity} physical socket placements, got {len(placements)}")
@@ -332,21 +352,42 @@ def _assert_flasher_socket_contract(definition: dict[str, object]) -> None:
 
 
 def _assert_placement_provenance(definition: dict[str, object]) -> None:
+	source_ids = {source["id"] for source in definition["sources"]}
 	for collection in (definition["inputs"], definition["outputs"]):
 		for device in collection:
 			for placement in device.get("spatial", {}).get("placements", []):
 				refs = placement["provenance"]["source_refs"]
-				if len(refs) != 1:
-					raise ValueError(f"{placement['id']} must name only its coordinate source")
+				if not refs or any(ref not in source_ids for ref in refs):
+					raise ValueError(f"{placement['id']} must name every source required to reproduce or license the placement")
+	inputs = {int(device["binding"]["device"]): device for device in definition["inputs"] if device["binding"]["group"] == "pinmame.input.switch"}
+	if set(inputs[22]["spatial"]["placements"][0]["provenance"]["source_refs"]) != {TABLE_SOURCE, MANUAL_SOURCE}:
+		raise ValueError("X-Men LE switch 22 must name both the table coordinate and manual shared-opto derivation")
+	outputs = {int(device["binding"]["device"]): device for device in definition["outputs"] if device["binding"]["group"] == "pinmame.output.solenoid"}
+	for address in (6, 7):
+		if set(outputs[address]["spatial"]["placements"][0]["provenance"]["source_refs"]) != {TABLE_SOURCE, SCRIPT_SOURCE}:
+			raise ValueError(f"X-Men LE output {address} must name both the table anchor and working-script assembly derivation")
+
+
+def _promote_when_spatially_complete(definition: dict[str, object]) -> None:
+	if definition.get("conflicts"):
+		raise ValueError("X-Men LE cannot be author-ready while unresolved conflicts remain")
+	for collection_name in ("inputs", "outputs", "displays"):
+		for device in definition[collection_name]:
+			spatial = device.get("spatial")
+			if not isinstance(spatial, dict) or spatial.get("status") not in {"validated", "not_applicable"}:
+				raise ValueError(f"{device['id']} prevents X-Men LE author-ready promotion: spatial disposition is incomplete")
+	definition["coverage"]["status"] = "author_ready"
+	definition["coverage"]["missing"] = []
+	definition["coverage"]["dimensions"]["spatial_placement"] = "validated"
 
 
 SPATIAL_KNOWLEDGE_APPENDIX = """## Normalized spatial evidence
 
-The partial spatial records retain direct coordinates when an exact LE VPX table object supplies them, and explicitly disclosed derived/shared assembly anchors where the working script and mechanism justify reusing a table point. The VPW v1.0 table supplies the normalized controller/device points; the exact LE v2.0.1 table supplies the named flasher geometry retained for F18, F22, F28, F29, and F31. Placement provenance names only the table that supplies each coordinate. The exact LE v2.2.7a_TEST table remains retained as corroborating evidence, but it is not incorrectly claimed as a coordinate source.
+The schema-v2 records retain direct coordinates when an exact LE VPX table object supplies them, explicitly disclosed shared-assembly anchors when the working script and mechanism justify reusing a table point, and measured factory-manual device-symbol centers where a table exposes only render proxies. The VPW v1.0 table supplies a canonical 952 by 2115 playfield extent and the normalized controller/device points; the exact LE v2.0.1 table supplies the named flasher geometry retained for F18, F22, F28, F29, and F31. Placement provenance names the coordinate source plus any manual or working-script source required to justify a shared anchor. The exact LE v2.2.7a_TEST table remains retained as corroborating evidence, but it is not incorrectly claimed as a coordinate source.
 
-The official Stern manual PDF page 60 was visually verified at the root: F17 reads `FLASH: LEFT SIDE (X2)` and F18 reads `FLASH: RIGHT SIDE`, so F18 quantity is one. The reviewed flasher set contains 21 manual sockets; 16 direct placements are retained for F17/F18/F21/F22/F25/F28/F29/F31/F32, while F19/F20/F30 retain their manual quantities without spatial placements. F19 and F20 each expose only one virtual/render center per circuit, and the F30 point is an undisclosed Cyclops spinner proxy; duplicated or semantically mismatched points are not socket geometry.
+The official Stern manual PDF page 60 was visually verified at the root: F17 reads `FLASH: LEFT SIDE (X2)` and F18 reads `FLASH: RIGHT SIDE`, so F18 quantity is one. The complete flasher set contains 21 physical sockets. Page 61 places both F19 clear sockets and both F20 blue sockets as alternating pairs around the Magneto disc, and places the single F30 Magneto spotlight immediately left of the disc. A retained native-resolution crop and transcription record the full-page 2531 by 3557 render, playfield-frame corners, five device-symbol pixel centers, normalization formula, and three-decimal results. A Q4 control measurement lands within 0.014 normalized units of the exact VPW Magneto anchor, demonstrating that the manual and table frames agree while quantifying their drafting tolerance. The five placements retain only the Limited Edition manual as coordinate provenance, avoiding the retained tables' one-center disc lightmaps and unrelated F30 render proxy.
 
-The four ball-position switches 18-21 use exact table kicker centers. Switch 22 is a distinct manual trough-jam opto; the retained LE tables do not supply its exact geometry, so it has no speculative placement. Outputs Q6/Q7 share the exact `Trigger.sw53.center` anchor only as derived assembly geometry: the working script/mechanism ties both actuators to the center-lock assembly, but this is not an exact actuator object coordinate. F22 uses the exact v2.0.1 `Light.f122a` `(0.608390, 0.169829)` and `Light.f122b` `(0.450827, 0.172193)` emitter centers; the prior `Primitive.Target_004_*`/`Target_001_*` lightmap recipients are excluded. F30 exact emitter geometry is unresolved: no `f130` emitter exists, and `(0.689153, 0.184374)` is a Cyclops spinner proxy rather than an F30 placement. F19/F20 per-socket geometry, F30 emitter geometry, and switch 22 exact geometry are the authoring-critical spatial blockers. The definition remains partial with `coverage.missing` containing `spatial_placement` and `coverage.dimensions.spatial_placement` set to `unknown`. Cabinet/service inputs, the start-button lamp, shaker, coin meter, unused channels, the DIP bank, GI dim control outputs 54-56, and virtual output 33 remain explicitly controlled non-playfield records. The Pro table and archive `xmn_151` table are excluded from LE spatial evidence.
+The four ball-position switches 18-21 use exact table kicker centers. The manual's page-b3 trough cut-away proves switch 22 is the upper stacking beam on the same dual-opto transmitter/receiver assembly as switch 21. Because the physical distinction is vertical, outside the normalized x/y plane, switch 22 shares the exact switch-21 table anchor and its placement provenance names both the table coordinate and the manual derivation. Outputs Q6/Q7 similarly share the exact `Trigger.sw53.center` anchor only as derived assembly geometry; their placement provenance names both the table anchor and the working script that ties both actuators to the center-lock assembly. This is not an exact actuator object coordinate. F22 uses the exact v2.0.1 `Light.f122a` `(0.608390, 0.169829)` and `Light.f122b` `(0.450827, 0.172193)` emitter centers; the prior `Primitive.Target_004_*`/`Target_001_*` lightmap recipients are excluded. Cabinet/service inputs, the start-button lamp, shaker, coin meter, unused channels, the DIP bank, GI dim control outputs 54-56, and virtual output 33 remain explicitly controlled non-playfield records. The Pro table and archive `xmn_151` table are excluded from LE spatial evidence. With every installed LE playfield device now assigned or explicitly non-spatial, the definition is author-ready.
 """
 
 
@@ -354,11 +395,15 @@ def generate(root: Path = ROOT) -> None:
 	partial_path = root / "machines/partial/stern/x-men-limited-edition-2012.json"
 	author_ready_path = root / "machines/author-ready/stern/x-men-limited-edition-2012.json"
 	legacy_path = root / "machines/partial/stern/x-men-le-2012.json"
-	refuse_if_canonical_definition_exists(author_ready_path)
 	if legacy_path.exists():
 		raise RuntimeError(
-			f"Refusing to regenerate {partial_path}: legacy X-Men LE definition exists at {legacy_path}; "
+			f"Refusing to regenerate {author_ready_path}: legacy X-Men LE definition exists at {legacy_path}; "
 			"resolve the duplicate canonical definition explicitly before curating again."
+		)
+	if partial_path.exists():
+		raise RuntimeError(
+			f"Refusing to regenerate {author_ready_path}: a partial canonical definition exists at {partial_path}; "
+			"treat it as a deliberate demotion and resolve the evidence gap explicitly before promoting again."
 		)
 	definition = build_le()
 	for replacement in [TABLE_SOURCE_RECORD, *CORROBORATING_TABLE_SOURCE_RECORDS]:
@@ -372,10 +417,33 @@ def generate(root: Path = ROOT) -> None:
 	apply_spatial(definition)
 	_assert_flasher_socket_contract(definition)
 	_assert_placement_provenance(definition)
-	definition = fail_closed_spatial_partial(definition)
-	write_json(partial_path, definition)
-	write_text(root / "knowledge/stern/x-men-limited-edition-2012.md", fail_closed_spatial_knowledge(definition["machine"]["id"], LE_KNOWLEDGE).rstrip() + "\n\n" + SPATIAL_KNOWLEDGE_APPENDIX.rstrip() + "\n")
+	_promote_when_spatially_complete(definition)
+	write_json(author_ready_path, definition)
+	write_text(root / "knowledge/stern/x-men-limited-edition-2012.md", LE_KNOWLEDGE.rstrip() + "\n\n" + SPATIAL_KNOWLEDGE_APPENDIX.rstrip() + "\n")
+
+
+def check(root: Path = ROOT) -> None:
+	partial_path = root / "machines/partial/stern/x-men-limited-edition-2012.json"
+	if partial_path.exists():
+		raise RuntimeError(f"Refusing X-Men LE author-ready check while a partial canonical definition exists at {partial_path}")
+	with tempfile.TemporaryDirectory() as temporary:
+		expected_root = Path(temporary)
+		generate(expected_root)
+		for relative_path in (
+			Path("machines/author-ready/stern/x-men-limited-edition-2012.json"),
+			Path("knowledge/stern/x-men-limited-edition-2012.md"),
+		):
+			actual_path = root / relative_path
+			expected_path = expected_root / relative_path
+			if not actual_path.is_file() or actual_path.read_bytes() != expected_path.read_bytes():
+				raise RuntimeError(f"X-Men LE generated artifact drift: {relative_path.as_posix()}")
 
 
 if __name__ == "__main__":
-	generate()
+	parser = argparse.ArgumentParser(description=__doc__)
+	parser.add_argument("--check", action="store_true", help="reconstruct and compare the canonical LE artifacts without writing")
+	arguments = parser.parse_args()
+	if arguments.check:
+		check()
+	else:
+		generate()
