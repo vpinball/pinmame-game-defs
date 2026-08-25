@@ -26,7 +26,7 @@ Count: **11**
 
 ## Catalog drivers without a CSV mapping
 
-Count: **360**
+Count: **362**
 
 - `aar_101`
 - `afv_d4`
@@ -95,6 +95,7 @@ Count: **360**
 - `domino2`
 - `dragfis17`
 - `drakor`
+- `ebalchmb`
 - `empsback`
 - `escape`
 - `evlfight`
@@ -370,6 +371,7 @@ Count: **360**
 - `ttt_10`
 - `uboat65`
 - `ufo_x`
+- `usafootr`
 - `v1`
 - `vegast`
 - `vikngkng`
@@ -391,7 +393,7 @@ Count: **360**
 
 ## Machine definitions without a CSV mapping
 
-Count: **240**
+Count: **242**
 
 - `bally.revenge-from-mars.1999`
 - `diagnostic.scotts-test-rom-v8`
@@ -445,6 +447,7 @@ Count: **240**
 - `stub.pinmame.discodan`
 - `stub.pinmame.domino2`
 - `stub.pinmame.drakor`
+- `stub.pinmame.ebalchmb`
 - `stub.pinmame.empsback`
 - `stub.pinmame.escape`
 - `stub.pinmame.evlfight`
@@ -622,6 +625,7 @@ Count: **240**
 - `stub.pinmame.ttt_10`
 - `stub.pinmame.uboat65`
 - `stub.pinmame.ufo_x`
+- `stub.pinmame.usafootr`
 - `stub.pinmame.v1`
 - `stub.pinmame.vikngkng`
 - `stub.pinmame.voleybal`
@@ -659,30 +663,25 @@ Count: **2**
 
 ## CSV OPDB machine records split across definitions
 
-Count: **11**
+Count: **8**
 
 - opdb_id=G41yq-MQP65; machine_ids=stub.pinmame.blckhole,stub.pinmame.blkholea
-- opdb_id=G439V-MDvWZ; machine_ids=stub.pinmame.ebalchmb,stub.pinmame.eballchp
 - opdb_id=G43W4-MKNW0; machine_ids=stern.ac-dc-led-pro.2014,stern.ac-dc-pro.2012,stern.ac-dc-vault-edition.2018
 - opdb_id=G4jXr-MQ6kz; machine_ids=bally.kiss.1979,stub.pinmame.kiss
-- opdb_id=G4yVw-M85j8; machine_ids=stern.batman-the-dark-knight-pro.2008,stern.batman-the-dark-knight-standard-home-edition.2010
 - opdb_id=G5KXk-MLB9V; machine_ids=bally.eight-ball-deluxe.1981,stub.pinmame.eballdlx
 - opdb_id=G5VDd-MJpqO; machine_ids=stub.pinmame.frpwr_a7,stub.pinmame.frpwr_d7,stub.pinmame.frpwr_e7,stub.pinmame.frpwr_l6
 - opdb_id=G5b38-MDqkx; machine_ids=stub.pinmame.meteor,stub.pinmame.meteora
-- opdb_id=G5wxv-MP3k9; machine_ids=stub.pinmame.usafootb,stub.pinmame.usafootr
 - opdb_id=GRbl7-ML8EY; machine_ids=stub.pinmame.alcapone,stub.pinmame.speakesy
 - opdb_id=GrEzp-MDbW3; machine_ids=stub.pinmame.vlcno_1b,stub.pinmame.vlcno_ax
 
 ## Selected OPDB records that intentionally differ from the CSV machine record
 
-Count: **6**
+Count: **4**
 
 - machine_id=stern.ac-dc-led-pro.2014; csv_opdb_ids=G43W4-MKNW0; selected_opdb_id=G43W4-MKNW0-AOENR; selected_ipdb_id=6441
 - machine_id=stern.ac-dc-premium-limited-edition-luci.2012; csv_opdb_ids=G43W4-MrRpw; selected_opdb_id=G43W4-MXrPx; selected_ipdb_id=5775
 - machine_id=stern.ac-dc-vault-edition.2018; csv_opdb_ids=G43W4-MKNW0; selected_opdb_id=G43W4-MKNX0; selected_ipdb_id=6439
 - machine_id=stern.x-men-limited-edition.2012; csv_opdb_ids=Grj6X-MJNV1; selected_opdb_id=Grj6X-MJNV1-AOwN1; selected_ipdb_id=5823
-- machine_id=capcom.big-bang-bar.1996; csv_opdb_ids=G56vo-Ml9Pp; selected_opdb_id=G56vo-MLl1Z; selected_ipdb_id=4001
-- machine_id=stern.batman-the-dark-knight-standard-home-edition.2010; csv_opdb_ids=G4yVw-M85j8; selected_opdb_id=G4yVw-MQY90; selected_ipdb_id=5583
 
 ## Selected OPDB families that differ from the CSV family
 
