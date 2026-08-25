@@ -1,12 +1,17 @@
 from __future__ import annotations
 
+import csv
 import json
 import tempfile
 import unittest
 from pathlib import Path
 
 from pinmame_game_defs.errors import DefinitionError
+from pinmame_game_defs.jsonio import file_sha256
 from pinmame_game_defs.opdb import import_opdb, load_opdb_machine_identity_index
+
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def write_json(path: Path, value: object) -> None:
@@ -15,6 +20,33 @@ def write_json(path: Path, value: object) -> None:
 
 
 class OpdbImportTests(unittest.TestCase):
+	def test_committed_mapping_matches_identity_report(self) -> None:
+		mapping_path = ROOT / "machines/opdb_id.csv"
+		report = json.loads((ROOT / "reports/opdb-identity.json").read_text(encoding="utf-8"))
+		with mapping_path.open("r", encoding="utf-8-sig", newline="") as stream:
+			row_count = sum(1 for _ in csv.DictReader(stream))
+		self.assertEqual("machines/opdb_id.csv", report["mapping"]["path"])
+		self.assertEqual(row_count, report["mapping"]["row_count"])
+		self.assertEqual(file_sha256(mapping_path), report["mapping"]["sha256"])
+
+	def test_committed_overrides_match_identity_report(self) -> None:
+		overrides = json.loads((ROOT / "config/opdb-overrides.json").read_text(encoding="utf-8"))["machines"]
+		report = json.loads((ROOT / "reports/opdb-identity.json").read_text(encoding="utf-8"))
+		reported = {record["machine_id"]: record for record in report["machines"] if record["resolution"] == "override"}
+		self.assertEqual(set(overrides), set(reported))
+		for machine_id, override in overrides.items():
+			self.assertEqual(override["opdb_id"], reported[machine_id]["opdb_id"], machine_id)
+
+	def test_unsupported_opdb_identities_stay_unmapped(self) -> None:
+		# See docs/CURRENT-STATE.md: the pinned snapshot has no record for either physical variant.
+		with (ROOT / "machines/opdb_id.csv").open("r", encoding="utf-8-sig", newline="") as stream:
+			mapped_romsets = {row["romset"] for row in csv.DictReader(stream)}
+		for romset in ("ebalchmb", "usafootr"):
+			self.assertNotIn(romset, mapped_romsets)
+			machine = json.loads((ROOT / f"machines/stubs/{romset}.json").read_text(encoding="utf-8"))["machine"]
+			self.assertNotIn("ipdb_id", machine, romset)
+			self.assertNotIn("opdb_id", machine, romset)
+
 	def test_import_updates_identity_family_provenance_and_incoherences(self) -> None:
 		with tempfile.TemporaryDirectory() as directory:
 			root = Path(directory)
