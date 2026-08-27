@@ -31,8 +31,8 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 25 | 2010 | Avatar Limited Edition | Stern | partial | 94% |
 | 26 | 2010 | Avatar Pro | Stern | partial | 88% |
 | 27 | 2010 | Batman: The Dark Knight Standard/Home Edition | Stern | partial | 94% |
-| 28 | 2010 | Iron Man | Stern | author_ready | 100% |
-| 29 | 2010 | STUB - Big Buck Hunter Pro (V1.7) | Stern | stub | 0% |
+| 28 | 2010 | Big Buck Hunter Pro | Stern | partial | 63% |
+| 29 | 2010 | Iron Man | Stern | author_ready | 100% |
 | 30 | 2009 | 24 | Stern | partial | 63% |
 | 31 | 2009 | STUB - CSI: Crime Scene Investigation (V2.4) | Stern | stub | 0% |
 | 32 | 2009 | STUB - Indiana Jones (V2.1) | Stern | stub | 0% |

@@ -56,7 +56,11 @@ class CompletionScoreTests(unittest.TestCase):
 		self.assertEqual(88, by_id["williams.monster-bash.1998"]["completion_score"])
 		self.assertEqual(75, by_id["stern.lord-of-the-rings.2003"]["completion_score"])
 		self.assertEqual(19, by_id["data-east.guns-n-roses.1994"]["completion_score"])
-		self.assertEqual(0, by_id["stub.pinmame.bbh_170"]["completion_score"])
+		# The Big Buck Hunter Pro curation replaced its generated stub with an honest partial:
+		# six of the sixteen requirements (input/output semantics, polarity, recreation notes,
+		# spatial placement, unresolved conflicts) are missing, so the equal-credit score is 63.
+		self.assertNotIn("stub.pinmame.bbh_170", by_id)
+		self.assertEqual(63, by_id["stern.big-buck-hunter-pro.2010"]["completion_score"])
 
 	def test_repository_validation_rejects_a_hand_edited_score(self) -> None:
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")

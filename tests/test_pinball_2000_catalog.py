@@ -46,6 +46,9 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		cls.catalog_drivers = {driver["id"]: driver for driver in cls.catalog["drivers"]}
 
 	def test_catalog_baseline_counts(self) -> None:
+		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced a
+		# generated stub with an honest partial on this tree: two fewer stubs, two more
+		# partials, every other count unchanged.
 		self.assertEqual(
 			{
 				"author_ready_count": 25,
@@ -53,9 +56,9 @@ class Pinball2000CatalogTests(unittest.TestCase):
 				"game_count": 789,
 				"machine_count": 790,
 				"non_game_count": 1,
-				"partial_count": 98,
+				"partial_count": 99,
 				"root_driver_count": 774,
-				"stub_count": 667,
+				"stub_count": 666,
 			},
 			self.catalog["summary"],
 		)
