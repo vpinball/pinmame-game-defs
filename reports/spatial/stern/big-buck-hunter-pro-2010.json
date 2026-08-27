@@ -1,0 +1,923 @@
+{
+  "blockers": [
+    "outputs[binding.device=27,28,29,30] (pinmame.output.lamp) carry no spatial key: the retained table renders all four as colored bulb Primitives stacked at raw (401.3, 263.9, z 290) with Flash-glow partners clustered around raw (352.5, 250-371), so four distinct physical bulb positions cannot be derived from the stack. See the lamp records' own notes.",
+    "outputs[binding.device=0] (pinmame.output.gi) has no spatial key: the partial manual prints no G.I. bulb inventory, and the retained script's UpdateGI drives one 27-light collection for any string index, so no per-bulb placement set can be asserted. The 27 retained GI positions are in the geometry dump.",
+    "Roughly half the bound-by-ROM address space (matrix switches 2, 3, 4, 12, 17, 46-64; solenoids 6, 8-11, 13, 17, 18, 24, 28, 30; lamps 1, 2, 4, 12, 13, 34, 36, 37, 44, 48, 56, 58, 64, 71-80) is recorded availability unknown rather than placed or declared unused: the partial manual carries none of Stern's electrical tables, and no retained source names or binds those addresses. Failing to observe an address is never proof that it is unused."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 2162.0,
+      "left": 0.0,
+      "right": 979.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/979.0; 0=left, 1=right",
+    "y": "y/2162.0; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "Stacked bulb Primitives L27-L30 and their Flash partners f27-f30: four lamp addresses rendered at one position, so no distinct per-address placement exists.",
+    "Unbound decorative flasher shapes f1, f2, f5, f6, f7 (above the playfield's top edge) and unbound lights f131a1/f131a2: no callback binds them to any address.",
+    "Ten Timer objects (BuckTimer, LampTimer, ...): editor timers with arbitrary positions, not physical devices."
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 822,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "3b50291ecc3fe665c082567801ae2319f31b49142153ae24f6e2bfff5d80d9e9",
+    "manifest_uri": "external:pinmame-vpx-sources/stern/big-buck-hunter-pro-2010/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.bbh-stern-2010",
+    "total_bytes": 100412917,
+    "vpxtool_version": "vpxtool git:v0.33.3"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "stern.big-buck-hunter-pro.2010",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      -7,
+      -6,
+      -5,
+      -4,
+      -3,
+      -2,
+      -1,
+      0,
+      11,
+      15,
+      16,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88
+    ],
+    "dip_switch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "not_applicable_outputs": {
+    "unused": [
+      {
+        "address": 51,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 52,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 53,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 54,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 55,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 56,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 57,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 58,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 59,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 60,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 61,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 62,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 63,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 64,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 65,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 66,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 33,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 34,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 35,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 36,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 45,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 47,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 117,
+  "projections": [
+    {
+      "address": 1,
+      "group": "pinmame.input.switch",
+      "reason": "The Buck is a moving target: its hit is detected by the retained table through which of the thirty-one BuckWall ladder segments is raised at the Buck's current animated position, so the hit sensor has no single playfield coordinate. Placement projects onto the Buck target's home position (Primitive.Buck), where the mechanism rests and where the wall ladder begins."
+    },
+    {
+      "address": 18,
+      "group": "pinmame.input.switch",
+      "reason": "Below-playfield trough assembly; the manual's cut-away draws the trough and labels its switches but gives no playfield-surface coordinate. Placement projects onto the trough's own ball-release kicker (Kicker.BallRelease), the same documented projection every other thin-table trough in this project uses."
+    },
+    {
+      "address": 19,
+      "group": "pinmame.input.switch",
+      "reason": "Below-playfield trough assembly; projects onto Kicker.BallRelease like switches 18-22."
+    },
+    {
+      "address": 20,
+      "group": "pinmame.input.switch",
+      "reason": "Below-playfield trough assembly; projects onto Kicker.BallRelease like switches 18-22."
+    },
+    {
+      "address": 21,
+      "group": "pinmame.input.switch",
+      "reason": "Below-playfield trough assembly; projects onto Kicker.BallRelease like switches 18-22."
+    },
+    {
+      "address": 22,
+      "group": "pinmame.input.switch",
+      "reason": "Below-playfield trough assembly; projects onto Kicker.BallRelease like switches 18-22."
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "reason": "The Buck drive's position feedback travels with the moving target along the deer-track fiber assembly; no fixed sensor coordinate exists in any retained source. Placement projects onto the deer-track ladder's midpoint (the mean of the BuckWall1-31 drag-point centroids), disclosed as a projection, not an observation."
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "reason": "Same Buck-drive position-feedback projection as switch 37."
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "reason": "Below-playfield coil; placed at its own ball-release kicker's position like the trough sensors, the standard thin-table trough projection."
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "reason": "The auto-launch coil sits behind the plunger assembly; placed at the Plunger object's position as the assembly's own anchor."
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "reason": "The Buck drive's coils and motor live inside the moving-target mechanism below/behind the track; all three project onto the Buck target's home position (Primitive.Buck), the mechanism's own fixed anchor, disclosed as a projection rather than a coil-body coordinate."
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "reason": "See solenoid 3's projection note."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "See solenoid 3's projection note."
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "reason": "Below-playfield coil; placed at the Kicker.sw34 ball-sense position it serves, disclosed as an assembly anchor rather than the coil body's own coordinate."
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "reason": "The Elk diverter's coil is inside the mini-flipper assembly; placed at the Elkdiverter flipper object's own pivot."
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "reason": "The flipper coil sits inside the flipper assembly below the playfield; placed at the LeftFlipper object's own pivot as the assembly's anchor, not the coil body's coordinate."
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid",
+      "reason": "See solenoid 15's projection note (RightFlipper pivot)."
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid",
+      "reason": "The f126 flasher is a tall shape carried by drag points; placed at the centroid of its four drag points, recorded as a derivation rather than a measured center."
+    }
+  ],
+  "resolved_input_addresses": [
+    1,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    13,
+    14,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 69,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 70,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "da706d513c20c0936013e7c76eba6394408b20a6e9c7e9526873c969211b2e5c",
+    "geometry_dump_sha256": "7cbd1ece1730ced491bf178d81b0812d8c0ac70721ed1adfb236fc9347f0a88e",
+    "manual_sha256": "c35324b36939b315bc0a85e2caad1fcb46e568b7c9f33930f3a67924ab9f7dff",
+    "table_sha256": "347f5533c2a673611eec9689b8c2ab7456e01db94ea8cae1082eec2545d80626"
+  },
+  "status": "partial",
+  "unresolved": [
+    {
+      "address": 0,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 79,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 80,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 59,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 60,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.input.switch"
+    }
+  ],
+  "version": 1,
+  "visual_review_cache": {
+    "geometry": {
+      "path": "external:pinmame-review-artifacts/big-buck-hunter-pro-2010/vpx-geometry.json",
+      "sha256": "7cbd1ece1730ced491bf178d81b0812d8c0ac70721ed1adfb236fc9347f0a88e"
+    },
+    "root": "external:pinmame-manuals/by-machine/stern.big-buck-hunter-pro.2010/"
+  }
+}
