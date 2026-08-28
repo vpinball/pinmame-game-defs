@@ -1841,7 +1841,7 @@
       "label": "Past Spinner",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 1. Printed on the switch-locations parts list with an LED/photo-transistor opto pair and no separate switch part number, printed in column {column}, which the switch matrix does not shade (only column 3 is shaded). PinMAME's jyGameData inverted-switch mask normalizes this address, so the public switch state is already normalized and must not be inverted again.",
+        "notes": "Printed switch-matrix drive column 4, return row 1. Printed on the switch-locations parts list with an LED/photo-transistor opto pair and no separate switch part number, printed in column 4, which the switch matrix does not shade (only column 3 is shaded). PinMAME's jyGameData inverted-switch mask normalizes this address, so the public switch state is already normalized and must not be inverted again.",
         "part_number": "A-16908 (LED) / A-16909 (PHOTO TRANS)",
         "switch_type": "opto"
       },
@@ -1898,7 +1898,7 @@
       "label": "In The Sewer",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 2. Printed on the switch-locations parts list with an LED/photo-transistor opto pair and no separate switch part number, printed in column {column}, which the switch matrix does not shade (only column 3 is shaded). PinMAME's jyGameData inverted-switch mask normalizes this address, so the public switch state is already normalized and must not be inverted again.",
+        "notes": "Printed switch-matrix drive column 4, return row 2. Printed on the switch-locations parts list with an LED/photo-transistor opto pair and no separate switch part number, printed in column 4, which the switch matrix does not shade (only column 3 is shaded). PinMAME's jyGameData inverted-switch mask normalizes this address, so the public switch state is already normalized and must not be inverted again.",
         "part_number": "A-16908 (LED) / A-16909 (PHOTO TRANS)",
         "switch_type": "opto"
       },
@@ -1937,7 +1937,7 @@
       "label": "Lock Jam",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 3. Printed on the switch-locations parts list with an LED/photo-transistor opto pair and no separate switch part number, printed in column {column}, which the switch matrix does not shade (only column 3 is shaded). PinMAME's jyGameData inverted-switch mask normalizes this address, so the public switch state is already normalized and must not be inverted again.",
+        "notes": "Printed switch-matrix drive column 4, return row 3. Printed on the switch-locations parts list with an LED/photo-transistor opto pair and no separate switch part number, printed in column 4, which the switch matrix does not shade (only column 3 is shaded). PinMAME's jyGameData inverted-switch mask normalizes this address, so the public switch state is already normalized and must not be inverted again.",
         "part_number": "A-16908 (LED) / A-16909 (PHOTO TRANS)",
         "switch_type": "opto"
       },
@@ -1994,7 +1994,7 @@
       "label": "Past Crane",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 4. Printed on the switch-locations parts list with an LED/photo-transistor opto pair and no separate switch part number, printed in column {column}, which the switch matrix does not shade (only column 3 is shaded). PinMAME's jyGameData inverted-switch mask does NOT normalize this address, so the printed A-16908/A-16909 opto pair is not inverted by the emulator.",
+        "notes": "Printed switch-matrix drive column 4, return row 4. Printed on the switch-locations parts list with an LED/photo-transistor opto pair and no separate switch part number, printed in column 4, which the switch matrix does not shade (only column 3 is shaded). PinMAME's jyGameData inverted-switch mask does NOT normalize this address, so the printed A-16908/A-16909 opto pair is not inverted by the emulator.",
         "part_number": "A-16908 (LED) / A-16909 (PHOTO TRANS)",
         "switch_type": "opto"
       },
@@ -3969,7 +3969,7 @@
       "normally_closed": false,
       "physical": {
         "location": "flipper assembly",
-        "notes": "Printed Fliptronic grounded switch F1. PinMAME forces this end-of-stroke address every VBLANK: jyGameData's FLIP_SOL(FLIP_L) sets the lower-flipper FLIP_EOS bit, so core_updateSw recomputes it from core_getSol (the flipper hold coil state) plus CORE_FLIPSTROKETIME and writes it back into the matrix. A recreation must not drive it.",
+        "notes": "Printed Fliptronic grounded switch F1. PinMAME forces this end-of-stroke address every VBLANK: jyGameData's FLIP_SOL(FLIP_L) sets the lower-flipper FLIP_EOS bit, so core_updateSw recomputes it from core_getSol (the flipper hold coil state) plus CORE_FLIPSTROKETIME and writes it back into the matrix. A recreation must not drive it. Its normalized coordinate is the retained table's own flipper pivot center: the retained extraction contains no separate EOS contact object, so this is a documented projection onto the flipper assembly rather than a surveyed sensor position.",
         "part_number": "SW-1A-194",
         "switch_type": "leaf"
       },
@@ -4030,7 +4030,7 @@
       "normally_closed": true,
       "physical": {
         "location": "cabinet flipper button",
-        "notes": "Printed Fliptronic grounded switch F2. Printed as an opto that is typically closed. WPC-95 reads the flipper column through WPC_FLIPPERSW95 with a hardware inversion, so the public switch state is already normalized.",
+        "notes": "Printed Fliptronic grounded switch F2. The switch matrix's Fliptronic block shades this position as an opto that is typically closed. WPC-95 reads the flipper column through WPC_FLIPPERSW95 with a hardware inversion, so the public switch state is already normalized.",
         "part_number": "A-17316",
         "switch_type": "opto"
       },
@@ -4083,7 +4083,7 @@
       "normally_closed": false,
       "physical": {
         "location": "flipper assembly",
-        "notes": "Printed Fliptronic grounded switch F3. PinMAME forces this end-of-stroke address every VBLANK: jyGameData's FLIP_SOL(FLIP_L) sets the lower-flipper FLIP_EOS bit, so core_updateSw recomputes it from core_getSol (the flipper hold coil state) plus CORE_FLIPSTROKETIME and writes it back into the matrix. A recreation must not drive it.",
+        "notes": "Printed Fliptronic grounded switch F3. PinMAME forces this end-of-stroke address every VBLANK: jyGameData's FLIP_SOL(FLIP_L) sets the lower-flipper FLIP_EOS bit, so core_updateSw recomputes it from core_getSol (the flipper hold coil state) plus CORE_FLIPSTROKETIME and writes it back into the matrix. A recreation must not drive it. Its normalized coordinate is the retained table's own flipper pivot center: the retained extraction contains no separate EOS contact object, so this is a documented projection onto the flipper assembly rather than a surveyed sensor position.",
         "part_number": "SW-1A-194",
         "switch_type": "leaf"
       },
@@ -4144,7 +4144,7 @@
       "normally_closed": true,
       "physical": {
         "location": "cabinet flipper button",
-        "notes": "Printed Fliptronic grounded switch F4. Printed as an opto that is typically closed. WPC-95 reads the flipper column through WPC_FLIPPERSW95 with a hardware inversion, so the public switch state is already normalized.",
+        "notes": "Printed Fliptronic grounded switch F4. The switch matrix's Fliptronic block shades this position as an opto that is typically closed. WPC-95 reads the flipper column through WPC_FLIPPERSW95 with a hardware inversion, so the public switch state is already normalized.",
         "part_number": "A-17316",
         "switch_type": "opto"
       },
@@ -4257,7 +4257,7 @@
       "label": "Not Fitted Upper Right Flipper Button",
       "normally_closed": true,
       "physical": {
-        "location": "flipper assembly",
+        "location": "cabinet flipper button",
         "notes": "Printed Fliptronic grounded switch F6. Junk Yard fits no upper flippers, so no physical upper-flipper button is installed (the Switch Locations page prints this position Not Used). jyGameData's FLIP_SW(FLIP_L | FLIP_U) includes the FLIP_U bit, so PinMAME's flipMask carries the upper-flipper button bit, but under LibPinMAME (g_fHandleKeyboard=0) the button bits are read straight from and written back to the matrix unchanged, so PinMAME publishes no meaningful runtime state at this address. Recorded unused.",
         "switch_type": "opto"
       },
@@ -4360,7 +4360,7 @@
       "label": "Not Fitted Upper Left Flipper Button",
       "normally_closed": true,
       "physical": {
-        "location": "flipper assembly",
+        "location": "cabinet flipper button",
         "notes": "Printed Fliptronic grounded switch F8. Junk Yard fits no upper flippers, so no physical upper-flipper button is installed (the Switch Locations page prints this position Not Used). jyGameData's FLIP_SW(FLIP_L | FLIP_U) includes the FLIP_U bit, so PinMAME's flipMask carries the upper-flipper button bit, but under LibPinMAME (g_fHandleKeyboard=0) the button bits are read straight from and written back to the matrix unchanged, so PinMAME publishes no meaningful runtime state at this address. Recorded unused.",
         "switch_type": "opto"
       },
@@ -6168,7 +6168,7 @@
       "label": "Hold Crane",
       "physical": {
         "assembly_part_number": "A-21523",
-        "notes": "Printed solenoid/flasher table entry 15 (Low Power). Retained script callback/driver: SolHoldCrane (Wrecker ball hold). Projected onto the crane mechanism's entry kicker (Kicker CraneEntry, table object center); the crane hold coil shares the crane assembly with solenoid 3.",
+        "notes": "Printed solenoid/flasher table entry 15 (Low Power). Retained script callback/driver: SolHoldCrane (Wrecker ball hold).",
         "part_number": "A-20099"
       },
       "provenance": {
@@ -12157,7 +12157,7 @@
           "method": "model",
           "path": "evidence/excerpts/williams.junkyard.1996/switch-locations.md",
           "reviewed": false,
-          "sha256": "5a097d1291745e7e865094d54e5ceaa98f2ff6cbc417078c322f47c5a352514b",
+          "sha256": "14669b28fa11a9f840a3e932de914fb4fb7f6aae6c1e4400402a18c1eebcbf59",
           "transcribed_by": "vision worker (sonnet) transcribed from the rendered page"
         },
         {

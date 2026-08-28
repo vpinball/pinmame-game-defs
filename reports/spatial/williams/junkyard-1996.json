@@ -14,7 +14,7 @@
     "y": "y/2162; 0=rear/backglass, 1=apron/player"
   },
   "excluded_object_classes": [
-    "Switch 42's only trigger object sits below the playfield apron (y > 1); projected onto the sewer kicker instead of using the off-playfield trigger.",
+    "Switch 42's only retained trigger object sits below the playfield apron (y > 1) and is a modelling artifact of the hidden sewer sink; it is left unresolved rather than promoted to a playfield coordinate.",
     "Flasher 18 (Window Shop) and flashers 20/23/24/26 second inset bulbs are backbox/insert-panel circuits with no playfield placement."
   ],
   "extraction": {
@@ -25,7 +25,7 @@
     "manifest_uri": "external:pinmame-vpx-sources/williams/junkyard-1996/extracted-vpxtool.manifest.json",
     "source_ref": "vpx-extraction.junkyard-mfuegemann",
     "total_bytes": 299118752,
-    "vpxtool_version": "vpxtool"
+    "vpxtool_version": "vpxtool git:v0.33.3"
   },
   "format": "pinmame-spatial-blockers",
   "machine_id": "williams.junkyard.1996",
@@ -335,14 +335,19 @@
       "reason": "Projected onto the refrigerator popper kicker (Kicker Sol2, table object center): switch 43 (Lock Jam) is the popper's internal position reported by the retained script's bsFridgePopper ball stack handling, and the fridge unit has no separate switch-43 trigger object."
     },
     {
+      "address": 111,
+      "group": "pinmame.input.switch",
+      "reason": "Lower Right Flipper EOS projected onto the retained table's own flipper pivot center; no separate EOS contact object exists in the extraction."
+    },
+    {
+      "address": 113,
+      "group": "pinmame.input.switch",
+      "reason": "Lower Left Flipper EOS projected onto the retained table's own flipper pivot center; no separate EOS contact object exists in the extraction."
+    },
+    {
       "address": 3,
       "group": "pinmame.output.solenoid",
       "reason": "Projected onto the crane mechanism's top-left hole (Kicker CraneHole, table object center); the crane arm itself (PCraneArm) is a render primitive without a switch/solenoid collision object."
-    },
-    {
-      "address": 15,
-      "group": "pinmame.output.solenoid",
-      "reason": "Projected onto the crane mechanism's entry kicker (Kicker CraneEntry, table object center); the crane hold coil shares the crane assembly with solenoid 3."
     },
     {
       "address": 16,

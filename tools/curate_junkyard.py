@@ -406,8 +406,6 @@ SOLENOID_POSITIONS = {
 SOLENOID_PROJECTIONS = {
 	3: "Projected onto the crane mechanism's top-left hole (Kicker CraneHole, table object center); the crane "
 	    "arm itself (PCraneArm) is a render primitive without a switch/solenoid collision object.",
-	15: "Projected onto the crane mechanism's entry kicker (Kicker CraneEntry, table object center); the "
-	    "crane hold coil shares the crane assembly with solenoid 3.",
 	16: "Projected onto the dog-house spike object (Primitive Spike, table object center): solenoid 16 (Move "
 	    "Dog) drives the spike arm that the retained script's SpikeTimer animates.",
 }
@@ -621,7 +619,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt-junkyard.switch-locations",
 					"locator": "PDF page 111, printed 2-35, Switch Locations parts list",
 					"path": "evidence/excerpts/williams.junkyard.1996/switch-locations.md",
-					"sha256": "5a097d1291745e7e865094d54e5ceaa98f2ff6cbc417078c322f47c5a352514b",
+					"sha256": "14669b28fa11a9f840a3e932de914fb4fb7f6aae6c1e4400402a18c1eebcbf59",
 					"method": "model",
 					"transcribed_by": "vision worker (sonnet) transcribed from the rendered page",
 					"reviewed": False,
@@ -786,7 +784,7 @@ def input_devices() -> list[dict[str, Any]]:
 				notes += " The printed matrix and the Switch Locations parts list both mark this position Not Used."
 			elif address in OPTO_SWITCHES:
 				shaded = "shaded \"OPTO, TYPICALLY CLOSED\" on the printed switch matrix (column 3 rows 1-7)" if column == 3 else (
-					"printed in column {column}, which the switch matrix does not shade (only column 3 is shaded)"
+					f"printed in column {column}, which the switch matrix does not shade (only column 3 is shaded)"
 				)
 				normalized = (
 					"PinMAME's jyGameData inverted-switch mask normalizes this address, so the public "
@@ -854,7 +852,7 @@ def input_devices() -> list[dict[str, Any]]:
 	}
 	for address, (label, role, availability, normally_closed, switch_type, part_number, keep_wiring, position) in flipper_inputs.items():
 		wire, connection = FLIPPER_SWITCH_WIRING[address]
-		physical: dict[str, Any] = {"location": "cabinet flipper button" if role.endswith(".button") else "flipper assembly"}
+		physical: dict[str, Any] = {"location": "cabinet flipper button" if role.endswith(".button") or role == "internal.unfitted.flipper-button" else "flipper assembly"}
 		if switch_type:
 			physical["switch_type"] = switch_type
 		if part_number:
@@ -865,7 +863,10 @@ def input_devices() -> list[dict[str, Any]]:
 				" PinMAME forces this end-of-stroke address every VBLANK: jyGameData's FLIP_SOL(FLIP_L) "
 				"sets the lower-flipper FLIP_EOS bit, so core_updateSw recomputes it from core_getSol "
 				"(the flipper hold coil state) plus CORE_FLIPSTROKETIME and writes it back into the "
-				"matrix. A recreation must not drive it."
+				"matrix. A recreation must not drive it. Its normalized coordinate is the retained "
+				"table's own flipper pivot center: the retained extraction contains no separate EOS "
+				"contact object, so this is a documented projection onto the flipper assembly rather "
+				"than a surveyed sensor position."
 			)
 		elif address in {116, 118}:
 			notes += (
@@ -885,8 +886,9 @@ def input_devices() -> list[dict[str, Any]]:
 			)
 		elif switch_type == "opto":
 			notes += (
-				" Printed as an opto that is typically closed. WPC-95 reads the flipper column through "
-				"WPC_FLIPPERSW95 with a hardware inversion, so the public switch state is already normalized."
+				" The switch matrix's Fliptronic block shades this position as an opto that is typically "
+				"closed. WPC-95 reads the flipper column through WPC_FLIPPERSW95 with a hardware "
+				"inversion, so the public switch state is already normalized."
 			)
 		physical["notes"] = notes
 		extra: dict[str, Any] = {
@@ -1659,7 +1661,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"manifest_uri": "external:pinmame-vpx-sources/williams/junkyard-1996/extracted-vpxtool.manifest.json",
 			"source_ref": VPX_EXTRACTION_SOURCE,
 			"total_bytes": EXTRACTION_TOTAL_BYTES,
-			"vpxtool_version": "vpxtool",
+			"vpxtool_version": "vpxtool git:v0.33.3",
 		},
 		"source_hashes": {
 			"embedded_script_sha256": SCRIPT_SHA256,
@@ -1679,6 +1681,9 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			{"group": "pinmame.input.switch", "address": address, "reason": reason}
 			for address, reason in sorted(SWITCH_PROJECTIONS.items())
 		] + [
+			{"group": "pinmame.input.switch", "address": 111, "reason": "Lower Right Flipper EOS projected onto the retained table's own flipper pivot center; no separate EOS contact object exists in the extraction."},
+			{"group": "pinmame.input.switch", "address": 113, "reason": "Lower Left Flipper EOS projected onto the retained table's own flipper pivot center; no separate EOS contact object exists in the extraction."},
+		] + [
 			{"group": "pinmame.output.solenoid", "address": address, "reason": reason}
 			for address, reason in sorted(SOLENOID_PROJECTIONS.items())
 		],
@@ -1686,7 +1691,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"root": "external:pinmame-manuals/rendered/williams.junkyard.1996/",
 		},
 		"excluded_object_classes": [
-			"Switch 42's only trigger object sits below the playfield apron (y > 1); projected onto the sewer kicker instead of using the off-playfield trigger.",
+			"Switch 42's only retained trigger object sits below the playfield apron (y > 1) and is a modelling artifact of the hidden sewer sink; it is left unresolved rather than promoted to a playfield coordinate.",
 			"Flasher 18 (Window Shop) and flashers 20/23/24/26 second inset bulbs are backbox/insert-panel circuits with no playfield placement.",
 		],
 		"unresolved": [
