@@ -10,15 +10,15 @@ The matching source is the retained known-working `Junk Yard (Williams 1996).vpx
 - The retained manual (146 pages, 16-50052-101 FINAL) carries a usable OCR text layer but every printed table used here was read from 200 dpi renders and transcribed (by a vision-capable model worker) into `evidence/excerpts/williams.junkyard.1996/`, cross-checked across the repeated copies.
 - The trough and lock/scoop multi-position sensors have no dedicated playfield trigger objects because the retained script's cvpmBallStack helpers model ball sensing purely as an internal switch array. Those addresses are explicit documented projections onto the real kicker object that carries the mechanism's exit/entry point.
 - Switch 44 (Past Crane) is the single polarity disagreement: opto-constructed per the manual but not normalized by jyGameData's mask. Recorded as a first-class unresolved conflict.
-- GI addresses 2-4 and flasher/insert-panel bulbs are backbox/cabinet circuits with controlled `not_applicable` spatial records.
+- GI addresses 2-4 are backbox/cabinet circuits with controlled `not_applicable` spatial records. Of the playfield flashers, only the backbox-only flasher 18 carries a controlled `cabinet_or_service` record; the other unplaced flashers (19-21, 23-28) and the hold-crane coil have no spatial key and are listed in `unresolved_output_bindings`.
 - The 128x32 DMD is backbox hardware, so its spatial record is a controlled `not_applicable`.
 
 ## Counts
 
-- Placements: 150
+- Placements: 151
 - Located input addresses: 48
-- Located output bindings: 72
-- Unresolved input addresses: [28, 42]
+- Located output bindings: 73
+- Unresolved input addresses: 28, 42
 - Unresolved output bindings: 15, 19, 20, 21, 23, 24, 25, 26, 27, 28
 
 ## Promotion decision

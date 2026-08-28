@@ -32,6 +32,7 @@ CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
 CONTROLLER_SOURCE = "controller-profile.pinmame-wpc-95"
 MANUAL_SOURCE = "manual.williams.junkyard.1996"
+MANUAL_HANDBOOK_SOURCE = "manual-support.williams.junkyard.1996"
 VPX_TABLE_SOURCE = "vpx-table.junkyard-mfuegemann"
 VPX_SCRIPT_SOURCE = "vpx-script.junkyard-mfuegemann"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.junkyard-mfuegemann"
@@ -329,7 +330,9 @@ LAMP_ROW_WIRING = {
 	7: ("Red-Violet", "J125-8", "Q101"), 8: ("Red-Gray", "J125-9", "Q105"),
 }
 # Items 81-86 are annotated "located on the insert panel" on the Lamp Locations page.
-INSERT_PANEL_LAMPS = {81, 82, 83, 84, 85, 86}
+# Items 81-85 are annotated "located on the insert panel" on the Lamp Locations page and have no
+# playfield drawing icon. Lamp 86 (Gen. Crane) is disputed (see conflict.junkyard.lamp-86-plane).
+INSERT_PANEL_LAMPS = {81, 82, 83, 84, 85}
 
 GI_STRINGS = {
 	0: ("Playfield String 1", "J105-1 / J105-7", "Q5", "#44"),
@@ -713,6 +716,23 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
 		},
+		{
+			"id": MANUAL_HANDBOOK_SOURCE,
+			"kind": "manual",
+			"uri": "external:pinmame-manuals/by-machine/williams.junkyard.1996/Junk_Yard_Operator_Handbook.pdf",
+			"original_filename": "Williams_1996_Junk_Yard_Operator_Manual.pdf",
+			"sha256": "50ce0d549ca29641ed4265f8a12d821af9b6dfdbdbd6277e03db2dc623caef0a",
+			"locator": (
+				"16-page Williams Junk Yard Operator Handbook (a born-digital PDF with a real text layer) that "
+				"reproduces the same switch matrix, lamp matrix, solenoid/flasher table, general illumination, "
+				"and flipper circuits as the full operations manual. Retained as a corroborating source with a "
+				"usable text layer; it prints the switch-31 row as \"Trough Eject\" (matching the full manual's "
+				"device) and can assist the visual re-check of the six model transcriptions."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Williams Electronics Games, Inc.",
+			"rights": "NOASSERTION",
+		},
 	]
 
 def _device(identifier: str, label: str, kind: str, group: str, address: int, availability: str, refs: tuple[str, ...], **extra: Any) -> dict[str, Any]:
@@ -997,7 +1017,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				bulbs, quantity, _playfield_emitters = FLASHER_QTY[address]
 				physical["quantity"] = quantity
 				notes += f" Printed flashlamp complement: {bulbs}."
-				if address not in SOLENOID_POSITIONS and address not in SOLENOID_PROJECTIONS:
+				if address not in SOLENOID_POSITIONS and address not in SOLENOID_PROJECTIONS and address != 18:
 					notes += (
 						" No retained playfield coordinate is available for this flasher in the current "
 						"extraction, so it is left unresolved rather than assigned a false position."
@@ -1007,7 +1027,10 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			if address in {45, 46, 47, 48}:
 				notes += (
 					" PinMAME's public lower-flipper addresses are 45-48 while the printed table numbers the "
-					"same circuits 29-32; the manual address is preserved as an alias."
+					"same circuits 29-32; the manual address is preserved as an alias. The two windings of "
+					"each flipper (power and hold) share one coordinate at the flipper assembly pivot, and "
+					"the same pivot anchor is used for the corresponding EOS switch (public 111/113), so "
+					"these are co-located placements rather than independent sockets."
 				)
 			if address in {33, 34, 35, 36}:
 				notes += (
@@ -1130,7 +1153,14 @@ def lamp_outputs() -> list[dict[str, Any]]:
 			if address == 88:
 				notes += " Cabinet button lamp inside the illuminated start button assembly, sharing its assembly part number with switch 13."
 			if address in INSERT_PANEL_LAMPS:
-				notes += " The Lamp Locations page footnotes this lamp as located on the insert panel; lamp 86 is also drawn on the playfield crane mechanism."
+				notes += " The Lamp Locations page footnotes this lamp as located on the insert panel and it has no playfield drawing icon."
+			if address == 86:
+				notes += (
+					" The Lamp Locations page footnotes this lamp as an insert-panel lamp, but the same "
+					"page's playfield drawing runs a leader from badge 86 into the on-playfield crane "
+					"mechanism, and the retained table models a Lamp86 Light object on the playfield. The "
+					"manual disagrees with itself; recorded as conflict.junkyard.lamp-86-plane."
+				)
 			if address not in LAMP_POSITIONS and not unused and address not in {81, 82, 83, 84, 85, 86, 87, 88}:
 				notes += " No playfield Light object exists in the retained table for this address."
 			physical["notes"] = notes
@@ -1609,6 +1639,24 @@ def build() -> dict[str, Any]:
 				"path": "evidence/excerpts/williams.junkyard.1996/switch-locations.md",
 				"source_refs": ["manual.williams.junkyard.1996", "pinmame.core.8371478a7640"],
 			},
+			{
+				"id": "conflict.junkyard.lamp-86-plane",
+				"status": "unresolved",
+				"description": (
+					"Lamp 86 (Gen. Crane) sits on an unresolved physical plane. The manual's own Lamp "
+					"Locations page (2-37) disagrees with itself: the footnote asterisks items 81-86 as "
+					"\"located on the insert panel\", but the same page's playfield line drawing runs a "
+					"leader from badge 86 into the on-playfield crane mechanism at the top-left. The "
+					"retained table models a Lamp86 Light object on the playfield, which agrees with the "
+					"drawing's crane placement but not with the insert-panel footnote. The transcription "
+					"records both facts without picking a side. The definition places lamp 86 on the "
+					"playfield from the retained table and notes the conflict. Resolution path: a "
+					"photograph of an unrestored machine with the Gen. Crane lamp lit, or the insert-panel/"
+					"crane assembly lamp wiring, to confirm which physical plane the #44 socket sits on."
+				),
+				"path": "evidence/excerpts/williams.junkyard.1996/lamp-locations.md",
+				"source_refs": ["manual.williams.junkyard.1996", "vpx-table.junkyard-mfuegemann"],
+			},
 		],
 	}
 	identifiers = [device["id"] for device in definition["inputs"] + definition["outputs"]]
@@ -1706,8 +1754,8 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		},
 		"excluded_object_classes": [
 			"Switch 28 (Crane Down) and switch 42 (In The Sewer) have no playfield placement: their only retained VPX objects sit below the playfield apron (y > 1) as modelling artifacts of the crane mechanism and hidden sewer sink, so both are left unresolved rather than promoted to an off-playfield coordinate.",
-			"Flashers 18-21 and 23-28 (Window Shop, Autofire, Left Side, Scoop Up, Back Left, Back Right, Shooter, Scoop, Dog House, Cars) and the hold-crane coil (15) have no reliable playfield coordinate in the current extraction, so they are listed in unresolved_output_bindings rather than assigned a false position.",
-			"Flasher 18 (Window Shop) is a backbox-only flasher and flashers 20/23/24/26 also drive insert-panel bulbs; those non-playfield bulbs have no coordinate.",
+			"Flashers 19-21 and 23-28 (Autofire, Left Side, Scoop Up, Back Left, Back Right, Shooter, Scoop, Dog House, Cars) and the hold-crane coil (15) have no reliable playfield coordinate in the current extraction, so they are listed in unresolved_output_bindings rather than assigned a false position.",
+			"Flasher 18 (Window Shop) is a backbox-only flasher and flashers 20/23/24/26 also drive insert-panel bulbs; those non-playfield bulbs have no coordinate. Flasher 18 itself is recorded cabinet_or_service.",
 		],
 		"unresolved": [
 			{"group": "pinmame.input.switch", "address": 44, "reason": "opto polarity not normalized by PinMAME; see conflict.junkyard.past-crane-opto-not-normalized"},
@@ -1744,8 +1792,10 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"the mechanism's exit/entry point.",
 		"- Switch 44 (Past Crane) is the single polarity disagreement: opto-constructed per the manual but "
 		"not normalized by jyGameData's mask. Recorded as a first-class unresolved conflict.",
-		"- GI addresses 2-4 and flasher/insert-panel bulbs are backbox/cabinet circuits with controlled "
-		"`not_applicable` spatial records.",
+		"- GI addresses 2-4 are backbox/cabinet circuits with controlled `not_applicable` spatial records. "
+		"Of the playfield flashers, only the backbox-only flasher 18 carries a controlled "
+		"`cabinet_or_service` record; the other unplaced flashers (19-21, 23-28) and the hold-crane coil "
+		"have no spatial key and are listed in `unresolved_output_bindings`.",
 		"- The 128x32 DMD is backbox hardware, so its spatial record is a controlled `not_applicable`.",
 		"",
 		"## Counts",
@@ -1753,7 +1803,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"- Placements: {report['placement_count']}",
 		f"- Located input addresses: {len(report['resolved_input_addresses'])}",
 		f"- Located output bindings: {len(report['resolved_output_bindings'])}",
-		f"- Unresolved input addresses: {report['unresolved_input_addresses']}",
+		f"- Unresolved input addresses: {', '.join(str(a) for a in report['unresolved_input_addresses'])}",
 		f"- Unresolved output bindings: {', '.join(str(b['address']) for b in sorted(report['unresolved_output_bindings'], key=lambda b: b['address']))}",
 		"",
 		"## Promotion decision",
