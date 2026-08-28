@@ -53,9 +53,9 @@ class Pinball2000CatalogTests(unittest.TestCase):
 				"game_count": 789,
 				"machine_count": 790,
 				"non_game_count": 1,
-				"partial_count": 97,
+				"partial_count": 98,
 				"root_driver_count": 774,
-				"stub_count": 668,
+				"stub_count": 667,
 			},
 			self.catalog["summary"],
 		)

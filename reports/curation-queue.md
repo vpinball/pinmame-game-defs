@@ -110,7 +110,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 104 | 1996 | STUB - Gun Shot | Spinball (Spain) | stub | 0% |
 | 105 | 1996 | STUB - Jolly Park | Spinball (Spain) | stub | 0% |
 | 106 | 1996 | STUB - Verne's World | Spinball (Spain) | stub | 0% |
-| 107 | 1996 | STUB - Junk Yard (1.2) | Williams | stub | 0% |
+| 107 | 1996 | Junk Yard | Williams | partial | 81% |
 | 108 | 1996 | STUB - Phantom Haus (0.4 Prototype) | Williams | stub | 0% |
 | 109 | 1996 | STUB - Ticket Tac Toe (1.0) | Williams | stub | 0% |
 | 110 | 1996 | Tales of the Arabian Nights | Williams | partial | 88% |
