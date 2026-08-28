@@ -32,7 +32,6 @@ CATALOG_SOURCE = f"pinmame.catalog.{PINMAME_REVISION[:12]}"
 CORE_SOURCE = f"pinmame.core.{PINMAME_REVISION[:12]}"
 CONTROLLER_SOURCE = "controller-profile.pinmame-wpc-95"
 MANUAL_SOURCE = "manual.williams.junkyard.1996"
-MANUAL_HANDBOOK_SOURCE = "manual-support.williams.junkyard.1996"
 VPX_TABLE_SOURCE = "vpx-table.junkyard-mfuegemann"
 VPX_SCRIPT_SOURCE = "vpx-script.junkyard-mfuegemann"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.junkyard-mfuegemann"
@@ -400,17 +399,42 @@ UNRESOLVED_SWITCHES = {28, 42}
 
 SOLENOID_POSITIONS = {
 	1: [(0.955817, 0.956156)], 2: [(0.080396, 0.466650)],
-	3: [(0.100972, 0.068166)], 5: [(0.247794, 0.041003)],
+	3: [(0.100972, 0.068166)], 5: [(0.635057, 0.366176)],
 	6: [(0.784861, 0.124993)], 9: [(0.869354, 0.866385)],
 	10: [(0.226610, 0.725648)], 11: [(0.686888, 0.728451)],
 	16: [(0.927521, 0.277521)],
-	17: [(0.941736, 0.333218)], 22: [(0.463120, 0.203393)],
+	17: [(0.941736, 0.333218)], 19: [(0.459272, 0.807972)],
+	20: [(0.052521, 0.663853)], 21: [(0.635057, 0.366176)],
+	22: [(0.463120, 0.203393)], 23: [(0.267857, 0.011563)],
+	24: [(0.910189, 0.011563)], 26: [(0.721639, 0.306429)],
 	45: [(0.628838, 0.837541)], 46: [(0.628838, 0.837541)],
 	47: [(0.297535, 0.837518)], 48: [(0.297535, 0.837518)],
 }
 SOLENOID_PROJECTIONS = {
+	5: "Projected onto the fork-lift scoop's left fork arm (P_Fork1, table object center): solenoid 5 (Scoop "
+	    "Down) drives the fork arms down and the retained script's ScoopDown handler rotates P_Fork1/P_Fork2, "
+	    "which sit at the scoop mechanism (agreeing with the manual's Solenoid Locations drawing, 'Right side, "
+	    "middle, at the scoop mechanism').",
+	21: "Projected onto the fork-lift scoop's left fork arm (P_Fork1, table object center), co-located with "
+	    "solenoid 5: solenoid 21 (Scoop Up) raises the same fork arms the ScoopDown handler lowers.",
+	17: "Projected onto the dog-house kicker object (Kicker DogHole, table object center): solenoid 17 (Dog "
+	    "Face Flasher) is bound in the retained script only to the setflash channel (SolFlash17), with no "
+	    "separate playfield flasher object, so it is placed at the dog-house assembly.",
+	19: "Placed at the retained script's autofire flasher light (Light Sol19, table object center), which the "
+	    "script's SolCallBack(19) = vpmFlasher Sol19 drives.",
+	20: "Placed at the fridge flasher primitive (P_FridgeFlasher, table object center), which the script's "
+	    "SolFlash20 handler re-textures as the red dome flasher.",
+	23: "Placed at the back-left flasher primitive (P_BackLeftFlasher, table object center), which the "
+	    "script's SolFlash23 handler re-textures.",
+	24: "Placed at the back-right flasher primitive (P_BackRightFlasher, table object center), which the "
+	    "script's SolFlash24 handler re-textures.",
+	26: "Placed at the dog/scoop flasher primitive (P_DogScoopFlasher, table object center), which the "
+	    "script's SolFlash26 handler re-textures as the red dome flasher at the scoop.",
 	3: "Projected onto the crane mechanism's top-left hole (Kicker CraneHole, table object center); the crane "
-	    "arm itself (PCraneArm) is a render primitive without a switch/solenoid collision object.",
+	    "arm itself (PCraneArm) is a render primitive without a switch/solenoid collision object. Note the "
+	    "manual's Solenoid Locations drawing places the Power Crane callout top-right-of-center at the crane "
+	    "assembly; the retained table's CraneHole kicker sits at the far left, so this is a projection onto the "
+	    "crane mechanism rather than the drawn callout point.",
 	16: "Projected onto the dog-house spike object (Primitive Spike, table object center): solenoid 16 (Move "
 	    "Dog) drives the spike arm that the retained script's SpikeTimer animates.",
 }
@@ -716,23 +740,6 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
 		},
-		{
-			"id": MANUAL_HANDBOOK_SOURCE,
-			"kind": "manual",
-			"uri": "external:pinmame-manuals/by-machine/williams.junkyard.1996/Junk_Yard_Operator_Handbook.pdf",
-			"original_filename": "Williams_1996_Junk_Yard_Operator_Manual.pdf",
-			"sha256": "50ce0d549ca29641ed4265f8a12d821af9b6dfdbdbd6277e03db2dc623caef0a",
-			"locator": (
-				"16-page Williams Junk Yard Operator Handbook (a born-digital PDF with a real text layer) that "
-				"reproduces the same switch matrix, lamp matrix, solenoid/flasher table, general illumination, "
-				"and flipper circuits as the full operations manual. Retained as a corroborating source with a "
-				"usable text layer; it prints the switch-31 row as \"Trough Eject\" (matching the full manual's "
-				"device) and can assist the visual re-check of the six model transcriptions."
-			),
-			"license": "NOASSERTION",
-			"attribution": "Williams Electronics Games, Inc.",
-			"rights": "NOASSERTION",
-		},
 	]
 
 def _device(identifier: str, label: str, kind: str, group: str, address: int, availability: str, refs: tuple[str, ...], **extra: Any) -> dict[str, Any]:
@@ -1004,7 +1011,12 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			if address in SOLENOID_ASSEMBLIES:
 				physical["assembly_part_number"] = SOLENOID_ASSEMBLIES[address]
 			printed_type = wiring_data.get("printed_type", "")
-			notes = f"Printed solenoid/flasher table entry {address:02d} ({printed_type})."
+			if address in {45, 46, 47, 48}:
+				# The printed Solenoid/Flasher Table numbers these lower-flipper circuits 29-32 (Lwr Rt
+				# Power/Hold, Lwr Lt Power/Hold), not 45-48; the manual alias is recorded below.
+				notes = f"Printed lower-flipper circuit for public address {address:02d}."
+			else:
+				notes = f"Printed solenoid/flasher table entry {address:02d} ({printed_type})."
 			if address in {4, 8, 12, 13, 14}:
 				notes = (
 					f"Printed solenoid {address:02d} is NOT USED: the Solenoid/Flasher Table lists the row "
@@ -1024,6 +1036,13 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 					)
 			if address in SOLENOID_CALLBACKS:
 				notes += f" Retained script callback/driver: {SOLENOID_CALLBACKS[address]}."
+			if address == 15:
+				notes += (
+					" The Solenoid Locations page carries a `**IN BACKBOX` footnote on item 15 (Hold Crane) "
+					"while the same page's playfield drawing also runs a callout into the crane mechanism, so "
+					"the physical plane of the hold-crane is not fully settled; it is left unresolved pending "
+					"that reconciliation rather than assigned a coordinate."
+				)
 			if address in {45, 46, 47, 48}:
 				notes += (
 					" PinMAME's public lower-flipper addresses are 45-48 while the printed table numbers the "
@@ -1646,7 +1665,8 @@ def build() -> dict[str, Any]:
 					"Lamp 86 (Gen. Crane) sits on an unresolved physical plane. The manual's own Lamp "
 					"Locations page (2-37) disagrees with itself: the footnote asterisks items 81-86 as "
 					"\"located on the insert panel\", but the same page's playfield line drawing runs a "
-					"leader from badge 86 into the on-playfield crane mechanism at the top-left. The "
+					"leader from a margin badge 86 into the on-playfield crane mechanism at the top of the "
+					"playfield. The "
 					"retained table models a Lamp86 Light object on the playfield, which agrees with the "
 					"drawing's crane placement but not with the insert-panel footnote. The transcription "
 					"records both facts without picking a side. The definition places lamp 86 on the "
@@ -1754,11 +1774,17 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		},
 		"excluded_object_classes": [
 			"Switch 28 (Crane Down) and switch 42 (In The Sewer) have no playfield placement: their only retained VPX objects sit below the playfield apron (y > 1) as modelling artifacts of the crane mechanism and hidden sewer sink, so both are left unresolved rather than promoted to an off-playfield coordinate.",
-			"Flashers 19-21 and 23-28 (Autofire, Left Side, Scoop Up, Back Left, Back Right, Shooter, Scoop, Dog House, Cars) and the hold-crane coil (15) have no reliable playfield coordinate in the current extraction, so they are listed in unresolved_output_bindings rather than assigned a false position.",
-			"Flasher 18 (Window Shop) is a backbox-only flasher and flashers 20/23/24/26 also drive insert-panel bulbs; those non-playfield bulbs have no coordinate. Flasher 18 itself is recorded cabinet_or_service.",
+			"Flashers 25 (Shooter), 27 (Dog House) and 28 (Cars) and the hold-crane coil (15) have no "
+			"playfield object bound to them in the current extraction (the script's SetFlash/Flash helpers "
+			"are defined but never called for these), so they are listed in unresolved_output_bindings "
+			"rather than assigned a false position.",
+			"Flasher 18 (Window Shop) is a backbox-only flasher and is recorded cabinet_or_service; flashers "
+			"20/23/24/26 additionally drive insert-panel bulbs whose non-playfield planes have no coordinate, "
+			"but the flashers themselves are placed at their script-bound playfield primitives.",
 		],
 		"unresolved": [
 			{"group": "pinmame.input.switch", "address": 44, "reason": "opto polarity not normalized by PinMAME; see conflict.junkyard.past-crane-opto-not-normalized"},
+			{"group": "pinmame.output.lamp", "address": 86, "reason": "physical plane disputed (manual insert-panel footnote vs playfield-crane drawing); see conflict.junkyard.lamp-86-plane"},
 		],
 	}
 

@@ -11,7 +11,7 @@
       "status": "unresolved"
     },
     {
-      "description": "Lamp 86 (Gen. Crane) sits on an unresolved physical plane. The manual's own Lamp Locations page (2-37) disagrees with itself: the footnote asterisks items 81-86 as \"located on the insert panel\", but the same page's playfield line drawing runs a leader from badge 86 into the on-playfield crane mechanism at the top-left. The retained table models a Lamp86 Light object on the playfield, which agrees with the drawing's crane placement but not with the insert-panel footnote. The transcription records both facts without picking a side. The definition places lamp 86 on the playfield from the retained table and notes the conflict. Resolution path: a photograph of an unrestored machine with the Gen. Crane lamp lit, or the insert-panel/crane assembly lamp wiring, to confirm which physical plane the #44 socket sits on.",
+      "description": "Lamp 86 (Gen. Crane) sits on an unresolved physical plane. The manual's own Lamp Locations page (2-37) disagrees with itself: the footnote asterisks items 81-86 as \"located on the insert panel\", but the same page's playfield line drawing runs a leader from a margin badge 86 into the on-playfield crane mechanism at the top of the playfield. The retained table models a Lamp86 Light object on the playfield, which agrees with the drawing's crane placement but not with the insert-panel footnote. The transcription records both facts without picking a side. The definition places lamp 86 on the playfield from the retained table and notes the conflict. Resolution path: a photograph of an unrestored machine with the Gen. Crane lamp lit, or the insert-panel/crane assembly lamp wiring, to confirm which physical plane the #44 socket sits on.",
       "id": "conflict.junkyard.lamp-86-plane",
       "path": "evidence/excerpts/williams.junkyard.1996/lamp-locations.md",
       "source_refs": [
@@ -5541,7 +5541,7 @@
       "label": "Power Crane",
       "physical": {
         "assembly_part_number": "A-21523",
-        "notes": "Printed solenoid/flasher table entry 03 (High Power). Retained script callback/driver: SolPowerCrane (Wrecker ball chain/crane drive). Projected onto the crane mechanism's top-left hole (Kicker CraneHole, table object center); the crane arm itself (PCraneArm) is a render primitive without a switch/solenoid collision object.",
+        "notes": "Printed solenoid/flasher table entry 03 (High Power). Retained script callback/driver: SolPowerCrane (Wrecker ball chain/crane drive). Projected onto the crane mechanism's top-left hole (Kicker CraneHole, table object center); the crane arm itself (PCraneArm) is a render primitive without a switch/solenoid collision object. Note the manual's Solenoid Locations drawing places the Power Crane callout top-right-of-center at the crane assembly; the retained table's CraneHole kicker sits at the far left, so this is a projection onto the crane mechanism rather than the drawn callout point.",
         "part_number": "A-20099"
       },
       "provenance": {
@@ -5648,7 +5648,7 @@
       "label": "Scoop Down",
       "physical": {
         "assembly_part_number": "A-21220",
-        "notes": "Printed solenoid/flasher table entry 05 (High Power). Retained script callback/driver: ScoopDown (Controller.Switch(72)=True, fork arms down).",
+        "notes": "Printed solenoid/flasher table entry 05 (High Power). Retained script callback/driver: ScoopDown (Controller.Switch(72)=True, fork arms down). Projected onto the fork-lift scoop's left fork arm (P_Fork1, table object center): solenoid 5 (Scoop Down) drives the fork arms down and the retained script's ScoopDown handler rotates P_Fork1/P_Fork2, which sit at the scoop mechanism (agreeing with the manual's Solenoid Locations drawing, 'Right side, middle, at the scoop mechanism').",
         "part_number": "SM1-28-900"
       },
       "provenance": {
@@ -5665,14 +5665,15 @@
             "id": "device.scoop-down.effect",
             "provenance": {
               "source_refs": [
-                "vpx-table.junkyard-mfuegemann"
+                "vpx-table.junkyard-mfuegemann",
+                "manual.williams.junkyard.1996"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.247794,
-            "y": 0.041003
+            "x": 0.635057,
+            "y": 0.366176
           }
         ],
         "status": "validated"
@@ -6181,7 +6182,7 @@
       "label": "Hold Crane",
       "physical": {
         "assembly_part_number": "A-21523",
-        "notes": "Printed solenoid/flasher table entry 15 (Low Power). Retained script callback/driver: SolHoldCrane (Wrecker ball hold).",
+        "notes": "Printed solenoid/flasher table entry 15 (Low Power). Retained script callback/driver: SolHoldCrane (Wrecker ball hold). The Solenoid Locations page carries a `**IN BACKBOX` footnote on item 15 (Hold Crane) while the same page's playfield drawing also runs a callout into the crane mechanism, so the physical plane of the hold-crane is not fully settled; it is left unresolved pending that reconciliation rather than assigned a coordinate.",
         "part_number": "A-20099"
       },
       "provenance": {
@@ -6278,7 +6279,7 @@
       "label": "Dog Face Flasher",
       "physical": {
         "assembly_part_number": "A-21395",
-        "notes": "Printed solenoid/flasher table entry 17 (Flasher). Printed flashlamp complement: #906 (1) on the playfield. Retained script callback/driver: SolFlash17 (dog face flasher).",
+        "notes": "Printed solenoid/flasher table entry 17 (Flasher). Printed flashlamp complement: #906 (1) on the playfield. Retained script callback/driver: SolFlash17 (dog face flasher). Projected onto the dog-house kicker object (Kicker DogHole, table object center): solenoid 17 (Dog Face Flasher) is bound in the retained script only to the setflash channel (SolFlash17), with no separate playfield flasher object, so it is placed at the dog-house assembly.",
         "quantity": 1
       },
       "provenance": {
@@ -6295,7 +6296,8 @@
             "id": "device.dog-face-flasher.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.junkyard-mfuegemann"
+                "vpx-table.junkyard-mfuegemann",
+                "manual.williams.junkyard.1996"
               ],
               "status": "validated"
             },
@@ -6382,7 +6384,7 @@
       "label": "Autofire Flashers",
       "physical": {
         "assembly_part_number": "A-17984",
-        "notes": "Printed solenoid/flasher table entry 19 (Flasher). Printed flashlamp complement: #89 (2) on the playfield. No retained playfield coordinate is available for this flasher in the current extraction, so it is left unresolved rather than assigned a false position. Retained script callback/driver: vpmFlasher Sol19 (autofire flasher).",
+        "notes": "Printed solenoid/flasher table entry 19 (Flasher). Printed flashlamp complement: #89 (2) on the playfield. Retained script callback/driver: vpmFlasher Sol19 (autofire flasher). Placed at the retained script's autofire flasher light (Light Sol19, table object center), which the script's SolCallBack(19) = vpmFlasher Sol19 drives.",
         "quantity": 2
       },
       "provenance": {
@@ -6390,6 +6392,25 @@
           "manual.williams.junkyard.1996",
           "vpx-script.junkyard-mfuegemann",
           "pinmame.core.8371478a7640"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.autofire-flashers.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.junkyard-mfuegemann",
+                "manual.williams.junkyard.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.459272,
+            "y": 0.807972
+          }
         ],
         "status": "validated"
       },
@@ -6420,7 +6441,7 @@
       "kind": "flasher",
       "label": "Left Side Flashers",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 20 (Flasher). Printed flashlamp complement: #906 (1) on the playfield and #906 (1) on the insert panel. No retained playfield coordinate is available for this flasher in the current extraction, so it is left unresolved rather than assigned a false position. Retained script callback/driver: SolFlash20 (fridge flasher).",
+        "notes": "Printed solenoid/flasher table entry 20 (Flasher). Printed flashlamp complement: #906 (1) on the playfield and #906 (1) on the insert panel. Retained script callback/driver: SolFlash20 (fridge flasher). Placed at the fridge flasher primitive (P_FridgeFlasher, table object center), which the script's SolFlash20 handler re-textures as the red dome flasher.",
         "quantity": 2
       },
       "provenance": {
@@ -6428,6 +6449,25 @@
           "manual.williams.junkyard.1996",
           "vpx-script.junkyard-mfuegemann",
           "pinmame.core.8371478a7640"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.left-side-flashers.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.junkyard-mfuegemann",
+                "manual.williams.junkyard.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.052521,
+            "y": 0.663853
+          }
         ],
         "status": "validated"
       },
@@ -6459,7 +6499,7 @@
       "label": "Scoop Up",
       "physical": {
         "assembly_part_number": "A-21220",
-        "notes": "Printed solenoid/flasher table entry 21 (Low Power). Retained script callback/driver: ScoopUp (Controller.Switch(72)=False, forks up).",
+        "notes": "Printed solenoid/flasher table entry 21 (Low Power). Retained script callback/driver: ScoopUp (Controller.Switch(72)=False, forks up). Projected onto the fork-lift scoop's left fork arm (P_Fork1, table object center), co-located with solenoid 5: solenoid 21 (Scoop Up) raises the same fork arms the ScoopDown handler lowers.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
@@ -6467,6 +6507,25 @@
           "manual.williams.junkyard.1996",
           "vpx-script.junkyard-mfuegemann",
           "pinmame.core.8371478a7640"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.scoop-up.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.junkyard-mfuegemann",
+                "manual.williams.junkyard.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.635057,
+            "y": 0.366176
+          }
         ],
         "status": "validated"
       },
@@ -6555,7 +6614,7 @@
       "label": "Back Left Flashers",
       "physical": {
         "assembly_part_number": "A-20158",
-        "notes": "Printed solenoid/flasher table entry 23 (Flasher). Printed flashlamp complement: #906 (1) on the playfield and #906 (1) on the insert panel. No retained playfield coordinate is available for this flasher in the current extraction, so it is left unresolved rather than assigned a false position. Retained script callback/driver: SolFlash23 (back-left flasher).",
+        "notes": "Printed solenoid/flasher table entry 23 (Flasher). Printed flashlamp complement: #906 (1) on the playfield and #906 (1) on the insert panel. Retained script callback/driver: SolFlash23 (back-left flasher). Placed at the back-left flasher primitive (P_BackLeftFlasher, table object center), which the script's SolFlash23 handler re-textures.",
         "quantity": 2
       },
       "provenance": {
@@ -6563,6 +6622,25 @@
           "manual.williams.junkyard.1996",
           "vpx-script.junkyard-mfuegemann",
           "pinmame.core.8371478a7640"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.back-left-flashers.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.junkyard-mfuegemann",
+                "manual.williams.junkyard.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.267857,
+            "y": 0.011563
+          }
         ],
         "status": "validated"
       },
@@ -6594,7 +6672,7 @@
       "label": "Back Right Flashers",
       "physical": {
         "assembly_part_number": "A-20158",
-        "notes": "Printed solenoid/flasher table entry 24 (Flasher). Printed flashlamp complement: #906 (1) on the playfield and #906 (1) on the insert panel. No retained playfield coordinate is available for this flasher in the current extraction, so it is left unresolved rather than assigned a false position. Retained script callback/driver: SolFlash24 (back-right flasher).",
+        "notes": "Printed solenoid/flasher table entry 24 (Flasher). Printed flashlamp complement: #906 (1) on the playfield and #906 (1) on the insert panel. Retained script callback/driver: SolFlash24 (back-right flasher). Placed at the back-right flasher primitive (P_BackRightFlasher, table object center), which the script's SolFlash24 handler re-textures.",
         "quantity": 2
       },
       "provenance": {
@@ -6602,6 +6680,25 @@
           "manual.williams.junkyard.1996",
           "vpx-script.junkyard-mfuegemann",
           "pinmame.core.8371478a7640"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.back-right-flashers.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.junkyard-mfuegemann",
+                "manual.williams.junkyard.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.910189,
+            "y": 0.011563
+          }
         ],
         "status": "validated"
       },
@@ -6672,7 +6769,7 @@
       "label": "Scoop Flashers",
       "physical": {
         "assembly_part_number": "A-21355",
-        "notes": "Printed solenoid/flasher table entry 26 (Gen. Purpose). Printed flashlamp complement: #906 (1) on the playfield and #906 (1) on the insert panel. No retained playfield coordinate is available for this flasher in the current extraction, so it is left unresolved rather than assigned a false position. Retained script callback/driver: SolFlash26 (scoop flasher).",
+        "notes": "Printed solenoid/flasher table entry 26 (Gen. Purpose). Printed flashlamp complement: #906 (1) on the playfield and #906 (1) on the insert panel. Retained script callback/driver: SolFlash26 (scoop flasher). Placed at the dog/scoop flasher primitive (P_DogScoopFlasher, table object center), which the script's SolFlash26 handler re-textures as the red dome flasher at the scoop.",
         "quantity": 2
       },
       "provenance": {
@@ -6680,6 +6777,25 @@
           "manual.williams.junkyard.1996",
           "vpx-script.junkyard-mfuegemann",
           "pinmame.core.8371478a7640"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.scoop-flashers.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.junkyard-mfuegemann",
+                "manual.williams.junkyard.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.721639,
+            "y": 0.306429
+          }
         ],
         "status": "validated"
       },
@@ -7453,7 +7569,7 @@
       "label": "Lower Right Flipper Power",
       "physical": {
         "assembly_part_number": "A-15849-R-2",
-        "notes": "Printed solenoid/flasher table entry 45 (Fliptronic power). PinMAME's public lower-flipper addresses are 45-48 while the printed table numbers the same circuits 29-32; the manual address is preserved as an alias. The two windings of each flipper (power and hold) share one coordinate at the flipper assembly pivot, and the same pivot anchor is used for the corresponding EOS switch (public 111/113), so these are co-located placements rather than independent sockets.",
+        "notes": "Printed lower-flipper circuit for public address 45. PinMAME's public lower-flipper addresses are 45-48 while the printed table numbers the same circuits 29-32; the manual address is preserved as an alias. The two windings of each flipper (power and hold) share one coordinate at the flipper assembly pivot, and the same pivot anchor is used for the corresponding EOS switch (public 111/113), so these are co-located placements rather than independent sockets.",
         "part_number": "FL-11629"
       },
       "provenance": {
@@ -7509,7 +7625,7 @@
       "label": "Lower Right Flipper Hold",
       "physical": {
         "assembly_part_number": "A-15849-R-2",
-        "notes": "Printed solenoid/flasher table entry 46 (Fliptronic hold). Retained script callback/driver: SolRFlipper (RightFlipper). PinMAME's public lower-flipper addresses are 45-48 while the printed table numbers the same circuits 29-32; the manual address is preserved as an alias. The two windings of each flipper (power and hold) share one coordinate at the flipper assembly pivot, and the same pivot anchor is used for the corresponding EOS switch (public 111/113), so these are co-located placements rather than independent sockets.",
+        "notes": "Printed lower-flipper circuit for public address 46. Retained script callback/driver: SolRFlipper (RightFlipper). PinMAME's public lower-flipper addresses are 45-48 while the printed table numbers the same circuits 29-32; the manual address is preserved as an alias. The two windings of each flipper (power and hold) share one coordinate at the flipper assembly pivot, and the same pivot anchor is used for the corresponding EOS switch (public 111/113), so these are co-located placements rather than independent sockets.",
         "part_number": "FL-11629"
       },
       "provenance": {
@@ -7566,7 +7682,7 @@
       "label": "Lower Left Flipper Power",
       "physical": {
         "assembly_part_number": "A-15849-L-2",
-        "notes": "Printed solenoid/flasher table entry 47 (Fliptronic power). PinMAME's public lower-flipper addresses are 45-48 while the printed table numbers the same circuits 29-32; the manual address is preserved as an alias. The two windings of each flipper (power and hold) share one coordinate at the flipper assembly pivot, and the same pivot anchor is used for the corresponding EOS switch (public 111/113), so these are co-located placements rather than independent sockets.",
+        "notes": "Printed lower-flipper circuit for public address 47. PinMAME's public lower-flipper addresses are 45-48 while the printed table numbers the same circuits 29-32; the manual address is preserved as an alias. The two windings of each flipper (power and hold) share one coordinate at the flipper assembly pivot, and the same pivot anchor is used for the corresponding EOS switch (public 111/113), so these are co-located placements rather than independent sockets.",
         "part_number": "FL-11629"
       },
       "provenance": {
@@ -7622,7 +7738,7 @@
       "label": "Lower Left Flipper Hold",
       "physical": {
         "assembly_part_number": "A-15849-L-2",
-        "notes": "Printed solenoid/flasher table entry 48 (Fliptronic hold). Retained script callback/driver: SolLFlipper (LeftFlipper). PinMAME's public lower-flipper addresses are 45-48 while the printed table numbers the same circuits 29-32; the manual address is preserved as an alias. The two windings of each flipper (power and hold) share one coordinate at the flipper assembly pivot, and the same pivot anchor is used for the corresponding EOS switch (public 111/113), so these are co-located placements rather than independent sockets.",
+        "notes": "Printed lower-flipper circuit for public address 48. Retained script callback/driver: SolLFlipper (LeftFlipper). PinMAME's public lower-flipper addresses are 45-48 while the printed table numbers the same circuits 29-32; the manual address is preserved as an alias. The two windings of each flipper (power and hold) share one coordinate at the flipper assembly pivot, and the same pivot anchor is used for the corresponding EOS switch (public 111/113), so these are co-located placements rather than independent sockets.",
         "part_number": "FL-11629"
       },
       "provenance": {
@@ -12200,17 +12316,6 @@
       "license": "NOASSERTION",
       "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 bb9b127b90d2e892f18707933288e15a080819e7d27cefaf787ee04379adbdbc; 1008 files, 299118752 bytes, produced with vpxtool from the retained table.",
       "uri": "external:pinmame-vpx-sources/williams/junkyard-1996/extracted-vpxtool.manifest.json"
-    },
-    {
-      "attribution": "Williams Electronics Games, Inc.",
-      "id": "manual-support.williams.junkyard.1996",
-      "kind": "manual",
-      "license": "NOASSERTION",
-      "locator": "16-page Williams Junk Yard Operator Handbook (a born-digital PDF with a real text layer) that reproduces the same switch matrix, lamp matrix, solenoid/flasher table, general illumination, and flipper circuits as the full operations manual. Retained as a corroborating source with a usable text layer; it prints the switch-31 row as \"Trough Eject\" (matching the full manual's device) and can assist the visual re-check of the six model transcriptions.",
-      "original_filename": "Williams_1996_Junk_Yard_Operator_Manual.pdf",
-      "rights": "NOASSERTION",
-      "sha256": "50ce0d549ca29641ed4265f8a12d821af9b6dfdbdbd6277e03db2dc623caef0a",
-      "uri": "external:pinmame-manuals/by-machine/williams.junkyard.1996/Junk_Yard_Operator_Handbook.pdf"
     }
   ]
 }
