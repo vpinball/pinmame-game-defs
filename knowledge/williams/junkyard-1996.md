@@ -51,19 +51,31 @@ entirely unpopulated; switches 23, 25, 55, and 75 are also printed Not Used.
 Printed circuits 33-36 (the "Upr. Rt."/"Upr. Lt." driver-board slot,
 `CORE_FIRSTUFLIPSOL=33`) already equal their own public addresses. Junk Yard
 fits **no upper flippers**: `jyGameData` declares `FLIP_SOL(FLIP_L)` only, so
-no upper flipper solenoid is CPU-driven and no upper `FLIP_EOS` bit is set
-(public 117, the upper-left EOS, is dead). The switch mask is
-`FLIP_SW(FLIP_L | FLIP_U)`, which includes the upper-flipper **button** bits:
-PinMAME's `flipMask` carries `CORE_SWURFLIPBUTBIT` (→ public 116) and
-`CORE_SWULFLIPBUTBIT` (→ public 118), and `core_updateSw` overwrites both every
-VBLANK with the selected flipper-button state, so a recreation must not drive
-116 or 118 even though no physical upper-flipper button is installed. The
-Switch Locations page marks F6/F7/F8 (Upper Right/Optos and Upper Left
-E.O.S./Opto) Not Used. F5, however, is **not** an upper-flipper contact at
-all: the manual prints it "SPINNER" (part 5647-12693-24), and the retained
-script's `Switch115_Spin` handler pulses it as the playfield spinner. This is
-the same "Fliptronic F5 repurposed for a non-flipper device" pattern Monster
-Bash established with its Center Spinner.
+no upper flipper solenoid is CPU-driven and no upper `FLIP_EOS` bit is set.
+The Switch Locations page marks F6/F7/F8 (Upper Right/Optos and Upper Left
+E.O.S./Opto) Not Used.
+
+The flipper-column switch treatment deserves precision because it depends on
+PinMAME's `flipMask` construction (`core.c:2510-2517`), which is driven by
+`jyGameData`'s `FLIP_SW(FLIP_L | FLIP_U) | FLIP_SOL(FLIP_L)`. That mask always
+carries the lower-right/left button bits and the lower EOS bits (from
+`FLIP_SOL(FLIP_L)`), and additionally the upper-right/left **button** bits
+(from `FLIP_SW(FLIP_U)`); it carries no upper EOS bit. The two addresses that
+PinMAME genuinely **forces every VBLANK** regardless of keyboard mode are the
+lower end-of-stroke contacts 111 and 113: `core_updateSw` recomputes them from
+`core_getSol` (the flipper hold-coil state) plus `CORE_FLIPSTROKETIME`
+(`core.c:1756-1775`) and writes them back, so **a recreation must not drive
+111 or 113**. The button addresses 112/114/116/118 are read from and written
+back to the matrix unchanged when keyboard handling is off
+(`core.c:1731`, the LibPinMAME default `g_fHandleKeyboard=0`), so the emulator
+publishes no meaningful runtime state at them; 116/118 are additionally
+unfitted (no physical upper-flipper button exists) and are recorded `unused`,
+while 117 (upper-left EOS) is dead because no upper `FLIP_EOS` bit is set.
+F5, however, is **not** a flipper contact at all: the manual prints it
+"SPINNER" (part 5647-12693-24), and the retained script's `Switch115_Spin`
+handler pulses it as the playfield spinner. This is the same "Fliptronic F5
+repurposed for a non-flipper device" pattern Monster Bash established with its
+Center Spinner.
 
 ## Opto polarity sweep
 
