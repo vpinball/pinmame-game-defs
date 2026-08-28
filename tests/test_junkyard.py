@@ -259,6 +259,38 @@ class JunkyardDefinitionTests(unittest.TestCase):
 		self.assertNotIn("spatial", self.switches[28])
 		self.assertNotIn("spatial", self.switches[42])
 
+	def test_no_flasher_claims_internal_nonvisual_and_unplaced_outputs_are_listed(self) -> None:
+		# A device with no coordinate must omit spatial (and be listed in the report's unresolved
+		# output bindings), never be labelled "internal_nonvisual", which would falsely assert it
+		# has no visible location. Regression guard for the removed catch-all fallback.
+		report = load_json(SPATIAL_REPORT_PATH)
+		unresolved = {b["address"] for b in report["unresolved_output_bindings"]}
+		for device in self.definition["outputs"]:
+			if device["binding"]["group"] != "pinmame.output.solenoid":
+				continue
+			spatial = device.get("spatial")
+			self.assertNotEqual(
+				"internal_nonvisual",
+				spatial.get("reason") if spatial else None,
+				device["id"],
+			)
+			if device["kind"] == "flasher" and device["availability"] == "used":
+				if spatial is None:
+					self.assertIn(device["binding"]["device"], unresolved, device["id"])
+				elif spatial["status"] == "not_applicable":
+					self.assertEqual("cabinet_or_service", spatial["reason"], device["id"])
+				else:
+					self.assertEqual("validated", spatial["status"], device["id"])
+		# The hold-crane coil (15) and the unplaced playfield flashers are unresolved.
+		for address in (15, 19, 20, 21, 23, 24, 25, 26, 27, 28):
+			self.assertIn(address, unresolved)
+		# The backbox-only flasher 18 and knocker 7 are cabinet_or_service, not unresolved.
+		self.assertNotIn(18, unresolved)
+		self.assertNotIn(7, unresolved)
+		# The lower flipper coils are placed at the flipper assemblies.
+		for address in (45, 46, 47, 48):
+			self.assertEqual("validated", self.solenoids[address]["spatial"]["status"], address)
+
 	def test_geometric_ordering_regression_assertions(self) -> None:
 		switch_pos = _positions(self.switches)
 		# Slingshots: left is left of right.

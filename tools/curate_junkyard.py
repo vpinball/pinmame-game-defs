@@ -402,6 +402,8 @@ SOLENOID_POSITIONS = {
 	10: [(0.226610, 0.725648)], 11: [(0.686888, 0.728451)],
 	16: [(0.927521, 0.277521)],
 	17: [(0.941736, 0.333218)], 22: [(0.463120, 0.203393)],
+	45: [(0.628838, 0.837541)], 46: [(0.628838, 0.837541)],
+	47: [(0.297535, 0.837518)], 48: [(0.297535, 0.837518)],
 }
 SOLENOID_PROJECTIONS = {
 	3: "Projected onto the crane mechanism's top-left hole (Kicker CraneHole, table object center); the crane "
@@ -992,11 +994,14 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 					"no physical device is created."
 				)
 			if kind == "flasher" and address in FLASHER_QTY:
-				bulbs, quantity, playfield_emitters = FLASHER_QTY[address]
+				bulbs, quantity, _playfield_emitters = FLASHER_QTY[address]
 				physical["quantity"] = quantity
 				notes += f" Printed flashlamp complement: {bulbs}."
-				if playfield_emitters < quantity:
-					notes += " Only the playfield-visible bulb(s) have a playfield placement; the insert-panel/backbox bulb(s) have no coordinate."
+				if address not in SOLENOID_POSITIONS and address not in SOLENOID_PROJECTIONS:
+					notes += (
+						" No retained playfield coordinate is available for this flasher in the current "
+						"extraction, so it is left unresolved rather than assigned a false position."
+					)
 			if address in SOLENOID_CALLBACKS:
 				notes += f" Retained script callback/driver: {SOLENOID_CALLBACKS[address]}."
 			if address in {45, 46, 47, 48}:
@@ -1032,19 +1037,21 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			else:
 				availability = "used"
 			role = "emitter" if kind == "flasher" else "effect"
-			if address == 7:
+			if address in {4, 8, 12, 13, 14} or address in {33, 34, 35, 36}:
+				pass  # spatial already set to not_applicable("unused") above
+			elif address == 7:
 				extra["roles"] = ["cabinet.knocker"]
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
 			elif address == 18:
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
-			if address == 15:
+			elif address == 15:
 				pass  # hold-crane projection anchor sits below the playfield apron; spatial omitted
-			elif address in SOLENOID_POSITIONS:
-				extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], VPX_TABLE_SOURCE)
 			elif address in SOLENOID_PROJECTIONS:
 				extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], VPX_TABLE_SOURCE, MANUAL_SOURCE)
-			elif availability != "unused":
-				extra["spatial"] = not_applicable("internal_nonvisual", MANUAL_SOURCE)
+			elif address in SOLENOID_POSITIONS:
+				extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], VPX_TABLE_SOURCE)
+			else:
+				pass  # no coordinate or projection; spatial omitted so the device is honestly unresolved
 			refs = (MANUAL_SOURCE, CORE_SOURCE)
 			if address in SOLENOID_CALLBACKS:
 				refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
@@ -1699,7 +1706,8 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		},
 		"excluded_object_classes": [
 			"Switch 28 (Crane Down) and switch 42 (In The Sewer) have no playfield placement: their only retained VPX objects sit below the playfield apron (y > 1) as modelling artifacts of the crane mechanism and hidden sewer sink, so both are left unresolved rather than promoted to an off-playfield coordinate.",
-			"Flasher 18 (Window Shop) and flashers 20/23/24/26 second inset bulbs are backbox/insert-panel circuits with no playfield placement.",
+			"Flashers 18-21 and 23-28 (Window Shop, Autofire, Left Side, Scoop Up, Back Left, Back Right, Shooter, Scoop, Dog House, Cars) and the hold-crane coil (15) have no reliable playfield coordinate in the current extraction, so they are listed in unresolved_output_bindings rather than assigned a false position.",
+			"Flasher 18 (Window Shop) is a backbox-only flasher and flashers 20/23/24/26 also drive insert-panel bulbs; those non-playfield bulbs have no coordinate.",
 		],
 		"unresolved": [
 			{"group": "pinmame.input.switch", "address": 44, "reason": "opto polarity not normalized by PinMAME; see conflict.junkyard.past-crane-opto-not-normalized"},
@@ -1746,7 +1754,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"- Located input addresses: {len(report['resolved_input_addresses'])}",
 		f"- Located output bindings: {len(report['resolved_output_bindings'])}",
 		f"- Unresolved input addresses: {report['unresolved_input_addresses']}",
-		f"- Unresolved output bindings: {report['unresolved_output_bindings']}",
+		f"- Unresolved output bindings: {', '.join(str(b['address']) for b in sorted(report['unresolved_output_bindings'], key=lambda b: b['address']))}",
 		"",
 		"## Promotion decision",
 		"",
