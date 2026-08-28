@@ -80,7 +80,7 @@ class JunkyardDefinitionTests(unittest.TestCase):
 		self.assertEqual("0x80", self.definition["controller"]["hardware_generation"])
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
-		self.assertEqual(1, len(self.definition["conflicts"]))
+		self.assertEqual(2, len(self.definition["conflicts"]))
 
 	def test_the_stale_author_ready_artifact_is_gone_and_the_stub_is_superseded(self) -> None:
 		self.assertFalse(AUTHOR_READY_PATH.exists())
@@ -136,13 +136,16 @@ class JunkyardDefinitionTests(unittest.TestCase):
 
 	def test_the_past_crane_opto_conflict_is_first_class_and_has_a_resolution_path(self) -> None:
 		conflicts = self.definition["conflicts"]
-		self.assertEqual(1, len(conflicts))
-		conflict = conflicts[0]
-		self.assertEqual("conflict.junkyard.past-crane-opto-not-normalized", conflict["id"])
+		self.assertEqual(2, len(conflicts))
+		by_id = {c["id"]: c for c in conflicts}
+		conflict = by_id["conflict.junkyard.past-crane-opto-not-normalized"]
 		self.assertEqual("unresolved", conflict["status"])
 		self.assertIn("switch 44", conflict["description"])
 		self.assertIn("Resolution path:", conflict["description"])
 		self.assertTrue(conflict["source_refs"])
+		lamp_conflict = by_id["conflict.junkyard.lamp-86-plane"]
+		self.assertEqual("unresolved", lamp_conflict["status"])
+		self.assertIn("Resolution path:", lamp_conflict["description"])
 
 	def test_flipper_positions_lower_fitted_upper_unfitted_spinner_on_f5(self) -> None:
 		for address in (111, 112, 113, 114, 115):
@@ -226,9 +229,13 @@ class JunkyardDefinitionTests(unittest.TestCase):
 		self.assertEqual("Not Used Lamp Position 56", self.lamps[56]["label"])
 		self.assertEqual("unused", self.lamps[56]["availability"])
 		self.assertEqual("unused", self.lamps[87]["availability"])
-		for address in (81, 82, 83, 84, 85, 86):
+		for address in (81, 82, 83, 84, 85):
 			self.assertEqual("not_applicable", self.lamps[address]["spatial"]["status"], address)
 			self.assertEqual("cabinet_or_service", self.lamps[address]["spatial"]["reason"], address)
+		# Lamp 86 (Gen. Crane) is placed on the playfield from the retained table, with its
+		# manual insert-panel-vs-playfield contradiction recorded as a conflict.
+		self.assertEqual("validated", self.lamps[86]["spatial"]["status"])
+		self.assertIn("conflict.junkyard.lamp-86-plane", self.lamps[86]["physical"]["notes"])
 		self.assertEqual("not_applicable", self.lamps[88]["spatial"]["status"])
 
 	def test_every_spatial_placement_is_validated_unique_and_in_range(self) -> None:

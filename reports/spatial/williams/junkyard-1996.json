@@ -15,8 +15,8 @@
   },
   "excluded_object_classes": [
     "Switch 28 (Crane Down) and switch 42 (In The Sewer) have no playfield placement: their only retained VPX objects sit below the playfield apron (y > 1) as modelling artifacts of the crane mechanism and hidden sewer sink, so both are left unresolved rather than promoted to an off-playfield coordinate.",
-    "Flashers 18-21 and 23-28 (Window Shop, Autofire, Left Side, Scoop Up, Back Left, Back Right, Shooter, Scoop, Dog House, Cars) and the hold-crane coil (15) have no reliable playfield coordinate in the current extraction, so they are listed in unresolved_output_bindings rather than assigned a false position.",
-    "Flasher 18 (Window Shop) is a backbox-only flasher and flashers 20/23/24/26 also drive insert-panel bulbs; those non-playfield bulbs have no coordinate."
+    "Flashers 19-21 and 23-28 (Autofire, Left Side, Scoop Up, Back Left, Back Right, Shooter, Scoop, Dog House, Cars) and the hold-crane coil (15) have no reliable playfield coordinate in the current extraction, so they are listed in unresolved_output_bindings rather than assigned a false position.",
+    "Flasher 18 (Window Shop) is a backbox-only flasher and flashers 20/23/24/26 also drive insert-panel bulbs; those non-playfield bulbs have no coordinate. Flasher 18 itself is recorded cabinet_or_service."
   ],
   "extraction": {
     "fail_closed": true,
@@ -110,10 +110,6 @@
       },
       {
         "address": 85,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 86,
         "group": "pinmame.output.lamp"
       },
       {
@@ -234,7 +230,7 @@
       }
     ]
   },
-  "placement_count": 150,
+  "placement_count": 151,
   "projections": [
     {
       "address": 12,
@@ -579,6 +575,10 @@
     },
     {
       "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
       "group": "pinmame.output.lamp"
     },
     {

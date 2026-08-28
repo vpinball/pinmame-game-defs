@@ -52,8 +52,8 @@ Printed circuits 33-36 (the "Upr. Rt."/"Upr. Lt." driver-board slot,
 `CORE_FIRSTUFLIPSOL=33`) already equal their own public addresses. Junk Yard
 fits **no upper flippers**: `jyGameData` declares `FLIP_SOL(FLIP_L)` only, so
 no upper flipper solenoid is CPU-driven and no upper `FLIP_EOS` bit is set.
-The Switch Locations page marks F6/F7/F8 (Upper Right/Optos and Upper Left
-E.O.S./Opto) Not Used.
+The Switch Locations page marks F6 (Upper Right Flipper Cabinet), F7
+(Upper Left Flipper E.O.S.) and F8 (Upper Left Flipper Cabinet) Not Used.
 
 The flipper-column switch treatment deserves precision because it depends on
 PinMAME's `flipMask` construction (`core.c:2510-2517`), which is driven by
