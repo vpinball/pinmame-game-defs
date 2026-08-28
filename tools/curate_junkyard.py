@@ -910,7 +910,9 @@ def input_devices() -> list[dict[str, Any]]:
 				"FLIP_U) includes the FLIP_U bit, so PinMAME's flipMask carries the upper-flipper button "
 				"bit, but under LibPinMAME (g_fHandleKeyboard=0) the button bits are read straight from "
 				"and written back to the matrix unchanged, so PinMAME publishes no meaningful runtime "
-				"state at this address. Recorded unused."
+				"state at this address. (In keyboard mode core.c copies the lower-flipper key state into "
+				"these bits because FLIP_BUT(FLIP_UR/UL) is unset, mirroring the FunHouse pattern.) "
+				"Recorded unused."
 			)
 		elif availability == "unused":
 			notes += (
@@ -1655,7 +1657,7 @@ def build() -> dict[str, Any]:
 					"the public idle state of switch 44 and its transitions as the crane passes, or a later "
 					"corrected upstream mask."
 				),
-				"path": "evidence/excerpts/williams.junkyard.1996/switch-locations.md",
+				"path": "inputs[binding.device=44]",
 				"source_refs": ["manual.williams.junkyard.1996", "pinmame.core.8371478a7640"],
 			},
 			{
@@ -1674,7 +1676,7 @@ def build() -> dict[str, Any]:
 					"photograph of an unrestored machine with the Gen. Crane lamp lit, or the insert-panel/"
 					"crane assembly lamp wiring, to confirm which physical plane the #44 socket sits on."
 				),
-				"path": "evidence/excerpts/williams.junkyard.1996/lamp-locations.md",
+				"path": "outputs[binding.device=86]",
 				"source_refs": ["manual.williams.junkyard.1996", "vpx-table.junkyard-mfuegemann"],
 			},
 		],
@@ -1820,8 +1822,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"not normalized by jyGameData's mask. Recorded as a first-class unresolved conflict.",
 		"- GI addresses 2-4 are backbox/cabinet circuits with controlled `not_applicable` spatial records. "
 		"Of the playfield flashers, only the backbox-only flasher 18 carries a controlled "
-		"`cabinet_or_service` record; the other unplaced flashers (19-21, 23-28) and the hold-crane coil "
-		"have no spatial key and are listed in `unresolved_output_bindings`.",
+		"`cabinet_or_service` record; the flashers 25 (Shooter), 27 (Dog House) and 28 (Cars) and the "
+		"hold-crane coil (15) have no spatial key and are listed in `unresolved_output_bindings`.",
 		"- The 128x32 DMD is backbox hardware, so its spatial record is a controlled `not_applicable`.",
 		"",
 		"## Counts",

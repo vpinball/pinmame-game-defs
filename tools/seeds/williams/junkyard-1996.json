@@ -3,7 +3,7 @@
     {
       "description": "Switch 44 (Past Crane) is opto-constructed per the manual's Switch Locations parts list (2-35), which prints an A-16908 (LED) / A-16909 (PHOTO TRANS) opto pair for item 44 as it does for items 41-43 -- but pinned PinMAME's jyGameData inverted-switch mask ({0x00,0x00,0x00,0x7f,0x07,0x00,0x00,...}) covers column 4 rows 1-3 (0x07, switches 41-43) and leaves row 4 (switch 44) uninverted. The other ten opto addresses (31-37, 41-43) all agree between the manual and the emulator; this is the sole polarity disagreement, of the same family as Monster Bash's Dracula-position optos and Indiana Jones's captive-ball opto. Resolution path: a LibPinMAME gameplay-harness trace of a legal jy_11/jy_12 ROM observing the public idle state of switch 44 and its transitions as the crane passes, or a later corrected upstream mask.",
       "id": "conflict.junkyard.past-crane-opto-not-normalized",
-      "path": "evidence/excerpts/williams.junkyard.1996/switch-locations.md",
+      "path": "inputs[binding.device=44]",
       "source_refs": [
         "manual.williams.junkyard.1996",
         "pinmame.core.8371478a7640"
@@ -13,7 +13,7 @@
     {
       "description": "Lamp 86 (Gen. Crane) sits on an unresolved physical plane. The manual's own Lamp Locations page (2-37) disagrees with itself: the footnote asterisks items 81-86 as \"located on the insert panel\", but the same page's playfield line drawing runs a leader from a margin badge 86 into the on-playfield crane mechanism at the top of the playfield. The retained table models a Lamp86 Light object on the playfield, which agrees with the drawing's crane placement but not with the insert-panel footnote. The transcription records both facts without picking a side. The definition places lamp 86 on the playfield from the retained table and notes the conflict. Resolution path: a photograph of an unrestored machine with the Gen. Crane lamp lit, or the insert-panel/crane assembly lamp wiring, to confirm which physical plane the #44 socket sits on.",
       "id": "conflict.junkyard.lamp-86-plane",
-      "path": "evidence/excerpts/williams.junkyard.1996/lamp-locations.md",
+      "path": "outputs[binding.device=86]",
       "source_refs": [
         "manual.williams.junkyard.1996",
         "vpx-table.junkyard-mfuegemann"
@@ -4270,7 +4270,7 @@
       "normally_closed": true,
       "physical": {
         "location": "cabinet flipper button",
-        "notes": "Printed Fliptronic grounded switch F6. Junk Yard fits no upper flippers, so no physical upper-flipper button is installed (the Switch Locations page prints this position Not Used). jyGameData's FLIP_SW(FLIP_L | FLIP_U) includes the FLIP_U bit, so PinMAME's flipMask carries the upper-flipper button bit, but under LibPinMAME (g_fHandleKeyboard=0) the button bits are read straight from and written back to the matrix unchanged, so PinMAME publishes no meaningful runtime state at this address. Recorded unused.",
+        "notes": "Printed Fliptronic grounded switch F6. Junk Yard fits no upper flippers, so no physical upper-flipper button is installed (the Switch Locations page prints this position Not Used). jyGameData's FLIP_SW(FLIP_L | FLIP_U) includes the FLIP_U bit, so PinMAME's flipMask carries the upper-flipper button bit, but under LibPinMAME (g_fHandleKeyboard=0) the button bits are read straight from and written back to the matrix unchanged, so PinMAME publishes no meaningful runtime state at this address. (In keyboard mode core.c copies the lower-flipper key state into these bits because FLIP_BUT(FLIP_UR/UL) is unset, mirroring the FunHouse pattern.) Recorded unused.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -4373,7 +4373,7 @@
       "normally_closed": true,
       "physical": {
         "location": "cabinet flipper button",
-        "notes": "Printed Fliptronic grounded switch F8. Junk Yard fits no upper flippers, so no physical upper-flipper button is installed (the Switch Locations page prints this position Not Used). jyGameData's FLIP_SW(FLIP_L | FLIP_U) includes the FLIP_U bit, so PinMAME's flipMask carries the upper-flipper button bit, but under LibPinMAME (g_fHandleKeyboard=0) the button bits are read straight from and written back to the matrix unchanged, so PinMAME publishes no meaningful runtime state at this address. Recorded unused.",
+        "notes": "Printed Fliptronic grounded switch F8. Junk Yard fits no upper flippers, so no physical upper-flipper button is installed (the Switch Locations page prints this position Not Used). jyGameData's FLIP_SW(FLIP_L | FLIP_U) includes the FLIP_U bit, so PinMAME's flipMask carries the upper-flipper button bit, but under LibPinMAME (g_fHandleKeyboard=0) the button bits are read straight from and written back to the matrix unchanged, so PinMAME publishes no meaningful runtime state at this address. (In keyboard mode core.c copies the lower-flipper key state into these bits because FLIP_BUT(FLIP_UR/UL) is unset, mirroring the FunHouse pattern.) Recorded unused.",
         "switch_type": "opto"
       },
       "provenance": {
