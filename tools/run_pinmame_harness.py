@@ -76,6 +76,13 @@ KEY_ALIASES = {
 	"right_flipper": 94,
 	"left_action": 95,
 	"right_action": 96,
+	# Stern S.A.M. coin-door keys, pinned to src/wpc/sam.c SAM_COMPORTS: Back=KEYCODE_7
+	# (already service_green), Minus=KEYCODE_8 (service_black), Plus=KEYCODE_9,
+	# Select=KEYCODE_0, coins on KEYCODE_3..6.
+	"service_select": 26,
+	"service_plus": 35,
+	"coin1": 29,
+	"coin2": 30,
 }
 MIN_SAFE_PUBLIC_SWITCH = -7
 MAX_SAFE_PUBLIC_SWITCH = 120

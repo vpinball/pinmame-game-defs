@@ -55,12 +55,23 @@ IPDB_SOURCE = "ipdb.machine-5513"
 VPX_TABLE_SOURCE = "vpx-table.bbh-stern-2010"
 VPX_SCRIPT_SOURCE = "vpx-script.bbh-stern-2010"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.bbh-stern-2010"
+VPX_TABLE_V10_SOURCE = "vpx-table.bbh-stern-2010-v1.10"
+VPX_SCRIPT_V10_SOURCE = "vpx-script.bbh-stern-2010-v1.10"
+VPX_EXTRACTION_V10_SOURCE = "vpx-extraction.bbh-stern-2010-v1.10"
+RUNTIME_ATTRACT_SOURCE = "runtime-scenario.bbh-attract-observe"
 ROM_SOURCE = "rom.stern.big-buck-hunter-pro"
 
 TABLE_SHA256 = "347f5533c2a673611eec9689b8c2ab7456e01db94ea8cae1082eec2545d80626"
 SCRIPT_SHA256 = "da706d513c20c0936013e7c76eba6394408b20a6e9c7e9526873c969211b2e5c"
 MANUAL_SHA256 = "c35324b36939b315bc0a85e2caad1fcb46e568b7c9f33930f3a67924ab9f7dff"
 VPX_GEOMETRY_SHA256 = "7cbd1ece1730ced491bf178d81b0812d8c0ac70721ed1adfb236fc9347f0a88e"
+
+TABLE_V10_SHA256 = "fb000405999aa4fba8423f1437fb48927648b40052008fe7f6dc28648a51014b"
+SCRIPT_V10_SHA256 = "9f233c21ee0719383e5cf4e1e9aa5969e1407a8a61ca997b255aa9df2fc99224"
+EXTRACTION_V10_MANIFEST_SHA256 = "47dc92a1857438245a6532f7239b3ae041e7fae12b720d6d67eb57ec01e5503e"
+EXTRACTION_V10_FILE_COUNT = 1499
+EXTRACTION_V10_TOTAL_BYTES = 199556363
+ATTRACT_RUN_SHA256 = "49faad88b97d2a902c7d573c2692cf2f7765a4ebcb0a06d371766612f3fbe6e8"
 
 EXTRACTION_RELATIVE_PATH = Path("stern/big-buck-hunter-pro-2010/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("stern/big-buck-hunter-pro-2010/extracted-vpxtool.manifest.json")
@@ -503,6 +514,89 @@ def source_records() -> list[dict[str, Any]]:
 			"attribution": "Stern Pinball, Inc. firmware, user-authorized local copies",
 			"rights": "NOASSERTION",
 		},
+		{
+			"id": VPX_TABLE_V10_SOURCE,
+			"kind": "vpx_table",
+			"uri": "external:pinmame-vpx-sources/stern/big-buck-hunter-pro-2010/source/Big%20Buck%20Hunter%20Pro%20%28Stern%202010%29%20v1.10.vpx",
+			"original_filename": "Big Buck Hunter Pro (Stern 2010) v1.10.vpx",
+			"sha256": TABLE_V10_SHA256,
+			"locator": (
+				"Second retained known-working recreation of the same physical machine, supplied by the "
+				"contributor after the first pass: the December 2023 'Modern Upgrade' (table version "
+				"1.10, save revision 437, VPX 10.8) by TastyWasps on the 32assassin/85vette base with "
+				"VR work by Retro27 and Sixtoe. Its 144,072-byte script binds the same solenoid and "
+				"switch set as the retained v1.11 script -- every SolCallback line matches except that "
+				"flasher strings 20/22/31/32 route to named flash subroutines instead of Setlamp "
+				"channels -- which independently corroborates those runtime bindings. It adds three "
+				"writes the retained table never makes: the flipper keys also maintain "
+				"Controller.Switch(73)/(75), and the front key pulses switch 79 -- addresses in the "
+				"73-80 block outside the shared S.A.M. profile's declared input ranges, recorded on "
+				"those switch records and in the knowledge note as an open ROM-read question. Its "
+				"sw85a_Hit handler also pulses 85 alongside sw85_Hit, corroborating the Elk binding. "
+				"This table is not used for geometry: its object set differs from the retained v1.11 "
+				"table this definition's placements come from."
+			),
+			"license": "NOASSERTION",
+			"attribution": "community table authors (TastyWasps modern upgrade of the 32assassin/85vette table; VR by Retro27 and Sixtoe)",
+			"rights": "NOASSERTION",
+		},
+		{
+			"id": VPX_SCRIPT_V10_SOURCE,
+			"kind": "vpx_script",
+			"uri": "external:pinmame-vpx-sources/stern/big-buck-hunter-pro-2010/extracted-v1.10/script.vbs",
+			"original_filename": "script.vbs",
+			"sha256": SCRIPT_V10_SHA256,
+			"known_working": True,
+			"locator": (
+				"Retained embedded script of the v1.10 modern-upgrade table, 144,072 bytes, 4,192 lines. "
+				"Corroborating runtime source: identical SolCallback set to the retained v1.11 script "
+				"(1, 2, 3, 4, 7, 12, 14, 15, 16, 23 plus flasher channels 19-22/25-27/29/31/32, with "
+				"20/22/31/32 through named flash subs), identical maintained rollover handlers, "
+				"sw85a_Hit added alongside sw85_Hit both pulsing 85, the magna-save Buck-advance "
+				"writes commented out, and the three extra key writes: LeftFlipperKey to "
+				"Controller.Switch(73), RightFlipperKey to Switch(75), and keyFront pulsing switch 79 "
+				"while maintaining Switch(15)."
+			),
+			"license": "NOASSERTION",
+			"attribution": "community table authors",
+			"rights": "NOASSERTION",
+		},
+		{
+			"id": VPX_EXTRACTION_V10_SOURCE,
+			"kind": "vpx_table",
+			"uri": "external:pinmame-vpx-sources/stern/big-buck-hunter-pro-2010/extracted-v1.10.manifest.json",
+			"locator": (
+				"Canonical manifest covering every sorted relative POSIX path, byte size and SHA-256 "
+				f"under extracted-v1.10; manifest SHA-256 {EXTRACTION_V10_MANIFEST_SHA256}; "
+				f"{EXTRACTION_V10_FILE_COUNT} files, {EXTRACTION_V10_TOTAL_BYTES} bytes, produced with "
+				"vpxtool git:v0.33.3 from the retained v1.10 table."
+			),
+			"license": "NOASSERTION",
+			"attribution": "vpxtool extraction",
+		},
+		{
+			"id": RUNTIME_ATTRACT_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": "external:pinmame-runtime-evidence/big-buck-hunter-pro-2010/attract-03/run.json",
+			"revision": "2026-08-28",
+			"sha256": ATTRACT_RUN_SHA256,
+			"locator": (
+				"Hash-pinned LibPinMAME gameplay-harness run (tools/run_pinmame_harness.py) of the "
+				"exact-bytes bbh_160 ROM: boot through power-up tests into attract mode, no inputs, "
+				"~115 seconds of observation with the committed scenario "
+				"tools/harness-scenarios/stern/bbh-attract-observe.json. Observed: the ROM drives 78 "
+				"of the 80 public lamp addresses during the attract lamp chase -- every address except "
+				"1 and 2, including all twenty lamp addresses the retained scripts never bind -- the "
+				"single GI channel is active, no solenoid fires, and switches 21/22/23/73/75/79/81/83/"
+				"85 all idle low. A lamp-matrix bit lighting in attract proves the ROM drives the "
+				"address, not that a physical bulb is fitted, so these observations upgrade "
+				"availability and never construction. The run's scenario SHA-256, library SHA-256 "
+				"(ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d) and fresh-state "
+				"work directory are recorded inside the retained run artifact."
+			),
+			"license": "NOASSERTION",
+			"attribution": "pinmame-game-defs curation harness run",
+		},
 	]
 
 
@@ -649,6 +743,37 @@ DEDICATED_SWITCHES: dict[int, tuple[str, str, str]] = {
 		"Printed DED #8, the second UK post-save address, not fitted for the same reason as D-7. "
 		"The retained script writes Controller.Switch(72) while the Buck sits at the far end of "
 		"its travel and reverses there. " + TROUGH_SUBSTITUTION_NOTE),
+	73: ("Unidentified extended-block switch (the v1.10 table's left-flipper write)", "n/a (73-80 block)",
+		"This address sits in the 73-80 block between the dedicated coins (65-72) and the flipper "
+		"column (81-88), which the shared S.A.M. profile's declared input ranges do not cover: "
+		"sam.c reads it only through the strobed matrix word (sw_stb bit 4 returns swMatrix[9] as "
+		"the low byte and swMatrix[10] as the high byte), so the block is reachable hardware that "
+		"no retained manual names. The v1.10 modern-upgrade table maintains Controller.Switch(73) "
+		"from the left-flipper key while core.vbs simultaneously drives the flipper column "
+		"(81/83), so whether this machine's ROM reads its flipper buttons from the flipper "
+		"column, from this block, or from both is an open question a switch-test or gameplay "
+		"harness trace must settle. Recorded availability unknown; no placement is claimed."),
+	75: ("Unidentified extended-block switch (the v1.10 table's right-flipper write)", "n/a (73-80 block)",
+		"See switch 73: the v1.10 table maintains Controller.Switch(75) from the right-flipper "
+		"key. Availability unknown pending a runtime trace."),
+	79: ("Unidentified extended-block switch (the v1.10 table's front-key pulse)", "n/a (73-80 block)",
+		"See switch 73: the v1.10 table pulses Controller.Switch 79 from its front key while "
+		"also maintaining tournament start (15). Availability unknown pending a runtime trace."),
+	74: ("Unidentified extended-block switch", "n/a (73-80 block)",
+		"See switch 73 for the block's structure. No retained table writes this address; the "
+		"block is reachable hardware that no retained manual names."),
+	76: ("Unidentified extended-block switch", "n/a (73-80 block)",
+		"See switch 73 for the block's structure. No retained table writes this address; the "
+		"block is reachable hardware that no retained manual names."),
+	77: ("Unidentified extended-block switch", "n/a (73-80 block)",
+		"See switch 73 for the block's structure. No retained table writes this address; the "
+		"block is reachable hardware that no retained manual names."),
+	78: ("Unidentified extended-block switch", "n/a (73-80 block)",
+		"See switch 73 for the block's structure. No retained table writes this address; the "
+		"block is reachable hardware that no retained manual names."),
+	80: ("Unidentified extended-block switch", "n/a (73-80 block)",
+		"See switch 73 for the block's structure. No retained table writes this address; the "
+		"block is reachable hardware that no retained manual names."),
 	81: ("Left Flipper Button", "D-9", None),
 	82: ("Left Flipper End-of-Stroke (emulator-synthesized)", "D-10", None),
 	83: ("Right Flipper Button", "D-11", None),
@@ -868,6 +993,28 @@ def _matrix_switch(address: int) -> dict[str, Any]:
 
 def _dedicated_switch(address: int) -> dict[str, Any]:
 	label, d_number, extra = DEDICATED_SWITCHES[address]
+	if 73 <= address <= 80:
+		identifier = f"switch.extended-{address}"
+		board_note = (
+			"Read through sam.c's strobed matrix word: the matrix read at 0x1100000 returns "
+			"MAKE16BIT(swMatrix[2 + sw_stb*2], swMatrix[1 + sw_stb*2]), so strobe bit 4 returns "
+			"swMatrix[9] (the coin block, 65-72) as the low byte and swMatrix[10] (this block, "
+			"73-80) as the high byte. The shared S.A.M. profile's declared input ranges do not "
+			"cover this block; it is enumerated here because a second retained table demonstrably "
+			"writes three of its addresses."
+		)
+		device: dict[str, Any] = {
+			"id": identifier,
+			"label": label,
+			"kind": "switch",
+			"binding": {"group": "pinmame.input.switch", "device": address},
+			"aliases": [{"namespace": "pinmame.switch", "value": str(address)}],
+			"availability": "unknown",
+			"provenance": provenance(CORE_SOURCE, VPX_SCRIPT_V10_SOURCE, status="candidate"),
+		}
+		physical: dict[str, Any] = {"notes": f"{board_note} {extra}"}
+		device["physical"] = physical
+		return device
 	if 65 <= address <= 72:
 		identifier = f"switch.dedicated-{address}"
 		board_note = "Read through sam.c's dedswitch_lower_r, which returns coreGlobals.swMatrix[9] as the low byte of the lower dedicated-switch word."
@@ -962,7 +1109,9 @@ def _dip_switch(position: int) -> dict[str, Any]:
 def input_devices() -> list[dict[str, Any]]:
 	devices = [_dedicated_switch(address) for address in sorted(DEDICATED_SWITCHES) if address <= 0]
 	devices += [_matrix_switch(address) for address in range(1, 65)]
-	devices += [_dedicated_switch(address) for address in sorted(DEDICATED_SWITCHES) if address > 0]
+	devices += [_dedicated_switch(address) for address in sorted(DEDICATED_SWITCHES) if 0 < address <= 72]
+	devices += [_dedicated_switch(address) for address in range(73, 81)]
+	devices += [_dedicated_switch(address) for address in sorted(DEDICATED_SWITCHES) if address > 80]
 	devices += [_dip_switch(position) for position in range(1, 9)]
 	return devices
 
@@ -1349,6 +1498,12 @@ LAMP_POSITIONS: dict[int, tuple[tuple[float, float], ...]] = {
 # for four distinct positions, so these four carry no spatial key and the stack is disclosed.
 STACKED_PRIMITIVE_LAMPS = frozenset({27, 28, 29, 30})
 
+# Lamp addresses the attract-mode harness run observed the ROM driving (run.json, ~115 s of
+# attract: every address except 1 and 2). A driven matrix bit proves the ROM uses the
+# address, not that a bulb is fitted, so these upgrade availability to used/observed while
+# construction stays unasserted.
+ATTRACT_OBSERVED_LAMPS = frozenset(range(3, 81))
+
 LAMP_EXTRA_NOTES: dict[int, str] = {
 	16: "One of the five Buck path lamps (16-20): the retained table's Buck driver follows whichever "
 	"of these is flashing and walks the Buck target to it, so these five addresses are load-bearing "
@@ -1375,14 +1530,24 @@ LAMP_EXTRA_NOTES: dict[int, str] = {
 
 
 def _lamp(address: int) -> dict[str, Any]:
+	attract_observed = address in ATTRACT_OBSERVED_LAMPS
+	availability = "used" if (address in SCRIPT_BOUND_LAMPS or attract_observed) else "unknown"
+	prov_status = "validated" if address in SCRIPT_BOUND_LAMPS else "observed" if attract_observed else "candidate"
+	prov_refs: tuple[str, ...]
+	if address in SCRIPT_BOUND_LAMPS:
+		prov_refs = SCRIPT_REFS
+	elif attract_observed:
+		prov_refs = (RUNTIME_ATTRACT_SOURCE, CORE_SOURCE)
+	else:
+		prov_refs = (CORE_SOURCE,)
 	device: dict[str, Any] = {
 		"id": f"lamp.{address}",
-		"label": f"Lamp {address}" if address not in LAMP_EXTRA_NOTES or address < 60 else f"Lamp {address}",
+		"label": f"Lamp {address}",
 		"kind": "lamp",
 		"binding": {"group": "pinmame.output.lamp", "device": address},
 		"aliases": [{"namespace": "pinmame.lamp", "value": str(address)}],
-		"availability": "used" if address in SCRIPT_BOUND_LAMPS else "unknown",
-		"provenance": provenance(*SCRIPT_REFS, status="observed" if address in SCRIPT_BOUND_LAMPS else "candidate"),
+		"availability": availability,
+		"provenance": provenance(*prov_refs, status=prov_status),
 	}
 	notes: list[str] = []
 	if address in SCRIPT_BOUND_LAMPS:
@@ -1395,11 +1560,22 @@ def _lamp(address: int) -> dict[str, Any]:
 				"share one point and the stack gives no basis for four distinct positions, so this "
 				"record carries no spatial key; the stack is disclosed in the retained geometry dump."
 			)
+	elif attract_observed:
+		notes.append(
+			"Observed driven by the ROM during the hash-pinned attract-mode harness run (see source "
+			"runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address "
+			"except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the "
+			"address, not that a physical bulb is fitted, so no construction or placement is "
+			"claimed; the address is simply not the dead hole it would have to be to stay dark "
+			"through a full attract cycle. Neither retained table renders it, so no placement "
+			"exists."
+		)
 	else:
 		notes.append(
-			"No retained source binds or names this address: the partial manual carries no lamp "
-			"matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may "
-			"drive it at runtime; failing to observe an address is never proof that it is unused."
+			"Never observed driven: neither retained table binds it, and the ROM's attract lamp "
+			"chase left it dark through the whole hash-pinned observation window. That is not "
+			"proof the address is unused (the chase may not exercise every fitted bulb), so the "
+			"address stays unknown rather than unused."
 		)
 	if address in LAMP_EXTRA_NOTES:
 		notes.append(LAMP_EXTRA_NOTES[address])
@@ -1720,11 +1896,11 @@ SPATIAL_GAPS = (
 	"G.I. bulb inventory, and the retained script's UpdateGI drives one 27-light collection for any "
 	"string index, so no per-bulb placement set can be asserted. The 27 retained GI positions are in "
 	"the geometry dump.",
-	"Roughly half the bound-by-ROM address space (matrix switches 2, 3, 4, 12, 17, 46-64; solenoids "
-	"6, 8-11, 13, 17, 18, 24, 28, 30; lamps 1, 2, 4, 12, 13, 34, 36, 37, 44, 48, 56, 58, 64, 71-80) "
-	"is recorded availability unknown rather than placed or declared unused: the partial manual "
-	"carries none of Stern's electrical tables, and no retained source names or binds those "
-	"addresses. Failing to observe an address is never proof that it is unused.",
+	"The switch and solenoid semantics the retained sources cannot reach stay unknown: matrix "
+	"switches 2, 3, 4, 12, 17 and 46-64, solenoids 6, 8-11, 13, 17, 18, 24, 28 and 30, the "
+	"73-80 extended switch block, and lamps 1-2 (never observed driven). The attract-mode harness "
+	"run resolved the other twenty lamp addresses to observed-driven; the remaining route is a "
+	"service-menu coil/switch harness run, whose navigation is mapped in the knowledge note.",
 )
 
 
@@ -1960,12 +2136,15 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"## Promotion decision",
 		"",
 		"Promotion to `author_ready` is refused. Two conflicts remain unresolved "
-		"(`conflict.sam-invsw-never-populated`, `conflict.elk-button-physical-control`); the input "
-		"and output semantics of roughly forty addresses are unknown because no electrical table "
-		"exists in any retained source; recreation knowledge remains observed until a harness run "
-		"exercises the ROM's Buck feedback and the Elk button path; and the stacked-bulb and G.I. "
-		"spatial gaps have no honest placement set. The record therefore stays `partial` with "
-		"`coverage.missing = [\"input_semantics\", \"output_semantics\", \"polarity\", "
+		"(`conflict.sam-invsw-never-populated`, `conflict.elk-button-physical-control`); the switch "
+		"semantics of the 46-64 matrix block and the eight-address 73-80 extended block, the "
+		"identities of eleven solenoids, and lamps 1-2 remain unknown because no electrical table "
+		"exists in any retained source; the attract-mode harness run resolved the other twenty "
+		"lamp addresses to observed-driven and the remaining route is a service-menu coil/switch "
+		"run whose entry key is still unmapped; recreation knowledge remains observed until that "
+		"run exercises the ROM's Buck feedback and the Elk button path; and the stacked-bulb and "
+		"G.I. spatial gaps have no honest placement set. The record therefore stays `partial` "
+		"with `coverage.missing = [\"input_semantics\", \"output_semantics\", \"polarity\", "
 		"\"recreation_notes\", \"spatial_placement\", \"unresolved_conflicts\"]`.",
 		"",
 		"## Retained evidence",

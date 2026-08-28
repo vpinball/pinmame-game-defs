@@ -3165,6 +3165,214 @@
       "aliases": [
         {
           "namespace": "pinmame.switch",
+          "value": "73"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 73,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.extended-73",
+      "kind": "switch",
+      "label": "Unidentified extended-block switch (the v1.10 table's left-flipper write)",
+      "physical": {
+        "notes": "Read through sam.c's strobed matrix word: the matrix read at 0x1100000 returns MAKE16BIT(swMatrix[2 + sw_stb*2], swMatrix[1 + sw_stb*2]), so strobe bit 4 returns swMatrix[9] (the coin block, 65-72) as the low byte and swMatrix[10] (this block, 73-80) as the high byte. The shared S.A.M. profile's declared input ranges do not cover this block; it is enumerated here because a second retained table demonstrably writes three of its addresses. This address sits in the 73-80 block between the dedicated coins (65-72) and the flipper column (81-88), which the shared S.A.M. profile's declared input ranges do not cover: sam.c reads it only through the strobed matrix word (sw_stb bit 4 returns swMatrix[9] as the low byte and swMatrix[10] as the high byte), so the block is reachable hardware that no retained manual names. The v1.10 modern-upgrade table maintains Controller.Switch(73) from the left-flipper key while core.vbs simultaneously drives the flipper column (81/83), so whether this machine's ROM reads its flipper buttons from the flipper column, from this block, or from both is an open question a switch-test or gameplay harness trace must settle. Recorded availability unknown; no placement is claimed."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "vpx-script.bbh-stern-2010-v1.10"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "74"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 74,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.extended-74",
+      "kind": "switch",
+      "label": "Unidentified extended-block switch",
+      "physical": {
+        "notes": "Read through sam.c's strobed matrix word: the matrix read at 0x1100000 returns MAKE16BIT(swMatrix[2 + sw_stb*2], swMatrix[1 + sw_stb*2]), so strobe bit 4 returns swMatrix[9] (the coin block, 65-72) as the low byte and swMatrix[10] (this block, 73-80) as the high byte. The shared S.A.M. profile's declared input ranges do not cover this block; it is enumerated here because a second retained table demonstrably writes three of its addresses. See switch 73 for the block's structure. No retained table writes this address; the block is reachable hardware that no retained manual names."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "vpx-script.bbh-stern-2010-v1.10"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "75"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 75,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.extended-75",
+      "kind": "switch",
+      "label": "Unidentified extended-block switch (the v1.10 table's right-flipper write)",
+      "physical": {
+        "notes": "Read through sam.c's strobed matrix word: the matrix read at 0x1100000 returns MAKE16BIT(swMatrix[2 + sw_stb*2], swMatrix[1 + sw_stb*2]), so strobe bit 4 returns swMatrix[9] (the coin block, 65-72) as the low byte and swMatrix[10] (this block, 73-80) as the high byte. The shared S.A.M. profile's declared input ranges do not cover this block; it is enumerated here because a second retained table demonstrably writes three of its addresses. See switch 73: the v1.10 table maintains Controller.Switch(75) from the right-flipper key. Availability unknown pending a runtime trace."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "vpx-script.bbh-stern-2010-v1.10"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "76"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 76,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.extended-76",
+      "kind": "switch",
+      "label": "Unidentified extended-block switch",
+      "physical": {
+        "notes": "Read through sam.c's strobed matrix word: the matrix read at 0x1100000 returns MAKE16BIT(swMatrix[2 + sw_stb*2], swMatrix[1 + sw_stb*2]), so strobe bit 4 returns swMatrix[9] (the coin block, 65-72) as the low byte and swMatrix[10] (this block, 73-80) as the high byte. The shared S.A.M. profile's declared input ranges do not cover this block; it is enumerated here because a second retained table demonstrably writes three of its addresses. See switch 73 for the block's structure. No retained table writes this address; the block is reachable hardware that no retained manual names."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "vpx-script.bbh-stern-2010-v1.10"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "77"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 77,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.extended-77",
+      "kind": "switch",
+      "label": "Unidentified extended-block switch",
+      "physical": {
+        "notes": "Read through sam.c's strobed matrix word: the matrix read at 0x1100000 returns MAKE16BIT(swMatrix[2 + sw_stb*2], swMatrix[1 + sw_stb*2]), so strobe bit 4 returns swMatrix[9] (the coin block, 65-72) as the low byte and swMatrix[10] (this block, 73-80) as the high byte. The shared S.A.M. profile's declared input ranges do not cover this block; it is enumerated here because a second retained table demonstrably writes three of its addresses. See switch 73 for the block's structure. No retained table writes this address; the block is reachable hardware that no retained manual names."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "vpx-script.bbh-stern-2010-v1.10"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "78"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 78,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.extended-78",
+      "kind": "switch",
+      "label": "Unidentified extended-block switch",
+      "physical": {
+        "notes": "Read through sam.c's strobed matrix word: the matrix read at 0x1100000 returns MAKE16BIT(swMatrix[2 + sw_stb*2], swMatrix[1 + sw_stb*2]), so strobe bit 4 returns swMatrix[9] (the coin block, 65-72) as the low byte and swMatrix[10] (this block, 73-80) as the high byte. The shared S.A.M. profile's declared input ranges do not cover this block; it is enumerated here because a second retained table demonstrably writes three of its addresses. See switch 73 for the block's structure. No retained table writes this address; the block is reachable hardware that no retained manual names."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "vpx-script.bbh-stern-2010-v1.10"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "79"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 79,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.extended-79",
+      "kind": "switch",
+      "label": "Unidentified extended-block switch (the v1.10 table's front-key pulse)",
+      "physical": {
+        "notes": "Read through sam.c's strobed matrix word: the matrix read at 0x1100000 returns MAKE16BIT(swMatrix[2 + sw_stb*2], swMatrix[1 + sw_stb*2]), so strobe bit 4 returns swMatrix[9] (the coin block, 65-72) as the low byte and swMatrix[10] (this block, 73-80) as the high byte. The shared S.A.M. profile's declared input ranges do not cover this block; it is enumerated here because a second retained table demonstrably writes three of its addresses. See switch 73: the v1.10 table pulses Controller.Switch 79 from its front key while also maintaining tournament start (15). Availability unknown pending a runtime trace."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "vpx-script.bbh-stern-2010-v1.10"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "80"
+        }
+      ],
+      "availability": "unknown",
+      "binding": {
+        "device": 80,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.extended-80",
+      "kind": "switch",
+      "label": "Unidentified extended-block switch",
+      "physical": {
+        "notes": "Read through sam.c's strobed matrix word: the matrix read at 0x1100000 returns MAKE16BIT(swMatrix[2 + sw_stb*2], swMatrix[1 + sw_stb*2]), so strobe bit 4 returns swMatrix[9] (the coin block, 65-72) as the low byte and swMatrix[10] (this block, 73-80) as the high byte. The shared S.A.M. profile's declared input ranges do not cover this block; it is enumerated here because a second retained table demonstrably writes three of its addresses. See switch 73 for the block's structure. No retained table writes this address; the block is reachable hardware that no retained manual names."
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.8371478a7640",
+          "vpx-script.bbh-stern-2010-v1.10"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
           "value": "81"
         },
         {
@@ -6533,12 +6741,11 @@
       "kind": "lamp",
       "label": "Lamp 1",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Never observed driven: neither retained table binds it, and the ROM's attract lamp chase left it dark through the whole hash-pinned observation window. That is not proof the address is unused (the chase may not exercise every fitted bulb), so the address stays unknown rather than unused."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "pinmame.core.8371478a7640"
         ],
         "status": "candidate"
       }
@@ -6559,12 +6766,11 @@
       "kind": "lamp",
       "label": "Lamp 2",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Never observed driven: neither retained table binds it, and the ROM's attract lamp chase left it dark through the whole hash-pinned observation window. That is not proof the address is unused (the chase may not exercise every fitted bulb), so the address stays unknown rather than unused."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "pinmame.core.8371478a7640"
         ],
         "status": "candidate"
       }
@@ -6592,7 +6798,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6621,7 +6827,7 @@
           "value": "4"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 4,
         "group": "pinmame.output.lamp"
@@ -6630,14 +6836,14 @@
       "kind": "lamp",
       "label": "Lamp 4",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -6663,7 +6869,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6708,7 +6914,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6753,7 +6959,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6798,7 +7004,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6843,7 +7049,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6888,7 +7094,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6933,7 +7139,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -6962,7 +7168,7 @@
           "value": "12"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 12,
         "group": "pinmame.output.lamp"
@@ -6971,14 +7177,14 @@
       "kind": "lamp",
       "label": "Lamp 12",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -6988,7 +7194,7 @@
           "value": "13"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 13,
         "group": "pinmame.output.lamp"
@@ -6997,14 +7203,14 @@
       "kind": "lamp",
       "label": "Lamp 13",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -7030,7 +7236,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7075,7 +7281,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7120,7 +7326,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7165,7 +7371,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7210,7 +7416,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7255,7 +7461,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7300,7 +7506,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7345,7 +7551,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7390,7 +7596,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7435,7 +7641,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7480,7 +7686,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7525,7 +7731,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7570,7 +7776,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7615,7 +7821,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -7641,7 +7847,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -7667,7 +7873,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -7693,7 +7899,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       }
     },
     {
@@ -7719,7 +7925,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7764,7 +7970,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7809,7 +8015,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7838,7 +8044,7 @@
           "value": "34"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 34,
         "group": "pinmame.output.lamp"
@@ -7847,14 +8053,14 @@
       "kind": "lamp",
       "label": "Lamp 34",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -7880,7 +8086,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -7909,7 +8115,7 @@
           "value": "36"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 36,
         "group": "pinmame.output.lamp"
@@ -7918,14 +8124,14 @@
       "kind": "lamp",
       "label": "Lamp 36",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -7935,7 +8141,7 @@
           "value": "37"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 37,
         "group": "pinmame.output.lamp"
@@ -7944,14 +8150,14 @@
       "kind": "lamp",
       "label": "Lamp 37",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -7977,7 +8183,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8022,7 +8228,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8067,7 +8273,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8112,7 +8318,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8157,7 +8363,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8202,7 +8408,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8231,7 +8437,7 @@
           "value": "44"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 44,
         "group": "pinmame.output.lamp"
@@ -8240,14 +8446,14 @@
       "kind": "lamp",
       "label": "Lamp 44",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -8273,7 +8479,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8318,7 +8524,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8363,7 +8569,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8392,7 +8598,7 @@
           "value": "48"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 48,
         "group": "pinmame.output.lamp"
@@ -8401,14 +8607,14 @@
       "kind": "lamp",
       "label": "Lamp 48",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -8434,7 +8640,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8479,7 +8685,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8524,7 +8730,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8569,7 +8775,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8614,7 +8820,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8659,7 +8865,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8704,7 +8910,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8733,7 +8939,7 @@
           "value": "56"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 56,
         "group": "pinmame.output.lamp"
@@ -8742,14 +8948,14 @@
       "kind": "lamp",
       "label": "Lamp 56",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -8775,7 +8981,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8804,7 +9010,7 @@
           "value": "58"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 58,
         "group": "pinmame.output.lamp"
@@ -8813,14 +9019,14 @@
       "kind": "lamp",
       "label": "Lamp 58",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -8846,7 +9052,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8891,7 +9097,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8936,7 +9142,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -8981,7 +9187,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9026,7 +9232,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9055,7 +9261,7 @@
           "value": "64"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 64,
         "group": "pinmame.output.lamp"
@@ -9064,14 +9270,14 @@
       "kind": "lamp",
       "label": "Lamp 64",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -9097,7 +9303,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9142,7 +9348,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9187,7 +9393,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9232,7 +9438,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9277,7 +9483,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9322,7 +9528,7 @@
           "pinmame.core.8371478a7640",
           "vpx-script.bbh-stern-2010"
         ],
-        "status": "observed"
+        "status": "validated"
       },
       "spatial": {
         "placements": [
@@ -9351,7 +9557,7 @@
           "value": "71"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 71,
         "group": "pinmame.output.lamp"
@@ -9360,14 +9566,14 @@
       "kind": "lamp",
       "label": "Lamp 71",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -9377,7 +9583,7 @@
           "value": "72"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 72,
         "group": "pinmame.output.lamp"
@@ -9386,14 +9592,14 @@
       "kind": "lamp",
       "label": "Lamp 72",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -9403,7 +9609,7 @@
           "value": "73"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 73,
         "group": "pinmame.output.lamp"
@@ -9412,14 +9618,14 @@
       "kind": "lamp",
       "label": "Lamp 73",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -9429,7 +9635,7 @@
           "value": "74"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 74,
         "group": "pinmame.output.lamp"
@@ -9438,14 +9644,14 @@
       "kind": "lamp",
       "label": "Lamp 74",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -9455,7 +9661,7 @@
           "value": "75"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 75,
         "group": "pinmame.output.lamp"
@@ -9464,14 +9670,14 @@
       "kind": "lamp",
       "label": "Lamp 75",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -9481,7 +9687,7 @@
           "value": "76"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 76,
         "group": "pinmame.output.lamp"
@@ -9490,14 +9696,14 @@
       "kind": "lamp",
       "label": "Lamp 76",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -9507,7 +9713,7 @@
           "value": "77"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 77,
         "group": "pinmame.output.lamp"
@@ -9516,14 +9722,14 @@
       "kind": "lamp",
       "label": "Lamp 77",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -9533,7 +9739,7 @@
           "value": "78"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 78,
         "group": "pinmame.output.lamp"
@@ -9542,14 +9748,14 @@
       "kind": "lamp",
       "label": "Lamp 78",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -9559,7 +9765,7 @@
           "value": "79"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 79,
         "group": "pinmame.output.lamp"
@@ -9568,14 +9774,14 @@
       "kind": "lamp",
       "label": "Lamp 79",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -9585,7 +9791,7 @@
           "value": "80"
         }
       ],
-      "availability": "unknown",
+      "availability": "used",
       "binding": {
         "device": 80,
         "group": "pinmame.output.lamp"
@@ -9594,14 +9800,14 @@
       "kind": "lamp",
       "label": "Lamp 80",
       "physical": {
-        "notes": "No retained source binds or names this address: the partial manual carries no lamp matrix table, and the retained script's UpdateLamps has no entry for it. The ROM may drive it at runtime; failing to observe an address is never proof that it is unused."
+        "notes": "Observed driven by the ROM during the hash-pinned attract-mode harness run (see source runtime-scenario.bbh-attract-observe): the attract lamp chase drives every address except 1 and 2. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so no construction or placement is claimed; the address is simply not the dead hole it would have to be to stay dark through a full attract cycle. Neither retained table renders it, so no placement exists."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.8371478a7640",
-          "vpx-script.bbh-stern-2010"
+          "runtime-scenario.bbh-attract-observe",
+          "pinmame.core.8371478a7640"
         ],
-        "status": "candidate"
+        "status": "observed"
       }
     },
     {
@@ -9807,6 +10013,47 @@
       "locator": "The contributor's authorized ROM library (the user's VPinMAME roms folder, treated read-only): bbh_140.zip (SHA-256 c621195e182190e02c39fbf70805a84cfb15921f78f00a9a3c16136009ea6a57, member bbh140.bin SHA-1 0c500c0a5588f8476a71599be70b515ba3e19cab, matching pinned sam.c exactly); bbh_150.zip (SHA-256 1680fb35c5705e7c1f4f45824cc2e240ad1815e4338ce31744e938d55ae3163c, member bbh150.bin SHA-1 16e499046107baceda6f6c934d70ba2108915973, matching); bbh_160.zip (SHA-256 82f0101cc2dc1a8888a7ef6e5ccb0bcdd98eb15257caa3cc864c02b7a3e6b94b, member bbh_160.bin SHA-1 c58a2ae5c1332390f0d1191ee8ff920ceec23352, matching); bbh_170.zip (SHA-256 76a35ec46b65fe93667b069d3af4a5df0eeabcc541fc1a84f43f1c3e18ec2ffb, member BBH_V1-7_A_c.bin 29,069,268 bytes SHA-1 5c292f8093130d2a3aef919aa57d9d8c5f8e7756, NOT matching pinned sam.c's 0x01BB8FD0-byte 9a71959c57b9a75028e21bce9ee03871f8914138; see the bbh_170 driver record). Renamed byte-identical staging copies for future harness work sit at external:pinmame-roms/stern/big-buck-hunter-pro/ under the working root; the user's own library was never modified.",
       "rights": "NOASSERTION",
       "uri": "external:pinmame-roms/stern/big-buck-hunter-pro"
+    },
+    {
+      "attribution": "community table authors (TastyWasps modern upgrade of the 32assassin/85vette table; VR by Retro27 and Sixtoe)",
+      "id": "vpx-table.bbh-stern-2010-v1.10",
+      "kind": "vpx_table",
+      "license": "NOASSERTION",
+      "locator": "Second retained known-working recreation of the same physical machine, supplied by the contributor after the first pass: the December 2023 'Modern Upgrade' (table version 1.10, save revision 437, VPX 10.8) by TastyWasps on the 32assassin/85vette base with VR work by Retro27 and Sixtoe. Its 144,072-byte script binds the same solenoid and switch set as the retained v1.11 script -- every SolCallback line matches except that flasher strings 20/22/31/32 route to named flash subroutines instead of Setlamp channels -- which independently corroborates those runtime bindings. It adds three writes the retained table never makes: the flipper keys also maintain Controller.Switch(73)/(75), and the front key pulses switch 79 -- addresses in the 73-80 block outside the shared S.A.M. profile's declared input ranges, recorded on those switch records and in the knowledge note as an open ROM-read question. Its sw85a_Hit handler also pulses 85 alongside sw85_Hit, corroborating the Elk binding. This table is not used for geometry: its object set differs from the retained v1.11 table this definition's placements come from.",
+      "original_filename": "Big Buck Hunter Pro (Stern 2010) v1.10.vpx",
+      "rights": "NOASSERTION",
+      "sha256": "fb000405999aa4fba8423f1437fb48927648b40052008fe7f6dc28648a51014b",
+      "uri": "external:pinmame-vpx-sources/stern/big-buck-hunter-pro-2010/source/Big%20Buck%20Hunter%20Pro%20%28Stern%202010%29%20v1.10.vpx"
+    },
+    {
+      "attribution": "community table authors",
+      "id": "vpx-script.bbh-stern-2010-v1.10",
+      "kind": "vpx_script",
+      "known_working": true,
+      "license": "NOASSERTION",
+      "locator": "Retained embedded script of the v1.10 modern-upgrade table, 144,072 bytes, 4,192 lines. Corroborating runtime source: identical SolCallback set to the retained v1.11 script (1, 2, 3, 4, 7, 12, 14, 15, 16, 23 plus flasher channels 19-22/25-27/29/31/32, with 20/22/31/32 through named flash subs), identical maintained rollover handlers, sw85a_Hit added alongside sw85_Hit both pulsing 85, the magna-save Buck-advance writes commented out, and the three extra key writes: LeftFlipperKey to Controller.Switch(73), RightFlipperKey to Switch(75), and keyFront pulsing switch 79 while maintaining Switch(15).",
+      "original_filename": "script.vbs",
+      "rights": "NOASSERTION",
+      "sha256": "9f233c21ee0719383e5cf4e1e9aa5969e1407a8a61ca997b255aa9df2fc99224",
+      "uri": "external:pinmame-vpx-sources/stern/big-buck-hunter-pro-2010/extracted-v1.10/script.vbs"
+    },
+    {
+      "attribution": "vpxtool extraction",
+      "id": "vpx-extraction.bbh-stern-2010-v1.10",
+      "kind": "vpx_table",
+      "license": "NOASSERTION",
+      "locator": "Canonical manifest covering every sorted relative POSIX path, byte size and SHA-256 under extracted-v1.10; manifest SHA-256 47dc92a1857438245a6532f7239b3ae041e7fae12b720d6d67eb57ec01e5503e; 1499 files, 199556363 bytes, produced with vpxtool git:v0.33.3 from the retained v1.10 table.",
+      "uri": "external:pinmame-vpx-sources/stern/big-buck-hunter-pro-2010/extracted-v1.10.manifest.json"
+    },
+    {
+      "attribution": "pinmame-game-defs curation harness run",
+      "id": "runtime-scenario.bbh-attract-observe",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Hash-pinned LibPinMAME gameplay-harness run (tools/run_pinmame_harness.py) of the exact-bytes bbh_160 ROM: boot through power-up tests into attract mode, no inputs, ~115 seconds of observation with the committed scenario tools/harness-scenarios/stern/bbh-attract-observe.json. Observed: the ROM drives 78 of the 80 public lamp addresses during the attract lamp chase -- every address except 1 and 2, including all twenty lamp addresses the retained scripts never bind -- the single GI channel is active, no solenoid fires, and switches 21/22/23/73/75/79/81/83/85 all idle low. A lamp-matrix bit lighting in attract proves the ROM drives the address, not that a physical bulb is fitted, so these observations upgrade availability and never construction. The run's scenario SHA-256, library SHA-256 (ca33d8fd92ff8f797db2628604db50ae02c8d6b95cd0d6718ce74833980d145d) and fresh-state work directory are recorded inside the retained run artifact.",
+      "revision": "2026-08-28",
+      "sha256": "49faad88b97d2a902c7d573c2692cf2f7765a4ebcb0a06d371766612f3fbe6e8",
+      "uri": "external:pinmame-runtime-evidence/big-buck-hunter-pro-2010/attract-03/run.json"
     }
   ]
 }

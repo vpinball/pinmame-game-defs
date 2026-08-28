@@ -248,6 +248,13 @@ class RuntimeHarnessTests(unittest.TestCase):
 				"right_flipper": 94,
 				"left_action": 95,
 				"right_action": 96,
+				# Stern S.A.M. coin-door keys added for the Big Buck Hunter Pro navigation
+				# work, each pinned to sam.c's SAM_COMPORTS: Select=KEYCODE_0, Plus=KEYCODE_9,
+				# Coin 1/2 on KEYCODE_3/4.
+				"service_select": 26,
+				"service_plus": 35,
+				"coin1": 29,
+				"coin2": 30,
 			},
 			HARNESS.KEY_ALIASES,
 		)

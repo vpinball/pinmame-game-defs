@@ -42,13 +42,13 @@ The matching source is the retained known-working `Big Buck Hunter Pro (Stern 20
 - Inputs with a controlled `dip_switch` record: 8
 - Outputs with a controlled `unused` record: 16
 - Outputs with a controlled `virtual` record: 18
-- Devices with no `spatial` key at all: 65
+- Devices with no `spatial` key at all: 73
 
 ## Named spatial gaps
 
 - outputs[binding.device=27,28,29,30] (pinmame.output.lamp) carry no spatial key: the retained table renders all four as colored bulb Primitives stacked at raw (401.3, 263.9, z 290) with Flash-glow partners clustered around raw (352.5, 250-371), so four distinct physical bulb positions cannot be derived from the stack. See the lamp records' own notes.
 - outputs[binding.device=0] (pinmame.output.gi) has no spatial key: the partial manual prints no G.I. bulb inventory, and the retained script's UpdateGI drives one 27-light collection for any string index, so no per-bulb placement set can be asserted. The 27 retained GI positions are in the geometry dump.
-- Roughly half the bound-by-ROM address space (matrix switches 2, 3, 4, 12, 17, 46-64; solenoids 6, 8-11, 13, 17, 18, 24, 28, 30; lamps 1, 2, 4, 12, 13, 34, 36, 37, 44, 48, 56, 58, 64, 71-80) is recorded availability unknown rather than placed or declared unused: the partial manual carries none of Stern's electrical tables, and no retained source names or binds those addresses. Failing to observe an address is never proof that it is unused.
+- The switch and solenoid semantics the retained sources cannot reach stay unknown: matrix switches 2, 3, 4, 12, 17 and 46-64, solenoids 6, 8-11, 13, 17, 18, 24, 28 and 30, the 73-80 extended switch block, and lamps 1-2 (never observed driven). The attract-mode harness run resolved the other twenty lamp addresses to observed-driven; the remaining route is a service-menu coil/switch harness run, whose navigation is mapped in the knowledge note.
 
 ## Excluded retained objects
 
@@ -58,7 +58,7 @@ The matching source is the retained known-working `Big Buck Hunter Pro (Stern 20
 
 ## Promotion decision
 
-Promotion to `author_ready` is refused. Two conflicts remain unresolved (`conflict.sam-invsw-never-populated`, `conflict.elk-button-physical-control`); the input and output semantics of roughly forty addresses are unknown because no electrical table exists in any retained source; recreation knowledge remains observed until a harness run exercises the ROM's Buck feedback and the Elk button path; and the stacked-bulb and G.I. spatial gaps have no honest placement set. The record therefore stays `partial` with `coverage.missing = ["input_semantics", "output_semantics", "polarity", "recreation_notes", "spatial_placement", "unresolved_conflicts"]`.
+Promotion to `author_ready` is refused. Two conflicts remain unresolved (`conflict.sam-invsw-never-populated`, `conflict.elk-button-physical-control`); the switch semantics of the 46-64 matrix block and the eight-address 73-80 extended block, the identities of eleven solenoids, and lamps 1-2 remain unknown because no electrical table exists in any retained source; the attract-mode harness run resolved the other twenty lamp addresses to observed-driven and the remaining route is a service-menu coil/switch run whose entry key is still unmapped; recreation knowledge remains observed until that run exercises the ROM's Buck feedback and the Elk button path; and the stacked-bulb and G.I. spatial gaps have no honest placement set. The record therefore stays `partial` with `coverage.missing = ["input_semantics", "output_semantics", "polarity", "recreation_notes", "spatial_placement", "unresolved_conflicts"]`.
 
 ## Retained evidence
 
