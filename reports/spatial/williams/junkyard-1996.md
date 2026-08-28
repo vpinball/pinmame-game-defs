@@ -15,11 +15,11 @@ The matching source is the retained known-working `Junk Yard (Williams 1996).vpx
 
 ## Counts
 
-- Placements: 146
+- Placements: 150
 - Located input addresses: 48
-- Located output bindings: 68
+- Located output bindings: 72
 - Unresolved input addresses: [28, 42]
-- Unresolved output bindings: [{'group': 'pinmame.output.solenoid', 'address': 15}]
+- Unresolved output bindings: 15, 19, 20, 21, 23, 24, 25, 26, 27, 28
 
 ## Promotion decision
 

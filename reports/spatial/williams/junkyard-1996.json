@@ -15,7 +15,8 @@
   },
   "excluded_object_classes": [
     "Switch 28 (Crane Down) and switch 42 (In The Sewer) have no playfield placement: their only retained VPX objects sit below the playfield apron (y > 1) as modelling artifacts of the crane mechanism and hidden sewer sink, so both are left unresolved rather than promoted to an off-playfield coordinate.",
-    "Flasher 18 (Window Shop) and flashers 20/23/24/26 second inset bulbs are backbox/insert-panel circuits with no playfield placement."
+    "Flashers 18-21 and 23-28 (Window Shop, Autofire, Left Side, Scoop Up, Back Left, Back Right, Shooter, Scoop, Dog House, Cars) and the hold-crane coil (15) have no reliable playfield coordinate in the current extraction, so they are listed in unresolved_output_bindings rather than assigned a false position.",
+    "Flasher 18 (Window Shop) is a backbox-only flasher and flashers 20/23/24/26 also drive insert-panel bulbs; those non-playfield bulbs have no coordinate."
   ],
   "extraction": {
     "fail_closed": true,
@@ -118,67 +119,13 @@
       {
         "address": 88,
         "group": "pinmame.output.lamp"
-      }
-    ],
-    "internal_nonvisual": [
+      },
       {
         "address": 7,
         "group": "pinmame.output.solenoid"
       },
       {
         "address": 18,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 19,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 20,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 21,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 23,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 24,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 25,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 26,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 27,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 28,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 45,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 46,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 47,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 48,
         "group": "pinmame.output.solenoid"
       }
     ],
@@ -287,7 +234,7 @@
       }
     ]
   },
-  "placement_count": 146,
+  "placement_count": 150,
   "projections": [
     {
       "address": 12,
@@ -677,6 +624,22 @@
     {
       "address": 22,
       "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid"
     }
   ],
   "source_hashes": {
@@ -699,6 +662,42 @@
   "unresolved_output_bindings": [
     {
       "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
       "group": "pinmame.output.solenoid"
     }
   ],
