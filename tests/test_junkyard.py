@@ -147,14 +147,15 @@ class JunkyardDefinitionTests(unittest.TestCase):
 	def test_flipper_positions_lower_fitted_upper_unfitted_spinner_on_f5(self) -> None:
 		for address in (111, 112, 113, 114, 115):
 			self.assertEqual("used", self.switches[address]["availability"], address)
-		# 117 (upper-left EOS) is genuinely dead: jyGameData sets no upper FLIP_EOS bit.
-		self.assertEqual("unused", self.switches[117]["availability"])
-		self.assertEqual("unused", self.switches[117]["spatial"]["reason"])
-		# 116/118 (upper-right/left buttons) are unfitted physically but the emulator still publishes
-		# button state at them every VBLANK (FLIP_SW includes FLIP_U), so they are "used" state a
-		# recreation must not drive.
-		for address in (116, 118):
-			self.assertEqual("used", self.switches[address]["availability"], address)
+		# 116/118 (upper-right/left buttons) and 117 (upper-left EOS) are all unfitted; under
+		# LibPinMAME the button bits round-trip unchanged and the upper EOS has no FLIP_EOS bit,
+		# so none publishes meaningful emulator state and all are unused.
+		for address in (116, 117, 118):
+			self.assertEqual("unused", self.switches[address]["availability"], address)
+			self.assertEqual("unused", self.switches[address]["spatial"]["reason"], address)
+		# The lower EOS contacts 111/113 are forced every VBLANK by PinMAME (recomputed from
+		# core_getSol + CORE_FLIPSTROKETIME), so a recreation must not drive them.
+		for address in (111, 113):
 			self.assertIn("must not drive", self.switches[address]["physical"]["notes"])
 		self.assertTrue(self.switches[112]["normally_closed"])
 		self.assertTrue(self.switches[114]["normally_closed"])

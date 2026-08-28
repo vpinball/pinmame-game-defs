@@ -786,7 +786,7 @@ def input_devices() -> list[dict[str, Any]]:
 				notes += " The printed matrix and the Switch Locations parts list both mark this position Not Used."
 			elif address in OPTO_SWITCHES:
 				shaded = "shaded \"OPTO, TYPICALLY CLOSED\" on the printed switch matrix (column 3 rows 1-7)" if column == 3 else (
-					"listed as an opto pair on the Switch Locations parts list (the printed switch matrix shades only column 3, not this column)"
+					"printed in column {column}, which the switch matrix does not shade (only column 3 is shaded)"
 				)
 				normalized = (
 					"PinMAME's jyGameData inverted-switch mask normalizes this address, so the public "
@@ -797,7 +797,7 @@ def input_devices() -> list[dict[str, Any]]:
 				)
 				notes += (
 					" Printed on the switch-locations parts list with an LED/photo-transistor opto pair and "
-					"no separate switch part number, and " + shaded + ". " + normalized
+					"no separate switch part number, " + shaded + ". " + normalized
 				)
 			if address == 24:
 				notes += " Physical part 5643-15190-00 is a permanently closed link used to prove the matrix is connected."
@@ -848,9 +848,9 @@ def input_devices() -> list[dict[str, Any]]:
 		113: ("Lower Left Flipper EOS", "internal.flipper.lower.left.eos", "used", False, "leaf", "SW-1A-194", True, [(0.297535, 0.837518)]),
 		114: ("Lower Left Flipper Button", "flipper.lower.left.button", "used", True, "opto", "A-17316", True, None),
 		115: ("Spinner", "playfield.spinner", "used", False, "leaf", "5647-12693-24", True, [(0.933303, 0.505121)]),
-		116: ("Not Fitted Upper Right Flipper Button", "internal.unfitted.flipper-button", "used", True, "opto", None, True, None),
-		117: ("Not Used Upper Left Flipper EOS", "internal.unused.flipper", "unused", True, "leaf", None, True, None),
-		118: ("Not Fitted Upper Left Flipper Button", "internal.unfitted.flipper-button", "used", True, "opto", None, True, None),
+		116: ("Not Fitted Upper Right Flipper Button", "internal.unfitted.flipper-button", "unused", True, "opto", None, True, None),
+		117: ("Not Used Upper Left Flipper EOS", "internal.unused.flipper", "unused", None, "leaf", None, True, None),
+		118: ("Not Fitted Upper Left Flipper Button", "internal.unfitted.flipper-button", "unused", True, "opto", None, True, None),
 	}
 	for address, (label, role, availability, normally_closed, switch_type, part_number, keep_wiring, position) in flipper_inputs.items():
 		wire, connection = FLIPPER_SWITCH_WIRING[address]
@@ -860,14 +860,21 @@ def input_devices() -> list[dict[str, Any]]:
 		if part_number:
 			physical["part_number"] = part_number
 		notes = f"Printed Fliptronic grounded switch F{address - 110}."
-		if address in {116, 118}:
+		if address in {111, 113}:
+			notes += (
+				" PinMAME forces this end-of-stroke address every VBLANK: jyGameData's FLIP_SOL(FLIP_L) "
+				"sets the lower-flipper FLIP_EOS bit, so core_updateSw recomputes it from core_getSol "
+				"(the flipper hold coil state) plus CORE_FLIPSTROKETIME and writes it back into the "
+				"matrix. A recreation must not drive it."
+			)
+		elif address in {116, 118}:
 			notes += (
 				" Junk Yard fits no upper flippers, so no physical upper-flipper button is installed (the "
-				"Switch Locations page prints this position Not Used), but jyGameData's "
-				"FLIP_SW(FLIP_L | FLIP_U) includes the FLIP_U bit, so PinMAME's flipMask carries the "
-				"upper-flipper button bit (CORE_SWURFLIPBUTBIT for F6, CORE_SWULFLIPBUTBIT for F8) and "
-				"core_updateSw overwrites this public address every VBLANK with the selected flipper-button "
-				"state. A recreation must not drive it."
+				"Switch Locations page prints this position Not Used). jyGameData's FLIP_SW(FLIP_L | "
+				"FLIP_U) includes the FLIP_U bit, so PinMAME's flipMask carries the upper-flipper button "
+				"bit, but under LibPinMAME (g_fHandleKeyboard=0) the button bits are read straight from "
+				"and written back to the matrix unchanged, so PinMAME publishes no meaningful runtime "
+				"state at this address. Recorded unused."
 			)
 		elif availability == "unused":
 			notes += (
@@ -898,14 +905,11 @@ def input_devices() -> list[dict[str, Any]]:
 				extra["normally_closed"] = bool(normally_closed)
 		else:
 			extra["normally_closed"] = bool(normally_closed)
-			if address in {116, 118}:
-				extra["spatial"] = not_applicable("unused", MANUAL_SOURCE)
-			else:
-				extra["spatial"] = (
-					not_applicable("cabinet_or_service", MANUAL_SOURCE)
-					if role.endswith(".button")
-					else located(f"switch.generic-{address}", "sensor", position, VPX_TABLE_SOURCE)
-			)
+			extra["spatial"] = (
+				not_applicable("cabinet_or_service", MANUAL_SOURCE)
+				if role.endswith(".button")
+				else located(f"switch.generic-{address}", "sensor", position, VPX_TABLE_SOURCE)
+		)
 		items.append(
 			_device(
 				f"switch.generic-{address}",
@@ -1183,8 +1187,9 @@ def gi_outputs() -> list[dict[str, Any]]:
 			if address == 2:
 				notes += (
 					" Backbox insert-panel illumination behind the translite. The retained script's UpdateGI "
-					"does handle this string (case 2), but it drives only the backglass logo, not a playfield "
-					"emitter, so it has no playfield coordinate."
+					"has a case 2 for this string, but its whole body is two commented-out VBScript lines "
+					"('BackGlass Junk Yard logo On/Off'), so no address 0-4 outside 0/1 produces any visual "
+					"effect; this string has no playfield coordinate."
 				)
 			elif address == 4:
 				notes += (
