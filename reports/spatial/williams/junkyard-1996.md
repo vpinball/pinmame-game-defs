@@ -1,6 +1,6 @@
 # Junk Yard (Williams, 1996) spatial review
 
-Status: validated. The definition remains `partial` at `machines/partial/williams/junkyard-1996.json` because the past-crane opto polarity conflict is unresolved and several mechanism-internal sensors carry documented projections.
+Status: validated spatial-report format; spatial coverage itself is `candidate`. The definition remains `partial` at `machines/partial/williams/junkyard-1996.json` because the past-crane opto polarity conflict is unresolved and several mechanism-internal sensors carry documented projections.
 
 The matching source is the retained known-working `Junk Yard (Williams 1996).vpx` (v1.3 by mfuegemann) at SHA-256 `8ff2c1c8ae3457a4b88ff2207bc506d07435b049343301ded4dbf8e855bef07f`. The retained `vpxtool` extraction produced the embedded script at SHA-256 `b583aed396fea3cf6e2f862fdb51989aa01a99e624bbae8b30e8aeba7eeb4033`; that embedded stream is the runtime and causality authority. Exact playfield bounds are `left=0 top=0 right=952 bottom=2162`, and every canonical coordinate is x/952 and y/2162 rounded to at most six fractional places.
 
