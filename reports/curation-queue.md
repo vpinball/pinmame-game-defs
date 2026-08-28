@@ -95,7 +95,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 89 | 1996 | Scared Stiff | Bally | partial | 81% |
 | 90 | 1996 | STUB - League Champ (1.1) | Bally | stub | 0% |
 | 91 | 1996 | STUB - WPC Test Fixture: WPC-95 (1.2) | Bally | stub | 0% |
-| 92 | 1996 | Big Bang Bar | Capcom | partial | 63% |
+| 92 | 1996 | Big Bang Bar | Capcom | author_ready | 100% |
 | 93 | 1996 | Breakshot | Capcom | partial | 19% |
 | 94 | 1996 | STUB - Airborne (1.6) | Capcom | stub | 0% |
 | 95 | 1996 | STUB - Flipper Football (1.04) | Capcom | stub | 0% |

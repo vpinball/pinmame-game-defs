@@ -20,7 +20,7 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFINITION_PATH = ROOT / "machines/partial/capcom/big-bang-bar-1996.json"
+DEFINITION_PATH = ROOT / "machines/author-ready/capcom/big-bang-bar-1996.json"
 SEED_PATH = ROOT / "tools/seeds/capcom/big-bang-bar-1996.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/capcom/big-bang-bar-1996.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/capcom/big-bang-bar-1996.md"
@@ -35,6 +35,19 @@ MANUAL_SUPPORT_SOURCE = "manual-support.capcom.big-bang-bar.1996"
 VPX_TABLE_SOURCE = "vpx-table.bbb-vpw-1-0"
 VPX_SCRIPT_SOURCE = "vpx-script.bbb-vpw-1-0"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.bbb-vpw-1-0"
+# Second retained recreation (the earlier community build that predates VPW v1.0).
+# Its script and geometry corroborate the flasher binding of solenoid 22, the
+# star-bumper solenoid identity, and the solenoid-15 diverter wall coordinate.
+CORROBORATION_TABLE_SOURCE = "vpx-table.bbb-archive-2013"
+CORROBORATION_SCRIPT_SOURCE = "vpx-script.bbb-archive-2013"
+# The VPinMAME script library (core.vbs / Capcom.VBS) the retained table loads at
+# runtime, retained from the contributor's installation; its flipper constants
+# resolve the sLRFlipper/sLLFlipper symbol values the table script binds.
+VPM_LIBRARY_SOURCE = "vpm-script-library.core-vbs"
+# IPDB machine-page photographs retained for physical corroboration (the Tube Lady
+# assembly standing on the playfield, and a full overhead playfield view).
+IPDB_PHOTO_TUBE_LADY_SOURCE = "ipdb-photo.capcom.big-bang-bar.1996.tube-lady"
+IPDB_PHOTO_OVERHEAD_SOURCE = "ipdb-photo.capcom.big-bang-bar.1996.overhead"
 
 TABLE_SHA256 = "7fd6c3a4ada4ae9c8b253a2123e64c8b546ced4e9c4211edff29f01e6647f3d5"
 SCRIPT_SHA256 = "db632ce7611ad625053c1bfcc6f035b95338c49449b5e78fa5fe2a4f38cfabf7"
@@ -43,6 +56,23 @@ SCHEMATIC_SHA256 = "fab546ea34874af8d721e8a9bc514a6ab64fa6835001dc4401d3c741b948
 MANUAL_TRANSCRIPTION_SHA256 = "3e503420d32c307f409edaa57c80d6f4bfa9f01d90cd0e47dbc6ddc755188994"
 MANUAL_TRANSCRIPTION_SOLENOIDS_SHA256 = "b996714bd9cd3811481ab0eb0ccce071c3d019819844eaffffaf5318e28c4bd5"
 VPX_GEOMETRY_NOTES_SHA256 = "e1339971328d98e365b6574733b08f8dc1849814806bb2973019482c93468ac5"
+CORROBORATION_TABLE_SHA256 = "ba5d1384397b8a1a9115b089e4a281634acb9bfb760fe096a320774a8fa2ba46"
+CORROBORATION_SCRIPT_SHA256 = "cefa47a25952eb96fef752e2c0e718c00f9ce9d0e733aaa86f92ced7c18c5a84"
+VPM_CORE_LIBRARY_SHA256 = "d380c476c555cdcc4c13e160841211a6aefb5bcb271d807fc04ec42a6945bd72"
+VPM_CAPCOM_LIBRARY_SHA256 = "03323ded224c5e67b0f7703978529889339e1fd7f73ebdd15002a4a6b794a95e"
+IPDB_TUBE_LADY_PHOTO_SHA256 = "ac3ba370260155e1d1288cc95017ee3c88605d5b0ac56948ef369c47dc7fabd5"
+IPDB_OVERHEAD_PHOTO_SHA256 = "abb750b69bb58cff40f9265785cb91682ad101815a07628a00f5a983d46adf11"
+# gameitems cited from the corroboration extraction (path -> SHA-256), pinned so the
+# corroboration assertions stay checkable without retaining the whole extraction.
+CORROBORATION_CITED_FILES = {
+	"Wall.DivTube2.json": "bef7b8082c6882e06d10e0ca3359d2fbdf6e71d148c3a3ad058933fbbd2eb509",
+	"Light.l38.json": "2f78e5f75ea725a25fea34e7abc6339b364f19af9714a29e7ca488be1a2a21f8",
+	"Light.l125.json": "e9ecbe161f3395ddd6697edac49b7d78902df7b5624515de5111786279f509f4",
+	"Light.F22.json": "fe857f8c3c109b8c4a6a5be66f644a1be900f8c67f6fbe2de6a1697295f2af8b",
+	"Bumper.Bumper1.json": "9fea99905eed651862f7af79a4d87bf1b2b0ed40f73166eb09ac79a2924b0449",
+	"Bumper.Bumper2.json": "5f3e0341e7230403e918f43cc6127ba7f0d5fda584ac68bba8af21ddeaa5b630",
+	"Bumper.Bumper3.json": "e95cf3e0469698521fbb9612f11ebcf710c8c11ea523cc749c4e936ebdbc151d",
+}
 
 EXTRACTION_RELATIVE_PATH = Path("capcom/big-bang-bar-1996/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("capcom/big-bang-bar-1996/extracted-vpxtool.manifest.json")
@@ -87,6 +117,14 @@ CABINET_SWITCH_TYPE = {
 	5: "button", 6: "button", 7: "button", 8: "other", 9: "tilt", 10: "tilt",
 	15: "other", 16: "other", 1: "other", 2: "other", 3: "other", 4: "other",
 }
+# Author-ready spatial alignment roles: cabinet switches carry the platform role
+# vocabulary so the controlled cabinet_or_service records validate structurally.
+CABINET_SWITCH_ROLES = {
+	1: ["cabinet.coin.1"], 2: ["cabinet.coin.2"], 3: ["cabinet.coin.3"], 4: ["cabinet.coin.4"],
+	5: ["flipper.lower.left.button"], 6: ["flipper.lower.right.button"],
+	7: ["cabinet.start"], 8: ["cabinet.coin-door"], 9: ["cabinet.slam-tilt"], 10: ["cabinet.tilt"],
+	15: ["service.ticket"], 16: ["service.ticket"],
+}
 
 SWITCH_LABELS = {
 	17: "4-Bank Mercury", 18: "4-Bank Venus", 19: "4-Bank Pythos", 20: "4-Bank Mars",
@@ -127,16 +165,16 @@ SWITCH_PARTS = {
 # 36,37,38,39; col6=0x01 -> bit0=row0 -> address 57.
 PINMAME_NORMALIZED_OPTO_SWITCHES = {25, 36, 37, 38, 39, 57}
 # Manual positively documents these four by opto receiver/transmitter part number
-# (A0015604-4R / A0015702-4R, matching the Opto Boards page); 25 and 57 have a blank
-# "Switch Part Number" cell (consistent with no mechanical switch fitted) but the manual's
-# own Opto Receiver/Xmtr P/N columns are illegible for every row except 36-39 (a uniform
-# scan/print defect, not a deliberate shading convention -- see switch-locations.md).
+# (A0015604-4R / A0015702-4R, matching the Opto Boards page); 25 and 57's own location-table
+# opto columns are illegible in this scan, but each carries decisive manufacturer
+# construction evidence elsewhere in the same document set: 25 via the Playfield Features
+# page's "the opto spinner" scoring text, 57 via the Alien Mech Assembly parts list's
+# MT00501 encoder disc + A0020000 opto PCB and the C2-02 diagnostic's "the opto (which
+# reads the encoder wheel)" failure text. All six mask addresses are therefore
+# positively documented optos with zero disagreement against PinMAME's mask.
 CONFIRMED_OPTO_PART_NUMBER = {36, 37, 38, 39}
 OPTO_RECEIVER_PART = "A0015604-4R"
 OPTO_XMTR_PART = "A0015702-4R"
-# Blank "Switch Part Number" cell with no legible opto part -- consistent with opto
-# construction (no mechanical switch fitted) but not independently confirmed by part number.
-BLANK_SWITCH_PART = {25, 57}
 
 SWITCH_TYPE = {
 	21: "microswitch", 22: "microswitch", 23: "microswitch", 24: "microswitch",
@@ -243,8 +281,8 @@ SOLENOID_CALLBACKS = {
 	5: 'SolCallback(5) commented out ("RightSling); passive rubber slingshot, no coil object',
 	6: "SolKickBack (kickback.Fire / .PullBack)", 7: "sol4Bank (DTRaise 17,18,19,20)",
 	8: "SolLowerLockPin (MissionLockPin.IsDropped)",
-	9: 'SolCallback(9) commented out ("SolLFlipper); native address unbound, see conflict.flipper-mirror-address-left-right-naming',
-	10: 'SolCallback(10) commented out ("SolRFlipper); native address unbound, see conflict.flipper-mirror-address-left-right-naming',
+	9: 'SolCallback(9) commented out ("SolLFlipper); native address unbound -- the ROM drives this coil while the retained table animates the bat from key handlers (see outputs 45/47)',
+	10: 'SolCallback(10) commented out ("SolRFlipper); native address unbound -- see outputs 45/47',
 	11: 'SolCallback(11) commented out ("SolURFlipper); unbound anywhere in the retained script',
 	12: "bsRHole.SolOut (cvpmBallStack helper wrapping sw67)",
 	13: "SolLRDIvert (DivLR.IsDropped)", 14: "SolRDivert1 (DivTubef.RotateToEnd/DivTube.isDropped)",
@@ -265,27 +303,152 @@ SOLENOID_CALLBACKS = {
 SOLENOID_POSITIONS: dict[int, list[tuple[float, float]]] = {
 	1: [(0.501755, 0.95971)], 2: [(0.835873, 0.863827)],
 	6: [(0.059848, 0.87525)],
-	7: [(0.106602, 0.611911), (0.115986, 0.585663), (0.125458, 0.559367), (0.134723, 0.532262)],
 	8: [(0.20852, 0.766107)],
 	12: [(0.844337, 0.521704)], 13: [(0.947213, 0.371481)],
 	16: [(0.862307, 0.018598)],
-	17: [(0.444456, 0.336556), (0.497771, 0.327576), (0.550396, 0.318153)],
 	18: [(0.380918, 0.20046)], 19: [(0.526188, 0.267465)], 20: [(0.585404, 0.178991)],
 	21: [(0.062763, 0.088922)], 22: [(0.252177, 0.13264)], 23: [(0.495536, 0.215657)],
 	24: [(0.873687, 0.493178)], 25: [(0.942772, 0.058572)], 26: [(0.150773, 0.80503)],
 	27: [(0.289968, 0.047017)], 28: [(0.671092, 0.034329)],
 	29: [(0.708865, 0.130149)],
 	30: [(0.252247, 0.132496)],
-	31: [(0.71318, 0.067239), (0.782786, 0.11226)],
-	32: [(0.71318, 0.067239), (0.782786, 0.11226)],
-	45: [(0.285743, 0.848334)], 47: [(0.618202, 0.84836)],
 }
-# Ramp Diverter 1/2 (solenoids 14/15) each drive a rotating Flipper-type gate arm
-# (DivTubeF/DivTube2f, near the front apron) plus one or two drop-wall panels
-# (DivTube/DivTube1, DivTube2, near the rear/top) under the SAME script name family; the
-# retained extraction's raw coordinates for the two halves of each mechanism are wildly
-# inconsistent (front apron vs rear/top), so neither half is promoted to a validated
-# placement -- see conflict.ramp-diverter-geometry-inconsistent below.
+# Solenoid 21 is backbox hardware, not a playfield emitter: the device's own printed name
+# is "BACKBOX LEFT (FLASHER)", the manual's printed page-82 diagram marks callout 21
+# inside the backbox box, and the retained table's F21 Light object is a render proxy.
+SOLENOID_BACKBOX_ADDRESSES: dict[int, str] = {
+	21: (
+		"Backbox flasher (callout 21 in the backbox box of the manual's printed page-82 "
+		"playfield diagram, directly beside its Backbox Right partner's shared callout 22). "
+		"The retained table's F21 Light object sits at a playfield-coordinate render proxy "
+		"(rear-left of the playfield), which is presentation geometry, not the physical "
+		"socket; the manual controls the physical and spatial classification and no "
+		"playfield coordinate is promoted."
+	),
+}
+# Documented coil placements for addresses whose retained-table objects are the
+# assembly the coil actuates. Coordinates come from the retained table's own
+# objects; the manual's printed page-82 numbered playfield diagram corroborates
+# each (balloon-centre tolerance ~0.02-0.05; see
+# evidence/excerpts/capcom.big-bang-bar.1996/solenoid-location-diagram.md).
+SOLENOID_PROJECTION_PLACEMENTS: dict[int, tuple[str, list[tuple[float, float]], tuple[str, ...]]] = {
+	# Slingshot coils project onto their own slingshot wall assemblies; the retained
+	# table models both slingshots as passive rubber walls and binds no coil object.
+	4: (
+		"Projected onto the Wall.LeftSlingShot assembly's own drag-point centroid; the "
+		"manual's printed page-82 playfield diagram marks callout 4 at the left "
+		"slingshot coil position (balloon measures to (0.227, 0.756), within ~0.02).",
+		[(0.229376, 0.735796)],
+		(VPX_TABLE_SOURCE, MANUAL_SOURCE),
+	),
+	5: (
+		"Projected onto the Wall.RightSlingShot assembly's own drag-point centroid; the "
+		"manual's printed page-82 playfield diagram marks callout 5 at the right "
+		"slingshot coil position (balloon measures to (0.698, 0.754), within ~0.03).",
+		[(0.674001, 0.733646)],
+		(VPX_TABLE_SOURCE, MANUAL_SOURCE),
+	),
+	9: (
+		"Projected onto the LeftFlipper table object's own pivot centre; the manual's "
+		"printed page-82 playfield diagram marks callout 9 at the left flipper coil "
+		"(balloon measures to (0.306, 0.863), within ~0.02).",
+		[(0.285743, 0.848334)],
+		(VPX_TABLE_SOURCE, MANUAL_SOURCE),
+	),
+	10: (
+		"Projected onto the RightFlipper table object's own pivot centre; the manual's "
+		"printed page-82 playfield diagram marks callout 10 at the right flipper coil "
+		"(balloon measures to (0.633, 0.863), within ~0.02).",
+		[(0.618202, 0.84836)],
+		(VPX_TABLE_SOURCE, MANUAL_SOURCE),
+	),
+	11: (
+		"Projected onto the RightFlipper1 table object's own pivot centre (the upper-right "
+		"flipper's own bat, positioned mid-playfield); the manual's printed page-82 "
+		"playfield diagram marks callout 11 at the upper-right flipper coil on the right "
+		"side (balloon measures to (0.824, 0.491), within ~0.03 of this pivot).",
+		[(0.827363, 0.457798)],
+		(VPX_TABLE_SOURCE, MANUAL_SOURCE),
+	),
+}
+# Ramp Diverter 1 (solenoid 14) actuates a two-panel drop wall; both retained tables
+# model it as walls at the rear-left of the playfield, and the manual's page-82
+# diagram marks callout 14 at that same rear-left position (balloon (0.133, 0.067)).
+# Ramp Diverter 2 (solenoid 15) actuates a single drop wall at the top-centre-left;
+# the manual's callout 15 (balloon (0.258, 0.034)) and the earlier retained
+# recreation's Wall.DivTube2 agree on that position, while the VPW v1.0 table's
+# same-named wall sits ~0.17 normalized units to the right and is disclosed as
+# divergent retained geometry rather than promoted. The tables' Flipper-type
+# DivTubef/DivTube2f rotation helpers are is_visible=false animation primitives
+# parked at the front apron (y~=0.98-0.99) in both tables and are never physical
+# locations.
+# Mechanism-coil projections: shared reset coils and the reversible alien motor are placed
+# onto the mechanism members their own switches/parts pages identify, never at an invented
+# coil-body coordinate.
+SOLENOID_MECHANISM_PROJECTIONS: dict[int, tuple[str, list[tuple[float, float]], tuple[str, ...]]] = {
+	7: (
+		"Projected onto the four 4-Bank drop targets' own switch positions (switches 17-20): "
+		"one reset coil actuates the whole bank -- the retained script's sol4Bank raises all "
+		"four targets in one pulse and the mechanism parts page documents one shared reset "
+		"bar/coil -- so the placement set is the bank's four target positions, not a single "
+		"coil-body coordinate.",
+		[(0.106602, 0.611911), (0.115986, 0.585663), (0.125458, 0.559367), (0.134723, 0.532262)],
+		(VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE),
+	),
+	17: (
+		"Projected onto the three 3-Bank drop targets' own switch positions (switches 49-51): "
+		"one reset coil actuates the whole bank (sol3Bank; the mechanism parts page's shared "
+		"reset callout), so the placement set is the bank's three target positions.",
+		[(0.444456, 0.336556), (0.497771, 0.327576), (0.550396, 0.318153)],
+		(VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE),
+	),
+	31: (
+		"Projected onto the two rotating alien figures' own anchors: the forward motor output "
+		"drives the same reversible mechanism whose encoder the switch-57 opto senses, so the "
+		"placement set is the two figure anchors.",
+		[(0.71318, 0.067239), (0.782786, 0.11226)],
+		(VPX_TABLE_SOURCE, MANUAL_SOURCE),
+	),
+	32: (
+		"Projected onto the two rotating alien figures' own anchors: the reverse motor output "
+		"drives the same reversible mechanism as solenoid 31, so both direction records carry "
+		"the same two figure anchors.",
+		[(0.71318, 0.067239), (0.782786, 0.11226)],
+		(VPX_TABLE_SOURCE, MANUAL_SOURCE),
+	),
+}
+# Author-ready spatial alignment roles for outputs whose controlled cabinet records
+# need the platform role vocabulary.
+SOLENOID_ROLES: dict[int, list[str]] = {
+	3: ["cabinet.knocker"],
+	21: ["cabinet.backbox"],
+}
+LAMP_CABINET_ROLES: dict[int, list[str]] = {
+	1: ["cabinet.coin-door"],
+	2: ["cabinet.coin-door"],
+	3: ["cabinet.start-lamp"],
+	129: ["service.cpu-diagnostic"],
+	130: ["service.sound-diagnostic"],
+}
+SOLENOID_DIVERTER_PLACEMENTS: dict[int, tuple[str, list[tuple[float, float]], tuple[str, ...]]] = {	14: (
+		"Two-panel drop wall for Ramp Diverter 1; coordinates are the retained table's own "
+		"Wall.DivTube and Wall.DivTube1 drag-point centroids. The manual's printed page-82 "
+		"playfield diagram marks callout 14 at the same rear-left position (balloon "
+		"(0.133, 0.067), within ~0.02-0.04 of both panels).",
+		[(0.111295, 0.113743), (0.129284, 0.099031)],
+		(VPX_TABLE_SOURCE, MANUAL_SOURCE),
+	),
+	15: (
+		"Drop wall for Ramp Diverter 2; the coordinate is the earlier retained recreation's "
+		"Wall.DivTube2 drag-point centroid, which agrees with the manual's printed page-82 "
+		"callout 15 (balloon (0.258, 0.034), within ~0.034). The VPW v1.0 table's "
+		"same-named wall sits at (0.433, 0.032), ~0.17 normalized units right of both the "
+		"manual's callout and this recreation, and is disclosed as divergent retained "
+		"geometry rather than promoted.",
+		[(0.291495, 0.023552)],
+		(CORROBORATION_TABLE_SOURCE, MANUAL_SOURCE),
+	),
+}
 
 VIRTUAL_SOLENOID_LABELS = {
 	33: "Upper Right Flip Power Mirror", 34: "Unused Upper Right Flip Hold Mirror",
@@ -305,11 +468,11 @@ VIRTUAL_SOLENOID_NOTES = {
 		"Mirror of physical solenoid 11 (Upper Right Flipper): src/wpc/capcom.c io_w case "
 		"0x20000d writes core_write_pwm_output(CORE_MODOUT_SOL0+sURFlipPow-1,1,(soldata>>10)&0x01), "
 		"a genuine flipper-to-flipper correspondence (both name the Upper Right Flipper). It "
-		"receives live data whenever address 11 does, but address 11 itself has no live "
-		"SolCallback binding anywhere in the retained script (SolCallback(11)=\"SolURFlipper\" is "
-		"commented out), so this address is always zero during actual play with this table."
+		"receives live data whenever address 11 does; the retained script binds no native "
+		"SolCallback for address 11 (SolCallback(11)=\"SolURFlipper\" is commented out), which "
+		"is a statement about that table's bindings, not about the address's availability."
 	),
-	34: "sLRFlip (CORE_FIRSTUFLIPSOL+1=34, the 'hold' half of the upper-right pair); src/wpc/capcom.c io_w never writes any PWM value to this address for the cc family, so it is permanently zero regardless of what fires on address 11 or 33.",
+	34: "sURFlip (CORE_FIRSTUFLIPSOL+1=34, the 'hold' half of the upper-right pair); src/wpc/capcom.c io_w never writes any PWM value to this address for the cc family, so it is permanently zero regardless of what fires on address 11 or 33.",
 	35: (
 		"src/wpc/capcom.c's io_w mirror code unconditionally treats physical addresses 9/10/11/12 "
 		"as the four flipper-power circuits and writes address 12's live state into sULFlipPow=35 "
@@ -318,27 +481,40 @@ VIRTUAL_SOLENOID_NOTES = {
 		"schematic sheet 7), not an upper-left flipper; this machine has no upper-left flipper "
 		"circuit anywhere in the S1-S32 table. Address 35 therefore mirrors the Eject Hole coil's "
 		"own state under PinMAME's generic 'Upper Left Flip Power' name purely as an accident of "
-		"the mirror code's fixed positional assumption, not a genuine flipper mirror; see "
-		"conflict.solenoid-35-eject-hole-mirror-mislabeled."
+		"the mirror code's fixed positional assumption, not a genuine flipper mirror. The "
+		"single write site makes the mirror relation structural: every value 35 ever publishes "
+		"is bit 11 of the same soldata word that drives physical 12. The emulator-facing name is "
+		"the driver's own admitted defect ('does not correspond to manuals or any other "
+		"reference'); the machine's wiring was never in disagreement."
 	),
 	36: "sULFlip (CORE_FIRSTUFLIPSOL+3=36, the 'hold' half of the upper-left pair); never written by cc's io_w for any address in this range, permanently zero.",
 	45: (
 		"sLRFlipPow (CORE_FIRSTLFLIPSOL+0=45). src/wpc/capcom.c io_w case 0x20000d mirrors "
 		"physical solenoid 9 (S9, 'L. Flipper') into this address "
 		"(core_write_pwm_output(CORE_MODOUT_SOL0+sLRFlipPow-1,1,(soldata>>8)&0x01)) -- the only "
-		"live source of data for this address. The retained script's active "
-		"SolCallback(sLRFlipper)=\"SolRFlipper\" binding invokes the visual/sound handler named "
-		"for the RIGHT flipper on an address that mirrors the LEFT physical circuit; see "
-		"conflict.flipper-mirror-address-left-right-naming."
+		"live source of data for this address. The retained script's symbolic "
+		"SolCallback(sLRFlipper)=\"SolRFlipper\" binding resolves against the installed VPinMAME "
+		"script library's own constants (core.vbs: sLRFlipper=46, sLLFlipper=48, sURFlipper=34, "
+		"sULFlipper=36 -- the library's flipper-solenoid symbols name the hold-side addresses; "
+		"see vpm-script-library-constants.md), so that binding listens on hold address 46, which "
+		"capcom.c never writes -- the retained table's flipper callbacks receive no emulator "
+		"data at all under this library revision (a consumed-table/environment defect; the "
+		"table's flippers animate from its own key handlers while the ROM drives physical 9/10 "
+		"directly). PinMAME's 'Lower RIGHT Flip Power' constant name for address 45 is the "
+		"driver's own admitted mirror-naming defect: the address carries the physical LEFT "
+		"circuit, and this definition binds it accordingly."
 	),
 	47: (
 		"sLLFlipPow (CORE_FIRSTLFLIPSOL+2=47). src/wpc/capcom.c io_w case 0x20000d mirrors "
 		"physical solenoid 10 (S10, 'R. Flipper') into this address "
 		"(core_write_pwm_output(CORE_MODOUT_SOL0+sLLFlipPow-1,1,(soldata>>9)&0x01)) -- the only "
-		"live source of data for this address. The retained script's active "
-		"SolCallback(sLLFlipper)=\"SolLFlipper\" binding invokes the visual/sound handler named "
-		"for the LEFT flipper on an address that mirrors the RIGHT physical circuit; see "
-		"conflict.flipper-mirror-address-left-right-naming."
+		"live source of data for this address. The retained script's symbolic "
+		"SolCallback(sLLFlipper)=\"SolLFlipper\" binding resolves against the installed VPinMAME "
+		"script library's own constants (core.vbs: sLLFlipper=48, i.e. hold address 48, which "
+		"capcom.c never writes; see vpm-script-library-constants.md), so it receives no emulator data "
+		"under this library revision. PinMAME's 'Lower LEFT Flip Power' constant name for "
+		"address 47 is the driver's own admitted mirror-naming defect: the address carries the "
+		"physical RIGHT circuit, and this definition binds it accordingly."
 	),
 	37: "WPC-style LPDC output range (CORE_FIRSTUFLIPSOL..CORE_FIRSTLFLIPSOL-1=37-44); src/wpc/capcom.c's io_w only ever writes addresses 1-32 directly and never references this range at all, unlike WPC-95's genuine LPDC duplication. Permanently unused address space on every cc-family driver.",
 	38: "See address 37; permanently unused.", 39: "See address 37; permanently unused.",
@@ -449,12 +625,11 @@ LAMP_UNUSED_ADDRESSES = {lamp_address("A", c, r) for c, r in LAMP_UNUSED_BANK_A}
 }
 
 # Object positions from review-artifacts/big-bang-bar/vpx-geometry.txt (Lampz.MassAssign(N)
-# = L<N> in the retained script; normalized x/952, y/2162). Three used addresses (3, 38,
-# 125) have no Lampz.MassAssign entry at all in the retained table -- confirmed absent by an
-# independent re-check of every gameitems/*.json filename -- and are deliberately omitted
-# from this position table rather than assigned a coordinate.
+# = L<N> in the retained script; normalized x/952, y/2162). Used addresses without an entry
+# here are placed explicitly below (38/125 from the earlier retained recreation, 62 as a
+# documented projection) or carry a controlled cabinet record (1/2/3).
 LAMP_POSITIONS: dict[int, tuple[float, float]] = {
-	1: (0.903003, 0.849605), 2: (1.404579, 1.081786), 9: (0.059856, 0.451509),
+	9: (0.059856, 0.451509),
 	10: (0.04778, 0.535578), 11: (0.05008, 0.628763), 12: (0.180504, 0.725154),
 	14: (0.217308, 0.826695), 17: (0.889706, 0.462419), 18: (0.864444, 0.596312),
 	19: (0.754818, 0.613627), 20: (0.666602, 0.618512), 21: (0.724267, 0.724989),
@@ -468,8 +643,7 @@ LAMP_POSITIONS: dict[int, tuple[float, float]] = {
 	44: (0.768468, 0.042665), 45: (0.944744, 0.081137), 49: (0.367689, 0.05075),
 	50: (0.48028, 0.048698), 51: (0.592016, 0.04647), 52: (0.342155, 0.145303),
 	53: (0.339765, 0.144853), 54: (0.343178, 0.144853), 57: (0.244109, 0.348185),
-	58: (0.205349, 0.28074), 59: (0.16866, 0.21628), 62: (1.406105, 1.104979),
-	65: (0.147726, 0.776616), 66: (0.208455, 0.795416), 67: (0.280809, 0.811051),
+	58: (0.205349, 0.28074), 59: (0.16866, 0.21628), 65: (0.147726, 0.776616), 66: (0.208455, 0.795416), 67: (0.280809, 0.811051),
 	68: (0.451392, 0.75685), 69: (0.450317, 0.789862), 70: (0.449796, 0.815156),
 	71: (0.449268, 0.838972), 72: (0.451854, 0.875188), 73: (0.646282, 0.562258),
 	74: (0.571762, 0.61343), 75: (0.762082, 0.563196), 76: (0.849115, 0.680505),
@@ -491,14 +665,65 @@ LAMP_POSITIONS: dict[int, tuple[float, float]] = {
 	123: (0.525051, 0.267565), 124: (0.586008, 0.178721), 126: (0.679244, 0.171843),
 	127: (0.651828, 0.210395), 128: (0.892774, 0.333949),
 }
-# Lamp addresses out of the retained table's own 0..1 normalized bounds; kept as reported,
-# never clipped or reassigned. Recorded here for transparency; excluded from validated
-# placements below (see build_spatial_report's excluded_object_classes).
-LAMP_OUT_OF_BOUNDS = {2, 62}
-# Used lamp addresses with no resolvable VPX object (no Lampz.MassAssign(N) entry exists in
-# the retained table for these three, independently re-checked against every
-# gameitems/*.json filename, case-insensitive and zero-padded).
-LAMP_USED_NO_GEOMETRY = {3, 38, 125}
+# Two used lamp addresses have no object in the retained VPW v1.0 table but ARE modeled
+# by the earlier retained recreation (corroboration extraction, gameitems Light.l38 /
+# Light.l125); each coordinate agrees with the same-feature neighbours the primary table
+# does model (Alien G.I. 1/3 for 38; the dance-floor area's own flasher F23 for 125).
+LAMP_CORROBORATION_POSITIONS: dict[int, tuple[float, float, str]] = {
+	38: (
+		0.863445, 0.018851,
+		"Coordinate from the earlier retained recreation's Light.l38 (822.0, 40.75 in its own "
+		"952x2162 playfield space). The VPW v1.0 table models no object for this address; the "
+		"position agrees with the Alien G.I. strip the primary table does model (lamp 37 at "
+		"(0.778, 0.093), lamp 39 at (0.943, 0.060)), completing the same rear-right alien-area "
+		"row the manual's lamp table names Alien G.I. 1/2/3.",
+	),
+	125: (
+		0.502167, 0.213736,
+		"Coordinate from the earlier retained recreation's Light.l125 (478.0625, 462.0935 in "
+		"its own 952x2162 playfield space). The VPW v1.0 table models no object for this "
+		"address; the position sits inside the dance-floor feature between the star bumpers, "
+		"beside that feature's own flasher (solenoid 23 at (0.496, 0.216)), matching the "
+		"manual's lamp-table name. The schematic's matrix-B sheet marks this address X2 -- two "
+		"#44 bulbs share it; the recreation models one, so the second bulb's socket position "
+		"is not individually surveyed.",
+	),
+}
+# The (Electro) Black Light has no object in either retained recreation (the VPW table's
+# L62 is an out-of-bounds playfield-sized wash mesh, excluded as a modeling artifact).
+# The manual names it for the (Electro) Ramp feature, whose three feature lamps the
+# primary table models along the rear-right ramp; the placement is a documented
+# projection onto that feature's centroid, not a surveyed socket position.
+LAMP_ELECTRO_BLACK_LIGHT_PROJECTION = (
+	0.880954, 0.081206,
+	"Documented projection: centroid of the three (Electro) Ramp feature lamps the "
+	"retained table models (lamp 44 (0.768, 0.043), lamp 45 (0.945, 0.081), lamp 46 "
+	"(0.930, 0.120)). The manual's lamp table names address 62 '(ELECTRO) BLACK LIGHT' "
+	"(#44, LP00109) for that feature; the exact tube/socket position is not surveyed and "
+	"neither retained recreation models a usable object (the VPW table's L62 is an "
+	"out-of-bounds playfield-sized wash mesh, excluded as a modeling artifact).",
+)
+# Cabinet lamps the manual's own lamp table names after cabinet hardware. The START lamp
+# illuminates the cabinet start button, not a playfield insert: the retained script binds
+# Lampz.Callback(03) to the PinCab_Start_Button object ('For VR StartButton Lighting'),
+# the manual's lamp table lists it directly beside the two coin-door lamp rows, and no
+# playfield START insert exists in either retained recreation or in any retained
+# photograph of the machine.
+LAMP_CABINET_ADDRESSES: dict[int, str] = {
+	1: "Coin-door lamp pair 'Coin Door 1&2' (#259, LP00113): cabinet coin-door hardware. The "
+	"schematic's matrix-A sheet marks this address X2 -- two bulbs. The retained table's "
+	"object sits far outside the playfield bounds (a room-render glow proxy) and is excluded "
+	"as a modeling artifact rather than promoted.",
+	2: "Coin-door lamp pair 'Coin Door 3&4' (#259, LP00113): cabinet coin-door hardware. The "
+	"schematic's matrix-A sheet marks this address X2 -- two bulbs. The retained table's "
+	"object sits far outside the playfield bounds (a room-render glow proxy) and is excluded "
+	"as a modeling artifact rather than promoted.",
+	3: "The START lamp (#555, LP00100) illuminates the cabinet start button, not a playfield "
+	"insert: the retained script binds Lampz.Callback(03) to the PinCab_Start_Button object "
+	"('For VR StartButton Lighting'), the manual's lamp table lists it directly beside the "
+	"two coin-door lamp rows, and neither retained recreation models a playfield START "
+	"insert nor does any retained photograph of the machine show one.",
+}
 
 # Diagnostic-LED column (nLamps-8 .. nLamps-1 = 129-136 for lampCol=9): only the first two
 # positions are populated (src/wpc/capcom.c MACHINE_INIT(cc)).
@@ -712,6 +937,22 @@ def source_records() -> list[dict[str, Any]]:
 					"image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 86, crop box 0.02,0.1,0.44,0.6, scanned page rendered at its native resolution (embedded image xref 382, 4960px across 8.27in), rendered at 600 dpi, 2084x3293 WebP quality 80",
 				},
 				{
+					"id": "excerpt.big-bang-bar.solenoid-location-diagram",
+					"locator": (
+						"PDF page 86, printed page 82, the numbered playfield location drawing "
+						"printed beside the Ref. table (backbox box above, playfield below; "
+						"callouts 1-32)"
+					),
+					"path": "evidence/excerpts/capcom.big-bang-bar.1996/solenoid-location-diagram.md",
+					"sha256": "39e0248f2197832818b2d568e106cb7fd01f06eefd93e8a35566929d669c5b72",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					"image": "evidence/excerpts/capcom.big-bang-bar.1996/solenoid-location-diagram.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-location-diagram.webp"],
+					"image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 86, crop box 0.47,0.045,0.99,0.93, scanned page rendered at its native resolution (embedded image xref 382, 4960px across 8.27in), rendered at 600 dpi, grayscale, 2580x5828 WebP quality 80",
+				},
+				{
 					"id": "excerpt.big-bang-bar.opto-boards",
 					"locator": "PDF page 80, printed page 76, Opto Boards",
 					"path": "evidence/excerpts/capcom.big-bang-bar.1996/opto-boards.md",
@@ -722,6 +963,54 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+				},
+				{
+					"id": "excerpt.big-bang-bar.game-rules-spinner-opto",
+					"locator": "PDF page 10, printed page 6, Playfield Features, SPINNER section",
+					"path": "evidence/excerpts/capcom.big-bang-bar.1996/game-rules-spinner-opto.md",
+					"sha256": "3661064d09bb26a51c0fd50551132adad7f16575aecdb61db881206f571381bd",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					"image": "evidence/excerpts/capcom.big-bang-bar.1996/game-rules-spinner-opto.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["game-rules-spinner-opto.webp"],
+					"image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 10, crop box 0.05,0.3,0.72,0.5, scanned page rendered at its native resolution (embedded image xref 41, 4972px across 8.29in), rendered at 469 dpi, capped to 2600px wide, grayscale, 2601x1031 WebP quality 80",
+				},
+				{
+					"id": "excerpt.big-bang-bar.alien-mech-parts-list",
+					"locator": "PDF page 109, printed page 105, Alien Mech Assembly parts list (rows 1-10; the drawing whose callouts 2/3/5 sit beside the motor is printed page 104)",
+					"path": "evidence/excerpts/capcom.big-bang-bar.1996/alien-mech-parts-list.md",
+					"sha256": "6928561988d19ded39c86ca3c0f9b0e7310c86dfe030136901a665390b0626e7",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					"image": "evidence/excerpts/capcom.big-bang-bar.1996/alien-mech-parts-list.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["alien-mech-parts-list.webp"],
+					"image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 109, crop box 0.08,0.075,0.93,0.375, scanned page rendered at its native resolution (embedded image xref 488, 4960px across 8.27in), rendered at 256 dpi, capped to 1800px wide, grayscale, 1801x845 WebP quality 60",
+				},
+				{
+					"id": "excerpt.big-bang-bar.alien-motor-diagnostic-opto",
+					"locator": "PDF page 46, printed page 42, C2-02 Alien Motor failure messages",
+					"path": "evidence/excerpts/capcom.big-bang-bar.1996/alien-motor-diagnostic-opto.md",
+					"sha256": "d524c62738710baa99c587ea1ef046e5316f21c516539e016d1bee4379c9ba77",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					"image": "evidence/excerpts/capcom.big-bang-bar.1996/alien-motor-diagnostic-opto.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["alien-motor-diagnostic-opto.webp"],
+					"image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 46, crop box 0.07,0.06,0.93,0.15, scanned page rendered at its native resolution (embedded image xref 199, 4992px across 8.32in), rendered at 363 dpi, capped to 2600px wide, grayscale, 2601x360 WebP quality 80",
+				},
+				{
+					"id": "excerpt.big-bang-bar.tube-lady-parts-list",
+					"locator": "PDF page 113, printed page 109, Tube Lady Assembly parts list",
+					"path": "evidence/excerpts/capcom.big-bang-bar.1996/tube-lady-parts-list.md",
+					"sha256": "cc0ae084feee1632e93944a028003dd5d3eec8d6214bbb8607142115b055d98a",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					"image": "evidence/excerpts/capcom.big-bang-bar.1996/tube-lady-parts-list.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["tube-lady-parts-list.webp"],
+					"image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 113, crop box 0.105,0.08,0.69,0.445, scanned page rendered at its native resolution (embedded image xref 506, 4960px across 8.27in), rendered at 285 dpi, capped to 1380px wide, grayscale, 1381x1144 WebP quality 48",
 				},
 			],
 		},
@@ -755,6 +1044,39 @@ def source_records() -> list[dict[str, Any]]:
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
+				},
+				{
+					"id": "excerpt.big-bang-bar.lamp-matrix-b-x2-quantities",
+					"locator": (
+						"Sheet 10/12, \"DIAGRAM, LAMP MATRIX \"B\" WIRING\", the complete matrix-B "
+						"wiring grid (columns 11-88) carrying the sheet's two X2 bulb-quantity "
+						"annotations (B-37 = public 87, B-85 = public 125)"
+					),
+					"path": "evidence/excerpts/capcom.big-bang-bar.1996/lamp-matrix-b-x2-quantities.md",
+					"sha256": "609f76b4229cf162d2d298c1baefd97b6bf61aab5aa4d9ce13e1f71f43849117",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered sheet",
+					"reviewed": True,
+					"image": "evidence/excerpts/capcom.big-bang-bar.1996/lamp-matrix-b-x2-quantities.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix-b-x2-quantities.webp"],
+					"image_derivation": "Capcom_1996_Big_Bang_Bar_Schematic_Diagrams_paginated.pdf page 10, crop box 0.01,0.15,0.58,0.78, scanned page rendered at its native resolution (embedded image xref 43, 9984px across 16.64in), rendered at 274 dpi, capped to 2600px wide, grayscale, 2601x1896 WebP quality 80",
+				},
+				{
+					"id": "excerpt.big-bang-bar.lamp-matrix-a-x2-quantities",
+					"locator": (
+						"Sheet 9/12, \"DIAGRAM, LAMP MATRIX \"A\" WIRING\", the complete matrix-A "
+						"wiring grid (columns 11-88) carrying the sheet's two X2 bulb-quantity "
+						"annotations (A-11 = public 1, A-12 = public 2, both coin-door lamp pairs) "
+						"plus the sheet's two-bulb X2 detail legend"
+					),
+					"path": "evidence/excerpts/capcom.big-bang-bar.1996/lamp-matrix-a-x2-quantities.md",
+					"sha256": "6e6ebeb8523d750a6c974e6b30fd08d1448f73ba713dca8c793f371327f53a7c",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered sheet",
+					"reviewed": True,
+					"image": "evidence/excerpts/capcom.big-bang-bar.1996/lamp-matrix-a-x2-quantities.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-matrix-a-x2-quantities.webp"],
+					"image_derivation": "Capcom_1996_Big_Bang_Bar_Schematic_Diagrams_paginated.pdf page 9, crop box 0.01,0.15,0.58,0.78, scanned page rendered at its native resolution (embedded image xref 39, 9984px across 16.64in), rendered at 274 dpi, capped to 2600px wide, grayscale, 2601x1896 WebP quality 80",
 				},
 			],
 		},
@@ -829,6 +1151,122 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
 		},
+		{
+			"id": CORROBORATION_TABLE_SOURCE,
+			"kind": "vpx_table",
+			"uri": "external:pinmame-vpx-sources/capcom/big-bang-bar-1996/corroboration/source/Big Bang Bar  (Capcom 1996).vpx",
+			"original_filename": "Big Bang Bar  (Capcom 1996).vpx",
+			"sha256": CORROBORATION_TABLE_SHA256,
+			"locator": (
+				"The earlier community recreation retained from the contributor's Tables Archive as "
+				f"corroboration evidence (a different implementation from VPW v1.0; its 99,636-byte "
+				"script shares the DivTube object-naming family with VPW v1.0, so the two are NOT "
+				"treated as independent for geometry consensus -- corroboration claims below are "
+				"always paired with a manual citation). Bounds are " f"{TABLE_BOUNDS}, identical to "
+				"the primary table. Cited for: the flasher binding of solenoid 22 ('setlamp 162' / "
+				"Light.F22), the star-bumper switch identities (Bumper1_Hit->56, Bumper2_Hit->54, "
+				"Bumper3_Hit->55 over the same three bumper-ring positions the primary table "
+				"models), and the Wall.DivTube2 coordinate used for solenoid 15's placement. "
+				"Cited gameitems are pinned by SHA-256 under "
+				"external:pinmame-review-artifacts/big-bang-bar/corroboration-table-cited/."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Big Bang Bar (Capcom 1996) community table authors",
+			"rights": "NOASSERTION",
+		},
+		{
+			"id": CORROBORATION_SCRIPT_SOURCE,
+			"kind": "vpx_script",
+			"uri": "external:pinmame-review-artifacts/big-bang-bar/corroboration-table-cited/script.vbs",
+			"original_filename": "script.vbs",
+			"sha256": CORROBORATION_SCRIPT_SHA256,
+			"locator": (
+				"The earlier recreation's embedded script (99,636 bytes), retained with its cited "
+				"gameitems. Runtime corroboration only: Const cGameName = \"bbb109\", "
+				"SolCallback(22)=\"setlamp 162,\" ('Tube Dancer Flasher'), "
+				"SolCallback(18/19/20) commented sound-only handlers labelled 'Left Bumper' / "
+				"'Middle Bumper' / 'Right Bumper', Bumper1_Hit->56 / Bumper2_Hit->54 / "
+				"Bumper3_Hit->55, and the same SolRDivert1/SolRDivert2 structure as the primary "
+				"table."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Big Bang Bar (Capcom 1996) community table authors",
+			"rights": "NOASSERTION",
+		},
+		{
+			"id": VPM_LIBRARY_SOURCE,
+			"kind": "vpx_script",
+			"uri": "external:pinmame-review-artifacts/big-bang-bar/vpm-script-libs/core.vbs",
+			"original_filename": "core.vbs",
+			"sha256": VPM_CORE_LIBRARY_SHA256,
+			"locator": (
+				"The VPinMAME script library the retained table loads at runtime (script.vbs line "
+				"130 ExecuteGlobal GetTextFile(\"controller.vbs\"), line 134 LoadVPM "
+				"\"01560000\", \"Capcom.VBS\", 3.10; Capcom.VBS executes core.vbs), retained from "
+				"the contributor's working installation together with Capcom.VBS (SHA-256 "
+				f"{VPM_CAPCOM_LIBRARY_SHA256}). Decisive for the flipper-mirror resolution: its "
+				"'-- Flipper solenoids (all games)' block defines Const sLRFlipper = 46, "
+				"sLLFlipper = 48, sURFlipper = 34, sULFlipper = 36 -- hold-side synthetic "
+				"addresses src/wpc/capcom.c never writes -- so the retained table's symbolic "
+				"flipper callbacks are dead bindings under this library revision. Transcribed "
+				"excerpt: evidence/excerpts/capcom.big-bang-bar.1996/vpm-script-library-constants.md."
+			),
+			"license": "NOASSERTION",
+			"attribution": "VPinMAME / Visual Pinball script-library maintainers",
+			"rights": "NOASSERTION",
+			"excerpts": [
+				{
+					"id": "excerpt.big-bang-bar.vpm-script-library-constants",
+					"locator": (
+						"core.vbs '-- Flipper solenoids (all games)' block plus the Capcom.VBS "
+						"switch constants, retained from the contributor's working installation "
+						"(SHA-256 values in the source record)"
+					),
+					"path": "evidence/excerpts/capcom.big-bang-bar.1996/vpm-script-library-constants.md",
+					"sha256": "55b2a7a1c3de7f58a86512c05b8a4ae8c323ecc83ffad4cf06b6c58ab54d5bbd",
+					"method": "manual",
+					"transcribed_by": "curator, read from the installed library files",
+					"reviewed": True,
+				},
+			],
+		},
+		{
+			"id": IPDB_PHOTO_TUBE_LADY_SOURCE,
+			"kind": "human_review",
+			"uri": "external:pinmame-review-artifacts/big-bang-bar/ipdb-photos/ipdb-4001-image-13-tube-lady-playfield.jpg",
+			"original_filename": "image-13.jpg",
+			"sha256": IPDB_TUBE_LADY_PHOTO_SHA256,
+			"locator": (
+				"IPDB machine 4001 photograph (retrieved from https://www.ipdb.org/machine.cgi?id=4001 "
+				"via an authenticated browser session, 2026-08-28): the physical Tube Lady assembly "
+				"standing in its clear tube on the playfield at the rear-left, beside the ADD-A-BALL / "
+				"10 MILL / TOP UP JACKPOT tube-sign rollover buttons, with no coil visible -- "
+				"corroborating the printed page-82 diagram's playfield callout-22/30 circle, the "
+				"retained tables' tube-dancer placement, and the parts list's motor-belt "
+				"construction. Identity/corroboration evidence only; no coordinate is derived from it."
+			),
+			"license": "NOASSERTION",
+			"attribution": "IPDB contributor photograph, Internet Pinball Machine Database",
+			"rights": "NOASSERTION",
+		},
+		{
+			"id": IPDB_PHOTO_OVERHEAD_SOURCE,
+			"kind": "human_review",
+			"uri": "external:pinmame-review-artifacts/big-bang-bar/ipdb-photos/ipdb-4001-image-6-playfield-overhead.jpg",
+			"original_filename": "image-6.jpg",
+			"sha256": IPDB_OVERHEAD_PHOTO_SHA256,
+			"locator": (
+				"IPDB machine 4001 full overhead playfield photograph (retrieved from "
+				"https://www.ipdb.org/machine.cgi?id=4001 via an authenticated browser session, "
+				"2026-08-28): whole-playfield view used to visually cross-check feature positions "
+				"(alien area, mode-ladder inserts, sling/apron area) against the retained tables' "
+				"geometry; no START playfield insert exists anywhere on it, corroborating the "
+				"cabinet START-button lamp disposition. Identity/corroboration evidence only."
+			),
+			"license": "NOASSERTION",
+			"attribution": "IPDB contributor photograph, Internet Pinball Machine Database",
+			"rights": "NOASSERTION",
+		},
 	]
 
 
@@ -872,6 +1310,10 @@ def input_devices() -> list[dict[str, Any]]:
 		if address in (15, 16):
 			notes += " Wired to this game's redemption/ticket hardware at a keyboard-simulation position CC_COMPORTS generically labels 'Unused' (src/wpc/capcoms.h); the printed part-number cell is blank."
 		physical["notes"] = notes
+		extra_kwargs: dict[str, Any] = {}
+		roles = CABINET_SWITCH_ROLES.get(address)
+		if roles:
+			extra_kwargs["roles"] = roles
 		items.append(
 			_device(
 				identifier,
@@ -884,7 +1326,8 @@ def input_devices() -> list[dict[str, Any]]:
 				aliases=[{"namespace": "pinmame.switch", "value": str(address)}],
 				normally_closed=False,
 				physical=physical,
-				spatial=not_applicable("cabinet_or_service", MANUAL_SOURCE),
+				spatial=not_applicable("constant" if unused else "cabinet_or_service", MANUAL_SOURCE),
+				**extra_kwargs,
 			)
 		)
 
@@ -909,14 +1352,27 @@ def input_devices() -> list[dict[str, Any]]:
 				"(src/wpc/capgames.c) normalizes this address, so the public switch state is "
 				"already inverted and must not be inverted again."
 			)
-		elif address in BLANK_SWITCH_PART:
+		elif address == 25:
 			notes += (
-				" Blank Switch Part Number cell (no mechanical switch fitted), consistent with "
-				"opto construction, but this manual's Opto Receiver/Xmtr P/N columns are illegible "
-				"for this row (a uniform scan/print defect affecting every row on this table except "
-				"36-39, not a deliberate shading convention -- see switch-locations.md) so no opto "
-				"part number can be positively cited. PinMAME's per-game capInvSw10 mask "
-				"(src/wpc/capgames.c) does normalize this address; see coverage.missing=['polarity']."
+				" Spinner: the manufacturer's own Playfield Features page (printed page 6) "
+				"states '110 score per revolution (the opto spinner is fast; about 200 revs "
+				"per solid hit!)' -- positive opto construction, resolving the question this "
+				"address's illegible Opto Receiver/Xmtr P/N cells (a uniform scan defect "
+				"affecting every row except 36-39 -- see switch-locations.md) left open. "
+				"PinMAME's per-game capInvSw10 mask (src/wpc/capgames.c) normalizes this "
+				"address, so the public switch state is already inverted and must not be "
+				"inverted again."
+			)
+		elif address == 57:
+			notes += (
+				" Alien Motor: the Alien Mech Assembly parts list (printed page 105) carries "
+				"the MT00501 encoder disc read by the A0020000 slotted-opto PCB assembly, and "
+				"the C2-02 Alien Motor diagnostic describes 'the opto (which reads the encoder "
+				"wheel)' -- positive opto construction, resolving the question this address's "
+				"illegible Opto Receiver/Xmtr P/N cells (a uniform scan defect affecting every "
+				"row except 36-39 -- see switch-locations.md) left open. PinMAME's per-game "
+				"capInvSw10 mask (src/wpc/capgames.c) normalizes this address, so the public "
+				"switch state is already inverted and must not be inverted again."
 			)
 		if address in PULSED_SWITCHES:
 			notes += " Set via vpmTimer.PulseSw in the retained script (momentary)."
@@ -939,6 +1395,7 @@ def input_devices() -> list[dict[str, Any]]:
 				address,
 				"unused" if unused else "used",
 				refs,
+				normally_closed=address in PINMAME_NORMALIZED_OPTO_SWITCHES,
 				pulse=address in PULSED_SWITCHES,
 				**extra,
 			)
@@ -999,56 +1456,104 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 		identifier = output_id(label)
 		kind = "flasher" if address in FLASHER_SOLENOIDS else "motor" if address in MOTOR_SOLENOIDS else "coil"
 		physical: dict[str, Any] = {}
-		part = SOLENOID_PART_NUMBERS.get(address)
-		if part:
-			physical["part_number"] = part
+		if address == 22:
+			# The location table prints CL00109 for this row, but the assembly's own parts
+			# list proves no coil exists; the bulbs are the flasher-lamp part the sibling
+			# flasher rows print.
+			physical["part_number"] = "LP00101"
+		else:
+			part = SOLENOID_PART_NUMBERS.get(address)
+			if part:
+				physical["part_number"] = part
 		notes = f"Manual/schematic Ref./S{address} ({label})."
 		if address in SOLENOID_CALLBACKS:
 			notes += f" Retained script: {SOLENOID_CALLBACKS[address]}."
 		if address == 22:
 			notes += (
 				" Schematic sheet 7 draws S22 feeding TWO device symbols in parallel from one "
-				"connector pin (VIO/BLU, J20/J21 pin 6): the Tube Dancer effect and the Backbox "
-				"Right flasher, resolving the manual's page-82 unnumbered 'BACKBOX RIGHT (FLASHER)' "
-				"row (it shares this address with 'TUBE DANCER' rather than being a numbering gap). "
-				"Both S22 symbols are drawn as the circular bulb shape used for lamps/flashers "
-				"elsewhere on the sheet, not the coil symbol S1-S20/S27-S29 use -- yet the Tube Lady "
-				"Assembly mechanism parts page shows a genuine coil (item 1A) as part of the same "
-				"mechanism. This construction question is unresolved; see "
-				"conflict.solenoid-22-shared-device-construction."
+				"connector pin (VIO/BLU, J20/J21 pin 6): the Tube Dancer flasher effect at the "
+				"playfield tube and the Backbox Right flasher, resolving the manual's page-82 "
+				"unnumbered 'BACKBOX RIGHT (FLASHER)' row (it shares this address with 'TUBE "
+				"DANCER' rather than being a numbering gap). Both symbols are the circular bulb "
+				"shape, PinMAME's MACHINE_INIT types all of 21-26 as flasher-bulb outputs, and "
+				"both retained recreations bind 22 to a flasher lamp only. The Tube Lady "
+				"Assembly's own parts list (printed page 109) settles the construction question "
+				"definitively: the assembly contains NO coil -- sub-assembly 1 is "
+				"'ASSEMBLY, MOTOR, TUBE LADY' (1A SM00221 COUPLING, SHAFT; 1F MR00108 MOTOR, 12 "
+				"VDC, 65 RPM -- the same part number the solenoid table prints for the Ref. "
+				"30/31/32 motors) driving the 2E belt assembly and 2F figure through the 2G "
+				"clear tube. The location table's CL00109 coil part number printed for Ref. 22 "
+				"is a manual-internal error against its own parts list, recorded here rather "
+				"than resolved by inventing a second device. Address 22 is a flasher output "
+				"driving two bulb locations: this playfield tube-dancer flasher, and the "
+				"backbox-right flasher (a backbox device with no playfield coordinate; "
+				"callout 22 appears in both the backbox box and the playfield circle on the "
+				"printed page-82 diagram)."
 			)
 		if address in (9, 10, 11):
 			notes += (
-				" Native SolCallback is commented out in the retained script; see "
-				"conflict.flipper-mirror-address-left-right-naming."
+				" The physical flipper coil. The retained script's native SolCallback is "
+				"commented out and its symbolic flipper bindings resolve to never-written "
+				"hold-side mirror addresses under the installed VPinMAME script library (see "
+				"output 45/47), so the ROM drives this coil while the retained table animates "
+				"the bat from its own key handlers."
 			)
 		if address in (4, 5):
-			notes += " No coil object in the retained table; VPX models this as a passive rubber slingshot wall (see the corresponding switch's projection note)."
+			notes += (
+				" The physical slingshot coil (CL00109, callout 4/5 on the manual's printed "
+				"page-82 playfield diagram). The retained table models the slingshot as a "
+				"passive rubber wall with no coil object and binds no SolCallback, so the "
+				"coordinate is a documented projection onto the wall assembly (see the "
+				"placement note)."
+			)
 		if address in (18, 19, 20):
 			notes += (
-				" Bumper1/Bumper2/Bumper3 VPX-object correspondence is inferred only from the order "
-				"SolCallback comments and Bumper1_Hit/Bumper2_Hit/Bumper3_Hit subs appear in the "
-				"retained script, not independently confirmed from a per-bumper wiring page."
+				" Star-bumper identity is validated by the manual's own printed page-82 "
+				"playfield diagram, which marks callout 18 leftmost, 20 upper-right and 19 "
+				"lower-centre -- matching this definition's switch/lamp geometry for the same "
+				"three bumpers (switches 54/55/56) and both retained recreations' bumper "
+				"object positions. Which Bumper1/Bumper2/Bumper3 VPX object each callback "
+				"would have driven is a retained-table detail only (the script comments these "
+				"callbacks out)."
 			)
 		if address in (14, 15):
 			notes += (
-				" The retained table's rotating gate-arm object (DivTubef/DivTube2f, a Flipper-type "
-				"primitive) and its associated drop-wall panel object(s) (DivTube/DivTube1, DivTube2) "
-				"report wildly inconsistent raw positions (front-apron vs rear/top of the playfield) "
-				"for what the script treats as one mechanism; neither half is promoted to a validated "
-				"placement. See conflict.ramp-diverter-geometry-inconsistent."
+				" The physical diverter coil. The retained tables' Flipper-type "
+				"DivTubef/DivTube2f rotation helpers are is_visible=false animation primitives "
+				"parked at the front apron in both recreations and are excluded from placement "
+				"consideration; the drop-wall panels are the physical mechanism (see the "
+				"placement note and the printed page-82 diagram's callouts 14/15 at the "
+				"playfield's rear)."
 			)
 		if address == 3:
-			notes += " Sound-only in the retained script (vpmSolSound); no table object."
+			notes += (
+				" Backbox knocker: the manual's printed page-82 playfield diagram marks "
+				"callout 3 inside the backbox box (top-right). Sound-only in the retained "
+				"script (vpmSolSound); no table object."
+			)
+		if address == 21:
+			notes += f" {SOLENOID_BACKBOX_ADDRESSES[21]}"
 		physical["notes"] = notes
 		aliases = [{"namespace": "pinmame.solenoid", "value": str(address)}]
 		extra: dict[str, Any] = {"aliases": aliases, "physical": physical}
-		if address in (3, 4, 5):
-			extra["spatial"] = not_applicable("no_physical_device", MANUAL_SOURCE, VPX_SCRIPT_SOURCE)
-		elif address in (14, 15):
-			pass  # Real physical devices with internally inconsistent retained-table geometry;
-			# omit `spatial` entirely rather than invent a coordinate or a not_applicable reason
-			# that doesn't fit (see conflict.ramp-diverter-geometry-inconsistent).
+		if address in SOLENOID_ROLES:
+			extra["roles"] = SOLENOID_ROLES[address]
+		if address == 21:
+			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
+		elif address == 3:
+			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, SCHEMATIC_SOURCE)
+		elif address in SOLENOID_PROJECTION_PLACEMENTS:
+			reason, positions, refs = SOLENOID_PROJECTION_PLACEMENTS[address]
+			physical["notes"] += f" Placement: {reason}"
+			extra["spatial"] = located(identifier, "effect", positions, *refs)
+		elif address in SOLENOID_MECHANISM_PROJECTIONS:
+			reason, positions, refs = SOLENOID_MECHANISM_PROJECTIONS[address]
+			physical["notes"] += f" Placement: {reason}"
+			extra["spatial"] = located(identifier, "effect", positions, *refs)
+		elif address in SOLENOID_DIVERTER_PLACEMENTS:
+			reason, positions, refs = SOLENOID_DIVERTER_PLACEMENTS[address]
+			physical["notes"] += f" Placement: {reason}"
+			extra["spatial"] = located(identifier, "effect", positions, *refs)
 		elif address in SOLENOID_POSITIONS:
 			role = "emitter" if kind == "flasher" else "effect"
 			extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], VPX_TABLE_SOURCE)
@@ -1059,7 +1564,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 
 	for address, label in VIRTUAL_SOLENOID_LABELS.items():
 		identifier = output_id(label)
-		availability = "used" if address in (33, 45, 47, 51) else "unused"
+		availability = "used" if address in (33, 35, 45, 47, 51) else "unused"
 		roles = ["internal.duplicate.mirror"] if address in (33, 35, 45, 47) else ["internal.unused"]
 		if address == 51:
 			roles = ["internal.diagnostic"]
@@ -1122,23 +1627,36 @@ def lamp_outputs() -> list[dict[str, Any]]:
 			"aliases": [{"namespace": "pinmame.lamp", "value": str(address)}],
 			"physical": physical,
 		}
-		if address in LAMP_USED_NO_GEOMETRY:
-			extra["physical"]["notes"] += (
-				" No Lampz.MassAssign(N) entry exists for this address in the retained table "
-				"(independently re-checked against every gameitems/*.json filename); the manual "
-				"documents this as a real, fitted device, but this recreation has no bound VPX "
-				"object and therefore no coordinate."
+		if address in LAMP_CABINET_ROLES:
+			extra["roles"] = LAMP_CABINET_ROLES[address]
+		if address in LAMP_CABINET_ADDRESSES:
+			physical["notes"] += f" {LAMP_CABINET_ADDRESSES[address]}"
+			if address in (1, 2):
+				physical["quantity"] = 2
+			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, VPX_SCRIPT_SOURCE, SCHEMATIC_SOURCE)
+		elif address in LAMP_CORROBORATION_POSITIONS:
+			x, y, reason = LAMP_CORROBORATION_POSITIONS[address]
+			physical["notes"] += f" Placement: {reason}"
+			if address == 125:
+				physical["quantity"] = 2
+			extra["spatial"] = located(identifier, "emitter", [(x, y)], CORROBORATION_TABLE_SOURCE, MANUAL_SOURCE)
+		elif address == 62:
+			x, y, reason = LAMP_ELECTRO_BLACK_LIGHT_PROJECTION
+			physical["notes"] += f" Placement: {reason}"
+			extra["spatial"] = located(identifier, "emitter", [(x, y)], MANUAL_SOURCE, VPX_TABLE_SOURCE)
+		elif address == 87:
+			physical["quantity"] = 2
+			physical["notes"] += (
+				" The schematic's matrix-B sheet marks this address X2 -- two #44 bulbs in "
+				"parallel (the sheet set's own detail legend shows the two-bulb circuit); the "
+				"retained table models one Light object at the free-shot outlane area, so the "
+				"placement records the modelled socket and the second parallel bulb's socket "
+				"position is not individually surveyed."
 			)
+			extra["spatial"] = located(identifier, "emitter", [LAMP_POSITIONS[address]], VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
 		elif address in LAMP_POSITIONS:
 			position = LAMP_POSITIONS[address]
-			if address in LAMP_OUT_OF_BOUNDS:
-				extra["physical"]["notes"] += (
-					f" The retained table's object (raw position far outside the {TABLE_BOUNDS} "
-					"playfield bounds) normalizes outside 0..1; excluded from validated placement as "
-					"a table-modeling anomaly rather than clamped or reassigned."
-				)
-			else:
-				extra["spatial"] = located(identifier, "emitter", [position], VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
+			extra["spatial"] = located(identifier, "emitter", [position], VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
 		items.append(_device(identifier, label, "lamp", "pinmame.output.lamp", address, "used", (MANUAL_SOURCE, VPX_SCRIPT_SOURCE), **extra))
 
 	for address, label in DIAG_LED_LABELS.items():
@@ -1153,6 +1671,7 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				(CORE_SOURCE,),
 				aliases=[{"namespace": "pinmame.lamp", "value": str(address)}],
 				physical={"notes": "PWM-integrated diagnostic LED (src/wpc/capcom.c MACHINE_INIT(cc), CORE_MODOUT_LED); reports ok/error state, not a player-visible playfield bulb."},
+				roles=LAMP_CABINET_ROLES[address],
 				spatial=not_applicable("cabinet_or_service", CORE_SOURCE),
 			)
 		)
@@ -1168,7 +1687,7 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				(CORE_SOURCE,),
 				aliases=[{"namespace": "pinmame.lamp", "value": str(address)}],
 				physical={"notes": "core_set_pwm_output_type(...,CORE_MODOUT_NONE) for the six unused positions of the diagnostic column (src/wpc/capcom.c MACHINE_INIT(cc))."},
-				spatial=not_applicable("unused", CORE_SOURCE),
+				spatial=not_applicable("virtual", CORE_SOURCE),
 			)
 		)
 	return items
@@ -1266,20 +1785,22 @@ def mechanisms() -> list[dict[str, Any]]:
 			[output_id("Aliens Forward Motor"), output_id("Aliens Reverse Motor"), output_id("Alien Lock Post")],
 			["switch.matrix-57", "switch.matrix-61", "switch.matrix-62"],
 			(
-				"One reversible DC gearmotor (Alien Mech Assembly parts page, printed page 104: one "
-				"motor item driving two gears on two independent shafts, each carrying one alien "
+				"One reversible DC gearmotor (Alien Mech Assembly parts list, printed page 105, "
+				"with its exploded drawing on printed page 104: "
+				"one motor item driving two gears on two independent shafts, each carrying one alien "
 				"figure) drives both alien figures together through a 32-step position counter "
 				"(retained script ALockTimer_timer, OldPos/NewPos 0-31). Switch 57 (Alien Motor, opto, "
 				"blank switch part) toggles through a repeating home/quarter/half/three-quarter-turn "
-				"notch pattern as the counter advances -- the diagnostic C2-02 Alien Motor calibration "
-				"test independently confirms one motor calibrated at two power levels with a "
-				"'Can't Find Home Position' failure mode tied to a dirty/misaligned double-notch "
-				"encoder wheel opto, matching this switch's role. Solenoids 31/32 (Aliens Forward/"
-				"Reverse) are this one gearmotor's two drive-direction outputs, not two independent "
-				"motors. Solenoid 16 (Alien Lock Post) raises/lowers a separate ball-lock post sensed "
-				"by switches 61/62 (Alien Lock Left/Right, SW00146); the retained script's sw61_Hit/"
-				"sw62_Hit handlers set AlienLBall/AlienRBall lock-state flags independently of the "
-				"rotating figures' own position."
+				"notch pattern as the counter advances -- the mechanism's own parts list carries the "
+				"MT00501 encoder disc read by the A0020000 slotted-opto PCB assembly, and the "
+				"diagnostic C2-02 Alien Motor calibration test confirms one motor calibrated at two "
+				"power levels with a 'Can't Find Home Position' failure mode tied to 'the opto "
+				"(which reads the encoder wheel)', matching this switch's role. Solenoids 31/32 "
+				"(Aliens Forward/Reverse) are this one gearmotor's two drive-direction outputs, not "
+				"two independent motors. Solenoid 16 (Alien Lock Post) raises/lowers a separate "
+				"ball-lock post sensed by switches 61/62 (Alien Lock Left/Right, SW00146); the "
+				"retained script's sw61_Hit/sw62_Hit handlers set AlienLBall/AlienRBall lock-state "
+				"flags independently of the rotating figures' own position."
 			),
 			MANUAL_SOURCE, SCHEMATIC_SOURCE, VPX_SCRIPT_SOURCE,
 		),
@@ -1290,14 +1811,26 @@ def mechanisms() -> list[dict[str, Any]]:
 			[output_id("Tube Dancer Motor"), output_id("Tube Dancer & Backbox Right Flasher")],
 			[],
 			(
-				"The Tube Lady Assembly parts page (printed page 108) shows one coil (item 1A) and a "
-				"separate DC gearmotor (item 1F) driving a dancing figure inside a clear backbox tube "
-				"via a rack/pinion or belt. The retained script models only the motor half: solDancer "
-				"(solenoid 30) enables a continuous wobble-rotation timer (dancerT_timer, no discrete "
-				"position and no switch) while enabled. The coil half's exact address and behavior are "
-				"unresolved -- see conflict.solenoid-22-shared-device-construction."
+				"The Tube Lady Assembly parts list (printed page 109) and its exploded drawing "
+				"(printed page 108) prove a purely motorized mechanism with no coil anywhere: "
+				"sub-assembly 1 (A-00649, 'ASSEMBLY, MOTOR, TUBE LADY') is the 1F MR00108 motor "
+				"(12 VDC, 65 RPM -- the same part number the solenoid table prints for the "
+				"Ref. 30/31/32 motors) driving through the 1A SM00221 shaft coupling (the "
+				"cylindrical part an earlier curation misread off the drawing as a coil) and the "
+				"1G motor shaft; sub-assembly 2 (A-00650, 'ASSEMBLY, TUBE LADY') is the 2G clear "
+				"tube, 2D base, 2B insert shaft, 2C wireform, and the 2E belt assembly carrying "
+				"the 2F figure. The assembly stands on the playfield at the rear-left circle the "
+				"printed page-82 diagram marks with callouts 22/30 (corroborated by the retained "
+				"IPDB photograph showing the figure in its tube beside the tube-sign rollovers). "
+				"Solenoid 30 is the motor's single drive output (the retained script's solDancer "
+				"enables a continuous wobble-rotation timer while energized); address 22 drives "
+				"the feature's flasher effect at the tube plus the Backbox Right flasher in "
+				"parallel (two bulb symbols on schematic sheet 7; the location table's CL00109 "
+				"cell for Ref. 22 is a manual-internal error against its own parts list). The "
+				"diagnostics section's C2 tests cover the alien motor but define no tube-dancer "
+				"coil test, consistent with the parts list."
 			),
-			MANUAL_SOURCE, VPX_SCRIPT_SOURCE,
+			MANUAL_SOURCE, SCHEMATIC_SOURCE, VPX_SCRIPT_SOURCE, IPDB_PHOTO_TUBE_LADY_SOURCE,
 		),
 		mechanism(
 			"mechanism.orbit-gates",
@@ -1313,23 +1846,28 @@ def mechanisms() -> list[dict[str, Any]]:
 			),
 			MANUAL_SOURCE, VPX_SCRIPT_SOURCE,
 		),
-		mechanism(
-			"mechanism.island-and-ramp-diverters",
-			"Island and Ramp Diverters",
-			"diverter",
-			[output_id("Island Diverter"), output_id("Ramp Diverter 1"), output_id("Ramp Diverter 2")],
-			["switch.matrix-31", "switch.matrix-69", "switch.matrix-70", "switch.matrix-71"],
-			(
-				"Three independent diverter solenoids (13 Island Diverter, 14 Ramp Diverter 1, 15 Ramp "
-				"Diverter 2) each raise/lower a wall or rotate a gate arm to route a ball between the "
-				"tube/island area and the ramp; the Left and Right Diverter Assembly parts page "
-				"(printed page 102) documents one coil per diverter. The retained table's own drop-"
-				"wall and rotating-arm object positions for 14/15 are internally inconsistent (see "
-				"conflict.ramp-diverter-geometry-inconsistent) and neither is promoted to a validated "
-				"placement."
-			),
-			MANUAL_SOURCE, VPX_SCRIPT_SOURCE,
+	mechanism(
+		"mechanism.island-and-ramp-diverters",
+		"Island and Ramp Diverters",
+		"diverter",
+		[output_id("Island Diverter"), output_id("Ramp Diverter 1"), output_id("Ramp Diverter 2")],
+		["switch.matrix-31", "switch.matrix-69", "switch.matrix-70", "switch.matrix-71"],
+		(
+			"Three independent diverter solenoids (13 Island Diverter, 14 Ramp Diverter 1, 15 Ramp "
+			"Diverter 2) each raise/lower a wall or rotate a gate arm to route a ball between the "
+			"tube/island area and the ramp; the Left and Right Diverter Assembly parts page "
+			"(printed page 102) documents one coil per diverter. The manual's printed page-82 "
+			"playfield diagram marks callout 14 at the rear-left playfield edge and callout 15 at "
+			"the top-centre-left ramp, and both retained recreations model the physical halves as "
+			"drop-wall panels there (DivTube/DivTube1 for 14; DivTube2 for 15 in the earlier "
+			"recreation, whose coordinate the VPW v1.0 table's same-named wall contradicts by "
+			"~0.17 normalized units and is disclosed on the placement). The tables' Flipper-type "
+			"DivTubef/DivTube2f gate-arm objects are is_visible=false rotation-animation helpers "
+			"parked at the front apron in both recreations -- table artifacts, not device "
+			"locations."
 		),
+		MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORROBORATION_TABLE_SOURCE,
+	),
 	]
 
 
@@ -1346,121 +1884,35 @@ def relationships() -> list[dict[str, Any]]:
 
 
 def conflicts() -> list[dict[str, Any]]:
-	return [
-		{
-			"id": "conflict.flipper-mirror-address-left-right-naming",
-			"path": "outputs[binding.device=45,47]",
-			"description": (
-				"src/wpc/capcom.c's io_w mirrors physical solenoid 9 (S9, manual/schematic-confirmed "
-				"'L. Flipper') into PinMAME's synthetic sLRFlipPow=45 address, and physical solenoid "
-				"10 (S10, 'R. Flipper') into sLLFlipPow=47 -- the opposite left/right sense from "
-				"PinMAME's own core.h naming ('Lower RIGHT Flip Power' mirrors the physical LEFT "
-				"circuit, and vice versa). The driver's own source comment admits this: 'This should "
-				"be removed as this push the legacy PinMAME specific mapping forward while it does "
-				"not correspond to manuals or any other reference.' The retained script's active "
-				"flipper bindings, SolCallback(sLRFlipper)=\"SolRFlipper\" and "
-				"SolCallback(sLLFlipper)=\"SolLFlipper\", use symbolic VPX/VPinMAME automation "
-				"constants whose exact numeric value this curation could not verify from any pinned "
-				"source (neither src/wpc/core.h nor the two pinned VPX script corpora define "
-				"'sLRFlipper' locally; it is presumably a COM-exposed constant from a library outside "
-				"the pinned PinMAME checkout). If sLRFlipper/sLLFlipper follow the common WPC-derived "
-				"convention (45/47), they resolve to the only two addresses in this range the emulator "
-				"ever writes live data to -- but under the driver's own admitted mirror-naming defect, "
-				"the script's 'SolRFlipper' visual/sound handler would then be driven by the mirror of "
-				"the physical LEFT flipper circuit. This definition binds the two used mirror "
-				"addresses (45, 47) to their physical correspondence (45 mirrors S9/Left Flipper; 47 "
-				"mirrors S10/Right Flipper) per the source-code mirror logic, not per PinMAME's "
-				"'Lower Right/Lower Left' constant names. Unresolved: the exact value of the script's "
-				"own sLRFlipper/sLLFlipper symbols, and therefore whether the retained table's visual "
-				"flipper handlers are internally consistent with this physical mapping. "
-				"Resolution path: read the numeric definitions of sLRFlipper and sLLFlipper out of the "
-				"two VPinMAME script libraries the retained script itself loads -- controller.vbs at "
-				"script line 130 and Capcom.VBS at script line 134 -- neither of which is present in "
-				"the retained extraction or in either pinned VPX script corpus, so a curator must "
-				"obtain them from the Visual Pinball/VPinMAME distribution this table requires; "
-				"independently, a LibPinMAME gameplay-harness run against a legal bbb109 ROM that "
-				"closes the driver's own FLIP_SWNO(5,6) flipper-button switches one at a time while "
-				"watching public 9, 10, 45 and 47 together shows which physical circuit each mirror "
-				"address carries. Unresolved."
-			),
-			"source_refs": [CORE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE, SCHEMATIC_SOURCE],
-		},
-		{
-			"id": "conflict.solenoid-35-eject-hole-mirror-mislabeled",
-			"path": "outputs[binding.device=35]",
-			"description": (
-				"src/wpc/capcom.c's io_w mirror code unconditionally treats physical solenoid "
-				"addresses 9/10/11/12 as the four flipper-power circuits and writes address 12's live "
-				"state into sULFlipPow=35 under the generic name 'Upper Left Flip Power'. The manual "
-				"and schematic sheet 7 both independently and exactly agree that physical address 12 "
-				"is 'Eject Hole' (S12), not an upper-left flipper -- and the S1-S32 device table shows "
-				"no upper-left flipper circuit anywhere on this machine at all (only S9/S10/S11, "
-				"Left/Right/Upper-Right). Address 35 therefore mirrors an unrelated device (the Eject "
-				"Hole coil, already separately modeled at address 12) purely as an artifact of "
-				"PinMAME's fixed positional mirror assumption, not a genuine flipper address on this "
-				"specific game. "
-				"Resolution path: a LibPinMAME gameplay-harness trace against a legal bbb109 ROM "
-				"watching public 12 and 35 together while the eject hole fires, proving that 35 only "
-				"ever repeats 12 and never carries drive of its own, or an upstream change removing "
-				"capcom.c's unconditional 9/10/11/12 mirror, which the driver's own comment already "
-				"asks for; no photograph or teardown can settle this one, because the disagreement is "
-				"about what PinMAME calls a synthetic address rather than about the machine's wiring, "
-				"on which the manual and schematic sheet 7 already agree. Unresolved."
-			),
-			"source_refs": [CORE_SOURCE, MANUAL_SOURCE, SCHEMATIC_SOURCE],
-		},
-		{
-			"id": "conflict.solenoid-22-shared-device-construction",
-			"path": "outputs[binding.device=22]",
-			"description": (
-				"Schematic sheet 7 draws both devices sharing solenoid address 22 (Tube Dancer and "
-				"Backbox Right flasher) with the identical circular bulb symbol used for lamps/"
-				"flashers elsewhere on the sheet, not the coil-plus-flyback-diode symbol used for "
-				"S1-S20/S27-S29. The manual's own page-82 location table separately prints Ref. 22 "
-				"'TUBE DANCER' with the generic coil part number CL00109 (not the LP00101 flasher-lamp "
-				"part its neighbors use), and the Tube Lady Assembly mechanism parts page (printed "
-				"page 108) shows a genuine coil (item 1A) as part of the same physical mechanism. "
-				"Whether the Tube Dancer's mechanical pop/bounce action is actually solenoid-driven "
-				"through address 22 (despite the bulb-shaped schematic symbol) or is purely "
-				"spring/gravity return with address 22 driving only lamp effects is not resolved by "
-				"any source available to this curation. "
-				"Resolution path: a LibPinMAME gameplay-harness trace against a legal bbb109 ROM "
-				"comparing address 22's drive pattern against the confirmed coil addresses and "
-				"against the confirmed flasher addresses 21 and 23-26, since a kicking coil and a "
-				"flasher bulb are not driven with the same pulse shape, or a teardown photograph of "
-				"the Tube Lady Assembly showing whether the item-1A coil on printed page 108 is wired "
-				"to the S22 branch; the physical half of that is a weak path on this machine, because "
-				"Big Bang Bar barely reached production and an unrestored example to photograph is "
-				"unlikely to be found, so the harness trace is the part a curator can realistically "
-				"obtain. Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, SCHEMATIC_SOURCE],
-		},
-		{
-			"id": "conflict.ramp-diverter-geometry-inconsistent",
-			"path": "outputs[binding.device=14,15]",
-			"description": (
-				"The retained table's rotating gate-arm objects for Ramp Diverter 1/2 (DivTubef, "
-				"DivTube2f -- Flipper-type primitives reused for rotation animation) sit near the "
-				"front apron (normalized y=0.98-0.99), while their same-named companion drop-wall "
-				"panel objects (DivTube/DivTube1, DivTube2) sit near the rear/top of the playfield "
-				"(normalized y=0.10-0.11) -- a difference far too large for one physical diverter "
-				"mechanism. The retained script's own SolRDivert1/SolRDivert2 handlers manipulate both "
-				"halves together as if they were one mechanism (DivTubef.RotateToEnd alongside "
-				"DivTube.isDropped/DivTube1.isDropped in the same Sub), so this is not a case of two "
-				"unrelated devices sharing a name by coincidence. No coordinate for either address is "
-				"promoted to a validated placement. "
-				"Resolution path: read the numbered playfield-location diagram printed beside the "
-				"Ref. table on the retained manual's printed page 82 (PDF page 86) for Ref. 14 and "
-				"15 and commit it as a rendered crop, which locates both diverters from the machine's "
-				"own document rather than from the retained table's inconsistent objects, and "
-				"corroborate it with a second independent known-working Big Bang Bar recreation whose "
-				"SolRDivert1/SolRDivert2 objects agree; the manual is already retained here, so this "
-				"needs no access to a physical machine. Unresolved."
-			),
-			"source_refs": [VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE],
-		},
-	]
+	"""The 2026-08-07 curation carried four first-class conflicts; every one has since
+	been resolved by evidence obtained within the retained document set and the
+	contributor's own working installation, so the promoted definition carries none:
+
+	1. conflict.flipper-mirror-address-left-right-naming -- the symbolic
+	   sLRFlipper/sLLFlipper values are environment-owned core.vbs constants naming the
+	   hold-side addresses (46/48/34/36), which capcom.c never writes; the retained
+	   table's flipper callbacks are dead bindings under that library (a
+	   consumed-table defect recorded on outputs 45/47), while the machine-level
+	   45->S9-Left / 47->S10-Right mirror binding was always consistent across
+	   capcom.c, the manual and schematic sheet 7.
+	2. conflict.solenoid-35-eject-hole-mirror-mislabeled -- capcom.c's single io_w
+	   write site makes the 35-repeats-12 mirror structural; the manual and schematic
+	   agree on the machine's wiring and the emulator-facing name is the driver's own
+	   admitted defect (recorded on output 35).
+	3. conflict.solenoid-22-shared-device-construction -- the Tube Lady Assembly's own
+	   parts list (printed page 109) contains no coil: item 1A is SM00221 COUPLING,
+	   SHAFT and the drive is the 1F MR00108 motor through a belt; address 22 is
+	   flasher-only, exactly as the schematic's bulb symbols, PinMAME's output typing
+	   and both retained recreations bind it (recorded on output 22).
+	4. conflict.ramp-diverter-geometry-inconsistent -- the retained tables'
+	   DivTubef/DivTube2f gate-arm objects are is_visible=false animation helpers
+	   parked at the front apron, not device locations; the drop-wall panels agree
+	   with the manual's printed page-82 callouts 14/15 at the playfield rear, and
+	   both diverters now carry validated placements (recorded on outputs 14/15).
+	"""
+	return []
+
+
 
 
 def drivers() -> list[dict[str, Any]]:
@@ -1494,17 +1946,17 @@ def build() -> dict[str, Any]:
 			"opdb_id": "G56vo-MLl1Z",
 		},
 		"coverage": {
-			"status": "partial",
-			"missing": ["polarity", "output_semantics", "mechanism_behavior", "recreation_notes", "spatial_placement", "unresolved_conflicts"],
+			"status": "author_ready",
+			"missing": [],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
-				"semantic_naming": "candidate",
-				"physical_wiring": "conflicted",
-				"mechanisms": "candidate",
+				"semantic_naming": "validated",
+				"physical_wiring": "validated",
+				"mechanisms": "validated",
 				"variant_coverage": "validated",
-				"recreation_knowledge": "observed",
-				"spatial_placement": "candidate",
+				"recreation_knowledge": "validated",
+				"spatial_placement": "validated",
 			},
 		},
 		"controller": {
@@ -1519,7 +1971,7 @@ def build() -> dict[str, Any]:
 		"mechanisms": mechanisms(),
 		"relationships": relationships(),
 		"sources": source_records(),
-		"knowledge": {"path": "knowledge/capcom/big-bang-bar-1996.md", "status": "partial"},
+		"knowledge": {"path": "knowledge/capcom/big-bang-bar-1996.md", "status": "complete"},
 		"conflicts": conflicts(),
 	}
 	identifiers = [device["id"] for device in definition["inputs"] + definition["outputs"]]
@@ -1562,25 +2014,11 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		if spatial is not None and spatial["status"] != "not_applicable":
 			placement_count += len(spatial["placements"])
 	return {
-		"format": "pinmame-spatial-blockers",
+		"format": "pinmame-spatial-audit",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"status": "validated",
-		"blockers": [
-			"Three used lamp addresses (3, 38, 125) have no Lampz.MassAssign object in the retained "
-			"table at all, so no coordinate can be reported; their `spatial` key is omitted rather "
-			"than invented.",
-			"Solenoids 14 (Ramp Diverter 1) and 15 (Ramp Diverter 2) each resolve to two table "
-			"objects whose raw positions are inconsistent by most of the playfield's length; neither "
-			"is promoted to a validated placement (conflict.ramp-diverter-geometry-inconsistent).",
-			"Lamps 2 and 62 resolve to retained-table objects whose raw positions fall outside the "
-			"table's own 0..1 normalized playfield bounds; excluded as a table-modeling anomaly "
-			"rather than clamped.",
-			"Four unresolved conflicts (flipper mirror address left/right naming, the address-35 "
-			"Eject Hole mirror mislabeled as an upper-left flipper, solenoid 22's shared "
-			"bulb-vs-coil device construction, and the ramp-diverter geometry inconsistency above) "
-			"keep coverage.dimensions.physical_wiring conflicted and the record partial.",
-		],
+		"blockers": [],
 		"coordinate_convention": {
 			"space": "playfield",
 			"source_bounds": {"left": 0.0, "top": 0.0, "right": 952.0, "bottom": 2162.0},
@@ -1602,6 +2040,12 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"manual_sha256": MANUAL_SHA256,
 			"schematic_sha256": SCHEMATIC_SHA256,
 			"table_sha256": TABLE_SHA256,
+			"corroboration_table_sha256": CORROBORATION_TABLE_SHA256,
+			"corroboration_script_sha256": CORROBORATION_SCRIPT_SHA256,
+			"vpm_core_library_sha256": VPM_CORE_LIBRARY_SHA256,
+			"vpm_capcom_library_sha256": VPM_CAPCOM_LIBRARY_SHA256,
+			"ipdb_tube_lady_photo_sha256": IPDB_TUBE_LADY_PHOTO_SHA256,
+			"ipdb_overhead_photo_sha256": IPDB_OVERHEAD_PHOTO_SHA256,
 		},
 		"placement_count": placement_count,
 		"resolved_input_addresses": sorted(located_inputs),
@@ -1616,6 +2060,13 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"projections": [
 			{"group": "pinmame.input.switch", "address": address, "reason": reason}
 			for address, reason in sorted(SWITCH_PROJECTIONS.items())
+		]
+		+ [
+			{"group": "pinmame.output.solenoid", "address": address, "reason": reason}
+			for address, (reason, _, _) in sorted({**SOLENOID_PROJECTION_PLACEMENTS, **SOLENOID_MECHANISM_PROJECTIONS, **SOLENOID_DIVERTER_PLACEMENTS}.items())
+		]
+		+ [
+			{"group": "pinmame.output.lamp", "address": 62, "reason": LAMP_ELECTRO_BLACK_LIGHT_PROJECTION[2]},
 		],
 		"visual_review_cache": {
 			"root": "external:pinmame-manuals/rendered/capcom.big-bang-bar.1996/",
@@ -1631,11 +2082,26 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 				"path": "external:pinmame-review-artifacts/big-bang-bar/vpx-geometry.txt",
 				"sha256": VPX_GEOMETRY_NOTES_SHA256,
 			},
+			"corroboration_cited_files": {
+				"path": "external:pinmame-review-artifacts/big-bang-bar/corroboration-table-cited/",
+				"files": dict(sorted(CORROBORATION_CITED_FILES.items())),
+			},
+			"vpm_script_libraries": {
+				"path": "external:pinmame-review-artifacts/big-bang-bar/vpm-script-libs/",
+				"core_vbs_sha256": VPM_CORE_LIBRARY_SHA256,
+				"capcom_vbs_sha256": VPM_CAPCOM_LIBRARY_SHA256,
+			},
+			"ipdb_photos": {
+				"path": "external:pinmame-review-artifacts/big-bang-bar/ipdb-photos/",
+				"tube_lady_sha256": IPDB_TUBE_LADY_PHOTO_SHA256,
+				"overhead_sha256": IPDB_OVERHEAD_PHOTO_SHA256,
+			},
 		},
 		"excluded_object_classes": [
-			"Light objects L02/L62 -- raw position far outside the retained table's 0..1 playfield bounds (table-modeling anomaly, not a distinct physical bulb position)",
+			"Flipper.DivTubef/DivTube2f (solenoids 14/15) -- is_visible=false rotation-animation helpers parked at the front apron (y~=0.98-0.99) in BOTH retained recreations; table artifacts, never physical device locations (the physical halves are the drop-wall panels, placed)",
 			"F21-F26 flasher Light objects reported under their owning solenoid address (21-26), never as a separate lamp address",
-			"DivTubeF/DivTube/DivTube1 and DivTube2f/DivTube2 (solenoids 14/15) -- internally inconsistent raw positions for what the script treats as one mechanism each; excluded pending human review",
+			"Light L01/L02 and the VPW L62 wash mesh -- room-render glow proxies far outside the playfield bounds; the physical coin-door lamps (1/2) carry controlled cabinet records and the black light (62) carries a documented feature-centroid projection",
+			"Primitive.PinCab_Start_Button / VR start-button props -- cabinet render objects bound to lamp 3 by the retained script, consistent with its cabinet disposition",
 		],
 		"unresolved": [],
 	}
@@ -1645,10 +2111,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	lines = [
 		"# Big Bang Bar (Capcom, 1996) spatial review",
 		"",
-		f"Status: {report['status']}. This audit is complete for every address it covers, but the "
-		"physical machine record itself remains `partial` at "
-		"`machines/partial/capcom/big-bang-bar-1996.json` because of unresolved conflicts and "
-		"output-semantics gaps outside this audit's scope; see the promotion decision below.",
+		f"Status: {report['status']}. The physical machine record is `author_ready` at "
+		"`machines/author-ready/capcom/big-bang-bar-1996.json`: every address is a validated "
+		"placement or a controlled `not_applicable` record, and no unresolved conflict remains.",
 		"",
 		"The matching source is the retained known-working `Big Bang Bar (Capcom 1996) VPW v1.0.vpx` "
 		f"at SHA-256 `{TABLE_SHA256}`. The retained extraction produced the embedded script at "
@@ -1662,8 +2127,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"operators manual and its companion schematic set are the physical inventory, quantity, "
 		"polarity, wiring, and device-identity authority (the schematic's own per-device "
 		"\"DEVICE # & DESCRIPTION\" table on sheet 7 is the single most authoritative solenoid "
-		"source found); pinned PinMAME source owns controller topology and per-game hardware "
-		"metadata; the retained table supplies geometry.",
+		"source found, and the Tube Lady Assembly's own parts list on printed page 109 is the "
+		"decisive construction source for that mechanism); pinned PinMAME source owns controller "
+		"topology and per-game hardware metadata; the retained tables supply geometry.",
 		"- The manual is an Adobe Paper Capture OCR'd scan whose text layer is unreliable on dense "
 		"multi-column tables; every printed table used here was read from rendered page images at "
 		"200-600 dpi and transcribed into "
@@ -1674,11 +2140,21 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"rotating mechanism's 32-step motor counter) or reuses a table object that also serves "
 		"another role (kickers, slingshot walls, bumpers). Those addresses are explicit documented "
 		"projections onto the real table object that carries the underlying mechanism state.",
-		"- Two Light objects (lamp addresses 2 and 62) sit outside the retained table's 0..1 "
-		"normalized playfield bounds and are excluded as a table-modeling anomaly.",
-		"- Three used lamp addresses (3, 38, 125) and two solenoid addresses' mechanism geometry "
-		"(14, 15) have no resolvable coordinate in the retained table; their `spatial` key is "
-		"omitted entirely rather than an invented status or coordinate.",
+		"- Solenoid coils whose retained-table objects are the assembly they actuate (the two "
+		"slingshot coils, the three flipper coils, and the two ramp-diverter drop walls) are "
+		"documented projections onto those objects, each corroborated by the manual's printed "
+		"page-82 numbered playfield diagram (balloon-centre tolerance ~0.02-0.05, measurement "
+		"record committed with the diagram excerpt).",
+		"- The manual's own parts lists settle the two construction questions the 2026-08-07 "
+		"curation left open: the Tube Lady Assembly contains no coil (item 1A is a shaft "
+		"coupling; the drive is the MR00108 motor through a belt), and the alien mechanism's "
+		"position sensor is the A0020000 slotted-opto PCB reading the MT00501 encoder disc.",
+		"- Cabinet lamps 1/2 (coin door, X2) and 3 (START, which the retained script binds to the "
+		"cabinet start button) carry controlled `cabinet_or_service` records; the retained "
+		"tables' out-of-bounds glow proxies for them are excluded as modeling artifacts.",
+		"- Lamp 62 ((Electro) Black Light) carries a documented projection onto the (Electro) Ramp "
+		"feature's centroid; lamps 38/125 carry coordinates from the earlier retained recreation "
+		"where the primary table models no object, each corroborated by same-feature geometry.",
 		"- The 128x32 DMD is backbox hardware, so its spatial record is a controlled "
 		"`not_applicable` with both PinMAME core and manual provenance.",
 		"",
@@ -1686,7 +2162,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 	]
 	for entry in report["projections"]:
-		lines.append(f"- Switch {entry['address']}: {entry['reason']}")
+		lines.append(f"- {entry['group']} {entry['address']}: {entry['reason']}")
 	lines += [
 		"",
 		"## Counts",
@@ -1705,19 +2181,14 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"No authoring-critical placement question remains silently unresolved: every address this "
-		"audit covers is either a validated placement, a controlled `not_applicable` record, or an "
-		"explicitly named unresolved gap. However, four first-class conflicts remain open (flipper "
-		"mirror address left/right naming, the address-35 Eject Hole mirror mislabeled as an "
-		"upper-left flipper, solenoid 22's shared bulb-vs-coil device construction, and the "
-		"ramp-diverter geometry inconsistency), and three output devices (the inferred Bumper "
-		"1/2/3 solenoid correspondence) rest on ordering evidence rather than a confirmed wiring "
-		"page. The definition therefore carries a non-empty `conflicts` array and "
-		"`coverage.dimensions.physical_wiring = \"conflicted\"`, so promotion to `author_ready` is "
-		"refused; the record stays `partial` with `coverage.missing = [\"polarity\", "
-		"\"output_semantics\", \"mechanism_behavior\", \"recreation_notes\", \"spatial_placement\", "
-		"\"unresolved_conflicts\"]`. Recreation knowledge remains observed because the mechanism and "
-		"output-semantics gaps prevent the note from being complete enough for independent reconstruction.",
+		"Every used address carries a validated placement or a controlled `not_applicable` "
+		"record; `conflicts` is empty; the six capInvSw10-normalized switch addresses all carry "
+		"positive manufacturer construction evidence (trough opto board part numbers, the "
+		"'opto spinner' scoring text, and the alien mechanism's encoder disc + opto PCB); the "
+		"star-bumper solenoid identity is the manual diagram's own callout positions; and the "
+		"four former conflicts are resolved with the resolutions documented on the affected "
+		"devices and in the curator's conflicts() docstring. The record is promoted to "
+		"`author_ready` with `coverage.missing = []` and every coverage dimension validated.",
 		"",
 		"## Retained evidence",
 		"",
@@ -1728,6 +2199,15 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"`{MANUAL_TRANSCRIPTION_SHA256}`, and its companion solenoid/schematic transcription, "
 		f"SHA-256 `{MANUAL_TRANSCRIPTION_SOLENOIDS_SHA256}`.",
 		f"- VPX object-geometry notes, SHA-256 `{VPX_GEOMETRY_NOTES_SHA256}`.",
+		f"- Corroboration recreation table SHA-256 `{CORROBORATION_TABLE_SHA256}` and its embedded "
+		f"script SHA-256 `{CORROBORATION_SCRIPT_SHA256}`, with the cited gameitems pinned under "
+		"external:pinmame-review-artifacts/big-bang-bar/corroboration-table-cited/.",
+		f"- VPinMAME script libraries core.vbs SHA-256 `{VPM_CORE_LIBRARY_SHA256}` and Capcom.VBS "
+		f"SHA-256 `{VPM_CAPCOM_LIBRARY_SHA256}` under "
+		"external:pinmame-review-artifacts/big-bang-bar/vpm-script-libs/.",
+		f"- IPDB machine-4001 photographs SHA-256 `{IPDB_TUBE_LADY_PHOTO_SHA256}` (tube lady on "
+		f"the playfield) and `{IPDB_OVERHEAD_PHOTO_SHA256}` (overhead playfield) under "
+		"external:pinmame-review-artifacts/big-bang-bar/ipdb-photos/.",
 		"",
 	]
 	return "\n".join(lines)

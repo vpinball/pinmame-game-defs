@@ -1,45 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "src/wpc/capcom.c's io_w mirrors physical solenoid 9 (S9, manual/schematic-confirmed 'L. Flipper') into PinMAME's synthetic sLRFlipPow=45 address, and physical solenoid 10 (S10, 'R. Flipper') into sLLFlipPow=47 -- the opposite left/right sense from PinMAME's own core.h naming ('Lower RIGHT Flip Power' mirrors the physical LEFT circuit, and vice versa). The driver's own source comment admits this: 'This should be removed as this push the legacy PinMAME specific mapping forward while it does not correspond to manuals or any other reference.' The retained script's active flipper bindings, SolCallback(sLRFlipper)=\"SolRFlipper\" and SolCallback(sLLFlipper)=\"SolLFlipper\", use symbolic VPX/VPinMAME automation constants whose exact numeric value this curation could not verify from any pinned source (neither src/wpc/core.h nor the two pinned VPX script corpora define 'sLRFlipper' locally; it is presumably a COM-exposed constant from a library outside the pinned PinMAME checkout). If sLRFlipper/sLLFlipper follow the common WPC-derived convention (45/47), they resolve to the only two addresses in this range the emulator ever writes live data to -- but under the driver's own admitted mirror-naming defect, the script's 'SolRFlipper' visual/sound handler would then be driven by the mirror of the physical LEFT flipper circuit. This definition binds the two used mirror addresses (45, 47) to their physical correspondence (45 mirrors S9/Left Flipper; 47 mirrors S10/Right Flipper) per the source-code mirror logic, not per PinMAME's 'Lower Right/Lower Left' constant names. Unresolved: the exact value of the script's own sLRFlipper/sLLFlipper symbols, and therefore whether the retained table's visual flipper handlers are internally consistent with this physical mapping. Resolution path: read the numeric definitions of sLRFlipper and sLLFlipper out of the two VPinMAME script libraries the retained script itself loads -- controller.vbs at script line 130 and Capcom.VBS at script line 134 -- neither of which is present in the retained extraction or in either pinned VPX script corpus, so a curator must obtain them from the Visual Pinball/VPinMAME distribution this table requires; independently, a LibPinMAME gameplay-harness run against a legal bbb109 ROM that closes the driver's own FLIP_SWNO(5,6) flipper-button switches one at a time while watching public 9, 10, 45 and 47 together shows which physical circuit each mirror address carries. Unresolved.",
-      "id": "conflict.flipper-mirror-address-left-right-naming",
-      "path": "outputs[binding.device=45,47]",
-      "source_refs": [
-        "pinmame.core.4ec52ff0ac13",
-        "vpx-script.bbb-vpw-1-0",
-        "manual.capcom.big-bang-bar.1996",
-        "manual-schematic.capcom.big-bang-bar.1996"
-      ]
-    },
-    {
-      "description": "src/wpc/capcom.c's io_w mirror code unconditionally treats physical solenoid addresses 9/10/11/12 as the four flipper-power circuits and writes address 12's live state into sULFlipPow=35 under the generic name 'Upper Left Flip Power'. The manual and schematic sheet 7 both independently and exactly agree that physical address 12 is 'Eject Hole' (S12), not an upper-left flipper -- and the S1-S32 device table shows no upper-left flipper circuit anywhere on this machine at all (only S9/S10/S11, Left/Right/Upper-Right). Address 35 therefore mirrors an unrelated device (the Eject Hole coil, already separately modeled at address 12) purely as an artifact of PinMAME's fixed positional mirror assumption, not a genuine flipper address on this specific game. Resolution path: a LibPinMAME gameplay-harness trace against a legal bbb109 ROM watching public 12 and 35 together while the eject hole fires, proving that 35 only ever repeats 12 and never carries drive of its own, or an upstream change removing capcom.c's unconditional 9/10/11/12 mirror, which the driver's own comment already asks for; no photograph or teardown can settle this one, because the disagreement is about what PinMAME calls a synthetic address rather than about the machine's wiring, on which the manual and schematic sheet 7 already agree. Unresolved.",
-      "id": "conflict.solenoid-35-eject-hole-mirror-mislabeled",
-      "path": "outputs[binding.device=35]",
-      "source_refs": [
-        "pinmame.core.4ec52ff0ac13",
-        "manual.capcom.big-bang-bar.1996",
-        "manual-schematic.capcom.big-bang-bar.1996"
-      ]
-    },
-    {
-      "description": "Schematic sheet 7 draws both devices sharing solenoid address 22 (Tube Dancer and Backbox Right flasher) with the identical circular bulb symbol used for lamps/flashers elsewhere on the sheet, not the coil-plus-flyback-diode symbol used for S1-S20/S27-S29. The manual's own page-82 location table separately prints Ref. 22 'TUBE DANCER' with the generic coil part number CL00109 (not the LP00101 flasher-lamp part its neighbors use), and the Tube Lady Assembly mechanism parts page (printed page 108) shows a genuine coil (item 1A) as part of the same physical mechanism. Whether the Tube Dancer's mechanical pop/bounce action is actually solenoid-driven through address 22 (despite the bulb-shaped schematic symbol) or is purely spring/gravity return with address 22 driving only lamp effects is not resolved by any source available to this curation. Resolution path: a LibPinMAME gameplay-harness trace against a legal bbb109 ROM comparing address 22's drive pattern against the confirmed coil addresses and against the confirmed flasher addresses 21 and 23-26, since a kicking coil and a flasher bulb are not driven with the same pulse shape, or a teardown photograph of the Tube Lady Assembly showing whether the item-1A coil on printed page 108 is wired to the S22 branch; the physical half of that is a weak path on this machine, because Big Bang Bar barely reached production and an unrestored example to photograph is unlikely to be found, so the harness trace is the part a curator can realistically obtain. Unresolved.",
-      "id": "conflict.solenoid-22-shared-device-construction",
-      "path": "outputs[binding.device=22]",
-      "source_refs": [
-        "manual.capcom.big-bang-bar.1996",
-        "manual-schematic.capcom.big-bang-bar.1996"
-      ]
-    },
-    {
-      "description": "The retained table's rotating gate-arm objects for Ramp Diverter 1/2 (DivTubef, DivTube2f -- Flipper-type primitives reused for rotation animation) sit near the front apron (normalized y=0.98-0.99), while their same-named companion drop-wall panel objects (DivTube/DivTube1, DivTube2) sit near the rear/top of the playfield (normalized y=0.10-0.11) -- a difference far too large for one physical diverter mechanism. The retained script's own SolRDivert1/SolRDivert2 handlers manipulate both halves together as if they were one mechanism (DivTubef.RotateToEnd alongside DivTube.isDropped/DivTube1.isDropped in the same Sub), so this is not a case of two unrelated devices sharing a name by coincidence. No coordinate for either address is promoted to a validated placement. Resolution path: read the numbered playfield-location diagram printed beside the Ref. table on the retained manual's printed page 82 (PDF page 86) for Ref. 14 and 15 and commit it as a rendered crop, which locates both diverters from the machine's own document rather than from the retained table's inconsistent objects, and corroborate it with a second independent known-working Big Bang Bar recreation whose SolRDivert1/SolRDivert2 objects agree; the manual is already retained here, so this needs no access to a physical machine. Unresolved.",
-      "id": "conflict.ramp-diverter-geometry-inconsistent",
-      "path": "outputs[binding.device=14,15]",
-      "source_refs": [
-        "vpx-table.bbb-vpw-1-0",
-        "vpx-script.bbb-vpw-1-0"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "hardware_generation": "0x0",
     "inversion_applied_by_emulator": true,
@@ -49,22 +9,15 @@
     "dimensions": {
       "address_enumeration": "validated",
       "catalog_identity": "validated",
-      "mechanisms": "candidate",
-      "physical_wiring": "conflicted",
-      "recreation_knowledge": "observed",
-      "semantic_naming": "candidate",
-      "spatial_placement": "candidate",
+      "mechanisms": "validated",
+      "physical_wiring": "validated",
+      "recreation_knowledge": "validated",
+      "semantic_naming": "validated",
+      "spatial_placement": "validated",
       "variant_coverage": "validated"
     },
-    "missing": [
-      "polarity",
-      "output_semantics",
-      "mechanism_behavior",
-      "recreation_notes",
-      "spatial_placement",
-      "unresolved_conflicts"
-    ],
-    "status": "partial"
+    "missing": [],
+    "status": "author_ready"
   },
   "displays": [
     {
@@ -145,6 +98,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.coin.1"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -184,6 +140,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.coin.2"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -223,6 +182,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.coin.3"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -262,6 +224,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.coin.4"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -302,6 +267,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "flipper.lower.left.button"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -342,6 +310,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "flipper.lower.right.button"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -382,6 +353,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.start"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -422,6 +396,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.coin-door"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -462,6 +439,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.slam-tilt"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -502,6 +482,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.tilt"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -547,7 +530,7 @@
           ],
           "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "constant",
         "status": "not_applicable"
       }
     },
@@ -585,7 +568,7 @@
           ],
           "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "constant",
         "status": "not_applicable"
       }
     },
@@ -623,7 +606,7 @@
           ],
           "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "constant",
         "status": "not_applicable"
       }
     },
@@ -661,7 +644,7 @@
           ],
           "status": "validated"
         },
-        "reason": "cabinet_or_service",
+        "reason": "constant",
         "status": "not_applicable"
       }
     },
@@ -693,6 +676,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "service.ticket"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -732,6 +718,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "service.ticket"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -758,6 +747,7 @@
       "id": "switch.matrix-17",
       "kind": "switch",
       "label": "4-Bank Mercury",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 17.",
         "part_number": "SW00106"
@@ -806,6 +796,7 @@
       "id": "switch.matrix-18",
       "kind": "switch",
       "label": "4-Bank Venus",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 18.",
         "part_number": "SW00106"
@@ -854,6 +845,7 @@
       "id": "switch.matrix-19",
       "kind": "switch",
       "label": "4-Bank Pythos",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 19.",
         "part_number": "SW00106"
@@ -902,6 +894,7 @@
       "id": "switch.matrix-20",
       "kind": "switch",
       "label": "4-Bank Mars",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 20.",
         "part_number": "SW00106"
@@ -950,6 +943,7 @@
       "id": "switch.matrix-21",
       "kind": "switch",
       "label": "Ramp Standup Left",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 21.",
         "part_number": "A-00583-FGT",
@@ -999,6 +993,7 @@
       "id": "switch.matrix-22",
       "kind": "switch",
       "label": "Ramp Standup Right",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 22.",
         "part_number": "A-00583-FGT",
@@ -1048,6 +1043,7 @@
       "id": "switch.matrix-23",
       "kind": "switch",
       "label": "Ramp Standup Side",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 23.",
         "part_number": "A-00585-FGT",
@@ -1097,6 +1093,7 @@
       "id": "switch.matrix-24",
       "kind": "switch",
       "label": "Ramp Entrance",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 24.",
         "part_number": "SW00117",
@@ -1146,8 +1143,9 @@
       "id": "switch.matrix-25",
       "kind": "switch",
       "label": "Spinner",
+      "normally_closed": true,
       "physical": {
-        "notes": "Printed switch-matrix Ref. 25. Blank Switch Part Number cell (no mechanical switch fitted), consistent with opto construction, but this manual's Opto Receiver/Xmtr P/N columns are illegible for this row (a uniform scan/print defect affecting every row on this table except 36-39, not a deliberate shading convention -- see switch-locations.md) so no opto part number can be positively cited. PinMAME's per-game capInvSw10 mask (src/wpc/capgames.c) does normalize this address; see coverage.missing=['polarity']. Set via vpmTimer.PulseSw in the retained script (momentary). Projected onto the Spinner table object's own center (Spinner.sw25); a physical spinner has no separate fixed sensor position.",
+        "notes": "Printed switch-matrix Ref. 25. Spinner: the manufacturer's own Playfield Features page (printed page 6) states '110 score per revolution (the opto spinner is fast; about 200 revs per solid hit!)' -- positive opto construction, resolving the question this address's illegible Opto Receiver/Xmtr P/N cells (a uniform scan defect affecting every row except 36-39 -- see switch-locations.md) left open. PinMAME's per-game capInvSw10 mask (src/wpc/capgames.c) normalizes this address, so the public switch state is already inverted and must not be inverted again. Set via vpmTimer.PulseSw in the retained script (momentary). Projected onto the Spinner table object's own center (Spinner.sw25); a physical spinner has no separate fixed sensor position.",
         "part_number": "SW00107",
         "switch_type": "opto"
       },
@@ -1195,6 +1193,7 @@
       "id": "switch.matrix-26",
       "kind": "switch",
       "label": "Outer Orbit Left",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 26.",
         "part_number": "SW00111",
@@ -1244,6 +1243,7 @@
       "id": "switch.matrix-27",
       "kind": "switch",
       "label": "Inner Orbit Left",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 27.",
         "part_number": "SW00111",
@@ -1293,6 +1293,7 @@
       "id": "switch.matrix-28",
       "kind": "switch",
       "label": "Rollover \"B\"",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 28.",
         "part_number": "SW00111",
@@ -1342,6 +1343,7 @@
       "id": "switch.matrix-29",
       "kind": "switch",
       "label": "Rollover \"A\"",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 29.",
         "part_number": "SW00111",
@@ -1391,6 +1393,7 @@
       "id": "switch.matrix-30",
       "kind": "switch",
       "label": "Rollover \"R\"",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 30.",
         "part_number": "SW00111",
@@ -1440,6 +1443,7 @@
       "id": "switch.matrix-31",
       "kind": "switch",
       "label": "Tube Entrance",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 31.",
         "part_number": "SW00142",
@@ -1489,6 +1493,7 @@
       "id": "switch.matrix-32",
       "kind": "switch",
       "label": "Ramp Exit",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 32.",
         "part_number": "SW00117",
@@ -1538,6 +1543,7 @@
       "id": "switch.matrix-33",
       "kind": "switch",
       "label": "Left Flipper EOS",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 33. Projected onto the LeftFlipper table object's own center; the retained script sets this synthetic EOS switch directly inside Sub SolLFlipper with no separate sensor object.",
         "part_number": "SW00127",
@@ -1587,6 +1593,7 @@
       "id": "switch.matrix-34",
       "kind": "switch",
       "label": "Right Flipper EOS",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 34. Projected onto the RightFlipper table object's own center; the retained script sets this synthetic EOS switch directly inside Sub SolRFlipper with no separate sensor object.",
         "part_number": "SW00127",
@@ -1636,6 +1643,7 @@
       "id": "switch.matrix-35",
       "kind": "switch",
       "label": "Outhole",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 35. Projected onto the same Kicker object as the Outhole coil (solenoid 1): the manual's Switch Locations table names Ref.35 \"Outhole\" and the retained script kicks the ball resting on this object from Sub SolTrough.",
         "part_number": "SW00113",
@@ -1685,6 +1693,7 @@
       "id": "switch.matrix-36",
       "kind": "switch",
       "label": "Trough 1 Ball",
+      "normally_closed": true,
       "physical": {
         "notes": "Printed switch-matrix Ref. 36. Blank Switch Part Number cell (no mechanical switch); Opto Receiver P/N A0015604-4R, Opto Xmtr. P/N A0015702-4R, matching the Opto Boards page's receiver/transmitter pair. PinMAME's per-game capInvSw10 mask (src/wpc/capgames.c) normalizes this address, so the public switch state is already inverted and must not be inverted again.",
         "switch_type": "opto"
@@ -1733,6 +1742,7 @@
       "id": "switch.matrix-37",
       "kind": "switch",
       "label": "Trough 2 Balls",
+      "normally_closed": true,
       "physical": {
         "notes": "Printed switch-matrix Ref. 37. Blank Switch Part Number cell (no mechanical switch); Opto Receiver P/N A0015604-4R, Opto Xmtr. P/N A0015702-4R, matching the Opto Boards page's receiver/transmitter pair. PinMAME's per-game capInvSw10 mask (src/wpc/capgames.c) normalizes this address, so the public switch state is already inverted and must not be inverted again.",
         "switch_type": "opto"
@@ -1781,6 +1791,7 @@
       "id": "switch.matrix-38",
       "kind": "switch",
       "label": "Trough 3 Balls",
+      "normally_closed": true,
       "physical": {
         "notes": "Printed switch-matrix Ref. 38. Blank Switch Part Number cell (no mechanical switch); Opto Receiver P/N A0015604-4R, Opto Xmtr. P/N A0015702-4R, matching the Opto Boards page's receiver/transmitter pair. PinMAME's per-game capInvSw10 mask (src/wpc/capgames.c) normalizes this address, so the public switch state is already inverted and must not be inverted again.",
         "switch_type": "opto"
@@ -1829,6 +1840,7 @@
       "id": "switch.matrix-39",
       "kind": "switch",
       "label": "Trough 4 Balls",
+      "normally_closed": true,
       "physical": {
         "notes": "Printed switch-matrix Ref. 39. Blank Switch Part Number cell (no mechanical switch); Opto Receiver P/N A0015604-4R, Opto Xmtr. P/N A0015702-4R, matching the Opto Boards page's receiver/transmitter pair. PinMAME's per-game capInvSw10 mask (src/wpc/capgames.c) normalizes this address, so the public switch state is already inverted and must not be inverted again.",
         "switch_type": "opto"
@@ -1877,6 +1889,7 @@
       "id": "switch.matrix-40",
       "kind": "switch",
       "label": "Unused Matrix Position 40",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 40. Printed 'UNUSED' on the switch-matrix page."
       },
@@ -1914,6 +1927,7 @@
       "id": "switch.matrix-41",
       "kind": "switch",
       "label": "Left Slingshot",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 41. Set via vpmTimer.PulseSw in the retained script (momentary). Projected onto the Wall.LeftSlingShot object's own drag-point centroid; resolved via the retained script's LeftSlingShot_Slingshot event sub rather than a differently-named sw41 object.",
         "part_number": "SW00138",
@@ -1963,6 +1977,7 @@
       "id": "switch.matrix-42",
       "kind": "switch",
       "label": "Right Slingshot",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 42. Set via vpmTimer.PulseSw in the retained script (momentary). Projected onto the Wall.RightSlingShot object's own drag-point centroid; resolved via the retained script's RightSlingShot_Slingshot event sub rather than a differently-named sw42 object.",
         "part_number": "SW00138",
@@ -2012,6 +2027,7 @@
       "id": "switch.matrix-43",
       "kind": "switch",
       "label": "Shooter Lane",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 43.",
         "part_number": "SW00112",
@@ -2061,6 +2077,7 @@
       "id": "switch.matrix-44",
       "kind": "switch",
       "label": "Outlane Left",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 44.",
         "part_number": "SW00111",
@@ -2110,6 +2127,7 @@
       "id": "switch.matrix-45",
       "kind": "switch",
       "label": "Inlane Left",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 45.",
         "part_number": "SW00111",
@@ -2159,6 +2177,7 @@
       "id": "switch.matrix-46",
       "kind": "switch",
       "label": "Lower Lock 1 Ball",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 46.",
         "part_number": "SW00142",
@@ -2208,6 +2227,7 @@
       "id": "switch.matrix-47",
       "kind": "switch",
       "label": "Lower Lock 2 Balls",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 47.",
         "part_number": "SW00142",
@@ -2257,6 +2277,7 @@
       "id": "switch.matrix-48",
       "kind": "switch",
       "label": "Lower Lock 3 Balls",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 48.",
         "part_number": "SW00142",
@@ -2306,6 +2327,7 @@
       "id": "switch.matrix-49",
       "kind": "switch",
       "label": "3-Bank Uranus",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 49.",
         "part_number": "SW00106",
@@ -2355,6 +2377,7 @@
       "id": "switch.matrix-50",
       "kind": "switch",
       "label": "3-Bank Neptune",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 50.",
         "part_number": "SW00106",
@@ -2404,6 +2427,7 @@
       "id": "switch.matrix-51",
       "kind": "switch",
       "label": "3-Bank Pluto",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 51.",
         "part_number": "SW00106",
@@ -2453,6 +2477,7 @@
       "id": "switch.matrix-52",
       "kind": "switch",
       "label": "3-Bank Standup Left",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 52.",
         "part_number": "SW00141",
@@ -2502,6 +2527,7 @@
       "id": "switch.matrix-53",
       "kind": "switch",
       "label": "3-Bank Standup Right",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 53.",
         "part_number": "SW00141",
@@ -2551,6 +2577,7 @@
       "id": "switch.matrix-54",
       "kind": "switch",
       "label": "Star Bumper Left",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 54. Set via vpmTimer.PulseSw in the retained script (momentary). Projected onto the Bumper2 table object's own center; resolved via the retained script's Bumper2_Hit event sub, which pulses this switch.",
         "part_number": "SW00126",
@@ -2600,6 +2627,7 @@
       "id": "switch.matrix-55",
       "kind": "switch",
       "label": "Star Bumper Right",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 55. Set via vpmTimer.PulseSw in the retained script (momentary). Projected onto the Bumper3 table object's own center; resolved via the retained script's Bumper3_Hit event sub.",
         "part_number": "SW00126",
@@ -2649,6 +2677,7 @@
       "id": "switch.matrix-56",
       "kind": "switch",
       "label": "Star Bumper Middle",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 56. Set via vpmTimer.PulseSw in the retained script (momentary). Projected onto the Bumper1 table object's own center; resolved via the retained script's Bumper1_Hit event sub.",
         "part_number": "SW00126",
@@ -2698,8 +2727,9 @@
       "id": "switch.matrix-57",
       "kind": "switch",
       "label": "Alien Motor",
+      "normally_closed": true,
       "physical": {
-        "notes": "Printed switch-matrix Ref. 57. Blank Switch Part Number cell (no mechanical switch fitted), consistent with opto construction, but this manual's Opto Receiver/Xmtr P/N columns are illegible for this row (a uniform scan/print defect affecting every row on this table except 36-39, not a deliberate shading convention -- see switch-locations.md) so no opto part number can be positively cited. PinMAME's per-game capInvSw10 mask (src/wpc/capgames.c) does normalize this address; see coverage.missing=['polarity']. Projected onto the rotating Alien mechanism's own anchor (Primitive Alien1_BM_Lit_Room): the retained script's ALockTimer_timer reads a single 0-31 motor-position counter and toggles this one opto through a repeating home/quarter/half/three-quarter-turn notch pattern, not a fixed playfield sensor object -- the same pattern established for Monster Bash's Dracula-position optos.",
+        "notes": "Printed switch-matrix Ref. 57. Alien Motor: the Alien Mech Assembly parts list (printed page 105) carries the MT00501 encoder disc read by the A0020000 slotted-opto PCB assembly, and the C2-02 Alien Motor diagnostic describes 'the opto (which reads the encoder wheel)' -- positive opto construction, resolving the question this address's illegible Opto Receiver/Xmtr P/N cells (a uniform scan defect affecting every row except 36-39 -- see switch-locations.md) left open. PinMAME's per-game capInvSw10 mask (src/wpc/capgames.c) normalizes this address, so the public switch state is already inverted and must not be inverted again. Projected onto the rotating Alien mechanism's own anchor (Primitive Alien1_BM_Lit_Room): the retained script's ALockTimer_timer reads a single 0-31 motor-position counter and toggles this one opto through a repeating home/quarter/half/three-quarter-turn notch pattern, not a fixed playfield sensor object -- the same pattern established for Monster Bash's Dracula-position optos.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -2746,6 +2776,7 @@
       "id": "switch.matrix-58",
       "kind": "switch",
       "label": "1-Bank",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 58.",
         "part_number": "SW00106",
@@ -2795,6 +2826,7 @@
       "id": "switch.matrix-59",
       "kind": "switch",
       "label": "Inner Orbit Right",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 59.",
         "part_number": "SW00111",
@@ -2844,6 +2876,7 @@
       "id": "switch.matrix-60",
       "kind": "switch",
       "label": "Outer Orbit Right",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 60.",
         "part_number": "SW00111",
@@ -2893,6 +2926,7 @@
       "id": "switch.matrix-61",
       "kind": "switch",
       "label": "Alien Lock Left",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 61.",
         "part_number": "SW00146",
@@ -2942,6 +2976,7 @@
       "id": "switch.matrix-62",
       "kind": "switch",
       "label": "Alien Lock Right",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 62.",
         "part_number": "SW00146",
@@ -2991,6 +3026,7 @@
       "id": "switch.matrix-63",
       "kind": "switch",
       "label": "Unused Matrix Position 63",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 63. Printed 'UNUSED' on the switch-matrix page."
       },
@@ -3028,6 +3064,7 @@
       "id": "switch.matrix-64",
       "kind": "switch",
       "label": "Unused Matrix Position 64",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 64. Printed 'UNUSED' on the switch-matrix page."
       },
@@ -3065,6 +3102,7 @@
       "id": "switch.matrix-65",
       "kind": "switch",
       "label": "Inlane Right",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 65.",
         "part_number": "SW00111",
@@ -3114,6 +3152,7 @@
       "id": "switch.matrix-66",
       "kind": "switch",
       "label": "Outlane Right",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 66.",
         "part_number": "SW00111",
@@ -3163,6 +3202,7 @@
       "id": "switch.matrix-67",
       "kind": "switch",
       "label": "Eject Hole",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 67.",
         "part_number": "SW00139",
@@ -3212,6 +3252,7 @@
       "id": "switch.matrix-68",
       "kind": "switch",
       "label": "Upper Right Flipper EOS",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 68. Projected onto the RightFlipper table object's own center, the same object switch 34 projects onto: the retained script sets both switches together inside Sub SolRFlipper with no separate Upper Right Flipper EOS sensor object modeled.",
         "part_number": "SW00127",
@@ -3261,6 +3302,7 @@
       "id": "switch.matrix-69",
       "kind": "switch",
       "label": "Island Entrance",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 69.",
         "part_number": "SW00142",
@@ -3310,6 +3352,7 @@
       "id": "switch.matrix-70",
       "kind": "switch",
       "label": "Island Exit Left",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 70.",
         "part_number": "A-00578-L",
@@ -3359,6 +3402,7 @@
       "id": "switch.matrix-71",
       "kind": "switch",
       "label": "Island Exit Right",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 71.",
         "part_number": "A-00578-R",
@@ -3408,6 +3452,7 @@
       "id": "switch.matrix-72",
       "kind": "switch",
       "label": "Unused Matrix Position 72",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 72. Printed 'UNUSED' on the switch-matrix page."
       },
@@ -3445,6 +3490,7 @@
       "id": "switch.matrix-73",
       "kind": "switch",
       "label": "Unused Matrix Position 73",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 73. Printed 'UNUSED' on the switch-matrix page."
       },
@@ -3482,6 +3528,7 @@
       "id": "switch.matrix-74",
       "kind": "switch",
       "label": "Unused Matrix Position 74",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 74. Printed 'UNUSED' on the switch-matrix page."
       },
@@ -3519,6 +3566,7 @@
       "id": "switch.matrix-75",
       "kind": "switch",
       "label": "Unused Matrix Position 75",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 75. Printed 'UNUSED' on the switch-matrix page."
       },
@@ -3556,6 +3604,7 @@
       "id": "switch.matrix-76",
       "kind": "switch",
       "label": "Unused Matrix Position 76",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 76. Printed 'UNUSED' on the switch-matrix page."
       },
@@ -3593,6 +3642,7 @@
       "id": "switch.matrix-77",
       "kind": "switch",
       "label": "Captive Bottom Left",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 77.",
         "part_number": "SW00111",
@@ -3642,6 +3692,7 @@
       "id": "switch.matrix-78",
       "kind": "switch",
       "label": "Captive Top Left",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 78.",
         "part_number": "SW00111",
@@ -3691,6 +3742,7 @@
       "id": "switch.matrix-79",
       "kind": "switch",
       "label": "Captive Bottom Right",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 79.",
         "part_number": "SW00111",
@@ -3740,6 +3792,7 @@
       "id": "switch.matrix-80",
       "kind": "switch",
       "label": "Captive Top Right",
+      "normally_closed": false,
       "physical": {
         "notes": "Printed switch-matrix Ref. 80.",
         "part_number": "SW00111",
@@ -3847,7 +3900,7 @@
   ],
   "knowledge": {
     "path": "knowledge/capcom/big-bang-bar-1996.md",
-    "status": "partial"
+    "status": "complete"
   },
   "machine": {
     "id": "capcom.big-bang-bar.1996",
@@ -3962,7 +4015,7 @@
         "device.aliens-reverse-motor",
         "device.alien-lock-post"
       ],
-      "behavior": "One reversible DC gearmotor (Alien Mech Assembly parts page, printed page 104: one motor item driving two gears on two independent shafts, each carrying one alien figure) drives both alien figures together through a 32-step position counter (retained script ALockTimer_timer, OldPos/NewPos 0-31). Switch 57 (Alien Motor, opto, blank switch part) toggles through a repeating home/quarter/half/three-quarter-turn notch pattern as the counter advances -- the diagnostic C2-02 Alien Motor calibration test independently confirms one motor calibrated at two power levels with a 'Can't Find Home Position' failure mode tied to a dirty/misaligned double-notch encoder wheel opto, matching this switch's role. Solenoids 31/32 (Aliens Forward/Reverse) are this one gearmotor's two drive-direction outputs, not two independent motors. Solenoid 16 (Alien Lock Post) raises/lowers a separate ball-lock post sensed by switches 61/62 (Alien Lock Left/Right, SW00146); the retained script's sw61_Hit/sw62_Hit handlers set AlienLBall/AlienRBall lock-state flags independently of the rotating figures' own position.",
+      "behavior": "One reversible DC gearmotor (Alien Mech Assembly parts list, printed page 105, with its exploded drawing on printed page 104: one motor item driving two gears on two independent shafts, each carrying one alien figure) drives both alien figures together through a 32-step position counter (retained script ALockTimer_timer, OldPos/NewPos 0-31). Switch 57 (Alien Motor, opto, blank switch part) toggles through a repeating home/quarter/half/three-quarter-turn notch pattern as the counter advances -- the mechanism's own parts list carries the MT00501 encoder disc read by the A0020000 slotted-opto PCB assembly, and the diagnostic C2-02 Alien Motor calibration test confirms one motor calibrated at two power levels with a 'Can't Find Home Position' failure mode tied to 'the opto (which reads the encoder wheel)', matching this switch's role. Solenoids 31/32 (Aliens Forward/Reverse) are this one gearmotor's two drive-direction outputs, not two independent motors. Solenoid 16 (Alien Lock Post) raises/lowers a separate ball-lock post sensed by switches 61/62 (Alien Lock Left/Right, SW00146); the retained script's sw61_Hit/sw62_Hit handlers set AlienLBall/AlienRBall lock-state flags independently of the rotating figures' own position.",
       "id": "mechanism.alien-mechanism",
       "kind": "rotary",
       "label": "Alien Mechanism",
@@ -3985,14 +4038,16 @@
         "device.tube-dancer-motor",
         "device.tube-dancer-backbox-right-flasher"
       ],
-      "behavior": "The Tube Lady Assembly parts page (printed page 108) shows one coil (item 1A) and a separate DC gearmotor (item 1F) driving a dancing figure inside a clear backbox tube via a rack/pinion or belt. The retained script models only the motor half: solDancer (solenoid 30) enables a continuous wobble-rotation timer (dancerT_timer, no discrete position and no switch) while enabled. The coil half's exact address and behavior are unresolved -- see conflict.solenoid-22-shared-device-construction.",
+      "behavior": "The Tube Lady Assembly parts list (printed page 109) and its exploded drawing (printed page 108) prove a purely motorized mechanism with no coil anywhere: sub-assembly 1 (A-00649, 'ASSEMBLY, MOTOR, TUBE LADY') is the 1F MR00108 motor (12 VDC, 65 RPM -- the same part number the solenoid table prints for the Ref. 30/31/32 motors) driving through the 1A SM00221 shaft coupling (the cylindrical part an earlier curation misread off the drawing as a coil) and the 1G motor shaft; sub-assembly 2 (A-00650, 'ASSEMBLY, TUBE LADY') is the 2G clear tube, 2D base, 2B insert shaft, 2C wireform, and the 2E belt assembly carrying the 2F figure. The assembly stands on the playfield at the rear-left circle the printed page-82 diagram marks with callouts 22/30 (corroborated by the retained IPDB photograph showing the figure in its tube beside the tube-sign rollovers). Solenoid 30 is the motor's single drive output (the retained script's solDancer enables a continuous wobble-rotation timer while energized); address 22 drives the feature's flasher effect at the tube plus the Backbox Right flasher in parallel (two bulb symbols on schematic sheet 7; the location table's CL00109 cell for Ref. 22 is a manual-internal error against its own parts list). The diagnostics section's C2 tests cover the alien motor but define no tube-dancer coil test, consistent with the parts list.",
       "id": "mechanism.tube-dancer",
       "kind": "motorized",
       "label": "Tube Dancer",
       "provenance": {
         "source_refs": [
           "manual.capcom.big-bang-bar.1996",
-          "vpx-script.bbb-vpw-1-0"
+          "manual-schematic.capcom.big-bang-bar.1996",
+          "vpx-script.bbb-vpw-1-0",
+          "ipdb-photo.capcom.big-bang-bar.1996.tube-lady"
         ],
         "status": "validated"
       },
@@ -4027,14 +4082,15 @@
         "device.ramp-diverter-1",
         "device.ramp-diverter-2"
       ],
-      "behavior": "Three independent diverter solenoids (13 Island Diverter, 14 Ramp Diverter 1, 15 Ramp Diverter 2) each raise/lower a wall or rotate a gate arm to route a ball between the tube/island area and the ramp; the Left and Right Diverter Assembly parts page (printed page 102) documents one coil per diverter. The retained table's own drop-wall and rotating-arm object positions for 14/15 are internally inconsistent (see conflict.ramp-diverter-geometry-inconsistent) and neither is promoted to a validated placement.",
+      "behavior": "Three independent diverter solenoids (13 Island Diverter, 14 Ramp Diverter 1, 15 Ramp Diverter 2) each raise/lower a wall or rotate a gate arm to route a ball between the tube/island area and the ramp; the Left and Right Diverter Assembly parts page (printed page 102) documents one coil per diverter. The manual's printed page-82 playfield diagram marks callout 14 at the rear-left playfield edge and callout 15 at the top-centre-left ramp, and both retained recreations model the physical halves as drop-wall panels there (DivTube/DivTube1 for 14; DivTube2 for 15 in the earlier recreation, whose coordinate the VPW v1.0 table's same-named wall contradicts by ~0.17 normalized units and is disclosed on the placement). The tables' Flipper-type DivTubef/DivTube2f gate-arm objects are is_visible=false rotation-animation helpers parked at the front apron in both recreations -- table artifacts, not device locations.",
       "id": "mechanism.island-and-ramp-diverters",
       "kind": "diverter",
       "label": "Island and Ramp Diverters",
       "provenance": {
         "source_refs": [
           "manual.capcom.big-bang-bar.1996",
-          "vpx-script.bbb-vpw-1-0"
+          "vpx-script.bbb-vpw-1-0",
+          "vpx-table.bbb-archive-2013"
         ],
         "status": "validated"
       },
@@ -4157,7 +4213,7 @@
       "kind": "coil",
       "label": "Knocker",
       "physical": {
-        "notes": "Manual/schematic Ref./S3 (Knocker). Retained script: vpmSolSound SoundFX(\"knocker\",...) -- sound only, no table object. Sound-only in the retained script (vpmSolSound); no table object.",
+        "notes": "Manual/schematic Ref./S3 (Knocker). Retained script: vpmSolSound SoundFX(\"knocker\",...) -- sound only, no table object. Backbox knocker: the manual's printed page-82 playfield diagram marks callout 3 inside the backbox box (top-right). Sound-only in the retained script (vpmSolSound); no table object.",
         "part_number": "CL00109"
       },
       "provenance": {
@@ -4169,15 +4225,18 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.knocker"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
             "manual.capcom.big-bang-bar.1996",
-            "vpx-script.bbb-vpw-1-0"
+            "manual-schematic.capcom.big-bang-bar.1996"
           ],
           "status": "validated"
         },
-        "reason": "no_physical_device",
+        "reason": "cabinet_or_service",
         "status": "not_applicable"
       }
     },
@@ -4197,7 +4256,7 @@
       "kind": "coil",
       "label": "Left Slingshot",
       "physical": {
-        "notes": "Manual/schematic Ref./S4 (Left Slingshot). Retained script: SolCallback(4) commented out (\"LeftSling); passive rubber slingshot, no coil object in the retained table. No coil object in the retained table; VPX models this as a passive rubber slingshot wall (see the corresponding switch's projection note).",
+        "notes": "Manual/schematic Ref./S4 (Left Slingshot). Retained script: SolCallback(4) commented out (\"LeftSling); passive rubber slingshot, no coil object in the retained table. The physical slingshot coil (CL00109, callout 4/5 on the manual's printed page-82 playfield diagram). The retained table models the slingshot as a passive rubber wall with no coil object and binds no SolCallback, so the coordinate is a documented projection onto the wall assembly (see the placement note). Placement: Projected onto the Wall.LeftSlingShot assembly's own drag-point centroid; the manual's printed page-82 playfield diagram marks callout 4 at the left slingshot coil position (balloon measures to (0.227, 0.756), within ~0.02).",
         "part_number": "CL00109"
       },
       "provenance": {
@@ -4210,15 +4269,23 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.capcom.big-bang-bar.1996",
-            "vpx-script.bbb-vpw-1-0"
-          ],
-          "status": "validated"
-        },
-        "reason": "no_physical_device",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.left-slingshot.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.229376,
+            "y": 0.735796
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -4237,7 +4304,7 @@
       "kind": "coil",
       "label": "Right Slingshot",
       "physical": {
-        "notes": "Manual/schematic Ref./S5 (Right Slingshot). Retained script: SolCallback(5) commented out (\"RightSling); passive rubber slingshot, no coil object. No coil object in the retained table; VPX models this as a passive rubber slingshot wall (see the corresponding switch's projection note).",
+        "notes": "Manual/schematic Ref./S5 (Right Slingshot). Retained script: SolCallback(5) commented out (\"RightSling); passive rubber slingshot, no coil object. The physical slingshot coil (CL00109, callout 4/5 on the manual's printed page-82 playfield diagram). The retained table models the slingshot as a passive rubber wall with no coil object and binds no SolCallback, so the coordinate is a documented projection onto the wall assembly (see the placement note). Placement: Projected onto the Wall.RightSlingShot assembly's own drag-point centroid; the manual's printed page-82 playfield diagram marks callout 5 at the right slingshot coil position (balloon measures to (0.698, 0.754), within ~0.03).",
         "part_number": "CL00109"
       },
       "provenance": {
@@ -4250,15 +4317,23 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.capcom.big-bang-bar.1996",
-            "vpx-script.bbb-vpw-1-0"
-          ],
-          "status": "validated"
-        },
-        "reason": "no_physical_device",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.right-slingshot.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.674001,
+            "y": 0.733646
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -4324,7 +4399,7 @@
       "kind": "coil",
       "label": "4-Bank Reset",
       "physical": {
-        "notes": "Manual/schematic Ref./S7 (4-Bank Reset). Retained script: sol4Bank (DTRaise 17,18,19,20).",
+        "notes": "Manual/schematic Ref./S7 (4-Bank Reset). Retained script: sol4Bank (DTRaise 17,18,19,20). Placement: Projected onto the four 4-Bank drop targets' own switch positions (switches 17-20): one reset coil actuates the whole bank -- the retained script's sol4Bank raises all four targets in one pulse and the mechanism parts page documents one shared reset bar/coil -- so the placement set is the bank's four target positions, not a single coil-body coordinate.",
         "part_number": "CL00109"
       },
       "provenance": {
@@ -4342,7 +4417,9 @@
             "id": "device.4-bank-reset.effect.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.bbb-vpw-1-0"
+                "vpx-table.bbb-vpw-1-0",
+                "vpx-script.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
               ],
               "status": "validated"
             },
@@ -4355,7 +4432,9 @@
             "id": "device.4-bank-reset.effect.2",
             "provenance": {
               "source_refs": [
-                "vpx-table.bbb-vpw-1-0"
+                "vpx-table.bbb-vpw-1-0",
+                "vpx-script.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
               ],
               "status": "validated"
             },
@@ -4368,7 +4447,9 @@
             "id": "device.4-bank-reset.effect.3",
             "provenance": {
               "source_refs": [
-                "vpx-table.bbb-vpw-1-0"
+                "vpx-table.bbb-vpw-1-0",
+                "vpx-script.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
               ],
               "status": "validated"
             },
@@ -4381,7 +4462,9 @@
             "id": "device.4-bank-reset.effect.4",
             "provenance": {
               "source_refs": [
-                "vpx-table.bbb-vpw-1-0"
+                "vpx-table.bbb-vpw-1-0",
+                "vpx-script.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
               ],
               "status": "validated"
             },
@@ -4457,7 +4540,7 @@
       "kind": "coil",
       "label": "Left Flipper",
       "physical": {
-        "notes": "Manual/schematic Ref./S9 (Left Flipper). Retained script: SolCallback(9) commented out (\"SolLFlipper); native address unbound, see conflict.flipper-mirror-address-left-right-naming. Native SolCallback is commented out in the retained script; see conflict.flipper-mirror-address-left-right-naming.",
+        "notes": "Manual/schematic Ref./S9 (Left Flipper). Retained script: SolCallback(9) commented out (\"SolLFlipper); native address unbound -- the ROM drives this coil while the retained table animates the bat from key handlers (see outputs 45/47). The physical flipper coil. The retained script's native SolCallback is commented out and its symbolic flipper bindings resolve to never-written hold-side mirror addresses under the installed VPinMAME script library (see output 45/47), so the ROM drives this coil while the retained table animates the bat from its own key handlers. Placement: Projected onto the LeftFlipper table object's own pivot centre; the manual's printed page-82 playfield diagram marks callout 9 at the left flipper coil (balloon measures to (0.306, 0.863), within ~0.02).",
         "part_number": "CL00109"
       },
       "provenance": {
@@ -4466,6 +4549,25 @@
           "manual-schematic.capcom.big-bang-bar.1996",
           "vpx-script.bbb-vpw-1-0",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.left-flipper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.285743,
+            "y": 0.848334
+          }
         ],
         "status": "validated"
       }
@@ -4486,7 +4588,7 @@
       "kind": "coil",
       "label": "Right Flipper",
       "physical": {
-        "notes": "Manual/schematic Ref./S10 (Right Flipper). Retained script: SolCallback(10) commented out (\"SolRFlipper); native address unbound, see conflict.flipper-mirror-address-left-right-naming. Native SolCallback is commented out in the retained script; see conflict.flipper-mirror-address-left-right-naming.",
+        "notes": "Manual/schematic Ref./S10 (Right Flipper). Retained script: SolCallback(10) commented out (\"SolRFlipper); native address unbound -- see outputs 45/47. The physical flipper coil. The retained script's native SolCallback is commented out and its symbolic flipper bindings resolve to never-written hold-side mirror addresses under the installed VPinMAME script library (see output 45/47), so the ROM drives this coil while the retained table animates the bat from its own key handlers. Placement: Projected onto the RightFlipper table object's own pivot centre; the manual's printed page-82 playfield diagram marks callout 10 at the right flipper coil (balloon measures to (0.633, 0.863), within ~0.02).",
         "part_number": "CL00109"
       },
       "provenance": {
@@ -4495,6 +4597,25 @@
           "manual-schematic.capcom.big-bang-bar.1996",
           "vpx-script.bbb-vpw-1-0",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.right-flipper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.618202,
+            "y": 0.84836
+          }
         ],
         "status": "validated"
       }
@@ -4515,7 +4636,7 @@
       "kind": "coil",
       "label": "Upper Right Flipper",
       "physical": {
-        "notes": "Manual/schematic Ref./S11 (Upper Right Flipper). Retained script: SolCallback(11) commented out (\"SolURFlipper); unbound anywhere in the retained script. Native SolCallback is commented out in the retained script; see conflict.flipper-mirror-address-left-right-naming.",
+        "notes": "Manual/schematic Ref./S11 (Upper Right Flipper). Retained script: SolCallback(11) commented out (\"SolURFlipper); unbound anywhere in the retained script. The physical flipper coil. The retained script's native SolCallback is commented out and its symbolic flipper bindings resolve to never-written hold-side mirror addresses under the installed VPinMAME script library (see output 45/47), so the ROM drives this coil while the retained table animates the bat from its own key handlers. Placement: Projected onto the RightFlipper1 table object's own pivot centre (the upper-right flipper's own bat, positioned mid-playfield); the manual's printed page-82 playfield diagram marks callout 11 at the upper-right flipper coil on the right side (balloon measures to (0.824, 0.491), within ~0.03 of this pivot).",
         "part_number": "CL00109"
       },
       "provenance": {
@@ -4524,6 +4645,25 @@
           "manual-schematic.capcom.big-bang-bar.1996",
           "vpx-script.bbb-vpw-1-0",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.upper-right-flipper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.827363,
+            "y": 0.457798
+          }
         ],
         "status": "validated"
       }
@@ -4638,7 +4778,7 @@
       "kind": "coil",
       "label": "Ramp Diverter 1",
       "physical": {
-        "notes": "Manual/schematic Ref./S14 (Ramp Diverter 1). Retained script: SolRDivert1 (DivTubef.RotateToEnd/DivTube.isDropped). The retained table's rotating gate-arm object (DivTubef/DivTube2f, a Flipper-type primitive) and its associated drop-wall panel object(s) (DivTube/DivTube1, DivTube2) report wildly inconsistent raw positions (front-apron vs rear/top of the playfield) for what the script treats as one mechanism; neither half is promoted to a validated placement. See conflict.ramp-diverter-geometry-inconsistent.",
+        "notes": "Manual/schematic Ref./S14 (Ramp Diverter 1). Retained script: SolRDivert1 (DivTubef.RotateToEnd/DivTube.isDropped). The physical diverter coil. The retained tables' Flipper-type DivTubef/DivTube2f rotation helpers are is_visible=false animation primitives parked at the front apron in both recreations and are excluded from placement consideration; the drop-wall panels are the physical mechanism (see the placement note and the printed page-82 diagram's callouts 14/15 at the playfield's rear). Placement: Two-panel drop wall for Ramp Diverter 1; coordinates are the retained table's own Wall.DivTube and Wall.DivTube1 drag-point centroids. The manual's printed page-82 playfield diagram marks callout 14 at the same rear-left position (balloon (0.133, 0.067), within ~0.02-0.04 of both panels).",
         "part_number": "CL00109"
       },
       "provenance": {
@@ -4647,6 +4787,39 @@
           "manual-schematic.capcom.big-bang-bar.1996",
           "vpx-script.bbb-vpw-1-0",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.ramp-diverter-1.effect.1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.111295,
+            "y": 0.113743
+          },
+          {
+            "id": "device.ramp-diverter-1.effect.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.129284,
+            "y": 0.099031
+          }
         ],
         "status": "validated"
       }
@@ -4667,7 +4840,7 @@
       "kind": "coil",
       "label": "Ramp Diverter 2",
       "physical": {
-        "notes": "Manual/schematic Ref./S15 (Ramp Diverter 2). Retained script: SolRDivert2 (DivTube2f.RotateToEnd/DivTube2.isDropped). The retained table's rotating gate-arm object (DivTubef/DivTube2f, a Flipper-type primitive) and its associated drop-wall panel object(s) (DivTube/DivTube1, DivTube2) report wildly inconsistent raw positions (front-apron vs rear/top of the playfield) for what the script treats as one mechanism; neither half is promoted to a validated placement. See conflict.ramp-diverter-geometry-inconsistent.",
+        "notes": "Manual/schematic Ref./S15 (Ramp Diverter 2). Retained script: SolRDivert2 (DivTube2f.RotateToEnd/DivTube2.isDropped). The physical diverter coil. The retained tables' Flipper-type DivTubef/DivTube2f rotation helpers are is_visible=false animation primitives parked at the front apron in both recreations and are excluded from placement consideration; the drop-wall panels are the physical mechanism (see the placement note and the printed page-82 diagram's callouts 14/15 at the playfield's rear). Placement: Drop wall for Ramp Diverter 2; the coordinate is the earlier retained recreation's Wall.DivTube2 drag-point centroid, which agrees with the manual's printed page-82 callout 15 (balloon (0.258, 0.034), within ~0.034). The VPW v1.0 table's same-named wall sits at (0.433, 0.032), ~0.17 normalized units right of both the manual's callout and this recreation, and is disclosed as divergent retained geometry rather than promoted.",
         "part_number": "CL00109"
       },
       "provenance": {
@@ -4676,6 +4849,25 @@
           "manual-schematic.capcom.big-bang-bar.1996",
           "vpx-script.bbb-vpw-1-0",
           "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "device.ramp-diverter-2.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.bbb-archive-2013",
+                "manual.capcom.big-bang-bar.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.291495,
+            "y": 0.023552
+          }
         ],
         "status": "validated"
       }
@@ -4743,7 +4935,7 @@
       "kind": "coil",
       "label": "3-Bank Reset",
       "physical": {
-        "notes": "Manual/schematic Ref./S17 (3-Bank Reset). Retained script: sol3Bank (DTRaise 49,50,51).",
+        "notes": "Manual/schematic Ref./S17 (3-Bank Reset). Retained script: sol3Bank (DTRaise 49,50,51). Placement: Projected onto the three 3-Bank drop targets' own switch positions (switches 49-51): one reset coil actuates the whole bank (sol3Bank; the mechanism parts page's shared reset callout), so the placement set is the bank's three target positions.",
         "part_number": "CL00109"
       },
       "provenance": {
@@ -4761,7 +4953,9 @@
             "id": "device.3-bank-reset.effect.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.bbb-vpw-1-0"
+                "vpx-table.bbb-vpw-1-0",
+                "vpx-script.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
               ],
               "status": "validated"
             },
@@ -4774,7 +4968,9 @@
             "id": "device.3-bank-reset.effect.2",
             "provenance": {
               "source_refs": [
-                "vpx-table.bbb-vpw-1-0"
+                "vpx-table.bbb-vpw-1-0",
+                "vpx-script.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
               ],
               "status": "validated"
             },
@@ -4787,7 +4983,9 @@
             "id": "device.3-bank-reset.effect.3",
             "provenance": {
               "source_refs": [
-                "vpx-table.bbb-vpw-1-0"
+                "vpx-table.bbb-vpw-1-0",
+                "vpx-script.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
               ],
               "status": "validated"
             },
@@ -4816,7 +5014,7 @@
       "kind": "coil",
       "label": "Star Bumper Left",
       "physical": {
-        "notes": "Manual/schematic Ref./S18 (Star Bumper Left). Retained script: SolCallback(18) commented out (\"Left Bumper); candidate Bumper1, order-inferred only. Bumper1/Bumper2/Bumper3 VPX-object correspondence is inferred only from the order SolCallback comments and Bumper1_Hit/Bumper2_Hit/Bumper3_Hit subs appear in the retained script, not independently confirmed from a per-bumper wiring page.",
+        "notes": "Manual/schematic Ref./S18 (Star Bumper Left). Retained script: SolCallback(18) commented out (\"Left Bumper); candidate Bumper1, order-inferred only. Star-bumper identity is validated by the manual's own printed page-82 playfield diagram, which marks callout 18 leftmost, 20 upper-right and 19 lower-centre -- matching this definition's switch/lamp geometry for the same three bumpers (switches 54/55/56) and both retained recreations' bumper object positions. Which Bumper1/Bumper2/Bumper3 VPX object each callback would have driven is a retained-table detail only (the script comments these callbacks out).",
         "part_number": "CL00109"
       },
       "provenance": {
@@ -4863,7 +5061,7 @@
       "kind": "coil",
       "label": "Star Bumper Middle",
       "physical": {
-        "notes": "Manual/schematic Ref./S19 (Star Bumper Middle). Retained script: SolCallback(19) commented out (\"Middle Bumper); candidate Bumper2, order-inferred only. Bumper1/Bumper2/Bumper3 VPX-object correspondence is inferred only from the order SolCallback comments and Bumper1_Hit/Bumper2_Hit/Bumper3_Hit subs appear in the retained script, not independently confirmed from a per-bumper wiring page.",
+        "notes": "Manual/schematic Ref./S19 (Star Bumper Middle). Retained script: SolCallback(19) commented out (\"Middle Bumper); candidate Bumper2, order-inferred only. Star-bumper identity is validated by the manual's own printed page-82 playfield diagram, which marks callout 18 leftmost, 20 upper-right and 19 lower-centre -- matching this definition's switch/lamp geometry for the same three bumpers (switches 54/55/56) and both retained recreations' bumper object positions. Which Bumper1/Bumper2/Bumper3 VPX object each callback would have driven is a retained-table detail only (the script comments these callbacks out).",
         "part_number": "CL00109"
       },
       "provenance": {
@@ -4910,7 +5108,7 @@
       "kind": "coil",
       "label": "Star Bumper Right",
       "physical": {
-        "notes": "Manual/schematic Ref./S20 (Star Bumper Right). Retained script: SolCallback(20) commented out (\"Right Bumper); candidate Bumper3, order-inferred only. Bumper1/Bumper2/Bumper3 VPX-object correspondence is inferred only from the order SolCallback comments and Bumper1_Hit/Bumper2_Hit/Bumper3_Hit subs appear in the retained script, not independently confirmed from a per-bumper wiring page.",
+        "notes": "Manual/schematic Ref./S20 (Star Bumper Right). Retained script: SolCallback(20) commented out (\"Right Bumper); candidate Bumper3, order-inferred only. Star-bumper identity is validated by the manual's own printed page-82 playfield diagram, which marks callout 18 leftmost, 20 upper-right and 19 lower-centre -- matching this definition's switch/lamp geometry for the same three bumpers (switches 54/55/56) and both retained recreations' bumper object positions. Which Bumper1/Bumper2/Bumper3 VPX object each callback would have driven is a retained-table detail only (the script comments these callbacks out).",
         "part_number": "CL00109"
       },
       "provenance": {
@@ -4957,7 +5155,7 @@
       "kind": "flasher",
       "label": "Backbox Left Flasher",
       "physical": {
-        "notes": "Manual/schematic Ref./S21 (Backbox Left Flasher). Retained script: Flash1 (Lampz.state(161), Light F21).",
+        "notes": "Manual/schematic Ref./S21 (Backbox Left Flasher). Retained script: Flash1 (Lampz.state(161), Light F21). Backbox flasher (callout 21 in the backbox box of the manual's printed page-82 playfield diagram, directly beside its Backbox Right partner's shared callout 22). The retained table's F21 Light object sits at a playfield-coordinate render proxy (rear-left of the playfield), which is presentation geometry, not the physical socket; the manual controls the physical and spatial classification and no playfield coordinate is promoted.",
         "part_number": "LP00101"
       },
       "provenance": {
@@ -4969,23 +5167,18 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.backbox"
+      ],
       "spatial": {
-        "placements": [
-          {
-            "id": "device.backbox-left-flasher.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.bbb-vpw-1-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.062763,
-            "y": 0.088922
-          }
-        ],
-        "status": "validated"
+        "provenance": {
+          "source_refs": [
+            "manual.capcom.big-bang-bar.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       }
     },
     {
@@ -5004,8 +5197,8 @@
       "kind": "flasher",
       "label": "Tube Dancer & Backbox Right Flasher",
       "physical": {
-        "notes": "Manual/schematic Ref./S22 (Tube Dancer & Backbox Right Flasher). Retained script: Flash2 (Lampz.state(162), Light F22). Schematic sheet 7 draws S22 feeding TWO device symbols in parallel from one connector pin (VIO/BLU, J20/J21 pin 6): the Tube Dancer effect and the Backbox Right flasher, resolving the manual's page-82 unnumbered 'BACKBOX RIGHT (FLASHER)' row (it shares this address with 'TUBE DANCER' rather than being a numbering gap). Both S22 symbols are drawn as the circular bulb shape used for lamps/flashers elsewhere on the sheet, not the coil symbol S1-S20/S27-S29 use -- yet the Tube Lady Assembly mechanism parts page shows a genuine coil (item 1A) as part of the same mechanism. This construction question is unresolved; see conflict.solenoid-22-shared-device-construction.",
-        "part_number": "CL00109"
+        "notes": "Manual/schematic Ref./S22 (Tube Dancer & Backbox Right Flasher). Retained script: Flash2 (Lampz.state(162), Light F22). Schematic sheet 7 draws S22 feeding TWO device symbols in parallel from one connector pin (VIO/BLU, J20/J21 pin 6): the Tube Dancer flasher effect at the playfield tube and the Backbox Right flasher, resolving the manual's page-82 unnumbered 'BACKBOX RIGHT (FLASHER)' row (it shares this address with 'TUBE DANCER' rather than being a numbering gap). Both symbols are the circular bulb shape, PinMAME's MACHINE_INIT types all of 21-26 as flasher-bulb outputs, and both retained recreations bind 22 to a flasher lamp only. The Tube Lady Assembly's own parts list (printed page 109) settles the construction question definitively: the assembly contains NO coil -- sub-assembly 1 is 'ASSEMBLY, MOTOR, TUBE LADY' (1A SM00221 COUPLING, SHAFT; 1F MR00108 MOTOR, 12 VDC, 65 RPM -- the same part number the solenoid table prints for the Ref. 30/31/32 motors) driving the 2E belt assembly and 2F figure through the 2G clear tube. The location table's CL00109 coil part number printed for Ref. 22 is a manual-internal error against its own parts list, recorded here rather than resolved by inventing a second device. Address 22 is a flasher output driving two bulb locations: this playfield tube-dancer flasher, and the backbox-right flasher (a backbox device with no playfield coordinate; callout 22 appears in both the backbox box and the playfield circle on the printed page-82 diagram).",
+        "part_number": "LP00101"
       },
       "provenance": {
         "source_refs": [
@@ -5427,7 +5620,7 @@
       "kind": "motor",
       "label": "Aliens Forward Motor",
       "physical": {
-        "notes": "Manual/schematic Ref./S31 (Aliens Forward Motor). Retained script: SolAlienForward (sets 'forward' flag consumed by ALockTimer_timer).",
+        "notes": "Manual/schematic Ref./S31 (Aliens Forward Motor). Retained script: SolAlienForward (sets 'forward' flag consumed by ALockTimer_timer). Placement: Projected onto the two rotating alien figures' own anchors: the forward motor output drives the same reversible mechanism whose encoder the switch-57 opto senses, so the placement set is the two figure anchors.",
         "part_number": "MR00108"
       },
       "provenance": {
@@ -5445,7 +5638,8 @@
             "id": "device.aliens-forward-motor.effect.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.bbb-vpw-1-0"
+                "vpx-table.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
               ],
               "status": "validated"
             },
@@ -5458,7 +5652,8 @@
             "id": "device.aliens-forward-motor.effect.2",
             "provenance": {
               "source_refs": [
-                "vpx-table.bbb-vpw-1-0"
+                "vpx-table.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
               ],
               "status": "validated"
             },
@@ -5487,7 +5682,7 @@
       "kind": "motor",
       "label": "Aliens Reverse Motor",
       "physical": {
-        "notes": "Manual/schematic Ref./S32 (Aliens Reverse Motor). Retained script: SolAlienReverse (sets 'reverse' flag, same mechanism as 31).",
+        "notes": "Manual/schematic Ref./S32 (Aliens Reverse Motor). Retained script: SolAlienReverse (sets 'reverse' flag, same mechanism as 31). Placement: Projected onto the two rotating alien figures' own anchors: the reverse motor output drives the same reversible mechanism as solenoid 31, so both direction records carry the same two figure anchors.",
         "part_number": "MR00108"
       },
       "provenance": {
@@ -5505,7 +5700,8 @@
             "id": "device.aliens-reverse-motor.effect.1",
             "provenance": {
               "source_refs": [
-                "vpx-table.bbb-vpw-1-0"
+                "vpx-table.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
               ],
               "status": "validated"
             },
@@ -5518,7 +5714,8 @@
             "id": "device.aliens-reverse-motor.effect.2",
             "provenance": {
               "source_refs": [
-                "vpx-table.bbb-vpw-1-0"
+                "vpx-table.bbb-vpw-1-0",
+                "manual.capcom.big-bang-bar.1996"
               ],
               "status": "validated"
             },
@@ -5547,7 +5744,7 @@
       "kind": "virtual",
       "label": "Upper Right Flip Power Mirror",
       "physical": {
-        "notes": "Mirror of physical solenoid 11 (Upper Right Flipper): src/wpc/capcom.c io_w case 0x20000d writes core_write_pwm_output(CORE_MODOUT_SOL0+sURFlipPow-1,1,(soldata>>10)&0x01), a genuine flipper-to-flipper correspondence (both name the Upper Right Flipper). It receives live data whenever address 11 does, but address 11 itself has no live SolCallback binding anywhere in the retained script (SolCallback(11)=\"SolURFlipper\" is commented out), so this address is always zero during actual play with this table."
+        "notes": "Mirror of physical solenoid 11 (Upper Right Flipper): src/wpc/capcom.c io_w case 0x20000d writes core_write_pwm_output(CORE_MODOUT_SOL0+sURFlipPow-1,1,(soldata>>10)&0x01), a genuine flipper-to-flipper correspondence (both name the Upper Right Flipper). It receives live data whenever address 11 does; the retained script binds no native SolCallback for address 11 (SolCallback(11)=\"SolURFlipper\" is commented out), which is a statement about that table's bindings, not about the address's availability."
       },
       "provenance": {
         "source_refs": [
@@ -5585,7 +5782,7 @@
       "kind": "virtual",
       "label": "Unused Upper Right Flip Hold Mirror",
       "physical": {
-        "notes": "sLRFlip (CORE_FIRSTUFLIPSOL+1=34, the 'hold' half of the upper-right pair); src/wpc/capcom.c io_w never writes any PWM value to this address for the cc family, so it is permanently zero regardless of what fires on address 11 or 33."
+        "notes": "sURFlip (CORE_FIRSTUFLIPSOL+1=34, the 'hold' half of the upper-right pair); src/wpc/capcom.c io_w never writes any PWM value to this address for the cc family, so it is permanently zero regardless of what fires on address 11 or 33."
       },
       "provenance": {
         "source_refs": [
@@ -5614,7 +5811,7 @@
           "value": "35"
         }
       ],
-      "availability": "unused",
+      "availability": "used",
       "binding": {
         "device": 35,
         "group": "pinmame.output.solenoid"
@@ -5623,7 +5820,7 @@
       "kind": "virtual",
       "label": "Eject Hole Position Mirror (Mislabeled Upper Left Flip Power)",
       "physical": {
-        "notes": "src/wpc/capcom.c's io_w mirror code unconditionally treats physical addresses 9/10/11/12 as the four flipper-power circuits and writes address 12's live state into sULFlipPow=35 (core_write_pwm_output(CORE_MODOUT_SOL0+sULFlipPow-1,1,(soldata>>11)&0x01)) -- but Big Bang Bar wires physical address 12 to Eject Hole (S12, confirmed by both the manual and schematic sheet 7), not an upper-left flipper; this machine has no upper-left flipper circuit anywhere in the S1-S32 table. Address 35 therefore mirrors the Eject Hole coil's own state under PinMAME's generic 'Upper Left Flip Power' name purely as an accident of the mirror code's fixed positional assumption, not a genuine flipper mirror; see conflict.solenoid-35-eject-hole-mirror-mislabeled."
+        "notes": "src/wpc/capcom.c's io_w mirror code unconditionally treats physical addresses 9/10/11/12 as the four flipper-power circuits and writes address 12's live state into sULFlipPow=35 (core_write_pwm_output(CORE_MODOUT_SOL0+sULFlipPow-1,1,(soldata>>11)&0x01)) -- but Big Bang Bar wires physical address 12 to Eject Hole (S12, confirmed by both the manual and schematic sheet 7), not an upper-left flipper; this machine has no upper-left flipper circuit anywhere in the S1-S32 table. Address 35 therefore mirrors the Eject Hole coil's own state under PinMAME's generic 'Upper Left Flip Power' name purely as an accident of the mirror code's fixed positional assumption, not a genuine flipper mirror. The single write site makes the mirror relation structural: every value 35 ever publishes is bit 11 of the same soldata word that drives physical 12. The emulator-facing name is the driver's own admitted defect ('does not correspond to manuals or any other reference'); the machine's wiring was never in disagreement."
       },
       "provenance": {
         "source_refs": [
@@ -6004,7 +6201,7 @@
       "kind": "virtual",
       "label": "Left Flipper Power Mirror",
       "physical": {
-        "notes": "sLRFlipPow (CORE_FIRSTLFLIPSOL+0=45). src/wpc/capcom.c io_w case 0x20000d mirrors physical solenoid 9 (S9, 'L. Flipper') into this address (core_write_pwm_output(CORE_MODOUT_SOL0+sLRFlipPow-1,1,(soldata>>8)&0x01)) -- the only live source of data for this address. The retained script's active SolCallback(sLRFlipper)=\"SolRFlipper\" binding invokes the visual/sound handler named for the RIGHT flipper on an address that mirrors the LEFT physical circuit; see conflict.flipper-mirror-address-left-right-naming."
+        "notes": "sLRFlipPow (CORE_FIRSTLFLIPSOL+0=45). src/wpc/capcom.c io_w case 0x20000d mirrors physical solenoid 9 (S9, 'L. Flipper') into this address (core_write_pwm_output(CORE_MODOUT_SOL0+sLRFlipPow-1,1,(soldata>>8)&0x01)) -- the only live source of data for this address. The retained script's symbolic SolCallback(sLRFlipper)=\"SolRFlipper\" binding resolves against the installed VPinMAME script library's own constants (core.vbs: sLRFlipper=46, sLLFlipper=48, sURFlipper=34, sULFlipper=36 -- the library's flipper-solenoid symbols name the hold-side addresses; see vpm-script-library-constants.md), so that binding listens on hold address 46, which capcom.c never writes -- the retained table's flipper callbacks receive no emulator data at all under this library revision (a consumed-table/environment defect; the table's flippers animate from its own key handlers while the ROM drives physical 9/10 directly). PinMAME's 'Lower RIGHT Flip Power' constant name for address 45 is the driver's own admitted mirror-naming defect: the address carries the physical LEFT circuit, and this definition binds it accordingly."
       },
       "provenance": {
         "source_refs": [
@@ -6017,23 +6214,14 @@
         "internal.duplicate.mirror"
       ],
       "spatial": {
-        "placements": [
-          {
-            "id": "device.left-flipper-power-mirror.effect",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.bbb-vpw-1-0",
-                "vpx-script.bbb-vpw-1-0"
-              ],
-              "status": "validated"
-            },
-            "role": "effect",
-            "space": "playfield",
-            "x": 0.285743,
-            "y": 0.848334
-          }
-        ],
-        "status": "validated"
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -6090,7 +6278,7 @@
       "kind": "virtual",
       "label": "Right Flipper Power Mirror",
       "physical": {
-        "notes": "sLLFlipPow (CORE_FIRSTLFLIPSOL+2=47). src/wpc/capcom.c io_w case 0x20000d mirrors physical solenoid 10 (S10, 'R. Flipper') into this address (core_write_pwm_output(CORE_MODOUT_SOL0+sLLFlipPow-1,1,(soldata>>9)&0x01)) -- the only live source of data for this address. The retained script's active SolCallback(sLLFlipper)=\"SolLFlipper\" binding invokes the visual/sound handler named for the LEFT flipper on an address that mirrors the RIGHT physical circuit; see conflict.flipper-mirror-address-left-right-naming."
+        "notes": "sLLFlipPow (CORE_FIRSTLFLIPSOL+2=47). src/wpc/capcom.c io_w case 0x20000d mirrors physical solenoid 10 (S10, 'R. Flipper') into this address (core_write_pwm_output(CORE_MODOUT_SOL0+sLLFlipPow-1,1,(soldata>>9)&0x01)) -- the only live source of data for this address. The retained script's symbolic SolCallback(sLLFlipper)=\"SolLFlipper\" binding resolves against the installed VPinMAME script library's own constants (core.vbs: sLLFlipper=48, i.e. hold address 48, which capcom.c never writes; see vpm-script-library-constants.md), so it receives no emulator data under this library revision. PinMAME's 'Lower LEFT Flip Power' constant name for address 47 is the driver's own admitted mirror-naming defect: the address carries the physical RIGHT circuit, and this definition binds it accordingly."
       },
       "provenance": {
         "source_refs": [
@@ -6103,23 +6291,14 @@
         "internal.duplicate.mirror"
       ],
       "spatial": {
-        "placements": [
-          {
-            "id": "device.right-flipper-power-mirror.effect",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.bbb-vpw-1-0",
-                "vpx-script.bbb-vpw-1-0"
-              ],
-              "status": "validated"
-            },
-            "role": "effect",
-            "space": "playfield",
-            "x": 0.618202,
-            "y": 0.84836
-          }
-        ],
-        "status": "validated"
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "virtual",
+        "status": "not_applicable"
       }
     },
     {
@@ -6291,8 +6470,9 @@
       "kind": "lamp",
       "label": "Coin Door 1&2",
       "physical": {
-        "notes": "Printed lamp-matrix address 1 ('Coin Door 1&2'), bulb type #259.",
-        "part_number": "LP00113"
+        "notes": "Printed lamp-matrix address 1 ('Coin Door 1&2'), bulb type #259. Coin-door lamp pair 'Coin Door 1&2' (#259, LP00113): cabinet coin-door hardware. The schematic's matrix-A sheet marks this address X2 -- two bulbs. The retained table's object sits far outside the playfield bounds (a room-render glow proxy) and is excluded as a modeling artifact rather than promoted.",
+        "part_number": "LP00113",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6301,24 +6481,20 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "cabinet.coin-door"
+      ],
       "spatial": {
-        "placements": [
-          {
-            "id": "lamp.matrix-1.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.bbb-vpw-1-0",
-                "vpx-script.bbb-vpw-1-0"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.903003,
-            "y": 0.849605
-          }
-        ],
-        "status": "validated"
+        "provenance": {
+          "source_refs": [
+            "manual.capcom.big-bang-bar.1996",
+            "vpx-script.bbb-vpw-1-0",
+            "manual-schematic.capcom.big-bang-bar.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       }
     },
     {
@@ -6337,8 +6513,9 @@
       "kind": "lamp",
       "label": "Coin Door 3&4",
       "physical": {
-        "notes": "Printed lamp-matrix address 2 ('Coin Door 3&4'), bulb type #259. The retained table's object (raw position far outside the left=0 top=0 right=952 bottom=2162 playfield bounds) normalizes outside 0..1; excluded from validated placement as a table-modeling anomaly rather than clamped or reassigned.",
-        "part_number": "LP00113"
+        "notes": "Printed lamp-matrix address 2 ('Coin Door 3&4'), bulb type #259. Coin-door lamp pair 'Coin Door 3&4' (#259, LP00113): cabinet coin-door hardware. The schematic's matrix-A sheet marks this address X2 -- two bulbs. The retained table's object sits far outside the playfield bounds (a room-render glow proxy) and is excluded as a modeling artifact rather than promoted.",
+        "part_number": "LP00113",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6346,6 +6523,21 @@
           "vpx-script.bbb-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "cabinet.coin-door"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.capcom.big-bang-bar.1996",
+            "vpx-script.bbb-vpw-1-0",
+            "manual-schematic.capcom.big-bang-bar.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       }
     },
     {
@@ -6364,7 +6556,7 @@
       "kind": "lamp",
       "label": "Start",
       "physical": {
-        "notes": "Printed lamp-matrix address 3 ('Start'), bulb type #555. No Lampz.MassAssign(N) entry exists for this address in the retained table (independently re-checked against every gameitems/*.json filename); the manual documents this as a real, fitted device, but this recreation has no bound VPX object and therefore no coordinate.",
+        "notes": "Printed lamp-matrix address 3 ('Start'), bulb type #555. The START lamp (#555, LP00100) illuminates the cabinet start button, not a playfield insert: the retained script binds Lampz.Callback(03) to the PinCab_Start_Button object ('For VR StartButton Lighting'), the manual's lamp table lists it directly beside the two coin-door lamp rows, and neither retained recreation models a playfield START insert nor does any retained photograph of the machine show one.",
         "part_number": "LP00100"
       },
       "provenance": {
@@ -6373,6 +6565,21 @@
           "vpx-script.bbb-vpw-1-0"
         ],
         "status": "validated"
+      },
+      "roles": [
+        "cabinet.start-lamp"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "manual.capcom.big-bang-bar.1996",
+            "vpx-script.bbb-vpw-1-0",
+            "manual-schematic.capcom.big-bang-bar.1996"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
       }
     },
     {
@@ -7867,13 +8074,32 @@
       "kind": "lamp",
       "label": "Alien G.I. 2",
       "physical": {
-        "notes": "Printed lamp-matrix address 38 ('Alien G.I. 2'), bulb type #44. No Lampz.MassAssign(N) entry exists for this address in the retained table (independently re-checked against every gameitems/*.json filename); the manual documents this as a real, fitted device, but this recreation has no bound VPX object and therefore no coordinate.",
+        "notes": "Printed lamp-matrix address 38 ('Alien G.I. 2'), bulb type #44. Placement: Coordinate from the earlier retained recreation's Light.l38 (822.0, 40.75 in its own 952x2162 playfield space). The VPW v1.0 table models no object for this address; the position agrees with the Alien G.I. strip the primary table does model (lamp 37 at (0.778, 0.093), lamp 39 at (0.943, 0.060)), completing the same rear-right alien-area row the manual's lamp table names Alien G.I. 1/2/3.",
         "part_number": "LP00104"
       },
       "provenance": {
         "source_refs": [
           "manual.capcom.big-bang-bar.1996",
           "vpx-script.bbb-vpw-1-0"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-38.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.bbb-archive-2013",
+                "manual.capcom.big-bang-bar.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.863445,
+            "y": 0.018851
+          }
         ],
         "status": "validated"
       }
@@ -8875,13 +9101,32 @@
       "kind": "lamp",
       "label": "(Electro) Black Light",
       "physical": {
-        "notes": "Printed lamp-matrix address 62 ('(Electro) Black Light'), bulb type #44. The retained table's object (raw position far outside the left=0 top=0 right=952 bottom=2162 playfield bounds) normalizes outside 0..1; excluded from validated placement as a table-modeling anomaly rather than clamped or reassigned.",
+        "notes": "Printed lamp-matrix address 62 ('(Electro) Black Light'), bulb type #44. Placement: Documented projection: centroid of the three (Electro) Ramp feature lamps the retained table models (lamp 44 (0.768, 0.043), lamp 45 (0.945, 0.081), lamp 46 (0.930, 0.120)). The manual's lamp table names address 62 '(ELECTRO) BLACK LIGHT' (#44, LP00109) for that feature; the exact tube/socket position is not surveyed and neither retained recreation models a usable object (the VPW table's L62 is an out-of-bounds playfield-sized wash mesh, excluded as a modeling artifact).",
         "part_number": "LP00109"
       },
       "provenance": {
         "source_refs": [
           "manual.capcom.big-bang-bar.1996",
           "vpx-script.bbb-vpw-1-0"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-62.emitter",
+            "provenance": {
+              "source_refs": [
+                "manual.capcom.big-bang-bar.1996",
+                "vpx-table.bbb-vpw-1-0"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.880954,
+            "y": 0.081206
+          }
         ],
         "status": "validated"
       }
@@ -9984,8 +10229,9 @@
       "kind": "lamp",
       "label": "Free Shot (Outlane L.)",
       "physical": {
-        "notes": "Printed lamp-matrix address 87 ('Free Shot (Outlane L.)'), bulb type #44.",
-        "part_number": "LP00104"
+        "notes": "Printed lamp-matrix address 87 ('Free Shot (Outlane L.)'), bulb type #44. The schematic's matrix-B sheet marks this address X2 -- two #44 bulbs in parallel (the sheet set's own detail legend shows the two-bulb circuit); the retained table models one Light object at the free-shot outlane area, so the placement records the modelled socket and the second parallel bulb's socket position is not individually surveyed.",
+        "part_number": "LP00104",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -11721,13 +11967,33 @@
       "kind": "lamp",
       "label": "Dance Floor",
       "physical": {
-        "notes": "Printed lamp-matrix address 125 ('Dance Floor'), bulb type #44. No Lampz.MassAssign(N) entry exists for this address in the retained table (independently re-checked against every gameitems/*.json filename); the manual documents this as a real, fitted device, but this recreation has no bound VPX object and therefore no coordinate.",
-        "part_number": "LP00104"
+        "notes": "Printed lamp-matrix address 125 ('Dance Floor'), bulb type #44. Placement: Coordinate from the earlier retained recreation's Light.l125 (478.0625, 462.0935 in its own 952x2162 playfield space). The VPW v1.0 table models no object for this address; the position sits inside the dance-floor feature between the star bumpers, beside that feature's own flasher (solenoid 23 at (0.496, 0.216)), matching the manual's lamp-table name. The schematic's matrix-B sheet marks this address X2 -- two #44 bulbs share it; the recreation models one, so the second bulb's socket position is not individually surveyed.",
+        "part_number": "LP00104",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
           "manual.capcom.big-bang-bar.1996",
           "vpx-script.bbb-vpw-1-0"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "placements": [
+          {
+            "id": "lamp.matrix-125.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.bbb-archive-2013",
+                "manual.capcom.big-bang-bar.1996"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.502167,
+            "y": 0.213736
+          }
         ],
         "status": "validated"
       }
@@ -11894,6 +12160,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "service.cpu-diagnostic"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -11929,6 +12198,9 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "service.sound-diagnostic"
+      ],
       "spatial": {
         "provenance": {
           "source_refs": [
@@ -11971,7 +12243,7 @@
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -12006,7 +12278,7 @@
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -12041,7 +12313,7 @@
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -12076,7 +12348,7 @@
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -12111,7 +12383,7 @@
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     },
@@ -12146,7 +12418,7 @@
           ],
           "status": "validated"
         },
-        "reason": "unused",
+        "reason": "virtual",
         "status": "not_applicable"
       }
     }
@@ -12235,6 +12507,18 @@
           "transcribed_by": "curator, read from the rendered page"
         },
         {
+          "id": "excerpt.big-bang-bar.solenoid-location-diagram",
+          "image": "evidence/excerpts/capcom.big-bang-bar.1996/solenoid-location-diagram.webp",
+          "image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 86, crop box 0.47,0.045,0.99,0.93, scanned page rendered at its native resolution (embedded image xref 382, 4960px across 8.27in), rendered at 600 dpi, grayscale, 2580x5828 WebP quality 80",
+          "image_sha256": "abd1e141f1eeee6ffc4211b0684d0992b6398670258ac1f0d29ceb79274c2abe",
+          "locator": "PDF page 86, printed page 82, the numbered playfield location drawing printed beside the Ref. table (backbox box above, playfield below; callouts 1-32)",
+          "method": "manual",
+          "path": "evidence/excerpts/capcom.big-bang-bar.1996/solenoid-location-diagram.md",
+          "reviewed": true,
+          "sha256": "39e0248f2197832818b2d568e106cb7fd01f06eefd93e8a35566929d669c5b72",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
           "id": "excerpt.big-bang-bar.opto-boards",
           "image": "evidence/excerpts/capcom.big-bang-bar.1996/opto-boards.png",
           "image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf PDF page 80, rendered at 300 dpi with pdftoppm, grayscale PNG",
@@ -12244,6 +12528,54 @@
           "path": "evidence/excerpts/capcom.big-bang-bar.1996/opto-boards.md",
           "reviewed": true,
           "sha256": "2b8c6c1e686270510340d9368badc9ad51f15eca9afbd07f6d17aa63cbc43eba",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.big-bang-bar.game-rules-spinner-opto",
+          "image": "evidence/excerpts/capcom.big-bang-bar.1996/game-rules-spinner-opto.webp",
+          "image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 10, crop box 0.05,0.3,0.72,0.5, scanned page rendered at its native resolution (embedded image xref 41, 4972px across 8.29in), rendered at 469 dpi, capped to 2600px wide, grayscale, 2601x1031 WebP quality 80",
+          "image_sha256": "c96dcdc39020f3ae80f6dd55feb371f23c95d0f6fa98075d194720d2a78d9f8e",
+          "locator": "PDF page 10, printed page 6, Playfield Features, SPINNER section",
+          "method": "manual",
+          "path": "evidence/excerpts/capcom.big-bang-bar.1996/game-rules-spinner-opto.md",
+          "reviewed": true,
+          "sha256": "3661064d09bb26a51c0fd50551132adad7f16575aecdb61db881206f571381bd",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.big-bang-bar.alien-mech-parts-list",
+          "image": "evidence/excerpts/capcom.big-bang-bar.1996/alien-mech-parts-list.webp",
+          "image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 109, crop box 0.08,0.075,0.93,0.375, scanned page rendered at its native resolution (embedded image xref 488, 4960px across 8.27in), rendered at 256 dpi, capped to 1800px wide, grayscale, 1801x845 WebP quality 60",
+          "image_sha256": "67b9e6beaa2e6b05439e925aa20c47f628538671a8eb57adfee9a45fda0c1cbd",
+          "locator": "PDF page 109, printed page 105, Alien Mech Assembly parts list (rows 1-10; the drawing whose callouts 2/3/5 sit beside the motor is printed page 104)",
+          "method": "manual",
+          "path": "evidence/excerpts/capcom.big-bang-bar.1996/alien-mech-parts-list.md",
+          "reviewed": true,
+          "sha256": "6928561988d19ded39c86ca3c0f9b0e7310c86dfe030136901a665390b0626e7",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.big-bang-bar.alien-motor-diagnostic-opto",
+          "image": "evidence/excerpts/capcom.big-bang-bar.1996/alien-motor-diagnostic-opto.webp",
+          "image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 46, crop box 0.07,0.06,0.93,0.15, scanned page rendered at its native resolution (embedded image xref 199, 4992px across 8.32in), rendered at 363 dpi, capped to 2600px wide, grayscale, 2601x360 WebP quality 80",
+          "image_sha256": "06c59d3bf9c1432d7ecbb9ac7128321071d3b49a64f00a77619fb4341a0d6d5c",
+          "locator": "PDF page 46, printed page 42, C2-02 Alien Motor failure messages",
+          "method": "manual",
+          "path": "evidence/excerpts/capcom.big-bang-bar.1996/alien-motor-diagnostic-opto.md",
+          "reviewed": true,
+          "sha256": "d524c62738710baa99c587ea1ef046e5316f21c516539e016d1bee4379c9ba77",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.big-bang-bar.tube-lady-parts-list",
+          "image": "evidence/excerpts/capcom.big-bang-bar.1996/tube-lady-parts-list.webp",
+          "image_derivation": "Capcom_1996_Big_Bang_Bar_Manual.pdf page 113, crop box 0.105,0.08,0.69,0.445, scanned page rendered at its native resolution (embedded image xref 506, 4960px across 8.27in), rendered at 285 dpi, capped to 1380px wide, grayscale, 1381x1144 WebP quality 48",
+          "image_sha256": "cc812e054e48f0cd485283dd6b550ec4f9b967e3df367be9a46cb5c6b70047a5",
+          "locator": "PDF page 113, printed page 109, Tube Lady Assembly parts list",
+          "method": "manual",
+          "path": "evidence/excerpts/capcom.big-bang-bar.1996/tube-lady-parts-list.md",
+          "reviewed": true,
+          "sha256": "cc0ae084feee1632e93944a028003dd5d3eec8d6214bbb8607142115b055d98a",
           "transcribed_by": "curator, read from the rendered page"
         }
       ],
@@ -12270,6 +12602,30 @@
           "reviewed": true,
           "sha256": "7b02fbdacd91ee25a82b540f9ee8822c92f97261c3548cfefeab086b5be0d4ca",
           "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.big-bang-bar.lamp-matrix-b-x2-quantities",
+          "image": "evidence/excerpts/capcom.big-bang-bar.1996/lamp-matrix-b-x2-quantities.webp",
+          "image_derivation": "Capcom_1996_Big_Bang_Bar_Schematic_Diagrams_paginated.pdf page 10, crop box 0.01,0.15,0.58,0.78, scanned page rendered at its native resolution (embedded image xref 43, 9984px across 16.64in), rendered at 274 dpi, capped to 2600px wide, grayscale, 2601x1896 WebP quality 80",
+          "image_sha256": "e94c2e72fdcc1bd7328ce8955624ce373eb611c80edbf5de031188e5b6dbf28d",
+          "locator": "Sheet 10/12, \"DIAGRAM, LAMP MATRIX \"B\" WIRING\", the complete matrix-B wiring grid (columns 11-88) carrying the sheet's two X2 bulb-quantity annotations (B-37 = public 87, B-85 = public 125)",
+          "method": "manual",
+          "path": "evidence/excerpts/capcom.big-bang-bar.1996/lamp-matrix-b-x2-quantities.md",
+          "reviewed": true,
+          "sha256": "609f76b4229cf162d2d298c1baefd97b6bf61aab5aa4d9ce13e1f71f43849117",
+          "transcribed_by": "curator, read from the rendered sheet"
+        },
+        {
+          "id": "excerpt.big-bang-bar.lamp-matrix-a-x2-quantities",
+          "image": "evidence/excerpts/capcom.big-bang-bar.1996/lamp-matrix-a-x2-quantities.webp",
+          "image_derivation": "Capcom_1996_Big_Bang_Bar_Schematic_Diagrams_paginated.pdf page 9, crop box 0.01,0.15,0.58,0.78, scanned page rendered at its native resolution (embedded image xref 39, 9984px across 16.64in), rendered at 274 dpi, capped to 2600px wide, grayscale, 2601x1896 WebP quality 80",
+          "image_sha256": "5992020bbcbbaeca8b815b3c47d1cbf90947bdccc954949f7b281470b308666d",
+          "locator": "Sheet 9/12, \"DIAGRAM, LAMP MATRIX \"A\" WIRING\", the complete matrix-A wiring grid (columns 11-88) carrying the sheet's two X2 bulb-quantity annotations (A-11 = public 1, A-12 = public 2, both coin-door lamp pairs) plus the sheet's two-bulb X2 detail legend",
+          "method": "manual",
+          "path": "evidence/excerpts/capcom.big-bang-bar.1996/lamp-matrix-a-x2-quantities.md",
+          "reviewed": true,
+          "sha256": "6e6ebeb8523d750a6c974e6b30fd08d1448f73ba713dca8c793f371327f53a7c",
+          "transcribed_by": "curator, read from the rendered sheet"
         }
       ],
       "id": "manual-schematic.capcom.big-bang-bar.1996",
@@ -12321,6 +12677,72 @@
       "license": "NOASSERTION",
       "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 8b1b7c6f35b98b0fecf1d88ac0746d81599fd8006189d58998c255de62fc2e90; 2874 files, 1091052346 bytes, produced with vpxtool from the retained table. Bounds are left=0 top=0 right=952 bottom=2162. A companion note (external:pinmame-review-artifacts/big-bang-bar/vpx-geometry.txt, SHA-256 e1339971328d98e365b6574733b08f8dc1849814806bb2973019482c93468ac5) records every object resolved and every address searched but not found.",
       "uri": "external:pinmame-vpx-sources/capcom/big-bang-bar-1996/extracted-vpxtool.manifest.json"
+    },
+    {
+      "attribution": "Big Bang Bar (Capcom 1996) community table authors",
+      "id": "vpx-table.bbb-archive-2013",
+      "kind": "vpx_table",
+      "license": "NOASSERTION",
+      "locator": "The earlier community recreation retained from the contributor's Tables Archive as corroboration evidence (a different implementation from VPW v1.0; its 99,636-byte script shares the DivTube object-naming family with VPW v1.0, so the two are NOT treated as independent for geometry consensus -- corroboration claims below are always paired with a manual citation). Bounds are left=0 top=0 right=952 bottom=2162, identical to the primary table. Cited for: the flasher binding of solenoid 22 ('setlamp 162' / Light.F22), the star-bumper switch identities (Bumper1_Hit->56, Bumper2_Hit->54, Bumper3_Hit->55 over the same three bumper-ring positions the primary table models), and the Wall.DivTube2 coordinate used for solenoid 15's placement. Cited gameitems are pinned by SHA-256 under external:pinmame-review-artifacts/big-bang-bar/corroboration-table-cited/.",
+      "original_filename": "Big Bang Bar  (Capcom 1996).vpx",
+      "rights": "NOASSERTION",
+      "sha256": "ba5d1384397b8a1a9115b089e4a281634acb9bfb760fe096a320774a8fa2ba46",
+      "uri": "external:pinmame-vpx-sources/capcom/big-bang-bar-1996/corroboration/source/Big Bang Bar  (Capcom 1996).vpx"
+    },
+    {
+      "attribution": "Big Bang Bar (Capcom 1996) community table authors",
+      "id": "vpx-script.bbb-archive-2013",
+      "kind": "vpx_script",
+      "license": "NOASSERTION",
+      "locator": "The earlier recreation's embedded script (99,636 bytes), retained with its cited gameitems. Runtime corroboration only: Const cGameName = \"bbb109\", SolCallback(22)=\"setlamp 162,\" ('Tube Dancer Flasher'), SolCallback(18/19/20) commented sound-only handlers labelled 'Left Bumper' / 'Middle Bumper' / 'Right Bumper', Bumper1_Hit->56 / Bumper2_Hit->54 / Bumper3_Hit->55, and the same SolRDivert1/SolRDivert2 structure as the primary table.",
+      "original_filename": "script.vbs",
+      "rights": "NOASSERTION",
+      "sha256": "cefa47a25952eb96fef752e2c0e718c00f9ce9d0e733aaa86f92ced7c18c5a84",
+      "uri": "external:pinmame-review-artifacts/big-bang-bar/corroboration-table-cited/script.vbs"
+    },
+    {
+      "attribution": "VPinMAME / Visual Pinball script-library maintainers",
+      "excerpts": [
+        {
+          "id": "excerpt.big-bang-bar.vpm-script-library-constants",
+          "locator": "core.vbs '-- Flipper solenoids (all games)' block plus the Capcom.VBS switch constants, retained from the contributor's working installation (SHA-256 values in the source record)",
+          "method": "manual",
+          "path": "evidence/excerpts/capcom.big-bang-bar.1996/vpm-script-library-constants.md",
+          "reviewed": true,
+          "sha256": "55b2a7a1c3de7f58a86512c05b8a4ae8c323ecc83ffad4cf06b6c58ab54d5bbd",
+          "transcribed_by": "curator, read from the installed library files"
+        }
+      ],
+      "id": "vpm-script-library.core-vbs",
+      "kind": "vpx_script",
+      "license": "NOASSERTION",
+      "locator": "The VPinMAME script library the retained table loads at runtime (script.vbs line 130 ExecuteGlobal GetTextFile(\"controller.vbs\"), line 134 LoadVPM \"01560000\", \"Capcom.VBS\", 3.10; Capcom.VBS executes core.vbs), retained from the contributor's working installation together with Capcom.VBS (SHA-256 03323ded224c5e67b0f7703978529889339e1fd7f73ebdd15002a4a6b794a95e). Decisive for the flipper-mirror resolution: its '-- Flipper solenoids (all games)' block defines Const sLRFlipper = 46, sLLFlipper = 48, sURFlipper = 34, sULFlipper = 36 -- hold-side synthetic addresses src/wpc/capcom.c never writes -- so the retained table's symbolic flipper callbacks are dead bindings under this library revision. Transcribed excerpt: evidence/excerpts/capcom.big-bang-bar.1996/vpm-script-library-constants.md.",
+      "original_filename": "core.vbs",
+      "rights": "NOASSERTION",
+      "sha256": "d380c476c555cdcc4c13e160841211a6aefb5bcb271d807fc04ec42a6945bd72",
+      "uri": "external:pinmame-review-artifacts/big-bang-bar/vpm-script-libs/core.vbs"
+    },
+    {
+      "attribution": "IPDB contributor photograph, Internet Pinball Machine Database",
+      "id": "ipdb-photo.capcom.big-bang-bar.1996.tube-lady",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "IPDB machine 4001 photograph (retrieved from https://www.ipdb.org/machine.cgi?id=4001 via an authenticated browser session, 2026-08-28): the physical Tube Lady assembly standing in its clear tube on the playfield at the rear-left, beside the ADD-A-BALL / 10 MILL / TOP UP JACKPOT tube-sign rollover buttons, with no coil visible -- corroborating the printed page-82 diagram's playfield callout-22/30 circle, the retained tables' tube-dancer placement, and the parts list's motor-belt construction. Identity/corroboration evidence only; no coordinate is derived from it.",
+      "original_filename": "image-13.jpg",
+      "rights": "NOASSERTION",
+      "sha256": "ac3ba370260155e1d1288cc95017ee3c88605d5b0ac56948ef369c47dc7fabd5",
+      "uri": "external:pinmame-review-artifacts/big-bang-bar/ipdb-photos/ipdb-4001-image-13-tube-lady-playfield.jpg"
+    },
+    {
+      "attribution": "IPDB contributor photograph, Internet Pinball Machine Database",
+      "id": "ipdb-photo.capcom.big-bang-bar.1996.overhead",
+      "kind": "human_review",
+      "license": "NOASSERTION",
+      "locator": "IPDB machine 4001 full overhead playfield photograph (retrieved from https://www.ipdb.org/machine.cgi?id=4001 via an authenticated browser session, 2026-08-28): whole-playfield view used to visually cross-check feature positions (alien area, mode-ladder inserts, sling/apron area) against the retained tables' geometry; no START playfield insert exists anywhere on it, corroborating the cabinet START-button lamp disposition. Identity/corroboration evidence only.",
+      "original_filename": "image-6.jpg",
+      "rights": "NOASSERTION",
+      "sha256": "abb750b69bb58cff40f9265785cb91682ad101815a07628a00f5a983d46adf11",
+      "uri": "external:pinmame-review-artifacts/big-bang-bar/ipdb-photos/ipdb-4001-image-6-playfield-overhead.jpg"
     }
   ]
 }

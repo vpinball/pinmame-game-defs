@@ -1,10 +1,5 @@
 {
-  "blockers": [
-    "Three used lamp addresses (3, 38, 125) have no Lampz.MassAssign object in the retained table at all, so no coordinate can be reported; their `spatial` key is omitted rather than invented.",
-    "Solenoids 14 (Ramp Diverter 1) and 15 (Ramp Diverter 2) each resolve to two table objects whose raw positions are inconsistent by most of the playfield's length; neither is promoted to a validated placement (conflict.ramp-diverter-geometry-inconsistent).",
-    "Lamps 2 and 62 resolve to retained-table objects whose raw positions fall outside the table's own 0..1 normalized playfield bounds; excluded as a table-modeling anomaly rather than clamped.",
-    "Four unresolved conflicts (flipper mirror address left/right naming, the address-35 Eject Hole mirror mislabeled as an upper-left flipper, solenoid 22's shared bulb-vs-coil device construction, and the ramp-diverter geometry inconsistency above) keep coverage.dimensions.physical_wiring conflicted and the record partial."
-  ],
+  "blockers": [],
   "coordinate_convention": {
     "source_bounds": {
       "bottom": 2162.0,
@@ -17,9 +12,10 @@
     "y": "y/2162; 0=rear/backglass, 1=apron/player"
   },
   "excluded_object_classes": [
-    "Light objects L02/L62 -- raw position far outside the retained table's 0..1 playfield bounds (table-modeling anomaly, not a distinct physical bulb position)",
+    "Flipper.DivTubef/DivTube2f (solenoids 14/15) -- is_visible=false rotation-animation helpers parked at the front apron (y~=0.98-0.99) in BOTH retained recreations; table artifacts, never physical device locations (the physical halves are the drop-wall panels, placed)",
     "F21-F26 flasher Light objects reported under their owning solenoid address (21-26), never as a separate lamp address",
-    "DivTubeF/DivTube/DivTube1 and DivTube2f/DivTube2 (solenoids 14/15) -- internally inconsistent raw positions for what the script treats as one mechanism each; excluded pending human review"
+    "Light L01/L02 and the VPW L62 wash mesh -- room-render glow proxies far outside the playfield bounds; the physical coin-door lamps (1/2) carry controlled cabinet records and the black light (62) carries a documented feature-centroid projection",
+    "Primitive.PinCab_Start_Button / VR start-button props -- cabinet render objects bound to lamp 3 by the retained script, consistent with its cabinet disposition"
   ],
   "extraction": {
     "fail_closed": true,
@@ -31,7 +27,7 @@
     "total_bytes": 1091052346,
     "vpxtool_version": "vpxtool"
   },
-  "format": "pinmame-spatial-blockers",
+  "format": "pinmame-spatial-audit",
   "machine_id": "capcom.big-bang-bar.1996",
   "not_applicable_inputs": {
     "cabinet_or_service": [
@@ -45,12 +41,14 @@
       8,
       9,
       10,
+      15,
+      16
+    ],
+    "constant": [
       11,
       12,
       13,
-      14,
-      15,
-      16
+      14
     ],
     "unused": [
       40,
@@ -70,25 +68,31 @@
   "not_applicable_outputs": {
     "cabinet_or_service": [
       {
+        "address": 1,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 2,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 3,
+        "group": "pinmame.output.lamp"
+      },
+      {
         "address": 129,
         "group": "pinmame.output.lamp"
       },
       {
         "address": 130,
         "group": "pinmame.output.lamp"
-      }
-    ],
-    "no_physical_device": [
+      },
       {
         "address": 3,
         "group": "pinmame.output.solenoid"
       },
       {
-        "address": 4,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 5,
+        "address": 21,
         "group": "pinmame.output.solenoid"
       }
     ],
@@ -164,7 +168,9 @@
       {
         "address": 96,
         "group": "pinmame.output.lamp"
-      },
+      }
+    ],
+    "virtual": [
       {
         "address": 131,
         "group": "pinmame.output.lamp"
@@ -188,9 +194,7 @@
       {
         "address": 136,
         "group": "pinmame.output.lamp"
-      }
-    ],
-    "virtual": [
+      },
       {
         "address": 33,
         "group": "pinmame.output.solenoid"
@@ -240,7 +244,15 @@
         "group": "pinmame.output.solenoid"
       },
       {
+        "address": 45,
+        "group": "pinmame.output.solenoid"
+      },
+      {
         "address": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 47,
         "group": "pinmame.output.solenoid"
       },
       {
@@ -261,7 +273,7 @@
       }
     ]
   },
-  "placement_count": 194,
+  "placement_count": 201,
   "projections": [
     {
       "address": 25,
@@ -317,6 +329,66 @@
       "address": 68,
       "group": "pinmame.input.switch",
       "reason": "Projected onto the RightFlipper table object's own center, the same object switch 34 projects onto: the retained script sets both switches together inside Sub SolRFlipper with no separate Upper Right Flipper EOS sensor object modeled."
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the Wall.LeftSlingShot assembly's own drag-point centroid; the manual's printed page-82 playfield diagram marks callout 4 at the left slingshot coil position (balloon measures to (0.227, 0.756), within ~0.02)."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the Wall.RightSlingShot assembly's own drag-point centroid; the manual's printed page-82 playfield diagram marks callout 5 at the right slingshot coil position (balloon measures to (0.698, 0.754), within ~0.03)."
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the four 4-Bank drop targets' own switch positions (switches 17-20): one reset coil actuates the whole bank -- the retained script's sol4Bank raises all four targets in one pulse and the mechanism parts page documents one shared reset bar/coil -- so the placement set is the bank's four target positions, not a single coil-body coordinate."
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the LeftFlipper table object's own pivot centre; the manual's printed page-82 playfield diagram marks callout 9 at the left flipper coil (balloon measures to (0.306, 0.863), within ~0.02)."
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the RightFlipper table object's own pivot centre; the manual's printed page-82 playfield diagram marks callout 10 at the right flipper coil (balloon measures to (0.633, 0.863), within ~0.02)."
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the RightFlipper1 table object's own pivot centre (the upper-right flipper's own bat, positioned mid-playfield); the manual's printed page-82 playfield diagram marks callout 11 at the upper-right flipper coil on the right side (balloon measures to (0.824, 0.491), within ~0.03 of this pivot)."
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "reason": "Two-panel drop wall for Ramp Diverter 1; coordinates are the retained table's own Wall.DivTube and Wall.DivTube1 drag-point centroids. The manual's printed page-82 playfield diagram marks callout 14 at the same rear-left position (balloon (0.133, 0.067), within ~0.02-0.04 of both panels)."
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "reason": "Drop wall for Ramp Diverter 2; the coordinate is the earlier retained recreation's Wall.DivTube2 drag-point centroid, which agrees with the manual's printed page-82 callout 15 (balloon (0.258, 0.034), within ~0.034). The VPW v1.0 table's same-named wall sits at (0.433, 0.032), ~0.17 normalized units right of both the manual's callout and this recreation, and is disclosed as divergent retained geometry rather than promoted."
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the three 3-Bank drop targets' own switch positions (switches 49-51): one reset coil actuates the whole bank (sol3Bank; the mechanism parts page's shared reset callout), so the placement set is the bank's three target positions."
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the two rotating alien figures' own anchors: the forward motor output drives the same reversible mechanism whose encoder the switch-57 opto senses, so the placement set is the two figure anchors."
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the two rotating alien figures' own anchors: the reverse motor output drives the same reversible mechanism as solenoid 31, so both direction records carry the same two figure anchors."
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp",
+      "reason": "Documented projection: centroid of the three (Electro) Ramp feature lamps the retained table models (lamp 44 (0.768, 0.043), lamp 45 (0.945, 0.081), lamp 46 (0.930, 0.120)). The manual's lamp table names address 62 '(ELECTRO) BLACK LIGHT' (#44, LP00109) for that feature; the exact tube/socket position is not surveyed and neither retained recreation models a usable object (the VPW table's L62 is an out-of-bounds playfield-sized wash mesh, excluded as a modeling artifact)."
     }
   ],
   "resolved_input_addresses": [
@@ -378,10 +450,6 @@
     80
   ],
   "resolved_output_bindings": [
-    {
-      "address": 1,
-      "group": "pinmame.output.lamp"
-    },
     {
       "address": 9,
       "group": "pinmame.output.lamp"
@@ -487,6 +555,10 @@
       "group": "pinmame.output.lamp"
     },
     {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
       "address": 39,
       "group": "pinmame.output.lamp"
     },
@@ -548,6 +620,10 @@
     },
     {
       "address": 59,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
       "group": "pinmame.output.lamp"
     },
     {
@@ -787,6 +863,10 @@
       "group": "pinmame.output.lamp"
     },
     {
+      "address": 125,
+      "group": "pinmame.output.lamp"
+    },
+    {
       "address": 126,
       "group": "pinmame.output.lamp"
     },
@@ -807,6 +887,14 @@
       "group": "pinmame.output.solenoid"
     },
     {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
       "address": 6,
       "group": "pinmame.output.solenoid"
     },
@@ -819,11 +907,31 @@
       "group": "pinmame.output.solenoid"
     },
     {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
       "address": 12,
       "group": "pinmame.output.solenoid"
     },
     {
       "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
       "group": "pinmame.output.solenoid"
     },
     {
@@ -844,10 +952,6 @@
     },
     {
       "address": 20,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 21,
       "group": "pinmame.output.solenoid"
     },
     {
@@ -893,72 +997,46 @@
     {
       "address": 32,
       "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 45,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 47,
-      "group": "pinmame.output.solenoid"
     }
   ],
   "source_hashes": {
+    "corroboration_script_sha256": "cefa47a25952eb96fef752e2c0e718c00f9ce9d0e733aaa86f92ced7c18c5a84",
+    "corroboration_table_sha256": "ba5d1384397b8a1a9115b089e4a281634acb9bfb760fe096a320774a8fa2ba46",
     "embedded_script_sha256": "db632ce7611ad625053c1bfcc6f035b95338c49449b5e78fa5fe2a4f38cfabf7",
+    "ipdb_overhead_photo_sha256": "abb750b69bb58cff40f9265785cb91682ad101815a07628a00f5a983d46adf11",
+    "ipdb_tube_lady_photo_sha256": "ac3ba370260155e1d1288cc95017ee3c88605d5b0ac56948ef369c47dc7fabd5",
     "manual_sha256": "5fc11391e3092298e31775fdff5944554fc78db2bdb9240aa39fa9eab5dabca5",
     "schematic_sha256": "fab546ea34874af8d721e8a9bc514a6ab64fa6835001dc4401d3c741b948d603",
-    "table_sha256": "7fd6c3a4ada4ae9c8b253a2123e64c8b546ced4e9c4211edff29f01e6647f3d5"
+    "table_sha256": "7fd6c3a4ada4ae9c8b253a2123e64c8b546ced4e9c4211edff29f01e6647f3d5",
+    "vpm_capcom_library_sha256": "03323ded224c5e67b0f7703978529889339e1fd7f73ebdd15002a4a6b794a95e",
+    "vpm_core_library_sha256": "d380c476c555cdcc4c13e160841211a6aefb5bcb271d807fc04ec42a6945bd72"
   },
   "status": "validated",
   "unresolved": [],
   "unresolved_inputs": [],
-  "unresolved_outputs": [
-    {
-      "address": 2,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 3,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 38,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 62,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 125,
-      "group": "pinmame.output.lamp"
-    },
-    {
-      "address": 9,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 10,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 11,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 14,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 15,
-      "group": "pinmame.output.solenoid"
-    }
-  ],
+  "unresolved_outputs": [],
   "version": 1,
   "visual_review_cache": {
+    "corroboration_cited_files": {
+      "files": {
+        "Bumper.Bumper1.json": "9fea99905eed651862f7af79a4d87bf1b2b0ed40f73166eb09ac79a2924b0449",
+        "Bumper.Bumper2.json": "5f3e0341e7230403e918f43cc6127ba7f0d5fda584ac68bba8af21ddeaa5b630",
+        "Bumper.Bumper3.json": "e95cf3e0469698521fbb9612f11ebcf710c8c11ea523cc749c4e936ebdbc151d",
+        "Light.F22.json": "fe857f8c3c109b8c4a6a5be66f644a1be900f8c67f6fbe2de6a1697295f2af8b",
+        "Light.l125.json": "e9ecbe161f3395ddd6697edac49b7d78902df7b5624515de5111786279f509f4",
+        "Light.l38.json": "2f78e5f75ea725a25fea34e7abc6339b364f19af9714a29e7ca488be1a2a21f8",
+        "Wall.DivTube2.json": "bef7b8082c6882e06d10e0ca3359d2fbdf6e71d148c3a3ad058933fbbd2eb509"
+      },
+      "path": "external:pinmame-review-artifacts/big-bang-bar/corroboration-table-cited/"
+    },
     "geometry_notes": {
       "path": "external:pinmame-review-artifacts/big-bang-bar/vpx-geometry.txt",
       "sha256": "e1339971328d98e365b6574733b08f8dc1849814806bb2973019482c93468ac5"
+    },
+    "ipdb_photos": {
+      "overhead_sha256": "abb750b69bb58cff40f9265785cb91682ad101815a07628a00f5a983d46adf11",
+      "path": "external:pinmame-review-artifacts/big-bang-bar/ipdb-photos/",
+      "tube_lady_sha256": "ac3ba370260155e1d1288cc95017ee3c88605d5b0ac56948ef369c47dc7fabd5"
     },
     "root": "external:pinmame-manuals/rendered/capcom.big-bang-bar.1996/",
     "solenoid_transcription": {
@@ -968,6 +1046,11 @@
     "transcription": {
       "path": "external:pinmame-review-artifacts/big-bang-bar/manual-transcription.md",
       "sha256": "3e503420d32c307f409edaa57c80d6f4bfa9f01d90cd0e47dbc6ddc755188994"
+    },
+    "vpm_script_libraries": {
+      "capcom_vbs_sha256": "03323ded224c5e67b0f7703978529889339e1fd7f73ebdd15002a4a6b794a95e",
+      "core_vbs_sha256": "d380c476c555cdcc4c13e160841211a6aefb5bcb271d807fc04ec42a6945bd72",
+      "path": "external:pinmame-review-artifacts/big-bang-bar/vpm-script-libs/"
     }
   }
 }

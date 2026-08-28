@@ -51,12 +51,12 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		# partials, every other count unchanged.
 		self.assertEqual(
 			{
-				"author_ready_count": 25,
+				"author_ready_count": 26,
 				"driver_count": 2888,
 				"game_count": 789,
 				"machine_count": 790,
 				"non_game_count": 1,
-				"partial_count": 99,
+				"partial_count": 98,
 				"root_driver_count": 774,
 				"stub_count": 666,
 			},
