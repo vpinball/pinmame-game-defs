@@ -1,7 +1,7 @@
 # Switch Locations (printed page 2-35)
 
 Source: Williams Junk Yard (1996) Operations Manual, "Switch Locations" page, printed page number **2-35**.
-Rendered page: printed page 2-35 of the retained manual (200 dpi render).
+Rendered page: printed page 2-35 (PDF render `p-111.png`, 200 dpi).
 
 Table header as printed: `Item No.` | `Switch No.` | `Description`
 
