@@ -852,7 +852,13 @@ def input_devices() -> list[dict[str, Any]]:
 	}
 	for address, (label, role, availability, normally_closed, switch_type, part_number, keep_wiring, position) in flipper_inputs.items():
 		wire, connection = FLIPPER_SWITCH_WIRING[address]
-		physical: dict[str, Any] = {"location": "cabinet flipper button" if role.endswith(".button") or role == "internal.unfitted.flipper-button" else "flipper assembly"}
+		location = (
+			"cabinet flipper button" if role.endswith(".button") or role == "internal.unfitted.flipper-button"
+			else "playfield spinner" if address == 115
+			else "not installed" if address in {116, 117, 118}
+			else "flipper assembly"
+		)
+		physical: dict[str, Any] = {"location": location}
 		if switch_type:
 			physical["switch_type"] = switch_type
 		if part_number:
@@ -907,11 +913,11 @@ def input_devices() -> list[dict[str, Any]]:
 				extra["normally_closed"] = bool(normally_closed)
 		else:
 			extra["normally_closed"] = bool(normally_closed)
-			extra["spatial"] = (
-				not_applicable("cabinet_or_service", MANUAL_SOURCE)
-				if role.endswith(".button")
-				else located(f"switch.generic-{address}", "sensor", position, VPX_TABLE_SOURCE)
-		)
+			if role.endswith(".button"):
+				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
+			else:
+				refs_for_location = (VPX_TABLE_SOURCE, MANUAL_SOURCE) if address in {111, 113} else (VPX_TABLE_SOURCE,)
+				extra["spatial"] = located(f"switch.generic-{address}", "sensor", position, *refs_for_location)
 		items.append(
 			_device(
 				f"switch.generic-{address}",
@@ -1677,6 +1683,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			for reason, bindings in sorted(not_applicable_outputs.items())
 		},
 		"unresolved_input_addresses": sorted(unresolved_inputs),
+		"unresolved_output_bindings": sorted(unresolved_outputs, key=lambda item: (item["group"], item["address"])),
 		"projections": [
 			{"group": "pinmame.input.switch", "address": address, "reason": reason}
 			for address, reason in sorted(SWITCH_PROJECTIONS.items())
@@ -1691,7 +1698,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"root": "external:pinmame-manuals/rendered/williams.junkyard.1996/",
 		},
 		"excluded_object_classes": [
-			"Switch 42's only retained trigger object sits below the playfield apron (y > 1) and is a modelling artifact of the hidden sewer sink; it is left unresolved rather than promoted to a playfield coordinate.",
+			"Switch 28 (Crane Down) and switch 42 (In The Sewer) have no playfield placement: their only retained VPX objects sit below the playfield apron (y > 1) as modelling artifacts of the crane mechanism and hidden sewer sink, so both are left unresolved rather than promoted to an off-playfield coordinate.",
 			"Flasher 18 (Window Shop) and flashers 20/23/24/26 second inset bulbs are backbox/insert-panel circuits with no playfield placement.",
 		],
 		"unresolved": [
@@ -1739,12 +1746,16 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"- Located input addresses: {len(report['resolved_input_addresses'])}",
 		f"- Located output bindings: {len(report['resolved_output_bindings'])}",
 		f"- Unresolved input addresses: {report['unresolved_input_addresses']}",
+		f"- Unresolved output bindings: {report['unresolved_output_bindings']}",
 		"",
 		"## Promotion decision",
 		"",
 		"Junk Yard is a deterministic partial. The past-crane opto polarity question and the trough/crane "
 		"projections must be resolved before promotion; a LibPinMAME harness trace of the public idle state "
-		"of switch 44 on a legal jy_11/jy_12 ROM is the concrete next step.",
+		"of switch 44 on a legal jy_11/jy_12 ROM is the concrete next step. Before any promotion, a "
+		"vision-capable curator must also visually re-check the six manual transcriptions (recorded "
+		"`reviewed: false` / `method: model`) against the rendered pages, since the manual-derived device "
+		"labels and wiring rest on those unchecked transcriptions.",
 		"",
 		"## Retained evidence",
 		"",
