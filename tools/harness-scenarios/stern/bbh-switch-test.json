@@ -1,0 +1,114 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "bbh_160",
+  "notes": "Switch Test with held reads: enter the SAM switch menu, then hold each candidate address (73, 75, 79, 81, 83, 85, 37, 45, 65) while the test screen reports what the ROM actually reads. Solenoids are recorded throughout so any flipper-coil response to 73/75 vs 81/83 is captured.",
+  "watch_switches": [37, 45, 65, 73, 75, 79, 81, 83, 85],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30.0,
+      "label": "boot stabilization into attract"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_green",
+      "hold_ms": 400,
+      "settle_s": 3.0,
+      "label": "Back: service menu splash"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_select",
+      "hold_ms": 700,
+      "settle_s": 3.0,
+      "label": "Select: icon menu"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_select",
+      "hold_ms": 700,
+      "settle_s": 3.0,
+      "label": "Select: diagnostics submenu, SW highlighted"
+    },
+    {
+      "type": "pulse_key",
+      "key": "service_select",
+      "hold_ms": 700,
+      "settle_s": 5.0,
+      "label": "Select: enter the switch test"
+    },
+    {
+      "type": "pulse",
+      "switch": 73,
+      "hold_ms": 3000,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "hold switch 73 (v1.10 table's left-flipper write)"
+    },
+    {
+      "type": "pulse",
+      "switch": 75,
+      "hold_ms": 3000,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "hold switch 75 (v1.10 table's right-flipper write)"
+    },
+    {
+      "type": "pulse",
+      "switch": 81,
+      "hold_ms": 3000,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "hold switch 81 (sam.c left flipper button)"
+    },
+    {
+      "type": "pulse",
+      "switch": 83,
+      "hold_ms": 3000,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "hold switch 83 (sam.c right flipper button)"
+    },
+    {
+      "type": "pulse",
+      "switch": 85,
+      "hold_ms": 3000,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "hold switch 85 (Elk diverter button per retained table)"
+    },
+    {
+      "type": "pulse",
+      "switch": 79,
+      "hold_ms": 3000,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "hold switch 79 (v1.10 keyFront pulse)"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 3000,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "hold switch 37 (Buck drive opto A per commented code)"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 3000,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "hold switch 45 (Buck drive opto B per commented code)"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 3000,
+      "settle_s": 2.0,
+      "snapshot_while_held": true,
+      "label": "hold switch 65 (D-1 left coin per sam.c comment map)"
+    }
+  ]
+}

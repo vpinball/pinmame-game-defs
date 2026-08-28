@@ -41,6 +41,7 @@ PLAYFIELD_HEIGHT = 2162.0
 MATRIX_ADDRESSES = set(range(1, 65))
 SERVICE_SWITCH_ADDRESSES = set(range(-7, 1))
 DEDICATED_SWITCH_ADDRESSES = set(range(65, 73))
+EXTENDED_SWITCH_ADDRESSES = set(range(73, 81))
 FLIPPER_SWITCH_ADDRESSES = set(range(81, 89))
 DIP_POSITIONS = set(range(1, 9))
 
@@ -53,6 +54,7 @@ SCRIPT_BOUND_LAMPS = {
 	29, 30, 31, 32, 33, 35, 38, 39, 40, 41, 42, 43, 45, 46, 47, 49, 50, 51, 52, 53, 54, 55,
 	57, 59, 60, 61, 62, 63, 65, 66, 67, 68, 69, 70,
 }
+ATTRACT_OBSERVED_LAMPS = set(range(3, 81))
 STACKED_PRIMITIVE_LAMPS = {27, 28, 29, 30}
 
 EXPECTED_CONFLICT_IDS = {
@@ -159,8 +161,24 @@ class AddressEnumerationTests(unittest.TestCase):
 		self.dips = {int(device["binding"]["device"]): device for device in self.definition["inputs"] if device["binding"]["group"] == "pinmame.input.dip"}
 
 	def test_switch_envelope_is_complete_without_duplicates(self) -> None:
-		expected = SERVICE_SWITCH_ADDRESSES | MATRIX_ADDRESSES | DEDICATED_SWITCH_ADDRESSES | FLIPPER_SWITCH_ADDRESSES
+		expected = (
+			SERVICE_SWITCH_ADDRESSES
+			| MATRIX_ADDRESSES
+			| DEDICATED_SWITCH_ADDRESSES
+			| EXTENDED_SWITCH_ADDRESSES
+			| FLIPPER_SWITCH_ADDRESSES
+		)
 		self.assertEqual(set(self.switches), expected)
+
+	def test_extended_block_is_enumerated_unknown_with_the_v1_10_evidence(self) -> None:
+		for address in sorted(EXTENDED_SWITCH_ADDRESSES):
+			device = self.switches[address]
+			self.assertEqual(device["availability"], "unknown", f"switch {address}")
+			self.assertEqual(device["id"], f"switch.extended-{address}")
+			self.assertIn("swMatrix[10]", device["physical"]["notes"])
+		self.assertIn("left-flipper key", self.switches[73]["physical"]["notes"])
+		self.assertIn("right-flipper key", self.switches[75]["physical"]["notes"])
+		self.assertIn("front key", self.switches[79]["physical"]["notes"])
 
 	def test_dip_bank_is_complete(self) -> None:
 		self.assertEqual(set(self.dips), DIP_POSITIONS)
@@ -192,8 +210,17 @@ class AddressEnumerationTests(unittest.TestCase):
 			self.assertEqual(self.switches[address]["availability"], "unknown", f"switch {address}")
 		for address in (6, 8, 9, 10, 11, 13, 17, 18, 24, 28, 30):
 			self.assertEqual(self.solenoids[address]["availability"], "unknown", f"solenoid {address}")
-		for address in (1, 2, 4, 12, 13, 34, 36, 37, 44, 48, 56, 58, 64, 71, 72, 73, 80):
+		for address in (1, 2):
 			self.assertEqual(self.lamps[address]["availability"], "unknown", f"lamp {address}")
+
+	def test_attract_observed_lamps_are_used_on_runtime_evidence(self) -> None:
+		for address in sorted(ATTRACT_OBSERVED_LAMPS - SCRIPT_BOUND_LAMPS):
+			device = self.lamps[address]
+			self.assertEqual(device["availability"], "used", f"lamp {address}")
+			self.assertEqual(device["provenance"]["status"], "observed")
+			self.assertIn("runtime-scenario.bbh-attract-observe", device["provenance"]["source_refs"])
+			self.assertIn("not that a physical bulb is fitted", device["physical"]["notes"])
+			self.assertNotIn("spatial", device)
 
 	def test_script_bound_lamps_are_used(self) -> None:
 		for address in sorted(SCRIPT_BOUND_LAMPS):
@@ -371,9 +398,17 @@ class ProvenanceTests(unittest.TestCase):
 			"vpx-table.bbh-stern-2010",
 			"vpx-script.bbh-stern-2010",
 			"vpx-extraction.bbh-stern-2010",
+			"vpx-table.bbh-stern-2010-v1.10",
+			"vpx-script.bbh-stern-2010-v1.10",
+			"vpx-extraction.bbh-stern-2010-v1.10",
+			"runtime-scenario.bbh-attract-observe",
 			"rom.stern.big-buck-hunter-pro",
 		):
 			self.assertIn(required, sources)
+
+	def test_v1_10_table_corroborates_without_overriding_geometry(self) -> None:
+		v10_table = {source["id"]: source for source in self.definition["sources"]}["vpx-table.bbh-stern-2010-v1.10"]
+		self.assertIn("not used for geometry", v10_table["locator"].lower())
 
 	def test_manual_source_commits_all_excerpts_with_matching_digests(self) -> None:
 		import hashlib
