@@ -295,11 +295,6 @@
       "reason": "Projected onto the movable Rebound Switch wall object (Wall.Switch12a, drag-point centroid): the retained script pulses switch 12 from the Switch12 and Switch12a wall hit handlers and there is no separate trigger object."
     },
     {
-      "address": 28,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the PinMAME ball-shooter / launch entry kicker (Kicker.LaunchEntry, table object center): switch 28 (Crane Down) is the crane mechanism's lower-position contact and the retained script's SolPowerCrane/SolHoldCrane handlers drive the crane arm without a separate switch 28 object."
-    },
-    {
       "address": 31,
       "group": "pinmame.input.switch",
       "reason": "Projected onto the trough's own release kicker (Kicker BallRelease, table object center): the retained cvpmTrough helper (bsTrough) models switches 32-35 purely as an internal switch array with no separate playfield trigger object, and the trough-eject opto is pulsed in the same SolTrough handler that fires the BallRelease kicker."
@@ -333,11 +328,6 @@
       "address": 37,
       "group": "pinmame.input.switch",
       "reason": "Projected onto the sewer kicker (Kicker Sewer, table object center); see switch 36."
-    },
-    {
-      "address": 42,
-      "group": "pinmame.input.switch",
-      "reason": "Projected onto the sewer kicker (Kicker Sewer, table object center): switch 42 (In The Sewer) is the sewer entry position reported by the retained script's sewer ball-stack handling; the extraction's only switch-42 trigger object sits below the playfield apron (y > 1), which is a modelling artifact of the hidden sink rather than a playfield coordinate."
     },
     {
       "address": 43,
@@ -694,7 +684,7 @@
     {
       "address": 44,
       "group": "pinmame.input.switch",
-      "reason": "opto polarity not normalized by PinMAME; see conflict.conflict.junkyard.past-crane-opto-not-normalized"
+      "reason": "opto polarity not normalized by PinMAME; see conflict.junkyard.past-crane-opto-not-normalized"
     }
   ],
   "unresolved_input_addresses": [

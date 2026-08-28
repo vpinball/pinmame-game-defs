@@ -68,7 +68,8 @@ class JunkyardDefinitionTests(unittest.TestCase):
 			self.definition["coverage"]["missing"],
 		)
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			self.assertIn(state, {"validated", "not_applicable", "candidate"}, dimension)
+			self.assertIn(state, {"validated", "not_applicable", "candidate", "conflicted"}, dimension)
+		self.assertEqual("conflicted", self.definition["coverage"]["dimensions"]["physical_wiring"])
 		self.assertEqual("williams.junkyard.1996", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
 		self.assertEqual(1996, self.definition["machine"]["year"])
@@ -146,9 +147,15 @@ class JunkyardDefinitionTests(unittest.TestCase):
 	def test_flipper_positions_lower_fitted_upper_unfitted_spinner_on_f5(self) -> None:
 		for address in (111, 112, 113, 114, 115):
 			self.assertEqual("used", self.switches[address]["availability"], address)
-		for address in (116, 117, 118):
-			self.assertEqual("unused", self.switches[address]["availability"], address)
-			self.assertEqual("unused", self.switches[address]["spatial"]["reason"], address)
+		# 117 (upper-left EOS) is genuinely dead: jyGameData sets no upper FLIP_EOS bit.
+		self.assertEqual("unused", self.switches[117]["availability"])
+		self.assertEqual("unused", self.switches[117]["spatial"]["reason"])
+		# 116/118 (upper-right/left buttons) are unfitted physically but the emulator still publishes
+		# button state at them every VBLANK (FLIP_SW includes FLIP_U), so they are "used" state a
+		# recreation must not drive.
+		for address in (116, 118):
+			self.assertEqual("used", self.switches[address]["availability"], address)
+			self.assertIn("must not drive", self.switches[address]["physical"]["notes"])
 		self.assertTrue(self.switches[112]["normally_closed"])
 		self.assertTrue(self.switches[114]["normally_closed"])
 		self.assertFalse(self.switches[111]["normally_closed"])

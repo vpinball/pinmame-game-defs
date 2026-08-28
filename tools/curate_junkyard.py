@@ -106,6 +106,10 @@ UNUSED_MATRIX_ADDRESSES = {23, 25, 55, 75, 81, 82, 83, 84, 85, 86, 87, 88}
 # trough and lock-up optos (A-18617-1/A-18618-1 for 31-35, A-16908/A-16909 for 36-37); column 4 rows 1-4
 # (41-44) carry the A-16908/A-16909 opto pair for Past Spinner, In The Sewer, Lock Jam, and Past Crane.
 OPTO_SWITCHES = {31, 32, 33, 34, 35, 36, 37, 41, 42, 43, 44}
+# The subset of opto addresses that PinMAME's jyGameData inverted-switch mask actually normalizes
+# (column 3 = 0x7f covers rows 1-7 = 31-37; column 4 = 0x07 covers rows 1-3 = 41-43). Switch 44
+# (Past Crane) is opto-constructed but NOT in this set -- the one polarity conflict.
+NORMALIZED_OPTO_SWITCHES = {31, 32, 33, 34, 35, 36, 37, 41, 42, 43}
 
 # Pulsed switches from the retained known-working script (vpmTimer.PulseSw / Controller.Switch setters).
 PULSED_SWITCHES = {12, 16, 17, 18, 26, 27, 28, 41, 42, 44, 45, 46, 47, 48, 51, 52, 61, 62, 63, 64, 65, 66, 72, 73, 76, 77, 78}
@@ -153,13 +157,13 @@ SWITCH_COLUMN_WIRING = {
 	7: ("Green-Violet", "J206-7", "U20-12"), 8: ("Green-Gray", "J206-9", "U20-11"),
 }
 SWITCH_ROW_WIRING = {
-	1: ("White-Green", "J208-1", "U18-11"), 2: ("White-Red", "J208-2", "U18-9"),
+	1: ("White-Brown", "J208-1", "U18-11"), 2: ("White-Red", "J208-2", "U18-9"),
 	3: ("White-Orange", "J208-3", "U18-5"), 4: ("White-Yellow", "J208-4", "U18-7"),
 	5: ("White-Green", "J208-5", "U19-11"), 6: ("White-Blue", "J208-7", "U19-9"),
 	7: ("White-Violet", "J208-8", "U19-5"), 8: ("White-Gray", "J208-9", "U19-7"),
 }
 DEDICATED_SWITCH_WIRING = {
-	1: ("Orange-Green", "J205-1", "U17-5"), 2: ("Orange-Red", "J205-2", "U17-7"),
+	1: ("Orange-Brown", "J205-1", "U17-5"), 2: ("Orange-Red", "J205-2", "U17-7"),
 	3: ("Orange-Black", "J205-3", "U17-11"), 4: ("Orange-Yellow", "J205-4", "U17-9"),
 	5: ("Orange-Green", "J205-6", "U16-9"), 6: ("Orange-Blue", "J205-7", "U16-11"),
 	7: ("Orange-Violet", "J205-8", "U16-7"), 8: ("Orange-Gray", "J205-9", "U16-5"),
@@ -368,9 +372,6 @@ SWITCH_PROJECTIONS = {
 	12: "Projected onto the movable Rebound Switch wall object (Wall.Switch12a, drag-point centroid): "
 	    "the retained script pulses switch 12 from the Switch12 and Switch12a wall hit handlers and there is "
 	    "no separate trigger object.",
-	28: "Projected onto the PinMAME ball-shooter / launch entry kicker (Kicker.LaunchEntry, table object center): "
-	    "switch 28 (Crane Down) is the crane mechanism's lower-position contact and the retained script's "
-	    "SolPowerCrane/SolHoldCrane handlers drive the crane arm without a separate switch 28 object.",
 	31: "Projected onto the trough's own release kicker (Kicker BallRelease, table object center): the retained "
 	    "cvpmTrough helper (bsTrough) models switches 32-35 purely as an internal switch array with no separate "
 	    "playfield trigger object, and the trough-eject opto is pulsed in the same SolTrough handler that fires "
@@ -386,14 +387,12 @@ SWITCH_PROJECTIONS = {
 	43: "Projected onto the refrigerator popper kicker (Kicker Sol2, table object center): switch 43 "
 	    "(Lock Jam) is the popper's internal position reported by the retained script's bsFridgePopper ball "
 	    "stack handling, and the fridge unit has no separate switch-43 trigger object.",
-	42: "Projected onto the sewer kicker (Kicker Sewer, table object center): switch 42 (In The Sewer) is the "
-	    "sewer entry position reported by the retained script's sewer ball-stack handling; the extraction's only "
-	    "switch-42 trigger object sits below the playfield apron (y > 1), which is a modelling artifact of the "
-	    "hidden sink rather than a playfield coordinate.",
 }
 
 # Switches whose only retained VPX object sits below the playfield apron (y > 1) and cannot be
-# promoted to a validated playfield coordinate; their spatial key is omitted entirely.
+# promoted to a validated playfield coordinate; their spatial key is omitted entirely. Switch 28
+# (Crane Down) has no separate playfield object (its only candidate is off-apron), and switch 42
+# (In The Sewer) likewise reports through the hidden sewer sink rather than a playfield trigger.
 UNRESOLVED_SWITCHES = {28, 42}
 
 SOLENOID_POSITIONS = {
@@ -622,7 +621,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt-junkyard.switch-locations",
 					"locator": "PDF page 111, printed 2-35, Switch Locations parts list",
 					"path": "evidence/excerpts/williams.junkyard.1996/switch-locations.md",
-					"sha256": "ece140e1c26d3ad308657c6e42b5de707c16dec227e92ae31aaa5b72d640e70b",
+					"sha256": "5a097d1291745e7e865094d54e5ceaa98f2ff6cbc417078c322f47c5a352514b",
 					"method": "model",
 					"transcribed_by": "vision worker (sonnet) transcribed from the rendered page",
 					"reviewed": False,
@@ -786,19 +785,19 @@ def input_devices() -> list[dict[str, Any]]:
 			if unused:
 				notes += " The printed matrix and the Switch Locations parts list both mark this position Not Used."
 			elif address in OPTO_SWITCHES:
+				shaded = "shaded \"OPTO, TYPICALLY CLOSED\" on the printed switch matrix (column 3 rows 1-7)" if column == 3 else (
+					"listed as an opto pair on the Switch Locations parts list (the printed switch matrix shades only column 3, not this column)"
+				)
+				normalized = (
+					"PinMAME's jyGameData inverted-switch mask normalizes this address, so the public "
+					"switch state is already normalized and must not be inverted again."
+				) if address in NORMALIZED_OPTO_SWITCHES else (
+					"PinMAME's jyGameData inverted-switch mask does NOT normalize this address, so the "
+					"printed A-16908/A-16909 opto pair is not inverted by the emulator."
+				)
 				notes += (
 					" Printed on the switch-locations parts list with an LED/photo-transistor opto pair and "
-					"no separate switch part number, and shaded \"OPTO, TYPICALLY CLOSED\" on the printed "
-					"switch matrix (column 3 rows 1-7). PinMAME's jyGameData inverted-switch mask normalizes "
-					"this address, so the public switch state is already normalized and must not be inverted "
-					"again."
-				)
-			if address == 44:
-				notes += (
-					" PINMAME DOES NOT NORMALIZE THIS ADDRESS: jyGameData's inverted-switch mask covers "
-					"column 4 rows 1-3 (41-43, 0x07) but not row 4, so the printed A-16908/A-16909 opto pair "
-					"at switch 44 (Past Crane) is not inverted by the emulator. Recorded as conflict "
-					"conflict.junkyard.past-crane-opto-not-normalized."
+					"no separate switch part number, and " + shaded + ". " + normalized
 				)
 			if address == 24:
 				notes += " Physical part 5643-15190-00 is a permanently closed link used to prove the matrix is connected."
@@ -849,9 +848,9 @@ def input_devices() -> list[dict[str, Any]]:
 		113: ("Lower Left Flipper EOS", "internal.flipper.lower.left.eos", "used", False, "leaf", "SW-1A-194", True, [(0.297535, 0.837518)]),
 		114: ("Lower Left Flipper Button", "flipper.lower.left.button", "used", True, "opto", "A-17316", True, None),
 		115: ("Spinner", "playfield.spinner", "used", False, "leaf", "5647-12693-24", True, [(0.933303, 0.505121)]),
-		116: ("Not Used Upper Right Flipper Button", "internal.unused.flipper", "unused", True, "opto", "A-17316", True, None),
-		117: ("Not Used Upper Left Flipper EOS", "internal.unused.flipper", "unused", True, "leaf", "SW-1A-194", True, None),
-		118: ("Not Used Upper Left Flipper Button", "internal.unused.flipper", "unused", True, "opto", "A-17316", True, None),
+		116: ("Not Fitted Upper Right Flipper Button", "internal.unfitted.flipper-button", "used", True, "opto", None, True, None),
+		117: ("Not Used Upper Left Flipper EOS", "internal.unused.flipper", "unused", True, "leaf", None, True, None),
+		118: ("Not Fitted Upper Left Flipper Button", "internal.unfitted.flipper-button", "used", True, "opto", None, True, None),
 	}
 	for address, (label, role, availability, normally_closed, switch_type, part_number, keep_wiring, position) in flipper_inputs.items():
 		wire, connection = FLIPPER_SWITCH_WIRING[address]
@@ -861,11 +860,21 @@ def input_devices() -> list[dict[str, Any]]:
 		if part_number:
 			physical["part_number"] = part_number
 		notes = f"Printed Fliptronic grounded switch F{address - 110}."
-		if availability == "unused":
+		if address in {116, 118}:
+			notes += (
+				" Junk Yard fits no upper flippers, so no physical upper-flipper button is installed (the "
+				"Switch Locations page prints this position Not Used), but jyGameData's "
+				"FLIP_SW(FLIP_L | FLIP_U) includes the FLIP_U bit, so PinMAME's flipMask carries the "
+				"upper-flipper button bit (CORE_SWURFLIPBUTBIT for F6, CORE_SWULFLIPBUTBIT for F8) and "
+				"core_updateSw overwrites this public address every VBLANK with the selected flipper-button "
+				"state. A recreation must not drive it."
+			)
+		elif availability == "unused":
 			notes += (
 				" Junk Yard fits no upper flippers: the Switch Locations page marks this position Not Used "
-				"(both the assembly and switch part columns print NOT USED), and jyGameData's "
-				"FLIP_SOL(FLIP_L) omits the FLIP_UR/FLIP_UL bits entirely -- two independent sources agree."
+				"(both the assembly and switch part columns print NOT USED). jyGameData's FLIP_SOL(FLIP_L) "
+				"sets no FLIP_EOS bit for the upper flippers, so this EOS address is dead and PinMAME never "
+				"publishes state at it."
 			)
 		elif switch_type == "opto":
 			notes += (
@@ -889,10 +898,13 @@ def input_devices() -> list[dict[str, Any]]:
 				extra["normally_closed"] = bool(normally_closed)
 		else:
 			extra["normally_closed"] = bool(normally_closed)
-			extra["spatial"] = (
-				not_applicable("cabinet_or_service", MANUAL_SOURCE)
-				if role.endswith(".button")
-				else located(f"switch.generic-{address}", "sensor", position, VPX_TABLE_SOURCE)
+			if address in {116, 118}:
+				extra["spatial"] = not_applicable("unused", MANUAL_SOURCE)
+			else:
+				extra["spatial"] = (
+					not_applicable("cabinet_or_service", MANUAL_SOURCE)
+					if role.endswith(".button")
+					else located(f"switch.generic-{address}", "sensor", position, VPX_TABLE_SOURCE)
 			)
 		items.append(
 			_device(
@@ -1168,11 +1180,23 @@ def gi_outputs() -> list[dict[str, Any]]:
 			extra["spatial"] = located(identifier, "emitter", GI_POSITIONS[address], VPX_TABLE_SOURCE)
 			extra["physical"] = {"notes": notes, "quantity": len(GI_POSITIONS[address])}
 		else:
-			notes += (
-				" Backbox insert-panel illumination behind the translite (or, for GI address 4, a shared "
-				"backbox/cabinet string); the retained script's UpdateGI handles only GI addresses 0-2, so "
-				"this string has no playfield coordinate."
-			)
+			if address == 2:
+				notes += (
+					" Backbox insert-panel illumination behind the translite. The retained script's UpdateGI "
+					"does handle this string (case 2), but it drives only the backglass logo, not a playfield "
+					"emitter, so it has no playfield coordinate."
+				)
+			elif address == 4:
+				notes += (
+					" Backbox insert-panel illumination that additionally feeds a cabinet bulb through J104. "
+					"The retained script's UpdateGI handles only GI addresses 0-2, so this string has no "
+					"playfield coordinate."
+				)
+			else:
+				notes += (
+					" Backbox insert-panel illumination behind the translite. The retained script's UpdateGI "
+					"handles only GI addresses 0-2, so this string has no playfield coordinate."
+				)
 			extra["roles"] = ["cabinet.insert-panel"]
 			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
 			extra["physical"] = {"notes": notes}
@@ -1369,7 +1393,7 @@ def mechanisms() -> list[dict[str, Any]]:
 		mechanism(
 			"mechanism.car-targets",
 			"Car drop-target bank",
-			"drop_target_bank",
+			"other",
 			[],
 			[sw(46), sw(47), sw(48), sw(53), sw(54)],
 			"Five standup targets (Car Target 1-5) sit at the top of the playfield above the crane track "
@@ -1387,7 +1411,7 @@ def mechanisms() -> list[dict[str, Any]]:
 		mechanism(
 			"mechanism.three-banks",
 			"Upper and lower three-bank target clusters",
-			"drop_target_bank",
+			"other",
 			[],
 			[sw(56), sw(57), sw(58), sw(61), sw(62), sw(63), sw(64), sw(65), sw(66), sw(76), sw(77), sw(78)],
 			"Four clusters of three standup targets each: Upper Right 3-Bank (61-63), Upper Left 3-Bank "
@@ -1526,7 +1550,7 @@ def build() -> dict[str, Any]:
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
 				"semantic_naming": "validated",
-				"physical_wiring": "validated",
+				"physical_wiring": "conflicted",
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
@@ -1661,7 +1685,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"Flasher 18 (Window Shop) and flashers 20/23/24/26 second inset bulbs are backbox/insert-panel circuits with no playfield placement.",
 		],
 		"unresolved": [
-			{"group": "pinmame.input.switch", "address": 44, "reason": "opto polarity not normalized by PinMAME; see conflict.conflict.junkyard.past-crane-opto-not-normalized"},
+			{"group": "pinmame.input.switch", "address": 44, "reason": "opto polarity not normalized by PinMAME; see conflict.junkyard.past-crane-opto-not-normalized"},
 		],
 	}
 
@@ -1670,7 +1694,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	lines = [
 		"# Junk Yard (Williams, 1996) spatial review",
 		"",
-		f"Status: {report['status']}. The definition remains `partial` at "
+		f"Status: {report['status']} spatial-report format; spatial coverage itself is `candidate`. The "
+		"definition remains `partial` at "
 		"`machines/partial/williams/junkyard-1996.json` because the past-crane opto polarity conflict is "
 		"unresolved and several mechanism-internal sensors carry documented projections.",
 		"",

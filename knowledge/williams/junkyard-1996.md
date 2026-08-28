@@ -18,7 +18,14 @@ The retained manual (146 pages) carries a usable OCR text layer, but every
 printed table cited here was read from 200 dpi renders and transcribed by a
 vision-capable model worker into
 `evidence/excerpts/williams.junkyard.1996/`, cross-checked across the repeated
-copies (front matter, printed 2-38, and Section 3).
+copies (front matter, printed 2-38, and Section 3). **These transcriptions are
+recorded with `reviewed: false` / `method: model`** — a vision-capable curator
+has not yet visually re-checked them against the rendered pages. The
+polarity, spatial, controller-topology, and mechanism-causality conclusions
+rest on pinned PinMAME source, the retained VPX geometry/script, and the
+cross-copy comparison rather than on the unchecked transcription alone; the
+manual-derived device labels are therefore candidate until a curator
+re-verifies the excerpt transcriptions.
 
 **Junk Yard has no pop bumpers.** Unlike most WPC-95 machines, neither the
 switch matrix nor the solenoid table lists a jet/popper bumper; the playfield
@@ -43,14 +50,20 @@ entirely unpopulated; switches 23, 25, 55, and 75 are also printed Not Used.
 (Lwr Lt Power/Hold) map to public addresses 45-48 (`CORE_FIRSTLFLIPSOL=45`).
 Printed circuits 33-36 (the "Upr. Rt."/"Upr. Lt." driver-board slot,
 `CORE_FIRSTUFLIPSOL=33`) already equal their own public addresses. Junk Yard
-fits **no upper flippers**: `jyGameData` declares `FLIP_SOL(FLIP_L)` only,
-omitting `FLIP_UR` and `FLIP_UL` entirely, and the Switch Locations page marks
-F6/F7/F8 (Upper Right/Optos and Upper Left E.O.S./Opto) Not Used. F5, however,
-is **not** an upper-flipper contact at all: the manual prints it "SPINNER"
-(part 5647-12693-24), and the retained script's `Switch115_Spin` handler
-pulses it as the playfield spinner. This is the same "Fliptronic F5 repurposed
-for a non-flipper device" pattern Monster Bash established with its Center
-Spinner.
+fits **no upper flippers**: `jyGameData` declares `FLIP_SOL(FLIP_L)` only, so
+no upper flipper solenoid is CPU-driven and no upper `FLIP_EOS` bit is set
+(public 117, the upper-left EOS, is dead). The switch mask is
+`FLIP_SW(FLIP_L | FLIP_U)`, which includes the upper-flipper **button** bits:
+PinMAME's `flipMask` carries `CORE_SWURFLIPBUTBIT` (→ public 116) and
+`CORE_SWULFLIPBUTBIT` (→ public 118), and `core_updateSw` overwrites both every
+VBLANK with the selected flipper-button state, so a recreation must not drive
+116 or 118 even though no physical upper-flipper button is installed. The
+Switch Locations page marks F6/F7/F8 (Upper Right/Optos and Upper Left
+E.O.S./Opto) Not Used. F5, however, is **not** an upper-flipper contact at
+all: the manual prints it "SPINNER" (part 5647-12693-24), and the retained
+script's `Switch115_Spin` handler pulses it as the playfield spinner. This is
+the same "Fliptronic F5 repurposed for a non-flipper device" pattern Monster
+Bash established with its Center Spinner.
 
 ## Opto polarity sweep
 
@@ -90,10 +103,10 @@ and is recorded as `conflict.junkyard.past-crane-opto-not-normalized`.
 - **Fork-lift scoop** (A-21220): solenoid 5 (Scoop Down) and solenoid 21
   (Scoop Up) lower/raise the fork arms; switches 73 (Scoop Made) and 72 (state)
   report the scoop.
-- **Car targets** (SW-1A-210): five standup targets at the top of the
-  playfield (46-48, 53-54).
+- **Car targets** (SW-1A-210): five **standup** targets at the top of the
+  playfield (46-48, 53-54); there is no resettable drop mechanism.
 - **Three-bank target clusters** (A-21349-1 / A-21351): four clusters of three
-  standups (56-58, 61-63, 64-66, 76-78).
+  **standup** targets (56-58, 61-63, 64-66, 76-78); no bank is solenoid-reset.
 - **Slingshots** (B-9362-R-3): left (10/51) and right (11/52).
 - **Spinner**: Fliptronic F5 (public 115).
 
