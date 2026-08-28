@@ -448,7 +448,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(25, catalog["summary"]["author_ready_count"])
 		self.assertEqual(667, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic; coverage counts
-		# only the 789 physical games and therefore reports 96 partial records above.
+		# only the 789 physical games and therefore reports 97 partial records above.
 		self.assertEqual(98, catalog["summary"]["partial_count"])
 		self.assertEqual(1, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}

@@ -303,16 +303,17 @@ class JunkyardDefinitionTests(unittest.TestCase):
 
 	def test_scoop_coils_are_at_the_scoop_mechanism_not_the_crane(self) -> None:
 		# Solenoids 5 (Scoop Down) and 21 (Scoop Up) must sit at the scoop mechanism beside their own
-		# sensors (switches 72/73), not at the crane (which is where switch 44 / Power Crane sit).
-		scoop_down = self.solenoids[5]["spatial"]["placements"][0]
-		scoop_up = self.solenoids[21]["spatial"]["placements"][0]
+		# sensors (switch 73), not at the crane (which is where switch 44 / Power Crane sit).
 		scoop_73 = self.switches[73]["spatial"]["placements"][0]
-		self.assertLess(abs(scoop_down["x"] - scoop_73["x"]), 0.5)
-		self.assertLess(abs(scoop_down["y"] - scoop_73["y"]), 0.5)
-		self.assertLess(abs(scoop_up["x"] - scoop_73["x"]), 0.5)
-		# And they must be far from the crane's switch 44 (which had leaked into this slot).
 		crane_44 = self.switches[44]["spatial"]["placements"][0]
-		self.assertGreater(abs(scoop_down["x"] - crane_44["x"]), 0.3)
+		for address in (5, 21):
+			placement = self.solenoids[address]["spatial"]["placements"][0]
+			dx = abs(placement["x"] - scoop_73["x"])
+			dy = abs(placement["y"] - scoop_73["y"])
+			self.assertLess(dx, 0.15, address)
+			self.assertLess(dy, 0.15, address)
+			# And clearly far from the crane's switch 44 (which had leaked into this slot).
+			self.assertGreater(abs(placement["x"] - crane_44["x"]), 0.3, address)
 
 	def test_geometric_ordering_regression_assertions(self) -> None:
 		switch_pos = _positions(self.switches)
