@@ -19,10 +19,11 @@ The matching source is the retained known-working `Junk Yard (Williams 1996).vpx
 - Located input addresses: 48
 - Located output bindings: 68
 - Unresolved input addresses: [28, 42]
+- Unresolved output bindings: [{'group': 'pinmame.output.solenoid', 'address': 15}]
 
 ## Promotion decision
 
-Junk Yard is a deterministic partial. The past-crane opto polarity question and the trough/crane projections must be resolved before promotion; a LibPinMAME harness trace of the public idle state of switch 44 on a legal jy_11/jy_12 ROM is the concrete next step.
+Junk Yard is a deterministic partial. The past-crane opto polarity question and the trough/crane projections must be resolved before promotion; a LibPinMAME harness trace of the public idle state of switch 44 on a legal jy_11/jy_12 ROM is the concrete next step. Before any promotion, a vision-capable curator must also visually re-check the six manual transcriptions (recorded `reviewed: false` / `method: model`) against the rendered pages, since the manual-derived device labels and wiring rest on those unchecked transcriptions.
 
 ## Retained evidence
 

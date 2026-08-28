@@ -14,7 +14,7 @@
     "y": "y/2162; 0=rear/backglass, 1=apron/player"
   },
   "excluded_object_classes": [
-    "Switch 42's only retained trigger object sits below the playfield apron (y > 1) and is a modelling artifact of the hidden sewer sink; it is left unresolved rather than promoted to a playfield coordinate.",
+    "Switch 28 (Crane Down) and switch 42 (In The Sewer) have no playfield placement: their only retained VPX objects sit below the playfield apron (y > 1) as modelling artifacts of the crane mechanism and hidden sewer sink, so both are left unresolved rather than promoted to an off-playfield coordinate.",
     "Flasher 18 (Window Shop) and flashers 20/23/24/26 second inset bulbs are backbox/insert-panel circuits with no playfield placement."
   ],
   "extraction": {
@@ -695,6 +695,12 @@
   "unresolved_input_addresses": [
     28,
     42
+  ],
+  "unresolved_output_bindings": [
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    }
   ],
   "version": 1,
   "visual_review_cache": {
