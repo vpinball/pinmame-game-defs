@@ -23,9 +23,13 @@ recorded with `reviewed: false` / `method: model`** — a vision-capable curator
 has not yet visually re-checked them against the rendered pages. The
 polarity, spatial, controller-topology, and mechanism-causality conclusions
 rest on pinned PinMAME source, the retained VPX geometry/script, and the
-cross-copy comparison rather than on the unchecked transcription alone; the
-manual-derived device labels are therefore candidate until a curator
-re-verifies the excerpt transcriptions.
+cross-copy comparison rather than on the unchecked transcription alone, and
+the semantic device identities are corroborated by the retained VPX object
+names and the pinned PinMAME source. The raw transcription wording (labels,
+part-number spellings) remains subject to a curator re-check of the excerpt
+transcriptions before author-ready promotion. A retained 16-page operator
+handbook (born-digital, with a real text layer) reproduces the same tables
+and can assist that re-check.
 
 **Junk Yard has no pop bumpers.** Unlike most WPC-95 machines, neither the
 switch matrix nor the solenoid table lists a jet/popper bumper; the playfield
@@ -82,7 +86,8 @@ Center Spinner.
 The manual's Switch Locations parts list (2-35) identifies eleven
 opto-constructed switches by printing an LED/photo-transistor pair on two
 lines rather than a single mechanical part: 31-35 (A-18617-1/A-18618-1, the
-trough) and 36-37, 41-44 (A-16908/A-16909, lock-up/sewer/scoop/crane optos).
+trough) and 36-37 (lock-up) and 41-44 (Past Spinner, In The Sewer, Lock Jam,
+Past Crane) (all A-16908/A-16909).
 The switch matrix (2-34) shades column 3 rows 1-7 as "OPTO, TYPICALLY CLOSED".
 
 Pinned PinMAME's `jyGameData` inverted-switch mask
@@ -103,8 +108,9 @@ and is recorded as `conflict.junkyard.past-crane-opto-not-normalized`.
 - **Shooter lane and auto plunger** (A-21022): the `Autoplunger` handler pulls
   back and fires `Auto_Plunger` only when switch 18 is active.
 - **Crane with wrecking ball** (A-21523): solenoid 3 (Power Crane) drives the
-  arm, solenoid 15 (Hold Crane) holds it; switches 15 (Top Left Crane), 44
-  (Past Crane), and 28 (Crane Down) report the head's positional limits.
+  arm, solenoid 15 (Hold Crane) holds it; switches 15 (Top Left Crane), 38
+  (Top Right Crane), 44 (Past Crane), and 28 (Crane Down) report the head's
+  positional limits.
 - **Refrigerator popper** (A-21216): `bsFridgePopper` uses switch 37 as the
   entry and switches 36/43 as the internal ball-stack array; solenoid 2 ejects.
 - **Bus ramp diverter** (A-21409-1): solenoid 6 rotates a diverter flap
@@ -119,7 +125,8 @@ and is recorded as `conflict.junkyard.past-crane-opto-not-normalized`.
   playfield (46-48, 53-54); there is no resettable drop mechanism.
 - **Three-bank target clusters** (A-21349-1 / A-21351): four clusters of three
   **standup** targets (56-58, 61-63, 64-66, 76-78); no bank is solenoid-reset.
-- **Slingshots** (B-9362-R-3): left (10/51) and right (11/52).
+- **Slingshots** (B-9362-R-3): left (solenoid 10, switch 51) and right
+  (solenoid 11, switch 52).
 - **Spinner**: Fliptronic F5 (public 115).
 
 ## Service and setup

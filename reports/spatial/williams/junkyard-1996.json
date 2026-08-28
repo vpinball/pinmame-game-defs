@@ -15,8 +15,8 @@
   },
   "excluded_object_classes": [
     "Switch 28 (Crane Down) and switch 42 (In The Sewer) have no playfield placement: their only retained VPX objects sit below the playfield apron (y > 1) as modelling artifacts of the crane mechanism and hidden sewer sink, so both are left unresolved rather than promoted to an off-playfield coordinate.",
-    "Flashers 19-21 and 23-28 (Autofire, Left Side, Scoop Up, Back Left, Back Right, Shooter, Scoop, Dog House, Cars) and the hold-crane coil (15) have no reliable playfield coordinate in the current extraction, so they are listed in unresolved_output_bindings rather than assigned a false position.",
-    "Flasher 18 (Window Shop) is a backbox-only flasher and flashers 20/23/24/26 also drive insert-panel bulbs; those non-playfield bulbs have no coordinate. Flasher 18 itself is recorded cabinet_or_service."
+    "Flashers 25 (Shooter), 27 (Dog House) and 28 (Cars) and the hold-crane coil (15) have no playfield object bound to them in the current extraction (the script's SetFlash/Flash helpers are defined but never called for these), so they are listed in unresolved_output_bindings rather than assigned a false position.",
+    "Flasher 18 (Window Shop) is a backbox-only flasher and is recorded cabinet_or_service; flashers 20/23/24/26 additionally drive insert-panel bulbs whose non-playfield planes have no coordinate, but the flashers themselves are placed at their script-bound playfield primitives."
   ],
   "extraction": {
     "fail_closed": true,
@@ -230,7 +230,7 @@
       }
     ]
   },
-  "placement_count": 151,
+  "placement_count": 157,
   "projections": [
     {
       "address": 12,
@@ -290,12 +290,52 @@
     {
       "address": 3,
       "group": "pinmame.output.solenoid",
-      "reason": "Projected onto the crane mechanism's top-left hole (Kicker CraneHole, table object center); the crane arm itself (PCraneArm) is a render primitive without a switch/solenoid collision object."
+      "reason": "Projected onto the crane mechanism's top-left hole (Kicker CraneHole, table object center); the crane arm itself (PCraneArm) is a render primitive without a switch/solenoid collision object. Note the manual's Solenoid Locations drawing places the Power Crane callout top-right-of-center at the crane assembly; the retained table's CraneHole kicker sits at the far left, so this is a projection onto the crane mechanism rather than the drawn callout point."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the fork-lift scoop's left fork arm (P_Fork1, table object center): solenoid 5 (Scoop Down) drives the fork arms down and the retained script's ScoopDown handler rotates P_Fork1/P_Fork2, which sit at the scoop mechanism (agreeing with the manual's Solenoid Locations drawing, 'Right side, middle, at the scoop mechanism')."
     },
     {
       "address": 16,
       "group": "pinmame.output.solenoid",
       "reason": "Projected onto the dog-house spike object (Primitive Spike, table object center): solenoid 16 (Move Dog) drives the spike arm that the retained script's SpikeTimer animates."
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the dog-house kicker object (Kicker DogHole, table object center): solenoid 17 (Dog Face Flasher) is bound in the retained script only to the setflash channel (SolFlash17), with no separate playfield flasher object, so it is placed at the dog-house assembly."
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed at the retained script's autofire flasher light (Light Sol19, table object center), which the script's SolCallBack(19) = vpmFlasher Sol19 drives."
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed at the fridge flasher primitive (P_FridgeFlasher, table object center), which the script's SolFlash20 handler re-textures as the red dome flasher."
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the fork-lift scoop's left fork arm (P_Fork1, table object center), co-located with solenoid 5: solenoid 21 (Scoop Up) raises the same fork arms the ScoopDown handler lowers."
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed at the back-left flasher primitive (P_BackLeftFlasher, table object center), which the script's SolFlash23 handler re-textures."
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed at the back-right flasher primitive (P_BackRightFlasher, table object center), which the script's SolFlash24 handler re-textures."
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed at the dog/scoop flasher primitive (P_DogScoopFlasher, table object center), which the script's SolFlash26 handler re-textures as the red dome flasher at the scoop."
     }
   ],
   "resolved_input_addresses": [
@@ -622,7 +662,31 @@
       "group": "pinmame.output.solenoid"
     },
     {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
       "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
       "group": "pinmame.output.solenoid"
     },
     {
@@ -653,6 +717,11 @@
       "address": 44,
       "group": "pinmame.input.switch",
       "reason": "opto polarity not normalized by PinMAME; see conflict.junkyard.past-crane-opto-not-normalized"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp",
+      "reason": "physical plane disputed (manual insert-panel footnote vs playfield-crane drawing); see conflict.junkyard.lamp-86-plane"
     }
   ],
   "unresolved_input_addresses": [
@@ -665,31 +734,7 @@
       "group": "pinmame.output.solenoid"
     },
     {
-      "address": 19,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 20,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 21,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 23,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 24,
-      "group": "pinmame.output.solenoid"
-    },
-    {
       "address": 25,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 26,
       "group": "pinmame.output.solenoid"
     },
     {
