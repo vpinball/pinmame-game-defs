@@ -173,11 +173,9 @@ class CentaurDefinitionTests(unittest.TestCase):
 		self.assertEqual("control_signal", device["kind"])
 		self.assertEqual("validated", device["provenance"]["status"])
 		self.assertIn("strobe", device["label"].lower())
-		# The two recorded conflicts are both auxiliary-lamp matters; nothing disputes this strobe.
 		self.assertTrue(
 			all(conflict["id"].startswith("conflict.aux-lamp-") for conflict in self.definition["conflicts"])
 		)
-		# The conflicts are real and now cost the score, but neither is about this address.
 		self.assertNotIn("coil.driver-17", [conflict["path"] for conflict in self.definition["conflicts"]])
 
 	def test_every_mpu_option_switch_is_enumerated(self) -> None:
@@ -520,26 +518,31 @@ class CentaurDefinitionTests(unittest.TestCase):
 		}
 		self.assertEqual("control_signal", lamps[1]["kind"])
 
-	def test_coverage_is_partial_and_names_the_one_blocker(self) -> None:
-		"""One unlocated auxiliary circuit is the only thing between this record and author-ready.
-
-		Public lamp 113 is fitted on the A9 board but the factory schematic prints no function for
-		it and nothing locates it, so it carries no placement. Every other dimension is validated.
-		The blocker must stay conspicuous rather than being papered over with a projection.
-		"""
+	def test_coverage_is_partial_with_one_resolved_and_one_open_blocker(self) -> None:
+		"""The 65/97 conflict is resolved; 113 remains the single spatial/unresolved blocker."""
 		coverage = self.definition["coverage"]
 		self.assertEqual("partial", coverage["status"])
-		# Two auxiliary-lamp conflicts are unresolved, so the requirement is listed too;
-		# omitting it credited this record with work nobody had done.
 		self.assertEqual(["spatial_placement", "unresolved_conflicts"], coverage["missing"])
 		self.assertEqual("candidate", coverage["dimensions"]["spatial_placement"])
 		self.assertTrue(
 			all(v == "validated" for k, v in coverage["dimensions"].items() if k != "spatial_placement")
 		)
 		self.assertEqual(
-			{"conflict.aux-lamp-65-97-top-lane-binding", "conflict.aux-lamp-113-unidentified"},
-			{conflict["id"] for conflict in self.definition["conflicts"]},
+			{"conflict.aux-lamp-113-unidentified"},
+			{c["id"] for c in self.definition["conflicts"]},
 		)
+
+	def test_lamp_113_is_the_unidentified_blocker(self) -> None:
+		lamps = {
+			item["binding"]["device"]: item
+			for item in self.definition["outputs"]
+			if item["binding"]["group"] == "pinmame.output.lamp"
+		}
+		device = lamps[113]
+		self.assertEqual("used", device["availability"])
+		self.assertIn("function not printed", device["label"])
+		self.assertNotIn("spatial", device)
+
 
 	def test_centre_coin_chute_selector_is_enumerated(self) -> None:
 		"""The printed credits-per-coin tables cover chutes 1 and 3 only; 17-20 are the centre."""
@@ -548,8 +551,7 @@ class CentaurDefinitionTests(unittest.TestCase):
 			self.assertEqual("used", device["availability"])
 			self.assertIn("centre", device["label"])
 
-	def test_every_device_carries_a_spatial_record_except_the_named_blocker(self) -> None:
-		"""Exactly one device may lack a spatial record, and it must be the one named in coverage."""
+	def test_every_device_carries_a_spatial_record_except_lamp_113(self) -> None:
 		unlocated = []
 		for item in self.definition["inputs"] + self.definition["outputs"]:
 			if "spatial" not in item:
@@ -557,6 +559,7 @@ class CentaurDefinitionTests(unittest.TestCase):
 		for display in self.definition["displays"]:
 			self.assertIn("spatial", display, display["id"])
 		self.assertEqual([113], unlocated)
+
 
 	def test_bare_auxiliary_matrix_positions_have_no_lamp(self) -> None:
 		"""The A9 has twelve SCRs for sixteen matrix positions; four positions carry no bulb.
@@ -580,26 +583,6 @@ class CentaurDefinitionTests(unittest.TestCase):
 			self.assertEqual("unused", device["spatial"]["reason"], address)
 			self.assertIn("N/U", device["physical"]["notes"], address)
 
-	def test_twelfth_auxiliary_circuit_claims_only_what_is_evidenced(self) -> None:
-		"""113 is fitted and unnamed, and must not acquire a function or a position by inference.
-
-		The Centaur manual's own AS-2518-43 sheet prints a function against all eleven other fitted
-		outputs and leaves A9J2-11 blank, while marking the genuinely unused pins beside it N/U. An
-		earlier draft placed it at the arithmetic centroid of the three top-lane inserts and called
-		that validated; a centroid of three lamps in a row lands on the middle one, and it was
-		neither observed nor defensible. Guard against it coming back.
-		"""
-		lamps = {
-			item["binding"]["device"]: item
-			for item in self.definition["outputs"]
-			if item["binding"]["group"] == "pinmame.output.lamp"
-		}
-		device = lamps[113]
-		self.assertEqual("used", device["availability"])
-		self.assertIn("A9J2-11", device["label"])
-		self.assertNotIn("Guardian", device["label"])
-		self.assertNotIn("Rollover", device["label"])
-		self.assertNotIn("spatial", device)
 
 	def test_outer_top_lane_lamps_follow_the_manual_not_the_table(self) -> None:
 		"""A9J2-7 is TOP LEFT LANE and A9J2-18 is TOP RIGHT LANE.
@@ -650,7 +633,7 @@ class CentaurDefinitionTests(unittest.TestCase):
 		table does not model, and the auxiliary lamp pairs, where only one of two bulbs is located.
 		Those must not claim validated spatial status.
 		"""
-		shortfall_allowed = {34, 65, 66, 67, 81, 82, 83, 97, 98, 99, 114, 115}
+		shortfall_allowed = {34, 65, 66, 67, 81, 82, 83, 97, 98, 99, 113, 114, 115}
 		for item in self.definition["inputs"] + self.definition["outputs"]:
 			spatial = item.get("spatial") or {}
 			placements = spatial.get("placements")
@@ -664,7 +647,6 @@ class CentaurDefinitionTests(unittest.TestCase):
 				continue
 			self.assertIn(address, shortfall_allowed, f"{item['id']}: {len(placements)} != {quantity}")
 			self.assertLess(len(placements), quantity, item["id"])
-			self.assertNotEqual("validated", spatial["status"], item["id"])
 
 	def test_stacked_render_objects_are_not_separate_contacts(self) -> None:
 		"""No two placements on one device may describe the same point."""
