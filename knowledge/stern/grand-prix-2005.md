@@ -51,6 +51,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `gprixi` (2006, Stern, clone of `gprix`).
 - `gprixl` (2006, Stern, clone of `gprix`).
 
+## VPX script candidates (candidate)
+
+- 1 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 56 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

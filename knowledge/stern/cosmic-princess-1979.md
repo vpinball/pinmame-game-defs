@@ -28,6 +28,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - The pinned PinMAME source declares `princess` at `src/wpc/stgames.c:318` with machine module `by35_mST100bs`; the definition declares controller platform `pinmame.stern-mpu200` from it.
 
+## VPX script candidates (candidate)
+
+- 1 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 28 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

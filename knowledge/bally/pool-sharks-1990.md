@@ -27,6 +27,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `pool_le2` (1990, Bally, clone of `pool_l7`).
 - `pool_p7` (1989, Bally, clone of `pool_l7`).
 
+## VPX script candidates (candidate)
+
+- 1 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 44 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

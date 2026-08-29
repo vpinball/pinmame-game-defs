@@ -127,7 +127,176 @@
     }
   ],
   "format": "pinmame-machine-definition",
-  "inputs": [],
+  "inputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "17"
+        }
+      ],
+      "binding": {
+        "device": 17,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.combo-trigger1",
+      "kind": "switch",
+      "label": "Combo Trigger1",
+      "provenance": {
+        "source_refs": [
+          "vpx-script.5d333bb5c0387e11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "18"
+        }
+      ],
+      "binding": {
+        "device": 18,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.combo-trigger1-18",
+      "kind": "switch",
+      "label": "Combo Trigger1",
+      "provenance": {
+        "source_refs": [
+          "vpx-script.5d333bb5c0387e11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "19"
+        }
+      ],
+      "binding": {
+        "device": 19,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.combo-trigger2",
+      "kind": "switch",
+      "label": "Combo Trigger2",
+      "provenance": {
+        "source_refs": [
+          "vpx-script.5d333bb5c0387e11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "21"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.combo-trigger3",
+      "kind": "switch",
+      "label": "Combo Trigger3",
+      "provenance": {
+        "source_refs": [
+          "vpx-script.5d333bb5c0387e11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "22"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.combo-trigger3-22",
+      "kind": "switch",
+      "label": "Combo Trigger3",
+      "provenance": {
+        "source_refs": [
+          "vpx-script.5d333bb5c0387e11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "23"
+        }
+      ],
+      "binding": {
+        "device": 23,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.combo-trigger4",
+      "kind": "switch",
+      "label": "Combo Trigger4",
+      "provenance": {
+        "source_refs": [
+          "vpx-script.5d333bb5c0387e11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "82"
+        }
+      ],
+      "binding": {
+        "device": 82,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flip-pass-r",
+      "kind": "switch",
+      "label": "Flip Pass R",
+      "provenance": {
+        "source_refs": [
+          "vpx-script.5d333bb5c0387e11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "84"
+        }
+      ],
+      "binding": {
+        "device": 84,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flip-pass-l",
+      "kind": "switch",
+      "label": "Flip Pass L",
+      "provenance": {
+        "source_refs": [
+          "vpx-script.5d333bb5c0387e11"
+        ],
+        "status": "candidate"
+      }
+    }
+  ],
   "knowledge": {
     "path": "knowledge/williams/firepower-1980.md",
     "status": "partial"
@@ -141,7 +310,50 @@
     "year": 1980
   },
   "mechanisms": [],
-  "outputs": [],
+  "outputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "2"
+        }
+      ],
+      "binding": {
+        "device": 2,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "coil.l-bank-reset",
+      "kind": "coil",
+      "label": "L Bank Reset",
+      "provenance": {
+        "source_refs": [
+          "vpx-script.5d333bb5c0387e11"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "3"
+        }
+      ],
+      "binding": {
+        "device": 3,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "coil.r-bank-reset",
+      "kind": "coil",
+      "label": "R Bank Reset",
+      "provenance": {
+        "source_refs": [
+          "vpx-script.5d333bb5c0387e11"
+        ],
+        "status": "candidate"
+      }
+    }
+  ],
   "relationships": [],
   "schema_version": 1,
   "sources": [
@@ -153,6 +365,16 @@
       "locator": "PinmameGetGames",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
       "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "Authors credited in FirePower(Vs A.I.)V3.7.vbs and repository contributors",
+      "id": "vpx-script.5d333bb5c0387e11",
+      "kind": "vpx_script",
+      "license": "NOASSERTION",
+      "locator": "vpxtable-scripts: FirePower(Vs A.I.)V3.7.vbs",
+      "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
+      "sha256": "5d333bb5c0387e11f04df0e29c6afde8e2cf0b6647207333714f23598c1ef23e",
+      "uri": "https://github.com/sverrewl/vpxtable_scripts"
     }
   ]
 }

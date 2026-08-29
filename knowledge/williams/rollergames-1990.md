@@ -37,6 +37,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - The pinned PinMAME source declares `rollr_l2` at `src/wpc/s11games.c:1310` with machine module `s11_mS11CS`; the definition declares controller platform `pinmame.system-11` from it.
 
+## VPX script candidates (candidate)
+
+- 2 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 116 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

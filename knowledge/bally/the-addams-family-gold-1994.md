@@ -35,6 +35,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - The pinned PinMAME source declares `tafg_lx3` at `src/wpc/sims/wpc/full/taf.c:557` with machine module `wpc_mFliptronS`; the definition declares controller platform `pinmame.wpc-fliptronic` from it.
 - The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
 
+## VPX script candidates (candidate)
+
+- 1 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 73 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display
