@@ -30,6 +30,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `tafg_la3` (1994, Bally, clone of `tafg_lx3`).
 - `tafg_lx3` (1994, Bally).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `tafg_lx3` at `src/wpc/sims/wpc/full/taf.c:557` with machine module `wpc_mFliptronS`; the definition declares controller platform `pinmame.wpc-fliptronic` from it.
+- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

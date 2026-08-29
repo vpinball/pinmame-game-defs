@@ -25,6 +25,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `eightbll` (1977, Bally).
 - `eightblo` (1977, Bally, clone of `eightbll`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `eightbll` at `src/wpc/by35games.c:139` with machine module `by35_mBY17`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

@@ -23,6 +23,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `lostwldb` (2008, Bally / Oliver, clone of `lostwrld`).
 - `lostwrld` (1978, Bally).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `lostwrld` at `src/wpc/by35games.c:320` with machine module `by35_mBY35_32S`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

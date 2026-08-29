@@ -25,6 +25,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `paragonc` (2008, Bally / Oliver, clone of `paragon`).
 - `paragond` (2008, Bally / Oliver, clone of `paragon`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `paragon` at `src/wpc/by35games.c:537` with machine module `by35_mBY35_50S`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

@@ -24,6 +24,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `stargzr` (1980, Stern).
 - `stargzrb` (2006, Stern / Oliver, clone of `stargzr`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `stargzr` at `src/wpc/stgames.c:896` with machine module `by35_mST200`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

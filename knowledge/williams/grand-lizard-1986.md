@@ -24,6 +24,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `grand_l3` (1986, Williams, clone of `grand_l4`).
 - `grand_l4` (1986, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `grand_l4` at `src/wpc/s11games.c:214` with machine module `s11_mS11XS`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

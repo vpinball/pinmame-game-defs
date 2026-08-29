@@ -23,6 +23,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `hurr_d2` (1991, Williams, clone of `hurr_l2`).
 - `hurr_l2` (1991, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `hurr_l2` at `src/wpc/sims/wpc/full/hurr.c:342` with machine module `wpc_mFliptronS`; the definition declares controller platform `pinmame.wpc-fliptronic` from it.
+- The driver source's named switch/solenoid symbols are carried as 48 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

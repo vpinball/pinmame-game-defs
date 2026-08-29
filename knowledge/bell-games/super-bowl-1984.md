@@ -23,6 +23,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `sprbwlfp` (2018, Bell Games / Quench, clone of `suprbowl`).
 - `suprbowl` (1984, Bell Games).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `suprbowl` at `src/wpc/nuova.c:260` with machine module `by35_mBY35_51NS`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

@@ -41,6 +41,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `ts_pa1` (1994, Bally, clone of `ts_lx5`).
 - `ts_pa2` (1994, Bally, clone of `ts_lx5`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `ts_lx5` at `src/wpc/sims/wpc/prelim/ts.c:293` with machine module `wpc_mSecurityS`; the definition declares controller platform `pinmame.wpc-security` from it.
+- The driver source's named switch/solenoid symbols are carried as 25 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

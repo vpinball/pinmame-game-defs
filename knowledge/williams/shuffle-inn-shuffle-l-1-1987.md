@@ -21,6 +21,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - `shfin_l1` (1987, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `shfin_l1` at `src/wpc/bowlgames.c:380` with machine module `s11_mS11S`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

@@ -22,6 +22,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - `mj_130` (1992, Data East).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `mj_130` at `src/wpc/degames.c:819` with machine module `de_mDEDMD32S2A`; the definition declares controller platform `pinmame.dataeast` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

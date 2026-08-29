@@ -27,6 +27,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `tmnt_200` (2025, Data East, clone of `tmnt_104`).
 - `tmnt_a07` (1991, Data East, clone of `tmnt_104`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `tmnt_104` at `src/wpc/degames.c:436` with machine module `de_mDEDMD16S1`; the definition declares controller platform `pinmame.dataeast` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

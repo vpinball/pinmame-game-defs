@@ -31,6 +31,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `wd_12gp` (2020, Bally, clone of `wd_12`).
 - `wd_12p` (2020, Bally, clone of `wd_12`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `wd_12` at `src/wpc/sims/wpc/prelim/wd.c:327` with machine module `wpc_m95DCSS`; the definition declares controller platform `pinmame.wpc-95` from it.
+- The driver source's named switch/solenoid symbols are carried as 28 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

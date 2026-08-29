@@ -24,6 +24,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `princesb` (2022, Stern / Quench, clone of `princess`).
 - `princess` (1979, Stern).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `princess` at `src/wpc/stgames.c:318` with machine module `by35_mST100bs`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

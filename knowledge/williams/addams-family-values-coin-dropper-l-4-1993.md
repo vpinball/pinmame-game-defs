@@ -22,6 +22,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `afv_d4` (1993, Williams, clone of `afv_l4`).
 - `afv_l4` (1993, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `afv_l4` at `src/wpc/bowlgames.c:624` with machine module `wpc_mDCSS`; the definition declares controller platform `pinmame.wpc-dcs` from it.
+- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

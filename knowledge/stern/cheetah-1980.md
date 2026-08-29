@@ -28,6 +28,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `cheetahb` (1980, Stern, clone of `cheetah`).
 - `cheetahb2` (2018, Stern / Idleman, clone of `cheetah`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `cheetah` at `src/wpc/stgames.c:786` with machine module `by35_mST200`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

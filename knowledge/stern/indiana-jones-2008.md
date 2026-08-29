@@ -38,6 +38,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `ij4_210` (2009, Stern).
 - `ij4_210f` (2009, Stern, clone of `ij4_210`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `ij4_210` at `src/wpc/sam.c:2980` with machine module `sam1`; the definition declares controller platform `pinmame.sam` from it.
+- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

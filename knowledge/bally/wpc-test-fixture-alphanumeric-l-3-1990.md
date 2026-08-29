@@ -21,6 +21,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - `tfa_13` (1990, Bally).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `tfa_13` at `src/wpc/wpcgames.c:217` with machine module `wpc_mAlpha`; the definition declares controller platform `pinmame.wpc-alpha` from it.
+- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

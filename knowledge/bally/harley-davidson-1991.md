@@ -27,6 +27,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `hd_l2` (1991, Bally, clone of `hd_l3`).
 - `hd_l3` (1991, Bally).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `hd_l3` at `src/wpc/sims/wpc/full/hd.c:402` with machine module `hd`; no reviewed profile covers that module yet, so no platform is declared.
+- The driver source's named switch/solenoid symbols are carried as 60 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

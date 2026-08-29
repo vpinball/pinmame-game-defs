@@ -23,6 +23,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `mnfb_c27` (1989, Data East, clone of `mnfb_c29`).
 - `mnfb_c29` (1989, Data East).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `mnfb_c29` at `src/wpc/degames.c:258` with machine module `de_mDEAS1`; the definition declares controller platform `pinmame.dataeast` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

@@ -29,6 +29,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `eatpm_l4` (1989, Bally).
 - `eatpm_p7` (1989, Bally, clone of `eatpm_l4`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `eatpm_l4` at `src/wpc/sims/s11/prelim/eatpm.c:281` with machine module `elvira`; no reviewed profile covers that module yet, so no platform is declared.
+- The driver source's named switch/solenoid symbols are carried as 58 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

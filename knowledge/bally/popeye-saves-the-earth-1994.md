@@ -27,6 +27,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `pop_pa3` (1993, Bally, clone of `pop_lx5`).
 - `pop_pa4` (1993, Bally, clone of `pop_lx5`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `pop_lx5` at `src/wpc/sims/wpc/prelim/pop.c:280` with machine module `wpc_mDCSS`; the definition declares controller platform `pinmame.wpc-dcs` from it.
+- The driver source's named switch/solenoid symbols are carried as 32 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

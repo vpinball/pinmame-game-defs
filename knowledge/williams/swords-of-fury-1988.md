@@ -26,6 +26,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `swrds_rr1` (2026, Williams / Frisbez, clone of `swrds_l2`).
 - `swrds_rr1b` (2026, Williams / Frisbez, clone of `swrds_l2`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `swrds_l2` at `src/wpc/s11games.c:601` with machine module `s11_mS11BS`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

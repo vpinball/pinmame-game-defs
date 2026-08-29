@@ -24,6 +24,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `freedoma` (2019, Bally, clone of `freedom`).
 - `freedomb` (2019, Bally, clone of `freedom`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `freedom` at `src/wpc/by35games.c:60` with machine module `by35_mBY17`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

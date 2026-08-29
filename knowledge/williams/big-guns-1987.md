@@ -26,6 +26,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `bguns_lac` (2019, Williams, clone of `bguns_l8`).
 - `bguns_p1` (1987, Williams, clone of `bguns_l8`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `bguns_l8` at `src/wpc/s11games.c:448` with machine module `s11_mS11AS`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

@@ -24,6 +24,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `cp_16` (1998, Bally).
 - `cp_16pfx` (2019, Zen Studios, clone of `cp_16`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `cp_16` at `src/wpc/sims/wpc/prelim/cp.c:271` with machine module `wpc_m95S`; the definition declares controller platform `pinmame.wpc-95` from it.
+- The driver source's named switch/solenoid symbols are carried as 23 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

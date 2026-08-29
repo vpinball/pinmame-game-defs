@@ -23,6 +23,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `sshtl_l3` (1984, Williams, clone of `sshtl_l7`).
 - `sshtl_l7` (1984, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `sshtl_l7` at `src/wpc/s11games.c:80` with machine module `s9_mS9S`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

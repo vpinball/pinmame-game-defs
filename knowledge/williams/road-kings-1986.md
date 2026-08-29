@@ -25,6 +25,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `rdkng_l3` (1986, Williams, clone of `rdkng_l4`).
 - `rdkng_l4` (1986, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `rdkng_l4` at `src/wpc/s11games.c:244` with machine module `s11_mS11XS`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

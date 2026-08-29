@@ -23,6 +23,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `sorcr_l1` (1985, Williams, clone of `sorcr_l2`).
 - `sorcr_l2` (1985, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `sorcr_l2` at `src/wpc/s11games.c:114` with machine module `s9_mS9S`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

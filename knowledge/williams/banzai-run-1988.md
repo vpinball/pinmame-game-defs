@@ -26,6 +26,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `bnzai_pa` (1988, Williams, clone of `bnzai_l3`).
 - `bnzai_t3` (2011, Williams / Francis, clone of `bnzai_l3`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `bnzai_l3` at `src/wpc/s11games.c:582` with machine module `s11_mS11BS`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

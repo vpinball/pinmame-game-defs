@@ -24,6 +24,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `cycln_l4` (1988, Williams, clone of `cycln_l5`).
 - `cycln_l5` (1988, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `cycln_l5` at `src/wpc/s11games.c:512` with machine module `s11_mS11BS`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

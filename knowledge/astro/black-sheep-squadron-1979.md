@@ -22,6 +22,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - `blkshpsq` (1978, Astro).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `blkshpsq` at `src/wpc/stgames.c:32` with machine module `by35_mST100`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

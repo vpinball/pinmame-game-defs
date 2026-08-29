@@ -31,6 +31,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `corv_px4` (1994, Bally, clone of `corv_21`).
 - `corv_px5` (1994, Bally, clone of `corv_21`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `corv_21` at `src/wpc/sims/wpc/prelim/corv.c:405` with machine module `wpc_mSecurityS`; the definition declares controller platform `pinmame.wpc-security` from it.
+- The driver source's named switch/solenoid symbols are carried as 63 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

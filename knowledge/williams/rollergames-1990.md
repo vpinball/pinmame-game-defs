@@ -33,6 +33,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `rollr_p2` (1991, Williams, clone of `rollr_l2`).
 - `rollr_ta2` (2025, Williams, clone of `rollr_l2`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `rollr_l2` at `src/wpc/s11games.c:1310` with machine module `s11_mS11CS`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

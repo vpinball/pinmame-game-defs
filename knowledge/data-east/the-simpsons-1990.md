@@ -23,6 +23,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `simp_a20` (1990, Data East, clone of `simp_a27`).
 - `simp_a27` (1990, Data East).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `simp_a27` at `src/wpc/degames.c:396` with machine module `de_mDEAS1`; the definition declares controller platform `pinmame.dataeast` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

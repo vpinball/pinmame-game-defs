@@ -27,6 +27,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `eballdp3` (1981, Bally, clone of `eballdlx`).
 - `eballdp4` (1981, Bally, clone of `eballdlx`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `eballdlx` at `src/wpc/by35games.c:1130` with machine module `by35_mBY35_61S`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

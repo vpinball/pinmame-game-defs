@@ -23,6 +23,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `rvrbt_l3` (1990, Williams).
 - `rvrbt_p7` (1990, Williams, clone of `rvrbt_l3`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `rvrbt_l3` at `src/wpc/s11games.c:1605` with machine module `s11_mS11CS`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

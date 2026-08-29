@@ -26,6 +26,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `bttf_a28` (1990, Data East).
 - `bttf_g27` (199?, Data East, clone of `bttf_a28`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `bttf_a28` at `src/wpc/degames.c:351` with machine module `de_mDEAS1`; the definition declares controller platform `pinmame.dataeast` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

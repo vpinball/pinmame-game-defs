@@ -27,6 +27,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `embryond` (2004, Bally / Oliver, clone of `embryon`).
 - `embryone` (2011, Bally, clone of `embryon`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `embryon` at `src/wpc/by35games.c:1214` with machine module `by35_mBY35_61BS`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

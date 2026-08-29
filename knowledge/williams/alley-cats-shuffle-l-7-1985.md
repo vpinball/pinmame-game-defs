@@ -21,6 +21,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - `alcat_l7` (1985, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `alcat_l7` at `src/wpc/bowlgames.c:330` with machine module `s9_mS11S`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

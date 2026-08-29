@@ -112,11 +112,14 @@ class AddamsFamilyDefinitionTests(unittest.TestCase):
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 		self.assertFalse(STUB_PATH.exists(), "taf_l5 stub must be pruned once the curated definition claims it")
 		# The 2026-08-29 identity promotion turned the Gold residual stub into its own
-		# identity-only partial record; it must never merge into the curated machine.
+		# identity-only partial record, and the I/O attachment later declared the
+		# WPC Fliptronic platform from the driver's own CORE_GAMEDEF module; it must
+		# never merge into the curated machine.
 		self.assertTrue(GOLD_STUB_PATH.is_file(), "tafg_lx3 (Gold, a separate physical machine) must stay a separate record")
 		gold_stub = load_json(GOLD_STUB_PATH)
 		self.assertEqual("partial", gold_stub["coverage"]["status"])
 		self.assertEqual("bally.the-addams-family-gold.1994", gold_stub["machine"]["id"])
+		self.assertEqual("pinmame.wpc-fliptronic", gold_stub["controller"]["platform"])
 		self.assertEqual([], gold_stub["inputs"])
 		self.assertEqual([], gold_stub["outputs"])
 

@@ -40,6 +40,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `fg_700al` (2007, Stern, clone of `fg_1200ag`).
 - `fg_800al` (2007, Stern, clone of `fg_1200ag`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `fg_1200ag` at `src/wpc/sam.c:2611` with machine module `sam1`; the definition declares controller platform `pinmame.sam` from it.
+- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

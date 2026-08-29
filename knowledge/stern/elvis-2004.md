@@ -42,6 +42,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `elvisi` (2004, Stern, clone of `elvis`).
 - `elvisl` (2004, Stern, clone of `elvis`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `elvis` at `src/wpc/sims/se/prelim/elvis.c:426` with machine module `de_mSES3`; no reviewed profile covers that module yet, so no platform is declared.
+- The driver source's named switch/solenoid symbols are carried as 19 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

@@ -22,6 +22,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - `milln_l3` (1987, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `milln_l3` at `src/wpc/sims/s11/full/milln.c:390` with machine module `s11_mS11AS`; the definition declares controller platform `pinmame.system-11` from it.
+- The driver source's named switch/solenoid symbols are carried as 76 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

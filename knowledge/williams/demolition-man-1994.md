@@ -41,6 +41,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `dm_px5` (1994, Williams, clone of `dm_lx4`).
 - `dm_px6` (1994, Williams, clone of `dm_lx4`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `dm_lx4` at `src/wpc/sims/wpc/full/dm.c:519` with machine module `wpc_mDCSS`; the definition declares controller platform `pinmame.wpc-dcs` from it.
+- The driver source's named switch/solenoid symbols are carried as 63 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

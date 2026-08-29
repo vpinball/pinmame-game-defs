@@ -23,6 +23,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `viking` (1980, Bally).
 - `vikingb` (2004, Bally / Oliver, clone of `viking`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `viking` at `src/wpc/by35games.c:868` with machine module `by35_mBY35_51S`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

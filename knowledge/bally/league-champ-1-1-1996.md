@@ -21,6 +21,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - `lc_11` (1996, Bally).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `lc_11` at `src/wpc/bowlgames.c:683` with machine module `wpc_mFliptronS`; the definition declares controller platform `pinmame.wpc-fliptronic` from it.
+- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

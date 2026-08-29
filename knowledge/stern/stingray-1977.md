@@ -24,6 +24,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `stingray` (1977, Stern).
 - `stingrfp` (1977, Stern, clone of `stingray`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `stingray` at `src/wpc/stgames.c:71` with machine module `by35_mST100`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

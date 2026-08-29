@@ -27,6 +27,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `dd_p6` (1990, Bally, clone of `dd_l2`).
 - `dd_p7` (1990, Bally, clone of `dd_l2`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `dd_l2` at `src/wpc/sims/s11/full/dd.c:419` with machine module `s11c_one`; no reviewed profile covers that module yet, so no platform is declared.
+- The driver source's named switch/solenoid symbols are carried as 63 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

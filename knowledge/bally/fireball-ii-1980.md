@@ -23,6 +23,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `fball_ia` (2004, Bally / Oliver, clone of `fball_ii`).
 - `fball_ii` (1981, Bally).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `fball_ii` at `src/wpc/by35games.c:1193` with machine module `by35_mBY35_61S`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

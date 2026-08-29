@@ -26,6 +26,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `swep1_201` (2025, Midway / mypinballs, clone of `swep1_150`).
 - `swep1_210` (2025, Midway / mypinballs, clone of `swep1_150`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `swep1_150` at `src/wpc/p2k.c:1584` with machine module `p2k`; the definition declares controller platform `pinmame.p2k` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

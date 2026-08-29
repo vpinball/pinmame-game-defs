@@ -22,6 +22,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `spacehaw` (1986, Nuova Bell Games).
 - `spchawfp` (1986, Nuova Bell Games, clone of `spacehaw`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `spacehaw` at `src/wpc/nuova.c:405` with machine module `by35_mBY35_45S`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

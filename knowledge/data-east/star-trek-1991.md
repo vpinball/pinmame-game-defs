@@ -28,6 +28,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `trek_201` (1992, Data East).
 - `trek_300` (2020, Data East, clone of `trek_201`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `trek_201` at `src/wpc/degames.c:577` with machine module `de_mDEDMD16S2A`; the definition declares controller platform `pinmame.dataeast` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

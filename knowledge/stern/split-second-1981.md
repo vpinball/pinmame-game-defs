@@ -23,6 +23,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `splitsec` (1981, Stern).
 - `splitsfp` (1981, Stern, clone of `splitsec`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `splitsec` at `src/wpc/stgames.c:1129` with machine module `by35_mST200v`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

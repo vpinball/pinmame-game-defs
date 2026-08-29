@@ -22,6 +22,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - `kiko_a10` (1990, Data East).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `kiko_a10` at `src/wpc/degames.c:337` with machine module `de_mDEAS1`; the definition declares controller platform `pinmame.dataeast` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

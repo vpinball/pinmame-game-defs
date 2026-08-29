@@ -24,6 +24,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `dh_lf2` (1995, Williams, clone of `dh_lx2`).
 - `dh_lx2` (1995, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `dh_lx2` at `src/wpc/sims/wpc/prelim/dh.c:277` with machine module `wpc_mSecurityS`; the definition declares controller platform `pinmame.wpc-security` from it.
+- The driver source's named switch/solenoid symbols are carried as 30 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

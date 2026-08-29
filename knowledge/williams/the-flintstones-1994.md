@@ -31,6 +31,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `fs_sp2` (1994, Williams, clone of `fs_lx5`).
 - `fs_sp2d` (1994, Williams, clone of `fs_lx5`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `fs_lx5` at `src/wpc/sims/wpc/prelim/fs.c:284` with machine module `wpc_mSecurityS`; the definition declares controller platform `pinmame.wpc-security` from it.
+- The driver source's named switch/solenoid symbols are carried as 30 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

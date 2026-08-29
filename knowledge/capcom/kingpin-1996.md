@@ -22,6 +22,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - `kpb105` (1996, Capcom).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `kpb105` at `src/wpc/capgames.c:351` with machine module `cc2`; the definition declares controller platform `pinmame.capcom` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

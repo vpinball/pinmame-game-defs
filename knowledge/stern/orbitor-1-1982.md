@@ -26,6 +26,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `orbitorb` (1982, Stern, clone of `orbitor1`).
 - `orbitorc` (1982, Stern, clone of `orbitor1`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `orbitor1` at `src/wpc/stgames.c:1341` with machine module `by35_mST200v`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

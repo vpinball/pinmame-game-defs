@@ -22,6 +22,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `pfevr_l2` (1984, Williams).
 - `pfevr_p3` (1984, Williams, clone of `pfevr_l2`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `pfevr_l2` at `src/wpc/bowlgames.c:270` with machine module `s9_mS9PS`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

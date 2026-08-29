@@ -95,7 +95,10 @@ class DataEastControllerTests(unittest.TestCase):
 					f"{path.as_posix()}:{device['id']}:{binding['device']}",
 				)
 			checked.append(definition["machine"]["id"])
-		self.assertEqual(7, len(checked))
+		# The 2026-08-29 identity promotion created twelve more Data East partials
+		# with resolved identity, and the PinMAME I/O attachment declared their
+		# controller platform from each driver's own CORE_GAMEDEF module.
+		self.assertEqual(19, len(checked))
 
 
 if __name__ == "__main__":

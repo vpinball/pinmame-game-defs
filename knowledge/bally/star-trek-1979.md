@@ -25,6 +25,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `startred` (2008, Bally / Oliver, clone of `startrek`).
 - `startrek` (1979, Bally).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `startrek` at `src/wpc/by35games.c:501` with machine module `by35_mBY35_50S`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

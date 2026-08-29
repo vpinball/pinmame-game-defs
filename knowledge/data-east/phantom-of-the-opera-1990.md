@@ -24,6 +24,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `poto_a31` (1990, Data East, clone of `poto_a32`).
 - `poto_a32` (1990, Data East).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `poto_a32` at `src/wpc/degames.c:308` with machine module `de_mDEAS1`; the definition declares controller platform `pinmame.dataeast` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

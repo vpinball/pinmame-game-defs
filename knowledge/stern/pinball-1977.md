@@ -23,6 +23,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `pinbalfp` (1977, Stern, clone of `pinball`).
 - `pinball` (1977, Stern).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `pinball` at `src/wpc/stgames.c:54` with machine module `by35_mST100`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

@@ -23,6 +23,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `hothand` (1979, Stern).
 - `hothanfp` (1979, Stern, clone of `hothand`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `hothand` at `src/wpc/stgames.c:277` with machine module `by35_mST100bs`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

@@ -25,6 +25,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `kissp` (1979, Bally, clone of `kiss`).
 - `kissp2` (1979, Bally, clone of `kiss`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `kiss` at `src/wpc/by35games.c:613` with machine module `by35_mBY35_50S`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

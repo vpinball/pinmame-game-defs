@@ -22,6 +22,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `tts_l1` (1986, Williams, clone of `tts_l2`).
 - `tts_l2` (1986, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `tts_l2` at `src/wpc/bowlgames.c:341` with machine module `s11_mS11S`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

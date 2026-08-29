@@ -23,6 +23,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `nugent` (1978, Stern).
 - `nugentfp` (1978, Stern, clone of `nugent`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `nugent` at `src/wpc/stgames.c:193` with machine module `by35_mST100s`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

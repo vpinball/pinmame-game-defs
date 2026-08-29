@@ -24,6 +24,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `ffv103` (1996, Capcom, clone of `ffv104`).
 - `ffv104` (1996, Capcom).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `ffv104` at `src/wpc/capgames.c:266` with machine module `cc2`; the definition declares controller platform `pinmame.capcom` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

@@ -25,6 +25,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `bk_l3` (1980, Williams, clone of `bk_l4`).
 - `bk_l4` (1980, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `bk_l4` at `src/wpc/sims/s7/full/bk.c:285` with machine module `s7_mS7S`; no reviewed profile covers that module yet, so no platform is declared.
+- The driver source's named switch/solenoid symbols are carried as 58 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

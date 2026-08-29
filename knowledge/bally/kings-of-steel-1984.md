@@ -24,6 +24,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `kosteela` (2004, Bally / Oliver, clone of `kosteel`).
 - `tigerrag` (1984, Bell Games, clone of `kosteel`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `kosteel` at `src/wpc/by35games.c:1755` with machine module `by35_mBY35_45S`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

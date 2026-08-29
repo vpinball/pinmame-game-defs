@@ -29,6 +29,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `bk2k_pf1` (1989, Williams, clone of `bk2k_l4`).
 - `bk2k_pu1` (1989, Williams, clone of `bk2k_l4`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `bk2k_l4` at `src/wpc/s11games.c:836` with machine module `s11_mS11BS`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

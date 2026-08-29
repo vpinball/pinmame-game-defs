@@ -26,6 +26,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `jb_10b` (1995, Williams, clone of `jb_10r`).
 - `jb_10r` (1995, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `jb_10r` at `src/wpc/sims/wpc/prelim/jb.c:299` with machine module `wpc_m95DCSS`; the definition declares controller platform `pinmame.wpc-95` from it.
+- The driver source's named switch/solenoid symbols are carried as 28 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

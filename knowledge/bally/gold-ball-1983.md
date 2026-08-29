@@ -25,6 +25,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `goldball` (1983, Bally).
 - `goldbaln` (1983, Bally, clone of `goldball`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `goldball` at `src/wpc/by35games.c:1697` with machine module `by35_mBY35_51S`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

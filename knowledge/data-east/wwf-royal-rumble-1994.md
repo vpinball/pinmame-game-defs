@@ -24,6 +24,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `wwfr_103f` (1994, Data East, clone of `wwfr_106`).
 - `wwfr_106` (1994, Data East).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `wwfr_106` at `src/wpc/degames.c:1248` with machine module `de_mDEDMD32S2A`; the definition declares controller platform `pinmame.dataeast` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

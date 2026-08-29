@@ -30,6 +30,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `pz_l2` (1991, Bally, clone of `pz_f4`).
 - `pz_l3` (1991, Bally, clone of `pz_f4`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `pz_f4` at `src/wpc/sims/wpc/full/pz.c:594` with machine module `wpc_mFliptronS`; the definition declares controller platform `pinmame.wpc-fliptronic` from it.
+- The driver source's named switch/solenoid symbols are carried as 68 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

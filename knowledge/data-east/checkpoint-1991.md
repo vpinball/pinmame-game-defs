@@ -22,6 +22,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - `ckpt_a17` (1991, Data East).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `ckpt_a17` at `src/wpc/degames.c:421` with machine module `de_mDEDMD16S1`; the definition declares controller platform `pinmame.dataeast` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

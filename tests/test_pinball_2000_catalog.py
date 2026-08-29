@@ -34,6 +34,10 @@ IDENTITY_PARTIAL_MISSING = [
 	"provenance",
 	"spatial_placement",
 ]
+# The 2026-08-29 PinMAME I/O attachment declares the Pinball 2000 controller
+# platform from the driver's own CORE_GAMEDEF module, so controller_platform
+# leaves the missing list for Episode I.
+SWEP1_PARTIAL_MISSING = [item for item in IDENTITY_PARTIAL_MISSING if item != "controller_platform"]
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -81,15 +85,19 @@ class Pinball2000CatalogTests(unittest.TestCase):
 	def test_swep1_is_an_identity_only_partial(self) -> None:
 		definition = load_json(SWEP1_PATH)
 		self.assertEqual("midway.pinball-2000-star-wars-episode-i-1-50.2003", definition["machine"]["id"])
+		self.assertEqual({"inversion_applied_by_emulator": True, "platform": "pinmame.p2k"}, definition["controller"])
 		self.assertNotIn("kind", definition["machine"])
 		self.assertNotIn("ipdb_id", definition["machine"])
 		self.assertNotIn("opdb_id", definition["machine"])
 		self.assertEqual(SWEP1_DRIVERS, {driver["id"] for driver in definition["drivers"]})
 		self.assertEqual("partial", definition["coverage"]["status"])
-		self.assertEqual(IDENTITY_PARTIAL_MISSING, definition["coverage"]["missing"])
+		self.assertEqual(SWEP1_PARTIAL_MISSING, definition["coverage"]["missing"])
 		for collection in ("inputs", "outputs", "displays", "mechanisms", "relationships", "conflicts"):
 			self.assertEqual([], definition[collection])
 		self.assertEqual({PINMAME_REVISION}, {source["revision"] for source in definition["sources"]})
+		core_sources = [source for source in definition["sources"] if source["id"].startswith("pinmame.core.")]
+		self.assertEqual(1, len(core_sources))
+		self.assertIn("machine module p2k", core_sources[0]["locator"])
 		self.assertEqual("knowledge/midway/pinball-2000-star-wars-episode-i-1-50-2003.md", definition["knowledge"]["path"])
 		self.assertTrue((ROOT / definition["knowledge"]["path"]).is_file())
 

@@ -24,6 +24,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `robo_a30` (1989, Data East, clone of `robo_a34`).
 - `robo_a34` (1989, Data East).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `robo_a34` at `src/wpc/degames.c:279` with machine module `de_mDEAS1`; the definition declares controller platform `pinmame.dataeast` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

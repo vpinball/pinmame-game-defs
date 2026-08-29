@@ -67,6 +67,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `wpt_140i` (2008, Stern, clone of `wpt_140a`).
 - `wpt_140l` (2008, Stern, clone of `wpt_140a`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `wpt_140a` at `src/wpc/sam.c:2506` with machine module `sam1`; the definition declares controller platform `pinmame.sam` from it.
+- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

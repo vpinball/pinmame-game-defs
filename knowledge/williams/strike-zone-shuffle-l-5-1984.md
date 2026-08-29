@@ -22,6 +22,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `szone_l2` (1984, Williams, clone of `szone_l5`).
 - `szone_l5` (1984, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `szone_l5` at `src/wpc/bowlgames.c:306` with machine module `s9_mS9S`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

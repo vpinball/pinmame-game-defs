@@ -27,6 +27,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `matahari` (1978, Bally).
 - `matatest` (2005, Bally / Oliver, clone of `matahari`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `matahari` at `src/wpc/by35games.c:200` with machine module `by35_mBY17`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

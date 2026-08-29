@@ -26,6 +26,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `lightnid` (2024, Stern / Idleman, clone of `lightnin`).
 - `lightnin` (1981, Stern).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `lightnin` at `src/wpc/stgames.c:1067` with machine module `by35_mST200v`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

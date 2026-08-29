@@ -21,6 +21,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - `scrzy_l1` (1984, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `scrzy_l1` at `src/wpc/bowlgames.c:289` with machine module `s9_mS9S`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

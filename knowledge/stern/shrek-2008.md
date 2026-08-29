@@ -23,6 +23,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `shr_130` (2008, Stern, clone of `shr_141`).
 - `shr_141` (2008, Stern).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `shr_141` at `src/wpc/sam.c:2949` with machine module `sam1`; the definition declares controller platform `pinmame.sam` from it.
+- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

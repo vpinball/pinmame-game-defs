@@ -25,6 +25,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `blackjcd` (2018, Bally, clone of `blackjck`).
 - `blackjck` (1978, Bally).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `blackjck` at `src/wpc/by35games.c:269` with machine module `by35_mBY17`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

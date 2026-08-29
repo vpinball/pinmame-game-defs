@@ -31,6 +31,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `monopoll` (2002, Stern, clone of `monopoly`).
 - `monopoly` (2001, Stern).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `monopoly` at `src/wpc/sims/se/prelim/monopoly.c:441` with machine module `de_mSES1`; no reviewed profile covers that module yet, so no platform is declared.
+- The driver source's named switch/solenoid symbols are carried as 23 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

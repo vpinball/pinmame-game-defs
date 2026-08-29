@@ -21,6 +21,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - `strax_p7` (1990, Williams).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `strax_p7` at `src/wpc/s11games.c:1586` with machine module `s11_mS11BS`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

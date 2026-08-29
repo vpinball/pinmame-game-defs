@@ -25,6 +25,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `bullseye` (1986, Grand Products Inc.).
 - `bullseyn` (1986, Grand Products Inc., clone of `bullseye`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `bullseye` at `src/wpc/by35games.c:1952` with machine module `by35_GP`; the definition declares controller platform `pinmame.by35` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

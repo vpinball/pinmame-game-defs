@@ -31,6 +31,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `sc_18s11` (1998, Bally).
 - `sc_18s2` (1998, Bally, clone of `sc_18s11`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `sc_18s11` at `src/wpc/sims/wpc/prelim/sc.c:288` with machine module `wpc_m95S`; the definition declares controller platform `pinmame.wpc-95` from it.
+- The driver source's named switch/solenoid symbols are carried as 27 candidate devices in the definition.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

@@ -31,6 +31,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - `pb_l5h` (2012, Francis, clone of `pb_l5`).
 - `pb_p4` (1986, Williams, clone of `pb_l5`).
 
+## PinMAME source contract (candidate)
+
+- The pinned PinMAME source declares `pb_l5` at `src/wpc/s11games.c:357` with machine module `s11_mS11XSL`; the definition declares controller platform `pinmame.system-11` from it.
+
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display
