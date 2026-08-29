@@ -348,15 +348,17 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
 		self.assertEqual(catalog["summary"]["game_count"], report["machine_count"])
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
-		self.assertEqual(789, report["machine_count"])
+		self.assertEqual(779, report["machine_count"])
 		self.assertEqual(26, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one
 		# stub with an honest partial, and the 2026-08-29 catalog-wide identity promotion
 		# converted every residual generated stub into an identity-only partial, so no stubs
-		# remain and every physical game is at least a named partial record.
-		self.assertEqual(763, report["partial_count"])
+		# remain and every physical game is at least a named partial record. The 2026-08-30
+		# review fixes classified ten test-fixture/test-chip records as diagnostic_software,
+		# so they no longer count as physical games.
+		self.assertEqual(753, report["partial_count"])
 		self.assertEqual(0, report["stub_count"])
-		self.assertEqual(1, report["non_game_record_count"])
+		self.assertEqual(11, report["non_game_record_count"])
 		self.assertEqual(790, report["catalog_record_count"])
 		# The Pinball 2000 baseline adds Revenge From Mars and Star Wars Episode I as two
 		# honest physical-game stubs. Its other new root, taf_i4bs, joins the existing
@@ -438,7 +440,7 @@ class SpatialMigrationTests(unittest.TestCase):
 		# positions while the remaining per-firmware expansion fitment stays a variant blocker.
 		# The 2026-08-29 identity promotion gives every machine an identity-only partial record that
 		# lists spatial_placement as missing, so this count rose from 45 by the 666 promoted stubs.
-		self.assertEqual(711, report["missing_requirement_counts"]["spatial_placement"])
+		self.assertEqual(701, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -450,14 +452,16 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Junk Yard and Big Buck Hunter Pro each add one definition carrying unresolved conflicts.
 		self.assertEqual(51, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(790, len(catalog["machines"]))
-		self.assertEqual(789, catalog["summary"]["game_count"])
+		self.assertEqual(779, catalog["summary"]["game_count"])
 		self.assertEqual(790, catalog["summary"]["machine_count"])
 		self.assertEqual(26, catalog["summary"]["author_ready_count"])
 		self.assertEqual(0, catalog["summary"]["stub_count"])
-		# The catalog count includes the separately classified partial diagnostic; coverage counts
-		# only the 789 physical games and therefore reports 763 partial records above.
+		# The catalog count includes the separately classified partial diagnostic plus the ten
+		# test-fixture/test-chip records classified diagnostic_software by the 2026-08-30 review
+		# fixes; coverage counts only the 779 physical games and therefore reports 753 partial
+		# records above.
 		self.assertEqual(764, catalog["summary"]["partial_count"])
-		self.assertEqual(1, catalog["summary"]["non_game_count"])
+		self.assertEqual(11, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(12, len(note_paths))
 		for relative_path in note_paths:

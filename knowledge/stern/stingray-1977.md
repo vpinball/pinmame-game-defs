@@ -26,12 +26,11 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `stingray` at `src/wpc/stgames.c:71` with machine module `by35_mST100`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+- The pinned PinMAME source declares `stingray` at `src/wpc/stgames.c:71` with machine module `by35_mST100`; no reviewed profile covers that module yet, so no platform is declared.
 
 ## VPX script candidates (candidate)
 
 - 1 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 39 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
-
 ## What a curator must establish next
 
 Controller platform from the pinned PinMAME driver source; full input, output, and display

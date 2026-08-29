@@ -57,7 +57,9 @@ PINMAME_URI = "https://github.com/vpinball/pinmame"
 
 # Reviewed mapping from PinMAME machine-module symbol to controller profile ID.
 # Modules whose generation the existing profiles do not cover (System 3-7, Bally
-# 6803, Hankin, United/Monroe bowlers, first-generation WPC DMD, Sega) stay
+# 6803, Hankin, United/Monroe bowlers, first-generation WPC DMD, Sega, and Stern
+# MPU-100 -- GEN_STMPU100 is a distinct generation with a different cabinet-switch
+# matrix column, so the MPU-200 profile would misstate those machines) stay
 # unmapped so controller_platform remains honestly missing for them.
 MODULE_PLATFORMS = {
 	"wpc_m95S": "pinmame.wpc-95",
@@ -85,9 +87,6 @@ MODULE_PLATFORMS = {
 	"by35_mBY17": "pinmame.by35",
 	"by35_centaur": "pinmame.by35",
 	"by35_GP": "pinmame.by35",
-	"by35_mST100": "pinmame.stern-mpu200",
-	"by35_mST100s": "pinmame.stern-mpu200",
-	"by35_mST100bs": "pinmame.stern-mpu200",
 	"by35_mST200": "pinmame.stern-mpu200",
 	"by35_mST200v": "pinmame.stern-mpu200",
 }

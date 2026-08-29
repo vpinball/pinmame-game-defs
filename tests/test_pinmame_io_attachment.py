@@ -16,7 +16,7 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.dataeast": 14,
 	"pinmame.p2k": 1,
 	"pinmame.sam": 9,
-	"pinmame.stern-mpu200": 33,
+	"pinmame.stern-mpu200": 20,
 	"pinmame.system-11": 24,
 	"pinmame.wpc-95": 7,
 	"pinmame.wpc-alpha": 1,
@@ -92,6 +92,14 @@ class PinmameIoAttachmentTests(unittest.TestCase):
 		self.assertNotIn("controller", definition)
 		self.assertIn("controller_platform", definition["coverage"]["missing"])
 		self.assertTrue(any(device["binding"]["group"] == "pinmame.input.switch" for device in definition["inputs"]))
+
+	def test_mpu100_machines_are_not_claimed_as_mpu200(self) -> None:
+		# GEN_STMPU100 is a distinct generation with a different cabinet-switch
+		# matrix column; the reviewed module mapping must not hand those machines
+		# the MPU-200 profile.
+		definition = load_json(ROOT / "machines/partial/stern/nugent-1978.json")
+		self.assertNotIn("controller", definition)
+		self.assertIn("controller_platform", definition["coverage"]["missing"])
 
 
 if __name__ == "__main__":

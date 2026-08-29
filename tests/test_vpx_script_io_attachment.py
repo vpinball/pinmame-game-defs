@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import unittest
 from pathlib import Path
 
@@ -10,9 +11,9 @@ CORPUS_REPOSITORIES = (
 	"https://github.com/sverrewl/vpxtable_scripts",
 	"https://github.com/jsm174/vpx-standalone-scripts",
 )
-EXPECTED_ATTACHED_MACHINES = 323
-EXPECTED_ATTACHED_DEVICES = 19407
-EXPECTED_ATTACHED_SCRIPTS = 424
+EXPECTED_ATTACHED_MACHINES = 303
+EXPECTED_ATTACHED_DEVICES = 17142
+EXPECTED_ATTACHED_SCRIPTS = 384
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
@@ -63,13 +64,34 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 		lamp = next(device for device in definition["outputs"] if device["binding"] == {"device": 5, "group": "pinmame.output.lamp"})
 		self.assertEqual("candidate", lamp["provenance"]["status"])
 		self.assertEqual("lamp", lamp["kind"])
-		self.assertEqual(116, sum(1 for device in definition["outputs"] if device["kind"] == "lamp"))
+		self.assertEqual(113, sum(1 for device in definition["outputs"] if device["kind"] == "lamp"))
 
-	def test_negative_addresses_get_identifier_safe_ids(self) -> None:
+	def test_handler_symbols_and_out_of_range_addresses_are_never_attached(self) -> None:
+		# VBScript keyboard/form handlers (Table1_KeyDown and friends) and script
+		# keyboard-alias references outside the public address ranges must not
+		# become devices. Nemesis's script reads Controller.Switch(-3); the
+		# definition must carry no such device.
 		definition = load_json(ROOT / "machines/partial/peyper-spain/nemesis-1986.json")
-		switch = next(device for device in definition["inputs"] if device["binding"] == {"device": -3, "group": "pinmame.input.switch"})
-		self.assertEqual("switch.nemesis-key-down-m3", switch["id"])
-		self.assertEqual(-3, switch["binding"]["device"])
+		self.assertEqual([], [device for device in definition["inputs"] if device["binding"]["device"] < 1])
+		for definition in self.attached:
+			for device in definition["inputs"] + definition["outputs"]:
+				self.assertFalse(
+					re.search(r"_(?:keydown|keyup|init|mousedown|mouseup)$", device["id"], re.IGNORECASE),
+					(definition["machine"]["id"], device["id"]),
+				)
+				group = device["binding"]["group"]
+				address = device["binding"]["device"]
+				bounds = {"pinmame.input.switch": (1, 128), "pinmame.output.solenoid": (1, 128), "pinmame.output.lamp": (1, 128), "pinmame.output.gi": (0, 16)}[group]
+				self.assertTrue(bounds[0] <= address <= bounds[1], (definition["machine"]["id"], device["id"], address))
+
+	def test_retheme_scripts_do_not_supply_machine_labels(self) -> None:
+		# Gremlins re-themes Victory's ROM but not Victory's playfield; the title
+		# match must cite only scripts whose path names the machine.
+		definition = load_json(ROOT / "machines/partial/gottlieb/victory-1987.json")
+		locations = [source["locator"] for source in definition["sources"] if source.get("kind") == "vpx_script" and len(source.get("sha256", "")) == 64]
+		self.assertTrue(locations)
+		self.assertTrue(all("victory" in locator.casefold() for locator in locations))
+		self.assertFalse(any("gremlins" in locator.casefold() for locator in locations))
 
 	def test_attachment_never_touches_machines_that_already_had_devices(self) -> None:
 		# The PinMAME define-attachment machines (e.g. Demolition Man) kept their

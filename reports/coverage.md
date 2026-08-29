@@ -2,12 +2,12 @@
 
 PinMAME revision: `8371478a7640f1896dcdf565aed340dc5df989ba`
 
-Author-ready coverage: **26 / 789 physical-machine records (3.2953%)**
+Author-ready coverage: **26 / 779 physical-machine records (3.3376%)**
 
 - In-scope drivers: 2888
-- Catalog records: 790 (1 diagnostic/system-software records excluded from game coverage)
+- Catalog records: 790 (11 diagnostic/system-software records excluded from game coverage)
 - Explicit stubs: 0
-- Partial definitions: 763
+- Partial definitions: 753
 - Author-ready definitions: 26
 - Completion gate: FAIL
 

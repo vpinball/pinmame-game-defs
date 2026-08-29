@@ -9,15 +9,32 @@ the contributing script through a ``vpx_script`` source record with the
 corpus's license/attribution. Script URIs deliberately avoid ``/blob/`` so the
 pinned-script link table stays authoritative.
 
-Machines that already hold devices (PinMAME define candidates or curated work)
-are skipped, and nothing is claimed: every enumeration requirement stays in
-``coverage.missing``. Machines with a controller platform have their candidates
-filtered to the profile's declared groups and address rules.
+Guardrails (applied to every machine, with or without a declared platform):
+
+- VBScript event-handler symbols (``*_KeyDown``, ``*_KeyUp``, ``*_Init``) are
+  keyboard/form plumbing, not playfield devices, and are never attached.
+- Public-address sanity bounds: switches 1-128, solenoids 1-128, lamps 1-128,
+  GI 0-16. Script references outside these ranges are keyboard aliases,
+  diagnostic keys, or extraction artifacts, not matrix devices.
+- A script only contributes to a machine when its file path names the machine
+  (every significant title token of the machine name, or the concatenated
+  title, appears as a path token). Community re-themes reuse licensed-out
+  ROMs, so ``cGameName`` alone cannot prove the script depicts the machine;
+  non-matching scripts stay in the extraction report as leads instead of
+  becoming device sources.
+
+Machines that already hold devices from curated work or from the PinMAME
+define attachment are skipped, and nothing is claimed: every enumeration
+requirement stays in ``coverage.missing``. Machines with a controller platform
+have their candidates filtered to the profile's declared groups and address
+rules. ``--sanitize`` recomputes every machine this pass has attached with the
+current rules; it is deterministic and safe to re-run.
 
 Run from the repository root:
 
 	python -B tools/attach_vpx_script_io.py --dry-run
 	python -B tools/attach_vpx_script_io.py
+	python -B tools/attach_vpx_script_io.py --sanitize
 """
 
 from __future__ import annotations
@@ -34,8 +51,8 @@ sys.path.insert(0, str(REPOSITORY_ROOT / "src"))
 from pinmame_game_defs.coverage import write_coverage_report  # noqa: E402
 from pinmame_game_defs.identifiers import slug  # noqa: E402
 from pinmame_game_defs.jsonio import load_json, write_json, write_text  # noqa: E402
-from pinmame_game_defs.validation import _address_allowed  # noqa: E402
 from pinmame_game_defs.registry import rebuild_catalog  # noqa: E402
+from pinmame_game_defs.validation import _address_allowed  # noqa: E402
 
 NON_GAME_KINDS = {"diagnostic_software", "system_software"}
 CORPUS_REPOSITORIES = {
@@ -48,6 +65,16 @@ GROUP_KINDS = {
 	"pinmame.output.lamp": ("lamp", "lamp", "pinmame.lamp"),
 	"pinmame.output.gi": ("gi", "gi", "pinmame.gi"),
 }
+ADDRESS_BOUNDS = {
+	"pinmame.input.switch": (1, 128),
+	"pinmame.output.solenoid": (1, 128),
+	"pinmame.output.lamp": (1, 128),
+	"pinmame.output.gi": (0, 16),
+}
+# VBScript form/keyboard event handlers, never playfield devices.
+HANDLER_SYMBOL_PATTERN = re.compile(r"_(?:keydown|keyup|init|mousedown|mouseup)$", re.IGNORECASE)
+TITLE_STOPWORDS = {"the", "a", "an", "and", "of"}
+SAM_GAME_ON_BINDING = {"device": 33, "group": "pinmame.output.solenoid"}
 
 
 def clean_label(label: str) -> str:
@@ -57,6 +84,28 @@ def clean_label(label: str) -> str:
 	if text and text[0].islower():
 		text = text[0].upper() + text[1:]
 	return text
+
+
+def candidate_allowed(candidate: dict[str, Any]) -> bool:
+	if HANDLER_SYMBOL_PATTERN.search(candidate.get("symbol", "")):
+		return False
+	bounds = ADDRESS_BOUNDS.get(candidate["group"])
+	if bounds is None:
+		return False
+	return bounds[0] <= candidate["address"] <= bounds[1]
+
+
+def title_tokens(title: str) -> tuple[list[str], str]:
+	tokens = [token for token in re.split(r"[^a-z0-9]+", title.casefold()) if token and token not in TITLE_STOPWORDS]
+	return tokens, "".join(tokens)
+
+
+def title_matches(machine_name: str, script_path: str) -> bool:
+	tokens, concatenated = title_tokens(machine_name)
+	if not tokens:
+		return False
+	path_tokens = {token for token in re.split(r"[^a-z0-9]+", script_path.casefold()) if token}
+	return set(tokens) <= path_tokens or concatenated in path_tokens
 
 
 def candidate_device(candidate: dict[str, Any], source_id: str, occupied: set[str]) -> dict[str, Any] | None:
@@ -88,7 +137,7 @@ def candidate_device(candidate: dict[str, Any], source_id: str, occupied: set[st
 	}
 
 
-def script_source_record(entry: dict[str, Any], evidence: dict[str, Any], corpus_repository: str) -> dict[str, Any]:
+def script_source_record(entry: dict[str, Any], evidence: dict[str, Any]) -> dict[str, Any]:
 	return {
 		"attribution": evidence["source"]["attribution"],
 		"id": f"vpx-script.{Path(entry['evidence']).stem}",
@@ -97,29 +146,91 @@ def script_source_record(entry: dict[str, Any], evidence: dict[str, Any], corpus
 		"locator": f"{entry['corpus']}: {entry['source']}",
 		"revision": entry["revision"],
 		"sha256": evidence["source"]["sha256"],
-		"uri": corpus_repository,
+		"uri": CORPUS_REPOSITORIES[entry["corpus"]],
 	}
 
 
-def knowledge_note_text(text: str, script_count: int, device_count: int) -> str | None:
-	marker = "## What a curator must establish next"
-	if marker not in text or "## VPX script candidates" in text:
-		return None
-	lines = [
-		"## VPX script candidates (candidate)",
-		"",
+def attach_candidates(
+	definition: dict[str, Any],
+	entries: list[dict[str, Any]],
+	profile_groups: dict[str, dict[str, Any]] | None,
+	machine_name: str,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+	"""Return (contributing script source records, merged devices) for empty arrays."""
+	occupied: set[str] = {device["id"] for device in definition["inputs"] + definition["outputs"]}
+	bindings: set[tuple[str, int]] = {
+		(device["binding"]["group"], device["binding"]["device"])
+		for device in definition["inputs"] + definition["outputs"]
+		if isinstance(device.get("binding"), dict)
+	}
+	source_ids = {source["id"] for source in definition["sources"]}
+	merged: list[dict[str, Any]] = []
+	contributing: dict[str, dict[str, Any]] = {}
+	for entry in sorted(entries, key=lambda item: (item["corpus"], item["source"])):
+		if not title_matches(machine_name, entry["source"]):
+			continue
+		evidence = load_json(REPOSITORY_ROOT / entry["evidence"])
+		source_id = f"vpx-script.{Path(entry['evidence']).stem}"
+		contributed = False
+		for candidate in [*evidence["switches"], *evidence["outputs"]]:
+			group = candidate["group"]
+			if group not in GROUP_KINDS or not candidate_allowed(candidate):
+				continue
+			if profile_groups is not None:
+				group_def = profile_groups.get(group)
+				if group_def is None or not _address_allowed(candidate["address"], group_def.get("address_rules", [])):
+					continue
+			key = (group, candidate["address"])
+			if key in bindings:
+				continue
+			device = candidate_device(candidate, source_id, occupied)
+			if device is None:
+				continue
+			bindings.add(key)
+			merged.append(device)
+			contributed = True
+		if contributed and source_id not in source_ids:
+			contributing[source_id] = script_source_record(entry, evidence)
+	return list(contributing.values()), merged
+
+
+def knowledge_note_section(script_count: int, device_count: int) -> str:
+	return (
+		"## VPX script candidates (candidate)\n"
+		"\n"
 		f"- {script_count} retained community table script(s) declare this machine's driver; their "
 		f"extracted switch/lamp/solenoid/GI candidates are carried as {device_count} candidate devices. "
 		"When curator work weighs sources, a retained script outranks emulator-derived candidates for "
 		"runtime semantics, but every device here is still a candidate until a known-working table is "
-		"verified against this exact physical machine.",
-	]
-	return text.replace(marker, "\n".join(lines) + "\n\n" + marker, 1)
+		"verified against this exact physical machine.\n"
+	)
+
+
+def update_knowledge_note(knowledge_path: Path, script_count: int, device_count: int) -> None:
+	if not knowledge_path.is_file():
+		return
+	text = knowledge_path.read_text(encoding="utf-8")
+	section = knowledge_note_section(script_count, device_count)
+	marker = "## What a curator must establish next"
+	existing_start = text.find("## VPX script candidates")
+	if existing_start >= 0:
+		existing_end = text.find("\n## ", existing_start + 1)
+		existing_block = text[existing_start:] if existing_end < 0 else text[existing_start:existing_end + 1]
+		if device_count:
+			text = text.replace(existing_block, section, 1)
+		else:
+			text = text.replace(existing_block, "", 1)
+	elif device_count:
+		if marker not in text:
+			return
+		text = text.replace(marker, section + "\n" + marker, 1)
+	write_text(knowledge_path, text.rstrip("\n") + "\n" if not text.endswith("\n") else text)
 
 
 def main() -> None:
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--dry-run", action="store_true")
+	parser.add_argument("--sanitize", action="store_true", help="Recompute every machine this pass has attached with the current rules.")
 	args = parser.parse_args()
 
 	catalog = load_json(REPOSITORY_ROOT / "catalog" / "pinmame.json")
@@ -141,71 +252,65 @@ def main() -> None:
 	for machine in catalog["machines"]:
 		if machine["machine_kind"] in NON_GAME_KINDS or machine["coverage_status"] != "partial":
 			continue
-		entries = entries_by_machine.get(machine["id"])
-		if not entries:
-			continue
 		definition_path = REPOSITORY_ROOT / machine["definition"]
 		definition = load_json(definition_path)
-		if definition["inputs"] or definition["outputs"]:
+		corpus_sources = [
+			source
+			for source in definition["sources"]
+			if source.get("kind") == "vpx_script" and source.get("uri") in set(CORPUS_REPOSITORIES.values()) and len(source.get("sha256", "")) == 64
+		]
+		if args.sanitize:
+			if not corpus_sources:
+				continue
+		elif definition["inputs"] or definition["outputs"] or not entries_by_machine.get(machine["id"]):
 			continue
-		profile = None
+		if args.sanitize and not entries_by_machine.get(machine["id"]):
+			# Nothing left to recompute from; drop this pass's devices and citations.
+			definition["inputs"] = []
+			definition["outputs"] = []
+			definition["sources"] = [source for source in definition["sources"] if source not in corpus_sources]
+			update_knowledge_note(REPOSITORY_ROOT / definition["knowledge"]["path"], 0, 0)
+			if not args.dry_run:
+				write_json(definition_path, definition)
+			touched += 1
+			continue
+
 		platform = definition.get("controller", {}).get("platform")
-		if platform:
-			profile = profiles.get(platform)
+		profile = profiles.get(platform) if platform else None
 		profile_groups = {group["id"]: group for group in profile["groups"]} if profile else None
 
-		occupied: set[str] = set()
-		bindings: set[tuple[str, int]] = set()
-		source_ids = {source["id"] for source in definition["sources"]}
-		merged: list[dict[str, Any]] = []
-		contributing: dict[str, dict[str, Any]] = {}
-		for entry in sorted(entries, key=lambda item: (item["corpus"], item["source"])):
-			evidence = load_json(REPOSITORY_ROOT / entry["evidence"])
-			source_id = f"vpx-script.{Path(entry['evidence']).stem}"
-			candidates = [*evidence["switches"], *evidence["outputs"]]
-			contributed = False
-			for candidate in candidates:
-				group = candidate["group"]
-				if group not in GROUP_KINDS:
-					continue
-				if profile_groups is not None:
-					group_def = profile_groups.get(group)
-					if group_def is None:
-						continue
-					if not _address_allowed(candidate["address"], group_def.get("address_rules", [])):
-						continue
-				key = (group, candidate["address"])
-				if key in bindings:
-					continue
-				device = candidate_device(candidate, source_id, occupied)
-				if device is None:
-					continue
-				bindings.add(key)
-				merged.append(device)
-				contributed = True
-			if contributed and source_id not in source_ids:
-				contributing[source_id] = script_source_record(entry, evidence, CORPUS_REPOSITORIES[entry["corpus"]])
-		if not merged:
-			continue
+		synthetic = None
+		if args.sanitize:
+			# Everything in these arrays came from this pass; the only non-script
+			# device the pass itself adds is the SAM synthetic game-on channel.
+			synthetic = next((device for device in definition["outputs"] if device.get("binding") == SAM_GAME_ON_BINDING and device.get("kind") == "virtual"), None)
+			definition["inputs"] = []
+			definition["outputs"] = []
+			definition["sources"] = [source for source in definition["sources"] if source not in corpus_sources]
 
-		for source in contributing.values():
-			definition["sources"].append(source)
-		definition["inputs"].extend(device for device in merged if device["binding"]["group"] == "pinmame.input.switch")
-		definition["outputs"].extend(device for device in merged if device["binding"]["group"] != "pinmame.input.switch")
+		contributing, merged = attach_candidates(definition, entries_by_machine.get(machine["id"], []), profile_groups, definition["machine"]["name"])
+		if merged:
+			for source in contributing:
+				definition["sources"].append(source)
+			definition["inputs"].extend(device for device in merged if device["binding"]["group"] == "pinmame.input.switch")
+			definition["outputs"].extend(device for device in merged if device["binding"]["group"] != "pinmame.input.switch")
+		if synthetic is not None:
+			definition["outputs"].append(synthetic)
+		if not merged and args.sanitize:
+			update_knowledge_note(REPOSITORY_ROOT / definition["knowledge"]["path"], 0, 0)
+		elif merged:
+			update_knowledge_note(REPOSITORY_ROOT / definition["knowledge"]["path"], len(contributing), len(merged))
+		if not merged and not args.sanitize:
+			continue
 		touched += 1
-		device_machines += 1
-		device_total += len(merged)
-		script_total += len(contributing)
+		if merged:
+			device_machines += 1
+			device_total += len(merged)
+			script_total += len(contributing)
 		if not args.dry_run:
 			write_json(definition_path, definition)
-			knowledge_path = REPOSITORY_ROOT / definition["knowledge"]["path"]
-			if knowledge_path.is_file():
-				updated = knowledge_note_text(knowledge_path.read_text(encoding="utf-8"), len(contributing), len(merged))
-				if updated is not None:
-					write_text(knowledge_path, updated)
 
-	print(f"{'DRY RUN: ' if args.dry_run else ''}would update {touched} definitions with candidate devices")
-	print(f"machines receiving devices: {device_machines} ({device_total} devices from {script_total} scripts)")
+	print(f"{'DRY RUN: ' if args.dry_run else ''}{'sanitized' if args.sanitize else 'attached'}: {touched} definitions touched, {device_machines} machines with devices, {device_total} devices from {script_total} scripts")
 	if args.dry_run:
 		return
 	rebuild_catalog(REPOSITORY_ROOT)

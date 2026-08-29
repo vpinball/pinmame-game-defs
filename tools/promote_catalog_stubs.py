@@ -8,13 +8,15 @@ It deliberately asserts nothing about controller platform, inputs, outputs,
 displays, mechanisms, polarity, wiring, or spatial placement, and every one of
 those requirements stays in `coverage.missing`.
 
+This pass is point-in-time: it consumed the generated `machines/stubs/*.json`
+inputs it promoted, so it cannot be replayed. `--check` re-derives everything
+the pass authored (driver family, machine identity block, knowledge path, and
+the exact coverage missing template) from the current catalog and OPDB identity
+report and fails on any drift between that derivation and the records on disk.
+
 Run from the repository root:
 
-	python -B tools/promote_catalog_stubs.py
-
-After the promotion the official generators must run (the script invokes them):
-`rebuild_catalog`, `import_opdb` against the retained snapshot, and
-`write_coverage_report`.
+	python -B tools/promote_catalog_stubs.py --check
 """
 
 from __future__ import annotations
@@ -118,8 +120,68 @@ def note_identity_line(resolved: bool, opdb_id: str | None, record: dict[str, An
 	)
 
 
+def expected_missing(resolved: bool) -> list[str]:
+	missing = list(IDENTITY_PARTIAL_MISSING)
+	if not resolved:
+		missing.insert(0, "identity")
+	return missing
+
+
+def check_promoted_records() -> None:
+	"""Fail on any drift between the pass's derivation and the records on disk.
+
+	The pass consumed its stub inputs, so it cannot be replayed; instead this
+	re-derives each authored field from the current catalog and OPDB identity
+	report: the driver family, the identity-derived machine id, OPDB/IPDB
+	agreement, the knowledge path, and the exact coverage.missing template.
+	"""
+	catalog = load_json(REPOSITORY_ROOT / "catalog" / "pinmame.json")
+	identity_index = {machine["machine_id"]: machine for machine in load_json(REPOSITORY_ROOT / "reports" / "opdb-identity.json")["machines"]}
+	machine_drivers: dict[str, set[str]] = {}
+	for record in catalog["drivers"]:
+		if record["machine_id"].startswith("stub."):
+			raise SystemExit(f"Catalog still maps {record['id']} to residual stub {record['machine_id']}")
+		machine_drivers.setdefault(record["machine_id"], set()).add(record["id"])
+	errors: list[str] = []
+	checked = 0
+	for machine in catalog["machines"]:
+		definition = load_json(REPOSITORY_ROOT / machine["definition"])
+		identity = definition["machine"]
+		machine_id = identity["id"]
+		if machine_id.startswith("stub."):
+			continue
+		missing = definition["coverage"]["missing"]
+		# Only the records this pass authored carry the identity-partial template.
+		if missing not in (expected_missing(True), expected_missing(False)):
+			continue
+		checked += 1
+		resolved = "opdb_id" in identity
+		if missing != expected_missing(resolved):
+			errors.append(f"{machine_id}: coverage.missing does not match the identity-partial template")
+		if resolved and machine_id in identity_index:
+			report_row = identity_index[machine_id]
+			if identity.get("ipdb_id") != report_row["ipdb_id"] or identity.get("opdb_id") != report_row["opdb_id"]:
+				errors.append(f"{machine_id}: OPDB identity disagrees with reports/opdb-identity.json")
+		expected_id = f"{slug(identity['manufacturer'])}.{slug(identity['name'])}"
+		if isinstance(identity["year"], int):
+			expected_id = f"{expected_id}.{identity['year']}"
+		if machine_id != expected_id and not machine_id.startswith(f"{expected_id}."):
+			errors.append(f"{machine_id}: id does not derive from the identity block")
+		if {driver["id"] for driver in definition["drivers"]} != machine_drivers.get(machine_id, set()):
+			errors.append(f"{machine_id}: driver list does not match the catalog family")
+		if not (REPOSITORY_ROOT / definition["knowledge"]["path"]).is_file():
+			errors.append(f"{machine_id}: knowledge note missing: {definition['knowledge']['path']}")
+	if errors:
+		raise SystemExit("Promoted-record drift detected:\n" + "\n".join(errors[:40]))
+	print(f"check OK: {checked} promoted identity-partial records match their derivation")
+
+
 def main() -> None:
 	dry_run = "--dry-run" in sys.argv
+	check_only = "--check" in sys.argv
+	if check_only:
+		check_promoted_records()
+		return
 	records = load_snapshot_records()
 	catalog = load_json(REPOSITORY_ROOT / "catalog" / "pinmame.json")
 	existing_machine_ids = {machine["id"] for machine in catalog["machines"]}

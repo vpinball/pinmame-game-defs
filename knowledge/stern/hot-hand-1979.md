@@ -25,7 +25,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `hothand` at `src/wpc/stgames.c:277` with machine module `by35_mST100bs`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+- The pinned PinMAME source declares `hothand` at `src/wpc/stgames.c:277` with machine module `by35_mST100bs`; no reviewed profile covers that module yet, so no platform is declared.
 
 ## What a curator must establish next
 

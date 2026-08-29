@@ -58,9 +58,9 @@ class Pinball2000CatalogTests(unittest.TestCase):
 			{
 				"author_ready_count": 26,
 				"driver_count": 2888,
-				"game_count": 789,
+				"game_count": 779,
 				"machine_count": 790,
-				"non_game_count": 1,
+				"non_game_count": 11,
 				"partial_count": 764,
 				"root_driver_count": 774,
 				"stub_count": 0,
