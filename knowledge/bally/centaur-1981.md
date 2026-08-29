@@ -1,6 +1,6 @@
 # Centaur
 
-Coverage: **author_ready**
+Coverage: **partial**
 
 Bally game #1239, 1981, IPDB 476. Four-player, five-ball, black-and-white playfield with a
 Squawk & Talk speech board. This is the project's first Bally MPU AS-2518-35 machine, so it
