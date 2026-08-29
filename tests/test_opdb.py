@@ -39,11 +39,16 @@ class OpdbImportTests(unittest.TestCase):
 
 	def test_unsupported_opdb_identities_stay_unmapped(self) -> None:
 		# See docs/CURRENT-STATE.md: the pinned snapshot has no record for either physical variant.
+		# The 2026-08-29 identity promotion moved their residual stubs into named partial records
+		# whose identity comes from the PinMAME catalog alone, still without any OPDB identity.
 		with (ROOT / "machines/opdb_id.csv").open("r", encoding="utf-8-sig", newline="") as stream:
 			mapped_romsets = {row["romset"] for row in csv.DictReader(stream)}
-		for romset in ("ebalchmb", "usafootr"):
+		for romset, definition_path in (
+			("ebalchmb", ROOT / "machines/partial/maibesa/eight-ball-champ-maibesa-unknown.json"),
+			("usafootr", ROOT / "machines/partial/alvin-g/u-s-a-football-redemption-p08-1994.json"),
+		):
 			self.assertNotIn(romset, mapped_romsets)
-			machine = json.loads((ROOT / f"machines/stubs/{romset}.json").read_text(encoding="utf-8"))["machine"]
+			machine = json.loads(definition_path.read_text(encoding="utf-8"))["machine"]
 			self.assertNotIn("ipdb_id", machine, romset)
 			self.assertNotIn("opdb_id", machine, romset)
 

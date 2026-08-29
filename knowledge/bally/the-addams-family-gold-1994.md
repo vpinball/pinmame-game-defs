@@ -1,0 +1,39 @@
+# The Addams Family Gold (Bally 1994)
+
+Coverage: **partial - machine identity only. Nothing about playfield devices, wiring, mechanisms,
+or behavior is evidenced yet.**
+
+This record was promoted from the generated catalog stub `stub.pinmame.tafg_lx3` by the
+catalog-wide identity pass of 2026-08-29. The promotion resolves machine identity and carries the
+catalog's residual driver grouping over unchanged, and it deliberately asserts nothing else. Every
+requirement in the definition's `coverage.missing` is genuinely outstanding.
+
+## Identity
+
+- PinMAME catalog: root driver `tafg_lx3`, description "Addams Family Special Collectors Edition / Gold, The (LX-3)", manufacturer
+  "Bally", catalog year "1994".
+- OPDB record `G4ODR-MLzY7` (IPDB 21) names this machine "The Addams Family Gold"
+  (Bally, manufacture date 1994-01-01); the resolved identity rests on the
+  agreement of the PinMAME catalog and this reviewed mapping.
+- The definition's driver list is exactly the clone tree PinMAME declares under `tafg_lx3`;
+  whether every listed driver really runs on this physical machine is unverified.
+
+## Drivers this record holds
+
+- `tafg_da2` (1994, Bally, clone of `tafg_lx3`).
+- `tafg_da3` (1994, Bally, clone of `tafg_lx3`).
+- `tafg_dx3` (1994, Bally, clone of `tafg_lx3`).
+- `tafg_h3` (1994, Bally, clone of `tafg_lx3`).
+- `tafg_i3` (1994, Bally, clone of `tafg_lx3`).
+- `tafg_i3bs` (2026, Bally / RedBall, clone of `tafg_lx3`).
+- `tafg_la2` (1994, Bally, clone of `tafg_lx3`).
+- `tafg_la3` (1994, Bally, clone of `tafg_lx3`).
+- `tafg_lx3` (1994, Bally).
+
+## What a curator must establish next
+
+Controller platform from the pinned PinMAME driver source; full input, output, and display
+enumeration with semantic names; physical wiring and polarity; mechanism inventory and behavior;
+variant differences across the clone tree; recreation knowledge from a manual, schematic, or
+known-working table; runtime provenance; and a normalized spatial placement for every physical
+device. No manual, table, ROM analysis, or harness evidence is retained for this machine yet.

@@ -18,7 +18,7 @@ KNOWLEDGE_PATH = ROOT / "knowledge" / "bally" / "the-addams-family-1992.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-fliptronic.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "bally" / "the-addams-family-1992.json"
 STUB_PATH = ROOT / "machines" / "stubs" / "taf_l5.json"
-GOLD_STUB_PATH = ROOT / "machines" / "stubs" / "tafg_lx3.json"
+GOLD_STUB_PATH = ROOT / "machines" / "partial" / "bally" / "the-addams-family-gold-1994.json"
 
 DRIVER_IDS = {
 	"taf_l5", "taf_p2", "taf_p3", "taf_l1", "taf_d1", "taf_l2", "taf_d2", "taf_l3", "taf_d3",
@@ -105,16 +105,20 @@ class AddamsFamilyDefinitionTests(unittest.TestCase):
 		self.assertEqual("complete", self.definition["knowledge"]["status"])
 		self.assertEqual([], self.definition["conflicts"])
 
-	def test_the_stale_stub_is_gone_and_gold_stub_is_untouched(self) -> None:
+	def test_the_stale_stub_is_gone_and_gold_record_is_still_separate(self) -> None:
 		self.assertTrue(AUTHOR_READY_PATH.exists())
 		self.assertFalse(PARTIAL_PATH.exists())
 		self.assertTrue(DEFINITION_PATH.is_file())
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 		self.assertFalse(STUB_PATH.exists(), "taf_l5 stub must be pruned once the curated definition claims it")
-		self.assertTrue(GOLD_STUB_PATH.is_file(), "tafg_lx3 (Gold, a separate physical machine) must stay untouched")
+		# The 2026-08-29 identity promotion turned the Gold residual stub into its own
+		# identity-only partial record; it must never merge into the curated machine.
+		self.assertTrue(GOLD_STUB_PATH.is_file(), "tafg_lx3 (Gold, a separate physical machine) must stay a separate record")
 		gold_stub = load_json(GOLD_STUB_PATH)
-		self.assertEqual("stub", gold_stub["coverage"]["status"])
-		self.assertEqual("stub.pinmame.tafg_lx3", gold_stub["machine"]["id"])
+		self.assertEqual("partial", gold_stub["coverage"]["status"])
+		self.assertEqual("bally.the-addams-family-gold.1994", gold_stub["machine"]["id"])
+		self.assertEqual([], gold_stub["inputs"])
+		self.assertEqual([], gold_stub["outputs"])
 
 	def test_every_taf_driver_is_claimed_exactly_once_and_is_physically_compatible(self) -> None:
 		self.assertEqual(DRIVER_IDS, {driver["id"] for driver in self.definition["drivers"]})

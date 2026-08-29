@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "catalog" / "pinmame.json"
 PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 RFM_PATH = ROOT / "machines" / "partial" / "bally" / "revenge-from-mars-1999.json"
-SWEP1_PATH = ROOT / "machines" / "stubs" / "swep1_150.json"
+SWEP1_PATH = ROOT / "machines" / "partial" / "midway" / "pinball-2000-star-wars-episode-i-1-50-2003.json"
 TAF_PATH = ROOT / "machines" / "author-ready" / "bally" / "the-addams-family-1992.json"
 
 RFM_DRIVERS = {
@@ -17,8 +17,9 @@ RFM_DRIVERS = {
 	"rfm_200", "rfm_210", "rfm_222", "rfm_223", "rfm_224", "rfm_250", "rfm_260",
 }
 SWEP1_DRIVERS = {"swep1_130", "swep1_140", "swep1_150", "swep1_200", "swep1_201", "swep1_210"}
-STUB_MISSING = [
+IDENTITY_PARTIAL_MISSING = [
 	"identity",
+	"driver_mapping",
 	"controller_platform",
 	"input_enumeration",
 	"input_semantics",
@@ -31,6 +32,7 @@ STUB_MISSING = [
 	"variant_differences",
 	"recreation_notes",
 	"provenance",
+	"spatial_placement",
 ]
 
 
@@ -46,9 +48,8 @@ class Pinball2000CatalogTests(unittest.TestCase):
 		cls.catalog_drivers = {driver["id"]: driver for driver in cls.catalog["drivers"]}
 
 	def test_catalog_baseline_counts(self) -> None:
-		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced a
-		# generated stub with an honest partial on this tree: two fewer stubs, two more
-		# partials, every other count unchanged.
+		# The 2026-08-29 catalog-wide identity promotion converted every residual
+		# stub into an identity-resolved partial, so no generated stubs remain.
 		self.assertEqual(
 			{
 				"author_ready_count": 26,
@@ -56,9 +57,9 @@ class Pinball2000CatalogTests(unittest.TestCase):
 				"game_count": 789,
 				"machine_count": 790,
 				"non_game_count": 1,
-				"partial_count": 98,
+				"partial_count": 764,
 				"root_driver_count": 774,
-				"stub_count": 666,
+				"stub_count": 0,
 			},
 			self.catalog["summary"],
 		)
@@ -66,7 +67,7 @@ class Pinball2000CatalogTests(unittest.TestCase):
 	def test_pinball_2000_families_are_complete_and_grouped(self) -> None:
 		for driver_ids, root_driver, definition, machine_id, coverage in (
 			(RFM_DRIVERS, "rfm_160", "machines/partial/bally/revenge-from-mars-1999.json", "bally.revenge-from-mars.1999", "partial"),
-			(SWEP1_DRIVERS, "swep1_150", "machines/stubs/swep1_150.json", "stub.pinmame.swep1_150", "stub"),
+			(SWEP1_DRIVERS, "swep1_150", "machines/partial/midway/pinball-2000-star-wars-episode-i-1-50-2003.json", "midway.pinball-2000-star-wars-episode-i-1-50.2003", "partial"),
 		):
 			catalog_family = {driver_id for driver_id in self.catalog_drivers if driver_id.startswith(root_driver.split("_")[0] + "_")}
 			self.assertEqual(driver_ids, catalog_family)
@@ -77,17 +78,19 @@ class Pinball2000CatalogTests(unittest.TestCase):
 				self.assertEqual(machine_id, row["machine_id"])
 				self.assertEqual(coverage, row["coverage_status"])
 
-	def test_swep1_remains_a_fail_closed_stub(self) -> None:
+	def test_swep1_is_an_identity_only_partial(self) -> None:
 		definition = load_json(SWEP1_PATH)
-		self.assertEqual("stub.pinmame.swep1_150", definition["machine"]["id"])
+		self.assertEqual("midway.pinball-2000-star-wars-episode-i-1-50.2003", definition["machine"]["id"])
 		self.assertNotIn("kind", definition["machine"])
+		self.assertNotIn("ipdb_id", definition["machine"])
+		self.assertNotIn("opdb_id", definition["machine"])
 		self.assertEqual(SWEP1_DRIVERS, {driver["id"] for driver in definition["drivers"]})
-		self.assertEqual("stub", definition["coverage"]["status"])
-		self.assertEqual(STUB_MISSING, definition["coverage"]["missing"])
+		self.assertEqual("partial", definition["coverage"]["status"])
+		self.assertEqual(IDENTITY_PARTIAL_MISSING, definition["coverage"]["missing"])
 		for collection in ("inputs", "outputs", "displays", "mechanisms", "relationships", "conflicts"):
 			self.assertEqual([], definition[collection])
 		self.assertEqual({PINMAME_REVISION}, {source["revision"] for source in definition["sources"]})
-		self.assertEqual("knowledge/stubs/swep1_150.md", definition["knowledge"]["path"])
+		self.assertEqual("knowledge/midway/pinball-2000-star-wars-episode-i-1-50-2003.md", definition["knowledge"]["path"])
 		self.assertTrue((ROOT / definition["knowledge"]["path"]).is_file())
 
 	def test_rfm_keeps_only_the_authenticated_factory_variant_blocker(self) -> None:
