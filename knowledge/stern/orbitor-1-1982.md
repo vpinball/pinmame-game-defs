@@ -32,8 +32,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## What a curator must establish next
 
-Controller platform from the pinned PinMAME driver source; full input, output, and display
+full input, output, and display
 enumeration with semantic names; physical wiring and polarity; mechanism inventory and behavior;
 variant differences across the clone tree; recreation knowledge from a manual, schematic, or
 known-working table; runtime provenance; and a normalized spatial placement for every physical
-device. No manual, table, ROM analysis, or harness evidence is retained for this machine yet.
+device. No manual, schematic, or runtime-harness evidence is retained for this machine yet; the candidate sections above are the only retained I/O evidence so far.

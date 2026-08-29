@@ -26,15 +26,17 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `magic` at `src/wpc/stgames.c:294` with machine module `by35_mST100bs`; no reviewed profile covers that module yet, so no platform is declared.
+- The pinned PinMAME source declares `magic` at `src/wpc/stgames.c:294` with machine module `by35_mST100bs`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+- The driver source's named switch/solenoid symbols are carried as 28 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 
-- 1 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 28 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+- 1 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 24 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+
 ## What a curator must establish next
 
-Controller platform from the pinned PinMAME driver source; full input, output, and display
+full input, output, and display
 enumeration with semantic names; physical wiring and polarity; mechanism inventory and behavior;
 variant differences across the clone tree; recreation knowledge from a manual, schematic, or
 known-working table; runtime provenance; and a normalized spatial placement for every physical
-device. No manual, table, ROM analysis, or harness evidence is retained for this machine yet.
+device. No manual, schematic, or runtime-harness evidence is retained for this machine yet; the candidate sections above are the only retained I/O evidence so far.

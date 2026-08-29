@@ -1,5 +1,9 @@
 {
   "conflicts": [],
+  "controller": {
+    "inversion_applied_by_emulator": true,
+    "platform": "pinmame.stern-mpu200"
+  },
   "coverage": {
     "dimensions": {
       "address_enumeration": "unknown",
@@ -12,7 +16,6 @@
     },
     "missing": [
       "driver_mapping",
-      "controller_platform",
       "input_enumeration",
       "input_semantics",
       "output_enumeration",
@@ -537,48 +540,6 @@
       "aliases": [
         {
           "namespace": "pinmame.solenoid",
-          "value": "12"
-        }
-      ],
-      "binding": {
-        "device": 12,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "coil.dt-l-sol-drop-up",
-      "kind": "coil",
-      "label": "Dt L.Sol Drop Up",
-      "provenance": {
-        "source_refs": [
-          "vpx-script.61b0f1e38b3f05b7"
-        ],
-        "status": "candidate"
-      }
-    },
-    {
-      "aliases": [
-        {
-          "namespace": "pinmame.solenoid",
-          "value": "13"
-        }
-      ],
-      "binding": {
-        "device": 13,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "coil.bs-left-kicker-sol-out",
-      "kind": "coil",
-      "label": "Bs Left Kicker.Sol Out",
-      "provenance": {
-        "source_refs": [
-          "vpx-script.61b0f1e38b3f05b7"
-        ],
-        "status": "candidate"
-      }
-    },
-    {
-      "aliases": [
-        {
-          "namespace": "pinmame.solenoid",
           "value": "14"
         }
       ],
@@ -589,48 +550,6 @@
       "id": "coil.sol-raise-drop-targets",
       "kind": "coil",
       "label": "Sol Raise Drop Targets",
-      "provenance": {
-        "source_refs": [
-          "vpx-script.61b0f1e38b3f05b7"
-        ],
-        "status": "candidate"
-      }
-    },
-    {
-      "aliases": [
-        {
-          "namespace": "pinmame.solenoid",
-          "value": "15"
-        }
-      ],
-      "binding": {
-        "device": 15,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "coil.bs-trough-sol-out",
-      "kind": "coil",
-      "label": "Bs Trough.Sol Out",
-      "provenance": {
-        "source_refs": [
-          "vpx-script.61b0f1e38b3f05b7"
-        ],
-        "status": "candidate"
-      }
-    },
-    {
-      "aliases": [
-        {
-          "namespace": "pinmame.solenoid",
-          "value": "16"
-        }
-      ],
-      "binding": {
-        "device": 16,
-        "group": "pinmame.output.solenoid"
-      },
-      "id": "coil.vpm-nudge-sol-game-on",
-      "kind": "coil",
-      "label": "Vpm Nudge.Sol Game On",
       "provenance": {
         "source_refs": [
           "vpx-script.61b0f1e38b3f05b7"
@@ -669,6 +588,15 @@
       "kind": "pinmame_catalog",
       "license": "BSD-3-Clause",
       "locator": "PinmameGetGames",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.8371478a7640",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/stgames.c:294 (machine module by35_mST100bs)",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
       "uri": "https://github.com/vpinball/pinmame"
     },

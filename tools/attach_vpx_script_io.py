@@ -71,9 +71,25 @@ ADDRESS_BOUNDS = {
 	"pinmame.output.lamp": (1, 128),
 	"pinmame.output.gi": (0, 16),
 }
-# VBScript form/keyboard event handlers, never playfield devices.
-HANDLER_SYMBOL_PATTERN = re.compile(r"_(?:keydown|keyup|init|mousedown|mouseup)$", re.IGNORECASE)
+# VBScript form/keyboard/timer event handlers, never playfield devices.
+HANDLER_SYMBOL_PATTERN = re.compile(r"_(?:keydown|keyup|init|mousedown|mouseup|timer)$", re.IGNORECASE)
 TITLE_STOPWORDS = {"the", "a", "an", "and", "of"}
+YEAR_PATTERN = re.compile(r"\b(?:19|20)\d{2}\b")
+
+
+def label_well_formed(label: str) -> bool:
+	# Raw VBScript fragments (unbalanced parentheses, trailing commas, dotted
+	# method calls, bare one-or-two-character object names) are not semantic
+	# names a curator can use.
+	if len(label) < 3:
+		return False
+	if label.count("(") != label.count(")"):
+		return False
+	if label.endswith(","):
+		return False
+	if re.search(r"\.[A-Za-z_]", label):
+		return False
+	return True
 SAM_GAME_ON_BINDING = {"device": 33, "group": "pinmame.output.solenoid"}
 
 
@@ -100,12 +116,19 @@ def title_tokens(title: str) -> tuple[list[str], str]:
 	return tokens, "".join(tokens)
 
 
-def title_matches(machine_name: str, script_path: str) -> bool:
+def title_matches(machine_name: str, machine_year: int | None, script_path: str) -> bool:
 	tokens, concatenated = title_tokens(machine_name)
 	if not tokens:
 		return False
 	path_tokens = {token for token in re.split(r"[^a-z0-9]+", script_path.casefold()) if token}
-	return set(tokens) <= path_tokens or concatenated in path_tokens
+	if not (set(tokens) <= path_tokens or concatenated in path_tokens):
+		return False
+	# A path that names a different model year ("Pinball Champ 82") does not
+	# describe this machine when the machine's own year is known.
+	path_years = set(YEAR_PATTERN.findall(script_path))
+	if machine_year is not None and path_years and str(machine_year) not in path_years:
+		return False
+	return True
 
 
 def candidate_device(candidate: dict[str, Any], source_id: str, occupied: set[str]) -> dict[str, Any] | None:
@@ -155,6 +178,8 @@ def attach_candidates(
 	entries: list[dict[str, Any]],
 	profile_groups: dict[str, dict[str, Any]] | None,
 	machine_name: str,
+	machine_year: int | None,
+	rejected_counter: list[int] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
 	"""Return (contributing script source records, merged devices) for empty arrays."""
 	occupied: set[str] = {device["id"] for device in definition["inputs"] + definition["outputs"]}
@@ -167,7 +192,7 @@ def attach_candidates(
 	merged: list[dict[str, Any]] = []
 	contributing: dict[str, dict[str, Any]] = {}
 	for entry in sorted(entries, key=lambda item: (item["corpus"], item["source"])):
-		if not title_matches(machine_name, entry["source"]):
+		if not title_matches(machine_name, machine_year, entry["source"]):
 			continue
 		evidence = load_json(REPOSITORY_ROOT / entry["evidence"])
 		source_id = f"vpx-script.{Path(entry['evidence']).stem}"
@@ -182,6 +207,11 @@ def attach_candidates(
 					continue
 			key = (group, candidate["address"])
 			if key in bindings:
+				continue
+			label = clean_label(candidate["label"])
+			if not label or not label_well_formed(label):
+				if rejected_counter is not None:
+					rejected_counter[0] += 1
 				continue
 			device = candidate_device(candidate, source_id, occupied)
 			if device is None:
@@ -215,16 +245,20 @@ def update_knowledge_note(knowledge_path: Path, script_count: int, device_count:
 	existing_start = text.find("## VPX script candidates")
 	if existing_start >= 0:
 		existing_end = text.find("\n## ", existing_start + 1)
+		# The block ends just before the next heading; keep the blank line that
+		# separates sections so replacement does not glue headings together.
 		existing_block = text[existing_start:] if existing_end < 0 else text[existing_start:existing_end + 1]
 		if device_count:
-			text = text.replace(existing_block, section, 1)
+			text = text.replace(existing_block, section + "\n", 1)
 		else:
 			text = text.replace(existing_block, "", 1)
 	elif device_count:
 		if marker not in text:
 			return
 		text = text.replace(marker, section + "\n" + marker, 1)
-	write_text(knowledge_path, text.rstrip("\n") + "\n" if not text.endswith("\n") else text)
+	if not text.endswith("\n"):
+		text += "\n"
+	write_text(knowledge_path, text)
 
 
 def main() -> None:
@@ -249,6 +283,7 @@ def main() -> None:
 	device_machines = 0
 	device_total = 0
 	script_total = 0
+	rejected_counter = [0]
 	for machine in catalog["machines"]:
 		if machine["machine_kind"] in NON_GAME_KINDS or machine["coverage_status"] != "partial":
 			continue
@@ -269,8 +304,8 @@ def main() -> None:
 			definition["inputs"] = []
 			definition["outputs"] = []
 			definition["sources"] = [source for source in definition["sources"] if source not in corpus_sources]
-			update_knowledge_note(REPOSITORY_ROOT / definition["knowledge"]["path"], 0, 0)
 			if not args.dry_run:
+				update_knowledge_note(REPOSITORY_ROOT / definition["knowledge"]["path"], 0, 0)
 				write_json(definition_path, definition)
 			touched += 1
 			continue
@@ -288,7 +323,8 @@ def main() -> None:
 			definition["outputs"] = []
 			definition["sources"] = [source for source in definition["sources"] if source not in corpus_sources]
 
-		contributing, merged = attach_candidates(definition, entries_by_machine.get(machine["id"], []), profile_groups, definition["machine"]["name"])
+		machine_year = definition["machine"].get("year")
+		contributing, merged = attach_candidates(definition, entries_by_machine.get(machine["id"], []), profile_groups, definition["machine"]["name"], machine_year, rejected_counter)
 		if merged:
 			for source in contributing:
 				definition["sources"].append(source)
@@ -297,9 +333,11 @@ def main() -> None:
 		if synthetic is not None:
 			definition["outputs"].append(synthetic)
 		if not merged and args.sanitize:
-			update_knowledge_note(REPOSITORY_ROOT / definition["knowledge"]["path"], 0, 0)
+			if not args.dry_run:
+				update_knowledge_note(REPOSITORY_ROOT / definition["knowledge"]["path"], 0, 0)
 		elif merged:
-			update_knowledge_note(REPOSITORY_ROOT / definition["knowledge"]["path"], len(contributing), len(merged))
+			if not args.dry_run:
+				update_knowledge_note(REPOSITORY_ROOT / definition["knowledge"]["path"], len(contributing), len(merged))
 		if not merged and not args.sanitize:
 			continue
 		touched += 1
@@ -311,6 +349,7 @@ def main() -> None:
 			write_json(definition_path, definition)
 
 	print(f"{'DRY RUN: ' if args.dry_run else ''}{'sanitized' if args.sanitize else 'attached'}: {touched} definitions touched, {device_machines} machines with devices, {device_total} devices from {script_total} scripts")
+	print(f"candidate labels rejected as ill-formed: {rejected_counter[0]}")
 	if args.dry_run:
 		return
 	rebuild_catalog(REPOSITORY_ROOT)

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import sys
 import unittest
 from pathlib import Path
 
@@ -11,19 +12,21 @@ PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 CORE_SOURCE_ID = f"pinmame.core.{PINMAME_REVISION[:12]}"
 
 EXPECTED_PLATFORM_COUNTS = {
-	"pinmame.by35": 53,
+	"pinmame.by35": 42,
 	"pinmame.capcom": 4,
-	"pinmame.dataeast": 14,
+	"pinmame.dataeast": 13,
 	"pinmame.p2k": 1,
 	"pinmame.sam": 9,
-	"pinmame.stern-mpu200": 20,
+	"pinmame.stern-mpu200": 24,
 	"pinmame.system-11": 24,
-	"pinmame.wpc-95": 7,
-	"pinmame.wpc-alpha": 1,
+	"pinmame.wpc-95": 6,
 	"pinmame.wpc-dcs": 3,
 	"pinmame.wpc-fliptronic": 6,
-	"pinmame.wpc-security": 6,
+	"pinmame.wpc-security": 5,
 }
+# Modules whose generation the reviewed profiles do not cover (or which belong
+# to a different generation than the profile name suggests) must never claim.
+UNMAPPED_MODULES = {"by35_mBY17", "by35_mST100", "by35_mST100s", "by35_GP"}
 
 
 def partial_definitions() -> list[dict[str, object]]:
@@ -60,6 +63,25 @@ class PinmameIoAttachmentTests(unittest.TestCase):
 			self.assertEqual(1, len(core_sources), definition["machine"]["id"])
 			self.assertEqual(PINMAME_REVISION, core_sources[0]["revision"])
 			self.assertNotIn("controller_platform", definition["coverage"]["missing"], definition["machine"]["id"])
+
+	def test_the_module_mapping_rule_holds_for_every_attachment(self) -> None:
+		# The declared platform must equal the reviewed module mapping applied to
+		# the locator's module, and unmapped modules must never claim.
+		sys.path.insert(0, str(ROOT / "tools"))
+		import attach_pinmame_io
+
+		for definition in attached_definitions():
+			locator = next(source["locator"] for source in definition["sources"] if "machine module " in source["locator"])
+			module = locator.split("machine module ", 1)[1].split(")", 1)[0].strip()
+			if module.startswith("by35_mBY35_"):
+				expected = "pinmame.by35"
+			elif module.startswith("de_m"):
+				expected = "pinmame.dataeast"
+			else:
+				expected = attach_pinmame_io.MODULE_PLATFORMS.get(module)
+			self.assertIsNotNone(expected, (definition["machine"]["id"], module))
+			self.assertEqual(expected, definition["controller"]["platform"], (definition["machine"]["id"], module))
+			self.assertFalse(module in UNMAPPED_MODULES, (definition["machine"]["id"], module))
 
 	def test_candidate_devices_carry_candidate_provenance(self) -> None:
 		definition = load_json(ROOT / "machines/partial/williams/demolition-man-1994.json")

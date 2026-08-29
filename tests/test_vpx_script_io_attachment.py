@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import sys
 import unittest
 from pathlib import Path
 
@@ -11,9 +12,9 @@ CORPUS_REPOSITORIES = (
 	"https://github.com/sverrewl/vpxtable_scripts",
 	"https://github.com/jsm174/vpx-standalone-scripts",
 )
-EXPECTED_ATTACHED_MACHINES = 303
-EXPECTED_ATTACHED_DEVICES = 17142
-EXPECTED_ATTACHED_SCRIPTS = 384
+EXPECTED_ATTACHED_MACHINES = 279
+EXPECTED_ATTACHED_DEVICES = 13865
+EXPECTED_ATTACHED_SCRIPTS = 351
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
@@ -54,7 +55,7 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 	def test_south_park_candidate_devices_are_candidates(self) -> None:
 		definition = load_json(ROOT / "machines/partial/sega/south-park-1999.json")
 		self.assertEqual(31, len(definition["inputs"]))
-		self.assertEqual(21, len(definition["outputs"]))
+		self.assertEqual(18, len(definition["outputs"]))
 		switch = next(device for device in definition["inputs"] if device["binding"]["device"] == 15)
 		self.assertEqual("candidate", switch["provenance"]["status"])
 		self.assertIn("vpx-script.", switch["provenance"]["source_refs"][0])
@@ -65,6 +66,27 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 		self.assertEqual("candidate", lamp["provenance"]["status"])
 		self.assertEqual("lamp", lamp["kind"])
 		self.assertEqual(113, sum(1 for device in definition["outputs"] if device["kind"] == "lamp"))
+		self.assertEqual(146, len(definition["inputs"]) + len(definition["outputs"]))
+
+	def test_script_citations_hash_the_pinned_corpora(self) -> None:
+		# Evidence-gated: recompute every cited script's SHA-256 against the
+		# pinned corpora checkouts and skip cleanly when they are absent.
+		corpora_root = ROOT.parent / "pinmame-game-defs-working-dir" / "source-checkouts"
+		vpxtable = corpora_root / "vpxtable_scripts"
+		standalone = corpora_root / "vpx-standalone-scripts"
+		if not vpxtable.is_dir() or not standalone.is_dir():
+			self.skipTest("pinned VPX script corpora are not available")
+		checked = 0
+		for definition in self.attached:
+			for source in corpus_source_records(definition):
+				corpus_root = vpxtable if "vpxtable-scripts" in source["locator"] else standalone
+				script_path = source["locator"].split(": ", 1)[1]
+				import hashlib
+
+				digest = hashlib.sha256((corpus_root / script_path).read_bytes()).hexdigest()
+				self.assertEqual(digest, source["sha256"], (definition["machine"]["id"], source["id"]))
+				checked += 1
+		self.assertGreaterEqual(checked, 300)
 
 	def test_handler_symbols_and_out_of_range_addresses_are_never_attached(self) -> None:
 		# VBScript keyboard/form handlers (Table1_KeyDown and friends) and script
@@ -75,14 +97,40 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 		self.assertEqual([], [device for device in definition["inputs"] if device["binding"]["device"] < 1])
 		for definition in self.attached:
 			for device in definition["inputs"] + definition["outputs"]:
-				self.assertFalse(
-					re.search(r"_(?:keydown|keyup|init|mousedown|mouseup)$", device["id"], re.IGNORECASE),
-					(definition["machine"]["id"], device["id"]),
+				# Case-sensitive: handler labels carry title-case "Key Down"/"Key
+				# Up" from symbol splitting, while legitimate labels such as
+				# South Park's "Mr Hankey Up" only collide case-insensitively.
+				self.assertIsNone(
+					re.search(r"Key (Down|Up)$|(Init|Timer)$", device["label"]),
+					(definition["machine"]["id"], device["id"], device["label"]),
 				)
 				group = device["binding"]["group"]
 				address = device["binding"]["device"]
 				bounds = {"pinmame.input.switch": (1, 128), "pinmame.output.solenoid": (1, 128), "pinmame.output.lamp": (1, 128), "pinmame.output.gi": (0, 16)}[group]
 				self.assertTrue(bounds[0] <= address <= bounds[1], (definition["machine"]["id"], device["id"], address))
+
+	def test_the_candidate_filter_rejects_handlers_and_fragments_directly(self) -> None:
+		# Unit-level regression for the guardrails: the persisted ids cannot carry
+		# underscores (slug destroys them), so the filter itself is tested here.
+		sys.path.insert(0, str(ROOT / "tools"))
+		import attach_vpx_script_io as tool
+
+		def switch(symbol: str, address: int) -> dict[str, object]:
+			return {"group": "pinmame.input.switch", "symbol": symbol, "address": address, "label": symbol}
+
+		self.assertFalse(tool.candidate_allowed(switch("Table1_KeyDown", 14)))
+		self.assertFalse(tool.candidate_allowed(switch("Table1_KeyUp", 16)))
+		self.assertFalse(tool.candidate_allowed(switch("Table1_Init", -5)))
+		self.assertFalse(tool.candidate_allowed(switch("RampLiftTimer_Timer", 25)))
+		self.assertFalse(tool.candidate_allowed(switch("swKey", -3)))
+		self.assertFalse(tool.candidate_allowed(switch("swZero", 0)))
+		self.assertTrue(tool.candidate_allowed(switch("swCoin1", 13)))
+		# Raw VBScript fragments never become labels either.
+		self.assertFalse(tool.label_well_formed("Vpm Sol Sound Sound FX("))
+		self.assertFalse(tool.label_well_formed("Set Lamp 117,"))
+		self.assertFalse(tool.label_well_formed("Dt Drop.Sol Unhit 1,"))
+		self.assertFalse(tool.label_well_formed("L2"))
+		self.assertTrue(tool.label_well_formed("Saucers On"))
 
 	def test_retheme_scripts_do_not_supply_machine_labels(self) -> None:
 		# Gremlins re-themes Victory's ROM but not Victory's playfield; the title

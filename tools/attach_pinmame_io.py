@@ -50,7 +50,7 @@ GAMEDEF_PATTERN = re.compile(r"\bCORE_GAMEDEF\s*\(\s*([a-z0-9_]+)\s*,\s*([a-z0-9
 CLONEDEF_PATTERN = re.compile(r"\bCORE_CLONEDEF\s*\(\s*([a-z0-9_]+)\s*,\s*([a-z0-9_]+)\s*,\s*\"([^\"]*)\"\s*,\s*([^,]+),\s*\"([^\"]*)\"\s*,\s*([a-z0-9_]+)", re.IGNORECASE)
 GAMEDEFNV_PATTERN = re.compile(r"\bCORE_GAMEDEFNV\s*\(\s*([a-z0-9_]+)\s*,\s*\"([^\"]*)\"\s*,\s*([^,]+),\s*\"([^\"]*)\"\s*,\s*([a-z0-9_]+)", re.IGNORECASE)
 CLONEDEFNV_PATTERN = re.compile(r"\bCORE_CLONEDEFNV\s*\(\s*([a-z0-9_]+)\s*,\s*\"([^\"]*)\"\s*,\s*([^,]+),\s*\"([^\"]*)\"\s*,\s*([a-z0-9_]+)", re.IGNORECASE)
-DEFINE_PATTERN = re.compile(r"^\s*#\s*define\s+([A-Za-z][A-Za-z0-9_]*)\s+(-?\d+)\s*(?://.*)?$", re.MULTILINE)
+DEFINE_PATTERN = re.compile(r"^\s*#\s*define\s+([A-Za-z][A-Za-z0-9_]*)\s+(-?\d+)\s*(?://.*|/\*.*?\*/)?\s*$", re.MULTILINE)
 
 PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 PINMAME_URI = "https://github.com/vpinball/pinmame"
@@ -84,9 +84,15 @@ MODULE_PLATFORMS = {
 	"s9_mS11S": "pinmame.system-11",
 	"cc1": "pinmame.capcom",
 	"cc2": "pinmame.capcom",
-	"by35_mBY17": "pinmame.by35",
+	# by35_mBY17 and by35_GP are aliases of the plain by35 machine driver whose
+	# games declare GEN_BY17, a generation distinct from GEN_BY35 (different
+	# display/DIP/sound-enable hardware flags in by35.c), so they must not take
+	# the AS-2518-35 profile. by35_mST100bs games declare GEN_STMPU200 even
+	# though the module name says ST100 (stgames.c: "uses MPU-200 inports"), so
+	# they keep the MPU-200 profile, while by35_mST100/s are GEN_STMPU100 and
+	# stay unclaimed.
 	"by35_centaur": "pinmame.by35",
-	"by35_GP": "pinmame.by35",
+	"by35_mST100bs": "pinmame.stern-mpu200",
 	"by35_mST200": "pinmame.stern-mpu200",
 	"by35_mST200v": "pinmame.stern-mpu200",
 }
@@ -207,9 +213,133 @@ def synthetic_device(template: dict[str, Any], source_id: str) -> dict[str, Any]
 	return copied
 
 
+def derive_platform(definition: dict[str, Any], machine: dict[str, Any], declarations: dict[str, dict[str, Any]], profiles: dict[str, dict[str, Any]]) -> tuple[str | None, dict[str, Any] | None, str | None]:
+	"""Derive the controller platform for one machine from its root driver's
+	CORE_GAMEDEF machine module, or (None, declaration, root) when no reviewed
+	profile covers it. A record whose root driver is not in its own driver list
+	(a split-tree residual) never derives a platform: the root's module describes
+	hardware the record does not hold."""
+	root_id = machine["root_drivers"][0] if len(machine["root_drivers"]) == 1 else None
+	if root_id is None:
+		return None, None, root_id
+	declaration = declarations.get(root_id)
+	if declaration is None:
+		return None, None, root_id
+	if root_id not in {driver["id"] for driver in definition["drivers"]}:
+		return None, declaration, root_id
+	module = declaration["module"]
+	if module.startswith(BY35_PREFIX):
+		platform = "pinmame.by35"
+	elif module.startswith("de_m"):
+		# de_m modules serve both Data East and Sega machines; the GAMEDEF's own
+		# manufacturer string separates them. Sega machines stay unmapped
+		# because their curated records do not agree on a whitestar platform.
+		platform = "pinmame.dataeast" if "data east" in declaration["manufacturer"].casefold() else None
+	else:
+		platform = MODULE_PLATFORMS.get(module)
+	if platform is None:
+		return None, declaration, root_id
+	profile_groups = {group["id"] for group in profiles[platform]["groups"]}
+	existing_groups = {
+		device["binding"]["group"]
+		for collection in ("inputs", "outputs")
+		for device in definition[collection]
+		if isinstance(device.get("binding"), dict) and isinstance(device["binding"].get("group"), str)
+	}
+	if not existing_groups <= profile_groups:
+		return None, declaration, root_id
+	return platform, declaration, root_id
+
+
+def attach_define_devices(definition: dict[str, Any], machine_id: str, file_machines: dict[str, set[str]], file_defines: dict[str, list[dict[str, Any]]], platform: str | None, skipped_counter: list[int]) -> int:
+	"""Merge every eligible driver file's numeric switch/solenoid defines into the
+	(empty) device arrays, adding a per-file driver source record. Returns the
+	number of attached devices."""
+	inputs = definition["inputs"]
+	outputs = definition["outputs"]
+	sources = definition["sources"]
+	source_ids = {source["id"] for source in sources}
+	eligible_files = sorted(
+		relative
+		for relative, machine_ids in file_machines.items()
+		if machine_ids == {machine_id} and relative in file_defines
+	)
+	if not eligible_files:
+		return 0
+	occupied = {device["id"] for device in inputs + outputs}
+	bindings = {(device["binding"]["group"], device["binding"]["device"]) for device in inputs + outputs if isinstance(device.get("binding"), dict)}
+	merged: list[dict[str, Any]] = []
+	for relative in eligible_files:
+		source_id = f"pinmame.driver.{Path(relative).stem}"
+		if source_id not in source_ids:
+			sources.append(driver_source_record(PINMAME_REVISION, relative))
+			source_ids.add(source_id)
+		for define in file_defines[relative]:
+			group = "pinmame.input.switch" if define["symbol"].startswith("sw") else "pinmame.output.solenoid"
+			if platform == "pinmame.sam" and group == "pinmame.output.solenoid" and define["address"] == 33:
+				skipped_counter[0] += 1
+				continue
+			if platform is not None and platform.startswith("pinmame.wpc") and group == "pinmame.output.solenoid" and define["address"] == 32:
+				skipped_counter[0] += 1
+				continue
+			key = (group, define["address"])
+			if key in bindings:
+				continue
+			bindings.add(key)
+			merged.append(dict(define, group=group, source_id=source_id))
+	for define in merged:
+		device = device_from_define(define, occupied)
+		(inputs if define["group"] == "pinmame.input.switch" else outputs).append(device)
+	return len(merged)
+
+
+def check_attachments(declarations: dict[str, dict[str, Any]], profiles: dict[str, dict[str, Any]]) -> None:
+	"""Fail on drift between the pass's derivation and the records on disk.
+
+	Only records this pass attached carry a core source citing an explicit
+	"machine module" locator; curated platform declarations predate that
+	convention and are out of this tool's contract."""
+	catalog = load_json(REPOSITORY_ROOT / "catalog" / "pinmame.json")
+	core_source_id = f"pinmame.core.{PINMAME_REVISION[:12]}"
+	errors: list[str] = []
+	checked = 0
+	for machine in catalog["machines"]:
+		definition = load_json(REPOSITORY_ROOT / machine["definition"])
+		module_locators = [
+			source["locator"]
+			for source in definition["sources"]
+			if source.get("id") == core_source_id and "machine module " in source.get("locator", "")
+		]
+		if not module_locators:
+			continue
+		platform, declaration, _root = derive_platform(definition, machine, declarations, profiles)
+		checked += 1
+		machine_id = machine["id"]
+		if declaration is None:
+			errors.append(f"{machine_id}: cites machine module but the pinned source no longer declares its root")
+			continue
+		controller = definition.get("controller")
+		if bool(controller) != (platform is not None):
+			errors.append(f"{machine_id}: controller block {controller} does not match the derived platform {platform!r}")
+			continue
+		if platform is None:
+			continue
+		if controller["platform"] != platform or controller.get("inversion_applied_by_emulator") is not True:
+			errors.append(f"{machine_id}: controller block does not match the derivation")
+			continue
+		locator = module_locators[0]
+		if f"machine module {declaration['module']}" not in locator or f"{declaration['file']}:{declaration['line']}" not in locator:
+			errors.append(f"{machine_id}: core source locator does not match the derivation: {locator}")
+	if errors:
+		raise SystemExit("Attachment drift detected:\n" + "\n".join(errors[:40]))
+	print(f"check OK: {checked} attached records match the module derivation")
+
+
 def main() -> None:
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--dry-run", action="store_true")
+	parser.add_argument("--sanitize-defines", action="store_true", help="Recompute every machine this pass attached defines to with the current define rules.")
+	parser.add_argument("--check", action="store_true", help="Verify controller platforms against the module derivation without writing.")
 	args = parser.parse_args()
 
 	actual_revision = pinmame_revision(PINMAME_SOURCE)
@@ -220,6 +350,9 @@ def main() -> None:
 		raise SystemExit("Catalog pins a different PinMAME revision.")
 	profiles = {profile["id"]: profile for profile in (load_json(path) for path in sorted((REPOSITORY_ROOT / "controllers" / "pinmame").glob("*.json")))}
 	declarations, file_defines = parse_driver_files()
+	if args.check:
+		check_attachments(declarations, profiles)
+		return
 
 	driver_machine = {record["id"]: record["machine_id"] for record in catalog["drivers"]}
 	file_machines: dict[str, set[str]] = {}
@@ -233,6 +366,7 @@ def main() -> None:
 	device_machine_count = 0
 	device_total = 0
 	changed = 0
+	skipped_counter = [0]
 	writes: list[tuple[Path, dict[str, Any]]] = []
 	note_writes: list[tuple[Path, str]] = []
 	for machine in catalog["machines"]:
@@ -240,104 +374,61 @@ def main() -> None:
 			continue
 		definition_path = REPOSITORY_ROOT / machine["definition"]
 		definition = load_json(definition_path)
-		if definition.get("controller"):
-			continue
-		root_id = machine["root_drivers"][0] if len(machine["root_drivers"]) == 1 else None
-		declaration = declarations.get(root_id) if root_id else None
-		module = declaration["module"] if declaration else None
-		platform = None
-		if module is not None:
-			if module.startswith(BY35_PREFIX):
-				platform = "pinmame.by35"
-			elif module.startswith("de_m"):
-				# de_m modules serve both Data East and Sega machines; the
-				# GAMEDEF's own manufacturer string separates them. Sega
-				# machines stay unmapped because their curated records do not
-				# agree on a whitestar platform yet.
-				platform = "pinmame.dataeast" if "data east" in declaration["manufacturer"].casefold() else None
-			else:
-				platform = MODULE_PLATFORMS.get(module)
-		if platform is not None:
-			profile_groups = {group["id"] for group in profiles[platform]["groups"]}
-			existing_groups = {
-				device["binding"]["group"]
-				for collection in ("inputs", "outputs")
-				for device in definition[collection]
-				if isinstance(device.get("binding"), dict) and isinstance(device["binding"].get("group"), str)
-			}
-			if not existing_groups <= profile_groups:
-				platform = None
-
 		machine_id = machine["id"]
-		inputs = definition["inputs"]
-		outputs = definition["outputs"]
-		sources = definition["sources"]
-		missing = definition["coverage"]["missing"]
-		source_ids = {source["id"] for source in sources}
+		sanitize_targets = args.sanitize_defines and any(source.get("id", "").startswith("pinmame.driver.") for source in definition["sources"])
+		if not sanitize_targets and definition.get("controller"):
+			continue
+		platform, declaration, root_id = derive_platform(definition, machine, declarations, profiles)
 		attached_platform = False
 		attached_devices = 0
-
-		if not inputs and not outputs and root_id is not None:
-			eligible_files = sorted(
-				relative
-				for relative, machine_ids in file_machines.items()
-				if machine_ids == {machine_id} and relative in file_defines
+		synthetic = None
+		if sanitize_targets:
+			synthetic = next(
+				(output for output in definition["outputs"] if output.get("binding") == {"device": 33, "group": "pinmame.output.solenoid"} and output.get("kind") == "virtual"),
+				None,
 			)
-			if eligible_files:
-				occupied = {device["id"] for device in inputs + outputs}
-				bindings = {(device["binding"]["group"], device["binding"]["device"]) for device in inputs + outputs if isinstance(device.get("binding"), dict)}
-				merged: list[dict[str, Any]] = []
-				for relative in eligible_files:
-					source_id = f"pinmame.driver.{Path(relative).stem}"
-					if source_id not in source_ids:
-						sources.append(driver_source_record(PINMAME_REVISION, relative))
-						source_ids.add(source_id)
-					for define in file_defines[relative]:
-						group = "pinmame.input.switch" if define["symbol"].startswith("sw") else "pinmame.output.solenoid"
-						if platform == "pinmame.sam" and group == "pinmame.output.solenoid" and define["address"] == 33:
-							continue
-						if platform is not None and platform.startswith("pinmame.wpc") and group == "pinmame.output.solenoid" and define["address"] == 32:
-							continue
-						key = (group, define["address"])
-						if key in bindings:
-							continue
-						bindings.add(key)
-						merged.append(dict(define, group=group, source_id=source_id))
-				for define in merged:
-					device = device_from_define(define, occupied)
-					(inputs if define["group"] == "pinmame.input.switch" else outputs).append(device)
-				attached_devices = len(merged)
-
+			definition["inputs"] = []
+			definition["outputs"] = []
+			definition["sources"] = [source for source in definition["sources"] if not source.get("id", "").startswith("pinmame.driver.")]
+		if not definition["inputs"] and not definition["outputs"]:
+			attached_devices = attach_define_devices(definition, machine_id, file_machines, file_defines, platform, skipped_counter)
 		if platform is not None:
+			sources = definition["sources"]
+			source_ids = {source["id"] for source in sources}
 			if core_source_id not in source_ids:
 				sources.append(core_source_record(PINMAME_REVISION, declaration))
 				source_ids.add(core_source_id)
 			definition["controller"] = {"inversion_applied_by_emulator": True, "platform": platform}
-			if "controller_platform" in missing:
-				missing.remove("controller_platform")
+			if "controller_platform" in definition["coverage"]["missing"]:
+				definition["coverage"]["missing"].remove("controller_platform")
 			if platform == "pinmame.sam" and not any(
-				isinstance(output.get("binding"), dict) and output["binding"] == {"device": 33, "group": "pinmame.output.solenoid"} for output in outputs
+				isinstance(output.get("binding"), dict) and output["binding"] == {"device": 33, "group": "pinmame.output.solenoid"} for output in definition["outputs"]
 			):
-				outputs.append(synthetic_device(SAM_GAME_ON_DEVICE, core_source_id))
+				definition["outputs"].append(synthetic_device(SAM_GAME_ON_DEVICE, core_source_id))
 				attached_devices += 1
 			platform_counts[platform] = platform_counts.get(platform, 0) + 1
 			attached_platform = True
+		if synthetic is not None:
+			definition["outputs"].append(synthetic)
+			attached_devices += 1
 
-		if attached_platform or attached_devices:
+		if attached_platform or attached_devices or sanitize_targets:
 			changed += 1
 			if attached_devices:
 				device_machine_count += 1
 				device_total += attached_devices
+			knowledge_path = REPOSITORY_ROOT / definition["knowledge"]["path"]
+			if knowledge_path.is_file() and declaration is not None and root_id is not None:
+				note_writes.append((knowledge_path, knowledge_note_text(knowledge_path.read_text(encoding="utf-8"), root_id, declaration, platform, len(definition["inputs"]) + len(definition["outputs"]))))
 			if args.dry_run:
 				continue
 			writes.append((definition_path, definition))
-			knowledge_path = REPOSITORY_ROOT / definition["knowledge"]["path"]
-			if knowledge_path.is_file() and declaration is not None and root_id is not None:
-				note_writes.append((knowledge_path, knowledge_note_text(knowledge_path.read_text(encoding="utf-8"), root_id, declaration, platform, attached_devices)))
 
-	print(f"{'DRY RUN: ' if args.dry_run else ''}would update {changed} definitions")
+	mode = "sanitized" if args.sanitize_defines else "attached"
+	print(f"{'DRY RUN: ' if args.dry_run else ''}{mode}: {changed} definitions touched")
 	print(f"platform attachments: {platform_counts}")
 	print(f"machines with candidate devices: {device_machine_count} ({device_total} devices)")
+	print(f"define references skipped by platform rules: {skipped_counter[0]}")
 	if args.dry_run:
 		return
 	for path, definition in writes:
@@ -352,17 +443,28 @@ def main() -> None:
 
 def knowledge_note_text(text: str, root_id: str, declaration: dict[str, Any], platform: str | None, device_count: int) -> str | None:
 	marker = "## What a curator must establish next"
-	if marker not in text or "## PinMAME source contract" in text:
+	if marker not in text:
 		return None
-	lines = ["## PinMAME source contract (candidate)", ""]
 	platform_text = (
 		f"; the definition declares controller platform `{platform}` from it." if platform else "; no reviewed profile covers that module yet, so no platform is declared."
 	)
-	lines.append(
+	first_line = (
 		f"- The pinned PinMAME source declares `{root_id}` at `{declaration['file']}:{declaration['line']}` with machine module `{declaration['module']}`{platform_text}"
 	)
-	if device_count:
-		lines.append(f"- The driver source's named switch/solenoid symbols are carried as {device_count} candidate devices in the definition.")
+	device_line = (
+		f"- The driver source's named switch/solenoid symbols are carried as {device_count} candidate devices in the definition." if device_count else None
+	)
+	section_start = text.find("## PinMAME source contract")
+	if section_start >= 0:
+		section_end = text.find("\n## ", section_start + 1)
+		existing_block = text[section_start:] if section_end < 0 else text[section_start:section_end + 1]
+		lines = ["## PinMAME source contract (candidate)", "", first_line]
+		if device_line:
+			lines.append(device_line)
+		return text.replace(existing_block, "\n".join(lines) + "\n\n", 1)
+	lines = ["## PinMAME source contract (candidate)", "", first_line]
+	if device_line:
+		lines.append(device_line)
 	return text.replace(marker, "\n".join(lines) + "\n\n" + marker, 1)
 
 

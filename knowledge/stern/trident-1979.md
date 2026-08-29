@@ -28,12 +28,12 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `trident` at `src/wpc/stgames.c:235` with machine module `by35_mST100bs`; no reviewed profile covers that module yet, so no platform is declared.
+- The pinned PinMAME source declares `trident` at `src/wpc/stgames.c:235` with machine module `by35_mST100bs`; the definition declares controller platform `pinmame.stern-mpu200` from it.
 
 ## What a curator must establish next
 
-Controller platform from the pinned PinMAME driver source; full input, output, and display
+full input, output, and display
 enumeration with semantic names; physical wiring and polarity; mechanism inventory and behavior;
 variant differences across the clone tree; recreation knowledge from a manual, schematic, or
 known-working table; runtime provenance; and a normalized spatial placement for every physical
-device. No manual, table, ROM analysis, or harness evidence is retained for this machine yet.
+device. No manual, schematic, or runtime-harness evidence is retained for this machine yet; the candidate sections above are the only retained I/O evidence so far.

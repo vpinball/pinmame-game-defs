@@ -27,7 +27,7 @@ class MachineClassificationTests(unittest.TestCase):
 		self.assertEqual(len(catalog["machines"]), report["catalog_record_count"])
 		self.assertEqual(catalog["summary"]["non_game_count"], report["non_game_record_count"])
 		self.assertEqual(catalog["summary"]["game_count"], report["machine_count"])
-		self.assertEqual(11, report["non_game_record_count"])
+		self.assertEqual(13, report["non_game_record_count"])
 
 	def test_diagnostic_is_not_in_game_curation_queue(self) -> None:
 		queue = build_curation_queue(REPOSITORY_ROOT)
