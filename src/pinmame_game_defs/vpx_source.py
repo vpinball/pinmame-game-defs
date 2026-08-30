@@ -21,7 +21,8 @@ CONST_SWITCH_PATTERN = re.compile(r"^\s*Const\s+(sw[A-Za-z0-9_]+)\s*=\s*(-?\d+)\
 CONST_OUTPUT_PATTERN = re.compile(r"^\s*(?i:Const)\s+(s[A-Z][A-Za-z0-9_]*)\s*=\s*(-?\d+)\b")
 # VBScript permits several assignments on one Const line
 # (`Const swOuthole=9,swTrough1=11`); capture the continuations too.
-CONST_CONTINUATION_PATTERN = re.compile(r",\s*(sw[A-Za-z0-9_]+|s[A-Z][A-Za-z0-9_]*)\s*=\s*(-?\d+)\b")
+CONST_LINE_PATTERN = re.compile(r"^\s*(?i:Const)\s+(?=[Ss])")
+CONST_ASSIGNMENT_PATTERN = re.compile(r"(sw[A-Za-z0-9_]+|s[A-Z][A-Za-z0-9_]*)\s*=\s*(-?\d+)\b")
 SUB_PATTERN = re.compile(r"^\s*(?:(?:Public|Private)\s+)?Sub\s+([A-Za-z_][A-Za-z0-9_]*)", re.IGNORECASE)
 END_SUB_PATTERN = re.compile(r"^\s*End\s+Sub\b", re.IGNORECASE)
 SWITCH_REF_PATTERN = re.compile(r"Controller\s*\.\s*Switch\s*\(\s*(-?\d+)\s*\)", re.IGNORECASE)
@@ -134,20 +135,20 @@ def extract_vpx_file(
 			current_sub = sub_match.group(1)
 		elif END_SUB_PATTERN.match(line):
 			current_sub = None
-		match = CONST_SWITCH_PATTERN.match(line)
-		if match:
-			symbol, address = match.group(1), int(match.group(2))
-			switch_candidates.setdefault((symbol.casefold(), address), _candidate(symbol=symbol, address=address, label=_symbol_label(symbol), group="pinmame.input.switch", line=line_number))
-			for continuation in CONST_CONTINUATION_PATTERN.finditer(line[match.end():]):
-				symbol, address = continuation.group(1), int(continuation.group(2))
-				switch_candidates.setdefault((symbol.casefold(), address), _candidate(symbol=symbol, address=address, label=_symbol_label(symbol), group="pinmame.input.switch", line=line_number))
-		match = CONST_OUTPUT_PATTERN.match(line)
-		if match:
-			symbol, address = match.group(1), int(match.group(2))
-			output_candidates.setdefault(("pinmame.output.solenoid", address, symbol.casefold()), _candidate(symbol=symbol, address=address, label=_symbol_label(symbol), group="pinmame.output.solenoid", line=line_number))
-			for continuation in CONST_CONTINUATION_PATTERN.finditer(line[match.end():]):
-				symbol, address = continuation.group(1), int(continuation.group(2))
-				output_candidates.setdefault(("pinmame.output.solenoid", address, symbol.casefold()), _candidate(symbol=symbol, address=address, label=_symbol_label(symbol), group="pinmame.output.solenoid", line=line_number))
+		const_match = CONST_LINE_PATTERN.match(line)
+		if const_match:
+			# Route each symbol on a Const line by its own shape: the `sw`
+			# prefix (case-insensitive, the corpus's switch convention) makes a
+			# switch; `s`+uppercase makes a solenoid. A mixed line
+			# (`Const sLSling=18,swLSling=55`) therefore records both classes,
+			# and `sWtgt` resolves to switch rather than being recorded as
+			# both.
+			for assignment in CONST_ASSIGNMENT_PATTERN.finditer(line[const_match.end():]):
+				symbol, address = assignment.group(1), int(assignment.group(2))
+				if re.fullmatch(r"sw[A-Za-z0-9_]+", symbol, re.IGNORECASE):
+					switch_candidates.setdefault((symbol.casefold(), address), _candidate(symbol=symbol, address=address, label=_symbol_label(symbol), group="pinmame.input.switch", line=line_number))
+				elif re.fullmatch(r"s[A-Z][A-Za-z0-9_]*", symbol):
+					output_candidates.setdefault(("pinmame.output.solenoid", address, symbol.casefold()), _candidate(symbol=symbol, address=address, label=_symbol_label(symbol), group="pinmame.output.solenoid", line=line_number))
 		for pattern in (SWITCH_REF_PATTERN, PULSE_SWITCH_PATTERN):
 			for ref_match in pattern.finditer(line):
 				address = int(ref_match.group(1))
