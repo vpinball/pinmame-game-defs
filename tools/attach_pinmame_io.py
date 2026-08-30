@@ -293,14 +293,21 @@ def attach_define_devices(definition: dict[str, Any], machine_id: str, file_mach
 	return len(merged)
 
 
-def check_attachments(declarations: dict[str, dict[str, Any]], profiles: dict[str, dict[str, Any]]) -> None:
+def check_attachments(declarations: dict[str, dict[str, Any]], profiles: dict[str, dict[str, Any]], file_defines: dict[str, list[dict[str, Any]]]) -> None:
 	"""Fail on drift between the pass's derivation and the records on disk.
 
-	Only records this pass attached carry a core source citing an explicit
-	"machine module" locator; curated platform declarations predate that
-	convention and are out of this tool's contract."""
+	Platform records are recognised by a core source citing an explicit
+	"machine module" locator; define-attached records by a pinmame.driver.*
+	source. Curated platform declarations predate both conventions and are out
+	of this tool's contract."""
 	catalog = load_json(REPOSITORY_ROOT / "catalog" / "pinmame.json")
 	core_source_id = f"pinmame.core.{PINMAME_REVISION[:12]}"
+	driver_machine = {record["id"]: record["machine_id"] for record in catalog["drivers"]}
+	file_machines: dict[str, set[str]] = {}
+	for driver_id, declaration in declarations.items():
+		machine_id = driver_machine.get(driver_id)
+		if machine_id:
+			file_machines.setdefault(declaration["file"], set()).add(machine_id)
 	errors: list[str] = []
 	checked = 0
 	for machine in catalog["machines"]:
@@ -310,26 +317,36 @@ def check_attachments(declarations: dict[str, dict[str, Any]], profiles: dict[st
 			for source in definition["sources"]
 			if source.get("id") == core_source_id and "machine module " in source.get("locator", "")
 		]
-		if not module_locators:
+		has_driver_sources = any(source.get("id", "").startswith("pinmame.driver.") for source in definition["sources"])
+		if not module_locators and not has_driver_sources:
 			continue
 		platform, declaration, _root = derive_platform(definition, machine, declarations, profiles)
 		checked += 1
 		machine_id = machine["id"]
-		if declaration is None:
-			errors.append(f"{machine_id}: cites machine module but the pinned source no longer declares its root")
-			continue
-		controller = definition.get("controller")
-		if bool(controller) != (platform is not None):
-			errors.append(f"{machine_id}: controller block {controller} does not match the derived platform {platform!r}")
-			continue
-		if platform is None:
-			continue
-		if controller["platform"] != platform or controller.get("inversion_applied_by_emulator") is not True:
-			errors.append(f"{machine_id}: controller block does not match the derivation")
-			continue
-		locator = module_locators[0]
-		if f"machine module {declaration['module']}" not in locator or f"{declaration['file']}:{declaration['line']}" not in locator:
-			errors.append(f"{machine_id}: core source locator does not match the derivation: {locator}")
+		if module_locators:
+			if declaration is None:
+				errors.append(f"{machine_id}: cites machine module but the pinned source no longer declares its root")
+				continue
+			controller = definition.get("controller")
+			if bool(controller) != (platform is not None):
+				errors.append(f"{machine_id}: controller block {controller} does not match the derived platform {platform!r}")
+				continue
+			if platform is not None:
+				if controller["platform"] != platform or controller.get("inversion_applied_by_emulator") is not True:
+					errors.append(f"{machine_id}: controller block does not match the derivation")
+					continue
+				locator = module_locators[0]
+				if f"machine module {declaration['module']}" not in locator or f"{declaration['file']}:{declaration['line']}" not in locator:
+					errors.append(f"{machine_id}: core source locator does not match the derivation: {locator}")
+		if has_driver_sources:
+			probe = {"inputs": [], "outputs": [], "sources": list(definition["sources"]), "machine": definition["machine"]}
+			probe["sources"] = [source for source in probe["sources"] if not source.get("id", "").startswith("pinmame.driver.")]
+			skipped: list[int] = [0]
+			attach_define_devices(probe, machine_id, file_machines, file_defines, platform, skipped)
+			expected = sorted((device["binding"]["group"], device["binding"]["device"]) for device in probe["inputs"] + probe["outputs"])
+			actual = sorted((device["binding"]["group"], device["binding"]["device"]) for device in definition["inputs"] + definition["outputs"])
+			if expected != actual:
+				errors.append(f"{machine_id}: define-derived device bindings drifted from the pinned source ({len(actual)} on disk vs {len(expected)} derived)")
 	if errors:
 		raise SystemExit("Attachment drift detected:\n" + "\n".join(errors[:40]))
 	print(f"check OK: {checked} attached records match the module derivation")
@@ -351,7 +368,7 @@ def main() -> None:
 	profiles = {profile["id"]: profile for profile in (load_json(path) for path in sorted((REPOSITORY_ROOT / "controllers" / "pinmame").glob("*.json")))}
 	declarations, file_defines = parse_driver_files()
 	if args.check:
-		check_attachments(declarations, profiles)
+		check_attachments(declarations, profiles, file_defines)
 		return
 
 	driver_machine = {record["id"]: record["machine_id"] for record in catalog["drivers"]}

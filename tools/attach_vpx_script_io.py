@@ -316,11 +316,18 @@ def main() -> None:
 
 		synthetic = None
 		if args.sanitize:
-			# Everything in these arrays came from this pass; the only non-script
-			# device the pass itself adds is the SAM synthetic game-on channel.
+			# Clear only the devices this pass contributed (provenance entirely
+			# citing this pass's vpx-script.* ids); curated devices that merely
+			# cite a corpus script survive untouched.
+			pass_source_ids = {source["id"] for source in corpus_sources}
+
+			def from_this_pass(device: dict[str, Any]) -> bool:
+				refs = device.get("provenance", {}).get("source_refs", [])
+				return bool(refs) and all(ref in pass_source_ids for ref in refs)
+
 			synthetic = next((device for device in definition["outputs"] if device.get("binding") == SAM_GAME_ON_BINDING and device.get("kind") == "virtual"), None)
-			definition["inputs"] = []
-			definition["outputs"] = []
+			definition["inputs"] = [device for device in definition["inputs"] if not from_this_pass(device)]
+			definition["outputs"] = [device for device in definition["outputs"] if not from_this_pass(device)]
 			definition["sources"] = [source for source in definition["sources"] if source not in corpus_sources]
 
 		machine_year = definition["machine"].get("year")

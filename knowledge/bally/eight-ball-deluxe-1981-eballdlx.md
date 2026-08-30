@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `eballdlx`, description "Eight Ball Deluxe (rev. 15)", manufacturer
   "Bally", catalog year "1981".
 - OPDB record `G5KXk-MLB9V` (IPDB 762) names this machine "Eight Ball Deluxe"
-  (Bally, manufacture date 1981-04-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Bally, manufacture date 1981-04-01); identity is unresolved: OPDB record shared with bally.eight-ball-deluxe.1981, so the mapped record is treated as a lead
+  rather than a resolved identity.
 - This is a split clone tree: the production drivers of `eballdlx` (including that root
   itself) belong to `bally.eight-ball-deluxe.1981`. This record holds only the residual drivers
   listed below, which may be physically different hardware such as prototypes; their fitment needs
@@ -29,7 +29,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `eballdlx` at `src/wpc/by35games.c:1130` with machine module `by35_mBY35_61S`; the definition declares controller platform `pinmame.by35` from it.
+- The pinned PinMAME source declares `eballdlx` at `src/wpc/by35games.c:1130` with machine module `by35_mBY35_61S`; no reviewed profile covers that module yet, so no platform is declared.
 
 ## What a curator must establish next
 

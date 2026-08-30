@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -63,6 +64,37 @@ class PinmameIoAttachmentTests(unittest.TestCase):
 			self.assertEqual(1, len(core_sources), definition["machine"]["id"])
 			self.assertEqual(PINMAME_REVISION, core_sources[0]["revision"])
 			self.assertNotIn("controller_platform", definition["coverage"]["missing"], definition["machine"]["id"])
+
+	def test_notes_never_claim_a_platform_the_definition_does_not_declare(self) -> None:
+		# Round-3 blocker: the platform revert fixed the definitions but left the
+		# prose asserting the removed claims. The invariant is repository-wide.
+		for definition in partial_definitions():
+			declared = definition.get("controller", {}).get("platform")
+			note_path = ROOT / definition["knowledge"]["path"]
+			if not note_path.is_file():
+				continue
+			text = note_path.read_text(encoding="utf-8")
+			claimed = re.findall(r"the definition declares controller platform `([^`]+)` from it\.", text)
+			for platform in claimed:
+				self.assertEqual(declared, platform, definition["machine"]["id"])
+
+	def test_demoted_identity_records_stay_honest(self) -> None:
+		# Round-3 blocker: shared OPDB records may be claimed as resolved by at
+		# most one record, and name disagreements keep identity unresolved.
+		owners: dict[str, list[str]] = {}
+		ipdb_owners: dict[str, list[str]] = {}
+		for definition in partial_definitions():
+			if "identity" in definition["coverage"]["missing"]:
+				continue
+			opdb_id = definition["machine"].get("opdb_id")
+			ipdb_id = definition["machine"].get("ipdb_id")
+			if opdb_id:
+				owners.setdefault(opdb_id, []).append(definition["machine"]["id"])
+			if ipdb_id:
+				ipdb_owners.setdefault(ipdb_id, []).append(definition["machine"]["id"])
+		for label, table in (("opdb", owners), ("ipdb", ipdb_owners)):
+			for value, sharers in table.items():
+				self.assertEqual(1, len(sharers), (label, value, sorted(sharers)))
 
 	def test_the_module_mapping_rule_holds_for_every_attachment(self) -> None:
 		# The declared platform must equal the reviewed module mapping applied to

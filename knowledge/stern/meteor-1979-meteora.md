@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `meteora`, description "Meteor (Bonus Count Offical Fix)", manufacturer
   "Stern", catalog year "1979".
 - OPDB record `G5b38-MDqkx` (IPDB 1580) names this machine "Meteor"
-  (Stern Electronics, manufacture date 1979-01-09); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Stern Electronics, manufacture date 1979-01-09); identity is unresolved: OPDB record shared with stern.meteor.1979, so the mapped record is treated as a lead
+  rather than a resolved identity.
 - The definition's driver list is exactly the clone tree PinMAME declares under `meteora`;
   whether every listed driver really runs on this physical machine is unverified.
 

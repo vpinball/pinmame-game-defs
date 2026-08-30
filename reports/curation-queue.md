@@ -492,7 +492,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 486 | 1982 | Spirit | Gottlieb | partial | 13% |
 | 487 | 1982 | Striker | Gottlieb | partial | 13% |
 | 488 | 1982 | Black Hole | LTD | partial | 13% |
-| 489 | 1982 | Speakeasy | LTD | partial | 13% |
+| 489 | 1982 | Speakeasy | LTD | partial | 6% |
 | 490 | 1982 | Zephy | LTD | partial | 6% |
 | 491 | 1982 | Cerberus | Playmatic | partial | 6% |
 | 492 | 1982 | Spain 82 | Playmatic | partial | 6% |
@@ -519,7 +519,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 513 | 1982 | Soccer Kings | Zaccaria | partial | 13% |
 | 514 | 1981 | Centaur | Bally | partial | 88% |
 | 515 | 1981 | Eight Ball Deluxe | Bally | partial | 75% |
-| 516 | 1981 | Eight Ball Deluxe | Bally | partial | 13% |
+| 516 | 1981 | Eight Ball Deluxe | Bally | partial | 6% |
 | 517 | 1981 | Elektra | Bally | partial | 19% |
 | 518 | 1981 | Embryon | Bally | partial | 19% |
 | 519 | 1981 | Fathom | Bally | partial | 81% |
@@ -528,12 +528,12 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 522 | 1981 | Vector | Bally | partial | 19% |
 | 523 | 1981 | Global Warfare | Game Plan | partial | 13% |
 | 524 | 1981 | Black Hole | Gottlieb | partial | 13% |
-| 525 | 1981 | Black Hole | Gottlieb | partial | 13% |
+| 525 | 1981 | Black Hole | Gottlieb | partial | 6% |
 | 526 | 1981 | Force II | Gottlieb | partial | 13% |
 | 527 | 1981 | Mars God of War | Gottlieb | partial | 13% |
 | 528 | 1981 | Pink Panther | Gottlieb | partial | 13% |
 | 529 | 1981 | Volcano | Gottlieb | partial | 13% |
-| 530 | 1981 | Volcano | Gottlieb | partial | 13% |
+| 530 | 1981 | Volcano | Gottlieb | partial | 6% |
 | 531 | 1981 | Empire Strikes Back, The | Hankin | partial | 6% |
 | 532 | 1981 | Cowboy Eight Ball | LTD | partial | 6% |
 | 533 | 1981 | Pentacup (rev. 2) | Micropin | partial | 6% |
@@ -601,9 +601,9 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 595 | 1980 | Firepower | Williams | partial | 13% |
 | 596 | 1980 | Omni (Shuffle) (L-1) | Williams | partial | 6% |
 | 597 | 1980 | Scorpion | Williams | partial | 13% |
-| 598 | 1980 | Firepower | Williams / Oliver | partial | 13% |
-| 599 | 1980 | Firepower | Williams / Oliver | partial | 13% |
-| 600 | 1980 | Firepower | Williams / Oliver | partial | 13% |
+| 598 | 1980 | Firepower | Williams / Oliver | partial | 6% |
+| 599 | 1980 | Firepower | Williams / Oliver | partial | 6% |
+| 600 | 1980 | Firepower | Williams / Oliver | partial | 6% |
 | 601 | 1980 | Fire Mountain | Zaccaria | partial | 13% |
 | 602 | 1980 | Space Shuttle | Zaccaria | partial | 13% |
 | 603 | 1980 | Star God | Zaccaria | partial | 13% |
@@ -617,7 +617,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 611 | 1979 | Harlem Globetrotters on Tour | Bally | partial | 13% |
 | 612 | 1979 | Hotdoggin' | Bally | partial | 19% |
 | 613 | 1979 | Kiss | Bally | author_ready | 100% |
-| 614 | 1979 | KISS | Bally | partial | 13% |
+| 614 | 1979 | KISS | Bally | partial | 6% |
 | 615 | 1979 | Paragon | Bally | partial | 19% |
 | 616 | 1979 | Rolling Stones | Bally | partial | 19% |
 | 617 | 1979 | Star Trek | Bally | partial | 19% |
@@ -648,7 +648,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 642 | 1979 | Hot Hand | Stern | partial | 19% |
 | 643 | 1979 | Magic | Stern | partial | 19% |
 | 644 | 1979 | Meteor | Stern | partial | 19% |
-| 645 | 1979 | Meteor | Stern | partial | 19% |
+| 645 | 1979 | Meteor | Stern | partial | 13% |
 | 646 | 1979 | Trident | Stern | partial | 19% |
 | 647 | 1979 | Football | Taito | partial | 6% |
 | 648 | 1979 | Shock | Taito | partial | 6% |

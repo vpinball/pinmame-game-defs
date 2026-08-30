@@ -23,8 +23,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `tfa_13` at `src/wpc/wpcgames.c:217` with machine module `wpc_mAlpha`; the definition declares controller platform `pinmame.wpc-alpha` from it.
-- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
+- The pinned PinMAME source declares `tfa_13` at `src/wpc/wpcgames.c:217` with machine module `wpc_mAlpha`; no reviewed profile covers that module yet, so no platform is declared.
 
 ## What a curator must establish next
 

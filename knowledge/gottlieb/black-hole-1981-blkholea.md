@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `blkholea`, description "Black Hole (Sound Only)", manufacturer
   "Gottlieb", catalog year "1981".
 - OPDB record `G41yq-MQP65` (IPDB 307) names this machine "Black Hole"
-  (Gottlieb, manufacture date 1981-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Gottlieb, manufacture date 1981-01-01); identity is unresolved: OPDB record shared with gottlieb.black-hole.1981, so the mapped record is treated as a lead
+  rather than a resolved identity.
 - The definition's driver list is exactly the clone tree PinMAME declares under `blkholea`;
   whether every listed driver really runs on this physical machine is unverified.
 

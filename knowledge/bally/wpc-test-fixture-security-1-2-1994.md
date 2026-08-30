@@ -23,8 +23,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `tfs_12` at `src/wpc/wpcgames.c:174` with machine module `wpc_mSecurityS`; the definition declares controller platform `pinmame.wpc-security` from it.
-- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
+- The pinned PinMAME source declares `tfs_12` at `src/wpc/wpcgames.c:174` with machine module `wpc_mSecurityS`; no reviewed profile covers that module yet, so no platform is declared.
 
 ## What a curator must establish next
 

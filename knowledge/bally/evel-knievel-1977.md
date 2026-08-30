@@ -26,7 +26,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `evelknie` at `src/wpc/by35games.c:115` with machine module `by35_mBY17`; the definition declares controller platform `pinmame.by35` from it.
+- The pinned PinMAME source declares `evelknie` at `src/wpc/by35games.c:115` with machine module `by35_mBY17`; no reviewed profile covers that module yet, so no platform is declared.
+- The driver source's named switch/solenoid symbols are carried as 19 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 
