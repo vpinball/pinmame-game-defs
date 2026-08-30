@@ -14,15 +14,12 @@ from .scope import is_in_scope_driver
 
 EXTRACTOR_VERSION = 1
 GAME_NAME_PATTERN = re.compile(r'^\s*(?:Const\s+)?cGameName\s*=\s*"([a-z0-9_]+)"', re.IGNORECASE | re.MULTILINE)
-CONST_SWITCH_PATTERN = re.compile(r"^\s*Const\s+(sw[A-Za-z0-9_]+)\s*=\s*(-?\d+)\b", re.IGNORECASE)
-# The Const keyword is case-insensitive in VBScript while the `s`+uppercase
-# Hungarian shape stays case-sensitive, so `const sHoleKicker = 1` is captured
-# without admitting bare assignments.
-CONST_OUTPUT_PATTERN = re.compile(r"^\s*(?i:Const)\s+(s[A-Z][A-Za-z0-9_]*)\s*=\s*(-?\d+)\b")
 # VBScript permits several assignments on one Const line
-# (`Const swOuthole=9,swTrough1=11`); capture the continuations too.
+# (`Const swOuthole=9,swTrough1=11`); capture the continuations too. The
+# lookbehind anchors each symbol so it cannot be sliced out of the middle of a
+# longer identifier (`Const SssVol = 1` must not yield `sVol`).
 CONST_LINE_PATTERN = re.compile(r"^\s*(?i:Const)\s+(?=[Ss])")
-CONST_ASSIGNMENT_PATTERN = re.compile(r"(sw[A-Za-z0-9_]+|s[A-Z][A-Za-z0-9_]*)\s*=\s*(-?\d+)\b")
+CONST_ASSIGNMENT_PATTERN = re.compile(r"(?<![A-Za-z0-9_])(sw[A-Za-z0-9_]+|s[A-Z][A-Za-z0-9_]*)\s*=\s*(-?\d+)\b")
 SUB_PATTERN = re.compile(r"^\s*(?:(?:Public|Private)\s+)?Sub\s+([A-Za-z_][A-Za-z0-9_]*)", re.IGNORECASE)
 END_SUB_PATTERN = re.compile(r"^\s*End\s+Sub\b", re.IGNORECASE)
 SWITCH_REF_PATTERN = re.compile(r"Controller\s*\.\s*Switch\s*\(\s*(-?\d+)\s*\)", re.IGNORECASE)

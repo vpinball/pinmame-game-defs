@@ -68,5 +68,16 @@ class CommentLineExtractionTests(unittest.TestCase):
 		self.assertEqual(1, len(evidence["outputs"]))
 
 
+	def test_mid_identifier_slicing_never_produces_candidates(self) -> None:
+		# Round-13 blocker: CONST_ASSIGNMENT_PATTERN without an anchor sliced
+		# `SssVol` into `sVol`. The lookbehind must keep the whole identifier.
+		text = "Const SssVol = 1\n"
+		evidence = self._extract(text)
+		symbols = [candidate["symbol"] for candidate in evidence["outputs"]]
+		self.assertNotIn("sVol", symbols)
+		self.assertNotIn("SssVol", symbols)  # lowercase `s`+lowercase is not Hungarian
+		self.assertEqual([], evidence["outputs"])
+
+
 if __name__ == "__main__":
 	unittest.main()

@@ -95,7 +95,11 @@ MODULE_PLATFORMS = {
 	# though the module name says ST100 (stgames.c: "uses MPU-200 inports"), so
 	# they keep the MPU-200 profile, while by35_mST100/s are GEN_STMPU100 and
 	# stay unclaimed.
-	# by35_mBY35_50S-style modules can span generations (scotest8 declares\n	# GEN_BY17 under a BY35 module); every attached record on this mapping is\n	# generation-verified by review round 12, and diagnostic records are\n	# excluded by the attachment itself.\n	"by35_centaur": "pinmame.by35",
+	# by35_mBY35_50S-style modules can span generations (scotest8 declares
+	# GEN_BY17 under a BY35 module); every attached record on this mapping is
+	# generation-verified by review round 12, and diagnostic records are
+	# excluded by the attachment itself.
+	"by35_centaur": "pinmame.by35",
 	"by35_mST100bs": "pinmame.stern-mpu200",
 	"by35_mST200": "pinmame.stern-mpu200",
 	"by35_mST200v": "pinmame.stern-mpu200",

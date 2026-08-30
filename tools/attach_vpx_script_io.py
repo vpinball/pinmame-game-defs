@@ -107,8 +107,9 @@ def vpx_symbol_label(symbol: str) -> str:
 	(`swTrough` -> Trough), which is wrong for VBScript symbols such as
 	`startgate` -> "Tartgate" or `solGameOn` -> "Ol Game On". Strip a Hungarian
 	prefix only when the remainder starts with an uppercase letter (the
-	Hungarian shape): `swTrough` -> "Trough", `sBJet` -> "BJet", while
-	`startgate`, `solGameOn`, and `SolKickback` keep their names."""
+	Hungarian shape): `swTrough` -> "Trough" and `sBJet` -> "BJet" lose their
+	markers, while `startgate` keeps its name and `solGameOn`/`SolKickback`
+	keep their prefixes (they are camel-split, not stripped)."""
 	value = symbol
 	if len(value) > 2 and value[:2].casefold() == "sw" and value[2].isupper():
 		value = value[2:]
