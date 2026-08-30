@@ -1,11 +1,11 @@
 # Titan (Taito 1982)
 
-Coverage: **partial - machine identity only. Nothing about playfield devices, wiring, mechanisms,
-or behavior is evidenced yet.**
+Coverage: **partial - machine identity plus candidate-only I/O attachments. Playfield devices,
+wiring, mechanisms, and behavior are evidenced only as unverified candidates.**
 
 This record was promoted from the generated catalog stub `stub.pinmame.titan` by the
 catalog-wide identity pass of 2026-08-29. The promotion resolves machine identity and carries the
-catalog's residual driver grouping over unchanged, and it deliberately asserts nothing else. Every
+catalog's residual driver grouping over unchanged, the platform and device attachments below were added by the 2026-08-29/30 candidate passes and assert nothing beyond candidate provenance. Every
 requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## Identity

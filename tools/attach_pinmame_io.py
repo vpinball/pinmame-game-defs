@@ -47,9 +47,9 @@ WORKING_ROOT = REPOSITORY_ROOT.parent / "pinmame-game-defs-working-dir"
 PINMAME_SOURCE = WORKING_ROOT / "source-checkouts" / "pinmame"
 
 GAMEDEF_PATTERN = re.compile(r"\bCORE_GAMEDEF\s*\(\s*([a-z0-9_]+)\s*,\s*([a-z0-9_]+)\s*,\s*\"([^\"]*)\"\s*,\s*([^,]+),\s*\"([^\"]*)\"\s*,\s*([a-z0-9_]+)", re.IGNORECASE)
-CLONEDEF_PATTERN = re.compile(r"\bCORE_CLONEDEF\s*\(\s*([a-z0-9_]+)\s*,\s*([a-z0-9_]+)\s*,\s*\"([^\"]*)\"\s*,\s*([^,]+),\s*\"([^\"]*)\"\s*,\s*([a-z0-9_]+)", re.IGNORECASE)
+CLONEDEF_PATTERN = re.compile(r"\bCORE_CLONEDEF\s*\(\s*([a-z0-9_]+)\s*,\s*([a-z0-9_]+)\s*,\s*([a-z0-9_]+)\s*,\s*\"([^\"]*)\"\s*,\s*([^,]+),\s*\"([^\"]*)\"\s*,\s*([a-z0-9_]+)", re.IGNORECASE)
 GAMEDEFNV_PATTERN = re.compile(r"\bCORE_GAMEDEFNV\s*\(\s*([a-z0-9_]+)\s*,\s*\"([^\"]*)\"\s*,\s*([^,]+),\s*\"([^\"]*)\"\s*,\s*([a-z0-9_]+)", re.IGNORECASE)
-CLONEDEFNV_PATTERN = re.compile(r"\bCORE_CLONEDEFNV\s*\(\s*([a-z0-9_]+)\s*,\s*\"([^\"]*)\"\s*,\s*([^,]+),\s*\"([^\"]*)\"\s*,\s*([a-z0-9_]+)", re.IGNORECASE)
+CLONEDEFNV_PATTERN = re.compile(r"\bCORE_CLONEDEFNV\s*\(\s*([a-z0-9_]+)\s*,\s*([a-z0-9_]+)\s*,\s*\"([^\"]*)\"\s*,\s*([^,]+),\s*\"([^\"]*)\"\s*,\s*([a-z0-9_]+)", re.IGNORECASE)
 DEFINE_PATTERN = re.compile(r"^\s*#\s*define\s+([A-Za-z][A-Za-z0-9_]*)\s+(-?\d+)\s*(?://.*|/\*.*?\*/)?\s*$", re.MULTILINE)
 
 PINMAME_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
@@ -119,7 +119,7 @@ def parse_driver_files() -> tuple[dict[str, dict[str, Any]], dict[str, list[dict
 	file_defines: dict[str, list[dict[str, Any]]] = {}
 	for path in sorted(PINMAME_SOURCE.glob("src/**/*.c")):
 		text, _encoding = _read_source(path)
-		if "CORE_GAMEDEF" not in text:
+		if "CORE_GAMEDEF" not in text and "CORE_CLONEDEF" not in text:
 			continue
 		relative = path.relative_to(PINMAME_SOURCE).as_posix()
 		defines: list[dict[str, Any]] = []
@@ -129,11 +129,17 @@ def parse_driver_files() -> tuple[dict[str, dict[str, Any]], dict[str, list[dict
 				defines.append({"symbol": symbol, "address": int(raw_address), "label": _symbol_label(symbol)})
 		if defines:
 			file_defines[relative] = sorted(defines, key=lambda item: (item["address"], item["symbol"]))
-		for pattern, is_clone in ((GAMEDEF_PATTERN, False), (GAMEDEFNV_PATTERN, False), (CLONEDEF_PATTERN, True), (CLONEDEFNV_PATTERN, True)):
+		for pattern, is_clone, nv in ((GAMEDEF_PATTERN, False, False), (GAMEDEFNV_PATTERN, False, True), (CLONEDEF_PATTERN, True, False), (CLONEDEFNV_PATTERN, True, True)):
 			for match in pattern.finditer(text):
 				groups = match.groups()
-				if pattern in (GAMEDEFNV_PATTERN, CLONEDEFNV_PATTERN):
-					driver_id, _name, _year, manufacturer, module = groups
+				if nv:
+					if is_clone:
+						driver_id, _parent, _name, _year, manufacturer, module = groups
+					else:
+						driver_id, _name, _year, manufacturer, module = groups
+				elif is_clone:
+					prefix, _parent, revision, _name, _year, manufacturer, module = groups
+					driver_id = f"{prefix}_{revision}"
 				else:
 					prefix, revision, _name, _year, manufacturer, module = groups
 					driver_id = f"{prefix}_{revision}"
@@ -415,7 +421,7 @@ def main() -> None:
 		sanitize_targets = args.sanitize_defines and any(source.get("id", "").startswith("pinmame.driver.") for source in definition["sources"])
 		if not sanitize_targets and definition.get("controller"):
 			continue
-		platform, declaration, root_id = derive_platform(definition, machine, declarations, profiles)
+		platform, declaration, root_id, none_reason = derive_platform(definition, machine, declarations, profiles)
 		attached_platform = False
 		attached_devices = 0
 		synthetic = None

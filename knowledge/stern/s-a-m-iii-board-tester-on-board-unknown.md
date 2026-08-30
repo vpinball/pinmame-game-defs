@@ -28,7 +28,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## What a curator must establish next
 
-full input, output, and display
+Full input, output, and display
 enumeration with semantic names; physical wiring and polarity; mechanism inventory and behavior;
 variant differences across the clone tree; recreation knowledge from a manual, schematic, or
 known-working table; runtime provenance; and a normalized spatial placement for every physical

@@ -43,6 +43,20 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		self.assertIn("check OK:", output)
 		self.assertGreaterEqual(int(output.split("check OK: ")[1].split(" ")[0]), 100)
 
+	def test_pinmame_attachment_dry_runs_execute(self) -> None:
+		# Round-5 blocker: the tool's write path crashed on an unpack error that
+		# --check never exercised. Both dry-run modes must execute cleanly.
+		if not (PINMAME_CHECKOUT / "src" / "wpc").is_dir():
+			self.skipTest("pinned PinMAME checkout is not available")
+		attach = run_tool("attach_pinmame_io.py", "--dry-run")
+		self.assertIn("attached:", attach)
+		sanitized = run_tool("attach_pinmame_io.py", "--sanitize-defines", "--dry-run")
+		self.assertIn("sanitized:", sanitized)
+
+	def test_vpx_attachment_dry_run_executes(self) -> None:
+		output = run_tool("attach_vpx_script_io.py", "--dry-run")
+		self.assertIn("attached:", output)
+
 
 if __name__ == "__main__":
 	unittest.main()

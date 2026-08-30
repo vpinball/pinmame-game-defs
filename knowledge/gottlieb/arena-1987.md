@@ -1,11 +1,11 @@
 # Arena (Gottlieb 1987)
 
-Coverage: **partial - machine identity only. Nothing about playfield devices, wiring, mechanisms,
-or behavior is evidenced yet.**
+Coverage: **partial - machine identity plus candidate-only I/O attachments. Playfield devices,
+wiring, mechanisms, and behavior are evidenced only as unverified candidates.**
 
 This record was promoted from the generated catalog stub `stub.pinmame.arena` by the
 catalog-wide identity pass of 2026-08-29. The promotion resolves machine identity and carries the
-catalog's residual driver grouping over unchanged, and it deliberately asserts nothing else. Every
+catalog's residual driver grouping over unchanged, the platform and device attachments below were added by the 2026-08-29/30 candidate passes and assert nothing beyond candidate provenance. Every
 requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## Identity
@@ -32,7 +32,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## VPX script candidates (candidate)
 
-- 1 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 47 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+- 1 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 46 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
 
 ## What a curator must establish next
 

@@ -13,8 +13,8 @@ CORPUS_REPOSITORIES = (
 	"https://github.com/jsm174/vpx-standalone-scripts",
 )
 EXPECTED_ATTACHED_MACHINES = 279
-EXPECTED_ATTACHED_DEVICES = 13865
-EXPECTED_ATTACHED_SCRIPTS = 351
+EXPECTED_ATTACHED_DEVICES = 13578
+EXPECTED_ATTACHED_SCRIPTS = 350
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
@@ -131,6 +131,35 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 		self.assertFalse(tool.label_well_formed("Dt Drop.Sol Unhit 1,"))
 		self.assertFalse(tool.label_well_formed("L2"))
 		self.assertTrue(tool.label_well_formed("Saucers On"))
+
+	def test_headline_matches_the_attachments(self) -> None:
+		# Round-5 major: notes must not headline "identity only" over definitions
+		# that carry a declared platform or candidate devices.
+		for definition in self.attached:
+			note_path = ROOT / definition["knowledge"]["path"]
+			text = note_path.read_text(encoding="utf-8")
+			has_attachments = bool(definition.get("controller")) or bool(definition["inputs"] or definition["outputs"])
+			if has_attachments:
+				self.assertNotIn("machine identity only", text, definition["machine"]["id"])
+			else:
+				self.assertIn("machine identity only", text, definition["machine"]["id"])
+
+	def test_helper_call_symbols_are_never_attached(self) -> None:
+		# Round-5 major: vpmSolSound/SetLamp123-style library helpers are not
+		# devices; no pass-attached label may come from one.
+		import sys
+
+		sys.path.insert(0, str(ROOT / "tools"))
+		import attach_vpx_script_io as tool
+
+		self.assertFalse(tool.candidate_allowed({"group": "pinmame.output.solenoid", "symbol": "vpmSolSound", "address": 1, "label": "Vpm Sol Sound"}))
+		self.assertFalse(tool.candidate_allowed({"group": "pinmame.output.solenoid", "symbol": "SetLamp123", "address": 17, "label": "Set Lamp123"}))
+		self.assertFalse(tool.candidate_allowed({"group": "pinmame.output.lamp", "symbol": "UpdateMultipleLamps", "address": 5, "label": "Update Multiple Lamps"}))
+		self.assertTrue(tool.candidate_allowed({"group": "pinmame.output.solenoid", "symbol": "sTrough", "address": 1, "label": "Trough"}))
+		for definition in self.attached:
+			for device in definition["inputs"] + definition["outputs"]:
+				self.assertNotIn("vpm sol sound", device["label"].casefold(), (definition["machine"]["id"], device["id"]))
+				self.assertFalse(re.match(r"^(?:set|update) ", device["label"].casefold()), (definition["machine"]["id"], device["id"]))
 
 	def test_retheme_scripts_do_not_supply_machine_labels(self) -> None:
 		# Gremlins re-themes Victory's ROM but not Victory's playfield; the title

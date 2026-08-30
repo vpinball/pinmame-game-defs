@@ -28,11 +28,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `sam1_flashb_0310` at `src/wpc/sam.c:2439` with machine module `sam1`; no platform is declared (the record is classified diagnostic or system software, outside the physical-machine attachment scope).
-- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
 
 ## What a curator must establish next
 
-full input, output, and display
+Full input, output, and display
 enumeration with semantic names; physical wiring and polarity; mechanism inventory and behavior;
 variant differences across the clone tree; recreation knowledge from a manual, schematic, or
 known-working table; runtime provenance; and a normalized spatial placement for every physical

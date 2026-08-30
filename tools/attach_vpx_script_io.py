@@ -73,6 +73,11 @@ ADDRESS_BOUNDS = {
 }
 # VBScript form/keyboard/timer event handlers, never playfield devices.
 HANDLER_SYMBOL_PATTERN = re.compile(r"_(?:keydown|keyup|init|mousedown|mouseup|timer)$", re.IGNORECASE)
+# VBScript statement keywords and library helper calls (vpmSolSound, SetLamp123,
+# UpdateMultipleLamps, ...): the handler name describes a helper invocation, not
+# a device; the real device identity sits in a trailing comment the extractor
+# does not model.
+HELPER_SYMBOL_PATTERN = re.compile(r"^(?i:vpm|set|update|sub|call)[A-Z_]")
 TITLE_STOPWORDS = {"the", "a", "an", "and", "of"}
 YEAR_PATTERN = re.compile(r"\b(?:19|20)\d{2}\b")
 
@@ -104,6 +109,8 @@ def clean_label(label: str) -> str:
 
 def candidate_allowed(candidate: dict[str, Any]) -> bool:
 	if HANDLER_SYMBOL_PATTERN.search(candidate.get("symbol", "")):
+		return False
+	if HELPER_SYMBOL_PATTERN.match(candidate.get("symbol", "")):
 		return False
 	bounds = ADDRESS_BOUNDS.get(candidate["group"])
 	if bounds is None:
@@ -345,7 +352,9 @@ def main() -> None:
 				definition["sources"].append(source)
 			definition["inputs"].extend(device for device in merged if device["binding"]["group"] == "pinmame.input.switch")
 			definition["outputs"].extend(device for device in merged if device["binding"]["group"] != "pinmame.input.switch")
-		if synthetic is not None:
+		if synthetic is not None and not any(
+			device.get("binding") == SAM_GAME_ON_BINDING and device.get("kind") == "virtual" for device in definition["outputs"]
+		):
 			definition["outputs"].append(synthetic)
 		if not merged and args.sanitize:
 			if not args.dry_run:

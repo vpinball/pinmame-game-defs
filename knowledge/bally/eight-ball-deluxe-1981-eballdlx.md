@@ -29,7 +29,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `eballdlx` at `src/wpc/by35games.c:1130` with machine module `by35_mBY35_61S`; no reviewed profile covers that module yet, so no platform is declared.
+- The pinned PinMAME source declares `eballdp1` at `src/wpc/by68701.c:469` with machine module `by68701_61S`; no platform is declared (the record does not hold its own root driver, so the root's module cannot describe its hardware).
 
 ## What a curator must establish next
 
