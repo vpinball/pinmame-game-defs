@@ -29,6 +29,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `bnzai_l3` at `src/wpc/s11games.c:582` with machine module `s11_mS11BS`; the definition declares controller platform `pinmame.system-11` from it.
+- The driver source's named switch/solenoid symbols are carried as 58 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 

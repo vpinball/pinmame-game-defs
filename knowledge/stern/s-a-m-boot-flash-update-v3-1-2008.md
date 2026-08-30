@@ -27,7 +27,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `sam1_flashb_0310` at `src/wpc/sam.c:2439` with machine module `sam1`; the definition declares controller platform `pinmame.sam` from it.
+- The pinned PinMAME source declares `sam1_flashb_0310` at `src/wpc/sam.c:2439` with machine module `sam1`; no platform is declared (the record is classified diagnostic or system software, outside the physical-machine attachment scope).
 - The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
 
 ## What a curator must establish next

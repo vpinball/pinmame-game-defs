@@ -24,7 +24,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `sam_iii` at `src/wpc/stgames.c:1443` with machine module `by35_mST200`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+- The pinned PinMAME source declares `sam_iii` at `src/wpc/stgames.c:1443` with machine module `by35_mST200`; no platform is declared (the drivers declare GEN_ASTRO, not the profile's generation).
 
 ## What a curator must establish next
 

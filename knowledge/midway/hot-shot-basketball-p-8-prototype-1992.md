@@ -25,7 +25,6 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `hshot_p8` at `src/wpc/bowlgames.c:552` with machine module `wpc_mFliptronS`; the definition declares controller platform `pinmame.wpc-fliptronic` from it.
-- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
 
 ## What a curator must establish next
 

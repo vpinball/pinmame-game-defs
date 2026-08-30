@@ -328,7 +328,15 @@ def main() -> None:
 			synthetic = next((device for device in definition["outputs"] if device.get("binding") == SAM_GAME_ON_BINDING and device.get("kind") == "virtual"), None)
 			definition["inputs"] = [device for device in definition["inputs"] if not from_this_pass(device)]
 			definition["outputs"] = [device for device in definition["outputs"] if not from_this_pass(device)]
-			definition["sources"] = [source for source in definition["sources"] if source not in corpus_sources]
+			kept_refs = {
+				ref
+				for device in definition["inputs"] + definition["outputs"]
+				for ref in device.get("provenance", {}).get("source_refs", [])
+			}
+			definition["sources"] = [
+				source for source in definition["sources"]
+				if source not in corpus_sources or source["id"] in kept_refs
+			]
 
 		machine_year = definition["machine"].get("year")
 		contributing, merged = attach_candidates(definition, entries_by_machine.get(machine["id"], []), profile_groups, definition["machine"]["name"], machine_year, rejected_counter)

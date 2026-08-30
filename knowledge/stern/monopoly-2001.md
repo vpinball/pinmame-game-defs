@@ -33,7 +33,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `monopoly` at `src/wpc/sims/se/prelim/monopoly.c:441` with machine module `de_mSES1`; no reviewed profile covers that module yet, so no platform is declared.
+- The pinned PinMAME source declares `monopoly` at `src/wpc/sims/se/prelim/monopoly.c:441` with machine module `de_mSES1`; no platform is declared (the de_mSES1 module serves several manufacturers and this record's catalog manufacturer (Stern) is not Data East).
 - The driver source's named switch/solenoid symbols are carried as 23 candidate devices in the definition.
 
 ## What a curator must establish next

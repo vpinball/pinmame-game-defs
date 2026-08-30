@@ -29,7 +29,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `hd_l3` at `src/wpc/sims/wpc/full/hd.c:402` with machine module `hd`; no reviewed profile covers that module yet, so no platform is declared.
+- The pinned PinMAME source declares `hd_l3` at `src/wpc/sims/wpc/full/hd.c:402` with machine module `hd`; no platform is declared (no reviewed profile covers that module yet).
 - The driver source's named switch/solenoid symbols are carried as 60 candidate devices in the definition.
 
 ## What a curator must establish next

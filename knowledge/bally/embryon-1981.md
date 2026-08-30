@@ -30,6 +30,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `embryon` at `src/wpc/by35games.c:1214` with machine module `by35_mBY35_61BS`; the definition declares controller platform `pinmame.by35` from it.
+- The driver source's named switch/solenoid symbols are carried as 31 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 

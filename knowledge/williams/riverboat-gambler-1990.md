@@ -26,6 +26,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `rvrbt_l3` at `src/wpc/s11games.c:1605` with machine module `s11_mS11CS`; the definition declares controller platform `pinmame.system-11` from it.
+- The driver source's named switch/solenoid symbols are carried as 90 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 

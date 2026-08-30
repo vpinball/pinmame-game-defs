@@ -25,7 +25,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `lectrono` at `src/wpc/stgames.c:152` with machine module `by35_mST100s`; no reviewed profile covers that module yet, so no platform is declared.
+- The pinned PinMAME source declares `lectrono` at `src/wpc/stgames.c:152` with machine module `by35_mST100s`; no platform is declared (no reviewed profile covers that module yet).
 
 ## What a curator must establish next
 

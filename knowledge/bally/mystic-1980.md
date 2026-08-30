@@ -26,6 +26,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `mystic` at `src/wpc/by35games.c:816` with machine module `by35_mBY35_51S`; the definition declares controller platform `pinmame.by35` from it.
+- The driver source's named switch/solenoid symbols are carried as 15 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 

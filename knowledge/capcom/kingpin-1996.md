@@ -25,6 +25,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `kpb105` at `src/wpc/capgames.c:351` with machine module `cc2`; the definition declares controller platform `pinmame.capcom` from it.
+- The driver source's named switch/solenoid symbols are carried as 146 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 

@@ -23,7 +23,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `detest` at `src/wpc/degames.c:1849` with machine module `de_mDEA`; no reviewed profile covers that module yet, so no platform is declared.
+- The pinned PinMAME source declares `detest` at `src/wpc/degames.c:1849` with machine module `de_mDEA`; no platform is declared (the record is classified diagnostic or system software, outside the physical-machine attachment scope).
 
 ## What a curator must establish next
 

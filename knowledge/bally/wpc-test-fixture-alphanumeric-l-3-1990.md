@@ -23,7 +23,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## PinMAME source contract (candidate)
 
-- The pinned PinMAME source declares `tfa_13` at `src/wpc/wpcgames.c:217` with machine module `wpc_mAlpha`; no reviewed profile covers that module yet, so no platform is declared.
+- The pinned PinMAME source declares `tfa_13` at `src/wpc/wpcgames.c:217` with machine module `wpc_mAlpha`; no platform is declared (the record is classified diagnostic or system software, outside the physical-machine attachment scope).
 
 ## What a curator must establish next
 

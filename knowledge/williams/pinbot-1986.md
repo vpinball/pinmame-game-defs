@@ -34,6 +34,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `pb_l5` at `src/wpc/s11games.c:357` with machine module `s11_mS11XSL`; the definition declares controller platform `pinmame.system-11` from it.
+- The driver source's named switch/solenoid symbols are carried as 44 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 

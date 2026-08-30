@@ -38,6 +38,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `meteor` at `src/wpc/stgames.c:351` with machine module `by35_mST200`; the definition declares controller platform `pinmame.stern-mpu200` from it.
+- The driver source's named switch/solenoid symbols are carried as 74 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 

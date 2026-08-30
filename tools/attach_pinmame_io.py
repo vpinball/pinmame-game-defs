@@ -213,32 +213,52 @@ def synthetic_device(template: dict[str, Any], source_id: str) -> dict[str, Any]
 	return copied
 
 
-def derive_platform(definition: dict[str, Any], machine: dict[str, Any], declarations: dict[str, dict[str, Any]], profiles: dict[str, dict[str, Any]]) -> tuple[str | None, dict[str, Any] | None, str | None]:
+# Records excluded from the module mapping despite their module appearing
+# above, because the drivers declare a different generation than the profile
+# describes (the declared generation is the authority, per the round-2/4
+# reviews): the S.A.M. board tester games bind GEN_ASTRO, not GEN_STMPU200.
+MODULE_PLATFORM_EXCLUSIONS = {
+	"stern.s-a-m-iii-board-tester-on-board": "the drivers declare GEN_ASTRO, not the profile's generation",
+}
+
+
+def derive_platform(definition: dict[str, Any], machine: dict[str, Any], declarations: dict[str, dict[str, Any]], profiles: dict[str, dict[str, Any]]) -> tuple[str | None, dict[str, Any] | None, str | None, str | None]:
 	"""Derive the controller platform for one machine from its root driver's
-	CORE_GAMEDEF machine module, or (None, declaration, root) when no reviewed
-	profile covers it. A record whose root driver is not in its own driver list
-	(a split-tree residual) never derives a platform: the root's module describes
-	hardware the record does not hold."""
+	CORE_GAMEDEF machine module. Returns (platform, declaration, root, reason):
+	reason explains why no platform was derived when platform is None. A record
+	whose root driver is not in its own driver list (a split-tree residual)
+	never derives a platform: the root's module describes hardware the record
+	does not hold."""
 	root_id = machine["root_drivers"][0] if len(machine["root_drivers"]) == 1 else None
 	if root_id is None:
-		return None, None, root_id
+		return None, None, root_id, "the machine spans several roots"
 	declaration = declarations.get(root_id)
 	if declaration is None:
-		return None, None, root_id
+		return None, None, root_id, "the pinned source's GAMEDEF for the root driver does not parse"
 	if root_id not in {driver["id"] for driver in definition["drivers"]}:
-		return None, declaration, root_id
+		return None, declaration, root_id, "the record does not hold its own root driver, so the root's module cannot describe its hardware"
 	module = declaration["module"]
+	exclusion = MODULE_PLATFORM_EXCLUSIONS.get(machine["id"])
+	if exclusion:
+		return None, declaration, root_id, exclusion
+	if machine.get("machine_kind") in NON_GAME_KINDS:
+		return None, declaration, root_id, "the record is classified diagnostic or system software, outside the physical-machine attachment scope"
 	if module.startswith(BY35_PREFIX):
 		platform = "pinmame.by35"
 	elif module.startswith("de_m"):
 		# de_m modules serve both Data East and Sega machines; the GAMEDEF's own
 		# manufacturer string separates them. Sega machines stay unmapped
 		# because their curated records do not agree on a whitestar platform.
-		platform = "pinmame.dataeast" if "data east" in declaration["manufacturer"].casefold() else None
+		if "data east" in declaration["manufacturer"].casefold():
+			platform = "pinmame.dataeast"
+		else:
+			return None, declaration, root_id, f"the {module} module serves several manufacturers and this record's catalog manufacturer ({declaration['manufacturer']}) is not Data East"
 	else:
 		platform = MODULE_PLATFORMS.get(module)
+		if platform is None:
+			return None, declaration, root_id, "no reviewed profile covers that module yet"
 	if platform is None:
-		return None, declaration, root_id
+		return None, declaration, root_id, "no reviewed profile covers that module yet"
 	profile_groups = {group["id"] for group in profiles[platform]["groups"]}
 	existing_groups = {
 		device["binding"]["group"]
@@ -247,8 +267,8 @@ def derive_platform(definition: dict[str, Any], machine: dict[str, Any], declara
 		if isinstance(device.get("binding"), dict) and isinstance(device["binding"].get("group"), str)
 	}
 	if not existing_groups <= profile_groups:
-		return None, declaration, root_id
-	return platform, declaration, root_id
+		return None, declaration, root_id, "the record holds devices outside the profile's declared groups"
+	return platform, declaration, root_id, None
 
 
 def attach_define_devices(definition: dict[str, Any], machine_id: str, file_machines: dict[str, set[str]], file_defines: dict[str, list[dict[str, Any]]], platform: str | None, skipped_counter: list[int]) -> int:
@@ -320,7 +340,7 @@ def check_attachments(declarations: dict[str, dict[str, Any]], profiles: dict[st
 		has_driver_sources = any(source.get("id", "").startswith("pinmame.driver.") for source in definition["sources"])
 		if not module_locators and not has_driver_sources:
 			continue
-		platform, declaration, _root = derive_platform(definition, machine, declarations, profiles)
+		platform, declaration, _root, _reason = derive_platform(definition, machine, declarations, profiles)
 		checked += 1
 		machine_id = machine["id"]
 		if module_locators:
@@ -434,9 +454,16 @@ def main() -> None:
 			if attached_devices:
 				device_machine_count += 1
 				device_total += attached_devices
+			note_declaration = declaration
+			note_root_id = root_id
+			if declaration is not None and root_id is not None and root_id not in {driver["id"] for driver in definition["drivers"]}:
+				# A split-tree residual must cite a driver it actually holds.
+				held = sorted(definition["drivers"], key=lambda item: item["id"])[0]["id"]
+				note_declaration = declarations.get(held)
+				note_root_id = held
 			knowledge_path = REPOSITORY_ROOT / definition["knowledge"]["path"]
-			if knowledge_path.is_file() and declaration is not None and root_id is not None:
-				note_writes.append((knowledge_path, knowledge_note_text(knowledge_path.read_text(encoding="utf-8"), root_id, declaration, platform, len(definition["inputs"]) + len(definition["outputs"]))))
+			if knowledge_path.is_file() and note_declaration is not None and note_root_id is not None:
+				note_writes.append((knowledge_path, knowledge_note_text(knowledge_path.read_text(encoding="utf-8"), note_root_id, note_declaration, platform, none_reason, len(definition["inputs"]) + len(definition["outputs"]))))
 			if args.dry_run:
 				continue
 			writes.append((definition_path, definition))
@@ -458,13 +485,14 @@ def main() -> None:
 	print(f"coverage: {report['stub_count']} stubs, {report['partial_count']} partials, {report['author_ready_count']} author-ready")
 
 
-def knowledge_note_text(text: str, root_id: str, declaration: dict[str, Any], platform: str | None, device_count: int) -> str | None:
+def knowledge_note_text(text: str, root_id: str, declaration: dict[str, Any], platform: str | None, none_reason: str | None, device_count: int) -> str | None:
 	marker = "## What a curator must establish next"
 	if marker not in text:
 		return None
-	platform_text = (
-		f"; the definition declares controller platform `{platform}` from it." if platform else "; no reviewed profile covers that module yet, so no platform is declared."
-	)
+	if platform:
+		platform_text = f"; the definition declares controller platform `{platform}` from it."
+	else:
+		platform_text = f"; no platform is declared ({none_reason or 'no reviewed profile covers that module'})."
 	first_line = (
 		f"- The pinned PinMAME source declares `{root_id}` at `{declaration['file']}:{declaration['line']}` with machine module `{declaration['module']}`{platform_text}"
 	)

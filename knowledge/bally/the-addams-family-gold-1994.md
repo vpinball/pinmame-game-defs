@@ -33,7 +33,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `tafg_lx3` at `src/wpc/sims/wpc/full/taf.c:557` with machine module `wpc_mFliptronS`; the definition declares controller platform `pinmame.wpc-fliptronic` from it.
-- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
+- The driver source's named switch/solenoid symbols are carried as 69 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 

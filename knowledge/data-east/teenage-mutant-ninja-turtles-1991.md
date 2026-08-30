@@ -30,6 +30,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `tmnt_104` at `src/wpc/degames.c:436` with machine module `de_mDEDMD16S1`; the definition declares controller platform `pinmame.dataeast` from it.
+- The driver source's named switch/solenoid symbols are carried as 90 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 
