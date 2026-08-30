@@ -45,7 +45,6 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `wof_500` at `src/wpc/sam.c:2878` with machine module `sam1`; the definition declares controller platform `pinmame.sam` from it.
-- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
 
 ## What a curator must establish next
 

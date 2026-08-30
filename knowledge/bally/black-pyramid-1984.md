@@ -27,11 +27,10 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `blakpyra` at `src/wpc/by35games.c:1776` with machine module `by35_mBY35_45S`; the definition declares controller platform `pinmame.by35` from it.
-- The driver source's named switch/solenoid symbols are carried as 82 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 
-- 2 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 82 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+- 2 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 83 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
 
 ## What a curator must establish next
 

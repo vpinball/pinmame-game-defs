@@ -70,7 +70,6 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `wpt_140a` at `src/wpc/sam.c:2506` with machine module `sam1`; the definition declares controller platform `pinmame.sam` from it.
-- The driver source's named switch/solenoid symbols are carried as 1 candidate devices in the definition.
 
 ## What a curator must establish next
 

@@ -25,7 +25,6 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `mj_130` at `src/wpc/degames.c:819` with machine module `de_mDEDMD32S2A`; the definition declares controller platform `pinmame.dataeast` from it.
-- The driver source's named switch/solenoid symbols are carried as 91 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 

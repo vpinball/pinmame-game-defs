@@ -93,6 +93,13 @@ def extract_vpx_file(
 	mechanisms: list[dict[str, Any]] = []
 	mechanism_note_lines: list[dict[str, Any]] = []
 	for line_number, line in enumerate(lines, start=1):
+		stripped = line.lstrip()
+		if stripped.startswith("'") or stripped[:3].casefold() == "rem":
+			# Whole-line VBScript comments are dead code: they create no switch
+			# read, callback, or lamp assignment, so they must not become
+			# candidate evidence (the project's own Secret Service and Torpedo
+			# Alley rule).
+			continue
 		sub_match = SUB_PATTERN.match(line)
 		if sub_match:
 			current_sub = sub_match.group(1)

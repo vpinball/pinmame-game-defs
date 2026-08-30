@@ -13,8 +13,8 @@ CORPUS_REPOSITORIES = (
 	"https://github.com/jsm174/vpx-standalone-scripts",
 )
 EXPECTED_ATTACHED_MACHINES = 279
-EXPECTED_ATTACHED_DEVICES = 13578
-EXPECTED_ATTACHED_SCRIPTS = 350
+EXPECTED_ATTACHED_DEVICES = 13292
+EXPECTED_ATTACHED_SCRIPTS = 353
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
@@ -54,11 +54,11 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 
 	def test_south_park_candidate_devices_are_candidates(self) -> None:
 		definition = load_json(ROOT / "machines/partial/sega/south-park-1999.json")
-		self.assertEqual(31, len(definition["inputs"]))
+		self.assertEqual(30, len(definition["inputs"]))
 		self.assertEqual(18, len(definition["outputs"]))
-		switch = next(device for device in definition["inputs"] if device["binding"]["device"] == 15)
-		self.assertEqual("candidate", switch["provenance"]["status"])
-		self.assertIn("vpx-script.", switch["provenance"]["source_refs"][0])
+		for device in definition["inputs"] + definition["outputs"]:
+			self.assertEqual("candidate", device["provenance"]["status"])
+			self.assertIn("vpx-script.", device["provenance"]["source_refs"][0])
 
 	def test_lamp_candidates_come_from_the_script(self) -> None:
 		definition = load_json(ROOT / "machines/partial/capcom/kingpin-1996.json")
@@ -67,6 +67,27 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 		self.assertEqual("lamp", lamp["kind"])
 		self.assertEqual(113, sum(1 for device in definition["outputs"] if device["kind"] == "lamp"))
 		self.assertEqual(146, len(definition["inputs"]) + len(definition["outputs"]))
+
+	def test_note_device_counts_name_only_define_derived_devices(self) -> None:
+		# Round-6 blocker: the PinMAME source-contract section must not attribute
+		# VPX-script or synthetic devices to the driver source.
+		import re as _re
+
+		for path in sorted((ROOT / "machines" / "partial").rglob("*.json")):
+			definition = load_json(path)
+			text = (ROOT / definition["knowledge"]["path"]).read_text(encoding="utf-8")
+			claim = _re.search(r"named switch/solenoid symbols are carried as (\\d+) candidate devices", text)
+			if claim is None:
+				continue
+			define_ids = {source["id"] for source in definition["sources"] if source.get("id", "").startswith("pinmame.driver.")}
+			actual = sum(
+				1
+				for device in definition["inputs"] + definition["outputs"]
+				if device.get("provenance", {}).get("source_refs")
+				and all(ref in define_ids for ref in device["provenance"]["source_refs"])
+			)
+			self.assertEqual(int(claim.group(1)), actual, definition["machine"]["id"])
+			self.assertGreater(actual, 0, definition["machine"]["id"])
 
 	def test_script_citations_hash_the_pinned_corpora(self) -> None:
 		# Evidence-gated: recompute every cited script's SHA-256 against the

@@ -27,7 +27,6 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `freedom` at `src/wpc/by35games.c:60` with machine module `by35_mBY17`; no platform is declared (no reviewed profile covers that module yet).
-- The driver source's named switch/solenoid symbols are carried as 14 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 

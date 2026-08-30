@@ -92,10 +92,30 @@ def label_well_formed(label: str) -> bool:
 		return False
 	if label.endswith(","):
 		return False
+	if "'" in label or '"' in label or "," in label:
+		return False
 	if re.search(r"\.[A-Za-z_]", label):
 		return False
 	return True
 SAM_GAME_ON_BINDING = {"device": 33, "group": "pinmame.output.solenoid"}
+
+
+def vpx_symbol_label(symbol: str) -> str:
+	"""Label a VBScript symbol without mangling it.
+
+	`pinmame_source._symbol_label` strips PinMAME's C Hungarian markers
+	(`swTrough` -> Trough), which is wrong for VBScript symbols such as
+	`startgate` -> "Tartgate" or `solGameOn` -> "Ol Game On". Strip a Hungarian
+	prefix only when it really is one: `sw` followed by a lowercase letter, or
+	a lone `s` followed by a lowercase letter."""
+	value = symbol
+	if len(value) > 2 and value[:2].casefold() == "sw" and value[2].islower():
+		value = value[2:]
+	elif len(value) > 1 and value[0].casefold() == "s" and value[1].islower():
+		value = value[1:]
+	value = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", value)
+	value = value.replace("_", " ")
+	return " ".join(value.split()) or symbol
 
 
 def clean_label(label: str) -> str:
@@ -215,7 +235,7 @@ def attach_candidates(
 			key = (group, candidate["address"])
 			if key in bindings:
 				continue
-			label = clean_label(candidate["label"])
+			label = clean_label(vpx_symbol_label(candidate.get("symbol") or candidate["label"]))
 			if not label or not label_well_formed(label):
 				if rejected_counter is not None:
 					rejected_counter[0] += 1

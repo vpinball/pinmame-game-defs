@@ -29,7 +29,6 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `bttf_a28` at `src/wpc/degames.c:351` with machine module `de_mDEAS1`; the definition declares controller platform `pinmame.dataeast` from it.
-- The driver source's named switch/solenoid symbols are carried as 92 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 

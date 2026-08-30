@@ -26,7 +26,6 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 ## PinMAME source contract (candidate)
 
 - The pinned PinMAME source declares `comet_l5` at `src/wpc/s11games.c:138` with machine module `s9_mS9S`; the definition declares controller platform `pinmame.system-11` from it.
-- The driver source's named switch/solenoid symbols are carried as 107 candidate devices in the definition.
 
 ## VPX script candidates (candidate)
 

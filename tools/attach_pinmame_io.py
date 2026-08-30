@@ -63,6 +63,10 @@ PINMAME_URI = "https://github.com/vpinball/pinmame"
 # unmapped so controller_platform remains honestly missing for them.
 MODULE_PLATFORMS = {
 	"wpc_m95S": "pinmame.wpc-95",
+	# GEN_WPC95DCS shares every public output path with GEN_WPC95 (core.c
+	# unions the two for lamp/solenoid/switch handling), so the WPC-95 profile
+	# covers both generations (Congo already treats a GEN_WPC95DCS driver on
+	# this profile).
 	"wpc_m95DCSS": "pinmame.wpc-95",
 	"wpc_mFliptronS": "pinmame.wpc-fliptronic",
 	"wpc_mSecurityS": "pinmame.wpc-security",
@@ -451,7 +455,9 @@ def main() -> None:
 				attached_devices += 1
 			platform_counts[platform] = platform_counts.get(platform, 0) + 1
 			attached_platform = True
-		if synthetic is not None:
+		if synthetic is not None and not any(
+			isinstance(output.get("binding"), dict) and output["binding"] == {"device": 33, "group": "pinmame.output.solenoid"} for output in definition["outputs"]
+		):
 			definition["outputs"].append(synthetic)
 			attached_devices += 1
 
@@ -467,9 +473,19 @@ def main() -> None:
 				held = sorted(definition["drivers"], key=lambda item: item["id"])[0]["id"]
 				note_declaration = declarations.get(held)
 				note_root_id = held
+			# Only define-derived devices may be attributed to the driver
+			# source; VPX-script and synthetic devices have their own
+			# provenance sections.
+			define_source_ids = {source["id"] for source in definition["sources"] if source.get("id", "").startswith("pinmame.driver.")}
+			define_device_count = sum(
+				1
+				for device in definition["inputs"] + definition["outputs"]
+				if device.get("provenance", {}).get("source_refs")
+				and all(ref in define_source_ids for ref in device["provenance"]["source_refs"])
+			)
 			knowledge_path = REPOSITORY_ROOT / definition["knowledge"]["path"]
 			if knowledge_path.is_file() and note_declaration is not None and note_root_id is not None:
-				note_writes.append((knowledge_path, knowledge_note_text(knowledge_path.read_text(encoding="utf-8"), note_root_id, note_declaration, platform, none_reason, len(definition["inputs"]) + len(definition["outputs"]))))
+				note_writes.append((knowledge_path, knowledge_note_text(knowledge_path.read_text(encoding="utf-8"), note_root_id, note_declaration, platform, none_reason, define_device_count)))
 			if args.dry_run:
 				continue
 			writes.append((definition_path, definition))
