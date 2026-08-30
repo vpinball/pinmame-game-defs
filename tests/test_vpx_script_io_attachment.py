@@ -5,15 +5,19 @@ import sys
 import unittest
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+
 from pinmame_game_defs.jsonio import load_json
 
-ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+from attach_vpx_script_io import label_well_formed as tool_label_ok
+
 CORPUS_REPOSITORIES = (
 	"https://github.com/sverrewl/vpxtable_scripts",
 	"https://github.com/jsm174/vpx-standalone-scripts",
 )
 EXPECTED_ATTACHED_MACHINES = 279
-EXPECTED_ATTACHED_DEVICES = 13292
+EXPECTED_ATTACHED_DEVICES = 13290
 EXPECTED_ATTACHED_SCRIPTS = 353
 
 
@@ -88,6 +92,44 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 			)
 			self.assertEqual(int(claim.group(1)), actual, definition["machine"]["id"])
 			self.assertGreater(actual, 0, definition["machine"]["id"])
+
+	def test_extraction_report_agrees_with_its_evidence_files(self) -> None:
+		# Round-7 blocker: the extraction was regenerated without committing the
+		# evidence, leaving report and evidence contradicting each other. This
+		# always-on check needs no external evidence root. Identical-content
+		# scripts share one evidence file, so paths may differ between an entry
+		# and its evidence; the content hash stem and the counts must not.
+		report = load_json(ROOT / "reports" / "vpx-script-extraction.json")
+		switch_total = 0
+		output_total = 0
+		for entry in report["entries"]:
+			evidence = load_json(ROOT / entry["evidence"])
+			stem = Path(entry["evidence"]).stem
+			self.assertTrue(evidence["source"]["sha256"].startswith(stem), entry["evidence"])
+			self.assertEqual(entry["switch_candidate_count"], len(evidence["switches"]), entry["evidence"])
+			self.assertEqual(entry["output_candidate_count"], len(evidence["outputs"]), entry["evidence"])
+			switch_total += len(evidence["switches"])
+			output_total += len(evidence["outputs"])
+		self.assertEqual(report["switch_candidate_count"], switch_total)
+		self.assertEqual(report["output_candidate_count"], output_total)
+
+	def test_the_vpx_labeler_does_not_mangle_plain_symbols(self) -> None:
+		import sys
+
+		sys.path.insert(0, str(ROOT / "tools"))
+		import attach_vpx_script_io as tool
+
+		self.assertEqual("startgate", tool.vpx_symbol_label("startgate"))
+		# clean_label capitalizes the first letter at device-build time.
+		self.assertEqual("sol Game On", tool.vpx_symbol_label("solGameOn"))
+		self.assertEqual("Sol Kickback", tool.vpx_symbol_label("SolKickback"))
+		self.assertEqual("Trough", tool.vpx_symbol_label("swTrough"))
+		self.assertEqual("BJet", tool.vpx_symbol_label("sBJet"))
+
+	def test_stored_labels_pass_the_well_formedness_rule(self) -> None:
+		for definition in self.attached:
+			for device in definition["inputs"] + definition["outputs"]:
+				self.assertTrue(tool_label_ok(device["label"]), (definition["machine"]["id"], device["id"], device["label"]))
 
 	def test_script_citations_hash_the_pinned_corpora(self) -> None:
 		# Evidence-gated: recompute every cited script's SHA-256 against the

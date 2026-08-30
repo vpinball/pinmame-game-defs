@@ -94,11 +94,12 @@ def extract_vpx_file(
 	mechanism_note_lines: list[dict[str, Any]] = []
 	for line_number, line in enumerate(lines, start=1):
 		stripped = line.lstrip()
-		if stripped.startswith("'") or stripped[:3].casefold() == "rem":
+		if stripped.startswith("'") or re.match(r"rem\b", stripped, re.IGNORECASE):
 			# Whole-line VBScript comments are dead code: they create no switch
 			# read, callback, or lamp assignment, so they must not become
 			# candidate evidence (the project's own Secret Service and Torpedo
-			# Alley rule).
+			# Alley rule). The Rem test needs the word boundary so live code
+			# such as RemoveBall or Remk.RotX survives.
 			continue
 		sub_match = SUB_PATTERN.match(line)
 		if sub_match:

@@ -28,12 +28,6 @@
       "line": 338,
       "raw": "Set LeftMagnet = New cvpmMagnet",
       "status": "candidate"
-    },
-    {
-      "kind": "cvpmMech",
-      "line": 2742,
-      "raw": "' *****  cvpmMech replacement, all because the \"Fast\" parameter is not set on timer update!!   We can't get smooth reels without this.   Until this is addressed in Core.vbs, replacing here.",
-      "status": "candidate"
     }
   ],
   "outputs": [
@@ -180,12 +174,6 @@
       "line_start": 1,
       "status": "candidate",
       "text": "/////////////IMPORTANT NOTE/////////////\nThe authors of this recreation have shared with the visual pinball community for personal use only.\nPlease do not sell or redistribute on machines produced for commercial sale.\n////////////////////////////////////////\nThe Addams Family\nOriginally manufactured 1992 by Bally Manufacturing Co. and designed by Pat Lawlor (20,270 units)\n\n////////////////////////////////////////\n////////////////////////////////////////\nRecreation for VPX by Sliderpoint, g5k and 3rdaxis\n\nUSES ROM - TAF_L7\nFor DMD Colorization visit : http://vpuniverse.com/forums/topic/3746-the-addams-family-colorization/\n\nNOTE: THIS TABLE INCLUDES THE IN-GAME OPTIONS MENU\nTo open the menu, press both magnasave buttons at the same time in the game.\n                          _____\n                          )   (\n                         / oOo \\\n                        /_______\\\n                        |       |\n                        |  .-.  |\n                        |  |~|  |\nI-I-I-I-I-I-I-I-I-I-I-I-|  |_|  |I-I-I-I-I-I-I-I-I-I-I-I-I\n).**.(~~~~~~~~~~~~~~~~~~|       |~~~~~~~~~~~~~~~~~~~).**.(\n/ |  | \\                 |       |                  / |  | \\\n/ |  | \\                 |       |                  / |  | \\\n) |__| (                _|_.---._|_                 ) |__| (\n|______|_________________|' .-. '|__________________|______|\n|      |  .-.  .-.       |,-|~|-,|        .-.  .-.  |      |\n\\ .    /  |~|  |~|       || | | ||        |~|  |~|  \\    . /\n)H   (   |_|  |_|       ||_|_|_||        |_|  |_|   )   H(\n|    |                  |       |                   |    |\n|    |                  |       |                   |    |\n\\    /   ...  ...       |_.=~=._|        ...  ...   \\    /\n ). (    |~|  |~|       |I|   |I|        |~|  |~|    ) .(\n |H |    |_|  |_|       |I|  .|I|        |_|  |_|    | H|\n |  |                   |I|___|I|                    |  |\n '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\nTODO:\n   * Fix materials\n   * Add in flipper triggers for two upper flippers, and fix the flipper triggers on the flippers\n   * Slingshot rubber posts and walls need to be reallisnged.\n   * Make ball react better when hitting rubber on right ramp\n   * check material values as some seem to be reflective.\n////////////////////////////////////////\nv 2.4.12 fluffhead35     - added end ramp rubber stopper to rubbers collection.  Fixed depth bias issue with lighting.\nv 2.4.11 fluffhead35     - Updated physics to latest, updated stand up target collidable primitives. Increased sling speed.  Adjusted flipper triggers areas.\nv 2.4.10 fluffhead35     - Adding back in missing sounds that need to be there from original table. Added in ramp bump sounds.  Reverted the flexdmd menu back to original F6 menu which fixed sideblades.\n                         - Fixed VR AutoDetect. Adjusted right ramp material for end rubber to slow ball down. Added StandUp Target Code, Changed physics on targets to be nfozzy, added Stand Up Target Inclined Objects\n                         - to TargetBounce Collections\nv 2.4.6 fluffhead35      - New playfield with holes cut, 3d insert images imported, 3d  insert materials imported, Insert Text Layer added, Adjusted InsertLights and Bulbs. Added FlipperCradleCollision.\nv.2.4.5 RobbyKingPin     - Brought back bsrtx8 wich was deleted by accident\nv.2.4.4 fluffhead35      - Replaced the webp images with the pngs from the original table, which has now fixed all the artifacting issues\nv 2.4.3 fluffhead35      - Changed Saucers to have kick and hits be based on fleep sounds\n                         - Fixed swap entry sound when getting there from plunger lane\n                         - Fixed thing kick sounds\n                         - Fixed Vault Entry Sounds\n                         - Updated knocker to use fleep Knocker\n                         - Removed the ExtraSSFThunk code and sounds\n                         - Added SSF code for cabinet and thing hand sounds\n                         - Moved ramptrigger04 to correct ramp.\nv 2.4.2 fluffhead35      - Added in Sounds for Trigger1, Ramp55, and ThingRampS\n                         - Adjusted some Ramp Triggers to be bigger and locked them\n                         - Changed ThingSaucerHit to be PlaySoundAtBall\n                         - Added hit events to a lot of the walls\nv.2.4.1 RobbyKingPin     - Added all the old options into the VPW Options UI\nv.2.4.0 RobbyKingPin     - Added VPW Options UI, needs more options being converted from the old interface when pressing f6\nv.2.3.9 RobbyKingPin     - Removed shadowtriggers no longer being used\nv.2.3.8 fluffhead35      - Added back SwampScoopS_Hit for scoop entry sound.\n                         - Adjusted ramp endpoints for ramprolling sounds.\n                         - Added RandomRampStopSounds.\n                         - Added in ChairKickerS sound.\nv.2.3.7 RobbyKingPin     - Added more rampsound triggers and tried to add saucerlock sounds\nv.2.3.6 RobbyKingPin     - Cleaning up old sound codes where needed\nv.2.3.5 RobbyKingPin     - Fixed the problems with the zCol rubberposts on the bookcase\nv.2.3.4 Clark Kent       - Adjusted the flippers/slingshot area to enable post passes and tricks\n                         - Upper left and upper right flipper adjusted\n                         - Inlane walls adjusted all 4 to have the same angle and shape on both sides\nv.2.3.2.1.3 3rdaxis      - Converted all png images to webP\n                         - Changed Lut selection sounds\n                         - Updated physics\n                         - Updated sounds\nv.2.3.2.1.0 RobbyKingPin - Added nFozzy/RothbauerW physics, Fleep sound and VPW Dynamic Ball Shadows\nv2.1 Changelog\n- SSF audio fixes\n- Added missing DOF (Arngrim)\n- Thing flipper texture fix for flasher fires\n- Flipper return strength - adjust from 0.07 to 0.045 to allow for tip passing\n- Bumper caps less transparent\n- Adjusted lamp fading speeds for bumper lights and mansion inserts (were too slow, suggested by flupper)\n- Uncompressed textures from original (see the compressed v2.1 if you have trouble with this version)\n- Tweaks to solve mysterious ball occasionally passing through things that they shouldn't\n- Fixed Seance insert bulb error\n- More adjustments to chair scoop hit sound timing.\n////////////////////////////////////////"
-    },
-    {
-      "line_end": 2742,
-      "line_start": 2740,
-      "status": "candidate",
-      "text": "*****  cvpmMech replacement, all because the \"Fast\" parameter is not set on timer update!!   We can't get smooth reels without this.   Until this is addressed in Core.vbs, replacing here."
     }
   ],
   "source": {
@@ -386,22 +374,6 @@
       "symbol": "SW38_UnHit"
     },
     {
-      "address": 41,
-      "group": "pinmame.input.switch",
-      "label": "SW41",
-      "line": 1762,
-      "status": "candidate",
-      "symbol": "SW41_Hit"
-    },
-    {
-      "address": 42,
-      "group": "pinmame.input.switch",
-      "label": "SW42",
-      "line": 1767,
-      "status": "candidate",
-      "symbol": "SW42_Hit"
-    },
-    {
       "address": 43,
       "group": "pinmame.input.switch",
       "label": "Chair Kicker",
@@ -424,62 +396,6 @@
       "line": 5607,
       "status": "candidate",
       "symbol": "STAction"
-    },
-    {
-      "address": 44,
-      "group": "pinmame.input.switch",
-      "label": "SW44a1",
-      "line": 1773,
-      "status": "candidate",
-      "symbol": "SW44a1_Hit"
-    },
-    {
-      "address": 44,
-      "group": "pinmame.input.switch",
-      "label": "SW44a2",
-      "line": 1785,
-      "status": "candidate",
-      "symbol": "SW44a2_Hit"
-    },
-    {
-      "address": 44,
-      "group": "pinmame.input.switch",
-      "label": "SW44b1",
-      "line": 1797,
-      "status": "candidate",
-      "symbol": "SW44b1_Hit"
-    },
-    {
-      "address": 44,
-      "group": "pinmame.input.switch",
-      "label": "SW44b2",
-      "line": 1809,
-      "status": "candidate",
-      "symbol": "SW44b2_Hit"
-    },
-    {
-      "address": 45,
-      "group": "pinmame.input.switch",
-      "label": "SW45",
-      "line": 1821,
-      "status": "candidate",
-      "symbol": "SW45_Hit"
-    },
-    {
-      "address": 47,
-      "group": "pinmame.input.switch",
-      "label": "SW47",
-      "line": 1830,
-      "status": "candidate",
-      "symbol": "SW47_Hit"
-    },
-    {
-      "address": 48,
-      "group": "pinmame.input.switch",
-      "label": "SW48",
-      "line": 1839,
-      "status": "candidate",
-      "symbol": "SW48_Hit"
     },
     {
       "address": 51,
@@ -552,14 +468,6 @@
       "line": 1863,
       "status": "candidate",
       "symbol": "SW61_Hit"
-    },
-    {
-      "address": 62,
-      "group": "pinmame.input.switch",
-      "label": "SW62",
-      "line": 1868,
-      "status": "candidate",
-      "symbol": "SW62_Hit"
     },
     {
       "address": 63,
@@ -752,14 +660,6 @@
       "line": 1905,
       "status": "candidate",
       "symbol": "SW78_unHit"
-    },
-    {
-      "address": 86,
-      "group": "pinmame.input.switch",
-      "label": "SW86",
-      "line": 1909,
-      "status": "candidate",
-      "symbol": "SW86_Hit"
     },
     {
       "address": 87,

@@ -106,12 +106,13 @@ def vpx_symbol_label(symbol: str) -> str:
 	`pinmame_source._symbol_label` strips PinMAME's C Hungarian markers
 	(`swTrough` -> Trough), which is wrong for VBScript symbols such as
 	`startgate` -> "Tartgate" or `solGameOn` -> "Ol Game On". Strip a Hungarian
-	prefix only when it really is one: `sw` followed by a lowercase letter, or
-	a lone `s` followed by a lowercase letter."""
+	prefix only when the remainder starts with an uppercase letter (the
+	Hungarian shape): `swTrough` -> "Trough", `sBJet` -> "BJet", while
+	`startgate`, `solGameOn`, and `SolKickback` keep their names."""
 	value = symbol
-	if len(value) > 2 and value[:2].casefold() == "sw" and value[2].islower():
+	if len(value) > 2 and value[:2].casefold() == "sw" and value[2].isupper():
 		value = value[2:]
-	elif len(value) > 1 and value[0].casefold() == "s" and value[1].islower():
+	elif len(value) > 1 and value[0].casefold() == "s" and value[1].isupper():
 		value = value[1:]
 	value = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", value)
 	value = value.replace("_", " ")
@@ -240,6 +241,9 @@ def attach_candidates(
 				if rejected_counter is not None:
 					rejected_counter[0] += 1
 				continue
+			# The stored label must be exactly the string that passed the
+			# well-formedness check.
+			candidate = dict(candidate, label=label)
 			device = candidate_device(candidate, source_id, occupied)
 			if device is None:
 				continue

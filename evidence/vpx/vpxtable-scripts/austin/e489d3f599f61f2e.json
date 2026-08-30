@@ -16,12 +16,6 @@
       "line": 238,
       "raw": "Set mMagnet= New cvpmMagnet",
       "status": "candidate"
-    },
-    {
-      "kind": "cvpmMech",
-      "line": 3035,
-      "raw": "' *****  cvpmMech replacement, all because the \"Fast\" parameter is not set on timer update!!   We can't get smooth reels without this.   Until this is addressed in Core.vbs, replacing here.",
-      "status": "candidate"
     }
   ],
   "outputs": [
@@ -626,30 +620,6 @@
       "symbol": "F105a"
     },
     {
-      "address": 106,
-      "group": "pinmame.output.lamp",
-      "label": "Flasher L6",
-      "line": 1458,
-      "status": "candidate",
-      "symbol": "FlasherL6"
-    },
-    {
-      "address": 112,
-      "group": "pinmame.output.lamp",
-      "label": "Flasher L12",
-      "line": 1464,
-      "status": "candidate",
-      "symbol": "FlasherL12"
-    },
-    {
-      "address": 113,
-      "group": "pinmame.output.lamp",
-      "label": "Flasher L13",
-      "line": 1470,
-      "status": "candidate",
-      "symbol": "FlasherL13"
-    },
-    {
       "address": 125,
       "group": "pinmame.output.lamp",
       "label": "Flasher Light25",
@@ -672,14 +642,6 @@
       "line": 599,
       "status": "candidate",
       "symbol": "Enabled"
-    },
-    {
-      "address": 127,
-      "group": "pinmame.output.lamp",
-      "label": "Flasher Light27",
-      "line": 1476,
-      "status": "candidate",
-      "symbol": "FlasherLight27"
     },
     {
       "address": 128,
@@ -712,14 +674,6 @@
       "line": 1450,
       "status": "candidate",
       "symbol": "FlasherLight31"
-    },
-    {
-      "address": 132,
-      "group": "pinmame.output.lamp",
-      "label": "Flasher L32",
-      "line": 1483,
-      "status": "candidate",
-      "symbol": "FlasherL32"
     },
     {
       "address": 1,
@@ -920,12 +874,6 @@
       "line_start": 4,
       "status": "candidate",
       "text": "Thalamus\nAdded/Updated \"Positional Sound Playback Functions\" and \"Supporting Ball & Sound Functions\"\nImproved directional positions\nChanged UseSolenoids=1 to 2 - and reverted\n\nAustin Powers (Stern 2001) VPin Workshop mod\n- nFozzy Physics: Benji, iaakki, Rothbauerw, Javier\n- PF rework, graphics: iaakki, EBisLit, Tomate, Brad1x\n- Inserts and lights: iaakki\n- VR work & Various Fixes: Sixtoe\n- Ramp plastics: Benji\n- Fleep's Sound package integration: Benji\n- 3D model changes: Benji, Tomate, Sixtoe\n- Various script changes by iaakki, Javier\n- Testing: people of VPin Workshop Discord, Rik Laubach\nCHANGES\n025 - tomate - New Left Ramp Primitive, New Left Ramp LowPoly colidable object, New primitive and material for the time machine axis\n026 - iaakki - Live catch bounce feature\n027 - tomate - Left Ramp decals, domes, gates and plate aligned\n028 - tomate - Left ramp mesh replacement\n029 - benji - new right and left ramp textures, new VR right and left ramp textures\n030 - tomate - new left ramp with fewer polygons\n031 - Benji - new right and left ramp textures, new VR right and left ramp textures. Boosted blenddisablelighting of ramps in script to compensate\n032 - sixtoe - Added blenddisablelighting variation for VR, manually tweaked VR ramp textures, moved ramp poles and screws to line up with ramps over slings, turned up backglass in VR, tweaaked vr plunger position\n033 - iaakki - SSLCrystal, Diverter and plastic ramps DL lit values tuned. Backwall flasher color taken into colormod. Livecatch script updated. Target hit sounds fixed. Rolling sound volume option added.\n034 - iaakki - fading script changed, insert flashers added for those near primitive, plastic depth bias issue\n035 - iaakki/sixtoe - Plastics UV map fixed, lane guide insert flashers adjusted, plastic image colors changed\n036 - iaakki - plastics colors reverted back a bit. Wall44 small tune, Dr Evil hit sound added.\n037 - iaakki - left ramp parameters fixed, PowerFlips option added that sets alternative physics values to flips.\n038 - iaakki - Ramp fx fix from Javier, Ball drop fx from Javier, Flip friction setup was missing in options.\n039 - iaakki - Ball drop sounds changed, some inserts tuned, GI top area tuned, laneguides adjusted, virtucon text fixed\n040 - iaakki - Flasherbloom31 added for bumpers\n041 - iaakki - DrEvil bug workaround, better standup targets around TM ramp, Light54 fixed, other minor improvements\n042 - iaakki - Flipper sizes fixed\n043 - iaakki - Latest NF flip script, slackyflips script option added, some material tunings, testing, slingshot tweak\n044 - benji/tomate - Mr. Bigglesworth added\n047 - iaakki - various audio fixes, flipper tricks and slaggy flips fixed, Mr Bigglesworth tied to GI\n048 - sixtoe - replaced pincab_bottom wall for primitive\n049 - iaakki - fixed desktop pov a bit, adjusted slackyflips, minor fixes and some cleanup\n052 - iaakki - Ramps fixed one more time, FlipperSolNudge option added, VUK altered, walls added near some plastics, etc...\nRC1 - iaakki - recontoured Flip Trigger areas to prevent ball stuck on trigger primitive near the flip, minor change to left orb, flipsolnudge divider 1.5 -> 1.7\nRC2 - iaakki - FlipSolfNudge renamed to FlipperNudge and multiball fix, Reduced friction on left ramp just a bit, parking cannon properly and fixed shooting\nRC3 - iaakki - Fixed reflection issue on DrEvil and removed some debug prints\nRC4 - iaakki - Flip size fine tune and FlipTrigger primitives remodeled. Assets locked\n1.0.1 - Sixtoe - Adjusted right ramp, fixed some minor issues.\n1.0.2 - Sixtoe - Redid all the ramp gates including prims and switches so everything both works and looks better, fixed 2 flasher switches not working.\n1.0.2 - iaakki - added one hidden Wall003 and minor flip tweak\n1.0.3 - iaakki - VUK fixed\n**********************************************************************************************************\n   Table options\n**********************************************************************************************************\n///////////////////////-----General Sound Options-----///////////////////////\n// VolumeDial:\n// VolumeDial is the actual global volume multiplier for the mechanical sounds.\n// Values smaller than 1 will decrease mechanical sounds volume.\n// Recommended values should be no greater than 1."
-    },
-    {
-      "line_end": 3035,
-      "line_start": 3033,
-      "status": "candidate",
-      "text": "*****  cvpmMech replacement, all because the \"Fast\" parameter is not set on timer update!!   We can't get smooth reels without this.   Until this is addressed in Core.vbs, replacing here."
     }
   ],
   "source": {
@@ -972,14 +920,6 @@
       "line": 885,
       "status": "candidate",
       "symbol": "sw16_unHit"
-    },
-    {
-      "address": 16,
-      "group": "pinmame.input.switch",
-      "label": "itch 16",
-      "line": 863,
-      "status": "candidate",
-      "symbol": "switch_16"
     },
     {
       "address": 18,
@@ -1062,28 +1002,12 @@
       "symbol": "sw31_Hit"
     },
     {
-      "address": 31,
-      "group": "pinmame.input.switch",
-      "label": "itch 31",
-      "line": 809,
-      "status": "candidate",
-      "symbol": "switch_31"
-    },
-    {
       "address": 32,
       "group": "pinmame.input.switch",
       "label": "sw32",
       "line": 847,
       "status": "candidate",
       "symbol": "sw32_Hit"
-    },
-    {
-      "address": 32,
-      "group": "pinmame.input.switch",
-      "label": "itch 32",
-      "line": 810,
-      "status": "candidate",
-      "symbol": "switch_32"
     },
     {
       "address": 33,
@@ -1100,14 +1024,6 @@
       "line": 887,
       "status": "candidate",
       "symbol": "sw33_unHit"
-    },
-    {
-      "address": 33,
-      "group": "pinmame.input.switch",
-      "label": "itch 33",
-      "line": 865,
-      "status": "candidate",
-      "symbol": "switch_33"
     },
     {
       "address": 34,
@@ -1174,14 +1090,6 @@
       "symbol": "sw39_unHit"
     },
     {
-      "address": 39,
-      "group": "pinmame.input.switch",
-      "label": "itch 39",
-      "line": 867,
-      "status": "candidate",
-      "symbol": "switch_39"
-    },
-    {
       "address": 41,
       "group": "pinmame.input.switch",
       "label": "sw41",
@@ -1246,14 +1154,6 @@
       "symbol": "sw47_unHit"
     },
     {
-      "address": 47,
-      "group": "pinmame.input.switch",
-      "label": "itch 47",
-      "line": 869,
-      "status": "candidate",
-      "symbol": "switch_47"
-    },
-    {
       "address": 48,
       "group": "pinmame.input.switch",
       "label": "sw48",
@@ -1268,14 +1168,6 @@
       "line": 893,
       "status": "candidate",
       "symbol": "sw48_unHit"
-    },
-    {
-      "address": 48,
-      "group": "pinmame.input.switch",
-      "label": "itch 48",
-      "line": 871,
-      "status": "candidate",
-      "symbol": "switch_48"
     },
     {
       "address": 49,
@@ -1334,14 +1226,6 @@
       "symbol": "sw57_unHit"
     },
     {
-      "address": 57,
-      "group": "pinmame.input.switch",
-      "label": "itch 57",
-      "line": 873,
-      "status": "candidate",
-      "symbol": "switch_57"
-    },
-    {
       "address": 58,
       "group": "pinmame.input.switch",
       "label": "sw58",
@@ -1356,14 +1240,6 @@
       "line": 897,
       "status": "candidate",
       "symbol": "sw58_unHit"
-    },
-    {
-      "address": 58,
-      "group": "pinmame.input.switch",
-      "label": "itch 58",
-      "line": 875,
-      "status": "candidate",
-      "symbol": "switch_58"
     },
     {
       "address": 59,
@@ -1390,14 +1266,6 @@
       "symbol": "sw60_unHit"
     },
     {
-      "address": 60,
-      "group": "pinmame.input.switch",
-      "label": "itch 60",
-      "line": 877,
-      "status": "candidate",
-      "symbol": "switch_60"
-    },
-    {
       "address": 61,
       "group": "pinmame.input.switch",
       "label": "sw61",
@@ -1412,14 +1280,6 @@
       "line": 901,
       "status": "candidate",
       "symbol": "sw61_unHit"
-    },
-    {
-      "address": 61,
-      "group": "pinmame.input.switch",
-      "label": "itch 61",
-      "line": 879,
-      "status": "candidate",
-      "symbol": "switch_61"
     },
     {
       "address": 62,
