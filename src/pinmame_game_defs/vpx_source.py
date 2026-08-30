@@ -15,7 +15,13 @@ from .scope import is_in_scope_driver
 EXTRACTOR_VERSION = 1
 GAME_NAME_PATTERN = re.compile(r'^\s*(?:Const\s+)?cGameName\s*=\s*"([a-z0-9_]+)"', re.IGNORECASE | re.MULTILINE)
 CONST_SWITCH_PATTERN = re.compile(r"^\s*Const\s+(sw[A-Za-z0-9_]+)\s*=\s*(-?\d+)\b", re.IGNORECASE)
-CONST_OUTPUT_PATTERN = re.compile(r"^\s*Const\s+(s[A-Z][A-Za-z0-9_]*)\s*=\s*(-?\d+)\b")
+# The Const keyword is case-insensitive in VBScript while the `s`+uppercase
+# Hungarian shape stays case-sensitive, so `const sHoleKicker = 1` is captured
+# without admitting bare assignments.
+CONST_OUTPUT_PATTERN = re.compile(r"^\s*(?i:Const)\s+(s[A-Z][A-Za-z0-9_]*)\s*=\s*(-?\d+)\b")
+# VBScript permits several assignments on one Const line
+# (`Const swOuthole=9,swTrough1=11`); capture the continuations too.
+CONST_CONTINUATION_PATTERN = re.compile(r",\s*(sw[A-Za-z0-9_]+|s[A-Z][A-Za-z0-9_]*)\s*=\s*(-?\d+)\b")
 SUB_PATTERN = re.compile(r"^\s*(?:(?:Public|Private)\s+)?Sub\s+([A-Za-z_][A-Za-z0-9_]*)", re.IGNORECASE)
 END_SUB_PATTERN = re.compile(r"^\s*End\s+Sub\b", re.IGNORECASE)
 SWITCH_REF_PATTERN = re.compile(r"Controller\s*\.\s*Switch\s*\(\s*(-?\d+)\s*\)", re.IGNORECASE)
@@ -132,10 +138,16 @@ def extract_vpx_file(
 		if match:
 			symbol, address = match.group(1), int(match.group(2))
 			switch_candidates.setdefault((symbol.casefold(), address), _candidate(symbol=symbol, address=address, label=_symbol_label(symbol), group="pinmame.input.switch", line=line_number))
+			for continuation in CONST_CONTINUATION_PATTERN.finditer(line[match.end():]):
+				symbol, address = continuation.group(1), int(continuation.group(2))
+				switch_candidates.setdefault((symbol.casefold(), address), _candidate(symbol=symbol, address=address, label=_symbol_label(symbol), group="pinmame.input.switch", line=line_number))
 		match = CONST_OUTPUT_PATTERN.match(line)
 		if match:
 			symbol, address = match.group(1), int(match.group(2))
 			output_candidates.setdefault(("pinmame.output.solenoid", address, symbol.casefold()), _candidate(symbol=symbol, address=address, label=_symbol_label(symbol), group="pinmame.output.solenoid", line=line_number))
+			for continuation in CONST_CONTINUATION_PATTERN.finditer(line[match.end():]):
+				symbol, address = continuation.group(1), int(continuation.group(2))
+				output_candidates.setdefault(("pinmame.output.solenoid", address, symbol.casefold()), _candidate(symbol=symbol, address=address, label=_symbol_label(symbol), group="pinmame.output.solenoid", line=line_number))
 		for pattern in (SWITCH_REF_PATTERN, PULSE_SWITCH_PATTERN):
 			for ref_match in pattern.finditer(line):
 				address = int(ref_match.group(1))

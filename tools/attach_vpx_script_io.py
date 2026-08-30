@@ -236,7 +236,7 @@ def attach_candidates(
 			key = (group, candidate["address"])
 			if key in bindings:
 				continue
-			label = clean_label(vpx_symbol_label(candidate.get("symbol") or candidate["label"]))
+			label = clean_label(vpx_symbol_label(re.sub(r"_(?:Hit|UnHit|Spin|Slingshot)$", "", candidate.get("symbol") or candidate["label"], flags=re.IGNORECASE)))
 			if not label or not label_well_formed(label):
 				if rejected_counter is not None:
 					rejected_counter[0] += 1
@@ -315,6 +315,7 @@ def main() -> None:
 	device_total = 0
 	script_total = 0
 	rejected_counter = [0]
+	multi_machine_dropped = sum(1 for entry in report["entries"] if len(entry["machine_ids"]) > 1)
 	for machine in catalog["machines"]:
 		if machine["machine_kind"] in NON_GAME_KINDS or machine["coverage_status"] != "partial":
 			continue
@@ -347,9 +348,11 @@ def main() -> None:
 
 		synthetic = None
 		if args.sanitize:
-			# Clear only the devices this pass contributed (provenance entirely
-			# citing this pass's vpx-script.* ids); curated devices that merely
-			# cite a corpus script survive untouched.
+			# Clear the devices this pass contributed (provenance entirely citing
+			# this pass's vpx-script.* ids). Anything whose provenance cites
+			# other sources survives; a curated record that cited a corpus
+			# script with a full hash would therefore also be cleared and
+			# recomputed by this mode.
 			pass_source_ids = {source["id"] for source in corpus_sources}
 
 			def from_this_pass(device: dict[str, Any]) -> bool:
@@ -398,6 +401,7 @@ def main() -> None:
 
 	print(f"{'DRY RUN: ' if args.dry_run else ''}{'sanitized' if args.sanitize else 'attached'}: {touched} definitions touched, {device_machines} machines with devices, {device_total} devices from {script_total} scripts")
 	print(f"candidate labels rejected as ill-formed: {rejected_counter[0]}")
+	print(f"multi-machine extraction entries skipped (disclosed, recorded as leads): {multi_machine_dropped}")
 	if args.dry_run:
 		return
 	rebuild_catalog(REPOSITORY_ROOT)

@@ -57,6 +57,15 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		output = run_tool("attach_vpx_script_io.py", "--dry-run")
 		self.assertIn("attached:", output)
 
+	def test_vpx_attachment_sanitize_dry_run_reproduces_the_committed_counts(self) -> None:
+		# The --sanitize mode produces the committed data; its dry run must
+		# report exactly the totals recorded in the attachment tests.
+		from test_vpx_script_io_attachment import EXPECTED_ATTACHED_DEVICES, EXPECTED_ATTACHED_MACHINES, EXPECTED_ATTACHED_SCRIPTS
+
+		output = run_tool("attach_vpx_script_io.py", "--sanitize", "--dry-run")
+		self.assertIn(f"{EXPECTED_ATTACHED_MACHINES} machines with devices", output)
+		self.assertIn(f"{EXPECTED_ATTACHED_DEVICES} devices from {EXPECTED_ATTACHED_SCRIPTS} scripts", output)
+
 
 if __name__ == "__main__":
 	unittest.main()
