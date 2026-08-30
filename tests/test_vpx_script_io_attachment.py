@@ -17,8 +17,8 @@ CORPUS_REPOSITORIES = (
 	"https://github.com/jsm174/vpx-standalone-scripts",
 )
 EXPECTED_ATTACHED_MACHINES = 279
-EXPECTED_ATTACHED_DEVICES = 13290
-EXPECTED_ATTACHED_SCRIPTS = 353
+EXPECTED_ATTACHED_DEVICES = 13283
+EXPECTED_ATTACHED_SCRIPTS = 352
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

@@ -73,6 +73,25 @@ def _candidate(
 	return result
 
 
+def strip_trailing_comment(line: str) -> str:
+	"""Remove a trailing VBScript comment from a live-code line.
+
+	A single-quote character starts a comment only when it sits outside a
+	double-quoted string, so a callback line with a quoted sound name keeps its
+	argument while a trailing boilerplate comment (round 9 of review showed one
+	becoming a phantom switch candidate) is dropped."""
+	in_quotes = False
+	index = 0
+	while index < len(line):
+		character = line[index]
+		if character == '"':
+			in_quotes = not in_quotes
+		elif character == "'" and not in_quotes:
+			return line[:index].rstrip()
+		index += 1
+	return line
+
+
 def extract_vpx_file(
 	path: Path,
 	source_root: Path,
@@ -100,6 +119,9 @@ def extract_vpx_file(
 			# candidate evidence (the project's own Secret Service and Torpedo
 			# Alley rule). The Rem test needs the word boundary so live code
 			# such as RemoveBall or Remk.RotX survives.
+			continue
+		line = strip_trailing_comment(line)
+		if not line.strip():
 			continue
 		sub_match = SUB_PATTERN.match(line)
 		if sub_match:
