@@ -12,8 +12,13 @@ class StripTrailingCommentTests(unittest.TestCase):
 		self.assertEqual("x = 1", strip_trailing_comment("x = 1"))
 
 	def test_quotes_protect_comment_characters(self) -> None:
-		line = 'SolCallback(1) = "vpmSolSound ""Jet3""", "it''s loud"'
-		self.assertEqual(line, strip_trailing_comment(line))
+		# The apostrophe inside the quoted string is real (not collapsed by
+		# adjacent-string concatenation), so a naive split-on-quote would
+		# truncate the live code; the quote-aware stripper must not.
+		line = 'x = "it' + chr(39) + 's live" ' + chr(39) + ' dead comment'
+		stripped = strip_trailing_comment(line)
+		self.assertEqual('x = "it' + chr(39) + 's live"', stripped)
+		self.assertNotEqual(line.split("'")[0].rstrip(), stripped)
 
 	def test_the_whole_line_can_be_a_comment(self) -> None:
 		self.assertEqual("", strip_trailing_comment("  ' SetLamp 106, Controller.Lamp(6)"))

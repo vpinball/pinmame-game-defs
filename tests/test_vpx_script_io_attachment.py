@@ -17,8 +17,8 @@ CORPUS_REPOSITORIES = (
 	"https://github.com/jsm174/vpx-standalone-scripts",
 )
 EXPECTED_ATTACHED_MACHINES = 279
-EXPECTED_ATTACHED_DEVICES = 13283
-EXPECTED_ATTACHED_SCRIPTS = 352
+EXPECTED_ATTACHED_DEVICES = 13217
+EXPECTED_ATTACHED_SCRIPTS = 351
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
@@ -80,7 +80,7 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 		for path in sorted((ROOT / "machines" / "partial").rglob("*.json")):
 			definition = load_json(path)
 			text = (ROOT / definition["knowledge"]["path"]).read_text(encoding="utf-8")
-			claim = _re.search(r"named switch/solenoid symbols are carried as (\\d+) candidate devices", text)
+			claim = _re.search(r"named switch/solenoid symbols are carried as (\d+) candidate devices", text)
 			if claim is None:
 				continue
 			define_ids = {source["id"] for source in definition["sources"] if source.get("id", "").startswith("pinmame.driver.")}

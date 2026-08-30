@@ -14,8 +14,8 @@ from .scope import is_in_scope_driver
 
 EXTRACTOR_VERSION = 1
 GAME_NAME_PATTERN = re.compile(r'^\s*(?:Const\s+)?cGameName\s*=\s*"([a-z0-9_]+)"', re.IGNORECASE | re.MULTILINE)
-CONST_SWITCH_PATTERN = re.compile(r"^\s*(?:Const\s+)?(sw[A-Za-z0-9_]+)\s*=\s*(-?\d+)\b", re.IGNORECASE)
-CONST_OUTPUT_PATTERN = re.compile(r"^\s*(?:Const\s+)?(s[A-Z][A-Za-z0-9_]*)\s*=\s*(-?\d+)\b")
+CONST_SWITCH_PATTERN = re.compile(r"^\s*Const\s+(sw[A-Za-z0-9_]+)\s*=\s*(-?\d+)\b", re.IGNORECASE)
+CONST_OUTPUT_PATTERN = re.compile(r"^\s*Const\s+(s[A-Z][A-Za-z0-9_]*)\s*=\s*(-?\d+)\b")
 SUB_PATTERN = re.compile(r"^\s*(?:(?:Public|Private)\s+)?Sub\s+([A-Za-z_][A-Za-z0-9_]*)", re.IGNORECASE)
 END_SUB_PATTERN = re.compile(r"^\s*End\s+Sub\b", re.IGNORECASE)
 SWITCH_REF_PATTERN = re.compile(r"Controller\s*\.\s*Switch\s*\(\s*(-?\d+)\s*\)", re.IGNORECASE)
