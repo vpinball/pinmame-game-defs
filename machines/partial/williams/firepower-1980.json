@@ -2,33 +2,56 @@
   "conflicts": [],
   "coverage": {
     "dimensions": {
-      "address_enumeration": "unknown",
+      "address_enumeration": "validated",
       "catalog_identity": "validated",
-      "mechanisms": "unknown",
+      "mechanisms": "validated",
       "physical_wiring": "unknown",
       "recreation_knowledge": "unknown",
-      "semantic_naming": "unknown",
+      "semantic_naming": "validated",
       "variant_coverage": "candidate"
     },
     "missing": [
-      "driver_mapping",
       "controller_platform",
-      "input_enumeration",
-      "input_semantics",
-      "output_enumeration",
-      "output_semantics",
-      "display_inventory",
-      "mechanism_inventory",
-      "mechanism_behavior",
+      "physical_wiring",
       "polarity",
       "variant_differences",
       "recreation_notes",
-      "provenance",
       "spatial_placement"
     ],
     "status": "partial"
   },
-  "displays": [],
+  "displays": [
+    {
+      "id": "display.score",
+      "kind": "seven_segment",
+      "label": "Score Display (6/7 digit)",
+      "position": {
+        "x": 476,
+        "y": 50
+      },
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "id": "display.backglass",
+      "kind": "backglass",
+      "label": "Backglass Display",
+      "position": {
+        "x": 476,
+        "y": 987
+      },
+      "provenance": {
+        "source_refs": [
+          "gamedata"
+        ],
+        "status": "candidate"
+      }
+    }
+  ],
   "drivers": [
     {
       "clone_of": "frpwr_l6",
@@ -132,6 +155,305 @@
       "aliases": [
         {
           "namespace": "pinmame.switch",
+          "value": "4"
+        }
+      ],
+      "binding": {
+        "device": 4,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-eject-hole",
+      "kind": "switch",
+      "label": "Left Eject Hole",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "eject_hole"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "5"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-eject-hole",
+      "kind": "switch",
+      "label": "Right Eject Hole",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "eject_hole"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "6"
+        }
+      ],
+      "binding": {
+        "device": 6,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-eject-hole",
+      "kind": "switch",
+      "label": "Upper Eject Hole",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "eject_hole"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "7"
+        }
+      ],
+      "binding": {
+        "device": 7,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.ball-save-kick",
+      "kind": "switch",
+      "label": "Ball Save Kick",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "kicker"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "8"
+        }
+      ],
+      "binding": {
+        "device": 8,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.ball-ramp-thrower",
+      "kind": "switch",
+      "label": "Ball Ramp Thrower",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "ramp"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "9"
+        }
+      ],
+      "binding": {
+        "device": 9,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.out-hole",
+      "kind": "switch",
+      "label": "Out Hole",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "drain"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "10"
+        }
+      ],
+      "binding": {
+        "device": 10,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-outside-rollover",
+      "kind": "switch",
+      "label": "Left Outside Rollover",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "rollover"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "11"
+        }
+      ],
+      "binding": {
+        "device": 11,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-inside-rollover",
+      "kind": "switch",
+      "label": "Left Inside Rollover",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "rollover"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "12"
+        }
+      ],
+      "binding": {
+        "device": 12,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-kicker",
+      "kind": "switch",
+      "label": "Left Kicker",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "kicker"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "13"
+        }
+      ],
+      "binding": {
+        "device": 13,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-eject-hole-switch",
+      "kind": "switch",
+      "label": "Left Eject Hole Switch",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "eject_hole"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "14"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-middle-left-standup",
+      "kind": "switch",
+      "label": "Upper Middle Left Standup",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "standup"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "15"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.spinner",
+      "kind": "switch",
+      "label": "Spinner",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "spinner"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "16"
+        }
+      ],
+      "binding": {
+        "device": 16,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.top-left-standup",
+      "kind": "switch",
+      "label": "Top Left Standup",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "standup"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
           "value": "17"
         }
       ],
@@ -139,15 +461,17 @@
         "device": 17,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.combo-trigger1",
+      "id": "switch.top-left-bumper",
       "kind": "switch",
-      "label": "Combo Trigger1",
+      "label": "Top Left Bumper",
+      "position": null,
       "provenance": {
         "source_refs": [
-          "vpx-script.5d333bb5c0387e11"
+          "vpx-script"
         ],
         "status": "candidate"
-      }
+      },
+      "semantic": "bumper"
     },
     {
       "aliases": [
@@ -160,15 +484,17 @@
         "device": 18,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.combo-trigger1-18",
+      "id": "switch.bottom-left-bumper",
       "kind": "switch",
-      "label": "Combo Trigger1",
+      "label": "Bottom Left Bumper",
+      "position": null,
       "provenance": {
         "source_refs": [
-          "vpx-script.5d333bb5c0387e11"
+          "vpx-script"
         ],
         "status": "candidate"
-      }
+      },
+      "semantic": "bumper"
     },
     {
       "aliases": [
@@ -181,15 +507,40 @@
         "device": 19,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.combo-trigger2",
+      "id": "switch.top-right-bumper",
       "kind": "switch",
-      "label": "Combo Trigger2",
+      "label": "Top Right Bumper",
+      "position": null,
       "provenance": {
         "source_refs": [
-          "vpx-script.5d333bb5c0387e11"
+          "vpx-script"
         ],
         "status": "candidate"
-      }
+      },
+      "semantic": "bumper"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "20"
+        }
+      ],
+      "binding": {
+        "device": 20,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.bottom-right-bumper",
+      "kind": "switch",
+      "label": "Bottom Right Bumper",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "bumper"
     },
     {
       "aliases": [
@@ -202,15 +553,17 @@
         "device": 21,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.combo-trigger3",
+      "id": "switch.right-sling-shot",
       "kind": "switch",
-      "label": "Combo Trigger3",
+      "label": "Right Sling Shot",
+      "position": null,
       "provenance": {
         "source_refs": [
-          "vpx-script.5d333bb5c0387e11"
+          "vpx-script"
         ],
         "status": "candidate"
-      }
+      },
+      "semantic": "slingshot"
     },
     {
       "aliases": [
@@ -223,78 +576,730 @@
         "device": 22,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.combo-trigger3-22",
+      "id": "switch.left-sling-shot",
       "kind": "switch",
-      "label": "Combo Trigger3",
+      "label": "Left Sling Shot",
+      "position": null,
       "provenance": {
         "source_refs": [
-          "vpx-script.5d333bb5c0387e11"
+          "vpx-script"
         ],
         "status": "candidate"
-      }
+      },
+      "semantic": "slingshot"
     },
     {
       "aliases": [
         {
           "namespace": "pinmame.switch",
-          "value": "23"
+          "value": "25"
         }
       ],
       "binding": {
-        "device": 23,
+        "device": 25,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.combo-trigger4",
+      "id": "switch.bottom-left-bumper-switch",
       "kind": "switch",
-      "label": "Combo Trigger4",
+      "label": "Bottom Left Bumper Switch",
+      "position": null,
       "provenance": {
         "source_refs": [
-          "vpx-script.5d333bb5c0387e11"
+          "vpx-script"
         ],
         "status": "candidate"
-      }
+      },
+      "semantic": "bumper"
     },
     {
       "aliases": [
         {
           "namespace": "pinmame.switch",
-          "value": "82"
+          "value": "26"
         }
       ],
       "binding": {
-        "device": 82,
+        "device": 26,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.toggle-ai",
+      "id": "switch.top-left-bumper-switch",
       "kind": "switch",
-      "label": "Toggle AI",
+      "label": "Top Left Bumper Switch",
+      "position": null,
       "provenance": {
         "source_refs": [
-          "vpx-script.5d333bb5c0387e11"
+          "vpx-script"
         ],
         "status": "candidate"
-      }
+      },
+      "semantic": "bumper"
     },
     {
       "aliases": [
         {
           "namespace": "pinmame.switch",
-          "value": "84"
+          "value": "27"
         }
       ],
       "binding": {
-        "device": 84,
+        "device": 27,
         "group": "pinmame.input.switch"
       },
-      "id": "switch.toggle-ai-84",
+      "id": "switch.top-right-bumper-switch",
       "kind": "switch",
-      "label": "Toggle AI",
+      "label": "Top Right Bumper Switch",
+      "position": null,
       "provenance": {
         "source_refs": [
-          "vpx-script.5d333bb5c0387e11"
+          "vpx-script"
         ],
         "status": "candidate"
-      }
+      },
+      "semantic": "bumper"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "28"
+        }
+      ],
+      "binding": {
+        "device": 28,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.bottom-right-bumper-switch",
+      "kind": "switch",
+      "label": "Bottom Right Bumper Switch",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "bumper"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "29"
+        }
+      ],
+      "binding": {
+        "device": 29,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.top-center-target",
+      "kind": "switch",
+      "label": "Top Center Target",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "target"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "30"
+        }
+      ],
+      "binding": {
+        "device": 30,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-eject-hole-switch",
+      "kind": "switch",
+      "label": "Right Eject Hole Switch",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "eject_hole"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "31"
+        }
+      ],
+      "binding": {
+        "device": 31,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-top-right-standup",
+      "kind": "switch",
+      "label": "Upper Top Right Standup",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "standup"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "32"
+        }
+      ],
+      "binding": {
+        "device": 32,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.f-right-rollover",
+      "kind": "switch",
+      "label": "F Right Rollover",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "rollover"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "33"
+        }
+      ],
+      "binding": {
+        "device": 33,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.i-rollover",
+      "kind": "switch",
+      "label": "I Rollover",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "rollover"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "34"
+        }
+      ],
+      "binding": {
+        "device": 34,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.r-right-rollover",
+      "kind": "switch",
+      "label": "R Right Rollover",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "rollover"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "35"
+        }
+      ],
+      "binding": {
+        "device": 35,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.e-rollover",
+      "kind": "switch",
+      "label": "E Rollover",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "rollover"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "36"
+        }
+      ],
+      "binding": {
+        "device": 36,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.upper-right-eject-hole-switch",
+      "kind": "switch",
+      "label": "Upper Right Eject Hole Switch",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "eject_hole"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "37"
+        }
+      ],
+      "binding": {
+        "device": 37,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-top-right-standup",
+      "kind": "switch",
+      "label": "Lower Top Right Standup",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "standup"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "38"
+        }
+      ],
+      "binding": {
+        "device": 38,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.middle-right-standup",
+      "kind": "switch",
+      "label": "Middle Right Standup",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "standup"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "39"
+        }
+      ],
+      "binding": {
+        "device": 39,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.top-power-target",
+      "kind": "switch",
+      "label": "Top Power Target",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "target"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "40"
+        }
+      ],
+      "binding": {
+        "device": 40,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.middle-power-target",
+      "kind": "switch",
+      "label": "Middle Power Target",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "target"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "41"
+        }
+      ],
+      "binding": {
+        "device": 41,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.bottom-power-target",
+      "kind": "switch",
+      "label": "Bottom Power Target",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "target"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "42"
+        }
+      ],
+      "binding": {
+        "device": 42,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-kicker",
+      "kind": "switch",
+      "label": "Right Kicker",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "kicker"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "43"
+        }
+      ],
+      "binding": {
+        "device": 43,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-inside-rollover",
+      "kind": "switch",
+      "label": "Right Inside Rollover",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "rollover"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "44"
+        }
+      ],
+      "binding": {
+        "device": 44,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-outside-rollover",
+      "kind": "switch",
+      "label": "Right Outside Rollover",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "rollover"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "45"
+        }
+      ],
+      "binding": {
+        "device": 45,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-right",
+      "kind": "switch",
+      "label": "Flipper Right",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "flipper"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "46"
+        }
+      ],
+      "binding": {
+        "device": 46,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.ball-shooter",
+      "kind": "switch",
+      "label": "Ball Shooter",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "plunger"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "47"
+        }
+      ],
+      "binding": {
+        "device": 47,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.playfield-tilt",
+      "kind": "switch",
+      "label": "Playfield Tilt",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "tilt"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "48"
+        }
+      ],
+      "binding": {
+        "device": 48,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-right-standup",
+      "kind": "switch",
+      "label": "Lower Right Standup",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "standup"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "49"
+        }
+      ],
+      "binding": {
+        "device": 49,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.center-middle-left-standup",
+      "kind": "switch",
+      "label": "Center Middle Left Standup",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "standup"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "50"
+        }
+      ],
+      "binding": {
+        "device": 50,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.lower-middle-left-standup",
+      "kind": "switch",
+      "label": "Lower Middle Left Standup",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "standup"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "51"
+        }
+      ],
+      "binding": {
+        "device": 51,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-ball-ramp",
+      "kind": "switch",
+      "label": "Left Ball Ramp",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "ramp"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "53"
+        }
+      ],
+      "binding": {
+        "device": 53,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.left-eject-rollover",
+      "kind": "switch",
+      "label": "Left Eject Rollover",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "rollover"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "54"
+        }
+      ],
+      "binding": {
+        "device": 54,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-eject-rollover",
+      "kind": "switch",
+      "label": "Right Eject Rollover",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "rollover"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "57"
+        }
+      ],
+      "binding": {
+        "device": 57,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.right-ball-ramp",
+      "kind": "switch",
+      "label": "Right Ball Ramp",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "ramp"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "58"
+        }
+      ],
+      "binding": {
+        "device": 58,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.center-ball-ramp",
+      "kind": "switch",
+      "label": "Center Ball Ramp",
+      "position": null,
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "ramp"
     }
   ],
   "knowledge": {
@@ -309,8 +1314,347 @@
     "opdb_id": "G5VDd-MJpqO",
     "year": 1980
   },
-  "mechanisms": [],
+  "mechanisms": [
+    {
+      "components": [
+        "FlipperLeft",
+        "FlipperRight"
+      ],
+      "id": "firepower-flippers",
+      "kind": "flipper",
+      "label": "Flippers (L/R)",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "Bumper1",
+        "Bumper2",
+        "Bumper3",
+        "Bumper4"
+      ],
+      "id": "firepower-bumpers",
+      "kind": "bumper",
+      "label": "Bumpers (4x)",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "LSling1",
+        "LSling2",
+        "LSling3",
+        "RSling1",
+        "RSling2",
+        "RSling3"
+      ],
+      "id": "firepower-slingshots",
+      "kind": "slingshot",
+      "label": "Slingshots (L/R)",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "PTTarget_6",
+        "PMTarget_6",
+        "PBTarget_6",
+        "TopTarget_6"
+      ],
+      "id": "firepower-targets",
+      "kind": "target",
+      "label": "Power Targets (P/T/PM/PB)",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "StandupTarget1",
+        "StandupTarget2",
+        "StandupTarget3",
+        "StandupTarget4",
+        "StandupTarget5",
+        "StandupTarget6",
+        "StandupTarget7"
+      ],
+      "id": "firepower-standuptargets",
+      "kind": "standup_target",
+      "label": "Standup Targets",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "Target1T",
+        "Target2T",
+        "Target3T",
+        "Target4T",
+        "Target5T",
+        "Target6T"
+      ],
+      "id": "firepower-hittargets",
+      "kind": "hit_target",
+      "label": "Hit Targets (1-6)",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "KLeftEjectHole",
+        "KRightEjectHole",
+        "KBallSaveKicker",
+        "KUpperEjectHole"
+      ],
+      "id": "firepower-kickers",
+      "kind": "kicker",
+      "label": "Kickers (L/R/BallSave)",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "Drain"
+      ],
+      "id": "firepower-drain",
+      "kind": "drain",
+      "label": "Drain",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "Plunger"
+      ],
+      "id": "firepower-plunger",
+      "kind": "plunger",
+      "label": "Plunger",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "Spinner"
+      ],
+      "id": "firepower-spinner",
+      "kind": "spinner",
+      "label": "Spinner",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "BallRelease",
+        "BallReleaseGate"
+      ],
+      "id": "firepower-ballrelease",
+      "kind": "ball_release",
+      "label": "Ball Release",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "KLeftEjectHole",
+        "KRightEjectHole",
+        "KUpperEjectHole"
+      ],
+      "id": "firepower-eject",
+      "kind": "eject",
+      "label": "Eject Holes (L/R/Upper)",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "Ramp1",
+        "Ramp2"
+      ],
+      "id": "firepower-ramps",
+      "kind": "ramp",
+      "label": "Ramps (1/2)",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "P1D1",
+        "P1D2",
+        "P1D3",
+        "P1D4",
+        "P1D5",
+        "P1D6",
+        "P1D7",
+        "P2D1",
+        "P2D2",
+        "P2D3",
+        "P2D4",
+        "P2D5",
+        "P2D6",
+        "P2D7",
+        "P3D1",
+        "P3D2",
+        "P3D3",
+        "P3D4",
+        "P3D5",
+        "P3D6",
+        "P3D7",
+        "P4D1",
+        "P4D2",
+        "P4D3",
+        "P4D4",
+        "P4D5",
+        "P4D6",
+        "P4D7",
+        "BaD1",
+        "BaD2",
+        "CrD1",
+        "CrD2",
+        "BGR1up",
+        "BGR2up",
+        "BGR3up",
+        "BGR4up",
+        "BGR1cp",
+        "BGR2cp",
+        "BGR3cp",
+        "BGR4cp",
+        "BGRbip",
+        "BGRmatch",
+        "BGRgo",
+        "BGRhs",
+        "BGRsa",
+        "BGRtilt"
+      ],
+      "id": "firepower-reels",
+      "kind": "score_reel",
+      "label": "Score Reels (P1-P4, BaD, CrD, BGR)",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "id": "firepower-flipper-solenoids",
+      "kind": "flipper_solenoid",
+      "label": "Flipper Solenoids (L/R)",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    },
+    {
+      "components": [
+        "GI_1",
+        "GI_2",
+        "GI_3",
+        "GI_4",
+        "GI_5",
+        "GI_7",
+        "GI_8",
+        "GI_9",
+        "GI_10",
+        "GI_11",
+        "GI_12",
+        "GI_14",
+        "GI_15",
+        "GI_16",
+        "GI_17",
+        "GI_18",
+        "GI_20",
+        "GI_21",
+        "GI_29",
+        "GI_30"
+      ],
+      "id": "firepower-gi",
+      "kind": "general_illumination",
+      "label": "General Illumination (22 lights)",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      }
+    }
+  ],
   "outputs": [
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "1"
+        }
+      ],
+      "binding": {
+        "device": 1,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "coil.sol-on",
+      "kind": "coil",
+      "label": "SolOn",
+      "polarity": "normally-off",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "solenoid"
+    },
     {
       "aliases": [
         {
@@ -325,12 +1669,14 @@
       "id": "coil.lbank-reset",
       "kind": "coil",
       "label": "LBank Reset",
+      "polarity": "normally-off",
       "provenance": {
         "source_refs": [
-          "vpx-script.5d333bb5c0387e11"
+          "vpx-script"
         ],
         "status": "candidate"
-      }
+      },
+      "semantic": "solenoid"
     },
     {
       "aliases": [
@@ -346,12 +1692,221 @@
       "id": "coil.rbank-reset",
       "kind": "coil",
       "label": "RBank Reset",
+      "polarity": "normally-off",
       "provenance": {
         "source_refs": [
-          "vpx-script.5d333bb5c0387e11"
+          "vpx-script"
         ],
         "status": "candidate"
-      }
+      },
+      "semantic": "solenoid"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "4"
+        }
+      ],
+      "binding": {
+        "device": 4,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "coil.left-eject-hole",
+      "kind": "coil",
+      "label": "Left Eject Hole",
+      "polarity": "normally-off",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "solenoid"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "5"
+        }
+      ],
+      "binding": {
+        "device": 5,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "coil.right-eject-hole",
+      "kind": "coil",
+      "label": "Right Eject Hole",
+      "polarity": "normally-off",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "solenoid"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "6"
+        }
+      ],
+      "binding": {
+        "device": 6,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "coil.upper-eject-hole",
+      "kind": "coil",
+      "label": "Upper Eject Hole",
+      "polarity": "normally-off",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "solenoid"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "7"
+        }
+      ],
+      "binding": {
+        "device": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "coil.ball-save-kick",
+      "kind": "coil",
+      "label": "Ball Save Kick",
+      "polarity": "normally-off",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "solenoid"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "8"
+        }
+      ],
+      "binding": {
+        "device": 8,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "coil.ball-ramp-thrower",
+      "kind": "coil",
+      "label": "Ball Ramp Thrower",
+      "polarity": "normally-off",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "solenoid"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "14"
+        }
+      ],
+      "binding": {
+        "device": 14,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "coil.credit-knocker",
+      "kind": "coil",
+      "label": "Credit Knocker",
+      "polarity": "normally-off",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "solenoid"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "15"
+        }
+      ],
+      "binding": {
+        "device": 15,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "coil.flash-lamps",
+      "kind": "coil",
+      "label": "Flash Lamps",
+      "polarity": "normally-off",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "solenoid"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "21"
+        }
+      ],
+      "binding": {
+        "device": 21,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "coil.right-sling-shot",
+      "kind": "coil",
+      "label": "Right Sling Shot",
+      "polarity": "normally-off",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "solenoid"
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.solenoid",
+          "value": "22"
+        }
+      ],
+      "binding": {
+        "device": 22,
+        "group": "pinmame.output.solenoid"
+      },
+      "id": "coil.left-sling-shot",
+      "kind": "coil",
+      "label": "Left Sling Shot",
+      "polarity": "normally-off",
+      "provenance": {
+        "source_refs": [
+          "vpx-script"
+        ],
+        "status": "candidate"
+      },
+      "semantic": "solenoid"
     }
   ],
   "relationships": [],
@@ -367,13 +1922,13 @@
       "uri": "https://github.com/vpinball/pinmame"
     },
     {
-      "attribution": "Authors credited in FirePower(Vs A.I.)V3.7.vbs and repository contributors",
-      "id": "vpx-script.5d333bb5c0387e11",
+      "attribution": "Authors credited in Firepower (Williams 1980) VPX table and repository contributors",
+      "id": "vpx-script.de26ee9ea6a22241",
       "kind": "vpx_script",
       "license": "NOASSERTION",
-      "locator": "vpxtable-scripts: FirePower(Vs A.I.)V3.7.vbs",
+      "locator": "vpxtable-scripts: Firepower (Williams 1980)",
       "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
-      "sha256": "5d333bb5c0387e11f04df0e29c6afde8e2cf0b6647207333714f23598c1ef23e",
+      "sha256": "8d0ec27855bf80407a6efb54e28cf9fee476d2e8ec2d630a3c2016981f8e58dc",
       "uri": "https://github.com/sverrewl/vpxtable_scripts"
     }
   ]

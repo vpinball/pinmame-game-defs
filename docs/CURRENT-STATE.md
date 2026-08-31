@@ -174,6 +174,26 @@ The FunHouse correction is isolated on branch `fix/funhouse-evidence` in worktre
 
 The Junk Yard partial is isolated on branch `defs/junkyard-1996` in worktree `pinmame-game-defs-working-dir/worktrees/pinmame-game-defs-junkyard`, based on `c4d91d1`; it replaces the `jy_12` stub and is described in its own section below.
 
+## Williams Firepower (1980)
+
+Williams Firepower (`williams.firepower.1980`, IPDB 856, OPDB `G5VDd-MJpqO`) replaced the
+generated stub on 2026-08-31 with a VPX-script-backed partial covering all twelve
+`frpwr_l6`-tree drivers (`frpwr_a6`, `frpwr_b6`, `frpwr_b7`, `frpwr_c6`, `frpwr_c7`,
+`frpwr_d6`, `frpwr_l2`, `frpwr_l2ff`, `frpwr_l6`, `frpwr_l6ff`, `frpwr_t6`, `frpwr_t6ff`).
+The retained community VPX table (`Firepower (Williams 1980).vpx`, VPX 10.4, by
+3rdaxis/Slydog43/G5K) was extracted and its `script.vbs` was parsed to produce 52 switch
+candidates (50 playfield plus 2 VPM framework switches filtered out), 12 solenoid
+candidates, and 14 mechanism candidates. Playfield dimensions are 952×1974 from
+`gamedata.json`.
+
+`coverage.missing` is `["controller_platform", "physical_wiring", "polarity",
+"variant_differences", "recreation_notes", "spatial_placement"]`. The controller platform
+is Williams System 6/7 — no existing repository profile covers this generation, so the
+platform claim is honestly unclaimed. The VPX script's `cGameName="frpwr_b7"` and VPM slot
+numbers differ from the earlier `frpwr_b7` evidence scripts (which used addresses 17-23, 82,
+84); the new extraction uses the actual VPX table constants. No manual, schematic, or
+runtime-harness evidence is retained.
+
 ## Williams FunHouse (1990)
 
 Williams FunHouse (`williams.funhouse.1990`) received a detailed evidence pass on 2026-08-14 and remains explicitly partial. It covers all sixteen `fh_l9`-tree drivers, including the WPC-Alpha-1/System-11-sound prototype `fh_pa1`, and enumerates the complete public contract: eight dedicated cabinet inputs, 64 matrix switches, generic flipper inputs 111-118, eight CPU DIP positions, solenoid/state addresses 1-50, all 64 lamp positions, five G.I. strings, two sixteen-character displays, and thirteen mechanisms. Generic inputs 112/114 are the live right/left cabinet-button states copied to matrix inputs 11/12; the other six generic positions are explicit unused addresses, and 11/12 are no longer falsely positioned on the lower flipper bats.
