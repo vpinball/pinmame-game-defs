@@ -598,7 +598,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 592 | 1980 | Alien Poker | Williams | partial | 13% |
 | 593 | 1980 | Black Knight | Williams | partial | 13% |
 | 594 | 1980 | Blackout | Williams | partial | 13% |
-| 595 | 1980 | Firepower | Williams | partial | 13% |
+| 595 | 1980 | Firepower | Williams | partial | 69% |
 | 596 | 1980 | Omni (Shuffle) (L-1) | Williams | partial | 6% |
 | 597 | 1980 | Scorpion | Williams | partial | 13% |
 | 598 | 1980 | Firepower | Williams / Oliver | partial | 6% |
