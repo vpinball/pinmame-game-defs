@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `trek_201`, description "Star Trek 25th Anniversary (2.01)", manufacturer
   "Data East", catalog year "1992".
 - OPDB record `G42qQ-MLn3y` (IPDB 2356) names this machine "Star Trek"
-  (Data East, manufacture date 1991-01-09); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Data East, manufacture date 1991-01-09); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME includes the 25th Anniversary subtitle; OPDB uses the shorter Star Trek title for the same Data East machine.
 - The definition's driver list is exactly the clone tree PinMAME declares under `trek_201`;
   whether every listed driver really runs on this physical machine is unverified.
 

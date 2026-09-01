@@ -8,7 +8,8 @@
       "additionalProperties": {
         "additionalProperties": false,
         "properties": {
-          "opdb_id": { "pattern": "^G[A-Za-z0-9]+-[A-Za-z0-9-]+$", "type": "string" },
+          "evidence_url": { "pattern": "^https://\\S+$", "type": "string" },
+          "opdb_id": { "pattern": "^G[A-Za-z0-9]+(?:-[A-Za-z0-9]+){1,2}$", "type": "string" },
           "reason": { "minLength": 1, "pattern": "[A-Za-z0-9]", "type": "string" }
         },
         "required": ["opdb_id", "reason"],

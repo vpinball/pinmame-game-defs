@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `bowarrow`, description "Bow & Arrow (Prototype, rev. 23)", manufacturer
   "Bally", catalog year "1976".
 - OPDB record `GRoqq-MJr9K` (IPDB 362) names this machine "Bow and Arrow"
-  (Bally, manufacture date 1975-11-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Bally, manufacture date 1975-11-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME identifies the physical machine as a prototype; OPDB's sole Bally Bow and Arrow record uses the unsuffixed title for that prototype.
 - The definition's driver list is exactly the clone tree PinMAME declares under `bowarrow`;
   whether every listed driver really runs on this physical machine is unverified.
 

@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `gs_lu4`, description "Game Show (LU-4 Europe)", manufacturer
   "Bally", catalog year "1990".
 - OPDB record `G5V92-MJ9XO` (IPDB 985) names this machine "The Bally Game Show"
-  (Bally, manufacture date 1990-01-04); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Bally, manufacture date 1990-01-04); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME abbreviates the title to Game Show; OPDB carries the full title The Bally Game Show.
 - The definition's driver list is exactly the clone tree PinMAME declares under `gs_lu4`;
   whether every listed driver really runs on this physical machine is unverified.
 

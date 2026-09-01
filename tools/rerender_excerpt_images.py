@@ -19,8 +19,13 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPOSITORY_ROOT / "src"))
+
+from pinmame_game_defs.workspace import resolve_working_root  # noqa: E402
 from render_excerpt_image import render
 
 DERIVATION = re.compile(
@@ -43,7 +48,7 @@ def _render_options(derivation: str) -> tuple[int, bool]:
 
 
 def _manual_roots(repository_root: Path) -> list[Path]:
-	working = repository_root.parent / "pinmame-game-defs-working-dir" / "manuals" / "by-machine"
+	working = resolve_working_root(repository_root) / "manuals" / "by-machine"
 	return [working] if working.is_dir() else []
 
 

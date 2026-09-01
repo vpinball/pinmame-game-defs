@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `boomrang`, description "Boomerang (Engineering Prototype, patched patent code)", manufacturer
   "Bally", catalog year "1975".
 - OPDB record `GrEOB-MDR2Y` (IPDB 354) names this machine "Boomerang"
-  (Bally, manufacture date 1974-12-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Bally, manufacture date 1974-12-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME identifies the physical machine as an engineering prototype; OPDB's sole Bally Boomerang record uses the unsuffixed title for that prototype.
 - The definition's driver list is exactly the clone tree PinMAME declares under `boomrang`;
   whether every listed driver really runs on this physical machine is unverified.
 

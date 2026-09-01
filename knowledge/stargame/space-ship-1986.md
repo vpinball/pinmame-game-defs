@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `spcship`, description "Space Ship", manufacturer
   "Stargame", catalog year "1986".
 - OPDB record `G5YVk-MDBvP` (IPDB 4623) names this machine "Space Ship"
-  (Unidesa, manufacture date 1986-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Unidesa, manufacture date 1986-01-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: OPDB catalogs this title under Unidesa; the cited manufacturer history identifies Stargame as its producer and later Cirsa subsidiary.
 - The definition's driver list is exactly the clone tree PinMAME declares under `spcship`;
   whether every listed driver really runs on this physical machine is unverified.
 

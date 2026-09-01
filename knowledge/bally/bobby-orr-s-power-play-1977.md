@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `pwerplay`, description "Power Play", manufacturer
   "Bally", catalog year "1978".
 - OPDB record `G4en0-MJ5vB` (IPDB 1858) names this machine "Bobby Orr's Power Play"
-  (Bally, manufacture date 1977-02-24); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Bally, manufacture date 1977-02-24); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME abbreviates the title to Power Play; OPDB carries the full licensed title Bobby Orr's Power Play.
 - The definition's driver list is exactly the clone tree PinMAME declares under `pwerplay`;
   whether every listed driver really runs on this physical machine is unverified.
 

@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `m_mpac`, description "Mr. & Mrs. Pac-Man Pinball", manufacturer
   "Bally", catalog year "1982".
 - OPDB record `Gr2Dk-MQNy7` (IPDB 1639) names this machine "Mr. & Mrs. Pac-Man"
-  (Bally, manufacture date 1982-05-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Bally, manufacture date 1982-05-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME appends Pinball to the Mr. & Mrs. Pac-Man root title; OPDB omits that medium label.
 - The definition's driver list is exactly the clone tree PinMAME declares under `m_mpac`;
   whether every listed driver really runs on this physical machine is unverified.
 

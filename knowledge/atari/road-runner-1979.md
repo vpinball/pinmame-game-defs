@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `roadrunr`, description "Road Runner (Prototype)", manufacturer
   "Atari", catalog year "1979".
 - OPDB record `G421X-ME0nK` (IPDB 3517) names this machine "Road Runner"
-  (Atari, manufacture date 1979-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Atari, manufacture date 1979-01-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME identifies the physical machine as a prototype; OPDB's sole Atari Road Runner record uses the unsuffixed title for that prototype.
 - The definition's driver list is exactly the clone tree PinMAME declares under `roadrunr`;
   whether every listed driver really runs on this physical machine is unverified.
 

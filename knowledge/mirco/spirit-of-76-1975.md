@@ -12,8 +12,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - PinMAME catalog: root driver `spirit76`, description "Spirit of 76", manufacturer
   "Mirco", catalog year "1975".
-- OPDB record `GrlPK-Mx0By` (IPDB 2293) names this machine "Spirit of 76"
-  (Gottlieb, manufacture date 1975-01-01); the resolved identity rests on the
+- OPDB record `G4d0O-MJpj2` (IPDB 2294) names this machine "Spirit of 76"
+  (Mirco Games, manufacture date 1975-01-01); the resolved identity rests on the
   agreement of the PinMAME catalog and this reviewed mapping.
 - The definition's driver list is exactly the clone tree PinMAME declares under `spirit76`;
   whether every listed driver really runs on this physical machine is unverified.

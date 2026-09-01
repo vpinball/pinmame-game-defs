@@ -17,11 +17,15 @@ report and fails on any drift between that derivation and the records on disk.
 Run from the repository root:
 
 	python -B tools/promote_catalog_stubs.py --check
+
+Bare CI without the retained OPDB snapshot can still verify every structural
+invariant without claiming an evidence-backed identity check:
+
+	python -B tools/promote_catalog_stubs.py --check-structure
 """
 
 from __future__ import annotations
 
-import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -32,10 +36,11 @@ sys.path.insert(0, str(REPOSITORY_ROOT / "src"))
 from pinmame_game_defs.coverage import write_coverage_report  # noqa: E402
 from pinmame_game_defs.identifiers import slug  # noqa: E402
 from pinmame_game_defs.jsonio import file_sha256, load_json, write_json, write_text  # noqa: E402
-from pinmame_game_defs.opdb import import_opdb  # noqa: E402
+from pinmame_game_defs.opdb import catalog_root_names_agree, identity_disagreement, import_opdb, record_name_agrees  # noqa: E402
 from pinmame_game_defs.registry import rebuild_catalog  # noqa: E402
+from pinmame_game_defs.workspace import resolve_working_root  # noqa: E402
 
-WORKING_ROOT = REPOSITORY_ROOT.parent / "pinmame-game-defs-working-dir"
+WORKING_ROOT = resolve_working_root(REPOSITORY_ROOT)
 SNAPSHOT_PATH = WORKING_ROOT / "review-artifacts" / "opdb-import" / "latest-opdb.json"
 ACQUIRED_AT = "2026-08-14T17:53:43Z"
 
@@ -58,6 +63,13 @@ IDENTITY_PARTIAL_MISSING = [
 	"provenance",
 	"spatial_placement",
 ]
+IDENTITY_BASIS_MARKERS = (
+	"catalog do not agree on identity",
+	"No OPDB record is mapped",
+	"OPDB record shared with",
+	"machine-specific exception in `config/opdb-overrides.json`",
+	"agreement of the PinMAME catalog and this reviewed mapping",
+)
 
 NOTE_TEMPLATE = """# {name} ({manufacturer} {year})
 
@@ -105,7 +117,7 @@ def load_snapshot_records() -> dict[str, dict[str, Any]]:
 	return records
 
 
-def note_identity_line(resolved: bool, disagreement_reason: str | None, opdb_id: str | None, record: dict[str, Any] | None) -> str:
+def note_identity_line(resolved: bool, disagreement_reason: str | None, opdb_id: str | None, record: dict[str, Any] | None, override_reason: str | None = None) -> str:
 	if not resolved and disagreement_reason and record is not None and opdb_id is not None:
 		manufacturer = (record.get("manufacturer") or {}).get("name") or "manufacturer unknown"
 		ipdb = record.get("ipdbId")
@@ -113,7 +125,7 @@ def note_identity_line(resolved: bool, disagreement_reason: str | None, opdb_id:
 		return (
 			f"- OPDB record `{opdb_id}` ({ipdb_text}) names this machine \"{record.get('name') or record.get('commonName')}\"\n"
 			f"  ({manufacturer}, manufacture date {record.get('manufactureDate') or 'unknown'}), but the mapped record and the PinMAME\n"
-			f"  catalog do not agree on the name, so identity is unresolved: {disagreement_reason}; the mapped record is a\n"
+			f"  catalog do not agree on identity, so identity is unresolved: {disagreement_reason}; the mapped record is a\n"
 			"  lead, not a resolved identity."
 		)
 	if not resolved or record is None or opdb_id is None:
@@ -124,10 +136,28 @@ def note_identity_line(resolved: bool, disagreement_reason: str | None, opdb_id:
 	manufacturer = (record.get("manufacturer") or {}).get("name") or "manufacturer unknown"
 	ipdb = record.get("ipdbId")
 	ipdb_text = f"IPDB {ipdb}" if isinstance(ipdb, int) else "no IPDB number"
+	if override_reason:
+		return (
+			f"- OPDB record `{opdb_id}` ({ipdb_text}) names this machine \"{record.get('name') or record.get('commonName')}\"\n"
+			f"  ({manufacturer}, manufacture date {record.get('manufactureDate') or 'unknown'}); the selected identity rests on the reviewed\n"
+			f"  machine-specific exception in `config/opdb-overrides.json`: {override_reason}"
+		)
 	return (
 		f"- OPDB record `{opdb_id}` ({ipdb_text}) names this machine \"{record.get('name') or record.get('commonName')}\"\n"
 		f"  ({manufacturer}, manufacture date {record.get('manufactureDate') or 'unknown'}); the resolved identity rests on the\n"
 		"  agreement of the PinMAME catalog and this reviewed mapping."
+	)
+
+
+def note_shared_identity_line(opdb_id: str, record: dict[str, Any], owner_machine_id: str) -> str:
+	manufacturer = (record.get("manufacturer") or {}).get("name") or "manufacturer unknown"
+	ipdb = record.get("ipdbId")
+	ipdb_text = f"IPDB {ipdb}" if isinstance(ipdb, int) else "no IPDB number"
+	return (
+		f"- OPDB record `{opdb_id}` ({ipdb_text}) names this machine \"{record.get('name') or record.get('commonName')}\"\n"
+		f"  ({manufacturer}, manufacture date {record.get('manufactureDate') or 'unknown'}); identity is unresolved: "
+		f"OPDB record shared with {owner_machine_id}, so the mapped record is treated as a lead\n"
+		"  rather than a resolved identity."
 	)
 
 
@@ -138,28 +168,18 @@ def expected_missing(resolved: bool) -> list[str]:
 	return missing
 
 
-TITLE_STOPWORDS = {"the", "a", "an", "and", "of", "&"}
-
-
-def name_agrees(root_description: str, opdb_name: str) -> bool:
-	"""PinMAME catalog and OPDB agree on the machine's name.
-
-	Token overlap, or either name's concatenated form appearing inside the
-	other's (root descriptions often append variant suffixes such as
-	"(Free Play)" or "(PEMBOT (no relation) J-1)")."""
-	def tokens(text: str) -> set[str]:
-		return {token for token in re.split(r"[^a-z0-9]+", text.casefold()) if token and token not in TITLE_STOPWORDS}
-
-	root_tokens = tokens(root_description)
-	opdb_tokens = tokens(opdb_name)
-	if root_tokens & opdb_tokens:
+def coverage_missing_matches(missing: list[str], *, resolved: bool, has_controller: bool) -> bool:
+	expected = expected_missing(resolved)
+	if missing == expected:
 		return True
-	root_compact = re.sub(r"[^a-z0-9]", "", root_description.casefold())
-	opdb_compact = re.sub(r"[^a-z0-9]", "", opdb_name.casefold())
-	return opdb_compact in root_compact or root_compact in opdb_compact
+	return has_controller and missing == [requirement for requirement in expected if requirement != "controller_platform"]
 
 
-def check_promoted_records() -> None:
+def has_exactly_one_identity_basis(knowledge_text: str) -> bool:
+	return sum(marker in knowledge_text for marker in IDENTITY_BASIS_MARKERS) == 1
+
+
+def check_promoted_records(*, structural_only: bool = False) -> None:
 	"""Fail on any drift between the pass's derivation and the records on disk.
 
 	The pass consumed its stub inputs, so it cannot be replayed; instead this
@@ -169,12 +189,10 @@ def check_promoted_records() -> None:
 	"""
 	catalog = load_json(REPOSITORY_ROOT / "catalog" / "pinmame.json")
 	identity_index = {machine["machine_id"]: machine for machine in load_json(REPOSITORY_ROOT / "reports" / "opdb-identity.json")["machines"]}
-	# The retained snapshot backs the agreement rule; without it only the
-	# structural checks run.
-	try:
-		snapshot_records = load_snapshot_records()
-	except SystemExit:
-		snapshot_records = None
+	# Full checks fail closed on the retained snapshot. The explicit structural
+	# mode exists for bare CI and never claims that identity evidence was checked.
+	snapshot_records = None if structural_only else load_snapshot_records()
+	machine_overrides = load_json(REPOSITORY_ROOT / "config" / "opdb-overrides.json")["machines"]
 	catalog_driver_by_id = {record["id"]: record for record in catalog["drivers"]}
 	machine_drivers: dict[str, set[str]] = {}
 	for record in catalog["drivers"]:
@@ -182,7 +200,7 @@ def check_promoted_records() -> None:
 			raise SystemExit(f"Catalog still maps {record['id']} to residual stub {record['machine_id']}")
 		machine_drivers.setdefault(record["machine_id"], set()).add(record["id"])
 	opdb_owners: dict[str, list[str]] = {}
-	ipdb_owners: dict[str, list[str]] = {}
+	ipdb_owners: dict[int, list[str]] = {}
 	definitions: dict[str, dict[str, Any]] = {}
 	for machine in catalog["machines"]:
 		definition = load_json(REPOSITORY_ROOT / machine["definition"])
@@ -203,21 +221,58 @@ def check_promoted_records() -> None:
 		if machine_id.startswith("stub."):
 			continue
 		missing = definition["coverage"]["missing"]
-		# Only the records this pass authored carry the identity-partial template.
-		if missing not in (expected_missing(True), expected_missing(False)):
+		knowledge_path = REPOSITORY_ROOT / definition["knowledge"]["path"]
+		if not knowledge_path.is_file():
+			errors.append(f"{machine_id}: knowledge note missing: {definition['knowledge']['path']}")
+			continue
+		knowledge_text = knowledge_path.read_text(encoding="utf-8")
+		# Later attachment passes legitimately remove controller_platform from
+		# some records, so the durable authored marker is the promotion note.
+		if "promoted from the generated catalog stub `stub.pinmame." not in knowledge_text:
 			continue
 		checked += 1
+		if not has_exactly_one_identity_basis(knowledge_text):
+			errors.append(f"{machine_id}: knowledge note must state exactly one OPDB identity basis")
 		resolved = "opdb_id" in identity and "identity" not in missing
-		if missing != expected_missing("opdb_id" in identity and resolved):
+		if not coverage_missing_matches(missing, resolved="opdb_id" in identity and resolved, has_controller=bool(definition.get("controller"))):
 			errors.append(f"{machine_id}: coverage.missing does not match the identity-partial template")
 		if "opdb_id" in identity and snapshot_records is not None:
 			record = snapshot_records.get(identity["opdb_id"])
 			if record is None:
 				errors.append(f"{machine_id}: OPDB record absent from the retained snapshot")
-			elif resolved:
-				root_description = catalog_driver_by_id[machine["root_drivers"][0]]["description"]
-				if not name_agrees(root_description, record.get("name") or record.get("commonName") or ""):
-					errors.append(f"{machine_id}: claims resolved identity although the catalog and OPDB names disagree")
+			else:
+				root_descriptions, root_name_agrees = catalog_root_names_agree(machine["root_drivers"], catalog_driver_by_id, record)
+				if resolved:
+					override = machine_overrides.get(machine_id)
+					if not root_name_agrees:
+						if not isinstance(override, dict) or override.get("opdb_id") != identity["opdb_id"]:
+							errors.append(f"{machine_id}: claims resolved identity although the catalog and OPDB names disagree")
+					disagreement = identity_disagreement(definition, record)
+					if disagreement and (not isinstance(override, dict) or override.get("opdb_id") != identity["opdb_id"]):
+						errors.append(f"{machine_id}: claims resolved identity although {disagreement}")
+					override_reason = (
+						override.get("reason")
+						if isinstance(override, dict) and override.get("opdb_id") == identity["opdb_id"] and (not root_name_agrees or disagreement)
+						else None
+					)
+					expected_identity_line = note_identity_line(True, None, identity["opdb_id"], record, override_reason)
+					if expected_identity_line not in knowledge_text:
+						errors.append(f"{machine_id}: knowledge note does not describe its current OPDB identity basis")
+				else:
+					shared_owners = sorted(
+						set(opdb_owners.get(identity["opdb_id"], []))
+						& set(ipdb_owners.get(identity.get("ipdb_id"), []))
+					)
+					if not root_name_agrees:
+						expected_identity_line = note_identity_line(False, "catalog/OPDB name disagreement", identity["opdb_id"], record)
+						if expected_identity_line not in knowledge_text:
+							errors.append(f"{machine_id}: knowledge note does not describe its current unresolved OPDB identity basis")
+					elif len(shared_owners) == 1:
+						expected_identity_line = note_shared_identity_line(identity["opdb_id"], record, shared_owners[0])
+						if expected_identity_line not in knowledge_text:
+							errors.append(f"{machine_id}: knowledge note does not describe its current shared OPDB identity basis")
+					else:
+						errors.append(f"{machine_id}: unresolved mapped identity has no unique resolved OPDB/IPDB owner")
 		if resolved and machine_id in identity_index:
 			report_row = identity_index[machine_id]
 			if identity.get("ipdb_id") != report_row["ipdb_id"] or identity.get("opdb_id") != report_row["opdb_id"]:
@@ -229,20 +284,25 @@ def check_promoted_records() -> None:
 			errors.append(f"{machine_id}: id does not derive from the identity block")
 		if {driver["id"] for driver in definition["drivers"]} != machine_drivers.get(machine_id, set()):
 			errors.append(f"{machine_id}: driver list does not match the catalog family")
-		if not (REPOSITORY_ROOT / definition["knowledge"]["path"]).is_file():
-			errors.append(f"{machine_id}: knowledge note missing: {definition['knowledge']['path']}")
 	for label, owners in (("opdb_id", opdb_owners), ("ipdb_id", ipdb_owners)):
 		for value, sharers in owners.items():
 			if len(sharers) > 1:
 				errors.append(f"{label} {value} is claimed as resolved by {len(sharers)} records: {sorted(sharers)}")
 	if errors:
 		raise SystemExit("Promoted-record drift detected:\n" + "\n".join(errors[:40]))
-	print(f"check OK: {checked} promoted identity-partial records match their derivation")
+	label = "structural check OK" if structural_only else "check OK"
+	print(f"{label}: {checked} promoted identity-partial records match their derivation")
 
 
 def main() -> None:
 	dry_run = "--dry-run" in sys.argv
 	check_only = "--check" in sys.argv
+	structural_only = "--check-structure" in sys.argv
+	if check_only and structural_only:
+		raise SystemExit("Choose only one of --check and --check-structure")
+	if structural_only:
+		check_promoted_records(structural_only=True)
+		return
 	if check_only:
 		check_promoted_records()
 		return
@@ -255,6 +315,7 @@ def main() -> None:
 		raise SystemExit("No catalog stubs remain; nothing to promote.")
 
 	plans: list[dict[str, Any]] = []
+	machine_overrides = load_json(REPOSITORY_ROOT / "config" / "opdb-overrides.json")["machines"]
 	used_machine_ids = set(existing_machine_ids)
 	for path in stub_paths:
 		definition = load_json(path)
@@ -276,7 +337,9 @@ def main() -> None:
 		record = records.get(opdb_id) if isinstance(opdb_id, str) else None
 		resolved = record is not None
 		disagreement_reason = None
-		if resolved and not name_agrees(catalog_description, record.get("name") or record.get("commonName") or ""):
+		override = machine_overrides.get(machine["id"])
+		name_override = isinstance(override, dict) and override.get("opdb_id") == opdb_id
+		if resolved and not record_name_agrees(catalog_description, record) and not name_override:
 			# The OPDB record and the PinMAME catalog do not agree on the
 			# machine's name, so identity stays honestly unresolved.
 			resolved = False
@@ -291,6 +354,14 @@ def main() -> None:
 			opdb_date = record.get("manufactureDate")
 			if isinstance(opdb_date, str) and opdb_date[:4].isdigit():
 				year = int(opdb_date[:4])
+		override_waives_agreement = bool(
+			resolved
+			and name_override
+			and (
+				not record_name_agrees(catalog_description, record)
+				or identity_disagreement({"machine": {"name": name, "manufacturer": machine["manufacturer"], "year": year}}, record)
+			)
+		)
 		base_id = f"{slug(machine['manufacturer'])}.{slug(name)}"
 		if isinstance(year, int):
 			base_id = f"{base_id}.{year}"
@@ -320,6 +391,7 @@ def main() -> None:
 				"record": record,
 				"resolved": resolved,
 				"disagreement_reason": disagreement_reason,
+				"override_reason": override.get("reason") if override_waives_agreement else None,
 				"name": name,
 				"year": year,
 				"machine_id": machine_id,
@@ -366,7 +438,7 @@ def main() -> None:
 			root_id=plan["root_id"],
 			description=plan["description"],
 			catalog_year=plan["root_driver_year"],
-			identity_line=note_identity_line(plan["resolved"], plan["disagreement_reason"], plan["opdb_id"], plan["record"]),
+			identity_line=note_identity_line(plan["resolved"], plan["disagreement_reason"], plan["opdb_id"], plan["record"], plan["override_reason"]),
 			family_line=family_line,
 			driver_lines="\n".join(driver_lines),
 		)

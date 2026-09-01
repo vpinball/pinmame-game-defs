@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `granny`, description "Granny and the Gators (Video/Pinball Combo)", manufacturer
   "Bally", catalog year "1984".
 - OPDB record `G4OKd-Mb51r` (IPDB 1083) names this machine "Granny and the Gators"
-  (Bally, manufacture date 1984-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Bally, manufacture date 1984-01-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME identifies Granny and the Gators as a Video/Pinball Combo; OPDB's sole Bally record omits that product-class qualifier for the same hybrid machine.
 - The definition's driver list is exactly the clone tree PinMAME declares under `granny`;
   whether every listed driver really runs on this physical machine is unverified.
 

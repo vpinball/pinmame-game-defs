@@ -42,8 +42,9 @@ from pinmame_game_defs.identifiers import slug  # noqa: E402
 from pinmame_game_defs.jsonio import file_sha256, load_json, write_json, write_text  # noqa: E402
 from pinmame_game_defs.pinmame_source import _read_source, _symbol_label  # noqa: E402
 from pinmame_game_defs.registry import rebuild_catalog  # noqa: E402
+from pinmame_game_defs.workspace import resolve_working_root  # noqa: E402
 
-WORKING_ROOT = REPOSITORY_ROOT.parent / "pinmame-game-defs-working-dir"
+WORKING_ROOT = resolve_working_root(REPOSITORY_ROOT)
 PINMAME_SOURCE = WORKING_ROOT / "source-checkouts" / "pinmame"
 
 GAMEDEF_PATTERN = re.compile(r"\bCORE_GAMEDEF\s*\(\s*([a-z0-9_]+)\s*,\s*([a-z0-9_]+)\s*,\s*\"([^\"]*)\"\s*,\s*([^,]+),\s*\"([^\"]*)\"\s*,\s*([a-z0-9_]+)", re.IGNORECASE)

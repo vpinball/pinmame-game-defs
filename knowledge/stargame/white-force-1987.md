@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `whtforce`, description "White Force", manufacturer
   "Stargame", catalog year "1987".
 - OPDB record `GRnW8-MQ66o` (IPDB 4129) names this machine "White Force"
-  (Unidesa, manufacture date 1987-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Unidesa, manufacture date 1987-01-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: OPDB catalogs this title under Unidesa; the cited manufacturer history identifies White Force as a Stargame release after it became a Cirsa subsidiary.
 - The definition's driver list is exactly the clone tree PinMAME declares under `whtforce`;
   whether every listed driver really runs on this physical machine is unverified.
 

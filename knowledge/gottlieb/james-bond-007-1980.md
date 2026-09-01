@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `jamesb`, description "James Bond (Timed Play)", manufacturer
   "Gottlieb", catalog year "1980".
 - OPDB record `G4PXJ-MQPlw` (IPDB 1286) names this machine "James Bond 007"
-  (Gottlieb, manufacture date 1980-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Gottlieb, manufacture date 1980-01-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME abbreviates the title to James Bond; OPDB carries the full title James Bond 007.
 - The definition's driver list is exactly the clone tree PinMAME declares under `jamesb`;
   whether every listed driver really runs on this physical machine is unverified.
 

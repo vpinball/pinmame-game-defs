@@ -1,26 +1,26 @@
-# Buck Rogers (Gottlieb 1979)
+# Dragon (Gottlieb 1978)
 
 Coverage: **partial - machine identity only. Nothing about playfield devices, wiring, mechanisms,
 or behavior is evidenced yet.**
 
-This record was promoted from the generated catalog stub `stub.pinmame.buckrgrs` by the
+This record was promoted from the generated catalog stub `stub.pinmame.dragon` by the
 catalog-wide identity pass of 2026-08-29. The promotion resolves machine identity and carries the
 catalog's residual driver grouping over unchanged, and it deliberately asserts nothing else. Every
 requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## Identity
 
-- PinMAME catalog: root driver `buckrgrs`, description "Buck Rogers", manufacturer
-  "Gottlieb", catalog year "1980".
-- OPDB record `GRw8o-MDxjq` (IPDB 4999) names this machine "Buck Rogers"
-  (Mambelli, manufacture date 1979-01-01); the resolved identity rests on the
+- PinMAME catalog: root driver `dragon`, description "Dragon", manufacturer
+  "Gottlieb", catalog year "1978".
+- OPDB record `G4qPZ-ME0Nr` (IPDB 729) names this machine "Dragon"
+  (Gottlieb, manufacture date 1978-10-01); the resolved identity rests on the
   agreement of the PinMAME catalog and this reviewed mapping.
-- The definition's driver list is exactly the clone tree PinMAME declares under `buckrgrs`;
+- The definition's driver list is exactly the clone tree PinMAME declares under `dragon`;
   whether every listed driver really runs on this physical machine is unverified.
 
 ## Drivers this record holds
 
-- `buckrgrs` (1980, Gottlieb, clone of `gts1s`).
+- `dragon` (1978, Gottlieb, clone of `gts1`).
 
 ## What a curator must establish next
 

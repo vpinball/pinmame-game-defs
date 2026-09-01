@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `swtril43`, description "Star Wars Trilogy Special Edition, The (4.03)", manufacturer
   "Sega", catalog year "1997".
 - OPDB record `GrybN-MLl5X` (IPDB 4054) names this machine "Star Wars Trilogy"
-  (Sega, manufacture date 1997-03-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Sega, manufacture date 1997-03-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME uses the licensed Star Wars Trilogy Special Edition title; OPDB shortens it to Star Wars Trilogy.
 - The definition's driver list is exactly the clone tree PinMAME declares under `swtril43`;
   whether every listed driver really runs on this physical machine is unverified.
 

@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `trucksp3`, description "Truck Stop (P-3 Prototype)", manufacturer
   "Bally", catalog year "1988".
 - OPDB record `G5Y6O-MLn90` (IPDB 2667) names this machine "Truck Stop"
-  (Bally, manufacture date 1988-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Bally, manufacture date 1988-01-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME identifies the physical machine as a prototype; OPDB's sole Bally Truck Stop record uses the unsuffixed title for that prototype.
 - The definition's driver list is exactly the clone tree PinMAME declares under `trucksp3`;
   whether every listed driver really runs on this physical machine is unverified.
 

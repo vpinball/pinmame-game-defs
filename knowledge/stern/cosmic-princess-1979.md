@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `princess`, description "Cosmic Princess", manufacturer
   "Stern", catalog year "1979".
 - OPDB record `G4d9B-MJk65` (IPDB 3967) names this machine "Cosmic Princess"
-  (Allied Leisure, manufacture date 1979-01-08); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Allied Leisure, manufacture date 1979-01-08); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: OPDB catalogs the physical machine under Allied Leisure; the cited serial-number record identifies its Australian production under license from Stern.
 - The definition's driver list is exactly the clone tree PinMAME declares under `princess`;
   whether every listed driver really runs on this physical machine is unverified.
 

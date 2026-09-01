@@ -13,7 +13,7 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `frpwr_e7`, description "Firepower (Sys.7/6-digit /10 Scoring rev. 31)", manufacturer
   "Williams / Oliver", catalog year "2005".
 - OPDB record `G5VDd-MJpqO` (IPDB 856) names this machine "Firepower"
-  (Williams, manufacture date 1980-02-01); identity is unresolved: OPDB record shared with williams-oliver.firepower.1980, so the mapped record is treated as a lead
+  (Williams, manufacture date 1980-02-01); identity is unresolved: OPDB record shared with williams.firepower.1980, so the mapped record is treated as a lead
   rather than a resolved identity.
 - The definition's driver list is exactly the clone tree PinMAME declares under `frpwr_e7`;
   whether every listed driver really runs on this physical machine is unverified.

@@ -1,26 +1,25 @@
-# Rio (Game Plan 1977)
+# Flicker (Prototype) (Nutting Associates 1974)
 
 Coverage: **partial - machine identity only. Nothing about playfield devices, wiring, mechanisms,
 or behavior is evidenced yet.**
 
-This record was promoted from the generated catalog stub `stub.pinmame.rio` by the
+This record was promoted from the generated catalog stub `stub.pinmame.flicker` by the
 catalog-wide identity pass of 2026-08-29. The promotion resolves machine identity and carries the
 catalog's residual driver grouping over unchanged, and it deliberately asserts nothing else. Every
 requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 ## Identity
 
-- PinMAME catalog: root driver `rio`, description "Rio", manufacturer
-  "Game Plan", catalog year "1978".
-- OPDB record `GRw9Z-MLbl4` (IPDB 1961) names this machine "Rio"
-  (Playmatic, manufacture date 1977-06-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
-- The definition's driver list is exactly the clone tree PinMAME declares under `rio`;
+- PinMAME catalog: root driver `flicker`, description "Flicker (Prototype)", manufacturer
+  "Nutting Associates", catalog year "1974".
+- No OPDB record is mapped for this driver in `machines/opdb_id.csv`, so the name above comes
+  from the PinMAME catalog alone and is unverified.
+- The definition's driver list is exactly the clone tree PinMAME declares under `flicker`;
   whether every listed driver really runs on this physical machine is unverified.
 
 ## Drivers this record holds
 
-- `rio` (1978, Game Plan, clone of `gp_110`).
+- `flicker` (1974, Nutting Associates).
 
 ## What a curator must establish next
 

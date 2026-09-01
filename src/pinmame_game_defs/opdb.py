@@ -95,6 +95,185 @@ def _similarity(left: str | None, right: str | None) -> float:
 	return SequenceMatcher(None, _normalize(left), _normalize(right)).ratio()
 
 
+TITLE_STOPWORDS = {"a", "an", "and", "of", "the"}
+TITLE_VARIANT_TOKENS = {
+	"edition",
+	"fp",
+	"mod",
+	"model",
+	"rev",
+	"revision",
+	"unofficial",
+}
+TITLE_PARENTHETICAL_MEANINGFUL_TOKENS = {
+	"anniversary",
+	"bingo",
+	"boss",
+	"bowler",
+	"ce",
+	"classic",
+	"combo",
+	"deluxe",
+	"dropper",
+	"edition",
+	"em",
+	"gun",
+	"home",
+	"le",
+	"led",
+	"limited",
+	"luci",
+	"motion",
+	"picture",
+	"player",
+	"players",
+	"premium",
+	"pro",
+	"prototype",
+	"redemption",
+	"remake",
+	"se",
+	"signature",
+	"shuffle",
+	"special",
+	"ss",
+	"standard",
+	"trilogy",
+	"vault",
+}
+
+
+def _parenthetical_is_meaningful(value: str) -> bool:
+	tokens = re.findall(r"[a-z0-9]+", value.casefold())
+	return bool(set(tokens) & TITLE_PARENTHETICAL_MEANINGFUL_TOKENS) or any(re.fullmatch(r"[1-9]p", token) for token in tokens)
+
+
+def _title_text(value: str) -> str:
+	text = value.casefold().removeprefix("stub - ")
+	text = re.sub(
+		r"\(([^)]*)\)",
+		lambda match: match.group(0) if _parenthetical_is_meaningful(match.group(1)) else " ",
+		text,
+	)
+	text = re.sub(r"\bfree[ -]?play\b", " ", text)
+	return text
+
+
+def _tokens_from_title_text(text: str) -> frozenset[str]:
+	return frozenset(
+		"limited" if token == "le" else token
+		for token in re.split(r"[^a-z0-9]+", text)
+		if token and token not in TITLE_STOPWORDS and token not in TITLE_VARIANT_TOKENS
+	)
+
+
+def _title_tokens(value: str) -> frozenset[str]:
+	return _tokens_from_title_text(_title_text(value))
+
+
+def _parenthetical_is_ignorable_record_metadata(value: str) -> bool:
+	text = value.strip().casefold()
+	return bool(
+		re.fullmatch(r"free[ -]?play", text)
+		or re.fullmatch(r"rev(?:ision)?\.?\s*[a-z0-9][a-z0-9._-]*", text)
+		or re.fullmatch(r"(?:version\s*)?[vrls]\s*[-.]?\s*\d+(?:[._-]\d+)*(?:[a-z]\d*)?", text)
+		or re.fullmatch(r"\d+\.\d+(?:[._-]\d+)*(?:[a-z]\d*)?", text)
+	)
+
+
+def _parenthetical_tokens(value: str) -> frozenset[str]:
+	parentheticals = re.findall(r"\(([^)]*)\)", value.casefold())
+	return _tokens_from_title_text(" ".join(text for text in parentheticals if not _parenthetical_is_ignorable_record_metadata(text)))
+
+
+def names_agree(left: str, right: str) -> bool:
+	"""Match title spelling/order and reviewed variant wording, never subsets."""
+	left_normalized = _normalize(_title_text(left))
+	right_normalized = _normalize(_title_text(right))
+	if left_normalized == right_normalized or left_normalized.replace(" ", "") == right_normalized.replace(" ", ""):
+		return True
+	left_tokens = _title_tokens(left)
+	right_tokens = _title_tokens(right)
+	return bool(left_tokens) and left_tokens == right_tokens
+
+
+def record_name_agrees(machine_name: str, record: dict[str, Any]) -> bool:
+	"""Match a title against either canonical name carried by one OPDB record."""
+	record_name = record.get("name")
+	record_qualifiers: frozenset[str] = frozenset()
+	if isinstance(record_name, str) and record_name.strip():
+		record_qualifiers = _parenthetical_tokens(record_name)
+		if record_qualifiers and not record_qualifiers <= _tokens_from_title_text(machine_name.casefold()):
+			return False
+		if names_agree(machine_name, record_name):
+			return True
+	common_name = record.get("commonName")
+	if isinstance(common_name, str) and common_name.strip():
+		common_qualifiers = _parenthetical_tokens(common_name)
+		if record_qualifiers and not record_qualifiers <= common_qualifiers:
+			# A generic commonName must not erase a physical qualifier carried by
+			# OPDB's canonical name.
+			return False
+		if common_qualifiers and not common_qualifiers <= _tokens_from_title_text(machine_name.casefold()):
+			return False
+		if names_agree(machine_name, common_name):
+			return True
+	return False
+
+
+def catalog_root_names_agree(
+	root_driver_ids: list[str],
+	catalog_driver_by_id: dict[str, dict[str, Any]],
+	record: dict[str, Any],
+) -> tuple[list[str], bool]:
+	"""Compare every declared catalog root fail-closed against one OPDB record."""
+	descriptions: list[str] = []
+	complete = bool(root_driver_ids)
+	for root_id in root_driver_ids:
+		catalog_driver = catalog_driver_by_id.get(root_id)
+		description = catalog_driver.get("description") if isinstance(catalog_driver, dict) else None
+		if not isinstance(description, str) or not description.strip():
+			complete = False
+			continue
+		descriptions.append(description)
+	return descriptions, complete and any(record_name_agrees(description, record) for description in descriptions)
+
+
+def _manufacturer_agrees(machine_manufacturer: str, record: dict[str, Any]) -> bool:
+	machine_tokens = frozenset(_normalize(machine_manufacturer).split())
+	manufacturer = record.get("manufacturer") if isinstance(record.get("manufacturer"), dict) else {}
+	for record_value in (manufacturer.get("name"), manufacturer.get("fullName")):
+		record_tokens = frozenset(_normalize(record_value).split())
+		if machine_tokens and record_tokens and (machine_tokens <= record_tokens or record_tokens <= machine_tokens):
+			return True
+	return False
+
+
+def identity_disagreements(definition: dict[str, Any], record: dict[str, Any]) -> dict[str, str]:
+	"""Return every incompatible identity dimension, keyed structurally."""
+	machine = definition["machine"]
+	disagreements: dict[str, str] = {}
+	if not record_name_agrees(machine["name"], record):
+		disagreements["name"] = f"machine name {machine['name']!r} disagrees with OPDB record {record['opdbId']}"
+	if not _manufacturer_agrees(machine["manufacturer"], record):
+		manufacturer = record.get("manufacturer") if isinstance(record.get("manufacturer"), dict) else {}
+		opdb_manufacturer = manufacturer.get("fullName") or manufacturer.get("name") or "unknown manufacturer"
+		disagreements["manufacturer"] = f"manufacturer {machine['manufacturer']!r} disagrees with OPDB record {record['opdbId']} ({opdb_manufacturer})"
+	machine_year = machine.get("year")
+	manufacture_date = record.get("manufactureDate")
+	if isinstance(machine_year, int) and isinstance(manufacture_date, str) and re.match(r"^\d{4}", manufacture_date):
+		opdb_year = int(manufacture_date[:4])
+		if abs(machine_year - opdb_year) > 1:
+			disagreements["year"] = f"machine year {machine_year} disagrees with OPDB record {record['opdbId']} ({opdb_year})"
+	return disagreements
+
+
+def identity_disagreement(definition: dict[str, Any], record: dict[str, Any]) -> str | None:
+	"""Return a human-readable summary of incompatible identity dimensions."""
+	values = identity_disagreements(definition, record).values()
+	return "; ".join(values) or None
+
+
 def _record_score(definition: dict[str, Any], record: dict[str, Any]) -> float:
 	machine = definition["machine"]
 	name_score = max(_similarity(machine["name"], record.get("name")), _similarity(machine["name"], record.get("commonName")))
@@ -157,6 +336,32 @@ def _choose_record(
 	if len(ranked) > 1 and ranked[0][0] - ranked[1][0] < 10:
 		raise DefinitionError(f"{definition['machine']['id']}: ambiguous OPDB machine records; add an explicit override")
 	return ranked[0][1], "csv"
+
+
+def _override_is_redundant(
+	definition: dict[str, Any],
+	selected: dict[str, Any],
+	mapped_records: list[dict[str, Any]],
+	by_ipdb: dict[int, list[dict[str, Any]]],
+	disagreements: dict[str, str],
+	root_name_agrees: bool,
+) -> bool:
+	"""Return whether normal selection reaches the override record without waivers."""
+	if disagreements or not root_name_agrees:
+		return False
+	replay_definition = dict(definition)
+	replay_definition["machine"] = dict(definition["machine"])
+	# OPDB import persists its selected identity back into the definition. Do not
+	# let those generated fields make the override appear load-bearing on the
+	# next run; replay selection from the independent canonical identity fields.
+	replay_definition["machine"].pop("ipdb_id", None)
+	replay_definition["machine"].pop("opdb_id", None)
+	try:
+		group_id = _choose_group(replay_definition, mapped_records, None)
+		without_override, _method = _choose_record(replay_definition, group_id, mapped_records, None, by_ipdb)
+	except DefinitionError:
+		return False
+	return without_override["opdbId"] == selected["opdbId"]
 
 
 def _definition_paths(repository_root: Path) -> list[Path]:
@@ -303,6 +508,11 @@ def build_opdb_import(repository_root: Path, snapshot_path: Path, acquired_at: s
 		raise DefinitionError("config/opdb-overrides.json must contain stale_opdb_ids and machines objects")
 	stale_ids = overrides["stale_opdb_ids"]
 	machine_overrides = overrides["machines"]
+	for machine_id, override in machine_overrides.items():
+		if not isinstance(override, dict) or not isinstance(override.get("opdb_id"), str) or not OPDB_ID_PATTERN.fullmatch(override["opdb_id"]) or not isinstance(override.get("reason"), str) or not override["reason"].strip():
+			raise DefinitionError(f"{machine_id}: OPDB override must contain non-empty opdb_id and reason strings")
+		if "evidence_url" in override and (not isinstance(override["evidence_url"], str) or not re.fullmatch(r"https://\S+", override["evidence_url"])):
+			raise DefinitionError(f"{machine_id}: OPDB override evidence_url must be an HTTPS URL")
 	mapping_path = repository_root / "machines" / "opdb_id.csv"
 	mapping, rows = _load_mapping(mapping_path)
 	for stale_id, replacement in stale_ids.items():
@@ -315,6 +525,8 @@ def build_opdb_import(repository_root: Path, snapshot_path: Path, acquired_at: s
 		raise DefinitionError(f"CSV contains OPDB IDs absent from the snapshot: {unknown_targets}")
 	catalog = load_json(repository_root / "catalog" / "pinmame.json")
 	catalog_driver_ids = {record["id"] for record in catalog["drivers"]}
+	catalog_driver_by_id = {record["id"]: record for record in catalog["drivers"]}
+	catalog_machine_by_id = {record["id"]: record for record in catalog["machines"]}
 	definitions: list[tuple[dict[str, Any], str]] = []
 	for path in _definition_paths(repository_root):
 		definition = load_json(path)
@@ -352,9 +564,26 @@ def build_opdb_import(repository_root: Path, snapshot_path: Path, acquired_at: s
 		ipdb_id = selected.get("ipdbId")
 		if not isinstance(ipdb_id, int):
 			raise DefinitionError(f"{machine_id}: selected OPDB record {selected['opdbId']} has no IPDB number")
+		disagreements = identity_disagreements(definition, selected)
+		disagreement = "; ".join(disagreements.values()) or None
+		identity_is_resolved = "identity" not in definition.get("coverage", {}).get("missing", [])
+		if disagreement and identity_is_resolved and override_record is None:
+			raise DefinitionError(f"{machine_id}: resolved identity is incompatible: {disagreement}; correct the mapping, mark identity unresolved, or add a reviewed override")
+		if identity_is_resolved and "manufacturer" in disagreements and not isinstance(override.get("evidence_url") if isinstance(override, dict) else None, str):
+			raise DefinitionError(f"{machine_id}: cross-manufacturer OPDB override requires an evidence_url")
+		catalog_machine = catalog_machine_by_id.get(machine_id)
+		root_driver_ids = catalog_machine.get("root_drivers", []) if isinstance(catalog_machine, dict) else []
+		root_descriptions, root_name_agrees = catalog_root_names_agree(root_driver_ids, catalog_driver_by_id, selected)
+		if identity_is_resolved and not root_name_agrees and override_record is None:
+			raise DefinitionError(
+				f"{machine_id}: resolved identity disagrees with PinMAME root title(s) {root_descriptions}; "
+				"correct the mapping or add a reviewed override"
+			)
+		if override_record is not None and _override_is_redundant(definition, selected, mapped_records, by_ipdb, disagreements, root_name_agrees):
+			raise DefinitionError(f"{machine_id}: OPDB override is redundant and must be removed")
 		mapped_ipdb_ids = {record.get("ipdbId") for record in mapped_records if isinstance(record.get("ipdbId"), int)}
 		if override_record is not None:
-			method = "override"
+			method = "csv_with_reviewed_override" if selected["opdbId"] in normalized_ids else "override"
 		elif machine_id in stale_rewrite_machines:
 			method = "stale_id_rewrite"
 		elif selected["opdbId"] in normalized_ids or ipdb_id in mapped_ipdb_ids:

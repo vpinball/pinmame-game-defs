@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `id4`, description "ID4: Independence Day (2.02)", manufacturer
   "Sega", catalog year "1996".
 - OPDB record `G4doQ-MKNN9` (IPDB 3878) names this machine "Independence Day"
-  (Sega, manufacture date 1996-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Sega, manufacture date 1996-01-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME prefixes the title with its ID4 abbreviation; OPDB carries Independence Day.
 - The definition's driver list is exactly the clone tree PinMAME declares under `id4`;
   whether every listed driver really runs on this physical machine is unverified.
 

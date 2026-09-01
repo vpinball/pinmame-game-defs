@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `grand8`, description "Grand 8, Le", manufacturer
   "Christian Tabart (France)", catalog year "1985".
 - OPDB record `G5bQq-MkPW7` (IPDB 3916) names this machine "Le Grande 8"
-  (K.C. Tabart, manufacture date 1985-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (K.C. Tabart, manufacture date 1985-01-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME's catalog spells the title Grand 8, Le while OPDB spells it Le Grande 8.
 - The definition's driver list is exactly the clone tree PinMAME declares under `grand8`;
   whether every listed driver really runs on this physical machine is unverified.
 

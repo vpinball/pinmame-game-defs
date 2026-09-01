@@ -80,6 +80,14 @@ HANDLER_SYMBOL_PATTERN = re.compile(r"_(?:keydown|keyup|init|mousedown|mouseup|t
 HELPER_SYMBOL_PATTERN = re.compile(r"^(?i:vpm|set|update|sub|call)[A-Z_]")
 TITLE_STOPWORDS = {"the", "a", "an", "and", "of"}
 YEAR_PATTERN = re.compile(r"\b(?:19|20)\d{2}\b")
+IDENTITY_ONLY_HEADLINE = (
+	"Coverage: **partial - machine identity only. Nothing about playfield devices, wiring, mechanisms,\n"
+	"or behavior is evidenced yet.**"
+)
+ATTACHMENT_HEADLINE = (
+	"Coverage: **partial - machine identity plus candidate-only I/O attachments. Playfield devices,\n"
+	"wiring, mechanisms, and behavior are evidenced only as unverified candidates.**"
+)
 
 
 def label_well_formed(label: str) -> bool:
@@ -189,6 +197,28 @@ def candidate_device(candidate: dict[str, Any], source_id: str, occupied: set[st
 	}
 
 
+def multi_address_switch_helpers(evidence: dict[str, Any]) -> set[tuple[str, str]]:
+	"""Find switch-named routines that write several addresses, not devices."""
+	addresses: dict[tuple[str, str], set[int]] = {}
+	for candidate in [*evidence["switches"], *evidence["outputs"]]:
+		symbol = candidate.get("symbol", "")
+		if not symbol.casefold().endswith("switch"):
+			continue
+		key = (candidate["group"], symbol.casefold())
+		addresses.setdefault(key, set()).add(candidate["address"])
+	return {key for key, values in addresses.items() if len(values) >= 2}
+
+
+def address_label(group: str, address: int) -> str:
+	prefix = {
+		"pinmame.input.switch": "Switch",
+		"pinmame.output.solenoid": "Solenoid",
+		"pinmame.output.lamp": "Lamp",
+		"pinmame.output.gi": "GI",
+	}[group]
+	return f"{prefix} {address}"
+
+
 def script_source_record(entry: dict[str, Any], evidence: dict[str, Any]) -> dict[str, Any]:
 	return {
 		"attribution": evidence["source"]["attribution"],
@@ -200,6 +230,27 @@ def script_source_record(entry: dict[str, Any], evidence: dict[str, Any]) -> dic
 		"sha256": evidence["source"]["sha256"],
 		"uri": CORPUS_REPOSITORIES[entry["corpus"]],
 	}
+
+
+def remove_script_attachments(definition: dict[str, Any], corpus_sources: list[dict[str, Any]]) -> None:
+	"""Remove only devices wholly supported by this pass and its unused citations."""
+	pass_source_ids = {source["id"] for source in corpus_sources}
+
+	def from_this_pass(device: dict[str, Any]) -> bool:
+		refs = device.get("provenance", {}).get("source_refs", [])
+		return bool(refs) and all(ref in pass_source_ids for ref in refs)
+
+	definition["inputs"] = [device for device in definition["inputs"] if not from_this_pass(device)]
+	definition["outputs"] = [device for device in definition["outputs"] if not from_this_pass(device)]
+	kept_refs = {
+		ref
+		for device in definition["inputs"] + definition["outputs"]
+		for ref in device.get("provenance", {}).get("source_refs", [])
+	}
+	definition["sources"] = [
+		source for source in definition["sources"]
+		if source not in corpus_sources or source["id"] in kept_refs
+	]
 
 
 def attach_candidates(
@@ -224,6 +275,7 @@ def attach_candidates(
 		if not title_matches(machine_name, machine_year, entry["source"]):
 			continue
 		evidence = load_json(REPOSITORY_ROOT / entry["evidence"])
+		helper_symbols = multi_address_switch_helpers(evidence)
 		source_id = f"vpx-script.{Path(entry['evidence']).stem}"
 		contributed = False
 		for candidate in [*evidence["switches"], *evidence["outputs"]]:
@@ -237,7 +289,10 @@ def attach_candidates(
 			key = (group, candidate["address"])
 			if key in bindings:
 				continue
-			label = clean_label(vpx_symbol_label(re.sub(r"_(?:Hit|UnHit|Spin|Slingshot)$", "", candidate.get("symbol") or candidate["label"], flags=re.IGNORECASE)))
+			if (group, candidate.get("symbol", "").casefold()) in helper_symbols:
+				label = address_label(group, candidate["address"])
+			else:
+				label = clean_label(vpx_symbol_label(re.sub(r"_(?:Hit|UnHit|Spin|Slingshot)$", "", candidate.get("symbol") or candidate["label"], flags=re.IGNORECASE)))
 			if not label or not label_well_formed(label):
 				if rejected_counter is not None:
 					rejected_counter[0] += 1
@@ -268,7 +323,7 @@ def knowledge_note_section(script_count: int, device_count: int) -> str:
 	)
 
 
-def update_knowledge_note(knowledge_path: Path, script_count: int, device_count: int) -> None:
+def update_knowledge_note(knowledge_path: Path, script_count: int, device_count: int, has_attachments: bool) -> None:
 	if not knowledge_path.is_file():
 		return
 	text = knowledge_path.read_text(encoding="utf-8")
@@ -288,6 +343,10 @@ def update_knowledge_note(knowledge_path: Path, script_count: int, device_count:
 		if marker not in text:
 			return
 		text = text.replace(marker, section + "\n" + marker, 1)
+	if has_attachments:
+		text = text.replace(IDENTITY_ONLY_HEADLINE, ATTACHMENT_HEADLINE, 1)
+	else:
+		text = text.replace(ATTACHMENT_HEADLINE, IDENTITY_ONLY_HEADLINE, 1)
 	if not text.endswith("\n"):
 		text += "\n"
 	write_text(knowledge_path, text)
@@ -334,11 +393,14 @@ def main() -> None:
 			continue
 		if args.sanitize and not entries_by_machine.get(machine["id"]):
 			# Nothing left to recompute from; drop this pass's devices and citations.
-			definition["inputs"] = []
-			definition["outputs"] = []
-			definition["sources"] = [source for source in definition["sources"] if source not in corpus_sources]
+			remove_script_attachments(definition, corpus_sources)
 			if not args.dry_run:
-				update_knowledge_note(REPOSITORY_ROOT / definition["knowledge"]["path"], 0, 0)
+				update_knowledge_note(
+					REPOSITORY_ROOT / definition["knowledge"]["path"],
+					0,
+					0,
+					bool(definition.get("controller")) or bool(definition["inputs"] or definition["outputs"]),
+				)
 				write_json(definition_path, definition)
 			touched += 1
 			continue
@@ -354,24 +416,8 @@ def main() -> None:
 			# other sources survives; a curated record that cited a corpus
 			# script with a full hash would therefore also be cleared and
 			# recomputed by this mode.
-			pass_source_ids = {source["id"] for source in corpus_sources}
-
-			def from_this_pass(device: dict[str, Any]) -> bool:
-				refs = device.get("provenance", {}).get("source_refs", [])
-				return bool(refs) and all(ref in pass_source_ids for ref in refs)
-
 			synthetic = next((device for device in definition["outputs"] if device.get("binding") == SAM_GAME_ON_BINDING and device.get("kind") == "virtual"), None)
-			definition["inputs"] = [device for device in definition["inputs"] if not from_this_pass(device)]
-			definition["outputs"] = [device for device in definition["outputs"] if not from_this_pass(device)]
-			kept_refs = {
-				ref
-				for device in definition["inputs"] + definition["outputs"]
-				for ref in device.get("provenance", {}).get("source_refs", [])
-			}
-			definition["sources"] = [
-				source for source in definition["sources"]
-				if source not in corpus_sources or source["id"] in kept_refs
-			]
+			remove_script_attachments(definition, corpus_sources)
 
 		machine_year = definition["machine"].get("year")
 		contributing, merged = attach_candidates(definition, entries_by_machine.get(machine["id"], []), profile_groups, definition["machine"]["name"], machine_year, rejected_counter)
@@ -386,10 +432,20 @@ def main() -> None:
 			definition["outputs"].append(synthetic)
 		if not merged and args.sanitize:
 			if not args.dry_run:
-				update_knowledge_note(REPOSITORY_ROOT / definition["knowledge"]["path"], 0, 0)
+				update_knowledge_note(
+					REPOSITORY_ROOT / definition["knowledge"]["path"],
+					0,
+					0,
+					bool(definition.get("controller")) or bool(definition["inputs"] or definition["outputs"]),
+				)
 		elif merged:
 			if not args.dry_run:
-				update_knowledge_note(REPOSITORY_ROOT / definition["knowledge"]["path"], len(contributing), len(merged))
+				update_knowledge_note(
+					REPOSITORY_ROOT / definition["knowledge"]["path"],
+					len(contributing),
+					len(merged),
+					bool(definition.get("controller")) or bool(definition["inputs"] or definition["outputs"]),
+				)
 		if not merged and not args.sanitize:
 			continue
 		touched += 1

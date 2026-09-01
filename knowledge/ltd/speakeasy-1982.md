@@ -13,8 +13,9 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `alcapone`, description "Al Capone", manufacturer
   "LTD", catalog year "198?".
 - OPDB record `GRbl7-ML8EY` (IPDB 2270) names this machine "Speakeasy"
-  (Bally, manufacture date 1982-01-08); identity is unresolved: catalog/OPDB name disagreement, so the mapped record is treated as a lead
-  rather than a resolved identity.
+  (Bally, manufacture date 1982-01-08), but the mapped record and the PinMAME
+  catalog do not agree on identity, so identity is unresolved: catalog/OPDB name disagreement; the mapped record is a
+  lead, not a resolved identity.
 - The definition's driver list is exactly the clone tree PinMAME declares under `alcapone`;
   whether every listed driver really runs on this physical machine is unverified.
 

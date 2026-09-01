@@ -26,7 +26,7 @@ Count: **11**
 
 ## Catalog drivers without a CSV mapping
 
-Count: **362**
+Count: **363**
 
 - `aar_101`
 - `afv_d4`
@@ -108,6 +108,7 @@ Count: **362**
 - `fjholden`
 - `flashman`
 - `fldragon`
+- `flicker`
 - `football`
 - `force`
 - `force_ekky`
@@ -393,7 +394,7 @@ Count: **362**
 
 ## Machine definitions without a CSV mapping
 
-Count: **242**
+Count: **243**
 
 - `alvin-g.dinosaur-eggs-r02.1993`
 - `alvin-g.u-s-a-football-redemption-p08.1994`
@@ -512,6 +513,7 @@ Count: **242**
 - `nuova-bell-games.top-pin.1988`
 - `nuova-bell-games.u-boat-65.1988`
 - `nuova-bell-games.world-defender.1985`
+- `nutting-associates.flicker-prototype.1974`
 - `peyper-spain.nemesis.1986`
 - `peyper-spain.odin.1985`
 - `peyper-spain.odisea-paris-dakar.1987`

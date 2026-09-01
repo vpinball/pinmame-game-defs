@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `tafg_lx3`, description "Addams Family Special Collectors Edition / Gold, The (LX-3)", manufacturer
   "Bally", catalog year "1994".
 - OPDB record `G4ODR-MLzY7` (IPDB 21) names this machine "The Addams Family Gold"
-  (Bally, manufacture date 1994-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Bally, manufacture date 1994-01-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME calls the edition Addams Family Special Collectors Edition / Gold; OPDB uses The Addams Family Gold.
 - The definition's driver list is exactly the clone tree PinMAME declares under `tafg_lx3`;
   whether every listed driver really runs on this physical machine is unverified.
 

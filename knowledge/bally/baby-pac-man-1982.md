@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `babypac`, description "Baby Pac-Man (Video/Pinball Combo)", manufacturer
   "Bally", catalog year "1982".
 - OPDB record `G5Kvx-MQdpl` (IPDB 125) names this machine "Baby Pac-Man"
-  (Bally, manufacture date 1982-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Bally, manufacture date 1982-01-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME identifies Baby Pac-Man as a Video/Pinball Combo; OPDB's sole Bally Baby Pac-Man record omits that product-class qualifier for the same hybrid machine.
 - The definition's driver list is exactly the clone tree PinMAME declares under `babypac`;
   whether every listed driver really runs on this physical machine is unverified.
 

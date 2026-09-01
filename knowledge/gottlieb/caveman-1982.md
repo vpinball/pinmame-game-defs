@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `caveman`, description "Caveman (Pinball/Video Combo)", manufacturer
   "Gottlieb", catalog year "1981".
 - OPDB record `GR768-MLErr` (IPDB 475) names this machine "Caveman"
-  (Gottlieb, manufacture date 1982-01-09); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Gottlieb, manufacture date 1982-01-09); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME identifies Caveman as a Pinball/Video Combo; OPDB's sole Gottlieb Caveman record omits that product-class qualifier for the same hybrid machine.
 - The definition's driver list is exactly the clone tree PinMAME declares under `caveman`;
   whether every listed driver really runs on this physical machine is unverified.
 

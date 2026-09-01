@@ -37,7 +37,7 @@
             "uniqueItems": true
           },
           "opdb_id": { "pattern": "^G[A-Za-z0-9]+-[A-Za-z0-9-]+$", "type": "string" },
-          "resolution": { "enum": ["csv", "existing", "override", "stale_id_rewrite"] }
+          "resolution": { "enum": ["csv", "csv_with_reviewed_override", "existing", "override", "stale_id_rewrite"] }
         },
         "required": ["machine_id", "definition", "opdb_id", "family_opdb_id", "ipdb_id", "mapped_driver_count", "mapped_opdb_ids", "resolution"],
         "type": "object"

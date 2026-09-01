@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `lizard`, description "(Pinball) Lizard", manufacturer
   "Game Plan", catalog year "1980".
 - OPDB record `GR9ko-MLzrW` (IPDB 1464) names this machine "Pinball Lizard"
-  (Game Plan, manufacture date 1980-07-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Game Plan, manufacture date 1980-07-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME parenthesizes Pinball in the root title while OPDB renders Pinball Lizard without parentheses.
 - The definition's driver list is exactly the clone tree PinMAME declares under `lizard`;
   whether every listed driver really runs on this physical machine is unverified.
 

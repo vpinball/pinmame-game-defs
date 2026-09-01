@@ -12,8 +12,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 
 - PinMAME catalog: root driver `cobrapb`, description "Cobra (Playbar)", manufacturer
   "Playbar", catalog year "1987".
-- OPDB record `G50zO-MJ97Z` (IPDB 3026) names this machine "Cobra"
-  (Bell Games, manufacture date 1987-02-01); the resolved identity rests on the
+- OPDB record `G50zO-MJ97Z-AOvwl` (IPDB 4124) names this machine "Cobra"
+  (Playbar, manufacture date 1987-06-01); the resolved identity rests on the
   agreement of the PinMAME catalog and this reviewed mapping.
 - The definition's driver list is exactly the clone tree PinMAME declares under `cobrapb`;
   whether every listed driver really runs on this physical machine is unverified.

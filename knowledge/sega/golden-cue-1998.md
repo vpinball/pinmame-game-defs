@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `goldcue`, description "Golden Cue (0.04 Prototype)", manufacturer
   "Sega", catalog year "1998".
 - OPDB record `GRYzo-MP3p7` (IPDB 4383) names this machine "Golden Cue"
-  (Sega, manufacture date 1998-06-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Sega, manufacture date 1998-06-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME identifies the physical machine as a prototype; OPDB's sole Sega Golden Cue record uses the unsuffixed title for that prototype.
 - The definition's driver list is exactly the clone tree PinMAME declares under `goldcue`;
   whether every listed driver really runs on this physical machine is unverified.
 

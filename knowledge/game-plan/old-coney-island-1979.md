@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `coneyis`, description "Coney Island!", manufacturer
   "Game Plan", catalog year "1979".
 - OPDB record `G4qjj-MZeyb` (IPDB 553) names this machine "Old Coney Island!"
-  (Game Plan, manufacture date 1979-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Game Plan, manufacture date 1979-01-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME abbreviates the title to Coney Island; OPDB carries the full title Old Coney Island.
 - The definition's driver list is exactly the clone tree PinMAME declares under `coneyis`;
   whether every listed driver really runs on this physical machine is unverified.
 

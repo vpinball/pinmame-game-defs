@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `thund_p1`, description "Thunderball (P-1 Prototype)", manufacturer
   "Williams", catalog year "1982".
 - OPDB record `G4J3k-MLnnX` (IPDB 2554) names this machine "Thunderball"
-  (Williams, manufacture date 1982-05-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Williams, manufacture date 1982-05-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME identifies the physical machine as a prototype; OPDB's sole Williams Thunderball record uses the unsuffixed title for that prototype.
 - The definition's driver list is exactly the clone tree PinMAME declares under `thund_p1`;
   whether every listed driver really runs on this physical machine is unverified.
 

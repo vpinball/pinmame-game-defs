@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import re
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
 from pinmame_game_defs.jsonio import load_json
+from pinmame_game_defs.workspace import resolve_working_root
 
 sys.path.insert(0, str(ROOT / "tools"))
 from attach_vpx_script_io import label_well_formed as tool_label_ok
@@ -16,9 +18,9 @@ CORPUS_REPOSITORIES = (
 	"https://github.com/sverrewl/vpxtable_scripts",
 	"https://github.com/jsm174/vpx-standalone-scripts",
 )
-EXPECTED_ATTACHED_MACHINES = 279
-EXPECTED_ATTACHED_DEVICES = 13184
-EXPECTED_ATTACHED_SCRIPTS = 351
+EXPECTED_ATTACHED_MACHINES = 280
+EXPECTED_ATTACHED_DEVICES = 13210
+EXPECTED_ATTACHED_SCRIPTS = 352
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
@@ -134,7 +136,7 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 	def test_script_citations_hash_the_pinned_corpora(self) -> None:
 		# Evidence-gated: recompute every cited script's SHA-256 against the
 		# pinned corpora checkouts and skip cleanly when they are absent.
-		corpora_root = ROOT.parent / "pinmame-game-defs-working-dir" / "source-checkouts"
+		corpora_root = resolve_working_root(ROOT) / "source-checkouts"
 		vpxtable = corpora_root / "vpxtable_scripts"
 		standalone = corpora_root / "vpx-standalone-scripts"
 		if not vpxtable.is_dir() or not standalone.is_dir():
@@ -223,6 +225,64 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 			for device in definition["inputs"] + definition["outputs"]:
 				self.assertNotIn("vpm sol sound", device["label"].casefold(), (definition["machine"]["id"], device["id"]))
 				self.assertFalse(re.match(r"^(?:set|update) ", device["label"].casefold()), (definition["machine"]["id"], device["id"]))
+
+	def test_multi_address_switch_routine_uses_address_labels(self) -> None:
+		import attach_vpx_script_io as tool
+
+		evidence = {
+			"outputs": [],
+			"switches": [
+				{"address": 10, "group": "pinmame.input.switch", "symbol": "VTSwitch"},
+				{"address": 20, "group": "pinmame.input.switch", "symbol": "VTSwitch"},
+				{"address": 30, "group": "pinmame.input.switch", "symbol": "PhysicalSwitch"},
+			],
+		}
+		self.assertEqual({("pinmame.input.switch", "vtswitch")}, tool.multi_address_switch_helpers(evidence))
+		self.assertEqual("Switch 10", tool.address_label("pinmame.input.switch", 10))
+		buck = load_json(ROOT / "machines/partial/gottlieb/buck-rogers-1980.json")
+		labels = {device["binding"]["device"]: device["label"] for device in buck["inputs"]}
+		for address in (10, 20, 30, 40, 50, 60):
+			self.assertEqual(f"Switch {address}", labels[address])
+
+	def test_sanitize_removal_is_provenance_scoped(self) -> None:
+		import attach_vpx_script_io as tool
+
+		corpus_source = {"id": "vpx-script.corpus", "kind": "vpx_script"}
+		other_source = {"id": "pinmame.driver.game", "kind": "source_code"}
+		definition = {
+			"inputs": [
+				{"id": "pass-only", "provenance": {"source_refs": ["vpx-script.corpus"]}},
+				{"id": "mixed", "provenance": {"source_refs": ["vpx-script.corpus", "pinmame.driver.game"]}},
+			],
+			"outputs": [{"id": "other", "provenance": {"source_refs": ["pinmame.driver.game"]}}],
+			"sources": [corpus_source, other_source],
+		}
+		tool.remove_script_attachments(definition, [corpus_source])
+		self.assertEqual(["mixed"], [device["id"] for device in definition["inputs"]])
+		self.assertEqual(["other"], [device["id"] for device in definition["outputs"]])
+		self.assertEqual([corpus_source, other_source], definition["sources"])
+		definition["inputs"] = []
+		tool.remove_script_attachments(definition, [corpus_source])
+		self.assertEqual([other_source], definition["sources"])
+
+	def test_prototype_title_token_is_required(self) -> None:
+		import attach_vpx_script_io as tool
+
+		self.assertTrue(tool.title_matches("Flicker Prototype", 1974, "Flicker Prototype (Nutting 1974).vbs"))
+		self.assertFalse(tool.title_matches("Flicker Prototype", 1974, "Flicker (Nutting 1974).vbs"))
+
+	def test_knowledge_headline_rewrites_in_both_directions(self) -> None:
+		import attach_vpx_script_io as tool
+
+		with tempfile.TemporaryDirectory() as directory:
+			path = Path(directory) / "note.md"
+			path.write_text(f"# Example\n\n{tool.IDENTITY_ONLY_HEADLINE}\n\n## What a curator must establish next\n", encoding="utf-8")
+			tool.update_knowledge_note(path, 1, 2, True)
+			self.assertIn(tool.ATTACHMENT_HEADLINE, path.read_text(encoding="utf-8"))
+			tool.update_knowledge_note(path, 0, 0, False)
+			text = path.read_text(encoding="utf-8")
+			self.assertIn(tool.IDENTITY_ONLY_HEADLINE, text)
+			self.assertNotIn("## VPX script candidates", text)
 
 	def test_retheme_scripts_do_not_supply_machine_labels(self) -> None:
 		# Gremlins re-themes Victory's ROM but not Victory's playfield; the title

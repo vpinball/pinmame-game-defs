@@ -13,8 +13,8 @@ requirement in the definition's `coverage.missing` is genuinely outstanding.
 - PinMAME catalog: root driver `dd_l2`, description "Dr. Dude (LA-2)", manufacturer
   "Bally", catalog year "1990".
 - OPDB record `GRVEJ-MDq1w` (IPDB 737) names this machine "Dr. Dude And His Excellent Ray"
-  (Bally, manufacture date 1990-01-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
+  (Bally, manufacture date 1990-01-01); the selected identity rests on the reviewed
+  machine-specific exception in `config/opdb-overrides.json`: PinMAME abbreviates the title to Dr. Dude; OPDB carries the full title Dr. Dude And His Excellent Ray.
 - The definition's driver list is exactly the clone tree PinMAME declares under `dd_l2`;
   whether every listed driver really runs on this physical machine is unverified.
 
