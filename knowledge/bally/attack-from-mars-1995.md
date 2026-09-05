@@ -780,6 +780,96 @@ ramp (27). That is what puts solenoid 19 on the right side of the playfield and 
 solenoid 23 Saucer Dome shares assembly A-20670 with solenoids 37 and 38 - all three are on the one
 saucer L.E.D. board inside saucer assembly A-20608.
 
+## ROM-internal game state and rule thresholds
+
+Method: `docs/ROM-STATE-MAPPING.md`. Source record `rom-state.afm-113b.wpc-emu-2026-09-05` below.
+These are **contributor-reported candidate/observed** firmware findings on `afm_113b` only. No
+content-addressed traces are retained for them yet, so none is promoted. They assert nothing about
+physical devices, polarity or placement. Offsets in the block table below are decimal.
+
+**Switch timing observed on the jet switches.** Tested on switches 53, 54 and 55 in 20-hit
+batches, pulse meaning the closed interval and gap the open interval between closures of the same
+switch, timed on the emulator's clock. A 1 ms and a 2 ms closure registered nothing; 4 ms
+registered 19 of 20. Gaps of 40, 80 and 120 ms registered 7, 19 and 20 of 20. Intervals of 3 ms,
+and between 80 and 120 ms, were not tested, so 4 ms and 120 ms are working intervals rather than
+proven minima, and neither is established for other switches or other games. Round-robin across
+the three jet switches did not beat the per-switch hold-off.
+
+**Per-player feature block.** Player 1 at CPU RAM 0x0870, stride 0x50, so player n is
+`0x0870 + 0x50*(n-1)`. Observed fields, by offset:
+
+| offset | field |
+| --- | --- |
+| +6 / +7 / +8 | Super Jets requirement copy, jet hits remaining, times collected this game |
+| +9 to +12 | hurry-up lane counters: left ramp, right ramp, left orbit, right orbit |
+| +13 | Total Annihilation started |
+| +14 / +15 | locks remaining, locks made |
+| +23 | 3-bank target bitmask, 3 bits, reads 7 with the bank up |
+| +25 / +26 / +28 | attack-wave hits required, hits remaining, hit value in millions |
+| +29 | final-wave mothership counter, armed to 10 |
+| +30 | MARTIAN standup bitmask, 7 bits, set to 127 at ball start |
+
+Player scores are 6-byte BCD at 0x16A0 with a 7-byte stride. Current player 0x03B5, current ball
+0x03B6, players in game 0x1711, game running 0x0080.
+
+**Rule thresholds read from code.** Super Jets requires `min(100 + 25 x times already collected,
+200)` jet hits, computed at bank 53 0x466E-0x4680 and counted down at 0x46FD-0x4706; the prediction
+that the ball after a first collect arms at 125 was confirmed in the emulator; the 200 cap is read from the same code but was not separately
+exercised. Attack-wave saucer
+hits required are `3 x waves completed + (game adjustment 0x0C + 1)`, computed at bank 52
+0x6B4D-0x6B63; setting that adjustment to 0 and to 4 produced 1-hit and 5-hit waves as predicted, which exercises
+the constant term; the coefficient on completed waves is read from the code and was observed across
+consecutive waves rather than isolated experimentally.
+Locks compare against an immediate 3 at bank 52 0x52D0 and 0x52E5. The 3-bank and MARTIAN
+bitmasks fire their mode when the byte reaches zero, at bank 52 0x5B85 and 0x40C3 respectively.
+The final attack wave ignores the requirement field it arms and counts the separate mothership
+counter at +29 from 10, with the target bank held down for the whole wave.
+
+**Operator adjustments.** Read through an inline-argument call at `$83E8`; the value byte is at
+`base + 2*(index & 0x7F) + 1`, standard base 0x1B95 and game base held in RAM at 0x02D9 (0x1C47 on
+this ROM, which is 0x1B95 plus twice the 0x59 standard entries). Each adjustment has a 12-byte ROM
+descriptor of default, minimum and maximum: game table at bank 55 0x67AC with 43 entries, standard
+table at bank 57 0x49BB with 89. The getter clamps every read against that descriptor, so a stored
+byte and the effective value can differ. The printed menu names are plain ASCII in index order,
+English at bank 28 from 0x6083 and German at bank 29 from 0x6181 for the game table, and bank 56
+from 0x5ADA for the standard table.
+
+This is a **partial firmware-menu recovery**: it reads names and ranges out of the ROM, covering
+ground the contributor-held operations manual would have supplied, but it is not a substitute for
+that manual and has not been checked against it. Selected entries, name from the ROM strings,
+default and range from the descriptors:
+
+| # | value at | name | default | range |
+| --- | --- | --- | --- | --- |
+| 0x03 | 0x1C4E | BALL SAVES | 1 | 0-5 |
+| 0x04 | 0x1C50 | BALL SAVE TIME | 4 | 3-15 |
+| 0x06 | 0x1C54 | ATTACK WAVE E.B. | 2 | 0-5 |
+| 0x09 | 0x1C5A | STROBE M.B. E.B. | 10 | 7-12 |
+| 0x0A | 0x1C5C | STARTING WAVE | 0 | 0-5 |
+| 0x0C | 0x1C60 | ATTACK WAVE DIFF. | 2 | 0-4 |
+| 0x0D | 0x1C62 | 1st HARD LOCK | 2 | 1-3 |
+| 0x0E | 0x1C64 | SUPER J.P. TIMER | 10 | 5-20 |
+| 0x11 | 0x1C6A | MARTIAN TIMER | 30 | 10-60 |
+| 0x12 | 0x1C6C | MAX. DIRTY POOL | 1 | 1-6 |
+| 0x1C-0x23 | 0x1C80+ | DISABLE DIVERTER, L. GATE, R. GATE, MTR. BANK, DROP TGT., ALIENS, SAUCER, STROBE | 0 | 0-1 |
+
+Three entries were identified experimentally before the name strings were found, and each landed
+where the name list places it: 0x04 changed the ball-save window, 0x0C changed the wave
+requirement, and 0x11 changed the Martian Attack countdown. That supports the alignment at those
+three indices and makes it plausible across the table; it does not verify every entry.
+
+The ball-save measurements were 3.70 s, 9.29 s and 17.61 s for settings of 3, 8 and 15, taken on
+the emulator clock from the first scoring switch to the last edge of lamp 15, sampled at 10 ms.
+They exceed their settings by roughly a sixth to a quarter. The measurement endpoint, the lamp's
+own behaviour and the emulator's timing are all candidate explanations and none has been
+separated, so these are relative confirmations that the adjustment drives the window rather than
+calibrated durations for recreation.
+
+**Runtime reachability.** Because WPC-95 persists all 0x3000 bytes as NVRAM, a table script can
+read these addresses live through `Controller.NVRAM` or the `ChangedNVRAM` callback. Confirmed on
+VPinMAME with the retained g5k script's table: 847 polls over 93 seconds, no COM errors, changed
+rows delivered on every poll during play, and the full image indexed directly by RAM offset.
+
 ## Sources
 
 - `manual.attack-from-mars.1995`: contributor-held Bally/Midway operations manual scan, SHA-256 `12c36ce8e1e0997a03016d76589df4fe2a6ad66cd5592d2a6f8dd75e49f6b1e5`; lamp matrix 2-42/2-43, switch matrix 2-44, solenoid/flasher table 2-46, assemblies Section 2. **Not retained in this repository's evidence roots**, so it is corroboration for the retained handbook rather than an independent authority for any promoted assertion.
@@ -802,3 +892,15 @@ saucer L.E.D. board inside saucer assembly A-20608.
   `afm_113b` from empty NVRAM, reach attract and start a ball; they observe all five GI strings, sixty
   matrix lamps, every one of the sixteen saucer-L.E.D. addresses, and solenoids 29, 31, 37, 38, 41
   and 42.
+- `rom-state.afm-113b.wpc-emu-2026-09-05`: headless emulation and static disassembly of the same
+  `afm_113b.zip` archive already pinned above, SHA-256
+  `378102edfd80d650bf6810d5e521fd08cfd972f8732f3c2204f5929d2266358d`, using `wpc-emu` 0.36.7 (npm,
+  MIT) and a purpose-written 6809 disassembler. Fourteen scripted games were recorded at 50 ms RAM
+  resolution with the sound, solenoid, lamp and switch timeline. No ROM bytes are retained here;
+  the evidence is addresses, short instruction listings and measured values. Firmware authority
+  only: it asserts nothing physical. Disassembly used a purpose-written 6809 disassembler carried in
+  the contributor's `vpxc` working repository, not in this one; its listings were cross-checked
+  against the emulator's own execution. Runtime reachability was separately confirmed under
+  VPinMAME reported as 3.6, whose exact binary identity was not captured. **No scenario scripts,
+  traces, tool hashes or polling artifacts are retained in this repository's evidence roots**, so
+  every finding above is candidate/observed and none is promoted.
