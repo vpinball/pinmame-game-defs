@@ -88,9 +88,10 @@ Callouts drawn: 01, 02, 03, 05, 06, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 
   popper mechanism at the rear left, 06, 21, 22, 23 and 24 into the hand drive at the rear left, 15
   and 16 at the drop target beside the popper.
 - 33 points at the diverter at the top of the left orbit; 34 at the rear-left rail above it.
-- An unlabelled plain dome circle is drawn at the far left of the playfield beside the jet bumpers
-  (about 0.06, 0.28 through the fit below). No callout names it; it is a lead for the Left Ramp
-  Flasher (25), which has no callout, and is not used as its placement.
+- An unlabelled plain dome circle is drawn at the far left of the playfield beside the jet bumpers,
+  centred at pixel (1585, 1116), (0.061, 0.287) through the fit below. No callout names it; the
+  definition takes it to be the Left Ramp Flasher (25), which has no callout, because a second table
+  drives its solenoid-25 glow at the same spot.
 - 01 points at the trough under the right of the apron and 02 at the foot of the shooter lane.
 
 The flasher placements in the definition map these callouts through a least-squares affine fit of

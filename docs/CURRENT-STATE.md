@@ -261,6 +261,8 @@ The lamp and switch matrices also number the nine Cyberspace Matrix holes in opp
 
 Side effects on shared figures: the catalog-wide `unresolved_conflicts` requirement count falls by one, to 46, and the `spatial_placement` count rises by one, to 696, because the legacy record never listed that requirement. Six Johnny Mnemonic drawings join the excerpt page-scale allow-list, and the pinned corpus script `Johnny_Mnemonic_1.3.vbs` joins the script-link table.
 
+Follow-up the same day: the contributor's archived 2020 Johnny Mnemonic table (Alessio, retained under `vpx-sources/williams/johnny-mnemonic-1995/archive-2020/` with an 814-file manifest) models every flasher as a glow sprite driven from its solenoid. The sprites are not sockets, but they corroborate the drawing measurements (17, 20 and 28 within 0.01, 19 within 0.021; 18, 26 and 27 differ by 0.04-0.10 in the rear area, where the two tables' geometry already disagrees by up to 0.06). The solenoid-25 sprite sits 0.021 from an unlabelled dome on the location drawing, so the Left Ramp Flasher is now placed on that dome as `observed`, leaving G.I. string 4 as the only output with no coordinate.
+
 ## Stern Big Buck Hunter Pro (2010)
 
 Stern Big Buck Hunter Pro (`stern.big-buck-hunter-pro.2010`, IPDB 5513, OPDB `G4N6n-MLxER`) replaced the generated `bbh_170` stub with a deterministic partial covering all four `bbh_*` drivers (`bbh_170` parent plus `bbh_140`/`bbh_150`/`bbh_160`, driver.c-dated 02/10 through 11/10, all physically identical). `coverage.missing` is exactly `["input_semantics", "output_semantics", "polarity", "recreation_notes", "spatial_placement", "unresolved_conflicts"]` with two unresolved conflicts.

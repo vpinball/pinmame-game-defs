@@ -20,9 +20,8 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 
 ROOT = Path(__file__).resolve().parents[1]
 # Kept partial: the flasher sockets are measured only from the manual's location drawing (the
-# retained table parks its flasher lights at the cabinet edge), the Left Ramp Flasher and G.I.
-# string 4 have no coordinate at all, and the playfield G.I. sockets come only from the retained
-# table's G.I. collections.
+# retained table parks its flasher lights at the cabinet edge), G.I. string 4 has no coordinate at
+# all, and the playfield G.I. sockets come only from the retained table's G.I. collections.
 PARTIAL_PATH = ROOT / "machines/partial/williams/johnny-mnemonic-1995.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/williams/johnny-mnemonic-1995.json"
 DEFINITION_PATH = PARTIAL_PATH
@@ -47,6 +46,7 @@ VPX_SCRIPT_SOURCE = "vpx-script.johnny-mnemonic-vpw-1-2-2"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.johnny-mnemonic-vpw-1-2-2"
 CORPUS_SCRIPT_SOURCE = "vpx-script.johnny-mnemonic-1-3"
 DRAWING_FIT_SOURCE = "human-review.johnny-mnemonic.solenoid-drawing-fit"
+ARCHIVE_TABLE_SOURCE = "vpx-table.johnny-mnemonic-alessio-2020"
 
 MANUAL_SHA256 = "5dfa8c788011a3e1177668eb0815ed081dbd2c96ca4859f3525bf040b9f01519"
 ADDENDUM1_SHA256 = "a6469fb01b1dc9c78e9fecea3a9dbb1deea6e286f6ae05d3df9579ecbf85f4c8"
@@ -57,8 +57,13 @@ TABLE_SHA256 = "234c81299f3bff614fee39f9fa5594f060dbc06f49d96f8e68673fb07c03acf8
 SCRIPT_SHA256 = "1a70a6128f293072261657597b4b62c404d16d5e88e50080a3bc163b2fe1d5ef"
 CORPUS_SCRIPT_SHA256 = "38e1e83bd2b6ca8b4720c49591a36d30cb7d0f3863a52668c41fc4d8b1617d08"
 VPXTABLE_SCRIPTS_REVISION = "0c036bb61b4b4e8c778c37559f6795df8cd1521e"
-DRAWING_FIT_SHA256 = "ababe3e05cf3b95214360f232449f316694a0f2f97cd18234123d60bf6c0d9bb"
-DRAWING_FIT_OUTPUT_SHA256 = "fb3babc5a6a9410751f7de83f0b9891b2ce241ffc740ba9151b247b15dade0a8"
+DRAWING_FIT_SHA256 = "b7b8d812e2072bbb7190836b9956123a7191d41ca2c76a63c03390dbdf86ea4d"
+DRAWING_FIT_OUTPUT_SHA256 = "5be04b8cdc5643c829b793cec16b27efa4cedb2852c2fd637cee7084e8e58cf0"
+ARCHIVE_TABLE_SHA256 = "45ca049ef65852c5eb01076c4b19cdc3e92e5a7beb98fee8e2d77b87334485e6"
+ARCHIVE_SCRIPT_SHA256 = "c66790ffbc7a1b91799563797d4eeef56652df986fa6cb22c134d87c0bc6edaf"
+ARCHIVE_MANIFEST_SHA256 = "e94fce3afda18382b04e010d45cb58585ab5b36131cd7316b836c14d88c6670f"
+ARCHIVE_FILE_COUNT = 814
+ARCHIVE_TOTAL_BYTES = 78611022
 
 EXTRACTION_RELATIVE_PATH = Path("williams/johnny-mnemonic-1995/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("williams/johnny-mnemonic-1995/extracted-vpxtool.manifest.json")
@@ -346,7 +351,12 @@ DRAWING_FLASHER_POSITIONS = {
 	26: ((0.936, 0.201), "the dome circle drawn at the right of the upper playfield, beside the right loop"),
 	27: ((0.237, 0.078), "the end of callout 27's leader in the popper mechanism at the rear left"),
 	28: ((0.941, 0.049), "the end of callout 28's leader at the right end of the back panel"),
+	25: ((0.061, 0.287), "the centre of the unlabelled plain dome circle drawn at the far left beside the jet bumpers"),
 }
+# Distance from each drawing measurement to the glow sprite F1nn that the 2020 archive table (Alessio)
+# drives from the same solenoid, both normalized in their own table frames (the fit output lists them).
+ARCHIVE_GLOW_DISTANCES = {17: 0.005, 18: 0.076, 19: 0.021, 20: 0.008, 25: 0.021, 26: 0.044, 27: 0.096, 28: 0.009}
+EXTRAPOLATED_FLASHERS = {25, 26, 28}
 
 # --- Lamp matrix (manual printed 2-32).
 LAMP_LABELS = {
@@ -782,6 +792,25 @@ def source_records() -> list[dict[str, Any]]:
 			),
 			"license": "NOASSERTION",
 			"attribution": "Johnny Mnemonic VPX table authors; corpus by sverrewl",
+			"rights": "NOASSERTION",
+		},
+		{
+			"id": ARCHIVE_TABLE_SOURCE,
+			"kind": "vpx_table",
+			"uri": "external:pinmame-vpx-sources/williams/johnny-mnemonic-1995/archive-2020/Johnny Mnemonic (Williams 1995).vpx",
+			"original_filename": "Johnny Mnemonic (Williams 1995).vpx",
+			"sha256": ARCHIVE_TABLE_SHA256,
+			"locator": (
+				"The contributor's archived 2020 Johnny Mnemonic table by Alessio (VPX 10.4; its info block still carries another "
+				f"table's title), whose script (SHA-256 {ARCHIVE_SCRIPT_SHA256}) runs jm_12r and binds SolCallback 17-20 and 25-28 to "
+				"setLamp 117-128, which AddLamp maps onto the glow sprites F117-F128. Bounds 952x1974. Used only to corroborate the "
+				"drawing-measured flasher placements by the centres of those sprites (external:pinmame-review-artifacts/"
+				"johnny-mnemonic/vpx-geometry-archive2020.tsv and the drawing-fit output); no placement takes its coordinates. "
+				f"Extraction manifest SHA-256 {ARCHIVE_MANIFEST_SHA256}, {ARCHIVE_FILE_COUNT} files, {ARCHIVE_TOTAL_BYTES} bytes, "
+				"vpxtool git:v0.33.3."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Alessio",
 			"rights": "NOASSERTION",
 		},
 		{
@@ -1228,17 +1257,24 @@ def _flasher_notes(address: int, printed_type: str, part: str) -> str:
 			"least-squares affine fit of that drawing onto the retained table (worst control residual 0.013); observed only, rounded "
 			"to three places."
 		)
-		if address in {26, 28}:
+		if address in EXTRAPOLATED_FLASHERS:
 			notes += (
 				" The fit's control points span x 0.18-0.79 and y 0.06-0.85, so this point is extrapolated and the residual does not "
 				"bound its error."
 			)
-	else:
-		notes += (
-			" No coordinate: the location drawing draws no callout 25 and the retained table has no socket object for it. The "
-			"drawing does show an unlabelled plain dome circle at the far left beside the jet bumpers (about 0.06, 0.28 through the "
-			"fit), a lead only."
-		)
+		if address == 25:
+			notes += (
+				" The drawing gives this dome no callout and draws no callout 25 anywhere; the dome is taken to be the Left Ramp "
+				"Flasher because the 2020 archive table (Alessio) drives its glow sprite F125 from solenoid 25 at the same spot, "
+				f"{ARCHIVE_GLOW_DISTANCES[address]} away. Neither source is a socket record, so the placement stays observed."
+			)
+		else:
+			notes += (
+				f" The 2020 archive table (Alessio) drives a glow sprite F1{address} from this solenoid; its centre lies "
+				f"{ARCHIVE_GLOW_DISTANCES[address]} from this measurement in that table's own normalized frame, whose rear area "
+				"differs from the retained VPW table by up to about 0.06. A glow sprite shows where the table paints light, not a "
+				"socket, so it only corroborates."
+			)
 	return notes
 
 
@@ -1307,7 +1343,7 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			elif kind == "flasher":
 				if address in DRAWING_FLASHER_POSITIONS:
 					(x, y), _ = DRAWING_FLASHER_POSITIONS[address]
-					extra["spatial"] = located(identifier, "emitter", [(x, y)], MANUAL_SOURCE, DRAWING_FIT_SOURCE, VPX_TABLE_SOURCE, status="observed")
+					extra["spatial"] = located(identifier, "emitter", [(x, y)], MANUAL_SOURCE, DRAWING_FIT_SOURCE, VPX_TABLE_SOURCE, ARCHIVE_TABLE_SOURCE, status="observed")
 			elif address in DRAWING_COIL_POSITIONS:
 				(x, y), _ = DRAWING_COIL_POSITIONS[address]
 				extra["spatial"] = located(identifier, "effect", [(x, y)], MANUAL_SOURCE, DRAWING_FIT_SOURCE, VPX_TABLE_SOURCE, status="observed")
@@ -1737,11 +1773,12 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"machine_id": definition["machine"]["id"],
 		"status": "observed",
 		"blockers": [
-			"The Clear Matrix coil (5) and flashers 17-20 and 26-28 have no table object at their location: the retained VPW table drives its flasher lightmaps from lights parked at "
+			"The Clear Matrix coil (5) and flashers 17-20 and 25-28 have no table object at their location: the retained VPW table drives its flasher lightmaps from lights parked at "
 			"the cabinet edge. Their coordinates are measured on the manual's solenoid/flashlamp location drawing through a nine-point "
 			"least-squares fit (worst residual 0.013) and stay observed. Promotion needs a socket survey of a real machine or a "
 			"retained table with modelled flasher sockets.",
-			"The Left Ramp Flasher (25) has no callout on the location drawing and no socket in the table, so it has no coordinate.",
+			"The Left Ramp Flasher (25) has no callout on the location drawing; it is placed on an unlabelled dome the drawing shows "
+			"at the far left, identified by the 2020 archive table's solenoid-25 glow sprite 0.021 away, and stays observed.",
 			"G.I. string 4 (public 3) is a playfield-only string with no factory socket list and no placed table light, so it has no "
 			"coordinate.",
 			"Playfield G.I. strings 1-3 have no factory socket list; every coordinate comes from the retained table's GIString1-3 "
@@ -1777,7 +1814,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"transform": "Least-squares affine fit of the 300 dpi render of printed 2-37 onto table coordinates through nine shared features (four corner matrix holes, two upper jet bumper centres, both flipper pivots, the Crazy Bob's eject box); worst control residual 0.013 normalized.",
 			"switch_drawing": "The switch-location drawing (printed 2-35) was compared by eye: every placed switch's callout reaches the feature its table object stands on, and the drawing's Cyber Space Assy. inset puts 51/52/53 on the rear row and 71/72/73 at the front, as the script binds the Matrix kickers.",
 			"coil_callouts": "Coil callouts measured through the same fit (pixel readings in the artifact): 01 ends 0.051 from its trough eject kicker, 02 0.003 from its autoplunger trigger, 33 (Left Diverter) 0.060 from the table's left diverter walls, and 05 (Clear Matrix) on the coil at the matrix's right rear corner, 0.129 from the centre hole, which is where solenoid 5 is placed. The other coil leaders were not measured.",
-			"extrapolation": "The control points span x 0.18-0.79 and y 0.06-0.85; flashers 26 and 28 and the Clear Matrix coil (5) lie outside that range, so their placements are extrapolated and the residual does not bound their error.",
+			"extrapolation": "The control points span x 0.18-0.79 and y 0.06-0.85; flashers 25, 26 and 28 and the Clear Matrix coil (5) lie outside that range, so their placements are extrapolated and the residual does not bound their error.",
 		},
 		"placement_count": placement_count,
 		"resolved_input_addresses": sorted(located_inputs),
@@ -1798,7 +1835,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"coordinate_origins": {
 			"drag_point_means": ["Wall Leftslingshot (switch 25, solenoid 9)", "Wall Rightslingshot (switch 26, solenoid 10)", "Wall sw38", "Wall sw43 (switch 43, solenoids 15/16)", "Wall LeftDiverterOpen (solenoids 33/34)", "Wall RightDiverterOpen (solenoids 35/36)"],
 			"object_centers": "every other table placement uses its retained object's own center",
-			"drawing_measurements": "flashers 17-20 and 26-28 and the Clear Matrix coil (5), rounded to three places",
+			"drawing_measurements": "flashers 17-20 and 25-28 and the Clear Matrix coil (5), rounded to three places",
 		},
 		"excluded_object_classes": [
 			"Flasher lights l117-l128 and G.I. light l143a: lightmap drivers parked in a row at the cabinet edge (y 2129), not sockets.",
@@ -1815,8 +1852,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		f"Status: {report['status']}. Every switch, coil, magnet and lamp that has a playfield location is placed from the retained "
 		"table or carries a controlled `not_applicable` record, except the Clear Matrix coil and the flashers, which are measured on "
-		"the manual's location drawing and stay `observed`; the playfield G.I. strings are placed from the table's G.I. collections and stay `observed`, and the Left Ramp "
-		"Flasher and G.I. string 4 have no coordinate, which keeps the record at `machines/partial/williams/johnny-mnemonic-1995.json`.",
+		"the manual's location drawing and stay `observed`; the playfield G.I. strings are placed from the table's G.I. collections and stay `observed`, and "
+		"G.I. string 4 has no coordinate, which keeps the record at `machines/partial/williams/johnny-mnemonic-1995.json`.",
 		"",
 		f"The geometry source is the retained known-working `Johnny Mnemonic (Williams 1995) VPW v1.2.2.vpx` (SHA-256 "
 		f"`{TABLE_SHA256}`); its embedded script (SHA-256 `{SCRIPT_SHA256}`) is the runtime binding authority. Exact playfield bounds "
@@ -1858,8 +1895,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"## Promotion decision",
 		"",
 		"Refused. `coverage.missing` is `[\"spatial_placement\"]`: the flasher sockets are known only from the factory drawing's "
-		"callouts, the playfield G.I. sockets only from one community table's light collections, and the Left Ramp Flasher and G.I. "
-		"string 4 are not placed at all.",
+		"callouts (corroborated only by a second community table's glow sprites), the playfield G.I. sockets only from one community "
+		"table's light collections, and G.I. string 4 is not placed at all.",
 		"",
 		"## Retained evidence",
 		"",

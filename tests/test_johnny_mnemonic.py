@@ -193,9 +193,9 @@ class JohnnyMnemonicTests(unittest.TestCase):
 				self.assertEqual(spatial["status"], placement["provenance"]["status"])
 		self.assertEqual(len(ids), len(set(ids)))
 		expected = {("pinmame.output.gi", 0), ("pinmame.output.gi", 1), ("pinmame.output.gi", 2), ("pinmame.input.switch", 31)}
-		expected |= {("pinmame.output.solenoid", address) for address in (5, 17, 18, 19, 20, 26, 27, 28)}
+		expected |= {("pinmame.output.solenoid", address) for address in (5, 17, 18, 19, 20, 25, 26, 27, 28)}
 		self.assertEqual(expected, observed)
-		self.assertEqual({("pinmame.output.solenoid", 25), ("pinmame.output.gi", 3)}, unplaced)
+		self.assertEqual({("pinmame.output.gi", 3)}, unplaced)
 		self.assertEqual((10, 11, 12), tuple(len(self.gis[address]["spatial"]["placements"]) for address in (0, 1, 2)))
 		self.assertEqual("cabinet_or_service", self.gis[4]["spatial"]["reason"])
 
@@ -214,7 +214,7 @@ class JohnnyMnemonicTests(unittest.TestCase):
 		self.assertNotIn("quantity", self.lamps[88]["physical"])
 
 	def test_drawing_measured_flashers_cite_the_fit(self) -> None:
-		for address in (5, 17, 18, 19, 20, 26, 27, 28):
+		for address in (5, 17, 18, 19, 20, 25, 26, 27, 28):
 			refs = self.solenoids[address]["spatial"]["placements"][0]["provenance"]["source_refs"]
 			self.assertIn("human-review.johnny-mnemonic.solenoid-drawing-fit", refs)
 			for value in first_xy(self.solenoids[address]):
@@ -362,6 +362,18 @@ class JohnnyMnemonicRetainedEvidenceTests(unittest.TestCase):
 		measured = {int(number): (float(x), float(y)) for number, x, y in re.findall(r"(?m)^  (\d+): px \(\d+,\d+\) -> table \([^)]*\) normalized \(([\d.]+), ([\d.]+)\)", output)}
 		expected = {**{address: xy for address, (xy, _) in curator.DRAWING_FLASHER_POSITIONS.items()}, **{address: xy for address, (xy, _) in curator.DRAWING_COIL_POSITIONS.items()}}
 		self.assertEqual(expected, {address: measured[address] for address in expected})
+
+	def test_retained_archive_table_hashes(self) -> None:
+		import curate_johnny_mnemonic as curator
+
+		root = self._root("PINMAME_VPX_SOURCES_ROOT") / "williams" / "johnny-mnemonic-1995" / "archive-2020"
+		self.assertEqual(curator.ARCHIVE_TABLE_SHA256, hashlib.sha256((root / "Johnny Mnemonic (Williams 1995).vpx").read_bytes()).hexdigest())
+		self.assertEqual(curator.ARCHIVE_SCRIPT_SHA256, hashlib.sha256((root / "Johnny Mnemonic (Williams 1995)" / "script.vbs").read_bytes()).hexdigest())
+		from pinmame_game_defs.jsonio import canonical_bytes, load_json
+
+		manifest = load_json(root / "extracted-vpxtool.manifest.json")
+		self.assertEqual(canonical_bytes(curator.build_extraction_manifest(root / "Johnny Mnemonic (Williams 1995)")), canonical_bytes(manifest))
+		self.assertEqual(curator.ARCHIVE_MANIFEST_SHA256, hashlib.sha256(canonical_bytes(manifest)).hexdigest())
 
 	def test_retained_drawing_fit_hashes(self) -> None:
 		import curate_johnny_mnemonic as curator

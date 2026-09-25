@@ -4,7 +4,7 @@ Coverage: **partial**. Every address is enumerated and named, and construction, 
 and variant facts are validated from the factory operations manual, its service bulletins, pinned
 PinMAME and the retained known-working table, and no conflict is open. It stays partial on spatial
 placement alone: the retained table has no flasher sockets, so seven flashers and the Clear Matrix
-coil are measured on the manual's location drawing and stay observed; the Left Ramp Flasher and G.I. string 4 have no
+coil are measured on the manual's location drawing and stay observed; G.I. string 4 has no
 coordinate at all; and the playfield G.I. sockets come only from the table's G.I. collections.
 
 ## Identity and drivers
@@ -157,4 +157,5 @@ A socket-level survey of a real machine (or a table that models the flasher and 
 positions for flashers 17-20 and 25-28, the Clear Matrix coil and every playfield G.I. bulb by
 string, including string 4 (the table's string-4 lightmap covers the upper-left playfield, a region
 lead only). The location drawing shows an unlabelled dome at the far left beside the
-jets, a lead for the Left Ramp Flasher (25).
+jets; the record places the Left Ramp Flasher (25) there because the 2020 archive table (Alessio) drives its
+solenoid-25 glow at the same spot, but no source confirms it.

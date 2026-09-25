@@ -1,7 +1,7 @@
 {
   "blockers": [
-    "The Clear Matrix coil (5) and flashers 17-20 and 26-28 have no table object at their location: the retained VPW table drives its flasher lightmaps from lights parked at the cabinet edge. Their coordinates are measured on the manual's solenoid/flashlamp location drawing through a nine-point least-squares fit (worst residual 0.013) and stay observed. Promotion needs a socket survey of a real machine or a retained table with modelled flasher sockets.",
-    "The Left Ramp Flasher (25) has no callout on the location drawing and no socket in the table, so it has no coordinate.",
+    "The Clear Matrix coil (5) and flashers 17-20 and 25-28 have no table object at their location: the retained VPW table drives its flasher lightmaps from lights parked at the cabinet edge. Their coordinates are measured on the manual's solenoid/flashlamp location drawing through a nine-point least-squares fit (worst residual 0.013) and stay observed. Promotion needs a socket survey of a real machine or a retained table with modelled flasher sockets.",
+    "The Left Ramp Flasher (25) has no callout on the location drawing; it is placed on an unlabelled dome the drawing shows at the far left, identified by the 2020 archive table's solenoid-25 glow sprite 0.021 away, and stays observed.",
     "G.I. string 4 (public 3) is a playfield-only string with no factory socket list and no placed table light, so it has no coordinate.",
     "Playfield G.I. strings 1-3 have no factory socket list; every coordinate comes from the retained table's GIString1-3 collections and stays observed.",
     "Trough Jam (31) has no table object and is projected onto the Trough Ball 1 kicker, so it stays observed."
@@ -26,7 +26,7 @@
       "Wall LeftDiverterOpen (solenoids 33/34)",
       "Wall RightDiverterOpen (solenoids 35/36)"
     ],
-    "drawing_measurements": "flashers 17-20 and 26-28 and the Clear Matrix coil (5), rounded to three places",
+    "drawing_measurements": "flashers 17-20 and 25-28 and the Clear Matrix coil (5), rounded to three places",
     "object_centers": "every other table placement uses its retained object's own center"
   },
   "excluded_object_classes": [
@@ -49,11 +49,11 @@
   "machine_id": "williams.johnny-mnemonic.1995",
   "manual_reconciliation": {
     "artifact": "external:pinmame-review-artifacts/johnny-mnemonic/fit_solenoid_drawing.py",
-    "artifact_sha256": "ababe3e05cf3b95214360f232449f316694a0f2f97cd18234123d60bf6c0d9bb",
+    "artifact_sha256": "b7b8d812e2072bbb7190836b9956123a7191d41ca2c76a63c03390dbdf86ea4d",
     "coil_callouts": "Coil callouts measured through the same fit (pixel readings in the artifact): 01 ends 0.051 from its trough eject kicker, 02 0.003 from its autoplunger trigger, 33 (Left Diverter) 0.060 from the table's left diverter walls, and 05 (Clear Matrix) on the coil at the matrix's right rear corner, 0.129 from the centre hole, which is where solenoid 5 is placed. The other coil leaders were not measured.",
-    "extrapolation": "The control points span x 0.18-0.79 and y 0.06-0.85; flashers 26 and 28 and the Clear Matrix coil (5) lie outside that range, so their placements are extrapolated and the residual does not bound their error.",
+    "extrapolation": "The control points span x 0.18-0.79 and y 0.06-0.85; flashers 25, 26 and 28 and the Clear Matrix coil (5) lie outside that range, so their placements are extrapolated and the residual does not bound their error.",
     "output": "external:pinmame-review-artifacts/johnny-mnemonic/fit_solenoid_drawing.out.txt",
-    "output_sha256": "fb3babc5a6a9410751f7de83f0b9891b2ce241ffc740ba9151b247b15dade0a8",
+    "output_sha256": "5be04b8cdc5643c829b793cec16b27efa4cedb2852c2fd637cee7084e8e58cf0",
     "switch_drawing": "The switch-location drawing (printed 2-35) was compared by eye: every placed switch's callout reaches the feature its table object stands on, and the drawing's Cyber Space Assy. inset puts 51/52/53 on the rear row and 71/72/73 at the front, as the script binds the Matrix kickers.",
     "transform": "Least-squares affine fit of the 300 dpi render of printed 2-37 onto table coordinates through nine shared features (four corner matrix holes, two upper jet bumper centres, both flipper pivots, the Crazy Bob's eject box); worst control residual 0.013 normalized."
   },
@@ -269,6 +269,10 @@
       "group": "pinmame.output.solenoid"
     },
     {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
       "address": 26,
       "group": "pinmame.output.solenoid"
     },
@@ -281,7 +285,7 @@
       "group": "pinmame.output.solenoid"
     }
   ],
-  "placement_count": 162,
+  "placement_count": 163,
   "projections": [
     {
       "address": 31,
@@ -317,6 +321,11 @@
       "address": 20,
       "group": "pinmame.output.solenoid",
       "reason": "Measured on the location drawing at the dome circle drawn inside the right slingshot through the affine fit; not a table object."
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid",
+      "reason": "Measured on the location drawing at the centre of the unlabelled plain dome circle drawn at the far left beside the jet bumpers through the affine fit; not a table object."
     },
     {
       "address": 26,
@@ -708,10 +717,6 @@
     {
       "address": 3,
       "group": "pinmame.output.gi"
-    },
-    {
-      "address": 25,
-      "group": "pinmame.output.solenoid"
     }
   ],
   "version": 1
