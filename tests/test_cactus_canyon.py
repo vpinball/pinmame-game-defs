@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 import unittest
 from pathlib import Path
@@ -9,9 +10,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-DEFINITION_PATH = ROOT / "machines" / "partial" / "bally" / "cactus-canyon-1998.json"
+DEFINITION_PATH = ROOT / "machines" / "author-ready" / "bally" / "cactus-canyon-1998.json"
 SEED_PATH = ROOT / "tools" / "seeds" / "bally" / "cactus-canyon-1998.json"
-AUTHOR_READY_PATH = ROOT / "machines" / "author-ready" / "bally" / "cactus-canyon-1998.json"
+PARTIAL_PATH = ROOT / "machines" / "partial" / "bally" / "cactus-canyon-1998.json"
 KNOWLEDGE_PATH = ROOT / "knowledge" / "bally" / "cactus-canyon-1998.md"
 CONTROLLER_PATH = ROOT / "controllers" / "pinmame" / "wpc-95.json"
 SPATIAL_REPORT_PATH = ROOT / "reports" / "spatial" / "bally" / "cactus-canyon-1998.json"
@@ -62,14 +63,11 @@ class CactusCanyonDefinitionTests(unittest.TestCase):
 		cls.lamps = bindings(cls.definition, "outputs", "pinmame.output.lamp")
 		cls.gi = bindings(cls.definition, "outputs", "pinmame.output.gi")
 
-	def test_partial_identity_and_coverage(self) -> None:
+	def test_author_ready_identity_and_coverage(self) -> None:
 		self.assertEqual(2, self.definition["schema_version"])
-		self.assertEqual("partial", self.definition["coverage"]["status"])
-		self.assertEqual(["spatial_placement"], self.definition["coverage"]["missing"])
-		self.assertEqual("candidate", self.definition["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual("author_ready", self.definition["coverage"]["status"])
+		self.assertEqual([], self.definition["coverage"]["missing"])
 		for dimension, state in self.definition["coverage"]["dimensions"].items():
-			if dimension == "spatial_placement":
-				continue
 			self.assertIn(state, {"validated", "not_applicable"}, dimension)
 		self.assertEqual("bally.cactus-canyon.1998", self.definition["machine"]["id"])
 		self.assertEqual("physical_pinball", self.definition["machine"]["kind"])
@@ -79,7 +77,7 @@ class CactusCanyonDefinitionTests(unittest.TestCase):
 		self.assertEqual("pinmame.wpc-95", self.definition["controller"]["platform"])
 		self.assertEqual("0x80", self.definition["controller"]["hardware_generation"])
 		self.assertTrue(self.definition["controller"]["inversion_applied_by_emulator"])
-		self.assertEqual("partial", self.definition["knowledge"]["status"])
+		self.assertEqual("complete", self.definition["knowledge"]["status"])
 
 	def test_no_opto_polarity_conflict_is_recorded(self) -> None:
 		# Unlike Monster Bash's Dracula-position column, the full opto sweep found
@@ -87,8 +85,8 @@ class CactusCanyonDefinitionTests(unittest.TestCase):
 		# machine's conflicts array must be empty.
 		self.assertEqual([], self.definition["conflicts"])
 
-	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
-		self.assertFalse(AUTHOR_READY_PATH.exists())
+	def test_the_stale_partial_artifact_is_gone(self) -> None:
+		self.assertFalse(PARTIAL_PATH.exists())
 		self.assertTrue(DEFINITION_PATH.is_file())
 		self.assertTrue(KNOWLEDGE_PATH.is_file())
 		self.assertTrue(SPATIAL_REPORT_PATH.is_file())
@@ -162,16 +160,66 @@ class CactusCanyonDefinitionTests(unittest.TestCase):
 			aliases = {alias["namespace"]: alias["value"] for alias in self.solenoids[address]["aliases"]}
 			self.assertEqual(manual_address, aliases["manual.address"], address)
 
-	def test_flasher_dual_bulb_addresses_declare_two_quantity_but_only_two_have_two_placements(self) -> None:
-		dual_bulb_addresses = (24, 26, 27, 28)
-		for address in dual_bulb_addresses:
+	def test_dual_bulb_flashers_place_only_their_playfield_bulb(self) -> None:
+		# Each of 24, 26, 27 and 28 fits a playfield bulb plus a backbox insert-panel bulb; only the
+		# playfield bulb gets a coordinate, as in the author-ready WPC-95 records.
+		for address in (24, 26, 27, 28):
 			solenoid = self.solenoids[address]
 			self.assertEqual(2, solenoid["physical"]["quantity"], address)
-		# 27/28 resolve two distinguishable coordinates; 24/26 do not (documented gap).
-		self.assertEqual(2, len(self.solenoids[27]["spatial"]["placements"]))
-		self.assertEqual(2, len(self.solenoids[28]["spatial"]["placements"]))
-		self.assertEqual(1, len(self.solenoids[24]["spatial"]["placements"]))
-		self.assertEqual(1, len(self.solenoids[26]["spatial"]["placements"]))
+			self.assertEqual(1, len(solenoid["spatial"]["placements"]), address)
+			self.assertIn("insert-panel bulb is backbox hardware", solenoid["physical"]["notes"], address)
+
+	def test_flasher_placements_are_bulb_objects_not_helpers_or_centroids(self) -> None:
+		# Exact retained-object centers: the smallest-radius bulb Light of each script-bound collection,
+		# the Flasherbase primitive of each Flupper dome, or for 26 the spotlight primitive SpotP at the
+		# end of the printed 2-37 leader. The f27r*/f28r* F_refl back-wall
+		# reflection sprites (0.847689/0.009251, 0.994748/0.032234, 0.160714/0.007863,
+		# 0.002101/0.175301) and the object-less 24 x of 0.6428 must never return.
+		expected = {
+			18: (0.340267, 0.278301), 19: (0.092962, 0.827937), 20: (0.809786, 0.831389),
+			24: (0.611894, 0.571833), 25: (0.953894, 0.367023), 26: (0.800694, 0.216224),
+			27: (0.95042, 0.034507), 28: (0.109553, 0.166406),
+		}
+		for address, (x, y) in expected.items():
+			placement = self.solenoids[address]["spatial"]["placements"][0]
+			self.assertEqual((x, y), (placement["x"], placement["y"]), address)
+
+	def test_flasher_and_gi_placements_recompute_from_the_retained_objects(self) -> None:
+		"""With the VPX sources root set, every flasher and GI placement is a named object's own center."""
+		root = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
+		if not root:
+			self.skipTest("PINMAME_VPX_SOURCES_ROOT is not set")
+		import curate_cactus_canyon as curator
+
+		gameitems = Path(root) / "bally" / "cactus-canyon-1998" / "extracted-vpxtool" / "gameitems"
+		centers = {}
+		for path in gameitems.glob("*.json"):
+			kind, item = next(iter(json.loads(path.read_text(encoding="utf-8")).items()))
+			center = item.get("center") or item.get("position")
+			if kind in {"Light", "Primitive"} and center:
+				centers[item["name"].lower()] = (round(center["x"] / 952, 6), round(center["y"] / 2162, 6))
+		source = (ROOT / "tools" / "curate_cactus_canyon.py").read_text(encoding="utf-8")
+		import re
+
+		for table in ("FLASHER_POSITIONS", "GI_POSITIONS"):
+			block = source[source.index(f"{table} = {{"):]
+			block = block[: block.index("\n}\n")]
+			pairs = re.findall(r"\(([0-9.]+), ([0-9.]+)\)\S*\s*# (\w+)", block)
+			self.assertTrue(pairs, table)
+			for x, y, name in pairs:
+				self.assertEqual(centers[name.lower()], (float(x), float(y)), name)
+		# No placement may use an object the spatial report lists as excluded (the names before each
+		# entry's first parenthesis).
+		excluded = set()
+		for entry in curator.build_spatial_report(self.definition)["excluded_object_classes"]:
+			if "listed twice" in entry:  # a duplicate collection entry, not an excluded object
+				continue
+			excluded.update(re.findall(r"\b(\w+)\b", entry.split("(")[0].lower()))
+		for table in ("FLASHER_POSITIONS", "GI_POSITIONS"):
+			block = source[source.index(f"{table} = {{"):]
+			block = block[: block.index("\n}\n")]
+			for name in re.findall(r"# (\w+)", block):
+				self.assertNotIn(name.lower(), excluded, name)
 
 	def test_lamp_matrix_is_enumerated_with_correct_unused_positions(self) -> None:
 		self.assertEqual(MATRIX_ADDRESSES, set(self.lamps))
@@ -276,8 +324,8 @@ class CactusCanyonCatalogReconciliationTests(unittest.TestCase):
 			self.assertIn(driver_id, by_id)
 			record = by_id[driver_id]
 			self.assertEqual("bally.cactus-canyon.1998", record["machine_id"])
-			self.assertEqual("machines/partial/bally/cactus-canyon-1998.json", record["definition"])
-			self.assertEqual("partial", record["coverage_status"])
+			self.assertEqual("machines/author-ready/bally/cactus-canyon-1998.json", record["definition"])
+			self.assertEqual("author_ready", record["coverage_status"])
 			self.assertEqual("cc_13", record["root_driver"])
 
 

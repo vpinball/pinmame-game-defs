@@ -13,13 +13,11 @@
       "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "validated",
-      "spatial_placement": "candidate",
+      "spatial_placement": "validated",
       "variant_coverage": "validated"
     },
-    "missing": [
-      "spatial_placement"
-    ],
-    "status": "partial"
+    "missing": [],
+    "status": "author_ready"
   },
   "displays": [
     {
@@ -3141,7 +3139,7 @@
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-22407",
-        "notes": "Printed switch-matrix drive column 7, return row 1. Printed as an opto that rests closed on the board-assembly pages 2-10 through 2-13 (Trough IR LED/Photo Transistor PCB, Train Single Opto, or Mine Dual Opto PCB) with the Switch Part Number column blank; ccGameData's inverted-switch mask ({0x00,0x00,0x00,0x7f,0x03,0x00,0x00,0xc1,...}) normalizes it, so the public switch state is already normalized and must not be inverted again. Projected onto the Train mechanism's own retained table objects (Primitives Train and Train1, table object center): the retained script's sw71 object is a VPX Timer, not a Hit trigger, and its sw71_Timer handler pulses public switch 71 once per encoder step while the Train primitive is in motion (\"Dozer - Encoder Pulse which runs with Train Mech.\"); there is no separate playfield sensor object.",
+        "notes": "Printed switch-matrix drive column 7, return row 1. Printed as an opto that rests closed on the board-assembly pages 2-10 through 2-13 (Trough IR LED/Photo Transistor PCB, Train Single Opto, or Mine Dual Opto PCB) with the Switch Part Number column blank; ccGameData's inverted-switch mask ({0x00,0x00,0x00,0x7f,0x03,0x00,0x00,0xc1,...}) normalizes it, so the public switch state is already normalized and must not be inverted again. Projected onto the Train mechanism's own retained table objects (Primitives Train and Train1, table object center): the retained script's Table1_Init registers a VPinMAME cvpmMech on the physical-ROM (PROC=0) path (script.vbs lines 191-203): Sol1 = 38 (forward), Sol2 = 37 (reverse), MType vpmMechTwoDirSol + vpmMechStopEnd + vpmMechLinear, Length 570, Steps 613, .AddSw 72, 0, 0 (Train Home asserted at step 0 only) and .AddPulseSw 71, 14, 3 (Train Encoder asserted for 3 of every 14 steps, core.vbs mapping it to PinMAME's pulsed mech switch). PinMAME therefore drives 71 and 72 from the mechanism position; the sw71 Timer object is switched on only in the PROC=1 TrainF_PROC/TrainB_PROC handlers, which are out of scope; there is no separate playfield sensor object.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -3197,7 +3195,7 @@
       "label": "Train Home",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 7, return row 2. Projected onto the Train mechanism's own retained table object (Primitive Train, table object center): the retained script's PROC=0 TrainF/TrainB handlers never set Controller.Switch(72) at all (only the PROC=1 Polly_Timer path does), so there is no VPX object of any kind bound to this address under the physical ROM's normal operating path; the manual and PinMAME's own switch matrix are the only evidence this switch exists, at the position of the mechanism whose motion it senses.",
+        "notes": "Printed switch-matrix drive column 7, return row 2. Projected onto the Train mechanism's own retained table object (Primitive Train, table object center): the retained script's Table1_Init registers a VPinMAME cvpmMech on the physical-ROM (PROC=0) path (script.vbs lines 191-203): Sol1 = 38 (forward), Sol2 = 37 (reverse), MType vpmMechTwoDirSol + vpmMechStopEnd + vpmMechLinear, Length 570, Steps 613, .AddSw 72, 0, 0 (Train Home asserted at step 0 only) and .AddPulseSw 71, 14, 3 (Train Encoder asserted for 3 of every 14 steps, core.vbs mapping it to PinMAME's pulsed mech switch). PinMAME therefore drives 71 and 72 from the mechanism position; the sw71 Timer object is switched on only in the PROC=1 TrainF_PROC/TrainB_PROC handlers, which are out of scope; recorded at the position of the mechanism whose travel it senses.",
         "part_number": "5647-12693-66",
         "switch_type": "microswitch"
       },
@@ -3454,7 +3452,7 @@
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-22443",
-        "notes": "Printed switch-matrix drive column 7, return row 7. Printed as an opto that rests closed on the board-assembly pages 2-10 through 2-13 (Trough IR LED/Photo Transistor PCB, Train Single Opto, or Mine Dual Opto PCB) with the Switch Part Number column blank; ccGameData's inverted-switch mask ({0x00,0x00,0x00,0x7f,0x03,0x00,0x00,0xc1,...}) normalizes it, so the public switch state is already normalized and must not be inverted again. Projected onto the Mine mechanism's own retained table object (Primitive MineSign, table object center): like switch 72, the retained script's PROC=0 MoveMine/MineTimer_Timer handlers never set Controller.Switch(77) (only the PROC=1 Sw15_Timer path does); the manual and PinMAME are the only evidence for this address, recorded at the position of the mechanism it senses.",
+        "notes": "Printed switch-matrix drive column 7, return row 7. Printed as an opto that rests closed on the board-assembly pages 2-10 through 2-13 (Trough IR LED/Photo Transistor PCB, Train Single Opto, or Mine Dual Opto PCB) with the Switch Part Number column blank; ccGameData's inverted-switch mask ({0x00,0x00,0x00,0x7f,0x03,0x00,0x00,0xc1,...}) normalizes it, so the public switch state is already normalized and must not be inverted again. Projected onto the Mine mechanism's own retained table object (Primitive MineSign, table object center): the retained script's Table1_Init registers a VPinMAME cvpmMech on the physical-ROM (PROC=0) path (script.vbs lines 176-187): Sol1 = 17, MType vpmMechOneSol + vpmMechReverse + vpmMechLinear, Length 100, Steps 49, .AddSw 77, 0, 1 (Mine Home asserted at steps 0-1) and .AddPulseSw 78, 8, 2 (Mine Encoder asserted for 2 of every 8 steps). PinMAME therefore drives 77 and 78 from the mechanism position; recorded at the position of the mechanism it senses.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -3510,7 +3508,7 @@
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-22443",
-        "notes": "Printed switch-matrix drive column 7, return row 8. Printed as an opto that rests closed on the board-assembly pages 2-10 through 2-13 (Trough IR LED/Photo Transistor PCB, Train Single Opto, or Mine Dual Opto PCB) with the Switch Part Number column blank; ccGameData's inverted-switch mask ({0x00,0x00,0x00,0x7f,0x03,0x00,0x00,0xc1,...}) normalizes it, so the public switch state is already normalized and must not be inverted again. Projected onto the Mine mechanism's own retained table object (Primitive MineSign, table object center): the retained script's PROC=0 path has no object bound to public switch 78 either (only the PROC=1 sw15b_Timer path pulses it, \"Dozer - Encoder Pulse which runs with Mine Mech.\"); recorded at the position of the mechanism it senses.",
+        "notes": "Printed switch-matrix drive column 7, return row 8. Printed as an opto that rests closed on the board-assembly pages 2-10 through 2-13 (Trough IR LED/Photo Transistor PCB, Train Single Opto, or Mine Dual Opto PCB) with the Switch Part Number column blank; ccGameData's inverted-switch mask ({0x00,0x00,0x00,0x7f,0x03,0x00,0x00,0xc1,...}) normalizes it, so the public switch state is already normalized and must not be inverted again. Projected onto the Mine mechanism's own retained table object (Primitive MineSign, table object center): the retained script's Table1_Init registers a VPinMAME cvpmMech on the physical-ROM (PROC=0) path (script.vbs lines 176-187): Sol1 = 17, MType vpmMechOneSol + vpmMechReverse + vpmMechLinear, Length 100, Steps 49, .AddSw 77, 0, 1 (Mine Home asserted at steps 0-1) and .AddPulseSw 78, 8, 2 (Mine Encoder asserted for 2 of every 8 steps). PinMAME therefore drives 77 and 78 from the mechanism position; recorded at the position of the mechanism it senses.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -4736,7 +4734,7 @@
   ],
   "knowledge": {
     "path": "knowledge/bally/cactus-canyon-1998.md",
-    "status": "partial"
+    "status": "complete"
   },
   "machine": {
     "id": "bally.cactus-canyon.1998",
@@ -5102,7 +5100,7 @@
         "device.mine-motor"
       ],
       "assembly_part_number": "A-22404",
-      "behavior": "Solenoid 17 (MoveMine callback in the retained script's PROC=0 branch) raises and lowers the Mine sign (retained Primitive MineSign) between a low and high position via MineTimer_Timer, which also drops or raises the Mine Entrance wall (switch 15's IsDropped flag) as the sign passes a threshold. Mine Home (77) and Mine Encoder (78) are the printed position/step optos on the A-22443 Mine Dual Opto PCB, but the retained script's PROC=0 path (MoveMine/MineTimer_Timer) never sets Controller.Switch for either address -- only the PROC=1 path (Sw15_Timer/sw15b_Timer, community P-ROC hardware) exercises them -- so their causal timing here rests on the manual and PinMAME's addressing rather than an observed script behavior under the physical ROM's normal path.",
+      "behavior": "Solenoid 17 (MoveMine callback in the retained script's PROC=0 branch) raises and lowers the Mine sign (retained Primitive MineSign) between a low and high position via MineTimer_Timer, which also drops or raises the Mine Entrance wall (switch 15's IsDropped flag) as the sign passes a threshold. Mine Home (77) and Mine Encoder (78) are the printed position/step optos on the A-22443 Mine Dual Opto PCB. On the physical-ROM path the retained script registers a VPinMAME cvpmMech for them (Sol1 = 17, MType vpmMechOneSol + vpmMechReverse + vpmMechLinear, Length 100, Steps 49): Mine Home 77 is asserted at mech steps 0-1 (.AddSw 77, 0, 1) and Mine Encoder 78 for 2 of every 8 steps (.AddPulseSw 78, 8, 2), so PinMAME drives both from the sign's position while MoveMine only animates the primitive.",
       "id": "mechanism.mine-sign",
       "kind": "motorized",
       "label": "Motorized mine entrance sign",
@@ -5152,13 +5150,13 @@
         "device.train-forward"
       ],
       "assembly_part_number": "A-22271",
-      "behavior": "Solenoids 37/38 (TrainB/TrainF callbacks in the retained script's PROC=0 branch) drive the Train primitive back and forth along the track via an H-bridge (A-22271 Train Motor Circuits assembly, gates U3A/U3B reverse and U3C/U3D forward) toward TrainMech.Position; TrainTimer_Timer animates the running gears and stops the motor once the target position is reached and the solenoid is released. Train Encoder (71) is pulsed once per timer tick by a dedicated VPX Timer object (sw71) while the train is in motion (\"Dozer - Encoder Pulse which runs with Train Mech.\"). Train Home (72) is never set by the retained script's PROC=0 path at all (only the PROC=1 Polly_Timer path, community P-ROC hardware, sets it); its causal timing here rests on the manual and PinMAME's addressing.",
+      "behavior": "Solenoids 37/38 (TrainB/TrainF callbacks in the retained script's PROC=0 branch) drive the Train primitive back and forth along the track via an H-bridge (A-22271 Train Motor Circuits assembly, gates U3A/U3B reverse and U3C/U3D forward) toward TrainMech.Position; TrainTimer_Timer animates the running gears and stops the motor once the target position is reached and the solenoid is released. On the physical-ROM path the retained script registers a VPinMAME cvpmMech (Sol1 = 38 forward, Sol2 = 37 reverse, MType vpmMechTwoDirSol + vpmMechStopEnd + vpmMechLinear, Length 570, Steps 613): Train Home 72 is asserted at mech step 0 (.AddSw 72, 0, 0) and Train Encoder 71 for 3 of every 14 steps (.AddPulseSw 71, 14, 3), so PinMAME drives both from the train's position.",
       "id": "mechanism.train",
       "kind": "motorized",
       "label": "Motorized train on tracks",
       "positions": [
         {
-          "description": "Pulsed each timer tick while running.",
+          "description": "Pulsed for 3 of every 14 mech steps while the train moves.",
           "id": "encoder",
           "label": "Train motor encoder pulse",
           "sensors": [
@@ -6266,7 +6264,7 @@
       "label": "Mine Flasher",
       "physical": {
         "assembly_part_number": "04-12478-12",
-        "notes": "Printed solenoid/flasher table entry 18 (Flasher). Printed flashlamp complement: #906.",
+        "notes": "Printed solenoid/flasher table entry 18 (Flasher). Printed flashlamp complement: #906. The playfield placement is Light54, the smallest-radius bulb Light of the script-bound F18 collection, beside the mine hole. The collection's members sit at three separate depths (Light54/F18a at y 0.278, Light59 at 0.306, Light58 at 0.335; Light58 and Light59 are the desktop and cabinet alternates the script toggles with DesktopMode), and printed page 2-37 does not draw flasher 18, so the choice among them is the smallest-radius rule rather than a manual cross-check.",
         "quantity": 1
       },
       "provenance": {
@@ -6288,8 +6286,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.322517,
-            "y": 0.302535
+            "x": 0.340267,
+            "y": 0.278301
           }
         ],
         "status": "validated"
@@ -6344,7 +6342,7 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.091456,
+            "x": 0.092962,
             "y": 0.827937
           }
         ],
@@ -6400,8 +6398,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.810374,
-            "y": 0.83104
+            "x": 0.809786,
+            "y": 0.831389
           }
         ],
         "status": "validated"
@@ -6594,7 +6592,7 @@
       "label": "Beacon Flasher",
       "physical": {
         "assembly_part_number": "A-17802",
-        "notes": "Printed solenoid/flasher table entry 24 (Flasher). Printed flashlamp complement: #906 / #906. The solenoid-locations list prints this address twice (Playfield and Insert Panel), so two bulbs are fitted.",
+        "notes": "Printed solenoid/flasher table entry 24 (Flasher). Printed flashlamp complement: #906 / #906. The solenoid-locations list prints this address twice (Playfield and Insert Panel), so two bulbs are fitted. Only the playfield bulb has a playfield placement; the insert-panel bulb is backbox hardware behind the translite and is deliberately not given a playfield coordinate. The playfield placement is Light41, the bulb Light of the script-bound F24 collection; its co-located partner Light47 is an insert overlay (image inserts, is_bulb_light false), not a bulb.",
         "quantity": 2
       },
       "provenance": {
@@ -6616,8 +6614,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.6428,
-            "y": 0.571628
+            "x": 0.611894,
+            "y": 0.571833
           }
         ],
         "status": "validated"
@@ -6671,8 +6669,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.9536,
-            "y": 0.36775
+            "x": 0.953894,
+            "y": 0.367023
           }
         ],
         "status": "validated"
@@ -6704,7 +6702,7 @@
       "kind": "flasher",
       "label": "Saloon Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 26 (Gen. Purpose). Printed flashlamp complement: #906 / #906. The solenoid-locations list prints this address twice (Playfield and Insert Panel), so two bulbs are fitted.",
+        "notes": "Printed solenoid/flasher table entry 26 (Gen. Purpose). Printed flashlamp complement: #906 / #906. The solenoid-locations list prints this address twice (Playfield and Insert Panel), so two bulbs are fitted. Only the playfield bulb has a playfield placement; the insert-panel bulb is backbox hardware behind the translite and is deliberately not given a playfield coordinate. The script-bound F26 Lights (Light56/Light57) render the flash as a glow on the saloon at about (0.76, 0.19), but printed page 2-37 draws the Saloon flasher's leader to a bracket on the right ramp. Measured on the retained 1551x2143 render of that page, whose playfield frame runs x 375-1164 and y 254-2019 (jet bumper 13 and the domes of flashers 25 and 27 land on their own drawn circles under that frame), the leader ends at pixel (1020, 610), normalized (0.818, 0.202). The table's decorative spotlight primitive SpotP sits at (0.800694, 0.216224), about 0.022 from that endpoint (measurement retained as excerpt saloon-flasher-location), so the physical playfield bulb is placed at SpotP and the saloon glow is treated as the table's visual effect, not the socket.",
         "quantity": 2
       },
       "provenance": {
@@ -6720,14 +6718,15 @@
             "id": "device.saloon-flasher.emitter",
             "provenance": {
               "source_refs": [
-                "vpx-table.cc-vpw-1-0-2"
+                "vpx-table.cc-vpw-1-0-2",
+                "manual.bally.cactus-canyon.1998"
               ],
               "status": "validated"
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.757863,
-            "y": 0.19034
+            "x": 0.800694,
+            "y": 0.216224
           }
         ],
         "status": "validated"
@@ -6759,7 +6758,7 @@
       "kind": "flasher",
       "label": "Back Right Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 27 (Gen. Purpose). Printed flashlamp complement: #906 / #906. The solenoid-locations list prints this address twice (Playfield and Insert Panel), so two bulbs are fitted.",
+        "notes": "Printed solenoid/flasher table entry 27 (Gen. Purpose). Printed flashlamp complement: #906 / #906. The solenoid-locations list prints this address twice (Playfield and Insert Panel), so two bulbs are fitted. Only the playfield bulb has a playfield placement; the insert-panel bulb is backbox hardware behind the translite and is deliberately not given a playfield coordinate.",
         "quantity": 2
       },
       "provenance": {
@@ -6772,7 +6771,7 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.back-right-flasher.emitter.1",
+            "id": "device.back-right-flasher.emitter",
             "provenance": {
               "source_refs": [
                 "vpx-table.cc-vpw-1-0-2"
@@ -6781,21 +6780,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.847689,
-            "y": 0.009251
-          },
-          {
-            "id": "device.back-right-flasher.emitter.2",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.cc-vpw-1-0-2"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.994748,
-            "y": 0.032234
+            "x": 0.95042,
+            "y": 0.034507
           }
         ],
         "status": "validated"
@@ -6827,7 +6813,7 @@
       "kind": "flasher",
       "label": "Back Left Flasher",
       "physical": {
-        "notes": "Printed solenoid/flasher table entry 28 (Gen. Purpose). Printed flashlamp complement: #906 / #906. The solenoid-locations list prints this address twice (Playfield and Insert Panel), so two bulbs are fitted.",
+        "notes": "Printed solenoid/flasher table entry 28 (Gen. Purpose). Printed flashlamp complement: #906 / #906. The solenoid-locations list prints this address twice (Playfield and Insert Panel), so two bulbs are fitted. Only the playfield bulb has a playfield placement; the insert-panel bulb is backbox hardware behind the translite and is deliberately not given a playfield coordinate.",
         "quantity": 2
       },
       "provenance": {
@@ -6840,7 +6826,7 @@
       "spatial": {
         "placements": [
           {
-            "id": "device.back-left-flasher.emitter.1",
+            "id": "device.back-left-flasher.emitter",
             "provenance": {
               "source_refs": [
                 "vpx-table.cc-vpw-1-0-2"
@@ -6849,21 +6835,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.160714,
-            "y": 0.007863
-          },
-          {
-            "id": "device.back-left-flasher.emitter.2",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.cc-vpw-1-0-2"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.002101,
-            "y": 0.175301
+            "x": 0.109553,
+            "y": 0.166406
           }
         ],
         "status": "validated"
@@ -12200,7 +12173,7 @@
       "kind": "gi",
       "label": "Illumination String 1",
       "physical": {
-        "notes": "Printed general-illumination string 01 (Illumination String 1); printed bulb type #44. The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate come from the retained table's GI emitter collection for this string (UpdateGI in the retained script). GI address 0 drives collection LeftGI (10 physical bulb positions from 19 raw members, clustered within 25px); GI address 1 drives RightGI (12 from 24 raw members, one an authoring duplicate); GI address 2 drives TopGI plus TopGI2 (16 from 32 raw members; TopGI2's three members are additional VR-room-only render duplicates of three TopGI bulbs, not new positions).",
+        "notes": "Printed general-illumination string 01 (Illumination String 1); printed bulb type #44. The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate come from the retained table's GI emitter collection for this string (UpdateGI in the retained script). GI address 0 drives collection LeftGI (10 physical bulb positions from 19 raw members, clustered within 25px); GI address 1 drives RightGI (12 from 24 raw members, one an authoring duplicate); GI address 2 drives TopGI plus TopGI2 (16 from 32 raw members; TopGI2's three members, lit only when the table's VRRoom option is 0, duplicate three TopGI bulbs rather than adding positions).",
         "quantity": 10
       },
       "provenance": {
@@ -12223,8 +12196,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.066907,
-            "y": 0.400675
+            "x": 0.067377,
+            "y": 0.400558
           },
           {
             "id": "gi.string-1.emitter.2",
@@ -12236,8 +12209,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.07146,
-            "y": 0.607051
+            "x": 0.071409,
+            "y": 0.607161
           },
           {
             "id": "gi.string-1.emitter.3",
@@ -12249,8 +12222,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.098183,
-            "y": 0.454017
+            "x": 0.098468,
+            "y": 0.454129
           },
           {
             "id": "gi.string-1.emitter.4",
@@ -12262,8 +12235,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.117679,
-            "y": 0.559022
+            "x": 0.117635,
+            "y": 0.558887
           },
           {
             "id": "gi.string-1.emitter.5",
@@ -12275,8 +12248,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.126261,
-            "y": 0.909269
+            "x": 0.126262,
+            "y": 0.909268
           },
           {
             "id": "gi.string-1.emitter.6",
@@ -12288,8 +12261,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.130987,
-            "y": 0.504269
+            "x": 0.131192,
+            "y": 0.504182
           },
           {
             "id": "gi.string-1.emitter.7",
@@ -12301,8 +12274,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.140158,
-            "y": 0.798691
+            "x": 0.14024,
+            "y": 0.798607
           },
           {
             "id": "gi.string-1.emitter.8",
@@ -12314,8 +12287,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.190462,
-            "y": 0.719611
+            "x": 0.190847,
+            "y": 0.719382
           },
           {
             "id": "gi.string-1.emitter.9",
@@ -12327,8 +12300,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.212253,
-            "y": 0.820456
+            "x": 0.2125,
+            "y": 0.820154
           },
           {
             "id": "gi.string-1.emitter.10",
@@ -12340,8 +12313,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.218503,
-            "y": 0.763594
+            "x": 0.218332,
+            "y": 0.763644
           }
         ],
         "status": "validated"
@@ -12373,7 +12346,7 @@
       "kind": "gi",
       "label": "Illumination String 2",
       "physical": {
-        "notes": "Printed general-illumination string 02 (Illumination String 2); printed bulb type #44. The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate come from the retained table's GI emitter collection for this string (UpdateGI in the retained script). GI address 0 drives collection LeftGI (10 physical bulb positions from 19 raw members, clustered within 25px); GI address 1 drives RightGI (12 from 24 raw members, one an authoring duplicate); GI address 2 drives TopGI plus TopGI2 (16 from 32 raw members; TopGI2's three members are additional VR-room-only render duplicates of three TopGI bulbs, not new positions).",
+        "notes": "Printed general-illumination string 02 (Illumination String 2); printed bulb type #44. The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate come from the retained table's GI emitter collection for this string (UpdateGI in the retained script). GI address 0 drives collection LeftGI (10 physical bulb positions from 19 raw members, clustered within 25px); GI address 1 drives RightGI (12 from 24 raw members, one an authoring duplicate); GI address 2 drives TopGI plus TopGI2 (16 from 32 raw members; TopGI2's three members, lit only when the table's VRRoom option is 0, duplicate three TopGI bulbs rather than adding positions).",
         "quantity": 12
       },
       "provenance": {
@@ -12396,8 +12369,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.692111,
-            "y": 0.763691
+            "x": 0.692003,
+            "y": 0.763904
           },
           {
             "id": "gi.string-2.emitter.2",
@@ -12409,8 +12382,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.69605,
-            "y": 0.823784
+            "x": 0.695672,
+            "y": 0.823864
           },
           {
             "id": "gi.string-2.emitter.3",
@@ -12422,8 +12395,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.721728,
-            "y": 0.722387
+            "x": 0.721765,
+            "y": 0.722705
           },
           {
             "id": "gi.string-2.emitter.4",
@@ -12435,8 +12408,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.77041,
-            "y": 0.801249
+            "x": 0.769872,
+            "y": 0.801244
           },
           {
             "id": "gi.string-2.emitter.5",
@@ -12461,8 +12434,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.846507,
-            "y": 0.500793
+            "x": 0.846375,
+            "y": 0.500895
           },
           {
             "id": "gi.string-2.emitter.7",
@@ -12474,8 +12447,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.855704,
-            "y": 0.457858
+            "x": 0.855838,
+            "y": 0.457985
           },
           {
             "id": "gi.string-2.emitter.8",
@@ -12487,8 +12460,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.875063,
-            "y": 0.535779
+            "x": 0.875121,
+            "y": 0.535778
           },
           {
             "id": "gi.string-2.emitter.9",
@@ -12500,8 +12473,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.888535,
-            "y": 0.418941
+            "x": 0.888808,
+            "y": 0.419058
           },
           {
             "id": "gi.string-2.emitter.10",
@@ -12513,8 +12486,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.893367,
-            "y": 0.762909
+            "x": 0.89177,
+            "y": 0.764602
           },
           {
             "id": "gi.string-2.emitter.11",
@@ -12526,8 +12499,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.893519,
-            "y": 0.671124
+            "x": 0.892076,
+            "y": 0.673049
           },
           {
             "id": "gi.string-2.emitter.12",
@@ -12539,8 +12512,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.894102,
-            "y": 0.592817
+            "x": 0.893898,
+            "y": 0.592633
           }
         ],
         "status": "validated"
@@ -12572,7 +12545,7 @@
       "kind": "gi",
       "label": "Illumination String 3",
       "physical": {
-        "notes": "Printed general-illumination string 03 (Illumination String 3); printed bulb type #44. The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate come from the retained table's GI emitter collection for this string (UpdateGI in the retained script). GI address 0 drives collection LeftGI (10 physical bulb positions from 19 raw members, clustered within 25px); GI address 1 drives RightGI (12 from 24 raw members, one an authoring duplicate); GI address 2 drives TopGI plus TopGI2 (16 from 32 raw members; TopGI2's three members are additional VR-room-only render duplicates of three TopGI bulbs, not new positions).",
+        "notes": "Printed general-illumination string 03 (Illumination String 3); printed bulb type #44. The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate come from the retained table's GI emitter collection for this string (UpdateGI in the retained script). GI address 0 drives collection LeftGI (10 physical bulb positions from 19 raw members, clustered within 25px); GI address 1 drives RightGI (12 from 24 raw members, one an authoring duplicate); GI address 2 drives TopGI plus TopGI2 (16 from 32 raw members; TopGI2's three members, lit only when the table's VRRoom option is 0, duplicate three TopGI bulbs rather than adding positions).",
         "quantity": 16
       },
       "provenance": {
@@ -12595,8 +12568,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.114286,
-            "y": 0.099311
+            "x": 0.114491,
+            "y": 0.099309
           },
           {
             "id": "gi.string-3.emitter.2",
@@ -12608,8 +12581,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.133587,
-            "y": 0.009389
+            "x": 0.133181,
+            "y": 0.010083
           },
           {
             "id": "gi.string-3.emitter.3",
@@ -12621,8 +12594,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.133661,
-            "y": 0.124063
+            "x": 0.133181,
+            "y": 0.123564
           },
           {
             "id": "gi.string-3.emitter.4",
@@ -12634,8 +12607,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.134055,
-            "y": 0.259662
+            "x": 0.133975,
+            "y": 0.263515
           },
           {
             "id": "gi.string-3.emitter.5",
@@ -12647,8 +12620,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.159398,
-            "y": 0.167049
+            "x": 0.159938,
+            "y": 0.168745
           },
           {
             "id": "gi.string-3.emitter.6",
@@ -12660,8 +12633,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.202479,
-            "y": 0.251031
+            "x": 0.203082,
+            "y": 0.25115
           },
           {
             "id": "gi.string-3.emitter.7",
@@ -12673,8 +12646,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.230063,
-            "y": 0.063432
+            "x": 0.230563,
+            "y": 0.063407
           },
           {
             "id": "gi.string-3.emitter.8",
@@ -12686,8 +12659,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.32697,
-            "y": 0.063844
+            "x": 0.327617,
+            "y": 0.063535
           },
           {
             "id": "gi.string-3.emitter.9",
@@ -12699,8 +12672,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.337353,
-            "y": 0.127939
+            "x": 0.337313,
+            "y": 0.129635
           },
           {
             "id": "gi.string-3.emitter.10",
@@ -12712,8 +12685,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.423451,
-            "y": 0.179221
+            "x": 0.424344,
+            "y": 0.179223
           },
           {
             "id": "gi.string-3.emitter.11",
@@ -12725,8 +12698,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.476297,
-            "y": 0.124258
+            "x": 0.475494,
+            "y": 0.124647
           },
           {
             "id": "gi.string-3.emitter.12",
@@ -12738,8 +12711,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.767542,
-            "y": 0.02049
+            "x": 0.767545,
+            "y": 0.020489
           },
           {
             "id": "gi.string-3.emitter.13",
@@ -12751,8 +12724,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.852363,
-            "y": 0.046792
+            "x": 0.852104,
+            "y": 0.046729
           },
           {
             "id": "gi.string-3.emitter.14",
@@ -12764,8 +12737,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.92385,
-            "y": 0.075694
+            "x": 0.923643,
+            "y": 0.075854
           },
           {
             "id": "gi.string-3.emitter.15",
@@ -12777,8 +12750,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.925672,
-            "y": 0.218159
+            "x": 0.925673,
+            "y": 0.218157
           },
           {
             "id": "gi.string-3.emitter.16",
@@ -12790,8 +12763,8 @@
             },
             "role": "emitter",
             "space": "playfield",
-            "x": 0.93386,
-            "y": 0.127419
+            "x": 0.933853,
+            "y": 0.127386
           }
         ],
         "status": "validated"
@@ -13022,6 +12995,18 @@
           "reviewed": true,
           "sha256": "f1e0e2a9094bb63fca5e5b5c06f92243c754bcb5e9231230742bceccd497dd46",
           "transcribed_by": "curator, OCR text extracted then confirmed against the rendered page"
+        },
+        {
+          "id": "excerpt.cactus-canyon.saloon-flasher-location",
+          "image": "evidence/excerpts/bally.cactus-canyon.1998/saloon-flasher-location.webp",
+          "image_derivation": "Cactus_Canyon_Manual.pdf page 95, crop box 0.45,0.1,0.86,0.4, scanned page rendered at its native resolution (embedded image xref 391, 1551px across 7.76in), rendered at 200 dpi, grayscale, 637x644 WebP quality 80; cropped to the upper-right playfield around the right ramp with callout balloons 27, 36/33, 26, 38/37 and 04",
+          "image_sha256": "db5f5577bc9e7268b2f4004ffb7c49a371e91f54dbf1d28d2a0422c11916eab6",
+          "locator": "PDF page 95, printed 2-37, playfield solenoid/flasher location drawing, callout 26 leader",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.cactus-canyon.1998/saloon-flasher-location.md",
+          "reviewed": true,
+          "sha256": "39d6ac660e4beecaac7abbe280ece8b2ce4f621be10211a426202c5d4523e03b",
+          "transcribed_by": "curator, measured on the rendered page"
         },
         {
           "id": "excerpt.cactus-canyon.solenoid-flasher-wiring",

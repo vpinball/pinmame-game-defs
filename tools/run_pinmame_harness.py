@@ -86,6 +86,13 @@ KEY_ALIASES = {
 }
 MIN_SAFE_PUBLIC_SWITCH = -7
 MAX_SAFE_PUBLIC_SWITCH = 120
+# WPC's wpc_sw2m maps public 121-128 to internal column CORE_CUSTSWCOL (12), inside the
+# 16-column coreGlobals.swMatrix, so reading a WPC driver's custom switch column is safe.
+# Sequential converters map the same numbers past the array, so this is opt-in and read-only.
+WPC_CUSTOM_SWITCH_RANGE = range(121, 129)
+# PINMAME_HARDWARE_GEN_WPCALPHA_1 through PINMAME_HARDWARE_GEN_WPC95 (libpinmame.h): every
+# generation whose switch conversion is wpc_sw2m.
+WPC_HARDWARE_GEN_MASK = 0xFF
 
 # PinMAME's regular 16-segment patterns (core_ascii2seg16). Some ROMs use
 # bespoke animation glyphs; those remain visible as ``?`` while ordinary
@@ -504,6 +511,36 @@ def _parse_watch_switch(value: str) -> int:
 	return switch
 
 
+def _parse_wpc_custom_watch_switch(value: str) -> int:
+	try:
+		switch = int(value)
+	except ValueError as exc:
+		raise argparse.ArgumentTypeError("watched switch must be an integer") from exc
+	if switch not in WPC_CUSTOM_SWITCH_RANGE:
+		raise argparse.ArgumentTypeError("a WPC custom-column switch must be between 121 and 128")
+	return switch
+
+
+def _require_wpc_generation(generation: int) -> None:
+	if not generation & WPC_HARDWARE_GEN_MASK:
+		raise RuntimeError(
+			f"--watch-wpc-custom-switch needs a WPC-generation driver; PinmameGetHardwareGen() returned "
+			f"{generation:#x}, whose switch conversion would read past the switch matrix"
+		)
+
+
+def _with_wpc_custom_watch(library: Any, watch_switches: tuple[int, ...], custom: list[int]) -> tuple[int, ...]:
+	"""Add the WPC custom-column watches only once the running driver is proven to be WPC.
+
+	Until this returns, the watch list holds only ordinary addresses, so a failure snapshot taken
+	after a refused or timed-out start can never read 121-128 on a non-WPC driver.
+	"""
+	if not custom:
+		return watch_switches
+	_require_wpc_generation(library.PinmameGetHardwareGen())
+	return tuple(sorted(set(watch_switches) | set(custom)))
+
+
 def _validate_public_switch_address(
 	switch: int,
 	error_type: type[Exception] = ValueError,
@@ -543,6 +580,8 @@ def _configure_api(library: ctypes.CDLL) -> None:
 	library.PinmameSetHandleMechanics.restype = None
 	library.PinmameRun.argtypes = [ctypes.c_char_p]
 	library.PinmameRun.restype = ctypes.c_int
+	library.PinmameGetHardwareGen.argtypes = []
+	library.PinmameGetHardwareGen.restype = ctypes.c_uint64
 	library.PinmameIsRunning.argtypes = []
 	library.PinmameIsRunning.restype = ctypes.c_int
 	library.PinmameStop.argtypes = []
@@ -742,9 +781,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 		if action["type"] in ("pulse", "set_switch", "pulse_until_display", "pulse_until_output")
 		and "switch" in action
 	)
-	watch_switches = tuple(sorted(watch_switch_set))
-	for switch in watch_switches:
+	for switch in watch_switch_set:
 		_validate_public_switch_address(switch)
+	watch_switches = tuple(sorted(watch_switch_set))
 	use_keyboard = any(
 		action["type"] in ("pulse_key", "set_key")
 		or (action["type"] in ("pulse_until_display", "pulse_until_output") and "key" in action)
@@ -899,6 +938,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 	try:
 		if not recorder.ready.wait(args.ready_timeout):
 			raise TimeoutError("PinMAME did not report a ready state")
+		watch_switches = _with_wpc_custom_watch(library, watch_switches, args.watch_wpc_custom_switch)
 		for switch, state in initial_switches:
 			library.PinmameSetSwitch(switch, state)
 			recorder.record(
@@ -1318,6 +1358,17 @@ def build_parser() -> argparse.ArgumentParser:
 		default=[],
 		metavar="SWITCH",
 		help="include the observed public state of this switch in every snapshot; may be repeated",
+	)
+	parser.add_argument(
+		"--watch-wpc-custom-switch",
+		type=_parse_wpc_custom_watch_switch,
+		action="append",
+		default=[],
+		metavar="SWITCH",
+		help=(
+			"read-only watch of a WPC driver's custom switch column (public 121-128), which wpc_sw2m maps "
+			"inside the switch matrix; only valid for WPC-generation drivers that declare hw.swCol"
+		),
 	)
 	parser.add_argument(
 		"--initial-switch",

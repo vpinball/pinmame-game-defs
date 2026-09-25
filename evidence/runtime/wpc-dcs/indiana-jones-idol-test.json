@@ -1,0 +1,407 @@
+{
+  "driver_ids": [
+    "ij_l7"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.indiana-jones-the-pinball-adventure.1993"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game ij_l7 --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --handle-mechanics <15|7> --watch-wpc-custom-switch 121 --watch-wpc-custom-switch 122 --watch-wpc-custom-switch 123 --scenario tools/harness-scenarios/wpc-dcs/ij-idol-test.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Mask 15 enables all four ij_handleMech mechanisms including bit 3, the idol, which writes public 121-123; mask 7 keeps the drop targets and mini-playfield but removes idol position feedback. The --watch-wpc-custom-switch reads come from PinMAME's model; observed_switch_addresses lists the idol switches at 1 after each press.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "ij_l7",
+    "observations": {
+      "diagnostic_snapshots": [
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "IDOL TEST / MTR=OFF POS. 6 / MODE=ONCE after CHECKING IDOL LOCK PLEASE WAIT",
+          "label": "--handle-mechanics 15: T.14 IDOL TEST about ten seconds after starting it, public 121/122/123 = 110",
+          "nonzero_pixels": 662,
+          "pixel_sha256": "45878f38f5008ff3c05585f2ab3d4a0708263f00c6b66e53b04713f7cfe83d89"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "IDOL TEST / MTR=OFF POS. 1 / MODE=ONCE",
+          "label": "--handle-mechanics 15: T.14 IDOL TEST four seconds after service Up press 1, public 121/122/123 = 100",
+          "nonzero_pixels": 654,
+          "pixel_sha256": "e92097e5de82e0656b52fec19f8ee629e3663fcfbec0c4e635a1c51bd7fac37a"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "IDOL TEST / MTR=OFF POS. 2 / MODE=ONCE",
+          "label": "--handle-mechanics 15: T.14 IDOL TEST four seconds after service Up press 2, public 121/122/123 = 101",
+          "nonzero_pixels": 662,
+          "pixel_sha256": "4c8938b6ef276130cbe413c5b1b542500f393dd456e2674f6671af625e6d3ec9"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "IDOL TEST / MTR=OFF POS. 3 / MODE=ONCE",
+          "label": "--handle-mechanics 15: T.14 IDOL TEST four seconds after service Up press 3, public 121/122/123 = 001",
+          "nonzero_pixels": 658,
+          "pixel_sha256": "5d004ef9938c7b0fd0b8d7fcb5081c98de27b9eb9a511c054b8341542c81a77d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "IDOL TEST / MTR=OFF POS. 4 / MODE=ONCE",
+          "label": "--handle-mechanics 15: T.14 IDOL TEST four seconds after service Up press 4, public 121/122/123 = 011",
+          "nonzero_pixels": 661,
+          "pixel_sha256": "4a11152a6fdfdb9d731ff866925db01bb9db2f7b8fc4a24817e6fc730aeefb8d"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "IDOL TEST / MTR=OFF POS. 5 / MODE=ONCE",
+          "label": "--handle-mechanics 15: T.14 IDOL TEST four seconds after service Up press 5, public 121/122/123 = 010",
+          "nonzero_pixels": 661,
+          "pixel_sha256": "b72b0664b5a0b6f62fbb54acfcf46e18c92b3406720cf655fe0ac434a4021228"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "IDOL TEST / MTR=OFF POS. 6 / MODE=ONCE",
+          "label": "--handle-mechanics 15: T.14 IDOL TEST four seconds after service Up press 6, public 121/122/123 = 110",
+          "nonzero_pixels": 662,
+          "pixel_sha256": "45878f38f5008ff3c05585f2ab3d4a0708263f00c6b66e53b04713f7cfe83d89"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ERROR! ERROR! ERROR! IDOL LOCK NOT WORKING CORRECTLY (the screen alternates with ERROR IDOL BAD / MTR=OFF POS. 1)",
+          "label": "--handle-mechanics 7: T.14 IDOL TEST about ten seconds after starting it, public 121/122/123 = 000",
+          "nonzero_pixels": 0,
+          "pixel_sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ERROR IDOL BAD / MTR=OFF POS. 1 / MODE=ONCE",
+          "label": "--handle-mechanics 7: T.14 IDOL TEST four seconds after service Up press 1, public 121/122/123 = 000",
+          "nonzero_pixels": 1132,
+          "pixel_sha256": "afa54a11a1d1d6ccafa9e969edfd3867d45262b65ed206240c186fc0724e4185"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ERROR IDOL BAD / MTR=OFF POS. 1 / MODE=ONCE",
+          "label": "--handle-mechanics 7: T.14 IDOL TEST four seconds after service Up press 2, public 121/122/123 = 000",
+          "nonzero_pixels": 1132,
+          "pixel_sha256": "afa54a11a1d1d6ccafa9e969edfd3867d45262b65ed206240c186fc0724e4185"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ERROR IDOL BAD / MTR=OFF POS. 1 / MODE=ONCE",
+          "label": "--handle-mechanics 7: T.14 IDOL TEST four seconds after service Up press 3, public 121/122/123 = 000",
+          "nonzero_pixels": 1132,
+          "pixel_sha256": "afa54a11a1d1d6ccafa9e969edfd3867d45262b65ed206240c186fc0724e4185"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ERROR IDOL BAD / MTR=OFF POS. 1 / MODE=ONCE",
+          "label": "--handle-mechanics 7: T.14 IDOL TEST four seconds after service Up press 4, public 121/122/123 = 000",
+          "nonzero_pixels": 1132,
+          "pixel_sha256": "afa54a11a1d1d6ccafa9e969edfd3867d45262b65ed206240c186fc0724e4185"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ERROR IDOL BAD / MTR=OFF POS. 1 / MODE=ONCE",
+          "label": "--handle-mechanics 7: T.14 IDOL TEST four seconds after service Up press 5, public 121/122/123 = 000",
+          "nonzero_pixels": 1132,
+          "pixel_sha256": "afa54a11a1d1d6ccafa9e969edfd3867d45262b65ed206240c186fc0724e4185"
+        },
+        {
+          "active_solenoid_addresses": [
+            29,
+            31
+          ],
+          "display_index": 0,
+          "interpreted_text": "ERROR IDOL BAD / MTR=OFF POS. 1 / MODE=ONCE",
+          "label": "--handle-mechanics 7: T.14 IDOL TEST four seconds after service Up press 6, public 121/122/123 = 000",
+          "nonzero_pixels": 1132,
+          "pixel_sha256": "afa54a11a1d1d6ccafa9e969edfd3867d45262b65ed206240c186fc0724e4185"
+        }
+      ],
+      "display_indices_seen": [
+        0
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 15: service Up press 1 in T.14 IDOL TEST; the wheel motor (public 56) runs 0.5 s, public 121/122/123 read 100, and the ROM displays POS. 1",
+          "observed_switch_addresses": [
+            121
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 15: service Up press 2 in T.14 IDOL TEST; the wheel motor (public 56) runs 0.48 s, public 121/122/123 read 101, and the ROM displays POS. 2",
+          "observed_switch_addresses": [
+            121,
+            123
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 15: service Up press 3 in T.14 IDOL TEST; the wheel motor (public 56) runs 0.48 s, public 121/122/123 read 001, and the ROM displays POS. 3",
+          "observed_switch_addresses": [
+            123
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 15: service Up press 4 in T.14 IDOL TEST; the wheel motor (public 56) runs 0.5 s, public 121/122/123 read 011, and the ROM displays POS. 4",
+          "observed_switch_addresses": [
+            122,
+            123
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 15: service Up press 5 in T.14 IDOL TEST; the wheel motor (public 56) runs 0.48 s, public 121/122/123 read 010, and the ROM displays POS. 5",
+          "observed_switch_addresses": [
+            122
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 15: service Up press 6 in T.14 IDOL TEST; the wheel motor (public 56) runs 0.48 s, public 121/122/123 read 110, and the ROM displays POS. 6",
+          "observed_switch_addresses": [
+            121,
+            122
+          ],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Up press 1 in T.14 IDOL TEST; no wheel-motor (public 56) transition follows, public 121/122/123 stay 000, and the ROM still reports ERROR IDOL BAD",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Up press 2 in T.14 IDOL TEST; the wheel motor (public 56) runs 4.06 s, public 121/122/123 stay 000, and the ROM still reports ERROR IDOL BAD",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Up press 3 in T.14 IDOL TEST; the wheel motor (public 56) runs 4.06 s, public 121/122/123 stay 000, and the ROM still reports ERROR IDOL BAD",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Up press 4 in T.14 IDOL TEST; the wheel motor (public 56) runs 4.06 s, public 121/122/123 stay 000, and the ROM still reports ERROR IDOL BAD",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Up press 5 in T.14 IDOL TEST; the wheel motor (public 56) runs 4.09 s, public 121/122/123 stay 000, and the ROM still reports ERROR IDOL BAD",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "input_address": 7,
+          "input_kind": "switch",
+          "label": "--handle-mechanics 7: service Up press 6 in T.14 IDOL TEST; the wheel motor (public 56) runs 4.06 s, public 121/122/123 stay 000, and the ROM still reports ERROR IDOL BAD",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            56
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        23,
+        29,
+        31,
+        56
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 320,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "ij-idol-test-mech15",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/indiana-jones-the-pinball-adventure-1993/harness/ij-idol-test-mech15.json",
+        "scenario_path": "tools/harness-scenarios/wpc-dcs/ij-idol-test.json",
+        "scenario_sha256": "8e6d724bf6c89ef5361d87ffe27cdbaf2361f381e45d9123555184ccc11c5001",
+        "self_test_pulses": 0,
+        "sha256": "63c16ef86afe68f72cc8f0425d379b4bf2e80edf1866a3227648d3b2ecaf2b1f",
+        "snapshot_count": 342,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          121,
+          122,
+          123
+        ]
+      },
+      {
+        "action_count": 320,
+        "initial_switches": [
+          {
+            "state": 0,
+            "switch": 22
+          }
+        ],
+        "name": "ij-idol-test-mech7",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory, so the ROM performed its own factory reset before the scenario left the message loop with Escape",
+        "retained_from": "external:pinmame-review-artifacts/indiana-jones-the-pinball-adventure-1993/harness/ij-idol-test-mech7.json",
+        "scenario_path": "tools/harness-scenarios/wpc-dcs/ij-idol-test.json",
+        "scenario_sha256": "8e6d724bf6c89ef5361d87ffe27cdbaf2361f381e45d9123555184ccc11c5001",
+        "self_test_pulses": 0,
+        "sha256": "119b78e37200ac624896251eb50ce3bb2a9d84e7524897226e515740a015c60c",
+        "snapshot_count": 342,
+        "watch_switches": [
+          5,
+          7,
+          8,
+          22,
+          121,
+          122,
+          123
+        ]
+      }
+    ],
+    "rom_archive_sha256": "d2ada6d65b749f89e85789efb94898113463f1eadbb1f3007b702b56aeadf12e"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/indiana-jones-the-pinball-adventure-1993/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "63c16ef86afe68f72cc8f0425d379b4bf2e80edf1866a3227648d3b2ecaf2b1f"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

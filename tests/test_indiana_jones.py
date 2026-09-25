@@ -93,23 +93,97 @@ class IndianaJonesDefinitionTests(unittest.TestCase):
 		self.assertIn("WPC_GILAMPS bit 7", self.solenoids[31]["physical"]["notes"])
 		self.assertNotIn("fast-flip RAM flag", self.solenoids[31]["physical"]["notes"])
 
-	def test_two_opto_polarity_conflicts_are_recorded_and_unresolved(self) -> None:
+	def test_only_the_captive_ball_opto_conflict_remains(self) -> None:
 		conflicts = {conflict["id"]: conflict for conflict in self.definition["conflicts"]}
-		self.assertEqual(
-			{"conflict.captive-ball-front-opto-not-normalized", "conflict.wheel-position-opto-not-normalized"},
-			set(conflicts),
-		)
+		self.assertEqual({"conflict.captive-ball-front-opto-not-normalized"}, set(conflicts))
 		captive = conflicts["conflict.captive-ball-front-opto-not-normalized"]
 		self.assertGreaterEqual(len(captive["source_refs"]), 2)
 		self.assertIn("71", captive["path"])
 		self.assertIn("unresolved", captive["description"].lower())
 		self.assertIn("harness", captive["description"].lower())
-		wheel = conflicts["conflict.wheel-position-opto-not-normalized"]
-		self.assertGreaterEqual(len(wheel["source_refs"]), 2)
+
+	def test_wheel_position_polarity_is_settled_by_the_rom_idol_test(self) -> None:
 		for address in (121, 122, 123):
-			self.assertIn(str(address), wheel["path"])
-		self.assertIn("unresolved", wheel["description"].lower())
-		self.assertIn("harness", wheel["description"].lower())
+			switch = self.switches[address]
+			self.assertIn("runtime.indiana-jones.idol-test", switch["provenance"]["source_refs"], address)
+			self.assertIn("T.14 IDOL TEST", switch["physical"]["notes"], address)
+			self.assertIn("never inverts them", switch["physical"]["notes"], address)
+		idol = {item["id"]: item for item in self.definition["mechanisms"]}["mechanism.idol"]
+		self.assertIn("runtime.indiana-jones.idol-test", idol["provenance"]["source_refs"])
+
+	def test_idol_runtime_evidence_steps_every_position_only_with_feedback(self) -> None:
+		import hashlib
+
+		evidence = load_json(ROOT / "evidence" / "runtime" / "wpc-dcs" / "indiana-jones-idol-test.json")
+		self.assertEqual("ij_l7", evidence["runtime"]["game"])
+		observations = evidence["runtime"]["observations"]["named_action_observations"]
+		with_idol = [item for item in observations if item["label"].startswith("--handle-mechanics 15:")]
+		without = [item for item in observations if item["label"].startswith("--handle-mechanics 7:")]
+		self.assertEqual(6, len(with_idol))
+		self.assertEqual(6, len(without))
+		# The six codes form a twisted ring (each complement is the code three positions away), so only the
+		# ROM's label for each read-back code settles polarity: the known-working table's UpdateIdol_timer
+		# comments name 100 Pos1 through 110 Pos6, and inverted levels would put the table's Pos1 at POS. 4.
+		table_codes = ["100", "101", "001", "011", "010", "110"]
+		for number, (item, code) in enumerate(zip(with_idol, table_codes), start=1):
+			self.assertEqual([56], item["transitioned_solenoid_addresses"], item["label"])
+			self.assertIn(f"read {code}, and the ROM displays POS. {number}", item["label"])
+			active = [address for address, bit in zip((121, 122, 123), code) if bit == "1"]
+			self.assertEqual(active, item["observed_switch_addresses"], item["label"])
+		for item in without:
+			self.assertIn("ERROR IDOL BAD", item["label"])
+			self.assertEqual([], item["observed_switch_addresses"], item["label"])
+		scenario = ROOT / "tools" / "harness-scenarios" / "wpc-dcs" / "ij-idol-test.json"
+		digest = hashlib.sha256(scenario.read_bytes()).hexdigest()
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		prefix = "external:pinmame-review-artifacts/"
+		diagnostics = evidence["runtime"]["observations"]["diagnostic_snapshots"]
+		for raw in evidence["runtime"]["raw_runs"]:
+			self.assertEqual(digest, raw["scenario_sha256"], raw["name"])
+			if not root:
+				continue
+			path = Path(root) / raw["retained_from"][len(prefix):]
+			self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest(), raw["name"])
+			run = load_json(path)
+			snapshots = run["snapshots"]
+			# The POS labels are the curator's reading of the ROM's display: pin each one to the raw
+			# run's own frame, so a label can only name a frame the run actually showed.
+			mask = run["handle_mechanics"]
+			by_label = {snap["label"]: snap for snap in snapshots}
+			frames = []
+			for number in range(1, 7):
+				frame = by_label[f"T.14 after press {number} sample 020"]["displays"][0]["pixel_sha256"]
+				pinned = [
+					item for item in diagnostics
+					if item["label"].startswith(f"--handle-mechanics {mask}: T.14 IDOL TEST four seconds after service Up press {number},")
+				]
+				self.assertEqual(1, len(pinned), (raw["name"], number))
+				self.assertEqual(pinned[0]["pixel_sha256"], frame, (raw["name"], number))
+				frames.append(frame)
+			if mask == 15:
+				# Six different POS screens, one per press.
+				self.assertEqual(6, len(set(frames)), raw["name"])
+			presses = [index for index, snap in enumerate(snapshots) if "inside T.14 (press" in snap["label"]]
+			self.assertEqual(6, len(presses), raw["name"])
+			for number, index in enumerate(presses):
+				end = presses[number + 1] if number + 1 < len(presses) else len(snapshots)
+				start, stop = snapshots[index - 1]["time_s"], snapshots[end - 1]["time_s"]
+				events = [e for e in run["events"] if e["event"] == "solenoid" and e["number"] == 56 and start <= e["time_s"] < stop]
+				on = [e["time_s"] for e in events if e["state"]]
+				off = [e["time_s"] for e in events if not e["state"]]
+				# A motor start must always be followed by a stop inside the press window.
+				self.assertEqual(bool(on), bool(off), (raw["name"], number))
+				if run["handle_mechanics"] == 15:
+					# One short wheel step per press: the ROM stops on the next position code.
+					self.assertTrue(on and off[0] - on[0] < 1.0, (raw["name"], number))
+					# Read the codes from the same sample-020 snapshot whose frame is pinned above, so the
+					# label and the code are proven to have been seen together.
+					sample = by_label[f"T.14 after press {number + 1} sample 020"]
+					levels = {w["number"]: w["state"] for w in sample["watched_switches"]}
+					self.assertEqual(table_codes[number], "".join(str(levels[a]) for a in (121, 122, 123)), (raw["name"], number))
+				elif on:
+					# Without feedback the ROM runs the motor until its own timeout.
+					self.assertGreater(off[0] - on[0], 3.0, (raw["name"], number))
 
 	def test_the_stale_author_ready_artifact_is_gone(self) -> None:
 		self.assertFalse(AUTHOR_READY_PATH.exists())
@@ -166,8 +240,9 @@ class IndianaJonesDefinitionTests(unittest.TestCase):
 	def test_wheel_and_captive_ball_optos_are_not_normalized_by_pinmame(self) -> None:
 		# ijGameData's inverted-switch mask covers column 7 (0x06) and the custom column (0x18);
 		# neither covers 71, 121, 122, or 123, even though all four are printed opto interrupters
-		# whose column neighbors (72/73 and 124/125) ARE covered. This asymmetry is the entire
-		# basis of the two conflicts and must not be silently "fixed" by normalizing all of them.
+		# whose column neighbors (72/73 and 124/125) ARE covered. The ROM's idol test proved 121-123
+		# need no inversion, and 71 remains a conflict, so none of them may be silently "fixed" by
+		# normalizing them.
 		mask_col7 = 0x06
 		mask_custom = 0x18
 		self.assertEqual(0, mask_col7 & 0x01)  # bit0 = address 71
@@ -399,10 +474,9 @@ class IndianaJonesDefinitionTests(unittest.TestCase):
 			"03451b7951242d204f9f79ab91f108d3c8aa203039f2ca867b24f4f47668c250",
 			sources["vpx-table.ij-vpw-1-0"]["sha256"],
 		)
-		self.assertNotIn("runtime.indiana-jones", sources)
+		self.assertEqual("runtime_scenario", sources["runtime.indiana-jones.idol-test"]["kind"])
 		self.assertNotIn("rom.ij", sources)
 		for source in self.definition["sources"]:
-			self.assertNotEqual("runtime_scenario", source["kind"])
 			self.assertNotEqual("rom_static_analysis", source["kind"])
 			if source["kind"] in {"vpx_script", "manual", "service_bulletin"}:
 				self.assertTrue(source.get("license"), source["id"])

@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # rather than validated. See conflicts()/coverage below.
 PARTIAL_PATH = ROOT / "machines/partial/bally/cactus-canyon-1998.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/bally/cactus-canyon-1998.json"
-DEFINITION_PATH = PARTIAL_PATH
+DEFINITION_PATH = AUTHOR_READY_PATH
 SEED_PATH = ROOT / "tools/seeds/bally/cactus-canyon-1998.json"
 SPATIAL_REPORT_PATH = ROOT / "reports/spatial/bally/cactus-canyon-1998.json"
 SPATIAL_REPORT_MARKDOWN_PATH = ROOT / "reports/spatial/bally/cactus-canyon-1998.md"
@@ -217,10 +217,10 @@ SWITCH_POSITIONS = {
 	85: [(0.059086, 0.337997)], 86: [(0.144853, 0.544186)], 87: [(0.144853, 0.575504)],
 }
 SWITCH_PROJECTIONS = {
-	71: "Projected onto the Train mechanism's own retained table objects (Primitives Train and Train1, table object center): the retained script's sw71 object is a VPX Timer, not a Hit trigger, and its sw71_Timer handler pulses public switch 71 once per encoder step while the Train primitive is in motion (\"Dozer - Encoder Pulse which runs with Train Mech.\"); there is no separate playfield sensor object.",
-	72: "Projected onto the Train mechanism's own retained table object (Primitive Train, table object center): the retained script's PROC=0 TrainF/TrainB handlers never set Controller.Switch(72) at all (only the PROC=1 Polly_Timer path does), so there is no VPX object of any kind bound to this address under the physical ROM's normal operating path; the manual and PinMAME's own switch matrix are the only evidence this switch exists, at the position of the mechanism whose motion it senses.",
-	77: "Projected onto the Mine mechanism's own retained table object (Primitive MineSign, table object center): like switch 72, the retained script's PROC=0 MoveMine/MineTimer_Timer handlers never set Controller.Switch(77) (only the PROC=1 Sw15_Timer path does); the manual and PinMAME are the only evidence for this address, recorded at the position of the mechanism it senses.",
-	78: "Projected onto the Mine mechanism's own retained table object (Primitive MineSign, table object center): the retained script's PROC=0 path has no object bound to public switch 78 either (only the PROC=1 sw15b_Timer path pulses it, \"Dozer - Encoder Pulse which runs with Mine Mech.\"); recorded at the position of the mechanism it senses.",
+	71: "Projected onto the Train mechanism's own retained table objects (Primitives Train and Train1, table object center): the retained script's Table1_Init registers a VPinMAME cvpmMech on the physical-ROM (PROC=0) path (script.vbs lines 191-203): Sol1 = 38 (forward), Sol2 = 37 (reverse), MType vpmMechTwoDirSol + vpmMechStopEnd + vpmMechLinear, Length 570, Steps 613, .AddSw 72, 0, 0 (Train Home asserted at step 0 only) and .AddPulseSw 71, 14, 3 (Train Encoder asserted for 3 of every 14 steps, core.vbs mapping it to PinMAME's pulsed mech switch). PinMAME therefore drives 71 and 72 from the mechanism position; the sw71 Timer object is switched on only in the PROC=1 TrainF_PROC/TrainB_PROC handlers, which are out of scope; there is no separate playfield sensor object.",
+	72: "Projected onto the Train mechanism's own retained table object (Primitive Train, table object center): the retained script's Table1_Init registers a VPinMAME cvpmMech on the physical-ROM (PROC=0) path (script.vbs lines 191-203): Sol1 = 38 (forward), Sol2 = 37 (reverse), MType vpmMechTwoDirSol + vpmMechStopEnd + vpmMechLinear, Length 570, Steps 613, .AddSw 72, 0, 0 (Train Home asserted at step 0 only) and .AddPulseSw 71, 14, 3 (Train Encoder asserted for 3 of every 14 steps, core.vbs mapping it to PinMAME's pulsed mech switch). PinMAME therefore drives 71 and 72 from the mechanism position; the sw71 Timer object is switched on only in the PROC=1 TrainF_PROC/TrainB_PROC handlers, which are out of scope; recorded at the position of the mechanism whose travel it senses.",
+	77: "Projected onto the Mine mechanism's own retained table object (Primitive MineSign, table object center): the retained script's Table1_Init registers a VPinMAME cvpmMech on the physical-ROM (PROC=0) path (script.vbs lines 176-187): Sol1 = 17, MType vpmMechOneSol + vpmMechReverse + vpmMechLinear, Length 100, Steps 49, .AddSw 77, 0, 1 (Mine Home asserted at steps 0-1) and .AddPulseSw 78, 8, 2 (Mine Encoder asserted for 2 of every 8 steps). PinMAME therefore drives 77 and 78 from the mechanism position; recorded at the position of the mechanism it senses.",
+	78: "Projected onto the Mine mechanism's own retained table object (Primitive MineSign, table object center): the retained script's Table1_Init registers a VPinMAME cvpmMech on the physical-ROM (PROC=0) path (script.vbs lines 176-187): Sol1 = 17, MType vpmMechOneSol + vpmMechReverse + vpmMechLinear, Length 100, Steps 49, .AddSw 77, 0, 1 (Mine Home asserted at steps 0-1) and .AddPulseSw 78, 8, 2 (Mine Encoder asserted for 2 of every 8 steps). PinMAME therefore drives 77 and 78 from the mechanism position; recorded at the position of the mechanism it senses.",
 }
 
 SOLENOID_LABELS = {
@@ -324,17 +324,47 @@ SOLENOID_POSITIONS = {
 	37: [(0.739496, 0.342276)], 38: [(0.739496, 0.342276)],
 	45: [(0.622071, 0.844588)], 46: [(0.622071, 0.844588)], 47: [(0.287847, 0.844588)], 48: [(0.287847, 0.844588)],
 }
-# Flasher addresses use a light-cluster centroid or, where two distinct rendered
-# positions exist, both -- see review-artifacts/cactus-canyon-1998/vpx-geometry.txt.
+# Flasher emitters are each fitted playfield bulb's own retained object: for F18/F19/F20/F24 the
+# smallest-falloff-radius bulb Light (is_bulb_light true) of the collection the retained script binds
+# to the address, and for the three Flupper domes (Flash125/127/128 -> InitFlasher 3/2/1) the
+# Flasherbase primitive that holds the bulb. Flasher 26 is the exception: its script-bound F26 Lights
+# glow on the saloon, while printed page 2-37 draws the Saloon flasher's leader to a bracket on the
+# right ramp, where the table carries the decorative spotlight primitive SpotP; see FLASHER_NOTES.
+# Each second bulb that the Solenoid/Flasher Locations page prints on the backbox INSERT PANEL (24,
+# 26, 27, 28) is backbox hardware behind the translite and deliberately has no playfield coordinate,
+# which is why quantity 2 carries one placement. The f27r*/f28r* Flasher objects are F_refl
+# back-wall reflection sprites (render helpers), not bulbs.
 FLASHER_POSITIONS = {
-	18: [(0.322517, 0.302535)],
-	19: [(0.091456, 0.827937)],
-	20: [(0.810374, 0.83104)],
-	24: [(0.6428, 0.571628)],
-	25: [(0.9536, 0.36775)],
-	26: [(0.757863, 0.19034)],
-	27: [(0.847689, 0.009251), (0.994748, 0.032234)],
-	28: [(0.160714, 0.007863), (0.002101, 0.175301)],
+	18: [(0.340267, 0.278301)],  # Light54
+	19: [(0.092962, 0.827937)],  # Light10
+	20: [(0.809786, 0.831389)],  # Light11
+	24: [(0.611894, 0.571833)],  # Light41
+	25: [(0.953894, 0.367023)],  # Flasherbase3
+	26: [(0.800694, 0.216224)],  # SpotP
+	27: [(0.95042, 0.034507)],  # Flasherbase2
+	28: [(0.109553, 0.166406)],  # Flasherbase1
+}
+FLASHER_NOTES = {
+	18: (
+		" The playfield placement is Light54, the smallest-radius bulb Light of the script-bound F18 collection, "
+		"beside the mine hole. The collection's members sit at three separate depths (Light54/F18a at y 0.278, "
+		"Light59 at 0.306, Light58 at 0.335; Light58 and Light59 are the desktop and cabinet alternates the script "
+		"toggles with DesktopMode), and printed page 2-37 does not draw flasher 18, so the choice among them is the "
+		"smallest-radius rule rather than a manual cross-check."
+	),
+	24: (
+		" The playfield placement is Light41, the bulb Light of the script-bound F24 collection; its co-located "
+		"partner Light47 is an insert overlay (image inserts, is_bulb_light false), not a bulb."
+	),
+	26: (
+		" The script-bound F26 Lights (Light56/Light57) render the flash as a glow on the saloon at about "
+		"(0.76, 0.19), but printed page 2-37 draws the Saloon flasher's leader to a bracket on the right ramp. "
+		"Measured on the retained 1551x2143 render of that page, whose playfield frame runs x 375-1164 and y "
+		"254-2019 (jet bumper 13 and the domes of flashers 25 and 27 land on their own drawn circles under that "
+		"frame), the leader ends at pixel (1020, 610), normalized (0.818, 0.202). The table's decorative spotlight "
+		"primitive SpotP sits at (0.800694, 0.216224), about 0.022 from that endpoint (measurement retained as excerpt saloon-flasher-location), so the physical playfield bulb "
+		"is placed at SpotP and the saloon glow is treated as the table's visual effect, not the socket."
+	),
 }
 FLASHER_QUANTITY = {18: 1, 19: 1, 20: 1, 24: 2, 25: 1, 26: 2, 27: 2, 28: 2}
 
@@ -437,22 +467,53 @@ LAMP_POSITIONS = {
 	84: [(0.409018, 0.479513)],
 	88: [(0.940126, 0.888645)],
 }
+# GI emitters: each physical bulb is the smallest-falloff-radius Light of its retained render cluster
+# (the bulb object; its larger-radius twin is the playfield glow), stored at that object's own center
+# rather than a cluster centroid. The cluster membership is in review-artifacts vpx-geometry.txt.
 GI_POSITIONS = {
 	0: [
-		(0.066907, 0.400675), (0.07146, 0.607051), (0.098183, 0.454017), (0.117679, 0.559022),
-		(0.126261, 0.909269), (0.130987, 0.504269), (0.140158, 0.798691), (0.190462, 0.719611),
-		(0.212253, 0.820456), (0.218503, 0.763594),
+		(0.067377, 0.400558),  # light025 (cluster light025+light30)
+		(0.071409, 0.607161),  # light021 (cluster light021+light35)
+		(0.098468, 0.454129),  # light024 (cluster light024+light32)
+		(0.117635, 0.558887),  # light022 (cluster light022+light34)
+		(0.126262, 0.909268),  # light60 (cluster light60)
+		(0.131192, 0.504182),  # light023 (cluster light023+light33)
+		(0.14024, 0.798607),  # light009 (cluster light009+light36)
+		(0.190847, 0.719382),  # light011 (cluster light011+light38)
+		(0.2125, 0.820154),  # light008 (cluster light008+light4)
+		(0.218332, 0.763644),  # light010 (cluster light010+light37)
 	],
 	1: [
-		(0.692111, 0.763691), (0.69605, 0.823784), (0.721728, 0.722387), (0.77041, 0.801249),
-		(0.772584, 0.909806), (0.846507, 0.500793), (0.855704, 0.457858), (0.875063, 0.535779),
-		(0.888535, 0.418941), (0.893367, 0.762909), (0.893519, 0.671124), (0.894102, 0.592817),
+		(0.692003, 0.763904),  # light013 (cluster light013+light6)
+		(0.695672, 0.823864),  # light014 (cluster light014+light3)
+		(0.721765, 0.722705),  # light012 (cluster light012+light5)
+		(0.769872, 0.801244),  # light015 (cluster light015+light2)
+		(0.772584, 0.909806),  # light61 (cluster light61)
+		(0.846375, 0.500895),  # light018 (cluster light018+light9)
+		(0.855838, 0.457985),  # light019 (cluster light019+light12)
+		(0.875121, 0.535778),  # light017 (cluster light017+light8)
+		(0.888808, 0.419058),  # light020 (cluster light020+light13)
+		(0.89177, 0.764602),  # light003 (cluster light003+light1)
+		(0.892076, 0.673049),  # light004 (cluster light004+light31)
+		(0.893898, 0.592633),  # light016 (cluster light016+light7)
 	],
 	2: [
-		(0.114286, 0.099311), (0.133587, 0.009389), (0.133661, 0.124063), (0.134055, 0.259662),
-		(0.159398, 0.167049), (0.202479, 0.251031), (0.230063, 0.063432), (0.32697, 0.063844),
-		(0.337353, 0.127939), (0.423451, 0.179221), (0.476297, 0.124258), (0.767542, 0.02049),
-		(0.852363, 0.046792), (0.92385, 0.075694), (0.925672, 0.218159), (0.93386, 0.127419),
+		(0.114491, 0.099309),  # light030 (cluster light030+light23)
+		(0.133181, 0.010083),  # light029 (cluster light029+light22)
+		(0.133181, 0.123564),  # light031 (cluster light031+light24)
+		(0.133975, 0.263515),  # light005 (cluster light005+light28)
+		(0.159938, 0.168745),  # l2 (cluster l2+l3a2+l3b2)
+		(0.203082, 0.25115),  # light026 (cluster light026+light29)
+		(0.230563, 0.063407),  # light032 (cluster light032+light19)
+		(0.327617, 0.063535),  # light033 (cluster light033+light20)
+		(0.337313, 0.129635),  # l1 (cluster l1+l3a1+l3b1)
+		(0.424344, 0.179223),  # light027 (cluster light027+light27)
+		(0.475494, 0.124647),  # light028 (cluster light028+light21)
+		(0.767545, 0.020489),  # light18 (cluster light18)
+		(0.852104, 0.046729),  # light007 (cluster light007+light17)
+		(0.923643, 0.075854),  # light006 (cluster light006+light16)
+		(0.925673, 0.218157),  # light14 (cluster light14)
+		(0.933853, 0.127386),  # light034 (cluster light034+light15)
 	],
 }
 
@@ -679,6 +740,18 @@ def source_records() -> list[dict[str, Any]]:
 					"image_derivation": "Cactus_Canyon_Manual.pdf page 94, crop box 0.03,0.02,0.985,0.69, scanned page rendered at its native resolution (embedded image xref 387, 1551px across 7.76in), rendered at 200 dpi, 1482x1440 WebP quality 80; cropped to the Solenoid/Flasher Locations, Flippers and Train Motor Circuits blocks only, excluding the General Illumination block printed lower on the same page (see excerpt.cactus-canyon.general-illumination)",
 					"method": "mixed",
 					"transcribed_by": "curator, OCR text extracted then confirmed against the rendered page",
+					"reviewed": True,
+				},
+				{
+					"id": "excerpt.cactus-canyon.saloon-flasher-location",
+					"locator": "PDF page 95, printed 2-37, playfield solenoid/flasher location drawing, callout 26 leader",
+					"path": "evidence/excerpts/bally.cactus-canyon.1998/saloon-flasher-location.md",
+					"sha256": "39d6ac660e4beecaac7abbe280ece8b2ce4f621be10211a426202c5d4523e03b",
+					"image": "evidence/excerpts/bally.cactus-canyon.1998/saloon-flasher-location.webp",
+					"image_sha256": "db5f5577bc9e7268b2f4004ffb7c49a371e91f54dbf1d28d2a0422c11916eab6",
+					"image_derivation": "Cactus_Canyon_Manual.pdf page 95, crop box 0.45,0.1,0.86,0.4, scanned page rendered at its native resolution (embedded image xref 391, 1551px across 7.76in), rendered at 200 dpi, grayscale, 637x644 WebP quality 80; cropped to the upper-right playfield around the right ramp with callout balloons 27, 36/33, 26, 38/37 and 04",
+					"method": "manual",
+					"transcribed_by": "curator, measured on the rendered page",
 					"reviewed": True,
 				},
 				{
@@ -1049,8 +1122,10 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				if quantity == 2:
 					notes += (
 						" The solenoid-locations list prints this address twice (Playfield and Insert Panel), so "
-						"two bulbs are fitted."
+						"two bulbs are fitted. Only the playfield bulb has a playfield placement; the insert-panel bulb "
+						"is backbox hardware behind the translite and is deliberately not given a playfield coordinate."
 					)
+				notes += FLASHER_NOTES.get(address, "")
 			if address in SOLENOID_CALLBACKS:
 				notes += f" Retained script callback/driver: {SOLENOID_CALLBACKS[address]}."
 			if address == 7:
@@ -1109,7 +1184,11 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				availability = "used"
 				role = "emitter" if kind == "flasher" else "effect"
 				if address in FLASHER_POSITIONS:
-					extra["spatial"] = located(identifier, role, FLASHER_POSITIONS[address], VPX_TABLE_SOURCE)
+					# Flasher 26's anchor is chosen by the printed 2-37 leader, so the manual is a placement source too.
+					extra["spatial"] = located(
+						identifier, role, FLASHER_POSITIONS[address], VPX_TABLE_SOURCE,
+						*((MANUAL_SOURCE,) if address == 26 else ()),
+					)
 				else:
 					extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], VPX_TABLE_SOURCE)
 			refs = (MANUAL_SOURCE, CORE_SOURCE)
@@ -1262,8 +1341,8 @@ def gi_outputs() -> list[dict[str, Any]]:
 				"retained script). GI address 0 drives collection LeftGI (10 physical bulb positions from 19 raw "
 				"members, clustered within 25px); GI address 1 drives RightGI (12 from 24 raw members, one an "
 				"authoring duplicate); GI address 2 drives TopGI plus TopGI2 (16 from 32 raw members; TopGI2's "
-				"three members are additional VR-room-only render duplicates of three TopGI bulbs, not new "
-				"positions)."
+				"three members, lit only when the table's VRRoom option is 0, duplicate three TopGI bulbs "
+				"rather than adding positions)."
 			)
 			extra["spatial"] = located(identifier, "emitter", positions, VPX_TABLE_SOURCE)
 		else:
@@ -1486,11 +1565,11 @@ def mechanisms() -> list[dict[str, Any]]:
 			"Solenoid 17 (MoveMine callback in the retained script's PROC=0 branch) raises and lowers the Mine sign "
 			"(retained Primitive MineSign) between a low and high position via MineTimer_Timer, which also drops or "
 			"raises the Mine Entrance wall (switch 15's IsDropped flag) as the sign passes a threshold. Mine Home "
-			"(77) and Mine Encoder (78) are the printed position/step optos on the A-22443 Mine Dual Opto PCB, but "
-			"the retained script's PROC=0 path (MoveMine/MineTimer_Timer) never sets Controller.Switch for either "
-			"address -- only the PROC=1 path (Sw15_Timer/sw15b_Timer, community P-ROC hardware) exercises them -- so "
-			"their causal timing here rests on the manual and PinMAME's addressing rather than an observed script "
-			"behavior under the physical ROM's normal path.",
+			"(77) and Mine Encoder (78) are the printed position/step optos on the A-22443 Mine Dual Opto PCB. On the "
+			"physical-ROM path the retained script registers a VPinMAME cvpmMech for them (Sol1 = 17, MType "
+			"vpmMechOneSol + vpmMechReverse + vpmMechLinear, Length 100, Steps 49): Mine Home 77 is asserted at mech "
+			"steps 0-1 (.AddSw 77, 0, 1) and Mine Encoder 78 for 2 of every 8 steps (.AddPulseSw 78, 8, 2), so "
+			"PinMAME drives both from the sign's position while MoveMine only animates the primitive.",
 			[
 				("home", "Mine sign home/lowered", ["switch.matrix-77"], "Position opto."),
 				("encoder", "Mine motor encoder pulse", ["switch.matrix-78"], "Step/encoder opto."),
@@ -1508,13 +1587,14 @@ def mechanisms() -> list[dict[str, Any]]:
 			"Solenoids 37/38 (TrainB/TrainF callbacks in the retained script's PROC=0 branch) drive the Train "
 			"primitive back and forth along the track via an H-bridge (A-22271 Train Motor Circuits assembly, gates "
 			"U3A/U3B reverse and U3C/U3D forward) toward TrainMech.Position; TrainTimer_Timer animates the running "
-			"gears and stops the motor once the target position is reached and the solenoid is released. Train "
-			"Encoder (71) is pulsed once per timer tick by a dedicated VPX Timer object (sw71) while the train is "
-			"in motion (\"Dozer - Encoder Pulse which runs with Train Mech.\"). Train Home (72) is never set by the "
-			"retained script's PROC=0 path at all (only the PROC=1 Polly_Timer path, community P-ROC hardware, sets "
-			"it); its causal timing here rests on the manual and PinMAME's addressing.",
+			"gears and stops the motor once the target position is reached and the solenoid is released. On the "
+			"physical-ROM path the retained script registers a VPinMAME "
+			"cvpmMech (Sol1 = 38 forward, Sol2 = 37 reverse, MType vpmMechTwoDirSol + vpmMechStopEnd + "
+			"vpmMechLinear, Length 570, Steps 613): Train Home 72 is asserted at mech step 0 (.AddSw 72, 0, 0) and "
+			"Train Encoder 71 for 3 of every 14 steps (.AddPulseSw 71, 14, 3), so PinMAME drives both from the "
+			"train's position.",
 			[
-				("encoder", "Train motor encoder pulse", ["switch.matrix-71"], "Pulsed each timer tick while running."),
+				("encoder", "Train motor encoder pulse", ["switch.matrix-71"], "Pulsed for 3 of every 14 mech steps while the train moves."),
 				("home", "Train home position", ["switch.matrix-72"], "Home/rest position opto."),
 			],
 			CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE,
@@ -1617,8 +1697,8 @@ def build() -> dict[str, Any]:
 			"opdb_id": "G4835-Mb5eO",
 		},
 		"coverage": {
-			"status": "partial",
-			"missing": ["spatial_placement"],
+			"status": "author_ready",
+			"missing": [],
 			"dimensions": {
 				"catalog_identity": "validated",
 				"address_enumeration": "validated",
@@ -1627,7 +1707,7 @@ def build() -> dict[str, Any]:
 				"mechanisms": "validated",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "validated",
-				"spatial_placement": "candidate",
+				"spatial_placement": "validated",
 			},
 		},
 		"controller": {
@@ -1642,7 +1722,7 @@ def build() -> dict[str, Any]:
 		"mechanisms": mechanisms(),
 		"relationships": relationships(),
 		"sources": source_records(),
-		"knowledge": {"path": "knowledge/bally/cactus-canyon-1998.md", "status": "partial"},
+		"knowledge": {"path": "knowledge/bally/cactus-canyon-1998.md", "status": "complete"},
 		"conflicts": conflicts(),
 	}
 	identifiers = [device["id"] for device in definition["inputs"] + definition["outputs"]]
@@ -1678,17 +1758,10 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		if device["spatial"]["status"] != "not_applicable":
 			placement_count += len(device["spatial"]["placements"])
 	return {
-		"format": "pinmame-spatial-blockers",
+		"format": "pinmame-spatial-audit",
 		"version": 1,
 		"machine_id": definition["machine"]["id"],
 		"status": "validated",
-		"blockers": [
-			"Flasher addresses 24 (Beacon Flasher) and 26 (Saloon Flasher) each drive a documented playfield-plus-"
-			"insert-panel bulb pair (Solenoid/Flasher Locations page 2-36 lists each twice), but the retained VPX "
-			"table's Light-object clusters for both addresses are co-located or only a few pixels apart, so only "
-			"one resolvable coordinate is recorded for each rather than two. No coordinate was invented to fill the "
-			"gap. Every other spatial dimension this report audits is complete.",
-		],
 		"coordinate_convention": {
 			"space": "playfield",
 			"source_bounds": {"left": 0.0, "top": 0.0, "right": 952.0, "bottom": 2162.0},
@@ -1736,14 +1809,11 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"excluded_object_classes": [
 			"l23a co-located-but-distinct second Light object bound to lamp 23 (manual documents one bulb)",
 			"secretentrance Kicker (co-located duplicate of bartpopper/switch 42, solenoid 8)",
-			"l1, l2 Light objects (never referenced by SetLamp/SetLampMod; no valid WPC-95 lamp address)",
-			"light006, light007, light034 (TopGI2 VR-room-only render duplicates of light16, light17, light15)",
+			"l3a1, l3a2, l3b1, l3b2 (larger-radius TopGI twins of l1 and l2; l1 and l2 are GI string 3 bulbs, not lamp-matrix objects, since no WPC-95 lamp address 1 or 2 exists)",
+			"light16, light17, light15 (larger-radius twins of the TopGI2 members light006, light007, light034 that carry those three bulbs' placements)",
 			"light004 listed twice in the RightGI collection (authoring duplicate, one physical bulb)",
 		],
-		"unresolved": [
-			"Flasher 24 (Beacon Flasher) insert-panel bulb coordinate distinct from its playfield bulb.",
-			"Flasher 26 (Saloon Flasher) insert-panel bulb coordinate distinct from its playfield bulb.",
-		],
+		"unresolved": [],
 	}
 
 
@@ -1751,10 +1821,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 	lines = [
 		"# Cactus Canyon (Bally, 1998) spatial review",
 		"",
-		f"Status: {report['status']}. Every spatial dimension audited here is complete except two flasher "
-		"addresses (24, 26) whose second documented bulb has no independently resolvable coordinate; the physical "
-		"machine record stays `partial` at `machines/partial/bally/cactus-canyon-1998.json` for that reason alone "
-		"-- no polarity conflict was found for this machine (see the opto sweep in the manual transcription).",
+		f"Status: {report['status']}. Every spatial dimension audited here is complete, and the physical machine "
+		"record is `author_ready` at `machines/author-ready/bally/cactus-canyon-1998.json` -- no polarity conflict "
+		"was found for this machine (see the opto sweep in the manual transcription).",
 		"",
 		"The matching source is the retained known-working `Cactus Canyon (Bally 1998) VPW 1.0.2.vpx` at SHA-256 "
 		f"`{TABLE_SHA256}`. The retained `vpxtool` extraction produced the embedded script at SHA-256 "
@@ -1777,14 +1846,26 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"(31-37, 41-42, 71, 77, 78, plus the Fliptronic 112/114 button optos handled by WPC-95's own hardware "
 		"inversion) is normalized by the emulator. No `conflict.*-opto-not-normalized` entry was needed.",
 		"- Switches 71/72 (Train Encoder/Home) and 77/78 (Mine Home/Encoder) have no dedicated playfield trigger "
-		"object because the retained script's PROC=0 (physical ROM) path either drives them from a Timer object "
-		"tied to mechanism motion (71) or does not set them at all (72, 77, 78 -- only the PROC=1 community P-ROC "
-		"path does). All four are documented projections onto the Train or Mine mechanism's own retained table "
-		"object.",
+		"object because on the physical-ROM (PROC=0) path the retained script registers VPinMAME cvpmMech objects "
+		"for the train (home 72 at step 0, encoder 71 for 3 of every 14 of 613 steps) and the mine sign (home 77 at "
+		"steps 0-1, encoder 78 for 2 of every 8 of 49 steps), so PinMAME drives them from mechanism position. All "
+		"four are documented projections onto the Train or Mine mechanism's own retained table object.",
 		"- GI strings 0-2 use the retained table's LeftGI/RightGI/TopGI(+TopGI2) emitter collections, matching the "
 		"retained script's `UpdateGI` dispatch exactly; each collection's members were clustered within 25px to "
-		"collapse render-doubled Light objects into one placement per physical bulb. GI strings 3 and 4 are "
-		"backbox insert-panel/cabinet circuits and take a controlled `cabinet_or_service` record.",
+		"collapse render-doubled Light objects into one placement per physical bulb, and each placement is the "
+		"smallest-falloff-radius member's own center, never a cluster centroid. TopGI2 (light006, light007, "
+		"light034) is switched on only when the table's VRRoom option is 0, so its members are desktop/cabinet-view "
+		"duplicates of three TopGI bulbs; where one of them is the smaller-radius member of its cluster it carries "
+		"that bulb's placement. GI strings 3 and 4 are backbox insert-panel/cabinet circuits and take a controlled "
+		"`cabinet_or_service` record.",
+		"- Flasher emitters use the fitted playfield bulb's own retained object: the smallest-radius bulb Light of the "
+		"address's script-bound collection, the Flasherbase primitive of the three Flupper domes (25, 27, 28), or for "
+		"flasher 26 the spotlight primitive SpotP at the end of the printed 2-37 leader, the script-bound saloon glow "
+		"being a visual effect. The second "
+		"bulb of 24, 26, 27 and 28 sits on the backbox insert panel and has no playfield coordinate, the same "
+		"treatment as the author-ready WPC-95 records. The f27r*/f28r* back-wall `F_refl` reflection sprites "
+		"that an earlier pass placed for 27 and 28, and an x coordinate for 24 that matched no object, were "
+		"replaced.",
 		"- Solenoids 41/42 are PinMAME's LPDC mirror of the physical train-motor drive lines 37/38 and are declared "
 		"virtual with a `virtual` spatial record so no duplicate motor is ever placed on the playfield.",
 		"- The 128x32 DMD is backbox hardware, so its spatial record is a controlled `not_applicable` with both "
@@ -1813,14 +1894,11 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"No switch-polarity conflict, unnamed required address, or missing physical/controller variant remains for "
 		"this machine, and the deterministic curator reproduces the canonical artifact and its pinned seed "
-		"byte-for-byte. However, flasher addresses 24 and 26 each document two fitted bulbs (playfield plus "
-		"insert-panel) on the printed Solenoid/Flasher Locations page, and the retained table's Light-object "
-		"evidence for both addresses cannot be split into two independently resolvable coordinates -- inventing a "
-		"second coordinate is explicitly forbidden, so each keeps exactly one placement. `coverage.missing` is "
-		"`[\"spatial_placement\"]` and `coverage.dimensions.spatial_placement = \"candidate\"`, so promotion to "
-		"`author_ready` is refused; the record stays `partial` until a second distinguishable insert-panel bulb "
-		"position is found (a higher-resolution table revision, a playfield photograph, or a runtime harness trace "
-		"that separately drives the two physical lamps).",
+		"byte-for-byte. Every fitted playfield device carries a placement taken from its own retained object "
+		"or a documented projection onto its own mechanism, every backbox, cabinet, virtual and unused address "
+		"carries a controlled `not_applicable` record, and insert-panel flasher bulbs are recorded as backbox "
+		"hardware without a playfield coordinate. The record carries no conflict and is promoted to "
+		"`author_ready`.",
 		"",
 		"## Retained evidence",
 		"",
@@ -1842,18 +1920,18 @@ def generate(root: Path = ROOT) -> Path:
 	report = build_spatial_report(definition)
 	write_json(root / SPATIAL_REPORT_PATH.relative_to(ROOT), report)
 	write_text(root / SPATIAL_REPORT_MARKDOWN_PATH.relative_to(ROOT), render_spatial_report(report))
-	stale_author_ready = root / AUTHOR_READY_PATH.relative_to(ROOT)
-	if stale_author_ready.exists():
-		stale_author_ready.unlink()
+	stale_partial = root / PARTIAL_PATH.relative_to(ROOT)
+	if stale_partial.exists():
+		stale_partial.unlink()
 	return root / DEFINITION_PATH.relative_to(ROOT)
 
 
 def check(root: Path = ROOT) -> None:
 	definition_path = root / DEFINITION_PATH.relative_to(ROOT)
 	seed_path = root / SEED_PATH.relative_to(ROOT)
-	stale_author_ready_path = root / AUTHOR_READY_PATH.relative_to(ROOT)
-	if stale_author_ready_path.exists():
-		raise RuntimeError(f"Stale Cactus Canyon author-ready definition is still present: {stale_author_ready_path}")
+	stale_partial_path = root / PARTIAL_PATH.relative_to(ROOT)
+	if stale_partial_path.exists():
+		raise RuntimeError(f"Stale Cactus Canyon partial definition is still present: {stale_partial_path}")
 	if not definition_path.is_file():
 		raise RuntimeError(f"Cactus Canyon definition is missing: {definition_path}")
 	if not seed_path.is_file():

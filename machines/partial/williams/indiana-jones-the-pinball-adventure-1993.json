@@ -8,15 +8,6 @@
         "manual.williams.indiana-jones-the-pinball-adventure.1993",
         "pinmame.core.4ec52ff0ac13"
       ]
-    },
-    {
-      "description": "The manual documents public switches 121-123 (Wheel Position 1-3, printed switch-column-9 positions 91-93) as opto interrupters on the A-13901-2 \"3-sw. Opto PCB Assembly (for idol)\" -- three onboard LED/phototransistor pairs (OPTO1/OPTO2/OPTO3). Pinned PinMAME's ijGameData inverted-switch mask covers the custom switch column (index 12) with only 0x18 (binary 00011000): bits 3 and 4 (addresses 124 and 125, Mini Playfield Left/Right Limit, also opto per the A-16657 Motor Opto Switch PCB on the very same physical column) are normalized, but bits 0-2 (121-123) are not, even though all five addresses share one physical harness and one opto-sensor technology. The manual is physical-construction ground truth and pinned PinMAME is public-address and emulator-normalization ground truth, and the two disagree on whether a recreation must invert the wheel-position trio while the limit-switch pair on the same column is already normalized. Resolution path: run the implemented LibPinMAME gameplay harness against a legal ij_l7 ROM, drive the idol motor through a full rotation, and observe the idle and transition public state of switches 121-123 at each 60-degree boundary. Unresolved.",
-      "id": "conflict.wheel-position-opto-not-normalized",
-      "path": "inputs[binding.device=121,122,123]",
-      "source_refs": [
-        "manual.williams.indiana-jones-the-pinball-adventure.1993",
-        "pinmame.core.4ec52ff0ac13"
-      ]
     }
   ],
   "controller": {
@@ -4241,14 +4232,15 @@
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-13901-2 3-sw. Opto PCB Assembly (OPTO1)",
-        "notes": "Custom switch column (declared by ijGameData hw.swCol=1), internal array index 12, public address 121. Printed on the schematic as switch column 9 position 91 (captured as a manual.address alias). Opto interrupter per the 3-sw Opto PCB Assembly (idol) or Motor Opto Switch PCB Assembly (mini playfield); see manual-transcription.md 'Custom switch column'. Pinned PinMAME's ijGameData inverted-switch mask (column index 12, 0x18) does NOT cover this address even though it is printed opto construction; see the corresponding unresolved conflicts entry.",
+        "notes": "Custom switch column (declared by ijGameData hw.swCol=1), internal array index 12, public address 121. Printed on the schematic as switch column 9 position 91 (captured as a manual.address alias). Opto interrupter per the 3-sw Opto PCB Assembly (idol) or Motor Opto Switch PCB Assembly (mini playfield); see manual-transcription.md 'Custom switch column'. Pinned PinMAME's ijGameData inverted-switch mask (column index 12, 0x18) does not cover this address even though it is printed opto construction, and no inversion is needed. The ROM's own T.14 IDOL TEST, fed by PinMAME's idol model (which writes 121-123 through the same six-case sequence the known-working table writes), steps the idol through POS. 1 to POS. 6, while without that feedback it reports ERROR IDOL BAD. The six codes form a three-bit twisted-ring sequence in which the complement of any code is the code three positions away, so a clean step sequence alone would not rule out inverted levels; what settles polarity is the label the ROM gives each code. The runs read back public 121/122/123 after every press, and the ROM labels 100, 101, 001, 011, 010 and 110 as POS. 1 through POS. 6 -- exactly the labels the known-working table's UpdateIdol_timer comments give the codes it writes. Inverted levels would have made the table's POS. 1 code read as POS. 4. A recreation drives 121-123 exactly as the known-working table's UpdateIdol_timer does and never inverts them. normally_closed is kept consistent with the machine's other printed optos, but an encoder has no rest position, so the flag carries no resting-level meaning here and is not a runtime rule. Because the address is not in the inversion mask, WPC_SWROWREAD returns the public level unchanged (wpc.c core_getSwCol), so the ROM's codes are the public levels a recreation writes.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.indiana-jones-the-pinball-adventure.1993",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.ij-vpw-1-0"
+          "vpx-script.ij-vpw-1-0",
+          "runtime.indiana-jones.idol-test"
         ],
         "status": "validated"
       },
@@ -4301,14 +4293,15 @@
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-13901-2 3-sw. Opto PCB Assembly (OPTO2)",
-        "notes": "Custom switch column (declared by ijGameData hw.swCol=1), internal array index 12, public address 122. Printed on the schematic as switch column 9 position 92 (captured as a manual.address alias). Opto interrupter per the 3-sw Opto PCB Assembly (idol) or Motor Opto Switch PCB Assembly (mini playfield); see manual-transcription.md 'Custom switch column'. Pinned PinMAME's ijGameData inverted-switch mask (column index 12, 0x18) does NOT cover this address even though it is printed opto construction; see the corresponding unresolved conflicts entry.",
+        "notes": "Custom switch column (declared by ijGameData hw.swCol=1), internal array index 12, public address 122. Printed on the schematic as switch column 9 position 92 (captured as a manual.address alias). Opto interrupter per the 3-sw Opto PCB Assembly (idol) or Motor Opto Switch PCB Assembly (mini playfield); see manual-transcription.md 'Custom switch column'. Pinned PinMAME's ijGameData inverted-switch mask (column index 12, 0x18) does not cover this address even though it is printed opto construction, and no inversion is needed. The ROM's own T.14 IDOL TEST, fed by PinMAME's idol model (which writes 121-123 through the same six-case sequence the known-working table writes), steps the idol through POS. 1 to POS. 6, while without that feedback it reports ERROR IDOL BAD. The six codes form a three-bit twisted-ring sequence in which the complement of any code is the code three positions away, so a clean step sequence alone would not rule out inverted levels; what settles polarity is the label the ROM gives each code. The runs read back public 121/122/123 after every press, and the ROM labels 100, 101, 001, 011, 010 and 110 as POS. 1 through POS. 6 -- exactly the labels the known-working table's UpdateIdol_timer comments give the codes it writes. Inverted levels would have made the table's POS. 1 code read as POS. 4. A recreation drives 121-123 exactly as the known-working table's UpdateIdol_timer does and never inverts them. normally_closed is kept consistent with the machine's other printed optos, but an encoder has no rest position, so the flag carries no resting-level meaning here and is not a runtime rule. Because the address is not in the inversion mask, WPC_SWROWREAD returns the public level unchanged (wpc.c core_getSwCol), so the ROM's codes are the public levels a recreation writes.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.indiana-jones-the-pinball-adventure.1993",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.ij-vpw-1-0"
+          "vpx-script.ij-vpw-1-0",
+          "runtime.indiana-jones.idol-test"
         ],
         "status": "validated"
       },
@@ -4361,14 +4354,15 @@
       "normally_closed": true,
       "physical": {
         "assembly_part_number": "A-13901-2 3-sw. Opto PCB Assembly (OPTO3)",
-        "notes": "Custom switch column (declared by ijGameData hw.swCol=1), internal array index 12, public address 123. Printed on the schematic as switch column 9 position 93 (captured as a manual.address alias). Opto interrupter per the 3-sw Opto PCB Assembly (idol) or Motor Opto Switch PCB Assembly (mini playfield); see manual-transcription.md 'Custom switch column'. Pinned PinMAME's ijGameData inverted-switch mask (column index 12, 0x18) does NOT cover this address even though it is printed opto construction; see the corresponding unresolved conflicts entry.",
+        "notes": "Custom switch column (declared by ijGameData hw.swCol=1), internal array index 12, public address 123. Printed on the schematic as switch column 9 position 93 (captured as a manual.address alias). Opto interrupter per the 3-sw Opto PCB Assembly (idol) or Motor Opto Switch PCB Assembly (mini playfield); see manual-transcription.md 'Custom switch column'. Pinned PinMAME's ijGameData inverted-switch mask (column index 12, 0x18) does not cover this address even though it is printed opto construction, and no inversion is needed. The ROM's own T.14 IDOL TEST, fed by PinMAME's idol model (which writes 121-123 through the same six-case sequence the known-working table writes), steps the idol through POS. 1 to POS. 6, while without that feedback it reports ERROR IDOL BAD. The six codes form a three-bit twisted-ring sequence in which the complement of any code is the code three positions away, so a clean step sequence alone would not rule out inverted levels; what settles polarity is the label the ROM gives each code. The runs read back public 121/122/123 after every press, and the ROM labels 100, 101, 001, 011, 010 and 110 as POS. 1 through POS. 6 -- exactly the labels the known-working table's UpdateIdol_timer comments give the codes it writes. Inverted levels would have made the table's POS. 1 code read as POS. 4. A recreation drives 121-123 exactly as the known-working table's UpdateIdol_timer does and never inverts them. normally_closed is kept consistent with the machine's other printed optos, but an encoder has no rest position, so the flag carries no resting-level meaning here and is not a runtime rule. Because the address is not in the inversion mask, WPC_SWROWREAD returns the public level unchanged (wpc.c core_getSwCol), so the ROM's codes are the public levels a recreation writes.",
         "switch_type": "opto"
       },
       "provenance": {
         "source_refs": [
           "manual.williams.indiana-jones-the-pinball-adventure.1993",
           "pinmame.core.4ec52ff0ac13",
-          "vpx-script.ij-vpw-1-0"
+          "vpx-script.ij-vpw-1-0",
+          "runtime.indiana-jones.idol-test"
         ],
         "status": "validated"
       },
@@ -5710,7 +5704,8 @@
         "source_refs": [
           "pinmame.core.4ec52ff0ac13",
           "vpx-script.ij-vpw-1-0",
-          "manual.williams.indiana-jones-the-pinball-adventure.1993"
+          "manual.williams.indiana-jones-the-pinball-adventure.1993",
+          "runtime.indiana-jones.idol-test"
         ],
         "status": "validated"
       },
@@ -14434,6 +14429,15 @@
       "license": "NOASSERTION",
       "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 438995cdc586b0ba83f6e683b9e0576530517f6e0a5afa86f2dd1236d5bbfb40; 2027 files, 362116168 bytes, produced with vpxtool git:v0.33.3 from the retained table. Bounds are left=0 top=0 right=1093 bottom=2162.",
       "uri": "external:pinmame-vpx-sources/williams/indiana-jones-the-pinball-adventure-1993/extracted-vpxtool.manifest.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.indiana-jones.idol-test",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Two hash-pinned LibPinMAME harness runs of ij_l7 from empty NVRAM (scenario tools/harness-scenarios/wpc-dcs/ij-idol-test.json) that open the ROM's own T.14 IDOL TEST and press service Up six times. With --handle-mechanics 15 (PinMAME's ij_handleMech including bit 3, the idol, which writes 121-123 through the same six-case sequence the known-working table writes) the ROM reports CHECKING IDOL LOCK, then steps the wheel motor (public 56) about 0.5 s per press and displays POS. 1 through POS. 6 in order, and --watch-wpc-custom-switch readback records public 121/122/123 = 100, 101, 001, 011, 010, 110 beside those six labels. With --handle-mechanics 7 (no idol feedback) 121-123 read 000 throughout, the ROM reports ERROR! IDOL LOCK NOT WORKING CORRECTLY and ERROR IDOL BAD, and each press after the first runs the motor about 4 s.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/wpc-dcs/indiana-jones-idol-test.json"
     }
   ]
 }

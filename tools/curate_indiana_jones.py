@@ -20,10 +20,10 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 
 
 ROOT = Path(__file__).resolve().parents[1]
-# Stays partial: public switches 71 (Captive Ball Front) and 121-123 (Wheel Position 1-3) are
-# printed opto interrupters that pinned PinMAME's ijGameData inverted-switch mask does not
-# normalize (see conflict.captive-ball-front-opto-not-normalized and
-# conflict.wheel-position-opto-not-normalized, both unresolved).
+# Stays partial: public switch 71 (Captive Ball Front) is a printed opto interrupter that pinned
+# PinMAME's ijGameData inverted-switch mask does not normalize (see
+# conflict.captive-ball-front-opto-not-normalized, unresolved). The same question for 121-123
+# (Wheel Position 1-3) was settled on 2026-09-25 by the ROM's own T.14 IDOL TEST (RUNTIME_IDOL_SOURCE).
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/williams/indiana-jones-the-pinball-adventure-1993.json"
 PARTIAL_PATH = ROOT / "machines/partial/williams/indiana-jones-the-pinball-adventure-1993.json"
 DEFINITION_PATH = PARTIAL_PATH
@@ -40,6 +40,12 @@ MANUAL_SUPPORT_SOURCE = "manual-support.williams.indiana-jones-the-pinball-adven
 VPX_TABLE_SOURCE = "vpx-table.ij-vpw-1-0"
 VPX_SCRIPT_SOURCE = "vpx-script.ij-vpw-1-0"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.ij-vpw-1-0"
+RUNTIME_IDOL_SOURCE = "runtime.indiana-jones.idol-test"
+RUNTIME_IDOL_PATH = "evidence/runtime/wpc-dcs/indiana-jones-idol-test.json"
+ARGUMENT = (
+	"The six codes form a three-bit twisted-ring sequence in which the complement of any code is the code three positions away, so a clean step sequence alone would not rule out inverted levels; what settles polarity is the label the ROM gives each code. The runs read back public 121/122/123 after every press, and the ROM labels 100, 101, 001, 011, 010 and 110 as POS. 1 through POS. 6 -- exactly the labels the known-working table's UpdateIdol_timer comments give the codes it writes. Inverted levels would have made the table's POS. 1 code read as POS. 4."
+)
+RUNTIME_LIBRARY_REVISION = "8371478a7640f1896dcdf565aed340dc5df989ba"
 
 TABLE_SHA256 = "03451b7951242d204f9f79ab91f108d3c8aa203039f2ca867b24f4f47668c250"
 SCRIPT_SHA256 = "926e7a90d89602b003ac93757ee23c6ae916bb382112be28f82388381490bb7a"
@@ -878,6 +884,25 @@ def source_records() -> list[dict[str, Any]]:
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
 		},
+		{
+			"id": RUNTIME_IDOL_SOURCE,
+			"kind": "runtime_scenario",
+			"uri": f"internal:{RUNTIME_IDOL_PATH}",
+			"revision": RUNTIME_LIBRARY_REVISION,
+			"locator": (
+				"Two hash-pinned LibPinMAME harness runs of ij_l7 from empty NVRAM (scenario "
+				"tools/harness-scenarios/wpc-dcs/ij-idol-test.json) that open the ROM's own T.14 IDOL TEST and press "
+				"service Up six times. With --handle-mechanics 15 (PinMAME's ij_handleMech including bit 3, the idol, "
+				"which writes 121-123 through the same six-case sequence the known-working table writes) the ROM "
+				"reports CHECKING IDOL LOCK, then steps the wheel motor (public 56) about 0.5 s per press and displays "
+				"POS. 1 through POS. 6 in order, and --watch-wpc-custom-switch readback records public 121/122/123 = "
+				"100, 101, 001, 011, 010, 110 beside those six labels. With --handle-mechanics 7 (no idol feedback) "
+				"121-123 read 000 throughout, the ROM reports ERROR! IDOL LOCK NOT WORKING CORRECTLY and ERROR IDOL BAD, "
+				"and each press after the first runs the motor about 4 s."
+			),
+			"license": "NOASSERTION",
+			"attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+		},
 	]
 
 
@@ -1045,9 +1070,18 @@ def input_devices() -> list[dict[str, Any]]:
 				)
 			else:
 				physical["notes"] += (
-					" Pinned PinMAME's ijGameData inverted-switch mask (column index 12, 0x18) does NOT cover this "
-					"address even though it is printed opto construction; see the corresponding unresolved conflicts "
-					"entry."
+					" Pinned PinMAME's ijGameData inverted-switch mask (column index 12, 0x18) does not cover this "
+					"address even though it is printed opto construction, and no inversion is needed. The ROM's own "
+					"T.14 IDOL TEST, fed by PinMAME's idol model (which writes 121-123 through the same six-case "
+					"sequence the known-working table writes), steps the idol through POS. 1 to POS. 6, while without "
+					"that feedback it reports ERROR IDOL BAD. "
+					+ ARGUMENT
+					+ " A recreation drives 121-123 exactly as the known-working table's UpdateIdol_timer does and "
+					"never inverts them. normally_closed is kept consistent with the machine's other printed optos, but an "
+					"encoder has no rest position, so the flag carries no resting-level meaning here and is not a "
+					"runtime rule. Because the address is not in the inversion mask, "
+					"WPC_SWROWREAD returns the public level unchanged (wpc.c core_getSwCol), so the ROM's codes are the "
+					"public levels a recreation writes."
 				)
 			items.append(
 				_device(
@@ -1057,7 +1091,8 @@ def input_devices() -> list[dict[str, Any]]:
 					"pinmame.input.switch",
 					address,
 					"used",
-					(MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE),
+					(MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
+					+ ((RUNTIME_IDOL_SOURCE,) if address in (121, 122, 123) else ()),
 					aliases=[
 						{"namespace": "pinmame.switch", "value": str(address)},
 						{"namespace": "manual.address", "value": manual_alias},
@@ -1637,7 +1672,7 @@ def mechanisms() -> list[dict[str, Any]]:
 				("position-3", "Idol lock pocket 3", ["switch.custom-123"], "Sextant boundary at 60 degrees."),
 				("exit", "Idol exit", ["switch.matrix-32"], "Ball leaves the lock after solenoid 6 opens the doors."),
 			],
-			CORE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE,
+			CORE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE, RUNTIME_IDOL_SOURCE,
 			assembly_part_number="A-16228",
 		),
 		mechanism(
@@ -1864,26 +1899,6 @@ def conflicts() -> list[dict[str, Any]]:
 			),
 			"source_refs": [MANUAL_SOURCE, CORE_SOURCE],
 		},
-		{
-			"id": "conflict.wheel-position-opto-not-normalized",
-			"path": "inputs[binding.device=121,122,123]",
-			"description": (
-				"The manual documents public switches 121-123 (Wheel Position 1-3, printed switch-column-9 positions "
-				"91-93) as opto interrupters on the A-13901-2 \"3-sw. Opto PCB Assembly (for idol)\" -- three onboard "
-				"LED/phototransistor pairs (OPTO1/OPTO2/OPTO3). Pinned PinMAME's ijGameData inverted-switch mask "
-				"covers the custom switch column (index 12) with only 0x18 (binary 00011000): bits 3 and 4 (addresses "
-				"124 and 125, Mini Playfield Left/Right Limit, also opto per the A-16657 Motor Opto Switch PCB on the "
-				"very same physical column) are normalized, but bits 0-2 (121-123) are not, even though all five "
-				"addresses share one physical harness and one opto-sensor technology. The manual is physical-"
-				"construction ground truth and pinned PinMAME is public-address and emulator-normalization ground "
-				"truth, and the two disagree on whether a recreation must invert the wheel-position trio while the "
-				"limit-switch pair on the same column is already normalized. Resolution path: run the implemented "
-				"LibPinMAME gameplay harness against a legal ij_l7 ROM, drive the idol motor through a full rotation, "
-				"and observe the idle and transition public state of switches 121-123 at each 60-degree boundary. "
-				"Unresolved."
-			),
-			"source_refs": [MANUAL_SOURCE, CORE_SOURCE],
-		},
 	]
 
 
@@ -1994,10 +2009,6 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"PinMAME's ijGameData inverted-switch mask does not normalize, unlike its two column neighbors 72/73 "
 			"-- recorded conflict.captive-ball-front-opto-not-normalized, unresolved. This is a polarity conflict, "
 			"not a spatial gap; every dimension this report audits is complete and validated.",
-			"Public switches 121-123 (Wheel Position 1-3) are printed normally-closed opto interrupters on the same "
-			"physical switch column as normalized addresses 124/125, but pinned PinMAME's inverted-switch mask does "
-			"not cover them -- recorded conflict.wheel-position-opto-not-normalized, unresolved. Also a polarity "
-			"conflict, not a spatial gap.",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -2049,7 +2060,7 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"Flasher.FL_LJackpotb, Light.FL_SJackpota/FL_SJackpotb, Light.f54a, Light.FL_JackpotMultib -- secondary render-duplicate objects for flasher addresses the manual prints at quantity 1",
 			"PLAYFIELD_GI, PLAYFIELD_LRamp, PLAYFIELD_RRamp, PLAYFIELD_leftside, PLAYFIELD_ruins Flasher objects at the exact table center (0.5, 0.5) -- table-modeling visibility-toggle utility objects, not physical emitters",
 		],
-		"unresolved": ["conflict.captive-ball-front-opto-not-normalized", "conflict.wheel-position-opto-not-normalized"],
+		"unresolved": ["conflict.captive-ball-front-opto-not-normalized"],
 	}
 
 
@@ -2059,8 +2070,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		f"Status: {report['status']}. Every spatial dimension audited here is complete, but the physical machine "
 		"record itself remains `partial` at "
-		"`machines/partial/williams/indiana-jones-the-pinball-adventure-1993.json` because of two unresolved "
-		"switch-polarity conflicts outside this audit's scope; see the promotion decision below.",
+		"`machines/partial/williams/indiana-jones-the-pinball-adventure-1993.json` because of one unresolved "
+		"switch-polarity conflict outside this audit's scope; see the promotion decision below.",
 		"",
 		"The matching source is the retained known-working `Indiana Jones The Pinball Adventure (Williams 1993) "
 		f"VPWmod v1.0.vpx` at SHA-256 `{TABLE_SHA256}`. The retained `vpxtool git:v0.33.3` extraction produced the "
@@ -2114,15 +2125,15 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"No authoring-critical placement, quantity, or semantic question remains unresolved for the addresses this "
 		"audit covers, and the deterministic curator reproduces the canonical artifact and its pinned seed "
-		"byte-for-byte. However, public switch 71 (Captive Ball Front) and switches 121-123 (Wheel Position 1-3) "
-		"are printed normally-closed opto interrupters per the manual's own board schematics that pinned PinMAME's "
-		"ijGameData inverted-switch mask does not normalize, unlike their opto column neighbors (72/73 and "
-		"124/125 respectively) -- two unresolved polarity conflicts recorded as `conflict.captive-ball-front-opto-"
-		"not-normalized` and `conflict.wheel-position-opto-not-normalized`. The definition therefore carries a "
-		"non-empty `conflicts` array and `coverage.dimensions.physical_wiring = \"conflicted\"`, so promotion to "
-		"`author_ready` is refused; the record stays `partial` with `coverage.missing = [\"polarity\", "
-		"\"unresolved_conflicts\"]` until a LibPinMAME harness trace against a legal ij_l7 ROM observes the true "
-		"idle and transition public state of all four addresses.",
+		"byte-for-byte. However, public switch 71 (Captive Ball Front) is a printed normally-closed opto "
+		"interrupter per the manual's own board schematics that pinned PinMAME's ijGameData inverted-switch mask "
+		"does not normalize, unlike its opto column neighbors 72/73 -- an unresolved polarity conflict recorded as "
+		"`conflict.captive-ball-front-opto-not-normalized`. The same question for switches 121-123 (Wheel Position "
+		f"1-3) was settled by the ROM's own T.14 IDOL TEST (`{RUNTIME_IDOL_PATH}`), whose readback shows the ROM "
+		"labelling each code the table writes with the table's own position name. The definition therefore "
+		"carries a non-empty `conflicts` array and `coverage.dimensions.physical_wiring = \"conflicted\"`, so "
+		"promotion to `author_ready` is refused; the record stays `partial` with `coverage.missing = "
+		"[\"polarity\", \"unresolved_conflicts\"]` until ROM evidence settles switch 71.",
 		"",
 		"## Retained evidence",
 		"",

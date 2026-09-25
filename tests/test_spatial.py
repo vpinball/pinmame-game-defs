@@ -342,21 +342,21 @@ class SpatialMigrationTests(unittest.TestCase):
 				self.assertEqual(expected, definition["coverage"]["missing"])
 				self.assertEqual("unknown", definition["coverage"]["dimensions"]["spatial_placement"])
 				self.assertTrue(all(value == "validated" for key, value in definition["coverage"]["dimensions"].items() if key != "spatial_placement"))
-		self.assertEqual(28, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
+		self.assertEqual(29, len(list((ROOT / "machines" / "author-ready").rglob("*.json"))))
 		catalog = load_json(ROOT / "catalog" / "pinmame.json")
 		report = build_coverage_report(ROOT)
 		self.assertEqual(catalog["summary"]["machine_count"], report["catalog_record_count"])
 		self.assertEqual(catalog["summary"]["game_count"], report["machine_count"])
 		self.assertEqual(catalog["summary"]["author_ready_count"], report["author_ready_count"])
 		self.assertEqual(777, report["machine_count"])
-		self.assertEqual(28, report["author_ready_count"])
+		self.assertEqual(29, report["author_ready_count"])
 		# The 2026-08-28 Junk Yard curation and the Big Buck Hunter Pro pass each replaced one
 		# stub with an honest partial, and the 2026-08-29 catalog-wide identity promotion
 		# converted every residual generated stub into an identity-only partial, so no stubs
 		# remain and every physical game is at least a named partial record. The 2026-08-30
 		# review fixes classified ten test-fixture/test-chip records as diagnostic_software,
 		# so they no longer count as physical games.
-		self.assertEqual(749, report["partial_count"])
+		self.assertEqual(748, report["partial_count"])
 		self.assertEqual(0, report["stub_count"])
 		self.assertEqual(13, report["non_game_record_count"])
 		self.assertEqual(790, report["catalog_record_count"])
@@ -371,9 +371,6 @@ class SpatialMigrationTests(unittest.TestCase):
 		# not a missing spatial record, so it is not counted here either. Twilight Zone genuinely
 		# has unresolved spatial gaps (switches 26/31-33/45/46/55 and GI address 2 have no bound
 		# VPX object), so it is counted alongside Centaur/Terminator 2.
-		# Cactus Canyon is also not a retrofit: every switch/solenoid/lamp/GI address has a resolved
-		# placement or a controlled not_applicable record except flashers 24 and 26, whose second
-		# documented (playfield vs insert-panel) bulb has no independently resolvable VPX coordinate.
 		# Star Trek: The Next Generation is likewise not a retrofit: it was curated directly from a
 		# legacy candidate-only stub, and three lamps (53, 85, 86) have no world-space Light object
 		# in the retained extraction (only a local-origin Primitive with an unresolved parent
@@ -440,7 +437,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# positions while the remaining per-firmware expansion fitment stays a variant blocker.
 		# The 2026-08-29 identity promotion gives every machine an identity-only partial record that
 		# lists spatial_placement as missing, so this count rose from 45 by the 666 promoted stubs.
-		self.assertEqual(699, report["missing_requirement_counts"]["spatial_placement"])
+		# Cactus Canyon's 2026-09-25 promotion to author_ready removes its spatial gap.
+		self.assertEqual(698, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -459,13 +457,13 @@ class SpatialMigrationTests(unittest.TestCase):
 		self.assertEqual(790, len(catalog["machines"]))
 		self.assertEqual(777, catalog["summary"]["game_count"])
 		self.assertEqual(790, catalog["summary"]["machine_count"])
-		self.assertEqual(28, catalog["summary"]["author_ready_count"])
+		self.assertEqual(29, catalog["summary"]["author_ready_count"])
 		self.assertEqual(0, catalog["summary"]["stub_count"])
 		# The catalog count includes the separately classified partial diagnostic plus the ten
 		# test-fixture/test-chip records classified diagnostic_software by the 2026-08-30 review
-		# fixes; coverage counts only the 777 physical games and therefore reports 749 partial
+		# fixes; coverage counts only the 777 physical games and therefore reports 748 partial
 		# records above.
-		self.assertEqual(762, catalog["summary"]["partial_count"])
+		self.assertEqual(761, catalog["summary"]["partial_count"])
 		self.assertEqual(13, catalog["summary"]["non_game_count"])
 		note_paths = {definition["knowledge"]["path"] for definition in migrated.values()}
 		self.assertEqual(12, len(note_paths))

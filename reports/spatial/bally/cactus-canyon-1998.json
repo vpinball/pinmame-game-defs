@@ -1,7 +1,4 @@
 {
-  "blockers": [
-    "Flasher addresses 24 (Beacon Flasher) and 26 (Saloon Flasher) each drive a documented playfield-plus-insert-panel bulb pair (Solenoid/Flasher Locations page 2-36 lists each twice), but the retained VPX table's Light-object clusters for both addresses are co-located or only a few pixels apart, so only one resolvable coordinate is recorded for each rather than two. No coordinate was invented to fill the gap. Every other spatial dimension this report audits is complete."
-  ],
   "coordinate_convention": {
     "source_bounds": {
       "bottom": 2162.0,
@@ -16,8 +13,8 @@
   "excluded_object_classes": [
     "l23a co-located-but-distinct second Light object bound to lamp 23 (manual documents one bulb)",
     "secretentrance Kicker (co-located duplicate of bartpopper/switch 42, solenoid 8)",
-    "l1, l2 Light objects (never referenced by SetLamp/SetLampMod; no valid WPC-95 lamp address)",
-    "light006, light007, light034 (TopGI2 VR-room-only render duplicates of light16, light17, light15)",
+    "l3a1, l3a2, l3b1, l3b2 (larger-radius TopGI twins of l1 and l2; l1 and l2 are GI string 3 bulbs, not lamp-matrix objects, since no WPC-95 lamp address 1 or 2 exists)",
+    "light16, light17, light15 (larger-radius twins of the TopGI2 members light006, light007, light034 that carry those three bulbs' placements)",
     "light004 listed twice in the RightGI collection (authoring duplicate, one physical bulb)"
   ],
   "extraction": {
@@ -30,7 +27,7 @@
     "total_bytes": 139765398,
     "vpxtool_version": "vpxtool"
   },
-  "format": "pinmame-spatial-blockers",
+  "format": "pinmame-spatial-audit",
   "machine_id": "bally.cactus-canyon.1998",
   "not_applicable_inputs": {
     "cabinet_or_service": [
@@ -234,27 +231,27 @@
       }
     ]
   },
-  "placement_count": 184,
+  "placement_count": 182,
   "projections": [
     {
       "address": 71,
       "group": "pinmame.input.switch",
-      "reason": "Projected onto the Train mechanism's own retained table objects (Primitives Train and Train1, table object center): the retained script's sw71 object is a VPX Timer, not a Hit trigger, and its sw71_Timer handler pulses public switch 71 once per encoder step while the Train primitive is in motion (\"Dozer - Encoder Pulse which runs with Train Mech.\"); there is no separate playfield sensor object."
+      "reason": "Projected onto the Train mechanism's own retained table objects (Primitives Train and Train1, table object center): the retained script's Table1_Init registers a VPinMAME cvpmMech on the physical-ROM (PROC=0) path (script.vbs lines 191-203): Sol1 = 38 (forward), Sol2 = 37 (reverse), MType vpmMechTwoDirSol + vpmMechStopEnd + vpmMechLinear, Length 570, Steps 613, .AddSw 72, 0, 0 (Train Home asserted at step 0 only) and .AddPulseSw 71, 14, 3 (Train Encoder asserted for 3 of every 14 steps, core.vbs mapping it to PinMAME's pulsed mech switch). PinMAME therefore drives 71 and 72 from the mechanism position; the sw71 Timer object is switched on only in the PROC=1 TrainF_PROC/TrainB_PROC handlers, which are out of scope; there is no separate playfield sensor object."
     },
     {
       "address": 72,
       "group": "pinmame.input.switch",
-      "reason": "Projected onto the Train mechanism's own retained table object (Primitive Train, table object center): the retained script's PROC=0 TrainF/TrainB handlers never set Controller.Switch(72) at all (only the PROC=1 Polly_Timer path does), so there is no VPX object of any kind bound to this address under the physical ROM's normal operating path; the manual and PinMAME's own switch matrix are the only evidence this switch exists, at the position of the mechanism whose motion it senses."
+      "reason": "Projected onto the Train mechanism's own retained table object (Primitive Train, table object center): the retained script's Table1_Init registers a VPinMAME cvpmMech on the physical-ROM (PROC=0) path (script.vbs lines 191-203): Sol1 = 38 (forward), Sol2 = 37 (reverse), MType vpmMechTwoDirSol + vpmMechStopEnd + vpmMechLinear, Length 570, Steps 613, .AddSw 72, 0, 0 (Train Home asserted at step 0 only) and .AddPulseSw 71, 14, 3 (Train Encoder asserted for 3 of every 14 steps, core.vbs mapping it to PinMAME's pulsed mech switch). PinMAME therefore drives 71 and 72 from the mechanism position; the sw71 Timer object is switched on only in the PROC=1 TrainF_PROC/TrainB_PROC handlers, which are out of scope; recorded at the position of the mechanism whose travel it senses."
     },
     {
       "address": 77,
       "group": "pinmame.input.switch",
-      "reason": "Projected onto the Mine mechanism's own retained table object (Primitive MineSign, table object center): like switch 72, the retained script's PROC=0 MoveMine/MineTimer_Timer handlers never set Controller.Switch(77) (only the PROC=1 Sw15_Timer path does); the manual and PinMAME are the only evidence for this address, recorded at the position of the mechanism it senses."
+      "reason": "Projected onto the Mine mechanism's own retained table object (Primitive MineSign, table object center): the retained script's Table1_Init registers a VPinMAME cvpmMech on the physical-ROM (PROC=0) path (script.vbs lines 176-187): Sol1 = 17, MType vpmMechOneSol + vpmMechReverse + vpmMechLinear, Length 100, Steps 49, .AddSw 77, 0, 1 (Mine Home asserted at steps 0-1) and .AddPulseSw 78, 8, 2 (Mine Encoder asserted for 2 of every 8 steps). PinMAME therefore drives 77 and 78 from the mechanism position; recorded at the position of the mechanism it senses."
     },
     {
       "address": 78,
       "group": "pinmame.input.switch",
-      "reason": "Projected onto the Mine mechanism's own retained table object (Primitive MineSign, table object center): the retained script's PROC=0 path has no object bound to public switch 78 either (only the PROC=1 sw15b_Timer path pulses it, \"Dozer - Encoder Pulse which runs with Mine Mech.\"); recorded at the position of the mechanism it senses."
+      "reason": "Projected onto the Mine mechanism's own retained table object (Primitive MineSign, table object center): the retained script's Table1_Init registers a VPinMAME cvpmMech on the physical-ROM (PROC=0) path (script.vbs lines 176-187): Sol1 = 17, MType vpmMechOneSol + vpmMechReverse + vpmMechLinear, Length 100, Steps 49, .AddSw 77, 0, 1 (Mine Home asserted at steps 0-1) and .AddPulseSw 78, 8, 2 (Mine Encoder asserted for 2 of every 8 steps). PinMAME therefore drives 77 and 78 from the mechanism position; recorded at the position of the mechanism it senses."
     }
   ],
   "resolved_input_addresses": [
@@ -705,10 +702,7 @@
     "table_sha256": "2e93faec289ce517a30f7285187d9eedca4652417ea2744e381c04a2e94e371b"
   },
   "status": "validated",
-  "unresolved": [
-    "Flasher 24 (Beacon Flasher) insert-panel bulb coordinate distinct from its playfield bulb.",
-    "Flasher 26 (Saloon Flasher) insert-panel bulb coordinate distinct from its playfield bulb."
-  ],
+  "unresolved": [],
   "version": 1,
   "visual_review_cache": {
     "root": "external:pinmame-manuals/rendered/bally.cactus-canyon.1998/",
