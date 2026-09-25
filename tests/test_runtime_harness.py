@@ -35,11 +35,22 @@ class RuntimeHarnessTests(unittest.TestCase):
 		def PinmameGetChangedLamps(self, _states: object) -> int:
 			return 0
 
+		def PinmameGetChangedSolenoids(self, _states: object) -> int:
+			self.changed_solenoid_polls = getattr(self, "changed_solenoid_polls", 0) + 1
+			return 0
+
 		def PinmameGetMaxGIs(self) -> int:
 			return 0
 
 		def PinmameGetChangedGIs(self, _states: object) -> int:
 			return 0
+
+	def test_output_poll_requests_physical_solenoid_integration(self) -> None:
+		# LibPinMAME integrates forced physical solenoid outputs (Capcom, SAM) only when
+		# PinmameGetChangedSolenoids is called; without it OnSolenoidUpdated never fires.
+		library = self.FakeLibrary()
+		HARNESS._poll_outputs(library, HARNESS.Recorder())
+		self.assertEqual(1, library.changed_solenoid_polls)
 
 	def test_pulse_parser_supports_service_switches_and_timing(self) -> None:
 		self.assertEqual((-7, 100, 1.0), HARNESS._parse_pulse("-7"))

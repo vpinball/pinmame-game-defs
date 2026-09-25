@@ -453,8 +453,8 @@ class SpatialMigrationTests(unittest.TestCase):
 		# The 2026-09-25 Monster Bash T.19 DRACULA harness runs resolve one, and the Lord of the
 		# Rings stacking-opto runs resolve another.
 		# The Machine: Bride of Pinbot's curation replaced a legacy record whose one migration conflict
-		# is resolved, removing one more.
-		self.assertEqual(48, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# is resolved, removing one more. The Kingpin curation adds its flasher-29 orbit-side conflict.
+		self.assertEqual(49, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(790, len(catalog["machines"]))
 		self.assertEqual(777, catalog["summary"]["game_count"])
 		self.assertEqual(790, catalog["summary"]["machine_count"])

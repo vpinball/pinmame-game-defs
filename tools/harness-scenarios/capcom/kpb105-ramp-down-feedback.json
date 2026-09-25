@@ -1,0 +1,30 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "kpb105",
+  "notes": "Left ramp entrance: observe whether the ROM's repeated public solenoid 14 (RAMP) pulses depend on public switch 47 (RAMP, DOWN). Boot with 47 open (ramp not reported down), then close 47, then open it again.",
+  "watch_switches": [
+    47
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30.0,
+      "label": "boot with switch 47 open: record solenoid 14 activity"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 1,
+      "settle_s": 30.0,
+      "label": "close 47 (ramp reported down): record solenoid 14 activity"
+    },
+    {
+      "type": "set_switch",
+      "switch": 47,
+      "state": 0,
+      "settle_s": 30.0,
+      "label": "open 47 again: record solenoid 14 activity"
+    }
+  ]
+}

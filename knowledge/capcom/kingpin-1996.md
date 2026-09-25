@@ -1,39 +1,128 @@
 # Kingpin (Capcom 1996)
 
-Coverage: **partial - machine identity plus candidate-only I/O attachments. Playfield devices,
-wiring, mechanisms, and behavior are evidenced only as unverified candidates.**
+Coverage: **partial.** The complete controller contract is validated: every public switch, solenoid
+and lamp address, its name, its wiring colour code and connector pin, opto polarity and the DMD.
+Still open: spatial placement (no VPX table is retained yet), the physical behaviour of several
+mechanisms, the contact construction of four switches, one conflict about a flasher's position, and
+the recreation notes that depend on those.
 
-This record was promoted from the generated catalog stub `stub.pinmame.kpb105` by the
-catalog-wide identity pass of 2026-08-29. The promotion resolves machine identity and carries the
-catalog's residual driver grouping over unchanged, the platform and device attachments below were added by the 2026-08-29/30 candidate passes and assert nothing beyond candidate provenance. Every
-requirement in the definition's `coverage.missing` is genuinely outstanding.
+## Why this record has no manual
 
-## Identity
+Kingpin was to be Capcom's next pinball machine after Big Bang Bar when Capcom closed its pinball
+factory in 1996. Krellan's page puts Big Bang Bar at "10-or-so" machines and calls Kingpin "just as
+rare, if not more so". No printed factory manual is known: pinned PinMAME's `capcom.c` says it "did
+not find a manual for this one", and Krellan says the same. This definition replaces the manual with
+the machine's own firmware plus one hands-on survey:
 
-- PinMAME catalog: root driver `kpb105`, description "Kingpin (Beta 1.05)", manufacturer
-  "Capcom", catalog year "1996".
-- OPDB record `G48od-MJNnn` (IPDB 4000) names this machine "Kingpin"
-  (Capcom, manufacture date 1996-12-01); the resolved identity rests on the
-  agreement of the PinMAME catalog and this reviewed mapping.
-- The definition's driver list is exactly the clone tree PinMAME declares under `kpb105`;
-  whether every listed driver really runs on this physical machine is unverified.
+1. **The ROM's service menu.** Walked on fresh isolated state by the LibPinMAME harness
+   (`tools/harness-scenarios/capcom/kpb105-*.json`). The Solenoid, Lamp and Switch Tests print each
+   device's name, its wire colours and its connector pin. Each harness step pairs that text with the
+   public address that changed (solenoids, lamps) or was held (switches). Every row is transcribed in
+   `evidence/excerpts/capcom.kingpin.1996/service-*.md` beside a sheet of the frames, and the runs are
+   pinned by hash in `evidence/runtime/capcom/kingpin-service-diagnostics.json`.
+2. **The ROM's I/O name-record table.** `tools/capcom_kingpin_rom_records.py` decodes the 199 records
+   (123 lamps, 46 switches, 30 coils) the menu reads. The lamp and switch conversions reproduce the
+   observed public addresses (the switch column pairing follows `capcom.c`'s `io_r`); the coil byte
+   order is taken from the Solenoid Test walk. The record's opto flag marks exactly the nine optos.
+3. **Pinned PinMAME** for transport: `cc_sw2m`/`cc_m2sw`, the solenoid words and legacy mirrors, the
+   two lamp matrices, and the `capInvSw11` opto mask.
+4. **Krellan's page** (krellan.com/pinball/kingpin). Its author checked every lamp position on a real
+   machine in operator mode. The page also lists switches, solenoids, the slot-machine drum and
+   several hardware notes.
 
-## Drivers this record holds
+The three retained community table scripts are one lineage, all marked "Table not verified yet", and
+are used only as leads.
 
-- `kpb105` (1996, Capcom).
+## Controller contract
 
-## PinMAME source contract (candidate)
+- **Driver:** `kpb105`, the only Kingpin driver. The operator menu shows "KING PIN" version β1.5
+  (Krellan: two known versions, 1.4 beta and 1.5 beta). `kpv106.zip` in the user's ROM library is
+  byte-identical.
+- **Switches:** cabinet 1-16, playfield 17-80; the ROM's own switch numbers equal PinMAME's public
+  addresses. Unused per the ROM: 11, 12, 40, 56, 64-80. Nine optos (17, 36-39, 44, 48, 52, 61) are
+  normalized by PinMAME, so do not invert them again. Their supply is connector J15 on the power
+  board. Krellan calls every other switch a "normal switch", which only separates it from the
+  optos; normally open is this curation's inference for them. The construction of the end-of-stroke
+  switches 33/34, the slam switch 9 and input 8 is left undocumented, because those are normally
+  closed on some other platforms. 81-88 are PinMAME's synthetic flipper column, 89-96 are empty.
+- **Wiring:** the colours and pins the service menu prints come from the ROM's fixed colour tables.
+  They are the manufacturer's standard harness code for each position, not a trace of a real
+  harness, and this machine barely left prototype.
+- **Flipper buttons:** the ROM reads them at 5 (left) and 6 (right). Under PinMAME a host must
+  press them through the flipper-column button bits, **84** (left) and **82** (right), because
+  `core_updateSw` copies those bits into 5/6 every frame. A direct write to 5 or 6 lasts at most one
+  frame. The retained table scripts write 5/6 directly.
+- **Solenoids:** 32 driver outputs:
+  - 1-11, 13-17 and 32 are 50 V coils;
+  - 12 is a 12 V motor;
+  - 18-31 are 20 V flashers;
+  - 9 and 10 are the CPU-driven flippers.
 
-- The pinned PinMAME source declares `kpb105` at `src/wpc/capgames.c:351` with machine module `cc2`; the definition declares controller platform `pinmame.capcom` from it.
+  PinMAME mirrors 9/10/11/12 at 45/47/33/35 for old DOF configurations. On Kingpin the 33 and 35
+  mirrors carry the slot eject and slot motor, not flippers. 51 is the Fast Flips game-on state.
+- **Lamps:** two 8x8 matrices, 1-64 (A) and 65-128 (B); 123-125 are NOT USED per the ROM. There is no
+  GI channel: every light is a matrix lamp. That includes 35 numbered "G.I." positions (G.I. 1-36
+  with no 18; the matrix slot between 17 and 19 is the captive standup) and a backbox G.I. The ROM's
+  "(2)" marks an output with two bulbs and "RED" a red bulb. Krellan describes many of them as
+  "behind above and red": a red light immediately behind the previous one on its own output. He
+  notes that this gives the game "the capability to turn almost the entire GI to a red color".
+  129/130 are the CPU and sound board diagnostic LEDs.
+- **Operator menu:** making switch 8 (PinMAME's "Coin Door", Krellan's "operator's Advance button")
+  enters it. The flipper buttons then step and Start selects. The ROM also warns about a 50 V door
+  interlock switch ("Check 50V Interlock SW."); nothing ties that switch to a public address. At
+  factory settings a credit costs two coins.
 
-## VPX script candidates (candidate)
+## Mechanisms
 
-- 2 retained community table script(s) declare this machine's driver; their extracted switch/lamp/solenoid/GI candidates are carried as 146 candidate devices. When curator work weighs sources, a retained script outranks emulator-derived candidates for runtime semantics, but every device here is still a candidate until a known-working table is verified against this exact physical machine.
+- **Trough.** Outhole switch 35 and OUTHOLE coil 1 (Krellan: "ball lift"), a four-opto trough
+  (36-39), and TROUGH coil 2 serving the shooter lane. Install four balls. The ROM fires 1 when 35
+  closes (again about every 1.2 s while it stays closed, once more about 0.7 s after it opens) and
+  fires 2 when a game starts.
+- **Auto plunger.** Shooter lane 43 and AUTO PLUNGER coil 32; the cabinet launch button is switch 14.
+  Outside a game the ROM launches any ball it finds in the shooter lane.
+- **Left ramp entrance lift.** RAMP coil 14 raises the entrance to reveal the Hideout, and switch 47
+  reads the lowered position. While 47 is open the ROM drives 14 for about 1.3 s, rests about 1.0 s
+  and repeats; it stops once 47 closes. Whether the lift latches or needs a held drive is not
+  documented.
+- **Hideout gun lock.** A three-ball lock under the ramp (44 opto, 45, 46) with GUN EJECT coil 8.
+  Krellan: the playfield area near the left orbit is hinged at the rear, so the eject lifts it and
+  the ball shoots down at the player from under the floor. The role of GUN TROUGH OPTO 48 is unknown.
+- **Slot machine.** One drum, turned by SLOT MOTOR 12 and indexed by SLOT OPTO 52. It shows nine rows
+  of three identical symbols; in spin order: Money, Goods, Sevens, Gangsters, Bars, Power, Guns,
+  Crazy Cash, Cherries. The motor often stops between rows and the software rounds to the nearest
+  row. How the opto is timed per row is not documented. The saucer (51, SLOT EJECT 11) is flanked by
+  standups 49/50.
+- **Drop targets.** KING bank 25-28 (reset 6) on the left, PIN bank 29-31 (reset 7) on the right. Both
+  resets fire at game start.
+- **Top diverter.** TOPGATES 13, behind and left of the top lanes, blocks the left orbit. It has no
+  position switch.
+- **Other devices:**
+  - star bumpers: left 17/57, center 15/58, right 16/59;
+  - slingshots: 4/41 and 5/42;
+  - captive ball: switch 32;
+  - spinners: 17 (right ramp) and 61 (left ramp), both optos.
+- **Flippers** are CPU-driven, with end-of-stroke switches 33/34 read by the ROM. Their strength is
+  software-adjustable. In the timed "power meter" game style they weaken and stop when the meter runs
+  out (Krellan).
 
-## What a curator must establish next
+## Things a table author will trip over
 
-Full input, output, and display
-enumeration with semantic names; physical wiring and polarity; mechanism inventory and behavior;
-variant differences across the clone tree; recreation knowledge from a manual, schematic, or
-known-working table; runtime provenance; and a normalized spatial placement for every physical
-device. No manual, schematic, or runtime-harness evidence is retained for this machine yet; the candidate sections above are the only retained I/O evidence so far.
+- **Table defects.** The retained script lineage's captive-ball target pulses 49 instead of 32. It
+  binds its right-ramp flasher routine to 23, although the ROM names 22 R. RAMP FLASHER and 23
+  BUILDING FLASHER. It also presses the flipper buttons by writing 5/6, which PinMAME overwrites
+  every frame (use 84/82).
+- **Flasher typing.** PinMAME's flasher typing for Kingpin (18-19, 21-31) came from a VPX table. The
+  ROM prints 20 (Big Al) as a flasher too; Krellan puts Big Al on the backglass, and the retained
+  table does not bind 20. Krellan reports #67 and #906 flasher bulbs rather than #89.
+- **Output 20 in the service test.** During the ROM's Solenoid Test, public 20 pulses continuously
+  whichever coil is selected.
+- **Flasher 29.** The ROM names it "L.ORBIT (EAST)", although EAST is the right-orbit insert
+  (`conflict.flasher-29-orbit-side`).
+
+## What is still needed
+
+- **Spatial placement:** a VPX recreation to measure device positions, cross-checked against
+  Krellan's lamp positions and photographs of a real machine.
+- **Mechanism behaviour:** whether the ramp and top-diverter coils toggle latches or need a held drive,
+  what GUN TROUGH OPTO does, and how the slot drum's opto is timed.
+- **Flasher 29:** its actual orbit side.

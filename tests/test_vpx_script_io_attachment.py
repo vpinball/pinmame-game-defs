@@ -18,9 +18,10 @@ CORPUS_REPOSITORIES = (
 	"https://github.com/sverrewl/vpxtable_scripts",
 	"https://github.com/jsm174/vpx-standalone-scripts",
 )
-EXPECTED_ATTACHED_MACHINES = 280
-EXPECTED_ATTACHED_DEVICES = 13210
-EXPECTED_ATTACHED_SCRIPTS = 352
+# Kingpin was curated on 2026-09-25 and no longer carries this pass's candidates.
+EXPECTED_ATTACHED_MACHINES = 279
+EXPECTED_ATTACHED_DEVICES = 13064
+EXPECTED_ATTACHED_SCRIPTS = 350
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:
@@ -67,12 +68,12 @@ class VpxScriptIoAttachmentTests(unittest.TestCase):
 			self.assertIn("vpx-script.", device["provenance"]["source_refs"][0])
 
 	def test_lamp_candidates_come_from_the_script(self) -> None:
-		definition = load_json(ROOT / "machines/partial/capcom/kingpin-1996.json")
+		definition = load_json(ROOT / "machines/partial/sega/golden-cue-1998.json")
 		lamp = next(device for device in definition["outputs"] if device["binding"] == {"device": 5, "group": "pinmame.output.lamp"})
 		self.assertEqual("candidate", lamp["provenance"]["status"])
 		self.assertEqual("lamp", lamp["kind"])
-		self.assertEqual(113, sum(1 for device in definition["outputs"] if device["kind"] == "lamp"))
-		self.assertEqual(146, len(definition["inputs"]) + len(definition["outputs"]))
+		self.assertEqual(84, sum(1 for device in definition["outputs"] if device["kind"] == "lamp"))
+		self.assertEqual(118, len(definition["inputs"]) + len(definition["outputs"]))
 
 	def test_note_device_counts_name_only_define_derived_devices(self) -> None:
 		# Round-6 blocker: the PinMAME source-contract section must not attribute

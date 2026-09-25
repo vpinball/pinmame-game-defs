@@ -1,0 +1,1962 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "kpb105",
+  "notes": "Capcom Kingpin C1.04 Lamp Test walk on fresh isolated state. Each flipper step selects one lamp; the DMD names it (for example 11A - COIN 1/COIN 3) with its column/row drivers, connector pins and wire colours, and the public lamp that turns on in that step pairs the ROM lamp name with the public lamp address. The walk runs forward with the right flipper and then backward with the left flipper; each pass covers every position, so the second is an independent cross-check. Retain the DMD frames to prove the path taken. Flipper buttons are pressed through PinMAME's flipper-column button bits (public 84 left, 82 right): kpb105 declares FLIP_SWNO(5,6), and with keyboard handling off core_updateSw copies those bits into matrix switches 5/6 every frame, so a direct host write to 5 or 6 lasts at most one frame.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "open coin door (public 8): fresh NVRAM asks DO YOU WANT TO SETUP THIS GAME?"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "hold left flipper button (public 84)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "hold right flipper button (public 82): both flippers cancel the setup prompt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "release left flipper button"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "release right flipper button: main menu, SET VOLUME highlighted"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "Start: enter C DIAGNOSTICS"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "settle in C1 DIAGNOSTICS"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "Start: enter C1 STANDARD TESTS"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "settle in C1.01 SWITCH TEST"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "C1 right 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "C1 right 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "C1 right 3 (C1.04 LAMP TEST)"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 4.0,
+      "label": "Start: enter LAMP TEST (ALL LAMPS ON)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 37"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 38"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 41"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 44"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 45"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 46"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 47"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 48"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 49"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 50"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 51"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 52"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 53"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 54"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 55"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 56"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 57"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 58"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 59"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 60"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 61"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 62"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 63"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 64"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 65"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 66"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 67"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 68"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 69"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 70"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 71"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 72"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 73"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 74"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 75"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 76"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 77"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 78"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 79"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 80"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 81"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 82"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 83"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 84"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 85"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 86"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 87"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 88"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 89"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 90"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 91"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 92"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 93"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 94"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 95"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 96"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 97"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 98"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 99"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 100"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 101"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 102"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 103"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 104"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 105"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 106"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 107"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 108"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 109"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 110"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 111"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 112"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 113"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 114"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 115"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 116"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 117"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 118"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 119"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 120"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 121"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 122"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 123"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 124"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 125"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 126"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 127"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 128"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: single lamp step 129"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 8"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 9"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 10"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 11"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 12"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 13"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 14"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 15"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 16"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 20"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 22"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 23"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 24"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 25"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 26"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 27"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 28"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 29"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 30"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 31"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 32"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 33"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 34"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 35"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 36"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 37"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 38"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 39"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 40"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 41"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 42"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 43"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 44"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 45"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 46"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 47"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 48"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 49"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 50"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 51"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 52"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 53"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 54"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 55"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 56"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 57"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 58"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 59"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 60"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 61"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 62"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 63"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 64"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 65"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 66"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 67"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 68"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 69"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 70"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 71"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 72"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 73"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 74"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 75"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 76"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 77"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 78"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 79"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 80"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 81"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 82"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 83"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 84"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 85"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 86"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 87"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 88"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 89"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 90"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 91"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 92"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 93"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 94"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 95"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 96"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 97"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 98"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 99"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 100"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 101"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 102"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 103"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 104"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 105"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 106"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 107"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 108"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 109"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 110"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 111"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 112"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 113"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 114"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 115"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 116"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 117"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 118"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 119"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 120"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 121"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 122"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 123"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 124"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 125"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 126"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 127"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 128"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 129"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper: single lamp step back 130"
+    }
+  ]
+}

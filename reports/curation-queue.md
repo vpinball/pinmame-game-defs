@@ -92,7 +92,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 86 | 1996 | Big Bang Bar | Capcom | author_ready | 100% |
 | 87 | 1996 | Breakshot | Capcom | partial | 19% |
 | 88 | 1996 | Flipper Football | Capcom | partial | 19% |
-| 89 | 1996 | Kingpin | Capcom | partial | 19% |
+| 89 | 1996 | Kingpin | Capcom | partial | 69% |
 | 90 | 1996 | Barb Wire | Gottlieb | partial | 13% |
 | 91 | 1996 | Brooks & Dunn (rev. T1) | Gottlieb | partial | 6% |
 | 92 | 1996 | NBA MAC | MAC S.A. | partial | 6% |

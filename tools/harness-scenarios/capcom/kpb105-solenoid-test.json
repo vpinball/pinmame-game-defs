@@ -1,0 +1,590 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "kpb105",
+  "notes": "Capcom Kingpin C1.03 Solenoid Test walk on fresh isolated state. The DMD names each coil as S01-S32 with its wire colours, connector pin and supply; each selection fires that coil, so every step's solenoid transitions pair a displayed S-number with the public solenoid address. Menu navigation uses public 8 (coin door), 7 (Start) and the flipper buttons; retain the DMD frames to prove the path taken. Flipper buttons are pressed through PinMAME's flipper-column button bits (public 84 left, 82 right): kpb105 declares FLIP_SWNO(5,6), and with keyboard handling off core_updateSw copies those bits into matrix switches 5/6 every frame, so a direct host write to 5 or 6 lasts at most one frame.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "open coin door (public 8): fresh NVRAM asks DO YOU WANT TO SETUP THIS GAME?"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "hold left flipper button (public 84)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "hold right flipper button (public 82): both flippers cancel the setup prompt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "release left flipper button"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "release right flipper button: main menu, SET VOLUME highlighted"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "Start: enter C DIAGNOSTICS"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "settle in C1 DIAGNOSTICS"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "Start: enter C1 STANDARD TESTS"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "settle in C1.01 SWITCH TEST"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "C1 right 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "C1 right 2 (C1.03 SOLENOID TEST)"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 4.0,
+      "label": "Start: enter SOLENOID TEST on S01"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S01 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S01"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S02 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S02"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S03 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S03"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S04 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S04"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S05 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S05"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S06 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S06"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S07 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S07"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S08 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S08"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S09 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S09"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S10 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S10"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S11 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S11"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S12 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S12"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S13 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S13"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S14 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S14"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S15 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S15"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S16 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S16"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S17 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S17"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S18 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S18"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S19 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S19"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S20 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S20"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S21 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S21"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S22 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S22"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S23 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S23"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S24 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S24"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S25 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S25"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S26 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S26"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S27 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S27"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S28 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S28"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S29 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S29"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S30 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S30"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S31 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S31"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 2.5,
+      "label": "Start: fire the selected coil (S32 expected)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper: select the next coil after S32"
+    }
+  ]
+}

@@ -561,6 +561,8 @@ def _configure_api(library: ctypes.CDLL) -> None:
 	library.PinmameGetLamp.restype = ctypes.c_int
 	library.PinmameGetChangedLamps.argtypes = [ctypes.POINTER(PinmameLampState)]
 	library.PinmameGetChangedLamps.restype = ctypes.c_int
+	library.PinmameGetChangedSolenoids.argtypes = [ctypes.POINTER(PinmameSolenoidState)]
+	library.PinmameGetChangedSolenoids.restype = ctypes.c_int
 	library.PinmameGetMaxGIs.argtypes = []
 	library.PinmameGetMaxGIs.restype = ctypes.c_int
 	library.PinmameGetGI.argtypes = [ctypes.c_int]
@@ -569,7 +571,25 @@ def _configure_api(library: ctypes.CDLL) -> None:
 	library.PinmameGetChangedGIs.restype = ctypes.c_int
 
 
+# PinmameGetChangedSolenoids copies at most CORE_MODOUT_SOL_MAX (72) entries
+# (vp_tChgSols in src/wpc/vpintf.h); 128 leaves headroom for that bound.
+_CHANGED_SOLENOID_BUFFER = 128
+
+
 def _poll_outputs(library: ctypes.CDLL, recorder: Recorder) -> None:
+	# LibPinMAME integrates physical (PWM) solenoid outputs only on request: VIDEO_UPDATE
+	# skips core_update_pwm_solenoids() under LIBPINMAME, so a driver that forces physical
+	# output emulation (Capcom's MACHINE_INIT sets CORE_MODOUT_FORCE_ON) never changes the
+	# state the emulation thread compares before firing OnSolenoidUpdated. Requesting the
+	# changed solenoids performs that integration. The returned legacy-mask changes are
+	# discarded: the callback remains the single recording path, so no event is doubled.
+	# For such drivers the physical state is therefore sampled once per poll (about every
+	# 10 ms while waiting); a pulse shorter than that can go unrecorded. SAM also forces
+	# physical-output mode (sam.c sets CORE_MODOUT_FORCE_ON), so SAM traces recorded before
+	# this call existed may under-report solenoid transitions.
+	solenoid_states = (PinmameSolenoidState * _CHANGED_SOLENOID_BUFFER)()
+	library.PinmameGetChangedSolenoids(solenoid_states)
+
 	max_lamps = max(library.PinmameGetMaxLamps(), 1)
 	lamp_states = (PinmameLampState * max_lamps)()
 	for index in range(library.PinmameGetChangedLamps(lamp_states)):

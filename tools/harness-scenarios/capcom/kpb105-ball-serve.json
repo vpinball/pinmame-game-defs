@@ -1,0 +1,94 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "kpb105",
+  "notes": "Ball handling with four balls held in the trough (public 36-39, normalized so 1 = ball present) and the left ramp reported down (47). In attract: a ball on the outhole switch (35), then a ball in the shooter lane (43); then two coins (one credit at the factory default price) and Start. Each phase is separated by a quiet wait so its solenoid response is attributable. Stops at the first serve: the harness has no ball model, so later play is not meaningful.",
+  "initial_switches": [
+    {
+      "switch": 36,
+      "state": 1
+    },
+    {
+      "switch": 37,
+      "state": 1
+    },
+    {
+      "switch": 38,
+      "state": 1
+    },
+    {
+      "switch": 39,
+      "state": 1
+    },
+    {
+      "switch": 47,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    14,
+    35,
+    36,
+    37,
+    38,
+    39,
+    43,
+    47
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 40.0,
+      "label": "boot into attract with a full trough (the power-on coil pulses happen in this window)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "attract: a ball lands on the outhole switch (35)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 35,
+      "state": 0,
+      "settle_s": 6.0,
+      "label": "attract: the outhole switch opens again"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "attract: a ball rests in the shooter lane (43)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 43,
+      "state": 0,
+      "settle_s": 6.0,
+      "label": "attract: the shooter lane clears"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "coin chute 1 (first coin: the factory default prices a credit at two coins, CREDITS 1/2)"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 150,
+      "settle_s": 2.0,
+      "label": "coin chute 1 (second coin: one credit)"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 150,
+      "settle_s": 3.0,
+      "label": "Start with a credit and a full trough"
+    }
+  ]
+}

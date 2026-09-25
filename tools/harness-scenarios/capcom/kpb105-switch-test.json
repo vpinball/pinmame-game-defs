@@ -1,0 +1,771 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "kpb105",
+  "notes": "Capcom Kingpin C1.01 Switch Test walk on fresh isolated state. Inside the test the flipper buttons browse the ROM's switch list, so the first steps browse the cabinet entries 05-08 (flipper buttons, Start, coin door), which the menu navigation itself uses. Then each public switch 1-4 and 9-80 is held while the DMD names the closed switch with its ROM switch number, wire colours and connector pin, pairing the ROM's own switch number and name with the public address. Flipper buttons are pressed through PinMAME's flipper-column button bits (public 84 left, 82 right): kpb105 declares FLIP_SWNO(5,6), and with keyboard handling off core_updateSw copies those bits into matrix switches 5/6 every frame, so a direct host write to 5 or 6 lasts at most one frame.",
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract"
+    },
+    {
+      "type": "set_switch",
+      "switch": 8,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "open coin door (public 8): fresh NVRAM asks DO YOU WANT TO SETUP THIS GAME?"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "hold left flipper button (public 84)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "hold right flipper button (public 82): both flippers cancel the setup prompt"
+    },
+    {
+      "type": "set_switch",
+      "switch": 84,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "release left flipper button"
+    },
+    {
+      "type": "set_switch",
+      "switch": 82,
+      "state": 0,
+      "settle_s": 3.0,
+      "label": "release right flipper button: main menu, SET VOLUME highlighted"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 1"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 2"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 3"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 4"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 5"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 6"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "main menu right 7"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "Start: enter C DIAGNOSTICS"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "settle in C1 DIAGNOSTICS"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 3.0,
+      "label": "Start: enter C1 STANDARD TESTS"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "settle in C1.01 SWITCH TEST"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 100,
+      "settle_s": 4.0,
+      "label": "Start: enter SWITCH TEST (the Start press itself is shown as 07 START BUTTON)"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper button (84): browse the Switch Test list back to 06"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "left flipper button (84): browse back to 05"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper button (82): browse forward to 06"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper button (82): browse forward to 07"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 100,
+      "settle_s": 2.0,
+      "label": "right flipper button (82): browse forward to 08"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 1 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 2 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 3 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 4 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 9 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 10 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 11 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 12 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 13 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 14 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 15 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 16 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 17 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 18 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 19 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 20 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 21 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 22 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 23 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 24 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 25 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 26 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 27 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 28 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 29 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 30 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 31 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 32 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 33 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 34 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 35 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 36 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 37 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 38 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 39 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 40 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 41 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 42 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 43 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 44 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 45 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 46 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 47 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 48 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 49,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 49 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 50 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 51 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 52 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 53 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 54 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 55 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 56,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 56 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 57 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 58,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 58 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 59,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 59 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 60 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 61 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 62 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 63,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 63 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 64,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 64 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 65,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 65 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 66,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 66 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 67,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 67 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 68,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 68 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 69,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 69 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 70,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 70 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 71,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 71 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 72,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 72 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 73,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 73 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 74,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 74 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 75,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 75 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 76,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 76 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 77,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 77 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 78,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 78 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 79,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 79 while the Switch Test names it"
+    },
+    {
+      "type": "pulse",
+      "switch": 80,
+      "hold_ms": 900,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "hold public switch 80 while the Switch Test names it"
+    }
+  ]
+}
