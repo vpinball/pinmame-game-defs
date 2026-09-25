@@ -409,8 +409,8 @@ const selectClass = 'rounded-lg border border-line bg-panel px-2.5 py-1.5 text-[
 							<td class="num px-3 py-2 text-right text-xs" :style="{ color: STATUS_META[machine.status].color }">
 								{{ machine.completionScore }}%
 							</td>
-							<td class="num px-3 py-2 text-xs whitespace-nowrap text-ink-3">
-								{{ machine.updated ? new Date(machine.updated * 1000).toISOString().slice(0, 10) : '—' }}
+							<td class="num px-3 py-2 text-xs whitespace-nowrap text-ink-3" :title="UPDATED_TITLE">
+								{{ machine.updated ? formatUpdated(machine.updated) : '—' }}
 							</td>
 							<td class="px-3 py-2">
 								<StatusChip :status="machine.status" size="sm" />

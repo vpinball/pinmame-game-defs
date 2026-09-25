@@ -622,6 +622,7 @@ for (const [machineId, { path, doc }] of definitions) {
 			knowledgeHeadings: knowledge?.headings ?? [],
 			knowledgeSummary: knowledge?.summary ?? [],
 			catalogDrivers,
+			updated: entry.updated,
 			...(memoryMaps && memoryMapsByMachine.has(machineId)
 				? {
 					externalData: {

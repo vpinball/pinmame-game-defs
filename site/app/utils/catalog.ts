@@ -219,6 +219,15 @@ export const shortHash = (hash: string | undefined) => (hash ? hash.slice(0, 12)
  */
 export const num = (value: number) => String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
+/**
+ * A machine's last-update time (Unix seconds) as `YYYY-MM-DD`. UTC for the same
+ * reason `num` avoids the locale: the prerendered page and the browser must agree.
+ */
+export const formatUpdated = (seconds: number) => new Date(seconds * 1000).toISOString().slice(0, 10)
+
+/** Tooltip for every place the update date appears. */
+export const UPDATED_TITLE = 'Last commit to the machine definition or its knowledge note'
+
 export function decodeMachineRows(index: { rows: any[][] }): MachineSummary[] {
 	return index.rows.map(row => ({
 		slug: row[0],

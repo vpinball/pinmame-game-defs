@@ -25,6 +25,7 @@ const manufacturer = computed(() => detail.value?.machine.manufacturer ?? summar
 const year = computed(() => detail.value?.machine.year ?? summary.value?.year ?? null)
 const status = computed(() => detail.value?.coverage.status ?? summary.value?.status ?? 'stub')
 const completionScore = computed(() => detail.value?.coverage.completion_score ?? summary.value?.completionScore ?? 0)
+const updated = computed(() => detail.value?.updated ?? summary.value?.updated ?? null)
 
 useSeo({
 	title: name,
@@ -188,6 +189,10 @@ const opdbUrl = computed(() =>
 						{{ platformShort(detail.controller.platform) }}
 					</NuxtLink>
 					<span v-if="detail" class="num text-[11px] text-ink-4">{{ detail.machine.id }}</span>
+					<span v-if="updated" class="inline-flex items-center gap-1 text-[11px] text-ink-4" :title="UPDATED_TITLE">
+						<Icon name="lucide:history" class="size-3" />
+						Updated <span class="num">{{ formatUpdated(updated) }}</span>
+					</span>
 					<NuxtLink
 						v-if="detail?.family"
 						:to="`/families/${detail.family.slug}`"

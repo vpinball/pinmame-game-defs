@@ -268,6 +268,8 @@ export interface MachineDetail {
 	/** Leading `Label: **value**` lines, lifted out of the note's prose. */
 	knowledgeSummary: { label: string, value: string }[]
 	catalogDrivers: CatalogDriver[]
+	/** Same as `MachineSummary.updated`. */
+	updated: number | null
 	/**
 	 * Generated from upstream projects at build time. Never canonical, never part
 	 * of coverage — see `ExternalData`.

@@ -70,5 +70,10 @@ const stats = computed(() => [
 				<span class="num">{{ machine.drivers }} ROM{{ machine.drivers === 1 ? '' : 's' }}</span>
 			</div>
 		</div>
+
+		<div v-if="machine.updated" class="mt-2.5 flex items-center gap-1 border-t border-line-soft pt-2 text-[10px] text-ink-4" :title="UPDATED_TITLE">
+			<Icon name="lucide:history" class="size-3 shrink-0" />
+			Updated <span class="num">{{ formatUpdated(machine.updated) }}</span>
+		</div>
 	</NuxtLink>
 </template>
