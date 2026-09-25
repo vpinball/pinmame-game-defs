@@ -2,7 +2,8 @@
 
 Coverage: **partial.** The complete controller contract is validated: every public switch, solenoid
 and lamp address, its name, its wiring colour code and connector pin, every fitted switch's contact
-polarity (ten by ordinary construction) and the DMD. Still open: spatial placement (no VPX table is retained yet), the physical
+polarity (ten by ordinary construction) and the DMD. Most playfield devices carry observed
+coordinates from one community table. Still open: validated spatial placement, the physical
 behaviour of several mechanisms, one conflict about a flasher's position, and the recreation notes
 that depend on those.
 
@@ -113,12 +114,40 @@ are used only as leads.
   software-adjustable. In the timed "power meter" game style they weaken and stop when the meter runs
   out (Krellan).
 
+## Playfield layout
+
+Coordinates come from SG1bsoN's 2021 "1920 Mod" v1.1 of the 2016 table by ICPjuggla, freneticamnesic
+and dark (VPUniverse file 7039), whose script runs `kpb105` with the same switch, lamp and coil
+bindings as the retained 1.2 script. Each placement is one table object's own centre (for a wall,
+the centroid of its outline points), normalized over the table's 952 x 2162 playfield. The table is one unverified lineage, so every placement is
+`observed`; Krellan's 41 photographs of a real machine agree with its overall layout but were not
+measured.
+
+- **Ramps.** The left ramp starts in the centre by the lock entrance 44 and climbs past its spinner
+  61 to the top right, where its exit switch 62 sits; a wireform returns the ball across the
+  playfield to the left inlane. The right ramp (spinner 17) climbs to the top left, where its exit
+  switch 18 sits, and its wireform crosses the other to the right inlane.
+- **Slot machine.** Upper left: saucer 51 and slot eject 11, drum 12/52, the two slot standups 49/50
+  with their gun lamps 72/73, and the Hotel Lex flasher 28 above it.
+- **Drop banks.** KING (25-28) on the left and PIN (29-31) on the right, in the middle of the
+  playfield well above the slingshots, each with its flasher (30, 31) beside it.
+- **Projections and clamps.** The trough switches sit on a script ball stack, so they are projected
+  onto the trough exit kicker. The three backpanel lamps (116, 119, 120) sit on the back panel and
+  are clamped to the rear edge.
+- **Not placed:** no source places gun locks 45/46 (Krellan puts gun lock 1 in the hideout; the
+  table's lock ends at the gun eject by the left orbit); the ramp-down switch 47, gun trough opto
+  48, knocker 3, drop resets 6/7 and ramp lift 14 have no usable table object; flasher 22 has only a
+  wide glow light with no flasher dome; 29 is the open conflict.
+
 ## Things a table author will trip over
 
 - **Table defects.** The retained script lineage's captive-ball target pulses 49 instead of 32. It
-  binds its right-ramp flasher routine to 23, although the ROM names 22 R. RAMP FLASHER and 23
-  BUILDING FLASHER. It also presses the flipper buttons by writing 5/6, which PinMAME overwrites
-  every frame (use 84/82).
+  names its flasher routines misleadingly: the routine on 23 is called RightRampFlash but lights a
+  light beside the Hotel Lex building, which fits the ROM's 23 BUILDING FLASHER, and the routine on
+  18 drives lights on the left ramp that its comments call right ramp flash. Go by what the routines
+  light, not their names. It mirrors the kid flashers: Krellan puts 19 under "Sudden" by the left
+  flipper and 24 under "Death" by the right, while the table binds its left-side object to 24. It also presses the
+  flipper buttons by writing 5/6, which PinMAME overwrites every frame (use 84/82).
 - **Flasher typing.** PinMAME's flasher typing for Kingpin (18-19, 21-31) came from a VPX table. The
   ROM prints 20 (Big Al) as a flasher too; Krellan puts Big Al on the backglass, and the retained
   table does not bind 20. Krellan reports #67 and #906 flasher bulbs rather than #89.
@@ -129,8 +158,9 @@ are used only as leads.
 
 ## What is still needed
 
-- **Spatial placement:** a VPX recreation to measure device positions, cross-checked against
-  Krellan's lamp positions and photographs of a real machine.
+- **Spatial placement:** an independent source for the observed coordinates (a second, unrelated
+  recreation, a measured photograph or a playfield scan), and positions for the devices listed as
+  not placed above.
 - **Mechanism behaviour:** whether the ramp and top-diverter coils toggle latches or need a held drive,
   what GUN TROUGH OPTO does, and how the slot drum's opto is timed.
 - **Flasher 29:** its actual orbit side.

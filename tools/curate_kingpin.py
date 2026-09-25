@@ -32,6 +32,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFINITION_PATH = ROOT / "machines/partial/capcom/kingpin-1996.json"
 SEED_PATH = ROOT / "tools/seeds/capcom/kingpin-1996.json"
 KNOWLEDGE_PATH = ROOT / "knowledge/capcom/kingpin-1996.md"
+SPATIAL_REPORT_PATH = ROOT / "reports/spatial/capcom/kingpin-1996.json"
+SPATIAL_REPORT_MD_PATH = ROOT / "reports/spatial/capcom/kingpin-1996.md"
 MACHINE_ID = "capcom.kingpin.1996"
 EXCERPT_DIR = ROOT / "evidence/excerpts" / MACHINE_ID
 RUNTIME_EVIDENCE_PATH = ROOT / "evidence/runtime/capcom/kingpin-service-diagnostics.json"
@@ -58,6 +60,8 @@ KRELLAN_SOURCE = "human-review.krellan.kingpin"
 SCRIPT_SOURCE = "vpx.kingpin-1.2-thalamus"
 SCRIPT_OLD_SOURCE = "vpx.kingpin-080715a"
 SCRIPT_MOD_SOURCE = "vpx.kingpin-bigus-mod-3.0"
+VPX_TABLE_SOURCE = "vpx-table.kingpin-sg1bson-1920-mod-1.1"
+VPX_TABLE_SCRIPT_SOURCE = "vpx.kingpin-sg1bson-1920-mod-1.1"
 
 ROM_ARCHIVE_SHA256 = "fb64bcbc1dcd361ccc888cc235dde089e17907eac880af4cdfc3c7812269c0c5"
 PROGRAM_ROM_SHA1 = "c731e0b5c9b211574dda8aecbad799bc180a59db"
@@ -66,6 +70,18 @@ KRELLAN_PAGE_SHA256 = "d1aee4120403c311cafaa0252aaecf02b2fc357f610741bdadca5a31b
 SCRIPT_SHA256 = "ebc3d8bd0b2d982e5817e99e5a23e1b480f87ace8fccacc17cbefe8600abb0ee"
 SCRIPT_OLD_SHA256 = "4a7276245dd674415909a29f647718880b8e4d44b871ea9eafff2d05f6f63c15"
 SCRIPT_MOD_SHA256 = "bea7f77d66d56d5bb01678c36fd21661ced263728d25f3309f5a1979ecab8995"
+# The SG1bsoN 1920 mod v1.1 table (VPU file 7039), retained under the working root's vpx-sources/capcom/kingpin-1996.
+VPX_TABLE_FILENAME = "Kingpin (Capcom 1996) SG1bsoN - 1920 Mod.vpx"
+VPX_TABLE_SHA256 = "9f26df43bcfac2ca8f47f75ebefa87e6f40d56029242004d528fab8cee5d37cf"
+VPX_TABLE_SIZE = 106242048
+VPX_ARCHIVE_SHA256 = "43288a5f4a96da7251f599056c5401946c8a2d2791bb70f33bd6870095f4ba98"
+VPX_TABLE_SCRIPT_SHA256 = "e12c314213227337c7ebd78e8789dcdc65af34e8b385278e5ee6f1a26f6fdc3d"
+EXTRACTION_RELATIVE_PATH = Path("capcom/kingpin-1996/extracted-vpxtool")
+EXTRACTION_MANIFEST_RELATIVE_PATH = Path("capcom/kingpin-1996/extracted-vpxtool.manifest.json")
+EXTRACTION_FILE_COUNT = 1463
+EXTRACTION_TOTAL_BYTES = 172289469
+EXTRACTION_MANIFEST_SHA256 = "5f8485fb81afcef48f42f16974d49d944bd078e69cd0ce198c5c2fac29082b60"
+TABLE_BOUNDS = {"left": 0.0, "top": 0.0, "right": 952.0, "bottom": 2162.0}
 
 # BEGIN GENERATED DIAGNOSTIC TABLES
 # C1.03 Solenoid Test text per public solenoid: (ROM name, drive wire and pin, supply) -- evidence/excerpts/capcom.kingpin.1996/service-solenoid-test.md
@@ -661,6 +677,225 @@ KRELLAN_LAMPS = {
 }
 # END GENERATED DIAGNOSTIC TABLES
 
+# BEGIN GENERATED SPATIAL TABLES
+# From review-artifacts/kingpin/spatial/emit_curator_block.py over placements.json (placements.py over bindings.json, which
+# bindings.py reads from the SG1bsoN 1920 mod v1.1 extraction): normalized x/952, y/2162, each point one table object's own
+# centre (a Wall's is the centroid of its outline points).
+PLACEMENT_DERIVATION_SHA256 = {
+	'bindings.py': 'c34ecf08b4feb813857421ceabc76f3bbc6738fd3f42acd0254bf0c9ae142a19',
+	'bindings.json': '0984d4fe9ec9eb502f58db76cefe976513355ac175e729dfc981460b0f3e5f22',
+	'placements.py': 'fdd7dac0c7e1a0b14983b7e86cec91c60f9d74e64019a80fa846d0a7d3617dae',
+	'placements.json': '4c264e79cb6e1e3093e536274e0878b693ed9956efaf86c3df10f8deb37a7785',
+	'emit_curator_block.py': '74bb9257191cf26cca8d431bdcc6441cd65956547570c0e1fdbaad303c27d1d7',
+}
+# Switch/coil entries: (x, y, object, object type, projection note or None).
+SPATIAL_SWITCHES = {
+	17: (0.654137, 0.309175, 'sw17', 'Spinner', None),
+	18: (0.049895, 0.036222, 'sw18', 'Trigger', None),
+	19: (0.136949, 0.75133, 'sw19', 'Trigger', None),
+	20: (0.779806, 0.750405, 'sw20', 'Trigger', None),
+	21: (0.062106, 0.750983, 'sw21', 'Trigger', None),
+	22: (0.853335, 0.750173, 'sw22', 'Trigger', None),
+	23: (0.107012, 0.062384, 'sw23', 'Trigger', None),
+	24: (0.893251, 0.070941, 'sw24', 'Trigger', None),
+	25: (0.120186, 0.58765, 'sw25', 'Wall', None),
+	26: (0.130952, 0.563714, 'sw26', 'Wall', None),
+	27: (0.142244, 0.537118, 'sw27', 'Wall', None),
+	28: (0.152706, 0.507834, 'sw28', 'Wall', None),
+	29: (0.827468, 0.527405, 'sw29', 'Wall', None),
+	30: (0.831539, 0.553423, 'sw30', 'Wall', None),
+	31: (0.83469, 0.579556, 'sw31', 'Wall', None),
+	32: (0.064382, 0.345282, 'sw32', 'Wall', "the table's captive-ball target object (its handler pulses 49, a table defect; the object is the captive-ball target)"),
+	33: (0.296218, 0.857539, 'LeftFlipper', 'Flipper', "projected onto the left flipper's pivot: the end-of-stroke switch is part of the flipper assembly and the table has no object for it"),
+	34: (0.618697, 0.857192, 'RightFlipper', 'Flipper', "projected onto the right flipper's pivot: the end-of-stroke switch is part of the flipper assembly and the table has no object for it"),
+	35: (0.472689, 0.956059, 'Drain', 'Kicker', None),
+	36: (0.852941, 0.878122, 'BallRelease', 'Kicker', 'projected onto the trough exit kicker: the table models the four-ball trough as a script ball stack with no switch objects'),
+	37: (0.852941, 0.878122, 'BallRelease', 'Kicker', 'projected onto the trough exit kicker: the table models the four-ball trough as a script ball stack with no switch objects'),
+	38: (0.852941, 0.878122, 'BallRelease', 'Kicker', 'projected onto the trough exit kicker: the table models the four-ball trough as a script ball stack with no switch objects'),
+	39: (0.852941, 0.878122, 'BallRelease', 'Kicker', 'projected onto the trough exit kicker: the table models the four-ball trough as a script ball stack with no switch objects'),
+	41: (0.233357, 0.743871, 'LeftSlingshot', 'Wall', None),
+	42: (0.682777, 0.741501, 'RightSlingshot', 'Wall', None),
+	43: (0.939995, 0.881302, 'swPlunger', 'Trigger', None),
+	44: (0.451155, 0.327706, 'sw44', 'Kicker', None),
+	49: (0.137299, 0.151654, 'sw49', 'Wall', None),
+	50: (0.267332, 0.142769, 'sw50', 'Wall', None),
+	51: (0.188025, 0.097826, 'sw51', 'Kicker', None),
+	52: (0.228992, 0.09852, 'SLOTmachineCylinder', 'Primitive', "projected onto the slot drum primitive: the drum's index opto has no table object"),
+	53: (0.473083, 0.077185, 'sw53', 'Trigger', None),
+	54: (0.570772, 0.077185, 'sw54', 'Trigger', None),
+	55: (0.66636, 0.077185, 'sw55', 'Trigger', None),
+	57: (0.444065, 0.152058, 'Bumper1', 'Bumper', None),
+	58: (0.568014, 0.215316, 'Bumper2', 'Bumper', None),
+	59: (0.714154, 0.151422, 'Bumper3', 'Bumper', None),
+	60: (0.843487, 0.111644, 'sw60', 'Wall', None),
+	61: (0.441702, 0.182036, 'sw61', 'Spinner', None),
+	62: (0.89663, 0.151059, 'sw62', 'Trigger', None),
+	63: (0.543943, 0.397202, 'sw63', 'Wall', None),
+}
+SPATIAL_COILS = {
+	1: (0.472689, 0.956059, 'Drain', 'Kicker', None),
+	2: (0.852941, 0.878122, 'BallRelease', 'Kicker', None),
+	4: (0.233357, 0.743871, 'LeftSlingshot', 'Wall', None),
+	5: (0.682777, 0.741501, 'RightSlingshot', 'Wall', None),
+	8: (0.090336, 0.206059, 'GunKicker', 'Kicker', None),
+	9: (0.296218, 0.857539, 'LeftFlipper', 'Flipper', "the flipper's pivot"),
+	10: (0.618697, 0.857192, 'RightFlipper', 'Flipper', "the flipper's pivot"),
+	11: (0.188025, 0.097826, 'sw51b', 'Kicker', None),
+	12: (0.228992, 0.09852, 'SLOTmachineCylinder', 'Primitive', 'the slot drum primitive the motor turns'),
+	13: (0.308824, 0.021277, 'Gate2', 'Gate', "the invisible collision gate the table's LoopGate routine toggles, the only gate it models for the ROM's TOPGATES; it sits behind and to the left of the top lanes, where Krellan puts the top diverter that blocks the left orbit"),
+	15: (0.568014, 0.215316, 'Bumper2', 'Bumper', 'the bumper the ROM names C. STAR BUMPER (Krellan: bottom jet bumper); VPX fires bumpers without a coil callback'),
+	16: (0.714154, 0.151422, 'Bumper3', 'Bumper', 'the bumper the ROM names R. STAR BUMPER; VPX fires bumpers without a coil callback'),
+	17: (0.444065, 0.152058, 'Bumper1', 'Bumper', 'the bumper the ROM names L. STAR BUMPER; VPX fires bumpers without a coil callback'),
+	32: (0.939995, 0.881302, 'swPlunger', 'Trigger', "the shooter-lane trigger the table's impulse plunger acts on (InitImpulseP swplunger), which its auto-fire routine fires"),
+}
+# Flasher entries: ([(x, y, object, object type), ...], note or None).
+SPATIAL_FLASHERS = {
+	18: ([(0.72528, 0.065696, 'f22a', 'Light')], "the light the table's LeftRampFlash routine (SolCallback 18) drives through pseudo-lamp 130, on the left ramp's upper curve under the table's flasher dome mesh (Primitive_flasherdome, centred there once its size and position are applied); the script's own comment calls it right ramp flash"),
+	19: ([(0.29877, 0.715023, 'F24', 'Light')], "Krellan puts 19 under 'Sudden' by the left flipper and the ROM names it Left Kid; the table binds its left-side flasher object F24 to 24 and F19, on the right, to 19 (a table defect), so 19 takes F24's position"),
+	21: ([(0.211438, 0.449249, 'f21', 'Light')], None),
+	23: ([(0.05556, 0.10688, 'f23a', 'Light')], "the light the table's RightRampFlash routine (SolCallback 23) drives through pseudo-lamp 129, beside the Hotel Lex building under the table's red dome mesh (Hotel_RedFlasher, centred there once its size and position are applied); the script's own comment calls it hotel lex flash"),
+	24: ([(0.613049, 0.716322, 'F19', 'Light')], "Krellan puts 24 under 'Death' by the right flipper and the ROM names it Right Kid; the table binds its right-side flasher object F19 to 19 (a table defect), so 24 takes F19's position"),
+	25: ([(0.092174, 0.399355, 'f25', 'Light')], None),
+	26: ([(0.574842, 0.129698, 'f26', 'Light')], None),
+	27: ([(0.36896, 0.771927, 'f27a', 'Light'), (0.538603, 0.771464, 'f27b', 'Light')], 'the table drives two lights from 27 through pseudo-lamp 131, one at each end of the power meter; the ROM calls the output Power Flashers'),
+	28: ([(0.230042, 0.060592, 'f28', 'Light')], None),
+	30: ([(0.054622, 0.502081, 'f30', 'Light')], None),
+	31: ([(0.890756, 0.481499, 'f31', 'Light')], None),
+}
+# Lamp entries: [(x, y, light, raw y before clamping to the rear edge or None), ...].
+SPATIAL_LAMPS = {
+	5: [(0.057248, 0.690405, 'l5a16', None)],
+	6: [(0.132878, 0.685202, 'l6a16', None)],
+	7: [(0.856355, 0.690405, 'l7a16', None)],
+	8: [(0.78125, 0.685202, 'l8a16', None)],
+	9: [(0.251838, 0.666238, 'l9a16', None)],
+	10: [(0.656775, 0.665544, 'l10a16', None)],
+	11: [(0.532826, 0.734924, 'l11a16', None)],
+	12: [(0.371061, 0.734924, 'l12a16', None)],
+	13: [(0.453782, 0.706449, 'l13a16', None)],
+	14: [(0.370667, 0.821707, 'l14a16', None)],
+	15: [(0.534922, 0.818865, 'l15a16', None)],
+	16: [(0.453782, 0.805576, 'l16a16', None)],
+	17: [(0.506828, 0.613856, 'l17a16', None)],
+	18: [(0.478466, 0.66112, 'l18a16', None)],
+	19: [(0.371421, 0.661205, 'l19a16', None)],
+	20: [(0.33666, 0.615475, 'l20a16', None)],
+	21: [(0.420168, 0.586797, 'l21a16', None)],
+	22: [(0.390362, 0.607872, 'l22a16', None)],
+	23: [(0.455488, 0.607352, 'l23a16', None)],
+	24: [(0.421612, 0.652969, 'l24a16', None)],
+	25: [(0.310924, 0.786959, 'l25a16', None)],
+	26: [(0.340599, 0.781409, 'l26a16', None)],
+	27: [(0.371324, 0.776668, 'l27a16', None)],
+	28: [(0.403493, 0.773257, 'l28a16', None)],
+	29: [(0.435399, 0.771175, 'l29a16', None)],
+	30: [(0.468356, 0.770713, 'l30a16', None)],
+	31: [(0.501576, 0.772274, 'l31a16', None)],
+	32: [(0.534401, 0.775396, 'l32a16', None)],
+	33: [(0.566308, 0.780021, 'l33a16', None)],
+	34: [(0.601618, 0.786707, 'l34a16', None)],
+	35: [(0.419118, 0.534965, 'l35a16', None)],
+	36: [(0.381828, 0.520048, 'l36a16', None)],
+	37: [(0.345851, 0.505247, 'l37a16', None)],
+	38: [(0.309086, 0.49033, 'l38a16', None)],
+	39: [(0.270746, 0.475298, 'l39a16', None)],
+	40: [(0.189338, 0.155137, 'l40a', None), (0.276523, 0.155137, 'l40b', None)],
+	41: [(0.440257, 0.485011, 'l41a16', None)],
+	42: [(0.489627, 0.452402, 'l42a16', None)],
+	43: [(0.188288, 0.557745, 'l43a16', None)],
+	44: [(0.776786, 0.556241, 'l44a16', None)],
+	45: [(0.457852, 0.39077, 'l45a16', None)],
+	46: [(0.534139, 0.425142, 'l46a16', None)],
+	47: [(0.610163, 0.490446, 'l47a16', None)],
+	48: [(0.57051, 0.456103, 'l48a16', None)],
+	49: [(0.816308, 0.440261, 'l49a16', None)],
+	50: [(0.860163, 0.382675, 'l50a16', None)],
+	51: [(0.772715, 0.331218, 'l51a16', None)],
+	52: [(0.792936, 0.263457, 'l52a16', None)],
+	53: [(0.641816, 0.542364, 'l53a16', None)],
+	54: [(0.092437, 0.403374, 'l54a16', None)],
+	55: [(0.812237, 0.184508, 'l55a16', None)],
+	56: [(0.814338, 0.140451, 'l56a16', None)],
+	57: [(0.314332, 0.443725, 'l57a16', None)],
+	58: [(0.297006, 0.398401, 'l58a16', None)],
+	59: [(0.284926, 0.367643, 'l59a16', None)],
+	60: [(0.27416, 0.337462, 'l60a16', None)],
+	61: [(0.261817, 0.306704, 'l61a16', None)],
+	62: [(0.249737, 0.277217, 'l62a16', None)],
+	63: [(0.237658, 0.247153, 'l63a16', None)],
+	64: [(0.226103, 0.218244, 'l64a16', None)],
+	65: [(0.076812, 0.162393, 'l65a16', None)],
+	66: [(0.07051, 0.112555, 'l66a16', None)],
+	67: [(0.186844, 0.188295, 'l67a16', None)],
+	68: [(0.246455, 0.187139, 'l68a16', None)],
+	69: [(0.473477, 0.021233, 'l69a16', None)],
+	70: [(0.568277, 0.021233, 'l70a16', None)],
+	71: [(0.665179, 0.021696, 'l71a16', None)],
+	72: [(0.140231, 0.172945, 'l72a16', None)],
+	73: [(0.280987, 0.163, 'l73a16', None)],
+	81: [(0.441702, 0.15148, 'l81', None)],
+	82: [(0.568803, 0.21531, 'l82', None)],
+	83: [(0.713761, 0.15148, 'l83', None)],
+	84: [(0.044905, 0.570016, 'l84a', None)],
+	85: [(0.15888, 0.81492, 'l85e', None), (0.224457, 0.834555, 'l85d', None)],
+	86: [(0.69185, 0.834844, 'l86c', None), (0.757427, 0.813476, 'l86d', None)],
+	87: [(0.048582, 0.54342, 'l87a', None)],
+	88: [(0.838498, 0.321404, 'l88a', None)],
+	89: [(0.270221, 0.09268, 'l89a', None)],
+	90: [(0.267595, 0.053365, 'l90a', None)],
+	91: [(0.426471, 0.067704, 'l91', None)],
+	92: [(0.373687, 0.054521, 'l92a', None)],
+	93: [(0.372637, 0.11812, 'l93a', None)],
+	94: [(0.380515, 0.1017, 'l94a', None)],
+	95: [(0.195903, 0.73358, 'l95e', None), (0.221834, 0.779691, 'l95a', None)],
+	96: [(0.693162, 0.778248, 'l96a', None), (0.721901, 0.732192, 'l96e', None)],
+	97: [(0.521402, 0.072213, 'l97b', None)],
+	98: [(0.617516, 0.073023, 'l98b', None)],
+	99: [(0.060662, 0.460395, 'l99a', None)],
+	100: [(0.045956, 0.423393, 'l100a', None)],
+	101: [(0.066964, 0.319785, 'l101a', None)],
+	102: [(0.053309, 0.287407, 'l102a', None)],
+	103: [(0.058133, 0.057065, 'l103a', None)],
+	104: [(0.099527, 0.018212, 'l104a', None)],
+	105: [(0.898372, 0.575567, 'l105a', None)],
+	106: [(0.895221, 0.541802, 'l106a', None)],
+	107: [(0.865284, 0.508962, 'l107a', None)],
+	108: [(0.889968, 0.449063, 'l108a', None)],
+	109: [(0.946166, 0.370201, 'l109', None)],
+	110: [(0.961397, 0.34083, 'l110', None)],
+	111: [(0.909401, 0.042727, 'l111a', None)],
+	112: [(0.877889, 0.020294, 'l112a', None)],
+	113: [(0.686712, 0.297583, 'l113', None)],
+	114: [(0.632616, 0.288564, 'l114', None)],
+	115: [(0.863183, 0.277694, 'l115a', None)],
+	116: [(0.612395, 0.0, 'l116', -0.040053)],
+	117: [(0.547006, 0.343837, 'l117a', None)],
+	118: [(0.545431, 0.326029, 'l118a', None)],
+	119: [(0.764706, 0.0, 'l119', -0.040284)],
+	120: [(0.934874, 0.0, 'l120', -0.053929)],
+	121: [(0.434349, 0.192414, 'l121a', None)],
+	122: [(0.637012, 0.318473, 'l122a', None)],
+	127: [(0.892069, 0.177324, 'l127a', None)],
+	128: [(0.786502, 0.060303, 'l128c', None), (0.889443, 0.152347, 'l128a', None)],
+}
+SPATIAL_SWITCH_UNPLACED = {
+	45: 'the table models the three-ball gun lock as a script ball stack with no switch objects; Krellan puts gun lock 1 in the hideout under the ramp, and in the table the lock ends at the gun eject near the left orbit, so no source places gun lock 2',
+	46: 'the table models the three-ball gun lock as a script ball stack with no switch objects; Krellan puts gun lock 1 in the hideout under the ramp, and in the table the lock ends at the gun eject near the left orbit, so no source places gun lock 3',
+	47: 'the table raises the ramp with an invisible helper flipper parked beyond the table edge (LeftRampFlipper, x > 1) and has no object for the ramp-down switch',
+	48: 'no table object models the gun trough opto, and no source locates it',
+}
+SPATIAL_COIL_UNPLACED = {
+	3: 'the knocker has no table object and no source locates it',
+	6: 'the drop-target reset coil sits under the KING bank; the table has no single object for it and a centroid of the four targets would be invented',
+	7: 'the drop-target reset coil sits under the PIN bank; the table has no single object for it and a centroid of the three targets would be invented',
+	14: 'the table raises the ramp with an invisible helper flipper parked beyond the table edge (LeftRampFlipper, x > 1)',
+}
+SPATIAL_FLASHER_UNPLACED = {
+	22: "the table drives only f22 from it, a light near the right ramp's exit with an 800 falloff (every other flasher light in the table has 300 or less) and no flasher dome at it, and no source locates the physical bulb",
+	29: 'its orbit side is the open conflict conflict.flasher-29-orbit-side',
+}
+# END GENERATED SPATIAL TABLES
+
 WIRE_COLOURS = {"BLK", "BRN", "RED", "ORG", "YEL", "GRN", "BLU", "VIO", "GRY", "WHT"}
 
 # --- Readable labels. The ROM's own text is kept verbatim in physical.notes and as a
@@ -802,6 +1037,57 @@ def provenance(*source_refs: str, status: str = "validated") -> dict[str, Any]:
 
 def not_applicable(reason: str, *source_refs: str) -> dict[str, Any]:
 	return {"status": "not_applicable", "reason": reason, "provenance": provenance(*source_refs)}
+
+
+def located(device_id: str, role: str, points: list[tuple[float, float]], extra_refs: tuple[str, ...] = ()) -> dict[str, Any]:
+	"""Observed placements from the SG1bsoN mod table: one unverified community lineage, so never validated.
+
+	extra_refs name the sources the choice of object depends on beyond the table and its script (a ROM name, Krellan).
+	"""
+	placements = []
+	for index, (x, y) in enumerate(points, 1):
+		suffix = role if len(points) == 1 else f"{role}-{index}"
+		placements.append({
+			"id": f"{device_id}.{suffix}",
+			"role": role,
+			"space": "playfield",
+			"x": x,
+			"y": y,
+			"provenance": provenance(VPX_TABLE_SOURCE, VPX_TABLE_SCRIPT_SOURCE, *extra_refs, status="observed"),
+		})
+	return {"status": "observed", "placements": placements}
+
+
+def placement_note(objects: list[tuple[str, str]], note: str | None) -> str:
+	"""objects: (name, VPX item type). A Wall has no centre of its own, so its placement is the centroid of its outline points."""
+	parts = [
+		f"the centroid of the outline points of the wall '{name}'" if item_type == "Wall" else f"the centre of the {item_type.lower()} '{name}'"
+		for name, item_type in objects
+	]
+	text = "Placement (observed), from the SG1bsoN 1920 mod table: " + "; ".join(parts)
+	return text + (f", {note}." if note else ".")
+
+
+# Sources a placement's choice of object depends on beyond the table and its script.
+PLACEMENT_EXTRA_REFS = {
+	("switch", 32): (SWITCH_TEST_SOURCE,),
+	("switch", 33): (SWITCH_TEST_SOURCE,),
+	("switch", 34): (SWITCH_TEST_SOURCE,),
+	("switch", 36): (SWITCH_TEST_SOURCE,),
+	("switch", 37): (SWITCH_TEST_SOURCE,),
+	("switch", 38): (SWITCH_TEST_SOURCE,),
+	("switch", 39): (SWITCH_TEST_SOURCE,),
+	("switch", 44): (KRELLAN_SOURCE,),
+	("switch", 52): (SWITCH_TEST_SOURCE,),
+	("solenoid", 13): (SOLENOID_TEST_SOURCE, KRELLAN_SOURCE),
+	("solenoid", 15): (SOLENOID_TEST_SOURCE, SWITCH_TEST_SOURCE, KRELLAN_SOURCE),
+	("solenoid", 16): (SOLENOID_TEST_SOURCE, SWITCH_TEST_SOURCE, KRELLAN_SOURCE),
+	("solenoid", 17): (SOLENOID_TEST_SOURCE, SWITCH_TEST_SOURCE, KRELLAN_SOURCE),
+	("solenoid", 18): (SOLENOID_TEST_SOURCE,),
+	("solenoid", 19): (SOLENOID_TEST_SOURCE, LAMP_TEST_SOURCE, KRELLAN_SOURCE),
+	("solenoid", 23): (SOLENOID_TEST_SOURCE,),
+	("solenoid", 24): (SOLENOID_TEST_SOURCE, LAMP_TEST_SOURCE, KRELLAN_SOURCE),
+}
 
 
 def slug(value: str) -> str:
@@ -1072,6 +1358,34 @@ def source_records() -> list[dict[str, Any]]:
 			"(SHA-256 6f740d30997b177972bfad1127dfafd1d3dd53c71982d47243a051dc029fb81d).",
 			"Authors credited in Kingpin (Capcom 1996)_Bigus(MOD)3.0.vbs and repository contributors",
 		),
+		{
+			"id": VPX_TABLE_SOURCE,
+			"kind": "vpx_table",
+			"uri": "external:pinmame-vpx-sources/capcom/kingpin-1996/Kingpin%20%28Capcom%201996%29%20SG1bsoN%20-%201920%20Mod.vpx",
+			"sha256": VPX_TABLE_SHA256,
+			"original_filename": VPX_TABLE_FILENAME,
+			"locator": (
+				f"SG1bsoN's 1920 mod v1.1 (2021) of the 2016 table by ICPjuggla, freneticamnesic and dark, downloaded with the contributor's "
+				f"approval from https://vpuniverse.com/files/file/7039-kingpin-capcom-1996-sg1bson-1920-mod/ (archive "
+				f"1559856481_Kingpin(Capcom1996)SG1bsoN-1920Mod-V1.1.zip, SHA-256 {VPX_ARCHIVE_SHA256}); {VPX_TABLE_SIZE} bytes. Playfield "
+				"bounds left=0 top=0 right=952 bottom=2162 (gamedata.json); normalized coordinates are x/952 and y/2162. Extracted with "
+				f"vpxtool git:v0.33.3 to external:pinmame-vpx-sources/{EXTRACTION_RELATIVE_PATH.as_posix()} ({EXTRACTION_FILE_COUNT} files, "
+				f"{EXTRACTION_TOTAL_BYTES} bytes, canonical manifest SHA-256 {EXTRACTION_MANIFEST_SHA256}). Geometry for named objects only; "
+				"its script runs kpb105 with the same I/O bindings as the retained 1.2 script, so it is one unverified community lineage."
+			),
+			"license": "NOASSERTION",
+			"rights": "NOASSERTION",
+			"attribution": "SG1bsoN (mod); original table by ICPjuggla, freneticamnesic and dark",
+		},
+		script_source(
+			VPX_TABLE_SCRIPT_SOURCE,
+			f"external:pinmame-vpx-sources/{EXTRACTION_RELATIVE_PATH.as_posix()}/script.vbs",
+			"v1.1",
+			VPX_TABLE_SCRIPT_SHA256,
+			"The SG1bsoN 1920 mod's embedded script (cGameName kpb105): its Sub handlers, NFadeL lamp bindings and SolCallback "
+			"assignments name the table objects each placement uses; its switch, lamp and coil bindings equal the retained 1.2 script's.",
+			"SG1bsoN (mod) and the authors credited in the table script",
+		),
 	]
 
 
@@ -1234,6 +1548,12 @@ def input_devices() -> list[dict[str, Any]]:
 					refs += [TROUBLESHOOTING_HELD_SOURCE, TROUBLESHOOTING_BASELINE_SOURCE]
 			if address in CONTACT_POLARITY_NOTES:
 				notes.append(CONTACT_POLARITY_NOTES[address])
+		if address in SPATIAL_SWITCHES:
+			x, y, obj, item_type, note = SPATIAL_SWITCHES[address]
+			extra["spatial"] = located(switch_id(address), "sensor", [(x, y)], PLACEMENT_EXTRA_REFS.get(("switch", address), ()))
+			notes.append(placement_note([(obj, item_type)], note))
+		elif address in SPATIAL_SWITCH_UNPLACED:
+			notes.append(f"No playfield placement: {SPATIAL_SWITCH_UNPLACED[address]}.")
 		physical["notes"] = " ".join(notes)
 		extra["physical"] = physical
 		if address in PULSED_SWITCHES:
@@ -1330,11 +1650,24 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			notes.append(KRELLAN_SOLENOID_NOTES[address])
 		if address in SOLENOID_EXTRA_NOTES:
 			notes.append(SOLENOID_EXTRA_NOTES[address])
+		spatial = None
+		if address in SPATIAL_COILS:
+			x, y, obj, item_type, note = SPATIAL_COILS[address]
+			spatial = located(solenoid_id(address), "effect", [(x, y)], PLACEMENT_EXTRA_REFS.get(("solenoid", address), ()))
+			notes.append(placement_note([(obj, item_type)], note))
+		elif address in SPATIAL_FLASHERS:
+			points, note = SPATIAL_FLASHERS[address]
+			spatial = located(solenoid_id(address), "emitter", [(x, y) for x, y, _, _ in points], PLACEMENT_EXTRA_REFS.get(("solenoid", address), ()))
+			notes.append(placement_note([(obj, item_type) for _, _, obj, item_type in points], note))
+		elif address in SPATIAL_COIL_UNPLACED or address in SPATIAL_FLASHER_UNPLACED:
+			notes.append(f"No playfield placement: {SPATIAL_COIL_UNPLACED.get(address) or SPATIAL_FLASHER_UNPLACED[address]}.")
 		extra: dict[str, Any] = {
 			"aliases": [{"namespace": "pinmame.solenoid", "value": str(address)}, rom_alias(rom_name)],
 			"wiring": wiring,
 			"physical": {"notes": " ".join(notes)},
 		}
+		if spatial:
+			extra["spatial"] = spatial
 		if address == 20:
 			# Krellan places Big Al on the backglass but also says some flashers may be on both the backglass and the
 			# playfield, so the backbox-only placement is observed, not validated.
@@ -1442,6 +1775,18 @@ def lamp_outputs() -> list[dict[str, Any]]:
 			notes.append(f"Krellan (checked on a real machine): '{KRELLAN_LAMPS[address]}'.")
 		if address in LAMP_EXTRA_NOTES:
 			notes.append(LAMP_EXTRA_NOTES[address])
+		if address in SPATIAL_LAMPS:
+			points = SPATIAL_LAMPS[address]
+			extra["spatial"] = located(lamp_id(address), "emitter", [(x, y) for x, y, _, _ in points])
+			notes.append(placement_note([(obj, "Light") for _, _, obj, _ in points], None))
+			raw = [raw_y for _, _, _, raw_y in points if raw_y is not None]
+			if raw:
+				notes.append(
+					f"The table puts this light on the back panel, behind the playfield's rear edge (raw normalized y {raw[0]}); the "
+					"placement is clamped to the rear edge (y = 0) at the table's x."
+				)
+			if quantity > len(points):
+				notes.append(f"The ROM marks {quantity} bulbs, but the table binds one light to this output, so one placement is recorded.")
 		physical["notes"] = " ".join(notes)
 		if address in CABINET_LAMPS:
 			physical["location"] = CABINET_LAMPS[address]
@@ -1503,7 +1848,11 @@ SOLENOID_EXTRA_NOTES = {
 	14: "The ramp-down-feedback scenario shows the ROM's software loop: with switch 47 open it drives this coil for about 1.3 s, rests about 1.0 s and repeats (9 drives in 30 s), stops once 47 closes, and resumes when 47 reopens. Whether the lift is a latch that each drive toggles (as the retained script lineage models it) or needs its drive held is not documented.",
 	18: "pinned capcom.c types 18-19 and 21-31 as #89 flashers from a VPX table because no manual was found; the ROM prints this output as a 20 V flasher. Krellan reports #67 and #906 flasher bulbs on this machine.",
 	20: "The binding still holds: when S20 is selected nothing but 20 changes, and every neighbouring step fires its own number. The ROM prints S20 as a 20 V flasher output; Krellan places Big Al on the backglass, while also saying some flashers may be on both the backglass and the playfield. pinned capcom.c's flasher typing, taken from a VPX table, leaves 20 out, and the retained table lineage does not bind 20, so PinMAME models it as a plain two-state solenoid. During the whole C1.03 Solenoid Test the ROM pulses this output continuously, whichever coil is selected.",
-	22: "The retained script lineage binds its right-ramp flasher routine to 23 (`SolCallback(23) = \"RightRampFlash\"`) and a generic flasher object to 22; the ROM names 22 R. RAMP FLASHER and 23 BUILDING FLASHER. That is a defect in the table, not a question about the machine.",
+	22: (
+		"The retained script lineage names the routine it binds to 23 RightRampFlash (`SolCallback(23) = \"RightRampFlash\"`), but that "
+		"routine lights a light beside the Hotel Lex building, which fits the ROM's 23 BUILDING FLASHER; its only object for 22 is a wide "
+		"glow light near the right ramp's exit. The routine names mislead, and the objects agree with the ROM names by position."
+	),
 	29: "See conflict.flasher-29-orbit-side: the ROM's own name points at the left orbit while calling it EAST, and Krellan puts it under the East light at the right orbit.",
 	32: "The ball-serve scenario shows the ROM firing this coil on its own when a ball rests in the shooter lane (43) outside a game. The cabinet launch button (14) is the player's control for it in play; the harness, having no ball model, does not isolate that path.",
 	1: "The ball-serve scenario shows the ROM firing this coil when the outhole switch (35) closes in attract, again about every 1.2 s while it stays closed, and once more about 0.7 s after it opens.",
@@ -1730,6 +2079,12 @@ def build() -> dict[str, Any]:
 			"kind": "physical_pinball",
 			"ipdb_id": 4000,
 			"opdb_id": "G48od-MJNnn",
+			"playfield": {
+				"width": TABLE_BOUNDS["right"] - TABLE_BOUNDS["left"],
+				"height": TABLE_BOUNDS["bottom"] - TABLE_BOUNDS["top"],
+				"units": "vpx",
+				"provenance": provenance(VPX_TABLE_SOURCE, status="observed"),
+			},
 		},
 		"coverage": {
 			"status": "partial",
@@ -1742,7 +2097,7 @@ def build() -> dict[str, Any]:
 				"mechanisms": "observed",
 				"variant_coverage": "validated",
 				"recreation_knowledge": "observed",
-				"spatial_placement": "unknown",
+				"spatial_placement": "observed",
 			},
 		},
 		"controller": {
@@ -1771,7 +2126,8 @@ KNOWLEDGE_NOTE = """# Kingpin (Capcom 1996)
 
 Coverage: **partial.** The complete controller contract is validated: every public switch, solenoid
 and lamp address, its name, its wiring colour code and connector pin, every fitted switch's contact
-polarity (ten by ordinary construction) and the DMD. Still open: spatial placement (no VPX table is retained yet), the physical
+polarity (ten by ordinary construction) and the DMD. Most playfield devices carry observed
+coordinates from one community table. Still open: validated spatial placement, the physical
 behaviour of several mechanisms, one conflict about a flasher's position, and the recreation notes
 that depend on those.
 
@@ -1882,12 +2238,40 @@ are used only as leads.
   software-adjustable. In the timed "power meter" game style they weaken and stop when the meter runs
   out (Krellan).
 
+## Playfield layout
+
+Coordinates come from SG1bsoN's 2021 "1920 Mod" v1.1 of the 2016 table by ICPjuggla, freneticamnesic
+and dark (VPUniverse file 7039), whose script runs `kpb105` with the same switch, lamp and coil
+bindings as the retained 1.2 script. Each placement is one table object's own centre (for a wall,
+the centroid of its outline points), normalized over the table's 952 x 2162 playfield. The table is one unverified lineage, so every placement is
+`observed`; Krellan's 41 photographs of a real machine agree with its overall layout but were not
+measured.
+
+- **Ramps.** The left ramp starts in the centre by the lock entrance 44 and climbs past its spinner
+  61 to the top right, where its exit switch 62 sits; a wireform returns the ball across the
+  playfield to the left inlane. The right ramp (spinner 17) climbs to the top left, where its exit
+  switch 18 sits, and its wireform crosses the other to the right inlane.
+- **Slot machine.** Upper left: saucer 51 and slot eject 11, drum 12/52, the two slot standups 49/50
+  with their gun lamps 72/73, and the Hotel Lex flasher 28 above it.
+- **Drop banks.** KING (25-28) on the left and PIN (29-31) on the right, in the middle of the
+  playfield well above the slingshots, each with its flasher (30, 31) beside it.
+- **Projections and clamps.** The trough switches sit on a script ball stack, so they are projected
+  onto the trough exit kicker. The three backpanel lamps (116, 119, 120) sit on the back panel and
+  are clamped to the rear edge.
+- **Not placed:** no source places gun locks 45/46 (Krellan puts gun lock 1 in the hideout; the
+  table's lock ends at the gun eject by the left orbit); the ramp-down switch 47, gun trough opto
+  48, knocker 3, drop resets 6/7 and ramp lift 14 have no usable table object; flasher 22 has only a
+  wide glow light with no flasher dome; 29 is the open conflict.
+
 ## Things a table author will trip over
 
 - **Table defects.** The retained script lineage's captive-ball target pulses 49 instead of 32. It
-  binds its right-ramp flasher routine to 23, although the ROM names 22 R. RAMP FLASHER and 23
-  BUILDING FLASHER. It also presses the flipper buttons by writing 5/6, which PinMAME overwrites
-  every frame (use 84/82).
+  names its flasher routines misleadingly: the routine on 23 is called RightRampFlash but lights a
+  light beside the Hotel Lex building, which fits the ROM's 23 BUILDING FLASHER, and the routine on
+  18 drives lights on the left ramp that its comments call right ramp flash. Go by what the routines
+  light, not their names. It mirrors the kid flashers: Krellan puts 19 under "Sudden" by the left
+  flipper and 24 under "Death" by the right, while the table binds its left-side object to 24. It also presses the
+  flipper buttons by writing 5/6, which PinMAME overwrites every frame (use 84/82).
 - **Flasher typing.** PinMAME's flasher typing for Kingpin (18-19, 21-31) came from a VPX table. The
   ROM prints 20 (Big Al) as a flasher too; Krellan puts Big Al on the backglass, and the retained
   table does not bind 20. Krellan reports #67 and #906 flasher bulbs rather than #89.
@@ -1898,12 +2282,182 @@ are used only as leads.
 
 ## What is still needed
 
-- **Spatial placement:** a VPX recreation to measure device positions, cross-checked against
-  Krellan's lamp positions and photographs of a real machine.
+- **Spatial placement:** an independent source for the observed coordinates (a second, unrelated
+  recreation, a measured photograph or a playfield scan), and positions for the devices listed as
+  not placed above.
 - **Mechanism behaviour:** whether the ramp and top-diverter coils toggle latches or need a held drive,
   what GUN TROUGH OPTO does, and how the slot drum's opto is timed.
 - **Flasher 29:** its actual orbit side.
 """
+
+
+def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
+	located_devices, unplaced = [], []
+	for device in definition["inputs"] + definition["outputs"]:
+		spatial = device.get("spatial")
+		group, address = device["binding"]["group"], device["binding"]["device"]
+		if spatial and spatial["status"] != "not_applicable":
+			located_devices.append({
+				"device": device["id"],
+				"placements": [{"id": item["id"], "role": item["role"], "x": item["x"], "y": item["y"]} for item in spatial["placements"]],
+			})
+		elif spatial is None and device["availability"] in {"used", "optional"}:
+			reason = (
+				SPATIAL_SWITCH_UNPLACED.get(address) if group == "pinmame.input.switch"
+				else SPATIAL_COIL_UNPLACED.get(address) or SPATIAL_FLASHER_UNPLACED.get(address)
+			)
+			unplaced.append({"device": device["id"], "reason": reason})
+	projections = {switch_id(a): note for a, (_x, _y, _o, _t, note) in SPATIAL_SWITCHES.items() if note}
+	projections.update({solenoid_id(a): note for a, (_x, _y, _o, _t, note) in SPATIAL_COILS.items() if note})
+	projections.update({solenoid_id(a): note for a, (_p, note) in SPATIAL_FLASHERS.items() if note})
+	centroids = sorted(
+		[switch_id(a) for a, entry in SPATIAL_SWITCHES.items() if entry[3] == "Wall"]
+		+ [solenoid_id(a) for a, entry in SPATIAL_COILS.items() if entry[3] == "Wall"],
+		key=lambda identifier: (identifier.split(".")[0], int(identifier.split(".")[1])),
+	)
+	clamps = {lamp_id(a): points[0][3] for a, points in SPATIAL_LAMPS.items() if points[0][3] is not None}
+	shortfalls = []
+	for device in definition["outputs"]:
+		spatial = device.get("spatial")
+		if not spatial or spatial["status"] == "not_applicable":
+			continue
+		quantity = device.get("physical", {}).get("quantity")
+		if quantity and quantity > len(spatial["placements"]):
+			shortfalls.append({"device": device["id"], "bulbs": quantity, "placements": len(spatial["placements"]), "why": "the ROM's '(2)'; the table binds one light"})
+		elif device["kind"] == "flasher" and DIAG_SOLENOIDS[device["binding"]["device"]][0].endswith("FLASHERS") and len(spatial["placements"]) == 1:
+			shortfalls.append({"device": device["id"], "bulbs": None, "placements": 1, "why": f"the ROM's plural name '{DIAG_SOLENOIDS[device['binding']['device']][0]}'; the table models one light"})
+	return {
+		"format": "pinmame-spatial-blockers",
+		"version": 1,
+		"machine_id": MACHINE_ID,
+		"coordinate_space": "playfield",
+		"source": {
+			"source_ref": VPX_TABLE_SOURCE,
+			"script_source_ref": VPX_TABLE_SCRIPT_SOURCE,
+			"vpx_filename": VPX_TABLE_FILENAME,
+			"vpx_sha256": VPX_TABLE_SHA256,
+			"vpx_size": VPX_TABLE_SIZE,
+			"script_sha256": VPX_TABLE_SCRIPT_SHA256,
+			"extraction": {
+				"tool": "vpxtool git:v0.33.3",
+				"path": f"external:pinmame-vpx-sources/{EXTRACTION_RELATIVE_PATH.as_posix()}",
+				"file_count": EXTRACTION_FILE_COUNT,
+				"total_bytes": EXTRACTION_TOTAL_BYTES,
+				"manifest_sha256": EXTRACTION_MANIFEST_SHA256,
+			},
+			"bounds": TABLE_BOUNDS,
+		},
+		"transformation": (
+			"x = (object x - left) / (right - left), y = (object y - top) / (bottom - top), rounded to six decimals; each point is one "
+			"table object's own centre (a wall's is the centroid of its outline points)"
+		),
+		"selection_rules": [
+			"Switches and coils use the object the table script binds to the address, or the mechanism object named in the device's projection note. A Wall has no centre of its own; its placement is the centroid of its outline points (listed under centroid_placements).",
+			(
+				"Lamps use the table's l<N>a16 playfield insert light when it exists; otherwise the script-bound lights, without the two "
+				"whole-table colour-grade helpers (falloff >= 1000), are grouped within 0.05 normalized units and each group is placed at "
+				"its smallest-falloff light."
+			),
+			"Flashers use the lights the table script drives from the address, directly or through its flash routines' pseudo-lamps (18 via 130, 23 via 129, 27 via 131), except where Krellan's hands-on chart and the ROM name contradict the table's side (19 and 24).",
+			"Backpanel lamps 116, 119 and 120 lie behind the playfield's rear edge in the table and are clamped to y = 0.",
+		],
+		"derivation": {
+			"tool_path": "external:pinmame-review-artifacts/kingpin/spatial",
+			"sha256": PLACEMENT_DERIVATION_SHA256,
+		},
+		"centroid_placements": centroids,
+		"backpanel_clamps": clamps,
+		"bulb_shortfalls": shortfalls,
+		"candidates": {
+			lamp_id(127): (
+				"the table's l127c light at (0.834, 0.080), behind the upper-right standup, fits Krellan's 'behind right gun standup and at "
+				"corner between that lane and right orbit, x2' for this output, but the table script comments its binding out; it is a "
+				"candidate for the output's second bulb and is not placed"
+			),
+		},
+		"status": "observed",
+		"promotion_decision": (
+			"spatial_placement stays in coverage.missing: every coordinate comes from one unverified community lineage, flasher 22 has only "
+			"a wide glow light with no flasher dome, flasher 29's orbit side is conflicted, several mechanism devices have no usable table "
+			"object, and some "
+			"multi-bulb outputs have fewer placements than bulbs."
+		),
+		"counts": {
+			"located_devices": len(located_devices),
+			"placements": sum(len(item["placements"]) for item in located_devices),
+			"unplaced_used_devices": len(unplaced),
+		},
+		"projections": projections,
+		"unplaced": unplaced,
+		"located": located_devices,
+	}
+
+
+def render_spatial_report(report: dict[str, Any]) -> str:
+	source = report["source"]
+	extraction = source["extraction"]
+	lines = [
+		"# Capcom Kingpin (1996) spatial blockers",
+		"",
+		f"Generated by `tools/curate_kingpin.py`. Status: **{report['status']}**; `spatial_placement` remains in `coverage.missing`.",
+		"",
+		report["promotion_decision"],
+		"",
+		"## Source",
+		"",
+		f"- Table: `{source['vpx_filename']}`, SHA-256 `{source['vpx_sha256']}` ({source['vpx_size']} bytes), source `{source['source_ref']}`.",
+		f"- Script: SHA-256 `{source['script_sha256']}`, source `{source['script_source_ref']}`.",
+		(
+			f"- Extraction: {extraction['tool']}, {extraction['file_count']} files, {extraction['total_bytes']} bytes, canonical manifest "
+			f"SHA-256 `{extraction['manifest_sha256']}`."
+		),
+		f"- Bounds: left {source['bounds']['left']}, top {source['bounds']['top']}, right {source['bounds']['right']}, bottom {source['bounds']['bottom']}.",
+		f"- Transformation: {report['transformation']}.",
+		"",
+		"## Selection rules",
+		"",
+		*[f"- {rule}" for rule in report["selection_rules"]],
+		"",
+		"## Counts",
+		"",
+		(
+			f"{report['counts']['located_devices']} devices carry {report['counts']['placements']} observed placements; "
+			f"{report['counts']['unplaced_used_devices']} used devices are not placed."
+		),
+		"",
+		"## Projections and substitutions",
+		"",
+		"| Device | Note |",
+		"| --- | --- |",
+		*[f"| `{device}` | {note} |" for device, note in report["projections"].items()],
+		"",
+		"## Wall centroids",
+		"",
+		", ".join(f"`{identifier}`" for identifier in report["centroid_placements"]),
+		"",
+		"## Backpanel clamps",
+		"",
+		*[f"- `{device}`: raw normalized y {raw}, placed at y = 0" for device, raw in report["backpanel_clamps"].items()],
+		"",
+		"## Fewer placements than bulbs",
+		"",
+		*[f"- `{item['device']}`: {item['placements']} placement(s); {item['why']}" for item in report["bulb_shortfalls"]],
+		"",
+		"## Candidates not placed",
+		"",
+		*[f"- `{device}`: {text}" for device, text in report["candidates"].items()],
+		"",
+		f"Derivation scripts (`{report['derivation']['tool_path']}`): "
+		+ ", ".join(f"{name} `{digest}`" for name, digest in report["derivation"]["sha256"].items()) + ".",
+		"",
+		"## Not placed",
+		"",
+		"| Device | Reason |",
+		"| --- | --- |",
+		*[f"| `{item['device']}` | {item['reason']} |" for item in report["unplaced"]],
+		"",
+	]
+	return "\n".join(lines)
 
 
 def generate(root: Path = ROOT) -> Path:
@@ -1911,6 +2465,10 @@ def generate(root: Path = ROOT) -> Path:
 	write_json(root / DEFINITION_PATH.relative_to(ROOT), definition)
 	write_json(root / SEED_PATH.relative_to(ROOT), definition)
 	(root / KNOWLEDGE_PATH.relative_to(ROOT)).write_text(KNOWLEDGE_NOTE, encoding="utf-8", newline="\n")
+	report = build_spatial_report(definition)
+	(root / SPATIAL_REPORT_PATH.relative_to(ROOT)).parent.mkdir(parents=True, exist_ok=True)
+	write_json(root / SPATIAL_REPORT_PATH.relative_to(ROOT), report)
+	(root / SPATIAL_REPORT_MD_PATH.relative_to(ROOT)).write_text(render_spatial_report(report), encoding="utf-8", newline="\n")
 	return root / DEFINITION_PATH.relative_to(ROOT)
 
 
@@ -1928,7 +2486,14 @@ def check(root: Path = ROOT) -> None:
 	knowledge_path = root / KNOWLEDGE_PATH.relative_to(ROOT)
 	if not knowledge_path.is_file() or knowledge_path.read_bytes() != KNOWLEDGE_NOTE.encode("utf-8"):
 		raise RuntimeError(f"Kingpin knowledge note drifted from its deterministic curator: {knowledge_path}")
-	print("Kingpin definition, seed, and knowledge note match the deterministic curator.")
+	report = build_spatial_report(build())
+	report_path = root / SPATIAL_REPORT_PATH.relative_to(ROOT)
+	if not report_path.is_file() or report_path.read_bytes() != canonical_bytes(report):
+		raise RuntimeError(f"Kingpin spatial report drifted from its deterministic curator: {report_path}")
+	report_md_path = root / SPATIAL_REPORT_MD_PATH.relative_to(ROOT)
+	if not report_md_path.is_file() or report_md_path.read_bytes() != render_spatial_report(report).encode("utf-8"):
+		raise RuntimeError(f"Kingpin spatial report drifted from its deterministic curator: {report_md_path}")
+	print("Kingpin definition, seed, knowledge note and spatial report match the deterministic curator.")
 
 
 def main() -> None:

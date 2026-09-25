@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import hashlib
 import importlib.util
+import json
 import re
 import sys
 import unittest
 from pathlib import Path
 
-from pinmame_game_defs.jsonio import load_json
+from pinmame_game_defs.jsonio import canonical_bytes, load_json
 from pinmame_game_defs.validation import unresolved_conflicts
 from pinmame_game_defs.workspace import resolve_working_root
 
@@ -458,7 +459,234 @@ class KingpinDefinitionTest(unittest.TestCase):
 		for source in self.definition["sources"]:
 			if source["kind"] == "vpx_script":
 				self.assertFalse(source["known_working"])
-				self.assertIn("/blob/", source["uri"])
+				if source["id"] == CURATOR.VPX_TABLE_SCRIPT_SOURCE:
+					self.assertTrue(source["uri"].startswith("external:pinmame-vpx-sources/"))
+				else:
+					self.assertIn("/blob/", source["uri"])
+
+	def test_spatial_placements_are_observed_and_cite_the_retained_table(self) -> None:
+		self.assertIn("spatial_placement", self.definition["coverage"]["missing"])
+		self.assertEqual("observed", self.definition["coverage"]["dimensions"]["spatial_placement"])
+		self.assertEqual({"width": 952.0, "height": 2162.0}, {k: self.definition["machine"]["playfield"][k] for k in ("width", "height")})
+		located = 0
+		for device in self.definition["inputs"] + self.definition["outputs"]:
+			spatial = device.get("spatial")
+			if not spatial or spatial["status"] == "not_applicable":
+				continue
+			located += 1
+			self.assertEqual("observed", spatial["status"], device["id"])
+			self.assertIn(device["availability"], {"used", "optional"}, device["id"])
+			for placement in spatial["placements"]:
+				self.assertEqual("observed", placement["provenance"]["status"])
+				refs = placement["provenance"]["source_refs"]
+				self.assertEqual([CURATOR.VPX_TABLE_SOURCE, CURATOR.VPX_TABLE_SCRIPT_SOURCE], refs[:2])
+				group = {"pinmame.input.switch": "switch", "pinmame.output.solenoid": "solenoid"}.get(device["binding"]["group"], "lamp")
+				self.assertEqual(list(CURATOR.PLACEMENT_EXTRA_REFS.get((group, device["binding"]["device"]), ())), refs[2:], device["id"])
+			self.assertIn("Placement (observed)", device["physical"]["notes"], device["id"])
+		self.assertEqual(179, located)
+		# the kid-flasher substitution depends on the ROM names and Krellan, so its placements cite them
+		for address in (19, 24):
+			refs = self.device("output.solenoid", address)["spatial"]["placements"][0]["provenance"]["source_refs"]
+			self.assertIn(CURATOR.KRELLAN_SOURCE, refs)
+			self.assertIn(CURATOR.SOLENOID_TEST_SOURCE, refs)
+		# every used playfield device without a placement says why
+		for device in self.definition["inputs"] + self.definition["outputs"]:
+			if "spatial" not in device and device["availability"] in {"used", "optional"}:
+				self.assertIn("No playfield placement:", device["physical"]["notes"], device["id"])
+
+	def test_kid_flashers_follow_krellan_not_the_table_binding(self) -> None:
+		left = self.device("output.solenoid", 19)["spatial"]["placements"][0]
+		right = self.device("output.solenoid", 24)["spatial"]["placements"][0]
+		self.assertLess(left["x"], 0.5)
+		self.assertGreater(right["x"], 0.5)
+		self.assertEqual("F24", CURATOR.SPATIAL_FLASHERS[19][0][0][2])
+		self.assertEqual("F19", CURATOR.SPATIAL_FLASHERS[24][0][0][2])
+		krellan = {int(row[0]): row[1] for row in table_rows("krellan-solenoid-table.md")}
+		self.assertIn("Sudden", krellan[19])
+		self.assertIn("Death", krellan[24])
+
+	def test_spatial_report_is_committed_and_reconciles(self) -> None:
+		report = load_json(ROOT / "reports/spatial/capcom/kingpin-1996.json")
+		self.assertEqual("pinmame-spatial-blockers", report["format"])
+		self.assertEqual(canonical_bytes(CURATOR.build_spatial_report(self.definition)), canonical_bytes(report))
+		unplaced = {item["device"] for item in report["unplaced"]}
+		self.assertEqual({"switch.45", "switch.46", "switch.47", "switch.48", "solenoid.3", "solenoid.6", "solenoid.7", "solenoid.14", "solenoid.22", "solenoid.29"}, unplaced)
+		walls = {switch_id for switch_id in report["centroid_placements"]}
+		self.assertEqual({f"switch.{a}" for a, entry in CURATOR.SPATIAL_SWITCHES.items() if entry[3] == "Wall"} | {f"solenoid.{a}" for a, entry in CURATOR.SPATIAL_COILS.items() if entry[3] == "Wall"}, walls)
+		for identifier in walls:
+			group, address = identifier.split(".")
+			device = self.device("input.switch" if group == "switch" else "output.solenoid", int(address))
+			self.assertIn("the centroid of the outline points of the wall", device["physical"]["notes"], identifier)
+		self.assertEqual({"lamp.116", "lamp.119", "lamp.120"}, set(report["backpanel_clamps"]))
+		self.assertTrue(all(item["reason"] for item in report["unplaced"]))
+
+	def test_retained_extraction_matches_its_manifest(self) -> None:
+		working_root = resolve_working_root(ROOT)
+		sources = working_root / "vpx-sources" if working_root else None
+		if sources is None or not (sources / CURATOR.EXTRACTION_RELATIVE_PATH).is_dir():
+			self.skipTest("retained Kingpin table extraction is not available")
+		extraction = sources / CURATOR.EXTRACTION_RELATIVE_PATH
+		manifest = load_json(sources / CURATOR.EXTRACTION_MANIFEST_RELATIVE_PATH)
+		paths = sorted((path for path in extraction.rglob("*") if path.is_file()), key=lambda path: path.relative_to(extraction).as_posix())
+		expected = {
+			"format": "pinmame-vpx-extraction-manifest",
+			"version": 1,
+			"files": [
+				{"path": path.relative_to(extraction).as_posix(), "size": path.stat().st_size, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+				for path in paths
+			],
+		}
+		self.assertEqual(canonical_bytes(expected), canonical_bytes(manifest))
+		self.assertEqual(CURATOR.EXTRACTION_FILE_COUNT, len(paths))
+		self.assertEqual(CURATOR.EXTRACTION_TOTAL_BYTES, sum(path.stat().st_size for path in paths))
+		self.assertEqual(CURATOR.EXTRACTION_MANIFEST_SHA256, hashlib.sha256(canonical_bytes(manifest)).hexdigest())
+		self.assertEqual(CURATOR.VPX_TABLE_SCRIPT_SHA256, hashlib.sha256((extraction / "script.vbs").read_bytes()).hexdigest())
+		table = sources / "capcom/kingpin-1996" / CURATOR.VPX_TABLE_FILENAME
+		self.assertEqual(CURATOR.VPX_TABLE_SHA256, hashlib.sha256(table.read_bytes()).hexdigest())
+
+	def test_placements_are_their_objects_centres_in_the_retained_extraction(self) -> None:
+		working_root = resolve_working_root(ROOT)
+		sources = working_root / "vpx-sources" if working_root else None
+		if sources is None or not (sources / CURATOR.EXTRACTION_RELATIVE_PATH).is_dir():
+			self.skipTest("retained Kingpin table extraction is not available")
+		items = {}
+		for path in (sources / CURATOR.EXTRACTION_RELATIVE_PATH / "gameitems").glob("*.json"):
+			item_type, name = path.stem.split(".", 1)
+			items[name] = (item_type, json.loads(path.read_text(encoding="utf-8"))[item_type])
+
+		def centre(name: str) -> tuple[float, float]:
+			item_type, value = items[name]
+			if item_type == "Wall":
+				points = value["drag_points"]
+				x, y = sum(point["x"] for point in points) / len(points), sum(point["y"] for point in points) / len(points)
+			elif item_type == "Primitive":
+				x, y = value["position"]["x"], value["position"]["y"]
+			else:
+				x, y = value["center"]["x"], value["center"]["y"]
+			return round(x / 952.0, 6), round(y / 2162.0, 6)
+
+		for address, (x, y, name, item_type, _note) in {**CURATOR.SPATIAL_SWITCHES, **CURATOR.SPATIAL_COILS}.items():
+			self.assertEqual((x, y), centre(name), (address, name))
+			self.assertEqual(items[name][0], item_type, (address, name))
+		for address, (points, _note) in CURATOR.SPATIAL_FLASHERS.items():
+			for x, y, name, item_type in points:
+				self.assertEqual((x, y), centre(name), (address, name))
+				self.assertEqual(items[name][0], item_type, (address, name))
+		for address, points in CURATOR.SPATIAL_LAMPS.items():
+			for x, y, name, raw_y in points:
+				expected_x, expected_y = centre(name)
+				self.assertEqual(expected_x, x, (address, name))
+				self.assertEqual(expected_y if raw_y is None else 0.0, y, (address, name))
+				if raw_y is not None:
+					self.assertEqual(expected_y, raw_y, (address, name))
+					self.assertLess(raw_y, 0.0, (address, name))
+
+	def test_placed_objects_are_bound_to_their_addresses_in_the_table_script(self) -> None:
+		working_root = resolve_working_root(ROOT)
+		sources = working_root / "vpx-sources" if working_root else None
+		if sources is None or not (sources / CURATOR.EXTRACTION_RELATIVE_PATH).is_dir():
+			self.skipTest("retained Kingpin table extraction is not available")
+		lines = (sources / CURATOR.EXTRACTION_RELATIVE_PATH / "script.vbs").read_text(encoding="latin-1").replace("\r\n", "\n").split("\n")
+		active = [line.split("'", 1)[0] if '"' not in line.split("'", 1)[0] else line for line in lines if not line.strip().startswith("'")]
+		script = "\n".join(active)
+		subs: dict[str, str] = {}
+		current = None
+		for line in active:
+			match = re.match(r"\s*Sub\s+(\w+)", line, re.I)
+			if match:
+				current = match.group(1).lower()
+				subs[current] = ""
+			if current:
+				subs[current] += line + "\n"
+				if re.match(r"\s*End\s+Sub", line, re.I) or re.search(r"End Sub\s*$", line, re.I):
+					current = None
+
+		def lamp_bound(number: int, name: str) -> bool:
+			return re.search(rf"^\s*(NFadeLm?|Flashm?)\s+{number}\s*,\s*{name}\b", script, re.M | re.I) is not None
+
+		def callback(address: int) -> str:
+			match = re.search(rf"SolCallback\({address}\)\s*=\s*\"([^\"]*)\"", script, re.I)
+			return match.group(1) if match else ""
+
+		def switch_bound(name: str, address: int) -> bool:
+			bodies = [body for sub, body in subs.items() if sub.startswith(name.lower() + "_")]
+			return any(re.search(rf"Switch\({address}\)\s*=\s*1|PulseSw\s*{address}\b", body) for body in bodies)
+
+		# lamps: every placed light is bound to its own address
+		for address, points in CURATOR.SPATIAL_LAMPS.items():
+			for _x, _y, name, _raw in points:
+				self.assertTrue(lamp_bound(address, name), (address, name))
+		# switches: the placed object's handler asserts the address, except the documented projections
+		projections = {32, 33, 34, 36, 37, 38, 39, 52}
+		# ball-stack entry switches: the object's handlers add the ball to the stack whose InitSw names the address
+		stacks = {35: ("bsTrough", "35,36,37,38,39"), 44: ("bsLock", "0,44,45,46"), 51: ("bsVUK", "0,51")}
+		drops = {25: "dtDropL", 26: "dtDropL", 27: "dtDropL", 28: "dtDropL", 29: "dtDropR", 30: "dtDropR", 31: "dtDropR"}
+		for bank, targets in (("dtDropL", (25, 26, 27, 28)), ("dtDropR", (29, 30, 31))):
+			objects = ",".join(f"sw{target}" for target in targets)
+			numbers = ", ".join(str(target) for target in targets)
+			self.assertIn(f"{bank}.InitDrop Array({objects}),Array({numbers})", script)
+		for address, (_x, _y, name, _type, note) in CURATOR.SPATIAL_SWITCHES.items():
+			if address in projections:
+				self.assertTrue(note, address)
+				continue
+			if address in drops:
+				self.assertEqual(f"sw{address}", name, address)
+				continue
+			if address in stacks:
+				stack, init = stacks[address]
+				self.assertIn(f"{stack}.InitSw {init}", script, address)
+				bodies = "".join(body for sub, body in subs.items() if sub.startswith(name.lower() + "_"))
+				self.assertIn(f"{stack}.AddBall Me", bodies, (address, name))
+				continue
+			self.assertTrue(switch_bound(name, address), (address, name))
+		self.assertTrue(switch_bound("sw32", 49), "the captive-ball target's handler pulses 49, the documented table defect")
+		self.assertIn("bsTrough.InitSw 35,36,37,38,39", script)
+		self.assertIn("bsTrough.InitKick BallRelease", script)
+		# flashers: driven directly, or through the flash routines' pseudo-lamps
+		routes = {18: ("LeftRampFlash", 130), 23: ("RightRampFlash", 129), 27: ("SetLamp 131,", 131)}
+		for address, (points, _note) in CURATOR.SPATIAL_FLASHERS.items():
+			names = [name for _x, _y, name, _type in points]
+			if address in (19, 24):
+				continue
+			if address in routes:
+				routine, lamp = routes[address]
+				self.assertEqual(routine, callback(address), address)
+				if routine.startswith("SetLamp"):
+					for name in names:
+						self.assertTrue(lamp_bound(lamp, name), (address, name))
+				else:
+					self.assertRegex(subs[routine.lower()], rf"SetFlash {lamp}, 1", address)
+					for name in names:
+						self.assertTrue(lamp_bound(lamp, name), (address, name))
+			else:
+				self.assertEqual(f"{names[0]}.State=".lower(), callback(address).lower(), address)
+		# the kid flashers are swapped against the table on purpose: each placed object is bound to the other address
+		self.assertEqual("f24.state=", callback(24).lower())
+		self.assertEqual("f24", CURATOR.SPATIAL_FLASHERS[19][0][0][2].lower())
+		self.assertEqual("f19.state=", callback(19).lower())
+		self.assertEqual("f19", CURATOR.SPATIAL_FLASHERS[24][0][0][2].lower())
+		# coils: the callback and the object its routine or ball stack acts on
+		coil_evidence = {
+			1: ("bsTrough.SolIn", "Drain", r"Sub Drain_Hit"),
+			2: ("bsTrough.SolOut", "BallRelease", r"bsTrough\.InitKick BallRelease"),
+			8: ("bsLock.SolOut", "GunKicker", r"bsLock\.InitKick GunKicker"),
+			9: ("SolLFlipper", "LeftFlipper", r"LeftFlipper\.RotateToEnd"),
+			10: ("SolRFlipper", "RightFlipper", r"RightFlipper\.RotateToEnd"),
+			11: ("bsVUK.SolOut", "sw51b", r"bsVUK\.InitKick sw51b"),
+			12: ("SlotMachineMotor", "SLOTmachineCylinder", r"SLOTmachineCylinder\.RotX = SlotPos"),
+			13: ("LoopGate", "Gate2", r"Gate2\.Collidable"),
+			32: ("SolAutoFire", "swPlunger", r"InitImpulseP swplunger"),
+		}
+		for address, (routine, name, pattern) in coil_evidence.items():
+			self.assertEqual(routine.lower(), callback(address).lower(), address)
+			self.assertEqual(name, CURATOR.SPATIAL_COILS[address][2], address)
+			self.assertRegex(script, pattern, address)
+		# slings and bumpers: no coil callback; the placed object is the one whose handler asserts the matching switch
+		for coil, switch in ((4, 41), (5, 42), (15, 58), (16, 59), (17, 57)):
+			self.assertEqual(CURATOR.SPATIAL_SWITCHES[switch][2], CURATOR.SPATIAL_COILS[coil][2], coil)
+		self.assertEqual(
+			set(CURATOR.SPATIAL_COILS), set(coil_evidence) | {4, 5, 15, 16, 17},
+		)
 
 	def test_labels_expand_rom_abbreviations(self) -> None:
 		self.assertEqual("Upper Right Charmed Life", CURATOR.lamp_label("U.R. CHARMED LIFE"))
