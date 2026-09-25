@@ -240,6 +240,7 @@ export function decodeMachineRows(index: { rows: any[][] }): MachineSummary[] {
 		// spirit from any build that ran without the upstream checkout — both mean
 		// the same thing to every consumer, so both decode to zero.
 		memoryMaps: row[15] ?? 0,
+		updated: row[16] ?? null,
 	}))
 }
 

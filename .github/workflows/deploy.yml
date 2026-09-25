@@ -43,6 +43,12 @@ jobs:
         working-directory: site
     steps:
       - uses: actions/checkout@v7
+        with:
+          # Full history: prepare-data reads each machine's last commit time
+          # for the "recently updated" sort, and a shallow clone has none.
+          # Blobless, because that walk needs only commits and trees.
+          fetch-depth: 0
+          filter: blob:none
 
       - name: Check out Pinball Memory Maps
         uses: actions/checkout@v7

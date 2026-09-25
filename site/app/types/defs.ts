@@ -304,6 +304,11 @@ export interface MachineSummary {
 	 * author-ready machine may have none. Never treat it as coverage.
 	 */
 	memoryMaps: number
+	/**
+	 * Unix seconds of the last commit to the definition or its knowledge note.
+	 * Null for uncommitted files and for builds without full git history.
+	 */
+	updated: number | null
 }
 
 /** Editions of one title, derived from the shared PinMAME driver prefix. */

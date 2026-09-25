@@ -23,7 +23,8 @@ const platform = ref('all')
 const MEMORY_MAP_FILTERS = ['all', 'available', 'unavailable'] as const
 type MemoryMapFilter = typeof MEMORY_MAP_FILTERS[number]
 const memoryMap = ref<MemoryMapFilter>('all')
-const sort = ref<'completion' | 'year' | 'name' | 'size'>('completion')
+const SORTS = ['completion', 'year', 'updated', 'name', 'size'] as const
+const sort = ref<typeof SORTS[number]>('completion')
 const view = ref<'grid' | 'table'>('grid')
 const limit = ref(60)
 const tags = ref<string[]>([])
@@ -46,7 +47,7 @@ onMounted(() => {
 		memoryMap.value = requestedMemoryMap as MemoryMapFilter
 	}
 	const requestedSort = params.get('sort')
-	if (requestedSort && ['completion', 'year', 'name', 'size'].includes(requestedSort)) sort.value = requestedSort as typeof sort.value
+	if (requestedSort && (SORTS as readonly string[]).includes(requestedSort)) sort.value = requestedSort as typeof sort.value
 	tags.value = (params.get('tags') ?? '').split(',').filter(Boolean)
 	urlReady.value = true
 })
@@ -112,6 +113,8 @@ const filtered = computed(() => {
 	const rank = { author_ready: 0, partial: 1, stub: 2 }
 	return list.sort((a, b) => {
 		if (sort.value === 'name') return a.name.localeCompare(b.name)
+		// Machines with no commit time (uncommitted, or a shallow build) sink to the end.
+		if (sort.value === 'updated') return (b.updated ?? 0) - (a.updated ?? 0) || a.name.localeCompare(b.name)
 		if (sort.value === 'size') return (b.switches + b.lamps + b.coils) - (a.switches + a.lamps + a.coils)
 		if (sort.value === 'completion') return b.completionScore - a.completionScore || (b.year ?? 0) - (a.year ?? 0) || a.name.localeCompare(b.name)
 		return rank[a.status] - rank[b.status] || (b.year ?? 0) - (a.year ?? 0) || a.name.localeCompare(b.name)
@@ -249,6 +252,9 @@ const selectClass = 'rounded-lg border border-line bg-panel px-2.5 py-1.5 text-[
 					<option value="year">
 						Sort: coverage, newest
 					</option>
+					<option value="updated">
+						Sort: recently updated
+					</option>
 					<option value="name">
 						Sort: name
 					</option>
@@ -349,6 +355,9 @@ const selectClass = 'rounded-lg border border-line bg-panel px-2.5 py-1.5 text-[
 								Complete
 							</th>
 							<th class="eyebrow px-3 py-2.5 font-semibold">
+								Updated
+							</th>
+							<th class="eyebrow px-3 py-2.5 font-semibold">
 								Coverage
 							</th>
 						</tr>
@@ -399,6 +408,9 @@ const selectClass = 'rounded-lg border border-line bg-panel px-2.5 py-1.5 text-[
 							</td>
 							<td class="num px-3 py-2 text-right text-xs" :style="{ color: STATUS_META[machine.status].color }">
 								{{ machine.completionScore }}%
+							</td>
+							<td class="num px-3 py-2 text-xs whitespace-nowrap text-ink-3">
+								{{ machine.updated ? new Date(machine.updated * 1000).toISOString().slice(0, 10) : '—' }}
 							</td>
 							<td class="px-3 py-2">
 								<StatusChip :status="machine.status" size="sm" />

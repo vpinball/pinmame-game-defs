@@ -12,6 +12,7 @@
  *   3. ../pinmame-game-defs
  *   4. ../.worktrees/pinmame-game-defs-machine-definitions   (local dev)
  */
+import { spawnSync } from 'node:child_process'
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -144,6 +145,43 @@ const memoryMaps = loadPinballMemoryMaps(
 	publicDataRoot,
 )
 
+/**
+ * When each machine definition and knowledge note was last committed, as Unix
+ * seconds keyed by path relative to the defs root. One `git log` pass; each
+ * path keeps its maximum commit time, so skewed dates or merged side branches
+ * cannot put an older commit first. Merge commits list no files, so a change
+ * made only while resolving a merge conflict is not counted.
+ *
+ * A shallow clone would stamp every file with the tip commit's date and turn
+ * "recently updated" into noise, so it yields no dates at all rather than
+ * wrong ones. Uncommitted files have no entry either.
+ */
+function loadLastCommitTimes(): Map<string, number> {
+	const times = new Map<string, number>()
+	const git = (...args: string[]) => spawnSync('git', ['-C', defsRoot, '-c', 'core.quotePath=false', ...args], { encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 })
+	const shallow = git('rev-parse', '--is-shallow-repository')
+	if (shallow.status !== 0) {
+		console.warn('[data] last updated   : git history unavailable; machines carry no update time')
+		return times
+	}
+	if (shallow.stdout.trim() === 'true') {
+		console.warn('[data] last updated   : shallow clone; fetch full history to get update times')
+		return times
+	}
+	// --no-renames keeps the output independent of local diff.renames config and
+	// skips detection work (and, on a blobless clone, lazy blob fetches); a move
+	// lists both paths, and the new one still gets the move time. --relative
+	// keys paths to the defs root even when it sits inside a larger repository.
+	const log = git('log', '--no-renames', '--relative', '--format=%x01%ct', '--name-only', '--', 'machines', 'knowledge')
+	if (log.status !== 0) throw new Error(`git log failed: ${log.stderr}`)
+	for (const commit of log.stdout.split('\x01')) {
+		const [time, ...paths] = commit.split('\n').map(line => line.trim()).filter(Boolean)
+		if (!time) continue
+		for (const path of paths) times.set(path, Math.max(times.get(path) ?? 0, Number(time)))
+	}
+	return times
+}
+
 console.log(`[data] defs root      : ${defsRoot}`)
 console.log(`[data] pinmame rev    : ${catalog.source.pinmame_revision.slice(0, 12)}`)
 console.log(`[data] drivers        : ${catalog.drivers.length}`)
@@ -153,6 +191,14 @@ if (memoryMaps) {
 	console.log(`[data] mapped drivers : ${memoryMaps.byDriver.size}; ${memoryMaps.unmatchedRoms.length} external-only ROM IDs`)
 } else {
 	console.log('[data] memory maps    : not configured (set PINBALL_MEMORY_MAPS_ROOT to enable)')
+}
+
+const lastCommitTimes = loadLastCommitTimes()
+
+/** The later of a machine's definition and knowledge-note commit times. */
+const lastUpdated = (...paths: (string | null | undefined)[]): number | null => {
+	const times = paths.map(path => (path ? lastCommitTimes.get(path) : undefined)).filter((t): t is number => t !== undefined)
+	return times.length ? Math.max(...times) : null
 }
 
 // Every machine definition on disk, keyed by machine.id. The catalog can lag
@@ -408,6 +454,8 @@ type MachineIndexEntry = {
 	hasDetail: boolean
 	order: number | null
 	definition: string
+	/** Unix seconds of the last commit touching the definition or its note. */
+	updated: number | null
 }
 
 /**
@@ -439,6 +487,9 @@ type MachineRow = [
 	// catalog's own driver list, so a stub qualifies exactly like a described
 	// machine — the join is on the ROM name, not on how much we know about it.
 	memoryMaps: number,
+	// Unix seconds of the last commit to the definition or its knowledge note;
+	// null when uncommitted or when the build had no full git history.
+	updated: number | null,
 ]
 
 const STATUS_CODE = { stub: 0, partial: 1, author_ready: 2 } as const
@@ -462,6 +513,7 @@ const toRow = (m: MachineIndexEntry): MachineRow => [
 	romsByMachine.get(m.id) ?? [],
 	m.completionScore,
 	memoryMapsByMachine.get(m.id)?.length ?? 0,
+	m.updated,
 ]
 
 const machineIndex: MachineIndexEntry[] = []
@@ -532,6 +584,7 @@ for (const [machineId, { path, doc }] of definitions) {
 		hasDetail: status !== 'stub',
 		order: catalogEntry?.processing_order ?? null,
 		definition: repoPath(path),
+		updated: lastUpdated(repoPath(path), doc.knowledge?.path),
 	}
 	machineIndex.push(entry)
 
@@ -610,10 +663,19 @@ for (const record of catalog.machines) {
 		hasDetail: false,
 		order: record.processing_order ?? null,
 		definition: record.definition ?? '',
+		updated: lastUpdated(record.definition),
 	})
 }
 
 machineIndex.sort((a, b) => (b.year ?? 0) - (a.year ?? 0) || a.name.localeCompare(b.name))
+// Counts matches rather than paths, so a path-key mismatch shows up as zero
+// instead of passing silently.
+const datedMachines = machineIndex.filter(m => m.updated !== null).length
+if (lastCommitTimes.size) {
+	const report = `[data] last updated   : ${datedMachines} of ${machineIndex.length} machines have a commit time`
+	if (datedMachines) console.log(report)
+	else console.warn(`${report}; git paths do not match definition paths`)
+}
 for (const machine of machineIndex) {
 	if (!machine.machineKind?.trim()) throw new Error(`Machine ${machine.id} has no machine kind; catalog v2 cannot be generated.`)
 	if (!romsByMachine.get(machine.id)?.length) throw new Error(`Machine ${machine.id} has no ROM sets; catalog v2 cannot be generated.`)
@@ -1049,7 +1111,7 @@ for (const machine of machineIndex) {
 
 writeOut('site.json', site)
 writeOut('machines.json', {
-	columns: ['slug', 'name', 'manufacturer', 'year', 'status', 'platform', 'drivers', 'switches', 'lamps', 'coils', 'mechanisms', 'highlights', 'definition', 'roms', 'completionScore', 'memoryMaps'],
+	columns: ['slug', 'name', 'manufacturer', 'year', 'status', 'platform', 'drivers', 'switches', 'lamps', 'coils', 'mechanisms', 'highlights', 'definition', 'roms', 'completionScore', 'memoryMaps', 'updated'],
 	rows: machineIndex.map(toRow),
 })
 writeOut('platforms.json', platformIndex)
