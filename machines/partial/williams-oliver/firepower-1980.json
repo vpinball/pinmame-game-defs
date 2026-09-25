@@ -6,13 +6,13 @@
       "catalog_identity": "validated",
       "mechanisms": "unknown",
       "physical_wiring": "unknown",
-      "recreation_knowledge": "unknown",
+      "recreation_knowledge": "candidate",
       "semantic_naming": "unknown",
+      "spatial_placement": "unknown",
       "variant_coverage": "candidate"
     },
     "missing": [
       "identity",
-      "driver_mapping",
       "controller_platform",
       "input_enumeration",
       "input_semantics",
@@ -36,6 +36,41 @@
       "flags": 0,
       "id": "frpwr_a7",
       "manufacturer": "Williams / Oliver",
+      "variant_notes": "Oliver 2005 System 7 six-digit conversion, revision 31 (s7games.c: s7_mS7S6, GEN_S7, s7_6digit_disp). PinMAME declares it as its own root. No harness run of this driver is retained.",
+      "year": "2005"
+    },
+    {
+      "clone_of": "frpwr_l6",
+      "description": "Firepower (Sys.7/7-digit conversion)",
+      "flags": 0,
+      "id": "frpwr_b7",
+      "manufacturer": "Williams / Oliver",
+      "variant_notes": "Oliver 2003 System 7 seven-digit conversion (s7_mS7S6, fp_7digit_disp), declared a clone of frpwr_l6. The ROM the retained known-working Firepower table loads. One retained harness run covers a game start and the switch-driven special-solenoid path; see the knowledge note for what it does and does not show.",
+      "year": "2003"
+    },
+    {
+      "clone_of": "frpwr_l6",
+      "description": "Firepower (Sys.7/7-digit conversion rev. 38)",
+      "flags": 0,
+      "id": "frpwr_c7",
+      "manufacturer": "Williams / Oliver",
+      "variant_notes": "Oliver 2006 System 7 seven-digit conversion, revision 38, with an extra IC26 ROM and speech ROM v_ic4 (s7_mS7S6, fp_7digit_disp), declared a clone of frpwr_l6. No harness run of this driver is retained.",
+      "year": "2006"
+    },
+    {
+      "description": "Firepower (Sys.7/7-digit conversion rev. 31)",
+      "flags": 0,
+      "id": "frpwr_d7",
+      "manufacturer": "Williams / Oliver",
+      "variant_notes": "Oliver 2005 System 7 seven-digit conversion, revision 31 (s7_mS7S6, fp_7digit_disp). PinMAME declares it as its own root. No harness run of this driver is retained.",
+      "year": "2005"
+    },
+    {
+      "description": "Firepower (Sys.7/6-digit /10 Scoring rev. 31)",
+      "flags": 0,
+      "id": "frpwr_e7",
+      "manufacturer": "Williams / Oliver",
+      "variant_notes": "Oliver 2005 System 7 six-digit /10 scoring conversion, revision 31 (s7_mS7S6, s7_6digit_disp). PinMAME declares it as its own root. No harness run of this driver is retained.",
       "year": "2005"
     }
   ],
@@ -48,6 +83,7 @@
   "machine": {
     "id": "williams-oliver.firepower.1980",
     "ipdb_id": 856,
+    "kind": "physical_conversion",
     "manufacturer": "Williams / Oliver",
     "name": "Firepower",
     "opdb_id": "G5VDd-MJpqO",
@@ -56,16 +92,35 @@
   "mechanisms": [],
   "outputs": [],
   "relationships": [],
-  "schema_version": 1,
+  "schema_version": 2,
   "sources": [
     {
       "attribution": "PinMAME contributors",
       "id": "pinmame.catalog.8371478a7640",
       "kind": "pinmame_catalog",
       "license": "BSD-3-Clause",
-      "locator": "PinmameGetGames",
+      "locator": "Pinned catalog driver records for the Oliver System 7 Firepower conversions: frpwr_a7, frpwr_d7 and frpwr_e7 (roots of their own) and frpwr_b7 and frpwr_c7 (clones of frpwr_l6)",
       "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
       "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "PinMAME contributors",
+      "id": "pinmame.core.8371478a7640",
+      "kind": "pinmame_core",
+      "license": "BSD-3-Clause",
+      "locator": "src/wpc/s7games.c 'Firepower - Sys.7': every driver declares machine driver s7_mS7S6 (GEN_S7 CPU board with the System 6 sound board) and INITGAMEFULL(name, disp, 0, 45, 11774, 26, 25, 27, 28, 42, 12) with s7_6digit_disp for frpwr_a7/e7 and fp_7digit_disp for frpwr_b7/d7 (frpwr_c7 reuses frpwr_b7's init); src/wpc/s7.h S7_GAMEONSOL 25 and the -7..-3 diagnostic inputs; src/wpc/s7.c s7_vblank (game-on at 25 and an eight-entry sxx.ssSw loop), the PIA CA2/CB2 handlers that map ROM-fired special solenoids through setSSSol slots 0-7 (pia2cb2 0, pia2ca2 1, pia4cb2 2, pia4ca2 3, pia1ca2 4, pia3cb2 5, pia0cb2 6, pia0ca2 7), and s7_dips_r, whose body matches s6_dips_r (both banks, by strobe position, while -3 is held)",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "https://github.com/vpinball/pinmame"
+    },
+    {
+      "attribution": "pinmame-game-defs curation",
+      "id": "runtime.firepower.sys7-conversion",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "LibPinMAME harness run of frpwr_b7 with tools/run_pinmame_harness.py, library pinmame64.dll built from the pinned PinMAME revision (SHA-256 ddee814f9dd321d03f7e6978f93096fe830e029e61d0399846e7e44428b7ce4e), ROM archive frpwr_b7.zip from the operator's authorized ROM corpus (SHA-256 4c862efdd027117bc4cfc088f759d887b811fa23d51b8cfa8541ed8a6e19c928, CRCs matching the pinned driver), in an isolated state directory. Scenario tools/harness-scenarios/system-6/firepower-sys7-conversion-gameplay.json (SHA-256 3446b71166ea1731aaaa2be57aca3364b2abc9683176e45a6181b59e6ddff45b). A first power-up from empty CMOS stops on the game-identification/audit screen, so every evidentiary run starts from a state directory initialized by exactly one prior empty-NVRAM boot (scenario SHA-256 9e659cd6e73f66581642e059af4557c0c1d9b75ef3bd28e6159dfb5455adbb9a, raw run SHA-256 a00bdb89d102411abb8f5ec1496f34926691efdd01e3f69d531980f81b41adb0). The frpwr_l6 gameplay causality sequence run on the Oliver System 7 conversion frpwr_b7: the game-on enable asserts at public 25, the coin credit appears on display index 4 (fp_7digit_disp position 34) and the ball number on index 5, and closing matrix switches 26, 25, 27, 28, 42 and 12 publishes 17-22 in order. That special-solenoid pairing is PinMAME's switch-driven sxx.ssSw path, which is sequential by construction; the run never makes the ROM fire a special solenoid itself, reaches no service test and reads no DIP switch. The whole run directory is pinned by external:pinmame-runtime-evidence/firepower-1980.manifest.json (40 files, 5508646 bytes, manifest SHA-256 2af0fcd687c87a98813e5e4bfc6ebd22cd3730e7584ff81ff4ab8c1e621b42c6). No ROM bytes or NVRAM blobs are retained in this repository.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "7422c2d8b6e4f511e3bb12be0a2c6109720e9d3b27a71669116ba0237205fea6",
+      "uri": "external:pinmame-runtime-evidence/firepower-1980/run-b7.json"
     }
   ]
 }

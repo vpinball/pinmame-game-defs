@@ -54,7 +54,7 @@ class MachineKindClassificationTests(unittest.TestCase):
 		self.assertEqual(self.catalog["summary"]["game_count"], report["machine_count"])
 		self.assertEqual(13, report["non_game_record_count"])
 		self.assertEqual(13, sum(1 for machine in self.catalog["machines"] if machine["machine_kind"] == "diagnostic_software"))
-		self.assertEqual(777, report["machine_count"])
+		self.assertEqual(775, report["machine_count"])
 
 
 if __name__ == "__main__":

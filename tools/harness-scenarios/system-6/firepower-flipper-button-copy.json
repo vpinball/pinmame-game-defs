@@ -1,0 +1,101 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "frpwr_l6",
+  "notes": "Firepower cabinet flipper-button path. System 6 has no flipper matrix column of its own: the driver declares FLIP_SWNO(0,45), so core_updateSw copies the right cabinet button (synthetic flipper-column position 82) into matrix switch 45 every frame, and PinMAME publishes the synthetic flipper coil states 45-48 only while the game-on enable (23) is set. This run never writes public 45: after a started game lights lamp 5 from the F rollover (32), it presses 82 and then 84 and records whether the ROM moves the lit lane-change lamp and which synthetic flipper outputs follow each button. Run from an NVRAM initialized by one prior empty-NVRAM power-up.",
+  "initial_switches": [
+    {
+      "switch": 51,
+      "state": 1
+    },
+    {
+      "switch": 58,
+      "state": 1
+    },
+    {
+      "switch": 57,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    3,
+    4,
+    45,
+    46,
+    51,
+    57,
+    58,
+    82,
+    84
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6,
+      "label": "settle into game-over attract mode with three balls resting on the ball ramp"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "insert a coin on the right coin switch (public 4)"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 4.0,
+      "label": "press the credit button (public 3) to start a game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "the thrown ball leaves the right ball-ramp position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "ball arrives in the shooter lane (public 46)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "ball plunged out of the shooter lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "F rollover lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 300,
+      "settle_s": 1.5,
+      "label": "press and release the right cabinet flipper button (synthetic 82); public 45 is never written by the scenario"
+    },
+    {
+      "type": "pulse",
+      "switch": 84,
+      "hold_ms": 300,
+      "settle_s": 1.5,
+      "label": "press and release the left cabinet flipper button (synthetic 84)"
+    },
+    {
+      "type": "pulse",
+      "switch": 82,
+      "hold_ms": 300,
+      "settle_s": 1.5,
+      "label": "press the right cabinet flipper button again"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "frpwr_l6",
+  "notes": "Williams System 6 diagnostics per the Firepower instruction booklet 16P-497-103: with the Auto-Up/Manual-Down toggle (public -6) at Manual-Down, Advance (public -7) blanks the displays; Advance plus Auto-Up runs the display-digit test; Advance runs Test 01 (lamps); Manual-Down plus Advance enters Test 02 and pulses solenoid 01, and each further Advance pulses the next solenoid while the ball-in-play display shows its number. S6 has no keyboard in this harness, so SWITCH_UPDATE(s6) leaves matrix column 0 to the direct switch writes. Public -6 reads 1 for Auto-Up.",
+  "initial_switches": [
+    {"switch": -6, "state": 1}
+  ],
+  "watch_switches": [-7, -6, 9, 51, 57, 58],
+  "actions": [
+    {"type": "wait", "seconds": 6.0, "label": "boot and settle into game-over attract mode"},
+    {"type": "set_switch", "switch": -6, "state": 0, "settle_s": 0.5, "label": "Auto/Manual toggle to Manual-Down"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 1.5, "label": "Advance: enter diagnostics, displays blank"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 0.5, "label": "Advance"},
+    {"type": "set_switch", "switch": -6, "state": 1, "settle_s": 4.0, "label": "Auto-Up: display digits test"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 4.0, "label": "Advance: Test 01 lamp test"},
+    {"type": "set_switch", "switch": -6, "state": 0, "settle_s": 0.5, "label": "Manual-Down"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: Test 02, solenoid 01"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"},
+    {"type": "pulse", "switch": -7, "hold_ms": 200, "settle_s": 2.0, "label": "Advance: next solenoid"}
+  ]
+}

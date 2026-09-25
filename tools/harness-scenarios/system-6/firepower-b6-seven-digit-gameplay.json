@@ -1,0 +1,202 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "frpwr_b6",
+  "notes": "Oliver System 6 seven-digit conversion display check (frpwr_b6, s6_mS6S, fp_7digit_disp). PinMAME labels the two small fp_7digit_disp entries only as left and right side, so this run inserts a coin, starts a game and records which display entry shows the credit count and which shows the ball in play, together with the special-solenoid, flipper-button and lane-change behaviour already recorded for frpwr_l6. Run from an NVRAM initialized by one prior empty-NVRAM power-up.",
+  "initial_switches": [
+    {
+      "switch": 51,
+      "state": 1
+    },
+    {
+      "switch": 58,
+      "state": 1
+    },
+    {
+      "switch": 57,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    3,
+    4,
+    9,
+    13,
+    30,
+    36,
+    45,
+    46,
+    51,
+    57,
+    58,
+    82
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6,
+      "label": "settle into game-over attract mode with three balls resting on the ball ramp"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "insert a coin on the right coin switch (public 4)"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 4.0,
+      "label": "press the credit button (public 3) to start a game"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "the thrown ball leaves the right ball-ramp position"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 1,
+      "settle_s": 1.5,
+      "label": "ball arrives in the shooter lane (public 46)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 46,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "ball plunged out of the shooter lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "F rollover lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "right flipper lane-change switch (public 45)"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "I rollover lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "left kicker (slingshot) switch: special solenoid 22 is switch-driven via sxx.ssSw"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "right kicker (slingshot) switch: special solenoid 21"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "top left jet bumper switch: special solenoid 17"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "bottom left jet bumper switch: special solenoid 18"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "top right jet bumper switch: special solenoid 19"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 100,
+      "settle_s": 1.5,
+      "label": "bottom right jet bumper switch: special solenoid 20"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "ball enters the left eject hole (public 13)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 13,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "eject hole empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "ball enters the right eject hole (public 30)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 30,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "right eject hole empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "ball enters the upper right eject hole (public 36)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 36,
+      "state": 0,
+      "settle_s": 1.0,
+      "label": "upper right eject hole empties"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 1,
+      "settle_s": 3.0,
+      "label": "ball drains into the outhole (public 9)"
+    },
+    {
+      "type": "set_switch",
+      "switch": 9,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "outhole kicked clear"
+    },
+    {
+      "type": "set_switch",
+      "switch": 57,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "ball lands back on the right ball-ramp position"
+    }
+  ]
+}

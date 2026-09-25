@@ -1,0 +1,834 @@
+{
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 1974.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/1974; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "ComboTrigger1-4, invisible triggers between the six 1-6 targets that pulse two adjacent target switches at once; a table aid for shots that strike two targets, not a device.",
+    "B1T1-B4T8, rings of invisible triggers around the jet bumpers used only for the table's animation.",
+    "StandupTarget walls' own switch number: all eight handlers pulse 48, so their identity comes from Figure 4 rather than the script.",
+    "Drain, the retained trough's entry kicker on the table's bottom edge; the outhole placement is the booklet's registered callout instead.",
+    "LBlueTopB/LBlueMiddleB/LBlueBottomB, LBumper*B and LBackHole1, co-located bloom and halo copies of bound lights.",
+    "GI_* lights: general illumination is an unswitched 6.3 VAC supply with no controller address.",
+    "All backglass Light, Flasher and Reel objects, which render the backbox and score displays."
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifests": {
+      "firepower-vs-ai-v3.4.2": {
+        "file_count": 1065,
+        "manifest_sha256": "cb8357b34e6ed744e9bae39f3845fd6477a1361925f5d8248f54936349252055",
+        "total_bytes": 332893876
+      },
+      "firepower-williams-1980-v1.0": {
+        "file_count": 1098,
+        "manifest_sha256": "119ea4e367f16ae078fe76ac9dcd50f80f8b01192e4bd413b1dbb963f9c26c31",
+        "total_bytes": 252535142
+      }
+    },
+    "source_ref": "vpx-extraction.firepower-williams-1980-v1-0",
+    "vpxtool_version": "vpxtool git:v0.33.3"
+  },
+  "format": "pinmame-spatial-audit",
+  "machine_id": "williams.firepower.1980",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      {
+        "address": -7,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": -6,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": -5,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": -4,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": -3,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 1,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 2,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 3,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 4,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 5,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 6,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 8,
+        "group": "pinmame.input.switch"
+      }
+    ],
+    "dip_switch": [
+      {
+        "address": 1,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 2,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 9,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 10,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 11,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 12,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 13,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 14,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 15,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 16,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 17,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 18,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 19,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 20,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 21,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 22,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 23,
+        "group": "pinmame.input.dip"
+      },
+      {
+        "address": 24,
+        "group": "pinmame.input.dip"
+      }
+    ],
+    "unused": [
+      {
+        "address": 20,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 24,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 52,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 55,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 56,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 59,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 60,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 61,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 62,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 63,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 64,
+        "group": "pinmame.input.switch"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 81,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 82,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 83,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 84,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 85,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 86,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 87,
+        "group": "pinmame.input.switch"
+      },
+      {
+        "address": 88,
+        "group": "pinmame.input.switch"
+      }
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 50,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 51,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 52,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 53,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 54,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 55,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 57,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 58,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 59,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 60,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 61,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 62,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 63,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 64,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 14,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 16,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 23,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "internal_nonvisual": [
+      {
+        "address": 9,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 10,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 11,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 12,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 13,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 23,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 2,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 3,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 45,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 47,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "placement_count": 110,
+  "projections": [
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 4 callout (outhole); the retained table has no object for this device. Two-decimal precision."
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained LeftSlingShot wall, whose _Slingshot handler pulses this address; the contact sits behind the rubber."
+    },
+    {
+      "address": 14,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained StandupTarget4 wall, identified as this standup by the registered Figure 4 callouts (the table's own handler pulses 48 for every standup wall)."
+    },
+    {
+      "address": 16,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained StandupTarget1 wall, identified as this standup by the registered Figure 4 callouts (the table's own handler pulses 48 for every standup wall)."
+    },
+    {
+      "address": 29,
+      "group": "pinmame.input.switch",
+      "reason": "Centre of the world-space mesh bounds of the retained TopTarget_6 primitive."
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained StandupTarget2 wall, identified as this standup by the registered Figure 4 callouts (the table's own handler pulses 48 for every standup wall)."
+    },
+    {
+      "address": 37,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained StandupTarget3 wall, identified as this standup by the registered Figure 4 callouts (the table's own handler pulses 48 for every standup wall)."
+    },
+    {
+      "address": 38,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained StandupTarget7 wall, identified as this standup by the registered Figure 4 callouts (the table's own handler pulses 48 for every standup wall)."
+    },
+    {
+      "address": 39,
+      "group": "pinmame.input.switch",
+      "reason": "Centre of the world-space mesh bounds of the retained PTTarget_6 primitive."
+    },
+    {
+      "address": 40,
+      "group": "pinmame.input.switch",
+      "reason": "Centre of the world-space mesh bounds of the retained PMTarget_6 primitive."
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "reason": "Centre of the world-space mesh bounds of the retained PBTarget_6 primitive."
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained RightSlingShot wall, whose _Slingshot handler pulses this address; the contact sits behind the rubber."
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 4 callout (lane-change); the retained table has no object for this device. Two-decimal precision."
+    },
+    {
+      "address": 47,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 4 callout (playfield-tilt); the retained table has no object for this device. Two-decimal precision."
+    },
+    {
+      "address": 48,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained StandupTarget5 wall, identified as this standup by the registered Figure 4 callouts (the table's own handler pulses 48 for every standup wall)."
+    },
+    {
+      "address": 49,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 4 callout (center-middle-left-standup); the base table has no wall for this standup. The Vs A.I. revision's StandupTarget8 wall at (0.111636, 0.369892) corroborates it to within 0.01. Two-decimal precision."
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "reason": "Drag-point centroid of the retained StandupTarget6 wall, identified as this standup by the registered Figure 4 callouts (the table's own handler pulses 48 for every standup wall)."
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 4 callout (left-ball-ramp); the retained table has no object for this device. Two-decimal precision."
+    },
+    {
+      "address": 57,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 4 callout (right-ball-ramp); the retained table has no object for this device. Two-decimal precision."
+    },
+    {
+      "address": 58,
+      "group": "pinmame.input.switch",
+      "reason": "Registered from the booklet's Figure 4 callout (center-ball-ramp); the retained table has no object for this device. Two-decimal precision."
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "reason": "Ball Release sits with the outhole below the apron; placed at the registered Figure 4 outhole callout, which Figure 3's callout 01 matches."
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "reason": "Ball Ramp Thrower sits at the exit end of the ball ramp below the apron; placed on the retained trough's exit kicker BallRelease, which throws into the shooter lane."
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained Bumper1 object the coil drives."
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained Bumper4 object the coil drives."
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained Bumper2 object the coil drives."
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained Bumper3 object the coil drives."
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained RightSlingShot object the coil drives."
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained LeftSlingShot object the coil drives."
+    }
+  ],
+  "resolved_input_addresses": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    21,
+    22,
+    23,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    53,
+    54,
+    57,
+    58
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 1,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "8d0ec27855bf80407a6efb54e28cf9fee476d2e8ec2d630a3c2016981f8e58dc",
+    "geometry_candidates_sha256": "0dbb74f4f0d508c3b6b772f62f3dec5fe1e052b259def1f8698b0791e934d85c",
+    "instruction_booklet_sha256": "ed59481c2a4eeb89a130e7d42e1fa98ae6d8fe68022bbd12658d46a46a500f94",
+    "primitive_bounds_sha256": "0d4a67a9f99f6e04c67a56ff231eba434e855282a1d87e936920319f4b5c7fc1",
+    "schematics_sha256": "a3b403c78b5fc3560c9e2bce8401dbdc0493e2f5cd01a2ce90ce92373343e34b",
+    "table_sha256": "7786f7d073b6580e808acfb8aff60d1f30436f9d4d224b0ff57ca2ef899db179",
+    "vs_ai_table_sha256": "070c34356ef677d8d1f37079ef9a18de8f9fc6629bbbb15df660918cfebba19c"
+  },
+  "status": "validated and promoted to machines/author-ready/williams/firepower-1980.json",
+  "unresolved": [],
+  "version": 1,
+  "visual_review_cache": [
+    "external:pinmame-manuals/by-machine/williams.firepower.1980/render/",
+    "external:pinmame-review-artifacts/firepower-1980/"
+  ]
+}

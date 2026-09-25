@@ -1,0 +1,592 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "frpwr_l6",
+  "notes": "Williams System 6 Test 03 (switch test) per the Firepower instruction booklet 16P-497-103 diagnostic procedure steps 1-7: the credit display shows 03 and the ball-in-play display shows the number of each switch the ROM sees closed. Each public switch 1-64 is closed alone for 400 ms with a snapshot taken while held, so the displayed number can be paired with the public address that was driven. Run from an NVRAM initialized by one prior empty-NVRAM power-up, because a first power-up from empty CMOS stops on the game-identification/audit screen.",
+  "watch_switches": [
+    -7,
+    -6
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 6.0,
+      "label": "settle into game-over attract mode"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "Auto/Manual toggle to Manual-Down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 1.5,
+      "label": "Advance: enter diagnostics, displays blank"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 0.5,
+      "label": "Advance"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 4.0,
+      "label": "Auto-Up: display digits test"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Advance: Test 01 lamp test"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 0,
+      "settle_s": 0.5,
+      "label": "Manual-Down"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 1.0,
+      "label": "Advance: Test 02 solenoid test"
+    },
+    {
+      "type": "set_switch",
+      "switch": -6,
+      "state": 1,
+      "settle_s": 0.5,
+      "label": "Auto-Up"
+    },
+    {
+      "type": "pulse",
+      "switch": -7,
+      "hold_ms": 200,
+      "settle_s": 3.0,
+      "label": "Advance: Test 03 switch test"
+    },
+    {
+      "type": "pulse",
+      "switch": 1,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 1 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 2,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 2 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 3 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 4,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 4 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 5,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 5 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 6 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 7,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 7 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 8,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 8 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 9 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 10,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 10 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 11,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 11 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 12,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 12 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 13,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 13 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 14,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 14 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 15,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 15 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 16,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 16 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 17,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 17 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 18,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 18 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 19,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 19 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 20,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 20 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 21,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 21 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 22,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 22 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 23,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 23 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 24,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 24 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 25,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 25 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 26,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 26 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 27,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 27 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 28,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 28 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 29,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 29 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 30,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 30 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 31,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 31 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 32,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 32 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 33,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 33 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 34,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 34 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 35,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 35 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 36,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 36 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 37,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 37 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 38,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 38 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 39,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 39 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 40,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 40 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 41,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 41 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 42,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 42 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 43,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 43 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 44,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 44 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 45,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 45 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 46,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 46 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 47,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 47 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 48,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 48 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 49,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 49 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 50,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 50 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 51,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 51 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 52,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 52 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 53,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 53 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 54,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 54 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 55,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 55 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 56,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 56 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 57,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 57 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 58,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 58 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 59,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 59 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 60,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 60 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 61,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 61 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 62,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 62 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 63,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 63 and read the ball-in-play display"
+    },
+    {
+      "type": "pulse",
+      "switch": 64,
+      "hold_ms": 400,
+      "settle_s": 1.2,
+      "snapshot_while_held": true,
+      "label": "close public switch 64 and read the ball-in-play display"
+    }
+  ]
+}

@@ -599,185 +599,183 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 593 | 1980 | Alien Poker | Williams | partial | 13% |
 | 594 | 1980 | Black Knight | Williams | partial | 13% |
 | 595 | 1980 | Blackout | Williams | partial | 13% |
-| 596 | 1980 | Firepower | Williams | partial | 13% |
+| 596 | 1980 | Firepower | Williams | author_ready | 100% |
 | 597 | 1980 | Omni (Shuffle) (L-1) | Williams | partial | 6% |
 | 598 | 1980 | Scorpion | Williams | partial | 13% |
-| 599 | 1980 | Firepower | Williams / Oliver | partial | 6% |
-| 600 | 1980 | Firepower | Williams / Oliver | partial | 6% |
-| 601 | 1980 | Firepower | Williams / Oliver | partial | 6% |
-| 602 | 1980 | Fire Mountain | Zaccaria | partial | 13% |
-| 603 | 1980 | Space Shuttle | Zaccaria | partial | 13% |
-| 604 | 1980 | Star God | Zaccaria | partial | 13% |
-| 605 | 1979 | Disco '79 | Allied Leisure | partial | 13% |
-| 606 | 1979 | Star Shooter | Allied Leisure | partial | 13% |
-| 607 | 1979 | Black Sheep Squadron | Astro | partial | 13% |
-| 608 | 1979 | Hercules | Atari | partial | 13% |
-| 609 | 1979 | Road Runner | Atari | partial | 13% |
-| 610 | 1979 | Superman | Atari | partial | 13% |
-| 611 | 1979 | Future Spa | Bally | partial | 19% |
-| 612 | 1979 | Harlem Globetrotters on Tour | Bally | partial | 13% |
-| 613 | 1979 | Hotdoggin' | Bally | partial | 19% |
-| 614 | 1979 | Kiss | Bally | author_ready | 100% |
-| 615 | 1979 | KISS | Bally | partial | 6% |
-| 616 | 1979 | Paragon | Bally | partial | 19% |
-| 617 | 1979 | Rolling Stones | Bally | partial | 19% |
-| 618 | 1979 | Star Trek | Bally | partial | 19% |
-| 619 | 1979 | Supersonic | Bally | partial | 19% |
-| 620 | 1979 | Viking | Bally | partial | 19% |
-| 621 | 1979 | Circa 1933 | Fascination Int. | partial | 13% |
-| 622 | 1979 | Eros One | Fascination Int. | partial | 13% |
-| 623 | 1979 | Family Fun! | Game Plan | partial | 13% |
-| 624 | 1979 | Old Coney Island! | Game Plan | partial | 13% |
-| 625 | 1979 | Sharpshooter | Game Plan | partial | 13% |
-| 626 | 1979 | Star Trip | Game Plan | partial | 13% |
-| 627 | 1979 | Vegas | Game Plan | partial | 13% |
-| 628 | 1979 | Count-Down | Gottlieb | partial | 19% |
-| 629 | 1979 | Genie | Gottlieb | partial | 13% |
-| 630 | 1979 | Pinball Pool | Gottlieb | partial | 13% |
-| 631 | 1979 | Solar Ride | Gottlieb | partial | 13% |
-| 632 | 1979 | The Incredible Hulk | Gottlieb | partial | 13% |
-| 633 | 1979 | Totem | Gottlieb | partial | 13% |
-| 634 | 1979 | Centaur (Inder) | Inder (Spain) | partial | 6% |
-| 635 | 1979 | Topaz (Inder) | Inder (Spain) | partial | 6% |
-| 636 | 1979 | Antar | Playmatic | partial | 6% |
-| 637 | 1979 | Party | Playmatic | partial | 6% |
-| 638 | 1979 | Night Fever | Sonic (Spain) | partial | 6% |
-| 639 | 1979 | Storm | Sonic (Spain) | partial | 6% |
-| 640 | 1979 | Cosmic Princess | Stern | partial | 19% |
-| 641 | 1979 | Dracula | Stern | partial | 13% |
-| 642 | 1979 | Hot Hand | Stern | partial | 19% |
-| 643 | 1979 | Magic | Stern | partial | 19% |
-| 644 | 1979 | Meteor | Stern | partial | 19% |
-| 645 | 1979 | Meteor | Stern | partial | 13% |
-| 646 | 1979 | Trident | Stern | partial | 19% |
-| 647 | 1979 | Football | Taito | partial | 6% |
-| 648 | 1979 | Shock | Taito | partial | 6% |
-| 649 | 1979 | Aristocrat (Shuffle) (L-1) | Williams | partial | 6% |
-| 650 | 1979 | Flash | Williams | partial | 13% |
-| 651 | 1979 | Gorgar | Williams | partial | 13% |
-| 652 | 1979 | King Tut (Shuffle) (L-1) | Williams | partial | 6% |
-| 653 | 1979 | Laser Ball | Williams | partial | 13% |
-| 654 | 1979 | Stellar Wars | Williams | partial | 13% |
-| 655 | 1979 | Taurus (Shuffle) (L-1) | Williams | partial | 6% |
-| 656 | 1979 | Time Warp | Williams | partial | 13% |
-| 657 | 1979 | Tri Zone | Williams | partial | 13% |
-| 658 | 1979 | Hot Wheels | Zaccaria | partial | 13% |
-| 659 | 1979 | Shooting the Rapids | Zaccaria | partial | 13% |
-| 660 | 1979 | Space City | Zaccaria | partial | 13% |
-| 661 | 1978 | Flame of Athens | Allied Leisure | partial | 13% |
-| 662 | 1978 | Hearts Spades | Allied Leisure | partial | 13% |
-| 663 | 1978 | Hoe Down | Allied Leisure | partial | 13% |
-| 664 | 1978 | Take Five | Allied Leisure | partial | 13% |
-| 665 | 1978 | Middle Earth | Atari | partial | 13% |
-| 666 | 1978 | Space Riders | Atari | partial | 13% |
-| 667 | 1978 | Dolly Parton | Bally | partial | 19% |
-| 668 | 1978 | Lost World | Bally | partial | 19% |
-| 669 | 1978 | Playboy | Bally | partial | 19% |
-| 670 | 1978 | Silverball Mania | Bally | partial | 19% |
-| 671 | 1978 | Strikes and Spares | Bally | partial | 13% |
-| 672 | 1978 | Voltan Escapes Cosmic Doom | Bally | partial | 19% |
-| 673 | 1978 | Black Velvet | Game Plan | partial | 13% |
-| 674 | 1978 | Camel Lights | Game Plan | partial | 13% |
-| 675 | 1978 | Chuck-A-Luck | Game Plan | partial | 13% |
-| 676 | 1978 | Foxy Lady | Game Plan | partial | 13% |
-| 677 | 1978 | Real | Game Plan | partial | 13% |
-| 678 | 1978 | Rio | Game Plan | partial | 13% |
-| 679 | 1978 | Charlie’s Angels | Gottlieb | partial | 13% |
-| 680 | 1978 | Close Encounters of the Third Kind | Gottlieb | partial | 13% |
-| 681 | 1978 | Dragon | Gottlieb | partial | 13% |
-| 682 | 1978 | Joker Poker | Gottlieb | partial | 13% |
-| 683 | 1978 | Sinbad | Gottlieb | partial | 13% |
-| 684 | 1978 | FJ Holden | Hankin | partial | 6% |
-| 685 | 1978 | Orbit 1 | Hankin | partial | 6% |
-| 686 | 1978 | Pentacup (rev. 1) | Micropin | partial | 6% |
-| 687 | 1978 | Rotation VIII | Midway | partial | 13% |
-| 688 | 1978 | Lucky Draw | Mirco | partial | 13% |
-| 689 | 1978 | Big Town | Playmatic | partial | 6% |
-| 690 | 1978 | Chance | Playmatic | partial | 6% |
-| 691 | 1978 | Last Lap | Playmatic | partial | 6% |
-| 692 | 1978 | Space Gambler | Playmatic | partial | 6% |
-| 693 | 1978 | Third World | Sonic (Spain) | partial | 6% |
-| 694 | 1978 | Lectronamo | Stern | partial | 13% |
-| 695 | 1978 | Memory Lane | Stern | partial | 13% |
-| 696 | 1978 | Nugent | Stern | partial | 13% |
-| 697 | 1978 | Stars | Stern | partial | 13% |
-| 698 | 1978 | Wild Fyre | Stern | partial | 13% |
-| 699 | 1978 | Spectra IV | Valley | partial | 13% |
-| 700 | 1978 | Contact | Williams | partial | 13% |
-| 701 | 1978 | Disco Fever | Williams | partial | 13% |
-| 702 | 1978 | Phoenix | Williams | partial | 13% |
-| 703 | 1978 | Pokerino | Williams | partial | 13% |
-| 704 | 1978 | Pompeii (Shuffle) (L-1) | Williams | partial | 6% |
-| 705 | 1978 | Topaz (Shuffle) (L-1) | Williams | partial | 6% |
-| 706 | 1978 | World Cup | Williams | partial | 13% |
-| 707 | 1978 | Future World | Zaccaria | partial | 13% |
-| 708 | 1978 | House of Diamonds | Zaccaria | partial | 13% |
-| 709 | 1978 | Ski Jump | Zaccaria | partial | 13% |
-| 710 | 1978 | Winter Sports | Zaccaria | partial | 13% |
-| 711 | 1977 | Roy Clark Super Picker | Allied Leisure | partial | 13% |
-| 712 | 1977 | Airborne Avenger | Atari | partial | 13% |
-| 713 | 1977 | Time 2000 | Atari | partial | 13% |
-| 714 | 1977 | Black Jack | Bally | partial | 13% |
-| 715 | 1977 | Bobby Orr's Power Play | Bally | partial | 13% |
-| 716 | 1977 | Eight Ball | Bally | partial | 13% |
-| 717 | 1977 | Evel Knievel | Bally | partial | 13% |
-| 718 | 1977 | Mata Hari | Bally | partial | 13% |
-| 719 | 1977 | Six Million Dollar Man | Bally | partial | 19% |
-| 720 | 1977 | Roy Clark 'The' Entertainer | Fascination Int. | partial | 13% |
-| 721 | 1977 | Cleopatra | Gottlieb | partial | 13% |
-| 722 | 1977 | Pinball | Stern | partial | 13% |
-| 723 | 1977 | Stingray | Stern | partial | 13% |
-| 724 | 1977 | Hot Tip | Williams | partial | 13% |
-| 725 | 1977 | Lucky Seven | Williams | partial | 13% |
-| 726 | 1976 | Thunderbolt | Allied Leisure | partial | 13% |
-| 727 | 1976 | Atarians | Atari | partial | 13% |
-| 728 | 1976 | Freedom | Bally | partial | 13% |
-| 729 | 1976 | Night Rider | Bally | partial | 13% |
-| 730 | 1975 | Bow and Arrow | Bally | partial | 13% |
-| 731 | 1975 | Spirit of 76 | Mirco | partial | 13% |
-| 732 | 1974 | Boomerang | Bally | partial | 13% |
-| 733 | 1974 | Flicker (Prototype) | Nutting Associates | partial | 6% |
-| 734 | 1974 | Strike | Zaccaria | partial | 13% |
-| 735 | unknown | Rush (1.0) | Astill Entertainment | partial | 6% |
-| 736 | unknown | System 3 game template | Gottlieb | partial | 6% |
-| 737 | unknown | Movie Masters | Jac Van Ham (Royal) | partial | 6% |
-| 738 | unknown | Pin Ball | Joctronic | partial | 6% |
-| 739 | unknown | Pimbal (Pinball 3000) | Juegos Populares | partial | 6% |
-| 740 | unknown | Alien Warrior | LTD | partial | 6% |
-| 741 | unknown | Arizona | LTD | partial | 6% |
-| 742 | unknown | Atlantis (LTD) | LTD | partial | 6% |
-| 743 | unknown | Columbia | LTD | partial | 6% |
-| 744 | unknown | Cowboy Eight Ball 2 | LTD | partial | 6% |
-| 745 | unknown | Disco Dancing | LTD | partial | 6% |
-| 746 | unknown | Force | LTD | partial | 6% |
-| 747 | unknown | Haunted Hotel | LTD | partial | 6% |
-| 748 | unknown | Hustler | LTD | partial | 6% |
-| 749 | unknown | King Kong (LTD) | LTD | partial | 6% |
-| 750 | unknown | Martian Queen | LTD | partial | 6% |
-| 751 | unknown | Mr. & Mrs. Pec-Men | LTD | partial | 6% |
-| 752 | unknown | Space Poker | LTD | partial | 6% |
-| 753 | unknown | Time Machine (LTD) (4 Players) | LTD | partial | 6% |
-| 754 | unknown | Trick Shooter | LTD | partial | 6% |
-| 755 | unknown | Viking King | LTD | partial | 6% |
-| 756 | unknown | Unknown Game (MAC #1808) | MAC S.A. | partial | 6% |
-| 757 | unknown | Eight Ball Champ (Maibesa) | Maibesa | partial | 6% |
-| 758 | unknown | Stars & Strikes (Bowler) | Monroe Bowling Co. | partial | 6% |
-| 759 | unknown | Mad Race | Playmatic | partial | 6% |
-| 760 | unknown | Miss Disco (Bingo) | Playmatic | partial | 6% |
-| 761 | unknown | Heavy Metal | Rowamet | partial | 6% |
-| 762 | unknown | Brooklyn (set 1) (Bingo) | Seeben (Belgium) | partial | 6% |
-| 763 | unknown | Penalty (Bingo) | Seeben (Belgium) | partial | 6% |
-| 764 | unknown | Continental 3 in 1 (Bingo) | Sirmo (Belgium) | partial | 6% |
-| 765 | unknown | Domino II (Bingo) | Sirmo (Belgium) | partial | 6% |
-| 766 | unknown | Golden Gate (set 1) (Bingo) | Sirmo (Belgium) | partial | 6% |
-| 767 | unknown | New Dixieland (Bingo) | Sirmo (Belgium) | partial | 6% |
-| 768 | unknown | Super Dixieland (Bingo) | Sirmo (Belgium) | partial | 6% |
-| 769 | unknown | Triple Joker (Bingo) | Sirmo (Belgium) | partial | 6% |
-| 770 | unknown | Golden Game (Bingo) | Splin (Belgium) | partial | 6% |
-| 771 | unknown | Michigan (Bingo) | Splin (Belgium) | partial | 6% |
-| 772 | unknown | Montana Bingo Stake 6/10 (Bingo) | Splin (Belgium) | partial | 6% |
-| 773 | unknown | Top Game Laser L10 (Bingo) | Splin (Belgium) | partial | 6% |
-| 774 | unknown | Fire Action Deluxe | Taito | partial | 6% |
-| 775 | unknown | Polar Explorer | Taito | partial | 6% |
-| 776 | unknown | Volley | Taito | partial | 6% |
-| 777 | unknown | Big Ball Bowling (Bowler) | United(?) | partial | 6% |
+| 599 | 1980 | Firepower | Williams / Oliver | partial | 13% |
+| 600 | 1980 | Fire Mountain | Zaccaria | partial | 13% |
+| 601 | 1980 | Space Shuttle | Zaccaria | partial | 13% |
+| 602 | 1980 | Star God | Zaccaria | partial | 13% |
+| 603 | 1979 | Disco '79 | Allied Leisure | partial | 13% |
+| 604 | 1979 | Star Shooter | Allied Leisure | partial | 13% |
+| 605 | 1979 | Black Sheep Squadron | Astro | partial | 13% |
+| 606 | 1979 | Hercules | Atari | partial | 13% |
+| 607 | 1979 | Road Runner | Atari | partial | 13% |
+| 608 | 1979 | Superman | Atari | partial | 13% |
+| 609 | 1979 | Future Spa | Bally | partial | 19% |
+| 610 | 1979 | Harlem Globetrotters on Tour | Bally | partial | 13% |
+| 611 | 1979 | Hotdoggin' | Bally | partial | 19% |
+| 612 | 1979 | Kiss | Bally | author_ready | 100% |
+| 613 | 1979 | KISS | Bally | partial | 6% |
+| 614 | 1979 | Paragon | Bally | partial | 19% |
+| 615 | 1979 | Rolling Stones | Bally | partial | 19% |
+| 616 | 1979 | Star Trek | Bally | partial | 19% |
+| 617 | 1979 | Supersonic | Bally | partial | 19% |
+| 618 | 1979 | Viking | Bally | partial | 19% |
+| 619 | 1979 | Circa 1933 | Fascination Int. | partial | 13% |
+| 620 | 1979 | Eros One | Fascination Int. | partial | 13% |
+| 621 | 1979 | Family Fun! | Game Plan | partial | 13% |
+| 622 | 1979 | Old Coney Island! | Game Plan | partial | 13% |
+| 623 | 1979 | Sharpshooter | Game Plan | partial | 13% |
+| 624 | 1979 | Star Trip | Game Plan | partial | 13% |
+| 625 | 1979 | Vegas | Game Plan | partial | 13% |
+| 626 | 1979 | Count-Down | Gottlieb | partial | 19% |
+| 627 | 1979 | Genie | Gottlieb | partial | 13% |
+| 628 | 1979 | Pinball Pool | Gottlieb | partial | 13% |
+| 629 | 1979 | Solar Ride | Gottlieb | partial | 13% |
+| 630 | 1979 | The Incredible Hulk | Gottlieb | partial | 13% |
+| 631 | 1979 | Totem | Gottlieb | partial | 13% |
+| 632 | 1979 | Centaur (Inder) | Inder (Spain) | partial | 6% |
+| 633 | 1979 | Topaz (Inder) | Inder (Spain) | partial | 6% |
+| 634 | 1979 | Antar | Playmatic | partial | 6% |
+| 635 | 1979 | Party | Playmatic | partial | 6% |
+| 636 | 1979 | Night Fever | Sonic (Spain) | partial | 6% |
+| 637 | 1979 | Storm | Sonic (Spain) | partial | 6% |
+| 638 | 1979 | Cosmic Princess | Stern | partial | 19% |
+| 639 | 1979 | Dracula | Stern | partial | 13% |
+| 640 | 1979 | Hot Hand | Stern | partial | 19% |
+| 641 | 1979 | Magic | Stern | partial | 19% |
+| 642 | 1979 | Meteor | Stern | partial | 19% |
+| 643 | 1979 | Meteor | Stern | partial | 13% |
+| 644 | 1979 | Trident | Stern | partial | 19% |
+| 645 | 1979 | Football | Taito | partial | 6% |
+| 646 | 1979 | Shock | Taito | partial | 6% |
+| 647 | 1979 | Aristocrat (Shuffle) (L-1) | Williams | partial | 6% |
+| 648 | 1979 | Flash | Williams | partial | 13% |
+| 649 | 1979 | Gorgar | Williams | partial | 13% |
+| 650 | 1979 | King Tut (Shuffle) (L-1) | Williams | partial | 6% |
+| 651 | 1979 | Laser Ball | Williams | partial | 13% |
+| 652 | 1979 | Stellar Wars | Williams | partial | 13% |
+| 653 | 1979 | Taurus (Shuffle) (L-1) | Williams | partial | 6% |
+| 654 | 1979 | Time Warp | Williams | partial | 13% |
+| 655 | 1979 | Tri Zone | Williams | partial | 13% |
+| 656 | 1979 | Hot Wheels | Zaccaria | partial | 13% |
+| 657 | 1979 | Shooting the Rapids | Zaccaria | partial | 13% |
+| 658 | 1979 | Space City | Zaccaria | partial | 13% |
+| 659 | 1978 | Flame of Athens | Allied Leisure | partial | 13% |
+| 660 | 1978 | Hearts Spades | Allied Leisure | partial | 13% |
+| 661 | 1978 | Hoe Down | Allied Leisure | partial | 13% |
+| 662 | 1978 | Take Five | Allied Leisure | partial | 13% |
+| 663 | 1978 | Middle Earth | Atari | partial | 13% |
+| 664 | 1978 | Space Riders | Atari | partial | 13% |
+| 665 | 1978 | Dolly Parton | Bally | partial | 19% |
+| 666 | 1978 | Lost World | Bally | partial | 19% |
+| 667 | 1978 | Playboy | Bally | partial | 19% |
+| 668 | 1978 | Silverball Mania | Bally | partial | 19% |
+| 669 | 1978 | Strikes and Spares | Bally | partial | 13% |
+| 670 | 1978 | Voltan Escapes Cosmic Doom | Bally | partial | 19% |
+| 671 | 1978 | Black Velvet | Game Plan | partial | 13% |
+| 672 | 1978 | Camel Lights | Game Plan | partial | 13% |
+| 673 | 1978 | Chuck-A-Luck | Game Plan | partial | 13% |
+| 674 | 1978 | Foxy Lady | Game Plan | partial | 13% |
+| 675 | 1978 | Real | Game Plan | partial | 13% |
+| 676 | 1978 | Rio | Game Plan | partial | 13% |
+| 677 | 1978 | Charlie’s Angels | Gottlieb | partial | 13% |
+| 678 | 1978 | Close Encounters of the Third Kind | Gottlieb | partial | 13% |
+| 679 | 1978 | Dragon | Gottlieb | partial | 13% |
+| 680 | 1978 | Joker Poker | Gottlieb | partial | 13% |
+| 681 | 1978 | Sinbad | Gottlieb | partial | 13% |
+| 682 | 1978 | FJ Holden | Hankin | partial | 6% |
+| 683 | 1978 | Orbit 1 | Hankin | partial | 6% |
+| 684 | 1978 | Pentacup (rev. 1) | Micropin | partial | 6% |
+| 685 | 1978 | Rotation VIII | Midway | partial | 13% |
+| 686 | 1978 | Lucky Draw | Mirco | partial | 13% |
+| 687 | 1978 | Big Town | Playmatic | partial | 6% |
+| 688 | 1978 | Chance | Playmatic | partial | 6% |
+| 689 | 1978 | Last Lap | Playmatic | partial | 6% |
+| 690 | 1978 | Space Gambler | Playmatic | partial | 6% |
+| 691 | 1978 | Third World | Sonic (Spain) | partial | 6% |
+| 692 | 1978 | Lectronamo | Stern | partial | 13% |
+| 693 | 1978 | Memory Lane | Stern | partial | 13% |
+| 694 | 1978 | Nugent | Stern | partial | 13% |
+| 695 | 1978 | Stars | Stern | partial | 13% |
+| 696 | 1978 | Wild Fyre | Stern | partial | 13% |
+| 697 | 1978 | Spectra IV | Valley | partial | 13% |
+| 698 | 1978 | Contact | Williams | partial | 13% |
+| 699 | 1978 | Disco Fever | Williams | partial | 13% |
+| 700 | 1978 | Phoenix | Williams | partial | 13% |
+| 701 | 1978 | Pokerino | Williams | partial | 13% |
+| 702 | 1978 | Pompeii (Shuffle) (L-1) | Williams | partial | 6% |
+| 703 | 1978 | Topaz (Shuffle) (L-1) | Williams | partial | 6% |
+| 704 | 1978 | World Cup | Williams | partial | 13% |
+| 705 | 1978 | Future World | Zaccaria | partial | 13% |
+| 706 | 1978 | House of Diamonds | Zaccaria | partial | 13% |
+| 707 | 1978 | Ski Jump | Zaccaria | partial | 13% |
+| 708 | 1978 | Winter Sports | Zaccaria | partial | 13% |
+| 709 | 1977 | Roy Clark Super Picker | Allied Leisure | partial | 13% |
+| 710 | 1977 | Airborne Avenger | Atari | partial | 13% |
+| 711 | 1977 | Time 2000 | Atari | partial | 13% |
+| 712 | 1977 | Black Jack | Bally | partial | 13% |
+| 713 | 1977 | Bobby Orr's Power Play | Bally | partial | 13% |
+| 714 | 1977 | Eight Ball | Bally | partial | 13% |
+| 715 | 1977 | Evel Knievel | Bally | partial | 13% |
+| 716 | 1977 | Mata Hari | Bally | partial | 13% |
+| 717 | 1977 | Six Million Dollar Man | Bally | partial | 19% |
+| 718 | 1977 | Roy Clark 'The' Entertainer | Fascination Int. | partial | 13% |
+| 719 | 1977 | Cleopatra | Gottlieb | partial | 13% |
+| 720 | 1977 | Pinball | Stern | partial | 13% |
+| 721 | 1977 | Stingray | Stern | partial | 13% |
+| 722 | 1977 | Hot Tip | Williams | partial | 13% |
+| 723 | 1977 | Lucky Seven | Williams | partial | 13% |
+| 724 | 1976 | Thunderbolt | Allied Leisure | partial | 13% |
+| 725 | 1976 | Atarians | Atari | partial | 13% |
+| 726 | 1976 | Freedom | Bally | partial | 13% |
+| 727 | 1976 | Night Rider | Bally | partial | 13% |
+| 728 | 1975 | Bow and Arrow | Bally | partial | 13% |
+| 729 | 1975 | Spirit of 76 | Mirco | partial | 13% |
+| 730 | 1974 | Boomerang | Bally | partial | 13% |
+| 731 | 1974 | Flicker (Prototype) | Nutting Associates | partial | 6% |
+| 732 | 1974 | Strike | Zaccaria | partial | 13% |
+| 733 | unknown | Rush (1.0) | Astill Entertainment | partial | 6% |
+| 734 | unknown | System 3 game template | Gottlieb | partial | 6% |
+| 735 | unknown | Movie Masters | Jac Van Ham (Royal) | partial | 6% |
+| 736 | unknown | Pin Ball | Joctronic | partial | 6% |
+| 737 | unknown | Pimbal (Pinball 3000) | Juegos Populares | partial | 6% |
+| 738 | unknown | Alien Warrior | LTD | partial | 6% |
+| 739 | unknown | Arizona | LTD | partial | 6% |
+| 740 | unknown | Atlantis (LTD) | LTD | partial | 6% |
+| 741 | unknown | Columbia | LTD | partial | 6% |
+| 742 | unknown | Cowboy Eight Ball 2 | LTD | partial | 6% |
+| 743 | unknown | Disco Dancing | LTD | partial | 6% |
+| 744 | unknown | Force | LTD | partial | 6% |
+| 745 | unknown | Haunted Hotel | LTD | partial | 6% |
+| 746 | unknown | Hustler | LTD | partial | 6% |
+| 747 | unknown | King Kong (LTD) | LTD | partial | 6% |
+| 748 | unknown | Martian Queen | LTD | partial | 6% |
+| 749 | unknown | Mr. & Mrs. Pec-Men | LTD | partial | 6% |
+| 750 | unknown | Space Poker | LTD | partial | 6% |
+| 751 | unknown | Time Machine (LTD) (4 Players) | LTD | partial | 6% |
+| 752 | unknown | Trick Shooter | LTD | partial | 6% |
+| 753 | unknown | Viking King | LTD | partial | 6% |
+| 754 | unknown | Unknown Game (MAC #1808) | MAC S.A. | partial | 6% |
+| 755 | unknown | Eight Ball Champ (Maibesa) | Maibesa | partial | 6% |
+| 756 | unknown | Stars & Strikes (Bowler) | Monroe Bowling Co. | partial | 6% |
+| 757 | unknown | Mad Race | Playmatic | partial | 6% |
+| 758 | unknown | Miss Disco (Bingo) | Playmatic | partial | 6% |
+| 759 | unknown | Heavy Metal | Rowamet | partial | 6% |
+| 760 | unknown | Brooklyn (set 1) (Bingo) | Seeben (Belgium) | partial | 6% |
+| 761 | unknown | Penalty (Bingo) | Seeben (Belgium) | partial | 6% |
+| 762 | unknown | Continental 3 in 1 (Bingo) | Sirmo (Belgium) | partial | 6% |
+| 763 | unknown | Domino II (Bingo) | Sirmo (Belgium) | partial | 6% |
+| 764 | unknown | Golden Gate (set 1) (Bingo) | Sirmo (Belgium) | partial | 6% |
+| 765 | unknown | New Dixieland (Bingo) | Sirmo (Belgium) | partial | 6% |
+| 766 | unknown | Super Dixieland (Bingo) | Sirmo (Belgium) | partial | 6% |
+| 767 | unknown | Triple Joker (Bingo) | Sirmo (Belgium) | partial | 6% |
+| 768 | unknown | Golden Game (Bingo) | Splin (Belgium) | partial | 6% |
+| 769 | unknown | Michigan (Bingo) | Splin (Belgium) | partial | 6% |
+| 770 | unknown | Montana Bingo Stake 6/10 (Bingo) | Splin (Belgium) | partial | 6% |
+| 771 | unknown | Top Game Laser L10 (Bingo) | Splin (Belgium) | partial | 6% |
+| 772 | unknown | Fire Action Deluxe | Taito | partial | 6% |
+| 773 | unknown | Polar Explorer | Taito | partial | 6% |
+| 774 | unknown | Volley | Taito | partial | 6% |
+| 775 | unknown | Big Ball Bowling (Bowler) | United(?) | partial | 6% |

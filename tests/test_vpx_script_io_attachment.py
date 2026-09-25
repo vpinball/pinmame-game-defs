@@ -18,10 +18,10 @@ CORPUS_REPOSITORIES = (
 	"https://github.com/sverrewl/vpxtable_scripts",
 	"https://github.com/jsm174/vpx-standalone-scripts",
 )
-# Kingpin was curated on 2026-09-25 and no longer carries this pass's candidates.
-EXPECTED_ATTACHED_MACHINES = 279
-EXPECTED_ATTACHED_DEVICES = 13064
-EXPECTED_ATTACHED_SCRIPTS = 350
+# Kingpin and Firepower were curated on 2026-09-25 and no longer carry this pass's candidates.
+EXPECTED_ATTACHED_MACHINES = 278
+EXPECTED_ATTACHED_DEVICES = 13054
+EXPECTED_ATTACHED_SCRIPTS = 349
 
 
 def corpus_source_records(definition: dict[str, object]) -> list[dict[str, object]]:

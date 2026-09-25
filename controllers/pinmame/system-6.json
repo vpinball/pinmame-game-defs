@@ -1,0 +1,126 @@
+{
+  "format": "pinmame-controller-profile",
+  "version": 1,
+  "id": "pinmame.system-6",
+  "authority": "pinmame",
+  "hardware_family": "Williams System 6",
+  "inversion_applied_by_emulator": true,
+  "groups": [
+    {
+      "id": "pinmame.input.switch",
+      "direction": "input",
+      "kind": "switch",
+      "label": "Diagnostic buttons, the 8x8 switch matrix, and synthetic flipper-button positions",
+      "address_rules": [
+        {
+          "minimum": -7,
+          "maximum": -3
+        },
+        {
+          "minimum": 1,
+          "maximum": 64
+        },
+        {
+          "minimum": 81,
+          "maximum": 88
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "switch"
+        },
+        "controller_plugin": {
+          "group_id": 1,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "#### Matrix conversion\n\n`src/wpc/s6.c` `MACHINE_DRIVER_START(s6)` imports `PinMAME` and installs no switch or lamp converter of its own, so System 6 inherits PinMAME's sequential `core_swSeq2m`/`core_m2swSeq` (`src/wpc/core.c`). Public switches are therefore sequential matrix positions addressed column-major, not column-times-ten notation:\n\n| Value | Calculation |\n| --- | --- |\n| Column | `((n-1)/8)+1` |\n| Row | `((n-1)%8)+1` |\n\nColumn 1 is public `1-8` and column 8 is public `57-64`. The ROM strobes one column at a time through `PIA 1` port B (`s6_swcol_w`) and reads the eight rows back through port A (`s6_swrow_r`).\n\n#### Column 1 and the diagnostic column\n\nColumn 1 (public `1-8`) is an ordinary matrix column that happens to carry the cabinet switches. When PinMAME's own keyboard handling is enabled, `SWITCH_UPDATE(s6)` overwrites it every frame from the `S6_COMPORTS` port (`src/wpc/s6.h`): tilt `1`, ball-roll tilt `2`, start `3`, coin 1-3 `4-6`, slam tilt `7`, high-score reset `8`. With keyboard handling off, as under LibPinMAME and VPinMAME, the consumer writes these addresses directly.\n\nThe five negative addresses are internal matrix column 0 through the same `n+7` formula and come from the upper byte of the same port:\n\n| Address | Constant | Hardware |\n| --- | --- | --- |\n| `-7` | `S6_SWADVANCE` | Advance button, sampled into `PIA 0` `CA1` on every IRQ |\n| `-6` | `S6_SWUPDN` | Auto-Up/Manual-Down toggle, sampled into `PIA 0` `CB1`; public level `1` is Auto-Up |\n| `-5` | `S6_SWCPUDIAG` | CPU-board diagnostic button, wired to the NMI line |\n| `-4` | `S6_SWSOUNDDIAG` | Sound-board diagnostic button |\n| `-3` | `S6_ENTER` | Master Command Enter; `s6_dips_r` returns the function switches only while it is held |\n\nThey are service controls in the coin door or on the boards, never playfield positions.\n\n#### Flipper buttons\n\nSystem 6 flippers are not CPU-driven: the cabinet buttons switch the coils directly and the ROM only enables them. PinMAME still keeps its generic flipper column at internal column 11, which the sequential converter publishes at `81-88`; `CORE_SWLRFLIPBUTBIT` is public `82` and `CORE_SWLLFLIPBUTBIT` is public `84` (`src/wpc/core.h`). `core_updateSw` copies those two bits into the matrix addresses a game names with `FLIP_SWNO(left,right)`, and a zero argument means no copy. It also fabricates the synthetic flipper outputs `45-48` from them whenever the game-on enable is set (see the solenoid group). No System 6 driver declares `FLIP_SOL` or an `FLIP_EOS` bit, so the end-of-stroke positions `81`, `83`, `85` and `87` and the upper-flipper buttons `86` and `88` carry nothing.\n\n#### Polarity\n\nEvery System 6 `INITGAMEFULL` in `src/wpc/s6games.c` aggregate-initializes the per-game `wpc` struct as `{{0}}`, so the per-game inverted-switch mask is zero and PinMAME normalizes nothing. The public level is the raw closed-equals-`1` level of the switch.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.input.dip",
+      "direction": "configuration",
+      "kind": "dip_switch",
+      "label": "Sound-board option switch and the CPU-board function and Master Command banks",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 2
+        },
+        {
+          "minimum": 9,
+          "maximum": 24
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "dip"
+        }
+      },
+      "notes": "#### Addressing\n\n`MDRV_DIPS(8+16)` declares twenty-four DIP bits. A public DIP address is `bank * 8 + bit + 1`, where `bank` is the `PinmameSetDIP` bank and `bit` the bit within that bank's byte (`core_getDip`, `src/wpc/core.c`).\n\n| Addresses | Bank and bits | `S6_COMPORTS` label | Consumer |\n| --- | --- | --- | --- |\n| `1-2` | bank 0, bits 0-1 | `Sound Dip 1`, `Sound Dip 2` | the sound board; `src/wpc/wmssnd.c` folds them into bits 5 and 6 of the sound-command byte it presents to the sound CPU |\n| `9-16` | bank 1 | `F1`-`F8` | `s6_dips_r`, strobe positions 0 and 1 |\n| `17-24` | bank 2 | `D1`-`D8` | `s6_dips_r`, strobe positions 2 and 3 |\n\nBank 0 bits 2-7 are not declared.\n\n#### How the ROM reads the CPU-board banks\n\n`s6_dips_r` returns a four-bit nibble selected by the low two bits of the display strobe position, and only while Master Command Enter (`-3`) is held; the value is inverted because the ROM expects `on=0`. Strobe positions 0-1 return the low and high nibble of bank 1 and positions 2-3 the low and high nibble of bank 2. The source comment `s6 games only want dipcol 2` records that the System 6 ROMs sample only the low nibble of bank 2 (`D1`-`D4`). Which physical switch and function each bit carries is game documentation; a definition must cite its own manual rather than this profile.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.output.solenoid",
+      "direction": "controlled_device",
+      "kind": "solenoid",
+      "label": "Standard and special solenoid drivers, sound-command lines, the game-on enable, and synthetic flipper outputs",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 23
+        },
+        {
+          "minimum": 45,
+          "maximum": 48
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "solenoid"
+        },
+        "controller_plugin": {
+          "group_id": 1,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "#### Address map\n\n| Addresses | Behavior |\n| --- | --- |\n| `1-8` | Standard solenoid drivers on `PIA 3` port A (`s6_sol1_8_w`). |\n| `9-16` | Standard solenoid drivers on `PIA 3` port B (`s6_sol9_16_w`). The same byte, inverted, is the sound-board command (`sndbrd_0_data_w(0, ~data)`), so on System 6 games the low lines of this port normally carry sound commands rather than coils; the source comment says `9-13 used for sound`. Which addresses a game spends on sound is game documentation. |\n| `17-22` | Six special solenoids; see below. |\n| `23` | `CORE_SSFLIPENSOL`: the `PIA 3` `CB2` game-on signal (`s6_gameon_w`), published whenever the ROM enables play. On the hardware this line energizes the driver board's flipper relay and enables the special solenoids. |\n| `24-44` | Not published. `core_getSol` reads `coreGlobals.solenoids` for `1-28`, where System 6 sets only bits `0-22`, and returns `0` for `29-44` because the 29-44 branches serve only WPC, System 11, SAM and Whitestar generations. |\n| `45-48` | Synthetic lower-flipper outputs; see below. |\n\nAddresses `49-50` belong to PinMAME's built-in simulator (`sim_getSol`), which no System 6 driver populates, and no System 6 driver declares `hw.getSol` for the custom range.\n\n#### Special solenoids `17-22`\n\nThe six special solenoids are driven from the `CA2`/`CB2` lines of the four PIAs (`s6_specsol1_w` to `s6_specsol6_w`) and gated by the game-on enable. `setSSSol` indexes `CORE_FIRSTSSSOL + n` directly, so special solenoid `n` is public `16 + n` with no permutation, unlike System 11 and Data East. Each is also published when the switch named in the game's `sxx.ssSw[n-1]` closes while the enable is set (`s6_vblank`), which models the hardware in which that playfield switch fires the coil itself. `sxx.ssSw` is per-game data from the fourth to ninth `INITGAMEFULL` arguments in `src/wpc/s6games.c`, and a zero entry means the slot is not switch-driven.\n\n#### Synthetic flipper outputs `45-48`\n\nNo System 6 driver declares `FLIP_SOL`, so `core_updateSw` fabricates flipper state in `coreGlobals.solenoids2` from the synthetic flipper buttons at switch `82` (right) and `84` (left) whenever the game-on enable is set. `45`/`46` follow the right button and `47`/`48` the left. There is no driver-board output behind any of them: the physical flipper coils are switched by the cabinet buttons through the flipper relay.",
+      "notes_format": "markdown"
+    },
+    {
+      "id": "pinmame.output.lamp",
+      "direction": "controlled_device",
+      "kind": "lamp",
+      "label": "8x8 lamp matrix",
+      "address_rules": [
+        {
+          "minimum": 1,
+          "maximum": 64
+        }
+      ],
+      "transports": {
+        "libpinmame": {
+          "channel": "lamp"
+        },
+        "controller_plugin": {
+          "group_id": 512,
+          "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228"
+        }
+      },
+      "notes": "#### Matrix addressing\n\n`PIA 2` port B selects lamp columns and port A drives the rows active-low: `s6_lampcol_w` stores the column byte as written, and `s6_lamprow_w` stores the row byte inverted (`~data`). `core_setLamp` places column bit `c` at `lampMatrix[c]`, and the public lamp number read back through `vp_getLamp` is `lamp2m(n) - 8 = n - 1`. So public lamp = `(column - 1) * 8 + row`, with column 1 at `1-8` and column 8 at `57-64`. System 6 declares no auxiliary lamp columns.\n\n#### General illumination\n\nSystem 6 has no general-illumination controller channel. `coreGlobals.gi[]` is written only by WPC, Whitestar and SAM drivers, and `s6.c` never touches it. System 6 games feed their general illumination from an unswitched transformer winding.",
+      "notes_format": "markdown"
+    }
+  ],
+  "sources": [
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "locator": "src/wpc/s6.c (s6_pia PIA wiring, s6_dips_r, s6_swrow_r/s6_swcol_w, s6_lampcol_w/s6_lamprow_w, s6_sol1_8_w/s6_sol9_16_w, setSSSol/s6_specsol1_w-s6_specsol6_w/s6_gameon_w, s6_vblank, SWITCH_UPDATE(s6), MACHINE_DRIVER_START(s6) MDRV_DIPS(8+16)); src/wpc/s6.h (S6_COMPORTS, S6_SWADVANCE/S6_SWUPDN/S6_SWCPUDIAG/S6_SWSOUNDDIAG/S6_ENTER); src/wpc/s6games.c (INITGAMEFULL macro: GEN_S6, FLIP_SWNO, zero wpc struct, sxx.ssSw); src/wpc/core.c (core_swSeq2m/core_m2swSeq, core_setLamp, core_getDip, core_updateSw, core_getSol); src/wpc/core.h (CORE_FIRSTSSSOL=17, CORE_SSFLIPENSOL=23, CORE_FIRSTLFLIPSOL=45, CORE_FLIPPERSWCOL=11, CORE_SWLRFLIPBUTBIT/CORE_SWLLFLIPBUTBIT); src/wpc/vpintf.c (vp_getLamp lamp2m-8); src/wpc/wmssnd.c (s67s sound command bits 5-6 from core_getDip(0)); src/wpc/gen.h (GEN_S6)"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "a6f6d7266d301249ed09c1b0123f8476513a2228",
+      "locator": "src/libpinmame/libpinmame.cpp SetupMsgApi group definitions"
+    }
+  ]
+}
