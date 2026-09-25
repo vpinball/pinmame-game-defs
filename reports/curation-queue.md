@@ -97,7 +97,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 91 | 1996 | Brooks & Dunn (rev. T1) | Gottlieb | partial | 6% |
 | 92 | 1996 | NBA MAC | MAC S.A. | partial | 6% |
 | 93 | 1996 | Cut The Cheese (Redemption) | Sega | partial | 6% |
-| 94 | 1996 | GoldenEye | Sega | partial | 19% |
+| 94 | 1996 | GoldenEye | Sega | partial | 81% |
 | 95 | 1996 | Independence Day | Sega | partial | 13% |
 | 96 | 1996 | Space Jam | Sega | partial | 13% |
 | 97 | 1996 | Twister | Sega | partial | 13% |

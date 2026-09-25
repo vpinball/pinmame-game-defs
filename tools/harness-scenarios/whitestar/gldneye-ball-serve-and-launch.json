@@ -1,0 +1,177 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "gldneye",
+  "notes": "Boot gldneye with five balls on trough switches 10-14 and Satellite Home 20 held at public 1, insert four coins (6) and press Start (3). When the ROM fires the trough lock-ball coil (17), release trough switch 14 and raise the VUK opto 15 to 1 as a ball arriving on the up-kicker; when it fires the up-kicker (1), drop 15 to 0 and raise the shooter-lane switch 16 to 1. Wait for the flipper-enable outputs, pulse the cabinet Fire Button (9), and when the ROM fires the auto launch (2) drop 16 to 0 as the ball leaves; observe 20 s.",
+  "initial_switches": [
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 20,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    3,
+    6,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    20,
+    23,
+    24
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30.0,
+      "label": "power-up to attract"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 0.0,
+      "label": "start button"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "timeout_s": 15.0,
+      "active_only": true,
+      "label": "wait for the lock-ball coil"
+    },
+    {
+      "type": "set_switch",
+      "switch": 14,
+      "state": 0,
+      "settle_s": 0.0,
+      "label": "ball leaves trough position 5"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball blocks the VUK opto"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        1
+      ],
+      "timeout_s": 15.0,
+      "active_only": true,
+      "label": "wait for the up-kicker"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 0.3,
+      "label": "ball leaves the VUK"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "ball rests in the shooter lane"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        45,
+        47
+      ],
+      "timeout_s": 40.0,
+      "active_only": true,
+      "label": "wait for the flipper enables"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "flippers enabled, ball in shooter lane"
+    },
+    {
+      "type": "pulse",
+      "switch": 9,
+      "hold_ms": 150,
+      "settle_s": 0.0,
+      "label": "cabinet Fire Button"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        2
+      ],
+      "timeout_s": 10.0,
+      "active_only": true,
+      "label": "wait for the auto launch"
+    },
+    {
+      "type": "set_switch",
+      "switch": 16,
+      "state": 0,
+      "settle_s": 20.0,
+      "label": "ball leaves the shooter lane"
+    }
+  ]
+}

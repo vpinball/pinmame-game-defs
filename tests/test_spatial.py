@@ -442,7 +442,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Johnny Mnemonic's curation adds one: its legacy record never listed the requirement.
 		# Williams Earthshaker adds another for the same reason: its legacy-migrated record's fixed
 		# MIGRATION_MISSING list omitted spatial_placement, and its curated record lists the gaps.
-		self.assertEqual(697, report["missing_requirement_counts"]["spatial_placement"])
+		# Sega GoldenEye's legacy-migrated record never listed spatial_placement either; its curated partial
+		# keeps every coordinate observed (the manual scan lost its location-drawing callouts), adding one.
+		self.assertEqual(698, report["missing_requirement_counts"]["spatial_placement"])
 		# 33 until the coverage rule was made symmetric. Eighteen definitions held
 		# unresolved conflicts while omitting the requirement — fourteen because
 		# `import-legacy` wrote a fixed `MIGRATION_MISSING` list whatever it had just
@@ -464,7 +466,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# Star Trek: The Next Generation's 2026-09-25 spatial pass adds its Ship Mode 1/2 insert-position
 		# conflict. Johnny Mnemonic's curation replaces a legacy record whose one migration conflict the
 		# printed solenoid table resolves, removing one more.
-		self.assertEqual(46, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# Sega GoldenEye's curation adds its bulb-type conflict (lamp grid and flash lamp chart against the
+		# playfield bulb pages).
+		self.assertEqual(47, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(788, len(catalog["machines"]))
 		self.assertEqual(775, catalog["summary"]["game_count"])
 		self.assertEqual(788, catalog["summary"]["machine_count"])

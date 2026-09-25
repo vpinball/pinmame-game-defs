@@ -1,0 +1,56 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "gldneye",
+  "notes": "Boot gldneye with five balls resting on trough switches 10-14 and the Satellite Home switch 20 left at public 0, and observe power-up and attract mode for 90 s with no further input, recording every solenoid, lamp and GI transition.",
+  "initial_switches": [
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 20,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    20,
+    23,
+    24
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30.0,
+      "label": "power-up"
+    },
+    {
+      "type": "wait",
+      "seconds": 60.0,
+      "label": "attract mode"
+    }
+  ]
+}

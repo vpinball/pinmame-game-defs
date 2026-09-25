@@ -1,0 +1,75 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "gldneye",
+  "notes": "Boot gldneye with five balls resting on trough switches 10-14 and the Satellite Home switch 20 at public 0. Wait for the ROM to energize the satellite motor relay (solenoid 21), raise public 20 to 1 two seconds later, and observe whether the relay drops; then lower 20 again and observe for 40 s.",
+  "initial_switches": [
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 20,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    20,
+    23,
+    24
+  ],
+  "actions": [
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        21
+      ],
+      "timeout_s": 40.0,
+      "active_only": true,
+      "label": "wait for the satellite motor relay"
+    },
+    {
+      "type": "wait",
+      "seconds": 2.0,
+      "label": "motor running with home at 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 1,
+      "settle_s": 10.0,
+      "label": "satellite reaches home"
+    },
+    {
+      "type": "set_switch",
+      "switch": 20,
+      "state": 0,
+      "settle_s": 40.0,
+      "label": "satellite leaves home"
+    }
+  ]
+}

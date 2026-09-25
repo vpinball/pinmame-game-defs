@@ -1,0 +1,89 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "gldneye",
+  "notes": "Negative control for gldneye-ball-serve-and-launch: boot gldneye with five balls on trough switches 10-14 and Satellite Home 20 held at public 1, insert four coins (6), press Start (3), and then change no switch for 40 s, leaving the VUK opto 15 at 0 and the shooter lane 16 at 0, recording the ROM's ball-serve retries.",
+  "initial_switches": [
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 20,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    3,
+    6,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    20,
+    23,
+    24
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30.0,
+      "label": "power-up to attract"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 40.0,
+      "label": "start button, then no further input"
+    }
+  ]
+}

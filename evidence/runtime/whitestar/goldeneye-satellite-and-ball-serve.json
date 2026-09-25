@@ -1,0 +1,607 @@
+{
+  "driver_ids": [
+    "gldneye"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "sega.goldeneye.1996"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game gldneye --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --ready-timeout 60 --scenario tools/harness-scenarios/whitestar/<gldneye-attract-satellite-away|gldneye-attract-satellite-home|gldneye-satellite-home-edge|gldneye-ball-serve-and-launch|gldneye-ball-serve-without-vuk|gldneye-ball-serve-vuk-opto-only|gldneye-ball-serve-trough-release-only>.json --output <external-run.json>. Built-in mechs stay disabled (--handle-mechanics 0); segames.c declares none for gldneye, and the retained known-working table also runs with HandleMechanics 0. LibPinMAME runs with the default binary solenoid output mode.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "gldneye",
+    "observations": {
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            20
+          ],
+          "input_address": 20,
+          "input_kind": "switch",
+          "label": "boot with trough switches 10-14 at 1 and Satellite Home 20 at 0 (gldneye-attract-satellite-away): the ROM energizes the satellite motor relay (public 21) about 9.3 s after power-up and releases it about 13.8 s later without home ever closing; no other coil fires",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            21
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            20
+          ],
+          "input_address": 20,
+          "input_kind": "switch",
+          "label": "boot with trough switches 10-14 at 1 and Satellite Home 20 held at 1 from power-up (gldneye-attract-satellite-home): no coil fires in 90 s; the satellite motor relay (21) never energizes",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            20
+          ],
+          "input_address": 20,
+          "input_kind": "switch",
+          "label": "attract mode, motor relay 21 running with 20 at 0 (gldneye-satellite-home-edge): 20 raised to 1 two seconds after 21 energizes; the ROM releases 21 about 0.11 s later; 20 lowered again 10 s later draws no coil",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            21
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            6,
+            10,
+            11,
+            12,
+            13,
+            14,
+            20
+          ],
+          "input_address": 6,
+          "input_kind": "switch",
+          "label": "left coin slot 6 pulsed four times in attract mode (gldneye-ball-serve-and-launch): each pulse drives the coin meter (public 24) and flasher 26 together for about 0.14 s (once about 0.19 s)",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            24,
+            26
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            3,
+            14,
+            15,
+            20
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "Start 3 pressed with credits (gldneye-ball-serve-and-launch): the ROM fires the trough lock-ball coil (public 17); as it does, the host releases trough switch 14 and raises the VUK opto 15 to 1, and the ROM fires the trough up-kicker (public 1) about 0.28 s later and releases 17",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            3,
+            6,
+            20
+          ],
+          "input_address": 3,
+          "input_kind": "switch",
+          "label": "negative control (gldneye-ball-serve-without-vuk): the same boot, coins and Start, but no switch changes afterwards, so the VUK opto 15 stays at 0; the ROM pulses 17 five times about 0.7 s apart, fires the auto launch (public 2) and then the up-kicker (public 1) about 3.45 s after the first 17 pulse, and repeats that cycle about every 4.2 s for the whole 40 s window, each new cycle starting with another auto-launch pulse together with the first 17 pulse, firing 1 nine times; after the coins (which pulse 24 and 26 as in the positive run) the only solenoids the ROM changes are 1, 2 and 17",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            2,
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            3,
+            6,
+            15,
+            20
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "isolation control (gldneye-ball-serve-vuk-opto-only): the same boot, coins and Start; as the ROM fires 17 the host raises only the VUK opto 15 to 1 and leaves trough switch 14 closed; the ROM fires the up-kicker (public 1) about 0.25 s later and kicks four more times about 0.94 s apart, then returns to its lock-ball retry cycle although 15 is still at 1",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            2,
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            3,
+            6,
+            14,
+            20
+          ],
+          "input_address": 14,
+          "input_kind": "switch",
+          "label": "isolation control (gldneye-ball-serve-trough-release-only): the same boot, coins and Start; as the ROM fires 17 the host releases only trough switch 14 and leaves the VUK opto 15 at 0; the ROM fires the up-kicker (public 1) about 0.81 s later and four more times about 0.93 s apart, then changes no solenoid for the remaining 7.4 s of the run",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            17
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            16,
+            20
+          ],
+          "input_address": 16,
+          "input_kind": "switch",
+          "label": "shooter lane 16 raised to 1 after the up-kicker fired: the next outputs the ROM changes, about 14.8 s later, are public 45, 46, 47 and 48, raised together and held (the flipper enables), with public 32 starting to flash; the run does not show what the ROM waits for in between",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            32,
+            45,
+            46,
+            47,
+            48
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            9,
+            16,
+            20
+          ],
+          "input_address": 9,
+          "input_kind": "switch",
+          "label": "cabinet Fire Button 9 pulsed with the ball in the shooter lane: the ROM fires the auto launch (public 2) about 0.08 s later and energizes the flipper magnet (public 34) for about 5.8 s; with 16 still at 1 it fires 2 again 3.9 s later, and 16 is then lowered; about 18.5 s after that the ROM starts a ball search pulsing 18, 21, 1, 4, 2 and 20",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            2,
+            4,
+            18,
+            20,
+            21,
+            34
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        4,
+        17,
+        18,
+        20,
+        21,
+        24,
+        26,
+        32,
+        34,
+        45,
+        46,
+        47,
+        48
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 2,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 10
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          },
+          {
+            "state": 0,
+            "switch": 20
+          }
+        ],
+        "name": "gldneye-attract-satellite-away",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory",
+        "retained_from": "external:pinmame-review-artifacts/goldeneye/harness/gldneye-attract-satellite-away.json",
+        "scenario_path": "tools/harness-scenarios/whitestar/gldneye-attract-satellite-away.json",
+        "scenario_sha256": "9025690bd6a2b8cc3a8d71e40c3bbd050b17c3d09a679bb673bf6bc3ddc4e4b3",
+        "self_test_pulses": 0,
+        "sha256": "e5425c0a6a451862495fef7c44eb2bbe3316cdda54b20c364236e0e7dd4a64a4",
+        "snapshot_count": 3,
+        "watch_switches": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          20,
+          23,
+          24
+        ]
+      },
+      {
+        "action_count": 2,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 10
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          },
+          {
+            "state": 1,
+            "switch": 20
+          }
+        ],
+        "name": "gldneye-attract-satellite-home",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory",
+        "retained_from": "external:pinmame-review-artifacts/goldeneye/harness/gldneye-attract-satellite-home.json",
+        "scenario_path": "tools/harness-scenarios/whitestar/gldneye-attract-satellite-home.json",
+        "scenario_sha256": "b142215bcc19fda23379a853e3950aab0a8be27bc6c353c59abd1360c7fef980",
+        "self_test_pulses": 0,
+        "sha256": "59c40fdf43fec9934389d47113e8ba5869da40ee2b4a610cbd5c3a15aaecb4f8",
+        "snapshot_count": 3,
+        "watch_switches": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          20,
+          23,
+          24
+        ]
+      },
+      {
+        "action_count": 4,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 10
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          },
+          {
+            "state": 0,
+            "switch": 20
+          }
+        ],
+        "name": "gldneye-satellite-home-edge",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory",
+        "retained_from": "external:pinmame-review-artifacts/goldeneye/harness/gldneye-satellite-home-edge.json",
+        "scenario_path": "tools/harness-scenarios/whitestar/gldneye-satellite-home-edge.json",
+        "scenario_sha256": "c5f3ec14784a5e33e8c8e47e887533e6d55581e81dd00e87148aafeb4af198cf",
+        "self_test_pulses": 0,
+        "sha256": "1342aebe7e5b5dd48495034c3ddfc57a8ea3fc9a24ecb3dee82eced4ed48f24c",
+        "snapshot_count": 5,
+        "watch_switches": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          20,
+          23,
+          24
+        ]
+      },
+      {
+        "action_count": 17,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 10
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          },
+          {
+            "state": 1,
+            "switch": 20
+          }
+        ],
+        "name": "gldneye-ball-serve-and-launch",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory",
+        "retained_from": "external:pinmame-review-artifacts/goldeneye/harness/gldneye-ball-serve-and-launch.json",
+        "scenario_path": "tools/harness-scenarios/whitestar/gldneye-ball-serve-and-launch.json",
+        "scenario_sha256": "bf3a0772d70cd9452586bbe2c4f552219d0101b796e5dfb8e4d9e3b438f4b928",
+        "self_test_pulses": 0,
+        "sha256": "78244b75a335ce4cfafa9762c9f65640d6aa177e94f980ee6c12103d1b78fb44",
+        "snapshot_count": 18,
+        "watch_switches": [
+          3,
+          6,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          20,
+          23,
+          24
+        ]
+      },
+      {
+        "action_count": 6,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 10
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          },
+          {
+            "state": 1,
+            "switch": 20
+          }
+        ],
+        "name": "gldneye-ball-serve-without-vuk",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory",
+        "retained_from": "external:pinmame-review-artifacts/goldeneye/harness/gldneye-ball-serve-without-vuk.json",
+        "scenario_path": "tools/harness-scenarios/whitestar/gldneye-ball-serve-without-vuk.json",
+        "scenario_sha256": "7b6c39a4dcf231aa6779ab4fe61d62ca919a1c405865e587f92f42389da2e6e0",
+        "self_test_pulses": 0,
+        "sha256": "a507d357857addae4a92b322ae2f559a5dc263395f45ece8db5f737424b0d257",
+        "snapshot_count": 7,
+        "watch_switches": [
+          3,
+          6,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          20,
+          23,
+          24
+        ]
+      },
+      {
+        "action_count": 9,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 10
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          },
+          {
+            "state": 1,
+            "switch": 20
+          }
+        ],
+        "name": "gldneye-ball-serve-vuk-opto-only",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory",
+        "retained_from": "external:pinmame-review-artifacts/goldeneye/harness/gldneye-ball-serve-vuk-opto-only.json",
+        "scenario_path": "tools/harness-scenarios/whitestar/gldneye-ball-serve-vuk-opto-only.json",
+        "scenario_sha256": "fe45f0975a923d0b10bad208f37382a42cbe5f52fb1981a4acda2ef91d48a1aa",
+        "self_test_pulses": 0,
+        "sha256": "64ec58023e847cc13aa0cef5428b820d280c64d205e87d29c155702134b7b974",
+        "snapshot_count": 10,
+        "watch_switches": [
+          3,
+          6,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          20,
+          23,
+          24
+        ]
+      },
+      {
+        "action_count": 9,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 10
+          },
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          },
+          {
+            "state": 1,
+            "switch": 20
+          }
+        ],
+        "name": "gldneye-ball-serve-trough-release-only",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory",
+        "retained_from": "external:pinmame-review-artifacts/goldeneye/harness/gldneye-ball-serve-trough-release-only.json",
+        "scenario_path": "tools/harness-scenarios/whitestar/gldneye-ball-serve-trough-release-only.json",
+        "scenario_sha256": "487a69141ae28338ca5e79aff95e15ca8de4155004f98141f3cd49661c0d16de",
+        "self_test_pulses": 0,
+        "sha256": "304722c2e230c8850cdf991afe465dbb20dbfd932216e7c747e64706c9b2f6b7",
+        "snapshot_count": 10,
+        "watch_switches": [
+          3,
+          6,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          20,
+          23,
+          24
+        ]
+      }
+    ],
+    "rom_archive_sha256": "2e94c97e1a17a61640249acd3604e69837f3cb1377134babba815d9916dded47"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/goldeneye/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "78244b75a335ce4cfafa9762c9f65640d6aa177e94f980ee6c12103d1b78fb44"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

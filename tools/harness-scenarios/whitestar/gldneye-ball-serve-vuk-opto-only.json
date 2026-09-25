@@ -1,0 +1,111 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "gldneye",
+  "notes": "Isolation control for gldneye-ball-serve-and-launch: boot gldneye with five balls on trough switches 10-14 and Satellite Home 20 held at public 1, insert four coins (6) and press Start (3). When the ROM fires the trough lock-ball coil (17), raise only the VUK opto 15 to 1, leaving trough switch 14 closed, and observe 12 s with no further input.",
+  "initial_switches": [
+    {
+      "switch": 10,
+      "state": 1
+    },
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 20,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    3,
+    6,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    20,
+    23,
+    24
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 30.0,
+      "label": "power-up to attract"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 6,
+      "hold_ms": 150,
+      "settle_s": 1.5,
+      "label": "left coin"
+    },
+    {
+      "type": "pulse",
+      "switch": 3,
+      "hold_ms": 150,
+      "settle_s": 0.0,
+      "label": "start button"
+    },
+    {
+      "type": "wait_until_output",
+      "channel": "solenoid",
+      "addresses": [
+        17
+      ],
+      "timeout_s": 15.0,
+      "active_only": true,
+      "label": "wait for the lock-ball coil"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 0.0,
+      "label": "only the VUK opto reports a ball"
+    },
+    {
+      "type": "wait",
+      "seconds": 12.0,
+      "label": "observe, no further input"
+    }
+  ]
+}
