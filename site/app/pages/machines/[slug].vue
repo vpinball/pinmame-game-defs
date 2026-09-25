@@ -24,6 +24,7 @@ const name = computed(() => detail.value?.machine.name ?? summary.value?.name ??
 const manufacturer = computed(() => detail.value?.machine.manufacturer ?? summary.value?.manufacturer ?? '')
 const year = computed(() => detail.value?.machine.year ?? summary.value?.year ?? null)
 const status = computed(() => detail.value?.coverage.status ?? summary.value?.status ?? 'stub')
+const completionScore = computed(() => detail.value?.coverage.completion_score ?? summary.value?.completionScore ?? 0)
 
 useSeo({
 	title: name,
@@ -171,6 +172,7 @@ const opdbUrl = computed(() =>
 						{{ name }}
 					</h1>
 					<StatusChip :status="status" />
+					<CompletionMeter class="w-40" :score="completionScore" :status="status" compact />
 				</div>
 				<p class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-ink-3">
 					<NuxtLink :to="manufacturerUrl" class="inline-flex items-center gap-1.5 transition-colors hover:text-amber">
