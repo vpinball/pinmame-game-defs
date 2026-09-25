@@ -1,7 +1,7 @@
 {
   "conflicts": [
     {
-      "description": "Pinned PinMAME's src/wpc/sims/wpc/full/tz.c names public solenoid 56 \"sClockFwd\" (#define sClockFwd CORE_CUSTSOLNO(6)) and public solenoid 57 \"sClockRev\" (#define sClockRev CORE_CUSTSOLNO(7)) -- i.e. 56 = Forward, 57 = Reverse. The printed manual's Solenoid/Flasher Locations page (2-53) prints the opposite direction for the equivalent auxiliary-board callout numbers: item 42 = \"Clock Reverse\" and item 43 = \"Clock Forward\". The retained known-working VPX script's own commented-out SolCallback lines bridge the two numbering schemes directly and independently corroborate the manual: `'SolCallback(56) = \"\"  '(42) Clock Reverse (***)` and `'SolCallback(57) = \"\"  '(43) Clock Forward (***)`. Two independent sources (the printed manual and the retained script author's own cross-reference comment) agree with each other and disagree with pinned PinMAME's internal #define name for which physical drive line is Forward versus Reverse. Neither solenoid is exercised at runtime by the retained script (the clock motor is driven entirely by PinMAME's own mechClock simulation, disabled by an #if 0 block in this pinned revision's tz_handleMech), so there is no runtime observation available to break the tie. Resolution path: a LibPinMAME gameplay-harness trace driving solenoids 56/57 individually against a legal tz_92 or later ROM while observing which direction the physical/simulated clock hand moves, or inspection of the A-16120 D.C. Motor Control Assembly schematic on a missing manual page. Unresolved.",
+      "description": "Pinned PinMAME's src/wpc/sims/wpc/full/tz.c names public solenoid 56 \"sClockFwd\" (#define sClockFwd CORE_CUSTSOLNO(6)) and public solenoid 57 \"sClockRev\" (#define sClockRev CORE_CUSTSOLNO(7)) -- i.e. 56 = Forward, 57 = Reverse. The printed manual's Solenoid/Flasher Locations page (2-53) prints the opposite direction for the equivalent auxiliary-board callout numbers: item 42 = \"Clock Reverse\" and item 43 = \"Clock Forward\". The retained known-working VPX script's own commented-out SolCallback lines bridge the two numbering schemes directly and independently corroborate the manual: `'SolCallback(56) = \"\"  '(42) Clock Reverse (***)` and `'SolCallback(57) = \"\"  '(43) Clock Forward (***)`. Two independent sources (the printed manual and the retained script author's own cross-reference comment) agree with each other and disagree with pinned PinMAME's internal #define name for which physical drive line is Forward versus Reverse. Neither solenoid is exercised at runtime by the retained script (the clock motor is driven entirely by PinMAME's own mechClock simulation, disabled by an #if 0 block in this pinned revision's tz_handleMech), so there is no runtime observation available to break the tie. Resolution path: a LibPinMAME gameplay-harness trace driving solenoids 56/57 individually against a legal tz_92 or later ROM while observing which direction the physical/simulated clock hand moves, or a wiring schematic for assembly A-16120 (printed \"D.C. Motor Assembly\" on page 2-47 and \"DC Motor Control Assembly\" on page 2-15), which is not among the retained pages. Unresolved.",
       "id": "conflict.clock-motor-direction-naming",
       "path": "binding:pinmame.output.solenoid/56,57/None",
       "source_refs": [
@@ -1346,23 +1346,34 @@
       "label": "Trough Proximity (Powerball Detect)",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 2, return row 6. This address is below the range covered by the retained switch-locations page (2-51); the manual's first Switch Locations page (2-50, covering items 1-33) is missing from this scan (see manual-transcription.md), so label and polarity here are sourced from tz.c's #define and its inverted-switch mask alone, not cross-checked against a printed part number. No VPX object binds switch 26 (Trough Proximity / powerball detect); the retained script sets it from tz_handleBallState's ball-type detection rather than a Hit event."
+        "notes": "Printed switch-matrix drive column 2, return row 6. This address is below the range covered by the retained switch-locations page (2-51); the manual's first Switch Locations page (2-50, covering items 1-33) is missing from this scan (see manual-transcription.md), so label and polarity here are sourced from tz.c's #define and its inverted-switch mask alone, not cross-checked against a printed part number. Projected onto Kicker.sw15, the right-trough eject position: the retained script's sw15_hit/sw15_unhit handlers set and clear switch 26 from the ball resting in that kicker (script.vbs sw15_hit), and the manual's Main Playfield Switch Locations drawing (page 2-51) prints callout 26 beside callout 15 at the trough's eject end. The proximity sensor itself is not a separate table object."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "vpx-script.tz-2-4-5"
         ],
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-26.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.786065,
+            "y": 0.876327
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -1472,27 +1483,38 @@
       },
       "id": "switch.matrix-31",
       "kind": "switch",
-      "label": "Lower Jet Bumper",
+      "label": "Left Jet Bumper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 3, return row 1. This address is below the range covered by the retained switch-locations page (2-51); the manual's first Switch Locations page (2-50, covering items 1-33) is missing from this scan (see manual-transcription.md), so label and polarity here are sourced from tz.c's #define and its inverted-switch mask alone, not cross-checked against a printed part number. Bumper1/Bumper2/Bumper3 are three generically-named VPX Bumper objects with no per-object binding to a specific public switch address in the retained script or extraction; a left/right/lower assignment could only be guessed from relative position, so no placement is asserted."
+        "notes": "Printed switch-matrix drive column 3, return row 1. This address is below the range covered by the retained switch-locations page (2-51); the manual's first Switch Locations page (2-50, covering items 1-33) is missing from this scan (see manual-transcription.md), so label and polarity here are sourced from tz.c's #define and its inverted-switch mask alone, not cross-checked against a printed part number. Placed on Bumper.Bumper1, the object whose Bumper1_Hit handler pulses switch 31 in the retained script; it is the left bumper of the three, and the manual's Main Playfield Switch Locations drawing (page 2-51) prints callout 31 on the left jet bumper. tz.c names this address only swJet1; the printed label comes from the manual's Main Playfield Switch Locations drawing (page 2-51), which prints callout 31 on the left, 32 on the upper-right, and 33 on the lower jet bumper, and the retained script binds Bumper1/Bumper2/Bumper3 (left/upper-right/lower) to 31/32/33 in the same order. An earlier revision of this definition labelled 31-33 Lower/Left/Right by analogy with the jet-bumper coil order (12 Lower, 13 Left, 14 Right), which no source supports for the switches."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "vpx-script.tz-2-4-5"
         ],
         "status": "validated"
       },
       "pulse": true,
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-31.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.075028,
+            "y": 0.504529
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -1509,27 +1531,38 @@
       },
       "id": "switch.matrix-32",
       "kind": "switch",
-      "label": "Left Jet Bumper",
+      "label": "Right Jet Bumper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 3, return row 2. This address is below the range covered by the retained switch-locations page (2-51); the manual's first Switch Locations page (2-50, covering items 1-33) is missing from this scan (see manual-transcription.md), so label and polarity here are sourced from tz.c's #define and its inverted-switch mask alone, not cross-checked against a printed part number. See switch 31: no explicit per-object address binding exists for the three generic Bumper objects."
+        "notes": "Printed switch-matrix drive column 3, return row 2. This address is below the range covered by the retained switch-locations page (2-51); the manual's first Switch Locations page (2-50, covering items 1-33) is missing from this scan (see manual-transcription.md), so label and polarity here are sourced from tz.c's #define and its inverted-switch mask alone, not cross-checked against a printed part number. Placed on Bumper.Bumper2, the object whose Bumper2_Hit handler pulses switch 32 in the retained script; it is the upper-right bumper of the three, and the manual's drawing (page 2-51) prints callout 32 there. tz.c names this address only swJet2; the printed label comes from the manual's Main Playfield Switch Locations drawing (page 2-51), which prints callout 31 on the left, 32 on the upper-right, and 33 on the lower jet bumper, and the retained script binds Bumper1/Bumper2/Bumper3 (left/upper-right/lower) to 31/32/33 in the same order. An earlier revision of this definition labelled 31-33 Lower/Left/Right by analogy with the jet-bumper coil order (12 Lower, 13 Left, 14 Right), which no source supports for the switches."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "vpx-script.tz-2-4-5"
         ],
         "status": "validated"
       },
       "pulse": true,
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-32.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.267643,
+            "y": 0.500265
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -1546,27 +1579,38 @@
       },
       "id": "switch.matrix-33",
       "kind": "switch",
-      "label": "Right Jet Bumper",
+      "label": "Lower Jet Bumper",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 3, return row 3. This address is below the range covered by the retained switch-locations page (2-51); the manual's first Switch Locations page (2-50, covering items 1-33) is missing from this scan (see manual-transcription.md), so label and polarity here are sourced from tz.c's #define and its inverted-switch mask alone, not cross-checked against a printed part number. See switch 31: no explicit per-object address binding exists for the three generic Bumper objects."
+        "notes": "Printed switch-matrix drive column 3, return row 3. This address is below the range covered by the retained switch-locations page (2-51); the manual's first Switch Locations page (2-50, covering items 1-33) is missing from this scan (see manual-transcription.md), so label and polarity here are sourced from tz.c's #define and its inverted-switch mask alone, not cross-checked against a printed part number. Placed on Bumper.Bumper3, the object whose Bumper3_Hit handler pulses switch 33 in the retained script; it is the lower bumper of the three, and the manual's drawing (page 2-51) prints callout 33 there. tz.c names this address only swJet3; the printed label comes from the manual's Main Playfield Switch Locations drawing (page 2-51), which prints callout 31 on the left, 32 on the upper-right, and 33 on the lower jet bumper, and the retained script binds Bumper1/Bumper2/Bumper3 (left/upper-right/lower) to 31/32/33 in the same order. An earlier revision of this definition labelled 31-33 Lower/Left/Right by analogy with the jet-bumper coil order (12 Lower, 13 Left, 14 Right), which no source supports for the switches."
       },
       "provenance": {
         "source_refs": [
-          "pinmame.core.4ec52ff0ac13"
+          "pinmame.core.4ec52ff0ac13",
+          "vpx-script.tz-2-4-5"
         ],
         "status": "validated"
       },
       "pulse": true,
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-33.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.163625,
+            "y": 0.591223
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -1587,7 +1631,7 @@
       "normally_closed": false,
       "physical": {
         "assembly_part_number": "SW-1A-114 (kicker) / SW-1A-120 (score)",
-        "notes": "Printed switch-matrix drive column 3, return row 4. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized)."
+        "notes": "Printed switch-matrix drive column 3, return row 4. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized). The retained script's LeftSlingShot_Slingshot pulses switch 34 and also, erroneously, switch 42; the extra pulse is a defect in the consumed table, not a property of the machine."
       },
       "provenance": {
         "source_refs": [
@@ -1635,7 +1679,7 @@
       "normally_closed": false,
       "physical": {
         "assembly_part_number": "SW-1A-114 (kicker) / SW-1A-120 (score)",
-        "notes": "Printed switch-matrix drive column 3, return row 5. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized)."
+        "notes": "Printed switch-matrix drive column 3, return row 5. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized). The retained script's RightSlingShot_Slingshot pulses switch 35 and also, erroneously, switch 41; the extra pulse is a defect in the consumed table, not a property of the machine."
       },
       "provenance": {
         "source_refs": [
@@ -1829,7 +1873,7 @@
       "label": "Dead End",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 1. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized).",
+        "notes": "Printed switch-matrix drive column 4, return row 1. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized). Besides its DeadEnd trigger, the retained script also pulses switch 41 from RightSlingShot_Slingshot, a defect in the consumed table rather than a machine behavior.",
         "part_number": "5647-12693-13"
       },
       "provenance": {
@@ -1877,7 +1921,7 @@
       "label": "Mini-Playfield Top Hole",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 2. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized).",
+        "notes": "Printed switch-matrix drive column 4, return row 2. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized). Besides its sw42 trigger, the retained script also pulses switch 42 from LeftSlingShot_Slingshot, a defect in the consumed table rather than a machine behavior.",
         "part_number": "5647-12693-13"
       },
       "provenance": {
@@ -2024,7 +2068,7 @@
       "label": "Mini-Playfield Left",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 5. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized). No gameitem, collection, or object event binding named sw45/sw45a was found anywhere in the retained extraction, despite the retained script defining Sub sw45_Hit and Sub sw45a_Hit.",
+        "notes": "Printed switch-matrix drive column 4, return row 5. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized). No spatial placement: the switch is a physical Powerfield (mini-playfield) switch pair (manual \"(2)\"), but the retained extraction contains no object named sw45 or sw45a -- the script's sw45_Hit/sw45a_Hit handlers are never reached, so the retained table never asserts switch 45 -- and the mini-playfield switch drawing is not among the retained manual pages (the Main Playfield drawing on page 2-51 omits it).",
         "part_number": "5647-12693-11"
       },
       "provenance": {
@@ -2035,17 +2079,7 @@
         ],
         "status": "validated"
       },
-      "pulse": true,
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
-      }
+      "pulse": true
     },
     {
       "aliases": [
@@ -2064,7 +2098,7 @@
       "label": "Mini-Playfield Right",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 4, return row 6. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized). No gameitem, collection, or object event binding named sw46/sw46a was found anywhere in the retained extraction, despite the retained script defining Sub sw46_Hit and Sub sw46a_Hit.",
+        "notes": "Printed switch-matrix drive column 4, return row 6. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized). No spatial placement: the switch is a physical Powerfield (mini-playfield) switch pair (manual \"(2)\"), but the retained extraction contains no object named sw46 or sw46a -- the script's sw46_Hit/sw46a_Hit handlers are never reached, so the retained table never asserts switch 46 -- and the mini-playfield switch drawing is not among the retained manual pages (the Main Playfield drawing on page 2-51 omits it).",
         "part_number": "5647-12693-11"
       },
       "provenance": {
@@ -2075,17 +2109,7 @@
         ],
         "status": "validated"
       },
-      "pulse": true,
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
-      }
+      "pulse": true
     },
     {
       "aliases": [
@@ -2128,8 +2152,8 @@
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.143608,
-            "y": 0.216659
+            "x": 0.485579,
+            "y": 0.216882
           }
         ],
         "status": "validated"
@@ -2249,7 +2273,7 @@
       "label": "Hitchhiker",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 5, return row 2. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized). Projected onto the Trigger.sw52 object, the only VPX trigger the retained script binds to switch 52; the geometry file lists it under the Hitchhiker figure's lane.",
+        "notes": "Printed switch-matrix drive column 5, return row 2. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized). Placed on Trigger.sw52, the table's own trigger for this switch: its sw52_Hit handler pulses switch 52 (script.vbs line 1709); the geometry file lists it under the Hitchhiker figure's lane.",
         "part_number": "5647-12693-19"
       },
       "provenance": {
@@ -2268,7 +2292,8 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.tz-2-4-5",
-                "vpx-script.tz-2-4-5"
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
               ],
               "status": "validated"
             },
@@ -2396,7 +2421,7 @@
       "label": "Gumball Geneva",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 5, return row 5. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized). Located on the underside of the playfield (manual dagger footnote). No VPX object binds switch 55 (Gumball Geneva); pinned PinMAME's tz_handleMech sets it synthetically from the internal gumball-motor position counter rather than from a table Hit event, and the manual documents it only as \"located on the underside of the playfield\".",
+        "notes": "Printed switch-matrix drive column 5, return row 5. Printed as a plain mechanical switch/target part; PinMAME's inverted-switch mask leaves this column at 0x00 (not normalized). Located on the underside of the playfield (manual dagger footnote). Projected onto the gumball machine assembly (A-16132), represented by the pivot of the retained table's gumball-globe primitive (Primitive.BM_Gumballs). The geneva switch sits on the underside of the playfield beneath that assembly (manual dagger footnote) and the manual's drawing (page 2-51) prints callout 55 inside the gumball-machine outline. The table has no switch object of its own for it; its script pulses switch 55 from SolGumRelease, which SolGumballMotor schedules after solenoid 24 turns on.",
         "part_number": "5647-12393-08"
       },
       "provenance": {
@@ -2408,14 +2433,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-55.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.186168,
+            "y": 0.106725
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -3141,8 +3176,8 @@
             },
             "role": "sensor",
             "space": "playfield",
-            "x": 0.60814,
-            "y": 0.116087
+            "x": 0.307772,
+            "y": 0.039463
           }
         ],
         "status": "validated"
@@ -3726,7 +3761,7 @@
       "label": "Clock 15 Minutes",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed custom switch column position 91. Printed with opto-board construction (A-16220, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again.",
+        "notes": "Printed custom switch column position 91. Printed with opto-board construction (A-16220, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again. Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object.",
         "part_number": "A-16220",
         "switch_type": "opto"
       },
@@ -3738,14 +3773,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-91.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.764801,
+            "y": 0.273884
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -3765,7 +3810,7 @@
       "label": "Clock 0 Minutes",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed custom switch column position 92. Printed with opto-board construction (A-16220, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again.",
+        "notes": "Printed custom switch column position 92. Printed with opto-board construction (A-16220, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again. Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object.",
         "part_number": "A-16220",
         "switch_type": "opto"
       },
@@ -3777,14 +3822,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-92.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.764801,
+            "y": 0.273884
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -3804,7 +3859,7 @@
       "label": "Clock 45 Minutes",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed custom switch column position 93. Printed with opto-board construction (A-16220, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again.",
+        "notes": "Printed custom switch column position 93. Printed with opto-board construction (A-16220, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again. Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object.",
         "part_number": "A-16220",
         "switch_type": "opto"
       },
@@ -3816,14 +3871,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-93.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.764801,
+            "y": 0.273884
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -3843,7 +3908,7 @@
       "label": "Clock 30 Minutes",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed custom switch column position 94. Printed with opto-board construction (A-16220, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again.",
+        "notes": "Printed custom switch column position 94. Printed with opto-board construction (A-16220, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again. Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object.",
         "part_number": "A-16220",
         "switch_type": "opto"
       },
@@ -3855,14 +3920,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-94.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.764801,
+            "y": 0.273884
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -3882,7 +3957,7 @@
       "label": "Clock Hour 1",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed custom switch column position 95. Printed with opto-board construction (A-16219, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again.",
+        "notes": "Printed custom switch column position 95. Printed with opto-board construction (A-16219, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again. Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object.",
         "part_number": "A-16219",
         "switch_type": "opto"
       },
@@ -3894,14 +3969,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-95.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.764801,
+            "y": 0.273884
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -3921,7 +4006,7 @@
       "label": "Clock Hour 2",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed custom switch column position 96. Printed with opto-board construction (A-16219, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again.",
+        "notes": "Printed custom switch column position 96. Printed with opto-board construction (A-16219, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again. Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object.",
         "part_number": "A-16219",
         "switch_type": "opto"
       },
@@ -3933,14 +4018,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-96.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.764801,
+            "y": 0.273884
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -3960,7 +4055,7 @@
       "label": "Clock Hour 3",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed custom switch column position 97. Printed with opto-board construction (A-16219, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again.",
+        "notes": "Printed custom switch column position 97. Printed with opto-board construction (A-16219, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again. Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object.",
         "part_number": "A-16219",
         "switch_type": "opto"
       },
@@ -3972,14 +4067,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-97.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.764801,
+            "y": 0.273884
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -3999,7 +4104,7 @@
       "label": "Clock Hour 4",
       "normally_closed": true,
       "physical": {
-        "notes": "Printed custom switch column position 98. Printed with opto-board construction (A-16219, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again.",
+        "notes": "Printed custom switch column position 98. Printed with opto-board construction (A-16219, Minute Opto P.C.B. for 91-94 or Hour Opto P.C.B. for 95-98). Not shown on the printed switch-locations diagram (manual asterisk footnote). Pinned PinMAME's inverted-switch mask marks the entire custom column 0xff, so the public switch state is already normalized and must not be inverted again. Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object.",
         "part_number": "A-16219",
         "switch_type": "opto"
       },
@@ -4011,14 +4116,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "switch.matrix-98.sensor",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "sensor",
+            "space": "playfield",
+            "x": 0.764801,
+            "y": 0.273884
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -4043,7 +4158,7 @@
       "normally_closed": false,
       "physical": {
         "location": "flipper assembly",
-        "notes": "Printed Fliptronic grounded switch F1. WPC_FLIPPERS unconditionally complements the flipper switch column for this hardware generation (no WPC-95-specific register is required), so the public state is already normalized.",
+        "notes": "Printed Fliptronic grounded switch F1. WPC_FLIPPERS unconditionally complements the flipper switch column for this hardware generation (no WPC-95-specific register is required), so the public state is already normalized. The end-of-stroke contact is internal to the flipper assembly; the flipper's playfield position is carried by its power/hold coil placements.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -4137,7 +4252,7 @@
       "normally_closed": false,
       "physical": {
         "location": "flipper assembly",
-        "notes": "Printed Fliptronic grounded switch F3. WPC_FLIPPERS unconditionally complements the flipper switch column for this hardware generation (no WPC-95-specific register is required), so the public state is already normalized.",
+        "notes": "Printed Fliptronic grounded switch F3. WPC_FLIPPERS unconditionally complements the flipper switch column for this hardware generation (no WPC-95-specific register is required), so the public state is already normalized. The end-of-stroke contact is internal to the flipper assembly; the flipper's playfield position is carried by its power/hold coil placements.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -4231,7 +4346,7 @@
       "normally_closed": false,
       "physical": {
         "location": "flipper assembly",
-        "notes": "Printed Fliptronic grounded switch F5. WPC_FLIPPERS unconditionally complements the flipper switch column for this hardware generation (no WPC-95-specific register is required), so the public state is already normalized.",
+        "notes": "Printed Fliptronic grounded switch F5. WPC_FLIPPERS unconditionally complements the flipper switch column for this hardware generation (no WPC-95-specific register is required), so the public state is already normalized. The end-of-stroke contact is internal to the flipper assembly; the flipper's playfield position is carried by its power/hold coil placements.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -4325,7 +4440,7 @@
       "normally_closed": false,
       "physical": {
         "location": "flipper assembly",
-        "notes": "Printed Fliptronic grounded switch F7. WPC_FLIPPERS unconditionally complements the flipper switch column for this hardware generation (no WPC-95-specific register is required), so the public state is already normalized.",
+        "notes": "Printed Fliptronic grounded switch F7. WPC_FLIPPERS unconditionally complements the flipper switch column for this hardware generation (no WPC-95-specific register is required), so the public state is already normalized. The end-of-stroke contact is internal to the flipper assembly; the flipper's playfield position is carried by its power/hold coil placements.",
         "switch_type": "leaf"
       },
       "provenance": {
@@ -4853,7 +4968,7 @@
         "device.gumball-motor"
       ],
       "assembly_part_number": "A-16132",
-      "behavior": "A ball diverted by solenoid 6 (Gumball Diverter) enters the gumball lane (switch 51), is caught by the Gumball Popper opto (switch 74) and kicked by solenoid 4 into the gumball wheel; a real gumball then enters the machine (switch 87, Gumball Enter opto) and travels to the exit (switch 56, Gumball Exit) where it is released to the player. Solenoid 24 turns the internal gumball motor; switch 55 (Gumball Geneva) senses the motor's geneva-gear position but is driven synthetically by pinned PinMAME's tz_handleMech from an internal position counter rather than a table Hit event, and has no bound VPX trigger object in the retained extraction. PinMAME's tz_getSol also exposes a fake CORE_CUSTSOLNO(9) \"gumball release\" state used only to simplify emulator-side sequencing, not a real coil.",
+      "behavior": "A ball diverted by solenoid 6 (Gumball Diverter) enters the gumball lane (switch 51), is caught by the Gumball Popper opto (switch 74) and kicked by solenoid 4 into the gumball wheel; a real gumball then enters the machine (switch 87, Gumball Enter opto) and travels to the exit (switch 56, Gumball Exit) where it is released to the player. Solenoid 24 turns the internal gumball motor; switch 55 (Gumball Geneva, on the underside beneath the gumball machine) senses the motor's geneva-gear position. Pinned PinMAME's tz_handleMech drives it synthetically from an internal position counter, and the retained table also pulses it itself: SolGumballMotor schedules SolGumRelease 1.7 s after solenoid 24 turns on, and SolGumRelease calls vpmtimer.PulseSw 55 (script.vbs line 2401) -- a behaviour of the table, not a Hit event from a switch object. Its spatial record is a projection onto the gumball machine assembly. PinMAME's tz_getSol also exposes a fake CORE_CUSTSOLNO(9) \"gumball release\" state used only to simplify emulator-side sequencing, not a real coil.",
       "id": "mechanism.gumball-machine",
       "kind": "toy",
       "label": "Gumball machine",
@@ -4913,7 +5028,7 @@
         "device.clock-motor-drive-b"
       ],
       "assembly_part_number": "A-16120",
-      "behavior": "A bidirectional DC gearmotor (A-16120 D.C. Motor Control Assembly) drives a physical analog clock hand through solenoids 56/57 as a forward/reverse pair, strobed by solenoid 58 (Clock Switch Strobe, A-16100). Eight opto sensors on Minute (A-16220, addresses 91-94) and Hour (A-16219, addresses 95-98) opto PC boards report clock-hand position; all eight are in PinMAME's fully-inverted custom switch column. Pinned PinMAME does not expose this to the table script at all: init_tz's mech_add(0, &mechClock) drives an internal MECH_TWODIRSOL simulation (mechClock's own switch/step-range table, disabled by an #if 0 block in tz_handleMech in this pinned revision) and Controller.GetMech(0) reports the resulting position directly; the retained script reads that mechanism position rather than driving the clock switches itself. Twilight Zone's own tz.c #define names solenoid 56 \"sClockFwd\" (Forward) and 57 \"sClockRev\" (Reverse); the printed manual and the retained script's own cross-reference comments read the opposite way -- see conflict.clock-motor-direction-naming, unresolved.",
+      "behavior": "A bidirectional DC gearmotor drives a physical analog clock hand through solenoids 56/57 as a forward/reverse pair; the solenoid table lists assembly A-16120 for both outputs, printed \"D.C. Motor Assembly\" on page 2-47 and \"DC Motor Control Assembly\" over a circuit-board drawing on page 2-15 (reading it as the motor-control board is an inference). The position optos are strobed by solenoid 58 (Clock Switch Strobe, A-16100). Eight opto sensors on Minute (A-16220, addresses 91-94) and Hour (A-16219, addresses 95-98) opto PC boards report clock-hand position; all eight are in PinMAME's fully-inverted custom switch column. Pinned PinMAME does not expose this to the table script at all: init_tz's mech_add(0, &mechClock) drives an internal MECH_TWODIRSOL simulation (mechClock's own switch/step-range table, disabled by an #if 0 block in tz_handleMech in this pinned revision) and Controller.GetMech(0) reports the resulting position directly; the retained script reads that mechanism position rather than driving the clock switches itself. Twilight Zone's own tz.c #define names solenoid 56 \"sClockFwd\" (Forward) and 57 \"sClockRev\" (Reverse); the printed manual and the retained script's own cross-reference comments read the opposite way -- see conflict.clock-motor-direction-naming, unresolved.",
       "id": "mechanism.clock",
       "kind": "motorized",
       "label": "Motorized analog clock",
@@ -5249,31 +5364,31 @@
         "device.right-jet-bumper"
       ],
       "assembly_part_number": "A-9415-2",
-      "behavior": "Three A-9415-2 jet bumpers. Solenoid 12 fires the Lower Jet Bumper (switch 31), solenoid 13 the Left Jet Bumper (switch 32), and solenoid 14 the Right Jet Bumper (switch 33); the retained script leaves these three SolCallback entries commented out because the table's native VPX bumper physics handles them directly.",
+      "behavior": "Three A-9415-2 jet bumpers. By the manual's location drawings, the left bumper carries switch 31 (page 2-51) and coil 13 (page 2-53), the upper-right bumper switch 32 and coil 14, and the lower bumper switch 33 and coil 12; the retained script binds Bumper1/Bumper2/Bumper3 to switches 31/32/33 in the same left/upper-right/lower order. Which coil the ROM fires for each switch is not asserted beyond this co-location. The retained script leaves the three coil SolCallback entries commented out because the table's native VPX bumper physics handles them directly.",
       "id": "mechanism.jet-bumpers",
       "kind": "other",
       "label": "Three-bumper jet nest",
       "positions": [
         {
-          "description": "Closest to the player.",
-          "id": "lower",
-          "label": "Lower jet bumper",
+          "description": "Left of the nest; coil 13 by location.",
+          "id": "left",
+          "label": "Left jet bumper",
           "sensors": [
             "switch.matrix-31"
           ]
         },
         {
-          "description": "Left of the nest.",
-          "id": "left",
-          "label": "Left jet bumper",
+          "description": "Upper right of the nest; coil 14 by location.",
+          "id": "right",
+          "label": "Right jet bumper",
           "sensors": [
             "switch.matrix-32"
           ]
         },
         {
-          "description": "Right of the nest.",
-          "id": "right",
-          "label": "Right jet bumper",
+          "description": "Closest to the player; coil 12 by location.",
+          "id": "lower",
+          "label": "Lower jet bumper",
           "sensors": [
             "switch.matrix-33"
           ]
@@ -5460,7 +5575,7 @@
       "label": "Slot Kickout",
       "physical": {
         "assembly_part_number": "A-16434",
-        "notes": "Printed solenoid/flasher-locations item 1. Retained script callback: SlotMachineKickout. Slot Kickout coil location coincides with the slot machine assembly (Trigger.slotMachine, Kicker.SlotKickerOverflow); no single coil-body object is separately named in the retained extraction.",
+        "notes": "Printed solenoid/flasher-locations item 01. Retained script callback: SlotMachineKickout. Projected onto Kicker.sw58, the slot kickout hole the retained script's SlotMachineKickout kicks (with the overflow kicker beside it); manual page 2-53 prints callout 01 at the slot machine.",
         "part_number": "AE-24-900"
       },
       "provenance": {
@@ -5472,14 +5587,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.slot-kickout.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.651165,
+            "y": 0.519193
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -5503,7 +5628,7 @@
       "label": "Rocket Kicker",
       "physical": {
         "assembly_part_number": "A-16647",
-        "notes": "Printed solenoid/flasher-locations item 2. Retained script callback: SolRocket.",
+        "notes": "Printed solenoid/flasher-locations item 02. Retained script callback: SolRocket.",
         "part_number": "AL-23-800"
       },
       "provenance": {
@@ -5555,7 +5680,7 @@
       "label": "Auto-Fire Kicker",
       "physical": {
         "assembly_part_number": "A-16647",
-        "notes": "Printed solenoid/flasher-locations item 3. Retained script callback: SolAutoKicker. Auto-Fire Kicker coil is inside the Kicker.AutoPlungerKicker assembly; the shooter-lane kicker object itself is used for switch 72's placement instead of a duplicate coil coordinate.",
+        "notes": "Printed solenoid/flasher-locations item 03. Retained script callback: SolAutoKicker. Projected onto Kicker.AutoPlungerKicker, the shooter-lane kicker the retained script's SolAutoKicker fires; the same object carries switch 72.",
         "part_number": "AL-23-800"
       },
       "provenance": {
@@ -5567,14 +5692,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.auto-fire-kicker.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.875735,
+            "y": 0.976383
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -5598,7 +5733,7 @@
       "label": "Gumball Popper",
       "physical": {
         "assembly_part_number": "A-16312",
-        "notes": "Printed solenoid/flasher-locations item 4. Retained script callback: SolGumballPopper.",
+        "notes": "Printed solenoid/flasher-locations item 04. Retained script callback: SolGumballPopper.",
         "part_number": "AE-23-800"
       },
       "provenance": {
@@ -5650,7 +5785,7 @@
       "label": "Right Ramp Diverter",
       "physical": {
         "assembly_part_number": "A-16361",
-        "notes": "Printed solenoid/flasher-locations item 5. Retained script callback: SolRightRampDiverter. Right Ramp Diverter coil has no separately named coil-body object; Flipper.RampDiverter documents the diverter blade only.",
+        "notes": "Printed solenoid/flasher-locations item 05. Retained script callback: SolRightRampDiverter. Placed on Primitive.BM_RDiv, the diverter blade the retained script's diverterTimer rotates (through the BP_RDiv array) when SolRightRampDiverter fires; the position is the primitive's own pivot, the blade's hinge. The script's Trigger.DivTrig (an invisible trigger that catches the ball to kick it) and Wall.DivWall (an invisible collision wall whose collidability the coil toggles) are helpers and are not used. The table's invisible right-ramp physics ramp (Ramp.Ramp342, a two-wire ramp about 135 units above the playfield) runs from the right-ramp hairpin to the left side and passes about 0.02 in front of this pivot, over Wall.DivWall. Manual page 2-53 prints callout 05 left of centre with its arrow pointing left to a vertical rail; measured on the committed crop, the arrow tip normalizes to about (0.273, 0.199), 0.016 from the pivot (see vpx-geometry-2026-09-25-round3.txt).",
         "part_number": "AE-26-1200"
       },
       "provenance": {
@@ -5662,14 +5797,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.right-ramp-diverter.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.279253,
+            "y": 0.21377
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -5693,7 +5838,7 @@
       "label": "Gumball Diverter",
       "physical": {
         "assembly_part_number": "A-16313",
-        "notes": "Printed solenoid/flasher-locations item 6. Retained script callback: SolGumballDiverter. Gumball Diverter coil has no separately named coil-body object; Flipper.GumballDiverter documents the diverter blade only.",
+        "notes": "Printed solenoid/flasher-locations item 06. Retained script callback: SolGumballDiverter. Placed on Flipper.GumballDiverter, the diverter blade the retained script's SolGumballDiverter rotates; the manual's Lower Playfield Parts page (2-47) shows the A-16313 Rear Diverter Assembly (item 19) under this rear-centre region, while the leaderless callout 06 on page 2-53 is printed further left, in the same region but not on the blade.",
         "part_number": "AE-26-1500"
       },
       "provenance": {
@@ -5705,14 +5850,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.gumball-diverter.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.583327,
+            "y": 0.054196
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -5736,7 +5891,7 @@
       "label": "Knocker",
       "physical": {
         "assembly_part_number": "B-10686-1",
-        "notes": "Printed solenoid/flasher-locations item 7. Retained script callback: SolKnocker. No VPX geometry evidence located for this address.",
+        "notes": "Printed solenoid/flasher-locations item 07. Retained script callback: SolKnocker. No spatial placement: the knocker is a physical coil (B-10686-1), but no retained page locates it -- it is absent from both playfield drawings on page 2-53, from the Lower Playfield Parts page (2-47), and from the Cabinet Parts list (2-3); the backbox and remaining parts pages are among the scan's missing even pages. The retained table's KnockerPosition primitive is an invisible sound-position helper parked off the playfield, not evidence.",
         "part_number": "AE-23-800"
       },
       "provenance": {
@@ -5746,16 +5901,6 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
-      },
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
       }
     },
     {
@@ -5779,7 +5924,7 @@
       "label": "Outhole",
       "physical": {
         "assembly_part_number": "A-8039-3",
-        "notes": "Printed solenoid/flasher-locations item 8. Retained script callback: SolOuthole. No VPX geometry evidence located for this address.",
+        "notes": "Printed solenoid/flasher-locations item 08. Retained script callback: SolOuthole. Projected onto Kicker.sw18, the outhole the retained script's SolOuthole kicks.",
         "part_number": "AE-27-1200"
       },
       "provenance": {
@@ -5791,14 +5936,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.outhole.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.466847,
+            "y": 0.974273
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -5822,7 +5977,7 @@
       "label": "Ball Release",
       "physical": {
         "assembly_part_number": "A-16766",
-        "notes": "Printed solenoid/flasher-locations item 9. Retained script callback: SolBallRelease.",
+        "notes": "Printed solenoid/flasher-locations item 09. Retained script callback: SolBallRelease.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
@@ -5874,7 +6029,7 @@
       "label": "Right Slingshot",
       "physical": {
         "assembly_part_number": "A-16645-R",
-        "notes": "Printed solenoid/flasher-locations item 10. Right Slingshot coil is native VPX slingshot physics (Wall.RightSlingShot); no scripted coil object exists.",
+        "notes": "Printed solenoid/flasher-locations item 10. Projected onto the retained table's Wall.RightSlingShot (drag-point mean), the slingshot assembly this coil fires; the table uses native slingshot physics, so no scripted coil object exists. Manual page 2-53 prints callout 10 at the right slingshot.",
         "part_number": "AE-27-1200"
       },
       "provenance": {
@@ -5885,14 +6040,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.right-slingshot.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.676268,
+            "y": 0.727484
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -5916,7 +6081,7 @@
       "label": "Left Slingshot",
       "physical": {
         "assembly_part_number": "A-16645-L",
-        "notes": "Printed solenoid/flasher-locations item 11. Left Slingshot coil is native VPX slingshot physics (Wall.LeftSlingShot); no scripted coil object exists.",
+        "notes": "Printed solenoid/flasher-locations item 11. Projected onto the retained table's Wall.LeftSlingShot (drag-point mean), the slingshot assembly this coil fires; the table uses native slingshot physics, so no scripted coil object exists. Manual page 2-53 prints callout 11 at the left slingshot.",
         "part_number": "AE-27-1200"
       },
       "provenance": {
@@ -5927,14 +6092,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.left-slingshot.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.296464,
+            "y": 0.727956
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -5958,7 +6133,7 @@
       "label": "Lower Jet Bumper",
       "physical": {
         "assembly_part_number": "A-9415-2",
-        "notes": "Printed solenoid/flasher-locations item 12. Lower Jet Bumper coil has no separately named coil-body object distinct from Bumper.Bumper3.",
+        "notes": "Printed solenoid/flasher-locations item 12. Projected onto Bumper.Bumper3, the lower jet bumper; manual page 2-53 prints callout 12 on the lower bumper. The table's bumpers are native physics, so the coil has no object of its own.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
@@ -5969,14 +6144,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.lower-jet-bumper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.163625,
+            "y": 0.591223
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -6000,7 +6185,7 @@
       "label": "Left Jet Bumper",
       "physical": {
         "assembly_part_number": "A-9415-2",
-        "notes": "Printed solenoid/flasher-locations item 13. Left Jet Bumper coil has no separately named coil-body object distinct from Bumper.Bumper1.",
+        "notes": "Printed solenoid/flasher-locations item 13. Projected onto Bumper.Bumper1, the left jet bumper; manual page 2-53 prints callout 13 on the left bumper. The table's bumpers are native physics, so the coil has no object of its own.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
@@ -6011,14 +6196,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.left-jet-bumper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.075028,
+            "y": 0.504529
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -6042,7 +6237,7 @@
       "label": "Right Jet Bumper",
       "physical": {
         "assembly_part_number": "A-9415-2",
-        "notes": "Printed solenoid/flasher-locations item 14. Right Jet Bumper coil has no separately named coil-body object distinct from Bumper.Bumper2.",
+        "notes": "Printed solenoid/flasher-locations item 14. Projected onto Bumper.Bumper2, the upper-right jet bumper; manual page 2-53 prints callout 14 on the right bumper. The table's bumpers are native physics, so the coil has no object of its own.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
@@ -6053,14 +6248,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.right-jet-bumper.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.267643,
+            "y": 0.500265
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -6084,7 +6289,7 @@
       "label": "Lock Release",
       "physical": {
         "assembly_part_number": "A-16307",
-        "notes": "Printed solenoid/flasher-locations item 15. Retained script callback: LockKickout.",
+        "notes": "Printed solenoid/flasher-locations item 15. Retained script callback: LockKickout. Projected onto Kicker.sw88, the lower lock position the retained script's LockKickout kicks; manual page 2-53 prints callout 15 at the lock.",
         "part_number": "AE-27-1200"
       },
       "provenance": {
@@ -6102,14 +6307,15 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.tz-2-4-5",
-                "vpx-script.tz-2-4-5"
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.815733,
-            "y": 0.481498
+            "x": 0.755565,
+            "y": 0.171456
           }
         ],
         "status": "validated"
@@ -6188,7 +6394,8 @@
       "label": "Bumpers Flasher",
       "physical": {
         "assembly_part_number": "A-12336-1",
-        "notes": "Printed solenoid/flasher-locations item 17. Retained script callback: SolModCallback UpdateF17. Flasher bulb location is not separately named in the retained extraction; treated as a controlled backbox/insert circuit rather than an invented playfield coordinate."
+        "notes": "Printed solenoid/flasher-locations item 17. Retained script callback: SolModCallback UpdateF17. Two sockets, both driven by the retained script's UpdateF17: Light.f17 between the jet bumpers and Light.f17b at the left edge beside them, matching the two callout-17 circles on manual page 2-53 and its printed \"(2)\".",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6198,18 +6405,40 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.bumpers-flasher.emitter.1",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.175732,
+            "y": 0.526118
+          },
+          {
+            "id": "device.bumpers-flasher.emitter.2",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.024073,
+            "y": 0.575889
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -6233,7 +6462,8 @@
       "label": "Power Payoff Flasher",
       "physical": {
         "assembly_part_number": "A-12336-1 / A-16060",
-        "notes": "Printed solenoid/flasher-locations item 18. Retained script callback: SolModCallback FlashPWM 18. Flasher bulb location is not separately named in the retained extraction; treated as a controlled backbox/insert circuit rather than an invented playfield coordinate."
+        "notes": "Printed solenoid/flasher-locations item 18. Retained script callback: SolModCallback FlashPWM 18. No spatial placement: the manual prints two bulbs (\"(2)\") and draws one callout-18 circle on the ramp overlay and one right of centre on the main playfield (page 2-53), but the retained table models only one (Light.f18, x=0.864045 y=0.403193, the ramp-overlay bulb). Placing one of two sockets would misstate the quantity.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6242,19 +6472,6 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
-      },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
       }
     },
     {
@@ -6278,7 +6495,8 @@
       "label": "Mini-Playfield Flasher",
       "physical": {
         "assembly_part_number": "A-12336-1",
-        "notes": "Printed solenoid/flasher-locations item 19. Retained script callback: SolModCallback FlashPWM 19. Flasher bulb location is not separately named in the retained extraction; treated as a controlled backbox/insert circuit rather than an invented playfield coordinate."
+        "notes": "Printed solenoid/flasher-locations item 19. Retained script callback: SolModCallback FlashPWM 19. No spatial placement: the manual prints two bulbs (\"(2)\") and draws both callout-19 circles at the mini-playfield (page 2-53), but the retained table models only one (Light.f19, x=0.173298 y=0.349009).",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6287,19 +6505,6 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
-      },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
       }
     },
     {
@@ -6323,7 +6528,8 @@
       "label": "Upper Left Ramp Flasher",
       "physical": {
         "assembly_part_number": "A-16330 / A-16060",
-        "notes": "Printed solenoid/flasher-locations item 20. Retained script callback: SolModCallback FlashPWM 20. Flasher bulb location is not separately named in the retained extraction; treated as a controlled backbox/insert circuit rather than an invented playfield coordinate."
+        "notes": "Printed solenoid/flasher-locations item 20. Retained script callback: SolModCallback FlashPWM 20. No spatial placement: the manual prints two bulbs (\"(2)\"), one at the top of the upper left ramp and one under the door panel's Gum insert (page 2-53 draws callout 20 in both places), but the retained table models only the ramp bulb (Light.f20, x=0.404644 y=0.037562). The retained script's comment says \"the additional GUM and BALL flashers were removed to reduce cost\"; that is an unsourced claim about later production, so the fitted quantity is left open rather than reduced to one.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -6332,19 +6538,6 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
-      },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
       }
     },
     {
@@ -6510,7 +6703,7 @@
       "label": "Gumball Motor",
       "physical": {
         "assembly_part_number": "A-16132",
-        "notes": "Printed solenoid/flasher-locations item 24. Retained script callback: SolGumballMotor.",
+        "notes": "Printed solenoid/flasher-locations item 24. Retained script callback: SolGumballMotor. Projected onto the gumball machine assembly (A-16132), represented by the pivot of Primitive.BM_Gumballs; manual page 2-53 prints callout 24 inside the gumball-machine outline. The retained script's SolGumballMotor turns the machine's knob animation.",
         "part_number": "14-7984"
       },
       "provenance": {
@@ -6528,14 +6721,15 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.tz-2-4-5",
-                "vpx-script.tz-2-4-5"
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.583327,
-            "y": 0.054196
+            "x": 0.186168,
+            "y": 0.106725
           }
         ],
         "status": "validated"
@@ -6666,7 +6860,7 @@
       "label": "Left Ramp Diverter",
       "physical": {
         "assembly_part_number": "A-16064",
-        "notes": "Printed solenoid/flasher-locations item 27. Retained script callback: SolLeftRampDiverter. The only candidate VPX object (Flipper.RampDiverter) sits at normalized y=1.000665, just outside the 0..1 playfield bounds -- a table-modeling anomaly (the diverter blade pivots below the visible apron edge) -- so no coordinate is asserted.",
+        "notes": "Printed solenoid/flasher-locations item 27. Retained script callback: SolLeftRampDiverter. Projected onto Wall.RampDivWall (drag-point mean), the blocking wall the retained script's SolLeftRampDiverter drops; manual page 2-53 prints callout 27 at the same right-edge position. Flipper.RampDiverter, the visible blade animation, sits at y=1.000665, outside the playfield, and is not used.",
         "part_number": "AE-26-1500"
       },
       "provenance": {
@@ -6678,14 +6872,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.left-ramp-diverter.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.956968,
+            "y": 0.295379
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -6709,7 +6913,8 @@
       "label": "Inside Ramp Flasher",
       "physical": {
         "assembly_part_number": "A-16060",
-        "notes": "Printed solenoid/flasher-locations item 28. Retained script callback: SolModCallback FlashPWM 28. Flasher bulb location is not separately named in the retained extraction; treated as a controlled backbox/insert circuit rather than an invented playfield coordinate."
+        "notes": "Printed solenoid/flasher-locations item 28. Retained script callback: SolModCallback FlashPWM 28. Placed on Light.f28, the flasher light the retained script's FlashPWM 28 drives; manual page 2-53 draws one callout-28 circle at the inside of the ramp.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -6719,18 +6924,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.inside-ramp-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.524902,
+            "y": 0.084076
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -6909,7 +7121,7 @@
       "kind": "coil",
       "label": "Upper Right Flipper Power",
       "physical": {
-        "notes": "Printed solenoid/flasher-locations item 33. No VPX geometry evidence located for this address."
+        "notes": "Not an item of the page 2-53 solenoid/flasher-locations table; the flipper coil is listed in the Flipper Coils table on the same page. Projected onto Flipper.RightFlipper1, the upper right flipper the retained script's SolURFlipper moves."
       },
       "provenance": {
         "source_refs": [
@@ -6919,14 +7131,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.upper-right-flipper-power.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.794956,
+            "y": 0.532521
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -6949,24 +7171,35 @@
       "kind": "coil",
       "label": "Upper Right Flipper Hold",
       "physical": {
-        "notes": "Printed solenoid/flasher-locations item 34. No VPX geometry evidence located for this address."
+        "notes": "Not an item of the page 2-53 solenoid/flasher-locations table; the flipper coil is listed in the Flipper Coils table on the same page. Retained script callback: SolURFlipper via SolCallback(sURFlipper) (upper right). Projected onto Flipper.RightFlipper1, the upper right flipper the retained script's SolURFlipper moves."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.twilight-zone.1993",
+          "vpx-script.tz-2-4-5",
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.upper-right-flipper-hold.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.794956,
+            "y": 0.532521
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -6989,7 +7222,7 @@
       "kind": "coil",
       "label": "Upper Left Flipper Power",
       "physical": {
-        "notes": "Printed solenoid/flasher-locations item 35. No VPX geometry evidence located for this address."
+        "notes": "Not an item of the page 2-53 solenoid/flasher-locations table; the flipper coil is listed in the Flipper Coils table on the same page. Projected onto Flipper.LeftFlipper1, the upper left flipper the retained script's SolULFlipper moves."
       },
       "provenance": {
         "source_refs": [
@@ -6999,14 +7232,24 @@
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.upper-left-flipper-power.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.280047,
+            "y": 0.320431
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -7029,24 +7272,35 @@
       "kind": "coil",
       "label": "Upper Left Flipper Hold",
       "physical": {
-        "notes": "Printed solenoid/flasher-locations item 36. No VPX geometry evidence located for this address."
+        "notes": "Not an item of the page 2-53 solenoid/flasher-locations table; the flipper coil is listed in the Flipper Coils table on the same page. Retained script callback: SolULFlipper via SolCallback(sULFlipper) (upper left). Projected onto Flipper.LeftFlipper1, the upper left flipper the retained script's SolULFlipper moves."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.twilight-zone.1993",
+          "vpx-script.tz-2-4-5",
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
       },
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "pinmame.core.4ec52ff0ac13"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.upper-left-flipper-hold.effect",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "effect",
+            "space": "playfield",
+            "x": 0.280047,
+            "y": 0.320431
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -7381,12 +7635,11 @@
       "kind": "coil",
       "label": "Lower Right Flipper Power",
       "physical": {
-        "notes": "Printed solenoid/flasher-locations item 45. Retained script callback: SolLFlipper (lower left)."
+        "notes": "Not an item of the page 2-53 solenoid/flasher-locations table; the flipper coil is listed in the Flipper Coils table on the same page. Projected onto Flipper.RightFlipper, the lower right flipper the retained script's SolRFlipper moves."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.twilight-zone.1993",
-          "vpx-script.tz-2-4-5",
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
@@ -7398,13 +7651,14 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.tz-2-4-5",
-                "vpx-script.tz-2-4-5"
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.33539,
+            "x": 0.635515,
             "y": 0.836095
           }
         ],
@@ -7431,7 +7685,7 @@
       "kind": "coil",
       "label": "Lower Right Flipper Hold",
       "physical": {
-        "notes": "Printed solenoid/flasher-locations item 46. Retained script callback: SolRFlipper (lower right)."
+        "notes": "Not an item of the page 2-53 solenoid/flasher-locations table; the flipper coil is listed in the Flipper Coils table on the same page. Retained script callback: SolRFlipper via SolCallback(sLRFlipper) (lower right). Projected onto Flipper.RightFlipper, the lower right flipper the retained script's SolRFlipper moves."
       },
       "provenance": {
         "source_refs": [
@@ -7448,7 +7702,8 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.tz-2-4-5",
-                "vpx-script.tz-2-4-5"
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
               ],
               "status": "validated"
             },
@@ -7481,12 +7736,11 @@
       "kind": "coil",
       "label": "Lower Left Flipper Power",
       "physical": {
-        "notes": "Printed solenoid/flasher-locations item 47. Retained script callback: SolULFlipper (upper left)."
+        "notes": "Not an item of the page 2-53 solenoid/flasher-locations table; the flipper coil is listed in the Flipper Coils table on the same page. Projected onto Flipper.LeftFlipper, the lower left flipper the retained script's SolLFlipper moves."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.twilight-zone.1993",
-          "vpx-script.tz-2-4-5",
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
@@ -7498,7 +7752,8 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.tz-2-4-5",
-                "vpx-script.tz-2-4-5"
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
               ],
               "status": "validated"
             },
@@ -7531,7 +7786,7 @@
       "kind": "coil",
       "label": "Lower Left Flipper Hold",
       "physical": {
-        "notes": "Printed solenoid/flasher-locations item 48. Retained script callback: SolURFlipper (upper right)."
+        "notes": "Not an item of the page 2-53 solenoid/flasher-locations table; the flipper coil is listed in the Flipper Coils table on the same page. Retained script callback: SolLFlipper via SolCallback(sLLFlipper) (lower left). Projected onto Flipper.LeftFlipper, the lower left flipper the retained script's SolLFlipper moves."
       },
       "provenance": {
         "source_refs": [
@@ -7548,13 +7803,14 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.tz-2-4-5",
-                "vpx-script.tz-2-4-5"
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.635515,
+            "x": 0.33539,
             "y": 0.836095
           }
         ],
@@ -7660,7 +7916,8 @@
       "label": "Upper Right Flipper Flasher",
       "physical": {
         "assembly_part_number": "A-12336-1",
-        "notes": "Printed solenoid/flasher-locations item 51. Printed auxiliary-board callout number 37. Retained script callback: SolModCallback FlashPWM 37. Flasher bulb location is not separately named in the retained extraction; treated as a controlled backbox/insert circuit rather than an invented playfield coordinate."
+        "notes": "Printed solenoid/flasher-locations item 37, the auxiliary board's callout number for public solenoid 51. Retained script callback: SolModCallback FlashPWM 37. Placed on Light.f37, the flasher light the retained script's FlashPWM 37 drives; manual page 2-53 draws callout 37 beside the upper right flipper.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -7670,18 +7927,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.upper-right-flipper-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.838875,
+            "y": 0.488991
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -7705,7 +7969,8 @@
       "label": "Gumball Machine High Flasher",
       "physical": {
         "assembly_part_number": "A-16651-4",
-        "notes": "Printed solenoid/flasher-locations item 52. Printed auxiliary-board callout number 38. Retained script callback: SolModCallback FlashPWM 38. Flasher bulb location is not separately named in the retained extraction; treated as a controlled backbox/insert circuit rather than an invented playfield coordinate."
+        "notes": "Printed solenoid/flasher-locations item 38, the auxiliary board's callout number for public solenoid 52. Retained script callback: SolModCallback FlashPWM 38. Placed on Light.f38, the flasher light the retained script's FlashPWM 38 drives; manual page 2-53 draws callouts 38-40 stacked at the top-left corner by the gumball machine.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -7715,18 +7980,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.gumball-machine-high-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.052104,
+            "y": 0.04634
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -7750,7 +8022,8 @@
       "label": "Gumball Machine Middle Flasher",
       "physical": {
         "assembly_part_number": "A-16651-4",
-        "notes": "Printed solenoid/flasher-locations item 53. Printed auxiliary-board callout number 39. Retained script callback: SolModCallback FlashPWM 39. Flasher bulb location is not separately named in the retained extraction; treated as a controlled backbox/insert circuit rather than an invented playfield coordinate."
+        "notes": "Printed solenoid/flasher-locations item 39, the auxiliary board's callout number for public solenoid 53. Retained script callback: SolModCallback FlashPWM 39. Placed on Light.f39, the flasher light the retained script's FlashPWM 39 drives; manual page 2-53 draws callouts 38-40 stacked at the top-left corner by the gumball machine.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -7760,18 +8033,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.gumball-machine-middle-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.051255,
+            "y": 0.084691
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -7795,7 +8075,8 @@
       "label": "Gumball Machine Low Flasher",
       "physical": {
         "assembly_part_number": "A-16651-4",
-        "notes": "Printed solenoid/flasher-locations item 54. Printed auxiliary-board callout number 40. Retained script callback: SolModCallback FlashPWM 40. Flasher bulb location is not separately named in the retained extraction; treated as a controlled backbox/insert circuit rather than an invented playfield coordinate."
+        "notes": "Printed solenoid/flasher-locations item 40, the auxiliary board's callout number for public solenoid 54. Retained script callback: SolModCallback FlashPWM 40. Placed on Light.f40, the flasher light the retained script's FlashPWM 40 drives; manual page 2-53 draws callouts 38-40 stacked at the top-left corner by the gumball machine.",
+        "quantity": 1
       },
       "provenance": {
         "source_refs": [
@@ -7805,18 +8086,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "device.gumball-machine-low-flasher.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.051718,
+            "y": 0.13487
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -7840,7 +8128,8 @@
       "label": "Upper Right Ramp Flasher",
       "physical": {
         "assembly_part_number": "A-16330 / A-16060",
-        "notes": "Printed solenoid/flasher-locations item 55. Printed auxiliary-board callout number 41. Retained script callback: SolModCallback FlashPWM 41. Flasher bulb location is not separately named in the retained extraction; treated as a controlled backbox/insert circuit rather than an invented playfield coordinate."
+        "notes": "Printed solenoid/flasher-locations item 41, the auxiliary board's callout number for public solenoid 55. Retained script callback: SolModCallback FlashPWM 41. No spatial placement: the page 2-53 table prints item 41 with two 24-8802 bulb rows, one on A-16330 and one on A-16060, the same two-row layout as item 20, though without item 20's \"(2)\"; the page's location drawing draws callout 41 twice, at the top of the upper right ramp and under the door panel's Ball insert. The quantity is therefore recorded as the two printed sockets. The retained table models only the ramp bulb (Light.f41, x=0.947625 y=0.052201), and its script comments the circuit \"x2 (**)\" with the unsourced note that the door-panel bulb was removed to reduce cost; whether later production fitted both sockets is not settled, and placing one of two sockets would misstate the quantity.",
+        "quantity": 2
       },
       "provenance": {
         "source_refs": [
@@ -7849,19 +8138,6 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
-      },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
       }
     },
     {
@@ -7885,7 +8161,7 @@
       "label": "Clock Motor Drive A",
       "physical": {
         "assembly_part_number": "A-16120",
-        "notes": "Printed solenoid/flasher-locations item 56. Printed auxiliary-board callout number 42. Drives the analog clock hand through the A-16120 D.C. Motor Control Assembly as one of a forward/reverse drive pair; see conflict.clock-motor-direction-naming for the Forward/Reverse label disagreement between tz.c's #define names and the manual/script cross-reference."
+        "notes": "Printed solenoid/flasher-locations item 42, the auxiliary board's callout number for public solenoid 56. Drives the analog clock hand as one of a forward/reverse drive pair; see conflict.clock-motor-direction-naming for the Forward/Reverse label disagreement between tz.c's #define names and the manual/script cross-reference. Projected onto the clock's rotation axis (pivot of Primitive.BM_ClockLarge): the drive line powers the clock's DC gearmotor, which the manual's Clock Gear Train Assembly page (1-51) mounts on the clock's back panel. The solenoid table's assembly number for this output, A-16120, is printed \"D.C. Motor Assembly\" as item 17 of the Lower Playfield Parts page (2-47) and \"DC Motor Control Assembly\" over a circuit-board drawing on page 2-15; reading A-16120 as the motor-control board rather than the motor itself is this curation's inference from those two pages. Where that board sits is not settled: page 2-53 draws callouts 42/43 right of centre above the slot machine, while page 2-47 puts item 17 under the rear right of the playfield."
       },
       "provenance": {
         "source_refs": [
@@ -7901,14 +8177,15 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.tz-2-4-5",
-                "vpx-script.tz-2-4-5"
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.765208,
-            "y": 0.141901
+            "x": 0.764801,
+            "y": 0.273884
           }
         ],
         "status": "validated"
@@ -7935,7 +8212,7 @@
       "label": "Clock Motor Drive B",
       "physical": {
         "assembly_part_number": "A-16120",
-        "notes": "Printed solenoid/flasher-locations item 57. Printed auxiliary-board callout number 43. Drives the analog clock hand through the A-16120 D.C. Motor Control Assembly as one of a forward/reverse drive pair; see conflict.clock-motor-direction-naming for the Forward/Reverse label disagreement between tz.c's #define names and the manual/script cross-reference."
+        "notes": "Printed solenoid/flasher-locations item 43, the auxiliary board's callout number for public solenoid 57. Drives the analog clock hand as one of a forward/reverse drive pair; see conflict.clock-motor-direction-naming for the Forward/Reverse label disagreement between tz.c's #define names and the manual/script cross-reference. Projected onto the clock's rotation axis (pivot of Primitive.BM_ClockLarge): the drive line powers the clock's DC gearmotor, which the manual's Clock Gear Train Assembly page (1-51) mounts on the clock's back panel. The solenoid table's assembly number for this output, A-16120, is printed \"D.C. Motor Assembly\" as item 17 of the Lower Playfield Parts page (2-47) and \"DC Motor Control Assembly\" over a circuit-board drawing on page 2-15; reading A-16120 as the motor-control board rather than the motor itself is this curation's inference from those two pages. Where that board sits is not settled: page 2-53 draws callouts 42/43 right of centre above the slot machine, while page 2-47 puts item 17 under the rear right of the playfield."
       },
       "provenance": {
         "source_refs": [
@@ -7951,14 +8228,15 @@
             "provenance": {
               "source_refs": [
                 "vpx-table.tz-2-4-5",
-                "vpx-script.tz-2-4-5"
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
               ],
               "status": "validated"
             },
             "role": "effect",
             "space": "playfield",
-            "x": 0.765208,
-            "y": 0.141901
+            "x": 0.764801,
+            "y": 0.273884
           }
         ],
         "status": "validated"
@@ -7981,11 +8259,11 @@
         "group": "pinmame.output.solenoid"
       },
       "id": "device.clock-switch-strobe",
-      "kind": "motor",
+      "kind": "control_signal",
       "label": "Clock Switch Strobe",
       "physical": {
         "assembly_part_number": "A-16100",
-        "notes": "Printed solenoid/flasher-locations item 58. Printed auxiliary-board callout number 44. Strobes the eight custom clock-position optos (91-98); not driven by the retained VPX script (handled entirely by PinMAME's own mechClock simulation)."
+        "notes": "Printed solenoid/flasher-locations item 44, the auxiliary board's callout number for public solenoid 58. Strobes the eight custom clock-position optos (91-98); not driven by the retained VPX script (handled entirely by PinMAME's own mechClock simulation). It is a logic-level strobe line into the clock opto boards rather than an actuator or an emitter, so it is typed control_signal and, like every control_signal output, carries an internal_nonvisual spatial record: there is no device of its own to place. The optos it strobes are placed on switches 91-98."
       },
       "provenance": {
         "source_refs": [
@@ -7994,24 +8272,19 @@
         ],
         "status": "validated"
       },
+      "roles": [
+        "internal.clock-opto-strobe"
+      ],
       "spatial": {
-        "placements": [
-          {
-            "id": "device.clock-switch-strobe.effect",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tz-2-4-5",
-                "vpx-script.tz-2-4-5"
-              ],
-              "status": "validated"
-            },
-            "role": "effect",
-            "space": "playfield",
-            "x": 0.815733,
-            "y": 0.481498
-          }
-        ],
-        "status": "validated"
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13",
+            "manual.bally.twilight-zone.1993"
+          ],
+          "status": "validated"
+        },
+        "reason": "internal_nonvisual",
+        "status": "not_applicable"
       }
     },
     {
@@ -8074,7 +8347,7 @@
       "label": "Camera (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 1, return row 1. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 1, return row 1. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8085,18 +8358,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-11.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.485033,
+            "y": 0.725309
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8120,7 +8400,7 @@
       "label": "Hitch-Hicker (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 1, return row 2. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 1, return row 2. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8131,18 +8411,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-12.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.407717,
+            "y": 0.724457
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8166,7 +8453,7 @@
       "label": "Clock Chaos (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 1, return row 3. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 1, return row 3. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8177,18 +8464,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-13.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.391142,
+            "y": 0.695878
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8212,7 +8506,7 @@
       "label": "Super Skill (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 1, return row 4. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 1, return row 4. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8223,18 +8517,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-14.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.390946,
+            "y": 0.655104
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8258,7 +8559,7 @@
       "label": "Fast Lock (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 1, return row 5. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 1, return row 5. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8269,18 +8570,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-15.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.391442,
+            "y": 0.617117
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8304,7 +8612,7 @@
       "label": "Lite Gumball (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 1, return row 6. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 1, return row 6. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8315,18 +8623,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-16.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.391005,
+            "y": 0.576266
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8350,7 +8665,7 @@
       "label": "Town Square Madness (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 1, return row 7. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 1, return row 7. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8361,18 +8676,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-17.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.406546,
+            "y": 0.539161
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8396,7 +8718,7 @@
       "label": "Lite Extra Ball (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 1, return row 8. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 1, return row 8. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8407,18 +8729,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-18.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.483602,
+            "y": 0.539219
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8442,7 +8771,7 @@
       "label": "Door Panel \"Lock 2\"",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 2, return row 1. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 2, return row 1. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8453,18 +8782,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-21.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.519007,
+            "y": 0.682909
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8488,7 +8824,7 @@
       "label": "Greed (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 2, return row 2. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 2, return row 2. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8499,18 +8835,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-22.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.561394,
+            "y": 0.723758
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8534,7 +8877,7 @@
       "label": "10 Million (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 2, return row 3. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 2, return row 3. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8545,18 +8888,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-23.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.578152,
+            "y": 0.695283
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8580,7 +8930,7 @@
       "label": "Battle the Power (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 2, return row 4. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 2, return row 4. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8591,18 +8941,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-24.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.577851,
+            "y": 0.656535
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8626,7 +8983,7 @@
       "label": "The Spiral (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 2, return row 5. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 2, return row 5. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8637,18 +8994,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-25.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.575682,
+            "y": 0.616606
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8672,7 +9036,7 @@
       "label": "Clock Million (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 2, return row 6. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 2, return row 6. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8683,18 +9047,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-26.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.576326,
+            "y": 0.576487
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8718,7 +9089,7 @@
       "label": "Super Slot (Door)",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 2, return row 7. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 2, return row 7. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8729,18 +9100,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-27.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.560138,
+            "y": 0.539998
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -8764,7 +9142,7 @@
       "label": "Door Panel \"Ball\"",
       "physical": {
         "assembly_part_number": "A-16327",
-        "notes": "Printed lamp-matrix drive column 2, return row 8. Printed bulb type #555. Printed suffix \"(Door)\": mounted on the cabinet coin door insert panel rather than the playfield.",
+        "notes": "Printed lamp-matrix drive column 2, return row 8. Printed bulb type #555. Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts around the door panel in the middle of the playfield, and the retained script maps the matching Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps.",
         "quantity": 1
       },
       "provenance": {
@@ -8775,18 +9153,25 @@
         ],
         "status": "validated"
       },
-      "roles": [
-        "cabinet.insert-panel"
-      ],
       "spatial": {
-        "provenance": {
-          "source_refs": [
-            "manual.bally.twilight-zone.1993"
-          ],
-          "status": "validated"
-        },
-        "reason": "cabinet_or_service",
-        "status": "not_applicable"
+        "placements": [
+          {
+            "id": "lamp.matrix-28.emitter",
+            "provenance": {
+              "source_refs": [
+                "vpx-table.tz-2-4-5",
+                "vpx-script.tz-2-4-5",
+                "manual.bally.twilight-zone.1993"
+              ],
+              "status": "validated"
+            },
+            "role": "emitter",
+            "space": "playfield",
+            "x": 0.517527,
+            "y": 0.590167
+          }
+        ],
+        "status": "validated"
       }
     },
     {
@@ -11156,7 +11541,7 @@
       "label": "Buy-In Button",
       "physical": {
         "assembly_part_number": "20-9663-9",
-        "notes": "Printed lamp-matrix drive column 8, return row 7. Manual prints no separate bulb number (cabinet button lamp, integral to the illuminated button assembly). Cabinet button lamp inside the illuminated buy-in/credit button assembly.",
+        "notes": "Printed lamp-matrix drive column 8, return row 7. Manual prints no separate bulb number (cabinet button lamp, integral to the illuminated button assembly). Cabinet button lamp inside the illuminated buy-in/credit button assembly; the manual's Lamp Locations drawing (page 2-55) prints callouts 87 and 88 below the playfield outline, at the cabinet front.",
         "quantity": 1
       },
       "provenance": {
@@ -11202,7 +11587,7 @@
       "label": "Credit Button",
       "physical": {
         "assembly_part_number": "20-9663-1",
-        "notes": "Printed lamp-matrix drive column 8, return row 8. Manual prints no separate bulb number (cabinet button lamp, integral to the illuminated button assembly). Cabinet button lamp inside the illuminated buy-in/credit button assembly.",
+        "notes": "Printed lamp-matrix drive column 8, return row 8. Manual prints no separate bulb number (cabinet button lamp, integral to the illuminated button assembly). Cabinet button lamp inside the illuminated buy-in/credit button assembly; the manual's Lamp Locations drawing (page 2-55) prints callouts 87 and 88 below the playfield outline, at the cabinet front.",
         "quantity": 1
       },
       "provenance": {
@@ -11438,33 +11823,13 @@
       "kind": "gi",
       "label": "Mini-Playfield & Insert",
       "physical": {
-        "notes": "Printed general-illumination string 02 (Mini-Playfield & Insert); printed coil/flasher number 24-8768. The manual prints no per-string bulb count, so the physical quantity and every emitter coordinate come from the retained table's GI emitter collection for this string (UpdateGI in the retained script).",
-        "quantity": 1
+        "notes": "Printed general-illumination string 02 (Mini-Playfield & Insert); printed coil/flasher number 24-8768. No spatial placement: the printed description \"Mini-playfield & Insert\" makes this a mixed string, lighting the mini-playfield and part of the backbox insert board, and no retained page lists its bulbs. The retained script's UpdateGI binds it to a single visible light object (l101, x=0.118778 y=0.301331 on the mini-playfield), which covers only the mini-playfield part and gives no count, so placing it as the whole string would misstate both quantity and extent. The backbox insert part is cabinet hardware and has no playfield coordinate."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.twilight-zone.1993",
           "vpx-script.tz-2-4-5",
           "pinmame.core.4ec52ff0ac13"
-        ],
-        "status": "validated"
-      },
-      "spatial": {
-        "placements": [
-          {
-            "id": "gi.string-2.emitter",
-            "provenance": {
-              "source_refs": [
-                "vpx-table.tz-2-4-5",
-                "vpx-script.tz-2-4-5"
-              ],
-              "status": "validated"
-            },
-            "role": "emitter",
-            "space": "playfield",
-            "x": 0.118778,
-            "y": 0.301331
-          }
         ],
         "status": "validated"
       }
@@ -11489,7 +11854,7 @@
       "kind": "gi",
       "label": "Clock & Insert",
       "physical": {
-        "notes": "Printed general-illumination string 03 (Clock & Insert); printed coil/flasher number 24-8829, 24-8768. The retained script's UpdateGI binds this string to a single light object (l102), but that object's raw table coordinate (x=-230.57, before normalization) falls outside the 0..1 playfield bounds -- a table-modeling anomaly, the same class of issue documented for Monster Bash's GIbot light11. No validated playfield placement is asserted for this address; see reports/spatial/bally/twilight-zone-1993.json unresolved list."
+        "notes": "Printed general-illumination string 03 (Clock & Insert); printed coil/flasher number 24-8829, 24-8768. No spatial placement: the printed description \"Clock & Insert\" makes this a mixed string, lighting the playfield clock and part of the backbox insert board, and no retained page lists its bulbs. The retained script's UpdateGI binds it to a single light object (l102) that only drives baked clock lightmaps; its raw table coordinate (x=-230.57) lies outside the playfield, so it is a render controller, not a socket. The clock bulbs are physical playfield devices without a defensible coordinate or count; the backbox insert part is cabinet hardware and has no playfield coordinate."
       },
       "provenance": {
         "source_refs": [
@@ -11498,16 +11863,6 @@
           "pinmame.core.4ec52ff0ac13"
         ],
         "status": "validated"
-      },
-      "spatial": {
-        "provenance": {
-          "source_refs": [
-            "vpx-script.tz-2-4-5"
-          ],
-          "status": "validated"
-        },
-        "reason": "internal_nonvisual",
-        "status": "not_applicable"
       }
     },
     {
@@ -11530,7 +11885,7 @@
       "kind": "gi",
       "label": "Insert Main",
       "physical": {
-        "notes": "Printed general-illumination string 04 (Insert Main); printed coil/flasher number 24-8768. The retained script's UpdateGI case for this address binds no light collection at all (case 3 has an empty body), so this string has no playfield-visible emitter evidence from the retained table."
+        "notes": "Printed general-illumination string 04 (Insert Main); printed coil/flasher number 24-8768. The printed description \"Insert Main\" names the backbox insert board, the lamp board behind the translite; the neighbouring strings are printed \"Playfield Left\"/\"Playfield Right\" and \"Mini-playfield & Insert\"/\"Clock & Insert\", so \"Insert\" is used on this page for the backbox part of a string; those two mixed strings (GI 1 and GI 2) carry no spatial record because their playfield parts have no bulb list, while this string is backbox-only. The retained script's UpdateGI case 3 has an empty body, so the table models no playfield emitter for it either. The connector columns that would confirm the backbox wiring are on the missing Solenoid/Flasher Table page (2-52)."
       },
       "provenance": {
         "source_refs": [
@@ -11546,6 +11901,7 @@
       "spatial": {
         "provenance": {
           "source_refs": [
+            "manual.bally.twilight-zone.1993",
             "vpx-script.tz-2-4-5"
           ],
           "status": "validated"
@@ -11828,7 +12184,7 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.twilight-zone.1993/solenoid-flasher-locations.md",
           "reviewed": true,
-          "sha256": "89f8394694ad868e8f7c6807525ea36eddc821791240ff112d95d7ee3ecdd817",
+          "sha256": "ea51496c3513888f462eddbb3d08fdc13380171471567f4bf92e649f9131a948",
           "transcribed_by": "curator, read from the rendered page"
         },
         {
@@ -11854,12 +12210,48 @@
           "reviewed": true,
           "sha256": "9e925d39687cbaf85483d062f4a6f468ad049b944e6c62e581485c56e15ba2eb",
           "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.twilight-zone.switch-locations-drawing",
+          "image": "evidence/excerpts/bally.twilight-zone.1993/switch-locations-drawing.webp",
+          "image_derivation": "Twilight_Zone_OPS.pdf page 61, crop box 0.44,0.12,0.9,0.85, scanned page rendered at its native resolution (embedded image xref 259, 2556px across 8.52in), rendered at 300 dpi, grayscale, 1173x2409 WebP quality 80",
+          "image_sha256": "f88910a25fb6d0b50c90d04babac328455a68ed78bcc14b89f35ded82f88c48a",
+          "locator": "PDF page 61, printed 2-51, Main Playfield Switch Locations drawing",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.twilight-zone.1993/switch-locations-drawing.md",
+          "reviewed": true,
+          "sha256": "be99f74c549abd99e6a34c06252b290d471d7b3c509b4aabe084a8b8724644c3",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.twilight-zone.solenoid-flasher-locations-drawing",
+          "image": "evidence/excerpts/bally.twilight-zone.1993/solenoid-flasher-locations-drawing.webp",
+          "image_derivation": "Twilight_Zone_OPS.pdf page 62, crop box 0.59,0.09,0.97,0.93, scanned page rendered at its native resolution (embedded image xref 264, 2562px across 8.54in), rendered at 300 dpi, grayscale, 970x2772 WebP quality 80",
+          "image_sha256": "756877fadbae71cf4704f4bc5aa8629cf6dcb1b866626f16cf5ecd8c0d9b08e5",
+          "locator": "PDF page 62, printed 2-53, Solenoid/Flasher Locations drawings (ramp overlay and main playfield)",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.twilight-zone.1993/solenoid-flasher-locations-drawing.md",
+          "reviewed": true,
+          "sha256": "448093daa0058f6f5a2d703ed5bcf523c8b0c7d32f3bb3b0dc1a944a13a6afcf",
+          "transcribed_by": "curator, read from the rendered page"
+        },
+        {
+          "id": "excerpt.twilight-zone.lamp-locations-drawing",
+          "image": "evidence/excerpts/bally.twilight-zone.1993/lamp-locations-drawing.webp",
+          "image_derivation": "Twilight_Zone_OPS.pdf page 63, crop box 0.45,0.12,0.93,0.87, scanned page rendered at its native resolution (embedded image xref 269, 2550px across 8.50in), rendered at 300 dpi, grayscale, 1225x2475 WebP quality 80",
+          "image_sha256": "64659e33cb20094a64b6124965d4b7fd5ddc36fa05d4d991edd9c0bd6a0c2ba3",
+          "locator": "PDF page 63, printed 2-55, Lamp Locations drawing (door panel and cabinet buttons)",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.twilight-zone.1993/lamp-locations-drawing.md",
+          "reviewed": true,
+          "sha256": "d5444d68fde1c0f56e717d6bf64172330636cb9e897e9b6f8c6a974459617374",
+          "transcribed_by": "curator, read from the rendered page"
         }
       ],
       "id": "manual.bally.twilight-zone.1993",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "166-page image-only scan of the Bally Twilight Zone operations manual (16-50020-101, April 1993; Internet Archive item arcademanual_Twilight_Zone_OPS). Printed page 2-51 (\"Switch Locations (Continued)\") carries switch items 34-98; page 2-53 (\"Solenoid/Flasher Locations\") carries the complete solenoid/flasher table, the Flipper Coils list, and the General Illumination Circuits table; page 2-55 (\"Lamp Locations\") carries the full 64-position lamp matrix. This retained scan is missing every even printed page from 2-48 through 2-54 inclusive, so the Switch Matrix wiring page (2-50, which also carries switch items 1-33), the Solenoid/Flasher Table wiring page (2-52), and the Lamp Matrix wiring page (2-54) are unavailable; see manual-transcription.md.",
+      "locator": "166-page image-only scan of the Bally Twilight Zone operations manual (16-50020-101, April 1993; Internet Archive item arcademanual_Twilight_Zone_OPS). Printed page 2-51 (\"Switch Locations (Continued)\") carries switch items 34-98; page 2-53 (\"Solenoid/Flasher Locations\") carries the complete solenoid/flasher table, the Flipper Coils list, and the General Illumination Circuits table; page 2-55 (\"Lamp Locations\") carries the full 64-position lamp matrix. This retained scan carries only odd-numbered printed pages (for example PDF 40 = 2-9, 58 = 2-45, 64 = 2-57), so every even page is absent, including the Switch Matrix wiring page (2-50, which also carries switch items 1-33), the Solenoid/Flasher Table wiring page (2-52), and the Lamp Matrix wiring page (2-54). The retained manual-transcription.md header states only the narrower 2-48 to 2-54 gap and is stale on that point.",
       "original_filename": "Twilight_Zone_OPS.pdf",
       "rights": "NOASSERTION",
       "sha256": "66b657fda3803ac65dbf0ca89f31825a1a3f95b989b96b99ecea02f42e32be34",
@@ -11903,7 +12295,7 @@
       "id": "vpx-extraction.tz-2-4-5",
       "kind": "vpx_table",
       "license": "NOASSERTION",
-      "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 6188e966e86cafeece592dfecf0603f8b3a16b7bc188d3b9ed876a2425d506c8; 3176 files, 546282740 bytes, produced with vpxtool from the retained table. Bounds are left=0 top=0 right=1082.353 bottom=2164.706. Raw per-object coordinates are retained in external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry.txt, SHA-256 dc8a49f6b1d1568ba9027af7453157039da05a08d6ffd2ac0a60c54940cb2f3a.",
+      "locator": "Canonical manifest covering every sorted relative POSIX path, byte size, and SHA-256 under extracted-vpxtool; manifest SHA-256 6188e966e86cafeece592dfecf0603f8b3a16b7bc188d3b9ed876a2425d506c8; 3176 files, 546282740 bytes, produced with vpxtool from the retained table. Bounds are left=0 top=0 right=1082.353 bottom=2164.706. Raw per-object coordinates are retained in external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry.txt, SHA-256 dc8a49f6b1d1568ba9027af7453157039da05a08d6ffd2ac0a60c54940cb2f3a, and its supplements external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-25.txt, SHA-256 d0ba08f21084d370b3924f3ab8d3fb164f1a9fd14cb1f6df1c33ab747b3ff7c3, and external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-25-round3.txt, SHA-256 1cab0a1ff393a96e2fa43e49ac31039e05280d462293c258ab91df042d6b1aff.",
       "uri": "external:pinmame-vpx-sources/bally/twilight-zone-1993/extracted-vpxtool.manifest.json"
     }
   ]

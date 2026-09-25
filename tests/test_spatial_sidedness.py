@@ -94,6 +94,17 @@ KNOWN_INVERSIONS: dict[str, dict[tuple[str, str], str]] = {
 			"opposite ramp's descending segment. The symmetry - BOTH ramps cross - is itself "
 			"evidence against a clerical swap.",
 	},
+	"bally.twilight-zone.1993": {
+		("device.left-ramp-diverter", "device.right-ramp-diverter"):
+			"CORRECT: (verified 2026-09-25) each diverter is named for the ramp it serves, not for "
+			"its side. The Solenoid/Flasher Locations drawing (manual page 2-53) prints callout 27 "
+			"(Left Ramp Diverter) at the right edge and callout 05 (Right Ramp Diverter) left of "
+			"centre, but it does not show the ramp wireforms. The retained table ties each to its "
+			"ramp: its left-ramp route (Ramp432-438, entering left of centre) ends at the right edge "
+			"on Wall.RampDivWall, which SolLeftRampDiverter drops, and its invisible right-ramp "
+			"physics ramp (Ramp342) crosses to the left side past the BM_RDiv blade, which "
+			"SolRightRampDiverter rotates.",
+	},
 	"stern.the-walking-dead-premium-limited-edition.2014": {
 		("switch.left-ramp-exit", "switch.right-ramp-exit"):
 			"CORRECT: same crossing-ramp geometry as the Pro edition above. Both editions share "

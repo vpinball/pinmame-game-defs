@@ -42,6 +42,12 @@ SCRIPT_SHA256 = "122ef6811ff2e6912593a28a75078a467e6d58dd208c98e313c82712aee2bc4
 MANUAL_SHA256 = "66b657fda3803ac65dbf0ca89f31825a1a3f95b989b96b99ecea02f42e32be34"
 MANUAL_TRANSCRIPTION_SHA256 = "022e91ceaedb44fdaf410cca90bfa534aa11c89fcd832dd2a0f94166c24de39a"
 VPX_GEOMETRY_SHA256 = "dc8a49f6b1d1568ba9027af7453157039da05a08d6ffd2ac0a60c54940cb2f3a"
+# Objects first used by the 2026-09-25 spatial repair, kept in a separate versioned file so the
+# original geometry dump above stays byte-identical.
+VPX_GEOMETRY_SUPPLEMENT_SHA256 = "d0ba08f21084d370b3924f3ab8d3fb164f1a9fd14cb1f6df1c33ab747b3ff7c3"
+# A second supplement added after the third review (the right ramp diverter blade and the callout-05 measurement);
+# both earlier geometry files stay byte-identical.
+VPX_GEOMETRY_SUPPLEMENT_2_SHA256 = "1cab0a1ff393a96e2fa43e49ac31039e05280d462293c258ab91df042d6b1aff"
 
 EXTRACTION_RELATIVE_PATH = Path("bally/twilight-zone-1993/extracted-vpxtool")
 EXTRACTION_MANIFEST_RELATIVE_PATH = Path("bally/twilight-zone-1993/extracted-vpxtool.manifest.json")
@@ -104,7 +110,7 @@ SWITCH_LABELS = {
 	15: "Right Trough", 16: "Center Trough", 17: "Left Trough", 18: "Outhole",
 	21: "Slam Tilt", 22: "Coin Door Closed", 23: "Buy-In Button",
 	25: "Far Left Trough", 26: "Trough Proximity (Powerball Detect)", 27: "Shooter Lane", 28: "Rocket Kicker",
-	31: "Lower Jet Bumper", 32: "Left Jet Bumper", 33: "Right Jet Bumper",
+	31: "Left Jet Bumper", 32: "Right Jet Bumper", 33: "Lower Jet Bumper",
 	34: "Left Slingshot", 35: "Right Slingshot", 36: "Left Outlane", 37: "Left Inlane 1", 38: "Left Inlane 2",
 	41: "Dead End", 42: "Mini-Playfield Top Hole", 43: "Player Piano", 44: "Mini-Playfield Enter",
 	45: "Mini-Playfield Left", 46: "Mini-Playfield Right", 47: "Clock Millions", 48: "Lower Left 5 Million",
@@ -179,41 +185,162 @@ FLIPPER_LABELS = {
 	118: ("Upper Left Flipper Button", "flipper.upper.left.button", "used"),
 }
 
+# --- Retained-table objects used as spatial anchors. Raw table coordinates exactly as the
+# retained extraction stores them (Light/Kicker/Trigger/Bumper/Flipper "center", HitTarget and
+# Primitive "position", or the arithmetic mean of a Wall's own drag points); they are listed in
+# review-artifacts/twilight-zone-1993/vpx-geometry.txt or its supplements vpx-geometry-2026-09-25.txt and
+# vpx-geometry-2026-09-25-round3.txt
+# and normalized by _norm() below.
+TABLE_OBJECTS: dict[str, tuple[float, float]] = {
+	"Kicker.sw15": (850.7996, 1896.9911),
+	"Kicker.sw18": (505.2928, 2109.0137),
+	"Kicker.sw58": (704.7905, 1123.8999),
+	"Kicker.sw88": (817.7883, 371.15216),
+	"Kicker.AutoPlungerKicker": (947.85394, 2113.5813),
+	"Kicker.GumballPopper": (333.1182, 85.42504),
+	"HitTarget.sw47": (525.56824, 469.4863),
+	"Bumper.Bumper1": (81.207054, 1092.1573),
+	"Bumper.Bumper2": (289.68414, 1082.9271),
+	"Bumper.Bumper3": (177.10031, 1279.8246),
+	"Flipper.LeftFlipper": (363.0102, 1809.9),
+	"Flipper.RightFlipper": (687.8521, 1809.9),
+	"Flipper.LeftFlipper1": (303.10974, 693.63904),
+	"Flipper.RightFlipper1": (860.4233, 1152.7524),
+	"Flipper.GumballDiverter": (631.3653, 117.31948),
+	"Wall.LeftSlingShot": (320.879095, 1575.8101),
+	"Wall.RightSlingShot": (731.9608916666666, 1574.7893666666666),
+	"Wall.RampDivWall": (1035.77705, 639.40872875),
+	"Primitive.BM_ClockLarge": (827.7844, 592.8787),
+	"Primitive.BM_Gumballs": (201.49995, 231.02759),
+	"Primitive.BM_RDiv": (302.25, 462.75),
+	"Light.f17": (190.20378, 1138.8903),
+	"Light.f17b": (26.05565, 1246.6298),
+	"Light.f28": (568.1295, 181.99942),
+	"Light.f37": (907.95844, 1058.5209),
+	"Light.f38": (56.394672, 100.31158),
+	"Light.f39": (55.475533, 183.33089),
+	"Light.f40": (55.97702, 291.95407),
+}
+
+
+def _norm(name: str) -> tuple[float, float]:
+	x, y = TABLE_OBJECTS[name]
+	return (round(x / BOUNDS_X, 6), round(y / BOUNDS_Y, 6))
+
+
+# The clock's rotation axis: the pivot of the minute-hand primitive that the retained script's
+# UpdateClock rotates from Controller.GetMech(0). The hour-hand pivot (BM_ClockShort) sits within
+# 0.009 of it; the clock face primitive's own pivot is not its axis, so it is not used.
+CLOCK_AXIS = "Primitive.BM_ClockLarge"
+# The gumball machine assembly (A-16132): the pivot of the gumball-globe primitive, which agrees
+# with manual callouts 24 (page 2-53) and 55 (page 2-51), both printed inside the gumball-machine
+# outline at the top left of the playfield.
+GUMBALL_MACHINE = "Primitive.BM_Gumballs"
+
 # --- Normalized playfield coordinates (x/1082.353, y/2164.706) from the retained
 # extraction; see review-artifacts/twilight-zone-1993/vpx-geometry.txt.
 SWITCH_POSITIONS = {
 	11: [(0.75733, 0.733553)], 12: [(0.816857, 0.749645)],
 	15: [(0.786065, 0.876327)], 16: [(0.717238, 0.897158)], 17: [(0.649107, 0.918002)], 18: [(0.466847, 0.974273)],
-	25: [(0.586598, 0.938043)], 27: [(0.953552, 0.885472)], 28: [(0.816222, 0.633787)],
+	25: [(0.586598, 0.938043)], 26: [_norm("Kicker.sw15")], 27: [(0.953552, 0.885472)], 28: [(0.816222, 0.633787)],
+	31: [_norm("Bumper.Bumper1")], 32: [_norm("Bumper.Bumper2")], 33: [_norm("Bumper.Bumper3")],
 	34: [(0.296464, 0.727956)], 35: [(0.676268, 0.727484)],
 	36: [(0.049304, 0.746239)], 37: [(0.126765, 0.714541)], 38: [(0.212212, 0.713967)],
 	41: [(0.085949, 0.216834)], 42: [(0.201272, 0.381543)], 43: [(0.663093, 0.297159)], 44: [(0.033737, 0.300647)],
-	47: [(0.143608, 0.216659)],
+	47: [_norm("HitTarget.sw47")],
 	51: [(0.60814, 0.116087)], 52: [(0.143608, 0.216659)], 53: [(0.423152, 0.15106)], 54: [(0.871712, 0.078071)],
+	55: [_norm(GUMBALL_MACHINE)],
 	56: [(0.218257, 0.190395)], 57: [(0.528667, 0.472186)], 58: [(0.651165, 0.519193)],
 	61: [(0.950867, 0.529593)], 62: [(0.950867, 0.491633)], 63: [(0.950797, 0.45433)],
 	48: [(0.206766, 0.619195)],
 	64: [(0.721088, 0.222436)], 65: [(0.759336, 0.32671), (0.759105, 0.30282)],
 	66: [(0.646481, 0.383017)], 67: [(0.635675, 0.407582)], 68: [(0.628201, 0.432651)],
-	72: [(0.875735, 0.976383)], 73: [(0.752093, 0.135059)], 74: [(0.60814, 0.116087)],
+	72: [(0.875735, 0.976383)], 73: [(0.752093, 0.135059)], 74: [_norm("Kicker.GumballPopper")],
 	75: [(0.184321, 0.296114)], 76: [(0.167764, 0.468382)], 77: [(0.298735, 0.531676)], 78: [(0.334772, 0.505688)],
 	81: [(0.881833, 0.219272)], 83: [(0.313118, 0.156291)], 84: [(0.765208, 0.141901)],
 	85: [(0.775234, 0.11319)], 87: [(0.174341, 0.060475)], 88: [(0.755565, 0.171456)],
+	**{address: [_norm(CLOCK_AXIS)] for address in range(91, 99)},
 }
 # Position 65 has two HitTarget objects (sw65, sw65a); Power Payoff is a two-target
 # bank sharing one public switch, matching the manual's "(2)" quantity annotation.
 SWITCH_PROJECTIONS = {
-	52: "Projected onto the Trigger.sw52 object, the only VPX trigger the retained script binds to switch 52; the geometry file lists it under the Hitchhiker figure's lane.",
+	26: (
+		"Projected onto Kicker.sw15, the right-trough eject position: the retained script's sw15_hit/sw15_unhit "
+		"handlers set and clear switch 26 from the ball resting in that kicker (script.vbs sw15_hit), and the "
+		"manual's Main Playfield Switch Locations drawing (page 2-51) prints callout 26 beside callout 15 at the "
+		"trough's eject end. The proximity sensor itself is not a separate table object."
+	),
+	31: (
+		"Placed on Bumper.Bumper1, the object whose Bumper1_Hit handler pulses switch 31 in the retained script; "
+		"it is the left bumper of the three, and the manual's Main Playfield Switch Locations drawing (page 2-51) "
+		"prints callout 31 on the left jet bumper."
+	),
+	32: (
+		"Placed on Bumper.Bumper2, the object whose Bumper2_Hit handler pulses switch 32 in the retained script; "
+		"it is the upper-right bumper of the three, and the manual's drawing (page 2-51) prints callout 32 there."
+	),
+	33: (
+		"Placed on Bumper.Bumper3, the object whose Bumper3_Hit handler pulses switch 33 in the retained script; "
+		"it is the lower bumper of the three, and the manual's drawing (page 2-51) prints callout 33 there."
+	),
+	52: "Placed on Trigger.sw52, the table's own trigger for this switch: its sw52_Hit handler pulses switch 52 (script.vbs line 1709); the geometry file lists it under the Hitchhiker figure's lane.",
+	55: (
+		"Projected onto the gumball machine assembly (A-16132), represented by the pivot of the retained table's "
+		"gumball-globe primitive (Primitive.BM_Gumballs). The geneva switch sits on the underside of the playfield "
+		"beneath that assembly (manual dagger footnote) and the manual's drawing (page 2-51) prints callout 55 "
+		"inside the gumball-machine outline. The table has no switch object of its own for it; its script pulses "
+		"switch 55 from SolGumRelease, which SolGumballMotor schedules after solenoid 24 turns on."
+	),
+	**{
+		address: (
+			"Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the "
+			"retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour "
+			"(A-16219) opto boards are inside the clock assembly, and the table models no individual opto object."
+		)
+		for address in range(91, 99)
+	},
 }
-UNRESOLVED_SWITCH_SPATIAL = {
-	26: "No VPX object binds switch 26 (Trough Proximity / powerball detect); the retained script sets it from tz_handleBallState's ball-type detection rather than a Hit event.",
-	31: "Bumper1/Bumper2/Bumper3 are three generically-named VPX Bumper objects with no per-object binding to a specific public switch address in the retained script or extraction; a left/right/lower assignment could only be guessed from relative position, so no placement is asserted.",
-	32: "See switch 31: no explicit per-object address binding exists for the three generic Bumper objects.",
-	33: "See switch 31: no explicit per-object address binding exists for the three generic Bumper objects.",
-	45: "No gameitem, collection, or object event binding named sw45/sw45a was found anywhere in the retained extraction, despite the retained script defining Sub sw45_Hit and Sub sw45a_Hit.",
-	46: "No gameitem, collection, or object event binding named sw46/sw46a was found anywhere in the retained extraction, despite the retained script defining Sub sw46_Hit and Sub sw46a_Hit.",
-	55: "No VPX object binds switch 55 (Gumball Geneva); pinned PinMAME's tz_handleMech sets it synthetically from the internal gumball-motor position counter rather than from a table Hit event, and the manual documents it only as \"located on the underside of the playfield\".",
+# Physical switches with no defensible coordinate: their spatial key is omitted entirely.
+UNPLACED_SWITCHES = {
+	45: (
+		"No spatial placement: the switch is a physical Powerfield (mini-playfield) switch pair (manual \"(2)\"), "
+		"but the retained extraction contains no object named sw45 or sw45a -- the script's sw45_Hit/sw45a_Hit "
+		"handlers are never reached, so the retained table never asserts switch 45 -- and the mini-playfield "
+		"switch drawing is not among the retained manual pages (the Main Playfield drawing on page 2-51 omits it)."
+	),
+	46: (
+		"No spatial placement: the switch is a physical Powerfield (mini-playfield) switch pair (manual \"(2)\"), "
+		"but the retained extraction contains no object named sw46 or sw46a -- the script's sw46_Hit/sw46a_Hit "
+		"handlers are never reached, so the retained table never asserts switch 46 -- and the mini-playfield "
+		"switch drawing is not among the retained manual pages (the Main Playfield drawing on page 2-51 omits it)."
+	),
 }
+
+_JET_LABEL_NOTE = (
+	"tz.c names this address only swJet{n}; the printed label comes from the manual's Main Playfield Switch "
+	"Locations drawing (page 2-51), which prints callout 31 on the left, 32 on the upper-right, and 33 on the lower "
+	"jet bumper, and the retained script binds Bumper1/Bumper2/Bumper3 (left/upper-right/lower) to 31/32/33 in the "
+	"same order. An earlier revision of this definition labelled 31-33 Lower/Left/Right by analogy with the "
+	"jet-bumper coil order (12 Lower, 13 Left, 14 Right), which no source supports for the switches."
+)
+SWITCH_EXTRA_NOTES = {
+	31: _JET_LABEL_NOTE.format(n=1),
+	32: _JET_LABEL_NOTE.format(n=2),
+	33: _JET_LABEL_NOTE.format(n=3),
+	34: "The retained script's LeftSlingShot_Slingshot pulses switch 34 and also, erroneously, switch 42; the extra pulse is a defect in the consumed table, not a property of the machine.",
+	35: "The retained script's RightSlingShot_Slingshot pulses switch 35 and also, erroneously, switch 41; the extra pulse is a defect in the consumed table, not a property of the machine.",
+	41: "Besides its DeadEnd trigger, the retained script also pulses switch 41 from RightSlingShot_Slingshot, a defect in the consumed table rather than a machine behavior.",
+	42: "Besides its sw42 trigger, the retained script also pulses switch 42 from LeftSlingShot_Slingshot, a defect in the consumed table rather than a machine behavior.",
+}
+
+
+def _switch_spatial(identifier: str, address: int, physical: dict[str, Any]) -> dict[str, Any]:
+	refs = (VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
+	if address in SWITCH_PROJECTIONS:
+		physical["notes"] += " " + SWITCH_PROJECTIONS[address]
+		refs = refs + (MANUAL_SOURCE,)
+	return located(identifier, "sensor", SWITCH_POSITIONS[address], *refs)
+
 
 # --- Solenoids (public PinMAME address -> label). Manual page 2-53 "Solenoid/Flasher
 # Locations"; printed items 37-44 are the auxiliary board's own callout numbers, bridged
@@ -279,36 +406,119 @@ SOLENOID_CALLBACKS = {
 	21: "SolLeftMagnet", 23: "SolLowerRightMagnet", 24: "SolGumballMotor",
 	25: "SolMiniMagnet mLeftMini", 26: "SolMiniMagnet mRightMini", 27: "SolLeftRampDiverter",
 	28: "SolModCallback FlashPWM 28",
-	45: "SolLFlipper (lower left)", 46: "SolRFlipper (lower right)",
-	47: "SolULFlipper (upper left)", 48: "SolURFlipper (upper right)",
+	34: "SolURFlipper via SolCallback(sURFlipper) (upper right)",
+	36: "SolULFlipper via SolCallback(sULFlipper) (upper left)",
+	46: "SolRFlipper via SolCallback(sLRFlipper) (lower right)",
+	48: "SolLFlipper via SolCallback(sLLFlipper) (lower left)",
 	51: "SolModCallback FlashPWM 37", 52: "SolModCallback FlashPWM 38", 53: "SolModCallback FlashPWM 39",
 	54: "SolModCallback FlashPWM 40", 55: "SolModCallback FlashPWM 41",
 	59: "SolGumRelease (commented out; PinMAME hack, unreliable with SolModCallbacks)",
 }
 FLASHER_ADDRESSES = {17, 18, 19, 20, 28, 51, 52, 53, 54, 55}
+# The clock switch strobe drives the clock opto boards' emitters through the auxiliary board; it is
+# a logic-level line, not an actuator or an emitter, so it is typed control_signal.
+CONTROL_SIGNAL_SOLENOIDS = {58}
+# Printed quantities on the Solenoid/Flasher Locations table (page 2-53): items 17-20 print "(2)"; item 41 (public 55)
+# prints no "(2)" but, like items 18 and 20, prints two 24-8802 bulb rows (on A-16330 and on A-16060), and the
+# location drawing on the same page draws two callout-41 circles.
+FLASHER_PRINTED_QUANTITY = {17: 2, 18: 2, 19: 2, 20: 2, 55: 2}
 
 SOLENOID_POSITIONS = {
-	2: [(0.816222, 0.633787)], 4: [(0.307772, 0.039463)], 9: [(0.786065, 0.876327)],
-	15: [(0.815733, 0.481498)], 16: [(0.907357, 0.888818)], 21: [(0.313118, 0.156291)],
-	23: [(0.881833, 0.219272)], 24: [(0.583327, 0.054196)], 25: [(0.100956, 0.42269)],
-	26: [(0.237953, 0.42269)],
-	45: [(0.33539, 0.836095)], 46: [(0.635515, 0.836095)], 47: [(0.33539, 0.836095)], 48: [(0.635515, 0.836095)],
-	56: [(0.765208, 0.141901)], 57: [(0.765208, 0.141901)], 58: [(0.815733, 0.481498)],
+	1: [_norm("Kicker.sw58")], 2: [(0.816222, 0.633787)], 3: [_norm("Kicker.AutoPlungerKicker")],
+	4: [(0.307772, 0.039463)], 5: [_norm("Primitive.BM_RDiv")], 6: [_norm("Flipper.GumballDiverter")],
+	8: [_norm("Kicker.sw18")], 9: [(0.786065, 0.876327)],
+	10: [_norm("Wall.RightSlingShot")], 11: [_norm("Wall.LeftSlingShot")],
+	12: [_norm("Bumper.Bumper3")], 13: [_norm("Bumper.Bumper1")], 14: [_norm("Bumper.Bumper2")],
+	15: [_norm("Kicker.sw88")], 16: [(0.907357, 0.888818)],
+	17: [_norm("Light.f17"), _norm("Light.f17b")],
+	21: [(0.313118, 0.156291)], 23: [(0.881833, 0.219272)], 24: [_norm(GUMBALL_MACHINE)],
+	25: [(0.100956, 0.42269)], 26: [(0.237953, 0.42269)], 27: [_norm("Wall.RampDivWall")],
+	28: [_norm("Light.f28")],
+	33: [_norm("Flipper.RightFlipper1")], 34: [_norm("Flipper.RightFlipper1")],
+	35: [_norm("Flipper.LeftFlipper1")], 36: [_norm("Flipper.LeftFlipper1")],
+	45: [_norm("Flipper.RightFlipper")], 46: [_norm("Flipper.RightFlipper")],
+	47: [_norm("Flipper.LeftFlipper")], 48: [_norm("Flipper.LeftFlipper")],
+	51: [_norm("Light.f37")], 52: [_norm("Light.f38")], 53: [_norm("Light.f39")], 54: [_norm("Light.f40")],
+	56: [_norm(CLOCK_AXIS)], 57: [_norm(CLOCK_AXIS)],
 }
-# Flasher bulbs are diffuse fixtures without their own single named playfield trigger
-# object in this retained extraction; their approximate location is documented in
-# physical.notes from the manual's "Where Used" text instead of a coordinate.
-UNRESOLVED_SOLENOID_SPATIAL = {
-	27: "The only candidate VPX object (Flipper.RampDiverter) sits at normalized y=1.000665, just outside the 0..1 playfield bounds -- a table-modeling anomaly (the diverter blade pivots below the visible apron edge) -- so no coordinate is asserted.",
-	1: "Slot Kickout coil location coincides with the slot machine assembly (Trigger.slotMachine, Kicker.SlotKickerOverflow); no single coil-body object is separately named in the retained extraction.",
-	3: "Auto-Fire Kicker coil is inside the Kicker.AutoPlungerKicker assembly; the shooter-lane kicker object itself is used for switch 72's placement instead of a duplicate coil coordinate.",
-	5: "Right Ramp Diverter coil has no separately named coil-body object; Flipper.RampDiverter documents the diverter blade only.",
-	6: "Gumball Diverter coil has no separately named coil-body object; Flipper.GumballDiverter documents the diverter blade only.",
-	10: "Right Slingshot coil is native VPX slingshot physics (Wall.RightSlingShot); no scripted coil object exists.",
-	11: "Left Slingshot coil is native VPX slingshot physics (Wall.LeftSlingShot); no scripted coil object exists.",
-	12: "Lower Jet Bumper coil has no separately named coil-body object distinct from Bumper.Bumper3.",
-	13: "Left Jet Bumper coil has no separately named coil-body object distinct from Bumper.Bumper1.",
-	14: "Right Jet Bumper coil has no separately named coil-body object distinct from Bumper.Bumper2.",
+# Why each placed output sits where it does. Every entry is either a script-bound object that is the
+# device itself or a documented projection onto the device's own mechanism object.
+SOLENOID_PLACEMENT_NOTES = {
+	1: "Projected onto Kicker.sw58, the slot kickout hole the retained script's SlotMachineKickout kicks (with the overflow kicker beside it); manual page 2-53 prints callout 01 at the slot machine.",
+	3: "Projected onto Kicker.AutoPlungerKicker, the shooter-lane kicker the retained script's SolAutoKicker fires; the same object carries switch 72.",
+	5: (
+		"Placed on Primitive.BM_RDiv, the diverter blade the retained script's diverterTimer rotates (through the BP_RDiv "
+		"array) when SolRightRampDiverter fires; the position is the primitive's own pivot, the blade's hinge. The script's "
+		"Trigger.DivTrig (an invisible trigger that catches the ball to kick it) and Wall.DivWall (an invisible collision "
+		"wall whose collidability the coil toggles) are helpers and are not used. The table's invisible right-ramp physics "
+		"ramp (Ramp.Ramp342, a two-wire ramp about 135 units above the playfield) runs from the right-ramp hairpin to the "
+		"left side and passes about 0.02 in front of this pivot, over Wall.DivWall. Manual page 2-53 prints callout 05 "
+		"left of centre with its arrow pointing left "
+		"to a vertical rail; measured on the committed crop, the arrow tip normalizes to about (0.273, 0.199), 0.016 from "
+		"the pivot (see vpx-geometry-2026-09-25-round3.txt)."
+	),
+	6: "Placed on Flipper.GumballDiverter, the diverter blade the retained script's SolGumballDiverter rotates; the manual's Lower Playfield Parts page (2-47) shows the A-16313 Rear Diverter Assembly (item 19) under this rear-centre region, while the leaderless callout 06 on page 2-53 is printed further left, in the same region but not on the blade.",
+	8: "Projected onto Kicker.sw18, the outhole the retained script's SolOuthole kicks.",
+	10: "Projected onto the retained table's Wall.RightSlingShot (drag-point mean), the slingshot assembly this coil fires; the table uses native slingshot physics, so no scripted coil object exists. Manual page 2-53 prints callout 10 at the right slingshot.",
+	11: "Projected onto the retained table's Wall.LeftSlingShot (drag-point mean), the slingshot assembly this coil fires; the table uses native slingshot physics, so no scripted coil object exists. Manual page 2-53 prints callout 11 at the left slingshot.",
+	12: "Projected onto Bumper.Bumper3, the lower jet bumper; manual page 2-53 prints callout 12 on the lower bumper. The table's bumpers are native physics, so the coil has no object of its own.",
+	13: "Projected onto Bumper.Bumper1, the left jet bumper; manual page 2-53 prints callout 13 on the left bumper. The table's bumpers are native physics, so the coil has no object of its own.",
+	14: "Projected onto Bumper.Bumper2, the upper-right jet bumper; manual page 2-53 prints callout 14 on the right bumper. The table's bumpers are native physics, so the coil has no object of its own.",
+	15: "Projected onto Kicker.sw88, the lower lock position the retained script's LockKickout kicks; manual page 2-53 prints callout 15 at the lock.",
+	17: "Two sockets, both driven by the retained script's UpdateF17: Light.f17 between the jet bumpers and Light.f17b at the left edge beside them, matching the two callout-17 circles on manual page 2-53 and its printed \"(2)\".",
+	24: "Projected onto the gumball machine assembly (A-16132), represented by the pivot of Primitive.BM_Gumballs; manual page 2-53 prints callout 24 inside the gumball-machine outline. The retained script's SolGumballMotor turns the machine's knob animation.",
+	27: "Projected onto Wall.RampDivWall (drag-point mean), the blocking wall the retained script's SolLeftRampDiverter drops; manual page 2-53 prints callout 27 at the same right-edge position. Flipper.RampDiverter, the visible blade animation, sits at y=1.000665, outside the playfield, and is not used.",
+	28: "Placed on Light.f28, the flasher light the retained script's FlashPWM 28 drives; manual page 2-53 draws one callout-28 circle at the inside of the ramp.",
+	33: "Projected onto Flipper.RightFlipper1, the upper right flipper the retained script's SolURFlipper moves.",
+	34: "Projected onto Flipper.RightFlipper1, the upper right flipper the retained script's SolURFlipper moves.",
+	35: "Projected onto Flipper.LeftFlipper1, the upper left flipper the retained script's SolULFlipper moves.",
+	36: "Projected onto Flipper.LeftFlipper1, the upper left flipper the retained script's SolULFlipper moves.",
+	45: "Projected onto Flipper.RightFlipper, the lower right flipper the retained script's SolRFlipper moves.",
+	46: "Projected onto Flipper.RightFlipper, the lower right flipper the retained script's SolRFlipper moves.",
+	47: "Projected onto Flipper.LeftFlipper, the lower left flipper the retained script's SolLFlipper moves.",
+	48: "Projected onto Flipper.LeftFlipper, the lower left flipper the retained script's SolLFlipper moves.",
+	51: "Placed on Light.f37, the flasher light the retained script's FlashPWM 37 drives; manual page 2-53 draws callout 37 beside the upper right flipper.",
+	52: "Placed on Light.f38, the flasher light the retained script's FlashPWM 38 drives; manual page 2-53 draws callouts 38-40 stacked at the top-left corner by the gumball machine.",
+	53: "Placed on Light.f39, the flasher light the retained script's FlashPWM 39 drives; manual page 2-53 draws callouts 38-40 stacked at the top-left corner by the gumball machine.",
+	54: "Placed on Light.f40, the flasher light the retained script's FlashPWM 40 drives; manual page 2-53 draws callouts 38-40 stacked at the top-left corner by the gumball machine.",
+	56: "Projected onto the clock's rotation axis (pivot of Primitive.BM_ClockLarge): the drive line powers the clock's DC gearmotor, which the manual's Clock Gear Train Assembly page (1-51) mounts on the clock's back panel. The solenoid table's assembly number for this output, A-16120, is printed \"D.C. Motor Assembly\" as item 17 of the Lower Playfield Parts page (2-47) and \"DC Motor Control Assembly\" over a circuit-board drawing on page 2-15; reading A-16120 as the motor-control board rather than the motor itself is this curation's inference from those two pages. Where that board sits is not settled: page 2-53 draws callouts 42/43 right of centre above the slot machine, while page 2-47 puts item 17 under the rear right of the playfield.",
+	57: "Projected onto the clock's rotation axis (pivot of Primitive.BM_ClockLarge): the drive line powers the clock's DC gearmotor, which the manual's Clock Gear Train Assembly page (1-51) mounts on the clock's back panel. The solenoid table's assembly number for this output, A-16120, is printed \"D.C. Motor Assembly\" as item 17 of the Lower Playfield Parts page (2-47) and \"DC Motor Control Assembly\" over a circuit-board drawing on page 2-15; reading A-16120 as the motor-control board rather than the motor itself is this curation's inference from those two pages. Where that board sits is not settled: page 2-53 draws callouts 42/43 right of centre above the slot machine, while page 2-47 puts item 17 under the rear right of the playfield.",
+}
+# Physical outputs with no defensible coordinate: their spatial key is omitted entirely.
+UNPLACED_SOLENOIDS = {
+	7: (
+		"No spatial placement: the knocker is a physical coil (B-10686-1), but no retained page locates it -- it is "
+		"absent from both playfield drawings on page 2-53, from the Lower Playfield Parts page (2-47), and from the "
+		"Cabinet Parts list (2-3); the backbox and remaining parts pages are among the scan's missing even pages. "
+		"The retained table's KnockerPosition primitive is an invisible sound-position helper parked off the "
+		"playfield, not evidence."
+	),
+	18: (
+		"No spatial placement: the manual prints two bulbs (\"(2)\") and draws one callout-18 circle on the ramp "
+		"overlay and one right of centre on the main playfield (page 2-53), but the retained table "
+		"models only one (Light.f18, x=0.864045 y=0.403193, the ramp-overlay bulb). Placing one of two sockets "
+		"would misstate the quantity."
+	),
+	19: (
+		"No spatial placement: the manual prints two bulbs (\"(2)\") and draws both callout-19 circles at the "
+		"mini-playfield (page 2-53), but the retained table models only one (Light.f19, x=0.173298 y=0.349009)."
+	),
+	20: (
+		"No spatial placement: the manual prints two bulbs (\"(2)\"), one at the top of the upper left ramp and one "
+		"under the door panel's Gum insert (page 2-53 draws callout 20 in both places), but the retained table models only the "
+		"ramp bulb (Light.f20, x=0.404644 y=0.037562). The retained script's comment says \"the additional GUM and "
+		"BALL flashers were removed to reduce cost\"; that is an unsourced claim about later production, so the "
+		"fitted quantity is left open rather than reduced to one."
+	),
+	55: (
+		"No spatial placement: the page 2-53 table prints item 41 with two 24-8802 bulb rows, one on A-16330 and one "
+		"on A-16060, the same two-row layout as item 20, though without item 20's \"(2)\"; the page's location "
+		"drawing draws callout 41 twice, at the top of the upper right ramp and under the door panel's Ball insert. The "
+		"quantity is therefore recorded as the two printed sockets. The retained table models only the ramp bulb "
+		"(Light.f41, x=0.947625 y=0.052201), and its script comments the circuit \"x2 (**)\" with the unsourced note "
+		"that the door-panel bulb was removed to reduce cost; whether later production fitted both sockets is not "
+		"settled, and placing one of two sockets would misstate the quantity."
+	),
 }
 
 
@@ -394,7 +604,6 @@ GI_POSITIONS = {
 		(0.420068, 0.110875), (0.330254, 0.085431), (0.287518, 0.76036), (0.170528, 0.706527),
 		(0.118867, 0.761465), (0.189684, 0.786184), (0.261934, 0.810595),
 	],
-	1: [(0.118778, 0.301331)],
 	4: [
 		(0.725698, 0.392912), (0.926481, 0.360232), (0.806104, 0.307407), (0.939409, 0.189479),
 		(0.940655, 0.168729), (0.930424, 0.0966), (0.930776, 0.079079), (0.861673, 0.024368),
@@ -557,10 +766,11 @@ def source_records() -> list[dict[str, Any]]:
 				"Internet Archive item arcademanual_Twilight_Zone_OPS). Printed page 2-51 (\"Switch Locations "
 				"(Continued)\") carries switch items 34-98; page 2-53 (\"Solenoid/Flasher Locations\") carries the "
 				"complete solenoid/flasher table, the Flipper Coils list, and the General Illumination Circuits table; "
-				"page 2-55 (\"Lamp Locations\") carries the full 64-position lamp matrix. This retained scan is missing "
-				"every even printed page from 2-48 through 2-54 inclusive, so the Switch Matrix wiring page (2-50, "
-				"which also carries switch items 1-33), the Solenoid/Flasher Table wiring page (2-52), and the Lamp "
-				"Matrix wiring page (2-54) are unavailable; see manual-transcription.md."
+				"page 2-55 (\"Lamp Locations\") carries the full 64-position lamp matrix. This retained scan carries "
+				"only odd-numbered printed pages (for example PDF 40 = 2-9, 58 = 2-45, 64 = 2-57), so every even page "
+				"is absent, including the Switch Matrix wiring page (2-50, which also carries switch items 1-33), the "
+				"Solenoid/Flasher Table wiring page (2-52), and the Lamp Matrix wiring page (2-54). The retained "
+				"manual-transcription.md header states only the narrower 2-48 to 2-54 gap and is stale on that point."
 			),
 			"license": "NOASSERTION",
 			"attribution": "Midway Manufacturing Company; scan hosted by the Internet Archive",
@@ -582,7 +792,7 @@ def source_records() -> list[dict[str, Any]]:
 					"id": "excerpt.twilight-zone.solenoid-flasher-locations",
 					"locator": "PDF page 62, printed 2-53, Solenoid/Flasher Locations and Flipper Coils",
 					"path": "evidence/excerpts/bally.twilight-zone.1993/solenoid-flasher-locations.md",
-					"sha256": "89f8394694ad868e8f7c6807525ea36eddc821791240ff112d95d7ee3ecdd817",
+					"sha256": "ea51496c3513888f462eddbb3d08fdc13380171471567f4bf92e649f9131a948",
 					"method": "manual",
 					"transcribed_by": "curator, read from the rendered page",
 					"reviewed": True,
@@ -613,6 +823,42 @@ def source_records() -> list[dict[str, Any]]:
 					"image": "evidence/excerpts/bally.twilight-zone.1993/lamp-locations.webp",
 					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations.webp"],
 					"image_derivation": "Twilight_Zone_OPS.pdf page 63, crop box 0.02,0.085,0.45,0.87, scanned page rendered at its native resolution (embedded image xref 269, 2550px across 8.50in), rendered at 300 dpi, 1097x2591 WebP quality 80",
+				},
+				{
+					"id": "excerpt.twilight-zone.switch-locations-drawing",
+					"locator": "PDF page 61, printed 2-51, Main Playfield Switch Locations drawing",
+					"path": "evidence/excerpts/bally.twilight-zone.1993/switch-locations-drawing.md",
+					"sha256": "be99f74c549abd99e6a34c06252b290d471d7b3c509b4aabe084a8b8724644c3",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					"image": "evidence/excerpts/bally.twilight-zone.1993/switch-locations-drawing.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["switch-locations-drawing.webp"],
+					"image_derivation": "Twilight_Zone_OPS.pdf page 61, crop box 0.44,0.12,0.9,0.85, scanned page rendered at its native resolution (embedded image xref 259, 2556px across 8.52in), rendered at 300 dpi, grayscale, 1173x2409 WebP quality 80",
+				},
+				{
+					"id": "excerpt.twilight-zone.solenoid-flasher-locations-drawing",
+					"locator": "PDF page 62, printed 2-53, Solenoid/Flasher Locations drawings (ramp overlay and main playfield)",
+					"path": "evidence/excerpts/bally.twilight-zone.1993/solenoid-flasher-locations-drawing.md",
+					"sha256": "448093daa0058f6f5a2d703ed5bcf523c8b0c7d32f3bb3b0dc1a944a13a6afcf",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					"image": "evidence/excerpts/bally.twilight-zone.1993/solenoid-flasher-locations-drawing.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["solenoid-flasher-locations-drawing.webp"],
+					"image_derivation": "Twilight_Zone_OPS.pdf page 62, crop box 0.59,0.09,0.97,0.93, scanned page rendered at its native resolution (embedded image xref 264, 2562px across 8.54in), rendered at 300 dpi, grayscale, 970x2772 WebP quality 80",
+				},
+				{
+					"id": "excerpt.twilight-zone.lamp-locations-drawing",
+					"locator": "PDF page 63, printed 2-55, Lamp Locations drawing (door panel and cabinet buttons)",
+					"path": "evidence/excerpts/bally.twilight-zone.1993/lamp-locations-drawing.md",
+					"sha256": "d5444d68fde1c0f56e717d6bf64172330636cb9e897e9b6f8c6a974459617374",
+					"method": "manual",
+					"transcribed_by": "curator, read from the rendered page",
+					"reviewed": True,
+					"image": "evidence/excerpts/bally.twilight-zone.1993/lamp-locations-drawing.webp",
+					"image_sha256": EXCERPT_IMAGE_HASHES["lamp-locations-drawing.webp"],
+					"image_derivation": "Twilight_Zone_OPS.pdf page 63, crop box 0.45,0.12,0.93,0.87, scanned page rendered at its native resolution (embedded image xref 269, 2550px across 8.50in), rendered at 300 dpi, grayscale, 1225x2475 WebP quality 80",
 				},
 			],
 		},
@@ -677,7 +923,11 @@ def source_records() -> list[dict[str, Any]]:
 				f"{EXTRACTION_TOTAL_BYTES} bytes, produced with vpxtool from the retained table. Bounds are "
 				f"{TABLE_BOUNDS}. Raw per-object coordinates are retained in "
 				"external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry.txt, "
-				f"SHA-256 {VPX_GEOMETRY_SHA256}."
+				f"SHA-256 {VPX_GEOMETRY_SHA256}, and its supplements "
+				"external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-25.txt, "
+				f"SHA-256 {VPX_GEOMETRY_SUPPLEMENT_SHA256}, and "
+				"external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-25-round3.txt, "
+				f"SHA-256 {VPX_GEOMETRY_SUPPLEMENT_2_SHA256}."
 			),
 			"license": "NOASSERTION",
 			"attribution": "vpxtool extraction",
@@ -800,17 +1050,14 @@ def input_devices() -> list[dict[str, Any]]:
 					physical["location"] = "cabinet"
 					if address == 22:
 						extra["initial_active"] = True
-				elif address in UNRESOLVED_SWITCH_SPATIAL:
-					extra["spatial"] = not_applicable("internal_nonvisual", CORE_SOURCE)
-					physical["notes"] += " " + UNRESOLVED_SWITCH_SPATIAL[address]
+				elif address in UNPLACED_SWITCHES:
+					physical["notes"] += " " + UNPLACED_SWITCHES[address]
 				elif address in SWITCH_POSITIONS:
-					coordinate_refs = (VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
-					if address in SWITCH_PROJECTIONS:
-						physical["notes"] += " " + SWITCH_PROJECTIONS[address]
-					extra["spatial"] = located(identifier, "sensor", SWITCH_POSITIONS[address], *coordinate_refs)
+					extra["spatial"] = _switch_spatial(identifier, address, physical)
 				else:
-					extra["spatial"] = not_applicable("internal_nonvisual", CORE_SOURCE)
-					physical["notes"] += " No VPX geometry evidence located for this address."
+					raise RuntimeError(f"Twilight Zone switch {address} has neither a placement nor an explicit unplaced reason")
+				if address in SWITCH_EXTRA_NOTES:
+					physical["notes"] += " " + SWITCH_EXTRA_NOTES[address]
 			items.append(_device(identifier, label, "switch", "pinmame.input.switch", address, availability, refs, **extra))
 
 	# Custom switch column (CORE_CUSTSWCOL), public addresses 91-98: the eight clock-
@@ -830,6 +1077,7 @@ def input_devices() -> list[dict[str, Any]]:
 				"inverted again."
 			),
 		}
+		spatial = _switch_spatial(identifier, address, physical)
 		items.append(
 			_device(
 				identifier,
@@ -842,7 +1090,7 @@ def input_devices() -> list[dict[str, Any]]:
 				aliases=[{"namespace": "pinmame.switch", "value": str(address)}],
 				normally_closed=True,
 				physical=physical,
-				spatial=not_applicable("internal_nonvisual", CORE_SOURCE),
+				spatial=spatial,
 			)
 		)
 
@@ -857,6 +1105,17 @@ def input_devices() -> list[dict[str, Any]]:
 				"the public state is already normalized."
 			),
 		}
+		if is_button:
+			spatial = not_applicable("cabinet_or_service", MANUAL_SOURCE)
+		else:
+			# The repository-wide convention for end-of-stroke contacts (The Addams Family, Monster Bash,
+			# Medieval Madness, Attack From Mars): an internal part of the flipper assembly, paired with its
+			# internal.* role. The flipper's position is carried by its coils.
+			physical["notes"] += (
+				" The end-of-stroke contact is internal to the flipper assembly; the flipper's playfield position "
+				"is carried by its power/hold coil placements."
+			)
+			spatial = not_applicable("internal_nonvisual", MANUAL_SOURCE)
 		items.append(
 			_device(
 				f"switch.generic-{address}",
@@ -873,7 +1132,7 @@ def input_devices() -> list[dict[str, Any]]:
 				roles=[role],
 				normally_closed=False,
 				physical=physical,
-				spatial=not_applicable("cabinet_or_service" if is_button else "internal_nonvisual", MANUAL_SOURCE),
+				spatial=spatial,
 			)
 		)
 
@@ -914,7 +1173,9 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			fitted = address in SOLENOID_LABELS
 			label = SOLENOID_LABELS.get(address) or NOT_FITTED_SOLENOID_LABELS[address]
 			identifier = output_id(label if fitted else f"{label} (Not Fitted)")
-			kind = "flasher" if address in FLASHER_ADDRESSES else "motor" if address in {56, 57, 58, 24} else "coil"
+			kind = "flasher" if address in FLASHER_ADDRESSES else "motor" if address in {56, 57, 24} else "coil"
+			if address in CONTROL_SIGNAL_SOLENOIDS:
+				kind = "control_signal"
 			if address in {33, 34, 35, 36, 45, 46, 47, 48}:
 				kind = "coil"
 			physical: dict[str, Any] = {}
@@ -924,9 +1185,18 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			assembly = SOLENOID_ASSEMBLIES.get(address)
 			if assembly:
 				physical["assembly_part_number"] = assembly
-			notes = f"Printed solenoid/flasher-locations item {address}."
 			if address in MANUAL_SOLENOID_ALIASES:
-				notes += f" Printed auxiliary-board callout number {MANUAL_SOLENOID_ALIASES[address]}."
+				notes = (
+					f"Printed solenoid/flasher-locations item {MANUAL_SOLENOID_ALIASES[address]}, the auxiliary board's "
+					f"callout number for public solenoid {address}."
+				)
+			elif address in {33, 34, 35, 36, 45, 46, 47, 48}:
+				notes = (
+					"Not an item of the page 2-53 solenoid/flasher-locations table; the flipper coil is listed in the "
+					"Flipper Coils table on the same page."
+				)
+			else:
+				notes = f"Printed solenoid/flasher-locations item {address:02d}."
 			if address in SOLENOID_CALLBACKS:
 				notes += f" Retained script callback: {SOLENOID_CALLBACKS[address]}."
 			if address == 22:
@@ -939,12 +1209,18 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 				)
 			if address in {56, 57}:
 				notes += (
-					" Drives the analog clock hand through the A-16120 D.C. Motor Control Assembly as one of a "
+					" Drives the analog clock hand as one of a "
 					"forward/reverse drive pair; see conflict.clock-motor-direction-naming for the Forward/Reverse "
 					"label disagreement between tz.c's #define names and the manual/script cross-reference."
 				)
 			if address == 58:
-				notes += " Strobes the eight custom clock-position optos (91-98); not driven by the retained VPX script (handled entirely by PinMAME's own mechClock simulation)."
+				notes += (
+					" Strobes the eight custom clock-position optos (91-98); not driven by the retained VPX script (handled "
+					"entirely by PinMAME's own mechClock simulation). It is a logic-level strobe line into the clock opto "
+					"boards rather than an actuator or an emitter, so it is typed control_signal and, like every "
+					"control_signal output, carries an internal_nonvisual spatial record: there is no device of its own "
+					"to place. The optos it strobes are placed on switches 91-98."
+				)
 			if address == 59:
 				notes += " Software-only state, not a real coil; PinMAME's tz_getSol special-cases it and the retained script comment calls it \"unreliable with SolModCallbacks\"."
 			physical["notes"] = notes
@@ -961,18 +1237,26 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			else:
 				availability = "used"
 				role = "emitter" if kind == "flasher" else "effect"
+				if kind == "flasher" and address in FLASHER_PRINTED_QUANTITY:
+					physical["quantity"] = FLASHER_PRINTED_QUANTITY[address]
 				if address in SOLENOID_POSITIONS:
-					extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
-				elif address in UNRESOLVED_SOLENOID_SPATIAL:
-					extra["spatial"] = not_applicable("internal_nonvisual", CORE_SOURCE)
-					physical["notes"] += " " + UNRESOLVED_SOLENOID_SPATIAL[address]
-				elif kind == "flasher":
-					extra["roles"] = ["cabinet.insert-panel"]
-					extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
-					physical["notes"] += " Flasher bulb location is not separately named in the retained extraction; treated as a controlled backbox/insert circuit rather than an invented playfield coordinate."
+					positions = SOLENOID_POSITIONS[address]
+					if kind == "flasher":
+						printed = physical.setdefault("quantity", len(positions))
+						if printed != len(positions):
+							raise RuntimeError(f"Twilight Zone flasher {address} quantity {printed} does not match {len(positions)} placements")
+					refs = (VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
+					if address in SOLENOID_PLACEMENT_NOTES:
+						physical["notes"] += " " + SOLENOID_PLACEMENT_NOTES[address]
+						refs = refs + (MANUAL_SOURCE,)
+					extra["spatial"] = located(identifier, role, positions, *refs)
+				elif address in UNPLACED_SOLENOIDS:
+					physical["notes"] += " " + UNPLACED_SOLENOIDS[address]
+				elif kind == "control_signal":
+					extra["roles"] = ["internal.clock-opto-strobe"]
+					extra["spatial"] = not_applicable("internal_nonvisual", CORE_SOURCE, MANUAL_SOURCE)
 				else:
-					extra["spatial"] = not_applicable("internal_nonvisual", CORE_SOURCE)
-					physical["notes"] += " No VPX geometry evidence located for this address."
+					raise RuntimeError(f"Twilight Zone solenoid {address} has neither a placement nor an explicit unplaced reason")
 			refs = (MANUAL_SOURCE, CORE_SOURCE)
 			if address in SOLENOID_CALLBACKS:
 				refs = (MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
@@ -1033,11 +1317,20 @@ def lamp_outputs() -> list[dict[str, Any]]:
 			else:
 				notes += " Manual prints no separate bulb number (cabinet button lamp, integral to the illuminated button assembly)."
 			if address in LAMP_DOOR_INSERTS:
-				notes += ' Printed suffix "(Door)": mounted on the cabinet coin door insert panel rather than the playfield.'
+				notes += (
+					" Printed suffix \"(Door)\" names the playfield's central door-panel insert group, not the cabinet coin "
+					"door: the manual's Lamp Locations drawing (page 2-55) prints callouts 11-18 and 21-28 on the inserts "
+					"around the door panel in the middle of the playfield, and the retained script maps the matching "
+					"Light objects l11-l28 by TimerInterval through vpmMapLights AllLamps."
+				)
 			if address in LAMP_NOT_SHOWN:
 				notes += " Not shown on the printed lamp-locations diagram (manual asterisk footnote)."
 			if address in {87, 88}:
-				notes += " Cabinet button lamp inside the illuminated buy-in/credit button assembly."
+				notes += (
+					" Cabinet button lamp inside the illuminated buy-in/credit button assembly; the manual's Lamp "
+					"Locations drawing (page 2-55) prints callouts 87 and 88 below the playfield outline, at the cabinet "
+					"front."
+				)
 			physical["notes"] = notes
 
 			extra: dict[str, Any] = {
@@ -1053,15 +1346,12 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
 			elif address in LAMP_DOOR_INSERTS:
 				availability = "used"
-				extra["roles"] = ["cabinet.insert-panel"]
-				extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE)
+				extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE, MANUAL_SOURCE)
 			else:
 				availability = "used"
-				if address in LAMP_POSITIONS:
-					extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE)
-				else:
-					extra["spatial"] = not_applicable("internal_nonvisual", CORE_SOURCE)
-					physical["notes"] += " No VPX geometry evidence located for this address."
+				if address not in LAMP_POSITIONS:
+					raise RuntimeError(f"Twilight Zone lamp {address} has no placement")
+				extra["spatial"] = located(identifier, "emitter", LAMP_POSITIONS[address], VPX_TABLE_SOURCE)
 			items.append(
 				_device(
 					identifier,
@@ -1099,22 +1389,36 @@ def gi_outputs() -> list[dict[str, Any]]:
 				"script)."
 			)
 			extra["spatial"] = located(identifier, "emitter", positions, VPX_TABLE_SOURCE, VPX_SCRIPT_SOURCE)
+		elif address == 1:
+			notes += (
+				" No spatial placement: the printed description \"Mini-playfield & Insert\" makes this a mixed string, "
+				"lighting the mini-playfield and part of the backbox insert board, and no retained page lists its "
+				"bulbs. The retained script's UpdateGI binds it to a single visible light object (l101, x=0.118778 "
+				"y=0.301331 on the mini-playfield), which covers only the mini-playfield part and gives no count, so "
+				"placing it as the whole string would misstate both quantity and extent. The backbox insert part is "
+				"cabinet hardware and has no playfield coordinate."
+			)
 		elif address == 2:
 			notes += (
-				" The retained script's UpdateGI binds this string to a single light object (l102), but that object's "
-				"raw table coordinate (x=-230.57, before normalization) falls outside the 0..1 playfield bounds -- a "
-				"table-modeling anomaly, the same class of issue documented for Monster Bash's GIbot light11. No "
-				"validated playfield placement is asserted for this address; see reports/spatial/bally/"
-				"twilight-zone-1993.json unresolved list."
+				" No spatial placement: the printed description \"Clock & Insert\" makes this a mixed string, lighting "
+				"the playfield clock and part of the backbox insert board, and no retained page lists its bulbs. The "
+				"retained script's UpdateGI binds it to a single light object (l102) that only drives baked clock "
+				"lightmaps; its raw table coordinate (x=-230.57) lies outside the playfield, so it is a render "
+				"controller, not a socket. The clock bulbs are physical playfield devices without a defensible "
+				"coordinate or count; the backbox insert part is cabinet hardware and has no playfield coordinate."
 			)
-			extra["spatial"] = not_applicable("internal_nonvisual", VPX_SCRIPT_SOURCE)
 		else:
 			notes += (
-				" The retained script's UpdateGI case for this address binds no light collection at all (case 3 has "
-				"an empty body), so this string has no playfield-visible emitter evidence from the retained table."
+				" The printed description \"Insert Main\" names the backbox insert board, the lamp board behind the "
+				"translite; the neighbouring strings are printed \"Playfield Left\"/\"Playfield Right\" and "
+				"\"Mini-playfield & Insert\"/\"Clock & Insert\", so \"Insert\" is used on this page for the backbox "
+				"part of a string; those two mixed strings (GI 1 and GI 2) carry no spatial record because their "
+				"playfield parts have no bulb list, while this string is backbox-only. The retained script's UpdateGI case 3 has an empty body, so the table models no "
+				"playfield emitter for it either. The connector columns that would confirm the backbox wiring are on "
+				"the missing Solenoid/Flasher Table page (2-52)."
 			)
 			extra["roles"] = ["cabinet.insert-panel"]
-			extra["spatial"] = not_applicable("cabinet_or_service", VPX_SCRIPT_SOURCE)
+			extra["spatial"] = not_applicable("cabinet_or_service", MANUAL_SOURCE, VPX_SCRIPT_SOURCE)
 		physical["notes"] = notes
 		extra["physical"] = physical
 		items.append(
@@ -1221,9 +1525,12 @@ def mechanisms() -> list[dict[str, Any]]:
 			"Gumball Popper opto (switch 74) and kicked by solenoid 4 into the gumball wheel; a real gumball then "
 			"enters the machine (switch 87, Gumball Enter opto) and travels to the exit (switch 56, Gumball Exit) "
 			"where it is released to the player. Solenoid 24 turns the internal gumball motor; switch 55 (Gumball "
-			"Geneva) senses the motor's geneva-gear position but is driven synthetically by pinned PinMAME's "
-			"tz_handleMech from an internal position counter rather than a table Hit event, and has no bound VPX "
-			"trigger object in the retained extraction. PinMAME's tz_getSol also exposes a fake CORE_CUSTSOLNO(9) "
+			"Geneva, on the underside beneath the gumball machine) senses the motor's geneva-gear position. Pinned "
+			"PinMAME's tz_handleMech drives it synthetically from an internal position counter, and the retained table "
+			"also pulses it itself: SolGumballMotor schedules SolGumRelease 1.7 s after solenoid 24 turns on, and "
+			"SolGumRelease calls vpmtimer.PulseSw 55 (script.vbs line 2401) -- a behaviour of the table, not a Hit "
+			"event from a switch object. Its spatial record is a projection onto the gumball machine assembly. PinMAME's "
+			"tz_getSol also exposes a fake CORE_CUSTSOLNO(9) "
 			"\"gumball release\" state used only to simplify emulator-side sequencing, not a real coil.",
 			[
 				("lane", "Gumball popper lane", ["switch.matrix-51"], "Ball enters the lane leading to the popper."),
@@ -1243,8 +1550,11 @@ def mechanisms() -> list[dict[str, Any]]:
 				"switch.matrix-91", "switch.matrix-92", "switch.matrix-93", "switch.matrix-94",
 				"switch.matrix-95", "switch.matrix-96", "switch.matrix-97", "switch.matrix-98",
 			],
-			"A bidirectional DC gearmotor (A-16120 D.C. Motor Control Assembly) drives a physical analog clock hand "
-			"through solenoids 56/57 as a forward/reverse pair, strobed by solenoid 58 (Clock Switch Strobe, A-16100). "
+			"A bidirectional DC gearmotor drives a physical analog clock hand through solenoids 56/57 as a forward/reverse "
+			"pair; the solenoid table lists assembly A-16120 for both outputs, printed \"D.C. Motor Assembly\" on page 2-47 "
+			"and \"DC Motor Control Assembly\" over a circuit-board drawing on page 2-15 (reading it as the motor-control "
+			"board is an inference). The position optos are "
+			"strobed by solenoid 58 (Clock Switch Strobe, A-16100). "
 			"Eight opto sensors on Minute (A-16220, addresses 91-94) and Hour (A-16219, addresses 95-98) opto PC "
 			"boards report clock-hand position; all eight are in PinMAME's fully-inverted custom switch column. "
 			"Pinned PinMAME does not expose this to the table script at all: init_tz's mech_add(0, &mechClock) drives "
@@ -1367,14 +1677,16 @@ def mechanisms() -> list[dict[str, Any]]:
 			"other",
 			[output_id("Lower Jet Bumper"), output_id("Left Jet Bumper"), output_id("Right Jet Bumper")],
 			["switch.matrix-31", "switch.matrix-32", "switch.matrix-33"],
-			"Three A-9415-2 jet bumpers. Solenoid 12 fires the Lower Jet Bumper (switch 31), solenoid 13 the Left "
-			"Jet Bumper (switch 32), and solenoid 14 the Right Jet Bumper (switch 33); the retained script leaves "
-			"these three SolCallback entries commented out because the table's native VPX bumper physics handles "
-			"them directly.",
+			"Three A-9415-2 jet bumpers. By the manual's location drawings, the left bumper carries switch 31 "
+			"(page 2-51) and coil 13 (page 2-53), the upper-right bumper switch 32 and coil 14, and the lower bumper "
+			"switch 33 and coil 12; the retained script binds Bumper1/Bumper2/Bumper3 to switches 31/32/33 in the "
+			"same left/upper-right/lower order. Which coil the ROM fires for each switch is not asserted beyond this "
+			"co-location. The retained script leaves the three coil SolCallback entries commented out because the "
+			"table's native VPX bumper physics handles them directly.",
 			[
-				("lower", "Lower jet bumper", ["switch.matrix-31"], "Closest to the player."),
-				("left", "Left jet bumper", ["switch.matrix-32"], "Left of the nest."),
-				("right", "Right jet bumper", ["switch.matrix-33"], "Right of the nest."),
+				("left", "Left jet bumper", ["switch.matrix-31"], "Left of the nest; coil 13 by location."),
+				("right", "Right jet bumper", ["switch.matrix-32"], "Upper right of the nest; coil 14 by location."),
+				("lower", "Lower jet bumper", ["switch.matrix-33"], "Closest to the player; coil 12 by location."),
 			],
 			MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE,
 			assembly_part_number="A-9415-2",
@@ -1465,7 +1777,8 @@ def conflicts() -> list[dict[str, Any]]:
 				"revision's tz_handleMech), so there is no runtime observation available to break the tie. "
 				"Resolution path: a LibPinMAME gameplay-harness trace driving solenoids 56/57 individually against a "
 				"legal tz_92 or later ROM while observing which direction the physical/simulated clock hand moves, "
-				"or inspection of the A-16120 D.C. Motor Control Assembly schematic on a missing manual page. "
+				"or a wiring schematic for assembly A-16120 (printed \"D.C. Motor Assembly\" on page 2-47 and \"DC Motor "
+				"Control Assembly\" on page 2-15), which is not among the retained pages. "
 				"Unresolved."
 			),
 			"source_refs": [CORE_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE],
@@ -1538,30 +1851,64 @@ def build() -> dict[str, Any]:
 	return definition
 
 
+def _unplaced_reason(device: dict[str, Any]) -> str:
+	group = device["binding"]["group"]
+	address = int(device["binding"]["device"])
+	if group == "pinmame.input.switch":
+		return UNPLACED_SWITCHES[address]
+	if group == "pinmame.output.solenoid":
+		return UNPLACED_SOLENOIDS[address]
+	if group == "pinmame.output.gi" and address == 1:
+		return (
+			"Mixed mini-playfield + backbox insert string with no retained bulb list; the single bound light l101 "
+			"covers only part of the mini-playfield and gives no count."
+		)
+	if group == "pinmame.output.gi" and address == 2:
+		return (
+			"Mixed clock + backbox insert string with no retained bulb list; the bound light l102 is an off-playfield "
+			"render controller, not a socket."
+		)
+	raise RuntimeError(f"Twilight Zone device {device['id']} has no spatial record and no documented reason")
+
+
 def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 	located_inputs: list[int] = []
 	not_applicable_inputs: dict[str, list[int]] = {}
-	for device in definition["inputs"]:
-		address = int(device["binding"]["device"])
-		spatial = device["spatial"]
-		if spatial["status"] == "not_applicable":
-			not_applicable_inputs.setdefault(spatial["reason"], []).append(address)
-		else:
-			located_inputs.append(address)
 	located_outputs: list[dict[str, Any]] = []
 	not_applicable_outputs: dict[str, list[dict[str, Any]]] = {}
+	unresolved: list[dict[str, Any]] = []
 	placement_count = 0
-	for device in definition["outputs"]:
-		binding = {"group": device["binding"]["group"], "address": int(device["binding"]["device"])}
-		spatial = device["spatial"]
-		if spatial["status"] == "not_applicable":
-			not_applicable_outputs.setdefault(spatial["reason"], []).append(binding)
-		else:
+	for collection in ("inputs", "outputs"):
+		for device in definition[collection]:
+			group = device["binding"]["group"]
+			address = int(device["binding"]["device"])
+			spatial = device.get("spatial")
+			if spatial is None:
+				unresolved.append({"group": group, "address": address, "reason": _unplaced_reason(device)})
+				continue
+			if spatial["status"] == "not_applicable":
+				if collection == "inputs":
+					not_applicable_inputs.setdefault(spatial["reason"], []).append(address)
+				else:
+					not_applicable_outputs.setdefault(spatial["reason"], []).append({"group": group, "address": address})
+				continue
 			placement_count += len(spatial["placements"])
-			located_outputs.append(binding)
-	for device in definition["inputs"]:
-		if device["spatial"]["status"] != "not_applicable":
-			placement_count += len(device["spatial"]["placements"])
+			if collection == "inputs":
+				located_inputs.append(address)
+			else:
+				located_outputs.append({"group": group, "address": address})
+	placement_notes = [
+		{"group": "pinmame.input.switch", "address": address, "reason": reason}
+		for address, reason in sorted(SWITCH_PROJECTIONS.items())
+	] + [
+		{"group": "pinmame.output.solenoid", "address": address, "reason": reason}
+		for address, reason in sorted(SOLENOID_PLACEMENT_NOTES.items())
+	]
+	# A projection places a device on another object of its own mechanism; the other notes place a device on the
+	# retained table's own object for it and only explain the choice.
+	projections = [entry for entry in placement_notes if entry["reason"].startswith("Projected onto")]
+	direct_placements = [entry for entry in placement_notes if not entry["reason"].startswith("Projected onto")]
+	unresolved_labels = ", ".join(f"{entry['group'].rsplit('.', 1)[-1]} {entry['address']}" for entry in unresolved)
 	return {
 		"format": "pinmame-spatial-blockers",
 		"version": 1,
@@ -1571,14 +1918,11 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"conflict.clock-motor-direction-naming is unresolved: pinned PinMAME's tz.c #define names contradict "
 			"both the printed manual and the retained script's own cross-reference comment for which of solenoids "
 			"56/57 is the clock's forward drive line.",
-			"Switches 26 (Trough Proximity), 45/46 (Mini-Playfield Left/Right), and 55 (Gumball Geneva) have no "
-			"bound VPX playfield object in the retained extraction, so they carry no validated spatial placement.",
-			"GI address 2 (Clock & Insert) is bound in the retained script to a single light object whose raw "
-			"coordinate falls outside the 0..1 playfield bounds; excluded as a table-modeling anomaly rather than "
-			"promoted to a placement.",
+			f"{len(unresolved)} physical devices carry no spatial record because no defensible coordinate exists "
+			f"({unresolved_labels}); each is listed with its reason under `unresolved`.",
 			"The manual's Switch Matrix (2-50), Solenoid/Flasher Table (2-52), and Lamp Matrix (2-54) wiring pages "
 			"are absent from this retained scan, so exact wire colors and connector/pin assignments are not "
-			"asserted for any device.",
+			"asserted for any device, and the mini-playfield switch drawing and backbox parts page are unavailable.",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1609,10 +1953,8 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			reason: sorted(bindings, key=lambda item: (item["group"], item["address"]))
 			for reason, bindings in sorted(not_applicable_outputs.items())
 		},
-		"projections": [
-			{"group": "pinmame.input.switch", "address": address, "reason": reason}
-			for address, reason in sorted(SWITCH_PROJECTIONS.items())
-		],
+		"projections": projections,
+		"direct_placements": direct_placements,
 		"visual_review_cache": {
 			"root": "external:pinmame-manuals/rendered/bally.twilight-zone.1993/",
 			"transcription": {
@@ -1623,18 +1965,24 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 				"path": "external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry.txt",
 				"sha256": VPX_GEOMETRY_SHA256,
 			},
+			"geometry_supplement": {
+				"path": "external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-25.txt",
+				"sha256": VPX_GEOMETRY_SUPPLEMENT_SHA256,
+			},
+			"geometry_supplement_2": {
+				"path": "external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-25-round3.txt",
+				"sha256": VPX_GEOMETRY_SUPPLEMENT_2_SHA256,
+			},
 		},
 		"excluded_object_classes": [
-			"Light.l102/l105-l111 (GI/backbox helper lights parented off-table, raw x=-230.57 outside 0..1 bounds after normalization) -- table modeling anomaly, not a distinct physical GI emitter",
+			"Light.l102/l105-l111 (GI/backbox helper lights parented off-table, raw x=-230.57 outside 0..1 bounds after normalization) -- render controllers for baked lightmaps, not physical GI emitters",
 			"Trigger.sw81_help/sw82_help/sw83_help debug/label marker duplicates of the magnet position triggers",
+			"Flipper.RampDiverter and Flipper.LRampSw (invisible animation helpers stored at y=1.000665/1.003437, outside the playfield)",
+			"Primitive.KnockerPosition (invisible sound-position helper parked off the playfield at y=-0.023220)",
+			"Trigger.DivTrig and Wall.DivWall (invisible ball-catch trigger and collision wall of the right ramp diverter; solenoid 5 is placed on the blade primitive BM_RDiv instead)",
+			"Light.f18/f19/f20/f41 (each models only one of a flasher circuit's two printed or drawn sockets, so the circuit is left unplaced rather than given a partial set)",
 		],
-		"unresolved": [
-			{"group": "pinmame.input.switch", "address": 26, "reason": UNRESOLVED_SWITCH_SPATIAL[26]},
-			{"group": "pinmame.input.switch", "address": 45, "reason": UNRESOLVED_SWITCH_SPATIAL[45]},
-			{"group": "pinmame.input.switch", "address": 46, "reason": UNRESOLVED_SWITCH_SPATIAL[46]},
-			{"group": "pinmame.input.switch", "address": 55, "reason": UNRESOLVED_SWITCH_SPATIAL[55]},
-			{"group": "pinmame.output.gi", "address": 2, "reason": "Bound light object l102 sits outside the playfield bounds; excluded as an anomaly rather than promoted."},
-		],
+		"unresolved": sorted(unresolved, key=lambda item: (item["group"], item["address"])),
 	}
 
 
@@ -1644,8 +1992,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		f"Status: {report['status']}. The physical machine record is `partial` at "
 		"`machines/partial/bally/twilight-zone-1993.json`, driven by one unresolved semantic conflict "
-		"(`conflict.clock-motor-direction-naming`) and a small number of switches/one GI string with no validated "
-		"playfield placement; see the promotion decision below.",
+		"(`conflict.clock-motor-direction-naming`) and the physical devices listed under Unresolved spatial evidence, "
+		"which have no defensible coordinate; see the promotion decision below.",
 		"",
 		"The matching source is the retained known-working `Twilight Zone (Bally 1993) 2.4.5.vpx` at SHA-256 "
 		f"`{TABLE_SHA256}`. The retained extraction produced the embedded script at SHA-256 `{SCRIPT_SHA256}`; that "
@@ -1656,26 +2004,38 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"## Evidence decisions",
 		"",
 		"- The embedded VPX script is the runtime and address/causality authority; the Bally operations manual is "
-		"the physical inventory, quantity, polarity, and label authority; pinned PinMAME owns controller topology "
-		"and the emulator-normalization mask; the retained table supplies geometry.",
+		"the physical inventory, quantity, polarity, label, and playfield-versus-cabinet authority; pinned PinMAME "
+		"owns controller topology and the emulator-normalization mask; the retained table supplies geometry.",
 		"- The retained manual PDF is an image-only scan. Every printed table used here was read from rendered pages "
-		"and transcribed into `external:pinmame-review-artifacts/twilight-zone-1993/manual-transcription.md`.",
-		"- This retained scan is missing every even printed page from 2-48 through 2-54 inclusive, removing the "
-		"Switch Matrix (2-50, which also carries the first Switch Locations table for items 1-33), Solenoid/Flasher "
-		"Table (2-52), and Lamp Matrix (2-54) wiring pages. Wire colors and connector/pin assignments are therefore "
-		"not asserted for any device in this definition, and switches below address 34 rely on pinned PinMAME's own "
-		"#defines and inverted-switch mask rather than a printed part-number cross-check.",
-		"- The manual's printed auxiliary-board item numbers 37-44 for the custom solenoid board are not the same "
-		"as PinMAME's public solenoid addresses for the same physical outputs; the retained script's own comments "
-		"bridge the two numbering schemes explicitly (see manual-transcription.md), resolving what would otherwise "
-		"look like a large unexplained address gap.",
-		"- Switches 71 (Big Kick), 82 (Upper Right Magnet), and 86 (Clock Lane), and solenoid 22 (Upper Right "
-		"Magnet), are printed \"Not Used\" with no part number at all. PinMAME's own simulator-only input-port "
-		"toggles of the same names belong to its internal text-mode ball tracker (sim.c), not a documented physical "
-		"factory option, so no fitted variant is claimed.",
-		"- GI address 2 (Clock & Insert) is bound in the retained script to a single light object (l102) whose raw "
-		"coordinate sits outside the playfield bounds; excluded as a table-modeling anomaly rather than promoted to "
-		"a false placement, the same treatment Monster Bash's curation gave its GIbot light11 anomaly.",
+		"and transcribed into `external:pinmame-review-artifacts/twilight-zone-1993/manual-transcription.md`; the "
+		"three location drawings (pages 2-51, 2-53, 2-55) are committed as page-scale excerpts with a callout "
+		"transcription each.",
+		"- This retained scan is missing every even printed page, including the Switch Matrix (2-50, which also "
+		"carries the first Switch Locations table for items 1-33), Solenoid/Flasher Table (2-52), and Lamp Matrix "
+		"(2-54) wiring pages. Wire colors and connector/pin assignments are therefore not asserted for any device.",
+		"- A `not_applicable` spatial record is used only for a device that genuinely has no playfield position: "
+		"coin-door, cabinet-button, and backbox devices the manual places off the playfield, unused addresses, "
+		"PinMAME-internal state channels, DIP switches, the clock strobe control line, and the four flipper "
+		"end-of-stroke contacts, which follow the repository-wide convention of an internal_nonvisual record paired "
+		"with an internal.* role because they sit inside the flipper assembly whose position the flipper coils "
+		"already carry. A physical playfield "
+		"device without a defensible coordinate carries no spatial key at all and is listed under Unresolved "
+		"spatial evidence.",
+		"- Lamps 11-18 and 21-28 carry the printed suffix \"(Door)\". That names the playfield's central door-panel "
+		"insert group, not the cabinet coin door: the Lamp Locations drawing prints those callouts on the door "
+		"panel in the middle of the playfield, and the retained script maps Light objects l11-l28 to them through "
+		"vpmMapLights. An earlier revision treated them as coin-door lamps.",
+		"- Switches 31-33 are labelled Left/Right/Lower from the Main Playfield Switch Locations drawing and the "
+		"script's Bumper1/Bumper2/Bumper3 binding, which agree; the earlier Lower/Left/Right labels had no source.",
+		"- Several earlier placements were wrong and are corrected here: switch 47 carried switch 52's trigger "
+		"coordinate, switch 74 carried the gumball popper lane hole instead of the popper kicker, solenoid 15 "
+		"carried lamp 86's coordinate instead of the lock kicker, solenoid 24 carried the gumball diverter blade, "
+		"solenoids 45 and 48 were placed on the opposite flipper, and solenoids 56-58 carried the lock kicker and "
+		"lamp 86 coordinates.",
+		"- The flasher Light objects (f17, f17b, f28, f37-f40) are the lights the retained script's FlashPWM/UpdateF17 "
+		"callbacks drive; each coincides with a callout circle on the manual's Solenoid/Flasher Locations drawing. "
+		"Flashers whose drawn or printed socket count exceeds the modelled lights (18, 19, 20, and the circuit at "
+		"public 55) are left unplaced rather than given a partial set.",
 		"- Solenoids 37-44 do not carry the WPC-95 LPDC duplication: this is a WPC-Fliptronic (pre-95, pre-integrated "
 		"board) generation, and pinned PinMAME's core_getSol only serves that address range for WPC-95/S11 "
 		"generations; Twilight Zone's own driver hook does not claim it either, so 37-44 are simply unused here.",
@@ -1686,7 +2046,16 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 	]
 	for entry in report["projections"]:
-		lines.append(f"- Switch {entry['address']}: {entry['reason']}")
+		lines.append(f"- {entry['group']} {entry['address']}: {entry['reason']}")
+	lines += [
+		"",
+		"## Direct placements with a recorded reason",
+		"",
+		"These devices sit on the retained table's own object for them; the note records why that object was chosen.",
+		"",
+	]
+	for entry in report["direct_placements"]:
+		lines.append(f"- {entry['group']} {entry['address']}: {entry['reason']}")
 	lines += [
 		"",
 		"## Unresolved spatial evidence",
@@ -1701,6 +2070,7 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"- Placements: {report['placement_count']}",
 		f"- Located input addresses: {len(report['resolved_input_addresses'])}",
 		f"- Located output bindings: {len(report['resolved_output_bindings'])}",
+		f"- Physical devices without a spatial record: {len(report['unresolved'])}",
 	]
 	for reason, addresses in report["not_applicable_inputs"].items():
 		lines.append(f"- Inputs with a controlled `{reason}` record: {len(addresses)}")
@@ -1715,12 +2085,16 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"reasons: `conflict.clock-motor-direction-naming` is a genuine, unresolved disagreement between pinned "
 		"PinMAME's internal #define names and two independent sources (the printed manual and the retained script "
 		"author's own cross-reference comment) about which of solenoids 56/57 is the clock's forward drive line, "
-		"and a small number of addresses (switches 26/45/46/55 and GI address 2) have no validated playfield "
-		"placement because no bound VPX object exists for them in the retained extraction. The definition therefore "
+		"and the physical devices listed above have no defensible playfield coordinate. The definition therefore "
 		"carries a non-empty `conflicts` array, `coverage.dimensions.semantic_naming = \"conflicted\"`, and "
 		"`coverage.missing = [\"spatial_placement\", \"unresolved_conflicts\"]`. Resolving the clock-direction "
-		"conflict needs a LibPinMAME harness trace or the missing D.C. Motor Control Assembly schematic; resolving "
-		"the remaining spatial gaps needs either a corrected retained table build or the missing 2-50 manual page.",
+		"conflict needs a LibPinMAME harness trace or a wiring schematic for assembly A-16120, which is not among the "
+		"retained pages; resolving "
+		"the spatial gaps needs a table that models the second socket of flashers 18-20 and the door-panel bulb on "
+		"public 55 (or a production-machine survey settling whether those door-panel bulbs were fitted), the "
+		"mini-playfield switch drawing on the missing page 2-50 for switches 45/46, bulb lists for the mixed "
+		"playfield/backbox GI strings 1 and 2, "
+		"and a page that locates the knocker.",
 		"",
 		"## Retained evidence",
 		"",
@@ -1728,7 +2102,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		f"{EXTRACTION_FILE_COUNT} files, {EXTRACTION_TOTAL_BYTES} bytes.",
 		f"- Human transcription of every printed table read from the rendered manual pages, SHA-256 "
 		f"`{MANUAL_TRANSCRIPTION_SHA256}`.",
-		f"- Raw retained-table object geometry, SHA-256 `{VPX_GEOMETRY_SHA256}`.",
+		f"- Raw retained-table object geometry, SHA-256 `{VPX_GEOMETRY_SHA256}`, and its two 2026-09-25 supplements, "
+		f"SHA-256 `{VPX_GEOMETRY_SUPPLEMENT_SHA256}` and `{VPX_GEOMETRY_SUPPLEMENT_2_SHA256}` (the second also records "
+		"the callout-05 measurement on the page 2-53 drawing).",
 		"",
 	]
 	return "\n".join(lines)

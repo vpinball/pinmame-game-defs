@@ -7,6 +7,11 @@ page is transcribed separately as `general-illumination.md`. The retained scan i
 Solenoid/Flasher Table wiring page (printed 2-52), so drive transistors, connectors and voltage
 rails are not available from this manual for these addresses.
 
+Rows marked "(blank)" are continuation lines the page prints with an empty cell; they are transcribed as printed
+rather than merged into the item above. Items 18, 20 and 41 each print a second 24-8802 bulb row (on A-16060), and
+only 18 and 20 add "(2)" to the description. The three extra description lines under item 28 repeat the names of
+items 38-40 with no part numbers of their own.
+
 | Item | Coil/Flasher Number | Assembly Number | Description |
 | --- | --- | --- | --- |
 | 01 | AE-24-900 | A-16434 | Slot Kickout |
@@ -26,9 +31,11 @@ rails are not available from this manual for these addresses.
 | 15 | AE-27-1200 | A-16307 | Lock Release |
 | 16 | SZ-33-3000 | A-16338 | Shooter Diverter |
 | 17 | 24-8802 | A-12336-1 | Bumpers (2) |
-| 18 | 24-8802 | A-12336-1 / A-16060 | Power Payoff (2) |
+| 18 | 24-8802 | A-12336-1 | Power Payoff (2) |
+| (blank) | 24-8802 | A-16060 | (blank) |
 | 19 | 24-8802 | A-12336-1 | Mini-playfield (2) |
-| 20 | 24-8802 | A-16330 / A-16060 | Upper Left Ramp (2) |
+| 20 | 24-8802 | A-16330 | Upper Left Ramp (2) |
+| (blank) | 24-8802 | A-16060 | (blank) |
 | 21 | 20-9247 | ---- | Left Magnet |
 | 22 | ---- | ---- | Not Used |
 | 23 | 20-9247 | ---- | Lower Right Magnet |
@@ -36,12 +43,16 @@ rails are not available from this manual for these addresses.
 | 25 | 20-9247 | A-16749 | Left Mini-playfield Magnet |
 | 26 | 20-9247 | A-16749 | Right Mini-playfield Magnet |
 | 27 | AE-26-1500 | A-16064 | Left Ramp Diverter |
-| 28 | 24-8802 | A-16060 | Inside Ramp / Gumball Machine High / Gumball Machine Middle / Gumball Machine Low |
+| 28 | 24-8802 | A-16060 | Inside Ramp |
+| (blank) | (blank) | (blank) | Gumball Machine High |
+| (blank) | (blank) | (blank) | Gumball Machine Middle |
+| (blank) | (blank) | (blank) | Gumball Machine Low |
 | 37 | 24-8802 | A-12336-1 | Upper Right Flipper |
 | 38 | 24-8802 | A-16651-4 | Gumball Machine High |
 | 39 | 24-8802 | A-16651-4 | Gumball Machine Middle |
 | 40 | 24-8802 | A-16651-4 | Gumball Machine Low |
-| 41 | 24-8802 | A-16330 / A-16060 | Upper Right Ramp |
+| 41 | 24-8802 | A-16330 | Upper Right Ramp |
+| (blank) | 24-8802 | A-16060 | (blank) |
 | 42 | ---- | A-16120 | Clock Reverse |
 | 43 | ---- | A-16120 | Clock Forward |
 | 44 | ---- | A-16100 | Clock Strobe |

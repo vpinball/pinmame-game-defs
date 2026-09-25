@@ -1,9 +1,8 @@
 {
   "blockers": [
     "conflict.clock-motor-direction-naming is unresolved: pinned PinMAME's tz.c #define names contradict both the printed manual and the retained script's own cross-reference comment for which of solenoids 56/57 is the clock's forward drive line.",
-    "Switches 26 (Trough Proximity), 45/46 (Mini-Playfield Left/Right), and 55 (Gumball Geneva) have no bound VPX playfield object in the retained extraction, so they carry no validated spatial placement.",
-    "GI address 2 (Clock & Insert) is bound in the retained script to a single light object whose raw coordinate falls outside the 0..1 playfield bounds; excluded as a table-modeling anomaly rather than promoted to a placement.",
-    "The manual's Switch Matrix (2-50), Solenoid/Flasher Table (2-52), and Lamp Matrix (2-54) wiring pages are absent from this retained scan, so exact wire colors and connector/pin assignments are not asserted for any device."
+    "9 physical devices carry no spatial record because no defensible coordinate exists (switch 45, switch 46, solenoid 7, solenoid 18, solenoid 19, solenoid 20, solenoid 55, gi 1, gi 2); each is listed with its reason under `unresolved`.",
+    "The manual's Switch Matrix (2-50), Solenoid/Flasher Table (2-52), and Lamp Matrix (2-54) wiring pages are absent from this retained scan, so exact wire colors and connector/pin assignments are not asserted for any device, and the mini-playfield switch drawing and backbox parts page are unavailable."
   ],
   "coordinate_convention": {
     "source_bounds": {
@@ -16,9 +15,75 @@
     "x": "x/1082.353; 0=left, 1=right",
     "y": "y/2164.706; 0=rear/backglass, 1=apron/player"
   },
+  "direct_placements": [
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "reason": "Placed on Bumper.Bumper1, the object whose Bumper1_Hit handler pulses switch 31 in the retained script; it is the left bumper of the three, and the manual's Main Playfield Switch Locations drawing (page 2-51) prints callout 31 on the left jet bumper."
+    },
+    {
+      "address": 32,
+      "group": "pinmame.input.switch",
+      "reason": "Placed on Bumper.Bumper2, the object whose Bumper2_Hit handler pulses switch 32 in the retained script; it is the upper-right bumper of the three, and the manual's drawing (page 2-51) prints callout 32 there."
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "reason": "Placed on Bumper.Bumper3, the object whose Bumper3_Hit handler pulses switch 33 in the retained script; it is the lower bumper of the three, and the manual's drawing (page 2-51) prints callout 33 there."
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "reason": "Placed on Trigger.sw52, the table's own trigger for this switch: its sw52_Hit handler pulses switch 52 (script.vbs line 1709); the geometry file lists it under the Hitchhiker figure's lane."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on Primitive.BM_RDiv, the diverter blade the retained script's diverterTimer rotates (through the BP_RDiv array) when SolRightRampDiverter fires; the position is the primitive's own pivot, the blade's hinge. The script's Trigger.DivTrig (an invisible trigger that catches the ball to kick it) and Wall.DivWall (an invisible collision wall whose collidability the coil toggles) are helpers and are not used. The table's invisible right-ramp physics ramp (Ramp.Ramp342, a two-wire ramp about 135 units above the playfield) runs from the right-ramp hairpin to the left side and passes about 0.02 in front of this pivot, over Wall.DivWall. Manual page 2-53 prints callout 05 left of centre with its arrow pointing left to a vertical rail; measured on the committed crop, the arrow tip normalizes to about (0.273, 0.199), 0.016 from the pivot (see vpx-geometry-2026-09-25-round3.txt)."
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on Flipper.GumballDiverter, the diverter blade the retained script's SolGumballDiverter rotates; the manual's Lower Playfield Parts page (2-47) shows the A-16313 Rear Diverter Assembly (item 19) under this rear-centre region, while the leaderless callout 06 on page 2-53 is printed further left, in the same region but not on the blade."
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "reason": "Two sockets, both driven by the retained script's UpdateF17: Light.f17 between the jet bumpers and Light.f17b at the left edge beside them, matching the two callout-17 circles on manual page 2-53 and its printed \"(2)\"."
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on Light.f28, the flasher light the retained script's FlashPWM 28 drives; manual page 2-53 draws one callout-28 circle at the inside of the ramp."
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on Light.f37, the flasher light the retained script's FlashPWM 37 drives; manual page 2-53 draws callout 37 beside the upper right flipper."
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on Light.f38, the flasher light the retained script's FlashPWM 38 drives; manual page 2-53 draws callouts 38-40 stacked at the top-left corner by the gumball machine."
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on Light.f39, the flasher light the retained script's FlashPWM 39 drives; manual page 2-53 draws callouts 38-40 stacked at the top-left corner by the gumball machine."
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed on Light.f40, the flasher light the retained script's FlashPWM 40 drives; manual page 2-53 draws callouts 38-40 stacked at the top-left corner by the gumball machine."
+    }
+  ],
   "excluded_object_classes": [
-    "Light.l102/l105-l111 (GI/backbox helper lights parented off-table, raw x=-230.57 outside 0..1 bounds after normalization) -- table modeling anomaly, not a distinct physical GI emitter",
-    "Trigger.sw81_help/sw82_help/sw83_help debug/label marker duplicates of the magnet position triggers"
+    "Light.l102/l105-l111 (GI/backbox helper lights parented off-table, raw x=-230.57 outside 0..1 bounds after normalization) -- render controllers for baked lightmaps, not physical GI emitters",
+    "Trigger.sw81_help/sw82_help/sw83_help debug/label marker duplicates of the magnet position triggers",
+    "Flipper.RampDiverter and Flipper.LRampSw (invisible animation helpers stored at y=1.000665/1.003437, outside the playfield)",
+    "Primitive.KnockerPosition (invisible sound-position helper parked off the playfield at y=-0.023220)",
+    "Trigger.DivTrig and Wall.DivWall (invisible ball-catch trigger and collision wall of the right ramp diverter; solenoid 5 is placed on the blade primitive BM_RDiv instead)",
+    "Light.f18/f19/f20/f41 (each models only one of a flasher circuit's two printed or drawn sockets, so the circuit is left unplaced rather than given a partial set)"
   ],
   "extraction": {
     "fail_closed": true,
@@ -63,21 +128,6 @@
       8
     ],
     "internal_nonvisual": [
-      26,
-      31,
-      32,
-      33,
-      45,
-      46,
-      55,
-      91,
-      92,
-      93,
-      94,
-      95,
-      96,
-      97,
-      98,
       111,
       113,
       115,
@@ -97,185 +147,17 @@
         "group": "pinmame.output.gi"
       },
       {
-        "address": 11,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 12,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 13,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 14,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 15,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 16,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 17,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 18,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 21,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 22,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 23,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 24,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 25,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 26,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 27,
-        "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 28,
-        "group": "pinmame.output.lamp"
-      },
-      {
         "address": 87,
         "group": "pinmame.output.lamp"
       },
       {
         "address": 88,
         "group": "pinmame.output.lamp"
-      },
-      {
-        "address": 17,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 18,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 19,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 20,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 28,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 51,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 52,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 53,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 54,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 55,
-        "group": "pinmame.output.solenoid"
       }
     ],
     "internal_nonvisual": [
       {
-        "address": 2,
-        "group": "pinmame.output.gi"
-      },
-      {
-        "address": 1,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 3,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 5,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 6,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 7,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 8,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 10,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 11,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 12,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 13,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 14,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 27,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 33,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 34,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 35,
-        "group": "pinmame.output.solenoid"
-      },
-      {
-        "address": 36,
+        "address": 58,
         "group": "pinmame.output.solenoid"
       }
     ],
@@ -348,12 +230,162 @@
       }
     ]
   },
-  "placement_count": 137,
+  "placement_count": 186,
   "projections": [
     {
-      "address": 52,
+      "address": 26,
       "group": "pinmame.input.switch",
-      "reason": "Projected onto the Trigger.sw52 object, the only VPX trigger the retained script binds to switch 52; the geometry file lists it under the Hitchhiker figure's lane."
+      "reason": "Projected onto Kicker.sw15, the right-trough eject position: the retained script's sw15_hit/sw15_unhit handlers set and clear switch 26 from the ball resting in that kicker (script.vbs sw15_hit), and the manual's Main Playfield Switch Locations drawing (page 2-51) prints callout 26 beside callout 15 at the trough's eject end. The proximity sensor itself is not a separate table object."
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the gumball machine assembly (A-16132), represented by the pivot of the retained table's gumball-globe primitive (Primitive.BM_Gumballs). The geneva switch sits on the underside of the playfield beneath that assembly (manual dagger footnote) and the manual's drawing (page 2-51) prints callout 55 inside the gumball-machine outline. The table has no switch object of its own for it; its script pulses switch 55 from SolGumRelease, which SolGumballMotor schedules after solenoid 24 turns on."
+    },
+    {
+      "address": 91,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object."
+    },
+    {
+      "address": 92,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object."
+    },
+    {
+      "address": 93,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object."
+    },
+    {
+      "address": 94,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object."
+    },
+    {
+      "address": 95,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object."
+    },
+    {
+      "address": 96,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object."
+    },
+    {
+      "address": 97,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object."
+    },
+    {
+      "address": 98,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the clock's rotation axis (the pivot of Primitive.BM_ClockLarge, the minute hand the retained script's UpdateClock rotates from Controller.GetMech(0)). The Minute (A-16220) and Hour (A-16219) opto boards are inside the clock assembly, and the table models no individual opto object."
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Kicker.sw58, the slot kickout hole the retained script's SlotMachineKickout kicks (with the overflow kicker beside it); manual page 2-53 prints callout 01 at the slot machine."
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Kicker.AutoPlungerKicker, the shooter-lane kicker the retained script's SolAutoKicker fires; the same object carries switch 72."
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Kicker.sw18, the outhole the retained script's SolOuthole kicks."
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained table's Wall.RightSlingShot (drag-point mean), the slingshot assembly this coil fires; the table uses native slingshot physics, so no scripted coil object exists. Manual page 2-53 prints callout 10 at the right slingshot."
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the retained table's Wall.LeftSlingShot (drag-point mean), the slingshot assembly this coil fires; the table uses native slingshot physics, so no scripted coil object exists. Manual page 2-53 prints callout 11 at the left slingshot."
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Bumper.Bumper3, the lower jet bumper; manual page 2-53 prints callout 12 on the lower bumper. The table's bumpers are native physics, so the coil has no object of its own."
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Bumper.Bumper1, the left jet bumper; manual page 2-53 prints callout 13 on the left bumper. The table's bumpers are native physics, so the coil has no object of its own."
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Bumper.Bumper2, the upper-right jet bumper; manual page 2-53 prints callout 14 on the right bumper. The table's bumpers are native physics, so the coil has no object of its own."
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Kicker.sw88, the lower lock position the retained script's LockKickout kicks; manual page 2-53 prints callout 15 at the lock."
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the gumball machine assembly (A-16132), represented by the pivot of Primitive.BM_Gumballs; manual page 2-53 prints callout 24 inside the gumball-machine outline. The retained script's SolGumballMotor turns the machine's knob animation."
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Wall.RampDivWall (drag-point mean), the blocking wall the retained script's SolLeftRampDiverter drops; manual page 2-53 prints callout 27 at the same right-edge position. Flipper.RampDiverter, the visible blade animation, sits at y=1.000665, outside the playfield, and is not used."
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Flipper.RightFlipper1, the upper right flipper the retained script's SolURFlipper moves."
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Flipper.RightFlipper1, the upper right flipper the retained script's SolURFlipper moves."
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Flipper.LeftFlipper1, the upper left flipper the retained script's SolULFlipper moves."
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Flipper.LeftFlipper1, the upper left flipper the retained script's SolULFlipper moves."
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Flipper.RightFlipper, the lower right flipper the retained script's SolRFlipper moves."
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Flipper.RightFlipper, the lower right flipper the retained script's SolRFlipper moves."
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Flipper.LeftFlipper, the lower left flipper the retained script's SolLFlipper moves."
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto Flipper.LeftFlipper, the lower left flipper the retained script's SolLFlipper moves."
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the clock's rotation axis (pivot of Primitive.BM_ClockLarge): the drive line powers the clock's DC gearmotor, which the manual's Clock Gear Train Assembly page (1-51) mounts on the clock's back panel. The solenoid table's assembly number for this output, A-16120, is printed \"D.C. Motor Assembly\" as item 17 of the Lower Playfield Parts page (2-47) and \"DC Motor Control Assembly\" over a circuit-board drawing on page 2-15; reading A-16120 as the motor-control board rather than the motor itself is this curation's inference from those two pages. Where that board sits is not settled: page 2-53 draws callouts 42/43 right of centre above the slot machine, while page 2-47 puts item 17 under the rear right of the playfield."
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the clock's rotation axis (pivot of Primitive.BM_ClockLarge): the drive line powers the clock's DC gearmotor, which the manual's Clock Gear Train Assembly page (1-51) mounts on the clock's back panel. The solenoid table's assembly number for this output, A-16120, is printed \"D.C. Motor Assembly\" as item 17 of the Lower Playfield Parts page (2-47) and \"DC Motor Control Assembly\" over a circuit-board drawing on page 2-15; reading A-16120 as the motor-control board rather than the motor itself is this curation's inference from those two pages. Where that board sits is not settled: page 2-53 draws callouts 42/43 right of centre above the slot machine, while page 2-47 puts item 17 under the rear right of the playfield."
     }
   ],
   "resolved_input_addresses": [
@@ -364,8 +396,12 @@
     17,
     18,
     25,
+    26,
     27,
     28,
+    31,
+    32,
+    33,
     34,
     35,
     36,
@@ -381,6 +417,7 @@
     52,
     53,
     54,
+    55,
     56,
     57,
     58,
@@ -404,7 +441,15 @@
     84,
     85,
     87,
-    88
+    88,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98
   ],
   "resolved_output_bindings": [
     {
@@ -412,12 +457,72 @@
       "group": "pinmame.output.gi"
     },
     {
-      "address": 1,
+      "address": 4,
       "group": "pinmame.output.gi"
     },
     {
-      "address": 4,
-      "group": "pinmame.output.gi"
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
     },
     {
       "address": 31,
@@ -604,7 +709,15 @@
       "group": "pinmame.output.lamp"
     },
     {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
       "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
       "group": "pinmame.output.solenoid"
     },
     {
@@ -612,7 +725,39 @@
       "group": "pinmame.output.solenoid"
     },
     {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
       "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
       "group": "pinmame.output.solenoid"
     },
     {
@@ -621,6 +766,10 @@
     },
     {
       "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
       "group": "pinmame.output.solenoid"
     },
     {
@@ -644,6 +793,30 @@
       "group": "pinmame.output.solenoid"
     },
     {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.solenoid"
+    },
+    {
       "address": 45,
       "group": "pinmame.output.solenoid"
     },
@@ -660,15 +833,27 @@
       "group": "pinmame.output.solenoid"
     },
     {
+      "address": 51,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.solenoid"
+    },
+    {
       "address": 56,
       "group": "pinmame.output.solenoid"
     },
     {
       "address": 57,
-      "group": "pinmame.output.solenoid"
-    },
-    {
-      "address": 58,
       "group": "pinmame.output.solenoid"
     }
   ],
@@ -680,29 +865,49 @@
   "status": "partial",
   "unresolved": [
     {
-      "address": 26,
-      "group": "pinmame.input.switch",
-      "reason": "No VPX object binds switch 26 (Trough Proximity / powerball detect); the retained script sets it from tz_handleBallState's ball-type detection rather than a Hit event."
-    },
-    {
       "address": 45,
       "group": "pinmame.input.switch",
-      "reason": "No gameitem, collection, or object event binding named sw45/sw45a was found anywhere in the retained extraction, despite the retained script defining Sub sw45_Hit and Sub sw45a_Hit."
+      "reason": "No spatial placement: the switch is a physical Powerfield (mini-playfield) switch pair (manual \"(2)\"), but the retained extraction contains no object named sw45 or sw45a -- the script's sw45_Hit/sw45a_Hit handlers are never reached, so the retained table never asserts switch 45 -- and the mini-playfield switch drawing is not among the retained manual pages (the Main Playfield drawing on page 2-51 omits it)."
     },
     {
       "address": 46,
       "group": "pinmame.input.switch",
-      "reason": "No gameitem, collection, or object event binding named sw46/sw46a was found anywhere in the retained extraction, despite the retained script defining Sub sw46_Hit and Sub sw46a_Hit."
+      "reason": "No spatial placement: the switch is a physical Powerfield (mini-playfield) switch pair (manual \"(2)\"), but the retained extraction contains no object named sw46 or sw46a -- the script's sw46_Hit/sw46a_Hit handlers are never reached, so the retained table never asserts switch 46 -- and the mini-playfield switch drawing is not among the retained manual pages (the Main Playfield drawing on page 2-51 omits it)."
     },
     {
-      "address": 55,
-      "group": "pinmame.input.switch",
-      "reason": "No VPX object binds switch 55 (Gumball Geneva); pinned PinMAME's tz_handleMech sets it synthetically from the internal gumball-motor position counter rather than from a table Hit event, and the manual documents it only as \"located on the underside of the playfield\"."
+      "address": 1,
+      "group": "pinmame.output.gi",
+      "reason": "Mixed mini-playfield + backbox insert string with no retained bulb list; the single bound light l101 covers only part of the mini-playfield and gives no count."
     },
     {
       "address": 2,
       "group": "pinmame.output.gi",
-      "reason": "Bound light object l102 sits outside the playfield bounds; excluded as an anomaly rather than promoted."
+      "reason": "Mixed clock + backbox insert string with no retained bulb list; the bound light l102 is an off-playfield render controller, not a socket."
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.solenoid",
+      "reason": "No spatial placement: the knocker is a physical coil (B-10686-1), but no retained page locates it -- it is absent from both playfield drawings on page 2-53, from the Lower Playfield Parts page (2-47), and from the Cabinet Parts list (2-3); the backbox and remaining parts pages are among the scan's missing even pages. The retained table's KnockerPosition primitive is an invisible sound-position helper parked off the playfield, not evidence."
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "reason": "No spatial placement: the manual prints two bulbs (\"(2)\") and draws one callout-18 circle on the ramp overlay and one right of centre on the main playfield (page 2-53), but the retained table models only one (Light.f18, x=0.864045 y=0.403193, the ramp-overlay bulb). Placing one of two sockets would misstate the quantity."
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "reason": "No spatial placement: the manual prints two bulbs (\"(2)\") and draws both callout-19 circles at the mini-playfield (page 2-53), but the retained table models only one (Light.f19, x=0.173298 y=0.349009)."
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "reason": "No spatial placement: the manual prints two bulbs (\"(2)\"), one at the top of the upper left ramp and one under the door panel's Gum insert (page 2-53 draws callout 20 in both places), but the retained table models only the ramp bulb (Light.f20, x=0.404644 y=0.037562). The retained script's comment says \"the additional GUM and BALL flashers were removed to reduce cost\"; that is an unsourced claim about later production, so the fitted quantity is left open rather than reduced to one."
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.solenoid",
+      "reason": "No spatial placement: the page 2-53 table prints item 41 with two 24-8802 bulb rows, one on A-16330 and one on A-16060, the same two-row layout as item 20, though without item 20's \"(2)\"; the page's location drawing draws callout 41 twice, at the top of the upper right ramp and under the door panel's Ball insert. The quantity is therefore recorded as the two printed sockets. The retained table models only the ramp bulb (Light.f41, x=0.947625 y=0.052201), and its script comments the circuit \"x2 (**)\" with the unsourced note that the door-panel bulb was removed to reduce cost; whether later production fitted both sockets is not settled, and placing one of two sockets would misstate the quantity."
     }
   ],
   "version": 1,
@@ -710,6 +915,14 @@
     "geometry": {
       "path": "external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry.txt",
       "sha256": "dc8a49f6b1d1568ba9027af7453157039da05a08d6ffd2ac0a60c54940cb2f3a"
+    },
+    "geometry_supplement": {
+      "path": "external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-25.txt",
+      "sha256": "d0ba08f21084d370b3924f3ab8d3fb164f1a9fd14cb1f6df1c33ab747b3ff7c3"
+    },
+    "geometry_supplement_2": {
+      "path": "external:pinmame-review-artifacts/twilight-zone-1993/vpx-geometry-2026-09-25-round3.txt",
+      "sha256": "1cab0a1ff393a96e2fa43e49ac31039e05280d462293c258ab91df042d6b1aff"
     },
     "root": "external:pinmame-manuals/rendered/bally.twilight-zone.1993/",
     "transcription": {

@@ -203,9 +203,153 @@ class TwilightZoneDefinitionTests(unittest.TestCase):
 
 	def test_gi_has_five_strings_and_address_2_has_no_false_placement(self) -> None:
 		self.assertEqual({0, 1, 2, 3, 4}, set(self.gi))
-		self.assertEqual("not_applicable", self.gi[2]["spatial"]["status"])
+		# GI 1 and GI 2 are mixed playfield + backbox insert strings with no bulb list: physical,
+		# but unplaced. GI 3 "Insert Main" is backbox-only.
+		for address in (1, 2):
+			self.assertNotIn("spatial", self.gi[address], address)
+			self.assertNotIn("quantity", self.gi[address]["physical"], address)
+			self.assertIn("No spatial placement", self.gi[address]["physical"]["notes"], address)
+			self.assertIn("backbox insert", self.gi[address]["physical"]["notes"], address)
+		self.assertEqual(("not_applicable", "cabinet_or_service"), (self.gi[3]["spatial"]["status"], self.gi[3]["spatial"]["reason"]))
 		self.assertEqual("validated", self.gi[0]["spatial"]["status"])
 		self.assertGreater(len(self.gi[0]["spatial"]["placements"]), 1)
+
+	def test_no_used_physical_device_is_internal_nonvisual_for_lack_of_geometry(self) -> None:
+		# validation.py pairs internal_nonvisual with internal.* roles. Only the four flipper
+		# end-of-stroke contacts and the clock strobe line may use it; every other used physical device
+		# must either be placed or omit its spatial key. The exemption is by address, not by role, so
+		# adding an internal.* role to another device cannot hide a missing placement.
+		exempt = {("pinmame.input.switch", address) for address in (111, 113, 115, 117)} | {("pinmame.output.solenoid", 58)}
+		physical_kinds = {"switch", "coil", "flasher", "lamp", "gi", "motor", "magnet", "relay", "control_signal"}
+		offenders = []
+		internal_nonvisual = set()
+		for device in self.definition["inputs"] + self.definition["outputs"]:
+			spatial = device.get("spatial")
+			key = (device["binding"]["group"], device["binding"]["device"])
+			if spatial is not None and spatial["status"] == "not_applicable" and spatial["reason"] == "internal_nonvisual":
+				internal_nonvisual.add(key)
+			if device["kind"] not in physical_kinds or device["availability"] != "used" or spatial is None:
+				continue
+			if key in exempt:
+				continue
+			if spatial["status"] == "not_applicable" and spatial["reason"] == "internal_nonvisual":
+				offenders.append(device["id"])
+			self.assertNotIn("No VPX geometry evidence", device.get("physical", {}).get("notes", ""), device["id"])
+		self.assertEqual([], offenders)
+		self.assertTrue(exempt <= internal_nonvisual)
+		strobe = self.solenoids[58]
+		self.assertEqual("control_signal", strobe["kind"])
+		self.assertEqual("internal_nonvisual", strobe["spatial"]["reason"])
+		self.assertEqual(["internal.clock-opto-strobe"], strobe["roles"])
+
+	def test_unplaced_physical_devices_omit_spatial_and_say_why(self) -> None:
+		unplaced = {
+			(device["binding"]["group"], device["binding"]["device"])
+			for device in self.definition["inputs"] + self.definition["outputs"]
+			if "spatial" not in device
+		}
+		self.assertEqual(
+			{
+				("pinmame.input.switch", 45), ("pinmame.input.switch", 46),
+				("pinmame.output.solenoid", 7), ("pinmame.output.solenoid", 18), ("pinmame.output.solenoid", 19),
+				("pinmame.output.solenoid", 20), ("pinmame.output.solenoid", 55),
+				("pinmame.output.gi", 1), ("pinmame.output.gi", 2),
+			},
+			unplaced,
+		)
+		for group, address in unplaced:
+			device = {"pinmame.input.switch": self.switches, "pinmame.output.solenoid": self.solenoids, "pinmame.output.gi": self.gi}[group][address]
+			self.assertEqual("used", device["availability"], (group, address))
+			self.assertIn("No spatial placement", device["physical"]["notes"], (group, address))
+		report = load_json(SPATIAL_REPORT_PATH)
+		self.assertEqual(unplaced, {(entry["group"], entry["address"]) for entry in report["unresolved"]})
+		self.assertIn("spatial_placement", self.definition["coverage"]["missing"])
+
+	def test_door_panel_lamps_are_playfield_inserts_and_buttons_are_cabinet(self) -> None:
+		for address in list(range(11, 19)) + list(range(21, 29)):
+			lamp = self.lamps[address]
+			placement = lamp["spatial"]["placements"][0]
+			self.assertEqual("validated", lamp["spatial"]["status"], address)
+			self.assertNotIn("roles", lamp, address)
+			self.assertTrue(0.35 < placement["x"] < 0.62 and 0.5 < placement["y"] < 0.75, address)
+		for address in (87, 88):
+			self.assertEqual("cabinet_or_service", self.lamps[address]["spatial"]["reason"])
+
+	def test_jet_bumper_switches_and_coils_follow_the_manual_drawings(self) -> None:
+		self.assertEqual("Left Jet Bumper", self.switches[31]["label"])
+		self.assertEqual("Right Jet Bumper", self.switches[32]["label"])
+		self.assertEqual("Lower Jet Bumper", self.switches[33]["label"])
+		point = lambda device: (device["spatial"]["placements"][0]["x"], device["spatial"]["placements"][0]["y"])
+		left, right, lower = point(self.switches[31]), point(self.switches[32]), point(self.switches[33])
+		self.assertLess(left[0], right[0])
+		self.assertGreater(lower[1], left[1])
+		self.assertGreater(lower[1], right[1])
+		# Coils by the page 2-53 drawing: 13 left, 14 upper right, 12 lower.
+		self.assertEqual(left, point(self.solenoids[13]))
+		self.assertEqual(right, point(self.solenoids[14]))
+		self.assertEqual(lower, point(self.solenoids[12]))
+
+	def test_flipper_coils_sit_on_their_own_flipper(self) -> None:
+		point = lambda device: (device["spatial"]["placements"][0]["x"], device["spatial"]["placements"][0]["y"])
+		lower_right, lower_left = point(self.solenoids[45]), point(self.solenoids[47])
+		upper_right, upper_left = point(self.solenoids[33]), point(self.solenoids[35])
+		self.assertGreater(lower_right[0], 0.5)
+		self.assertLess(lower_left[0], 0.5)
+		self.assertGreater(upper_right[0], upper_left[0])
+		self.assertEqual(lower_right, point(self.solenoids[46]))
+		self.assertEqual(lower_left, point(self.solenoids[48]))
+		self.assertEqual(upper_right, point(self.solenoids[34]))
+		self.assertEqual(upper_left, point(self.solenoids[36]))
+		# End-of-stroke contacts follow the repository convention: internal to the flipper assembly.
+		for eos in (111, 113, 115, 117):
+			spatial = self.switches[eos]["spatial"]
+			self.assertEqual(("not_applicable", "internal_nonvisual"), (spatial["status"], spatial["reason"]), eos)
+			self.assertTrue(self.switches[eos]["roles"][0].startswith("internal."), eos)
+		for button in (112, 114, 116, 118):
+			self.assertEqual("cabinet_or_service", self.switches[button]["spatial"]["reason"])
+
+	def test_clock_optos_and_motor_share_the_clock_axis(self) -> None:
+		point = lambda device: (device["spatial"]["placements"][0]["x"], device["spatial"]["placements"][0]["y"])
+		axis = point(self.switches[91])
+		self.assertTrue(axis[0] > 0.7 and axis[1] < 0.3)
+		for address in range(92, 99):
+			self.assertEqual(axis, point(self.switches[address]), address)
+		self.assertEqual(axis, point(self.solenoids[56]))
+		self.assertEqual(axis, point(self.solenoids[57]))
+
+	def test_corrected_placements_do_not_regress(self) -> None:
+		point = lambda device: (device["spatial"]["placements"][0]["x"], device["spatial"]["placements"][0]["y"])
+		self.assertNotEqual(point(self.switches[47]), point(self.switches[52]))
+		self.assertNotEqual(point(self.switches[74]), point(self.switches[51]))
+		self.assertEqual(point(self.switches[26]), point(self.switches[15]))
+		self.assertEqual(point(self.solenoids[15]), point(self.switches[88]))
+		self.assertNotEqual(point(self.solenoids[24]), point(self.solenoids[6]))
+		self.assertEqual(point(self.solenoids[24]), point(self.switches[55]))
+		flasher = self.solenoids[17]
+		self.assertEqual(2, flasher["physical"]["quantity"])
+		self.assertEqual(2, len(flasher["spatial"]["placements"]))
+		for address in (18, 19, 20, 55):
+			self.assertEqual(2, self.solenoids[address]["physical"]["quantity"], address)
+		# Solenoid 5 sits on the diverter blade primitive (BM_RDiv pivot), not on the invisible DivTrig/DivWall helpers.
+		self.assertEqual((0.279253, 0.21377), point(self.solenoids[5]))
+		self.assertIn("Primitive.BM_RDiv", self.solenoids[5]["physical"]["notes"])
+		for address in (51, 52, 53, 54, 55, 56, 57, 58):
+			self.assertTrue(self.solenoids[address]["physical"]["notes"].startswith(
+				f"Printed solenoid/flasher-locations item {address - 14}, "
+			), address)
+
+	def test_spatial_report_separates_projections_from_direct_placements(self) -> None:
+		report = load_json(SPATIAL_REPORT_PATH)
+		self.assertTrue(report["projections"])
+		self.assertTrue(report["direct_placements"])
+		for entry in report["projections"]:
+			self.assertTrue(entry["reason"].startswith("Projected onto"), entry)
+		for entry in report["direct_placements"]:
+			self.assertFalse(entry["reason"].startswith("Projected onto"), entry)
+		direct = {(entry["group"], entry["address"]) for entry in report["direct_placements"]}
+		self.assertIn(("pinmame.input.switch", 31), direct)
+		self.assertIn(("pinmame.input.switch", 52), direct)
+		self.assertIn(("pinmame.output.solenoid", 5), direct)
 
 	def test_device_identifiers_are_unique(self) -> None:
 		identifiers = [d["id"] for d in self.definition["inputs"] + self.definition["outputs"]]
@@ -254,6 +398,141 @@ class TwilightZoneCuratorDeterminismTests(unittest.TestCase):
 		definition = curator.build()
 		report = curator.build_spatial_report(definition)
 		self.assertEqual(report, json.loads(SPATIAL_REPORT_PATH.read_text(encoding="utf-8")))
+
+
+GEOMETRY_FILES = ("vpx-geometry.txt", "vpx-geometry-2026-09-25.txt", "vpx-geometry-2026-09-25-round3.txt")
+
+
+def _geometry_rows(text: str) -> list[tuple[str, str, float, float, float, float]]:
+	"""Parse the object rows of a pinned geometry file: (vpx_type, vpx_name, raw_x, raw_y, norm_x, norm_y)."""
+	rows = []
+	for line in text.splitlines():
+		fields = line.split("\t")
+		if len(fields) < 7:
+			continue
+		try:
+			numbers = [float(value) for value in fields[3:7]]
+		except ValueError:
+			continue
+		rows.append((fields[1], fields[2], *numbers))
+	return rows
+
+
+def _hard_coded_coordinates() -> list[tuple[str, float, float]]:
+	"""Every normalized coordinate the curator hard-codes, including the _norm() anchors."""
+	import curate_twilight_zone as curator
+
+	coordinates = []
+	for table_name, table in (
+		("SWITCH_POSITIONS", curator.SWITCH_POSITIONS),
+		("SOLENOID_POSITIONS", curator.SOLENOID_POSITIONS),
+		("LAMP_POSITIONS", curator.LAMP_POSITIONS),
+		("GI_POSITIONS", curator.GI_POSITIONS),
+	):
+		for address, points in table.items():
+			for x, y in points:
+				coordinates.append((f"{table_name}[{address}]", x, y))
+	return coordinates
+
+
+class TwilightZoneRetainedGeometryTests(unittest.TestCase):
+	"""Tie every hard-coded coordinate to the pinned geometry files, and those files to the retained extraction.
+
+	Every coordinate in SWITCH_POSITIONS, SOLENOID_POSITIONS, LAMP_POSITIONS and GI_POSITIONS (the TABLE_OBJECTS
+	anchors included, since they reach the definition through those tables) must equal the normalized columns of
+	a row in one of the three hash-pinned geometry files; with the extraction configured, every such row and every
+	TABLE_OBJECTS anchor must also be recomputable from gameitems.
+	"""
+
+	@staticmethod
+	def _object_point(item_type: str, item: dict[str, object]) -> tuple[float, float]:
+		if item_type in {"HitTarget", "Primitive"}:
+			return (item["position"]["x"], item["position"]["y"])
+		if item.get("center") is not None:
+			return (item["center"]["x"], item["center"]["y"])
+		if item_type == "Wall":
+			points = item["drag_points"]
+			return (sum(p["x"] for p in points) / len(points), sum(p["y"] for p in points) / len(points))
+		raise AssertionError(f"unexpected anchor type {item_type}")
+
+	@staticmethod
+	def _review_folder() -> Path | None:
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		return Path(root).expanduser().resolve() / "twilight-zone-1993" if root else None
+
+	def _used_rows(self, folder: Path) -> list[tuple[str, str, float, float, float, float]]:
+		rows = [row for name in GEOMETRY_FILES for row in _geometry_rows((folder / name).read_text(encoding="utf-8"))]
+		used = []
+		for label, x, y in _hard_coded_coordinates():
+			matches = [row for row in rows if abs(row[4] - x) < 5e-7 and abs(row[5] - y) < 5e-7]
+			self.assertTrue(matches, f"{label} ({x}, {y}) matches no row of the pinned geometry files")
+			used.extend(matches)
+		return used
+
+	def test_table_object_anchors_match_the_retained_extraction(self) -> None:
+		root = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
+		if not root:
+			self.skipTest("PINMAME_VPX_SOURCES_ROOT is not configured")
+		import curate_twilight_zone as curator
+
+		gameitems = Path(root).expanduser().resolve() / curator.EXTRACTION_RELATIVE_PATH / "gameitems"
+		for name, (x, y) in curator.TABLE_OBJECTS.items():
+			item_type, _ = name.split(".", 1)
+			path = gameitems / f"{name}.json"
+			self.assertTrue(path.is_file(), path)
+			item = load_json(path)[item_type]
+			actual = self._object_point(item_type, item)
+			self.assertAlmostEqual(x, actual[0], places=4, msg=name)
+			self.assertAlmostEqual(y, actual[1], places=4, msg=name)
+
+	def test_review_artifacts_match_their_pinned_hashes(self) -> None:
+		folder = self._review_folder()
+		if folder is None:
+			self.skipTest("PINMAME_REVIEW_ARTIFACTS_ROOT is not configured")
+		import hashlib
+		import curate_twilight_zone as curator
+
+		expected = {
+			"vpx-geometry.txt": curator.VPX_GEOMETRY_SHA256,
+			"vpx-geometry-2026-09-25.txt": curator.VPX_GEOMETRY_SUPPLEMENT_SHA256,
+			"vpx-geometry-2026-09-25-round3.txt": curator.VPX_GEOMETRY_SUPPLEMENT_2_SHA256,
+			"manual-transcription.md": curator.MANUAL_TRANSCRIPTION_SHA256,
+		}
+		for name, digest in expected.items():
+			self.assertEqual(digest, hashlib.sha256((folder / name).read_bytes()).hexdigest(), name)
+		geometry = "\n".join((folder / name).read_text(encoding="utf-8") for name in GEOMETRY_FILES)
+		# Every anchor the curator names must be listed in one of the pinned geometry files.
+		for name in curator.TABLE_OBJECTS:
+			item_type, object_name = name.split(".", 1)
+			self.assertIn(f"{item_type}\t{object_name}\t", geometry, name)
+
+	def test_every_hard_coded_coordinate_matches_a_pinned_geometry_row(self) -> None:
+		folder = self._review_folder()
+		if folder is None:
+			self.skipTest("PINMAME_REVIEW_ARTIFACTS_ROOT is not configured")
+		import curate_twilight_zone as curator
+
+		used = self._used_rows(folder)
+		self.assertGreater(len(used), 150)
+		# Each matched row must itself follow the file's stated normalization.
+		for item_type, name, raw_x, raw_y, x, y in used:
+			self.assertAlmostEqual(x, round(raw_x / curator.BOUNDS_X, 6), places=6, msg=f"{item_type}.{name}")
+			self.assertAlmostEqual(y, round(raw_y / curator.BOUNDS_Y, 6), places=6, msg=f"{item_type}.{name}")
+
+	def test_every_matched_geometry_row_is_recomputable_from_gameitems(self) -> None:
+		folder = self._review_folder()
+		vpx_root = os.environ.get("PINMAME_VPX_SOURCES_ROOT")
+		if folder is None or not vpx_root:
+			self.skipTest("PINMAME_REVIEW_ARTIFACTS_ROOT and PINMAME_VPX_SOURCES_ROOT are both required")
+		import curate_twilight_zone as curator
+
+		gameitems = Path(vpx_root).expanduser().resolve() / curator.EXTRACTION_RELATIVE_PATH / "gameitems"
+		for item_type, name, raw_x, raw_y, _, _ in set(self._used_rows(folder)):
+			path = gameitems / f"{item_type}.{name}.json"
+			self.assertTrue(path.is_file(), path)
+			actual = self._object_point(item_type, load_json(path)[item_type])
+			self.assertAlmostEqual(raw_x, actual[0], places=3, msg=f"{item_type}.{name}")
+			self.assertAlmostEqual(raw_y, actual[1], places=3, msg=f"{item_type}.{name}")
 
 
 class TwilightZoneExtractionManifestTests(unittest.TestCase):
