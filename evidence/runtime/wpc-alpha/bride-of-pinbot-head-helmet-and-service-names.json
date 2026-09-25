@@ -1,0 +1,423 @@
+{
+  "driver_ids": [
+    "bop_l7"
+  ],
+  "extractor": {
+    "id": "bop-head-mech-experiment",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "williams.the-machine-bride-of-pinbot.1991"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/bop_head_mech_experiment.py --library <libpinmame> --rom-path <vpinmame-roms> --work-dir <new-empty-dir> --output <external-json> --model <vpw|pinned|faces-open> --initial-angle <deg> --test <helmet|cycle|coils|lamp-names|solenoid-names|switch-names|flasher-names> --boot-wait 30 --settle <s> --steps <n>. Each run starts from a new empty state directory; the tool closes the coin door for the boot wait, opens it, and walks the service menu with the coin-door buttons (switches 5-8).",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "ddee814f9dd321d03f7e6978f93096fe830e029e61d0399846e7e44428b7ce4e"
+    },
+    "game": "bop_l7",
+    "observations": {
+      "display_indices_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "lamp_addresses_seen": [
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108
+      ],
+      "runs": {
+        "flasher-names": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 14,
+              "matched_text": "BILLION"
+            }
+          ],
+          "limitation": "Text is decoded from the sixteen-segment frames with the harness font table plus the period bit: the WPC alphanumeric font draws 5 like S and 0 like O, and the table has no entry for the 1 glyph, which prints as '?'. So 'CIRCLE SOK' reads 50K and 'LEFT LOOP SOOK' reads 500K; in the lower line 'O' before a digit is the leading zero of the step number.",
+          "note": "Service-test screens in display order (upper line / lower line; the lower line carries the test number and the lamp, solenoid, or switch number shown with each name): BILLION / T.S ?7 REPEAT; LEFT RAMP / T.S ?8 REPEAT; JACKPOT / T.S ?9 REPEAT; SKILL SHOT / T.S 2O REPEAT; LEFT HELMET / T.S 2? REPEAT; RIGHT HELMET / T.S 22 REPEAT; JETS ENTRANCE / T.S 23 REPEAT; LEFT LOOP / T.S 24 REPEAT; BILLION / T.S ?7 REPEAT"
+        },
+        "head-coils-vpw-start-0": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 23,
+              "matched_text": "HEAD MOUTH"
+            }
+          ],
+          "limitation": "Switch 67 is written by the host from a synthetic model; the run shows what the ROM accepts, not the physical cam profile.",
+          "note": "Model vpw, head start angle 0.0 degrees. Motor stops at modelled angles 14.52, 85.77, 174.84, 93.30; head kickers first fired at angles 8@85.77, 15@174.84, 16@174.84, 8@93.30.",
+          "ordered_solenoid_on_sequence": [
+            8,
+            15,
+            16,
+            8
+          ],
+          "solenoid_addresses_seen": [
+            8,
+            15,
+            16,
+            27,
+            28
+          ]
+        },
+        "head-coils-vpw-start-180": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 23,
+              "matched_text": "HEAD MOUTH"
+            }
+          ],
+          "limitation": "Switch 67 is written by the host from a synthetic model; the run shows what the ROM accepts, not the physical cam profile.",
+          "note": "Model vpw, head start angle 180.0 degrees. Motor stops at modelled angles 194.52, 356.22, 83.40, 6.03; head kickers first fired at angles 8@356.22, 15@83.40, 16@83.40, 8@6.03.",
+          "ordered_solenoid_on_sequence": [
+            8,
+            15,
+            16,
+            8
+          ],
+          "solenoid_addresses_seen": [
+            8,
+            15,
+            16,
+            27,
+            28
+          ]
+        },
+        "head-coils-vpw-start-270": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 23,
+              "matched_text": "HEAD MOUTH"
+            }
+          ],
+          "limitation": "Switch 67 is written by the host from a synthetic model; the run shows what the ROM accepts, not the physical cam profile.",
+          "note": "Model vpw, head start angle 270.0 degrees. Motor stops at modelled angles 15.48, 84.84, 174.39, 95.16; head kickers first fired at angles 8@84.84, 15@174.39, 16@174.39, 8@95.16.",
+          "ordered_solenoid_on_sequence": [
+            8,
+            15,
+            16,
+            8
+          ],
+          "solenoid_addresses_seen": [
+            8,
+            15,
+            16,
+            27,
+            28
+          ]
+        },
+        "head-coils-vpw-start-90": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 23,
+              "matched_text": "HEAD MOUTH"
+            }
+          ],
+          "limitation": "Switch 67 is written by the host from a synthetic model; the run shows what the ROM accepts, not the physical cam profile.",
+          "note": "Model vpw, head start angle 90.0 degrees. Motor stops at modelled angles 104.52, 174.84, 353.91, 186.57; head kickers first fired at angles 8@174.84, 15@353.91, 16@353.91, 8@186.57.",
+          "ordered_solenoid_on_sequence": [
+            8,
+            15,
+            16,
+            8
+          ],
+          "solenoid_addresses_seen": [
+            8,
+            15,
+            16,
+            27,
+            28
+          ]
+        },
+        "head-cycle-faces-open": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 24,
+              "matched_text": "HEAD CYCLE TEST"
+            }
+          ],
+          "limitation": "Switch 67 is written by the host from a synthetic model; the run shows what the ROM accepts, not the physical cam profile.",
+          "note": "Model faces-open, head start angle 0.0 degrees. Motor stops at modelled angles 85.32, 104.55, 194.10, 284.10, 353.94, 345.51, 255.99, 165.51, 96.15, 103.65, 195.06, 284.58, 353.49, 344.58, 255.99, 165.03, 95.67, 105.99, 195.06, 284.58, 353.94, 345.51, 255.96, 165.00, 96.57, 104.52, 195.93, 285.48, 354.39, 344.07, 255.03, 164.58; head kickers first fired at angles 8@104.55, 15@194.10, 16@194.10, 15@255.99, 16@255.99, 8@165.51, 8@103.65, 15@195.06, 16@195.06, 15@255.99, 16@255.99, 8@165.03, 8@105.99, 15@195.06, 16@195.06, 15@255.96, 16@255.96, 8@165.00, 8@104.52, 15@195.93, 16@195.93, 15@255.03, 16@255.03, 8@164.58.",
+          "ordered_solenoid_on_sequence": [
+            8,
+            15,
+            16,
+            15,
+            16,
+            8,
+            15,
+            16,
+            15,
+            16,
+            8,
+            15,
+            16,
+            15,
+            16,
+            8,
+            15,
+            16,
+            15,
+            16,
+            8
+          ],
+          "solenoid_addresses_seen": [
+            8,
+            15,
+            16,
+            27,
+            28
+          ]
+        },
+        "head-cycle-pinned": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 24,
+              "matched_text": "HEAD CYCLE TEST"
+            }
+          ],
+          "limitation": "Switch 67 is written by the host from a synthetic model; the run shows what the ROM accepts, not the physical cam profile.",
+          "note": "Model pinned, head start angle 0.0 degrees. Motor stops at modelled angles 64.20, 96.09, 184.23, 329.55, 64.23, 53.91, 251.73, 144.87, 84.87, 95.67, 186.15, 326.31, 62.85, 54.42, 248.46, 143.94, 85.83, 94.26, 183.81, 328.17, 65.67, 54.87, 250.80, 146.25, 85.80, 94.23, 185.16; head kickers first fired at angles 8@96.09, 15@184.23, 16@184.23, 15@251.73, 16@251.73, 8@144.87, 8@95.67, 15@186.15, 16@186.15, 15@248.46, 16@248.46, 8@143.94, 8@94.26, 15@183.81, 16@183.81, 15@250.80, 16@250.80, 8@146.25, 8@94.23, 15@185.16, 16@185.16.",
+          "ordered_solenoid_on_sequence": [
+            8,
+            15,
+            16,
+            15,
+            16,
+            8,
+            15,
+            16,
+            15,
+            16,
+            8,
+            15,
+            16,
+            15,
+            16,
+            8,
+            15,
+            16
+          ],
+          "solenoid_addresses_seen": [
+            8,
+            15,
+            16,
+            27,
+            28
+          ]
+        },
+        "head-cycle-vpw": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 24,
+              "matched_text": "HEAD CYCLE TEST"
+            }
+          ],
+          "limitation": "Switch 67 is written by the host from a synthetic model; the run shows what the ROM accepts, not the physical cam profile.",
+          "note": "Model vpw, head start angle 0.0 degrees. Motor stops at modelled angles 14.52, 84.81, 174.33, 352.92, 13.56, 4.65, 186.06, 94.17, 74.94, 84.78, 173.85, 355.26, 14.49, 5.13, 184.17, 96.51, 76.38, 84.36, 176.70, 354.84, 15.93, 6.06, 184.65, 93.24, 74.49, 84.78, 174.78, 355.23, 13.98, 4.14; head kickers first fired at angles 8@84.81, 15@174.33, 16@174.33, 15@186.06, 16@186.06, 8@94.17, 8@84.78, 15@173.85, 16@173.85, 15@184.17, 16@184.17, 8@96.51, 8@84.36, 15@176.70, 16@176.70, 15@184.65, 16@184.65, 8@93.24, 8@84.78, 15@174.78, 16@174.78.",
+          "ordered_solenoid_on_sequence": [
+            8,
+            15,
+            16,
+            15,
+            16,
+            8,
+            15,
+            16,
+            15,
+            16,
+            8,
+            15,
+            16,
+            15,
+            16,
+            8,
+            15,
+            16
+          ],
+          "solenoid_addresses_seen": [
+            8,
+            15,
+            16,
+            27,
+            28
+          ]
+        },
+        "helmet-single-lamp": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 25,
+              "matched_text": "HELMET LIGHT TST"
+            },
+            {
+              "after_service_pulses": 26,
+              "matched_text": "SINGLE LAMP"
+            }
+          ],
+          "note": "After Enter selected SINGLE LAMP only public lamp(s) 108 stayed lit; successive Up presses then lit 107, 106, 105, 104, 103, 102, 101, 98, 97, 96, 95, 94, 93, 92, 91, 108, 107."
+        },
+        "lamp-names": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 17,
+              "matched_text": "LEFT OUTLANE"
+            }
+          ],
+          "limitation": "Text is decoded from the sixteen-segment frames with the harness font table plus the period bit: the WPC alphanumeric font draws 5 like S and 0 like O, and the table has no entry for the 1 glyph, which prints as '?'. So 'CIRCLE SOK' reads 50K and 'LEFT LOOP SOOK' reads 500K; in the lower line 'O' before a digit is the leading zero of the step number.",
+          "note": "Service-test screens in display order (upper line / lower line; the lower line carries the test number and the lamp, solenoid, or switch number shown with each name): LEFT OUTLANE / T.8 O? LAMP ??; LEFT RETURN LANE / T.8 O2 LAMP ?2; RGHT RETURN LANE / T.8 O3 LAMP ?3; RIGHT OUTLANE / T.8 O4 LAMP ?4; LEFT STANDUP / T.8 OS LAMP ?S; RGHT TOP STANDUP / T.8 O6 LAMP ?6; RGHT BOT STANDUP / T.8 O7 LAMP ?7; SHOOT AGAIN / T.8 O8 LAMP ?8; CIR. LITE JACKPOT / T.8 O9 LAMP 2?; CIR. LITE BILLION / T.8 ?O LAMP 22; CIR. EXTRA BALL / T.8 ?? LAMP 23; CIR. LITE EXTRA B / T.8 ?2 LAMP 24; CIRCLE SOK / T.8 ?3 LAMP 2S; CIRCLE ?OOK / T.8 ?4 LAMP 26; VALUES DOUBLED / T.8 ?S LAMP 27; SPIN SMALL WHEEL / T.8 ?6 LAMP 28; CIRCLE 2SOK / T.8 ?7 LAMP 3?; CIR. ?O MILLION / T.8 ?8 LAMP 32; CIR. SO MILLION / T.8 ?9 LAMP 33; CIR. SPECIAL / T.8 2O LAMP 34; CIR. S MILLION / T.8 2? LAMP 3S; CIR. ? MILLION / T.8 22 LAMP 36; SPACE SHUTTLE / T.8 23 LAMP 37; LAUNCH PAD / T.8 24 LAMP 38; SKILL SHOT SOK / T.8 2S LAMP 4?; SKILL SHOT 7SK / T.8 26 LAMP 42; SKILL SHOT ?OOK / T.8 27 LAMP 43; SKILL SHOT 2OOK / T.8 28 LAMP 44; SKILL SHOT 2SK / T.8 29 LAMP 4S; HEAD LEFT EYE / T.8 3O LAMP 46; HEAD RIGHT EYE / T.8 3? LAMP 47; HEAD MOUTH / T.8 32 LAMP 48; LEFT LOOP SOOK / T.8 33 LAMP S?; LEFT LOOP ?OOK / T.8 34 LAMP S2; LEFT LOOP SOK / T.8 3S LAMP S3; LEFT LOOP 2SK / T.8 36 LAMP S4; RIGHT LOOP SOOK / T.8 37 LAMP SS; RIGHT LOOP ?OOK / T.8 38 LAMP S6; RIGHT LOOP SOK / T.8 39 LAMP S7; RIGHT LOOP 2SK / T.8 4O LAMP S8; RIGHT RAMP MILL / T.8 4? LAMP 6?; RIGHT RAMP SOOK / T.8 42 LAMP 62; RIGHT RAMP ?OOK / T.8 43 LAMP 63; WIRE BALL LOCK / T.8 44 LAMP 64; JETS ENTER SOOK / T.8 4S LAMP 6S; JETS ENTER ?OOK / T.8 46 LAMP 66; JETS ENTER SOK / T.8 47 LAMP 67; JETS ENTER 2SK / T.8 48 LAMP 68; JACKPOT 8 MILL. / T.8 49 LAMP 7?; JACKPOT 7 MILL. / T.8 SO LAMP 72; JACKPOT 6 MILL. / T.8 S? LAMP 73; JACKPOT S MILL. / T.8 S2 LAMP 74; JACKPOT 4 MILL. / T.8 S3 LAMP 7S; JACKPOT 3 MILL. / T.8 S4 LAMP 76; JACKPOT 2 MILL. / T.8 SS LAMP 77; JACKPOT ? MILL. / T.8 S6 LAMP 78; BACKGLS HIP / T.8 S7 LAMP 8?; BACKGLS MID. LEG / T.8 S8 LAMP 82; BACKGLS KNEE / T.8 S9 LAMP 83; BACKGLS FOOT / T.8 6O LAMP 84; BACKGLS SHOULDER / T.8 6? LAMP 8S; MINI PLYFLD ?OOK / T.8 62 LAMP 86; MINI PLYFLD 2OOK / T.8 63 LAMP 87; MINI PLYFLD 3OOK / T.8 64 LAMP 88; LEFT OUTLANE / T.8 O? LAMP ??"
+        },
+        "solenoid-names": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 13,
+              "matched_text": "OUTHOLE"
+            }
+          ],
+          "limitation": "Text is decoded from the sixteen-segment frames with the harness font table plus the period bit: the WPC alphanumeric font draws 5 like S and 0 like O, and the table has no entry for the 1 glyph, which prints as '?'. So 'CIRCLE SOK' reads 50K and 'LEFT LOOP SOOK' reads 500K; in the lower line 'O' before a digit is the leading zero of the step number.",
+          "note": "Service-test screens in display order (upper line / lower line; the lower line carries the test number and the lamp, solenoid, or switch number shown with each name): OUTHOLE / T.4 O? REPEAT; BALL RELEASE / T.4 O2 REPEAT; UNDERPLAY KICKER / T.4 O3 REPEAT; CONTROLLED GATE / T.4 O4 REPEAT; SKILL SHOT KICKR / T.4 OS REPEAT; WIRE BALL HOLDER / T.4 O6 REPEAT; KNOCKER / T.4 O7 REPEAT; U.L. JET BUMPER / T.4 O9 REPEAT; LEFT SLINGSHOT / T.4 ?O REPEAT; U.R. JET BUMPER / T.4 ?? REPEAT; RIGHT SLINGSHOT / T.4 ?2 REPEAT; LOWER JET BUMPER / T.4 ?3 REPEAT; JET BUMPER SLING / T.4 ?4 REPEAT; MOTOR RELAY / T.4 27 REPEAT; OUTHOLE / T.4 O? REPEAT"
+        },
+        "switch-names": {
+          "diagnostic_checkpoints": [
+            {
+              "after_service_pulses": 10,
+              "matched_text": "SWITCH EDGES"
+            }
+          ],
+          "limitation": "Text is decoded from the sixteen-segment frames with the harness font table plus the period bit: the WPC alphanumeric font draws 5 like S and 0 like O, and the table has no entry for the 1 glyph, which prints as '?'. So 'CIRCLE SOK' reads 50K and 'LEFT LOOP SOOK' reads 500K; in the lower line 'O' before a digit is the leading zero of the step number.",
+          "note": "Service-test screens in display order (upper line / lower line; the lower line carries the test number and the lamp, solenoid, or switch number shown with each name): SWITCH EDGES / T.?; SWITCH EDGES / T.? LAST SW. ??; SWITCH EDGES / T.? LAST SW. ?2; START BUTTON / T.? LAST SW. ?3; PLUMB BOB TILT / T.? LAST SW. ?4; LEFT OUTLANE / T.? LAST SW. ?S; L. FLIPPER LANE / T.? LAST SW. ?6; R. FLIPPER LANE / T.? LAST SW. ?7; RIGHT OUTLANE / T.? LAST SW. ?8; SLAM TILT / T.? LAST SW. 2?; TICKET OPTO. / T.? LAST SW. 23; SWITCH EDGES / T.? LAST SW. 23; RIGHT TROUGH / T.? LAST SW. 2S; CENTER TROUGH / T.? LAST SW. 26; LEFT TROUGH / T.? LAST SW. 27; LEFT STANDUP / T.? LAST SW. 28; SKILL SHOT SOK / T.? LAST SW. 3?; SKILL SHOT 7SK / T.? LAST SW. 32; SKILL SHOT ?OOK / T.? LAST SW. 33; SKILL SHOT 2OOK / T.? LAST SW. 34; SKILL SHOT 2SK / T.? LAST SW. 3S; RGHT TOP STANDUP / T.? LAST SW. 36; RGHT BOT STANDUP / T.? LAST SW. 37; OUTHOLE / T.? LAST SW. 38; RIGHT RAMP MADE / T.? LAST SW. 4?; NOT USED / T.? LAST SW. 42; LEFT LOOP / T.? LAST SW. 43; RIGHT LOOP TOP / T.? LAST SW. 44; RIGHT LOOP BOT / T.? LAST SW. 4S; UNDER PLAY KICK / T.? LAST SW. 46; ENTER HEAD / T.? LAST SW. 47; NOT USED / T.? LAST SW. 48; SPINNER / T.? LAST SW. S?; SHOOTER / T.? LAST SW. S2; U.R. JET BUMPER / T.? LAST SW. S3; U.L. JET BUMPER / T.? LAST SW. S4; LOWER JET BUMPER / T.? LAST SW. SS; JET BUMPER SLING / T.? LAST SW. S6; LEFT SLINGSHOT / T.? LAST SW. S7; RIGHT SLINGSHOT / T.? LAST SW. S8; NOT USED / T.? LAST SW. 6?; NOT USED / T.? LAST SW. 62; HEAD LEFT EYE / T.? LAST SW. 63; HEAD RIGHT EYE / T.? LAST SW. 64; HEAD MOUTH / T.? LAST SW. 6S; NOT USED / T.? LAST SW. 66; NOT USED / T.? LAST SW. 68; WIREFORM TOP / T.? LAST SW. 7?; WIREFORM BOTTOM / T.? LAST SW. 72; ENTER MINI PLYFD / T.? LAST SW. 73; MINI EXIT LEFT / T.? LAST SW. 74; MINI EXIT RIGHT / T.? LAST SW. 7S; LEFT RAMP ENTER / T.? LAST SW. 76; RGT RAMP ENTER / T.? LAST SW. 77; NOT USED / T.? LAST SW. 78; SWITCH EDGES / T.? LAST SW. 78; SWITCH EDGES / T.? LAST SW. 78; SWITCH EDGES / T.? LAST SW. 78; SWITCH EDGES / T.? LAST SW. 78; SWITCH EDGES / T.? LAST SW. 78; SWITCH EDGES / T.? LAST SW. 78; SWITCH EDGES / T.? LAST SW. 78; SWITCH EDGES / T.? LAST SW. 78"
+        }
+      },
+      "service_language": "English",
+      "solenoid_addresses_seen": [
+        8,
+        15,
+        16,
+        27,
+        28
+      ]
+    },
+    "raw_runs": [
+      {
+        "boot_wait_s": 30.0,
+        "name": "helmet-single-lamp",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "self_test_pulses": 43,
+        "sha256": "7aeb0e4ffb0077a2e3f79fddd1e081d27bbbcd397576663b8cbb7d86839151ff"
+      },
+      {
+        "boot_wait_s": 30.0,
+        "name": "head-cycle-vpw",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "self_test_pulses": 27,
+        "sha256": "955474b5e7fe13a52b30bae85cff7f155b2a68aa955bcbb93560c2bd01afd5aa"
+      },
+      {
+        "boot_wait_s": 30.0,
+        "name": "head-cycle-pinned",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "self_test_pulses": 27,
+        "sha256": "961733a303752609377596741e6f9f88b723beab9f2c9be980d880a4044c61e3"
+      },
+      {
+        "boot_wait_s": 30.0,
+        "name": "head-cycle-faces-open",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "self_test_pulses": 27,
+        "sha256": "97885f620e1bcdefcaa8f6d542a7fe60e5d8892adf86b4f78cf802975ef841ae"
+      },
+      {
+        "boot_wait_s": 30.0,
+        "name": "head-coils-vpw-start-0",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "self_test_pulses": 26,
+        "sha256": "ec63571541ae6d4e7291fdb1925fc8f19ceb36467ed47f42cad92e2a46b15e84"
+      },
+      {
+        "boot_wait_s": 30.0,
+        "name": "head-coils-vpw-start-90",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "self_test_pulses": 26,
+        "sha256": "f01669e0d85095459453f945e43c2315c714bed5a8854237b6a1743a385c72de"
+      },
+      {
+        "boot_wait_s": 30.0,
+        "name": "head-coils-vpw-start-180",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "self_test_pulses": 26,
+        "sha256": "55b3898e9e78b6e0814c3fbd9a1c09c3c6dfa0724e0da768858c51f8c6d360cf"
+      },
+      {
+        "boot_wait_s": 30.0,
+        "name": "head-coils-vpw-start-270",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "self_test_pulses": 26,
+        "sha256": "e79a1700b5bcd6170ab75bd581baadaadf68ef01fdc40a9153dcbbaaa5a23733"
+      },
+      {
+        "boot_wait_s": 30.0,
+        "name": "lamp-names",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "self_test_pulses": 81,
+        "sha256": "cf83cc9d65637f290c7a2c3ded290108f1b3cbe8b8ce4d3522d5af05750a35ac"
+      },
+      {
+        "boot_wait_s": 30.0,
+        "name": "solenoid-names",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "self_test_pulses": 27,
+        "sha256": "ce4210910a85831606f3998605bc53aff8b7e97533a0c8eac952085420621a8a"
+      },
+      {
+        "boot_wait_s": 30.0,
+        "name": "switch-names",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "self_test_pulses": 10,
+        "sha256": "81f0e52cea320407ae3ac8499c9910b79cdef47091ea23f0b41a3b9831cc37d6"
+      },
+      {
+        "boot_wait_s": 30.0,
+        "name": "flasher-names",
+        "nvram_initialization": "new empty isolated state directory; no NVRAM inherited",
+        "self_test_pulses": 22,
+        "sha256": "0bbe93a3fc0d670286d38f5f190bb07ef35a1eab10fc4ae7b4bb0a9de4c33c58"
+      }
+    ],
+    "rom_archive_sha256": "f03f933603c1de4a4ff74d881395fce833cfa3d50f835c4ee9d80e0f2502f645"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external.",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "manifest_algorithm": "source.sha256 is SHA-256 of manifest.json's exact UTF-8 bytes. manifest.json is compact canonical JSON with sorted keys, separators=(',', ':'), ensure_ascii=False, plus one LF; it lists every <run>.json file in source.path as {path, sha256, size}, sorted by path.",
+    "path": "external:pinmame-review-artifacts/bride-of-pinbot/harness-runs",
+    "quality": "observed",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "a8862cdb7d000ccf5ac310061e824d88931adf113db69f3ee0ff3742d03af151"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

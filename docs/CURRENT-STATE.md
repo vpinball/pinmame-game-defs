@@ -23,7 +23,7 @@ These pins and generated counts are the reproducible handoff baseline. Verify op
 
 The reviewed physical-only exclusion set is exactly `acd_170_ac`, `beachbms`, `beav_butt`, `bubba`, `che_cho`, `rambo`, and `tomjerry`. Do not regenerate stubs for them. Ordinary firmware modifications and physical conversions remain in scope when they run on documented hardware; examples include `clash` for a physical Rock Encore conversion and `mac_zois` for the physical machinaZOIS installation. Any addition to or removal from the exclusion set is a scope change requiring evidence, tests, a catalog diff, high-tier model review, and maintainer PR review.
 
-At the 2026-08-28 Big Bang Bar handoff, `catalog/pinmame.json` maps 2,888 drivers onto 790 catalog records: 789 physical-game records plus one separately classified non-game diagnostic. The catalog contained 26 `author_ready` records, 98 `partial` records including the separately classified diagnostic, and 666 `stub` records. The 2026-08-28 Junk Yard curation, Big Buck Hunter Pro pass, and Big Bang Bar pass each moved one record as described in their own sections below, the 2026-08-29 catalog-wide identity promotion (its own section above) converted every remaining stub into an identity-resolved partial, and the 2026-08-30 review fixes classified twelve test-fixture/test-chip/tester/boot-flash records as `diagnostic_software`, and the 2026-09-25 Monster Bash re-promotion moved one record back to `author_ready`, so the current generated counts are 790 catalog records: 27 `author_ready`, 763 `partial` (750 physical games plus thirteen non-game records), and zero stubs; author-ready physical coverage is 27/777 (3.4749%). Regeneration is the source of truth for the exact numbers.
+At the 2026-08-28 Big Bang Bar handoff, `catalog/pinmame.json` maps 2,888 drivers onto 790 catalog records: 789 physical-game records plus one separately classified non-game diagnostic. The catalog contained 26 `author_ready` records, 98 `partial` records including the separately classified diagnostic, and 666 `stub` records. The 2026-08-28 Junk Yard curation, Big Buck Hunter Pro pass, and Big Bang Bar pass each moved one record as described in their own sections below, the 2026-08-29 catalog-wide identity promotion (its own section above) converted every remaining stub into an identity-resolved partial, and the 2026-08-30 review fixes classified twelve test-fixture/test-chip/tester/boot-flash records as `diagnostic_software`, the 2026-09-25 Monster Bash re-promotion moved one record back to `author_ready`, and the 2026-09-25 Bride of Pinbot promotion (its own section below) moved one more, so the current generated counts are 790 catalog records: 28 `author_ready`, 762 `partial` (749 physical games plus thirteen non-game records), and zero stubs; author-ready physical coverage is 28/777 (3.6036%). Regeneration is the source of truth for the exact numbers.
 
 ## Identity and worktree integrity repair (2026-08-31)
 
@@ -209,6 +209,34 @@ Stern X-Men Limited Edition (`stern.x-men-limited-edition.2012`) was promoted to
 The FunHouse correction is isolated on branch `fix/funhouse-evidence` in worktree `pinmame-game-defs-working-dir/worktrees/pinmame-game-defs-funhouse`, rebased onto repository revision `fce093c94c563354fe3c332646a13ed9074f6977`; unrelated maintainer-local edits in the primary checkout remain out of scope. The corrected record remains partial because one physical G.I. branch cannot yet be placed without guessing.
 
 The Junk Yard partial is isolated on branch `defs/junkyard-1996` in worktree `pinmame-game-defs-working-dir/worktrees/pinmame-game-defs-junkyard`, based on `c4d91d1`; it replaces the `jy_12` stub and is described in its own section below.
+
+## Williams The Machine: Bride of Pinbot (1991)
+
+Williams The Machine: Bride of Pinbot (`williams.the-machine-bride-of-pinbot.1991`, IPDB 1502, OPDB `GRpee-MePdR`) was curated on 2026-09-25, replacing the legacy-migrated candidate partial with a deterministic curator (`tools/curate_bride_of_pinbot.py`). It was promoted straight to `author_ready`. It covers the fourteen-driver `bop_*` tree rooted at `bop_l7`; all fourteen share `bopGameData` and are physically identical. Together with the same day's Monster Bash re-promotion, the regenerated catalog holds 28 `author_ready` records and author-ready physical coverage is 28/777 (3.6036%).
+
+**Evidence set:**
+
+- **Manual.** Operations manual 16-50002-101 (March 1991), from Internet Archive item `williams-the-machine-bride-of-pinbot-manual`, with eight committed excerpts.
+- **Retained table.** The known-working VPW 1.0.3 table, extracted to 4,084 files.
+- **Harness runs.** Twelve new LibPinMAME runs on a libpinmame built from the pinned revision `8371478a`, SHA-256 `ddee814f…`. The build used a staged copy of the checkout because `source-checkouts/pinmame/CMakeLists.txt` is a stale 4ec52ff-era copy, so the checkout itself was left untouched.
+
+**Platform change.** The shared `controllers/pinmame/wpc-alpha.json` lamp group now admits the auxiliary columns 91-98 and 101-108. `bopGameData` is the only WPC-Alpha driver declaring `lampCol` (2, for the helmet chase lights).
+
+Five things from this machine generalise.
+
+1. **A reactive host model can probe a motorized toy whose only feedback is one switch.** `tools/bop_head_mech_experiment.py` integrates the head angle from the motor and relay outputs, writes switch 67 from a chosen pattern, and walks the ROM's own head tests. Under three synthetic patterns, `bop_l7` behaved identically:
+   - It stops the motor just after 67 closes when moving to faces 1-3, and just after it opens when moving to face 4.
+   - It fires the mouth kicker at its face 1 and both eye kickers at its face 2.
+   - Relay 27 is released for forward moves and energized for reverse.
+   - Its head tests home by running to the next opening edge of 67, which it treats as face 4, and then stepping one face. Under one synthetic pattern, four start angles homed onto three different physical positions, so the patterns give it no absolute home mark; the manual's calibration routine (printed 1-32/1-33) implies the real cam does give it a reference these patterns lack. That the ROM keeps the current face in NVRAM rests on pinned `bop.c` (header comment and `wpc_ram[0x1fc9]` reset) and the retained script's advice to delete the `.nv` file; the runs all started from empty NVRAM and did not vary it.
+
+   So the recreation contract is the edge sequence plus keeping the stored face in step. Pinned `bop.c` resets the stored face only when the driver name is exactly `bop_l7`. The physical cam profile is implementation detail below that contract, not a conflict.
+2. **The ROM's service tests are a machine source for labels and orderings the manual gets wrong.** Dumping the single-lamp, switch-edge, solenoid, and flasher test names resolved two questions:
+   - The lamp-matrix errors at 25 (`Circle 500K` printed, `CIRCLE 50K` in the ROM) and at 61/63 (`Right Ramp 100K` and `Right Ramp Million` swapped). The ROM's test shows each name beside its lamp number, and it sides with the lamp-locations page every time.
+   - The jet-bumper identities: `U.R.`/`U.L.` on 53/54. The display's period bit (0x80) must be decoded, not dropped as `?`.
+3. **A manual's test text plus the ROM's test order can place emitters that no drawing numbers.** The manual's helmet test says the first single lamp is the lower-left one and Up moves clockwise. The ROM starts that test on 108 and steps 107 … 101, 98 … 91. That fixes all sixteen helmet bulbs around the helmet. The retained table's `l91`-`l108` naming runs the other way round, a consumed-table defect.
+4. **A table can permute same-looking devices without affecting play.** The retained script pulses 53/55/54 from Bumper1/2/3, a permutation of the manual's upper-left 54, upper-right 53, lower 55. The manual, its drawing, pinned PinMAME names, and the ROM all agree, so placements follow them and the permutation is recorded as a table defect rather than a conflict.
+5. **A duplicated manual table can drift by a row between its copies.** The front-matter copy of the solenoid table is internally consistent: its J125 insert connections line up with the #906-insert flashers. Page 2-42 shifts the second connection column, and the 27/28 part numbers, one row. The front-matter alignment is confirmed by the solenoid-locations page and the A-14423-1 relay schematic.
 
 ## Williams FunHouse (1990)
 

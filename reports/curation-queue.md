@@ -210,7 +210,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 204 | 1991 | Hurricane | Williams | partial | 19% |
 | 205 | 1991 | Slugfest (L-1) | Williams | partial | 6% |
 | 206 | 1991 | Terminator 2: Judgment Day | Williams | partial | 88% |
-| 207 | 1991 | The Machine: Bride of Pinbot | Williams | partial | 13% |
+| 207 | 1991 | The Machine: Bride of Pinbot | Williams | author_ready | 100% |
 | 208 | 1990 | Bugs Bunny's Birthday Ball | Bally | partial | 13% |
 | 209 | 1990 | Dr. Dude And His Excellent Ray | Bally | partial | 13% |
 | 210 | 1990 | Pool Sharks | Bally | partial | 13% |

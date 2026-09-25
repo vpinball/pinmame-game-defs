@@ -538,6 +538,16 @@ Start every evidentiary run with a newly created state directory and a deliberat
 
 When a scenario fails after the ROM starts, the harness still writes a nonzero-exit partial trace containing completed steps, recorded events, a failure block, and a final failure snapshot. Preserve that artifact while correcting the scenario; it is diagnostic evidence, but it is not a successful evidentiary run and must not be cited as one.
 
+A motorized mechanism whose only feedback is a switch the motor itself moves cannot be exercised by a static scenario, because the switch must answer the ROM's own motor outputs. Probe it with a reactive host model instead:
+
+1. Integrate the mechanism's position from the public motor and direction outputs.
+2. Write the feedback switch from an explicitly named candidate pattern.
+3. Drive the ROM's own mechanism service tests, and record the modelled position at every motor stop and actuator pulse.
+
+Run more than one candidate pattern and more than one starting position. Behaviour that is identical across them is the ROM's contract. Behaviour that changes with the starting position suggests the ROM tracks position relative to remembered state rather than an absolute sensor mark; confirm it by also varying the stored state (NVRAM) before claiming memory-based tracking. A pattern the ROM accepts is still a synthetic probe, never a measurement of the physical cam.
+
+When the ROM's service tests display device names, dump them across the switch, lamp, solenoid, and flasher tests: they are machine evidence for labels and orderings. Decode every display attribute bit (for example an alphanumeric period) instead of dropping unknown segment values.
+
 Escalate to Ghidra only for authoring-critical facts still unresolved after manual, VPX script, PinMAME source, ROM strings/data tables, and harness traces. Follow the approach used in the `kiki` project, normally discovered as a sibling of this repository: identify the exact ROM, loader/CPU memory map, entry points, I/O tables, state variables, and mechanism routines; document addresses and confidence; confirm static conclusions with runtime traces when possible. Do not promote speculative decompilation labels to validated physical facts.
 
 ## Machine families and edition prose

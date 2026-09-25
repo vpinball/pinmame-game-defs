@@ -55,7 +55,7 @@
       "id": "pinmame.output.lamp",
       "direction": "controlled_device",
       "kind": "lamp",
-      "label": "Eight-by-eight controlled-lamp matrix",
+      "label": "Eight-by-eight controlled-lamp matrix plus driver-declared auxiliary lamp columns",
       "address_rules": [
         { "minimum": 11, "maximum": 18 },
         { "minimum": 21, "maximum": 28 },
@@ -64,13 +64,15 @@
         { "minimum": 51, "maximum": 58 },
         { "minimum": 61, "maximum": 68 },
         { "minimum": 71, "maximum": 78 },
-        { "minimum": 81, "maximum": 88 }
+        { "minimum": 81, "maximum": 88 },
+        { "minimum": 91, "maximum": 98 },
+        { "minimum": 101, "maximum": 108 }
       ],
       "transports": {
         "libpinmame": { "channel": "lamp" },
         "controller_plugin": { "group_id": 512, "contract_revision": "a6f6d7266d301249ed09c1b0123f8476513a2228" }
       },
-      "notes": "PinMAME applies wpc_sw2m/wpc_m2sw conversion to lamps. ChangedLamps therefore reports public matrix addresses 11-88 rather than sequential indices 1-64."
+      "notes": "PinMAME applies wpc_sw2m/wpc_m2sw conversion to lamps. ChangedLamps therefore reports public matrix addresses 11-88 rather than sequential indices 1-64. A driver that declares hw.lampCol extra columns publishes them as columns 9 and 10, public addresses 91-98 and 101-108 (wpc_init sets the lamp count to 64 + lampCol * 8). On this generation only The Machine: Bride of Pinbot declares lampCol = 2, for its sixteen helmet chase lights driven through a shift register rather than the matrix; every other WPC-Alpha game publishes 11-88 only."
     },
     {
       "id": "pinmame.output.gi",
@@ -94,6 +96,11 @@
       "uri": "https://github.com/vpinball/pinmame",
       "revision": "a6f6d7266d301249ed09c1b0123f8476513a2228",
       "locator": "src/libpinmame/libpinmame.cpp SetupMsgApi group definitions"
+    },
+    {
+      "uri": "https://github.com/vpinball/pinmame",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "locator": "src/wpc/wpc.c wpc_init nLamps = 64 + lampCol * 8; src/wpc/sims/wpc/full/bop.c bopGameData lampCol = 2 and bop_wpc_w helmet shift register"
     }
   ]
 }
