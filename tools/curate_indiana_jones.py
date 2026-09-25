@@ -1021,13 +1021,11 @@ def input_devices() -> list[dict[str, Any]]:
 						" Pinned PinMAME's ijGameData inverted-switch mask does NOT cover this address even though it is "
 						"printed opto construction, unlike its column neighbors 72/73, and no inversion is needed. "
 						+ EDGE_ARGUMENT
-						+ " normally_closed stays true from the part identity: 71 uses the same A-14231/A-14232 "
-						"LED/phototransistor pair as the normalized optos 42-45 and 47. The switch-edges run proves only "
-						"the ROM's logical sense (a closed matrix contact is active, since WPC_SWROWREAD returns the "
-						"public level unchanged outside the inversion mask, wpc.c core_getSwCol); it does not show which "
-						"physical state closes the contact. A captive ball that rests in the opto's beam would explain "
-						"both a normally-closed opto and the ROM reading it unnormalized, but no retained source states "
-						"the ball's rest position relative to the beam, so that stays unrecorded."
+						+ " normally_closed is false: outside the inversion mask WPC_SWROWREAD returns the public level "
+						"unchanged (wpc.c core_getSwCol), so the matrix contact is closed exactly when the ROM reads the "
+						"switch active and open when it is not actuated. The part identity (the same A-14231/A-14232 "
+						"LED/phototransistor pair as the normalized optos 42-45 and 47) fixes the opto construction, not "
+						"the matrix contact's normal state; which captive-ball position blocks the beam is not recorded."
 					)
 			if address == 24:
 				notes += " Physical part 5643-09288-00 is a permanently closed link used to prove the matrix is connected."
@@ -1054,7 +1052,7 @@ def input_devices() -> list[dict[str, Any]]:
 				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
 			else:
 				availability = "used"
-				extra["normally_closed"] = address in OPTO_SWITCHES
+				extra["normally_closed"] = address in OPTO_SWITCHES and address != 71
 				if address in PULSED_SWITCHES:
 					extra["pulse"] = True
 				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE) + ((RUNTIME_EDGES_SOURCE,) if address == 71 else ())
@@ -1110,11 +1108,10 @@ def input_devices() -> list[dict[str, Any]]:
 					"that feedback it reports ERROR IDOL BAD. "
 					+ ARGUMENT
 					+ " A recreation drives 121-123 exactly as the known-working table's UpdateIdol_timer does and "
-					"never inverts them. normally_closed is kept consistent with the machine's other printed optos, but an "
-					"encoder has no rest position, so the flag carries no resting-level meaning here and is not a "
-					"runtime rule. Because the address is not in the inversion mask, "
-					"WPC_SWROWREAD returns the public level unchanged (wpc.c core_getSwCol), so the ROM's codes are the "
-					"public levels a recreation writes."
+					"never inverts them. normally_closed is false: each channel's contact is closed only while the "
+					"ROM reads that code bit set, because the address is not in the inversion mask and the driver's "
+					"own custom-column read handler (ij.c ij_ijRowRead) returns coreGlobals.swMatrix unchanged, so the "
+					"ROM's codes are the public levels a recreation writes."
 				)
 			items.append(
 				_device(
@@ -1130,7 +1127,7 @@ def input_devices() -> list[dict[str, Any]]:
 						{"namespace": "pinmame.switch", "value": str(address)},
 						{"namespace": "manual.address", "value": manual_alias},
 					],
-					normally_closed=True,
+					normally_closed=address not in (121, 122, 123),
 					physical=physical,
 					wiring={
 						"board": "3-sw. Opto PCB (idol) / Motor Opto Switch PCB (mini playfield)",

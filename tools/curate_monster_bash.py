@@ -112,7 +112,9 @@ SWITCH_LABELS = {
 UNUSED_MATRIX_ADDRESSES = {37, 38, 41, 88}
 # Every switch shaded "OPTO, TYPICALLY CLOSED" on the printed matrix page (2-51): trough/popper
 # optos, flipper optos, and Dracula position optos 74-78 (printed on the A-21402 Defender Switch
-# Board Assembly with a blank switch part number). All thirteen are physically normally-closed.
+# Board Assembly with a blank switch part number). The eight masked ones are normally closed at the
+# matrix; 74-78 are unmasked and the ROM reads them active at public 1, so their matrix contacts are
+# normally open (see the runbook's normally_closed rule).
 OPTO_SWITCHES = {31, 32, 33, 34, 35, 36, 42, 43, 74, 75, 76, 77, 78}
 # PinMAME's mbGameData inverted-switch mask covers only these eight (column 3 = 0x3f bits 0-5,
 # column 4 = 0x06 bits 1-2); column 7, which carries 74-78, is 0x00. The ROM's own T.19 DRACULA test,
@@ -918,7 +920,7 @@ def input_devices() -> list[dict[str, Any]]:
 			elif address in OPTO_SWITCHES:
 				notes += (
 					" Printed on the A-21402 Defender Switch Board Assembly (page 2-11/2-12, \"IC Opto Inter w/Switch "
-					"10mA\") as an opto interrupter that rests closed: it is listed under the manual's Opto Assembly "
+					"10mA\") as an opto interrupter: it is listed under the manual's Opto Assembly "
 					"Part Number column with no switch part number, and shaded \"OPTO, TYPICALLY CLOSED\" on the "
 					"printed switch matrix (2-51), the same halftone used for 31-36 and 42/43. Unlike those eight, "
 					"column 7 of PinMAME's mbGameData inverted-switch mask is 0x00, so the emulator applies no "
@@ -929,8 +931,12 @@ def input_devices() -> list[dict[str, Any]]:
 					"each +/- press drives the motor, the next position switch rises to 1, the ROM releases the motor at "
 					"once and its sensor display marks that position box; with Dracula feedback removed the boxes stay "
 					"empty and the ROM runs the motor until its own timeout. A recreation drives this address to 1 at the "
-					"sensed position and must not invert it. Whether the physical beam is made or broken at the sensed "
-					"position is a board-internal detail the public contract does not expose."
+					"sensed position and must not invert it. normally_closed is false: outside the inversion mask the "
+					"CPU reads the public level unchanged, so the matrix contact is closed only while the figure occupies "
+					"this position and open otherwise. The \"typically closed\" halftone marks opto construction; a "
+					"matrix contact that rested closed would have the ROM see the figure at four positions at once. "
+					"Whether the physical beam is made or broken at the sensed position is a board-internal detail the "
+					"public contract does not expose."
 				)
 			if address == 24:
 				notes += (
@@ -962,7 +968,7 @@ def input_devices() -> list[dict[str, Any]]:
 				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)
 			else:
 				availability = "used"
-				extra["normally_closed"] = address in OPTO_SWITCHES
+				extra["normally_closed"] = address in OPTO_SWITCHES and address not in DRACULA_POSITION_SWITCHES
 				if address in PULSED_SWITCHES:
 					extra["pulse"] = True
 				refs = (MANUAL_SOURCE, CORE_SOURCE, VPX_SCRIPT_SOURCE)

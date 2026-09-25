@@ -202,7 +202,8 @@ class MonsterBashDefinitionTests(unittest.TestCase):
 	def test_printed_opto_polarity_is_recorded_even_where_pinmame_does_not_normalize_it(self) -> None:
 		for address in sorted(MATRIX_ADDRESSES - UNUSED_MATRIX_ADDRESSES - {24}):
 			switch = self.switches[address]
-			self.assertEqual(address in OPTO_ADDRESSES, switch["normally_closed"], address)
+			# Dracula position optos 74-78 are unmasked and read active at public 1: normally open at the matrix.
+			self.assertEqual(address in OPTO_ADDRESSES and address not in range(74, 79), switch["normally_closed"], address)
 			if address in OPTO_ADDRESSES:
 				self.assertEqual("opto", switch["physical"]["switch_type"], address)
 		self.assertEqual("constant", self.switches[24]["kind"])

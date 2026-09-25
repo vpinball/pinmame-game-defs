@@ -99,9 +99,8 @@ class IndianaJonesDefinitionTests(unittest.TestCase):
 		self.assertEqual("validated", switch["provenance"]["status"])
 		self.assertIn("T.1 SWITCH EDGES", switch["physical"]["notes"])
 		self.assertIn("never inverts it", switch["physical"]["notes"])
-		# The ROM's reading settles the public contract only; normally_closed stays the part identity
-		# (the same LED/phototransistor pair as the normalized optos 42-45/47).
-		self.assertTrue(switch["normally_closed"])
+		# normally_closed is the matrix contact when not actuated: unmasked and active at public 1, so open.
+		self.assertFalse(switch["normally_closed"])
 		self.assertEqual("opto", switch["physical"]["switch_type"])
 
 	def test_switch_edges_evidence_shows_71_active_at_public_one_like_its_controls(self) -> None:
@@ -266,15 +265,20 @@ class IndianaJonesDefinitionTests(unittest.TestCase):
 	def test_printed_opto_polarity_is_recorded_even_where_pinmame_does_not_normalize_it(self) -> None:
 		for address in sorted(MATRIX_ADDRESSES - {23, 24}):
 			switch = self.switches[address]
-			self.assertEqual(address in OPTO_MATRIX_ADDRESSES, switch["normally_closed"], address)
+			self.assertEqual(address in OPTO_MATRIX_ADDRESSES and address != 71, switch["normally_closed"], address)
 			if address in OPTO_MATRIX_ADDRESSES:
 				self.assertEqual("opto", switch["physical"]["switch_type"], address)
 		self.assertEqual("constant", self.switches[24]["kind"])
 		self.assertTrue(self.switches[24]["constant_active"])
 		self.assertTrue(self.switches[24]["initial_active"])
 		self.assertEqual("constant", self.switches[24]["spatial"]["reason"])
-		for address in (121, 122, 123, 124, 125):
+		# 124/125 are masked (normally closed at the matrix); the idol encoder channels 121-123 are unmasked
+		# and the ROM's code labels match the public levels unchanged, so their matrix contacts are
+		# normally open.
+		for address in (124, 125):
 			self.assertTrue(self.switches[address]["normally_closed"], address)
+		for address in (121, 122, 123):
+			self.assertFalse(self.switches[address]["normally_closed"], address)
 
 	def test_wheel_and_captive_ball_optos_are_not_normalized_by_pinmame(self) -> None:
 		# ijGameData's inverted-switch mask covers column 7 (0x06) and the custom column (0x18);
