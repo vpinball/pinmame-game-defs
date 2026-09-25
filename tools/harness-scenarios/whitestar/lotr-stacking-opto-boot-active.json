@@ -1,0 +1,48 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "lotr",
+  "notes": "Boot lotr with four balls resting on trough switches 11, 12, 13 and 14 and the 4-Ball Stacking Opto 15 held at public 1 from power-up, then observe 60 s with no further input. Compare with the first 25 s of lotr-stacking-opto.json, which boots identically except that 15 is held at public 0.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 1
+    }
+  ],
+  "watch_switches": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot with public 15 held at 1"
+    },
+    {
+      "type": "wait",
+      "seconds": 35.0,
+      "label": "attract mode with public 15 still at 1"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "format": "pinmame-harness-scenario",
+  "version": 1,
+  "game": "lotr",
+  "notes": "Boot lotr with four balls resting on trough switches 11, 12, 13 and 14 (the retained known-working VPW script initialises all four closed at game start) and the 4-Ball Stacking Opto 15 at public 0, which is where that table leaves it. After attract mode is reached, raise public 15 to 1, lower it, and raise it again, 20 s apart, recording every solenoid transition. A ROM that reads public 1 as 'ball stacked above a full trough' must react to the rising level and stay quiet at 0.",
+  "initial_switches": [
+    {
+      "switch": 11,
+      "state": 1
+    },
+    {
+      "switch": 12,
+      "state": 1
+    },
+    {
+      "switch": 13,
+      "state": 1
+    },
+    {
+      "switch": 14,
+      "state": 1
+    },
+    {
+      "switch": 15,
+      "state": 0
+    }
+  ],
+  "watch_switches": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "actions": [
+    {
+      "type": "wait",
+      "seconds": 25.0,
+      "label": "boot stabilization into attract mode with four balls on trough switches 11-14 and the stacking opto 15 at public 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 20.0,
+      "label": "public 15 raised to 1 in attract mode"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 0,
+      "settle_s": 20.0,
+      "label": "public 15 lowered back to 0"
+    },
+    {
+      "type": "set_switch",
+      "switch": 15,
+      "state": 1,
+      "settle_s": 20.0,
+      "label": "public 15 raised to 1 a second time"
+    }
+  ]
+}

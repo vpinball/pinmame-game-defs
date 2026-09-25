@@ -1,16 +1,5 @@
 {
-  "conflicts": [
-    {
-      "description": "The controller profile pinmame.whitestar declares inversion_applied_by_emulator: true as a platform capability. For this driver pinned PinMAME applies none: lotrGameData's positional aggregate initializer (segames.c:1498, {GEN_WS, se_dmd128x32, {...}}) never sets the trailing wpc member, so core_gameData->wpc.invSw is all-zero, and core.c:2455 copies those zeros into coreGlobals.invSw unchanged. No SE/Whitestar game table in segames.c assigns wpc.invSw, so this is a platform-wide fact rather than a defect specific to this game, and it matches what the Simpsons Pinball Party curation recorded under this same conflict id. Three of this machine's four printed optos are nonetheless settled here by observation rather than left open: the retained known-working VPW 1.6 script drives switches 14, 41 and 47 through direct assert/release pairs that are unambiguous about sense, and it is known-working on the ball trough, where a reversed opto would fail first. Switch 15 (4-ball Stacking Opto) is the one address with no such evidence -- the VPW table handles stacking through its own bookkeeping without a Controller.Switch call for 15, and neither the jpsalas nor the Hanibal table binds 14 or 15 at all -- so whether a consumer must invert the public state it presents for switch 15 cannot be settled from the manual (which states construction, not public polarity), from the retained recreations, or from pinned PinMAME (which asserts no inversion at all). Resolution path: a LibPinMAME gameplay-harness trace of a legal lotr ROM observing the idle public state of switch 15 with and without a ball resting on the stack. Unresolved.",
-      "id": "conflict.whitestar-invsw-never-populated",
-      "path": "controller.inversion_applied_by_emulator; inputs[binding.device=15]",
-      "source_refs": [
-        "pinmame.core.4ec52ff0ac13",
-        "manual.stern.lord-of-the-rings.2003",
-        "vpx-script.lotr-vpw-1-6"
-      ]
-    }
-  ],
+  "conflicts": [],
   "controller": {
     "inversion_applied_by_emulator": true,
     "platform": "pinmame.whitestar"
@@ -20,16 +9,14 @@
       "address_enumeration": "validated",
       "catalog_identity": "validated",
       "mechanisms": "validated",
-      "physical_wiring": "conflicted",
+      "physical_wiring": "validated",
       "recreation_knowledge": "validated",
       "semantic_naming": "observed",
       "spatial_placement": "observed",
       "variant_coverage": "observed"
     },
     "missing": [
-      "polarity",
       "spatial_placement",
-      "unresolved_conflicts",
       "variant_differences"
     ],
     "status": "partial"
@@ -1345,10 +1332,10 @@
       "id": "switch.matrix-14",
       "kind": "switch",
       "label": "4-ball Trough VUK Opto",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "location": "Below P/F",
-        "notes": "Printed switch-matrix drive column 2, return row 6. See Sw. 14 Note: OPTO PC boards used as switches, transmitter 515-0173-00 / receiver 515-0174-00. Opto assembly: the beam rests made, so the switch rests closed and opens when a ball blocks it. That describes the physical contact, not the public state: pinned PinMAME applies no inversion on Whitestar, because lotrGameData (segames.c:1498) leaves the wpc member -- and with it wpc.invSw -- zero-initialized and core.c:2455 copies those zeros into the live mask, so the ROM's own firmware accounts for the beam's rest state and the public state is whatever a recreation asserts. The retained known-working VPW 1.6 script asserts this address when a ball is present (sw14_Hit sets Controller.Switch(14) = 1 and sw14_UnHit clears it, and the ball-start block at line 454 seeds the four trough addresses asserted, lines 656/657), so a recreation should do the same.",
+        "notes": "Printed switch-matrix drive column 2, return row 6. See Sw. 14 Note: OPTO PC boards used as switches, transmitter 515-0173-00 / receiver 515-0174-00. Opto assembly (the printed switch note names the opto transmitter/receiver pair and nothing about its rest state). Pinned PinMAME applies no inversion on Whitestar, because lotrGameData (segames.c:1498) leaves the wpc member -- and with it wpc.invSw -- zero-initialized and core.c:2455 copies those zeros into the live mask, and se.c's switch_r returns ~core_getSwCol, so public 1 is what the CPU reads as a closed matrix contact. The retained known-working VPW 1.6 script asserts 14, 41 and 47 at 1 while a ball blocks them, and the ROM acts on 15 only at 1, so the matrix-facing contact of these opto boards rests open and closes while a ball blocks the beam; nothing in the firmware compensates for a closed rest state. The retained known-working VPW 1.6 script asserts this address when a ball is present (sw14_Hit sets Controller.Switch(14) = 1 and sw14_UnHit clears it, and the ball-start block at line 454 seeds the four trough addresses asserted, lines 656/657), so a recreation should do the same.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1412,10 +1399,10 @@
       "id": "switch.matrix-15",
       "kind": "switch",
       "label": "4-ball Stacking Opto",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "location": "Below P/F",
-        "notes": "Printed switch-matrix drive column 2, return row 7. See Sw. 15 Note: OPTO PC boards used as switches, transmitter 515-0173-00 / receiver 515-0174-00. Opto assembly: the beam rests made, so the switch rests closed and opens when a ball blocks it. That describes the physical contact, not the public state: pinned PinMAME applies no inversion on Whitestar, because lotrGameData (segames.c:1498) leaves the wpc member -- and with it wpc.invSw -- zero-initialized and core.c:2455 copies those zeros into the live mask, so the ROM's own firmware accounts for the beam's rest state and the public state is whatever a recreation asserts. No retained recreation binds this address, so unlike switches 14, 41, 47 the public sense the ROM expects here is unestablished; see conflict.whitestar-invsw-never-populated.",
+        "notes": "Printed switch-matrix drive column 2, return row 7. See Sw. 15 Note: OPTO PC boards used as switches, transmitter 515-0173-00 / receiver 515-0174-00. Opto assembly (the printed switch note names the opto transmitter/receiver pair and nothing about its rest state). Pinned PinMAME applies no inversion on Whitestar, because lotrGameData (segames.c:1498) leaves the wpc member -- and with it wpc.invSw -- zero-initialized and core.c:2455 copies those zeros into the live mask, and se.c's switch_r returns ~core_getSwCol, so public 1 is what the CPU reads as a closed matrix contact. The retained known-working VPW 1.6 script asserts 14, 41 and 47 at 1 while a ball blocks them, and the ROM acts on 15 only at 1, so the matrix-facing contact of these opto boards rests open and closes while a ball blocks the beam; nothing in the firmware compensates for a closed rest state. No retained recreation binds this address, so unlike switches 14, 41, 47 its public sense comes from the ROM rather than a script. Hash-pinned LibPinMAME runs of lotr with four balls held on 11-14 show that the ROM acts on public 1 and is quiet at 0: held at 1 from power-up, or raised to 1 in attract mode, it fires the trough up-kicker (public 1), and because the harness never lets a ball move it fires it six times in all and then fires the auto launch (public 2); 0 at boot and a fall back to 0 draw no coil. That 1 means a ball blocking the stacking opto is an inference, corroborated by switch 14, which uses the same 515-0173-00 / 515-0174-00 board pair and which the known-working VPW table asserts at 1 while a ball is present; that table also leaves 15 at 0 throughout. A recreation therefore holds 15 at 0 at rest, drives it to 1 only while a ball blocks the stacking opto, and never inverts it.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -1423,7 +1410,8 @@
           "manual.stern.lord-of-the-rings.2003",
           "pinmame.core.4ec52ff0ac13",
           "controller-profile.pinmame-whitestar",
-          "vpx-script.lotr-vpw-1-6"
+          "vpx-script.lotr-vpw-1-6",
+          "runtime.lord-of-the-rings.stacking-opto"
         ],
         "status": "validated"
       },
@@ -3053,10 +3041,10 @@
       "id": "switch.matrix-41",
       "kind": "switch",
       "label": "Top VUK",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "location": "Below P/F",
-        "notes": "Printed switch-matrix drive column 6, return row 1. See Sw. 41 Note: OPTO, transmitter 515-7307-00 / receiver 515-7308-00. Opto assembly: the beam rests made, so the switch rests closed and opens when a ball blocks it. That describes the physical contact, not the public state: pinned PinMAME applies no inversion on Whitestar, because lotrGameData (segames.c:1498) leaves the wpc member -- and with it wpc.invSw -- zero-initialized and core.c:2455 copies those zeros into the live mask, so the ROM's own firmware accounts for the beam's rest state and the public state is whatever a recreation asserts. The retained known-working VPW 1.6 script asserts this address when a ball is present (the Top VUK entry handler sets Controller.Switch(41) = 1 and the kick-out path clears it, lines 1115/1125), so a recreation should do the same.",
+        "notes": "Printed switch-matrix drive column 6, return row 1. See Sw. 41 Note: OPTO, transmitter 515-7307-00 / receiver 515-7308-00. Opto assembly (the printed switch note names the opto transmitter/receiver pair and nothing about its rest state). Pinned PinMAME applies no inversion on Whitestar, because lotrGameData (segames.c:1498) leaves the wpc member -- and with it wpc.invSw -- zero-initialized and core.c:2455 copies those zeros into the live mask, and se.c's switch_r returns ~core_getSwCol, so public 1 is what the CPU reads as a closed matrix contact. The retained known-working VPW 1.6 script asserts 14, 41 and 47 at 1 while a ball blocks them, and the ROM acts on 15 only at 1, so the matrix-facing contact of these opto boards rests open and closes while a ball blocks the beam; nothing in the firmware compensates for a closed rest state. The retained known-working VPW 1.6 script asserts this address when a ball is present (the Top VUK entry handler sets Controller.Switch(41) = 1 and the kick-out path clears it, lines 1115/1125), so a recreation should do the same.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -3454,10 +3442,10 @@
       "id": "switch.matrix-47",
       "kind": "switch",
       "label": "Ring Made",
-      "normally_closed": true,
+      "normally_closed": false,
       "physical": {
         "location": "Back Panel",
-        "notes": "Printed switch-matrix drive column 6, return row 7. See Sw. 47 Note: OPTO, transmitter 500-6746-00 / receiver 500-6747-00. Opto assembly: the beam rests made, so the switch rests closed and opens when a ball blocks it. That describes the physical contact, not the public state: pinned PinMAME applies no inversion on Whitestar, because lotrGameData (segames.c:1498) leaves the wpc member -- and with it wpc.invSw -- zero-initialized and core.c:2455 copies those zeros into the live mask, so the ROM's own firmware accounts for the beam's rest state and the public state is whatever a recreation asserts. The retained known-working VPW 1.6 script asserts this address when a ball is present (the Ring Made handler sets Controller.Switch(47) = 1 and clears it after the ball passes, lines 1189/1203), so a recreation should do the same.",
+        "notes": "Printed switch-matrix drive column 6, return row 7. See Sw. 47 Note: OPTO, transmitter 500-6746-00 / receiver 500-6747-00. Opto assembly (the printed switch note names the opto transmitter/receiver pair and nothing about its rest state). Pinned PinMAME applies no inversion on Whitestar, because lotrGameData (segames.c:1498) leaves the wpc member -- and with it wpc.invSw -- zero-initialized and core.c:2455 copies those zeros into the live mask, and se.c's switch_r returns ~core_getSwCol, so public 1 is what the CPU reads as a closed matrix contact. The retained known-working VPW 1.6 script asserts 14, 41 and 47 at 1 while a ball blocks them, and the ROM acts on 15 only at 1, so the matrix-facing contact of these opto boards rests open and closes while a ball blocks the beam; nothing in the firmware compensates for a closed rest state. The retained known-working VPW 1.6 script asserts this address when a ball is present (the Ring Made handler sets Controller.Switch(47) = 1 and clears it after the ball passes, lines 1189/1203), so a recreation should do the same.",
         "switch_type": "opto"
       },
       "provenance": {
@@ -14500,6 +14488,15 @@
       "revision": "2026-08-08",
       "sha256": "58eb403ba22b7c71f7360e785b08e47fb844dd77979553119028007815024456",
       "uri": "external:pinmame-vpx-sources/stern/lord-of-the-rings-2003/derived/spatial-consensus.json"
+    },
+    {
+      "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+      "id": "runtime.lord-of-the-rings.stacking-opto",
+      "kind": "runtime_scenario",
+      "license": "NOASSERTION",
+      "locator": "Two hash-pinned LibPinMAME harness runs of lotr from empty NVRAM with four balls resting on trough switches 11-14 (scenarios tools/harness-scenarios/whitestar/lotr-stacking-opto.json and lotr-stacking-opto-boot-active.json). With the 4-Ball Stacking Opto 15 held at public 1 from power-up, or raised to 1 in attract mode, the ROM fires the trough up-kicker (public 1) six times and the auto launch (public 2) once; with 15 at 0 at boot, or lowered back to 0, no coil fires.",
+      "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "uri": "internal:evidence/runtime/whitestar/lord-of-the-rings-stacking-opto.json"
     },
     {
       "attribution": "JPSalas; Neo LED Mod contributors",

@@ -450,8 +450,9 @@ class SpatialMigrationTests(unittest.TestCase):
 		# FunHouse resolves one of the 51 unresolved-conflict requirements present on the rebased
 		# baseline, leaving only its independently documented spatial blocker.
 		# Junk Yard and Big Buck Hunter Pro each add one definition carrying unresolved conflicts.
-		# The 2026-09-25 Monster Bash T.19 DRACULA harness runs resolve one.
-		self.assertEqual(50, report["missing_requirement_counts"]["unresolved_conflicts"])
+		# The 2026-09-25 Monster Bash T.19 DRACULA harness runs resolve one, and the Lord of the
+		# Rings stacking-opto runs resolve another.
+		self.assertEqual(49, report["missing_requirement_counts"]["unresolved_conflicts"])
 		self.assertEqual(790, len(catalog["machines"]))
 		self.assertEqual(777, catalog["summary"]["game_count"])
 		self.assertEqual(790, catalog["summary"]["machine_count"])

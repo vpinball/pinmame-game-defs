@@ -1,0 +1,224 @@
+{
+  "driver_ids": [
+    "lotr"
+  ],
+  "extractor": {
+    "id": "tools/run_pinmame_harness.py",
+    "version": 1
+  },
+  "format": "pinmame-machine-evidence",
+  "machine_ids": [
+    "stern.lord-of-the-rings.2003"
+  ],
+  "mechanisms": [],
+  "outputs": [],
+  "recreation_notes": [],
+  "runtime": {
+    "command_template": "python tools/run_pinmame_harness.py --library <libpinmame> --game lotr --rom-path <vpinmame-roms> --work-dir <new-isolated-state> --ready-timeout 30 --scenario tools/harness-scenarios/whitestar/<lotr-stacking-opto|lotr-stacking-opto-boot-active>.json --dmd-dir <external-dmd-dir> --output <external-run.json>. Built-in mechs stay disabled (--handle-mechanics 0): lotr declares none that touch switch 15.",
+    "emulator": {
+      "binary": "pinmame64.dll",
+      "built_from_revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+      "sha256": "deb2c99f44af3ae669a716943e737aca4b6b5126d5a786544206d0e7bd77e83c"
+    },
+    "game": "lotr",
+    "observations": {
+      "display_indices_seen": [
+        0
+      ],
+      "named_action_observations": [
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "boot into attract mode with trough switches 11-14 at public 1 and stacking opto 15 held at public 0 (lotr-stacking-opto run, first 25 s): no coil fires after the single power-up pulse on public 22 (the Balrog Motor), which both runs share",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "boot into attract mode with trough switches 11-14 at public 1 and stacking opto 15 held at public 1 from power-up (lotr-stacking-opto-boot-active run): the ROM fires the trough up-kicker (public 1) six times about 0.85 s apart, then the auto launch (public 2) once, then stays quiet; the retries happen because the harness holds 11-14 at 1 and 16 at 0, so no ball ever moves",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "attract mode: public 15 raised from 0 to 1; about one second later the ROM fires the trough up-kicker six times and the auto launch once",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            2
+          ]
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "attract mode: public 15 lowered back to 0; no coil fires within 20 s",
+          "observed_switch_addresses": [],
+          "result": "no_matching_transition",
+          "transitioned_solenoid_addresses": []
+        },
+        {
+          "active_solenoid_addresses": [],
+          "host_stimulus_switch_addresses": [
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "input_address": 15,
+          "input_kind": "switch",
+          "label": "attract mode: public 15 raised to 1 a second time; about one second later the ROM again fires the trough up-kicker six times and the auto launch once",
+          "observed_switch_addresses": [],
+          "result": "observed",
+          "transitioned_solenoid_addresses": [
+            1,
+            2
+          ]
+        }
+      ],
+      "solenoid_addresses_seen": [
+        1,
+        2,
+        22
+      ]
+    },
+    "raw_runs": [
+      {
+        "action_count": 4,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          },
+          {
+            "state": 0,
+            "switch": 15
+          }
+        ],
+        "name": "lotr-stacking-opto",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory",
+        "retained_from": "external:pinmame-review-artifacts/lord-of-the-rings-2003/harness/lotr-stacking-opto.json",
+        "scenario_path": "tools/harness-scenarios/whitestar/lotr-stacking-opto.json",
+        "scenario_sha256": "507ed1d1b5f020cae62a08cce4b7d5a8a261d4be5569848345c3c4c3c0b88937",
+        "self_test_pulses": 0,
+        "sha256": "56519dd5d17f78231f5df3d167b3f91ac7d3159381650270b12fbd56078d3f3b",
+        "snapshot_count": 5,
+        "watch_switches": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ]
+      },
+      {
+        "action_count": 2,
+        "initial_switches": [
+          {
+            "state": 1,
+            "switch": 11
+          },
+          {
+            "state": 1,
+            "switch": 12
+          },
+          {
+            "state": 1,
+            "switch": 13
+          },
+          {
+            "state": 1,
+            "switch": 14
+          },
+          {
+            "state": 1,
+            "switch": 15
+          }
+        ],
+        "name": "lotr-stacking-opto-boot-active",
+        "nvram_initialization": "empty; each run created its own isolated PinMAME state directory",
+        "retained_from": "external:pinmame-review-artifacts/lord-of-the-rings-2003/harness/lotr-stacking-opto-boot-active.json",
+        "scenario_path": "tools/harness-scenarios/whitestar/lotr-stacking-opto-boot-active.json",
+        "scenario_sha256": "83c4219897debb4224b9b43ffd220f54e6f24190134d458f807271c2ed10f228",
+        "self_test_pulses": 0,
+        "sha256": "a07169884fcbe903d64987f90ca2ec4ea216cc875d4af5e12a957760214b804e",
+        "snapshot_count": 3,
+        "watch_switches": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ]
+      }
+    ],
+    "rom_archive_sha256": "f9a390c1ac9c7ab48b2c810f847d23761c34ab7431d48ed77524e2fb3deda26c"
+  },
+  "source": {
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "path": "external:pinmame-review-artifacts/lord-of-the-rings-2003/harness",
+    "quality": "validated",
+    "repository": "https://github.com/vpinball/pinmame",
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "sha256": "56519dd5d17f78231f5df3d167b3f91ac7d3159381650270b12fbd56078d3f3b"
+  },
+  "states": [],
+  "switches": [],
+  "version": 1
+}

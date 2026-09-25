@@ -88,6 +88,8 @@ S_HAN = "vpx-script.lotr-hanibal-4k"
 T_NEO_LED = "vpx-table.lotr-neo-led-mod-1-0-3"
 SUPPORT = "manual-support.stern.lord-of-the-rings.2003"
 CONSENSUS_SOURCE = "spatial-consensus.stern.lord-of-the-rings.2003"
+RUNTIME_STACKING = "runtime.lord-of-the-rings.stacking-opto"
+RUNTIME_STACKING_PATH = "evidence/runtime/whitestar/lord-of-the-rings-stacking-opto.json"
 
 TABLE_SOURCE = {
     "vpw-1-6": T_VPW,
@@ -333,10 +335,10 @@ OPTOS = {14, 15, 41, 47}
 # Whitestar applies no switch inversion at all. lotrGameData (segames.c:1498) initializes only
 # GEN_WS, the display layout and the `hw` struct, leaving the trailing `wpc` member -- and with it
 # `wpc.invSw` -- at C zero-initialization, and core.c:2455 memcpy's those zeros into the live
-# coreGlobals.invSw. So the public state of an opto is exactly what the recreation asserts; the
-# ROM's own firmware accounts for the beam's rest state. An earlier pass here claimed "PinMAME
-# normalizes the public state", which reached the right instruction for a recreation through a
-# mechanism that does not exist.
+# coreGlobals.invSw. So the public state of an opto is exactly what the recreation asserts, and
+# se.c's switch_r returns ~core_getSwCol, so public 1 is what the CPU reads as a closed matrix
+# contact. An earlier pass here claimed "PinMAME normalizes the public state" and later that the
+# opto contact rests closed with firmware compensating; the evidence below refutes both.
 #
 # For these three the polarity is settled by observation rather than by reasoning: the retained
 # known-working VPW 1.6 script drives each of them through a direct pair whose asserted sense is
@@ -350,10 +352,11 @@ SCRIPT_EVIDENCED_OPTOS = {
     47: ("1189/1203", "the Ring Made handler sets Controller.Switch(47) = 1 and clears it after "
                       "the ball passes"),
 }
-# Switch 15 is the exception and the reason this machine carries a polarity conflict: no retained
-# recreation binds it. The VPW table routes the stacking opto through its own trough bookkeeping
-# without a Controller.Switch call, and neither alt table binds 14 or 15 at all.
+# Switch 15 has no retained recreation binding: the VPW table routes the stacking opto through its
+# own trough bookkeeping without a Controller.Switch call, and neither alt table binds 14 or 15 at
+# all. Its public sense is settled by the ROM instead, through the RUNTIME_STACKING harness runs.
 UNEVIDENCED_OPTOS = sorted(OPTOS - set(SCRIPT_EVIDENCED_OPTOS))
+HARNESS_EVIDENCED_OPTOS = {15}
 
 UK_ONLY = {1, 8}
 TOURNAMENT = {55}
@@ -563,6 +566,22 @@ SOURCES = [
 ]
 
 SOURCES.append({
+    "attribution": "Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external",
+    "id": RUNTIME_STACKING,
+    "kind": "runtime_scenario",
+    "license": "NOASSERTION",
+    "locator": (
+        "Two hash-pinned LibPinMAME harness runs of lotr from empty NVRAM with four balls resting on trough switches "
+        "11-14 (scenarios tools/harness-scenarios/whitestar/lotr-stacking-opto.json and "
+        "lotr-stacking-opto-boot-active.json). With the 4-Ball Stacking Opto 15 held at public 1 from power-up, or "
+        "raised to 1 in attract mode, the ROM fires the trough up-kicker (public 1) six times and the auto launch "
+        "(public 2) once; with 15 at 0 at boot, or lowered back to 0, no coil fires."
+    ),
+    "revision": "8371478a7640f1896dcdf565aed340dc5df989ba",
+    "uri": f"internal:{RUNTIME_STACKING_PATH}",
+})
+
+SOURCES.append({
     "attribution": "JPSalas; Neo LED Mod contributors",
     "id": T_NEO_LED,
     "kind": "vpx_table",
@@ -745,7 +764,11 @@ for address in range(1, 65):
         "label": ({11: "4-Ball Trough #1 (Left)", 12: "4-Ball Trough #2", 13: "4-Ball Trough #3"}.get(address)
                   or labelize(rec["name"]))
                  if rec.get("name") else f"Unused Switch {address}",
-        "provenance": {"source_refs": [MANUAL, CORE, PROFILE] + ([] if unused else [S_VPW]), "status": "validated"},
+        "provenance": {
+            "source_refs": [MANUAL, CORE, PROFILE] + ([] if unused else [S_VPW])
+            + ([RUNTIME_STACKING] if address in HARNESS_EVIDENCED_OPTOS else []),
+            "status": "validated",
+        },
     }
     if roles:
         entry["roles"] = roles
@@ -767,7 +790,9 @@ for address in range(1, 65):
         physical["switch_type"] = switch_type_for(address, rec)
         if rec.get("part"):
             physical["part_number"] = rec["part"]
-        entry["normally_closed"] = address in OPTOS
+        # The opto boards' matrix-facing contact rests open and closes while a ball blocks the beam
+        # (see the opto note below), so no switch on this machine is normally closed.
+        entry["normally_closed"] = False
         if address not in OPTOS:
             notes.append(
                 "The printed typical switch wiring lands the green drive wire on the normally-open terminal, so matrix "
@@ -775,11 +800,14 @@ for address in range(1, 65):
             )
         else:
             notes.append(
-                "Opto assembly: the beam rests made, so the switch rests closed and opens when a ball blocks it. That "
-                "describes the physical contact, not the public state: pinned PinMAME applies no inversion on "
-                "Whitestar, because lotrGameData (segames.c:1498) leaves the wpc member -- and with it wpc.invSw -- "
-                "zero-initialized and core.c:2455 copies those zeros into the live mask, so the ROM's own firmware "
-                "accounts for the beam's rest state and the public state is whatever a recreation asserts."
+                "Opto assembly (the printed switch note names the opto transmitter/receiver pair and nothing about "
+                "its rest state). Pinned PinMAME applies "
+                "no inversion on Whitestar, because lotrGameData (segames.c:1498) leaves the wpc member -- and with it "
+                "wpc.invSw -- zero-initialized and core.c:2455 copies those zeros into the live mask, and se.c's "
+                "switch_r returns ~core_getSwCol, so public 1 is what the CPU reads as a closed matrix contact. The "
+                "retained known-working VPW 1.6 script asserts 14, 41 and 47 at 1 while a ball blocks them, and the "
+                "ROM acts on 15 only at 1, so the matrix-facing contact of these opto boards rests open and closes "
+                "while a ball blocks the beam; nothing in the firmware compensates for a closed rest state."
             )
             if address in SCRIPT_EVIDENCED_OPTOS:
                 lines, how = SCRIPT_EVIDENCED_OPTOS[address]
@@ -791,8 +819,15 @@ for address in range(1, 65):
                 notes.append(
                     "No retained recreation binds this address, so unlike switches "
                     + ", ".join(str(a) for a in sorted(SCRIPT_EVIDENCED_OPTOS))
-                    + " the public sense the ROM expects here is unestablished; see "
-                    "conflict.whitestar-invsw-never-populated."
+                    + " its public sense comes from the ROM rather than a script. Hash-pinned LibPinMAME runs of lotr "
+                    "with four balls held on 11-14 show that the ROM acts on public 1 and is quiet at 0: held at 1 "
+                    "from power-up, or raised to 1 in attract mode, it fires the trough up-kicker (public 1), and "
+                    "because the harness never lets a ball move it fires it six times in all and then fires the auto launch "
+                    "(public 2); 0 at boot and a fall back to 0 draw no coil. That 1 means a ball blocking the "
+                    "stacking opto is an inference, corroborated by switch 14, which uses the same 515-0173-00 / "
+                    "515-0174-00 board pair and which the known-working VPW table asserts at 1 while a ball is "
+                    "present; that table also leaves 15 at 0 throughout. A recreation therefore holds 15 at 0 at "
+                    "rest, drives it to 1 only while a ball blocks the stacking opto, and never inverts it."
                 )
         physical["notes"] = " ".join(notes)
     entry["physical"] = physical
@@ -1600,32 +1635,9 @@ for _driver in drivers:
             raise SystemExit(f"{_driver['id']}: {_phrase} ROM {_rom} differs from the root but the note does not name it")
 
 definition = {
-    "conflicts": [
-        {
-            "description": (
-                "The controller profile pinmame.whitestar declares inversion_applied_by_emulator: true as a platform "
-                "capability. For this driver pinned PinMAME applies none: lotrGameData's positional aggregate "
-                "initializer (segames.c:1498, {GEN_WS, se_dmd128x32, {...}}) never sets the trailing wpc member, so "
-                "core_gameData->wpc.invSw is all-zero, and core.c:2455 copies those zeros into coreGlobals.invSw "
-                "unchanged. No SE/Whitestar game table in segames.c assigns wpc.invSw, so this is a platform-wide "
-                "fact rather than a defect specific to this game, and it matches what the Simpsons Pinball Party "
-                "curation recorded under this same conflict id. Three of this machine's four printed optos are "
-                "nonetheless settled here by observation rather than left open: the retained known-working VPW 1.6 "
-                "script drives switches 14, 41 and 47 through direct assert/release pairs that are unambiguous about "
-                "sense, and it is known-working on the ball trough, where a reversed opto would fail first. Switch 15 "
-                "(4-ball Stacking Opto) is the one address with no such evidence -- the VPW table handles stacking "
-                "through its own bookkeeping without a Controller.Switch call for 15, and neither the jpsalas nor the "
-                "Hanibal table binds 14 or 15 at all -- so whether a consumer must invert the public state it presents "
-                "for switch 15 cannot be settled from the manual (which states construction, not public polarity), "
-                "from the retained recreations, or from pinned PinMAME (which asserts no inversion at all). Resolution "
-                "path: a LibPinMAME gameplay-harness trace of a legal lotr ROM observing the idle public state of "
-                "switch 15 with and without a ball resting on the stack. Unresolved."
-            ),
-            "id": "conflict.whitestar-invsw-never-populated",
-            "path": "controller.inversion_applied_by_emulator; inputs[binding.device=15]",
-            "source_refs": [CORE, MANUAL, S_VPW],
-        },
-    ],
+    # conflict.whitestar-invsw-never-populated was resolved on 2026-09-25: switch 15, the last of
+    # the four printed optos without settled public polarity, is settled by the RUNTIME_STACKING runs.
+    "conflicts": [],
     "controller": {"inversion_applied_by_emulator": True, "platform": "pinmame.whitestar"},
     "coverage": {
         # Held at partial. lotrGameData declares SE_BOARDID_520_5242_00, the printed
@@ -1635,21 +1647,19 @@ definition = {
         # Their address-to-position map is compared across every retained script's actual binding;
         # disagreement remains explicit, and no factory per-emitter semantic names or connector
         # pins are known.
-        # physical_wiring is `conflicted` rather than `validated` because of switch 15: every
-        # connector, wire colour, driver transistor and return IC is manual-verified, but one
-        # printed opto's public polarity is unsettled. That follows the convention Monster Bash
-        # and Simpsons Pinball Party already set for an open polarity question.
+        # physical_wiring is `validated`: every connector, wire colour, driver transistor and return
+        # IC is manual-verified, and all four printed optos now have a settled public sense (14, 41
+        # and 47 from the known-working script, 15 from the RUNTIME_STACKING harness runs).
         "dimensions": {
             "address_enumeration": "validated", "catalog_identity": "validated", "mechanisms": "validated",
-            "physical_wiring": "conflicted", "recreation_knowledge": "validated", "semantic_naming": "observed",
+            "physical_wiring": "validated", "recreation_knowledge": "validated", "semantic_naming": "observed",
             "spatial_placement": "observed", "variant_coverage": "observed",
         },
-        # `polarity` and `unresolved_conflicts` are switch 15, the one opto no retained recreation
-        # binds. Spatial placement remains incomplete because many positions are observed rather
-        # than corroborated and fifteen printed devices are still unplaced. `variant_coverage`
-        # keeps the 2008 Limited Edition honest until its physical compatibility is sourced.
+        # Spatial placement remains incomplete because many positions are observed rather than
+        # corroborated and fifteen printed devices are still unplaced. `variant_coverage` keeps the
+        # 2008 Limited Edition honest until its physical compatibility is sourced.
         "missing": [
-            "polarity", "spatial_placement", "unresolved_conflicts", "variant_differences",
+            "spatial_placement", "variant_differences",
         ],
         "status": "partial",
     },
@@ -1924,7 +1934,7 @@ _anomaly_lines = "\n".join(f"- {a['detail']}" for a in transcription["source_ano
 
 knowledge_note = f"""# The Lord of the Rings (Stern, 2003)
 
-Coverage: **{definition['coverage']['status']} - manual-verified semantic I/O, mechanism inventory and behaviour, the complete public output inventory including board 520-5242-00 at lamps 81-99, and normalized placements; held below author-ready because switch 15's public opto polarity is unestablished, spatial evidence is not fully corroborated, five LED-board addresses have conflicting positions, fifteen printed devices remain unplaced, and the 2008 Limited Edition's physical compatibility is not yet sourced**
+Coverage: **{definition['coverage']['status']} - manual-verified semantic I/O, mechanism inventory and behaviour, the complete public output inventory including board 520-5242-00 at lamps 81-99, and normalized placements; held below author-ready because spatial evidence is not fully corroborated, five LED-board addresses have conflicting positions, fifteen printed devices remain unplaced, and the 2008 Limited Edition's physical compatibility is not yet sourced**
 
 ## Identity and evidence precedence
 
@@ -1952,11 +1962,11 @@ All four retained known-working scripts drive them. The controller profile expos
 
 ## Opto polarity: PinMAME normalizes nothing here
 
-The controller profile declares `inversion_applied_by_emulator: true` as a platform capability, and for this driver pinned PinMAME exercises none of it. `lotrGameData` (`segames.c:1498`) is a positional aggregate that sets only `GEN_WS`, the display layout and the `hw` struct; the trailing `wpc` member - which is where `invSw` lives - is left at C zero-initialization, and `core.c:2455` memcpy's those zeros into the live `coreGlobals.invSw`. **The four printed optos are therefore published exactly as a recreation asserts them, and the ROM's own firmware accounts for the beam resting made.** An earlier pass of this definition said "PinMAME normalizes the public state", which arrived at the right instruction for a recreation by way of a mechanism that does not exist.
+The controller profile declares `inversion_applied_by_emulator: true` as a platform capability, and for this driver pinned PinMAME exercises none of it. `lotrGameData` (`segames.c:1498`) is a positional aggregate that sets only `GEN_WS`, the display layout and the `hw` struct; the trailing `wpc` member - which is where `invSw` lives - is left at C zero-initialization, and `core.c:2455` memcpy's those zeros into the live `coreGlobals.invSw`. **The four printed optos are therefore published exactly as a recreation asserts them.** `se.c`'s `switch_r` returns `~core_getSwCol`, so public 1 is what the CPU reads as a closed matrix contact; with the evidence below, that makes the opto boards' matrix-facing contact rest open and close while a ball blocks the beam, and nothing in the firmware compensates for a closed rest state. An earlier pass of this definition said "PinMAME normalizes the public state", which arrived at the right instruction for a recreation by way of a mechanism that does not exist.
 
-Three of the four are settled by observation rather than by argument. The retained known-working VPW 1.6 script asserts switches {_format_addresses(sorted(SCRIPT_EVIDENCED_OPTOS))} when a ball is present, through direct assert/release pairs whose sense is unambiguous - and it is known-working on the ball trough, which is exactly where a reversed opto fails first. Switch 15 is the exception: no retained recreation binds it at all (the VPW table does its stacking bookkeeping without a `Controller.Switch(15)` call, and neither alt table binds 14 or 15), so the public sense the ROM expects there is genuinely unestablished and is carried as `conflict.whitestar-invsw-never-populated` rather than guessed from its sibling.
+All four are settled by observation rather than by argument. The retained known-working VPW 1.6 script asserts switches {_format_addresses(sorted(SCRIPT_EVIDENCED_OPTOS))} when a ball is present, through direct assert/release pairs whose sense is unambiguous - and it is known-working on the ball trough, which is exactly where a reversed opto fails first. Switch 15 is bound by no retained recreation (the VPW table does its stacking bookkeeping without a `Controller.Switch(15)` call, and neither alt table binds 14 or 15), so its sense was asked of the ROM directly. Hash-pinned LibPinMAME runs of `lotr` (`{RUNTIME_STACKING_PATH}`) with four balls held on 11-14 show the ROM acting on public 1 and quiet at 0: held at 1 from power-up, or raised to 1 in attract mode, it fires the trough up-kicker (public 1) and, because the harness never lets a ball move, fires it six times in all before firing the auto launch (public 2) once; 0 at boot and a fall back to 0 draw no coil at all. That 1 means a ball blocking the stacking opto is an inference, corroborated by switch 14 on the same 515-0173-00 / 515-0174-00 board pair, which the known-working table asserts at 1 while a ball is present; that table also leaves 15 at 0 throughout. Hold 15 at 0 at rest, drive it to 1 only while a ball blocks the stacking opto, and never invert it.
 
-`normally_closed: true` on these four records describes the physical contact, not the public state. Do not read it as a polarity instruction.
+`normally_closed` is false on all four: the matrix-facing opto contact rests open, exactly like the mechanical switches.
 
 ## Custom mechanisms
 
@@ -1976,7 +1986,7 @@ Public flasher 25 is not a single-point device. All three retained factory-layou
 
 ## Notable printed details
 
-- Optos, which rest closed, are switches {", ".join(str(a) for a in _optos)}.
+- Optos, whose matrix-facing contact rests open and closes while a ball blocks the beam, are switches {", ".join(str(a) for a in _optos)}.
 - Printed NOT USED: matrix switches {", ".join(str(a) for a in _unused_switches)}; dedicated switch DS-5; solenoids {", ".join(str(a) for a in _unused_coils)}.
 - The ring magnet on coil 6 is the only output with its own fuse, printed F20 and marked THIS GAME ONLY.
 - The lamp matrix axes are transposed between the manual and PinMAME: PinMAME's lamp column strobe corresponds to the printed **row** and its lamp row to the printed **column**. Do not map them by name.

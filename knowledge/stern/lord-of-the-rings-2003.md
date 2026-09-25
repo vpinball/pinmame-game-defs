@@ -1,6 +1,6 @@
 # The Lord of the Rings (Stern, 2003)
 
-Coverage: **partial - manual-verified semantic I/O, mechanism inventory and behaviour, the complete public output inventory including board 520-5242-00 at lamps 81-99, and normalized placements; held below author-ready because switch 15's public opto polarity is unestablished, spatial evidence is not fully corroborated, five LED-board addresses have conflicting positions, fifteen printed devices remain unplaced, and the 2008 Limited Edition's physical compatibility is not yet sourced**
+Coverage: **partial - manual-verified semantic I/O, mechanism inventory and behaviour, the complete public output inventory including board 520-5242-00 at lamps 81-99, and normalized placements; held below author-ready because spatial evidence is not fully corroborated, five LED-board addresses have conflicting positions, fifteen printed devices remain unplaced, and the 2008 Limited Edition's physical compatibility is not yet sourced**
 
 ## Identity and evidence precedence
 
@@ -28,11 +28,11 @@ All four retained known-working scripts drive them. The controller profile expos
 
 ## Opto polarity: PinMAME normalizes nothing here
 
-The controller profile declares `inversion_applied_by_emulator: true` as a platform capability, and for this driver pinned PinMAME exercises none of it. `lotrGameData` (`segames.c:1498`) is a positional aggregate that sets only `GEN_WS`, the display layout and the `hw` struct; the trailing `wpc` member - which is where `invSw` lives - is left at C zero-initialization, and `core.c:2455` memcpy's those zeros into the live `coreGlobals.invSw`. **The four printed optos are therefore published exactly as a recreation asserts them, and the ROM's own firmware accounts for the beam resting made.** An earlier pass of this definition said "PinMAME normalizes the public state", which arrived at the right instruction for a recreation by way of a mechanism that does not exist.
+The controller profile declares `inversion_applied_by_emulator: true` as a platform capability, and for this driver pinned PinMAME exercises none of it. `lotrGameData` (`segames.c:1498`) is a positional aggregate that sets only `GEN_WS`, the display layout and the `hw` struct; the trailing `wpc` member - which is where `invSw` lives - is left at C zero-initialization, and `core.c:2455` memcpy's those zeros into the live `coreGlobals.invSw`. **The four printed optos are therefore published exactly as a recreation asserts them.** `se.c`'s `switch_r` returns `~core_getSwCol`, so public 1 is what the CPU reads as a closed matrix contact; with the evidence below, that makes the opto boards' matrix-facing contact rest open and close while a ball blocks the beam, and nothing in the firmware compensates for a closed rest state. An earlier pass of this definition said "PinMAME normalizes the public state", which arrived at the right instruction for a recreation by way of a mechanism that does not exist.
 
-Three of the four are settled by observation rather than by argument. The retained known-working VPW 1.6 script asserts switches 14, 41, 47 when a ball is present, through direct assert/release pairs whose sense is unambiguous - and it is known-working on the ball trough, which is exactly where a reversed opto fails first. Switch 15 is the exception: no retained recreation binds it at all (the VPW table does its stacking bookkeeping without a `Controller.Switch(15)` call, and neither alt table binds 14 or 15), so the public sense the ROM expects there is genuinely unestablished and is carried as `conflict.whitestar-invsw-never-populated` rather than guessed from its sibling.
+All four are settled by observation rather than by argument. The retained known-working VPW 1.6 script asserts switches 14, 41, 47 when a ball is present, through direct assert/release pairs whose sense is unambiguous - and it is known-working on the ball trough, which is exactly where a reversed opto fails first. Switch 15 is bound by no retained recreation (the VPW table does its stacking bookkeeping without a `Controller.Switch(15)` call, and neither alt table binds 14 or 15), so its sense was asked of the ROM directly. Hash-pinned LibPinMAME runs of `lotr` (`evidence/runtime/whitestar/lord-of-the-rings-stacking-opto.json`) with four balls held on 11-14 show the ROM acting on public 1 and quiet at 0: held at 1 from power-up, or raised to 1 in attract mode, it fires the trough up-kicker (public 1) and, because the harness never lets a ball move, fires it six times in all before firing the auto launch (public 2) once; 0 at boot and a fall back to 0 draw no coil at all. That 1 means a ball blocking the stacking opto is an inference, corroborated by switch 14 on the same 515-0173-00 / 515-0174-00 board pair, which the known-working table asserts at 1 while a ball is present; that table also leaves 15 at 0 throughout. Hold 15 at 0 at rest, drive it to 1 only while a ball blocks the stacking opto, and never invert it.
 
-`normally_closed: true` on these four records describes the physical contact, not the public state. Do not read it as a polarity instruction.
+`normally_closed` is false on all four: the matrix-facing opto contact rests open, exactly like the mechanical switches.
 
 ## Custom mechanisms
 
@@ -59,7 +59,7 @@ Public flasher 25 is not a single-point device. All three retained factory-layou
 
 ## Notable printed details
 
-- Optos, which rest closed, are switches 14, 15, 41, 47.
+- Optos, whose matrix-facing contact rests open and closes while a ball blocks the beam, are switches 14, 15, 41, 47.
 - Printed NOT USED: matrix switches 26, 27, 63, 64; dedicated switch DS-5; solenoids 12, 28.
 - The ring magnet on coil 6 is the only output with its own fuse, printed F20 and marked THIS GAME ONLY.
 - The lamp matrix axes are transposed between the manual and PinMAME: PinMAME's lamp column strobe corresponds to the printed **row** and its lamp row to the printed **column**. Do not map them by name.

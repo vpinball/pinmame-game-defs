@@ -62,25 +62,24 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		self.assertEqual(2003, machine["year"])
 
 	def test_promotion_state_is_held_at_partial(self) -> None:
-		"""Held at partial by polarity, spatial, and edition-compatibility gaps.
+		"""Held at partial by spatial and edition-compatibility gaps.
 
 		The 520-5242-00 LED board is enumerated, but its positions are observed rather than
-		corroborated. Switch 15's public opto polarity and the LE hardware remain unestablished.
+		corroborated, and the LE hardware remains unestablished. Switch 15's public opto polarity
+		was settled by ROM harness runs on 2026-09-25, which cleared the polarity conflict.
 		"""
 		coverage = self.definition["coverage"]
 		self.assertEqual("partial", coverage["status"])
-		self.assertEqual(
-			["polarity", "spatial_placement", "unresolved_conflicts", "variant_differences"],
-			coverage["missing"],
-		)
+		self.assertEqual(["spatial_placement", "variant_differences"], coverage["missing"])
+		self.assertEqual([], self.definition["conflicts"])
 		self.assertEqual("validated", coverage["dimensions"]["address_enumeration"])
 		self.assertEqual("observed", coverage["dimensions"]["spatial_placement"])
-		self.assertEqual("conflicted", coverage["dimensions"]["physical_wiring"])
+		self.assertEqual("validated", coverage["dimensions"]["physical_wiring"])
 		self.assertEqual("observed", coverage["dimensions"]["variant_coverage"])
 		self.assertEqual(2, self.definition["schema_version"])
 
 	def test_optos_do_not_claim_an_inversion_pinmame_never_applies(self) -> None:
-		"""Whitestar normalizes nothing, and only switch 15 is left unsettled by that.
+		"""Whitestar normalizes nothing; three optos are settled by the script and 15 by the ROM.
 
 		`lotrGameData` is a positional aggregate that stops after the `hw` struct, so the
 		trailing `wpc` member -- and with it `wpc.invSw` -- is zero-initialized, and core.c
@@ -89,9 +88,8 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 		mechanism that does not exist.
 
 		The distinction this locks down is between the three optos a known-working recreation
-		settles by observation and the one it does not. Asserting only the conflict would let a
-		later pass quietly widen it to all four; asserting only the notes would let the conflict
-		be dropped.
+		settles by observation and switch 15, which no recreation binds and whose sense comes
+		from the stacking-opto harness runs instead.
 		"""
 		optos = {address: device for address, device in self.switches.items()
 		         if device.get("physical", {}).get("switch_type") == "opto"}
@@ -100,15 +98,63 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 			notes = device["physical"]["notes"]
 			self.assertNotIn("PinMAME normalizes", notes, f"switch {address} claims an inversion PinMAME never applies")
 			self.assertIn("zero-initialized", notes, f"switch {address} must say why no inversion is applied")
-			self.assertTrue(device["normally_closed"], f"switch {address} is a printed opto")
+			self.assertFalse(device["normally_closed"], f"switch {address}: the opto's matrix contact rests open")
+			self.assertIn("~core_getSwCol", notes, f"switch {address} must cite the Whitestar read path")
 		for address in (14, 41, 47):
 			self.assertIn("known-working VPW 1.6 script asserts this address", optos[address]["physical"]["notes"])
 		self.assertIn("No retained recreation binds this address", optos[15]["physical"]["notes"])
-
-		conflict = next(c for c in self.definition["conflicts"] if c["id"] == "conflict.whitestar-invsw-never-populated")
-		self.assertIn("binding.device=15", conflict["path"])
+		self.assertIn("never inverts it", optos[15]["physical"]["notes"])
+		self.assertIn("runtime.lord-of-the-rings.stacking-opto", optos[15]["provenance"]["source_refs"])
 		for address in (14, 41, 47):
-			self.assertNotIn(f"binding.device={address}", conflict["path"])
+			self.assertNotIn("runtime.lord-of-the-rings.stacking-opto", optos[address]["provenance"]["source_refs"])
+
+	def test_stacking_opto_runtime_evidence_separates_rest_from_active(self) -> None:
+		import hashlib
+
+		evidence = load_json(ROOT / "evidence" / "runtime" / "whitestar" / "lord-of-the-rings-stacking-opto.json")
+		self.assertEqual("lotr", evidence["runtime"]["game"])
+		observations = evidence["runtime"]["observations"]["named_action_observations"]
+		# Rest level 0 at boot and a fall to 0 draw nothing; 1 at boot and every rise to 1 draw the
+		# up-kicker and auto launch.
+		self.assertEqual(
+			[[], [1, 2], [1, 2], [], [1, 2]],
+			[item["transitioned_solenoid_addresses"] for item in observations],
+		)
+		for raw in evidence["runtime"]["raw_runs"]:
+			scenario = ROOT / raw["scenario_path"]
+			self.assertEqual(raw["scenario_sha256"], hashlib.sha256(scenario.read_bytes()).hexdigest())
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			return
+		prefix = "external:pinmame-review-artifacts/"
+		for raw in evidence["runtime"]["raw_runs"]:
+			path = Path(root) / raw["retained_from"][len(prefix):]
+			self.assertEqual(raw["sha256"], hashlib.sha256(path.read_bytes()).hexdigest(), raw["name"])
+			run = load_json(path)
+			fired = [
+				(event["time_s"], event["number"])
+				for event in run["events"]
+				if event["event"] == "solenoid" and event["state"]
+			]
+			# The only coils ever fired are the power-up Balrog Motor pulse on 22, the up-kicker and the launch.
+			self.assertLessEqual({number for _, number in fired}, {1, 2, 22}, raw["name"])
+			snapshots = run["snapshots"]
+			level = {s["label"]: next(w["state"] for w in s["watched_switches"] if w["number"] == 15) for s in snapshots}
+			# Rebuild each window from the raw run: which level switch 15 held, and what fired.
+			edges = [0.0] + [s["time_s"] for s in snapshots[1:]]
+			windows = []
+			for start, snap in zip(edges, snapshots[1:]):
+				burst = [number for time, number in fired if start < time <= snap["time_s"] and number != 22]
+				windows.append((level[snap["label"]], burst))
+			kick = [1, 1, 1, 1, 1, 1, 2]
+			expected = {
+				# boot at 0 (only the Balrog pulse, excluded), raised to 1, lowered to 0, raised to 1 again
+				"lotr-stacking-opto": [(0, []), (1, kick), (0, []), (1, kick)],
+				# boot with 15 held at 1 from power-up, then 35 s of attract mode still at 1
+				"lotr-stacking-opto-boot-active": [(1, kick), (1, [])],
+			}[raw["name"]]
+			self.assertEqual(expected, windows[: len(expected)], raw["name"])
+			self.assertEqual(len(expected), len(windows), raw["name"])
 
 	def test_led_board_is_enumerated_without_inventing_allocation_slots(self) -> None:
 		report = load_json(SPATIAL_REPORT_PATH)
@@ -347,10 +393,12 @@ class LordOfTheRingsDefinitionTests(unittest.TestCase):
 			self.assertEqual("unused", switch["availability"], address)
 			self.assertEqual("unused", switch["spatial"]["reason"], address)
 
-	def test_optos_rest_closed_and_everything_else_rests_open(self) -> None:
+	def test_every_matrix_switch_including_the_optos_rests_open(self) -> None:
+		# Whitestar reads ~core_getSwCol, the script asserts 14/41/47 at 1 with a ball present and the
+		# ROM acts on 15 only at 1, so the opto boards' matrix-facing contact rests open too.
 		for address in MATRIX_ADDRESSES - UNUSED_MATRIX_ADDRESSES:
 			switch = self.switches[address]
-			self.assertEqual(address in OPTO_ADDRESSES, switch["normally_closed"], address)
+			self.assertFalse(switch["normally_closed"], address)
 			if address in OPTO_ADDRESSES:
 				self.assertEqual("opto", switch["physical"]["switch_type"], address)
 

@@ -54,7 +54,7 @@ class CompletionScoreTests(unittest.TestCase):
 		self.assertEqual(100, by_id["williams.medieval-madness.1997"]["completion_score"])
 		self.assertEqual(94, by_id["williams.white-water.1993"]["completion_score"])
 		self.assertEqual(100, by_id["williams.monster-bash.1998"]["completion_score"])
-		self.assertEqual(75, by_id["stern.lord-of-the-rings.2003"]["completion_score"])
+		self.assertEqual(88, by_id["stern.lord-of-the-rings.2003"]["completion_score"])
 		self.assertEqual(19, by_id["data-east.guns-n-roses.1994"]["completion_score"])
 		# The Big Buck Hunter Pro curation replaced its generated stub with an honest partial:
 		# six of the sixteen requirements (input/output semantics, polarity, recreation notes,
