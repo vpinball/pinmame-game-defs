@@ -33,11 +33,11 @@ Devices: `coil.driver-17`, `coil.driver-18`, `coil.driver-19`, `coil.driver-21`,
 
 ### polarity
 
-Physical EOS contacts and controller-facing button/synthetic winding states share public meanings without an at-rest/end-of-stroke bench capture.
+The synthetic power/hold states have no settled winding-level mapping without a bench capture. Switches 15/16 are no longer part of this question: core_updateSw rewrites both from the cabinet-button bits at public 82/84 on every update, so the ROM reads them exactly as a consumer writes 82/84.
 
-Would resolve: Bench capture of cabinet button, EOS at rest/end of stroke, and public power/hold states on an original machine or faithful harness.
+Would resolve: Bench capture of the flipper windings and public power/hold states on an original machine or faithful harness.
 
-Devices: `switch.matrix-15`, `switch.matrix-16`, `coil.driver-45`, `coil.driver-46`, `coil.driver-47`, `coil.driver-48`
+Devices: `coil.driver-45`, `coil.driver-46`, `coil.driver-47`, `coil.driver-48`
 
 ### spatial_placement
 

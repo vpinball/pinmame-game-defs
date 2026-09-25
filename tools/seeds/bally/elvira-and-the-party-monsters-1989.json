@@ -3974,7 +3974,7 @@
       "label": "Unused Flipper Column Lower Right End-of-Stroke (81)",
       "physical": {
         "location": "internal public address space",
-        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLRFLIPEOSBIT = 0x01, published at 81 through core_swSeq2m(n) = n + 7. locals.flipMask carries this end-of-stroke bit only when hw.flippers sets FLIP_EOS (implied by FLIP_SOL), and FLIP_SWNO(58,57) sets neither, so core_updateSw neither synthesizes it nor copies it anywhere: PinMAME models no end-of-stroke switch on this machine. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8. S11.VBS names this address swURFlip; its vpmKeyDown/vpmKeyUp write it from a staged right-flipper key only while vpmFlips.FlipperSolNumber(3) is non-zero, which core.vbs makes the default (sURFlipper = 34) unless the table calls NoUpperRightFlipper. The constant does not follow the PinMAME column, and the ROM cannot read the address on this machine, so any such write has no effect.",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLRFLIPEOSBIT = 0x01, published at 81 through core_swSeq2m(n) = n + 7. locals.flipMask carries this end-of-stroke bit only when hw.flippers sets FLIP_EOS (implied by FLIP_SOL), and FLIP_SWNO(58,57) sets neither, so core_updateSw neither synthesizes it nor copies it anywhere: PinMAME models no end-of-stroke switch on this machine. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8. S11.VBS names this address swURFlip; its vpmKeyDown/vpmKeyUp write it from a staged right-flipper key only while vpmFlips.FlipperSolNumber(3) is non-zero, which core.vbs makes the default (sURFlipper = 34) unless the table calls NoUpperRightFlipper, directly or through core.vbs's cvpmFlips2.Init, which vpmInit runs and which calls it when the table defines cSingleRFlip as a number other than True. The constant does not follow the PinMAME column, and the ROM cannot read the address on this machine, so any such write has no effect.",
         "switch_type": "other"
       },
       "provenance": {
@@ -4058,7 +4058,7 @@
       "label": "Unused Flipper Column Lower Left End-of-Stroke (83)",
       "physical": {
         "location": "internal public address space",
-        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLLFLIPEOSBIT = 0x04, published at 83 through core_swSeq2m(n) = n + 7. locals.flipMask carries this end-of-stroke bit only when hw.flippers sets FLIP_EOS (implied by FLIP_SOL), and FLIP_SWNO(58,57) sets neither, so core_updateSw neither synthesizes it nor copies it anywhere: PinMAME models no end-of-stroke switch on this machine. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8. S11.VBS names this address swULFlip; its vpmKeyDown/vpmKeyUp write it from a staged left-flipper key only while vpmFlips.FlipperSolNumber(2) is non-zero, which core.vbs makes the default (sULFlipper = 36) unless the table calls NoUpperLeftFlipper. The constant does not follow the PinMAME column, and the ROM cannot read the address on this machine, so any such write has no effect.",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLLFLIPEOSBIT = 0x04, published at 83 through core_swSeq2m(n) = n + 7. locals.flipMask carries this end-of-stroke bit only when hw.flippers sets FLIP_EOS (implied by FLIP_SOL), and FLIP_SWNO(58,57) sets neither, so core_updateSw neither synthesizes it nor copies it anywhere: PinMAME models no end-of-stroke switch on this machine. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8. S11.VBS names this address swULFlip; its vpmKeyDown/vpmKeyUp write it from a staged left-flipper key only while vpmFlips.FlipperSolNumber(2) is non-zero, which core.vbs makes the default (sULFlipper = 36) unless the table calls NoUpperLeftFlipper, directly or through core.vbs's cvpmFlips2.Init, which vpmInit runs and which calls it when the table defines cSingleLFlip as a number other than True. The constant does not follow the PinMAME column, and the ROM cannot read the address on this machine, so any such write has no effect.",
         "switch_type": "other"
       },
       "provenance": {
@@ -11131,7 +11131,7 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.elvira-and-the-party-monsters.1989/vpm-script-library-flippers.md",
           "reviewed": true,
-          "sha256": "49729971135cb02511acafb9cb673ffedf51b855d05d66b6646cbacf168fa692",
+          "sha256": "275475d34c6335c85a2f67fbfe378be52459c7fcfa51bc0a11d9491b7252664a",
           "transcribed_by": "curator, read from the installed library files"
         }
       ],

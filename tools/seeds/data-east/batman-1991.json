@@ -878,7 +878,7 @@
       "kind": "switch",
       "label": "Left EOS",
       "physical": {
-        "notes": "Printed switch-matrix column 2, row 7. The manual prints this address as a flipper end-of-stroke switch. Pinned PinMAME publishes something else on it: btmnGameData declares FLIP_SWNO(15,16), and core.c:1740-1741 - under its own comment 'set switches in matrix for non-fliptronic games' - writes the flipper BUTTON state here through core_setSw. Because this game declares no FLIP_SOL, no FLIP_EOS bit is ever set and the EOS simulation at core.c:1756-1775 never runs, so no end-of-stroke state is modelled at all. A recreation must NOT drive this address: core_updateSw overwrites it every frame. The retained known-working VPW 1.1 script indeed never touches 15 or 16."
+        "notes": "Printed switch-matrix column 2, row 7. The manual prints this address as a flipper end-of-stroke switch. Pinned PinMAME publishes something else on it: btmnGameData declares FLIP_SWNO(15,16), and core.c:1740-1741 - under its own comment 'set switches in matrix for non-fliptronic games' - writes the flipper BUTTON state here through core_setSw. Because this game declares no FLIP_SOL, no FLIP_EOS bit is ever set and the EOS simulation at core.c:1756-1775 never runs, so no end-of-stroke state is modelled at all. A recreation must NOT drive this address: with keyboard handling off (the LibPinMAME default; the retained script sets HandleKeyboard = 0) core_updateSw overwrites it on every update from PinMAME's flipper column, public 84 (the left cabinet button, CORE_SWLLFLIPBUTBIT), so the ROM reads the button state exactly as the host writes it there. The retained known-working VPW 1.1 script never touches 15 or 16; its flipper keys reach DE.VBS vpmKeyDown/vpmKeyUp, which write swLLFlip = 84 (excerpt vpm-script-library-flippers)."
       },
       "provenance": {
         "source_refs": [
@@ -928,7 +928,7 @@
       "kind": "switch",
       "label": "Right EOS",
       "physical": {
-        "notes": "Printed switch-matrix column 2, row 8. The manual prints this address as a flipper end-of-stroke switch. Pinned PinMAME publishes something else on it: btmnGameData declares FLIP_SWNO(15,16), and core.c:1740-1741 - under its own comment 'set switches in matrix for non-fliptronic games' - writes the flipper BUTTON state here through core_setSw. Because this game declares no FLIP_SOL, no FLIP_EOS bit is ever set and the EOS simulation at core.c:1756-1775 never runs, so no end-of-stroke state is modelled at all. A recreation must NOT drive this address: core_updateSw overwrites it every frame. The retained known-working VPW 1.1 script indeed never touches 15 or 16."
+        "notes": "Printed switch-matrix column 2, row 8. The manual prints this address as a flipper end-of-stroke switch. Pinned PinMAME publishes something else on it: btmnGameData declares FLIP_SWNO(15,16), and core.c:1740-1741 - under its own comment 'set switches in matrix for non-fliptronic games' - writes the flipper BUTTON state here through core_setSw. Because this game declares no FLIP_SOL, no FLIP_EOS bit is ever set and the EOS simulation at core.c:1756-1775 never runs, so no end-of-stroke state is modelled at all. A recreation must NOT drive this address: with keyboard handling off (the LibPinMAME default; the retained script sets HandleKeyboard = 0) core_updateSw overwrites it on every update from PinMAME's flipper column, public 82 (the right cabinet button, CORE_SWLRFLIPBUTBIT), so the ROM reads the button state exactly as the host writes it there. The retained known-working VPW 1.1 script never touches 15 or 16; its flipper keys reach DE.VBS vpmKeyDown/vpmKeyUp, which write swLRFlip = 82 (excerpt vpm-script-library-flippers)."
       },
       "provenance": {
         "source_refs": [
@@ -3601,6 +3601,316 @@
     {
       "aliases": [
         {
+          "namespace": "pinmame.switch",
+          "value": "81"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 81,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-81",
+      "kind": "switch",
+      "label": "Unused Flipper Column Lower Right End-of-Stroke (81)",
+      "physical": {
+        "location": "internal public address space",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLRFLIPEOSBIT = 0x01, published at 81 through core_swSeq2m(n) = n + 7. locals.flipMask carries this end-of-stroke bit only when hw.flippers sets FLIP_EOS (implied by FLIP_SOL), and FLIP_SWNO(15,16) sets neither, so core_updateSw neither synthesizes it nor copies it anywhere: PinMAME models no end-of-stroke switch on this machine. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "82"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 82,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-82",
+      "kind": "switch",
+      "label": "Lower Right Flipper Button (PinMAME Flipper Column)",
+      "physical": {
+        "location": "cabinet flipper button",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLRFLIPBUTBIT = 0x02, published at 82 through core_swSeq2m(n) = n + 7. This is the lower right cabinet flipper button as the ROM receives it. The driver declares FLIP_SWNO(15,16) with no FLIP_SOL, so with keyboard handling off (the LibPinMAME default) core_updateSw reads this bit as the host wrote it and, on every update, copies it into matrix switch 16 through core_setSw and fabricates the synthetic 45/46 flipper outputs from it while the switched-solenoid enable is on. Drive this address, not 16: a host write to 16 is overwritten on the next update. The retained known-working script drives it: Table1_KeyDown/Table1_KeyUp (script lines 374-465) hand the right flipper key to DE.VBS vpmKeyDown/vpmKeyUp, which set Controller.Switch(swLRFlip) with swLRFlip = 82 (excerpt vpm-script-library-flippers). The physical counterpart is the right cabinet flipper button, which fires its flipper through the Flipper PCB with no CPU path; the manual prints matrix 16 as that flipper's end-of-stroke switch.",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx-script.batman-vpw-1-1",
+          "vpm-script-library.de-vbs"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "flipper.lower.right.button"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "83"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 83,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-83",
+      "kind": "switch",
+      "label": "Unused Flipper Column Lower Left End-of-Stroke (83)",
+      "physical": {
+        "location": "internal public address space",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLLFLIPEOSBIT = 0x04, published at 83 through core_swSeq2m(n) = n + 7. locals.flipMask carries this end-of-stroke bit only when hw.flippers sets FLIP_EOS (implied by FLIP_SOL), and FLIP_SWNO(15,16) sets neither, so core_updateSw neither synthesizes it nor copies it anywhere: PinMAME models no end-of-stroke switch on this machine. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "84"
+        }
+      ],
+      "availability": "used",
+      "binding": {
+        "device": 84,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-84",
+      "kind": "switch",
+      "label": "Lower Left Flipper Button (PinMAME Flipper Column)",
+      "physical": {
+        "location": "cabinet flipper button",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWLLFLIPBUTBIT = 0x08, published at 84 through core_swSeq2m(n) = n + 7. This is the lower left cabinet flipper button as the ROM receives it. The driver declares FLIP_SWNO(15,16) with no FLIP_SOL, so with keyboard handling off (the LibPinMAME default) core_updateSw reads this bit as the host wrote it and, on every update, copies it into matrix switch 15 through core_setSw and fabricates the synthetic 47/48 flipper outputs from it while the switched-solenoid enable is on. Drive this address, not 15: a host write to 15 is overwritten on the next update. The retained known-working script drives it: Table1_KeyDown/Table1_KeyUp (script lines 374-465) hand the left flipper key to DE.VBS vpmKeyDown/vpmKeyUp, which set Controller.Switch(swLLFlip) with swLLFlip = 84 (excerpt vpm-script-library-flippers). The physical counterpart is the left cabinet flipper button, which fires its flipper through the Flipper PCB with no CPU path; the manual prints matrix 15 as that flipper's end-of-stroke switch.",
+        "switch_type": "button"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpx-script.batman-vpw-1-1",
+          "vpm-script-library.de-vbs"
+        ],
+        "status": "validated"
+      },
+      "roles": [
+        "flipper.lower.left.button"
+      ],
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "cabinet_or_service",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "85"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 85,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-85",
+      "kind": "switch",
+      "label": "Unused Flipper Column Upper Right End-of-Stroke (85)",
+      "physical": {
+        "location": "internal public address space",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWURFLIPEOSBIT = 0x10, published at 85 through core_swSeq2m(n) = n + 7. locals.flipMask carries this end-of-stroke bit only when hw.flippers sets FLIP_EOS (implied by FLIP_SOL), and FLIP_SWNO(15,16) sets neither, so core_updateSw neither synthesizes it nor copies it anywhere: PinMAME models no end-of-stroke switch on this machine. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "86"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 86,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-86",
+      "kind": "switch",
+      "label": "Unused Flipper Column Upper Right Button (86)",
+      "physical": {
+        "location": "internal public address space",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWURFLIPBUTBIT = 0x20, published at 86 through core_swSeq2m(n) = n + 7. core_updateSw copies only the two lower button bits into the matrix and the synthetic outputs; this upper-button bit would join locals.flipMask only if hw.flippers set the matching upper FLIP_SW bit, and FLIP_SWNO(15,16) sets FLIP_SW(FLIP_L) only. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8. DE.VBS names this address swURFlip; its vpmKeyDown/vpmKeyUp write it from a staged right-flipper key only while vpmFlips.FlipperSolNumber(3) is non-zero, which core.vbs makes the default (sURFlipper = 34). The retained script defines cSingleRFlip = 0 (script.vbs line 193), so core.vbs's cvpmFlips2.Init, run by vpmInit, calls NoUpperRightFlipper (core.vbs lines 2111-2117 and 2312), which sets it to 0, so this table never writes the address. The constant is the PinMAME column's upper-right button bit, but core_updateSw does not copy it and the ROM cannot read the address on this machine, so any such write has no effect.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpm-script-library.de-vbs",
+          "vpx-script.batman-vpw-1-1"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "87"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 87,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-87",
+      "kind": "switch",
+      "label": "Unused Flipper Column Upper Left End-of-Stroke (87)",
+      "physical": {
+        "location": "internal public address space",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWULFLIPEOSBIT = 0x40, published at 87 through core_swSeq2m(n) = n + 7. locals.flipMask carries this end-of-stroke bit only when hw.flippers sets FLIP_EOS (implied by FLIP_SOL), and FLIP_SWNO(15,16) sets neither, so core_updateSw neither synthesizes it nor copies it anywhere: PinMAME models no end-of-stroke switch on this machine. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
+          "namespace": "pinmame.switch",
+          "value": "88"
+        }
+      ],
+      "availability": "unused",
+      "binding": {
+        "device": 88,
+        "group": "pinmame.input.switch"
+      },
+      "id": "switch.flipper-column-88",
+      "kind": "switch",
+      "label": "Unused Flipper Column Upper Left Button (88)",
+      "physical": {
+        "location": "internal public address space",
+        "notes": "PinMAME flipper switch column (CORE_FLIPPERSWCOL, internal column 11), bit CORE_SWULFLIPBUTBIT = 0x80, published at 88 through core_swSeq2m(n) = n + 7. core_updateSw copies only the two lower button bits into the matrix and the synthetic outputs; this upper-button bit would join locals.flipMask only if hw.flippers set the matching upper FLIP_SW bit, and FLIP_SWNO(15,16) sets FLIP_SW(FLIP_L) only. A host write survives in the column, but the ROM cannot read it there: s11.c's pia4a_r reads the switch matrix only through core_getSwCol with an eight-bit column strobe, which reaches columns 1-8. DE.VBS names this address swULFlip; its vpmKeyDown/vpmKeyUp write it from a staged left-flipper key only while vpmFlips.FlipperSolNumber(2) is non-zero, which core.vbs makes the default (sULFlipper = 36). The retained script defines cSingleLFlip = 0 (script.vbs line 192), so core.vbs's cvpmFlips2.Init, run by vpmInit, calls NoUpperLeftFlipper (core.vbs lines 2111-2117 and 2312), which sets it to 0, so this table never writes the address. The constant is the PinMAME column's upper-left button bit, but core_updateSw does not copy it and the ROM cannot read the address on this machine, so any such write has no effect.",
+        "switch_type": "other"
+      },
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13",
+          "vpm-script-library.de-vbs",
+          "vpx-script.batman-vpw-1-1"
+        ],
+        "status": "validated"
+      },
+      "spatial": {
+        "provenance": {
+          "source_refs": [
+            "pinmame.core.4ec52ff0ac13"
+          ],
+          "status": "validated"
+        },
+        "reason": "unused",
+        "status": "not_applicable"
+      }
+    },
+    {
+      "aliases": [
+        {
           "namespace": "pinmame.dip",
           "value": "0"
         }
@@ -5725,7 +6035,7 @@
       "kind": "virtual",
       "label": "Synthetic Lower Right Flipper Power",
       "physical": {
-        "notes": "Not a CPU-driven output on this machine. btmnGameData declares no FLIP_SOL, so core.c:1746-1753 synthesises these bits whenever Game On is active and the corresponding flipper button is down. Power and hold therefore assert and release together and are not independently controllable; a recreation must not model them as two separate coils. The physical coils are driven from the Flipper PCB, which the manual documents in its own unnumbered 'Flipper Solenoids' table listing a left and a right flipper only - there is no upper flipper of either hand.",
+        "notes": "Not a CPU-driven output on this machine. btmnGameData declares no FLIP_SOL, so core.c:1746-1753 synthesises these bits whenever the switched-solenoid enable is on and the corresponding cabinet button bit of PinMAME's flipper column is set: public 82, the same bit core_updateSw copies into matrix switch 16. Power and hold therefore assert and release together and are not independently controllable; a recreation must not model them as two separate coils. The physical coils are driven from the Flipper PCB, which the manual documents in its own unnumbered 'Flipper Solenoids' table listing a left and a right flipper only - there is no upper flipper of either hand.",
         "part_number": "23-900"
       },
       "provenance": {
@@ -5769,7 +6079,7 @@
       "kind": "virtual",
       "label": "Synthetic Lower Right Flipper Hold",
       "physical": {
-        "notes": "Not a CPU-driven output on this machine. btmnGameData declares no FLIP_SOL, so core.c:1746-1753 synthesises these bits whenever Game On is active and the corresponding flipper button is down. Power and hold therefore assert and release together and are not independently controllable; a recreation must not model them as two separate coils. The physical coils are driven from the Flipper PCB, which the manual documents in its own unnumbered 'Flipper Solenoids' table listing a left and a right flipper only - there is no upper flipper of either hand.",
+        "notes": "Not a CPU-driven output on this machine. btmnGameData declares no FLIP_SOL, so core.c:1746-1753 synthesises these bits whenever the switched-solenoid enable is on and the corresponding cabinet button bit of PinMAME's flipper column is set: public 82, the same bit core_updateSw copies into matrix switch 16. Power and hold therefore assert and release together and are not independently controllable; a recreation must not model them as two separate coils. The physical coils are driven from the Flipper PCB, which the manual documents in its own unnumbered 'Flipper Solenoids' table listing a left and a right flipper only - there is no upper flipper of either hand.",
         "part_number": "23-900"
       },
       "provenance": {
@@ -5813,7 +6123,7 @@
       "kind": "virtual",
       "label": "Synthetic Lower Left Flipper Power",
       "physical": {
-        "notes": "Not a CPU-driven output on this machine. btmnGameData declares no FLIP_SOL, so core.c:1746-1753 synthesises these bits whenever Game On is active and the corresponding flipper button is down. Power and hold therefore assert and release together and are not independently controllable; a recreation must not model them as two separate coils. The physical coils are driven from the Flipper PCB, which the manual documents in its own unnumbered 'Flipper Solenoids' table listing a left and a right flipper only - there is no upper flipper of either hand.",
+        "notes": "Not a CPU-driven output on this machine. btmnGameData declares no FLIP_SOL, so core.c:1746-1753 synthesises these bits whenever the switched-solenoid enable is on and the corresponding cabinet button bit of PinMAME's flipper column is set: public 84, the same bit core_updateSw copies into matrix switch 15. Power and hold therefore assert and release together and are not independently controllable; a recreation must not model them as two separate coils. The physical coils are driven from the Flipper PCB, which the manual documents in its own unnumbered 'Flipper Solenoids' table listing a left and a right flipper only - there is no upper flipper of either hand.",
         "part_number": "23-900"
       },
       "provenance": {
@@ -5857,7 +6167,7 @@
       "kind": "virtual",
       "label": "Synthetic Lower Left Flipper Hold",
       "physical": {
-        "notes": "Not a CPU-driven output on this machine. btmnGameData declares no FLIP_SOL, so core.c:1746-1753 synthesises these bits whenever Game On is active and the corresponding flipper button is down. Power and hold therefore assert and release together and are not independently controllable; a recreation must not model them as two separate coils. The physical coils are driven from the Flipper PCB, which the manual documents in its own unnumbered 'Flipper Solenoids' table listing a left and a right flipper only - there is no upper flipper of either hand.",
+        "notes": "Not a CPU-driven output on this machine. btmnGameData declares no FLIP_SOL, so core.c:1746-1753 synthesises these bits whenever the switched-solenoid enable is on and the corresponding cabinet button bit of PinMAME's flipper column is set: public 84, the same bit core_updateSw copies into matrix switch 15. Power and hold therefore assert and release together and are not independently controllable; a recreation must not model them as two separate coils. The physical coils are driven from the Flipper PCB, which the manual documents in its own unnumbered 'Flipper Solenoids' table listing a left and a right flipper only - there is no upper flipper of either hand.",
         "part_number": "23-900"
       },
       "provenance": {
@@ -9709,6 +10019,30 @@
         "status": "validated"
       },
       "source": "coil.driver-10"
+    },
+    {
+      "destination": "switch.matrix-16",
+      "id": "relationship.flipper-column-82-to-matrix-16",
+      "kind": "direct",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.flipper-column-82"
+    },
+    {
+      "destination": "switch.matrix-15",
+      "id": "relationship.flipper-column-84-to-matrix-15",
+      "kind": "direct",
+      "provenance": {
+        "source_refs": [
+          "pinmame.core.4ec52ff0ac13"
+        ],
+        "status": "validated"
+      },
+      "source": "switch.flipper-column-84"
     }
   ],
   "schema_version": 2,
@@ -9811,6 +10145,29 @@
       "rights": "NOASSERTION",
       "sha256": "f78f6b40b92c6acef4febe659fd891620773aa6a18715d2ace0cfa6565c1c53b",
       "uri": "external:pinmame-vpx-sources/data-east/batman-1991/Batman%20%28Data%20East%201991%29%20VPW%20v1.1.vbs"
+    },
+    {
+      "acquired_at": "2026-09-25T23:32:01Z",
+      "attribution": "VPinMAME / Visual Pinball script-library maintainers",
+      "excerpts": [
+        {
+          "id": "excerpt.batman.vpm-script-library-flippers",
+          "locator": "de.vbs lines 33-36, 62-79 and 94-111; core.vbs lines 2061-2062, 2090, 2101-2102, 2106-2119 and 2312; script.vbs lines 182, 188, 192-193, 264, 271, 374-440 and 443-465",
+          "method": "manual",
+          "path": "evidence/excerpts/data-east.batman.1991/vpm-script-library-flippers.md",
+          "reviewed": true,
+          "sha256": "bfb33f30bbe333b086aa6edd704227dcd460a357397618c394d406a71cb02530",
+          "transcribed_by": "curator, read from the library and script files"
+        }
+      ],
+      "id": "vpm-script-library.de-vbs",
+      "kind": "vpx_script",
+      "license": "NOASSERTION",
+      "locator": "The VPinMAME script library the retained table loads at runtime (script.vbs line 182 LoadVPM \"01120100\", \"DE.VBS\", 3.36; DE.VBS executes core.vbs), retained from the contributor's working installation together with core.vbs (SHA-256 a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69). DE.VBS defines swLRFlip = 82 and swLLFlip = 84 and sets them from the flipper keys in vpmKeyDown/vpmKeyUp, and names the staged upper flipper keys swURFlip = 86 and swULFlip = 88.",
+      "original_filename": "de.vbs",
+      "rights": "NOASSERTION",
+      "sha256": "8858b4509a600f77a8a5844f138ed1c71f19b023550660efd62e308588e84d04",
+      "uri": "external:pinmame-review-artifacts/vpm-script-libs/de.vbs"
     },
     {
       "attribution": "VPW; table metadata credits Javier, Dark and Ben Logan",

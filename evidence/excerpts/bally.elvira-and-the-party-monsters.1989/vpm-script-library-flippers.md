@@ -85,4 +85,4 @@ Sub Table1_KeyUp(ByVal KeyCode)
 End Sub
 ```
 
-The table's script never calls `NoUpperLeftFlipper` or `NoUpperRightFlipper` and never names a staged flipper key.
+The table's script never calls `NoUpperLeftFlipper` or `NoUpperRightFlipper`, never names a staged flipper key, and never defines `cSingleLFlip` or `cSingleRFlip`.

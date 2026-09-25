@@ -21,7 +21,7 @@ Pinned `s11.c` types output 9 as a bulb, 11 as GI, 12-15 as bulbs, and 25-32 as 
 
 The controller id is `pinmame.dataeast`, not `pinmame.system-11`: sharing PinMAME's `s11.c` implementation does not turn the physical Data East CPU/driver board into Williams System 11 hardware. The reviewed shared profile now supplies the platform address contract. The machine-level `inversion_applied_by_emulator` flag is true because consumers receive normalized public states and must not invert them again. Independently, `INITGAMES11` leaves Playboy's per-game `wpc.invSw` array all zeroes.
 
-The manual prints physical flipper EOS contacts at matrix 15/16, but `FLIP1516` makes the non-fliptronic core overwrite those public addresses with left/right cabinet-button state. This is a PinMAME public-address behavior rather than a description of the physical EOS wiring. A recreation should use public 15/16 as cabinet-button state and must not infer physical EOS state from them.
+The manual prints physical flipper EOS contacts at matrix 15/16, but `FLIP1516` makes the non-fliptronic core overwrite those public addresses with left/right cabinet-button state. This is a PinMAME public-address behavior rather than a description of the physical EOS wiring, and no physical EOS state can be inferred from them. The button state comes from PinMAME's flipper column, `CORE_FLIPPERSWCOL` (internal column 11), which `core_swSeq2m(n) = n + 7` publishes at switches 81-88: with keyboard handling off `core_updateSw` copies the right button (82) into 16 and the left button (84) into 15 on every update, and fabricates 45/46 from 82 and 47/48 from 84. **A recreation drives 82/84, never 15/16**; a write to 15/16 is overwritten on the next update. The other six column positions are end-of-stroke and upper-button bits this driver does not use and the ROM cannot read, so they are recorded unused. The retained table never writes 15/16: its flipper keys reach `DE2.VBS` `vpmKeyDown`/`vpmKeyUp`, which write `swLRFlip = 82` and `swLLFlip = 84` (`DE2.VBS`, unlike `DE.VBS`, names the staged upper keys 81/83).
 
 ## Lamp mapping and object accounting
 
@@ -59,10 +59,10 @@ Status remains `partial`; `coverage.missing` is [`output_semantics`, `mechanism_
 
 - `output_semantics`: callback group aliases/comments and core C-bank bulb typing disagree with printed physical functions.
 - `mechanism_behavior`: hidden Grotto transfer geometry and hardware-triggered special-coil pulse behavior are absent.
-- `polarity`: no original-machine trace reconciles cabinet button/EOS, K1 relay, and raw versus decoded output states.
+- `polarity`: no original-machine trace reconciles the K1 relay, the flipper windings, and raw versus decoded output states. The controller-facing level of switches 15/16 is settled: `core_updateSw` copies the cabinet-button bits at 82/84 into them.
 - `spatial_placement`: table objects are presentation candidates, flash groups lack socket surveys, and seven routed PINBALL lamps are not located by the manual's drawing at all.
 - `unresolved_conflicts`: eight source disagreements remain first-class. Two further records, the flipper end-of-stroke naming pair, are kept as ignored and do not block.
 
 ## Recreation boundary
 
-Consume PinMAME's decoded public mux outputs without adding another IRQ delay. Treat public 15/16 as flipper buttons rather than physical EOS contacts. Do not convert presentation proxies into extra hardware, infer socket locations from names, or erase the manual/core and manual/table disagreements.
+Consume PinMAME's decoded public mux outputs without adding another IRQ delay. Read public 15/16 as flipper-button state rather than physical EOS contacts, and drive the buttons at 82/84. Do not convert presentation proxies into extra hardware, infer socket locations from names, or erase the manual/core and manual/table disagreements.

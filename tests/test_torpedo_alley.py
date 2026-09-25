@@ -117,7 +117,8 @@ class TorpedoAlleyDefinitionTests(unittest.TestCase):
         for collection in (self.definition["inputs"],self.definition["outputs"]):
             for item in collection:
                 groups.setdefault(item["binding"]["group"],set()).add(item["binding"]["device"])
-        self.assertEqual({-7,-6}|set(range(1,65)),groups["pinmame.input.switch"])
+        # 81-88 are PinMAME's flipper column (CORE_FLIPPERSWCOL), not matrix positions.
+        self.assertEqual({-7,-6}|set(range(1,65))|set(range(81,89)),groups["pinmame.input.switch"])
         self.assertEqual({0},groups["pinmame.input.dip"])
         self.assertEqual(set(range(1,51)),groups["pinmame.output.solenoid"])
         self.assertEqual(set(range(1,65)),groups["pinmame.output.lamp"])
@@ -144,9 +145,12 @@ class TorpedoAlleyDefinitionTests(unittest.TestCase):
     def test_switch_namespace_is_complete_and_15_16_are_printed_eos(self) -> None:
         switches = {
             item["binding"]["device"]: item for item in self.definition["inputs"]
-            if item["binding"]["group"] == "pinmame.input.switch" and item["binding"]["device"] > 0
+            if item["binding"]["group"] == "pinmame.input.switch" and 0 < item["binding"]["device"] < 81
         }
         self.assertEqual(set(range(1, 65)), set(switches))
+        for address, button in ((15, 84), (16, 82)):
+            self.assertIn(f"public {button}", switches[address]["physical"]["notes"], address)
+            self.assertIn("have no effect", switches[address]["physical"]["notes"], address)
         for address, printed in enumerate(PRINTED_SWITCHES, start=1):
             item = switches[address]
             expected = SWITCH_LABEL_OVERRIDES.get(address, printed)
@@ -255,7 +259,12 @@ class TorpedoAlleyDefinitionTests(unittest.TestCase):
         relationships = self.definition["relationships"]
         relay = [item for item in relationships if item["id"].startswith("relationship.lr-relay-")]
         special = [item for item in relationships if item["id"].startswith("relationship.special-")]
-        self.assertEqual(13, len(relationships))
+        column = [item for item in relationships if item["id"].startswith("relationship.flipper-column-")]
+        self.assertEqual(15, len(relationships))
+        self.assertEqual(
+            {("switch.flipper-column-82", "switch.matrix-16"), ("switch.flipper-column-84", "switch.matrix-15")},
+            {(item["source"], item["destination"]) for item in column},
+        )
         self.assertEqual(8, len(relay))
         self.assertEqual({f"coil.driver-{address}" for address in range(25, 33)}, {item["destination"] for item in relay})
         self.assertTrue(all(item["source"] == "coil.driver-10" for item in relay))
@@ -422,7 +431,9 @@ class TorpedoAlleyDefinitionTests(unittest.TestCase):
                         foreign_tables.add(value.casefold())
         artifact_upper = artifact_text.upper()
         self.assertEqual(set(), {token for token in foreign_generations - own_generations if token in artifact_upper})
-        self.assertEqual(set(), foreign_hardware & set(re.findall(r"\b0x[0-9a-f]+\b", artifact_text)))
+        # Only the generated flipper-column phrases "CORE_SW...BIT = 0x.." are core.h switch bits; strip
+        # those phrases, not the token values, so a leaked 0x10/0x20/0x80 generation is still caught.
+        self.assertEqual(set(), foreign_hardware & set(re.findall(r"\b0x[0-9a-f]+\b", re.sub(r"\bcore_sw\w+bit = 0x[0-9a-f]{2}\b", "", artifact_text, flags=re.I))))
         self.assertEqual(set(), {value for value in foreign_tables if value in artifact_text})
         own_table = self.sources["vpx-table.torpedo-alley-hybrid-mod-1-1"]
         self.assertEqual("Torpedo Alley (Data East 1988) Physics Sound Hybrid MOD 1.1.vpx", own_table["original_filename"])

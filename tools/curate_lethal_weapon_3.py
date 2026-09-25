@@ -23,6 +23,15 @@ import tempfile
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import load_json, write_json
+from pinmame_flipper_column import (
+    VPM_CORE_SHA256,
+    VPM_DE_LIBRARY_SOURCE,
+    VPM_DE_LIBRARY_URI,
+    VPM_DE_SHA256,
+    flipper_column_inputs,
+    flipper_column_relationships,
+    vpm_staged_flipper_notes,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFINITION_PATH = ROOT / "machines/partial/data-east/lethal-weapon-3-1992.json"
@@ -56,6 +65,7 @@ TABLE = "vpx-table.lethal-weapon-3-vpw-2-0"
 SCRIPT_REF = "vpx-script.lethal-weapon-3-vpw-2-0"
 LEGACY = "legacy.game.lw3"
 EXTRACTION = "vpx-extraction.lethal-weapon-3-vpw-2-0"
+VPM_EXCERPT_SHA256 = "f171305e3876095bbd5c124be7f58db054a38e4842ac89a485bcd69cf1b205af"
 
 SW = TRANSCRIPTION["switch_matrix"]
 LAMPS = TRANSCRIPTION["lamp_matrix"]
@@ -264,15 +274,21 @@ for address in range(1, 65):
             "games' - mirrors the flipper BUTTON state here through core_setSw. Because this game "
             "declares no FLIP_SOL, no FLIP_EOS bit is ever "
             "set and the EOS simulation at core.c:1756-1775 never runs, so no end-of-stroke state "
-            "is modelled at all. The retained known-working VPW 2.0 script does drive this address "
-            "from the cabinet flipper key - script.vbs:928-929 on key down and 960-961 on key up - "
-            "which matches what the emulator already mirrors here and is therefore redundant "
-            "rather than authoritative. The mirroring is mode-dependent: those two core_setSw "
-            "calls sit inside the #ifdef PROC_SUPPORT / if (!coreGlobals.p_rocEn) guard at "
-            "core.c:1733, so an ordinary emulation build rewrites this address from the flipper "
-            "button bits on every core_updateSw pass and no recreation can publish an "
-            "end-of-stroke reading on it, while a P-ROC build driving real hardware skips the "
-            "write and takes the state from the physical switch."
+            "is modelled at all. The copy reads PinMAME's flipper column: with keyboard handling off "
+            "(the LibPinMAME default; the retained script sets HandleKeyboard=0) core_updateSw "
+            f"rewrites this address on every update from public {84 if address == 15 else 82} (the "
+            f"{'left' if address == 15 else 'right'} cabinet button, "
+            f"{'CORE_SWLLFLIPBUTBIT' if address == 15 else 'CORE_SWLRFLIPBUTBIT'}), so the ROM reads the "
+            f"button state exactly as the host writes it there. A consumer drives {84 if address == 15 else 82}, "
+            "not this address. The retained known-working VPW 2.0 script also writes this address "
+            f"directly from the {'left' if address == 15 else 'right'} flipper key - script.vbs:"
+            f"{928 if address == 15 else 929} on key down and {960 if address == 15 else 961} on key up - and "
+            "those writes are overwritten on the next update and have no effect, a defect of the table "
+            "rather than a fact about the machine; the same key reaches DE.VBS vpmKeyDown/vpmKeyUp, "
+            f"which write {'swLLFlip = 84' if address == 15 else 'swLRFlip = 82'} (excerpt "
+            "vpm-script-library-flippers). The two core_setSw calls sit inside the #ifdef "
+            "PROC_SUPPORT / if (!coreGlobals.p_rocEn) guard at core.c:1733, so only a P-ROC build "
+            "driving real hardware skips the copy and takes the state from the physical switch."
         )
     canonical_name = {
         15: "Left Flipper Cabinet Button",
@@ -341,6 +357,26 @@ for _address, _label, _port_label in (
         )},
         "spatial": not_applicable("cabinet_or_service", [CORE]),
     })
+
+# PinMAME's flipper column (public 81-88). FLIP1516 = FLIP_SWNO(15,16) is (left, right) in macro order:
+# core_updateSw copies 84 into 15 and 82 into 16, so a consumer drives 82/84.
+FLIP_SWNO = (15, 16)
+inputs.extend(flipper_column_inputs(
+    flip_swno=FLIP_SWNO, flip_swno_text="FLIP1516 = FLIP_SWNO(15,16)",
+    core_refs=(CORE,), button_refs=(SCRIPT_REF, VPM_DE_LIBRARY_SOURCE),
+    button_notes={
+        side: (
+            f"The retained known-working script drives it: Table1_KeyDown/Table1_KeyUp (script lines 919-970) hand the {side} "
+            f"flipper key to DE.VBS vpmKeyDown/vpmKeyUp, which set Controller.Switch({'swLLFlip' if side == 'left' else 'swLRFlip'}) with "
+            f"{'swLLFlip = 84' if side == 'left' else 'swLRFlip = 82'} (excerpt vpm-script-library-flippers). The physical counterpart is the "
+            f"{side} cabinet flipper button, which the manual's Switch Part Numbers table lists at matrix {15 if side == 'left' else 16} "
+            "as a cabinet switch."
+        )
+        for side in ("left", "right")
+    },
+    unused_notes=vpm_staged_flipper_notes(library="DE.VBS"),
+    unused_note_refs=(VPM_DE_LIBRARY_SOURCE,),
+))
 
 # DIP: s11.c declares MDRV_DIPS(1) and reads a single jumper bit on PIA2 PA7. The public address
 # is 0, matching the platform profile's own {"values": [0]} rule and the Whirlwind record.
@@ -653,8 +689,10 @@ for address, (label, side) in FLIPPERS.items():
             "part_number": flip["coil_type"],
             "notes": (
                 "Not a CPU-driven output on this machine. lw3GameData declares no FLIP_SOL, so "
-                "core.c:1746-1753 synthesises these bits whenever Game On is active and the "
-                "corresponding flipper button is down. Power and hold therefore assert and "
+                "core.c:1746-1753 synthesises these bits whenever the switched-solenoid enable is on "
+                "and the corresponding cabinet button bit of PinMAME's flipper column is set: public "
+                f"{82 if side == 'right' else 84}, the same bit core_updateSw copies into matrix switch "
+                f"{16 if side == 'right' else 15}. Power and hold therefore assert and "
                 "release together and are not independently controllable; a recreation must not "
                 "model them as two separate coils. The physical coils are driven from the "
                 "Flipper PCB, which the manual documents in its own unnumbered 'Flipper "
@@ -901,7 +939,9 @@ relationships = [
         "provenance": prov("validated", [MANUAL, CORE]),
     }
     for drive in range(1, 9)
-]
+] + flipper_column_relationships(
+    flip_swno=FLIP_SWNO, matrix_ids={15: "switch.matrix-15", 16: "switch.matrix-16"}, refs=(CORE,),
+)
 
 conflicts = [
     {
@@ -1124,6 +1164,29 @@ sources = [
         "attribution": "VPW; the table script credits tomate, apophis, iaakki, mcarter78, DGrimmReaper, fluffhead and Wylte",
     },
     {
+        "id": VPM_DE_LIBRARY_SOURCE, "kind": "vpx_script",
+        "uri": VPM_DE_LIBRARY_URI,
+        "original_filename": "de.vbs", "sha256": VPM_DE_SHA256, "acquired_at": "2026-09-25T23:32:01Z",
+        "locator": (
+            "The VPinMAME script library the retained table loads at runtime (script.vbs line 114 LoadVPM "
+            "\"03060000\", \"DE.VBS\", 3.36; DE.VBS executes core.vbs), retained from the contributor's working "
+            f"installation together with core.vbs (SHA-256 {VPM_CORE_SHA256}). DE.VBS defines swLRFlip = 82 and "
+            "swLLFlip = 84 and sets them from the flipper keys in vpmKeyDown/vpmKeyUp, and names the staged upper "
+            "flipper keys swURFlip/swULFlip at 86 and 88."
+        ),
+        "license": "NOASSERTION", "attribution": "VPinMAME / Visual Pinball script-library maintainers",
+        "rights": "NOASSERTION",
+        "excerpts": [
+            {
+                "id": "excerpt.lethal-weapon-3.vpm-script-library-flippers",
+                "locator": "de.vbs lines 33-36, 62-79 and 94-111; core.vbs lines 2061-2062 and 2090; script.vbs lines 114, 336, 919-948 and 951-970",
+                "path": "evidence/excerpts/data-east.lethal-weapon-3.1992/vpm-script-library-flippers.md",
+                "sha256": VPM_EXCERPT_SHA256,
+                "method": "manual", "transcribed_by": "curator, read from the library and script files", "reviewed": True,
+            },
+        ],
+    },
+    {
         "id": EXTRACTION, "kind": "vpx_table",
         "uri": "external:pinmame-vpx-sources/data-east/lethal-weapon-3-1992/extraction-manifest.json",
         "locator": (f"vpxtool extraction of the retained table, {HASHES['extraction_file_count']} files, "
@@ -1314,7 +1377,9 @@ The manual contradicts itself. Its switch-matrix chart names addresses 15 and 16
 
 **The mirroring is mode-dependent, and an unqualified rule here would be wrong.** Those two `core_setSw` calls sit inside `#ifdef PROC_SUPPORT` / `if (!coreGlobals.p_rocEn)` at `core.c:1733`, under the comment "Only handle flipper switches if we're not in a real game, otherwise they will get physically activated anyway". In an ordinary emulation build the addresses are rewritten from the flipper button bits on every `core_updateSw` pass, so a recreation cannot publish an end-of-stroke reading on them. In a P-ROC build driving real hardware the writes are skipped, because physical switches supply the state instead.
 
-The retained known-working VPW 2.0 script does drive both addresses from the cabinet flipper key, at `script.vbs:928-929` on key down and `960-961` on key up. That agrees with what the emulator mirrors, so it is redundant in an ordinary build rather than authoritative - and it is what a P-ROC-mode consumer would need. An earlier revision of this note asserted flatly that a recreation "must not drive 15 or 16" while the working recreation does exactly that; the rule was both unqualified and contradicted by the evidence.
+The mirrored state comes from PinMAME's flipper column, `CORE_FLIPPERSWCOL` (internal column 11), which `core_swSeq2m(n) = n + 7` publishes at switches 81-88. With keyboard handling off (the LibPinMAME default) `core_updateSw` copies the right button (82) into 16 and the left button (84) into 15, and fabricates 45/46 from 82 and 47/48 from 84, so **a consumer drives 82/84, never 15/16**. The other six column positions are end-of-stroke and upper-button bits this driver does not use and the ROM cannot read, and are recorded unused.
+
+The retained known-working VPW 2.0 script writes both addresses directly from the cabinet flipper key, at `script.vbs:928-929` on key down and `960-961` on key up. In an emulation build those writes are overwritten on the next update and have no effect; that is a defect of the table, not a fact about the machine. The table still works because the same keys reach `DE.VBS` `vpmKeyDown`/`vpmKeyUp`, which write `swLRFlip = 82` and `swLLFlip = 84`. An earlier revision of this note read the direct writes as what a P-ROC-mode consumer would need. In a P-ROC build `core_updateSw` skips the copy and the state comes from the physical switches, so the table's writes are not what a P-ROC consumer needs either.
 
 The superseded legacy record labels them "Left/Right Flipper Button", which describes what the emulator publishes rather than what the manual prints; both are recorded here.
 

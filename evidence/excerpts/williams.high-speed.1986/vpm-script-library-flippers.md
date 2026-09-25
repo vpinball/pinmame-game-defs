@@ -72,4 +72,4 @@ Function KeyUpHandler(ByVal k) : KeyUpHandler = vpmKeyUp(k) : End Function
 Neither handler writes `Controller.Switch(37)` or `Controller.Switch(38)`, and no other line of the script
 writes either address or any of `81-88` by number.
 
-The table's script never calls `NoUpperLeftFlipper` or `NoUpperRightFlipper` and never names a staged flipper key.
+The table's script never calls `NoUpperLeftFlipper` or `NoUpperRightFlipper`, never names a staged flipper key, and never defines `cSingleLFlip` or `cSingleRFlip`.

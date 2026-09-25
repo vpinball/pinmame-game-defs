@@ -55,7 +55,7 @@ MANUAL_SUPPORT_SOURCE = "manual-support.williams.high-speed.1986"
 VPX_TABLE_SOURCE = "vpx-table.high-speed-1986"
 VPX_SCRIPT_SOURCE = "vpx-script.high-speed-1986"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.high-speed-1986"
-VPM_EXCERPT_SHA256 = "f0f55c03babc4d24d161aa74e41fbfa0664401c30bfa6db83533144a6c0ffef1"
+VPM_EXCERPT_SHA256 = "7999c781e4547fa99276813bdd1bb08148f5f0a29f5954d581be7e66b75d5df8"
 # (left, right) in the driver's own FLIP_SWNO macro order.
 FLIP_SWNO = (37, 38)
 

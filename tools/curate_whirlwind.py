@@ -48,7 +48,7 @@ MANUAL_SUPPORT_SOURCE = "manual-support.williams.whirlwind.1990"
 VPX_TABLE_SOURCE = "vpx-table.whirlwind-1990"
 VPX_SCRIPT_SOURCE = "vpx-script.whirlwind-1990"
 VPX_EXTRACTION_SOURCE = "vpx-extraction.whirlwind-1990"
-VPM_EXCERPT_SHA256 = "a1dec5cc2af3fa8dee4e1efb73ad2920ee8f2a214b8cd648682b0ca920bbf471"
+VPM_EXCERPT_SHA256 = "4264fb8055edb5553560743a73ef9460cbae9ca93ce832cfc87ff833c12112dd"
 # (left, right) in the driver's own FLIP_SWNO macro order.
 FLIP_SWNO = (58, 57)
 

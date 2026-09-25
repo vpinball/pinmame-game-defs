@@ -126,9 +126,17 @@ class SecretServiceDefinitionTests(unittest.TestCase):
     def test_switch_namespace_is_complete_and_flippers_are_eos_contacts(self) -> None:
         switches = {
             item["binding"]["device"]: item for item in self.definition["inputs"]
-            if item["binding"]["group"] == "pinmame.input.switch" and item["binding"]["device"] > 0
+            if item["binding"]["group"] == "pinmame.input.switch" and 0 < item["binding"]["device"] < 81
         }
         self.assertEqual(set(range(1, 65)), set(switches))
+        column = {
+            item["binding"]["device"]: item for item in self.definition["inputs"]
+            if item["binding"]["group"] == "pinmame.input.switch" and item["binding"]["device"] >= 81
+        }
+        self.assertEqual(set(range(81, 89)), set(column))
+        self.assertEqual({82, 84}, {address for address, item in column.items() if item["availability"] == "used"})
+        for address, button in ((30, 84), (31, 82)):
+            self.assertIn(f"public {button}", switches[address]["physical"]["notes"], address)
         for address, expected in enumerate(SWITCH_FIXTURE, start=1):
             item = switches[address]
             self.assertEqual("unused" if expected is None else "used", item["availability"], address)
@@ -233,9 +241,15 @@ class SecretServiceDefinitionTests(unittest.TestCase):
         self.assertEqual(["coil.driver-19"], mechanisms["mechanism.blue-pop-bumper"]["actuators"])
 
     def test_relay_relationships_cover_public_25_through_32(self) -> None:
-        self.assertEqual(8, len(self.definition["relationships"]))
-        self.assertEqual({f"coil.driver-{address}" for address in range(25, 33)}, {item["destination"] for item in self.definition["relationships"]})
-        self.assertTrue(all(item["source"] == "coil.driver-10" and item["provenance"]["status"] == "conflicted" for item in self.definition["relationships"]))
+        relay = [item for item in self.definition["relationships"] if item["source"] == "coil.driver-10"]
+        self.assertEqual(8, len(relay))
+        self.assertEqual({f"coil.driver-{address}" for address in range(25, 33)}, {item["destination"] for item in relay})
+        self.assertTrue(all(item["provenance"]["status"] == "conflicted" for item in relay))
+        # The only other relationships are core_updateSw's two flipper-column copies.
+        self.assertEqual(
+            {("switch.flipper-column-82", "switch.matrix-31"), ("switch.flipper-column-84", "switch.matrix-30")},
+            {(item["source"], item["destination"]) for item in self.definition["relationships"] if item not in relay},
+        )
 
     def test_all_ten_conflicts_are_first_class(self) -> None:
         self.assertEqual({
@@ -411,7 +425,9 @@ class SecretServiceDefinitionTests(unittest.TestCase):
                         foreign_table_fingerprints.add(value.casefold())
         forbidden_generations = foreign_generation_constants - own_generation_constants
         artifact_upper = artifact_text.upper()
-        claimed_hardware_generations = set(re.findall(r"\b0x[0-9a-f]+\b", artifact_text))
+        # Only the generated flipper-column phrases "CORE_SW...BIT = 0x.." are core.h switch bits; strip
+        # those phrases, not the token values, so a leaked 0x10/0x20/0x80 generation is still caught.
+        claimed_hardware_generations = set(re.findall(r"\b0x[0-9a-f]+\b", re.sub(r"\bcore_sw\w+bit = 0x[0-9a-f]{2}\b", "", artifact_text, flags=re.I)))
         self.assertEqual(set(), {token for token in forbidden_generations if token in artifact_upper})
         self.assertEqual(set(), foreign_hardware_generations & claimed_hardware_generations)
         self.assertEqual(set(), {value for value in foreign_table_fingerprints if value in artifact_text})

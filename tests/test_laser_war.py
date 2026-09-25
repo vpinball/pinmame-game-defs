@@ -115,8 +115,15 @@ class LaserWarDefinitionTests(unittest.TestCase):
         self.assertIn("PIA or K1-multiplexed public state", output_semantics["reason"])
 
     def test_switch_namespace_is_complete_and_matches_independent_fixture(self) -> None:
-        matrix = {item["binding"]["device"]: item for item in self.definition["inputs"] if item["binding"]["group"] == "pinmame.input.switch" and item["binding"]["device"] > 0}
+        matrix = {item["binding"]["device"]: item for item in self.definition["inputs"] if item["binding"]["group"] == "pinmame.input.switch" and 0 < item["binding"]["device"] < 81}
         self.assertEqual(set(range(1, 65)), set(matrix))
+        column = {item["binding"]["device"]: item for item in self.definition["inputs"] if item["binding"]["group"] == "pinmame.input.switch" and item["binding"]["device"] >= 81}
+        self.assertEqual(set(range(81, 89)), set(column))
+        self.assertEqual({82, 84}, {address for address, item in column.items() if item["availability"] == "used"})
+        for address, button in ((46, 82), (47, 84)):
+            notes = matrix[address]["physical"]["notes"]
+            self.assertIn(f"public {button}", notes, address)
+            self.assertIn("overwritten on the next update and have no effect", notes, address)
         for address, printed in enumerate(TECH_CHART_SWITCHES, start=1):
             item = matrix[address]
             self.assertEqual("unused" if printed is None else "used", item["availability"], address)
@@ -400,7 +407,9 @@ class LaserWarDefinitionTests(unittest.TestCase):
 
         generation_constants = set(re.findall(r"\bGEN_[A-Z0-9_]+\b", "\n".join(texts)))
         self.assertLessEqual(generation_constants, {"GEN_DE"})
-        hardware_tokens = set(re.findall(r"\b0x[0-9a-f]+\b", artifact_text))
+        # Only the generated flipper-column phrases "CORE_SW...BIT = 0x.." are core.h switch bits; strip
+        # those phrases, not the token values, so a leaked 0x10/0x20/0x80 generation is still caught.
+        hardware_tokens = set(re.findall(r"\b0x[0-9a-f]+\b", re.sub(r"\bcore_sw\w+bit = 0x[0-9a-f]{2}\b", "", artifact_text, flags=re.I)))
         self.assertEqual({"0x1000"}, hardware_tokens)
 
         other_table_fingerprints = set()

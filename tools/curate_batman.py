@@ -24,6 +24,15 @@ import tempfile
 from pathlib import Path
 
 from pinmame_game_defs.jsonio import load_json, write_json
+from pinmame_flipper_column import (
+    VPM_CORE_SHA256,
+    VPM_DE_LIBRARY_SOURCE,
+    VPM_DE_LIBRARY_URI,
+    VPM_DE_SHA256,
+    flipper_column_inputs,
+    flipper_column_relationships,
+    vpm_staged_flipper_notes,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFINITION_PATH = ROOT / "machines/partial/data-east/batman-1991.json"
@@ -55,6 +64,7 @@ SCRIPT_REF = "vpx-script.batman-vpw-1-1"
 LEGACY = "legacy.game.batman"
 EXTRACTION = "vpx-extraction.batman-vpw-1-1"
 IPDB = "ipdb.machine.195"
+VPM_EXCERPT_SHA256 = "bfb33f30bbe333b086aa6edd704227dcd460a357397618c394d406a71cb02530"
 
 SW = TRANSCRIPTION["switch_matrix"]
 LAMPS = TRANSCRIPTION["lamp_matrix"]
@@ -173,8 +183,15 @@ for address in range(1, 65):
             "games' - writes the flipper BUTTON state here through core_setSw. Because this game "
             "declares no FLIP_SOL, no FLIP_EOS bit is ever set and the EOS simulation at "
             "core.c:1756-1775 never runs, so no end-of-stroke state is modelled at all. "
-            "A recreation must NOT drive this address: core_updateSw overwrites it every frame. "
-            "The retained known-working VPW 1.1 script indeed never touches 15 or 16."
+            "A recreation must NOT drive this address: with keyboard handling off (the LibPinMAME "
+            "default; the retained script sets HandleKeyboard = 0) core_updateSw overwrites it on "
+            f"every update from PinMAME's flipper column, public {84 if address == 15 else 82} (the "
+            f"{'left' if address == 15 else 'right'} cabinet button, "
+            f"{'CORE_SWLLFLIPBUTBIT' if address == 15 else 'CORE_SWLRFLIPBUTBIT'}), so the ROM reads "
+            "the button state exactly as the host writes it there. The retained known-working VPW "
+            "1.1 script never touches 15 or 16; its flipper keys reach DE.VBS vpmKeyDown/vpmKeyUp, "
+            f"which write {'swLLFlip = 84' if address == 15 else 'swLRFlip = 82'} (excerpt "
+            "vpm-script-library-flippers)."
         )
     entry = {
         "id": device_id,
@@ -239,6 +256,29 @@ for _address, _label, _port_label in (
         )},
         "spatial": not_applicable("cabinet_or_service", [CORE]),
     })
+
+# PinMAME's flipper column (public 81-88). FLIP_SWNO(15,16) is (left, right) in macro order:
+# core_updateSw copies 84 into 15 and 82 into 16, so a consumer drives 82/84.
+FLIP_SWNO = (15, 16)
+inputs.extend(flipper_column_inputs(
+    flip_swno=FLIP_SWNO, flip_swno_text="FLIP_SWNO(15,16)",
+    core_refs=(CORE,), button_refs=(SCRIPT_REF, VPM_DE_LIBRARY_SOURCE),
+    button_notes={
+        side: (
+            f"The retained known-working script drives it: Table1_KeyDown/Table1_KeyUp (script lines 374-465) hand "
+            f"the {side} flipper key to DE.VBS vpmKeyDown/vpmKeyUp, which set Controller.Switch("
+            f"{'swLLFlip' if side == 'left' else 'swLRFlip'}) with {'swLLFlip = 84' if side == 'left' else 'swLRFlip = 82'} "
+            f"(excerpt vpm-script-library-flippers). The physical counterpart is the {side} cabinet flipper button, "
+            "which fires its flipper through the Flipper PCB with no CPU path; the manual prints matrix "
+            f"{15 if side == 'left' else 16} as that flipper's end-of-stroke switch."
+        )
+        for side in ("left", "right")
+    },
+    unused_notes=vpm_staged_flipper_notes(
+        library="DE.VBS", single_flip_at={86: "script.vbs line 193", 88: "script.vbs line 192"},
+    ),
+    unused_note_refs=(VPM_DE_LIBRARY_SOURCE, SCRIPT_REF),
+))
 
 # DIP: s11.c declares MDRV_DIPS(1) and reads a single jumper bit on PIA2 PA7. The public address
 # is 0, matching the platform profile's own {"values": [0]} rule and the Whirlwind record.
@@ -517,8 +557,10 @@ for address, (label, side) in FLIPPERS.items():
             "part_number": flip["coil_type"],
             "notes": (
                 "Not a CPU-driven output on this machine. btmnGameData declares no FLIP_SOL, so "
-                "core.c:1746-1753 synthesises these bits whenever Game On is active and the "
-                "corresponding flipper button is down. Power and hold therefore assert and "
+                "core.c:1746-1753 synthesises these bits whenever the switched-solenoid enable is on "
+                "and the corresponding cabinet button bit of PinMAME's flipper column is set: public "
+                f"{82 if side == 'right' else 84}, the same bit core_updateSw copies into matrix switch "
+                f"{16 if side == 'right' else 15}. Power and hold therefore assert and "
                 "release together and are not independently controllable; a recreation must not "
                 "model them as two separate coils. The physical coils are driven from the "
                 "Flipper PCB, which the manual documents in its own unnumbered 'Flipper "
@@ -717,7 +759,9 @@ relationships = [
         "provenance": prov("validated", [MANUAL, CORE]),
     }
     for drive in range(1, 9)
-]
+] + flipper_column_relationships(
+    flip_swno=FLIP_SWNO, matrix_ids={15: "switch.matrix-15", 16: "switch.matrix-16"}, refs=(CORE,),
+)
 
 conflicts = [
     {
@@ -949,6 +993,29 @@ sources = [
         "known_working": True,
         "license": "NOASSERTION", "rights": "NOASSERTION",
         "attribution": "VPW; table metadata credits Javier, Dark and Ben Logan",
+    },
+    {
+        "id": VPM_DE_LIBRARY_SOURCE, "kind": "vpx_script",
+        "uri": VPM_DE_LIBRARY_URI,
+        "original_filename": "de.vbs", "sha256": VPM_DE_SHA256, "acquired_at": "2026-09-25T23:32:01Z",
+        "locator": (
+            "The VPinMAME script library the retained table loads at runtime (script.vbs line 182 LoadVPM "
+            "\"01120100\", \"DE.VBS\", 3.36; DE.VBS executes core.vbs), retained from the contributor's working "
+            f"installation together with core.vbs (SHA-256 {VPM_CORE_SHA256}). DE.VBS defines swLRFlip = 82 and "
+            "swLLFlip = 84 and sets them from the flipper keys in vpmKeyDown/vpmKeyUp, and names the staged upper "
+            "flipper keys swURFlip = 86 and swULFlip = 88."
+        ),
+        "license": "NOASSERTION", "attribution": "VPinMAME / Visual Pinball script-library maintainers",
+        "rights": "NOASSERTION",
+        "excerpts": [
+            {
+                "id": "excerpt.batman.vpm-script-library-flippers",
+                "locator": "de.vbs lines 33-36, 62-79 and 94-111; core.vbs lines 2061-2062, 2090, 2101-2102, 2106-2119 and 2312; script.vbs lines 182, 188, 192-193, 264, 271, 374-440 and 443-465",
+                "path": "evidence/excerpts/data-east.batman.1991/vpm-script-library-flippers.md",
+                "sha256": VPM_EXCERPT_SHA256,
+                "method": "manual", "transcribed_by": "curator, read from the library and script files", "reviewed": True,
+            },
+        ],
     },
     {
         "id": EXTRACTION, "kind": "vpx_table",
@@ -1221,12 +1288,21 @@ two addresses via `core_setSw`. Because this game declares no `FLIP_SOL`, no `FL
 ever set and the end-of-stroke simulation at `core.c:1756-1775` never runs at all.
 
 **A recreation must not drive public 15 or 16**, because `core_updateSw` overwrites them on every
-frame. The retained known-working script never touches either address, which is the behaviour this
-predicts.
+update. The button state enters at PinMAME's flipper column, `CORE_FLIPPERSWCOL` (internal column
+11), which `core_swSeq2m(n) = n + 7` publishes at 81-88: a consumer drives **82** (right button,
+copied into 16) and **84** (left button, copied into 15). The other six column positions are the
+end-of-stroke and upper-button bits; this driver sets neither `FLIP_EOS` nor an upper `FLIP_SW`
+bit, and the ROM cannot read column 11 through `s11.c`'s eight-column strobe, so they are
+recorded unused. The retained known-working script never touches 15 or 16: its flipper keys reach
+`DE.VBS` `vpmKeyDown`/`vpmKeyUp`, which write `swLRFlip = 82` and `swLLFlip = 84`. `DE.VBS` also
+names the staged upper keys `swURFlip = 86`/`swULFlip = 88`, but this table never writes them: it
+defines `cSingleLFlip = 0` and `cSingleRFlip = 0`, so `core.vbs`'s `cvpmFlips2.Init`, run by `vpmInit`,
+calls `NoUpperLeftFlipper`/`NoUpperRightFlipper` and the staged key writes nothing.
 
 ## Flipper coils are synthesised, and fire in pairs
 
-There is no `FLIP_SOL`, so `core.c:1746-1753` fabricates 45-48 from Game On plus button state:
+There is no `FLIP_SOL`, so `core.c:1746-1753` fabricates 45-48 from the switched-solenoid enable
+plus the button bits at 82 (45/46) and 84 (47/48):
 power and hold assert and release together. They are not independently controllable and must not
 be modelled as separate coils. The manual's own unnumbered "Flipper Solenoids" table lists a left
 and a right flipper and nothing else - there is no upper flipper of either hand, which is

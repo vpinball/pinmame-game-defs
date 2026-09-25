@@ -30,29 +30,65 @@ VPM_S11_SHA256 = "5582155ffbdaeeeb3d86fcb54d7738d9ea5f9c24951b607e30a316f88dfd5f
 VPM_CORE_SHA256 = "a228644ec9714e32c5c6764254b151dc3ec9df2c438dd5a7ce9e9f324cc56f69"
 
 
-def vpm_staged_flipper_notes(*, disabled_at: dict[int, str] | None = None) -> dict[int, str]:
-	"""Sentences for 81/83, which S11.VBS names swURFlip/swULFlip and writes from staged flipper keys.
+# The VPinMAME script libraries Data East known-working tables load through LoadVPM "DE.VBS" or "DE2.VBS",
+# retained beside s11.vbs. They share vpmKeyDown/vpmKeyUp and swLRFlip = 82 / swLLFlip = 84, and differ in
+# the upper constants: DE.VBS names the column's upper button bits (86/88), DE2.VBS the S11.VBS values (81/83).
+VPM_DE_LIBRARY_SOURCE = "vpm-script-library.de-vbs"
+VPM_DE_LIBRARY_URI = "external:pinmame-review-artifacts/vpm-script-libs/de.vbs"
+VPM_DE_SHA256 = "8858b4509a600f77a8a5844f138ed1c71f19b023550660efd62e308588e84d04"
+VPM_DE2_LIBRARY_SOURCE = "vpm-script-library.de2-vbs"
+VPM_DE2_LIBRARY_URI = "external:pinmame-review-artifacts/vpm-script-libs/de2.vbs"
+VPM_DE2_SHA256 = "96fc634c7d6529a0566c753e296b287a1402636b38aa9bef63afebbf49f20b04"
 
-	``disabled_at`` maps 81/83 to the script locator where the table calls the matching
+# Upper-flipper switch constants per library: (swURFlip, swULFlip).
+VPM_UPPER_FLIP_SWITCHES = {"S11.VBS": (81, 83), "DE.VBS": (86, 88), "DE2.VBS": (81, 83)}
+
+
+def vpm_staged_flipper_notes(
+	*,
+	disabled_at: dict[int, str] | None = None,
+	single_flip_at: dict[int, str] | None = None,
+	library: str = "S11.VBS",
+) -> dict[int, str]:
+	"""Sentences for the two addresses a VPinMAME library writes from staged flipper keys.
+
+	``library`` selects the constants: S11.VBS and DE2.VBS name 81/83 swURFlip/swULFlip, DE.VBS names
+	86/88. ``disabled_at`` maps those addresses to the script locator where the table calls the matching
 	``NoUpper*Flipper``, for a table that clears the solenoid number and so never writes the address.
+	``single_flip_at`` maps them to the locator where the table defines ``cSingleRFlip``/``cSingleLFlip``
+	as 0: core.vbs's cvpmFlips2.Init (lines 2111-2117, run by vpmInit at line 2312 once line 2102 finds
+	UseSolenoids defined) then calls the matching ``NoUpper*Flipper`` itself, because ``Not`` is bitwise in
+	VBScript and only True (-1) skips the call. An undefined constant raises an error under Option
+	Explicit, and the ``err.number = 0`` guard then skips the call.
 	"""
 	disabled_at = disabled_at or {}
+	single_flip_at = single_flip_at or {}
+	upper_right, upper_left = VPM_UPPER_FLIP_SWITCHES[library]
 	return {
 		address: (
-			f"S11.VBS names this address {constant}; its vpmKeyDown/vpmKeyUp write it from a staged {side}-flipper key "
+			f"{library} names this address {constant}; its vpmKeyDown/vpmKeyUp write it from a staged {side}-flipper key "
 			f"only while vpmFlips.FlipperSolNumber({index}) is non-zero, which core.vbs makes the default "
 			+ (
 				f"({default}). The retained script calls {opt_out} ({disabled_at[address]}), which sets it to 0, so this "
 				"table never writes the address."
 				if address in disabled_at else
-				f"({default}) unless the table calls {opt_out}."
+				f"({default}). The retained script defines {single} = 0 ({single_flip_at[address]}), so core.vbs's "
+				f"cvpmFlips2.Init, run by vpmInit, calls {opt_out} (core.vbs lines 2111-2117 and 2312), which sets it to 0, "
+				"so this table never writes the address."
+				if address in single_flip_at else
+				f"({default}) unless the table calls {opt_out}, directly or through core.vbs's cvpmFlips2.Init, which "
+				f"vpmInit runs and which calls it when the table defines {single} as a number other than True."
 			)
-			+ " The constant does not follow the PinMAME column, and the ROM cannot read the address on this "
-			"machine, so any such write has no effect."
+			+ (
+				f" The constant is the PinMAME column's upper-{side} button bit, but core_updateSw does not copy it and "
+				if address in (86, 88) else
+				" The constant does not follow the PinMAME column, and "
+			)
+			+ "the ROM cannot read the address on this machine, so any such write has no effect."
 		)
-		for address, constant, side, index, default, opt_out in (
-			(81, "swURFlip", "right", 3, "sURFlipper = 34", "NoUpperRightFlipper"),
-			(83, "swULFlip", "left", 2, "sULFlipper = 36", "NoUpperLeftFlipper"),
+		for address, constant, side, index, default, opt_out, single in (
+			(upper_right, "swURFlip", "right", 3, "sURFlipper = 34", "NoUpperRightFlipper", "cSingleRFlip"),
+			(upper_left, "swULFlip", "left", 2, "sULFlipper = 36", "NoUpperLeftFlipper", "cSingleLFlip"),
 		)
 	}
 

@@ -129,7 +129,8 @@ class BatmanDefinitionTests(unittest.TestCase):
         """
         # The two negative addresses are coin-door diagnostic buttons in switch column 0, not
         # matrix positions; everything from 1 to 64 is the matrix itself.
-        self.assertEqual(set(range(1, 65)) | {-7, -6}, set(self.switches))
+        # 81-88 are PinMAME's flipper column (CORE_FLIPPERSWCOL), not matrix positions either.
+        self.assertEqual(set(range(1, 65)) | {-7, -6} | set(range(81, 89)), set(self.switches))
         self.assertEqual(set(range(1, 65)), set(self.lamps))
         for address in range(1, 65):
             column, row = (address - 1) // 8 + 1, (address - 1) % 8 + 1
@@ -219,7 +220,22 @@ class BatmanDefinitionTests(unittest.TestCase):
             notes = self.switches[address]["physical"]["notes"]
             self.assertIn("must NOT drive this address", notes, address)
             self.assertIn("FLIP_SWNO(15,16)", notes, address)
+            self.assertIn(f"public {84 if address == 15 else 82}", notes, address)
             self.assertEqual("not_applicable", self.switches[address]["spatial"]["status"])
+
+    def test_the_flipper_column_is_where_a_consumer_drives_the_buttons(self) -> None:
+        """core_updateSw copies 84 into 15 and 82 into 16 on every update; the rest are unused."""
+        self.assertEqual({82, 84}, {a for a in range(81, 89) if self.switches[a]["availability"] == "used"})
+        copies = {(r["source"], r["destination"]) for r in self.definition["relationships"] if r["source"].startswith("switch.flipper-column-")}
+        self.assertEqual({("switch.flipper-column-82", "switch.matrix-16"), ("switch.flipper-column-84", "switch.matrix-15")}, copies)
+        # DE.VBS names the staged upper keys 86/88 (not S11.VBS's 81/83).
+        for address in (86, 88):
+            self.assertIn("DE.VBS names this address", self.switches[address]["physical"]["notes"], address)
+            # The table defines cSingleLFlip/cSingleRFlip = 0, so core.vbs clears the upper flipper numbers.
+            self.assertIn("cSingle", self.switches[address]["physical"]["notes"], address)
+            self.assertIn("never writes the address", self.switches[address]["physical"]["notes"], address)
+        for address in (81, 83):
+            self.assertNotIn("VBS names this address", self.switches[address]["physical"]["notes"], address)
 
     def test_general_illumination_is_solenoid_11_and_there_is_no_gi_group(self) -> None:
         """Three sources agree: s11.c's own '// GI output' comment, the manual's printed

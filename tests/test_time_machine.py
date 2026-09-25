@@ -107,8 +107,14 @@ class TimeMachineDefinitionTests(unittest.TestCase):
 		self.assertIn("INITGAMES11(tmac, GEN_DE, de_dispAlpha2, FLIP1516, SNDBRD_DE1S, 0, 0)", self.sources["pinmame.core.4ec52ff0ac13"]["locator"])
 
 	def test_complete_input_namespace_and_literal_manual_fitment(self) -> None:
-		positive = {item["binding"]["device"]: item for item in self.definition["inputs"] if item["binding"]["group"] == "pinmame.input.switch" and item["binding"]["device"] > 0}
+		positive = {item["binding"]["device"]: item for item in self.definition["inputs"] if item["binding"]["group"] == "pinmame.input.switch" and 0 < item["binding"]["device"] < 81}
 		self.assertEqual(set(range(1,65)), set(positive))
+		column = {item["binding"]["device"]: item for item in self.definition["inputs"] if item["binding"]["group"] == "pinmame.input.switch" and item["binding"]["device"] >= 81}
+		self.assertEqual(set(range(81,89)), set(column))
+		self.assertEqual({82,84}, {number for number, item in column.items() if item["availability"] == "used"})
+		for number, button in ((15,84),(16,82)):
+			self.assertIn(f"public {button}", positive[number]["physical"]["notes"], number)
+			self.assertIn("have no effect", positive[number]["physical"]["notes"], number)
 		self.assertEqual({-7,-6}, {item["binding"]["device"] for item in self.definition["inputs"] if item["binding"]["group"] == "pinmame.input.switch" and item["binding"]["device"] < 0})
 		self.assertEqual([0], [item["binding"]["device"] for item in self.definition["inputs"] if item["binding"]["group"] == "pinmame.input.dip"])
 		for number, printed in enumerate(SWITCHES, start=1):
@@ -175,8 +181,12 @@ class TimeMachineDefinitionTests(unittest.TestCase):
 		self.assertTrue(all(self.outputs[number]["provenance"]["source_refs"] == ["pinmame.core.4ec52ff0ac13","vpx-script.time-machine-2.4.1","runtime.time-machine.alpha-diagnostics"] for number in {45,46,47,48}))
 
 	def test_mux_relationships_and_special_coil_conflict_are_not_inferred(self) -> None:
-		relationships = self.definition["relationships"]
+		relationships = [item for item in self.definition["relationships"] if item["id"].startswith("relationship.lr-relay-")]
 		self.assertEqual({f"coil.driver-{number}" for number in range(25,33)}, {item["destination"] for item in relationships})
+		self.assertEqual(
+			{("switch.flipper-column-82","switch.matrix-16"),("switch.flipper-column-84","switch.matrix-15")},
+			{(item["source"],item["destination"]) for item in self.definition["relationships"] if item not in relationships},
+		)
 		self.assertTrue(all(item["source"] == "coil.driver-10" and item["kind"] == "relay_gated" for item in relationships))
 		mechanisms = {item["id"]: item for item in self.definition["mechanisms"]}
 		self.assertEqual([], mechanisms["mechanism.center-pop"]["actuators"])
@@ -268,7 +278,7 @@ class TimeMachineDefinitionTests(unittest.TestCase):
 			self.assertIn("original_filename", source)
 			self.assertIn("rights", source)
 		self.assertTrue(all(item["uri"] == "https://github.com/vpinball/pinmame" for item in self.definition["sources"] if item["kind"] in {"pinmame_catalog","pinmame_core"}))
-		self.assertTrue(all(item["uri"].startswith("external:pinmame-vpx-sources/") for item in self.definition["sources"] if item["kind"] in {"vpx_table","vpx_script"} and item["id"] != "vpx-extraction.time-machine-2.4.1"))
+		self.assertTrue(all(item["uri"].startswith("external:pinmame-vpx-sources/") for item in self.definition["sources"] if item["kind"] in {"vpx_table","vpx_script"} and item["id"] not in {"vpx-extraction.time-machine-2.4.1","vpm-script-library.de-vbs"}))
 		self.assertTrue(all(not item["uri"].startswith(("source-checkouts/","vpx-sources/")) for item in self.definition["sources"]))
 		self.assertEqual({
 			"excerpt.time-machine.switch-matrix":"PDF pages 26-27, printed pages 22-23",
@@ -431,7 +441,9 @@ class TimeMachineDefinitionTests(unittest.TestCase):
 					value = source.get(key)
 					if isinstance(value,str) and value.casefold() not in own_tables: foreign_table_builds.add(value.casefold())
 		self.assertEqual(set(), {value for value in foreign_generations - own_generations if value in artifact})
-		self.assertEqual(set(), foreign_hardware & set(re.findall(r"\b0x[0-9a-f]+\b", folded)))
+		# Only the generated flipper-column phrases "CORE_SW...BIT = 0x.." are core.h switch bits; strip
+		# those phrases, not the token values, so a leaked 0x10/0x20/0x80 generation is still caught.
+		self.assertEqual(set(), foreign_hardware & set(re.findall(r"\b0x[0-9a-f]+\b", re.sub(r"\bcore_sw\w+bit = 0x[0-9a-f]{2}\b", "", folded, flags=re.I))))
 		self.assertEqual(set(), {value for value in foreign_table_builds if value in folded})
 
 		conflict_ids = {item["id"].casefold() for item in self.definition["conflicts"]}

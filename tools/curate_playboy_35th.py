@@ -11,6 +11,15 @@ from pinmame_game_defs.coverage import build_coverage_report, build_curation_que
 from pinmame_game_defs.jsonio import content_sha256, load_json, write_text
 from pinmame_game_defs.registry import rebuild_catalog
 from pinmame_game_defs.validation import unresolved_conflicts
+from pinmame_flipper_column import (
+    VPM_CORE_SHA256,
+    VPM_DE2_LIBRARY_SOURCE,
+    VPM_DE2_LIBRARY_URI,
+    VPM_DE2_SHA256,
+    flipper_column_inputs,
+    flipper_column_relationships,
+    vpm_staged_flipper_notes,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +45,10 @@ SCRIPT_SOURCE = "vpx-script.playboy-35th-hybrid-1.1"
 EXTRACTION_SOURCE = "vpx-extraction.playboy-35th-hybrid-1.1"
 RENDER_SOURCE = "human-review.playboy-35th-manual-renders"
 RUNTIME_SOURCE = "runtime.playboy-35th.alpha-diagnostics"
+VPM_EXCERPT_PATH = Path("evidence/excerpts/data-east.playboy-35th-anniversary.1989/vpm-script-library-flippers.md")
+VPM_EXCERPT_SHA256 = "10d68d29c8df115078c8a638263bf1c2a439126fd3375ff0d04573b0e4c31725"
+# (left, right) in the driver's own FLIP1516 = FLIP_SWNO(15,16) macro order.
+FLIP_SWNO = (15, 16)
 
 MANUAL_FILENAME = "Data_East_1989_Playboy_35th_Anniversary_English_Manual_with_schematics.pdf"
 TABLE_FILENAME = "Playboy 35th Anniversary (Data East 1989) Physics Sound Hybrid MOD 1.1.vpx"
@@ -409,7 +422,13 @@ def switch_input(number: int) -> dict[str,object]:
     if number in SWITCH_PARTS:
         physical["part_number"] = SWITCH_PARTS[number]
     if number in {15,16}:
-        physical["notes"] += " The adjacent list also prints an Instant Info flipper function and a physical EOS contact; FLIP1516 publishes the cabinet-button state at this public address."
+        button = 84 if number == 15 else 82
+        side = "left" if number == 15 else "right"
+        physical["notes"] += (
+            " The adjacent list also prints an Instant Info flipper function and a physical EOS contact; FLIP1516 publishes the cabinet-button state at this public address."
+            f" With keyboard handling off (the LibPinMAME default; the retained script sets HandleKeyboard = 0) core_updateSw rewrites it on every update from PinMAME's flipper column, public {button} (the {side} cabinet button, {'CORE_SWLLFLIPBUTBIT' if number == 15 else 'CORE_SWLRFLIPBUTBIT'}), so the ROM reads the button state exactly as the host writes it there."
+            f" A consumer drives {button}, not this address; a host write here is overwritten on the next update. The retained script never writes this address: its {side} flipper key reaches DE2.VBS vpmKeyDown/vpmKeyUp, which write {'swLLFlip = 84' if number == 15 else 'swLRFlip = 82'} (excerpt vpm-script-library-flippers)."
+        )
     if number in {14,17}:
         physical["notes"] += " The switch-list part number conflicts with the playfield-bottom construction list's shooter-lane/Laser-Kick assignment."
     if number == 17:
@@ -586,7 +605,10 @@ def solenoid_output(number: int) -> dict[str,object]:
     if 33 <= number <= 44:
         physical["notes"] += " Pinned System 11 exposes this public address but this Data East driver does not populate it."
     if 45 <= number <= 48:
-        physical["notes"] += " Synthetic PinMAME lower-flipper power/hold state; there is no separate physical driver at this public address."
+        physical["notes"] += (
+            " Synthetic PinMAME lower-flipper power/hold state; there is no separate physical driver at this public address."
+            f" core_updateSw sets it while the switched-solenoid enable is on and the {'right' if number in (45, 46) else 'left'} cabinet button bit of PinMAME's flipper column is set: public {82 if number in (45, 46) else 84}, the same bit it copies into matrix switch {16 if number in (45, 46) else 15}."
+        )
     if number == 49:
         physical["notes"] += " System 11 simulation-only shooter address; the physical machine uses a manual plunger."
     if number == 50:
@@ -654,8 +676,8 @@ def mechanisms() -> list[dict[str,object]]:
         {"id":"mechanism.grotto-kicker","label":"Two-sensor Grotto path and kickout","kind":"kicker","actuators":["coil.driver-30"],"sensors":["switch.matrix-24","switch.matrix-31"],"behavior":"The in-bound trigger reports printed Grotto 1 at switch 24. The active bsGrotto saucer then holds/ejects at printed Grotto 2 switch 31 through output 30. Manual construction supplies one Grotto Kicking Assembly plus two kicking switches; exact under-playfield transfer geometry is not exposed.","assembly_part_number":"500-5053-00","positions":[{"id":"grotto.entry","label":"Grotto 1 entry","sensors":["switch.matrix-24"]},{"id":"grotto.cup","label":"Grotto 2 kickout cup","sensors":["switch.matrix-31"]}],"provenance":provenance("candidate",SCRIPT_SOURCE,MANUAL_SOURCE)},
         {"id":"mechanism.drop-bank","label":"Three-bank drop targets","kind":"drop_target_bank","actuators":["coil.driver-29"],"sensors":["switch.matrix-49","switch.matrix-50","switch.matrix-51"],"behavior":"The active cvpmDropTarget orders top, center, and bottom dropping faces at 49-51 and raises all three from output 29. Manual construction names 3 Bank Drop Target Assembly 500-5055-31.","assembly_part_number":"500-5055-31","positions":[{"id":"drop.position-top","label":"Top target","sensors":["switch.matrix-49"]},{"id":"drop.position-center","label":"Center target","sensors":["switch.matrix-50"]},{"id":"drop.position-bottom","label":"Bottom target","sensors":["switch.matrix-51"]}],"provenance":provenance("conflicted",SCRIPT_SOURCE,MANUAL_SOURCE)},
         {"id":"mechanism.laser-kick","label":"Left-outlane Laser Kick","kind":"kicker","actuators":["coil.driver-16"],"sensors":["switch.matrix-17"],"behavior":"The active impulse-plunger helper watches public switch 17 and output 16 auto-fires the left-outlane kickback. Although the helper's sw17 trigger is outside the asserted playfield, Kicker001_Hit explicitly publishes switch 17 from the in-bounds kickback object; that executable point is retained as candidate placement and the unbound sw17a name is excluded.","provenance":provenance("candidate",SCRIPT_SOURCE,MANUAL_SOURCE)},
-        {"id":"mechanism.left-flipper","label":"Lower-left flipper","kind":"other","actuators":["coil.driver-47","coil.driver-48"],"sensors":["switch.matrix-15"],"behavior":"One printed 22-800 dual-winding coil moves the sole left flipper. The manual prints physical Left EOS at 15, while FLIP1516 and the key handler publish cabinet-button state there.","assembly_part_number":"500-5031-52","provenance":provenance("conflicted",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
-        {"id":"mechanism.right-flipper","label":"Lower-right flipper","kind":"other","actuators":["coil.driver-45","coil.driver-46"],"sensors":["switch.matrix-16"],"behavior":"One printed 22-800 dual-winding coil moves the sole right flipper. The manual prints physical Right EOS at 16, while FLIP1516 and the key handler publish cabinet-button state there.","assembly_part_number":"500-5031-51","provenance":provenance("conflicted",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
+        {"id":"mechanism.left-flipper","label":"Lower-left flipper","kind":"other","actuators":["coil.driver-47","coil.driver-48"],"sensors":["switch.matrix-15"],"behavior":"One printed 22-800 dual-winding coil moves the sole left flipper. The manual prints physical Left EOS at 15, while FLIP1516 makes core_updateSw copy the left cabinet button, public 84, into it; the retained key handler drives 84 through DE2.VBS.","assembly_part_number":"500-5031-52","provenance":provenance("conflicted",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
+        {"id":"mechanism.right-flipper","label":"Lower-right flipper","kind":"other","actuators":["coil.driver-45","coil.driver-46"],"sensors":["switch.matrix-16"],"behavior":"One printed 22-800 dual-winding coil moves the sole right flipper. The manual prints physical Right EOS at 16, while FLIP1516 makes core_updateSw copy the right cabinet button, public 82, into it; the retained key handler drives 82 through DE2.VBS.","assembly_part_number":"500-5031-51","provenance":provenance("conflicted",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
         {"id":"mechanism.left-slingshot","label":"Left slingshot","kind":"other","actuators":["coil.driver-18"],"sensors":["switch.matrix-21"],"behavior":"The native left-slingshot event pulses switch 21. The manual maps hardware-triggered SP3 to the left slingshot, and pinned Data East setSSSol publishes SP3 as public 18; public callback pulse timing is not exposed.","assembly_part_number":"500-5077-00","provenance":provenance("candidate",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
         {"id":"mechanism.right-slingshot","label":"Right slingshot","kind":"other","actuators":["coil.driver-21"],"sensors":["switch.matrix-22"],"behavior":"The native right-slingshot event pulses switch 22. The manual maps hardware-triggered SP5 to the right slingshot, and pinned Data East setSSSol publishes SP5 as public 21; public callback pulse timing is not exposed.","assembly_part_number":"500-5077-00","provenance":provenance("candidate",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
         {"id":"mechanism.left-pop","label":"Left pop bumper","kind":"other","actuators":["coil.driver-19"],"sensors":["switch.matrix-46"],"behavior":"Bumper1_Hit pulses switch 46; the rendered manual maps SP4 to the left pop, and pinned Data East setSSSol publishes SP4 as public 19. The physical assembly is one of three 500-5034-00 pop bumpers.","assembly_part_number":"500-5034-00","provenance":provenance("candidate",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
@@ -671,8 +693,8 @@ def mechanisms() -> list[dict[str,object]]:
 def conflicts() -> list[dict[str,object]]:
     return [
         {"id":"conflict.shared-port-position-2-vs-unfitted","path":"/inputs/switch.matrix-2","description":"Shared Data East DE_COMPORTS names matrix position 2 Ball Tilt, while both Playboy manual switch tables print position 2 Not Used. Game-specific fitment is retained without erasing the shared-port label. Resolution path: a photograph or continuity check of an unrestored cabinet's WHT-RED return line, which the printed matrix gives as position 2's return, showing whether any contact lands on it, or a Data East cabinet or coin-door parts page from a title whose own chart does name the position - the Lethal Weapon 3 manual retained in this repository prints it 4th Coin - identifying the contact the shared macro bit was reserved for. Unresolved.","source_refs":[MANUAL_SOURCE,CORE_SOURCE]},
-        {"id":"conflict.left-eos-vs-public-button-state","status":"ignored","rationale":"An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.","path":"/inputs/switch.matrix-15","description":"The manual prints a physical Left EOS contact at matrix 15 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put left cabinet-button state at public 15.","source_refs":[MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE]},
-        {"id":"conflict.right-eos-vs-public-button-state","status":"ignored","rationale":"An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.","path":"/inputs/switch.matrix-16","description":"The manual prints a physical Right EOS contact at matrix 16 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put right cabinet-button state at public 16.","source_refs":[MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE]},
+        {"id":"conflict.left-eos-vs-public-button-state","status":"ignored","rationale":"An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.","path":"/inputs/switch.matrix-15","description":"The manual prints a physical Left EOS contact at matrix 15 and does not mark it as a cabinet switch. FLIP1516 makes core_updateSw copy the left cabinet-button bit (public 84), which the retained key handler writes through DE2.VBS, into public 15.","source_refs":[MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE]},
+        {"id":"conflict.right-eos-vs-public-button-state","status":"ignored","rationale":"An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.","path":"/inputs/switch.matrix-16","description":"The manual prints a physical Right EOS contact at matrix 16 and does not mark it as a cabinet switch. FLIP1516 makes core_updateSw copy the right cabinet-button bit (public 82), which the retained key handler writes through DE2.VBS, into public 16.","source_refs":[MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE]},
         {"id":"conflict.shooter-laser-switch-part-numbers","path":"/inputs/switch.matrix-14","description":"The manual switch list prints Shooter Lane part 500-5142-00 and Left Outlane part 500-5143-00. Its playfield-bottom list prints Laser Kick switch/bracket 500-5142-00 and Shooter lane switch/bracket 500-5143-00. Resolution path: a Data East parts catalogue or service bulletin that lists 500-5142-00 and 500-5143-00 against their assembly names, or a photograph of an unrestored machine's shooter-lane and Laser Kick switch/bracket assemblies compared against those two part numbers. Unresolved.","source_refs":[MANUAL_SOURCE,RENDER_SOURCE]},
         {"id":"conflict.outputs-4-and-5-share-pseudo-lamp-105","path":"/outputs/coil.driver-4","description":"The active lines bind both public outputs 4 and 5 to SetLamp 105. UpdateLamps has distinct Fl4 at pseudo 104 and Fl5 at 105, leaving Fl4 without a driving callback even though the manual prints separate Spinner 2 and Spinner 3 flash groups. Resolution path: a photograph of an unrestored playfield confirming that Spinner 2 and Spinner 3 each carry their own flash group, as the printed schematic's identical NO.89 (3) plus NO.906 (1) rows for outputs 4 and 5 claim, together with a corrected build of the retained table or a second independently authored known-working Playboy recreation that drives Fl4 and Fl5 from their own outputs. Unresolved.","source_refs":[SCRIPT_SOURCE,TABLE_SOURCE,MANUAL_SOURCE]},
         {"id":"conflict.outputs-13-through-15-script-comments-vs-manual","path":"/outputs/coil.driver-13","description":"The manual prints 13 Ramp Right, 14 Mansion Flash, and no feature label for 15. Active-line inline comments instead call 13 'flasher13 PB', 14 'Right Ramp', and 15 'mansion flasher'. Generic Fl13/Fl14/Fl15 names do not settle the shift, so manual labels and script annotations remain separate. Resolution path: an original-machine run of the ROM's own automatic Coil Test, which the retained play_a24 diagnostic trace shows firing 13, then 14, then 15, then 16 in that order, recording which physical flash group lights at each step; a machine owner can do that from the coin door. Unresolved.","source_refs":[MANUAL_SOURCE,SCRIPT_SOURCE,TABLE_SOURCE]},
@@ -752,12 +774,51 @@ def sources() -> list[dict[str,object]]:
         {"id":SCRIPT_SOURCE,"kind":"vpx_script","uri":"external:pinmame-vpx-sources/data-east/playboy-35th-anniversary-1989/vpxtool-extract/script.vbs","sha256":SCRIPT_SHA256,"revision":"script from retained hybrid table 1.1","license":"Community script; redistribution terms not supplied","attribution":"Credited table-script contributors","locator":"Const cGameName=play_a24; HandleMechanics=0; active SetLamp idiom has 15 output bindings plus one SetLamp subroutine definition, no Lampz.MassAssign and no vpmMapLights after whole-line comments are stripped; trough, saucers, Grotto, drop bank, kickback, flippers and sensors supply causality"},
         {"id":EXTRACTION_SOURCE,"kind":"vpx_table","uri":MANIFEST_PATH.as_posix(),"sha256":MANIFEST_CONTENT_SHA256,"revision":"vpxtool git:0561bb4","locator":f"2270 files; 164978347 bytes; algorithm: {MANIFEST_ALGORITHM}; canonical manifest SHA-256 {MANIFEST_SHA256}; 1748 files under gameitems/"},
         {"id":RENDER_SOURCE,"kind":"human_review","uri":f"external:pinmame-manuals/by-machine/{MACHINE_ID}/contributor-supplied/{MANUAL_FILENAME}","locator":"76-page contact sheet at 40 dpi; decisive matrix/coil pages rendered at 400 dpi, printed page 26 re-rendered at 600 dpi, and construction pages rendered at 300 dpi with Poppler on 2026-08-09. Tesseract/PDF text were secondary; rendered cells governed every mapping."},
+        {
+            "id": VPM_DE2_LIBRARY_SOURCE, "kind": "vpx_script",
+            "uri": VPM_DE2_LIBRARY_URI,
+            "original_filename": "de2.vbs", "sha256": VPM_DE2_SHA256, "acquired_at": "2026-09-25T23:32:01Z",
+            "locator": (
+                "The VPinMAME script library the retained table loads at runtime (script.vbs line 43 LoadVPM "
+                "\"01210000\", \"de2.vbs\", 3.1; DE2.VBS executes core.vbs), retained from the contributor's working "
+                f"installation together with core.vbs (SHA-256 {VPM_CORE_SHA256}). DE2.VBS defines swLRFlip = 82 and "
+                "swLLFlip = 84 and sets them from the flipper keys in vpmKeyDown/vpmKeyUp, and names the staged upper "
+                "flipper keys swURFlip/swULFlip at 81 and 83."
+            ),
+            "license": "NOASSERTION", "attribution": "VPinMAME / Visual Pinball script-library maintainers",
+            "rights": "NOASSERTION",
+            "excerpts": [
+                {
+                    "id": "excerpt.playboy-35th.vpm-script-library-flippers",
+                    "locator": "de2.vbs lines 33-36, 62-79 and 94-111; core.vbs lines 2061-2062 and 2090; script.vbs lines 43, 109, 300-309, 320 and 328-339",
+                    "path": "evidence/excerpts/data-east.playboy-35th-anniversary.1989/vpm-script-library-flippers.md",
+                    "sha256": VPM_EXCERPT_SHA256,
+                    "method": "manual", "transcribed_by": "curator, read from the library and script files", "reviewed": True,
+                },
+            ],
+        },
         {"id":RUNTIME_SOURCE,"kind":"runtime_scenario","uri":RUNTIME_EVIDENCE_PATH.as_posix(),"revision":PINMAME_REVISION,"sha256":sha256_text(json_text(build_runtime_evidence())),"locator":f"Two successful isolated play_a24 runs pin the exact ROM, LibPinMAME binary, reusable scenarios, raw traces, and external directory manifest {RUNTIME_MANIFEST_SHA256}. The automatic diagnostic records one complete regular/mux output cycle, in which watched branch 31 did not appear; that absence is not proof of dead or unfitted hardware. Named flipper-key actions observe public switches 15/16 and synthetic winding pairs 47/48 and 45/46. The other direct pulse actions ran during automatic Coil Test without held-state readback and make no special-solenoid claim.","license":"NOASSERTION","attribution":"Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external."},
     ]
 
 
 def build_machine() -> dict[str,object]:
-    inputs = diagnostic_inputs()+[switch_input(number) for number in range(1,65)]
+    inputs = diagnostic_inputs()+[switch_input(number) for number in range(1,65)]+flipper_column_inputs(
+        flip_swno=FLIP_SWNO, flip_swno_text="FLIP1516 = FLIP_SWNO(15,16)",
+        core_refs=(CORE_SOURCE,), button_refs=(SCRIPT_SOURCE, VPM_DE2_LIBRARY_SOURCE, RUNTIME_SOURCE),
+        button_notes={
+            side: (
+                f"The retained known-working script drives it: table1_KeyDown/table1_KeyUp (script lines 300-339) hand the {side} "
+                f"flipper key to DE2.VBS vpmKeyDown/vpmKeyUp, which set Controller.Switch({'swLLFlip' if side == 'left' else 'swLRFlip'}) with "
+                f"{'swLLFlip = 84' if side == 'left' else 'swLRFlip = 82'} (excerpt vpm-script-library-flippers). The retained play_a24 "
+                f"diagnostic runs held the {side} flipper through the emulator's keyboard port and read public {15 if side == 'left' else 16} "
+                f"active with {'47/48' if side == 'left' else '45/46'}. The physical counterpart is the {side} cabinet flipper button; "
+                f"the manual prints matrix {15 if side == 'left' else 16} as that flipper's end-of-stroke contact."
+            )
+            for side in ("left", "right")
+        },
+        unused_notes=vpm_staged_flipper_notes(library="DE2.VBS"),
+        unused_note_refs=(VPM_DE2_LIBRARY_SOURCE,),
+    )
     outputs = [solenoid_output(number) for number in range(1,51)]+[lamp_output(number) for number in range(1,65)]
     return {
         "format":"pinmame-machine-definition","schema_version":2,
@@ -766,7 +827,9 @@ def build_machine() -> dict[str,object]:
 		"controller":{"platform":"pinmame.dataeast","hardware_generation":"0x1000","inversion_applied_by_emulator":True},
         "drivers":[{"id":"play_a24","description":"Playboy 35th Anniversary (2.4)","year":"1989","manufacturer":"Data East","flags":0,"physical_compatibility":"identical","variant_notes":"The sole published driver. Exhaustive pinned-source search found no CORE_CLONEDEF and no second DRIVER entry; single-driver coverage is deliberate, not an omitted family."}],
         "inputs":inputs,"outputs":outputs,"displays":displays(),"mechanisms":mechanisms(),
-        "relationships":[{"id":f"relationship.lr-relay-{number}","kind":"relay_gated","source":"coil.driver-10","destination":f"coil.driver-{number}","provenance":provenance("conflicted",CORE_SOURCE,MANUAL_SOURCE)} for number in range(25,33)],
+        "relationships":[{"id":f"relationship.lr-relay-{number}","kind":"relay_gated","source":"coil.driver-10","destination":f"coil.driver-{number}","provenance":provenance("conflicted",CORE_SOURCE,MANUAL_SOURCE)} for number in range(25,33)]+flipper_column_relationships(
+            flip_swno=FLIP_SWNO, matrix_ids={15: "switch.matrix-15", 16: "switch.matrix-16"}, refs=(CORE_SOURCE,),
+        ),
         "sources":sources(),"knowledge":{"path":KNOWLEDGE_PATH.as_posix(),"status":"partial"},"conflicts":conflicts(),
     }
 
@@ -813,7 +876,7 @@ def build_spatial(machine: dict[str,object]) -> dict[str,object]:
         "blockers":[
             {"dimension":"output_semantics","devices":["coil.driver-4","coil.driver-5","coil.driver-13","coil.driver-14","coil.driver-15","coil.driver-19"]+[f"coil.driver-{number}" for number in range(25,33)],"reason":"Callback aliases/comments disagree with printed groups, one public special-solenoid state is also a background proxy, core PWM typing disagrees with the physical C-bank fitment, and unfitted address 31 lacks a decoded-state trace.","would_resolve":"Original-machine lamp/coil-test video synchronized with public output traces and a harness endpoint survey."},
             {"dimension":"mechanism_behavior","devices":["mechanism.grotto-kicker","mechanism.left-slingshot","mechanism.right-slingshot","mechanism.left-pop","mechanism.center-pop","mechanism.right-pop"],"reason":"Script establishes event edges but not the hidden Grotto transfer geometry or hardware-triggered special-coil pulse behavior.","would_resolve":"Original-machine captures of the Grotto ball path and each special-solenoid switch/coil waveform."},
-            {"dimension":"polarity","devices":["switch.matrix-15","switch.matrix-16","coil.driver-10","coil.driver-45","coil.driver-46","coil.driver-47","coil.driver-48"],"reason":"The core publishes cabinet buttons at manual EOS addresses and decoded mux states, but no at-rest/end-of-stroke or relay electrical trace proves physical polarity.","would_resolve":"Bench capture of cabinet button, EOS, K1 relay, raw A/C driver and public output states."},
+            {"dimension":"polarity","devices":["coil.driver-10","coil.driver-45","coil.driver-46","coil.driver-47","coil.driver-48"],"reason":"The core publishes decoded mux and synthetic flipper states, but no relay electrical trace proves physical polarity. Switches 15/16 are no longer part of this question: core_updateSw rewrites both from the cabinet-button bits at public 82/84 on every update, so the ROM reads them exactly as a consumer writes 82/84.","would_resolve":"Bench capture of the K1 relay, raw A/C driver, flipper windings and public output states."},
             {"dimension":"spatial_placement","devices":all_lamps+[f"coil.driver-{number}" for number in [1,2,3,4,5,6,7,8,9,11,13,14,15,16,17,18,19,21,22,25,26,27,28,29,30]],"reason":"Lamp and mechanism coordinates remain retained-table candidates; the manual supplies broad flash groups and backbox/playfield splits but not registered socket centers, and seven routed PINBALL lamps have no physical location in its drawing. Output 12 is classified as backbox-only and needs no playfield coordinate.","would_resolve":"A dimensionally registered original playfield/backbox survey or address-by-address photographs correlated with lamp, coil, and mechanism tests."},
             {"dimension":"unresolved_conflicts","devices":unresolved_conflict_ids,"reason":"Eight machine-specific source disagreements remain first-class and promotion-critical. The two flipper end-of-stroke naming records are recorded as ignored: the answer cannot reach a recreation, so they are not listed here.","would_resolve":"Independent original-machine observations or corrected authoritative sources that explicitly settle each recorded conflict."},
         ],
@@ -863,7 +926,7 @@ Pinned `s11.c` types output 9 as a bulb, 11 as GI, 12-15 as bulbs, and 25-32 as 
 
 The controller id is `pinmame.dataeast`, not `pinmame.system-11`: sharing PinMAME's `s11.c` implementation does not turn the physical Data East CPU/driver board into Williams System 11 hardware. The reviewed shared profile now supplies the platform address contract. The machine-level `inversion_applied_by_emulator` flag is true because consumers receive normalized public states and must not invert them again. Independently, `INITGAMES11` leaves Playboy's per-game `wpc.invSw` array all zeroes.
 
-The manual prints physical flipper EOS contacts at matrix 15/16, but `FLIP1516` makes the non-fliptronic core overwrite those public addresses with left/right cabinet-button state. This is a PinMAME public-address behavior rather than a description of the physical EOS wiring. A recreation should use public 15/16 as cabinet-button state and must not infer physical EOS state from them.
+The manual prints physical flipper EOS contacts at matrix 15/16, but `FLIP1516` makes the non-fliptronic core overwrite those public addresses with left/right cabinet-button state. This is a PinMAME public-address behavior rather than a description of the physical EOS wiring, and no physical EOS state can be inferred from them. The button state comes from PinMAME's flipper column, `CORE_FLIPPERSWCOL` (internal column 11), which `core_swSeq2m(n) = n + 7` publishes at switches 81-88: with keyboard handling off `core_updateSw` copies the right button (82) into 16 and the left button (84) into 15 on every update, and fabricates 45/46 from 82 and 47/48 from 84. **A recreation drives 82/84, never 15/16**; a write to 15/16 is overwritten on the next update. The other six column positions are end-of-stroke and upper-button bits this driver does not use and the ROM cannot read, so they are recorded unused. The retained table never writes 15/16: its flipper keys reach `DE2.VBS` `vpmKeyDown`/`vpmKeyUp`, which write `swLRFlip = 82` and `swLLFlip = 84` (`DE2.VBS`, unlike `DE.VBS`, names the staged upper keys 81/83).
 
 ## Lamp mapping and object accounting
 
@@ -901,13 +964,13 @@ Status remains `partial`; `coverage.missing` is [{missing}].
 
 - `output_semantics`: callback group aliases/comments and core C-bank bulb typing disagree with printed physical functions.
 - `mechanism_behavior`: hidden Grotto transfer geometry and hardware-triggered special-coil pulse behavior are absent.
-- `polarity`: no original-machine trace reconciles cabinet button/EOS, K1 relay, and raw versus decoded output states.
+- `polarity`: no original-machine trace reconciles the K1 relay, the flipper windings, and raw versus decoded output states. The controller-facing level of switches 15/16 is settled: `core_updateSw` copies the cabinet-button bits at 82/84 into them.
 - `spatial_placement`: table objects are presentation candidates, flash groups lack socket surveys, and seven routed PINBALL lamps are not located by the manual's drawing at all.
 - `unresolved_conflicts`: eight source disagreements remain first-class. Two further records, the flipper end-of-stroke naming pair, are kept as ignored and do not block.
 
 ## Recreation boundary
 
-Consume PinMAME's decoded public mux outputs without adding another IRQ delay. Treat public 15/16 as flipper buttons rather than physical EOS contacts. Do not convert presentation proxies into extra hardware, infer socket locations from names, or erase the manual/core and manual/table disagreements.
+Consume PinMAME's decoded public mux outputs without adding another IRQ delay. Read public 15/16 as flipper-button state rather than physical EOS contacts, and drive the buttons at 82/84. Do not convert presentation proxies into extra hardware, infer socket locations from names, or erase the manual/core and manual/table disagreements.
 """
 
 

@@ -98,12 +98,16 @@ class PlayboyDefinitionTests(unittest.TestCase):
         note = self.solenoids[25]["physical"]["notes"]
         self.assertIn("one IRQ",note)
         self.assertIn("must not add another delay",note)
-        relationships = self.definition["relationships"]
+        relationships = [row for row in self.definition["relationships"] if row["id"].startswith("relationship.lr-relay-")]
         self.assertEqual(set(range(25,33)),{int(row["destination"].rsplit("-",1)[1]) for row in relationships})
         self.assertTrue(all(row["source"] == "coil.driver-10" for row in relationships))
 
     def test_full_input_space_and_printed_unused_cells_are_enumerated(self) -> None:
-        self.assertEqual({-7,-6}|set(range(1,65)),set(self.switches))
+        # 81-88 are PinMAME's flipper column (CORE_FLIPPERSWCOL), not matrix positions.
+        self.assertEqual({-7,-6}|set(range(1,65))|set(range(81,89)),set(self.switches))
+        self.assertEqual({82,84},{address for address in range(81,89) if self.switches[address]["availability"] == "used"})
+        for address in (81,83):
+            self.assertIn("DE2.VBS names this address",self.switches[address]["physical"]["notes"],address)
         self.assertEqual({0},set(self.dips))
         for address in range(1,65):
             expected = "unused" if address in UNUSED_SWITCHES else "used"
@@ -302,7 +306,7 @@ class PlayboyDefinitionTests(unittest.TestCase):
         manual = next(item for item in self.definition["sources"] if item["kind"] == "manual")
         self.assertTrue(manual["uri"].startswith("external:pinmame-manuals/"))
         self.assertTrue(all(item["uri"] == "https://github.com/vpinball/pinmame" for item in self.definition["sources"] if item["kind"] in {"pinmame_catalog","pinmame_core"}))
-        self.assertTrue(all(item["uri"].startswith("external:pinmame-vpx-sources/") for item in self.definition["sources"] if item["kind"] in {"vpx_table","vpx_script"} and item["id"] != "vpx-extraction.playboy-35th-hybrid-1.1"))
+        self.assertTrue(all(item["uri"].startswith("external:pinmame-vpx-sources/") for item in self.definition["sources"] if item["kind"] in {"vpx_table","vpx_script"} and item["id"] not in {"vpx-extraction.playboy-35th-hybrid-1.1","vpm-script-library.de2-vbs"}))
         self.assertTrue(all(not item["uri"].startswith(("source-checkouts/","vpx-sources/","external:pinmame-manual-cache/")) for item in self.definition["sources"]))
         self.assertEqual(4,len(manual["excerpts"]))
         for excerpt in manual["excerpts"]:

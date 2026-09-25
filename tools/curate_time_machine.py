@@ -12,6 +12,15 @@ from pinmame_game_defs.coverage import build_coverage_report, build_curation_que
 from pinmame_game_defs.jsonio import content_sha256, load_json, write_json, write_text
 from pinmame_game_defs.registry import rebuild_catalog
 from pinmame_game_defs.validation import unresolved_conflicts
+from pinmame_flipper_column import (
+	VPM_CORE_SHA256,
+	VPM_DE_LIBRARY_SOURCE,
+	VPM_DE_LIBRARY_URI,
+	VPM_DE_SHA256,
+	flipper_column_inputs,
+	flipper_column_relationships,
+	vpm_staged_flipper_notes,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +45,9 @@ SCRIPT_SOURCE = "vpx-script.time-machine-2.4.1"
 EXTRACTION_SOURCE = "vpx-extraction.time-machine-2.4.1"
 RENDER_SOURCE = "human-review.time-machine-manual-renders"
 RUNTIME_SOURCE = "runtime.time-machine.alpha-diagnostics"
+VPM_EXCERPT_SHA256 = "999c3465d1f6f29cedaf778e7b1707b4014f883fd9f8e1adb39557547fa3fb35"
+# (left, right) in the driver's own FLIP1516 = FLIP_SWNO(15,16) macro order.
+FLIP_SWNO = (15, 16)
 
 MANUAL_SHA256 = "f232f8114ea31776a9d49e274b5ebed32cb3805acb4e719785fe48d43ddd719c"
 MANUAL_URI = "https://archive.org/download/Data_East_Time_Machine_Manual/Data_East_1988_Time_Machine_Manual.pdf"
@@ -321,7 +333,14 @@ def switch_input(number: int) -> dict[str, object]:
 	if number in SWITCH_PARTS:
 		physical["part_number"] = SWITCH_PARTS[number]
 	if number in {15, 16}:
-		physical["notes"] += " The printed parts list separately names the Instant Info flipper function and a physical EOS contact at this address; PinMAME FLIP1516 publishes cabinet-button state here."
+		button = 84 if number == 15 else 82
+		side = "left" if number == 15 else "right"
+		physical["notes"] += (
+			" The printed parts list separately names the Instant Info flipper function and a physical EOS contact at this address; PinMAME FLIP1516 publishes cabinet-button state here."
+			f" With keyboard handling off (the LibPinMAME default; the retained script sets HandleKeyboard = 0) core_updateSw rewrites it on every update from PinMAME's flipper column, public {button} (the {side} cabinet button, {'CORE_SWLLFLIPBUTBIT' if number == 15 else 'CORE_SWLRFLIPBUTBIT'}), so the ROM reads the button state exactly as the host writes it there."
+			f" A consumer drives {button}, not this address. The retained script's {'SolLFlipper' if number == 15 else 'SolRFlipper'} callback (registered as SolCallback({'sLLFlipper' if number == 15 else 'sLRFlipper'}); with UseSolenoids = 2 core.vbs's fast-flip code calls it from the flipper key and from the ROM's {48 if number == 15 else 46}) also writes Controller.Switch({number}) directly (script lines {'942 and 952' if number == 15 else '963 and 973'}); those writes are overwritten on the next update and have no effect, a defect of the table rather than a fact about the machine."
+			f" The table's {side} flipper key reaches DE.VBS vpmKeyDown/vpmKeyUp through KeyDownHandler/KeyUpHandler, which write {'swLLFlip = 84' if number == 15 else 'swLRFlip = 82'} (excerpt vpm-script-library-flippers)."
+		)
 	source_refs = [MANUAL_SOURCE, CORE_SOURCE, SCRIPT_SOURCE]
 	if number in {15,16}:
 		source_refs.append(RUNTIME_SOURCE)
@@ -464,7 +483,10 @@ def solenoid_output(number: int) -> dict[str, object]:
 	if number == 24: physical["notes"] += " Pinned core never populates this public address, and the manual identifies no physical circuit for it."
 	if 29 <= number <= 32: physical["notes"] += " The manual's Coil Tests prose says coil 10 multiplexes drives 1-8 between left and right sets for an effective total of 23 regular coils, and pinned Time Machine s11.c registers this as one of four distinct muxed #89-bulb output types at addresses 29-32. However, the retained device chart stops at SIDE R 04 and the retained script registers no callback, so static evidence cannot establish this exact state's runtime activity, fitted circuit, physical quantity, feature name, or socket."
 	if 33 <= number <= 44: physical["notes"] += " PinMAME's shared s11 core exposes this address but the Data East game driver never populates it."
-	if 45 <= number <= 48: physical["notes"] += " PinMAME-generated lower-flipper power/hold state; it is meaningful controller state, not a separate physical driver, winding, or part at this public number."
+	if 45 <= number <= 48: physical["notes"] += (
+		" PinMAME-generated lower-flipper power/hold state; it is meaningful controller state, not a separate physical driver, winding, or part at this public number."
+		f" core_updateSw sets it while the switched-solenoid enable is on and the {'right' if number in (45, 46) else 'left'} cabinet button bit of PinMAME's flipper column is set: public {82 if number in (45, 46) else 84}, the same bit it copies into matrix switch {16 if number in (45, 46) else 15}."
+	)
 	if number == 49: physical["notes"] += " PinMAME's shared s11 core simulation-only shooter address; it is not a physical Data East output."
 	if number == 50: physical["notes"] += " Reserved public address with no meaningful game state."
 	if number in {20,24}:
@@ -529,8 +551,8 @@ def mechanisms() -> list[dict[str, object]]:
 		{"id":"mechanism.super-vuk","label":"Super Vertical Up Kicker","kind":"kicker","actuators":["coil.driver-27"],"sensors":["switch.matrix-44","switch.matrix-45"],"behavior":"A ball entering the under-playfield path pulses ramp switch 44, then is staged at VUK switch 45. Output 27 drives the constructed 23-800 vertical plunger/cup assembly and clears switch 45 as the ball is kicked upward.","assembly_part_number":"500-5116-00","positions":[{"id":"super-vuk.entry","label":"Under-playfield entry","sensors":["switch.matrix-44"]},{"id":"super-vuk.cup","label":"VUK cup","sensors":["switch.matrix-45"]}],"provenance":provenance("validated",SCRIPT_SOURCE,MANUAL_SOURCE)},
 		{"id":"mechanism.visible-lock","label":"Three-position visible ball lock","kind":"other","actuators":["coil.driver-28"],"sensors":["switch.matrix-36","switch.matrix-37","switch.matrix-38"],"behavior":"The retained cvpmVLock orders three serial positions at switches 36, 37, and 38 and releases through output 28. The manual shows one 24-900 coil, spring-return plunger, lock cam, and bracket assembly rather than three independent ejectors.","assembly_part_number":"500-5104-00","positions":[{"id":"lock.position-1","label":"Lock Ball #1 / player-nearest","sensors":["switch.matrix-36"]},{"id":"lock.position-2","label":"Lock Ball #2 / middle","sensors":["switch.matrix-37"]},{"id":"lock.position-3","label":"Lock Ball #3 / rear","sensors":["switch.matrix-38"]}],"provenance":provenance("validated",SCRIPT_SOURCE,MANUAL_SOURCE)},
 		{"id":"mechanism.laser-kick","label":"Laser Kick kickback","kind":"kicker","actuators":["coil.driver-16"],"sensors":["switch.matrix-17"],"behavior":"Switch 17 reports the left outlane ahead of the printed Laser Kick assembly. Output 16 fires and retracts the retained KickBack plunger; the manual identifies assembly 500-5080-00 and a 23-800 coil.","assembly_part_number":"500-5080-00","provenance":provenance("validated",SCRIPT_SOURCE,MANUAL_SOURCE)},
-		{"id":"mechanism.left-flipper","label":"Lower-left flipper","kind":"other","actuators":["coil.driver-47","coil.driver-48"],"sensors":["switch.matrix-15"],"behavior":"One 22-750/30-2600 dual-winding coil moves the sole left flipper. The manual prints a physical Left EOS at 15, while FLIP1516 and the retained key handler publish cabinet-button state at that address.","assembly_part_number":"500-5031-12","provenance":provenance("conflicted",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
-		{"id":"mechanism.right-flipper","label":"Lower-right flipper","kind":"other","actuators":["coil.driver-45","coil.driver-46"],"sensors":["switch.matrix-16"],"behavior":"One 22-750/30-2600 dual-winding coil moves the sole right flipper. The manual prints a physical Right EOS at 16, while FLIP1516 and the retained key handler publish cabinet-button state at that address.","assembly_part_number":"500-5031-11","provenance":provenance("conflicted",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
+		{"id":"mechanism.left-flipper","label":"Lower-left flipper","kind":"other","actuators":["coil.driver-47","coil.driver-48"],"sensors":["switch.matrix-15"],"behavior":"One 22-750/30-2600 dual-winding coil moves the sole left flipper. The manual prints a physical Left EOS at 15, while FLIP1516 makes core_updateSw copy the left cabinet button, public 84, into that address; the retained key handler drives 84 through DE.VBS.","assembly_part_number":"500-5031-12","provenance":provenance("conflicted",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
+		{"id":"mechanism.right-flipper","label":"Lower-right flipper","kind":"other","actuators":["coil.driver-45","coil.driver-46"],"sensors":["switch.matrix-16"],"behavior":"One 22-750/30-2600 dual-winding coil moves the sole right flipper. The manual prints a physical Right EOS at 16, while FLIP1516 makes core_updateSw copy the right cabinet button, public 82, into that address; the retained key handler drives 82 through DE.VBS.","assembly_part_number":"500-5031-11","provenance":provenance("conflicted",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
 		{"id":"mechanism.left-slingshot","label":"Left slingshot","kind":"other","actuators":["coil.driver-18"],"sensors":["switch.matrix-21"],"behavior":"The manual fits a trigger and point switch plus a switch-triggered SP3 coil; pinned Data East setSSSol publishes SP3 as public 18, and the retained native slingshot event pulses switch 21. No public SolCallback exists because the special circuit is hardware-triggered.","assembly_part_number":"500-5029-01","provenance":provenance("candidate",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
 		{"id":"mechanism.right-slingshot","label":"Right slingshot","kind":"other","actuators":["coil.driver-21"],"sensors":["switch.matrix-22"],"behavior":"The manual fits a trigger and point switch plus a switch-triggered SP5 coil; pinned Data East setSSSol publishes SP5 as public 21, and the retained native slingshot event pulses switch 22. No public SolCallback exists because the special circuit is hardware-triggered.","assembly_part_number":"500-5029-01","provenance":provenance("candidate",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
 		{"id":"mechanism.left-pop","label":"Left pop bumper","kind":"other","actuators":["coil.driver-19"],"sensors":["switch.matrix-46"],"behavior":"The retained Bumper1 event pulses switch 46. Both manual special-coil representations agree that SP4 is the left pop, and pinned Data East setSSSol publishes SP4 as public 19, but public callback timing is not exposed.","assembly_part_number":"500-5034-07","provenance":provenance("candidate",SCRIPT_SOURCE,MANUAL_SOURCE,CORE_SOURCE)},
@@ -546,8 +568,8 @@ def mechanisms() -> list[dict[str, object]]:
 
 def conflicts() -> list[dict[str, object]]:
 	return [
-		{"id":"conflict.left-eos-vs-public-button-state","status":"ignored","rationale":"An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.","path":"/inputs/switch.matrix-15","description":"The manual prints a physical Left EOS contact at matrix 15 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put left cabinet-button state at public 15. The runtime trace confirms that emulator-facing button contract but cannot distinguish it from the manual's physical EOS circuit.","source_refs":[MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE,RUNTIME_SOURCE]},
-		{"id":"conflict.right-eos-vs-public-button-state","status":"ignored","rationale":"An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.","path":"/inputs/switch.matrix-16","description":"The manual prints a physical Right EOS contact at matrix 16 and does not mark it as a cabinet switch. FLIP1516 and the retained key handler put right cabinet-button state at public 16. The runtime trace confirms that emulator-facing button contract but cannot distinguish it from the manual's physical EOS circuit.","source_refs":[MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE,RUNTIME_SOURCE]},
+		{"id":"conflict.left-eos-vs-public-button-state","status":"ignored","rationale":"An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.","path":"/inputs/switch.matrix-15","description":"The manual prints a physical Left EOS contact at matrix 15 and does not mark it as a cabinet switch. FLIP1516 makes core_updateSw copy the left cabinet-button bit (public 84), which the retained key handler writes through DE.VBS, into public 15. The runtime trace confirms that emulator-facing button contract but cannot distinguish it from the manual's physical EOS circuit.","source_refs":[MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE,RUNTIME_SOURCE]},
+		{"id":"conflict.right-eos-vs-public-button-state","status":"ignored","rationale":"An end-of-stroke contact exists so a physical coil's power winding is cut before it burns, and a recreation has no coil to protect. This platform models no EOS at all -- the driver macro uses FLIP_SWNO without FLIP_SOL, so core.c's EOS simulation never runs -- and PinMAME publishes cabinet-button state at this address instead. Which of the two names belongs on it cannot change any table. The record is kept because it explains this address's conflicted provenance; it is not an outstanding question.","path":"/inputs/switch.matrix-16","description":"The manual prints a physical Right EOS contact at matrix 16 and does not mark it as a cabinet switch. FLIP1516 makes core_updateSw copy the right cabinet-button bit (public 82), which the retained key handler writes through DE.VBS, into public 16. The runtime trace confirms that emulator-facing button contract but cannot distinguish it from the manual's physical EOS circuit.","source_refs":[MANUAL_SOURCE,CORE_SOURCE,SCRIPT_SOURCE,RUNTIME_SOURCE]},
 		{"id":"conflict.shared-port-position-2-vs-unfitted","path":"/inputs/switch.matrix-2","description":"Shared Data East DE_COMPORTS names matrix position 2 Ball Tilt, while both Time Machine manual switch tables explicitly print position 2 Not Used. The machine record follows the game-specific fitment without erasing the shared-port label. Resolution path: a photograph or continuity check of an unrestored cabinet's WHT-RED return line, which the printed matrix gives as position 2's return, showing whether any contact lands on it, or a Data East cabinet or coin-door parts page from a title whose own chart does name the position - the Lethal Weapon 3 manual retained in this repository prints it 4th Coin - identifying the contact the shared macro bit was reserved for. Unresolved.","source_refs":[MANUAL_SOURCE,CORE_SOURCE]},
 		{"id":"conflict.special-coil-right-center-location","path":"/outputs/coil.driver-17","description":"The manual Coil Test table prints SP1 Right Pop Bumper and SP2 Center Pop Bumper. Its location drawing places SP1 at the center pop and SP2 at the right pop. Pinned Data East setSSSol publishes SP1 at public 17 and SP2 at public 22; the two physical assignments remain unresolved and neither output is assigned to a mechanism or coordinate. Resolution path: a LibPinMAME gameplay-harness trace against a legal tmac_a24 ROM that starts a ball and closes the center and right pop-bumper switches in turn while watching public 17 and 22 - the retained tmac_a24 diagnostic run records this as its own limitation, because that driver's ssSw mapping is empty and the ROM's automatic Coil Test never pulses 17-22 - or a photograph or continuity check of an unrestored playfield tracing the two special-coil control leads to their bumper bodies. Unresolved.","source_refs":[MANUAL_SOURCE,RENDER_SOURCE,CORE_SOURCE]},
 		{"id":"conflict.lamp-25-playfield-vs-table-backglass","path":"/outputs/lamp.matrix-25","description":"The manual description list explicitly prints lamp 25 as 2X All Scores Cntr Plyfld. The sole AllLamps member with TimerInterval 25 is Light l25, flagged is_backglass=true on hSpacewarpLights. No physical placement is selected. Resolution path: a photograph of an unrestored machine showing whether a 2X All Scores insert is fitted at the center playfield, on the back panel, or both - the same printed list distinguishes the two planes elsewhere, giving 26 as Extra Ball Back Panel - or a lamp survey tracing address 25's printed YEL-BLK drive and RED-BRN return to the socket they reach. Unresolved.","source_refs":[MANUAL_SOURCE,TABLE_SOURCE,SCRIPT_SOURCE]},
@@ -630,12 +652,52 @@ def sources() -> list[dict[str, object]]:
 		{"id":SCRIPT_SOURCE,"kind":"vpx_script","uri":"external:pinmame-vpx-sources/data-east/time-machine-1988/vpxtool-extract/script.vbs","sha256":SCRIPT_SHA256,"revision":"script from retained table 2.4.1","source_id":"retained-time-machine-2.4.1-script","original_filename":"script.vbs","license":"Community script; redistribution terms not supplied","attribution":"Credited Time Machine table-script contributors","rights":"NOASSERTION","acquired_at":"2026-08-09T12:35:55Z","locator":"Const cGameName=tmac_a24; UseSolenoids=2, UseLamps=1; HandleMechanics=0; vpmMapLights AllLamps; whole-line comments stripped before callback attribution; trough, VUK, three-position lock, kickback, flipper and sensor causality"},
 		{"id":EXTRACTION_SOURCE,"kind":"vpx_table","uri":MANIFEST_PATH.as_posix(),"sha256":MANIFEST_CONTENT_SHA256,"revision":"vpxtool git:0561bb4","source_id":"retained-time-machine-2.4.1-extraction","original_filename":"time-machine-1988-extraction-manifest.json","license":"Repository-generated metadata under MIT; underlying community-table rights are unchanged","attribution":"Generated from the retained Time Machine 2.4.1 table with vpxtool git:0561bb4","rights":"NOASSERTION","acquired_at":"2026-08-09T12:35:55Z","locator":f"3049 files; 313925219 bytes; algorithm: {MANIFEST_ALGORITHM}; canonical manifest SHA-256 {MANIFEST_SHA256}; 2389 files under gameitems/"},
 		{"id":RENDER_SOURCE,"kind":"human_review","uri":MANUAL_URI,"revision":"visual review 2026-08-09","sha256":MANUAL_SHA256,"license":"NOASSERTION","attribution":"Primary curator review of the retained Data East manual","rights":"NOASSERTION","acquired_at":"2026-08-09T12:41:47Z","locator":"Reviewed retained Archive.org renders at PDF pages 26-31, 67, 74, 76, and 77; every manual claim in the excerpts is limited to visible rendered-page content. PDF page 78 is blank."},
+		{
+		    "id": VPM_DE_LIBRARY_SOURCE, "kind": "vpx_script",
+		    "uri": VPM_DE_LIBRARY_URI,
+		    "original_filename": "de.vbs", "sha256": VPM_DE_SHA256, "acquired_at": "2026-09-25T23:32:01Z",
+		    "locator": (
+		        "The VPinMAME script library the retained table loads at runtime (script.vbs line 302 LoadVPM "
+		        "\"00990300\", \"DE.VBS\", 3.10; DE.VBS executes core.vbs), retained from the contributor's working "
+		        f"installation together with core.vbs (SHA-256 {VPM_CORE_SHA256}). DE.VBS defines swLRFlip = 82 and "
+		        "swLLFlip = 84 and sets them from the flipper keys in vpmKeyDown/vpmKeyUp, and names the staged upper "
+		        "flipper keys swURFlip/swULFlip at 86 and 88."
+		    ),
+		    "license": "NOASSERTION", "attribution": "VPinMAME / Visual Pinball script-library maintainers",
+		    "rights": "NOASSERTION",
+		    "excerpts": [
+		        {
+		            "id": "excerpt.time-machine.vpm-script-library-flippers",
+		            "locator": "de.vbs lines 33-36, 62-79 and 94-111; core.vbs lines 2061-2062, 2090, 2854-2855 and 2862-2863; script.vbs lines 302, 438, 716-785, 823-824, 939-952 and 960-973 (a bare CR counts as a line break)",
+		            "path": "evidence/excerpts/data-east.time-machine.1988/vpm-script-library-flippers.md",
+		            "sha256": VPM_EXCERPT_SHA256,
+		            "method": "manual", "transcribed_by": "curator, read from the library and script files", "reviewed": True,
+		        },
+		    ],
+		},
 		{"id":RUNTIME_SOURCE,"kind":"runtime_scenario","uri":RUNTIME_EVIDENCE_PATH.as_posix(),"revision":PINMAME_REVISION,"sha256":sha256_text(json_text(build_runtime_evidence())),"license":"NOASSERTION","attribution":"Generated locally from pinned PinMAME and the user-authorized ROM corpus; ROM bytes remain external.","rights":"NOASSERTION","acquired_at":"2026-08-12T00:50:07Z","locator":f"The manifest-pinned bundle {RUNTIME_MANIFEST_SHA256} retains one successful automatic tmac_a24 trace carried forward byte-for-byte from final-v4 and one successful final-v5 switch/flipper trace, each with an isolated state directory. The automatic diagnostic records the regular/K1-mux cycle; held flipper actions observe the emulator-facing 15/16 and 47/48 or 45/46 contracts. Direct switch pulses landed, but they ran during automatic Coil Test and cannot reach public 17-22 through this driver's empty ssSw mapping; they make no special-solenoid identity claim."},
 	]
 
 
 def build_machine() -> dict[str, object]:
-	inputs = diagnostic_inputs() + [switch_input(number) for number in range(1, 65)]
+	inputs = diagnostic_inputs() + [switch_input(number) for number in range(1, 65)] + flipper_column_inputs(
+		flip_swno=FLIP_SWNO, flip_swno_text="FLIP1516 = FLIP_SWNO(15,16)",
+		core_refs=(CORE_SOURCE,), button_refs=(SCRIPT_SOURCE, VPM_DE_LIBRARY_SOURCE, RUNTIME_SOURCE),
+		button_notes={
+			side: (
+				f"The retained known-working script drives it: Table1_KeyDown/Table1_KeyUp (script lines 716-785) hand the {side} "
+				"flipper key to KeyDownHandler/KeyUpHandler, which core.vbs routes to DE.VBS vpmKeyDown/vpmKeyUp, and those set "
+				f"Controller.Switch({'swLLFlip' if side == 'left' else 'swLRFlip'}) with {'swLLFlip = 84' if side == 'left' else 'swLRFlip = 82'} "
+				f"(excerpt vpm-script-library-flippers). The retained tmac_a24 switch/flipper run held the {side} flipper through the "
+				f"emulator's keyboard port and read public {15 if side == 'left' else 16} active with {'47/48' if side == 'left' else '45/46'}. "
+				f"The physical counterpart is the {side} cabinet flipper button; the manual prints matrix {15 if side == 'left' else 16} "
+				"as that flipper's end-of-stroke contact."
+			)
+			for side in ("left", "right")
+		},
+		unused_notes=vpm_staged_flipper_notes(library="DE.VBS"),
+		unused_note_refs=(VPM_DE_LIBRARY_SOURCE,),
+	)
 	outputs = [solenoid_output(number) for number in range(1, 51)] + [lamp_output(number) for number in range(1, 65)]
 	return {
 		"format":"pinmame-machine-definition", "schema_version":2,
@@ -648,7 +710,9 @@ def build_machine() -> dict[str, object]:
 			{"id":"tmac_g18","clone_of":"tmac_a24","description":"Time Machine (1.8 German)","year":"1988","manufacturer":"Data East","flags":0,"physical_compatibility":"compatible","variant_notes":"German program ROM revision; same INITGAMES11 physical GameData, display array, flipper declaration, and sound board as the parent."},
 		],
 		"inputs":inputs, "outputs":outputs, "displays":displays(), "mechanisms":mechanisms(),
-		"relationships":[{"id":f"relationship.lr-relay-{number}","kind":"relay_gated","source":"coil.driver-10","destination":f"coil.driver-{number}","provenance":provenance("validated",CORE_SOURCE,MANUAL_SOURCE)} for number in range(25,33)],
+		"relationships":[{"id":f"relationship.lr-relay-{number}","kind":"relay_gated","source":"coil.driver-10","destination":f"coil.driver-{number}","provenance":provenance("validated",CORE_SOURCE,MANUAL_SOURCE)} for number in range(25,33)]+flipper_column_relationships(
+			flip_swno=FLIP_SWNO, matrix_ids={15: "switch.matrix-15", 16: "switch.matrix-16"}, refs=(CORE_SOURCE,),
+		),
 		"sources":sources(), "knowledge":{"path":KNOWLEDGE_PATH.as_posix(),"status":"partial"}, "conflicts":conflicts(),
 	}
 
@@ -689,7 +753,7 @@ def build_spatial(machine: dict[str, object]) -> dict[str, object]:
 		"blockers":[
 			{"dimension":"output_semantics","devices":["coil.driver-29","coil.driver-30","coil.driver-31","coil.driver-32"],"reason":"Pinned source configures four distinct emulator-published mux-state output types at 29-32, but static evidence does not prove runtime activity. The retained manual has no printed device row for these public states and the retained script registers no callback, so availability is unknown and no physical quantity or socket is claimed.","would_resolve":"A retained original-machine or LibPinMAME runtime trace that records each public state 29-32 under controlled relay conditions, paired with a source-backed circuit or socket survey."},
 			{"dimension":"mechanism_behavior","devices":["coil.driver-17","coil.driver-18","coil.driver-19","coil.driver-21","coil.driver-22"],"reason":"Hardware-triggered special-coil pulse timing is absent from the retained public callbacks, and SP1/SP2 physical assignment conflicts.","would_resolve":"Original-machine captures of each bumper/slingshot switch and special-solenoid state, with right and center bumpers exercised separately."},
-			{"dimension":"polarity","devices":["switch.matrix-15","switch.matrix-16","coil.driver-45","coil.driver-46","coil.driver-47","coil.driver-48"],"reason":"Physical EOS contacts and controller-facing button/synthetic winding states share public meanings without an at-rest/end-of-stroke bench capture.","would_resolve":"Bench capture of cabinet button, EOS at rest/end of stroke, and public power/hold states on an original machine or faithful harness."},
+			{"dimension":"polarity","devices":["coil.driver-45","coil.driver-46","coil.driver-47","coil.driver-48"],"reason":"The synthetic power/hold states have no settled winding-level mapping without a bench capture. Switches 15/16 are no longer part of this question: core_updateSw rewrites both from the cabinet-button bits at public 82/84 on every update, so the ROM reads them exactly as a consumer writes 82/84.","would_resolve":"Bench capture of the flipper windings and public power/hold states on an original machine or faithful harness."},
 			{"dimension":"spatial_placement","devices":all_lamps+[f"coil.driver-{number}" for number in [5,6,7,8,9,12,13,14,15,17,22,29,30,31,32]],"reason":"Lamp positions are table candidates, two pop actuators conflict, and flash groups lack socket-level coordinates.","would_resolve":"A photographed socket/address survey above and below an original playfield plus the backbox/back-panel lamp boards."},
 			{"dimension":"unresolved_conflicts","devices":unresolved_conflict_ids,"reason":"Three machine-specific source disagreements remain first-class and promotion-critical. The two flipper end-of-stroke naming records are recorded as ignored: the answer cannot reach a recreation, so they are not listed here.","would_resolve":"Corrected upstream sources or independent original-machine traces that explicitly settle each conflicting state."},
 		],
@@ -749,7 +813,9 @@ The retained table SHA-256 is `{TABLE_SHA256}` and binds the correct parent with
 
 The manifest-pinned evidence bundle retains one successful automatic LibPinMAME run carried forward byte-for-byte from the final-v4 capture and one successful final-v5 switch/flipper run. Both used ROM archive SHA-256 `{ROM_ARCHIVE_SHA256}`, library SHA-256 `{PINMAME_LIBRARY_SHA256}`, and isolated state directories. Hash-pinned raw-run checkpoints matched the English `SWITCH TEST` and `COIL TEST` titles. The complete automatic output cycle was `1, 10, 25, 2, 10, 26, 3, 10, 27, 4, 10, 28, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16`; three pre-window ON events (10, 27, 23) preceded that repeating window. This proves that the selected ROM drives public 25-28 during the K1-interleaved test, while watched public 29-32 were not present in this captured cycle. Their absence is not proof of dead or unfitted addresses; the existing output-semantics blocker remains.
 
-Named flipper actions with held-state readback confirmed the emulator-facing contract: public button address 15 accompanies synthetic 47/48, and 16 accompanies 45/46. This does not distinguish the manual's physical EOS interpretation and therefore resolves neither flipper conflict. The remaining direct pulses were observed closed and released, but ran while the ROM's automatic Coil Test continued. Time Machine's `INITGAMES11` initializer leaves `ssSw` empty, and `s11.c` only publishes 17-22 from switch closures when an `ssSw` entry exists; otherwise ROM PIA writes call `setSSSol`. The switch sweep therefore could not exercise 17-22. Resolving the SP1/SP2 identity requires observing `setSSSol` during gameplay or static ROM analysis, not another diagnostic switch sweep.
+Named flipper actions with held-state readback confirmed the emulator-facing contract: public button address 15 accompanies synthetic 47/48, and 16 accompanies 45/46. This does not distinguish the manual's physical EOS interpretation and therefore resolves neither flipper conflict.
+
+The button state comes from PinMAME's flipper column, `CORE_FLIPPERSWCOL` (internal column 11), which `core_swSeq2m(n) = n + 7` publishes at switches 81-88. With keyboard handling off `core_updateSw` copies the right button (82) into 16 and the left button (84) into 15 on every update, and fabricates 45/46 from 82 and 47/48 from 84, so **a recreation drives 82/84, never 15/16**. The other six column positions are end-of-stroke and upper-button bits this driver does not use and the ROM cannot read, so they are recorded unused. The retained table's `SolLFlipper`/`SolRFlipper` callbacks also write `Controller.Switch(15)`/`(16)` directly; those writes are overwritten and have no effect. Its flipper keys reach `DE.VBS` `vpmKeyDown`/`vpmKeyUp` through `KeyDownHandler`/`KeyUpHandler`, which write `swLRFlip = 82` and `swLLFlip = 84`. The remaining direct pulses were observed closed and released, but ran while the ROM's automatic Coil Test continued. Time Machine's `INITGAMES11` initializer leaves `ssSw` empty, and `s11.c` only publishes 17-22 from switch closures when an `ssSw` entry exists; otherwise ROM PIA writes call `setSSSol`. The switch sweep therefore could not exercise 17-22. Resolving the SP1/SP2 identity requires observing `setSSSol` during gameplay or static ROM analysis, not another diagnostic switch sweep.
 
 ## Coverage and blockers
 
@@ -757,7 +823,7 @@ Status remains `partial`. `coverage.missing` is [{missing}].
 
 - `output_semantics`: public 29-32 are distinct emulator-published mux states whose runtime activity, physical quantity, and circuit identity are untraced.
 - `mechanism_behavior`: hardware-triggered special-coil timing is not exposed, and SP1/SP2 assignment conflicts.
-- `polarity`: FLIP1516 publishes cabinet-button state where the manual prints physical EOS contacts; no bench capture reconciles rest/end-of-stroke state.
+- `polarity`: no bench capture maps the synthetic power/hold states 45-48 onto the flipper windings. The controller-facing level of switches 15/16 is settled: `core_updateSw` copies the cabinet-button bits at 82/84 into them.
 - `spatial_placement`: lamp coordinates are table candidates, flash groups lack socket surveys, and the conflicted outputs have no selected position.
 - `unresolved_conflicts`: three source disagreements remain recorded in the definition and spatial report. Two further records, the flipper end-of-stroke naming pair, are kept as ignored and do not block.
 

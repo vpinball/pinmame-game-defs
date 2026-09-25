@@ -162,7 +162,8 @@ class LethalWeapon3DefinitionTests(unittest.TestCase):
         """
         # The two negative addresses are coin-door diagnostic buttons in switch column 0, not
         # matrix positions; everything from 1 to 64 is the matrix itself.
-        self.assertEqual(set(range(1, 65)) | {-7, -6}, set(self.switches))
+        # 81-88 are PinMAME's flipper column (CORE_FLIPPERSWCOL), not matrix positions either.
+        self.assertEqual(set(range(1, 65)) | {-7, -6} | set(range(81, 89)), set(self.switches))
         self.assertEqual(set(range(1, 65)), set(self.lamps))
         for address in range(1, 65):
             column, row = (address - 1) // 8 + 1, (address - 1) % 8 + 1
@@ -284,7 +285,9 @@ class LethalWeapon3DefinitionTests(unittest.TestCase):
                           "core_setSw",          # how it writes them
                           "FLIP_SOL",            # why no EOS state is simulated
                           "p_rocEn",             # the mode in which it does not write them
-                          "script.vbs:928-929"): # the retained script's own writes
+                          f"script.vbs:{928 if address == 15 else 929}",  # the retained script's own writes
+                          f"public {84 if address == 15 else 82}",         # the flipper-column bit it copies
+                          "have no effect"):     # why those writes do not matter
                 self.assertIn(token, notes, f"switch {address} note omits {token}")
             self.assertEqual("not_applicable", self.switches[address]["spatial"]["status"])
 

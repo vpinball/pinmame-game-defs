@@ -77,4 +77,4 @@ library. The branch taken depends on `VPinMAMEDriverVer`, and both branches writ
 at line 1635. The trailing `' line NNNN` markers above are added here to give the location and are not in the
 script.
 
-The table's script never calls `NoUpperLeftFlipper` or `NoUpperRightFlipper` and never names a staged flipper key.
+The table's script never calls `NoUpperLeftFlipper` or `NoUpperRightFlipper`, never names a staged flipper key, and never defines `cSingleLFlip` or `cSingleRFlip`.

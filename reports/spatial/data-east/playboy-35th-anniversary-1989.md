@@ -33,11 +33,11 @@ Devices: `mechanism.grotto-kicker`, `mechanism.left-slingshot`, `mechanism.right
 
 ### polarity
 
-The core publishes cabinet buttons at manual EOS addresses and decoded mux states, but no at-rest/end-of-stroke or relay electrical trace proves physical polarity.
+The core publishes decoded mux and synthetic flipper states, but no relay electrical trace proves physical polarity. Switches 15/16 are no longer part of this question: core_updateSw rewrites both from the cabinet-button bits at public 82/84 on every update, so the ROM reads them exactly as a consumer writes 82/84.
 
-Would resolve: Bench capture of cabinet button, EOS, K1 relay, raw A/C driver and public output states.
+Would resolve: Bench capture of the K1 relay, raw A/C driver, flipper windings and public output states.
 
-Devices: `switch.matrix-15`, `switch.matrix-16`, `coil.driver-10`, `coil.driver-45`, `coil.driver-46`, `coil.driver-47`, `coil.driver-48`
+Devices: `coil.driver-10`, `coil.driver-45`, `coil.driver-46`, `coil.driver-47`, `coil.driver-48`
 
 ### spatial_placement
 

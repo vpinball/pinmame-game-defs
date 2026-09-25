@@ -29,6 +29,18 @@ PROFILES = {
 }
 
 
+# Curated Data East records: machine id -> (degames.c INITGAMES11 prefix, FLIP_SWNO (left, right)).
+DATA_EAST_MACHINES = {
+	"data-east.batman.1991": ("btmn", (15, 16)),
+	"data-east.laser-war.1987": ("lwar", (47, 46)),
+	"data-east.lethal-weapon-3.1992": ("lw3", (15, 16)),
+	"data-east.playboy-35th-anniversary.1989": ("play", (15, 16)),
+	"data-east.secret-service.1988": ("ssvc", (30, 31)),
+	"data-east.time-machine.1988": ("tmac", (15, 16)),
+	"data-east.torpedo-alley.1988": ("torp", (15, 16)),
+}
+
+
 def load_json(path: Path) -> dict:
 	return json.loads(path.read_text(encoding="utf-8"))
 
@@ -131,6 +143,67 @@ class FlipperColumnDefinitionTests(unittest.TestCase):
 		self.assertIn("williams.high-speed.1986", checked)
 		self.assertIn("bally.elvira-and-the-party-monsters.1989", checked)
 		self.assertIn("williams.earthshaker.1989", checked)
+		for machine in DATA_EAST_MACHINES:
+			self.assertIn(machine, checked)
+
+	def test_every_data_east_record_copies_to_its_own_flip_swno_pair(self) -> None:
+		# The (left, right) pairs are FLIP1516 / FLIP4746 / FLIP3031 as degames.c declares them; the
+		# pinned-source test below checks that declaration for each driver prefix.
+		for machine, (prefix, (left, right)) in DATA_EAST_MACHINES.items():
+			definition = next(
+				load_json(path) for path in (ROOT / "machines").glob("**/*.json")
+				if load_json(path)["machine"]["id"] == machine
+			)
+			with self.subTest(machine=machine):
+				self.assertEqual("pinmame.dataeast", definition["controller"]["platform"])
+				switches = {item["id"]: item for item in definition["inputs"] if item["binding"]["group"] == "pinmame.input.switch"}
+				copies = {(item["source"], item["destination"]) for item in definition["relationships"] if item["source"].startswith("switch.flipper-column-")}
+				destinations = {source: switches[destination]["binding"]["device"] for source, destination in copies}
+				self.assertEqual({"switch.flipper-column-82": right, "switch.flipper-column-84": left}, destinations)
+				for address in (left, right):
+					notes = next(item for item in switches.values() if item["binding"]["device"] == address)["physical"]["notes"]
+					self.assertIn(f"public {84 if address == left else 82}", notes, address)
+				for address in (82, 84):
+					notes = switches[f"switch.flipper-column-{address}"]["physical"]["notes"]
+					self.assertIn(f"matrix switch {right if address == 82 else left}", notes)
+				for address in range(45, 49):
+					solenoid = next(
+						item for item in definition["outputs"]
+						if item["binding"]["group"] == "pinmame.output.solenoid" and item["binding"]["device"] == address
+					)
+					self.assertIn("public 82" if address in (45, 46) else "public 84", solenoid["physical"]["notes"], address)
+
+
+class FlipperColumnDataEastLibraryTests(unittest.TestCase):
+	"""The retained DE.VBS/DE2.VBS copies behind every Data East 81-88 and staged-flipper note."""
+
+	def test_retained_data_east_libraries_match_their_pins_and_upper_constants(self) -> None:
+		import hashlib
+		import os
+
+		from pinmame_flipper_column import VPM_CORE_SHA256, VPM_DE2_SHA256, VPM_DE_SHA256, VPM_UPPER_FLIP_SWITCHES
+
+		root = os.environ.get("PINMAME_REVIEW_ARTIFACTS_ROOT")
+		if not root:
+			self.skipTest("review-artifacts root is not configured")
+		library = Path(root) / "vpm-script-libs"
+		for name, digest in (("de.vbs", VPM_DE_SHA256), ("de2.vbs", VPM_DE2_SHA256), ("core.vbs", VPM_CORE_SHA256)):
+			self.assertEqual(digest, hashlib.sha256((library / name).read_bytes()).hexdigest(), name)
+		for name, key in (("de.vbs", "DE.VBS"), ("de2.vbs", "DE2.VBS")):
+			text = (library / name).read_text(encoding="utf-8", errors="replace")
+			upper_right, upper_left = VPM_UPPER_FLIP_SWITCHES[key]
+			with self.subTest(library=name):
+				self.assertRegex(text, r"Const swLRFlip\s*=\s*82\b")
+				self.assertRegex(text, r"Const swLLFlip\s*=\s*84\b")
+				self.assertRegex(text, rf"Const swURFlip\s*=\s*{upper_right}\b")
+				self.assertRegex(text, rf"Const swULFlip\s*=\s*{upper_left}\b")
+		core = (library / "core.vbs").read_text(encoding="utf-8", errors="replace").splitlines()
+		# The lines vpm_staged_flipper_notes(single_flip_at=...) cites.
+		self.assertEqual("If not cSingleLFlip Then", core[2110].strip())
+		self.assertEqual("if err.number = 0 then NoUpperLeftFlipper", core[2111].strip())
+		self.assertEqual("If not cSingleRFlip Then", core[2114].strip())
+		self.assertEqual("if err.number = 0 then NoUpperRightFlipper", core[2115].strip())
+		self.assertEqual("vpmFlips.Init", core[2311].strip())
 
 
 class FlipperColumnPinnedSourceTests(unittest.TestCase):
@@ -176,6 +249,18 @@ class FlipperColumnPinnedSourceTests(unittest.TestCase):
 		s11games = (wpc / "s11games.c").read_text(encoding="utf-8", errors="replace")
 		self.assertIn("INITGAME(whirl,GEN_S11B,s11_dispS11b2,12, FLIP_SWNO(58,57)", s11games)
 		self.assertIn("INITGAMEFULL(hs, GEN_S11X, s11_dispS11, 0, FLIP_SWNO(37,38)", s11games)
+
+	def test_each_curated_data_east_driver_declares_the_recorded_flip_swno_pair(self) -> None:
+		degames = (self.checkout / "src" / "wpc" / "degames.c").read_text(encoding="utf-8", errors="replace")
+		macros = {
+			name: (int(left), int(right))
+			for name, left, right in re.findall(r"^#define (FLIP\d{4})\s+FLIP_SWNO\((\d+),(\d+)\)", degames, re.M)
+		}
+		for machine, (prefix, pair) in DATA_EAST_MACHINES.items():
+			with self.subTest(machine=machine):
+				line = re.search(rf"^INITGAMES11\({prefix}\s*,\s*(GEN_DE\w*)\s*,[^,]+,\s*(FLIP\d{{4}})\s*,", degames, re.M)
+				self.assertIsNotNone(line, prefix)
+				self.assertEqual(pair, macros[line.group(2)], prefix)
 
 	def test_no_system_11_or_data_east_driver_inverts_the_flipper_column(self) -> None:
 		# invSw[11] would change what core_updateSw reads from 81-88. Every initializer on these

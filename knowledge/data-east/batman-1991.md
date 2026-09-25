@@ -86,12 +86,21 @@ two addresses via `core_setSw`. Because this game declares no `FLIP_SOL`, no `FL
 ever set and the end-of-stroke simulation at `core.c:1756-1775` never runs at all.
 
 **A recreation must not drive public 15 or 16**, because `core_updateSw` overwrites them on every
-frame. The retained known-working script never touches either address, which is the behaviour this
-predicts.
+update. The button state enters at PinMAME's flipper column, `CORE_FLIPPERSWCOL` (internal column
+11), which `core_swSeq2m(n) = n + 7` publishes at 81-88: a consumer drives **82** (right button,
+copied into 16) and **84** (left button, copied into 15). The other six column positions are the
+end-of-stroke and upper-button bits; this driver sets neither `FLIP_EOS` nor an upper `FLIP_SW`
+bit, and the ROM cannot read column 11 through `s11.c`'s eight-column strobe, so they are
+recorded unused. The retained known-working script never touches 15 or 16: its flipper keys reach
+`DE.VBS` `vpmKeyDown`/`vpmKeyUp`, which write `swLRFlip = 82` and `swLLFlip = 84`. `DE.VBS` also
+names the staged upper keys `swURFlip = 86`/`swULFlip = 88`, but this table never writes them: it
+defines `cSingleLFlip = 0` and `cSingleRFlip = 0`, so `core.vbs`'s `cvpmFlips2.Init`, run by `vpmInit`,
+calls `NoUpperLeftFlipper`/`NoUpperRightFlipper` and the staged key writes nothing.
 
 ## Flipper coils are synthesised, and fire in pairs
 
-There is no `FLIP_SOL`, so `core.c:1746-1753` fabricates 45-48 from Game On plus button state:
+There is no `FLIP_SOL`, so `core.c:1746-1753` fabricates 45-48 from the switched-solenoid enable
+plus the button bits at 82 (45/46) and 84 (47/48):
 power and hold assert and release together. They are not independently controllable and must not
 be modelled as separate coils. The manual's own unnumbered "Flipper Solenoids" table lists a left
 and a right flipper and nothing else - there is no upper flipper of either hand, which is
@@ -104,7 +113,7 @@ The retained manual has **no text layer whatsoever** (70 pages,
 transcribed by hand. Nothing came from `pdftotext`.
 
 Spatial placement rests on **one** retained recreation, the VPW v1.1 build, whose playfield is
-**952 x 1974** - not the 2162 most WPC-era tables use. 27 of the 44
+**952 x 1974** - not the 2162 most WPC-era tables use. 27 of the 46
 fitted switches and 54 of the 64 lamps resolved to an object; nothing resolved to an
 address the manual prints "Not Used", which is the check that would have caught an invented
 binding. 14 coordinates are centroids of an extended object's drag points rather

@@ -5,13 +5,11 @@
         "coil.driver-45",
         "coil.driver-46",
         "coil.driver-47",
-        "coil.driver-48",
-        "switch.matrix-46",
-        "switch.matrix-47"
+        "coil.driver-48"
       ],
       "dimension": "polarity",
-      "reason": "The community technical chart prints the physical flipper/EOS wiring, but controller-facing runtime behavior conflicts with the printed EOS labels and no retained evidence establishes the polarity translation.",
-      "would_resolve": "Bench observation of controller-facing flipper-button and EOS polarity synchronized with the physical contacts."
+      "reason": "The community technical chart prints the physical flipper/EOS wiring, but no retained evidence establishes which physical winding each synthetic power/hold state 45-48 stands for. Switches 46/47 are no longer part of this question: core_updateSw rewrites both from the cabinet-button bits at public 82/84 on every update, so the ROM reads them exactly as a consumer writes 82/84.",
+      "would_resolve": "Bench observation of the dual-winding flipper assemblies synchronized with the synthetic states 45-48."
     },
     {
       "devices": [
@@ -136,7 +134,7 @@
       "status": "candidate"
     }
   ],
-  "promotion_decision": "Keep partial. The special-solenoid public mapping remains conflicted, and the kickback's relay-to-local-coil implementation, flipper/EOS polarity, and socket-level tower/GI placements remain authoring-critical blockers.",
+  "promotion_decision": "Keep partial. The special-solenoid public mapping remains conflicted, and the kickback's relay-to-local-coil implementation, the winding mapping of the synthetic flipper states 45-48, and socket-level tower/GI placements remain authoring-critical blockers.",
   "resolved": [
     {
       "id": "switch.matrix-14",
