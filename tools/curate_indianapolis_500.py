@@ -20,7 +20,8 @@ from pinmame_game_defs.jsonio import canonical_bytes, load_json, write_json, wri
 
 ROOT = Path(__file__).resolve().parents[1]
 # Kept partial: the manual prints no general-illumination bulb list, so the playfield G.I. emitters
-# come only from the retained table's G.I. collections and stay `observed` (see the spatial audit).
+# come only from the retained table's G.I. collections and stay `observed`; the race-track reflector
+# bulbs have no printed count; and switches 54 and 75 fail the factory switch-drawing check.
 PARTIAL_PATH = ROOT / "machines/partial/bally/indianapolis-500-1995.json"
 AUTHOR_READY_PATH = ROOT / "machines/author-ready/bally/indianapolis-500-1995.json"
 DEFINITION_PATH = PARTIAL_PATH
@@ -187,6 +188,14 @@ SWITCH_OBJECTS = {
 	61: "Kicker sw61", 62: "Kicker sw62", 64: "Kicker sw64", 65: "Kicker sw65",
 	72: "Bumper Bumper1", 73: "Bumper Bumper2", 74: "Bumper Bumper3", 75: "Trigger sw75", 76: "Trigger sw76",
 }
+# Switch placements the factory switch-location drawing downgrades. The reconciliation
+# (external:pinmame-review-artifacts/indianapolis-500/manual-reconciliation.md) refits both drawings by
+# least squares and applies one rule: a measured placement agrees when its callout reaches the same
+# physical feature within 0.07 normalized units, inclusive; any read above the limit keeps it observed.
+OBSERVED_SWITCHES = {
+	54: "The handbook switch-location drawing's callout 54 ends 0.075 normalized from this wall's centre through the refitted drawing transform (external:pinmame-review-artifacts/indianapolis-500/manual-reconciliation.md), above the 0.07 limit, although it points at the same rubber switch beside the lower kicker.",
+	75: "The handbook switch-location drawing's callout 75 ends at the right ramp's entrance posts, 0.064-0.078 normalized from this trigger on three reads through the refitted transform (external:pinmame-review-artifacts/indianapolis-500/manual-reconciliation.md), above the 0.07 limit on one of them.",
+}
 SWITCH_PROJECTIONS = {
 	41: "Projected onto the trough eject kicker (Kicker BallRelease): the retained script's cvpmTrough keeps the balls virtually and pulses Top Trough on each Trough (solenoid 13) eject, so no table object represents the individual trough opto positions; the manual draws 41-45 along the A-19963 outhole ball trough at the lower right.",
 	42: "Projected onto the trough eject kicker (Kicker BallRelease); the retained script's cvpmTrough.InitSwitches Array(42, 43, 44, 45) models the four ball positions virtually.",
@@ -263,7 +272,7 @@ SOLENOID_WIRING = {
 PRINTED_FLIPPER_CIRCUITS = {45: "29", 46: "30", 47: "31", 48: "32", 33: "33", 34: "34", 35: "35", 36: "36"}
 SOLENOID_ASSEMBLIES = {
 	1: "A-14525", 2: "A-20235", 3: "B-9361-R-1", 4: "A-20451", 5: "A-20159", 7: "B-10686-1",
-	8: "A-9415-2", 9: "A-9415-2", 10: "A-9415-2", 11: "B-9362-L-2", 12: "A-9362-R-3", 13: "A-19963",
+	8: "A-9415-2", 9: "A-9415-2", 10: "A-9415-2", 11: "B-9362-L-2", 12: "B-9362-R-3", 13: "A-19963",
 	14: "A-19980", 15: "A-19980", 16: "A-19980", 17: "A-20038", 18: "A-20169", 19: "A-17802",
 	20: "A-17802", 21: "A-17802", 22: "A-17802", 23: "A-20432-5", 24: "A-20432-5", 25: "A-20432-5",
 	26: "C-13337", 27: "C-13337 with A-19979", 28: "A-19980", 33: "A-14876-R-3", 34: "A-14876-R-3",
@@ -293,6 +302,8 @@ SOLENOID_POSITIONS = {
 	33: [(0.895129, 0.544263)], 34: [(0.895129, 0.544263)], 35: [(0.11504, 0.622629)], 36: [(0.11504, 0.622629)],
 	45: [(0.624039, 0.900775)], 46: [(0.624039, 0.900775)], 47: [(0.288178, 0.900775)], 48: [(0.288178, 0.900775)],
 }
+# Solenoid placements projected onto a switch's table object; they inherit that switch's status.
+SOLENOID_SWITCH_ANCHORS = {1: 25}
 SOLENOID_OBJECTS = {
 	1: "projected onto Trigger SW25 (see note)", 2: "Kicker sw61", 3: "Kicker sw64", 4: "Kicker sw65",
 	5: "Kicker sw62", 8: "Bumper Bumper1", 9: "Bumper Bumper2", 10: "Bumper Bumper3",
@@ -306,7 +317,7 @@ SOLENOID_OBJECTS = {
 	47: "Flipper LeftFlipper", 48: "Flipper LeftFlipper",
 }
 
-# --- Lamp matrix (handbook printed pages 2-3; the full manual repeats them on printed 2-38/2-39).
+# --- Lamp matrix (handbook printed pages 2-3).
 LAMP_LABELS = {
 	11: "Left Lane", 12: "Center Lane", 13: "Right Lane", 14: "Upper Eject Top", 15: "Jet Wrench",
 	16: "Extra Ball", 17: "Victory Lap", 18: "Turbo Wrench",
@@ -338,6 +349,11 @@ LAMP_ASSEMBLIES = {
 	**{address: "A-19823" for address in (71, 72, 73, 74, 75, 76, 77, 78, 81, 82, 83, 84)},
 	86: "20-9663-B-3", 87: "20-9663-21", 88: "20-9663-1",
 }
+LAMP_CONNECTOR_NOTE = (
+	" Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts "
+	"the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the "
+	"same wire colours."
+)
 LIGHTUP_TARGETS = {
 	71: 56, 72: 56, 73: 56, 74: 56, 75: 57, 76: 57, 77: 57, 78: 57, 81: 58, 82: 58, 83: 58, 84: 58,
 }
@@ -400,7 +416,7 @@ GI_POSITIONS = {
 }
 GI_EXCLUDED = {
 	0: "t2 (no bulb mesh)",
-	1: "Light14-Light20 and Light22-Light25 duplicates without a bulb mesh, and the Sol16 flasher helpers F16_Lamp3/F16_Lamp4/F16_Lamp5",
+	1: "Light14-Light20 and Light22-Light25 duplicates and F16_Lamp3/F16_Lamp4/F16_Lamp5, none of which has a bulb mesh (the F16_Lamp3/4/5 lights are named after flasher 16 but only this string's UpdateGI case drives them)",
 	2: "Light2, Light4, Light5, Light41, Light59 (no bulb mesh) and the 500-unit ambient fills Light11 and Light64",
 }
 
@@ -498,7 +514,7 @@ HANDBOOK_EXCERPTS = (
 	("switch-matrix", "PDF page 6, printed page 4, SWITCH MATRIX", "Indianapolis_500_OPS.pdf page 6, crop box 0.05,0.15,0.93,0.55, scanned page rendered at its native resolution (embedded image xref 25, 1456px across 4.85in), rendered at 176 dpi, capped to 750px wide, grayscale, 751x583 WebP quality 80"),
 	("switch-locations", "PDF page 6, printed page 4, SWITCH LOCATIONS items F1-48", "Indianapolis_500_OPS.pdf page 6, crop box 0.05,0.56,0.95,0.86, scanned page rendered at its native resolution (embedded image xref 25, 1456px across 4.85in), rendered at 252 dpi, capped to 1100px wide, grayscale, 1101x628 WebP quality 80"),
 	("switch-locations-continued", "PDF page 7, printed page 5, SWITCH LOCATIONS CONTINUED items 51-88", "Indianapolis_500_OPS.pdf page 7, crop box 0.12,0.62,0.95,0.87, scanned page rendered at its native resolution (embedded image xref 30, 1712px across 5.71in), rendered at 300 dpi, grayscale, 1422x622 WebP quality 80"),
-	("solenoid-flasher-table", "PDF page 8, printed page 6, SOLENOID/FLASHER TABLE rows 01-36", "Indianapolis_500_OPS.pdf page 8, crop box 0.04,0.15,0.96,0.497, scanned page rendered at its native resolution (embedded image xref 35, 1536px across 5.12in), rendered at 180 dpi, capped to 850px wide, grayscale, 851x510 WebP quality 80"),
+	("solenoid-flasher-table", "PDF page 8, printed page 6, SOLENOID/FLASHER TABLE rows 01-36", "Indianapolis_500_OPS.pdf page 8, crop box 0.04,0.15,0.96,0.505, scanned page rendered at its native resolution (embedded image xref 35, 1536px across 5.12in), rendered at 180 dpi, capped to 850px wide, grayscale, 851x522 WebP quality 80"),
 	("gi-and-flipper-circuits", "PDF page 8, printed page 6, SOLENOID/FLASHER TABLE General Illumination and Flipper Circuits blocks", "Indianapolis_500_OPS.pdf page 8, crop box 0.04,0.49,0.96,0.68, scanned page rendered at its native resolution (embedded image xref 35, 1536px across 5.12in), rendered at 300 dpi, grayscale, 1414x465 WebP quality 80"),
 	("solenoid-flasher-locations", "PDF page 8, printed page 6, SOLENOID/FLASHER LOCATIONS items 01-20", "Indianapolis_500_OPS.pdf page 8, crop box 0.05,0.68,0.95,0.87, scanned page rendered at its native resolution (embedded image xref 35, 1536px across 5.12in), rendered at 300 dpi, grayscale, 1384x464 WebP quality 80"),
 	("solenoid-flasher-locations-continued", "PDF page 9, printed page 7, SOLENOID/FLASHER LOCATIONS CONTINUED, G.I. circuits and flipper coils", "Indianapolis_500_OPS.pdf page 9, crop box 0.06,0.65,0.94,0.87, scanned page rendered at its native resolution (embedded image xref 40, 1604px across 5.35in), rendered at 300 dpi, grayscale, 1412x541 WebP quality 80"),
@@ -513,6 +529,12 @@ MANUAL_EXCERPTS = (
 	("pit-ramp-diverter-assembly", "PDF page 96, printed page 2-22, A-19978 Pit Ramp Diverter Assembly parts tables", "indy500manualfull.original-scan.pdf page 96, crop box 0.08,0.62,0.98,0.95, scanned page rendered at its native resolution (embedded image xref 570, 2544px across 8.47in), rendered at 184 dpi, capped to 1400px wide, grayscale, 1401x665 WebP quality 80"),
 	("turbo-motor-assembly", "PDF page 97, printed page 2-23, A-20038 Turbo Motor Assembly parts table", "indy500manualfull.original-scan.pdf page 97, crop box 0.49,0.1,0.98,0.52, scanned page rendered at its native resolution (embedded image xref 576, 2544px across 8.47in), rendered at 241 dpi, capped to 1000px wide, grayscale, 1000x1111 WebP quality 80"),
 	("race-track-assembly", "PDF page 103, printed page 2-29, A-20169 Race Track Assembly parts table", "indy500manualfull.original-scan.pdf page 103, crop box 0.08,0.63,0.97,0.84, scanned page rendered at its native resolution (embedded image xref 612, 2544px across 8.47in), rendered at 186 dpi, capped to 1400px wide, grayscale, 1401x429 WebP quality 80"),
+	("turbo-multiball-rules", "PDF page 17, game rules, TURBO MULTI-BALL paragraph", "indy500manualfull.original-scan.pdf page 17, crop box 0.08,0.1,0.95,0.27, scanned page rendered at its native resolution (embedded image xref 96, 2544px across 8.47in), rendered at 217 dpi, capped to 1600px wide, grayscale, 1601x406 WebP quality 80"),
+	("race-track-wiring-drawing", "PDF page 103, printed page 2-29, A-20169 Race Track Assembly front view with the reflector socket leads", "indy500manualfull.original-scan.pdf page 103, crop box 0.55,0.22,0.99,0.53, scanned page rendered at its native resolution (embedded image xref 612, 2544px across 8.47in), rendered at 300 dpi, grayscale, 1120x1023 WebP quality 80"),
+	("flasher-wiring", "PDF page 125, printed page 3-7, FLASHER WIRING", "indy500manualfull.original-scan.pdf page 125, crop box 0.1,0.08,0.95,0.86, scanned page rendered at its native resolution (embedded image xref 744, 2544px across 8.47in), rendered at 194 dpi, capped to 1400px wide, grayscale, 1401x1665 WebP quality 80"),
+	("power-driver-connectors-3-25-left", "PDF page 143, printed page 3-25, power driver board connectors J113-J120", "indy500manualfull.original-scan.pdf page 143, crop box 0.09,0.07,0.53,0.82, scanned page rendered at its native resolution (embedded image xref 852, 2544px across 8.47in), rendered at 134 dpi, capped to 500px wide, grayscale, 501x1104 WebP quality 80"),
+	("power-driver-connectors-3-25-right", "PDF page 143, printed page 3-25, power driver board connectors J121-J129", "indy500manualfull.original-scan.pdf page 143, crop box 0.52,0.07,0.9,0.85, scanned page rendered at its native resolution (embedded image xref 852, 2544px across 8.47in), rendered at 155 dpi, capped to 500px wide, grayscale, 501x1330 WebP quality 80"),
+	("power-driver-connectors-3-26", "PDF page 144, printed page 3-26, power driver board connectors J130-J138", "indy500manualfull.original-scan.pdf page 144, crop box 0.09,0.08,0.85,0.44, scanned page rendered at its native resolution (embedded image xref 858, 2544px across 8.47in), rendered at 155 dpi, capped to 1000px wide, grayscale, 1001x614 WebP quality 80"),
 	("ten-opto-pcb", "PDF page 138, printed page 3-20, A-18159 10 Opto P.C.B. connector list", "indy500manualfull.original-scan.pdf page 138, crop box 0.08,0.4,0.87,0.87, scanned page rendered at its native resolution (embedded image xref 822, 2544px across 8.47in), rendered at 149 dpi, capped to 1000px wide, grayscale, 1001x772 WebP quality 80"),
 )
 # The upper-playfield parts page is one transcription with three crops.
@@ -623,8 +645,9 @@ def source_records() -> list[dict[str, Any]]:
 				"(indy500manualfull.pdf, SHA-256 2cd7354de4744fcc84078dd98cb6b544bebc38780e8daf52d1454c6962340e13) "
 				"is retained beside it for text search only. Section 2 printed 2-13/2-14 (A-19823 4-LED Illuminated "
 				"Target PCB, A-20047 Turbo Opto PCB), 2-22 (A-19978 Pit Ramp Diverter), 2-23 (A-20038 Turbo Motor), "
-				"2-29 (A-20169 Race Track), 2-38 to 2-44 (repeats of the handbook's lamp, switch and solenoid tables); "
-				"Section 3 printed 3-7 (flasher wiring) and 3-20 (A-18159 10 Opto P.C.B.)."
+				"2-29 (A-20169 Race Track); "
+				"the game rules (PDF page 17, Turbo Multi-Ball); Section 3 printed 3-7 (flasher wiring), 3-20 (A-18159 10 "
+				"Opto P.C.B.) and 3-25/3-26 (power driver board connector lists)."
 			),
 			"license": "NOASSERTION",
 			"attribution": "Midway Manufacturing Company; scan hosted by the Internet Pinball Machine Database",
@@ -688,7 +711,9 @@ def source_records() -> list[dict[str, Any]]:
 				"Indianapolis 500 (Bally 1995) v1.36.vbs (142,080 bytes), the April 2023 TastyWasps/VPW enhancement of "
 				'the same Dozer table: cGameName = "i500_11r", UseSolenoids = 2, the same SolCallback table for 1-5, 7, '
 				"13-16, 18-28 and 36, the same switch handlers and turbo simulator, and additionally SolCallback(sURFlipper) "
-				'= "SolURFlipper" driving the upper right flipper on its own. Script only; its table is not retained.'
+				'= "SolURFlipper" driving the upper right flipper on its own; its KeyUpperRight key handler also calls '
+				"SolURFlipper 1/0 directly (a staged-flipper convenience that bypasses the ROM). Script only; its table is "
+				"not retained."
 			),
 			"license": "NOASSERTION",
 			"attribution": "JPSalas, Dorsola, Dozer and TastyWasps (VPW); corpus by sverrewl",
@@ -843,7 +868,10 @@ def input_devices() -> list[dict[str, Any]]:
 					extra["initial_active"] = True
 			else:
 				coordinate_refs = (VPX_TABLE_SOURCE, HANDBOOK_SOURCE) if address in SWITCH_PROJECTIONS else (VPX_TABLE_SOURCE,)
-				extra["spatial"] = located(identifier, "sensor", [SWITCH_POSITIONS[address]], *coordinate_refs)
+				status = "observed" if address in OBSERVED_SWITCHES else "validated"
+				if address in OBSERVED_SWITCHES:
+					physical["notes"] += " " + OBSERVED_SWITCHES[address] + " The placement stays observed."
+				extra["spatial"] = located(identifier, "sensor", [SWITCH_POSITIONS[address]], *coordinate_refs, status=status)
 			items.append(_device(identifier, label, "switch", "pinmame.input.switch", address, "used", refs, **extra))
 
 	for address, (label, role, switch_type, part, wire, connection) in FLIPPER_SWITCHES.items():
@@ -926,7 +954,8 @@ def _solenoid_notes(address: int, printed_type: str) -> str:
 		notes += (
 			" A-14525 Kicker Bracket Assembly at the foot of the shooter lane. The retained Plunger1 object sits "
 			"below the playfield bounds (normalized y 1.009131), so the placement is projected onto the shooter-lane "
-			"switch SW25 directly above it."
+			"switch SW25 directly above it; the handbook's callout 01 reaches that kicker bracket at the foot of the "
+			"lane, and the placement inherits switch 25's status."
 		)
 	if address == 7:
 		notes += " Backbox-mounted knocker (printed backbox voltage and drive connections)."
@@ -943,8 +972,10 @@ def _solenoid_notes(address: int, printed_type: str) -> str:
 		notes += (
 			" Printed in the Flasher category but its part is 14-8022 Race Track Gear Motor (A-20169 Race Track "
 			"Assembly): an upright arched track at the rear of the playfield on which the motor turns a small car "
-			"around a hub. The retained script spins the Indy_Top car while this output is on."
+			"around a hub. The retained script spins the Indy_Top car while this output is on; its Indy_up_Flash timer also strobes the IU1-IU5 lights and car shadows as a visual effect of the spinning car. The track's reflector fixtures are wired to G.I. string 02 (see that output)."
 		)
+	if address == 12:
+		notes += " The solenoid/flasher locations list prints this assembly as A-9362-R-3; both playfield parts lists print B-9362-R-3, which is recorded."
 	if address in {19, 20, 21, 22}:
 		notes += " One of the four coloured car flashers (A-17802) under the playfield car inserts."
 	if address in {23, 24, 25}:
@@ -956,9 +987,9 @@ def _solenoid_notes(address: int, printed_type: str) -> str:
 			"left beside the three-bank targets, so two placements are recorded."
 		)
 	if address == 16:
-		notes += " The retained table also lists this flasher's helper lights F16_Lamp3/4/5 in its GITR collection; they are not G.I. bulbs and are excluded there."
+		notes += " The retained Sol16 callback drives F16_Lamp1, F16_Lamp2 and F16_Side_Flash1; the table's F16_Lamp3/4/5 lights belong only to its G.I. string 2 collection."
 	if address in {14, 15, 16}:
-		notes += " The full manual's flasher wiring drawing (printed 3-7) prints the J127-7/8/9 wires as Black-Yellow/Blue-Gray/Blue-Gray against the table's Brn-Blu/Brn-Vio/Brn-Gry; the table's colours are recorded."
+		notes += " The full manual's flasher wiring drawing (printed 3-7) prints the J127-7/8/9 wires as Black-Yellow/Blue-Gray/Blue-Gray; the solenoid table and the power driver board connector list (printed 3-25) both print Brown-Blue/Brown-Violet/Brown-Gray, which is recorded."
 	if address in {33, 34}:
 		notes += (
 			" Upper right flipper (A-14876-R-3, FL-11629 coil), a real Fliptronic flipper on the right side of the "
@@ -1027,7 +1058,9 @@ def solenoid_outputs() -> list[dict[str, Any]]:
 			else:
 				role = "emitter" if kind == "flasher" else "effect"
 				refs = (VPX_TABLE_SOURCE, HANDBOOK_SOURCE) if address in {1, 14, 15, 16, 19, 20, 21, 22, 26, 27, 28} else (VPX_TABLE_SOURCE,)
-				extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], *refs)
+				anchor = SOLENOID_SWITCH_ANCHORS.get(address)
+				status = "observed" if anchor in OBSERVED_SWITCHES else "validated"
+				extra["spatial"] = located(identifier, role, SOLENOID_POSITIONS[address], *refs, status=status)
 			refs = (HANDBOOK_SOURCE, CORE_SOURCE)
 			if address in SOLENOID_CALLBACKS:
 				refs = (HANDBOOK_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
@@ -1087,7 +1120,7 @@ def lamp_outputs() -> list[dict[str, Any]]:
 				)
 				continue
 			physical: dict[str, Any] = {"quantity": 1, "assembly_part_number": LAMP_ASSEMBLIES[address]}
-			notes = f"Printed lamp-matrix drive column {column}, return row {row}."
+			notes = f"Printed lamp-matrix drive column {column}, return row {row}." + LAMP_CONNECTOR_NOTE
 			refs: tuple[str, ...] = (HANDBOOK_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
 			extra: dict[str, Any] = {"aliases": aliases, "wiring": wiring, "physical": physical}
 			if address in LIGHTUP_TARGETS:
@@ -1101,9 +1134,12 @@ def lamp_outputs() -> list[dict[str, Any]]:
 					f"(Wall sw{target} bounding-box center)."
 				)
 				refs = (HANDBOOK_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
-				extra["spatial"] = located(identifier, "emitter", [SWITCH_POSITIONS[target]], VPX_TABLE_SOURCE, MANUAL_SOURCE)
+				status = "observed" if target in OBSERVED_SWITCHES else "validated"
+				if target in OBSERVED_SWITCHES:
+					notes += f" Observed only, like switch {target}'s own placement."
+				extra["spatial"] = located(identifier, "emitter", [SWITCH_POSITIONS[target]], VPX_TABLE_SOURCE, MANUAL_SOURCE, status=status)
 			elif address in {86, 87, 88}:
-				notes += " Lamp inside the illuminated cabinet button assembly; the manual draws its callout below the cabinet outline."
+				notes += " Lamp inside the illuminated cabinet button assembly; the manual draws its callout below the cabinet outline. The power driver board connector list routes rows 6-8 to the cabinet lamps through J134-7/8/9."
 				extra["roles"] = ["cabinet.launch" if address == 86 else "cabinet.buy-in" if address == 87 else "cabinet.start"]
 				extra["spatial"] = not_applicable("cabinet_or_service", HANDBOOK_SOURCE)
 				refs = (HANDBOOK_SOURCE, CORE_SOURCE)
@@ -1133,23 +1169,50 @@ def gi_outputs() -> list[dict[str, Any]]:
 			"wiring": {"board": "WPC-Security power driver board", "power_connection": voltage, "driver_transistor": transistor, "control_connection": drive, "control_wire": wire},
 		}
 		physical: dict[str, Any] = {}
-		refs: tuple[str, ...] = (HANDBOOK_SOURCE, CORE_SOURCE)
+		refs: tuple[str, ...] = (HANDBOOK_SOURCE, CORE_SOURCE, MANUAL_SOURCE)
+		notes += (
+			" The power driver board connector list (manual printed 3-25) labels J120 'to playfield' and J121 'to "
+			"insert', the reverse of the handbook table's Playfield/Backbox columns; the handbook's per-string names, "
+			"the retained script's per-string playfield dispatch and the race-track reflector wiring (G.I. string 02 "
+			"colours on the playfield) all follow the handbook table, which is recorded."
+		)
 		if address in GI_POSITIONS:
 			positions = GI_POSITIONS[address]
 			physical["quantity"] = len(positions)
 			notes += (
-				f" The manual prints no per-string bulb list or count, so the quantity counts the playfield sockets "
+				f" The manual prints no per-string bulb list or count, so the quantity counts playfield sockets "
 				f"only and every coordinate comes from the retained table's {GI_COLLECTIONS[address]} collection, "
 				f"which the retained script's UpdateGI dispatches for this string. Distinct bulb-mesh lights are placed "
 				f"once each; excluded: {GI_EXCLUDED[address]}. These placements are observed, not validated: no "
 				"factory source lists the sockets."
 			)
+			if address == 1:
+				notes += (
+					" This string also lights the race track: the A-20169 Race Track Assembly drawing (manual printed "
+					"2-29) shows two 04-10094 reflector socket assemblies at the top corners of the arch, each drawn with "
+					"two reflector cones, with every socket lead labelled ORG and ORG/WHT. ORG is read as this string's "
+					"Orange return (J121-2) and ORG/WHT as its White-Orange 6.8VAC feed (J121-8); that is an inference, "
+					"since the connector list prints White-Orange and this manual elsewhere distinguishes reversed colour "
+					"orders, but it is supported by string 02 being the only string that prints #555 bulbs on the "
+					"playfield. The drawing prints no bulb count, so the quantity counts "
+					"the placed sockets only and the race-track bulbs are neither counted nor placed. The retained table "
+					"lights the track's left corner from this string's collection (F16_Lamp4, no bulb mesh) and strobes "
+					"separate IU1-IU5 lights with the spinning car (solenoid 18) as an effect."
+				)
 			if address in {0, 2}:
 				notes += " The printed string also feeds #555 backbox bulbs (backbox connections), which are not placed."
 			extra["spatial"] = located(identifier, "emitter", positions, VPX_TABLE_SOURCE, status="observed")
-			refs = (HANDBOOK_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
+			refs = (HANDBOOK_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE, CORE_SOURCE)
 		else:
-			notes += " Backbox-only string (printed backbox connections only); the retained script's UpdateGI implements no case for it."
+			notes += " Backbox string (printed backbox connections only); the retained script's UpdateGI implements no case for it."
+			if address in {3, 4}:
+				notes += (
+					" Which backbox string also feeds the coin door is not settled: the handbook names string 04 "
+					"'Backbox-Coindoor', while the power driver board connector list (printed 3-25) routes a White-Violet "
+					"6.8VAC / Violet return G.I. pair through J119 to the A-17051-1 coin door interface board (J2-3/J2-5), "
+					"and White-Violet is string 05's printed drive-wire colour. That colour match is only an inference, "
+					"so neither string is given a coin-door role."
+				)
 			extra["roles"] = ["cabinet.insert-panel"]
 			extra["spatial"] = not_applicable("cabinet_or_service", HANDBOOK_SOURCE)
 		physical["notes"] = notes
@@ -1218,13 +1281,15 @@ def mechanisms() -> list[dict[str, Any]]:
 			"A ball entering the turbo popper at the upper left (opto 62, A-20159 Ball Popper Assembly) is raised by "
 			"solenoid 5 up the A-20407 Turbo Feed Wire Ramp into the turbo: a horizontal impeller (03-9343) inside the "
 			"A-20065 housing, turned by the 12VDC 14-8021.1 gearmotor of the A-20038 Turbo Motor Assembly on "
-			"solenoid 17. The impeller holds up to four balls in its quadrants. Turbo Ball Sense (63) is the "
+			"solenoid 17. The manual's rules lock two balls to start a 3-ball multiball, award the Super Jackpot for re-locking "
+			"the third, and serve an extra ball when every ball in play is locked (four balls at most); the manual "
+			"prints no physical capacity. Turbo Ball Sense (63) is the "
 			"LED/phototransistor pair through the housing wall; Turbo Index (66) is the A-20047 Turbo Opto PCB under "
 			"the impeller. Turned slowly the turbo stores balls; spun up it throws them out onto the 12-7273.2 Turbo "
 			"Exhaust Ramp. Pinned PinMAME models speed from the spacing of solenoid-17 pulses (stopped after 60 "
 			"updates without a pulse, fast when pulses arrive within two updates) and a 64-step position that "
 			"closes 66 for the first three of every sixteen steps. The retained script's own Dorsola/Dozer simulator "
-			"reads Controller.GetMech(0) for the speed, advances a four-quadrant model, opens 66 once per quadrant "
+			"reads Controller.GetMech(0) for the speed, advances a four-position model, opens 66 once per quadrant "
 			"and closes it for the other three sub-steps, closes 63 when a ball sits in the sensed quadrant, and "
 			"ejects the ball there at fast speed. The two duty cycles for 66 differ; the definition asserts only "
 			"that 66 is an index opto read by the ROM, not its duty cycle.",
@@ -1239,8 +1304,10 @@ def mechanisms() -> list[dict[str, Any]]:
 			"mechanism.race-track", "Race track car", "motorized", [output_id("Race Track Motor")], [],
 			"The A-20169 Race Track Assembly is an upright arched weldment at the rear of the playfield. Solenoid 18 "
 			"drives its 14-8022 gear motor, which turns a hub carrying a small car and driver around the face of the "
-			"arch; two reflector sockets sit at its top corners. No switch reports its position; the retained script "
-			"simply rotates the Indy_Top car while the output is on.",
+			"arch; a 04-10094 reflector fixture sits at each top corner, wired ORG and ORG/WHT, the colours of G.I. string 02 "
+			"(Upper Right Playfield); each assembly is drawn with two reflector cones and the drawing prints no bulb "
+			"count. No switch reports the car's position. The retained script rotates the Indy_Top car while the "
+			"output is on and strobes its IU1-IU5 lights and car shadows with it as an effect.",
 			[],
 			HANDBOOK_SOURCE, MANUAL_SOURCE, VPX_SCRIPT_SOURCE, assembly_part_number="A-20169",
 		),
@@ -1324,8 +1391,9 @@ def mechanisms() -> list[dict[str, Any]]:
 			"Lower right (A-15849-R-2), lower left (A-15849-L-2) and upper right (A-14876-R-3) Fliptronic flippers, all "
 			"FL-11629 blue coils with separate power and hold windings, each with a cabinet opto (112, 114, 116) and an "
 			"end-of-stroke leaf switch (111, 113, 115). The upper right flipper sits on the right side at "
-			"mid-playfield below the right ramp. The ROM energizes the power winding on the button and drops to the "
-			"hold winding once the end-of-stroke switch opens the power path.",
+			"mid-playfield below the right ramp. The ROM energizes the power and hold windings on the button and "
+			"switches the power transistor off when it reads the end-of-stroke input close; the hold winding keeps "
+			"the flipper up while the button stays pressed.",
 			[
 				("lower-right", "Lower right flipper", ["switch.generic-111", "switch.generic-112"], "Button opto 112, EOS 111."),
 				("lower-left", "Lower left flipper", ["switch.generic-113", "switch.generic-114"], "Button opto 114, EOS 113."),
@@ -1409,15 +1477,17 @@ def build() -> dict[str, Any]:
 
 def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 	located_inputs: list[int] = []
+	observed_inputs: list[int] = []
 	not_applicable_inputs: dict[str, list[int]] = {}
 	placement_count = 0
 	for device in definition["inputs"]:
 		spatial = device["spatial"]
+		address = int(device["binding"]["device"])
 		if spatial["status"] == "not_applicable":
-			not_applicable_inputs.setdefault(spatial["reason"], []).append(int(device["binding"]["device"]))
-		else:
-			located_inputs.append(int(device["binding"]["device"]))
-			placement_count += len(spatial["placements"])
+			not_applicable_inputs.setdefault(spatial["reason"], []).append(address)
+			continue
+		placement_count += len(spatial["placements"])
+		(observed_inputs if spatial["status"] == "observed" else located_inputs).append(address)
 	located_outputs: list[dict[str, Any]] = []
 	observed_outputs: list[dict[str, Any]] = []
 	not_applicable_outputs: dict[str, list[dict[str, Any]]] = {}
@@ -1441,6 +1511,12 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"from the retained table's GITL/GITR/GIB collections that its UpdateGI dispatches per string, reduced to "
 			"distinct bulb-mesh lights, and stays observed. Promotion needs a socket-level G.I. survey of a real "
 			"machine, or a factory drawing that assigns each playfield G.I. socket to its string.",
+			"The race track's two reflector fixtures belong to G.I. string 2 by their factory wire colours, but the "
+			"drawing prints no bulb count and the retained table models no bulb there, so they are neither counted "
+			"nor placed.",
+			"Switches 54 (Ten Point) and 75 (Right Ramp Enter) stay observed: through the refitted handbook switch "
+			"drawing, callout 54 ends 0.075 from its wall and callout 75 0.064-0.078 from its trigger, above the "
+			"0.07 limit.",
 		],
 		"coordinate_convention": {
 			"space": "playfield",
@@ -1464,8 +1540,23 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 			"manual_sha256": MANUAL_SHA256,
 			"table_sha256": TABLE_SHA256,
 		},
+		"manual_reconciliation": {
+			"artifact": "external:pinmame-review-artifacts/indianapolis-500/manual-reconciliation.md",
+			"artifact_sha256": "f17854d1855d8b40243376c36a26a40d2e535066db6efdf32591fe5aae23623c",
+			"overlay_images": {
+				"external:pinmame-review-artifacts/indianapolis-500/switch-drawing-overlay.png": "ae8fca87f22222326ca7e52182036c74ef0737e901dd4f8ccbf2f00523208685",
+				"external:pinmame-review-artifacts/indianapolis-500/switch-drawing-overlay-0.png": "89aa6bed040faaeb860cbe9e9d83baf6b31b839bb5c1e75e3805efc80597d9f5",
+				"external:pinmame-review-artifacts/indianapolis-500/switch-drawing-overlay-1.png": "aa041b17a37be08d182d2f57d6aad4a48b711d48bff580f7568556fb326ad439",
+				"external:pinmame-review-artifacts/indianapolis-500/switch-drawing-overlay-2.png": "ab5797393c2c3b2c92c97aa2dc146f3b5cf7d6c8979b65f38e5c9c25422cdd05",
+			},
+			"coil_and_flasher_callouts": "All 28 callouts on the handbook's solenoid/flasher location drawing (printed 7) were measured through a least-squares refit; every one reaches its table object within 0.07 normalized (largest 18 at 0.064 and the lower 27 socket at 0.065) except 01, the documented auto-plunger projection.",
+			"switch_callouts": "Every placed switch was overlaid on the handbook's switch-location drawing (printed 5) through a seven-point fit and ends on or within about a marker width of its marker; the four closest calls (25, 35, 54, 75) were re-measured through a ten-point least-squares refit, which keeps 54 (0.075) and 75 (0.064-0.078) observed. The other switches were not re-measured through the refit. The documented projections (trough optos 41-45, turbo optos 63/66) are exempt from the distance rule; their callouts reach the trough and the turbo.",
+			"transforms": "Both drawings are normalized through least-squares refits recorded in the artifact: page 9 through its 19 originally measured callouts, page 7 through ten leader endpoints including three in the lower third.",
+			"rule": "A measured placement agrees when the drawing callout reaches the same physical feature within 0.07 normalized units, inclusive; a placement with any read above the limit is kept observed, and so is anything projected onto an observed placement.",
+		},
 		"placement_count": placement_count,
 		"resolved_input_addresses": sorted(located_inputs),
+		"observed_input_addresses": sorted(observed_inputs),
 		"resolved_output_bindings": sorted(located_outputs, key=order),
 		"observed_output_bindings": sorted(observed_outputs, key=order),
 		"not_applicable_inputs": {reason: sorted(addresses) for reason, addresses in sorted(not_applicable_inputs.items())},
@@ -1485,7 +1576,8 @@ def build_spatial_report(definition: dict[str, Any]) -> dict[str, Any]:
 		"excluded_object_classes": [
 			"Second render lights bound to lamps 14, 16, 17, 21, 22 and 23 (L14a, L16a, L17a, L21a, L22a, L23a); the manual prints one bulb per lamp.",
 			"Both glow lights per Lightup LED address (L71-L74 with L71x-L74x, L75x-L84x with L75x1-L84x1); the LEDs are projected onto their target face.",
-			"G.I. collection members without a bulb mesh and the Sol16 flasher helpers F16_Lamp3/4/5 listed in GITR.",
+			"G.I. collection members without a bulb mesh, including F16_Lamp3/4/5 in GITR (named after flasher 16 but driven only as G.I.).",
+			"Race-track lights IU1-IU5, a strobe effect the retained script runs with the spinning car (solenoid 18).",
 			"The ToyMod duplicates Track1, Track3, Indy_Shaft1, Indy_Shaft3 and TopCar_Base2 (invisible option objects at the upper left).",
 			"Plunger1 (normalized y 1.009131, below the playfield bounds).",
 		],
@@ -1497,8 +1589,10 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"# Indianapolis 500 (Bally, 1995) spatial review",
 		"",
 		f"Status: {report['status']}. Every switch, coil, flasher, motor and lamp is placed from the retained table "
-		"or carries a controlled `not_applicable` record; the playfield general-illumination strings are placed but "
-		"only `observed`, which keeps the record at `machines/partial/bally/indianapolis-500-1995.json`.",
+		"or carries a controlled `not_applicable` record. The playfield general-illumination strings are placed but "
+		"only `observed`, switches 54 and 75 are `observed`, and the race track's G.I. reflector bulbs are not placed, which "
+		"keeps the record at "
+		"`machines/partial/bally/indianapolis-500-1995.json`.",
 		"",
 		f"The geometry source is the retained known-working `Indianapolis_500_VPX_1.1_RTM.vpx` (SHA-256 "
 		f"`{TABLE_SHA256}`); its embedded script (SHA-256 `{SCRIPT_SHA256}`) is the runtime binding authority. Exact "
@@ -1509,10 +1603,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"- The embedded script is the runtime authority; the July 1995 Operators Handbook and the 152-page operations "
 		"manual are the physical inventory, construction and wiring authority; pinned PinMAME owns controller topology; "
 		"the retained table supplies geometry.",
-		"- The handbook's location drawings were checked against the table: the jets (Left/Right/Center), the three "
-		"lanes 51-53 at the top right, the three-bank targets and pit-ramp diverter on the left, the upper right "
-		"flipper at mid-right, the turbo at the upper left and the race track at the rear right all fall where the "
-		"drawings put them.",
+		f"- Manual reconciliation (`{report['manual_reconciliation']['artifact']}`): "
+		f"{report['manual_reconciliation']['coil_and_flasher_callouts']} {report['manual_reconciliation']['switch_callouts']}",
 		"- Sensors inside a mechanism (the trough optos, the turbo's ball-sense and index optos) and the Lightup LEDs "
 		"are documented projections onto the mechanism or target that carries them.",
 		"- Left Side Flasher 27 has two sockets and two placements; every other flasher has one.",
@@ -1529,7 +1621,8 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"## Counts",
 		"",
 		f"- Placements: {report['placement_count']}",
-		f"- Located input addresses: {len(report['resolved_input_addresses'])}",
+		f"- Validated input addresses: {len(report['resolved_input_addresses'])}",
+		f"- Observed-only input addresses: {len(report['observed_input_addresses'])}",
 		f"- Validated output bindings: {len(report['resolved_output_bindings'])}",
 		f"- Observed-only output bindings: {len(report['observed_output_bindings'])}",
 	]
@@ -1539,9 +1632,9 @@ def render_spatial_report(report: dict[str, Any]) -> str:
 		"",
 		"## Promotion decision",
 		"",
-		"Refused. The definition has no conflicts and every other dimension is validated, but the three playfield "
-		"G.I. strings' sockets are known only from one community table's light collections. `coverage.missing` is "
-		"`[\"spatial_placement\"]` until a socket-level G.I. survey or factory drawing confirms them.",
+		"Refused. `coverage.missing` is `[\"spatial_placement\"]`: the playfield G.I. sockets are known only from one "
+		"community table's light collections, the race-track reflector bulbs are neither counted nor placed, and "
+		"switches 54 and 75 fail the factory switch-drawing check.",
 		"",
 		"## Retained evidence",
 		"",

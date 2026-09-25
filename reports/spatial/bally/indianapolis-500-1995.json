@@ -1,6 +1,8 @@
 {
   "blockers": [
-    "Playfield general illumination (G.I. strings 1-3, public 0-2) has no factory socket list: the manuals print only the string names, connectors and bulb types. Every playfield G.I. coordinate therefore comes from the retained table's GITL/GITR/GIB collections that its UpdateGI dispatches per string, reduced to distinct bulb-mesh lights, and stays observed. Promotion needs a socket-level G.I. survey of a real machine, or a factory drawing that assigns each playfield G.I. socket to its string."
+    "Playfield general illumination (G.I. strings 1-3, public 0-2) has no factory socket list: the manuals print only the string names, connectors and bulb types. Every playfield G.I. coordinate therefore comes from the retained table's GITL/GITR/GIB collections that its UpdateGI dispatches per string, reduced to distinct bulb-mesh lights, and stays observed. Promotion needs a socket-level G.I. survey of a real machine, or a factory drawing that assigns each playfield G.I. socket to its string.",
+    "The race track's two reflector fixtures belong to G.I. string 2 by their factory wire colours, but the drawing prints no bulb count and the retained table models no bulb there, so they are neither counted nor placed.",
+    "Switches 54 (Ten Point) and 75 (Right Ramp Enter) stay observed: through the refitted handbook switch drawing, callout 54 ends 0.075 from its wall and callout 75 0.064-0.078 from its trigger, above the 0.07 limit."
   ],
   "coordinate_convention": {
     "source_bounds": {
@@ -27,7 +29,8 @@
   "excluded_object_classes": [
     "Second render lights bound to lamps 14, 16, 17, 21, 22 and 23 (L14a, L16a, L17a, L21a, L22a, L23a); the manual prints one bulb per lamp.",
     "Both glow lights per Lightup LED address (L71-L74 with L71x-L74x, L75x-L84x with L75x1-L84x1); the LEDs are projected onto their target face.",
-    "G.I. collection members without a bulb mesh and the Sol16 flasher helpers F16_Lamp3/4/5 listed in GITR.",
+    "G.I. collection members without a bulb mesh, including F16_Lamp3/4/5 in GITR (named after flasher 16 but driven only as G.I.).",
+    "Race-track lights IU1-IU5, a strobe effect the retained script runs with the spinning car (solenoid 18).",
     "The ToyMod duplicates Track1, Track3, Indy_Shaft1, Indy_Shaft3 and TopCar_Base2 (invisible option objects at the upper left).",
     "Plunger1 (normalized y 1.009131, below the playfield bounds)."
   ],
@@ -43,6 +46,20 @@
   },
   "format": "pinmame-spatial-blockers",
   "machine_id": "bally.indianapolis-500.1995",
+  "manual_reconciliation": {
+    "artifact": "external:pinmame-review-artifacts/indianapolis-500/manual-reconciliation.md",
+    "artifact_sha256": "f17854d1855d8b40243376c36a26a40d2e535066db6efdf32591fe5aae23623c",
+    "coil_and_flasher_callouts": "All 28 callouts on the handbook's solenoid/flasher location drawing (printed 7) were measured through a least-squares refit; every one reaches its table object within 0.07 normalized (largest 18 at 0.064 and the lower 27 socket at 0.065) except 01, the documented auto-plunger projection.",
+    "overlay_images": {
+      "external:pinmame-review-artifacts/indianapolis-500/switch-drawing-overlay-0.png": "89aa6bed040faaeb860cbe9e9d83baf6b31b839bb5c1e75e3805efc80597d9f5",
+      "external:pinmame-review-artifacts/indianapolis-500/switch-drawing-overlay-1.png": "aa041b17a37be08d182d2f57d6aad4a48b711d48bff580f7568556fb326ad439",
+      "external:pinmame-review-artifacts/indianapolis-500/switch-drawing-overlay-2.png": "ab5797393c2c3b2c92c97aa2dc146f3b5cf7d6c8979b65f38e5c9c25422cdd05",
+      "external:pinmame-review-artifacts/indianapolis-500/switch-drawing-overlay.png": "ae8fca87f22222326ca7e52182036c74ef0737e901dd4f8ccbf2f00523208685"
+    },
+    "rule": "A measured placement agrees when the drawing callout reaches the same physical feature within 0.07 normalized units, inclusive; a placement with any read above the limit is kept observed, and so is anything projected onto an observed placement.",
+    "switch_callouts": "Every placed switch was overlaid on the handbook's switch-location drawing (printed 5) through a seven-point fit and ends on or within about a marker width of its marker; the four closest calls (25, 35, 54, 75) were re-measured through a ten-point least-squares refit, which keeps 54 (0.075) and 75 (0.064-0.078) observed. The other switches were not re-measured through the refit. The documented projections (trough optos 41-45, turbo optos 63/66) are exempt from the distance rule; their callouts reach the trough and the turbo.",
+    "transforms": "Both drawings are normalized through least-squares refits recorded in the artifact: page 9 through its 19 originally measured callouts, page 7 through ten leader endpoints including three in the lower third."
+  },
   "not_applicable_inputs": {
     "cabinet_or_service": [
       1,
@@ -205,6 +222,10 @@
       }
     ]
   },
+  "observed_input_addresses": [
+    54,
+    75
+  ],
   "observed_output_bindings": [
     {
       "address": 0,
@@ -349,7 +370,6 @@
     51,
     52,
     53,
-    54,
     55,
     56,
     57,
@@ -363,7 +383,6 @@
     72,
     73,
     74,
-    75,
     76
   ],
   "resolved_output_bindings": [

@@ -1,15 +1,17 @@
 # Indianapolis 500 (Bally 1995)
 
-Coverage: **partial**. Every address is enumerated and named, all construction, wiring, polarity,
-mechanism and variant facts are validated from the factory manuals, pinned PinMAME and the retained
-known-working table, and no conflict is open. The record stays partial only because the playfield
-general-illumination sockets are known from one community table's light collections and are
-therefore `observed`, not validated.
+Coverage: **partial**. Every address is enumerated and named, and construction, polarity, mechanism
+and variant facts are validated from the factory manuals, pinned PinMAME and the retained
+known-working table, and no conflict is open. It stays partial on spatial placement alone: the
+playfield general-illumination sockets are known only from one community table's light collections,
+the race track's G.I. reflector bulbs are neither counted nor placed, and the factory switch drawing
+puts the Ten Point (54) and Right Ramp Enter (75) callouts just over the check's 0.07 limit from the
+table objects, so those two placements stay observed.
 
 ## Identity and drivers
 
 - Midway Manufacturing Company under the Bally name, model 50026, released June 1995 (IPDB 2853,
-  OPDB `Gr8l3-MDWr0`). The game ROM's own splash reads `INDIANAPOLIS 500 / 50026 REV. 1.1 R`.
+  OPDB `Gr8l3-MDWr0`).
 - WPC-Security (WPC-S) hardware with a DCS sound board and a 128x32 DMD.
 - PinMAME drivers: `i500_11r` (1.1R, parent), `i500_11b` (1.1 Belgian) and `i500_10r` (1.0R). All three
   are declared in `src/wpc/sims/wpc/prelim/i500.c` with the `wpc_mSecurityS` machine driver, share one
@@ -23,7 +25,8 @@ therefore `observed`, not validated.
   `evidence/excerpts/bally.indianapolis-500.1995/`.
 - **Operations manual** (152 pages, IPDB `indy500manualfull.pdf`, image-only): the board and
   mechanism assembly pages that settle construction (A-19823, A-20047, A-19978, A-20038, A-20169,
-  A-18159). The handbook's tables are repeated in it on printed 2-38 to 2-44.
+  A-18159), the turbo multiball rules, the flasher wiring drawing and the power driver board
+  connector lists.
 - **Known-working table** `Indianapolis_500_VPX_1.1_RTM.vpx` (JPSalas VP9, Dozer VPX, Flupper ramps,
   2017) and its embedded script: runtime bindings and all geometry. Its two 4K MOD derivatives are
   the same geometry lineage.
@@ -55,7 +58,7 @@ therefore `observed`, not validated.
   motors; 17 is pulsed, and the turbo's speed follows the pulse spacing.
 - G.I. strings: public 0 Upper Left Playfield, 1 Upper Right Playfield, 2 Lower Playfield (these three
   light the playfield; 0 and 2 also feed backbox bulbs), 3 Backbox-Coindoor and 4 Backbox Title
-  (backbox only).
+  (backbox only). The race track's two reflector fixtures are wired in string 02's colours (see below).
 - Lamps 71-84 are red LEDs inside the three lightup targets, not bulbs. 67, 68 and 85 are unused;
   86-88 light the Launch, Buy-In and Start buttons.
 
@@ -72,8 +75,10 @@ manual plunger.
 
 The signature toy at the upper left. A ball entering the turbo popper (opto 62) is raised by solenoid 5
 up the turbo feed ramp into the turbo, a horizontal impeller in a housing turned by a 12 VDC
-gearmotor on solenoid 17. The impeller holds up to four balls in its quadrants; turning slowly it
-stores them, spun up it throws them out onto the turbo exhaust ramp. Turbo Ball Sense (63) is an
+gearmotor on solenoid 17. Turning slowly it stores balls in its impeller; spun up it throws them out
+onto the turbo exhaust ramp. The manual's rules lock two balls to start a 3-ball multiball, award the
+Super Jackpot for re-locking the third, and serve an extra ball when every ball in play is locked
+(four balls at most); the manual gives no physical capacity. Turbo Ball Sense (63) is an
 LED/phototransistor pair through the housing wall and Turbo Index (66) is an opto board under the
 impeller. PinMAME models the speed from the spacing of solenoid-17 pulses (stopped after roughly a
 second without a pulse, fast when pulses come back to back) and closes 66 for three of every sixteen
@@ -84,8 +89,14 @@ quadrant, and the exact duty cycle is not established by any source retained her
 ### Race track
 
 An upright arched track at the rear right of the playfield. Solenoid 18 runs its gear motor, which
-carries a small car and driver around the arch. No switch reports its position; two reflector sockets
-sit at the top corners of the arch.
+carries a small car and driver around the arch. No switch reports its position.
+
+A reflector fixture sits at each top corner of the arch, each drawn with two reflector cones. The
+factory drawing labels every lead ORG and ORG/WHT, read as the Orange return and White-Orange 6.8 VAC
+of G.I. string 02 (the only string printing #555 playfield bulbs), so they are general illumination,
+dimmed with the string and not strobed; the drawing prints no bulb count. The 2017
+table lights that corner from its string-2 collection and adds a strobe effect (IU1-IU5 and car
+shadows) while the car spins; that is a table effect, not a second circuit.
 
 ### Pit ramp diverter
 
@@ -122,10 +133,15 @@ upper flipper with the lower right callback; the 2023 VPW script drives it from 
 - Switch 63's LED/phototransistor is printed A-14231/A-14232 in the handbook and turbo assembly but
   A-16908/A-16909 on the 10-opto board page; both are optos.
 - The flasher wiring drawing prints different wire colours for solenoids 14-16 than the solenoid table.
-- Solenoid 12's assembly is printed `A-9362-R-3` in one list and `B-9362-R-3` in another.
+- Solenoid 12's assembly is printed `A-9362-R-3` in one list and `B-9362-R-3` in two others
+  (recorded as B-9362-R-3).
+- The power driver board connector lists (printed 3-25/3-26) label J120 "to playfield" and J121 "to
+  insert", the reverse of the handbook G.I. table's columns, and put the lamp rows on J135 and columns
+  on J138 while marking the matrix's J133 and J137 "Not Used". The game-specific tables are recorded.
 
 ## What would complete the record
 
-A socket-level survey of the playfield general illumination on a real machine (or a factory drawing
-assigning each G.I. socket to strings 1-3) would let the G.I. placements be validated and the record
-promoted.
+- A socket-level survey of the playfield general illumination on a real machine, or a factory drawing
+  assigning each G.I. socket to strings 1-3.
+- The race-track reflector bulb count and positions (a photo of a real machine).
+- A second geometry source for the Ten Point (54) and Right Ramp Enter (75) switches.

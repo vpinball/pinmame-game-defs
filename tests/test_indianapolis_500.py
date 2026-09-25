@@ -65,6 +65,7 @@ class IndianapolisFiveHundredTests(unittest.TestCase):
 		self.assertEqual("partial", coverage["status"])
 		self.assertEqual(["spatial_placement"], coverage["missing"])
 		self.assertEqual("observed", coverage["dimensions"]["spatial_placement"])
+		self.assertEqual("validated", coverage["dimensions"]["physical_wiring"])
 		self.assertEqual([], self.definition["conflicts"])
 		self.assertEqual("pinmame.wpc-security", self.definition["controller"]["platform"])
 		self.assertFalse(AUTHOR_READY_PATH.exists())
@@ -142,6 +143,23 @@ class IndianapolisFiveHundredTests(unittest.TestCase):
 		self.assertLess(distance(lamp18, turbo_target), distance(lamp18, ramp_target))
 		self.assertLess(distance(lamp27, ramp_target), distance(lamp27, turbo_target))
 
+	def test_nothing_placed_on_an_observed_switch_stays_validated(self) -> None:
+		observed = {first_xy(device) for address, device in self.switches.items() if device["spatial"]["status"] == "observed"}
+		for device in self.definition["outputs"]:
+			spatial = device["spatial"]
+			if spatial["status"] == "not_applicable" or device["kind"] == "gi":
+				continue
+			if first_xy(device) in observed:
+				self.assertEqual("observed", spatial["status"], device["id"])
+
+	def test_flipper_prose_describes_fliptronic_end_of_stroke(self) -> None:
+		flippers = next(mechanism for mechanism in self.definition["mechanisms"] if mechanism["id"] == "mechanism.flippers")
+		self.assertNotIn("opens the power path", flippers["behavior"])
+		self.assertIn("end-of-stroke input", flippers["behavior"])
+		turbo = next(mechanism for mechanism in self.definition["mechanisms"] if mechanism["id"] == "mechanism.turbo")
+		self.assertNotIn("four balls in its quadrants", turbo["behavior"])
+		self.assertNotIn("REV. 1.1", KNOWLEDGE_PATH.read_text(encoding="utf-8"))
+
 	def test_lightup_leds_are_projected_onto_their_target_faces(self) -> None:
 		for lamps, target in (((71, 72, 73, 74), 56), ((75, 76, 77, 78), 57), ((81, 82, 83, 84), 58)):
 			for address in lamps:
@@ -165,7 +183,17 @@ class IndianapolisFiveHundredTests(unittest.TestCase):
 		upper, lower = (placement["y"] for placement in self.solenoids[27]["spatial"]["placements"])
 		self.assertLess(upper, lower)
 
-	def test_only_general_illumination_is_observed(self) -> None:
+	def test_race_track_reflectors_belong_to_gi_string_2_without_a_bulb_count(self) -> None:
+		gi = self.gis[1]
+		self.assertEqual(len(gi["spatial"]["placements"]), gi["physical"]["quantity"])
+		self.assertIn("ORG and ORG/WHT", gi["physical"]["notes"])
+		self.assertIn("prints no bulb count", gi["physical"]["notes"])
+		for address in (3, 4):
+			self.assertIn("only an inference", self.gis[address]["physical"]["notes"])
+			self.assertEqual(["cabinet.insert-panel"], self.gis[address]["roles"])
+		self.assertEqual("B-9362-R-3", self.solenoids[12]["physical"]["assembly_part_number"])
+
+	def test_only_general_illumination_and_the_drawing_disputed_switches_are_observed(self) -> None:
 		statuses = {}
 		ids = []
 		for device in self.definition["inputs"] + self.definition["outputs"]:
@@ -179,7 +207,9 @@ class IndianapolisFiveHundredTests(unittest.TestCase):
 				self.assertEqual(spatial["status"], placement["provenance"]["status"])
 		self.assertEqual(len(ids), len(set(ids)))
 		observed = {key for key, status in statuses.items() if status == "observed"}
-		self.assertEqual({("pinmame.output.gi", 0), ("pinmame.output.gi", 1), ("pinmame.output.gi", 2)}, observed)
+		expected = {("pinmame.output.gi", 0), ("pinmame.output.gi", 1), ("pinmame.output.gi", 2)}
+		expected |= {("pinmame.input.switch", 54), ("pinmame.input.switch", 75)}
+		self.assertEqual(expected, observed)
 		self.assertEqual({"cabinet_or_service"}, {self.gis[3]["spatial"]["reason"], self.gis[4]["spatial"]["reason"]})
 		self.assertEqual((6, 12, 25), tuple(len(self.gis[address]["spatial"]["placements"]) for address in (0, 1, 2)))
 
@@ -243,9 +273,13 @@ class IndianapolisFiveHundredTests(unittest.TestCase):
 				curator.check(root)
 
 	def test_pinned_pinmame_declares_the_mask_and_flipper_hardware(self) -> None:
+		from pinmame_game_defs.workspace import resolve_working_root
+
 		checkout = os.environ.get("PINMAME_SOURCE_ROOT")
 		candidates = [Path(checkout)] if checkout else []
-		candidates.append(ROOT.parent / "pinmame-game-defs-working-dir" / "source-checkouts" / "pinmame")
+		working_root = resolve_working_root(ROOT)
+		if working_root is not None:
+			candidates.append(working_root / "source-checkouts" / "pinmame")
 		source = next((path / "src/wpc/sims/wpc/prelim/i500.c" for path in candidates if (path / "src/wpc/sims/wpc/prelim/i500.c").is_file()), None)
 		if source is None:
 			self.skipTest("pinned PinMAME checkout is not available")
@@ -283,6 +317,14 @@ class IndianapolisFiveHundredRetainedEvidenceTests(unittest.TestCase):
 		self.assertIn('SolCallback(36) = "SolDiverterHold"', text)
 		self.assertNotRegex(text, r"(?m)^\s*SolCallback\((35|17|33|34)\)")
 		self.assertIn("RightFlipper.RotateToEnd:RightFlipper2.RotateToEnd", text)
+
+	def test_retained_reconciliation_hashes(self) -> None:
+		report = load_json(SPATIAL_REPORT_PATH)["manual_reconciliation"]
+		root = self._root("PINMAME_REVIEW_ARTIFACTS_ROOT") / "indianapolis-500"
+		self.assertEqual(report["artifact_sha256"], hashlib.sha256((root / "manual-reconciliation.md").read_bytes()).hexdigest())
+		for uri, digest in report["overlay_images"].items():
+			name = uri.rsplit("/", 1)[1]
+			self.assertEqual(digest, hashlib.sha256((root / name).read_bytes()).hexdigest(), name)
 
 	def test_retained_manual_hashes(self) -> None:
 		import curate_indianapolis_500 as curator

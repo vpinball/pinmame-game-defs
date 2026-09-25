@@ -1,13 +1,13 @@
 # Indianapolis 500 (Bally, 1995) spatial review
 
-Status: observed. Every switch, coil, flasher, motor and lamp is placed from the retained table or carries a controlled `not_applicable` record; the playfield general-illumination strings are placed but only `observed`, which keeps the record at `machines/partial/bally/indianapolis-500-1995.json`.
+Status: observed. Every switch, coil, flasher, motor and lamp is placed from the retained table or carries a controlled `not_applicable` record. The playfield general-illumination strings are placed but only `observed`, switches 54 and 75 are `observed`, and the race track's G.I. reflector bulbs are not placed, which keeps the record at `machines/partial/bally/indianapolis-500-1995.json`.
 
 The geometry source is the retained known-working `Indianapolis_500_VPX_1.1_RTM.vpx` (SHA-256 `a009c201fa4956ee086243486465e08917540c9a5044f5f14b88e24e704e2aeb`); its embedded script (SHA-256 `bbb957330598291fbd8be3d89e6de2c6f4c541f417f66d443809ff2fe8302f72`) is the runtime binding authority. Exact playfield bounds are `left=0 top=0 right=952 bottom=2162`; every coordinate is x/952 and y/2162 rounded to six places.
 
 ## Evidence decisions
 
 - The embedded script is the runtime authority; the July 1995 Operators Handbook and the 152-page operations manual are the physical inventory, construction and wiring authority; pinned PinMAME owns controller topology; the retained table supplies geometry.
-- The handbook's location drawings were checked against the table: the jets (Left/Right/Center), the three lanes 51-53 at the top right, the three-bank targets and pit-ramp diverter on the left, the upper right flipper at mid-right, the turbo at the upper left and the race track at the rear right all fall where the drawings put them.
+- Manual reconciliation (`external:pinmame-review-artifacts/indianapolis-500/manual-reconciliation.md`): All 28 callouts on the handbook's solenoid/flasher location drawing (printed 7) were measured through a least-squares refit; every one reaches its table object within 0.07 normalized (largest 18 at 0.064 and the lower 27 socket at 0.065) except 01, the documented auto-plunger projection. Every placed switch was overlaid on the handbook's switch-location drawing (printed 5) through a seven-point fit and ends on or within about a marker width of its marker; the four closest calls (25, 35, 54, 75) were re-measured through a ten-point least-squares refit, which keeps 54 (0.075) and 75 (0.064-0.078) observed. The other switches were not re-measured through the refit. The documented projections (trough optos 41-45, turbo optos 63/66) are exempt from the distance rule; their callouts reach the trough and the turbo.
 - Sensors inside a mechanism (the trough optos, the turbo's ball-sense and index optos) and the Lightup LEDs are documented projections onto the mechanism or target that carries them.
 - Left Side Flasher 27 has two sockets and two placements; every other flasher has one.
 - G.I. strings 4 and 5 and the backbox bulbs of strings 1 and 3 are backbox devices and are not placed.
@@ -15,6 +15,8 @@ The geometry source is the retained known-working `Indianapolis_500_VPX_1.1_RTM.
 ## Blockers
 
 - Playfield general illumination (G.I. strings 1-3, public 0-2) has no factory socket list: the manuals print only the string names, connectors and bulb types. Every playfield G.I. coordinate therefore comes from the retained table's GITL/GITR/GIB collections that its UpdateGI dispatches per string, reduced to distinct bulb-mesh lights, and stays observed. Promotion needs a socket-level G.I. survey of a real machine, or a factory drawing that assigns each playfield G.I. socket to its string.
+- The race track's two reflector fixtures belong to G.I. string 2 by their factory wire colours, but the drawing prints no bulb count and the retained table models no bulb there, so they are neither counted nor placed.
+- Switches 54 (Ten Point) and 75 (Right Ramp Enter) stay observed: through the refitted handbook switch drawing, callout 54 ends 0.075 from its wall and callout 75 0.064-0.078 from its trigger, above the 0.07 limit.
 
 ## Explicit projections
 
@@ -42,7 +44,8 @@ The geometry source is the retained known-working `Indianapolis_500_VPX_1.1_RTM.
 ## Counts
 
 - Placements: 178
-- Located input addresses: 42
+- Validated input addresses: 40
+- Observed-only input addresses: 2
 - Validated output bindings: 92
 - Observed-only output bindings: 3
 - Inputs with a controlled `cabinet_or_service` record: 17
@@ -56,7 +59,7 @@ The geometry source is the retained known-working `Indianapolis_500_VPX_1.1_RTM.
 
 ## Promotion decision
 
-Refused. The definition has no conflicts and every other dimension is validated, but the three playfield G.I. strings' sockets are known only from one community table's light collections. `coverage.missing` is `["spatial_placement"]` until a socket-level G.I. survey or factory drawing confirms them.
+Refused. `coverage.missing` is `["spatial_placement"]`: the playfield G.I. sockets are known only from one community table's light collections, the race-track reflector bulbs are neither counted nor placed, and switches 54 and 75 fail the factory switch-drawing check.
 
 ## Retained evidence
 

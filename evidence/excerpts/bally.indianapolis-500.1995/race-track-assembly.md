@@ -29,6 +29,6 @@ drawing (the drawing is not reproduced in the crop). Read from the native 300 dp
 
 Drawing notes (from the drawing on the same page): an upright arched weldment (1) drawn from the
 back, the side and the front; the gear motor (4) is mounted on the back and turns a hub (2) carrying
-the small car (6) around the face of the arch; two reflector sockets (3/8), wired `ORG` and
-`ORG/WHT`, sit at the top corners of the arch. The page does not say which solenoid/flasher circuit
+the small car (6) around the face of the arch; a reflector fixture (item 3, each drawn with two
+reflector cones, leads labelled `ORG` and `ORG/WHT`) sits at each top corner of the arch. The page does not say which solenoid/flasher circuit
 feeds those sockets.

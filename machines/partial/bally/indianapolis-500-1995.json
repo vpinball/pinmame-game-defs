@@ -2441,7 +2441,7 @@
       "label": "Ten Point",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 5, return row 4. Rubber-mounted scoring switch; the retained script pulses it from the sw54 wall's Slingshot event. Placement: retained table object Wall sw54 (bounding-box center of its four drag points).",
+        "notes": "Printed switch-matrix drive column 5, return row 4. Rubber-mounted scoring switch; the retained script pulses it from the sw54 wall's Slingshot event. Placement: retained table object Wall sw54 (bounding-box center of its four drag points). The handbook switch-location drawing's callout 54 ends 0.075 normalized from this wall's centre through the refitted drawing transform (external:pinmame-review-artifacts/indianapolis-500/manual-reconciliation.md), above the 0.07 limit, although it points at the same rubber switch beside the lower kicker. The placement stays observed.",
         "part_number": "SW-1A-120",
         "switch_type": "leaf"
       },
@@ -2462,7 +2462,7 @@
               "source_refs": [
                 "vpx-table.indianapolis-500-dozer-1-1-rtm"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -2470,7 +2470,7 @@
             "y": 0.334314
           }
         ],
-        "status": "validated"
+        "status": "observed"
       },
       "wiring": {
         "board": "WPC-Security CPU board",
@@ -3374,7 +3374,7 @@
       "label": "Right Ramp Enter",
       "normally_closed": false,
       "physical": {
-        "notes": "Printed switch-matrix drive column 7, return row 5. Placement: retained table object Trigger sw75.",
+        "notes": "Printed switch-matrix drive column 7, return row 5. Placement: retained table object Trigger sw75. The handbook switch-location drawing's callout 75 ends at the right ramp's entrance posts, 0.064-0.078 normalized from this trigger on three reads through the refitted transform (external:pinmame-review-artifacts/indianapolis-500/manual-reconciliation.md), above the 0.07 limit on one of them. The placement stays observed.",
         "part_number": "5647-12693-11",
         "switch_type": "microswitch"
       },
@@ -3394,7 +3394,7 @@
               "source_refs": [
                 "vpx-table.indianapolis-500-dozer-1-1-rtm"
               ],
-              "status": "validated"
+              "status": "observed"
             },
             "role": "sensor",
             "space": "playfield",
@@ -3402,7 +3402,7 @@
             "y": 0.390206
           }
         ],
-        "status": "validated"
+        "status": "observed"
       },
       "wiring": {
         "board": "WPC-Security CPU board",
@@ -4733,7 +4733,7 @@
         "device.turbo-motor"
       ],
       "assembly_part_number": "A-20038",
-      "behavior": "A ball entering the turbo popper at the upper left (opto 62, A-20159 Ball Popper Assembly) is raised by solenoid 5 up the A-20407 Turbo Feed Wire Ramp into the turbo: a horizontal impeller (03-9343) inside the A-20065 housing, turned by the 12VDC 14-8021.1 gearmotor of the A-20038 Turbo Motor Assembly on solenoid 17. The impeller holds up to four balls in its quadrants. Turbo Ball Sense (63) is the LED/phototransistor pair through the housing wall; Turbo Index (66) is the A-20047 Turbo Opto PCB under the impeller. Turned slowly the turbo stores balls; spun up it throws them out onto the 12-7273.2 Turbo Exhaust Ramp. Pinned PinMAME models speed from the spacing of solenoid-17 pulses (stopped after 60 updates without a pulse, fast when pulses arrive within two updates) and a 64-step position that closes 66 for the first three of every sixteen steps. The retained script's own Dorsola/Dozer simulator reads Controller.GetMech(0) for the speed, advances a four-quadrant model, opens 66 once per quadrant and closes it for the other three sub-steps, closes 63 when a ball sits in the sensed quadrant, and ejects the ball there at fast speed. The two duty cycles for 66 differ; the definition asserts only that 66 is an index opto read by the ROM, not its duty cycle.",
+      "behavior": "A ball entering the turbo popper at the upper left (opto 62, A-20159 Ball Popper Assembly) is raised by solenoid 5 up the A-20407 Turbo Feed Wire Ramp into the turbo: a horizontal impeller (03-9343) inside the A-20065 housing, turned by the 12VDC 14-8021.1 gearmotor of the A-20038 Turbo Motor Assembly on solenoid 17. The manual's rules lock two balls to start a 3-ball multiball, award the Super Jackpot for re-locking the third, and serve an extra ball when every ball in play is locked (four balls at most); the manual prints no physical capacity. Turbo Ball Sense (63) is the LED/phototransistor pair through the housing wall; Turbo Index (66) is the A-20047 Turbo Opto PCB under the impeller. Turned slowly the turbo stores balls; spun up it throws them out onto the 12-7273.2 Turbo Exhaust Ramp. Pinned PinMAME models speed from the spacing of solenoid-17 pulses (stopped after 60 updates without a pulse, fast when pulses arrive within two updates) and a 64-step position that closes 66 for the first three of every sixteen steps. The retained script's own Dorsola/Dozer simulator reads Controller.GetMech(0) for the speed, advances a four-position model, opens 66 once per quadrant and closes it for the other three sub-steps, closes 63 when a ball sits in the sensed quadrant, and ejects the ball there at fast speed. The two duty cycles for 66 differ; the definition asserts only that 66 is an index opto read by the ROM, not its duty cycle.",
       "id": "mechanism.turbo",
       "kind": "motorized",
       "label": "Turbo ball lock",
@@ -4783,7 +4783,7 @@
         "device.race-track-motor"
       ],
       "assembly_part_number": "A-20169",
-      "behavior": "The A-20169 Race Track Assembly is an upright arched weldment at the rear of the playfield. Solenoid 18 drives its 14-8022 gear motor, which turns a hub carrying a small car and driver around the face of the arch; two reflector sockets sit at its top corners. No switch reports its position; the retained script simply rotates the Indy_Top car while the output is on.",
+      "behavior": "The A-20169 Race Track Assembly is an upright arched weldment at the rear of the playfield. Solenoid 18 drives its 14-8022 gear motor, which turns a hub carrying a small car and driver around the face of the arch; a 04-10094 reflector fixture sits at each top corner, wired ORG and ORG/WHT, the colours of G.I. string 02 (Upper Right Playfield); each assembly is drawn with two reflector cones and the drawing prints no bulb count. No switch reports the car's position. The retained script rotates the Indy_Top car while the output is on and strobes its IU1-IU5 lights and car shadows with it as an effect.",
       "id": "mechanism.race-track",
       "kind": "motorized",
       "label": "Race track car",
@@ -5054,7 +5054,7 @@
         "device.upper-right-flipper-power",
         "device.upper-right-flipper-hold"
       ],
-      "behavior": "Lower right (A-15849-R-2), lower left (A-15849-L-2) and upper right (A-14876-R-3) Fliptronic flippers, all FL-11629 blue coils with separate power and hold windings, each with a cabinet opto (112, 114, 116) and an end-of-stroke leaf switch (111, 113, 115). The upper right flipper sits on the right side at mid-playfield below the right ramp. The ROM energizes the power winding on the button and drops to the hold winding once the end-of-stroke switch opens the power path.",
+      "behavior": "Lower right (A-15849-R-2), lower left (A-15849-L-2) and upper right (A-14876-R-3) Fliptronic flippers, all FL-11629 blue coils with separate power and hold windings, each with a cabinet opto (112, 114, 116) and an end-of-stroke leaf switch (111, 113, 115). The upper right flipper sits on the right side at mid-playfield below the right ramp. The ROM energizes the power and hold windings on the button and switches the power transistor off when it reads the end-of-stroke input close; the hold winding keeps the flipper up while the button stays pressed.",
       "id": "mechanism.flippers",
       "kind": "other",
       "label": "Three flippers",
@@ -5146,7 +5146,7 @@
       "label": "Auto Plunger",
       "physical": {
         "assembly_part_number": "A-14525",
-        "notes": "Printed solenoid/flasher table entry 01 (High Power). Retained script callback: SolPlungBall (fires Plunger1). A-14525 Kicker Bracket Assembly at the foot of the shooter lane. The retained Plunger1 object sits below the playfield bounds (normalized y 1.009131), so the placement is projected onto the shooter-lane switch SW25 directly above it. Placement: retained table object projected onto Trigger SW25 (see note).",
+        "notes": "Printed solenoid/flasher table entry 01 (High Power). Retained script callback: SolPlungBall (fires Plunger1). A-14525 Kicker Bracket Assembly at the foot of the shooter lane. The retained Plunger1 object sits below the playfield bounds (normalized y 1.009131), so the placement is projected onto the shooter-lane switch SW25 directly above it; the handbook's callout 01 reaches that kicker bracket at the foot of the lane, and the placement inherits switch 25's status. Placement: retained table object projected onto Trigger SW25 (see note).",
         "part_number": "AE-23-800"
       },
       "provenance": {
@@ -5761,8 +5761,8 @@
       "kind": "coil",
       "label": "Right Slingshot",
       "physical": {
-        "assembly_part_number": "A-9362-R-3",
-        "notes": "Printed solenoid/flasher table entry 12 (Low Power). The retained script binds no callback; the table's own bumper/slingshot physics fire on contact and pulse the switch. Placement: retained table object Wall RightSlingShot bounding-box center.",
+        "assembly_part_number": "B-9362-R-3",
+        "notes": "Printed solenoid/flasher table entry 12 (Low Power). The retained script binds no callback; the table's own bumper/slingshot physics fire on contact and pulse the switch. The solenoid/flasher locations list prints this assembly as A-9362-R-3; both playfield parts lists print B-9362-R-3, which is recorded. Placement: retained table object Wall RightSlingShot bounding-box center.",
         "part_number": "AE-26-1200"
       },
       "provenance": {
@@ -5877,7 +5877,7 @@
       "label": "Upper Popper Flasher",
       "physical": {
         "assembly_part_number": "A-19980",
-        "notes": "Printed solenoid/flasher table entry 14 (Low Power). Retained script callback: Sol14 (SolModCallback). Top-rear dome beside the upper popper; the manual's flasher drawing puts callout 14 immediately right of the top-left corner dome 15. The full manual's flasher wiring drawing (printed 3-7) prints the J127-7/8/9 wires as Black-Yellow/Blue-Gray/Blue-Gray against the table's Brn-Blu/Brn-Vio/Brn-Gry; the table's colours are recorded. Placement: retained table object Light F14_Lamp2. Printed flashlamp type #906.",
+        "notes": "Printed solenoid/flasher table entry 14 (Low Power). Retained script callback: Sol14 (SolModCallback). Top-rear dome beside the upper popper; the manual's flasher drawing puts callout 14 immediately right of the top-left corner dome 15. The full manual's flasher wiring drawing (printed 3-7) prints the J127-7/8/9 wires as Black-Yellow/Blue-Gray/Blue-Gray; the solenoid table and the power driver board connector list (printed 3-25) both print Brown-Blue/Brown-Violet/Brown-Gray, which is recorded. Placement: retained table object Light F14_Lamp2. Printed flashlamp type #906.",
         "quantity": 1
       },
       "provenance": {
@@ -5936,7 +5936,7 @@
       "label": "Top Left Corner Flasher",
       "physical": {
         "assembly_part_number": "A-19980",
-        "notes": "Printed solenoid/flasher table entry 15 (Low Power). Retained script callback: Sol15 (SolModCallback). The full manual's flasher wiring drawing (printed 3-7) prints the J127-7/8/9 wires as Black-Yellow/Blue-Gray/Blue-Gray against the table's Brn-Blu/Brn-Vio/Brn-Gry; the table's colours are recorded. Placement: retained table object Light F15_Lamp2. Printed flashlamp type #906.",
+        "notes": "Printed solenoid/flasher table entry 15 (Low Power). Retained script callback: Sol15 (SolModCallback). The full manual's flasher wiring drawing (printed 3-7) prints the J127-7/8/9 wires as Black-Yellow/Blue-Gray/Blue-Gray; the solenoid table and the power driver board connector list (printed 3-25) both print Brown-Blue/Brown-Violet/Brown-Gray, which is recorded. Placement: retained table object Light F15_Lamp2. Printed flashlamp type #906.",
         "quantity": 1
       },
       "provenance": {
@@ -5995,7 +5995,7 @@
       "label": "Top Right Corner Flasher",
       "physical": {
         "assembly_part_number": "A-19980",
-        "notes": "Printed solenoid/flasher table entry 16 (Low Power). Retained script callback: Sol16 (SolModCallback). The retained table also lists this flasher's helper lights F16_Lamp3/4/5 in its GITR collection; they are not G.I. bulbs and are excluded there. The full manual's flasher wiring drawing (printed 3-7) prints the J127-7/8/9 wires as Black-Yellow/Blue-Gray/Blue-Gray against the table's Brn-Blu/Brn-Vio/Brn-Gry; the table's colours are recorded. Placement: retained table object Light F16_Lamp2. Printed flashlamp type #906.",
+        "notes": "Printed solenoid/flasher table entry 16 (Low Power). Retained script callback: Sol16 (SolModCallback). The retained Sol16 callback drives F16_Lamp1, F16_Lamp2 and F16_Side_Flash1; the table's F16_Lamp3/4/5 lights belong only to its G.I. string 2 collection. The full manual's flasher wiring drawing (printed 3-7) prints the J127-7/8/9 wires as Black-Yellow/Blue-Gray/Blue-Gray; the solenoid table and the power driver board connector list (printed 3-25) both print Brown-Blue/Brown-Violet/Brown-Gray, which is recorded. Placement: retained table object Light F16_Lamp2. Printed flashlamp type #906.",
         "quantity": 1
       },
       "provenance": {
@@ -6112,7 +6112,7 @@
       "label": "Race Track Motor",
       "physical": {
         "assembly_part_number": "A-20169",
-        "notes": "Printed solenoid/flasher table entry 18 (Flasher). Retained script callback: SolTopCar (spins the race-track car). Printed in the Flasher category but its part is 14-8022 Race Track Gear Motor (A-20169 Race Track Assembly): an upright arched track at the rear of the playfield on which the motor turns a small car around a hub. The retained script spins the Indy_Top car while this output is on. Placement: retained table object Primitive Indy_Top.",
+        "notes": "Printed solenoid/flasher table entry 18 (Flasher). Retained script callback: SolTopCar (spins the race-track car). Printed in the Flasher category but its part is 14-8022 Race Track Gear Motor (A-20169 Race Track Assembly): an upright arched track at the rear of the playfield on which the motor turns a small car around a hub. The retained script spins the Indy_Top car while this output is on; its Indy_up_Flash timer also strobes the IU1-IU5 lights and car shadows as a visual effect of the spinning car. The track's reflector fixtures are wired to G.I. string 02 (see that output). Placement: retained table object Primitive Indy_Top.",
         "part_number": "14-8022"
       },
       "provenance": {
@@ -7781,7 +7781,7 @@
       "label": "Left Lane",
       "physical": {
         "assembly_part_number": "A-20108",
-        "notes": "Printed lamp-matrix drive column 1, return row 1. Printed bulb 24-8768 (#555). Placement: retained table Light l11.",
+        "notes": "Printed lamp-matrix drive column 1, return row 1. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l11.",
         "quantity": 1
       },
       "provenance": {
@@ -7840,7 +7840,7 @@
       "label": "Center Lane",
       "physical": {
         "assembly_part_number": "A-20108",
-        "notes": "Printed lamp-matrix drive column 1, return row 2. Printed bulb 24-8768 (#555). Placement: retained table Light l12.",
+        "notes": "Printed lamp-matrix drive column 1, return row 2. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l12.",
         "quantity": 1
       },
       "provenance": {
@@ -7899,7 +7899,7 @@
       "label": "Right Lane",
       "physical": {
         "assembly_part_number": "A-20108",
-        "notes": "Printed lamp-matrix drive column 1, return row 3. Printed bulb 24-8768 (#555). Placement: retained table Light l13.",
+        "notes": "Printed lamp-matrix drive column 1, return row 3. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l13.",
         "quantity": 1
       },
       "provenance": {
@@ -7958,7 +7958,7 @@
       "label": "Upper Eject Top",
       "physical": {
         "assembly_part_number": "A-20104",
-        "notes": "Printed lamp-matrix drive column 1, return row 4. Printed bulb 24-8768 (#555). The retained script binds a second render light L14a to this address at a different position; the manual prints one bulb, so only the primary insert light is placed. Placement: retained table Light l14.",
+        "notes": "Printed lamp-matrix drive column 1, return row 4. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). The retained script binds a second render light L14a to this address at a different position; the manual prints one bulb, so only the primary insert light is placed. Placement: retained table Light l14.",
         "quantity": 1
       },
       "provenance": {
@@ -8017,7 +8017,7 @@
       "label": "Jet Wrench",
       "physical": {
         "assembly_part_number": "A-20104",
-        "notes": "Printed lamp-matrix drive column 1, return row 5. Printed bulb 24-8768 (#555). Placement: retained table Light l15.",
+        "notes": "Printed lamp-matrix drive column 1, return row 5. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l15.",
         "quantity": 1
       },
       "provenance": {
@@ -8076,7 +8076,7 @@
       "label": "Extra Ball",
       "physical": {
         "assembly_part_number": "A-20104",
-        "notes": "Printed lamp-matrix drive column 1, return row 6. Printed bulb 24-8768 (#555). The retained script binds a second render light L16a to this address at a different position; the manual prints one bulb, so only the primary insert light is placed. Placement: retained table Light l16.",
+        "notes": "Printed lamp-matrix drive column 1, return row 6. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). The retained script binds a second render light L16a to this address at a different position; the manual prints one bulb, so only the primary insert light is placed. Placement: retained table Light l16.",
         "quantity": 1
       },
       "provenance": {
@@ -8135,7 +8135,7 @@
       "label": "Victory Lap",
       "physical": {
         "assembly_part_number": "A-20104",
-        "notes": "Printed lamp-matrix drive column 1, return row 7. Printed bulb 24-8768 (#555). The retained script binds a second render light L17a to this address at a different position; the manual prints one bulb, so only the primary insert light is placed. Placement: retained table Light l17.",
+        "notes": "Printed lamp-matrix drive column 1, return row 7. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). The retained script binds a second render light L17a to this address at a different position; the manual prints one bulb, so only the primary insert light is placed. Placement: retained table Light l17.",
         "quantity": 1
       },
       "provenance": {
@@ -8194,7 +8194,7 @@
       "label": "Turbo Wrench",
       "physical": {
         "assembly_part_number": "A-17835",
-        "notes": "Printed lamp-matrix drive column 1, return row 8. Printed bulb 24-6549 (#44). The lamp-locations list prints item 18 'Left Ramp Wrench' and item 27 'Turbo Wrench', swapping the two names against the lamp matrix; the matrix labels are used because the retained table places 18 beside the turbo (and its Turbo Wrench target 47) and 27 beside the Left Ramp Wrench target 55. Placement: retained table Light l18.",
+        "notes": "Printed lamp-matrix drive column 1, return row 8. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-6549 (#44). The lamp-locations list prints item 18 'Left Ramp Wrench' and item 27 'Turbo Wrench', swapping the two names against the lamp matrix; the matrix labels are used because the retained table places 18 beside the turbo (and its Turbo Wrench target 47) and 27 beside the Left Ramp Wrench target 55. Placement: retained table Light l18.",
         "quantity": 1
       },
       "provenance": {
@@ -8253,7 +8253,7 @@
       "label": "Turbo Lock 1",
       "physical": {
         "assembly_part_number": "A-20107",
-        "notes": "Printed lamp-matrix drive column 2, return row 1. Printed bulb 24-8768 (#555). The retained script binds a second render light L21a to this address at a different position; the manual prints one bulb, so only the primary insert light is placed. Placement: retained table Light l21.",
+        "notes": "Printed lamp-matrix drive column 2, return row 1. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). The retained script binds a second render light L21a to this address at a different position; the manual prints one bulb, so only the primary insert light is placed. Placement: retained table Light l21.",
         "quantity": 1
       },
       "provenance": {
@@ -8312,7 +8312,7 @@
       "label": "Turbo Lock 2",
       "physical": {
         "assembly_part_number": "A-20107",
-        "notes": "Printed lamp-matrix drive column 2, return row 2. Printed bulb 24-8768 (#555). The retained script binds a second render light L22a to this address at a different position; the manual prints one bulb, so only the primary insert light is placed. Placement: retained table Light l22.",
+        "notes": "Printed lamp-matrix drive column 2, return row 2. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). The retained script binds a second render light L22a to this address at a different position; the manual prints one bulb, so only the primary insert light is placed. Placement: retained table Light l22.",
         "quantity": 1
       },
       "provenance": {
@@ -8371,7 +8371,7 @@
       "label": "Turbo Lock 3",
       "physical": {
         "assembly_part_number": "A-20107",
-        "notes": "Printed lamp-matrix drive column 2, return row 3. Printed bulb 24-8768 (#555). The retained script binds a second render light L23a to this address at a different position; the manual prints one bulb, so only the primary insert light is placed. Placement: retained table Light l23.",
+        "notes": "Printed lamp-matrix drive column 2, return row 3. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). The retained script binds a second render light L23a to this address at a different position; the manual prints one bulb, so only the primary insert light is placed. Placement: retained table Light l23.",
         "quantity": 1
       },
       "provenance": {
@@ -8430,7 +8430,7 @@
       "label": "Light Lock Lamp",
       "physical": {
         "assembly_part_number": "A-20105",
-        "notes": "Printed lamp-matrix drive column 2, return row 4. Printed bulb 24-8768 (#555). Placement: retained table Light l24.",
+        "notes": "Printed lamp-matrix drive column 2, return row 4. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l24.",
         "quantity": 1
       },
       "provenance": {
@@ -8489,7 +8489,7 @@
       "label": "Light Speedway",
       "physical": {
         "assembly_part_number": "A-20105",
-        "notes": "Printed lamp-matrix drive column 2, return row 5. Printed bulb 24-8768 (#555). Placement: retained table Light l25.",
+        "notes": "Printed lamp-matrix drive column 2, return row 5. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l25.",
         "quantity": 1
       },
       "provenance": {
@@ -8548,7 +8548,7 @@
       "label": "\"Pass\"",
       "physical": {
         "assembly_part_number": "A-20105",
-        "notes": "Printed lamp-matrix drive column 2, return row 6. Printed bulb 24-8768 (#555). Placement: retained table Light l26.",
+        "notes": "Printed lamp-matrix drive column 2, return row 6. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l26.",
         "quantity": 1
       },
       "provenance": {
@@ -8607,7 +8607,7 @@
       "label": "Left Ramp Wrench",
       "physical": {
         "assembly_part_number": "A-17835",
-        "notes": "Printed lamp-matrix drive column 2, return row 7. Printed bulb 24-6549 (#44). See lamp 18: the lamp-locations list swaps the two wrench names. Placement: retained table Light l27.",
+        "notes": "Printed lamp-matrix drive column 2, return row 7. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-6549 (#44). See lamp 18: the lamp-locations list swaps the two wrench names. Placement: retained table Light l27.",
         "quantity": 1
       },
       "provenance": {
@@ -8666,7 +8666,7 @@
       "label": "Left Ramp Standup",
       "physical": {
         "assembly_part_number": "A-17835",
-        "notes": "Printed lamp-matrix drive column 2, return row 8. Printed bulb 24-6549 (#44). Placement: retained table Light l28.",
+        "notes": "Printed lamp-matrix drive column 2, return row 8. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-6549 (#44). Placement: retained table Light l28.",
         "quantity": 1
       },
       "provenance": {
@@ -8725,7 +8725,7 @@
       "label": "Hit The \"Wall\"",
       "physical": {
         "assembly_part_number": "A-20106",
-        "notes": "Printed lamp-matrix drive column 3, return row 1. Printed bulb 24-8768 (#555). Placement: retained table Light l31.",
+        "notes": "Printed lamp-matrix drive column 3, return row 1. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l31.",
         "quantity": 1
       },
       "provenance": {
@@ -8784,7 +8784,7 @@
       "label": "Hit \"The\" Wall",
       "physical": {
         "assembly_part_number": "A-20106",
-        "notes": "Printed lamp-matrix drive column 3, return row 2. Printed bulb 24-8768 (#555). Placement: retained table Light l32.",
+        "notes": "Printed lamp-matrix drive column 3, return row 2. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l32.",
         "quantity": 1
       },
       "provenance": {
@@ -8843,7 +8843,7 @@
       "label": "\"Hit\" The Wall",
       "physical": {
         "assembly_part_number": "A-20106",
-        "notes": "Printed lamp-matrix drive column 3, return row 3. Printed bulb 24-8768 (#555). Placement: retained table Light l33.",
+        "notes": "Printed lamp-matrix drive column 3, return row 3. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l33.",
         "quantity": 1
       },
       "provenance": {
@@ -8902,7 +8902,7 @@
       "label": "Left Ramp Jackpot",
       "physical": {
         "assembly_part_number": "A-20105",
-        "notes": "Printed lamp-matrix drive column 3, return row 4. Printed bulb 24-8768 (#555). Placement: retained table Light l34.",
+        "notes": "Printed lamp-matrix drive column 3, return row 4. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l34.",
         "quantity": 1
       },
       "provenance": {
@@ -8961,7 +8961,7 @@
       "label": "Increase Boost",
       "physical": {
         "assembly_part_number": "A-20105",
-        "notes": "Printed lamp-matrix drive column 3, return row 5. Printed bulb 24-8768 (#555). Placement: retained table Light l35.",
+        "notes": "Printed lamp-matrix drive column 3, return row 5. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l35.",
         "quantity": 1
       },
       "provenance": {
@@ -9020,7 +9020,7 @@
       "label": "Souvenir Lamp",
       "physical": {
         "assembly_part_number": "A-20105",
-        "notes": "Printed lamp-matrix drive column 3, return row 6. Printed bulb 24-8768 (#555). Placement: retained table Light l36.",
+        "notes": "Printed lamp-matrix drive column 3, return row 6. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l36.",
         "quantity": 1
       },
       "provenance": {
@@ -9079,7 +9079,7 @@
       "label": "Left Flipper Lane",
       "physical": {
         "assembly_part_number": "A-17835",
-        "notes": "Printed lamp-matrix drive column 3, return row 7. Printed bulb 24-6549 (#44). Placement: retained table Light l37.",
+        "notes": "Printed lamp-matrix drive column 3, return row 7. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-6549 (#44). Placement: retained table Light l37.",
         "quantity": 1
       },
       "provenance": {
@@ -9138,7 +9138,7 @@
       "label": "Left Outlane",
       "physical": {
         "assembly_part_number": "A-17835",
-        "notes": "Printed lamp-matrix drive column 3, return row 8. Printed bulb 24-6549 (#44). Placement: retained table Light l38.",
+        "notes": "Printed lamp-matrix drive column 3, return row 8. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-6549 (#44). Placement: retained table Light l38.",
         "quantity": 1
       },
       "provenance": {
@@ -9197,7 +9197,7 @@
       "label": "Super Jets",
       "physical": {
         "assembly_part_number": "A-20103",
-        "notes": "Printed lamp-matrix drive column 4, return row 1. Printed bulb 24-8768 (#555). Placement: retained table Light l41.",
+        "notes": "Printed lamp-matrix drive column 4, return row 1. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l41.",
         "quantity": 1
       },
       "provenance": {
@@ -9256,7 +9256,7 @@
       "label": "Turbo Boost",
       "physical": {
         "assembly_part_number": "A-20103",
-        "notes": "Printed lamp-matrix drive column 4, return row 2. Printed bulb 24-8768 (#555). Placement: retained table Light l42.",
+        "notes": "Printed lamp-matrix drive column 4, return row 2. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l42.",
         "quantity": 1
       },
       "provenance": {
@@ -9315,7 +9315,7 @@
       "label": "Checkered Flag",
       "physical": {
         "assembly_part_number": "A-20103",
-        "notes": "Printed lamp-matrix drive column 4, return row 3. Printed bulb 24-8768 (#555). Placement: retained table Light l43.",
+        "notes": "Printed lamp-matrix drive column 4, return row 3. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l43.",
         "quantity": 1
       },
       "provenance": {
@@ -9374,7 +9374,7 @@
       "label": "Go For The Pole",
       "physical": {
         "assembly_part_number": "A-20103",
-        "notes": "Printed lamp-matrix drive column 4, return row 4. Printed bulb 24-8768 (#555). Placement: retained table Light l44.",
+        "notes": "Printed lamp-matrix drive column 4, return row 4. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l44.",
         "quantity": 1
       },
       "provenance": {
@@ -9433,7 +9433,7 @@
       "label": "Quick Pit",
       "physical": {
         "assembly_part_number": "A-20103",
-        "notes": "Printed lamp-matrix drive column 4, return row 5. Printed bulb 24-8768 (#555). Placement: retained table Light l45.",
+        "notes": "Printed lamp-matrix drive column 4, return row 5. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l45.",
         "quantity": 1
       },
       "provenance": {
@@ -9492,7 +9492,7 @@
       "label": "3X Playfield",
       "physical": {
         "assembly_part_number": "A-20103",
-        "notes": "Printed lamp-matrix drive column 4, return row 6. Printed bulb 24-8768 (#555). Placement: retained table Light l46.",
+        "notes": "Printed lamp-matrix drive column 4, return row 6. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l46.",
         "quantity": 1
       },
       "provenance": {
@@ -9551,7 +9551,7 @@
       "label": "Upper Right Flipper Wrench",
       "physical": {
         "assembly_part_number": "A-17835",
-        "notes": "Printed lamp-matrix drive column 4, return row 7. Printed bulb 24-6549 (#44). Placement: retained table Light l47.",
+        "notes": "Printed lamp-matrix drive column 4, return row 7. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-6549 (#44). Placement: retained table Light l47.",
         "quantity": 1
       },
       "provenance": {
@@ -9610,7 +9610,7 @@
       "label": "Right Flipper Lane",
       "physical": {
         "assembly_part_number": "A-17835",
-        "notes": "Printed lamp-matrix drive column 4, return row 8. Printed bulb 24-6549 (#44). Placement: retained table Light l48.",
+        "notes": "Printed lamp-matrix drive column 4, return row 8. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-6549 (#44). Placement: retained table Light l48.",
         "quantity": 1
       },
       "provenance": {
@@ -9669,7 +9669,7 @@
       "label": "Dueling Drivers",
       "physical": {
         "assembly_part_number": "A-20103",
-        "notes": "Printed lamp-matrix drive column 5, return row 1. Printed bulb 24-8768 (#555). Placement: retained table Light l51.",
+        "notes": "Printed lamp-matrix drive column 5, return row 1. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l51.",
         "quantity": 1
       },
       "provenance": {
@@ -9728,7 +9728,7 @@
       "label": "Super Lightups",
       "physical": {
         "assembly_part_number": "A-20103",
-        "notes": "Printed lamp-matrix drive column 5, return row 2. Printed bulb 24-8768 (#555). Placement: retained table Light l52.",
+        "notes": "Printed lamp-matrix drive column 5, return row 2. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l52.",
         "quantity": 1
       },
       "provenance": {
@@ -9787,7 +9787,7 @@
       "label": "Caution Flag",
       "physical": {
         "assembly_part_number": "A-20103",
-        "notes": "Printed lamp-matrix drive column 5, return row 3. Printed bulb 24-8768 (#555). Placement: retained table Light l53.",
+        "notes": "Printed lamp-matrix drive column 5, return row 3. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l53.",
         "quantity": 1
       },
       "provenance": {
@@ -9846,7 +9846,7 @@
       "label": "Extra Ball Flag",
       "physical": {
         "assembly_part_number": "A-20103",
-        "notes": "Printed lamp-matrix drive column 5, return row 4. Printed bulb 24-8768 (#555). Placement: retained table Light l54.",
+        "notes": "Printed lamp-matrix drive column 5, return row 4. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l54.",
         "quantity": 1
       },
       "provenance": {
@@ -9905,7 +9905,7 @@
       "label": "Wrong Turn",
       "physical": {
         "assembly_part_number": "A-20103",
-        "notes": "Printed lamp-matrix drive column 5, return row 5. Printed bulb 24-8768 (#555). Placement: retained table Light l55.",
+        "notes": "Printed lamp-matrix drive column 5, return row 5. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l55.",
         "quantity": 1
       },
       "provenance": {
@@ -9964,7 +9964,7 @@
       "label": "Gasoline Alley",
       "physical": {
         "assembly_part_number": "A-20103",
-        "notes": "Printed lamp-matrix drive column 5, return row 6. Printed bulb 24-8768 (#555). Placement: retained table Light l56.",
+        "notes": "Printed lamp-matrix drive column 5, return row 6. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l56.",
         "quantity": 1
       },
       "provenance": {
@@ -10023,7 +10023,7 @@
       "label": "Right Outlane",
       "physical": {
         "assembly_part_number": "A-17835",
-        "notes": "Printed lamp-matrix drive column 5, return row 7. Printed bulb 24-6549 (#44). Placement: retained table Light l57.",
+        "notes": "Printed lamp-matrix drive column 5, return row 7. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-6549 (#44). Placement: retained table Light l57.",
         "quantity": 1
       },
       "provenance": {
@@ -10082,7 +10082,7 @@
       "label": "Shoot Again",
       "physical": {
         "assembly_part_number": "A-17835",
-        "notes": "Printed lamp-matrix drive column 5, return row 8. Printed bulb 24-6549 (#44). Placement: retained table Light l58.",
+        "notes": "Printed lamp-matrix drive column 5, return row 8. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-6549 (#44). Placement: retained table Light l58.",
         "quantity": 1
       },
       "provenance": {
@@ -10141,7 +10141,7 @@
       "label": "Change Setup",
       "physical": {
         "assembly_part_number": "A-20105",
-        "notes": "Printed lamp-matrix drive column 6, return row 1. Printed bulb 24-8768 (#555). Placement: retained table Light l61.",
+        "notes": "Printed lamp-matrix drive column 6, return row 1. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l61.",
         "quantity": 1
       },
       "provenance": {
@@ -10200,7 +10200,7 @@
       "label": "Award Speedway",
       "physical": {
         "assembly_part_number": "A-20105",
-        "notes": "Printed lamp-matrix drive column 6, return row 2. Printed bulb 24-8768 (#555). Placement: retained table Light l62.",
+        "notes": "Printed lamp-matrix drive column 6, return row 2. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l62.",
         "quantity": 1
       },
       "provenance": {
@@ -10259,7 +10259,7 @@
       "label": "Hit The Wall",
       "physical": {
         "assembly_part_number": "A-20105",
-        "notes": "Printed lamp-matrix drive column 6, return row 3. Printed bulb 24-8768 (#555). Placement: retained table Light l63.",
+        "notes": "Printed lamp-matrix drive column 6, return row 3. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l63.",
         "quantity": 1
       },
       "provenance": {
@@ -10318,7 +10318,7 @@
       "label": "Right Ramp Jackpot",
       "physical": {
         "assembly_part_number": "A-20105",
-        "notes": "Printed lamp-matrix drive column 6, return row 4. Printed bulb 24-8768 (#555). Placement: retained table Light l64.",
+        "notes": "Printed lamp-matrix drive column 6, return row 4. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l64.",
         "quantity": 1
       },
       "provenance": {
@@ -10377,7 +10377,7 @@
       "label": "Pit Stop",
       "physical": {
         "assembly_part_number": "A-20105",
-        "notes": "Printed lamp-matrix drive column 6, return row 5. Printed bulb 24-8768 (#555). Placement: retained table Light l65.",
+        "notes": "Printed lamp-matrix drive column 6, return row 5. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l65.",
         "quantity": 1
       },
       "provenance": {
@@ -10436,7 +10436,7 @@
       "label": "Fast Laps",
       "physical": {
         "assembly_part_number": "A-20105",
-        "notes": "Printed lamp-matrix drive column 6, return row 6. Printed bulb 24-8768 (#555). Placement: retained table Light l66.",
+        "notes": "Printed lamp-matrix drive column 6, return row 6. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Printed bulb 24-8768 (#555). Placement: retained table Light l66.",
         "quantity": 1
       },
       "provenance": {
@@ -10591,7 +10591,7 @@
       "label": "Lightup 1 Lower Right",
       "physical": {
         "assembly_part_number": "A-19823",
-        "notes": "Printed lamp-matrix drive column 7, return row 1. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 56; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw56 bounding-box center).",
+        "notes": "Printed lamp-matrix drive column 7, return row 1. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 56; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw56 bounding-box center).",
         "quantity": 1
       },
       "provenance": {
@@ -10652,7 +10652,7 @@
       "label": "Lightup 1 Upper Right",
       "physical": {
         "assembly_part_number": "A-19823",
-        "notes": "Printed lamp-matrix drive column 7, return row 2. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 56; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw56 bounding-box center).",
+        "notes": "Printed lamp-matrix drive column 7, return row 2. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 56; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw56 bounding-box center).",
         "quantity": 1
       },
       "provenance": {
@@ -10713,7 +10713,7 @@
       "label": "Lightup 1 Upper Left",
       "physical": {
         "assembly_part_number": "A-19823",
-        "notes": "Printed lamp-matrix drive column 7, return row 3. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 56; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw56 bounding-box center).",
+        "notes": "Printed lamp-matrix drive column 7, return row 3. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 56; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw56 bounding-box center).",
         "quantity": 1
       },
       "provenance": {
@@ -10774,7 +10774,7 @@
       "label": "Lightup 1 Lower Left",
       "physical": {
         "assembly_part_number": "A-19823",
-        "notes": "Printed lamp-matrix drive column 7, return row 4. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 56; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw56 bounding-box center).",
+        "notes": "Printed lamp-matrix drive column 7, return row 4. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 56; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw56 bounding-box center).",
         "quantity": 1
       },
       "provenance": {
@@ -10835,7 +10835,7 @@
       "label": "Lightup 2 Lower Right",
       "physical": {
         "assembly_part_number": "A-19823",
-        "notes": "Printed lamp-matrix drive column 7, return row 5. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 57; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw57 bounding-box center).",
+        "notes": "Printed lamp-matrix drive column 7, return row 5. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 57; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw57 bounding-box center).",
         "quantity": 1
       },
       "provenance": {
@@ -10896,7 +10896,7 @@
       "label": "Lightup 2 Upper Right",
       "physical": {
         "assembly_part_number": "A-19823",
-        "notes": "Printed lamp-matrix drive column 7, return row 6. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 57; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw57 bounding-box center).",
+        "notes": "Printed lamp-matrix drive column 7, return row 6. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 57; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw57 bounding-box center).",
         "quantity": 1
       },
       "provenance": {
@@ -10957,7 +10957,7 @@
       "label": "Lightup 2 Upper Left",
       "physical": {
         "assembly_part_number": "A-19823",
-        "notes": "Printed lamp-matrix drive column 7, return row 7. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 57; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw57 bounding-box center).",
+        "notes": "Printed lamp-matrix drive column 7, return row 7. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 57; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw57 bounding-box center).",
         "quantity": 1
       },
       "provenance": {
@@ -11018,7 +11018,7 @@
       "label": "Lightup 2 Lower Left",
       "physical": {
         "assembly_part_number": "A-19823",
-        "notes": "Printed lamp-matrix drive column 7, return row 8. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 57; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw57 bounding-box center).",
+        "notes": "Printed lamp-matrix drive column 7, return row 8. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 57; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw57 bounding-box center).",
         "quantity": 1
       },
       "provenance": {
@@ -11079,7 +11079,7 @@
       "label": "Lightup 3 Lower Right",
       "physical": {
         "assembly_part_number": "A-19823",
-        "notes": "Printed lamp-matrix drive column 8, return row 1. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 58; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw58 bounding-box center).",
+        "notes": "Printed lamp-matrix drive column 8, return row 1. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 58; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw58 bounding-box center).",
         "quantity": 1
       },
       "provenance": {
@@ -11140,7 +11140,7 @@
       "label": "Lightup 3 Upper Right",
       "physical": {
         "assembly_part_number": "A-19823",
-        "notes": "Printed lamp-matrix drive column 8, return row 2. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 58; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw58 bounding-box center).",
+        "notes": "Printed lamp-matrix drive column 8, return row 2. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 58; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw58 bounding-box center).",
         "quantity": 1
       },
       "provenance": {
@@ -11201,7 +11201,7 @@
       "label": "Lightup 3 Upper Left",
       "physical": {
         "assembly_part_number": "A-19823",
-        "notes": "Printed lamp-matrix drive column 8, return row 3. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 58; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw58 bounding-box center).",
+        "notes": "Printed lamp-matrix drive column 8, return row 3. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 58; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw58 bounding-box center).",
         "quantity": 1
       },
       "provenance": {
@@ -11262,7 +11262,7 @@
       "label": "Lightup 3 Lower Left",
       "physical": {
         "assembly_part_number": "A-19823",
-        "notes": "Printed lamp-matrix drive column 8, return row 4. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 58; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw58 bounding-box center).",
+        "notes": "Printed lamp-matrix drive column 8, return row 4. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Red LED on the A-19823 4-LED Illuminated Target PCB of the lightup target at switch 58; the lamp-locations list prints no bulb number. The four LEDs sit in a 2x2 group on the upright board (printed LED3 top left, LED2 top right, LED4 bottom left, LED1 bottom right), so upper/lower differ in height above the playfield, not in playfield position. The retained table renders each address with two offset glow lights; the placement is projected onto the target face itself (Wall sw58 bounding-box center).",
         "quantity": 1
       },
       "provenance": {
@@ -11371,7 +11371,7 @@
       "label": "Launch Button",
       "physical": {
         "assembly_part_number": "20-9663-B-3",
-        "notes": "Printed lamp-matrix drive column 8, return row 6. Lamp inside the illuminated cabinet button assembly; the manual draws its callout below the cabinet outline.",
+        "notes": "Printed lamp-matrix drive column 8, return row 6. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Lamp inside the illuminated cabinet button assembly; the manual draws its callout below the cabinet outline. The power driver board connector list routes rows 6-8 to the cabinet lamps through J134-7/8/9.",
         "quantity": 1
       },
       "provenance": {
@@ -11424,7 +11424,7 @@
       "label": "Buy-In Button",
       "physical": {
         "assembly_part_number": "20-9663-21",
-        "notes": "Printed lamp-matrix drive column 8, return row 7. Lamp inside the illuminated cabinet button assembly; the manual draws its callout below the cabinet outline.",
+        "notes": "Printed lamp-matrix drive column 8, return row 7. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Lamp inside the illuminated cabinet button assembly; the manual draws its callout below the cabinet outline. The power driver board connector list routes rows 6-8 to the cabinet lamps through J134-7/8/9.",
         "quantity": 1
       },
       "provenance": {
@@ -11477,7 +11477,7 @@
       "label": "Start Button",
       "physical": {
         "assembly_part_number": "20-9663-1",
-        "notes": "Printed lamp-matrix drive column 8, return row 8. Lamp inside the illuminated cabinet button assembly; the manual draws its callout below the cabinet outline.",
+        "notes": "Printed lamp-matrix drive column 8, return row 8. Connectors follow the lamp matrix; the power driver board connector list (manual printed 3-26) instead puts the rows on J135 and the columns on J138 (J135-3 and J138-8 are keys) and marks J133 and J137 Not Used, with the same wire colours. Lamp inside the illuminated cabinet button assembly; the manual draws its callout below the cabinet outline. The power driver board connector list routes rows 6-8 to the cabinet lamps through J134-7/8/9.",
         "quantity": 1
       },
       "provenance": {
@@ -11529,12 +11529,13 @@
       "kind": "gi",
       "label": "Upper Left Playfield",
       "physical": {
-        "notes": "Printed general-illumination string 01 'Upper Left Playfield' (G.I. String 1); printed lamps #44 playfield, #555 backbox. The manual prints no per-string bulb list or count, so the quantity counts the playfield sockets only and every coordinate comes from the retained table's GITL collection, which the retained script's UpdateGI dispatches for this string. Distinct bulb-mesh lights are placed once each; excluded: t2 (no bulb mesh). These placements are observed, not validated: no factory source lists the sockets. The printed string also feeds #555 backbox bulbs (backbox connections), which are not placed.",
+        "notes": "Printed general-illumination string 01 'Upper Left Playfield' (G.I. String 1); printed lamps #44 playfield, #555 backbox. The power driver board connector list (manual printed 3-25) labels J120 'to playfield' and J121 'to insert', the reverse of the handbook table's Playfield/Backbox columns; the handbook's per-string names, the retained script's per-string playfield dispatch and the race-track reflector wiring (G.I. string 02 colours on the playfield) all follow the handbook table, which is recorded. The manual prints no per-string bulb list or count, so the quantity counts playfield sockets only and every coordinate comes from the retained table's GITL collection, which the retained script's UpdateGI dispatches for this string. Distinct bulb-mesh lights are placed once each; excluded: t2 (no bulb mesh). These placements are observed, not validated: no factory source lists the sockets. The printed string also feeds #555 backbox bulbs (backbox connections), which are not placed.",
         "quantity": 6
       },
       "provenance": {
         "source_refs": [
           "manual.bally.indianapolis-500.1995.operators-handbook",
+          "manual.bally.indianapolis-500.1995.operations-manual",
           "vpx-script.indianapolis-500-dozer-1-1-rtm",
           "pinmame.core.8371478a7640"
         ],
@@ -11651,12 +11652,13 @@
       "kind": "gi",
       "label": "Upper Right Playfield",
       "physical": {
-        "notes": "Printed general-illumination string 02 'Upper Right Playfield' (G.I. String 2); printed lamps #44, #555 playfield. The manual prints no per-string bulb list or count, so the quantity counts the playfield sockets only and every coordinate comes from the retained table's GITR collection, which the retained script's UpdateGI dispatches for this string. Distinct bulb-mesh lights are placed once each; excluded: Light14-Light20 and Light22-Light25 duplicates without a bulb mesh, and the Sol16 flasher helpers F16_Lamp3/F16_Lamp4/F16_Lamp5. These placements are observed, not validated: no factory source lists the sockets.",
+        "notes": "Printed general-illumination string 02 'Upper Right Playfield' (G.I. String 2); printed lamps #44, #555 playfield. The power driver board connector list (manual printed 3-25) labels J120 'to playfield' and J121 'to insert', the reverse of the handbook table's Playfield/Backbox columns; the handbook's per-string names, the retained script's per-string playfield dispatch and the race-track reflector wiring (G.I. string 02 colours on the playfield) all follow the handbook table, which is recorded. The manual prints no per-string bulb list or count, so the quantity counts playfield sockets only and every coordinate comes from the retained table's GITR collection, which the retained script's UpdateGI dispatches for this string. Distinct bulb-mesh lights are placed once each; excluded: Light14-Light20 and Light22-Light25 duplicates and F16_Lamp3/F16_Lamp4/F16_Lamp5, none of which has a bulb mesh (the F16_Lamp3/4/5 lights are named after flasher 16 but only this string's UpdateGI case drives them). These placements are observed, not validated: no factory source lists the sockets. This string also lights the race track: the A-20169 Race Track Assembly drawing (manual printed 2-29) shows two 04-10094 reflector socket assemblies at the top corners of the arch, each drawn with two reflector cones, with every socket lead labelled ORG and ORG/WHT. ORG is read as this string's Orange return (J121-2) and ORG/WHT as its White-Orange 6.8VAC feed (J121-8); that is an inference, since the connector list prints White-Orange and this manual elsewhere distinguishes reversed colour orders, but it is supported by string 02 being the only string that prints #555 bulbs on the playfield. The drawing prints no bulb count, so the quantity counts the placed sockets only and the race-track bulbs are neither counted nor placed. The retained table lights the track's left corner from this string's collection (F16_Lamp4, no bulb mesh) and strobes separate IU1-IU5 lights with the spinning car (solenoid 18) as an effect.",
         "quantity": 12
       },
       "provenance": {
         "source_refs": [
           "manual.bally.indianapolis-500.1995.operators-handbook",
+          "manual.bally.indianapolis-500.1995.operations-manual",
           "vpx-script.indianapolis-500-dozer-1-1-rtm",
           "pinmame.core.8371478a7640"
         ],
@@ -11851,12 +11853,13 @@
       "kind": "gi",
       "label": "Lower Playfield",
       "physical": {
-        "notes": "Printed general-illumination string 03 'Lower Playfield' (G.I. String 3); printed lamps #44 playfield, #555 backbox. The manual prints no per-string bulb list or count, so the quantity counts the playfield sockets only and every coordinate comes from the retained table's GIB collection, which the retained script's UpdateGI dispatches for this string. Distinct bulb-mesh lights are placed once each; excluded: Light2, Light4, Light5, Light41, Light59 (no bulb mesh) and the 500-unit ambient fills Light11 and Light64. These placements are observed, not validated: no factory source lists the sockets. The printed string also feeds #555 backbox bulbs (backbox connections), which are not placed.",
+        "notes": "Printed general-illumination string 03 'Lower Playfield' (G.I. String 3); printed lamps #44 playfield, #555 backbox. The power driver board connector list (manual printed 3-25) labels J120 'to playfield' and J121 'to insert', the reverse of the handbook table's Playfield/Backbox columns; the handbook's per-string names, the retained script's per-string playfield dispatch and the race-track reflector wiring (G.I. string 02 colours on the playfield) all follow the handbook table, which is recorded. The manual prints no per-string bulb list or count, so the quantity counts playfield sockets only and every coordinate comes from the retained table's GIB collection, which the retained script's UpdateGI dispatches for this string. Distinct bulb-mesh lights are placed once each; excluded: Light2, Light4, Light5, Light41, Light59 (no bulb mesh) and the 500-unit ambient fills Light11 and Light64. These placements are observed, not validated: no factory source lists the sockets. The printed string also feeds #555 backbox bulbs (backbox connections), which are not placed.",
         "quantity": 25
       },
       "provenance": {
         "source_refs": [
           "manual.bally.indianapolis-500.1995.operators-handbook",
+          "manual.bally.indianapolis-500.1995.operations-manual",
           "vpx-script.indianapolis-500-dozer-1-1-rtm",
           "pinmame.core.8371478a7640"
         ],
@@ -12220,12 +12223,13 @@
       "kind": "gi",
       "label": "Backbox-Coindoor",
       "physical": {
-        "notes": "Printed general-illumination string 04 'Backbox-Coindoor' (G.I. String 4); printed lamps #555 backbox. Backbox-only string (printed backbox connections only); the retained script's UpdateGI implements no case for it."
+        "notes": "Printed general-illumination string 04 'Backbox-Coindoor' (G.I. String 4); printed lamps #555 backbox. The power driver board connector list (manual printed 3-25) labels J120 'to playfield' and J121 'to insert', the reverse of the handbook table's Playfield/Backbox columns; the handbook's per-string names, the retained script's per-string playfield dispatch and the race-track reflector wiring (G.I. string 02 colours on the playfield) all follow the handbook table, which is recorded. Backbox string (printed backbox connections only); the retained script's UpdateGI implements no case for it. Which backbox string also feeds the coin door is not settled: the handbook names string 04 'Backbox-Coindoor', while the power driver board connector list (printed 3-25) routes a White-Violet 6.8VAC / Violet return G.I. pair through J119 to the A-17051-1 coin door interface board (J2-3/J2-5), and White-Violet is string 05's printed drive-wire colour. That colour match is only an inference, so neither string is given a coin-door role."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.indianapolis-500.1995.operators-handbook",
-          "pinmame.core.8371478a7640"
+          "pinmame.core.8371478a7640",
+          "manual.bally.indianapolis-500.1995.operations-manual"
         ],
         "status": "validated"
       },
@@ -12270,12 +12274,13 @@
       "kind": "gi",
       "label": "Backbox Title",
       "physical": {
-        "notes": "Printed general-illumination string 05 'Backbox Title' (G.I. String 5); printed lamps #555 backbox. Backbox-only string (printed backbox connections only); the retained script's UpdateGI implements no case for it."
+        "notes": "Printed general-illumination string 05 'Backbox Title' (G.I. String 5); printed lamps #555 backbox. The power driver board connector list (manual printed 3-25) labels J120 'to playfield' and J121 'to insert', the reverse of the handbook table's Playfield/Backbox columns; the handbook's per-string names, the retained script's per-string playfield dispatch and the race-track reflector wiring (G.I. string 02 colours on the playfield) all follow the handbook table, which is recorded. Backbox string (printed backbox connections only); the retained script's UpdateGI implements no case for it. Which backbox string also feeds the coin door is not settled: the handbook names string 04 'Backbox-Coindoor', while the power driver board connector list (printed 3-25) routes a White-Violet 6.8VAC / Violet return G.I. pair through J119 to the A-17051-1 coin door interface board (J2-3/J2-5), and White-Violet is string 05's printed drive-wire colour. That colour match is only an inference, so neither string is given a coin-door role."
       },
       "provenance": {
         "source_refs": [
           "manual.bally.indianapolis-500.1995.operators-handbook",
-          "pinmame.core.8371478a7640"
+          "pinmame.core.8371478a7640",
+          "manual.bally.indianapolis-500.1995.operations-manual"
         ],
         "status": "validated"
       },
@@ -12410,8 +12415,8 @@
         {
           "id": "excerpt.indianapolis-500.solenoid-flasher-table",
           "image": "evidence/excerpts/bally.indianapolis-500.1995/solenoid-flasher-table.webp",
-          "image_derivation": "Indianapolis_500_OPS.pdf page 8, crop box 0.04,0.15,0.96,0.497, scanned page rendered at its native resolution (embedded image xref 35, 1536px across 5.12in), rendered at 180 dpi, capped to 850px wide, grayscale, 851x510 WebP quality 80",
-          "image_sha256": "25b93f18e776ab801f2c3723e79d884131a206840168ec7aeb54c861dbc0539f",
+          "image_derivation": "Indianapolis_500_OPS.pdf page 8, crop box 0.04,0.15,0.96,0.505, scanned page rendered at its native resolution (embedded image xref 35, 1536px across 5.12in), rendered at 180 dpi, capped to 850px wide, grayscale, 851x522 WebP quality 80",
+          "image_sha256": "08d33ce548d3ad273f851324268f392f73b15938f76b391d6c674989e39cc4b3",
           "locator": "PDF page 8, printed page 6, SOLENOID/FLASHER TABLE rows 01-36",
           "method": "manual",
           "path": "evidence/excerpts/bally.indianapolis-500.1995/solenoid-flasher-table.md",
@@ -12574,7 +12579,79 @@
           "method": "manual",
           "path": "evidence/excerpts/bally.indianapolis-500.1995/race-track-assembly.md",
           "reviewed": true,
-          "sha256": "3d2af368133bab9000fca0b692384a3eae2ca7e5cfcc78042df0bbbf67d54cd6",
+          "sha256": "9280efcff79e917728242625486dcb26e674caa38b246cc9025b64c70de04674",
+          "transcribed_by": "curator, read from the native-resolution render"
+        },
+        {
+          "id": "excerpt.indianapolis-500.turbo-multiball-rules",
+          "image": "evidence/excerpts/bally.indianapolis-500.1995/turbo-multiball-rules.webp",
+          "image_derivation": "indy500manualfull.original-scan.pdf page 17, crop box 0.08,0.1,0.95,0.27, scanned page rendered at its native resolution (embedded image xref 96, 2544px across 8.47in), rendered at 217 dpi, capped to 1600px wide, grayscale, 1601x406 WebP quality 80",
+          "image_sha256": "baa69e175cf2edb6f51d43a87ac1e3ed1145d5755e68bad61e91563d35b7f5f9",
+          "locator": "PDF page 17, game rules, TURBO MULTI-BALL paragraph",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.indianapolis-500.1995/turbo-multiball-rules.md",
+          "reviewed": true,
+          "sha256": "be366c450213f14c16694380588e5935d534a9255d22123136d13d5ed7247db9",
+          "transcribed_by": "curator, read from the native-resolution render"
+        },
+        {
+          "id": "excerpt.indianapolis-500.race-track-wiring-drawing",
+          "image": "evidence/excerpts/bally.indianapolis-500.1995/race-track-wiring-drawing.webp",
+          "image_derivation": "indy500manualfull.original-scan.pdf page 103, crop box 0.55,0.22,0.99,0.53, scanned page rendered at its native resolution (embedded image xref 612, 2544px across 8.47in), rendered at 300 dpi, grayscale, 1120x1023 WebP quality 80",
+          "image_sha256": "e676b9c521917f55f9994f7934138c13c47a60570bdea3b9fef3634f4c730068",
+          "locator": "PDF page 103, printed page 2-29, A-20169 Race Track Assembly front view with the reflector socket leads",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.indianapolis-500.1995/race-track-wiring-drawing.md",
+          "reviewed": true,
+          "sha256": "c7fd914cd35dc890f9285570f974242ada218e917e446459139ed19d7cce636e",
+          "transcribed_by": "curator, read from the native-resolution render"
+        },
+        {
+          "id": "excerpt.indianapolis-500.flasher-wiring",
+          "image": "evidence/excerpts/bally.indianapolis-500.1995/flasher-wiring.webp",
+          "image_derivation": "indy500manualfull.original-scan.pdf page 125, crop box 0.1,0.08,0.95,0.86, scanned page rendered at its native resolution (embedded image xref 744, 2544px across 8.47in), rendered at 194 dpi, capped to 1400px wide, grayscale, 1401x1665 WebP quality 80",
+          "image_sha256": "22f4723bfd14aaa1b1e37dbacebff5d4e40e229a3d5811583fa470092555ca7c",
+          "locator": "PDF page 125, printed page 3-7, FLASHER WIRING",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.indianapolis-500.1995/flasher-wiring.md",
+          "reviewed": true,
+          "sha256": "c3b01b2054c79f401171dbf6a0761053af41151a6d4c68150813bb55c83c7e88",
+          "transcribed_by": "curator, read from the native-resolution render"
+        },
+        {
+          "id": "excerpt.indianapolis-500.power-driver-connectors-3-25-left",
+          "image": "evidence/excerpts/bally.indianapolis-500.1995/power-driver-connectors-3-25-left.webp",
+          "image_derivation": "indy500manualfull.original-scan.pdf page 143, crop box 0.09,0.07,0.53,0.82, scanned page rendered at its native resolution (embedded image xref 852, 2544px across 8.47in), rendered at 134 dpi, capped to 500px wide, grayscale, 501x1104 WebP quality 80",
+          "image_sha256": "7c32e28842558d911f4033f8904ffe450e21582c1a82a5ca104df9eb9fd38a83",
+          "locator": "PDF page 143, printed page 3-25, power driver board connectors J113-J120",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.indianapolis-500.1995/power-driver-connectors-3-25-left.md",
+          "reviewed": true,
+          "sha256": "8727c4585620558c2809e5beafff0ec6d60066b496829dffa8ce183a361f33fd",
+          "transcribed_by": "curator, read from the native-resolution render"
+        },
+        {
+          "id": "excerpt.indianapolis-500.power-driver-connectors-3-25-right",
+          "image": "evidence/excerpts/bally.indianapolis-500.1995/power-driver-connectors-3-25-right.webp",
+          "image_derivation": "indy500manualfull.original-scan.pdf page 143, crop box 0.52,0.07,0.9,0.85, scanned page rendered at its native resolution (embedded image xref 852, 2544px across 8.47in), rendered at 155 dpi, capped to 500px wide, grayscale, 501x1330 WebP quality 80",
+          "image_sha256": "2efb7a7d33bbec43175a17aeab80e1412646ae4f918446780625fa159e9dd4ea",
+          "locator": "PDF page 143, printed page 3-25, power driver board connectors J121-J129",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.indianapolis-500.1995/power-driver-connectors-3-25-right.md",
+          "reviewed": true,
+          "sha256": "91accb2a42a1e0c4a77ed1b909c124eb282bbf8faaeb7a7572c3762cf60ccea8",
+          "transcribed_by": "curator, read from the native-resolution render"
+        },
+        {
+          "id": "excerpt.indianapolis-500.power-driver-connectors-3-26",
+          "image": "evidence/excerpts/bally.indianapolis-500.1995/power-driver-connectors-3-26.webp",
+          "image_derivation": "indy500manualfull.original-scan.pdf page 144, crop box 0.09,0.08,0.85,0.44, scanned page rendered at its native resolution (embedded image xref 858, 2544px across 8.47in), rendered at 155 dpi, capped to 1000px wide, grayscale, 1001x614 WebP quality 80",
+          "image_sha256": "949b62d5a8e77e2e01927be009249b058f6114c2781c335b9876de0484c411e1",
+          "locator": "PDF page 144, printed page 3-26, power driver board connectors J130-J138",
+          "method": "manual",
+          "path": "evidence/excerpts/bally.indianapolis-500.1995/power-driver-connectors-3-26.md",
+          "reviewed": true,
+          "sha256": "427cb49fd3c838d4d964bde30425e97f710fa89b200eb9db4c4ff69c06e07ae4",
           "transcribed_by": "curator, read from the native-resolution render"
         },
         {
@@ -12593,7 +12670,7 @@
       "id": "manual.bally.indianapolis-500.1995.operations-manual",
       "kind": "manual",
       "license": "NOASSERTION",
-      "locator": "152-page image-only Indianapolis 500 operations manual, IPDB machine 2853 (https://www.ipdb.org/machine.cgi?id=2853, Midway 'Indianapolis 500', June 1995, model 50026, WPC-S), resource https://www.ipdb.org/files/2853/indy500manualfull.pdf, downloaded through an authenticated browser. The untouched download is retained under this hash; a contributor-made Acrobat OCR copy (indy500manualfull.pdf, SHA-256 2cd7354de4744fcc84078dd98cb6b544bebc38780e8daf52d1454c6962340e13) is retained beside it for text search only. Section 2 printed 2-13/2-14 (A-19823 4-LED Illuminated Target PCB, A-20047 Turbo Opto PCB), 2-22 (A-19978 Pit Ramp Diverter), 2-23 (A-20038 Turbo Motor), 2-29 (A-20169 Race Track), 2-38 to 2-44 (repeats of the handbook's lamp, switch and solenoid tables); Section 3 printed 3-7 (flasher wiring) and 3-20 (A-18159 10 Opto P.C.B.).",
+      "locator": "152-page image-only Indianapolis 500 operations manual, IPDB machine 2853 (https://www.ipdb.org/machine.cgi?id=2853, Midway 'Indianapolis 500', June 1995, model 50026, WPC-S), resource https://www.ipdb.org/files/2853/indy500manualfull.pdf, downloaded through an authenticated browser. The untouched download is retained under this hash; a contributor-made Acrobat OCR copy (indy500manualfull.pdf, SHA-256 2cd7354de4744fcc84078dd98cb6b544bebc38780e8daf52d1454c6962340e13) is retained beside it for text search only. Section 2 printed 2-13/2-14 (A-19823 4-LED Illuminated Target PCB, A-20047 Turbo Opto PCB), 2-22 (A-19978 Pit Ramp Diverter), 2-23 (A-20038 Turbo Motor), 2-29 (A-20169 Race Track); the game rules (PDF page 17, Turbo Multi-Ball); Section 3 printed 3-7 (flasher wiring), 3-20 (A-18159 10 Opto P.C.B.) and 3-25/3-26 (power driver board connector lists).",
       "original_filename": "indy500manualfull.pdf",
       "rights": "NOASSERTION",
       "sha256": "89d0cb19701e21b6136d073a270d774c2304775655fe29e70e6b802f657df808",
@@ -12635,7 +12712,7 @@
       "id": "vpx-script.indianapolis-500-vpw-1-36",
       "kind": "vpx_script",
       "license": "NOASSERTION",
-      "locator": "Indianapolis 500 (Bally 1995) v1.36.vbs (142,080 bytes), the April 2023 TastyWasps/VPW enhancement of the same Dozer table: cGameName = \"i500_11r\", UseSolenoids = 2, the same SolCallback table for 1-5, 7, 13-16, 18-28 and 36, the same switch handlers and turbo simulator, and additionally SolCallback(sURFlipper) = \"SolURFlipper\" driving the upper right flipper on its own. Script only; its table is not retained.",
+      "locator": "Indianapolis 500 (Bally 1995) v1.36.vbs (142,080 bytes), the April 2023 TastyWasps/VPW enhancement of the same Dozer table: cGameName = \"i500_11r\", UseSolenoids = 2, the same SolCallback table for 1-5, 7, 13-16, 18-28 and 36, the same switch handlers and turbo simulator, and additionally SolCallback(sURFlipper) = \"SolURFlipper\" driving the upper right flipper on its own; its KeyUpperRight key handler also calls SolURFlipper 1/0 directly (a staged-flipper convenience that bypasses the ROM). Script only; its table is not retained.",
       "revision": "0c036bb61b4b4e8c778c37559f6795df8cd1521e",
       "rights": "NOASSERTION",
       "sha256": "3398dc8c812b952bfb0ce6ed31fad6ff81657652e7adb062bef2d03b6253ed7e",
