@@ -109,7 +109,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 103 | 1996 | Tales of the Arabian Nights | Williams | partial | 88% |
 | 104 | 1996 | Ticket Tac Toe (1.0) | Williams | partial | 13% |
 | 105 | 1995 | Attack From Mars | Bally | author_ready | 100% |
-| 106 | 1995 | Indianapolis 500 | Bally | partial | 19% |
+| 106 | 1995 | Indianapolis 500 | Bally | partial | 94% |
 | 107 | 1995 | Theatre of Magic | Bally | partial | 88% |
 | 108 | 1995 | WHO dunnit | Bally | partial | 19% |
 | 109 | 1995 | Pinball Magic | Capcom | partial | 19% |
