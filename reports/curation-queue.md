@@ -236,7 +236,7 @@ Physical machines are processed newest-to-oldest. Unknown-year candidates are la
 | 230 | 1990 | Star Trax (Domestic Prototype) | Williams | partial | 13% |
 | 231 | 1990 | Whirlwind | Williams | partial | 81% |
 | 232 | 1989 | Atlantis | Bally | partial | 13% |
-| 233 | 1989 | Elvira and the Party Monsters | Bally | partial | 13% |
+| 233 | 1989 | Elvira and the Party Monsters | Bally | partial | 69% |
 | 234 | 1989 | Mousin' Around! | Bally | partial | 13% |
 | 235 | 1989 | Transporter the Rescue | Bally | partial | 19% |
 | 236 | 1989 | Monday Night Football | Data East | partial | 19% |

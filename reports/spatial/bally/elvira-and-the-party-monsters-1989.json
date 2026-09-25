@@ -1,0 +1,785 @@
+{
+  "blockers": [
+    "Lamps 11 and 20 (slingshot inserts) carry no spatial record: the manual's lamp matrix and its location drawing put them on opposite slingshots (conflict.slingshot-lamp-sides).",
+    "Solenoid 11 (Playfield GI Relay) switches playfield general illumination, but the manual enumerates no GI bulb count or position; the retained table's 29-member GI collection is not adopted.",
+    "Solenoid 16 (Boogie Monsters flashers) carries three observed placements against a printed two-bulb count, and solenoid 15 one placement against two printed playfield bulbs (conflict.flasher-bulb-quantities).",
+    "Solenoid 29 (Moon / Wolfman) has one retained object for two printed playfield bulbs; its placement is observed.",
+    "Flashers 13, 25, 27, 28, 29, 30, 31 and 32 also light Insert Board bulbs in the backbox (1 to 3 each, included in physical.quantity); only their playfield bulbs are placed.",
+    "Switches 31, 52, 55 and 56 and solenoids 15, 16, 29 and 32 have observed rather than validated placements: the manual's drawings print no callout, end the leader visibly away from the retained object, or print more bulbs than the table models."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 1974.0,
+      "left": 0.0,
+      "right": 952.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/952; 0=left, 1=right",
+    "y": "y/1974; 0=rear/backglass, 1=apron/player"
+  },
+  "excluded_object_classes": [
+    "l11a/L11b/L11c and l20a/L20b/L20c: additional lights inside each slingshot driven with lamps 11 and 20",
+    "l21a-l24a: lights beside the four left standups driven with lamps 21-24; the manual shows one insert per address",
+    "l54a/l54b, l55a/l55b, l56a/l56b: co-located bumper-cap helpers of lamps 54-56",
+    "fl17/fl18/fl25 flashers: glow effects driven with lamps 17, 18 and 25; the bulb-cover primitives L17/L18/L25 are placed, and fl17/fl18 each sit beside the other eye's cover",
+    "f57-f59 (\"BackWall\") and l60-l64 (\"BackGlass\"): proxies for backboard and backglass lamps, recorded as not_applicable cabinet_or_service",
+    "Coffin_1/Coffin_2 and Coffin_Elvira/Coffin_Drac: closed and open flip-up target visuals; the open visuals anchor the projections for 55 and 56",
+    "Trigger2-Trigger5, Balldrop1/2 and the LeftDrop/RightDrop kickers: sound and ball-routing helpers with no Controller.Switch call",
+    "GI collection (29 lights): playfield GI effect lights with no manual bulb inventory"
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1263,
+    "manifest_sha256": "fa3ddac51285909c3763a87c017e2bfddac9ec422082bfae1fcedce4b3623fa5",
+    "source_ref": "vpx-extraction.elvira-and-the-party-monsters-1989",
+    "total_bytes": 58249735
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "bally.elvira-and-the-party-monsters.1989",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      -7,
+      -6,
+      -5,
+      -4,
+      1,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      57,
+      58
+    ],
+    "dip_switch": [
+      0
+    ],
+    "internal_nonvisual": [
+      2
+    ],
+    "unused": [
+      10,
+      14,
+      24,
+      38,
+      39,
+      40,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 57,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 58,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 59,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 60,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 61,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 62,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 63,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 64,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 9,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 10,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "internal_nonvisual": [
+      {
+        "address": 12,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "unused": [
+      {
+        "address": 4,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 23,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 24,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 33,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 34,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 35,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 36,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 45,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 46,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 47,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 48,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "observed_bindings": [
+    {
+      "address": 31,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "omitted_outputs": [
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "placement_count": 124,
+  "projections": [
+    {
+      "address": 9,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Drain kicker (Kicker.Drain, object centre): the retained script manages the outhole inside its bsTrough cvpmBallStack and has no object of the switch's own. The manual draws callout 9 at the outhole end of the trough."
+    },
+    {
+      "address": 11,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the BallRelease kicker (Kicker.BallRelease, object centre): the three trough positions have no individual objects, bsTrough.InitSw 9, 11, 12, 13 managing them against the single exit kicker. The manual draws 11 nearest the shooter lane, then 12, then 13."
+    },
+    {
+      "address": 12,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the BallRelease kicker; see switch 11."
+    },
+    {
+      "address": 13,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the BallRelease kicker; see switch 11."
+    },
+    {
+      "address": 31,
+      "group": "pinmame.input.switch",
+      "reason": "Taken from Trigger.sw31, the invisible trigger the script's sw31_Hit handler pulses, which sits at the rear edge where the left (Monster Slide) ramp ends. The manual's switch drawing prints no callout 31, so the position is observed rather than validated."
+    },
+    {
+      "address": 33,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the drag-point centroid of Wall.LeftSlingShot, whose _Slingshot event the script uses to pulse this address; the switch is part of the slingshot assembly (manual note ***, paired kicker actuating switch B-12459/B-12715)."
+    },
+    {
+      "address": 34,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the drag-point centroid of Wall.RightSlingShot; see switch 33."
+    },
+    {
+      "address": 49,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the BallLock kicker (Kicker.BallLock, object centre): bsLock.InitSw 0, 49, 50, 51 manages the three lock positions against that single kicker. The manual's leaders for 49, 50, 51 and 52 all end in the upper-left lock lane."
+    },
+    {
+      "address": 50,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the BallLock kicker; see switch 49."
+    },
+    {
+      "address": 51,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the BallLock kicker; see switch 49."
+    },
+    {
+      "address": 52,
+      "group": "pinmame.input.switch",
+      "reason": "Taken from Trigger.sw52, the invisible trigger the script's sw52_Hit handler pulses. It sits about 0.1 right of where the manual's leader for 52 ends in the lock lane, so the position is observed."
+    },
+    {
+      "address": 55,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto Primitive.Coffin_Elvira, the open-state visual the script shows when target 53 is hit. The retained table has no object for the flip-up position switch; the manual's leader for 55 ends at the first flip-up. Observed, not validated; see conflict.flip-up-switch-roles."
+    },
+    {
+      "address": 56,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto Primitive.Coffin_Drac, the open-state visual shown for target 54; see switch 55."
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the Drain kicker (Kicker.Drain), the object bsTrough.SolIn kicks from; the manual draws 01A at the outhole."
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the BallRelease kicker (Kicker.BallRelease), the object bsTrough.SolOut ejects from; the manual draws 02A at the shooter-lane feed."
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the centre target of the bank (HitTarget.sw42): one reset coil lifts all three targets, and the manual draws 03A at the bank."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the eject-hole saucer (Kicker.sw48) that bsTP.SolOut ejects; the manual draws 05A there."
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the popper's saucer (Kicker.sw32). SolPopper lifts the ball from sw32 to the raised kicker sw32a before bsBP ejects it; the manual draws 06A at the popper."
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the lock kicker (Kicker.BallLock) that bsLock.SolOut ejects; the manual draws 08A at the lock release."
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid",
+      "reason": "Two effect placements at the two rubber boogie men (Primitive.boogie1 and Primitive.boogie2) that SolBoogie moves. The Boogie Monsters Assembly C-12920 has one coil driving a rocker link between two shafts, so the placements mark where the one coil's effect is seen, not two coils."
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed at Light.f15, the one object the script flashes for this address. The location drawing's single leader for callout 15 ends on the left side rail, which agrees with this position, but the solenoid table prints two playfield bulbs; observed pending conflict.flasher-bulb-quantities."
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid",
+      "reason": "Three placements at Light.f16, f16a and f16b, the array the script flashes for this address. The manual's location drawing gives callout 16 three leaders in the upper-left quadrant, but the solenoid table prints \"#906 flashlamp 2p\". Observed pending conflict.flasher-bulb-quantities."
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the upper-left bumper (Bumper.Bumper1) whose hit pulses switch 35; the manual draws 17 inside the upper-left bumper."
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the drag-point centroid of Wall.LeftSlingShot; the manual draws 18 inside the left slingshot."
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the upper-right bumper (Bumper.Bumper2) whose hit pulses switch 36; the manual draws 19 inside the upper-right bumper."
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the drag-point centroid of Wall.RightSlingShot; the manual draws 20 inside the right slingshot."
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projected onto the lower bumper (Bumper.Bumper3) whose hit pulses switch 37; the manual draws 21 at the lower bumper."
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid",
+      "reason": "Two effect placements at the two flip-up targets (HitTarget.sw53 and sw54) that SolFlipReset resets. One reset coil (B-12916) serves the Flip Up Targets Assembly; the manual draws 22 at the flip-up targets."
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid",
+      "reason": "Placed at Light.f32, the object the script flashes for this address. The manual's leader for 08C runs toward the skull passage roughly 0.1 lower and further right than this object, so the position is observed rather than validated."
+    }
+  ],
+  "resolved_input_addresses": [
+    9,
+    11,
+    12,
+    13,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56
+  ],
+  "resolved_output_bindings": [
+    {
+      "address": 1,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 7,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 39,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 40,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 49,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 50,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 29,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 30,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "source_hashes": {
+    "embedded_script_sha256": "aaa5bc0f1893d27dc4e49c2d3829a03ad79769f6328e6e4a8138fc4308d0bc4b",
+    "manual_sha256": "d1bc4d1c1e436733b6f84db35b874558f0c85a85ba6371196b5dfa63dd120445",
+    "table_sha256": "b9f54017274ccb4f3bddb08f6a999723502745527cdd8e237d639c1222552330"
+  },
+  "status": "observed",
+  "unresolved": [
+    "conflict.slingshot-lamp-sides",
+    "conflict.flasher-bulb-quantities",
+    "conflict.flip-up-switch-roles"
+  ],
+  "version": 1
+}

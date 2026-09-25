@@ -166,6 +166,7 @@ This pass commits directly to `master` at the maintainer's request while other s
 
 - Rank 13, Williams Monster Bash: promoted to `author_ready` (see its section).
 - Rank 15, Stern The Lord of the Rings: switch 15 polarity settled by the ROM, conflict removed (score 75 to 88); spatial corroboration and the Limited Edition comparison remain (see its section).
+- Rank 106, Bally Elvira and the Party Monsters: curated to a source-backed partial (see its section).
 
 Two harness lessons from it generalise.
 
@@ -187,6 +188,27 @@ Five things generalise.
 Remaining blockers: no VPX table file is retained (only backglasses exist locally), so no playfield coordinate exists yet; the contact construction of end-of-stroke switches 33/34, slam 9 and input 8 is undocumented; the ramp and top-diverter coils' latch behaviour, GUN TROUGH OPTO's role and the slot opto timing are undocumented; flasher 29's orbit side is disputed between the ROM name and Krellan.
 
 Side effects on earlier pass figures: Kingpin no longer carries the promotion note, the `machine module` platform attachment or the VPX-script candidates, so the promotion `--check` now counts 664 records, the platform attachment 133 machines (3 Capcom), and the script attachment 279 machines, 13,064 devices and 350 scripts; the tests were updated accordingly.
+
+## Bally Elvira and the Party Monsters (1989)
+
+Bally Elvira and the Party Monsters (`bally.elvira-and-the-party-monsters.1989`, model 2011, IPDB 782, OPDB `Grlxp-MVKBW`) was curated on 2026-09-25 directly on `master`, replacing the identity-plus-candidate record with a deterministic curator (`tools/curate_elvira.py`). It reuses `controllers/pinmame/system-11.json`, adding only a flipper-button paragraph to its notes; pinned PinMAME declares it `GEN_S11B`, as it does Whirlwind. It covers the eight-driver `eatpm_*` tree: `eatpm_l4` is the parent and the ROM both retained scripts bind. Six drivers are identical, while the `BAD_DUMP` LG-3 reconstruction and the PA-7 prototype are recorded as compatible. The record is `partial` with `coverage.missing` exactly `["input_semantics", "output_semantics", "mechanism_behavior", "spatial_placement", "unresolved_conflicts"]` and three unresolved conflicts, whose named addresses (switches 53-56, lamps 11/20, flashers 15/16) carry `conflicted` provenance:
+
+- the manual's lamp matrix and lamp drawing put lamps 11/20 on opposite slingshots;
+- the solenoid table's bulb counts for flashers 15/16 disagree with the location drawing; and
+- the manual's parts pages and the known-working script disagree on which flip-up switch (53/54 or 55/56) stays closed while a target is flipped.
+
+Evidence: IPDB's 118-page OCR-searchable operations manual 16-2011-101 (August 1989). The contributor downloaded it through a browser, and the untouched download is the cited copy; a contributor OCR pass sits separately under `manuals/_unsorted`. Eleven manual excerpts were read from native 300 dpi renders, plus one transcription of the installed VPinMAME `S11.VBS`/`core.vbs` flipper constants. Geometry and runtime bindings come from the retained 32assassin-lineage table (an artwork variant in the contributor's archive folder), whose extraction is pinned by a 1,263-file manifest. The pinned corpus `v1.03.vbs` is the same lineage and is cited as corroboration, not independent evidence.
+
+Five things from it generalise.
+
+1. **On `S11_MUXSW2` games switch 2 is the A/C relay's own opto, as Whirlwind's record already showed.** With `sxx.muxSol = 12`, `SWITCH_UPDATE(s11)` overwrites switch 2 with solenoid 12's state every update, and public 25-32 carry the C-side circuits of drivers 1-8. Elvira's interconnect-board schematic shows the physical side: opto isolator U1 lit from the 28 V C-side supply, next to two more 4N25s that sense the flipper circuits for switches 57/58.
+2. **Williams special solenoids come out in printed order even though the PIA handlers do not.** `s11.c` comments handlers 0-5 as F SS6, E SS5, B SST2, C SST3, A SS1, D SS4. The Williams `ssSolNo[0] = {5,4,1,2,0,3}` maps them back to SS1-SS6 at public 17-22. That is unlike the Data East permutation, which the earlier alpha curations had to untangle because it gives a non-sequential order.
+3. **A manual's text layer can shift a table by one row.** The IPDB OCR layer of the drop-target opto board parts list assigns every designator to the neighbouring description. Only the rendered page, which agrees with the schematic's values, is usable.
+4. **No harness scenario tried so far brings a System 11/11B ROM into attract mode from fresh NVRAM with the pinned LibPinMAME build.** In those runs `eatpm_l4/l1/l2/4u`, `bk2k_l4`, `polic_l4`, `jokrz_l6` and `whirl_l3` all stopped after FACTORY SETTING. After that only ADVANCE (a PIA interrupt input) is serviced, and stepping through every Id/Au/Ad item wraps without reaching the diagnostic tests. The toggled Up/Down input starts at 0, and ADVANCE at 1 steps forward. The runs are retained under `review-artifacts/elvira-and-the-party-monsters/harness-runs/` as diagnostics only. A System 11 harness scenario likely needs an input recipe like the WPC-95 Escape/coin-door one before it can serve as evidence; that recipe has not been found yet.
+
+5. **On cabinet-wired System 11 flippers, the consumer-facing button inputs are public 82/84, not the matrix switches.** `FLIP_SWNO(58,57)` makes `core_updateSw` rewrite 57/58 every update from PinMAME's flipper switch column, public 82 (right) and 84 (left) under the `n+7` conversion. VPinMAME's `S11.VBS` drives exactly those, and `core.vbs` binds `sLRFlipper`/`sLLFlipper` to the hold addresses 46/48. The System 11 profile notes now say so, but its address rules do not yet declare 81-84, so Elvira documents the path in its notes rather than as enumerated inputs; the Whirlwind and High Speed records do not mention it yet.
+
+Side effects on shared figures: the promotion `--check` now counts 663 records (after Kingpin's curation too), the define-derived candidate attachment loses this machine, and the catalog-wide `unresolved_conflicts` requirement count rises by one, to 50. The tests were updated accordingly.
 
 ## Stern Big Buck Hunter Pro (2010)
 

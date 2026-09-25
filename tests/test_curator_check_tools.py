@@ -83,15 +83,15 @@ class DeterministicCuratorCheckTests(unittest.TestCase):
 		self.assertEqual(0, completed.returncode, completed.stdout + completed.stderr)
 		output = completed.stdout.strip()
 		self.assertIn("structural check OK:", output)
-		# Kingpin left the bulk-promoted set when it was curated on 2026-09-25.
-		self.assertEqual(664, int(output.split("structural check OK: ")[1].split(" ")[0]))
+		# Kingpin and Elvira and the Party Monsters left the bulk-promoted set when they were curated on 2026-09-25.
+		self.assertEqual(663, int(output.split("structural check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_identity_check_passes_with_the_retained_snapshot(self) -> None:
 		if not OPDB_SNAPSHOT.is_file():
 			self.skipTest("retained OPDB snapshot is not available")
 		output = run_tool("promote_catalog_stubs.py", "--check")
 		self.assertIn("check OK:", output)
-		self.assertEqual(664, int(output.split("check OK: ")[1].split(" ")[0]))
+		self.assertEqual(663, int(output.split("check OK: ")[1].split(" ")[0]))
 
 	def test_promotion_check_fails_closed_without_the_retained_snapshot(self) -> None:
 		with tempfile.TemporaryDirectory() as temporary_directory:
