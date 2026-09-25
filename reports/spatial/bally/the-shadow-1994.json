@@ -1,0 +1,744 @@
+{
+  "blockers": [
+    "Every coordinate comes from one table lineage (the VPW Mod 1.0 build and its Skitso ancestor, which agree almost everywhere because they share geometry) and has not yet been checked against the manual's location drawings. The lamp (printed 2-39), switch (2-41) and solenoid/flasher (2-43) drawings carry legible callout numbers, so a least-squares fit of each drawing and a per-callout distance check can validate the placements.",
+    "Flashers 21, 22 and 23 each print two playfield sockets; the VPW table models one Flupper dome per output, so the second socket of each is not placed.",
+    "Flashers 17 (Mini Playfield) and 18 (Left Side) are not placed: the VPW table models no bulb or dome for them and drives only off-playfield helper lights, and the older table's F117/F118 are glow images, not sockets. Their sockets have to be measured on the printed 2-43 location drawing.",
+    "The ramp-ring lamps 81-84 are not placed for the same reason: the VPW table drives only off-playfield helper lights, and the older table's F181-F184 are glow sprites. Their sockets have to be measured on the printed 2-39 lamp location drawing.",
+    "Playfield general illumination (G.I. strings 1, 2 and 5, public 0, 1 and 4) has no factory socket list; every coordinate comes from the table's G.I. collections."
+  ],
+  "coordinate_convention": {
+    "source_bounds": {
+      "bottom": 1974.0,
+      "left": 0.0,
+      "right": 975.0,
+      "top": 0.0
+    },
+    "space": "playfield",
+    "x": "x/975; 0=left, 1=right",
+    "y": "y/1974; 0=rear/backglass, 1=apron/player"
+  },
+  "coordinate_origins": {
+    "bounding_box_centers": [
+      "Walls Leftslingshot and Rightslingshot (switches 61/62, solenoids 9/10), WallTarget (51, 8, 16), sw35, sw55 (55, 25, 36), sw71-sw74, sw81, sw82, sw84 and sw85-sw88"
+    ],
+    "mesh_bounding_box_centers": [
+      "Primitive SlingMiniPF (switch 36, solenoids 15, 19, 20) and the diverter blade meshes Div_Bot_Left/Div_Bot_Right and Div_Top_Left/Div_Top_Right (solenoids 3-6, placed at the midpoint of each pair); these primitives are baked at world coordinates, so the vertex bounding-box centers of their .obj files in the manifest-pinned extraction are used (world x = obj x, world y = obj y)"
+    ],
+    "object_centers": "every other placement uses its retained object's own center",
+    "wall_pair_midpoints": [
+      "Solenoid 24: the midpoint of the drag-point bounding-box centers of walls sw86 and sw87"
+    ]
+  },
+  "excluded_object_classes": [
+    "Off-playfield helper lights l81-l84 and L117, L118, L126-L128 (x < 0) that the VPW script drives.",
+    "The Flasher glow images F117, F118 and F181-F184 and their reflection sprites, which only the older Skitso script binds.",
+    "Reflection sprites (*_ref) and the Flupper dome flash, bloom and light layers; only each dome's base primitive is placed.",
+    "The co-located duplicate G.I. lights and the wide G.I. fill LB13."
+  ],
+  "extraction": {
+    "fail_closed": true,
+    "file_count": 1608,
+    "manifest_algorithm": "Canonical JSON containing format/version and every extracted file as sorted relative POSIX path, byte size, and SHA-256.",
+    "manifest_sha256": "0ffe2c6f22c92bae205ece4dcc8d2d904009c1ed80dbc3d9693d0bfccedc1b59",
+    "manifest_uri": "external:pinmame-vpx-sources/bally/the-shadow-1994/vpw-mod-1.0/extracted-vpxtool.manifest.json",
+    "source_ref": "vpx-extraction.the-shadow-vpw-mod-1-0",
+    "total_bytes": 203264122,
+    "vpxtool_version": "vpxtool git:v0.33.3"
+  },
+  "format": "pinmame-spatial-blockers",
+  "machine_id": "bally.the-shadow.1994",
+  "not_applicable_inputs": {
+    "cabinet_or_service": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      12,
+      13,
+      14,
+      21,
+      22,
+      23,
+      34,
+      112,
+      114,
+      116
+    ],
+    "constant": [
+      24
+    ],
+    "dip_switch": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "internal_nonvisual": [
+      111,
+      113,
+      115
+    ],
+    "unused": [
+      83,
+      117,
+      118
+    ]
+  },
+  "not_applicable_outputs": {
+    "cabinet_or_service": [
+      {
+        "address": 2,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 3,
+        "group": "pinmame.output.gi"
+      },
+      {
+        "address": 87,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 88,
+        "group": "pinmame.output.lamp"
+      },
+      {
+        "address": 7,
+        "group": "pinmame.output.solenoid"
+      }
+    ],
+    "virtual": [
+      {
+        "address": 29,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 30,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 31,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 32,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 37,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 38,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 39,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 40,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 41,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 42,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 43,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 44,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 49,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 50,
+        "group": "pinmame.output.solenoid"
+      },
+      {
+        "address": 51,
+        "group": "pinmame.output.solenoid"
+      }
+    ]
+  },
+  "observed_input_addresses": [
+    15,
+    16,
+    17,
+    18,
+    25,
+    26,
+    27,
+    28,
+    31,
+    32,
+    33,
+    35,
+    36,
+    37,
+    38,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    81,
+    82,
+    84,
+    85,
+    86,
+    87,
+    88
+  ],
+  "observed_output_bindings": [
+    {
+      "address": 0,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.gi"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 31,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 32,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 37,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 38,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 41,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 42,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 43,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 44,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 51,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 52,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 53,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 54,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 55,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 56,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 57,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 58,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 61,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 62,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 63,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 64,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 65,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 66,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 67,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 68,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 71,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 72,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 73,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 74,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 75,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 76,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 77,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 78,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 85,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 86,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 1,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 2,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 8,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 9,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 10,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 11,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 12,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 13,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 14,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 16,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 21,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 22,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 23,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 25,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 26,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 27,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 28,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 33,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 34,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 35,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 36,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 45,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 46,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 47,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 48,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "placement_count": 172,
+  "projections": [
+    {
+      "address": 36,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the Battlefield kicker head (Primitive SlingMiniPF, a mesh baked at world coordinates whose vertex bounding-box center is used, at the head's middle position): the Mini Kicker opto rides on the moving A-19070 coil/slide assembly, and the retained script pulses 36 from the Slingshot events of the nineteen position walls bf_k01-bf_k19 that it switches with Controller.GetMech(0)."
+    },
+    {
+      "address": 41,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough eject kicker (Kicker BallRelease): the retained script's cvpmBallStack holds the balls virtually on 41-45 (InitSw 0, 41, 42, 43, 44, 45) and the table has no object for the individual trough opto positions or for Top Trough 46; the manual draws the A-18753 outhole ball trough at the lower right."
+    },
+    {
+      "address": 42,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough eject kicker (Kicker BallRelease): the retained script's cvpmBallStack holds the balls virtually on 41-45 (InitSw 0, 41, 42, 43, 44, 45) and the table has no object for the individual trough opto positions or for Top Trough 46; the manual draws the A-18753 outhole ball trough at the lower right."
+    },
+    {
+      "address": 43,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough eject kicker (Kicker BallRelease): the retained script's cvpmBallStack holds the balls virtually on 41-45 (InitSw 0, 41, 42, 43, 44, 45) and the table has no object for the individual trough opto positions or for Top Trough 46; the manual draws the A-18753 outhole ball trough at the lower right."
+    },
+    {
+      "address": 44,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough eject kicker (Kicker BallRelease): the retained script's cvpmBallStack holds the balls virtually on 41-45 (InitSw 0, 41, 42, 43, 44, 45) and the table has no object for the individual trough opto positions or for Top Trough 46; the manual draws the A-18753 outhole ball trough at the lower right."
+    },
+    {
+      "address": 45,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough eject kicker (Kicker BallRelease): the retained script's cvpmBallStack holds the balls virtually on 41-45 (InitSw 0, 41, 42, 43, 44, 45) and the table has no object for the individual trough opto positions or for Top Trough 46; the manual draws the A-18753 outhole ball trough at the lower right."
+    },
+    {
+      "address": 46,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the trough eject kicker (Kicker BallRelease): the retained script's cvpmBallStack holds the balls virtually on 41-45 (InitSw 0, 41, 42, 43, 44, 45) and the table has no object for the individual trough opto positions or for Top Trough 46; the manual draws the A-18753 outhole ball trough at the lower right."
+    },
+    {
+      "address": 63,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the lockup kicker (Kicker Lockup): the retained script's cvpmBallStack bsLock holds the locked balls virtually on 63-65 (InitSw 0, 63, 64, 65) and the table has no object per lock position."
+    },
+    {
+      "address": 64,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the lockup kicker (Kicker Lockup); see switch 63."
+    },
+    {
+      "address": 65,
+      "group": "pinmame.input.switch",
+      "reason": "Projected onto the lockup kicker (Kicker Lockup); see switch 63."
+    },
+    {
+      "address": 3,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projection: the midpoint of the left diverter's two baked blade meshes Div_Bot_Left and Div_Bot_Right, each taken as the center of its vertex bounding box in the retained extraction's .obj (world x = obj x, world y = obj y); the coil sits under the blades, and the table models no coil object."
+    },
+    {
+      "address": 4,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projection: the midpoint of the left diverter's two baked blade meshes Div_Bot_Left and Div_Bot_Right, each taken as the center of its vertex bounding box in the retained extraction's .obj (world x = obj x, world y = obj y); the coil sits under the blades, and the table models no coil object."
+    },
+    {
+      "address": 5,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projection: the midpoint of the right diverter's two baked blade meshes Div_Top_Left and Div_Top_Right, each taken as the center of its vertex bounding box in the retained extraction's .obj (world x = obj x, world y = obj y); the coil sits under the blades, and the table models no coil object."
+    },
+    {
+      "address": 6,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projection: the midpoint of the right diverter's two baked blade meshes Div_Top_Left and Div_Top_Right, each taken as the center of its vertex bounding box in the retained extraction's .obj (world x = obj x, world y = obj y); the coil sits under the blades, and the table models no coil object."
+    },
+    {
+      "address": 15,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projection: the vertex bounding-box center of the baked kicker-head mesh SlingMiniPF (world x = obj x, world y = obj y); the head travels along the bf_k01-bf_k19 rail, so this is its modelled resting position, not a fixed socket."
+    },
+    {
+      "address": 19,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projection: the vertex bounding-box center of the baked kicker-head mesh SlingMiniPF (world x = obj x, world y = obj y); the head travels along the bf_k01-bf_k19 rail, so this is its modelled resting position, not a fixed socket."
+    },
+    {
+      "address": 20,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projection: the vertex bounding-box center of the baked kicker-head mesh SlingMiniPF (world x = obj x, world y = obj y); the head travels along the bf_k01-bf_k19 rail, so this is its modelled resting position, not a fixed socket."
+    },
+    {
+      "address": 24,
+      "group": "pinmame.output.solenoid",
+      "reason": "Projection: the midpoint of the drag-point bounding-box centers of the two middle Battlefield drop-target walls sw86 and sw87; the reset coil sits under the bank, and the table models no coil object."
+    }
+  ],
+  "resolved_input_addresses": [],
+  "resolved_output_bindings": [],
+  "source_hashes": {
+    "embedded_script_sha256": "973a9ad5b2ccbc31334dc3752e065f7a94265c69f9a89f3bcf58e2f3eec51f77",
+    "manual_sha256": "900c94825a940a34abaae5d14284098b44dda1e6c7f79d47a92e60f7bd0c4b9e",
+    "table_sha256": "f256caa5f7af3f17c5da3fa62b23ae49a6f4e9f80ab24acaac953db8d2cfe13e"
+  },
+  "status": "observed",
+  "unplaced_output_bindings": [
+    {
+      "address": 81,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 82,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 83,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 84,
+      "group": "pinmame.output.lamp"
+    },
+    {
+      "address": 17,
+      "group": "pinmame.output.solenoid"
+    },
+    {
+      "address": 18,
+      "group": "pinmame.output.solenoid"
+    }
+  ],
+  "version": 1
+}

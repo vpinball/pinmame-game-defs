@@ -24,7 +24,8 @@ EXPECTED_PLATFORM_COUNTS = {
 	"pinmame.wpc-95": 6,
 	"pinmame.wpc-dcs": 3,
 	"pinmame.wpc-fliptronic": 6,
-	"pinmame.wpc-security": 4,
+	# The Shadow (curated 2026-09-26) now declares its platform from the curated definition.
+	"pinmame.wpc-security": 3,
 }
 # Modules whose generation the reviewed profiles do not cover (or which belong
 # to a different generation than the profile name suggests) must never claim.
